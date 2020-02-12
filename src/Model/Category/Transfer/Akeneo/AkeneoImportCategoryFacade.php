@@ -192,7 +192,8 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
 
     private function loadAkeneoCategoryIds(): void
     {
-        $this->notTransferredCategoriesIds = array_flip($this->categoryFacade->getAllAkeneoCategoryIds());
+        $allAkeneoCategoryIds = $this->categoryFacade->getAllAkeneoCategoryIds();
+        $this->notTransferredCategoriesIds = array_combine($allAkeneoCategoryIds, $allAkeneoCategoryIds);
         $this->categoriesFromAkeneoCountBeforeTransfer = count($this->notTransferredCategoriesIds);
     }
 
@@ -212,9 +213,10 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
             $this->logger->addError(sprintf('Import categories from Akeneo probably failed, because all categories with akeneo code should be deleted. Deletion was aborted.'));
             return;
         }
-        foreach ($this->notTransferredCategoriesIds as $akeneoCode => $categoryId) {
+
+        foreach ($this->notTransferredCategoriesIds as $categoryId) {
             $this->categoryFacade->deleteById($categoryId);
-            $this->logger->addWarning(sprintf('Deleted category with ID: %s', $akeneoCode));
+            $this->logger->addWarning(sprintf('Deleted category with ID: %s', $categoryId));
         }
     }
 }
