@@ -1,4 +1,5 @@
 @in-grid-height: @input-height-small;
+@in-grid-item-width: calc(~"99.99% / 3");
 
 .in-grid-control {
     display: flex;
@@ -20,12 +21,21 @@
         font-size: 12px;
 
         @media @query-lg {
-            width: 30%;
+            width: calc(~"99.99% / 3");
         }
 
         &--paging {
             text-align: center;
             margin-bottom: 10px;
+            width: 100%;
+
+            @media @query-lg {
+                width: 47%;
+            }
+
+            @media @query-xl {
+                width: @in-grid-item-width;
+            }
 
             .window-content & {
                 width: 100%;
@@ -40,12 +50,14 @@
         &--settings {
             display: flex;
             flex-direction: row;
+            justify-content: center;
             width: 100%;
             text-align: right;
 
             @media @query-lg {
-                width: 40%;
                 flex-direction: column;
+                justify-content: flex-end;
+                width: @in-grid-item-width;
             }
 
             .window-content & {
@@ -63,7 +75,12 @@
             text-align: center;
 
             @media @query-lg {
+                width: 20%;
                 text-align: left;
+            }
+
+            @media @query-xl {
+                width: @in-grid-item-width;
             }
 
             .window-content & {
@@ -80,19 +97,15 @@
             float: right;
             display: block;
             text-align: center;
+            margin-left: 10px;
 
             @media @query-lg {
-                margin-left: 40px;
+                margin-left: 0;
                 text-align: right;
             }
 
             &--select {
-                margin-left: 10px;
                 margin-right: 9px;
-
-                @media @query-lg {
-                    margin-left: 40px;
-                }
             }
 
             &__text {
