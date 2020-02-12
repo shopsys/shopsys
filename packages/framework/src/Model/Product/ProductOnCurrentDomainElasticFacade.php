@@ -340,7 +340,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     protected function getIndexName(): string
     {
         return $this->indexDefinitionLoader->getIndexDefinition(
-            ProductIndex::INDEX_NAME,
+            ProductIndex::getName(),
             $this->domain->getId()
         )->getIndexAlias();
     }

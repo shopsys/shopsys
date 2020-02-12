@@ -9,14 +9,12 @@ use Symfony\Component\Intl\Exception\MethodNotImplementedException;
 
 class CategoryIndex extends AbstractIndex
 {
-    public const INDEX_NAME = 'category';
-
     /**
      * @return string
      */
-    public function getName(): string
+    public static function getName(): string
     {
-        return self::INDEX_NAME;
+        return 'category';
     }
 
     /**

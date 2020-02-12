@@ -11,7 +11,7 @@ abstract class AbstractIndex
     /**
      * @return string
      */
-    abstract public function getName(): string;
+    abstract public static function getName(): string;
 
     /**
      * @param int $domainId

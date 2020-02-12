@@ -162,7 +162,7 @@ class CategoryIndex extends AbstractIndex
     /**
      * @return string
      */
-    public function getName(): string
+    public static function getName(): string
     {
         // TODO: Implement getName() method.
     }
@@ -208,17 +208,16 @@ Register new index into `config/services.yml`
 ## Create new index into Elasticsearch
 
 To create an index into Elasticsearch we need to implement `getName()` method in `CategoryIndex`.
-The best practice is to define the index name as the constant for later usage for obtaining data.
+
+The name must be the same as the name of directory for Elasticsearch mapping in `src/Resources/definition/`
 
 ```php
-public const INDEX_NAME = 'category';
-
 /**
  * @return string
  */
-public function getName(): string
+public static function getName(): string
 {
-    return static::INDEX_NAME;
+    return 'category';
 }
 ```
 

@@ -28,7 +28,7 @@ class IndexRegistry
      */
     protected function registerIndex(AbstractIndex $index): void
     {
-        $this->registeredIndexes[$index->getName()] = $index;
+        $this->registeredIndexes[$index::getName()] = $index;
     }
 
     /**

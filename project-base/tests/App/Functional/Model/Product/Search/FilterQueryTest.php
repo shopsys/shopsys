@@ -200,7 +200,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
      */
     protected function createFilter(): FilterQuery
     {
-        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::INDEX_NAME, Domain::FIRST_DOMAIN_ID);
+        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), Domain::FIRST_DOMAIN_ID);
         $filter = $this->filterQueryFactory->create($indexDefinition->getIndexAlias());
 
         return $filter->filterOnlySellable();

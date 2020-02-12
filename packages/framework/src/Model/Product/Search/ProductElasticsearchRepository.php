@@ -113,7 +113,7 @@ class ProductElasticsearchRepository
             return [];
         }
 
-        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::INDEX_NAME, $domainId);
+        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId);
         $parameters = $this->createQuery($indexDefinition->getIndexAlias(), $searchText);
         $result = $this->client->search($parameters);
         return $this->extractIds($result);

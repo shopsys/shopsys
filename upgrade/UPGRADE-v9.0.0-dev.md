@@ -719,7 +719,7 @@ There you can find links to upgrade notes for other versions too.
             -       $elasticSearchIndexName = $this->elasticSearchStructureManager->getAliasName(Domain::FIRST_DOMAIN_ID, self::ELASTICSEARCH_INDEX);
             -	
             -       $filter = $this->filterQueryFactory->create($elasticSearchIndexName);
-            +       $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::INDEX_NAME, Domain::FIRST_DOMAIN_ID);
+            +       $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), Domain::FIRST_DOMAIN_ID);
             +       $filter = $this->filterQueryFactory->create($indexDefinition->getIndexAlias());
             	
                     return $filter->filterOnlySellable();

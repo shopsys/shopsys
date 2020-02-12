@@ -9,8 +9,6 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
 class ProductIndex extends AbstractIndex
 {
-    public const INDEX_NAME = 'product';
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -69,8 +67,8 @@ class ProductIndex extends AbstractIndex
     /**
      * @inheritDoc
      */
-    public function getName(): string
+    public static function getName(): string
     {
-        return static::INDEX_NAME;
+        return 'product';
     }
 }
