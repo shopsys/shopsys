@@ -1,21 +1,35 @@
 @wrap-bar-margin-bottom: @item-gap;
 @wrap-bar-btn-gap: 10px;
+@wrap-bar-buttons-width: 50%;
 
 .wrap-bar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     padding: 5px 0 @wrap-bar-margin-bottom;
-    .clearfix();
 
     border-bottom: @wrap-border-style;
 
+    @media @query-lg {
+        flex-direction: row;
+    }
+
     &__heading {
-        float: left;
+        width: 100%;
         margin-bottom: 5px;
 
         color: @color-title;
 
-        @media @query-lg {
+        @media @query-md {
+            //width: calc(~"100% - @{wrap-bar-buttons-width}");
             margin-bottom: 0;
         }
+
+    }
+
+    &__buttons {
+        display: inline-block;
+        width: 100%;
     }
 
     &__btn {
