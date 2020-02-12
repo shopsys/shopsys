@@ -21,9 +21,19 @@
                         {{ form_row(form.email, { label: 'Email'|trans }) }}
                         {{ form_row(form.telephone, { label: 'Telephone'|trans }) }}
                     </fieldset>
-                    {% if isCompanyCustomer %}
+                    {% if isWithoutRegistration == false and isCompanyCustomer == false %}
+                        {% do form.companyCustomer.setRendered() %}
+                        {% do form.companyName.setRendered() %}
+                        {% do form.companyNumber.setRendered() %}
+                        {% do form.companyTaxNumber.setRendered() %}
+                    {% else %}
                         <h2>{{ 'Company data'|trans }} <span class="heading-addition">{{ '(If I buy on the company behalf)'|trans }}</span></h2>
                         <fieldset>
+                            {{ form_row(form.companyCustomer, {
+                                attr: { class: 'js-checkbox-toggle', 'data-checkbox-toggle-container-id': 'js-company-fields' },
+                                label: 'I buy on company behalf'|trans
+                                })
+                            }}
                             <div id="js-company-fields">
                                 {{ form_row(form.companyName, { label: 'Company name'|trans }) }}
                                 {{ form_row(form.companyNumber, { label: 'Company number'|trans }) }}
@@ -33,10 +43,6 @@
                                 {% endif %}
                             </div>
                         </fieldset>
-                    {% else %}
-                        {% do form.companyName.setRendered() %}
-                        {% do form.companyNumber.setRendered() %}
-                        {% do form.companyTaxNumber.setRendered() %}
                     {% endif %}
 
                     <h2>{{ 'Billing data'|trans }} <span class="heading-addition">{{ '(This address will be on the tax invoice)'|trans }}</span></h2>

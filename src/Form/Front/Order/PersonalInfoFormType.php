@@ -87,6 +87,8 @@ class PersonalInfoFormType extends AbstractType
                 ]);
         }
 
+        $builder->add('companyCustomer', CheckboxType::class, ['required' => false]);
+
         $builder
             ->add('email', EmailType::class, [
                 'constraints' => [
@@ -287,15 +289,22 @@ class PersonalInfoFormType extends AbstractType
             ])
             ->add('save', SubmitType::class);
 
-        if ($options['is_company_customer'] && $options['domain_id'] == Domain::SECOND_DOMAIN_ID) {
+        if ($options['domain_id'] == Domain::SECOND_DOMAIN_ID) {
             $builder->add(
                 'companyNumberWithVat',
                 TextType::class,
                 [
                     'required' => true,
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Vyplňte prosím DIČ']),
-                        new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.']),
+                        new Constraints\NotBlank([
+                            'message' => 'Vyplňte prosím DIČ',
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                        new Constraints\Length([
+                            'max' => 50,
+                            'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.',
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
                     ],
                 ]
             );

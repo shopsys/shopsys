@@ -25,6 +25,11 @@ class OrderFlow extends FormFlow
     private $isCompanyCustomer = false;
 
     /**
+     * @var bool
+     */
+    private $isWithoutRegistration = false;
+
+    /**
      * @param int $domainId
      */
     public function setDomainId($domainId)
@@ -38,6 +43,15 @@ class OrderFlow extends FormFlow
     public function setIsCompanyCustomer(bool $isCompanyCustomer): void
     {
         $this->isCompanyCustomer = $isCompanyCustomer;
+    }
+
+    /**
+     * @param bool $isWithoutRegistration
+     */
+    public function setIsWithoutRegistration(bool $isWithoutRegistration): void
+    {
+        $this->isWithoutRegistration = $isWithoutRegistration;
+        $this->isWithoutRegistration;
     }
 
     /**

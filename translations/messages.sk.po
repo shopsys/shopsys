@@ -11,7 +11,7 @@ msgid "Company number"
 msgstr "IČ"
 
 msgid "Tax number"
-msgstr "IČ Dph"
+msgstr "IČ DPH"
 
 msgid "Tax number with vat"
 msgstr "DIČ"

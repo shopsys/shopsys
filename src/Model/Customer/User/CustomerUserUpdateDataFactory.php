@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as BaseCustomerUserUpdateDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 {
@@ -44,6 +46,30 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $customerUserUpdateData->billingAddressData = $billingAddressData;
         $customerUserUpdateData->customerUserData = $customerUserData;
         $customerUserUpdateData->sendRegistrationMail = true;
+
         return $customerUserUpdateData;
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Customer\BillingAddress $billingAddress
+     * @return \App\Model\Customer\BillingAddressData
+     */
+    protected function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress)
+    {
+        /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
+        $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
+
+        if ($billingAddress->getStreet() === null) {
+            $billingAddressData->companyName = $order->getCompanyName();
+            $billingAddressData->companyNumber = $order->getCompanyNumber();
+            $billingAddressData->companyTaxNumber = $order->getCompanyTaxNumber();
+            $billingAddressData->street = $order->getStreet();
+            $billingAddressData->city = $order->getCity();
+            $billingAddressData->postcode = $order->getPostcode();
+            $billingAddressData->country = $order->getCountry();
+        }
+
+        return $billingAddressData;
     }
 }
