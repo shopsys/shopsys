@@ -93,38 +93,6 @@ class IndexFacade
             $indexDefinition->getDomainId()
         ));
 
-        $this->exportAll($index, $indexDefinition, $output);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    public function migrateByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
-    {
-        $indexName = $indexDefinition->getIndexName();
-        $domainId = $indexDefinition->getDomainId();
-        $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
-
-        if ($existingIndexName === $indexDefinition->getVersionedIndexName()) {
-            $output->writeln(sprintf('Index "%s" on domain "%s" is up to date', $indexName, $domainId));
-            return;
-        }
-
-        $output->writeln(sprintf('Migrating index "%s" on domain "%s"', $indexName, $domainId));
-        $this->indexRepository->createIndex($indexDefinition);
-        $this->indexRepository->reindex($existingIndexName, $indexDefinition->getVersionedIndexName());
-        $this->indexRepository->createAlias($indexDefinition);
-        $this->indexRepository->deleteIndex($existingIndexName);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    protected function exportAll(AbstractIndex $index, IndexDefinition $indexDefinition, OutputInterface $output): void
-    {
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
         $indexAlias = $indexDefinition->getIndexAlias();
@@ -156,6 +124,28 @@ class IndexFacade
         $output->writeln('');
 
         $this->sqlLoggerFacade->reenableLogging();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    public function migrateByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
+    {
+        $indexName = $indexDefinition->getIndexName();
+        $domainId = $indexDefinition->getDomainId();
+        $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+
+        if ($existingIndexName === $indexDefinition->getVersionedIndexName()) {
+            $output->writeln(sprintf('Index "%s" on domain "%s" is up to date', $indexName, $domainId));
+            return;
+        }
+
+        $output->writeln(sprintf('Migrating index "%s" on domain "%s"', $indexName, $domainId));
+        $this->indexRepository->createIndex($indexDefinition);
+        $this->indexRepository->reindex($existingIndexName, $indexDefinition->getVersionedIndexName());
+        $this->indexRepository->createAlias($indexDefinition);
+        $this->indexRepository->deleteIndex($existingIndexName);
     }
 
     /**
