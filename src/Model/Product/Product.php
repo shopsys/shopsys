@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
+use Exception;
 
 /**
  * @ORM\Table(name="products")
@@ -232,5 +233,32 @@ class Product extends BaseProduct
             . ' '
             . $this->getNameSufix($locale)
         );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+     */
+    public function getCalculatedAvailability()
+    {
+        throw new Exception('Standart framework availability isn\'t supported. You should use new App\...\ProductAvailabilityFacade');
+        return $this->calculatedAvailability;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+     */
+    public function getAvailability()
+    {
+        throw new Exception('Standart framework availability isn\'t supported. You should use new App\...\ProductAvailabilityFacade');
+        return $this->availability;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
+     */
+    public function getOutOfStockAvailability()
+    {
+        throw new Exception('Standart framework availability isn\'t supported. You should use new App\...\ProductAvailabilityFacade');
+        return $this->outOfStockAvailability;
     }
 }

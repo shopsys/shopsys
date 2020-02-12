@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Stock\ProductStockRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -89,6 +90,11 @@ class ProductController extends FrontBaseController
     private $productStockRepository;
 
     /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
+    private $productAvailabilityFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -114,7 +120,8 @@ class ProductController extends FrontBaseController
         ModuleFacade $moduleFacade,
         BrandFacade $brandFacade,
         ListedProductViewFacadeInterface $listedProductViewFacade,
-        ProductStockRepository $productStockRepository
+        ProductStockRepository $productStockRepository,
+        ProductAvailabilityFacade $productAvailabilityFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -128,6 +135,7 @@ class ProductController extends FrontBaseController
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->categoryFacade = $categoryFacade;
         $this->productStockRepository = $productStockRepository;
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
     /**
@@ -148,6 +156,7 @@ class ProductController extends FrontBaseController
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
         $productStocks = $this->productStockRepository->getProductStocksExcludeCentralStockByProductAndDomainId($product, $this->domain->getId());
+        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId());
 
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $product,
@@ -157,6 +166,7 @@ class ProductController extends FrontBaseController
             'categoryList' => $categoryList,
             'domain' => $this->domain,
             'productStocks' => $productStocks,
+            'productAvailabilityInformation' => $productAvailabilityInformation
         ]);
     }
 

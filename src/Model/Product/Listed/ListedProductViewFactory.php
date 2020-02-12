@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Listed;
 
+use App\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView as BaseListedProductView;
@@ -13,6 +16,21 @@ use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory as BaseListe
 
 class ListedProductViewFactory extends BaseListedProductViewFactory
 {
+    /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
+    private $productAvailabilityFacade;
+
+    public function __construct(
+        Domain $domain,
+        ProductCachedAttributesFacade $productCachedAttributesFacade,
+        ProductAvailabilityFacade $productAvailabilityFacade
+    )
+    {
+        parent::__construct($domain, $productCachedAttributesFacade);
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
+    }
+
     /**
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $imageView
@@ -25,7 +43,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $product->getId(),
             $product->getName(),
             $product->getShortDescription($this->domain->getId()),
-            $product->getCalculatedAvailability()->getName(),
+            $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId()),
             $this->productCachedAttributesFacade->getProductSellingPrice($product),
             $this->getFlagIdsForProduct($product),
             $productActionView,
