@@ -8,7 +8,7 @@ As a first step we need to define [elasticsearch mapping](https://www.elastic.co
 
 ## New CategoryIndex
 
-Create a class `CategoryIndex` in `src/Model/Category/Elasticsearch`. The class must extends class `AbstractIndex`.
+Create class `CategoryIndex` in `src/Model/Category/Elasticsearch`. The class must extend class `Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex`.
 
 ```php
 declare(strict_types=1);
@@ -39,16 +39,16 @@ class CategoryIndex extends AbstractIndex
 }
 ```
 
-Register new index into `services.yml`
+Register new index into `config/services.yml`
 
 ```yaml
-    Shopsys\FrameworkBundle\Model\Category\Elasticsearch\CategoryIndex: ~
+    App\Model\Category\Elasticsearch\CategoryIndex: ~
 ```
 
 ## Create new index into elasticsearch
 
 To create an index into elasticsearch we need to implement `getName()` method in `CategoryIndex`.
-The best practice is to define index name into constant due to later usage for obtaining data.
+The best practice is to define the index name as the constant for later usage for obtaining data.
 
 ```diff
 +   public const INDEX_NAME = 'category';
@@ -61,20 +61,20 @@ The best practice is to define index name into constant due to later usage for o
 ```
 
 So far it is the most minimalistic implementation.
-Now we are able to create an index in elasticsearch by running `./phing elasticsearch-index-create -D elasticsearc.index=category`.
+Now we are able to create an index in elasticsearch by running `./phing elasticsearch-index-create -D elasticsearch.index=category`.
 Also we can use `./phing elasticsearch-index-recreate` or `./phing elasticsearch-index-delete`.
 
 !!! note
-Command `./phing elasticsearch-index-create -D elasticsearc.index=category` will creates elasticsearch index only for out CategoryIndex.
-Using `./phing elasticsearch-index-create` (without `-D` flag) it will create elasticsearch indexes for all registered ones in your project (product, category, and so on).
+Command `./phing elasticsearch-index-create -D elasticsearch.index=category` (notice the parameter -D) create elasticsearch index only for our CategoryIndex.
+Using `./phing elasticsearch-index-create` (without `-D` flag) will create elasticsearch indexes for all registered ones in your project (product, category, and so on).
 
 ## Export data into elasticsearch
 
-Creating and deleting index is nice but it is not really useful.
-As a next step we will implement method `getTotalCount()` and `getExportDataForBatch()` to be able export data.
+Creating and deleting the index is nice but alone it is not really useful.
+As the next step we will implement method `getTotalCount()` and `getExportDataForBatch()` to be able to export data.
 
 We can use already existing method in `\Shopsys\FrameworkBundle\Model\Category\CategoryRepository::getTranslatedVisibleSubcategoriesByDomain()`.
-The method `getTranslatedVisibleSubcategoriesByDomain()` needs as a second argument an instance of `DomainConfig` so we need to inject an instance of `Domain` class along with instance of `CategortRepository` into `CategoryIndex`.  
+The method `getTranslatedVisibleSubcategoriesByDomain()` needs as a second argument an instance of `DomainConfig` so we need to inject an instance of `Domain` class along with the instance of `CategoryRepository` into `CategoryIndex`.  
 
 ```diff
 +   /**
@@ -145,14 +145,14 @@ and also a `getExportDataForBatch()` with a private converting method `convertTo
 !!! note
 The `getExportDataForBatch()` must return serialized array of rows indexed by its ID
 
-Now we can export categories data (name, description, parentId, level, and uuid) into elasticsearch index via `./phing elasticsearch-export -D elaticsearch.index=category` (we need to have created index first, see the step above).
+Now we can export categories data (name, description, parentId, level, and uuid) into elasticsearch with `./phing elasticsearch-export -D elasticsearch.index=category` (index have to be created first, see the step above).
 
 ### Exporting via cron
 
-We may automate the export process via CronModule which is super easy.
-All we need to achieve this goal is to create a new class `CategoryExportCronModule` which extends `AbstractExportCronModule`.
+We may automate the export process thanks to the `CronModule` which is super easy.
+All we need to do to achieve this goal is to create a new class `CategoryExportCronModule` which extends `AbstractExportCronModule`.
 
-The most important task here is to override parent constructor with changing a type hint of the first argument to our created index (`CategoryIndex`).
+The most important task here is to override parent constructor and change the type-hint of the first argument to our created index (`CategoryIndex`).
 
 ```php
 declare(strict_types=1);
@@ -184,7 +184,7 @@ class CategoryExportCronModule extends AbstractExportCronModule
 ```
 
 Now if we have [crons](../introduction/cron.md) properly configured the new cron will be started automatically with others.
-Or you may want to [configure](../cookbook/working-with-multiple-cron-instances.md) this cron module with different timing
+Or you may want to [configure](../cookbook/working-with-multiple-cron-instances.md) this cron module with different timing.
 
 ### Implement partial update
 
@@ -195,7 +195,7 @@ Anywhere you want to add row to immediate export you may call `CategoryExportSch
 
 #### Scheduler
 
-Scheduler is used as a queue of IDs which we want to export. When we make any changes we may add an affected category ID into this queue and Subscriber will pick it up after request is done.
+Scheduler is used as a queue of IDs we want to export. When we make any changes we may add an affected category ID into this queue and subscriber will pick it up after request is done.
 
 Create class `CategoryExportScheduler` which extends `AbstractExportScheduler`. We do not need to override nor implement any method.
 
@@ -270,7 +270,7 @@ class CategoryExportSubscriber extends AbstractExportSubscriber
 
 #### CategoryIndex::getExportDataForIds()
 
-To finish partial exports we need to implement the last unimplemented method in `CategoryIndex` to return all categories by their identifiers.
+To finish partial exports we need to implement the last unimplemented method in `CategoryIndex` – to return all categories by their identifiers.
 We may also use already existing method from `CategoryRepository`.
 
 ```diff
@@ -290,5 +290,5 @@ We may also use already existing method from `CategoryRepository`.
 
 ## Conclusion
 
-We have created a new index category into elasticsearch. We are able to fill it with data (by a cron or immediately after row is changed).
-From now you are able to use elasticsearch as a data source (data providing functionality is needed to be implemented) instead PostgreSQL which will save your performance.
+We have created a new index category into elasticsearch. We were able to fill it with data (by a cron or immediately after a row is changed).
+From now you are able to use elasticsearch as a data source (data providing functionality is needed to be implemented) instead of PostgreSQL which will improve the performance of your application.
