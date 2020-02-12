@@ -42,6 +42,7 @@
             {%- set classes = classes|merge(['js-side-menu-submenu hidden']) -%}
         {%- endif -%}
     {%- endif -%}
+
     {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
         <ul{{ self.attributes(item.childrenAttributes, classes) }}>
             {{ block('children') }}
