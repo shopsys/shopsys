@@ -18,6 +18,11 @@ class CustomerUserData extends BaseUserData
      */
     public $newsletterSubscription = false;
 
+    /**
+     * @var int|null
+     */
+    public $erpCustomerNumber;
+
     public function __construct()
     {
         parent::__construct();

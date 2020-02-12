@@ -11,6 +11,7 @@ use GuzzleHttp\RequestOptions;
 class ScontoBridgeClient
 {
     private const URI_TOKEN_AUTH = 'TokenAuth/Authenticate';
+    public const DATE_TIME_FORMAT = 'Y-m-d H:i:s.u';
 
     /**
      * @var int

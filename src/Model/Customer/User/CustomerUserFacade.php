@@ -18,6 +18,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
+/**
+ * @property \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
+ */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
     /**
@@ -27,7 +30,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
+     * @param \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
@@ -60,7 +63,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @return \App\Model\Customer\User\CustomerUser
      */
-    protected function edit($customerUserId, CustomerUserUpdateData $customerUserUpdateData)
+    public function edit($customerUserId, CustomerUserUpdateData $customerUserUpdateData)
     {
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
@@ -75,5 +78,14 @@ class CustomerUserFacade extends BaseCustomerUserFacade
             $this->newsletterFacade->deleteById($newsletterSubscriber->getId());
         }
         return $customerUser;
+    }
+
+    /**
+     * @param int $erpCustomerNumber
+     * @return \App\Model\Customer\User\CustomerUser|null
+     */
+    public function findByErpCustomerNumber(int $erpCustomerNumber): ?CustomerUser
+    {
+        return $this->customerUserRepository->findByErpCustomerNumber($erpCustomerNumber);
     }
 }

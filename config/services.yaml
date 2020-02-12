@@ -226,3 +226,5 @@ services:
     App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency:
         arguments:
             $logger: '@monolog.logger.cron'
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository: '@App\Model\Customer\User\CustomerUserRepository'
