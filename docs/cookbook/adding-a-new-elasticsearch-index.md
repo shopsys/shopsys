@@ -6,9 +6,149 @@ In this cookbook, we will add a new Elasticsearch index for categories, implemen
 
 As a first step we need to define [Elasticsearch mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) in `src/Resources/definition/category/` for all domains (e.g. for 2 domains with ID 1 and 2: `1.json`, `2.json`).
 
+Example of mapping part for English domain with ID 1 (`category/1.json`)
+
+```json
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    },
+    "analysis": {
+      "filter": {
+        "english_stop": {
+          "type": "stop",
+          "stopwords": "_english_"
+        },
+        "english_stemmer": {
+          "type": "stemmer",
+          "language": "english"
+        },
+        "edge_ngram": {
+          "type": "edgeNGram",
+          "min_gram": 2,
+          "max_gram": 20
+        }
+      },
+      "tokenizer": {
+        "keep_special_chars": {
+          "type": "pattern",
+          "pattern": "[^\\p{L}\\d-/]+"
+        }
+      },
+      "analyzer": {
+        "full_with_diacritic": {
+          "tokenizer": "keep_special_chars",
+          "filter": [
+            "lowercase"
+          ]
+        },
+        "full_without_diacritic": {
+          "tokenizer": "keep_special_chars",
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        },
+        "stemming": {
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "english_stemmer",
+            "english_stop",
+            "asciifolding"
+          ]
+        },
+        "edge_ngram_with_diacritic": {
+          "tokenizer": "keep_special_chars",
+          "filter": [
+            "edge_ngram",
+            "lowercase"
+          ]
+        },
+        "edge_ngram_without_diacritic": {
+          "tokenizer": "keep_special_chars",
+          "filter": [
+            "edge_ngram",
+            "lowercase",
+            "asciifolding"
+          ]
+        },
+        "edge_ngram_without_diacritic_html": {
+          "char_filter": "html_strip",
+          "tokenizer": "keep_special_chars",
+          "filter": [
+            "edge_ngram",
+            "lowercase",
+            "asciifolding"
+          ]
+        },
+        "edge_ngram_unanalyzed": {
+          "tokenizer": "keyword",
+          "filter": [
+            "edge_ngram"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "name": {
+          "type": "text",
+          "analyzer": "stemming",
+          "fields": {
+            "full_with_diacritic": {
+              "type": "text",
+              "analyzer": "full_with_diacritic"
+            },
+            "full_without_diacritic": {
+              "type": "text",
+              "analyzer": "full_without_diacritic"
+            },
+            "edge_ngram_with_diacritic": {
+              "type": "text",
+              "analyzer": "edge_ngram_with_diacritic"
+            },
+            "edge_ngram_without_diacritic": {
+              "type": "text",
+              "analyzer": "edge_ngram_without_diacritic"
+            },
+            "keyword": {
+              "type": "icu_collation_keyword",
+              "language": "en",
+              "index": false
+            }
+          }
+        },
+        "description": {
+          "type": "text",
+          "analyzer": "edge_ngram_without_diacritic_html"
+        },
+        "parrent_id": {
+          "type": "integer"
+        },
+        "level": {
+          "type": "integer"
+        },
+        "uuid": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}
+```
+
 ## New CategoryIndex
 
-Create class `CategoryIndex` in `src/Model/Category/Elasticsearch`. The class must extend class `Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex`.
+Registering a child of `Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex` into application will allow you to manage Elasticsearch index easily for common tasks (create, delete, migrate structure and export data).
+All you need to do so is to implement abstract methods from parent class. In this cookbook we will do it step by step.
+
+Create class `CategoryIndex` in `src/Model/Category/Elasticsearch`.
+The class must extend class `Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex`.
 
 ```php
 declare(strict_types=1);
@@ -19,19 +159,39 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
 class CategoryIndex extends AbstractIndex
 {
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         // TODO: Implement getName() method.
     }
+
+    /**
+     * @param int $domainId
+     * @return int
+     */
     public function getTotalCount(int $domainId): int
     {
         // TODO: Implement getTotalCount() method.
     }
+
+    /**
+     * @param int $domainId
+     * @param array $restrictToIds
+     * @return array
+     */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {
         // TODO: Implement getExportDataForIds() method.
     }
 
+    /**
+     * @param int $domainId
+     * @param int $lastProcessedId
+     * @param int $batchSize
+     * @return array
+     */
     public function getExportDataForBatch(int $domainId,int $lastProcessedId,int $batchSize) : array
     {
         // TODO: Implement getExportDataForBatch() method.
@@ -50,14 +210,16 @@ Register new index into `config/services.yml`
 To create an index into Elasticsearch we need to implement `getName()` method in `CategoryIndex`.
 The best practice is to define the index name as the constant for later usage for obtaining data.
 
-```diff
-+   public const INDEX_NAME = 'category';
-+
-    public function getName(): string
-    {
--       // TODO: Implement getName() method.
-+       return static::INDEX_NAME;
-    }
+```php
+public const INDEX_NAME = 'category';
+
+/**
+ * @return string
+ */
+public function getName(): string
+{
+    return static::INDEX_NAME;
+}
 ```
 
 So far it is the most minimalistic implementation.
@@ -65,8 +227,8 @@ Now we are able to create an index in Elasticsearch by running `./phing elastics
 Also we can use `./phing elasticsearch-index-recreate` or `./phing elasticsearch-index-delete`.
 
 !!! note
-Command `./phing elasticsearch-index-create -D elasticsearch.index=category` (notice the parameter -D) create Elasticsearch index only for our CategoryIndex.
-Using `./phing elasticsearch-index-create` (without `-D` flag) will create Elasticsearch indexes for all registered ones in your project (product, category, and so on).
+    Command `./phing elasticsearch-index-create -D elasticsearch.index=category` (notice the parameter -D) create Elasticsearch index only for our CategoryIndex.
+    Using `./phing elasticsearch-index-create` (without `-D` flag) will create Elasticsearch indexes for all registered ones in your project (product, category, and so on).
 
 ## Export data into Elasticsearch
 
@@ -76,81 +238,94 @@ As the next step we will implement method `getTotalCount()` and `getExportDataFo
 We can use already existing method in `\Shopsys\FrameworkBundle\Model\Category\CategoryRepository::getTranslatedVisibleSubcategoriesByDomain()`.
 The method `getTranslatedVisibleSubcategoriesByDomain()` needs as a second argument an instance of `DomainConfig` so we need to inject an instance of `Domain` class along with the instance of `CategoryRepository` into `CategoryIndex`.  
 
-```diff
-+   /**
-+    * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-+    */
-+   protected $categoryRepository;
-+
-+   /**
-+    * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-+    */
-+   protected $domain;
-+
-+   /**
-+    * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-+    * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-+    */
-+   public function __construct(CategoryRepository $categoryRepository, Domain $domain)
-+   {
-+       $this->categoryRepository = $categoryRepository;
-+       $this->domain = $domain;
-+   }
-+
+```php
+/**
+ * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
+ */
+protected $categoryRepository;
+
+/**
+ * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+ */
+protected $domain;
+
+/**
+ * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
+ * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+ */
+public function __construct(CategoryRepository $categoryRepository, Domain $domain)
+{
+   $this->categoryRepository = $categoryRepository;
+   $this->domain = $domain;
+}
 ```
 
 When we have injected services we may implement `getTotalCount()`
 
-```diff
-   public function getTotalCount(int $domainId): int
-    {
--       // TODO: Implement getTotalCount() method.
-+       return count($this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
-+           $this->categoryRepository->getRootCategory(),
-+           $this->domain->getDomainConfigById($domainId)
-+       ));
-    }
+```php
+/**
+ * @param int $domainId
+ * @return int
+ */
+public function getTotalCount(int $domainId): int
+{
+    return count($this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
+        $this->categoryRepository->getRootCategory(),
+        $this->domain->getDomainConfigById($domainId)
+    ));
+}
 ```
 
 and also a `getExportDataForBatch()` with a private converting method `convertToElastic()`
 
-```diff
-    public function getExportDataForBatch(int $domainId,int $lastProcessedId,int $batchSize) : array
-    {
--       // TODO: Implement getExportDataForBatch() method.
-+       $domainConfig = $this->domain->getDomainConfigById($domainId);
-+       $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
-+           $this->categoryRepository->getRootCategory(),
-+           $domainConfig
-+       );
-+       $locale = $domainConfig->getLocale();
-+       foreach ($categories as $category) {
-+           $result[$category->getId()] = $this->convertToElastic($category, $domainId, $locale);
-+       }
-+       return $result;
+```php
+/**
+ * @param int $domainId
+ * @param int $lastProcessedId
+ * @param int $batchSize
+ * @return array
+ */
+public function getExportDataForBatch(int $domainId,int $lastProcessedId,int $batchSize) : array
+{
+    $domainConfig = $this->domain->getDomainConfigById($domainId);
+    $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
+        $this->categoryRepository->getRootCategory(),
+        $domainConfig
+    );
+    $locale = $domainConfig->getLocale();
+    foreach ($categories as $category) {
+        $result[$category->getId()] = $this->convertToElastic($category, $domainId, $locale);
     }
-+
-+   private function convertToElastic(Category $category, int $domainId, string $locale): array
-+   {
-+       return [
-+           'name' => $category->getName($locale),
-+           'description' => $category->getDescription($domainId),
-+           'parentId' => $category->getParent()->getId(),
-+           'level' => $category->getLevel(),
-+           'uuid' => $category->getUuid(),
-+       ];
-+   }
+    return $result;
+}
+
+/**
+ * @param \App\Model\Category\Category $category
+ * @param int $domainId
+ * @param string $locale
+ * @return array
+ */
+private function convertToElastic(Category $category, int $domainId, string $locale): array
+{
+    return [
+        'name' => $category->getName($locale),
+        'description' => $category->getDescription($domainId),
+        'parentId' => $category->getParent()->getId(),
+        'level' => $category->getLevel(),
+        'uuid' => $category->getUuid(),
+    ];
+}
 ```
 
 !!! note
-The `getExportDataForBatch()` must return serialized array of rows indexed by its ID
+    The `getExportDataForBatch()` must return serialized array of rows indexed by its ID
 
 Now we can export categories data (name, description, parentId, level, and uuid) into Elasticsearch with `./phing elasticsearch-export -D elasticsearch.index=category` (index have to be created first, see the step above).
 
 ### Exporting via cron
 
 We may automate the export process thanks to the `CronModule` which is super easy.
-All we need to do to achieve this goal is to create a new class `CategoryExportCronModule` which extends `AbstractExportCronModule`.
+All we need to do to achieve this goal is to create a new class `CategoryExportCronModule` in `src/Model/Category/Elasticsearch` which extends `AbstractExportCronModule`.
 
 The most important task here is to override parent constructor and change the type-hint of the first argument to our created index (`CategoryIndex`).
 
@@ -219,7 +394,8 @@ Override its `__construct()`, and `getSubscribedEvents()`.
 Here is important to override constructors arguments type hint.
 Instead of abstract classes from `\Shopsys\FrameworkBundle\Component\Elasticsearch` you need to replace it with our new implementation (`CategoryExportScheduler`, `CategoryIndex`).
 
-Implementation of `getSubscribedEvents()` is desired to use `exportScheduledRows()` from abstract class but also we can implement in by ourselves.
+We have to implement `getSubscribedEvents()` which is desired to listening for kernel response and then call parent's method `exportScheduledRows()` with the right priority.
+More information about subscribers can be found in [Symfony documentation](https://symfony.com/doc/current/event_dispatcher.html#creating-an-event-subscriber).
 
 ```php
 declare(strict_types=1);
@@ -273,19 +449,23 @@ class CategoryExportSubscriber extends AbstractExportSubscriber
 To finish partial exports we need to implement the last unimplemented method in `CategoryIndex` – to return all categories by their identifiers.
 We may also use already existing method from `CategoryRepository`.
 
-```diff
-    public function getExportDataForIds(int $domainId, array $restrictToIds): array
-    {
--       // TODO: Implement getExportDataForIds() method.
-+       $categories = $this->categoryRepository->getCategoriesByIds($restrictToIds);
-+
-+       $domainConfig = $this->domain->getDomainConfigById($domainId);
-+       $locale = $domainConfig->getLocale();
-+       foreach ($categories as $category) {
-+           $result[$category->getId()] = $this->convertToElastic($category, $domainId, $locale);
-+       }
-+       return $result;
+```php
+/**
+ * @param int $domainId
+ * @param array $restrictToIds
+ * @return array
+ */
+public function getExportDataForIds(int $domainId, array $restrictToIds): array
+{
+    $categories = $this->categoryRepository->getCategoriesByIds($restrictToIds);
+
+    $domainConfig = $this->domain->getDomainConfigById($domainId);
+    $locale = $domainConfig->getLocale();
+    foreach ($categories as $category) {
+        $result[$category->getId()] = $this->convertToElastic($category, $domainId, $locale);
     }
+    return $result;
+}
 ```
 
 ## Conclusion
