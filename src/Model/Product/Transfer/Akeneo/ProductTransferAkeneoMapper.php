@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Akeneo\Product\AkeneoProductHelper;
+use App\Model\Category\CategoryFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ProductTransferAkeneoMapper
 {
@@ -17,12 +19,20 @@ class ProductTransferAkeneoMapper
     private $productDataFactory;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private $categoryFacade;
+
+    /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
-        ProductDataFactory $productDataFactory
+        ProductDataFactory $productDataFactory,
+        CategoryFacade $categoryFacade
     ) {
         $this->productDataFactory = $productDataFactory;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -57,6 +67,37 @@ class ProductTransferAkeneoMapper
         $productData->lowPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->lowPriceWithVat, $akeneoProductData['values']['low_price_vat'] ?? null);
         $productData->highPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->highPriceWithVat, $akeneoProductData['values']['high_price_vat'] ?? null);
 
+        $productCategories = $this->getProductCategories($akeneoProductData['categories']);
+        $productData->categoriesByDomainId = [
+            Domain::FIRST_DOMAIN_ID => $productCategories,
+            Domain::SECOND_DOMAIN_ID => $productCategories,
+        ];
+
         return $productData;
+    }
+
+    /**
+     * @param string[] $akeneoCategoryCodes
+     * @return \App\Model\Category\Category[]
+     */
+    protected function getProductCategories(array $akeneoCategoryCodes): array
+    {
+        $productCategories = [];
+
+        foreach ($akeneoCategoryCodes as $categoryAkeneoCode) {
+            $category = $this->categoryFacade->findByAkeneoCode($categoryAkeneoCode);
+
+            if ($category === null) {
+                continue;
+            }
+
+            $productCategories[$category->getId()] = $category;
+
+            foreach ($category->getParentsWithoutRootCategory() as $parentCategory) {
+                $productCategories[$parentCategory->getId()] = $parentCategory;
+            }
+        }
+
+        return $productCategories;
     }
 }

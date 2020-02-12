@@ -37,6 +37,12 @@ class ProductTransferAkeneoValidator
                     new Assert\Type(['type' => 'string']),
                     new Assert\Length(['max' => 100]),
                 ],
+                'categories' => new Assert\Optional([
+                    new Assert\All([
+                        new Assert\Type(['type' => 'string']),
+                        new Assert\Length(['max' => 255]),
+                    ]),
+                ]),
             ],
         ]));
 

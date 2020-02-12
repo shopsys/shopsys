@@ -24,6 +24,8 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  */
 class Category extends BaseCategory
 {
+    private const CATEGORY_LEVEL_0 = 0;
+
     /**
      * @var string|null
      *
@@ -54,5 +56,17 @@ class Category extends BaseCategory
     public function getAkeneoCode(): ?string
     {
         return $this->akeneoCode;
+    }
+
+    /**
+     * @return \App\Model\Category\Category[]
+     */
+    public function getParentsWithoutRootCategory(): array
+    {
+        if ($this->parent === null || $this->parent->getLevel() === self::CATEGORY_LEVEL_0) {
+            return [];
+        }
+
+        return array_merge([$this->parent], $this->parent->getParentsWithoutRootCategory());
     }
 }

@@ -37,6 +37,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'shortDescriptionUsp4',
         'shortDescriptionUsp5',
         'pricesGroup',
+        'categoriesByDomainId',
     ];
 
     /**
