@@ -15,6 +15,7 @@
 * [Create Basic Grid](./create-basic-grid.md)
 * [Create Advanced Grid](./create-advanced-grid.md)
 * [Extending Product List](./extending-product-list.md)
+* [Adding a New Elasticsearch Index](./adding-a-new-elasticsearch-index.md)
 
 ## Backend API
 

@@ -388,7 +388,7 @@ class CategoryExportScheduler extends AbstractExportScheduler
 #### Subscriber
 
 Create class `CategoryExportSubscriber` which extends `AbstractExportSubsriber`.
-Override its `__construct()`, and `getSubscribedEvents()`.
+Override its `__construct()` and `getSubscribedEvents()` methods.
 
 Here is important to override constructors arguments type hint.
 Instead of abstract classes from `\Shopsys\FrameworkBundle\Component\Elasticsearch` you need to replace it with our new implementation (`CategoryExportScheduler`, `CategoryIndex`).
