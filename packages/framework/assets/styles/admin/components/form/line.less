@@ -200,12 +200,14 @@
 
         &--fixed-width-left {
             width: 40px;
-            right: 0;
+            right: 22px;
             position: absolute;
+            text-align: right;
 
-            @media @query-md {
+            @media @query-lg {
                 position: relative;
                 right: auto;
+                text-align: left;
             }
 
         }
