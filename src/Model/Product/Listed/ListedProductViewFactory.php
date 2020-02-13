@@ -21,12 +21,16 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      */
     private $productAvailabilityFacade;
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     */
     public function __construct(
         Domain $domain,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         ProductAvailabilityFacade $productAvailabilityFacade
-    )
-    {
+    ) {
         parent::__construct($domain, $productCachedAttributesFacade);
         $this->productAvailabilityFacade = $productAvailabilityFacade;
     }

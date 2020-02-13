@@ -687,3 +687,6 @@ msgstr "Televize"
 
 msgid "plazmová"
 msgstr "plazmová"
+
+msgid "K dispozici za %weeks% týdnů"
+msgstr "K dispozici za %weeks% týdnů"

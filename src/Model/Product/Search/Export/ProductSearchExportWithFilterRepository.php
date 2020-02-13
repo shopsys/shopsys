@@ -27,24 +27,33 @@ use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithF
  */
 class ProductSearchExportWithFilterRepository extends BaseProductSearchExportWithFilterRepository
 {
-
     /**
      * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      */
     private $productAvailabilityFacade;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \App\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     */
     public function __construct(
         EntityManagerInterface $em,
-        ParameterRepository $parameterRepository, 
-        ProductFacade $productFacade, 
-        FriendlyUrlRepository $friendlyUrlRepository, 
-        Domain $domain, 
-        ProductVisibilityRepository $productVisibilityRepository, 
+        ParameterRepository $parameterRepository,
+        ProductFacade $productFacade,
+        FriendlyUrlRepository $friendlyUrlRepository,
+        Domain $domain,
+        ProductVisibilityRepository $productVisibilityRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         ProductAvailabilityFacade $productAvailabilityFacade
-    )
-    {
-        parent::__construct($em, 
+    ) {
+        parent::__construct(
+            $em,
             $parameterRepository,
             $productFacade,
             $friendlyUrlRepository,

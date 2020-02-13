@@ -7,7 +7,6 @@ namespace App\Controller\Front;
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
-use App\Model\Stock\ProductStockRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
@@ -106,6 +105,7 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -163,7 +163,7 @@ class ProductController extends FrontBaseController
             'categoryList' => $categoryList,
             'domain' => $this->domain,
             'productAvailabilityInformation' => $productAvailabilityInformation,
-            'productStocksAvailabilitiesInformation' => $productStocksAvailabilitiesInformation
+            'productStocksAvailabilitiesInformation' => $productStocksAvailabilitiesInformation,
         ]);
     }
 

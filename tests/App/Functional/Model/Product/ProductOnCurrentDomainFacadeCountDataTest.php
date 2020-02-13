@@ -127,7 +127,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData = new ProductFilterData();
         $countData = new ProductFilterCountData();
 
-        $countData->countInStock = 10;
+        /*
+         * availability filter is temporary disabled util stocks will be full implemented,
+         * than u have to setup new correct expected values
+         */
+        $countData->countInStock = 0;
         $countData->countByBrandId = [
             2 => 6,
             14 => 2,
@@ -190,7 +194,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
 
         $countData = new ProductFilterCountData();
 
-        $countData->countInStock = 2;
+        /*
+         * availability filter is temporary disabled util stocks will be full implemented,
+         * than u have to setup new correct expected values
+         */
+        $countData->countInStock = 0;
         $countData->countByBrandId = [
             2 => 2,
         ];
@@ -247,7 +255,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData = new ProductFilterData();
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_CANON);
         $countData = new ProductFilterCountData();
-        $countData->countInStock = 6;
+        /*
+         * availability filter is temporary disabled util stocks will be full implemented,
+         * than u have to setup new correct expected values
+         */
+        $countData->countInStock = 0;
         $countData->countByFlagId = [
             1 => 3,
             2 => 2,
@@ -309,7 +321,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_NEW_PRODUCT);
 
         $countData = new ProductFilterCountData();
-        $countData->countInStock = 4;
+        /*
+         * availability filter is temporary disabled util stocks will be full implemented,
+         * than u have to setup new correct expected values
+         */
+        $countData->countInStock = 0;
         $countData->countByParameterIdAndValueId = [
             32 => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
@@ -362,7 +378,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create((80000 / 1.21) . ''), Domain::FIRST_DOMAIN_ID);
 
         $countData = new ProductFilterCountData();
-        $countData->countInStock = 6;
+        /*
+         * availability filter is temporary disabled util stocks will be full implemented,
+         * than u have to setup new correct expected values
+         */
+        $countData->countInStock = 0;
         $countData->countByBrandId = [
             2 => 4,
             14 => 2,
@@ -436,7 +456,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         );
 
         $countData = new ProductFilterCountData();
-        $countData->countInStock = 2;
+        /*
+         * availability filter is temporary disabled util stocks will be full implemented,
+         * than u have to setup new correct expected values
+         */
+        $countData->countInStock = 0;
         $countData->countByBrandId = [
             14 => 1,
         ];
@@ -504,7 +528,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         );
 
         $countData = new ProductFilterCountData();
-        $countData->countInStock = 7;
+        /*
+         * availability filter is temporary disabled util stocks will be full implemented,
+         * than u have to setup new correct expected values
+         */
+        $countData->countInStock = 0;
         $countData->countByBrandId = [
             14 => 2,
             2 => 5,
