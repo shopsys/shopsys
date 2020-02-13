@@ -256,9 +256,6 @@ msgstr "Dostupné dopravy"
 msgid "Back to overview"
 msgstr "Zpět na přehled"
 
-msgid "Base price in %currencyCode%"
-msgstr "Základní cena v %currencyCode%"
-
 msgid "Basic frontend currency %domainName%"
 msgstr "Základní měna frontendu %domainName%"
 
@@ -319,11 +316,20 @@ msgstr "Hromadná úprava byla provedena"
 msgid "CSS documentation"
 msgstr "CSS dokumentace"
 
+msgid "Calculated price excluding VAT"
+msgstr "Vypočtená cena bez DPH"
+
+msgid "Calculated price including VAT"
+msgstr "Vypočtená cena vč. DPH"
+
 msgid "Catalogue number"
 msgstr "Katalogové číslo"
 
 msgid "Categories"
 msgstr "Kategorie"
+
+msgid "Categories order saved."
+msgstr "Pořadí kategorií bylo uloženo."
 
 msgid "Category"
 msgstr "Kategorie"
@@ -562,11 +568,17 @@ msgstr "Zákazník <strong>{{ name }}</strong> byl smazán"
 msgid "Customer city"
 msgstr "Město zákazníka"
 
+msgid "Customer delivery addresses"
+msgstr "Doručovací adresa zákazníka"
+
 msgid "Customer detail"
 msgstr "Karta zákazníka"
 
 msgid "Customer e-mail address"
 msgstr "Emailová adresa zákazníka"
+
+msgid "Customer has no delivery addresses."
+msgstr "Zákazník nemá žádné doručovací adresy."
 
 msgid "Customer has no orders so far."
 msgstr "Zákazník prozatím nemá žádné objednávky."
@@ -642,6 +654,9 @@ msgstr "Smazat stav objednávky"
 
 msgid "Delivery address"
 msgstr "Dodací adresa"
+
+msgid "Delivery address is the same as billing address"
+msgstr "Doručovací adresa je stejná jako fakturační adresa"
 
 msgid "Description"
 msgstr "Popis"
@@ -1102,9 +1117,6 @@ msgstr "Skrývání zboží"
 msgid "I buy on company behalf"
 msgstr "Nakupuji na firmu"
 
-msgid "I want to deliver products to different address than the billing one"
-msgstr "Zboží chci doručit na jinou adresu než fakturační"
-
 msgid "ID"
 msgstr "ID"
 
@@ -1339,6 +1351,9 @@ msgstr "Nový stát"
 msgid "New customer"
 msgstr "Nový zákazník"
 
+msgid "New delivery address"
+msgstr "Nová doručovací adresa"
+
 msgid "New orders"
 msgstr "Nové objednávky"
 
@@ -1531,9 +1546,6 @@ msgstr "Číslo objednávky"
 msgid "Order saved"
 msgstr "Pořadí bylo uloženo"
 
-msgid "Order saved."
-msgstr "Pořadí bylo uloženo."
-
 msgid "Order saving failed"
 msgstr "Pořadí se nepodařilo uložit"
 
@@ -1617,6 +1629,9 @@ msgstr "Export osobních údajů"
 
 msgid "Personal information overview"
 msgstr "Přehled osobních údajů"
+
+msgid "Phone"
+msgstr "Telefon"
 
 msgid "Phone availability"
 msgstr "Dostupnost telefonu"
@@ -1992,12 +2007,6 @@ msgstr "Byla upravena doprava <strong><a href=\"{{ url }}\">{{ name }}</a></stro
 
 msgid "Shipping <strong>{{ name }}</strong> deleted"
 msgstr "Doprava <strong>{{ name }}</strong> byla smazána"
-
-msgid "Shipping address"
-msgstr "Doručovací adresa"
-
-msgid "Shipping address is the same as billing address"
-msgstr "Doručovací adresa je stejná jako fakturační"
 
 msgid "Shipping instructions"
 msgstr "Pokyny k dopravě"
@@ -2443,9 +2452,6 @@ msgstr "v kategorii (nad názvem kategorie)"
 msgid "in footer"
 msgstr "v patičce"
 
-msgid "in left panel (under category tree)"
-msgstr "v levém panelu (pod stromem kategorií)"
-
 msgid "in upper menu"
 msgstr "v horním menu"
 
@@ -2523,3 +2529,4 @@ msgstr "bez umístění"
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
+

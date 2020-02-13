@@ -256,9 +256,6 @@ msgstr ""
 msgid "Back to overview"
 msgstr ""
 
-msgid "Base price in %currencyCode%"
-msgstr ""
-
 msgid "Basic frontend currency %domainName%"
 msgstr ""
 
@@ -319,10 +316,19 @@ msgstr ""
 msgid "CSS documentation"
 msgstr ""
 
+msgid "Calculated price excluding VAT"
+msgstr ""
+
+msgid "Calculated price including VAT"
+msgstr ""
+
 msgid "Catalogue number"
 msgstr ""
 
 msgid "Categories"
+msgstr ""
+
+msgid "Categories order saved."
 msgstr ""
 
 msgid "Category"
@@ -562,11 +568,17 @@ msgstr ""
 msgid "Customer city"
 msgstr ""
 
+msgid "Customer delivery addresses"
+msgstr ""
+
 msgid "Customer detail"
 msgstr ""
 
 msgid "Customer e-mail address"
 msgstr "Customer email address"
+
+msgid "Customer has no delivery addresses."
+msgstr ""
 
 msgid "Customer has no orders so far."
 msgstr ""
@@ -641,6 +653,9 @@ msgid "Delete status of order"
 msgstr ""
 
 msgid "Delivery address"
+msgstr ""
+
+msgid "Delivery address is the same as billing address"
 msgstr ""
 
 msgid "Description"
@@ -1102,9 +1117,6 @@ msgstr ""
 msgid "I buy on company behalf"
 msgstr ""
 
-msgid "I want to deliver products to different address than the billing one"
-msgstr ""
-
 msgid "ID"
 msgstr ""
 
@@ -1339,6 +1351,9 @@ msgstr ""
 msgid "New customer"
 msgstr ""
 
+msgid "New delivery address"
+msgstr ""
+
 msgid "New orders"
 msgstr ""
 
@@ -1531,9 +1546,6 @@ msgstr ""
 msgid "Order saved"
 msgstr ""
 
-msgid "Order saved."
-msgstr ""
-
 msgid "Order saving failed"
 msgstr ""
 
@@ -1616,6 +1628,9 @@ msgid "Personal information export"
 msgstr ""
 
 msgid "Personal information overview"
+msgstr ""
+
+msgid "Phone"
 msgstr ""
 
 msgid "Phone availability"
@@ -1991,12 +2006,6 @@ msgid "Shipping <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was modifi
 msgstr ""
 
 msgid "Shipping <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Shipping address"
-msgstr ""
-
-msgid "Shipping address is the same as billing address"
 msgstr ""
 
 msgid "Shipping instructions"
@@ -2441,9 +2450,6 @@ msgid "in category (above the category name)"
 msgstr ""
 
 msgid "in footer"
-msgstr ""
-
-msgid "in left panel (under category tree)"
 msgstr ""
 
 msgid "in upper menu"

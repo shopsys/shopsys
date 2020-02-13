@@ -10,7 +10,7 @@ export default class DeliveryAddress {
 
         // eslint-disable-next-line no-new
         new Window({
-            content: Translator.trans('Do you really want to remove this shipping address?'),
+            content: Translator.trans('Do you really want to remove this delivery address?'),
             buttonCancel: true,
             buttonContinue: true,
             eventContinue: () => {

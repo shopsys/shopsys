@@ -41,7 +41,7 @@ class DeliveryAddressFormType extends AbstractType
         $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
 
         $builderDeliveryAdress = $builder->create('deliveryAddress', GroupType::class, [
-            'label' => t('Shipping address'),
+            'label' => t('Delivery address'),
             'attr' => [
                 'id' => 'customer_form_deliveryAddressData',
             ],
