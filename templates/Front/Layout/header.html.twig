@@ -96,7 +96,11 @@
                             <a href="{{ url('front_customer_edit') }}" class="menu-iconic__item__link">
                                 <i class="svg svg-user"></i>
                                 <span>
-                                    {{ app.user.firstName }} {{ app.user.lastName }}
+                                    {% if app.user.customer.billingAddress.companyCustomer == true %}
+                                        {{ app.user.customer.billingAddress.companyName }}
+                                    {% else %}
+                                        {{ app.user.firstName }} {{ app.user.lastName }}
+                                    {% endif %}
                                 </span>
                             </a>
                             <ul class="menu-iconic__sub">

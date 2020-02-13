@@ -59,13 +59,24 @@ class RegistrationFacade implements RegistrationFacadeInterface
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromRegistrationData($registrationData);
         $customerUserUpdateData->billingAddressData->country = $country;
 
-        /**
-         * @var \App\Model\Customer\User\CustomerUser
-         */
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
         if ($customerUser->isNewsletterSubscription()) {
             $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
         }
         return $customerUser;
+    }
+
+    /**
+     * @param \App\Model\Customer\User\RegistrationData $registrationData
+     * @return \App\Model\Customer\User\CustomerUser
+     */
+    public function registerCompany(RegistrationData $registrationData): CustomerUser
+    {
+        $registrationData->companyCustomer = true;
+        $registrationData->firstName = $registrationData->companyName;
+        $registrationData->lastName = $registrationData->companyName;
+        $registrationData->gender = '';
+        return $this->register($registrationData);
     }
 }

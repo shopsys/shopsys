@@ -182,9 +182,11 @@ class OrderController extends FrontBaseController
         $frontOrderFormData = new FrontOrderData();
         $frontOrderFormData->deliveryAddressSameAsBillingAddress = true;
         $isCompanyCustomer = false;
+        $isWithoutRegistration = true;
         if ($customerUser instanceof CustomerUser) {
             $this->orderFacade->prefillFrontOrderData($frontOrderFormData, $customerUser);
             $isCompanyCustomer = $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer();
+            $isWithoutRegistration = false;
         }
         $domainId = $this->domain->getId();
         $frontOrderFormData->domainId = $domainId;
@@ -195,7 +197,8 @@ class OrderController extends FrontBaseController
         if ($orderFlow->isBackToCartTransition()) {
             return $this->redirectToRoute('front_cart');
         }
-
+        $orderFlow->setIsCompanyCustomer($isCompanyCustomer);
+        $orderFlow->setIsWithoutRegistration($isWithoutRegistration);
         $orderFlow->bind($frontOrderFormData);
         $orderFlow->saveSentStepData();
 
@@ -266,6 +269,7 @@ class OrderController extends FrontBaseController
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),
+            'isWithoutRegistration' => $isWithoutRegistration,
             'isCompanyCustomer' => $isCompanyCustomer,
         ]);
     }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as BaseCustomerUserUpdateDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 {
@@ -15,11 +17,17 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      */
     public function createFromRegistrationData(RegistrationData $registrationData): CustomerUserUpdateData
     {
+
+        /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
         $billingAddressData = $this->billingAddressDataFactory->create();
         $billingAddressData->city = $registrationData->city;
         $billingAddressData->street = $registrationData->street;
         $billingAddressData->postcode = $registrationData->postcode;
         $billingAddressData->companyCustomer = $registrationData->companyCustomer;
+        $billingAddressData->companyName = $registrationData->companyName;
+        $billingAddressData->companyNumber = $registrationData->companyNumber;
+        $billingAddressData->companyTaxNumber = $registrationData->companyTaxNumber;
+        $billingAddressData->companyNumberWithVat = $registrationData->companyNumberWithVat;
 
         /**
          * @var \App\Model\Customer\User\CustomerUserData
@@ -38,6 +46,30 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $customerUserUpdateData->billingAddressData = $billingAddressData;
         $customerUserUpdateData->customerUserData = $customerUserData;
         $customerUserUpdateData->sendRegistrationMail = true;
+
         return $customerUserUpdateData;
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Customer\BillingAddress $billingAddress
+     * @return \App\Model\Customer\BillingAddressData
+     */
+    protected function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress)
+    {
+        /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
+        $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
+
+        if ($billingAddress->getStreet() === null) {
+            $billingAddressData->companyName = $order->getCompanyName();
+            $billingAddressData->companyNumber = $order->getCompanyNumber();
+            $billingAddressData->companyTaxNumber = $order->getCompanyTaxNumber();
+            $billingAddressData->street = $order->getStreet();
+            $billingAddressData->city = $order->getCity();
+            $billingAddressData->postcode = $order->getPostcode();
+            $billingAddressData->country = $order->getCountry();
+        }
+
+        return $billingAddressData;
     }
 }

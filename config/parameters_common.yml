@@ -35,6 +35,7 @@ parameters:
         Shopsys\FrameworkBundle\Model\Product\ProductDomain: App\Model\Product\ProductDomain
         Shopsys\FrameworkBundle\Model\Product\ProductTranslation: App\Model\Product\ProductTranslation
         Shopsys\FrameworkBundle\Model\Cart\Item\CartItem: App\Model\Cart\Item\CartItem
+        Shopsys\FrameworkBundle\Model\Customer\BillingAddress: App\Model\Customer\BillingAddress
     build-version: '0000000000000000'
     shopsys.display_timezone: Europe/Prague
     shopsys.image.enable_lazy_load: true

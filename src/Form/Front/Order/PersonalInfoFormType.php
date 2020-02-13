@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Order;
 
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Order\FrontOrderData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Transformers\InverseTransformer;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
-use Shopsys\FrameworkBundle\Model\Order\FrontOrderData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -63,19 +64,32 @@ class PersonalInfoFormType extends AbstractType
     {
         $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
 
+        if (!$options['is_company_customer']) {
+            $builder
+                ->add('gender', ChoiceType::class, [
+                    'choices' => array_flip(CustomerUser::getAllGenders()),
+                    'placeholder' => t('-- Vyber oslovení --'),
+                    'constraints' => [
+                        new Constraints\NotBlank(['message' => 'Prosím vyberte si oslovení']),
+                    ],
+                ])
+                ->add('firstName', TextType::class, [
+                    'constraints' => [
+                        new Constraints\NotBlank(['message' => 'Please enter first name']),
+                        new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
+                    ],
+                ])
+                ->add('lastName', TextType::class, [
+                    'constraints' => [
+                        new Constraints\NotBlank(['message' => 'Please enter last name']),
+                        new Constraints\Length(['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
+                    ],
+                ]);
+        }
+
+        $builder->add('companyCustomer', CheckboxType::class, ['required' => false]);
+
         $builder
-            ->add('firstName', TextType::class, [
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter first name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
-                ],
-            ])
-            ->add('lastName', TextType::class, [
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter last name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
-                ],
-            ])
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter email']),
@@ -89,7 +103,6 @@ class PersonalInfoFormType extends AbstractType
                     new Constraints\Length(['max' => 30, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']),
                 ],
             ])
-            ->add('companyCustomer', CheckboxType::class, ['required' => false])
             ->add('companyName', TextType::class, [
                 'required' => true,
                 'constraints' => [
@@ -276,6 +289,27 @@ class PersonalInfoFormType extends AbstractType
             ])
             ->add('save', SubmitType::class);
 
+        if ($options['domain_id'] == Domain::SECOND_DOMAIN_ID) {
+            $builder->add(
+                'companyNumberWithVat',
+                TextType::class,
+                [
+                    'required' => true,
+                    'constraints' => [
+                        new Constraints\NotBlank([
+                            'message' => 'Vyplňte prosím DIČ',
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                        new Constraints\Length([
+                            'max' => 50,
+                            'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.',
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                    ],
+                ]
+            );
+        }
+
         if ($this->heurekaFacade->isHeurekaShopCertificationActivated($this->domain->getId())) {
             $builder->add('disallowHeurekaVerifiedByCustomers', CheckboxType::class, [
                 'required' => false,
@@ -297,8 +331,9 @@ class PersonalInfoFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired('domain_id')
+            ->setRequired(['domain_id', 'is_company_customer'])
             ->setAllowedTypes('domain_id', 'int')
+            ->setAllowedTypes('is_company_customer', 'bool')
             ->setDefaults([
                 'data_class' => FrontOrderData::class,
                 'attr' => ['novalidate' => 'novalidate'],

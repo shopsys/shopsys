@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CustomerController extends FrontBaseController
 {
@@ -72,22 +73,23 @@ class CustomerController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request)
+    public function editAction(Request $request): Response
     {
         if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             $this->getFlashMessageSender()->addErrorFlash(t('You have to be logged in to enter this page'));
             return $this->redirectToRoute('front_login');
         }
 
-        /**
-         * @var \App\Model\Customer\User\CustomerUser
-         */
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->getUser();
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+        $isCompanyCustomer = $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer();
 
         $form = $this->createForm(CustomerUserUpdateFormType::class, $customerUserUpdateData, [
             'domain_id' => $this->domain->getId(),
+            'is_company_customer' => $isCompanyCustomer,
         ]);
         $form->handleRequest($request);
 
@@ -106,11 +108,15 @@ class CustomerController extends FrontBaseController
 
         return $this->render('Front/Content/Customer/edit.html.twig', [
             'form' => $form->createView(),
-            'isCompanyCustomer' => $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer(),
+            'isCompanyCustomer' => $isCompanyCustomer,
+            'domain' => $this->domain,
         ]);
     }
 
-    public function ordersAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function ordersAction(): Response
     {
         if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             $this->getFlashMessageSender()->addErrorFlash(t('You have to be logged in to enter this page'));
@@ -128,16 +134,18 @@ class CustomerController extends FrontBaseController
 
     /**
      * @param string $orderNumber
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function orderDetailRegisteredAction($orderNumber)
+    public function orderDetailRegisteredAction($orderNumber): Response
     {
         return $this->orderDetailAction(null, $orderNumber);
     }
 
     /**
      * @param string $urlHash
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function orderDetailUnregisteredAction($urlHash)
+    public function orderDetailUnregisteredAction($urlHash): Response
     {
         return $this->orderDetailAction($urlHash, null);
     }
@@ -145,8 +153,9 @@ class CustomerController extends FrontBaseController
     /**
      * @param string $urlHash
      * @param string $orderNumber
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function orderDetailAction($urlHash = null, $orderNumber = null)
+    private function orderDetailAction($urlHash = null, $orderNumber = null): Response
     {
         if ($orderNumber !== null) {
             if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
@@ -179,7 +188,7 @@ class CustomerController extends FrontBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function loginAsRememberedUserAction(Request $request)
+    public function loginAsRememberedUserAction(Request $request): Response
     {
         try {
             $this->loginAsUserFacade->loginAsRememberedUser($request);

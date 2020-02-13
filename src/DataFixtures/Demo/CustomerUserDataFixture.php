@@ -40,6 +40,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     protected const KEY_ADDRESS_COMPANY_CUSTOMER = 'companyCustomer';
     protected const KEY_ADDRESS_COMPANY_NAME = 'companyName';
     protected const KEY_ADDRESS_COMPANY_NUMBER = 'companyNumber';
+    protected const KEY_ADDRESS_COMPANY_NUMBER_WITH_VAT = 'companyNumberWithVat';
     protected const KEY_ADDRESS_STREET = 'street';
     protected const KEY_ADDRESS_CITY = 'city';
     protected const KEY_ADDRESS_POSTCODE = 'postcode';
@@ -180,10 +181,12 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         $customerUserData->gender = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_GENDER] ?? CustomerUser::GENDER_MALE;
         $customerUserData->newsletterSubscription = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION] ?? false;
 
+        /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
         $billingAddressData = $customerUserUpdateData->billingAddressData;
         $billingAddressData->companyCustomer = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_CUSTOMER];
         $billingAddressData->companyName = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_NAME] ?? null;
         $billingAddressData->companyNumber = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_NUMBER] ?? null;
+        $billingAddressData->companyNumberWithVat = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_NUMBER_WITH_VAT] ?? null;
         $billingAddressData->city = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_CITY] ?? null;
         $billingAddressData->street = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_STREET] ?? null;
         $billingAddressData->postcode = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_POSTCODE] ?? null;
@@ -228,6 +231,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
                     self::KEY_ADDRESS_COMPANY_NAME => 'Shopsys',
                     self::KEY_ADDRESS_COMPANY_NUMBER => '123456',
+                    self::KEY_ADDRESS_COMPANY_NUMBER_WITH_VAT => '654321',
                     self::KEY_ADDRESS_STREET => 'Hlubinská',
                     self::KEY_ADDRESS_CITY => 'Ostrava',
                     self::KEY_ADDRESS_POSTCODE => '70200',
@@ -319,6 +323,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
                     self::KEY_ADDRESS_COMPANY_NAME => 'Shopsys',
+                    self::KEY_ADDRESS_COMPANY_NUMBER_WITH_VAT => '654321',
                     self::KEY_ADDRESS_CITY => 'Ostrava',
                     self::KEY_ADDRESS_STREET => 'Hlubinská 5',
                     self::KEY_ADDRESS_POSTCODE => '70200',
@@ -466,6 +471,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
+                    self::KEY_ADDRESS_COMPANY_NUMBER_WITH_VAT => '654321',
                     self::KEY_ADDRESS_COMPANY_NAME => 'Shopsys',
                     self::KEY_ADDRESS_CITY => 'Ostrava',
                     self::KEY_ADDRESS_STREET => 'Hlubinská',

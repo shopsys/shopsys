@@ -11,4 +11,10 @@ interface RegistrationFacadeInterface
      * @return \App\Model\Customer\User\CustomerUser
      */
     public function register(RegistrationData $registrationData): CustomerUser;
+
+    /**
+     * @param \App\Model\Customer\User\RegistrationData $registrationData
+     * @return \App\Model\Customer\User\CustomerUser
+     */
+    public function registerCompany(RegistrationData $registrationData): CustomerUser;
 }

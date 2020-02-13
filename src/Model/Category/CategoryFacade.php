@@ -63,6 +63,7 @@ class CategoryFacade extends BaseCategoryFacade
      * @param int $domainId
      * @return \App\Model\Category\Category[]
      */
+
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId

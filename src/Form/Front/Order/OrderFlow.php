@@ -20,11 +20,38 @@ class OrderFlow extends FormFlow
     private $domainId;
 
     /**
+     * @var bool
+     */
+    private $isCompanyCustomer = false;
+
+    /**
+     * @var bool
+     */
+    private $isWithoutRegistration = false;
+
+    /**
      * @param int $domainId
      */
     public function setDomainId($domainId)
     {
         $this->domainId = $domainId;
+    }
+
+    /**
+     * @param bool $isCompanyCustomer
+     */
+    public function setIsCompanyCustomer(bool $isCompanyCustomer): void
+    {
+        $this->isCompanyCustomer = $isCompanyCustomer;
+    }
+
+    /**
+     * @param bool $isWithoutRegistration
+     */
+    public function setIsWithoutRegistration(bool $isWithoutRegistration): void
+    {
+        $this->isWithoutRegistration = $isWithoutRegistration;
+        $this->isWithoutRegistration;
     }
 
     /**
@@ -51,7 +78,10 @@ class OrderFlow extends FormFlow
             ],
             [
                 'form_type' => PersonalInfoFormType::class,
-                'form_options' => ['domain_id' => $this->domainId],
+                'form_options' => [
+                    'domain_id' => $this->domainId,
+                    'is_company_customer' => $this->isCompanyCustomer,
+                ],
             ],
         ];
     }

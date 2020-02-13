@@ -526,6 +526,9 @@ msgstr "Přihlášení k zpravodaji"
 msgid "Tax number"
 msgstr "DIČ"
 
+msgid "Tax number with vat"
+msgstr "DIČ"
+
 msgid "Technical parameters"
 msgstr "Technické parametry"
 
