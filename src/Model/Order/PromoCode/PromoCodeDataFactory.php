@@ -4,12 +4,29 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
+use App\Component\DateTimeHelper\DateTimeHelper;
+use DateTime;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory as BasePromoCodeDataFactory;
 
 class PromoCodeDataFactory extends BasePromoCodeDataFactory
 {
+    public const TIME_VALID_FORMAT = 'H:i';
+
+    /**
+     * @var \App\Component\DateTimeHelper\DateTimeHelper
+     */
+    private $dateTimeHelper;
+
+    /**
+     * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
+     */
+    public function __construct(DateTimeHelper $dateTimeHelper)
+    {
+        $this->dateTimeHelper = $dateTimeHelper;
+    }
+
     /**
      * @return \App\Model\Order\PromoCode\PromoCodeData
      */
@@ -38,5 +55,38 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
     {
         parent::fillFromPromoCode($promoCodeData, $promoCode);
         $promoCodeData->domainId = $promoCode->getDomainId();
+
+        $promoCodeData->timeValidFrom = $this->formatTimeFromValidDateTime($promoCode->getDatetimeValidFrom());
+        $promoCodeData->timeValidTo = $this->formatTimeFromValidDateTime($promoCode->getDatetimeValidTo());
+
+        $promoCodeData->dateValidFrom = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidFrom());
+        $promoCodeData->dateValidTo = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidTo());
+    }
+
+    /**
+     * @param \DateTime|null $dateTime
+     * @return \DateTime|null
+     */
+    private function switchDateFromDatabaseTimeZoneToViewTimezone(?DateTime $dateTime = null): ?DateTime
+    {
+        if ($dateTime !== null) {
+            return new DateTime($dateTime->format('Y-m-d H:i:s'), new \DateTimeZone(DateTimeHelper::UTC_TIMEZONE));
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \DateTime|null $dateTime
+     * @return string|null
+     */
+    private function formatTimeFromValidDateTime(?DateTime $dateTime = null): ?string
+    {
+        if ($dateTime !== null) {
+            $this->dateTimeHelper->convertDateTimeFromUtcToDisplayTimeZone($dateTime);
+            return $dateTime->format(self::TIME_VALID_FORMAT);
+        }
+
+        return null;
     }
 }
