@@ -49,7 +49,10 @@ class MoneyTypeExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['money_pattern'] = $this->getPattern($options['currency']);
+        $view->vars['money_pattern'] = $this->getPattern();
+        if ($options['currency']) {
+            $view->vars['symbolAfterInput'] = $this->intlCurrencyRepository->get($options['currency'], $this->localization->getLocale());
+        }
     }
 
     /**
@@ -73,18 +76,11 @@ class MoneyTypeExtension extends AbstractTypeExtension
     /**
      * Returns the pattern for this locale. Always places currency symbol after widget.
      * The pattern contains the placeholder "{{ widget }}" where the HTML tag should be inserted
-     * @see \Symfony\Component\Form\Extension\Core\Type\MoneyType::getPattern()
-     * @param string|bool $currency
      * @return string
+     * @see \Symfony\Component\Form\Extension\Core\Type\MoneyType::getPattern()
      */
-    private function getPattern($currency)
+    private function getPattern()
     {
-        if (!$currency) {
-            return '{{ widget }}';
-        } else {
-            $intlCurrency = $this->intlCurrencyRepository->get($currency, $this->localization->getLocale());
-
-            return '{{ widget }} ' . $intlCurrency->getSymbol();
-        }
+        return '{{ widget }}';
     }
 }

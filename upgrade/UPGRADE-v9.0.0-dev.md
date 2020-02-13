@@ -656,6 +656,8 @@ There you can find links to upgrade notes for other versions too.
         -           $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory);
         +           $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory . '/');
         ```
+- check your custom form types with currencies after Money input ([#1675](https://github.com/shopsys/shopsys/pull/1675))
+    - form field option `currency` is now rendered with `appendix_block` block (inside span tag) instead of plain text
 
 ### Tools
 
