@@ -32,4 +32,23 @@ class CategoryDataFactory extends BaseCategoryDataFactory
 
         return $categoryData;
     }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     */
+    protected function fillNew(BaseCategoryData $categoryData)
+    {
+        parent::fillNew($categoryData);
+    }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     * @param \App\Model\Category\Category $category
+     */
+    protected function fillFromCategory(BaseCategoryData $categoryData, BaseCategory $category)
+    {
+        parent::fillFromCategory($categoryData, $category);
+
+        $categoryData->akeneoCode = $category->getAkeneoCode();
+    }
 }

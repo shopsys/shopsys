@@ -34,6 +34,11 @@ class ProductController extends FrontBaseController
     private $productFilterConfigFactory;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private $categoryFacade;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
@@ -82,11 +87,6 @@ class ProductController extends FrontBaseController
      * @var \App\Model\Stock\ProductStockRepository
      */
     private $productStockRepository;
-
-    /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension

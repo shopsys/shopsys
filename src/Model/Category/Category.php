@@ -25,11 +25,19 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 class Category extends BaseCategory
 {
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=100, unique=true, nullable=true)
+     */
+    protected $akeneoCode;
+
+    /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
     public function __construct(BaseCategoryData $categoryData)
     {
         parent::__construct($categoryData);
+        $this->akeneoCode = $categoryData->akeneoCode;
     }
 
     /**
@@ -38,5 +46,13 @@ class Category extends BaseCategory
     public function edit(BaseCategoryData $categoryData)
     {
         parent::edit($categoryData);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAkeneoCode(): ?string
+    {
+        return $this->akeneoCode;
     }
 }

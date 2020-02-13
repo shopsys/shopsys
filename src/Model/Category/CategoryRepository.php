@@ -35,6 +35,55 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 class CategoryRepository extends BaseCategoryRepository
 {
     /**
+     * @param string $akeneoCode
+     * @return \App\Model\Category\Category|null
+     */
+    public function findByAkeneoCode(string $akeneoCode): ?Category
+    {
+        $category = $this->getCategoryRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
+        /* @var $category \App\Model\Category\Category */
+
+        if ($category !== null && $category->getParent() === null) {
+            // Copies logic from getAllQueryBuilder() - excludes root category
+            // Query builder is not used to be able to get the category from identity map if it was loaded previously
+            return null;
+        }
+        return $category;
+    }
+
+    /**
+     * @param string $akeneoCode
+     * @return \App\Model\Category\Category
+     */
+    public function getByAkeneoCode(string $akeneoCode): Category
+    {
+        $category = $this->getCategoryRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
+        /* @var $category \App\Model\Category\Category */
+
+        if ($category === null) {
+            $message = 'Category with Akeneo code ' . $akeneoCode . ' not found.';
+            throw new \Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException($message);
+        }
+
+        return $category;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getAllAkeneoCategoryIds(): array
+    {
+        $result = $this->getQueryBuilder()
+            ->select('c.id')
+            ->from(Category::class, 'c')
+            ->where('c.akeneoCode IS NOT NULL')
+            ->getQuery()
+            ->execute();
+
+        return array_map('reset', $result);
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      * @return \App\Model\Category\Category[]
