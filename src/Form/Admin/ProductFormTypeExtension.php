@@ -7,11 +7,15 @@ namespace App\Form\Admin;
 use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Product;
 use Shopsys\FormTypesBundle\MultidomainType;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -45,6 +49,26 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     public function __construct(FormBuilderHelper $formBuilderHelper)
     {
         $this->formBuilderHelper = $formBuilderHelper;
+    }
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     */
+    private $vatFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
+    public function __construct(VatFacade $vatFacade, Domain $domain)
+    {
+        $this->domain = $domain;
+        $this->vatFacade = $vatFacade;
     }
 
     /**
@@ -118,6 +142,29 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 ],
                 'required' => false,
             ]);
+
+        $vatsIndexedByDomainId = $builder->create('vatsIndexedByDomainId', FormType::class, [
+            'compound' => true,
+            'render_form_row' => false,
+            'disabled' => $this->isProductMainVariant($product),
+        ]);
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $vatsIndexedByDomainId
+                ->add($domainConfig->getId(), ChoiceType::class, [
+                    'required' => true,
+                    'disabled' => true,
+                    'choices' => $this->vatFacade->getAllForDomainIncludingMarkedForDeletion($domainConfig->getId()),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'constraints' => [
+                        new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
+                    ],
+                    'label' => t('DPH ' . $domainConfig->getName()),
+                ]);
+        }
+
+        $builderPricesGroup->add($vatsIndexedByDomainId);
     }
 
     /**
