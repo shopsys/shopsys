@@ -657,16 +657,15 @@ There you can find links to upgrade notes for other versions too.
         +           $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory . '/');
         ```
 
-- update your project to use refactored elasticsearch related classes [#1622](https://github.com/shopsys/shopsys/pull/1622)
-    - update `cron.yml` if you have registered products export by yourself
+- update your project to use refactored Elasticsearch related classes ([#1622](https://github.com/shopsys/shopsys/pull/1622))
+    - update `config/services/cron.yml` if you have registered products export by yourself
         	
         ```diff
         -   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
         +   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
-                tags:
         ```
 		 
-    - move `Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository` to `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository` you should affect this change in your `services_test.yml`
+    - update `config/services_test.yml`
     
         ```diff
         -   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: ~
@@ -699,7 +698,15 @@ There you can find links to upgrade notes for other versions too.
             ```
 	
     - update `FilterQueryTest`
-        - inject `IndexDefinitionLoader` instead removed `ElasticsearchStructureManager`
+        - define `use` statement for `ProductIndex`
+
+            ```diff
+                use Shopsys\FrameworkBundle\Component\Money\Money;
+            +   use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
+                use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+            ```
+
+        - inject `IndexDefinitionLoader` instead of removed `ElasticsearchStructureManager`
 
             ```diff
                 /**
