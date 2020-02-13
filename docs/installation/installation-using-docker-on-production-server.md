@@ -103,26 +103,26 @@ Maintenance page [`maintenance.html`](https://github.com/shopsys/shopsys/blob/ma
 
 ### Database
 
-We need PostgresSQL in version 10.5 installed. To get this done we need to add repository to our server and then install PostgresSQL server with PostgresSQL client.
+We need PostgresSQL in version 12.1 installed. To get this done we need to add repository to our server and then install PostgresSQL server with PostgresSQL client.
 
 ```sh
-rpm -Uvh https://yum.postgresql.org/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm
-yum install postgresql10-server postgresql10 postgresql10-contrib
+yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+yum install postgresql12-server postgresql12 postgresql12-contrib
 ```
 
 Next we initialise PostgresSQL database.
 
 ```sh
-/usr/pgsql-10/bin/postgresql-10-setup initdb
+/usr/pgsql-12/bin/postgresql-12-setup initdb
 ```
 
 We need to allow access to database from docker network that will operate on 192.168.0.1 subnet by adding one line into the config file.
 
 ```sh
-echo host all all 192.168.0.1/16 md5 >> /var/lib/pgsql/10/data/pg_hba.conf
+echo host all all 192.168.0.1/16 md5 >> /var/lib/pgsql/12/data/pg_hba.conf
 ```
 
-We edit configuration file `/var/lib/pgsql/10/data/postgresql.conf` of postgresql to match application needs based on our [postgres.conf](https://github.com/shopsys/shopsys/blob/master/project-base/docker/postgres/postgres.conf).
+We edit configuration file `/var/lib/pgsql/12/data/postgresql.conf` of postgresql to match application needs based on our [postgres.conf](https://github.com/shopsys/shopsys/blob/master/project-base/docker/postgres/postgres.conf).
 We also allow to establish connection via localhost and 192.168.0.1 subnet by modifying one line in `postgresql.conf`.
 
 ```ini
@@ -132,8 +132,8 @@ listen_addresses = '0.0.0.0'
 Now we register and launch PostgresSQL server as a service.
 
 ```sh
-systemctl start postgresql-10
-systemctl enable postgresql-10
+systemctl start postgresql-12
+systemctl enable postgresql-12
 ```
 
 Next with help of default postgres administration user we create new database user with login root. You will be prompted to enter password for newly created user root.
