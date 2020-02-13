@@ -57,15 +57,27 @@ deploy:review:
         CI_NETWORK: ci_default
         CI_NGINX_PROXY_NETWORK: ci_nginx-proxy-network
         PHP_FPM_IMAGE_NAME: $CI_COMMIT_REF_SLUG
+        PHP_FPM_CONTAINER_NAME_SUFFIX: _php-fpm_1
+        PHP_FPM_CONTAINER_NAME: ${CI_COMMIT_REF_SLUG}${PHP_FPM_CONTAINER_NAME_SUFFIX}
         HOSTS: $CI_COMMIT_REF_SLUG.ci.scontodev.cz,$CI_COMMIT_REF_SLUG.ci.scontodev.sk
         COMPOSE_PROJECT_NAME: $CI_COMMIT_REF_SLUG
     needs:
         - build
     <<: *only-default
     script:
+        - curl --location https://github.com/mikefarah/yq/releases/download/2.1.1/yq_linux_amd64 --output ~/yq && chmod +x ~/yq && ~/yq --version
         - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
         - docker-compose up -d
-        - "docker-compose exec -T php-fpm sed -i \"s/database_name:.*/database_name: ${PHP_FPM_IMAGE_NAME}/\" config/parameters.yml"
+        - docker cp ${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yml ~/parameters.yml
+        - ~/yq write --inplace ~/parameters.yml parameters.database_name ${PHP_FPM_IMAGE_NAME}
+        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.enabled ${AKENEO_DEV_ENABLED}
+        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.base_uri ${AKENEO_DEV_BASE_URI}
+        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.client_id ${AKENEO_DEV_CLIENT_ID}
+        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.secret ${AKENEO_DEV_SECRET}
+        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.user ${AKENEO_DEV_USER}
+        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.password ${AKENEO_DEV_PASSWORD}
+        - docker cp ~/parameters.yml "${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yml"
+        - docker-compose exec --user root -T php-fpm chown www-data:www-data /var/www/html/config/parameters.yml
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${PHP_FPM_IMAGE_NAME}.ci.scontodev.cz/g" config/domains_urls.yml
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.2:8000/https:\/\/${PHP_FPM_IMAGE_NAME}.ci.scontodev.sk/g" config/domains_urls.yml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y db-create build-demo
