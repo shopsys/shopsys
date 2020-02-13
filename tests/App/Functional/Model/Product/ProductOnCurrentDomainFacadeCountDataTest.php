@@ -358,8 +358,8 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create((1000 / 1.21).""), Domain::FIRST_DOMAIN_ID);
-        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create((80000 / 1.21).""), Domain::FIRST_DOMAIN_ID);
+        $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create((1000 / 1.21) . ''), Domain::FIRST_DOMAIN_ID);
+        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create((80000 / 1.21) . ''), Domain::FIRST_DOMAIN_ID);
 
         $countData = new ProductFilterCountData();
         $countData->countInStock = 6;

@@ -39,7 +39,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
         $productFilterData = new ProductFilterData();
         $priceWithVat = 1000;
-        $priceWithoutVat = ($priceWithVat / 1.21)."";
+        $priceWithoutVat = ($priceWithVat / 1.21) . '';
         $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($priceWithoutVat), Domain::FIRST_DOMAIN_ID);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
@@ -52,7 +52,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
         $productFilterData = new ProductFilterData();
         $priceWithVat = 10000;
-        $priceWithoutVat = ($priceWithVat / 1.21)."";
+        $priceWithoutVat = ($priceWithVat / 1.21) . '';
         $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($priceWithoutVat), Domain::FIRST_DOMAIN_ID);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
