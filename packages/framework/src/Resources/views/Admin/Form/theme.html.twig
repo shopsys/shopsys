@@ -488,25 +488,25 @@
 
 {% block product_widget %}
     <span class="js-product-picker-container" data-placeholder="{{ placeholder }}">
-        <span class="form-line__item">
+        <div class="form-line__item">
             <input
                 class="input js-product-picker-label"
                 value="{{ productName|default(placeholder) }}"
                 disabled="disabled"
                 readonly="readonly"
             />
-        </span>
-        <span class="form-line__item">
-            <button
+            <span class="form-line__item form-line__item--button form-line__item--fixed-width-left">
+                <button
                 type="button"
                 data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: allow_main_variants, allowVariants: allow_variants}) }}"
                 class="js-product-picker-create-picker-button btn btn--default"
                 title="{{ 'Click to go to product section'|trans }}"
                 type="button"
-            >
-                ...
-            </button>
-        </span>
+                >
+                    ...
+                </button>
+            </span>
+        </div>
         {% if enableRemove %}
             <a href="#" class="js-product-picker-remove-button display-none">
                 {{ 'Remove'|trans }}
