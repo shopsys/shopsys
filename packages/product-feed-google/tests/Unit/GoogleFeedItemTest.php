@@ -124,7 +124,7 @@ class GoogleFeedItemTest extends TestCase
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
         $productPrice = new ProductPrice($price, false);
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
             ->with($product, $domain->getId(), null)->willReturn($productPrice);
     }
 
