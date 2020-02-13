@@ -505,6 +505,11 @@ class ProductFacade
         $this->productRepository->markAllProductsForExport();
     }
 
+    public function markAllProductsAsExported(): void
+    {
+        $this->productRepository->markAllProductsAsExported();
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]

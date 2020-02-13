@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexExportedEvent;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityEvent;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandEvent;
@@ -83,6 +84,16 @@ class MarkProductForExportSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexExportedEvent $indexExportedEvent
+     */
+    public function markAllAsExported(IndexExportedEvent $indexExportedEvent): void
+    {
+        if ($indexExportedEvent->getIndex() instanceof ProductIndex) {
+            $this->productFacade->markAllProductsAsExported();
+        }
+    }
+
+    /**
      * @return array
      */
     public static function getSubscribedEvents(): array
@@ -97,6 +108,7 @@ class MarkProductForExportSubscriber implements EventSubscriberInterface
             FlagEvent::DELETE => 'markAffectedByFlag',
             PricingGroupEvent::CREATE => 'markAll',
             PricingGroupEvent::DELETE => 'markAll',
+            IndexExportedEvent::INDEX_EXPORTED => 'markAllAsExported',
         ];
     }
 }

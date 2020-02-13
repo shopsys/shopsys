@@ -870,6 +870,12 @@ class ProductRepository
             ->execute();
     }
 
+    public function markAllProductsAsExported(): void
+    {
+        $this->em->createQuery('UPDATE ' . Product::class . ' p SET p.exportProduct = FALSE')
+            ->execute();
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @return array
