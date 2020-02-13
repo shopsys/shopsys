@@ -51,7 +51,7 @@ The production environment is a little bit different than the one used on CI.
 For example, on Google Cloud we use storage tools like [Postgres](https://www.postgresql.org/) and [Redis](https://redis.io/) provided by Google Cloud platform.
 
 That means that we do not use always the same manifests, with Kustomize you can divide your manifests into `variants`, for example `CI`, `production` etc.
-These variants are located in [kubernetes/kustomize/overlays](https://github.com/shopsys/shopsys/tree/9.0/project-base/kubernetes/kustomize/overlays).
+These variants are located in [kubernetes/kustomize/overlays](https://github.com/shopsys/shopsys/tree/master/project-base/kubernetes/kustomize/overlays).
 Each variant has `kustomization.yml`, which can independently select own manifests using `resources` or generate config maps, create secrets etc.
 
 ### Usage Examples

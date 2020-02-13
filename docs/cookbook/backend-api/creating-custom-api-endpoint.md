@@ -68,6 +68,6 @@ In this step, we will require the client's name as a parameter and reflect it in
 ## Conclusion
 Your new backend API endpoint is now available on the url `<your_domain_url>/api/v1/hello/<name>`. If you are not sure how to test it, you can get inspired in [Introduction to Backend API](../../backend-api/introduction-to-backend-api.md#try-it).
 
-The routing for your new endpoint works out of the box, thanks to the `shopsys_shop_api` setting in your [`config/routes/backend-api.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/config/routes/backend-api.yml) configuration.
+The routing for your new endpoint works out of the box, thanks to the `shopsys_shop_api` setting in your [`config/routes/backend-api.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/src/config/routes/backend-api.yml) configuration.
 
-[API Authentication - OAuth2](../../backend-api/api-authentication-oauth2.md) is required by default for the endpoint, thanks to the `oauth2` setting in your [`config/routes/backend-api.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/routes/backend-api.yml) configuration.
+[API Authentication - OAuth2](../../backend-api/api-authentication-oauth2.md) is required by default for the endpoint, thanks to the `oauth2` setting in your [`config/routes/backend-api.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/backend-api.yml) configuration.

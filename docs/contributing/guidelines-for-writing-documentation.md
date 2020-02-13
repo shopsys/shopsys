@@ -1,15 +1,15 @@
 # Guidelines for Writing Documentation
 
-* Documentation is distributed with the source code of Shopsys Framework inside [docs](https://github.com/shopsys/shopsys/tree/9.0/docs/) directory in the project root.
+* Documentation is distributed with the source code of Shopsys Framework inside [docs](https://github.com/shopsys/shopsys/tree/master/docs/) directory in the project root.
 * Documentation is written in [Markdown format](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 * Output HTML is rendered from the `*.md` files using [MkDocs](https://www.mkdocs.org/) and hosted on [Read the Docs](https://readthedocs.org/).
     * The docs live at [https://docs.shopsys.com](https://docs.shopsys.com).
     * When using Docker, you can see the rendered docs locally on `http://127.0.0.1:1300`.
         * See `mkdocs` container defined in `docker-compose.yml`.
     * You can even access the rendered docs under `/documentation/` sub-folder for any branch that is built on our Jenkins CI server.
-    * The main [`mkdocs.yml`](https://github.com/shopsys/shopsys/blob/9.0/mkdocs.yml) configuration file is located in the monorepo root.
+    * The main [`mkdocs.yml`](https://github.com/shopsys/shopsys/blob/master/mkdocs.yml) configuration file is located in the monorepo root.
 * All documentation files should be named same as first heading (in lowercase, non-alphanumeric characters replaced by dash).
-* References to project files and classes have to be absolute links to the GitHub in proper version - eg. `[config/parameters_common.yml](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/parameters_common.yml)`.
+* References to project files and classes have to be absolute links to the GitHub in proper version - eg. `[config/parameters_common.yml](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yml)`.
     * there is an exception for files [CHANGELOG](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) and [UPGRADE](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) - these files should be always linked in the latest (i.e. `master`) version.
 * References among the docs files must be relative - e.g. `[read this article](../introduction/using-form-types.md)`.
 * All words in a title except conjunctions (and, or, but...), articles (a, an, the), and short prepositions (in, to, of...) should be capitalized. Other headings should not be capitalized.

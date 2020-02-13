@@ -14,7 +14,7 @@ When you want to customize the styles or templates, you can modify any of the fi
 ## Multidomain design customization
 Shopsys Framework provides an ability of running multiple domains as a single application,
 if you want to know more about this concept, you can read [the separate article](../introduction/domain-multidomain-multilanguage.md).
-In order to change your multidomain appearance, you can set two parameters [`domains.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/domains.yml) configuration file:
+In order to change your multidomain appearance, you can set two parameters [`domains.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yml) configuration file:
 
 - `styles_directory`
     - allows you to define a custom sub-folder with LESS files in `src/Resources/styles`

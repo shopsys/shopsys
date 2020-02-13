@@ -10,7 +10,7 @@ To deploy a project to Google Cloud, you need a couple of technologies, to not b
 ### Deploy to Kubernetes
 Script used for building current state of an application into Google Cloud.
 
-[deploy-to-google-cloud.sh](https://github.com/shopsys/shopsys/blob/9.0/project-base/.ci/deploy-to-google-cloud.sh)
+[deploy-to-google-cloud.sh](https://github.com/shopsys/shopsys/blob/master/project-base/.ci/deploy-to-google-cloud.sh)
 
 #### Environment variables
 | Variable name                    | Description
@@ -95,7 +95,7 @@ After running the script above, you will have your application running in Google
 The script used for deleting infrastructure on google.
 Script sends request to Google Cloud to stop all the resources provided by Terraform and updates `tfstate` file.
 
-[destroy-google-cloud-infrastructure.sh](https://github.com/shopsys/shopsys/blob/9.0/project-base/.ci/destroy-google-cloud-infrastructure.sh)
+[destroy-google-cloud-infrastructure.sh](https://github.com/shopsys/shopsys/blob/master/project-base/.ci/destroy-google-cloud-infrastructure.sh)
 
 #### Environment variables
 | Variable name                    | Description

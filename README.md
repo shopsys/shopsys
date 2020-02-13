@@ -22,18 +22,18 @@ Shopsys Framework is fully functional e-commerce platform with all basic functio
 * Registered customers
 * Basic orders management
 * Back-end administration
-* Front-end [full-text search](https://docs.shopsys.com/en/9.0/model/front-end-product-searching/) and [product filtering](https://docs.shopsys.com/en/9.0/model/front-end-product-filtering/)
+* Front-end [full-text search](https://docs.shopsys.com/en/latest/model/front-end-product-searching/) and [product filtering](https://docs.shopsys.com/en/latest/model/front-end-product-filtering/)
 * 3-step ordering process
 * Basic CMS
-* Support for several currencies, [languages, and domains](https://docs.shopsys.com/en/9.0/introduction/domain-multidomain-multilanguage/)
+* Support for several currencies, [languages, and domains](https://docs.shopsys.com/en/latest/introduction/domain-multidomain-multilanguage/)
 * Full friendly URL for main entities
 * Performance optimization through Elasticsearch, Redis, PostgreSQL
 * Full core upgradability
 * GDPR compliance
 * Preparation for scalability
-* Base for [Back-end API](https://docs.shopsys.com/en/9.0/backend-api/)
-* Manifest for orchestration via [Kubernetes](https://docs.shopsys.com/en/9.0/kubernetes/introduction-to-kubernetes/)
-* Support to easier [deployment to Google Cloud via Terraform](https://docs.shopsys.com/en/9.0/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
+* Base for [Back-end API](https://docs.shopsys.com/en/latest/backend-api/)
+* Manifest for orchestration via [Kubernetes](https://docs.shopsys.com/en/latest/kubernetes/introduction-to-kubernetes/)
+* Support to easier [deployment to Google Cloud via Terraform](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
 
 ### Plans for next releases
 
@@ -54,21 +54,21 @@ List of typical projects built on previous versions of Shopsys Framework:
 
 ## How to Start a New Project
 The *shopsys/shopsys* package is a monolithic repository, a single development environment, for management of all parts of Shopsys Framework.
-See more information about the monorepo approach in [the Monorepo article](https://docs.shopsys.com/en/9.0/introduction/monorepo/).
+See more information about the monorepo approach in [the Monorepo article](https://docs.shopsys.com/en/latest/introduction/monorepo/).
 
 For the purposes of building a new project use our [shopsys/project-base](https://github.com/shopsys/project-base),
 which is fully ready as the base for building your Shopsys Framework project.
 
 For more detailed instructions, follow one of the installation guides:
 
-* [Installation Guide](https://docs.shopsys.com/en/9.0/installation/installation-guide/)
-* [Deployment to Google Cloud](https://docs.shopsys.com/en/9.0/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
-* [Installation on production server](https://docs.shopsys.com/en/9.0/installation/installation-using-docker-on-production-server/)
+* [Installation Guide](https://docs.shopsys.com/en/latest/installation/installation-guide/)
+* [Deployment to Google Cloud](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
+* [Installation on production server](https://docs.shopsys.com/en/latest/installation/installation-using-docker-on-production-server/)
 
 ## Documentation
-For documentation of Shopsys Framework itself, see [Shopsys Framework Knowledge Base](https://docs.shopsys.com/en/9.0/).
+For documentation of Shopsys Framework itself, see [Shopsys Framework Knowledge Base](https://docs.shopsys.com/en/latest/).
 
-For the frequently asked questions, see [FAQ and Common Issues](https://docs.shopsys.com/en/9.0/introduction/faq-and-common-issues/).
+For the frequently asked questions, see [FAQ and Common Issues](https://docs.shopsys.com/en/latest/introduction/faq-and-common-issues/).
 
 ## Contributing
 If you have some ideas or you want to help to improve Shopsys Framework, let us know!
@@ -82,7 +82,7 @@ What to do when you are in troubles or need some help?
 The best way is to contact us on our [Slack](http://slack.shopsys-framework.com/).
 
 If you are experiencing problems during installation or running Shopsys Framework on Docker,
-please see our [Docker troubleshooting](https://docs.shopsys.com/en/9.0/docker/docker-troubleshooting/).
+please see our [Docker troubleshooting](https://docs.shopsys.com/en/latest/docker/docker-troubleshooting/).
 
 Or ultimately, just [report an issue](https://github.com/shopsys/shopsys/issues/new).
 

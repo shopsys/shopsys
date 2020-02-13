@@ -3,7 +3,7 @@
 The admin side menu is implemented by [KnpMenuBundle](https://symfony.com/doc/master/bundles/KnpMenuBundle/index.html) and to extend it, you can use [events](https://symfony.com/doc/master/bundles/KnpMenuBundle/events.html).
 An example of such an extension is described in the cookbook [Adding a New Administration Page](../cookbook/adding-a-new-administration-page.md).
 
-To see how the side menu works programmatically, you can see the [`SideMenuBuilder`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where it is created.
+To see how the side menu works programmatically, you can see the [`SideMenuBuilder`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where it is created.
 The side menu builder is tagged with `knp_menu.menu_builder` and is accessible under the alias `admin_side_menu`.
 
 There are a few customizations on top of the standard [KnpMenu](https://symfony.com/doc/master/bundles/KnpMenuBundle/index.html):
@@ -19,7 +19,7 @@ The menu template works similarly to the default `knp_menu.html.twig` but it use
 
 ## Javascript
 
-The behavior of the side menu is controlled via the JS component [`Shopsys.sideMenu`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Resources/scripts/admin/sideMenu.js).
+The behavior of the side menu is controlled via the JS component [`Shopsys.sideMenu`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/scripts/admin/sideMenu.js).
 
 ## Icons
 
@@ -46,7 +46,7 @@ AuthorizationCheckerInterface::isGranted(Roles::ROLE_SUPER_ADMIN);
 
 After building of the whole menu a `ConfigureMenuEvent::SIDE_MENU_ROOT` event is dispatched.
 After adding each of the submenus, a different event is dispatched.
-You can take a look at the class [`ConfigureMenuEvent`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/AdminNavigation/ConfigureMenuEvent.php) to see all the events and their internals.
+You can take a look at the class [`ConfigureMenuEvent`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/AdminNavigation/ConfigureMenuEvent.php) to see all the events and their internals.
 
 These can be used to [extend the menu](https://symfony.com/doc/master/bundles/KnpMenuBundle/events.html), either from the project repository or from modules.
 
@@ -56,7 +56,7 @@ To render the admin breadcrumb navigation, the menu items are used as well.
 For this reason, even pages that are not displayed in the menu are added to it (with a `display` attribute set to `false`).
 
 These items can have a configured route without some mandatory parameters filled in (eg. a product edit page without a product ID parameter).
-To avoid throwing the `MissingMandatoryParametersException`, we have replaced original `RoutingExtension` with [our own implementation](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/AdminNavigation/RoutingExtension.php).
+To avoid throwing the `MissingMandatoryParametersException`, we have replaced original `RoutingExtension` with [our own implementation](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/AdminNavigation/RoutingExtension.php).
 It simply doesn't generate a URI when the exception is thrown.
 The route is still used to resolve the current menu item.
 

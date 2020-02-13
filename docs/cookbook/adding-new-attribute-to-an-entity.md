@@ -121,7 +121,7 @@ for `Product` and `ProductData` instantiation to make them take our new attribut
 Edit `App\Model\Product\ProductDataFactory` - overwrite `create()` and `createFromProduct()` methods.
 
 *Alternatively you can create an independent class by implementing
-[`Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/ProductDataFactoryInterface.php).*
+[`Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductDataFactoryInterface.php).*
 
 ```php
 namespace App\Model\Product;
@@ -159,7 +159,7 @@ class ProductDataFactory extends BaseProductDataFactory
 }
 ```
 
-Your `ProductDataFactory` is already registered in [`services.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services.yaml)
+Your `ProductDataFactory` is already registered in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml)
 as an alias for the original interface.
 
 ```yaml
@@ -265,7 +265,7 @@ class ProductDataFactory extends BaseProductDataFactory
 
 ## Front-end
 In order to display your new attribute on a front-end page, you can modify the corresponding template directly
-as it is a part of your open-box, eg. [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Product/detail.html.twig).
+as it is a part of your open-box, eg. [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/detail.html.twig).
 
 ```twig
 {{ product.extId }}
@@ -277,7 +277,7 @@ You can modify data fixtures in `src/DataFixtures/` of your project
 
 ### Random `extId`
 
-If you want to add unique random `extId` for products from data fixtures you can add it in `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
+If you want to add unique random `extId` for products from data fixtures you can add it in `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
 You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random numbers like this:
 
 ```diff
@@ -350,7 +350,7 @@ You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random nu
 
 ### Specific `extId`
 
-If you need to add specific `extId` to products in data fixture you will have to update creation of products in [`ProductDataFixture::load`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
+If you need to add specific `extId` to products in data fixture you will have to update creation of products in [`ProductDataFixture::load`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
 
 ```diff
 

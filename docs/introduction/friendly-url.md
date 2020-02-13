@@ -11,7 +11,7 @@ The rest of the work is done automatically and URLs provided by these providers 
 
 - Create new class with name ending with `FriendlyUrlDataProvider` implementing `FriendlyUrlDataProviderInterface` interface
 
-- This interface requires you to implement two methods *(see [ProductDetailFriendlyUrlDataProvider](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/ProductDetailFriendlyUrlDataProvider.php) class as an example of the implementation)*:
+- This interface requires you to implement two methods *(see [ProductDetailFriendlyUrlDataProvider](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductDetailFriendlyUrlDataProvider.php) class as an example of the implementation)*:
 
     - `getFriendlyUrlData` method that generates `FriendlyUrlData` for all your entities
 

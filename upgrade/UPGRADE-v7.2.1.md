@@ -16,7 +16,7 @@ There you can find links to upgrade notes for other versions too.
         ```
 - fix the typo in Twig template `@ShopsysShop/Front/Content/Category/panel.html.twig` ([#1043](https://github.com/shopsys/shopsys/pull/1043))
     - `categoriyWithLazyLoadedVisibleChildren` ⟶ `categoryWithLazyLoadedVisibleChildren`
-- create an empty file `app/Resources/.gitkeep` to prepare a folder for [your overwritten templates](https://docs.shopsys.com/en/9.0/cookbook/modifying-a-template-in-administration/) ([#1073](https://github.com/shopsys/shopsys/pull/1073))
+- create an empty file `app/Resources/.gitkeep` to prepare a folder for [your overwritten templates](https://docs.shopsys.com/en/latest/cookbook/modifying-a-template-in-administration/) ([#1073](https://github.com/shopsys/shopsys/pull/1073))
 - fix `FilterQueryTest` to use ElasticSearch index prefix properly via `ElasticsearchStructureManager` ([#1082](https://github.com/shopsys/shopsys/pull/1082))
     ```diff
     - private const ELASTICSEARCH_INDEX = 'product1';

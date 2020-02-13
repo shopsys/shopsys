@@ -9,7 +9,7 @@ we decided to allow to use either the current (SQL) or the newly created (Elasti
 Thanks to this, you can still easily upgrade to the new version without the need to rewrite your application
 or use faster filtering with Elasticsearch we were able to deliver in the minor version as it does not break our BC promise.
 
-You can learn more about [Product filtering](https://docs.shopsys.com/en/9.0/model/front-end-product-filtering/) in the particular article.
+You can learn more about [Product filtering](https://docs.shopsys.com/en/latest/model/front-end-product-filtering/) in the particular article.
 
 ## Use current SQL Filtering
 You can still filter products via SQL if your filtering is more complex and/or you don't want to implement your custom modification in Elasticsearch.

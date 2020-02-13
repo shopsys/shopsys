@@ -36,7 +36,7 @@ Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monore
     * test your app locally
     * commit your changes
     * run `composer update` to update the rest of your dependencies, test the app again and commit `composer.lock`
-* if any of the database migrations does not suit you, there is an option to skip it, see [our Database Migrations docs](https://docs.shopsys.com/en/9.0/introduction/database-migrations/#reordering-and-skipping-migrations)
+* if any of the database migrations does not suit you, there is an option to skip it, see [our Database Migrations docs](https://docs.shopsys.com/en/latest/introduction/database-migrations/#reordering-and-skipping-migrations)
 * even we care a lot about these instructions, it is possible we miss something. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
 ## Upgrade guides

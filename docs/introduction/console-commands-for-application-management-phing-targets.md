@@ -38,7 +38,7 @@ Let us take look at the first one, that is located in the same file:
 Target `build-deploy-part-1-db-independent` also executes subset of Phing targets (`clean`,`composer-prod`,`npm`,`dirs-create`,`domains-urls-check`,`assets`).
 
 !!! note
-    During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/9.0/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 Let us move a little deeper and take a look at the first one, `clean`:
 ```xml
@@ -184,7 +184,7 @@ Exports all visible products to Elasticsearch.
 ### Coding standards
 
 #### annotations-check
-Checks whether annotations of extended classes in the project match the actual types according to [`ClassExtensionRegistry`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/ClassExtension/ClassExtensionRegistry.php).
+Checks whether annotations of extended classes in the project match the actual types according to [`ClassExtensionRegistry`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/ClassExtension/ClassExtensionRegistry.php).
 Reported problems can be fixed using [`annotations-fix` phing target](#annotations-fix).
 
 #### annotations-fix
@@ -220,7 +220,7 @@ Runs performance tests on a newly built test database with performance data.
 
 It may take a few hours as the generation of performance data is very time-consuming. Should be executed on CI server only.
 
-The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/parameters_common.yml).
+The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yml).
 You can easily override the default values in your `parameters.yml` or `parameters_test.yml` configuration files.
 
 ### Other

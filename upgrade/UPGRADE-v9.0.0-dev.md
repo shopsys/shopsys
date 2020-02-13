@@ -1,4 +1,4 @@
-# [Upgrade from v8.1.0-dev to v9.0.0-dev](https://github.com/shopsys/shopsys/compare/HEAD...9.0)
+# [Upgrade from v8.1.0-dev to v9.0.0-dev](https://github.com/shopsys/shopsys/compare/v8.1.0...HEAD)
 
 This guide contains instructions to upgrade from version v8.1.0-dev to v9.0.0-dev.
 
@@ -59,8 +59,8 @@ There you can find links to upgrade notes for other versions too.
         - `templates/Admin/Content/Brand/detail.html.twig`
         - `templates/Admin/Content/Category/detail.html.twig`
         - `templates/Admin/Content/Product/detail.html.twig`
-- add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
-- add optional [Frontend API](https://github.com/shopsys/shopsys/blob/9.0/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489)):
+- add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/master/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
+- add optional [Frontend API](https://github.com/shopsys/shopsys/blob/master/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489)):
     - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
     - register necessary bundles in `config/bundles.php`
         ```diff
@@ -70,11 +70,11 @@ There you can find links to upgrade notes for other versions too.
         +   Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
             Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
         ```
-    - add new route file [`config/routes/frontend-api.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/routes/frontend-api.yml) from GitHub
-    - add new route file [`config/routes/dev/frontend-api-graphiql.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/routes/dev/frontend-api-graphiql.yaml) from GitHub
-    - copy [type definitions from Github](https://github.com/shopsys/shopsys/tree/9.0/project-base/config/graphql/types) into `config/graphql/types/` folder
-    - copy necessary configuration [shopsys_frontend_api.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/packages/shopsys_frontend_api.yml) to `config/packages/shopsys_frontend_api.yml`
-    - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/9.0/project-base/tests/FrontendApiBundle) to your `tests` folder
+    - add new route file [`config/routes/frontend-api.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/frontend-api.yml) from GitHub
+    - add new route file [`config/routes/dev/frontend-api-graphiql.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/dev/frontend-api-graphiql.yaml) from GitHub
+    - copy [type definitions from Github](https://github.com/shopsys/shopsys/tree/master/project-base/config/graphql/types) into `config/graphql/types/` folder
+    - copy necessary configuration [shopsys_frontend_api.yml from Github](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/shopsys_frontend_api.yml) to `config/packages/shopsys_frontend_api.yml`
+    - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/master/project-base/tests/FrontendApiBundle) to your `tests` folder
     - enable Frontend API for desired domains in `config/parameters_common.yml` file
     for example
         ```diff
@@ -136,7 +136,7 @@ There you can find links to upgrade notes for other versions too.
         - `UploadedFileExtension::getUploadedFileByEntity()` and `UploadedFileExtension::hasUploadedFile()` has been removed including its Twig functions `hasUploadedFile` and `getUploadedFile`
         - `UploadedFileExtension::getUploadedFileUrl()` and `UploadedFileExtension::getUploadedFilePreviewHtml()` now expect `UploadedFile` instead of entity that applies also for their Twig functions `uploadedFileUrl` and `uploadedFilePreview`
         - `UploadedFile::setTemporaryFilename()` does not longer accept null
-        - `FileUploadType` now requires options `entity`, `file_entity_class` and `file_type` see [documentation](https://docs.shopsys.com/en/9.0/introduction/using-form-types/#fileuploadtype) for more info
+        - `FileUploadType` now requires options `entity`, `file_entity_class` and `file_type` see [documentation](https://docs.shopsys.com/en/latest/introduction/using-form-types/#fileuploadtype) for more info
         - `MailTemplateData::attachment()` and `MailTemplateData::deleteAttachment()` has been replaced by `MailTemplateData::attachments()` that is of type `\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData`
         - `src/Resources/scripts/admin/imageUpload.js` has been renamed to `src/Resources/scripts/admin/fileUpload.js` and all form of word `image` has been changed to `file`
         - `src/Resources/styles/admin/component/list/images.less` has been renamed to `src/Resources/styles/admin/component/list/files.less` and all form of word `image` has been changed to `file`
@@ -185,13 +185,13 @@ There you can find links to upgrade notes for other versions too.
   where you can edit main text for contact form. ([#1522](https://github.com/shopsys/shopsys/pull/1522))
 
   There are few steps need to be done, to make contact form work on FE
-    - in `ContactFormController` change previous `indexAction` with [the new one](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Controller/Front/ContactFormController.php). Please pay attention if you have some modification in previous implementation.
+    - in `ContactFormController` change previous `indexAction` with [the new one](https://github.com/shopsys/shopsys/blob/master/project-base/src/Controller/Front/ContactFormController.php). Please pay attention if you have some modification in previous implementation.
     - in `ContactFormController` add `ContactFormSettingsFacade` as dependency in constructor
     - in `ContactFormController` remove action `sendAction()`, it is not needed anymore
     - remove `src/Resources/scripts/frontend/contactForm.js`, it is not needed anymore
     - new localized route `front_contact` has been introduced with slug `contact`. This slug can be already in use in your project, because
       previous SSFW versions have an article called `Contact` which is used as the contact page. Please move the article's content to the new contact page and completely remove the article.
-      To remove the article, please create [new migration](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Migrations/Version20191121171000.php) in you project which removes the article and its slug.
+      To remove the article, please create [new migration](https://github.com/shopsys/shopsys/blob/master/project-base/src/Migrations/Version20191121171000.php) in you project which removes the article and its slug.
 
       If you don't want to remove the article, you will need to change path for the new route in the next step
 
@@ -201,7 +201,7 @@ There you can find links to upgrade notes for other versions too.
         +       path: /contact/
         +       defaults: { _controller: App\Controller\Front\ContactFormController:indexAction }
         ```
-    - add new template [`templates/Front/Content/ContactForm/index.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/ContactForm/index.html.twig)
+    - add new template [`templates/Front/Content/ContactForm/index.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/ContactForm/index.html.twig)
     - add link to new contact page somewhere in templates (e.g in `footer.html.twig`)
         ```diff
             <div class="footer__bottom__articles">
@@ -213,7 +213,7 @@ There you can find links to upgrade notes for other versions too.
         ```
 
 - vats can be created and managed per domains ([#1498](https://github.com/shopsys/shopsys/pull/1498))
-    - please read [upgrade instruction for vats per domain](https://github.com/shopsys/shopsys/blob/9.0/upgrade/upgrade-instruction-for-vats-per-domain.md)
+    - please read [upgrade instruction for vats per domain](https://github.com/shopsys/shopsys/blob/master/upgrade/upgrade-instruction-for-vats-per-domain.md)
 
 - apply these changes to add support for naming uploaded files([#1547](https://github.com/shopsys/shopsys/pull/1547))
     - update your `composer.json`
@@ -256,7 +256,7 @@ There you can find links to upgrade notes for other versions too.
         +       $config->skipRoute('Downloading uploaded files is not tested.');
             });
         ```
-    - add [src/Controller/Front/UploadedFileController.php](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Controller/Front/UploadedFileController.php) to your project
+    - add [src/Controller/Front/UploadedFileController.php](https://github.com/shopsys/shopsys/blob/master/project-base/src/Controller/Front/UploadedFileController.php) to your project
     - `MessageData::attachmentsFilepaths` has been replaced by `MessageData::attachments` that accepts array of `UploadedFile`
     - `MailTemplateFacade::getMailTemplateAttachmentsFilepaths()` has been replaced by `MailTemplateFacade::getMailTemplateAttachmentFilepath()` that accepts single `UploadedFile`
     - following methods has changed their interface, update your usages accordingly:
@@ -569,7 +569,7 @@ There you can find links to upgrade notes for other versions too.
 - add cart detail on hover ([#1565](https://github.com/shopsys/shopsys/pull/1565))
   
   - you can skip this task if you have your custom design
-  - Add new file [`src/Resources/styles/front/common/layout/header/cart-detail.less`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/layout/header/cart-detail.less)
+  - Add new file [`src/Resources/styles/front/common/layout/header/cart-detail.less`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Resources/styles/front/common/layout/header/cart-detail.less)
   - Update your `src/Resources/styles/front/common/layout/header/cart.less` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-bc98fd209f1c026440cbf870086beece)
   - Update your `src/Resources/styles/front/common/main.less`
       ```diff
@@ -577,10 +577,10 @@ There you can find links to upgrade notes for other versions too.
       + @import "layout/header/cart-detail.less";
         @import "layout/header/cart-mobile.less";
       ```
-  - Add new file [`templates/Front/Inline/Cart/cartBoxItemMacro.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Inline/Cart/cartBoxItemMacro.html.twig)
+  - Add new file [`templates/Front/Inline/Cart/cartBoxItemMacro.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Inline/Cart/cartBoxItemMacro.html.twig)
   - Update your `templates/Front/Inline/Cart/cartBox.html.twig` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-41605908c87d6192f16bdf03da67b192)
   - Update your `templates/Front/Layout/header.html.twig` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-fec16681aa60ba908bc8e574d24de3fd)
-  - Add new file [`assets/js/frontend/cart/cartBoxItemRemover.js`](https://github.com/shopsys/shopsys/blob/9.0/project-base/assets/js/frontend/cart/cartBoxItemRemover.js)
+  - Add new file [`assets/js/frontend/cart/cartBoxItemRemover.js`](https://github.com/shopsys/shopsys/blob/master/project-base/assets/js/frontend/cart/cartBoxItemRemover.js)
   - Update `assets/js/frontend/cart/cartBox.js`
       ```diff
         Ajax.ajax({
@@ -665,8 +665,8 @@ There you can find links to upgrade notes for other versions too.
   - run `php phing standards-fix` and fix possible violations that need to be fixed manually
 
 - if you want to add stylelint rules to check style coding standards [#1511](https://github.com/shopsys/shopsys/pull/1511)
-    -  add new file [.stylelintignore](https://github.com/shopsys/shopsys/blob/9.0/project-base/.stylelintignore)
-    -  add new file [.stylelintrc](https://github.com/shopsys/shopsys/blob/9.0/project-base/.stylelintrc)
+    -  add new file [.stylelintignore](https://github.com/shopsys/shopsys/blob/master/project-base/.stylelintignore)
+    -  add new file [.stylelintrc](https://github.com/shopsys/shopsys/blob/master/project-base/.stylelintrc)
     - update `gruntfile.js.twig` and add new task
         ```diff
         +   stylelint: {

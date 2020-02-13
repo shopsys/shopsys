@@ -98,13 +98,13 @@ webpack_encore:
 
 - Run `npm install` or `./phing npm-install-dependencies`
 
-- Replace file `webpack.config.js` from [GitHub](https://github.com/shopsys/shopsys/blob/9.0/project-base/webpack.config.js) into your project root
-- Copy file [`/frontend/validation/validationInit.js`](https://github.com/shopsys/shopsys/blob/9.0/project-base/assets/js/frontend/validation/validationInit.js) into your `assets/js`
-- Copy folder [`assets/js/commands`](https://github.com/shopsys/shopsys/tree/9.0/project-base/assets/js/commands) into your `assets/js` folder
-- Copy folder [`assets/js/bin`](https://github.com/shopsys/shopsys/tree/9.0/project-base/assets/js/bin) into your assets/js folder
-- Copy folder [`assets/js/utils`](https://github.com/shopsys/shopsys/tree/9.0/project-base/assets/js/utils) into your assets/js folder 
+- Replace file `webpack.config.js` from [GitHub](https://github.com/shopsys/shopsys/blob/master/project-base/webpack.config.js) into your project root
+- Copy file [`/frontend/validation/validationInit.js`](https://github.com/shopsys/shopsys/blob/master/project-base/assets/js/frontend/validation/validationInit.js) into your `assets/js`
+- Copy folder [`assets/js/commands`](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/commands) into your `assets/js` folder
+- Copy folder [`assets/js/bin`](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/bin) into your assets/js folder
+- Copy folder [`assets/js/utils`](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/utils) into your assets/js folder 
 
-- Create new js file `./assets/js/frontend.js` and import into it all your frontend javascripts (find inspiration on [GitHub](https://github.com/shopsys/shopsys/blob/9.0/project-base/assets/js/frontend.js))
+- Create new js file `./assets/js/frontend.js` and import into it all your frontend javascripts (find inspiration on [GitHub](https://github.com/shopsys/shopsys/blob/master/project-base/assets/js/frontend.js))
 
 - Rename folder `assets/js/custom_admin` to `assets/js/admin`
 
@@ -180,7 +180,7 @@ We refactored all javascripts in [#1545](https://github.com/shopsys/shopsys/pull
 You have two ways how to perform upgrade.
 The first way is incorporate changes from framework's common javascripts into your files.
 Those changes are described in diffs on next lines.
-The second way is to download all new javascripts from [`assets/js`](https://github.com/shopsys/shopsys/blob/9.0/project-base/assets/js) and put your changes into it.
+The second way is to download all new javascripts from [`assets/js`](https://github.com/shopsys/shopsys/blob/master/project-base/assets/js) and put your changes into it.
 You can found git diff command after individual files.
 
 We recommend the second way although it is more demanding because new javascripts will be used as source for next upgrade notes.

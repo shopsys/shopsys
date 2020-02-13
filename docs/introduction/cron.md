@@ -7,7 +7,7 @@ Periodically executed Cron modules recalculate visibility, generate XML feeds an
 By default you can configure your own cron configurations in `config/services/cron.yml` file.
 
 ## Default Cron Commands
-There is some prepared configuration for Shopsys Framework in a file [`src/Resources/config/services/cron.yml`](https://github.com/shopsys/framework/blob/9.0/src/Resources/config/services/cron.yml) in `FrameworkBundle`.
+There is some prepared configuration for Shopsys Framework in a file [`src/Resources/config/services/cron.yml`](https://github.com/shopsys/framework/blob/master/src/Resources/config/services/cron.yml) in `FrameworkBundle`.
 
 ## Running Cron Jobs
 Do not forget to set up a cron on your server to execute [`php phing cron`](../introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
