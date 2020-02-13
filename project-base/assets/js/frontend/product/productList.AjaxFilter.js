@@ -1,7 +1,7 @@
-import Register from 'framework/common/utils/register';
-import Ajax from 'framework/common/utils/ajax';
-import getBaseUrl from '../utils/url';
-import pushReloadState from '../components/history';
+import Register from 'framework/common/utils/Register';
+import Ajax from 'framework/common/utils/Ajax';
+import getBaseUrl from '../utils/getBaseUrl';
+import pushReloadState from '../components/pushReloadState';
 
 export default class ProductListAjaxFilter {
 

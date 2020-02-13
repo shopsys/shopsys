@@ -6,7 +6,7 @@ import tooltip from 'framework/common/bootstrap/tooltip';
 import 'framework/common/components';
 
 import CustomizeBundle from 'framework/common/validation/customizeBundle';
-import showFormErrorsWindowOnFrontend from './frontend/utils/customizeBundle';
+import showFormErrorsWindowOnFrontend from './frontend/utils/showFormErrorsWindow';
 
 import './loadTranslations';
 
@@ -23,16 +23,12 @@ import './frontend/order';
 // product entry?
 import './frontend/product';
 
-import './frontend/cart/cartBox';
-
 // cart entry?
 import './frontend/cart';
 
-import 'framework/common/validation/customizeFpValidator';
-import './frontend/validation/validationInit';
 import 'framework/common/validation';
 
-import Register from 'framework/common/utils/register';
+import Register from 'framework/common/utils/Register';
 
 tooltip($);
 

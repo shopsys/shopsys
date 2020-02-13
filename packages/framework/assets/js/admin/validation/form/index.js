@@ -1,7 +1,7 @@
-import './customer';
-import './freeTransportAndPayment';
-import './mailTemplate';
-import './noticer';
-import './order';
-import './product';
-import './promoCode';
+import './validationCustomer';
+import './validationFreTransportAndPayment';
+import './validationMailTemplate';
+import './validationAdvert';
+import './validationOrder';
+import './validationProduct';
+import './validationPromoCode';

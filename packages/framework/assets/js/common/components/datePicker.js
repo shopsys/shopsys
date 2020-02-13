@@ -1,5 +1,5 @@
 import 'jquery-ui/datepicker';
-import Register from '../utils/register';
+import Register from '../utils/Register';
 import constant from '../../admin/utils/constant';
 
 /* Czech initialisation for the jQuery UI date picker plugin. */

@@ -6,7 +6,7 @@ import './components';
 import './validation/customization';
 import './validation/form';
 
-import Register from '../common/utils/register';
+import Register from '../common/utils/Register';
 
 export default function registerAdmin () {
     $(document).ready(function () {

@@ -16,8 +16,15 @@ Slick component is used as homepage slider for cycling through images. We don't 
 ### Manual lazyload call
 If you need lazy loading in some situations (like popup menu with images) call lazyload function manually, or if you want load images on ajax content, you can use function:
 
+```js
+(new Register()).registerNewContent($container);
+```
+
+or
+
 ```javascript
-Shopsys.lazyLoadCall.inContainer(container);
+import { lazyLoadInit } from './lazyLoadInit';
+lazyLoadInit($container);
 ```
 
 As container variable use CSS selector for container with images. All images in this container will be loaded after function call.

@@ -1,7 +1,7 @@
-import { highlightSubmitButtons, findElementsToHighlight } from './validation';
+import { highlightSubmitButtons, findElementsToHighlight } from './validationHelpers';
 import constant from '../../admin/utils/constant';
-import Timeout from '../utils/timeout';
-import Window from '../../admin/utils/window';
+import Timeout from '../utils/Timeout';
+import Window from '../../admin/utils/Window';
 import Translator from 'bazinga-translator';
 
 export default class CustomizeBundle {

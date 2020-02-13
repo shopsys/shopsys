@@ -1,7 +1,7 @@
 import 'magnific-popup';
 import 'jquery-ui/sortable';
-import FormChangeInfo from './formChangeInfo';
-import Register from '../../common/utils/register';
+import FormChangeInfo from './FormChangeInfo';
+import Register from '../../common/utils/Register';
 
 window.ProductsPickerInstances = {};
 

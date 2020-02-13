@@ -100,11 +100,10 @@ webpack_encore:
 
 - Run `npm install` or `./phing npm-install-dependencies`
 
-- Replace file `webpack.config.js` from [GitHub](https://github.com/shopsys/shopsys/blob/master/project-base/webpack.config.js) into your project root
-- Copy file [`/frontend/validation/validationInit.js`](https://github.com/shopsys/shopsys/blob/master/project-base/assets/js/frontend/validation/validationInit.js) into your `assets/js`
+- Create file `webpack.config.js` in your project root and put content from [GitHub](https://github.com/shopsys/shopsys/blob/master/project-base/webpack.config.js)
 - Copy folder [`assets/js/commands`](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/commands) into your `assets/js` folder
 - Copy folder [`assets/js/bin`](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/bin) into your assets/js folder
-- Copy folder [`assets/js/utils`](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/utils) into your assets/js folder 
+- Copy folder [`assets/js/frontend/utils`](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/utils) into your assets/js/frontend folder 
 
 - Create new js file `./assets/js/frontend.js` and import into it all your frontend javascripts (find inspiration on [GitHub](https://github.com/shopsys/shopsys/blob/master/project-base/assets/js/frontend.js))
 
@@ -188,8 +187,8 @@ We recommend the second way although it is more demanding because new javascript
 
 - Update your `assets/js/frontend/cart/cartBox.js`
 ```diff
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Register from 'framework/common/utils/register';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) {
 
@@ -211,16 +210,16 @@ We recommend the second way although it is more demanding because new javascript
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/cart/cartBox.js assets/js/frontend/cart/cartBox.js
+git diff master:src/Resources/scripts/frontend/cart/cartBox.js assets/js/frontend/cart/CartBox.js
 ```
 
 - Update your `assets/js/frontend/cart/cartRecalculator.js`
 ```diff
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Timeout from 'framework/common/utils/timeout';
-+ import Register from 'framework/common/utils/register';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Timeout from 'framework/common/utils/Timeout';
++ import Register from 'framework/common/utils/Register';
 + import constant from '../utils/constant';
-+ import { KeyCodes } from 'framework/common/utils/keyCodes';
++ import { KeyCodes } from 'framework/common/utils/KeyCodes';
 
   (function ($) {
  
@@ -271,14 +270,14 @@ git diff master:src/Resources/scripts/frontend/cart/cartBox.js assets/js/fronten
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/cart/cartRecalculator.js assets/js/frontend/cart/cartRecalculator.js
+git diff master:src/Resources/scripts/frontend/cart/cartRecalculator.js assets/js/frontend/cart/CartRecalculator.js
 ```
 
 - Update your `assets/js/frontend/categoryPanel.js`
 ```diff
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Register from 'framework/common/utils/register';
-+ import Responsive from './utils/responsive';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Register from 'framework/common/utils/Register';
++ import Responsive from './utils/Responsive';
 
   (function ($) {
  
@@ -318,14 +317,14 @@ git diff master:src/Resources/scripts/frontend/cart/cartRecalculator.js assets/j
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/categoryPanel.js assets/js/frontend/categoryPanel.js
+git diff master:src/Resources/scripts/frontend/categoryPanel.js assets/js/frontend/components/CategoryPanel.js
 ```
 
 - Update your `assets/js/frontend/components/ajaxMoreLoader.js`
 ```diff
 + import 'framework/common/components';
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Register from 'framework/common/utils/register';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Register from 'framework/common/utils/Register';
 + import Translator from 'bazinga-translator';
 
   (function ($) {
@@ -360,12 +359,12 @@ git diff master:src/Resources/scripts/frontend/categoryPanel.js assets/js/fronte
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/components/ajaxMoreLoader.js assets/js/frontend/components/ajaxMoreLoader.js
+git diff master:src/Resources/scripts/frontend/components/ajaxMoreLoader.js assets/js/frontend/components/AjaxMoreLoader.js
 ```
 
 - Update your `assets/js/frontend/components/popup.js`
 ```diff
-+import Register from 'framework/common/utils/register';
++import Register from 'framework/common/utils/Register';
  
 - Shopsys = window.Shopsys || {};
 
@@ -381,14 +380,14 @@ git diff master:src/Resources/scripts/frontend/components/ajaxMoreLoader.js asse
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/components/popup.js assets/js/frontend/components/popup.js
+git diff master:src/Resources/scripts/frontend/components/popup.js assets/js/frontend/components/Popup.js
 ```
 
 - Update your `assets/js/frontend/components/responsiveTabs.js`
 ```diff
-+ import HybridTabs from 'framework/common/utils/hybridTabs';
-+ import Register from 'framework/common/utils/register';
-+ import Responsive from '../utils/responsive';
++ import HybridTabs from 'framework/common/utils/HybridTabs';
++ import Register from 'framework/common/utils/Register';
++ import Responsive from '../utils/Responsive';
 
   (function ($) {
 -     Shopsys = window.Shopsys || {};
@@ -424,12 +423,12 @@ git diff master:src/Resources/scripts/frontend/components/popup.js assets/js/fro
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/components/responsiveTabs.js assets/js/frontend/components/responsiveTabs.js
+git diff master:src/Resources/scripts/frontend/components/responsiveTabs.js assets/js/frontend/components/ResponsiveTabsInit.js
 ```
 
 - Update your `assets/js/frontend/form.js` 
 ```diff
-+ import Register from 'framework/common/utils/register';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) {
 
@@ -446,12 +445,12 @@ git diff master:src/Resources/scripts/frontend/components/responsiveTabs.js asse
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/form.js assets/js/frontend/form.js
+git diff master:src/Resources/scripts/frontend/form.js assets/js/frontend/components/disableDoubleSubmit.js
 ```
 
 - Update your `assets/js/frontend/honeyPot.js`
 ```diff
-+ import Register from 'framework/common/utils/register';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) {
  
@@ -467,34 +466,34 @@ git diff master:src/Resources/scripts/frontend/form.js assets/js/frontend/form.j
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/honeyPot.js assets/js/frontend/honeyPot.js
+git diff master:src/Resources/scripts/frontend/honeyPot.js assets/js/frontend/components/honeyPot.js
 ```
 
 - Update your `assets/js/frontend/lazyLoadInit.js` 
 ```diff
 + import MiniLazyload from 'minilazyload';
-+ import Register from 'framework/common/utils/register';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) { 
 -     Shopsys = window.Shopsys || {};
 +     const Shopsys = window.Shopsys || {};
 
-+     (new Register()).registerCallback(Shopsys.lazyLoadCall.inContainer);
++     (new Register()).registerCallback(Shopsys.lazyLoadInit.inContainer);
 
   })(jQuery);
 ```
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/lazyLoadInit.js assets/js/frontend/lazyLoadInit.js
+git diff master:src/Resources/scripts/frontend/lazyLoadInit.js assets/js/frontend/components/lazyLoadInit.js
 ```
 
-- Update your `assets/js/frontend/login.js`
+- Update your `assets/js/frontend/components/login.js`
  ```diff
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Register from 'framework/common/utils/register';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Register from 'framework/common/utils/Register';
 + import { createLoaderOverlay, showLoaderOverlay } from 'framework/common/utils/loaderOverlay';
-+ import Window from './utils/window';
++ import Window from './utils/Window';
 + import Translator from 'bazinga-translator';
 
   (function ($) {
@@ -555,14 +554,14 @@ git diff master:src/Resources/scripts/frontend/lazyLoadInit.js assets/js/fronten
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/login.js assets/js/frontend/login.js
+git diff master:src/Resources/scripts/frontend/login.js assets/js/frontend/components/Login.js
 ```
 
 - Update your `assets/js/frontend/newsletterSubscriptionForm.js`
 ```diff
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Register from 'framework/common/utils/register';
-+ import Window from './utils/window';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Register from 'framework/common/utils/Register';
++ import Window from './utils/Window';
 + import Translator from 'bazinga-translator';
 
   (function ($) {
@@ -602,12 +601,12 @@ git diff master:src/Resources/scripts/frontend/login.js assets/js/frontend/login
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/newsletterSubscriptionForm.js assets/js/frontend/newsletterSubscriptionForm.js
+git diff master:src/Resources/scripts/frontend/newsletterSubscriptionForm.js assets/js/frontend/components/NewsletterSubscriptionForm.js
 ```
 
 - Update your `assets/js/frontend/order/order.js`
 ```diff
-+ import Register from 'framework/common/utils/register';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) {
  
@@ -637,13 +636,13 @@ git diff master:src/Resources/scripts/frontend/newsletterSubscriptionForm.js ass
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/order/order.js assets/js/frontend/order/order.js
+git diff master:src/Resources/scripts/frontend/order/order.js assets/js/frontend/order/PaymentTransportRelations.js
 ```
 
 - Update your `assets/js/frontend/order/orderRememberData.js`
 ```diff
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Register from 'framework/common/utils/register';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) {
  
@@ -668,14 +667,14 @@ git diff master:src/Resources/scripts/frontend/order/order.js assets/js/frontend
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/order/orderRememberData.js assets/js/frontend/order/orderRememberData.js
+git diff master:src/Resources/scripts/frontend/order/orderRememberData.js assets/js/frontend/order/OrderRememberData.js
 ```
 
 - Update your `assets/js/frontend/order/preview.js`
 ```diff
 + import 'framework/common/components';
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Register from 'framework/common/utils/register';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) {
 
@@ -703,15 +702,15 @@ git diff master:src/Resources/scripts/frontend/order/orderRememberData.js assets
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/order/preview.js assets/js/frontend/order/preview.js
+git diff master:src/Resources/scripts/frontend/order/preview.js assets/js/frontend/order/OrderPreview.js
 ```
 
 - Update your `assets/js/frontend/product/addProduct.js`
 ```diff
 + import 'framework/common/components';
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Register from 'framework/common/utils/register';
-+ import Window from '../utils/window';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Register from 'framework/common/utils/Register';
++ import Window from '../utils/Window';
 + import Translator from 'bazinga-translator';
 
   (function ($) {
@@ -769,14 +768,14 @@ git diff master:src/Resources/scripts/frontend/order/preview.js assets/js/fronte
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/product/addProduct.js assets/js/frontend/product/addProduct.js
+git diff master:src/Resources/scripts/frontend/product/addProduct.js assets/js/frontend/product/AddProduct.js
 ```
 
 - Update your `assets/js/frontend/product/gallery.js`
 ```diff
 + import 'magnific-popup';
 + import 'slick-carousel';
-+ import Responsive from '../utils/responsive';
++ import Responsive from '../utils/Responsive';
 
   (function ($) {
 
@@ -814,14 +813,14 @@ git diff master:src/Resources/scripts/frontend/product/addProduct.js assets/js/f
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/product/gallery.js assets/js/frontend/product/gallery.js
+git diff master:src/Resources/scripts/frontend/product/gallery.js assets/js/frontend/product/ProductDetail.js
 ```
 
 - Update your `assets/js/frontend/product/productList.js`
 ```diff
 + import 'jquery.cookie';
 + import 'framework/common/components';
-+ import Register from 'framework/common/utils/register';
++ import Register from 'framework/common/utils/Register';
 + import Translator from 'bazinga-translator';
 
   (function ($) {
@@ -848,16 +847,16 @@ git diff master:src/Resources/scripts/frontend/product/gallery.js assets/js/fron
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/product/productList.js assets/js/frontend/product/productList.js
+git diff master:src/Resources/scripts/frontend/product/productList.js assets/js/frontend/product/ProductList.js
 ```
 
 - Update your `assets/js/frontend/promoCode.js`
 ```diff
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Window from './utils/window';
-+ import Register from 'framework/common/utils/register';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Window from './utils/Window';
++ import Register from 'framework/common/utils/Register';
 + import constant from './utils/constant';
-+ import { KeyCodes } from 'framework/common/utils/keyCodes';
++ import { KeyCodes } from 'framework/common/utils/KeyCodes';
 + import Translator from 'bazinga-translator';
 
   (function ($) {
@@ -919,14 +918,14 @@ git diff master:src/Resources/scripts/frontend/product/productList.js assets/js/
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/promoCode.js assets/js/frontend/promoCode.js
+git diff master:src/Resources/scripts/frontend/promoCode.js assets/js/frontend/components/PromoCode.js
 ```
 
 - Update your `assets/js/frontend/rangeSlider.js`
 ```diff
 + import 'jquery-ui/slider';
 + import { parseNumber, formatDecimalNumber } from 'framework/common/utils/number';
-+ import Register from 'framework/common/utils/register';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) {
 
@@ -971,16 +970,16 @@ git diff master:src/Resources/scripts/frontend/promoCode.js assets/js/frontend/p
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/rangeSlider.js assets/js/frontend/rangeSlider.js
+git diff master:src/Resources/scripts/frontend/rangeSlider.js assets/js/frontend/components/RangeSlider.js
 ```
 
 - Update your `assets/js/frontend/spinbox.js`
 ```diff
-+ import Ajax from 'framework/common/utils/ajax';
-+ import Register from 'framework/common/utils/register';
++ import Ajax from 'framework/common/utils/Ajax';
++ import Register from 'framework/common/utils/Register';
 + import Translator from 'bazinga-translator';
-+ import Timeout from 'framework/common/utils/timeout';
-+ import Window from './utils/window';
++ import Timeout from 'framework/common/utils/Timeout';
++ import Window from './utils/Window';
 
   (function ($) {
 
@@ -1026,12 +1025,13 @@ git diff master:src/Resources/scripts/frontend/rangeSlider.js assets/js/frontend
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/spinbox.js assets/js/frontend/spinbox.js
+git diff master:src/Resources/scripts/frontend/spinbox.js assets/js/frontend/components/Spinbox.js
 ```
 
 - Update your `assets/js/frontend/validation/form/customer.js`
 ```diff
 + import constant from '../../utils/constant';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) {
       $(document).ready(function () {
@@ -1058,17 +1058,19 @@ git diff master:src/Resources/scripts/frontend/spinbox.js assets/js/frontend/spi
               }
           });
       });
++     (new Register()).registerCallback(customerValidator);
   })(jQuery);
 ```
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/validation/form/customer.js assets/js/frontend/validation/form/customer.js
+git diff master:src/Resources/scripts/frontend/validation/form/customer.js assets/js/frontend/validation/form/customerValidator.js
 ```
 
 - Update your `assets/js/frontend/validation/form/order.js`
 ```diff
 + import constant from '../../utils/constant';
++ import Register from 'framework/common/utils/Register';
 
   (function ($) {
       $(document).ready(function () {
@@ -1100,12 +1102,13 @@ git diff master:src/Resources/scripts/frontend/validation/form/customer.js asset
              }
           });
       });
++     (new Register()).registerCallback(orderValidator);
   })(jQuery);
 ```
 
 Or you can see full changes between your old file and new file
 ```sh
-git diff master:src/Resources/scripts/frontend/validation/form/order.js assets/js/frontend/validation/form/order.js
+git diff master:src/Resources/scripts/frontend/validation/form/order.js assets/js/frontend/validation/form/orderValidator.js
 ```
 
 - Update your `src/Controller/Front/OrderController.php`

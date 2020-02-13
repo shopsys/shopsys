@@ -24,4 +24,4 @@ import './ShopsysFrameworkBundleFormConstraintsEmail.js';
 
 import './customizeBundle';
 import './customizeFpValidator';
-import './validation';
+import './validationListeners';
