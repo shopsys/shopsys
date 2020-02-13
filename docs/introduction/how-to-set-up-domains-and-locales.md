@@ -88,10 +88,10 @@ By default, the configurations for the domain 1 and 2 are already parts of a pro
 Configuration for elasticsearch can be found in `src/Resources/definition/`.
 If you add a new domain, you need to create an elasticsearch configuration for this new domain.
 
-After you create the configuration, you have to create the index in elasticsearch and fill it by products
+After you create the configuration, you have to create the index in elasticsearch and fill it by data
 ```sh
-php phing product-search-recreate-structure
-php phing product-search-export-products
+php phing elasticsearch-index-recreate
+php phing elasticsearch-export
 ```
 
 ### 3. Locale settings

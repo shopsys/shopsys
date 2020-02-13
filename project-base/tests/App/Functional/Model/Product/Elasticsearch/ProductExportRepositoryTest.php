@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\Model\Product\Search;
+namespace Tests\App\Functional\Model\Product\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
-class ProductSearchExportWithFilterRepositoryTest extends TransactionFunctionalTestCase
+class ProductExportRepositoryTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository
      * @inject
      */
     private $repository;
@@ -23,7 +22,7 @@ class ProductSearchExportWithFilterRepositoryTest extends TransactionFunctionalT
         $structure = array_keys(reset($data));
         sort($structure);
 
-        $expectedStructure = $this->getExpectedStructureForRepository($this->repository);
+        $expectedStructure = $this->getExpectedStructureForRepository();
 
         sort($expectedStructure);
 
@@ -31,10 +30,9 @@ class ProductSearchExportWithFilterRepositoryTest extends TransactionFunctionalT
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository $productSearchExportRepository
      * @return string[]
      */
-    private function getExpectedStructureForRepository(ProductSearchExportWithFilterRepository $productSearchExportRepository): array
+    private function getExpectedStructureForRepository(): array
     {
         return [
             'id',

@@ -5,6 +5,6 @@ services:
         public: false
 
 #   Example:
-#   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
+#   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
 #       tags:
 #           - { name: shopsys.cron, hours: '*', minutes: '*' }

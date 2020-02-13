@@ -1,6 +1,8 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Product\Search\Export;
+declare(strict_types=1);
+
+namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -16,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
-class ProductSearchExportWithFilterRepository
+class ProductExportRepository
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -83,14 +85,15 @@ class ProductSearchExportWithFilterRepository
     /**
      * @param int $domainId
      * @param string $locale
-     * @param int $startFrom
+     * @param int $lastProcessedId
      * @param int $batchSize
      * @return array
      */
-    public function getProductsData(int $domainId, string $locale, int $startFrom, int $batchSize): array
+    public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize): array
     {
         $queryBuilder = $this->createQueryBuilder($domainId)
-            ->setFirstResult($startFrom)
+            ->andWhere('p.id > :lastProcessedId')
+            ->setParameter('lastProcessedId', $lastProcessedId)
             ->setMaxResults($batchSize);
 
         $query = $queryBuilder->getQuery();
@@ -98,7 +101,7 @@ class ProductSearchExportWithFilterRepository
         $results = [];
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
-            $results[] = $this->extractResult($product, $domainId, $locale);
+            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale);
         }
 
         return $results;
@@ -121,7 +124,7 @@ class ProductSearchExportWithFilterRepository
         $result = [];
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
-            $result[] = $this->extractResult($product, $domainId, $locale);
+            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale);
         }
 
         return $result;
