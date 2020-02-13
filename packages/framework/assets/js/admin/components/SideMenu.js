@@ -8,8 +8,8 @@ export default class SideMenu {
         this.$items = this.$sideMenu.filterAllNodes('.js-side-menu-item');
         const _this = this;
 
-        this.$items.click( event => {
-            if($(event.currentTarget).hasClass('open')){
+        this.$items.click(event => {
+            if ($(event.currentTarget).hasClass('open')) {
                 $(event.currentTarget).filterAllNodes('.js-side-menu-submenu').addClass('hidden');
                 $(event.currentTarget).removeClass('open');
                 _this.$webPanel.removeClass('open');
