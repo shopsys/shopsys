@@ -43,6 +43,10 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @var \App\Model\Order\PromoCode\PromoCodeCategoryRepository
      */
     private $promoCodeCategoryRepository;
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeProductFactory
+     */
+    private $promoCodeProductFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -60,13 +64,15 @@ class PromoCodeFacade extends BasePromoCodeFacade
         Domain $domain,
         DateTimeHelper $dateTimeHelper,
         PromoCodeProductRepository $promoCodeProductRepository,
-        PromoCodeCategoryRepository $promoCodeCategoryRepository
+        PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        PromoCodeProductFactory $promoCodeProductFactory
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
         $this->domain = $domain;
         $this->dateTimeHelper = $dateTimeHelper;
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
+        $this->promoCodeProductFactory = $promoCodeProductFactory;
     }
 
     /**
@@ -182,16 +188,14 @@ class PromoCodeFacade extends BasePromoCodeFacade
             }
         }
 
-        foreach ($products as $product) {
-            if (in_array($product->getId(), $productIdsFromStorage, true) === false) {
-                $promoCodeProduct = new PromoCodeProduct($promoCode, $product);
-                $this->em->persist($promoCodeProduct);
-                $needFlush = true;
-            }
-        }
-
         if ($needFlush === true) {
             $this->em->flush();
+        }
+
+        foreach ($products as $product) {
+            if (in_array($product->getId(), $productIdsFromStorage, true) === false) {
+                $this->promoCodeProductFactory->create($promoCode, $product);
+            }
         }
     }
 

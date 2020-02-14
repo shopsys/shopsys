@@ -61,4 +61,22 @@ class PromoCodeProductRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param int $promoCodeId
+     * @return int[]
+     */
+    public function getProductIdsByPromoCodeId(int $promoCodeId): array
+    {
+        $result = $this->getQueryBuilder()
+            ->select('p.id')
+            ->from(PromoCodeProduct::class, 'pcc')
+            ->join(Product::class, 'p', Join::WITH, 'pcc.product = p')
+            ->where('pcc.promoCode = :promoCodeId')
+            ->setParameter('promoCodeId', $promoCodeId)
+            ->getQuery()
+            ->execute();
+
+        return array_map('reset', $result);
+    }
 }

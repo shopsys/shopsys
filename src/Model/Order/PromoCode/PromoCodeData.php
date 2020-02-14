@@ -46,10 +46,10 @@ class PromoCodeData extends BasePromoCodeData
     /**
      * @var \App\Model\Product\Product[]
      */
-    public $productsWithSale;
+    public $productsWithSale = [];
 
     /**
      * @var \App\Model\Category\Category[]
      */
-    public $categoriesWithSale;
+    public $categoriesWithSale = [];
 }
