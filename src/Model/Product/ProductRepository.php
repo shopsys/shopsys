@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use Doctrine\ORM\Internal\Hydration\IterableResult;
+use App\Model\Product\Type\ProductType;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -113,5 +114,22 @@ class ProductRepository extends BaseProductRepository
             ->where('p.downloadAssemblyInstructionFiles = true')
             ->getQuery()
             ->iterate();
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductType $productType
+     * @return bool
+     */
+    public function existsProductWithProductType(ProductType $productType): bool
+    {
+        $productsCount = $this->em->createQueryBuilder()
+            ->select('COUNT(p)')
+            ->from(Product::class, 'p')
+            ->where('p.productType = :productType')
+            ->setParameter('productType', $productType)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $productsCount > 0;
     }
 }

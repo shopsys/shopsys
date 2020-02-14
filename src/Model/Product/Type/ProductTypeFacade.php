@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Type;
 
+use App\Model\Product\ProductRepository;
+use App\Model\Product\Type\Exception\ProductTypeIsBeingUsedException;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProductTypeFacade
@@ -19,15 +21,23 @@ class ProductTypeFacade
     protected $productTypeRepository;
 
     /**
+     * @var \App\Model\Product\ProductRepository
+     */
+    private $productRepository;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Type\ProductTypeRepository $productTypeRepository
+     * @param \App\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
         EntityManagerInterface $em,
-        ProductTypeRepository $productTypeRepository
+        ProductTypeRepository $productTypeRepository,
+        ProductRepository $productRepository
     ) {
         $this->em = $em;
         $this->productTypeRepository = $productTypeRepository;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -68,6 +78,9 @@ class ProductTypeFacade
      */
     public function delete(ProductType $productType): void
     {
+        if ($this->productRepository->existsProductWithProductType($productType) === true) {
+            throw new ProductTypeIsBeingUsedException($productType);
+        }
         $this->em->remove($productType);
         $this->em->flush();
     }

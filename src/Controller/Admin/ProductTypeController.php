@@ -68,6 +68,8 @@ class ProductTypeController extends AdminBaseController
                     'name' => $productType->getName(),
                 ]
             );
+        } catch (\App\Model\Product\Type\Exception\ProductTypeIsBeingUsedException $ex) {
+            $this->getFlashMessageSender()->addErrorFlash(t('Zvolený typ je využíván a proto jej nelze nyní odstranit.'));
         } catch (\App\Model\Product\Type\Exception\ProductTypeNotFoundException $ex) {
             $this->getFlashMessageSender()->addErrorFlash(t('Zvolený typ již neexistuje.'));
         }
