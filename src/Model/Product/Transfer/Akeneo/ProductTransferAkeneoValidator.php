@@ -43,6 +43,10 @@ class ProductTransferAkeneoValidator
                         new Assert\Length(['max' => 255]),
                     ]),
                 ]),
+                'enabled' => [
+                    new Assert\NotBlank(),
+                    new Assert\Type(['type' => 'bool']),
+                ],
             ],
         ]));
 
