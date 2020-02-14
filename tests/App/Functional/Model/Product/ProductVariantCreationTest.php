@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -54,8 +55,10 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
      */
     public function testVariantsWithAvailabilitiesCanBeCreated(string $availabilityReference): void
     {
+        /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->availability = $this->getReference($availabilityReference);
+        $productData->productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
         $this->setVats($productData);
 
         $mainProduct = $this->productFacade->create($productData);
@@ -97,10 +100,12 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
      */
     public function testVariantsWithStockCanBeCreated(int $quantity, string $outOfStockAction, ?string $outOfStockAvailabilityReference): void
     {
+        /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->usingStock = true;
         $productData->stockQuantity = $quantity;
         $productData->outOfStockAction = $outOfStockAction;
+        $productData->productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
         if ($outOfStockAvailabilityReference !== null) {
             $productData->outOfStockAvailability = $this->getReference($outOfStockAvailabilityReference);
         }

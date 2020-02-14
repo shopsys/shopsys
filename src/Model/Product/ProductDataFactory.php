@@ -211,6 +211,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->namePrefix[$locale] = $product->getNamePrefix($locale);
             $productData->nameSufix[$locale] = $product->getNameSufix($locale);
         }
+
+        $productData->productType = $product->getProductType();
     }
 
     /**

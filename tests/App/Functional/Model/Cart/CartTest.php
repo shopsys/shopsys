@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Cart;
 
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Cart\Item\CartItem;
 use App\Model\Product\Product;
@@ -39,10 +40,12 @@ class CartTest extends TransactionFunctionalTestCase
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);
 
+        /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->availability = $availability;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
         $this->setVats($productData);
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);

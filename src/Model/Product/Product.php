@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Product\Type\ProductType;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
@@ -52,6 +53,13 @@ class Product extends BaseProduct
     private $downloadProductTypePlanFiles;
 
     /**
+     * @var \App\Model\Product\Type\ProductType
+     * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType")
+     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
+     */
+    private $productType;
+
+    /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */
@@ -60,6 +68,7 @@ class Product extends BaseProduct
         parent::__construct($productData, $variants);
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
+        $this->productType = $productData->productType;
     }
 
     /**
@@ -71,6 +80,7 @@ class Product extends BaseProduct
         parent::edit($productCategoryDomains, $productData);
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
+        $this->productType = $productData->productType;
     }
 
     /**
@@ -347,5 +357,13 @@ class Product extends BaseProduct
     public function isDownloadProductTypePlanFiles(): bool
     {
         return $this->downloadProductTypePlanFiles;
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType
+     */
+    public function getProductType(): ProductType
+    {
+        return $this->productType;
     }
 }

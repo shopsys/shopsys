@@ -33,12 +33,18 @@ class Version20200214104810 extends AbstractMigration
 
         $this->sql('INSERT INTO "product_types" ("id", "akeneo_code") VALUES
             (1,	\'common\'),
-            (2,	\'realy_big\')');
+            (2,	\'oversized\')');
         $this->sql('INSERT INTO "product_type_translations" ("id", "translatable_id", "name", "locale") VALUES
             (1,	1,	\'Běžné zboží\',	\'cs\'),
             (2,	1,	\'Bežný tovar\',	\'sk\'),
             (3,	2,	\'Nadrozměrné zboží\',	\'cs\'),
             (4,	2,	\'Nadrozmený tovar\',	\'sk\')');
+
+        $this->sql('ALTER TABLE products ADD product_type_id INT NOT NULL DEFAULT 1');
+        $this->sql('ALTER TABLE products ALTER product_type_id DROP DEFAULT');
+        $this->sql('ALTER TABLE products 
+            ADD CONSTRAINT FK_B3BA5A5A14959723 FOREIGN KEY (product_type_id) REFERENCES product_types (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->sql('CREATE INDEX IDX_B3BA5A5A14959723 ON products (product_type_id)');
     }
 
     /**

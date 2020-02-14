@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -53,6 +54,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
      */
     public function testCreateProductDomainWithData()
     {
+        /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
 
         $productData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
@@ -62,6 +64,8 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $productData->productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+
         $this->setVats($productData);
 
         $product = $this->productFactory->create($productData);

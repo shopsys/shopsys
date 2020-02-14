@@ -125,6 +125,13 @@ class ExtendedProduct extends Product
     protected $manyToManySelfReferencingInverseEntities;
 
     /**
+     * @var \App\Model\Product\Type\ProductType
+     * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType")
+     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
+     */
+    protected $productType;
+
+    /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */

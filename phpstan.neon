@@ -14,7 +14,7 @@ parameters:
             path: %currentWorkingDirectory%/src/DataFixtures/*
         -
             # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
-            message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
+            message: '#^Property (Shopsys|Tests|App)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
             path: %currentWorkingDirectory%/tests/App/*
         -
             # In tests, there are helper methods for grabbing services using $container->get()

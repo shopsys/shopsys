@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
@@ -55,6 +56,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $calculatedHidden,
         $calculatedSellingDenied
     ) {
+        /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->hidden = $hidden;
         $productData->sellingDenied = $sellingDenied;
@@ -64,6 +66,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
         $this->setVats($productData);
 
         $product = $this->productFacade->create($productData);
@@ -151,7 +154,9 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
         $productId = $product->getId();
 
+        /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
+        $productData->productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
         $this->setVats($productData);
 
         $this->productFacade->edit($productId, $productData);

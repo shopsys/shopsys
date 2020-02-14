@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Entity
  *
  * @method \App\Model\Product\Type\ProductTypeTranslation[] getTranslations()
+ * @method \App\Model\Product\Type\ProductTypeTranslation translation(?string $locale)
  */
 class ProductType extends AbstractTranslatableEntity
 {
