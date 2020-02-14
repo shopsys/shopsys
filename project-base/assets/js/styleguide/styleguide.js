@@ -1,3 +1,4 @@
+import 'codemirror/addon/scroll/simplescrollbars';
 import CodeMirror from 'codemirror';
 /**
  * Script used for the Styleguide structure only
