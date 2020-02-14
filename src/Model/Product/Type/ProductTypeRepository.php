@@ -61,4 +61,13 @@ class ProductTypeRepository
     {
         return $this->getProductTypeRepository()->findBy([], ['id' => 'asc']);
     }
+
+    /**
+     * @param string $akeneoCode
+     * @return \App\Model\Product\Type\ProductType|null
+     */
+    public function findByAkeneoCode(string $akeneoCode): ?ProductType
+    {
+        return $this->getProductTypeRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
+    }
 }

@@ -61,13 +61,15 @@ class ProductTypeInlineEdit extends AbstractGridInlineEdit
      */
     public function getForm($productTypeId)
     {
+        $options = ['edited_product_type' => null];
         $productTypeData = new ProductTypeData();
 
         if ($productTypeId !== null) {
             $productType = $this->productTypeFacade->getById((int)$productTypeId);
             $productTypeData->fillFromProductType($productType);
+            $options['edited_product_type'] = $productType;
         }
 
-        return $this->formFactory->create(ProductTypeFormType::class, $productTypeData);
+        return $this->formFactory->create(ProductTypeFormType::class, $productTypeData, $options);
     }
 }

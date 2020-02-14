@@ -79,4 +79,13 @@ class ProductTypeFacade
     {
         return $this->productTypeRepository->getAll();
     }
+
+    /**
+     * @param string $akeneoCode
+     * @return \App\Model\Product\Type\ProductType|null
+     */
+    public function findByAkeneoCode(string $akeneoCode): ?ProductType
+    {
+        return $this->productTypeRepository->findByAkeneoCode($akeneoCode);
+    }
 }
