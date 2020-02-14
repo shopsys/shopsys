@@ -3,8 +3,9 @@
     <div class="wrap-bar__buttons">
         <a href="{{ url('admin_payment_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
             <i class="btn__icon">+</i>{{ 'Create payment'|trans }}
-        </a
+        </a>
     </div>
 </div>
-
-{{ gridView.render() }}
+<div class="wrap-divider wrap-divider--bottom wrap-divider--no-border">
+    {{ gridView.render() }}
+</div>
