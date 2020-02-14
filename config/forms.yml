@@ -46,3 +46,11 @@ services:
     App\Form\Admin\PromoCodeFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType }
+
+    App\Form\Admin\Customer\BillingAddressFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType }
+
+    App\Form\Admin\Customer\DeliveryAddressFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType }
