@@ -1,0 +1,8 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Typy produktů'|trans }}{% endblock %}
+{% block h1 %}{{ 'Typy produktů'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+{% endblock %}
