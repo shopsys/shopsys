@@ -164,6 +164,7 @@ services:
         maxCount: 30
 
 parameters:
+    line_ending: '\n'
     exclude_files:
         - '*/tests/Unit/**/wrong/*'
         - '*/tests/Unit/**/Wrong/*'
