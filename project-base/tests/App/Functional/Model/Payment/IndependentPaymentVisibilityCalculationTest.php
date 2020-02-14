@@ -57,10 +57,10 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         }
         $paymentData->name = $names;
         $paymentData->hidden = false;
-        $paymentData->enabled = [
+        $paymentData->enabled = $this->getFilteredEnabledForDomains([
             self::FIRST_DOMAIN_ID => true,
             self::SECOND_DOMAIN_ID => false,
-        ];
+        ]);
 
         $payment = new Payment($paymentData);
 
@@ -116,8 +116,17 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         }
         $paymentData->name = $names;
         $paymentData->hidden = $hidden;
-        $paymentData->enabled = $enabledForDomains;
+        $paymentData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
 
         return new Payment($paymentData);
+    }
+
+    /**
+     * @param array $enabledForDomains
+     * @return array
+     */
+    private function getFilteredEnabledForDomains(array $enabledForDomains): array
+    {
+        return array_intersect_key($enabledForDomains, array_flip($this->domain->getAllIds()));
     }
 }

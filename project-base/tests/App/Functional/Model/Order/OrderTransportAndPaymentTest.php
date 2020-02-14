@@ -334,7 +334,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         }
         $paymentData->name = $names;
         $paymentData->hidden = $hidden;
-        $paymentData->enabled = $enabledForDomains;
+        $paymentData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
 
         return new Payment($paymentData);
     }
@@ -356,8 +356,17 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $transportData->name = $names;
 
         $transportData->hidden = $hidden;
-        $transportData->enabled = $enabledForDomains;
+        $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
 
         return new Transport($transportData);
+    }
+
+    /**
+     * @param array $enabledForDomains
+     * @return array
+     */
+    private function getFilteredEnabledForDomains(array $enabledForDomains): array
+    {
+        return array_intersect_key($enabledForDomains, array_flip($this->domain->getAllIds()));
     }
 }

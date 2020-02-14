@@ -56,10 +56,10 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         }
         $transportData->name = $names;
         $transportData->hidden = false;
-        $transportData->enabled = [
+        $transportData->enabled = $this->getFilteredEnabledForDomains([
             Domain::FIRST_DOMAIN_ID => true,
             Domain::SECOND_DOMAIN_ID => false,
-        ];
+        ]);
 
         $transport = new Transport($transportData);
 
@@ -118,8 +118,17 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $transportData->name = $names;
 
         $transportData->hidden = $hidden;
-        $transportData->enabled = $enabledForDomains;
+        $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
 
         return new Transport($transportData);
+    }
+
+    /**
+     * @param array $enabledForDomains
+     * @return array
+     */
+    private function getFilteredEnabledForDomains(array $enabledForDomains): array
+    {
+        return array_intersect_key($enabledForDomains, array_flip($this->domain->getAllIds()));
     }
 }
