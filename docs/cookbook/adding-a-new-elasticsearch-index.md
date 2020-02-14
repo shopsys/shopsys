@@ -467,7 +467,180 @@ public function getExportDataForIds(int $domainId, array $restrictToIds): array
 }
 ```
 
+### Export only changed categories
+
+Now, when we have a way to export partial data, we can extend the functionality even more and allow to export only changed categories.
+For this purpose we need our index to implement `\Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInterface` interface and add two more methods: `CategoryIndex::getChangedCount()` and  `CategoryIndex::getChangedIdsForBatch()`.
+
+!!! note
+    You will need to implement some way to distinguish changed categories.
+    For this purpose you can for example [add a new attribute to an entity](./adding-new-attribute-to-an-entity.md) or implement some sort of queue.
+
+#### CategoryIndex::getChangedIdsForBatch()
+
+This method have to return ID of categories that are considered changed and should be exported.
+If you use an entity attribute to distinguish changed categories, you can just simply return categories with this attribute set.
+
+```php
+declare(strict_types=1);
+
+namespace App\Model\Category\Elasticsearch;
+
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInterface;
+
+class CategoryIndex extends AbstractIndex implements IndexSupportChangesOnlyInterface
+{
+
+    // ...
+
+    /**
+     * @param int $domainId
+     * @param int $lastProcessedId
+     * @param int $batchSize
+     * @return int[]
+    */
+    public function getChangedIdsForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
+    {
+        $allCategories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
+            $this->categoryRepository->getRootCategory(),
+            $this->domain->getDomainConfigById($domainId)
+        );
+
+        $categoryIds = [];
+        foreach ($allCategories as $category) {
+            // boolean entity attribute `shouldBeExported` have to be added before. See "Adding New Attribute to an Entity" cookbook
+            if ($category->shouldBeExported === true) {
+                $categoryIds[] = $category->getId();
+            }
+        }
+
+        return $categoryIds;
+    }
+}
+```
+
+!!! note
+    In a real application, you should implement the logic with the database query to avoid fetching all data unnecessarily.
+
+!!! note
+    In this cookbook we return all affected categories at once.
+    On a larger data sets you can offset and limit the results with the `$lastProcessedId` and `$batchSize`.
+
+#### CategoryIndex::getChangedCount()
+
+This method have to return the count of changed categories.
+
+```php
+/**
+ * @param int $domainId
+ * @return int
+*/
+public function getChangedCount(int $domainId): int
+{
+    return count($this->getChangedIdsForBatch($domainId));
+}
+```
+
+### Exporting changed categories via cron
+
+We may automate the export process the same way as we did for full data export earlier.
+All we need to do is to create a new class `CategoryExportChangedCronModule` in `src/Model/Category/Elasticsearch` which extends `AbstractExportChangedCronModule`.
+
+The most important task here is to override parent constructor and change the type-hint of the first argument to our created index (`CategoryIndex`).
+
+```php
+declare(strict_types=1);
+
+namespace App\Model\Category\Elasticsearch;
+
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportCronModule;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
+
+class CategoryExportChangedCronModule extends AbstractExportChangedCronModule
+{
+    /**
+     * @param \App\Model\Category\Elasticsearch\CategoryIndex $index
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
+    public function __construct(
+        CategoryIndex $index,
+        IndexFacade $indexFacade,
+        IndexDefinitionLoader $indexDefinitionLoader,
+        Domain $domain
+    ) {
+        parent::__construct($index, $indexFacade, $indexDefinitionLoader, $domain);
+    }
+}
+```
+
+### Mark exported categories as exported
+
+Export now looks for the categories with the attribute `shouldExport` set to `true`.
+This is convenient, but after the export is finished, we should set the attribute back, so the next iterations will not export the same category over and over.
+
+For this, we can use `IndexExportedEvent::INDEX_EXPORTED` event which is fired after each index is finished for all domains.
+
+We create a simple subscriber to this event and mark categories as exported.
+
+```php
+declare(strict_types=1);
+
+namespace App\Model\Category\Elasticsearch;
+
+use App\Model\Category\Category;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexExportedEvent;
+
+class CategoryExportedSubscriber {
+
+    /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    protected $entityManager;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexExportedEvent $indexExportedEvent
+     */
+    public function markAllAsExported(IndexExportedEvent $indexExportedEvent): void
+    {
+        if ($indexExportedEvent->getIndex() instanceof CategoryIndex) {
+            $this->entityManager
+                ->createQuery('UPDATE ' . Category::class . ' c SET c.shouldExport = FALSE')
+                ->execute();
+
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            IndexExportedEvent::INDEX_EXPORTED => 'markAllAsExported',
+        ];
+    }
+}
+```
+
 ## Conclusion
 
-We have created a new index category into Elasticsearch. We were able to fill it with data (by a cron or immediately after a row is changed).
+We have created a new index category into Elasticsearch.
+We were able to fill it with data (by a cron or immediately after a row is changed).
+
+Categories can be marked for export (from different part of the application, integration with IS, ...) and only such categories can be exported.
+
 From now you are able to use Elasticsearch as a data source (data providing functionality is needed to be implemented) instead of PostgreSQL which will improve the performance of your application.

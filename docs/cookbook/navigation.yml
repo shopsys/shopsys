@@ -4,6 +4,7 @@ arrange:
     - jenkins-configuration.md
     - adding-a-new-entity.md
     - adding-new-attribute-to-an-entity.md
+    - adding-a-new-elasticsearch-index.md
     - adding-a-new-administration-page.md
     - adding-a-new-advert-position.md
     - adding-an-icon-into-a-button.md
