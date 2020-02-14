@@ -23,8 +23,10 @@
                         <div class="form-price-heading__cell form-price-heading__cell--field">
                             {{ inputPriceLabel({ isSimple: true }) }}
                         </div>
-                        <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price excluding VAT'|trans }}</div>
-                        <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price including VAT'|trans }}</div>
+                        <div class="form-price-heading__block">
+                            <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price excluding VAT'|trans }}</div>
+                            <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price including VAT'|trans }}</div>
+                        </div>
                     </div>
                     {% for productSellingPrice in productSellingPrices %}
                         <div class="form-line form-line--in-box">
@@ -73,8 +75,10 @@
                         <div class="form-price-heading__cell form-price-heading__cell--field">
                             {{ inputPriceLabel({ isSimple: true }) }}
                         </div>
-                        <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price excluding VAT'|trans }}</div>
-                        <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price including VAT'|trans }}</div>
+                        <div class="form-price-heading__block">
+                            <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price excluding VAT'|trans }}</div>
+                            <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price including VAT'|trans }}</div>
+                        </div>
                     </div>
                     {% for pricingGroup in pricingGroups %}
                         <div class="form-line form-line--in-box">

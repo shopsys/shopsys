@@ -22,8 +22,10 @@
                     <div class="form-price-heading__cell form-price-heading__cell--field">
                         {{ inputPriceLabel({ isSimple: true }) }}
                     </div>
-                    <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Calculated price excluding VAT'|trans }}</div>
-                    <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Calculated price including VAT'|trans }}</div>
+                    <div class="form-price-heading__block">
+                        <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Calculated price excluding VAT'|trans }}</div>
+                        <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Calculated price including VAT'|trans }}</div>
+                    </div>
                 </div>
 
                 <div class="form-line form-line--in-box">

@@ -14,6 +14,19 @@
         text-align: right;
     }
 
+    &__block {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        width: 100%;
+        padding-top: 10px;
+
+        @media @query-lg {
+            width: auto;
+            padding-top: 0;
+        }
+    }
+
     &__cell {
         display: inline-block;
         float: left;
