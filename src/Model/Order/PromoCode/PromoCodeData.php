@@ -42,4 +42,14 @@ class PromoCodeData extends BasePromoCodeData
      * @var \DateTime|null
      */
     public $datetimeValidTo;
+
+    /**
+     * @var \App\Model\Product\Product[]
+     */
+    public $productsWithSale;
+
+    /**
+     * @var \App\Model\Category\Category[]
+     */
+    public $categoriesWithSale;
 }

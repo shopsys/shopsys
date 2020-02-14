@@ -1,0 +1,64 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Order\PromoCode;
+
+use App\Model\Product\Product;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
+
+class PromoCodeProductRepository
+{
+    /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    protected $em;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getQueryBuilder()
+    {
+        return $this->em->createQueryBuilder();
+    }
+
+    /**
+     * @param int $promoCodeId
+     * @return \App\Model\Order\PromoCode\PromoCodeProduct[]
+     */
+    public function getAllByPromoCodeId(int $promoCodeId): array
+    {
+        return $this->getQueryBuilder()
+            ->select('pcp')
+            ->from(PromoCodeProduct::class, 'pcp')
+            ->where('pcp.promoCode = :promoCodeId')
+            ->setParameter('promoCodeId', $promoCodeId)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param int $promoCodeId
+     * @return \App\Model\Product\Product[]
+     */
+    public function getProductsByPromoCodeId(int $promoCodeId): array
+    {
+        return $this->getQueryBuilder()
+            ->select('p')
+            ->from(PromoCodeProduct::class, 'pcc')
+            ->join(Product::class, 'p', Join::WITH, 'pcc.product = p')
+            ->where('pcc.promoCode = :promoCodeId')
+            ->setParameter('promoCodeId', $promoCodeId)
+            ->getQuery()
+            ->execute();
+    }
+}

@@ -8,9 +8,15 @@ use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
+use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DomainType;
+use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
+use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\ProductsType;
+use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,11 +38,20 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     private $promoCode;
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
+     * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
      */
-    public function __construct(PromoCodeFacade $promoCodeFacade)
-    {
+    private $removeDuplicatesTransformer;
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
+     * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
+     */
+    public function __construct(
+        PromoCodeFacade $promoCodeFacade,
+        RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
+    ) {
         $this->promoCodeFacade = $promoCodeFacade;
+        $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
     }
 
     /**
@@ -66,6 +81,9 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $builder->add('code', TextType::class, $codeOptions);
 
         $this->buildTimeValidationForm($builder);
+
+        $this->buildProductsWithSaleForm($builder);
+        $this->buildCategoriesWithSaleForm($builder);
     }
 
     /**
@@ -96,6 +114,37 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'required' => false,
             'label' => t('Čas platnosti DO'),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildCategoriesWithSaleForm(FormBuilderInterface $builder)
+    {
+        $displayCategoriesGroup = $builder->create('displayCategoriesGroup', GroupType::class, [
+            'label' => t('Slevněné kategorie'),
+        ]);
+        $displayCategoriesGroup->add('categoriesWithSale', CategoriesType::class, [
+            'required' => false,
+            'domain_id' => Domain::FIRST_DOMAIN_ID,
+            'label' => t('Kategorie'),
+            'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+        ]);
+        $builder->add($displayCategoriesGroup);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildProductsWithSaleForm(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add('productsWithSale', ProductsType::class, [
+                'required' => false,
+                'sortable' => true,
+                'label' => t('Slevněné produkty'),
+            ])
+            ->addViewTransformer($this->removeDuplicatesTransformer);
     }
 
     /**

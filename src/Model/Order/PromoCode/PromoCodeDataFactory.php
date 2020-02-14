@@ -20,11 +20,28 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
     private $dateTimeHelper;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeCategoryRepository
+     */
+    private $promoCodeCategoryRepository;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeProductRepository
+     */
+    private $promoCodeProductRepository;
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      */
-    public function __construct(DateTimeHelper $dateTimeHelper)
-    {
+    public function __construct(
+        PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        PromoCodeProductRepository $promoCodeProductRepository,
+        DateTimeHelper $dateTimeHelper
+    ) {
         $this->dateTimeHelper = $dateTimeHelper;
+        $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
+        $this->promoCodeProductRepository = $promoCodeProductRepository;
     }
 
     /**
@@ -61,6 +78,9 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
 
         $promoCodeData->dateValidFrom = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidFrom());
         $promoCodeData->dateValidTo = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidTo());
+
+        $promoCodeData->categoriesWithSale = $this->promoCodeCategoryRepository->getCategoriesByPromoCodeId($promoCode->getId());
+        $promoCodeData->productsWithSale = $this->promoCodeProductRepository->getProductsByPromoCodeId($promoCode->getId());
     }
 
     /**
