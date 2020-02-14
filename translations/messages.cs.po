@@ -682,3 +682,8 @@ msgstr "{1}Načíst další položku|[2,4]Načíst další %loadNextCount% polo�
 msgid "{1}Load next %loadNextCount% product|[2,Inf]Load next %loadNextCount% products"
 msgstr "[1,4]Načíst další %loadNextCount% zboží|[5,Inf]Načíst dalších %loadNextCount% zboží"
 
+msgid "Televize"
+msgstr "Televize"
+
+msgid "plazmová"
+msgstr "plazmová"

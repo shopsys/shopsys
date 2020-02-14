@@ -13,8 +13,8 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -36,20 +36,13 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'shortDescriptionUsp3',
         'shortDescriptionUsp4',
         'shortDescriptionUsp5',
+        'pricesGroup',
     ];
 
     /**
      * @var \App\Component\Form\FormBuilderHelper
      */
     private $formBuilderHelper;
-
-    /**
-     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
-     */
-    public function __construct(FormBuilderHelper $formBuilderHelper)
-    {
-        $this->formBuilderHelper = $formBuilderHelper;
-    }
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -62,11 +55,13 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private $vatFacade;
 
     /**
+     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(VatFacade $vatFacade, Domain $domain)
+    public function __construct(FormBuilderHelper $formBuilderHelper, VatFacade $vatFacade, Domain $domain)
     {
+        $this->formBuilderHelper = $formBuilderHelper;
         $this->domain = $domain;
         $this->vatFacade = $vatFacade;
     }
