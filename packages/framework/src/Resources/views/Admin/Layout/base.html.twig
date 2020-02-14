@@ -8,9 +8,6 @@
 
         {{ encore_entry_script_tags('admin') }}
 
-        {{ js_validator_config() }}
-        {{ init_js_validation() }}
-
         <script type="text/javascript">
             global = {
                 locale: '{{ app.request.locale }}'
@@ -22,5 +19,8 @@
 
     <body>
         {% block html_body %}{% endblock %}
+
+        {{ js_validator_config() }}
+        {{ init_js_validation() }}
     </body>
 </html>
