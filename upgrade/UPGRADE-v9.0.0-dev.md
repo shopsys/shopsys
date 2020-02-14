@@ -661,24 +661,24 @@ There you can find links to upgrade notes for other versions too.
 
 - update your project to use refactored Elasticsearch related classes ([#1622](https://github.com/shopsys/shopsys/pull/1622))
     - update `config/services/cron.yml` if you have registered products export by yourself
-        	
+
         ```diff
         -   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
         +   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
         ```
-		 
+
     - update `config/services_test.yml`
     
         ```diff
         -   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: ~
         +   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: ~
         ```
-	
+
     - remove `\Tests\App\Functional\Component\Elasticsearch\ElasticsearchStructureUpdateCheckerTest`
     - update `ProductSearchExportWithFilterRepositoryTest`
         - move the class from `\Tests\App\Functional\Model\Product\Search\ProductSearchExportWithFilterRepositoryTest` to `Tests\App\Functional\Model\Product\Elasticsearch\ProductExportRepositoryTest`
         - update annotation for property `$repository`
-	
+
             ```diff
                 /**
             -    * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository
@@ -687,9 +687,9 @@ There you can find links to upgrade notes for other versions too.
                  */
                 private $repository;
             ```
-    
+
         - remove unused argument of method `getExpectedStructureForRepository()` and all its usages
-		
+
             ```diff
                 /**
             -    * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository $productSearchExportRepository
@@ -698,7 +698,7 @@ There you can find links to upgrade notes for other versions too.
             -   private function getExpectedStructureForRepository(ProductSearchExportWithFilterRepository $productSearchExportRepository): array
             +   private function getExpectedStructureForRepository(): array
             ```
-	
+
     - update `FilterQueryTest`
         - define `use` statement for `ProductIndex`
 
@@ -719,18 +719,17 @@ There you can find links to upgrade notes for other versions too.
             -   private $elasticSearchStructureManager;
             +   private $indexDefinitionLoader;
             ```
-		
+
         - update `createFilter()` method
 
             ```diff
                 protected function createFilter(): FilterQuery
                 {
             -       $elasticSearchIndexName = $this->elasticSearchStructureManager->getAliasName(Domain::FIRST_DOMAIN_ID, self::ELASTICSEARCH_INDEX);
-            -	
             -       $filter = $this->filterQueryFactory->create($elasticSearchIndexName);
             +       $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), Domain::FIRST_DOMAIN_ID);
             +       $filter = $this->filterQueryFactory->create($indexDefinition->getIndexAlias());
-            	
+
                     return $filter->filterOnlySellable();
                 }
             ```
@@ -738,10 +737,9 @@ There you can find links to upgrade notes for other versions too.
 - update FpJsFormValidator bundle ([#1664](https://github.com/shopsys/shopsys/pull/1664))
     - update your `composer.json`
       ```diff
-      +     "minimum-stability": "dev",
             "require": {
       -         "fp/jsformvalidator-bundle": "^1.5.1",
-      +         "fp/jsformvalidator-bundle": "dev-master",
+      +         "fp/jsformvalidator-bundle": "1.5.x-dev",
             }
       ```
     - update your `.eslintignore`
