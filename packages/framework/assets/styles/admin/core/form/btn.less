@@ -102,6 +102,7 @@
 }
 
 //// Modification - types
+@btn-small-min-width: 70px;
 @btn-small-height-decrease: 8px;
 @btn-small-padding-horizontal: 8px;
 @btn-small-height: @btn-height - @btn-small-height-decrease;
@@ -120,6 +121,7 @@
 
 .btn {
     &--small {
+        min-width: @btn-small-min-width;
         height: @btn-small-height;
         line-height: @btn-small-line-height;
         padding-left: @btn-small-padding-horizontal;
