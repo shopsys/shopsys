@@ -35,19 +35,22 @@
                         </thead>
 
                         <tbody>
-                            {% for index, cartItem in cartItems %}
+                            {% set cartItemPrices = orderPreview.quantifiedItemsPrices %}
+                            {% set cartItemDiscounts = orderPreview.quantifiedItemsDiscounts %}
+                            {% for index, quantifiedProduct in orderPreview.quantifiedProducts %}
                                 {% set cartItemPrice = cartItemPrices[index] %}
                                 {% set cartItemDiscount = cartItemDiscounts[index] %}
+                                {% set product = quantifiedProduct.product %}
                                 <tr class="table-cart__row js-cart-item">
                                     <td class="table-cart__cell table-cart__cell--image">
-                                        <a href="{{ url('front_product_detail', {id: cartItem.product.id}) }}" title="{{ cartItem.product.fullname }}" class="table-cart__cell__image">
-                                            {{ image(cartItem.product, { size: 'thumbnail' }) }}
+                                        <a href="{{ url('front_product_detail', {id: product.id}) }}" title="{{ product.fullname }}" class="table-cart__cell__image">
+                                            {{ image(product, { size: 'thumbnail' }) }}
                                         </a>
                                     </td>
 
                                     <td class="table-cart__cell table-cart__cell--name js-cart-item-name">
-                                        <a href="{{ url('front_product_detail', {id: cartItem.product.id}) }}">
-                                            {{ cartItem.name }}
+                                        <a href="{{ url('front_product_detail', {id: product.id}) }}">
+                                            {{ product.fullname }}
                                         </a>
                                         <div class="table-cart__cell__price-mobile">
                                             {{ cartItemPrice.totalPrice.priceWithVat|price }}
@@ -65,12 +68,12 @@
                                     </td>
 
                                     <td class="table-cart__cell table-cart__cell--price">
-                                        {{ cartItem.product.getVatForDomain(getDomain().id).percent|formatPercent }}
+                                        {{ product.getVatForDomain(getDomain().id).percent|formatPercent }}
                                     </td>
 
                                     <td class="table-cart__cell table-cart__cell--amount">
                                         <span class="form-input-spinbox js-spinbox">
-                                            {{ form_widget(form.quantities[cartItem.id], { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1}}) }}
+                                            {{ form_widget(form.quantities[index], { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1}}) }}
                                             <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">+</button>
                                             <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">-</button>
                                         </span>
@@ -88,7 +91,7 @@
 
                                     <td class="table-cart__cell table-cart__cell--action">
                                         <a
-                                            href="{{ url('front_cart_delete', {cartItemId: cartItem.id, _token: csrf_token('front_cart_delete_' ~ cartItem.id)}) }}"
+                                            href="{{ url('front_cart_delete', { cartItemId: index, _token: csrf_token('front_cart_delete_' ~ index) }) }}"
                                             class="js-cart-item-remove-button"
                                         >
                                             <i class="svg svg-remove"></i>
@@ -106,12 +109,12 @@
                                 <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price" colspan="3">
                                     <div>{{ 'Total price including VAT'|trans }}:
                                         <span>
-                                            {{ productsPrice.priceWithVat|price }}
+                                            {{ orderPreview.productsPrice.priceWithVat|price }}
                                         </span>
                                     </div>
                                     <div>{{ 'Celková cena bez DPH'|trans }}:
                                         <span>
-                                            {{ productsPrice.priceWithoutVat|price }}
+                                            {{ orderPreview.productsPrice.priceWithoutVat|price }}
                                         </span>
                                     </div>
                                 </td>

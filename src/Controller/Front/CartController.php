@@ -138,14 +138,11 @@ class CartController extends FrontBaseController
 
         return $this->render('Front/Content/Cart/index.html.twig', [
             'cart' => $cart,
-            'cartItems' => $cartItems,
-            'cartItemPrices' => $orderPreview->getQuantifiedItemsPrices(),
             'form' => $form->createView(),
             'isFreeTransportAndPaymentActive' => $this->freeTransportAndPaymentFacade->isActive($domainId),
             'isPaymentAndTransportFree' => $this->freeTransportAndPaymentFacade->isFree($productsPrice->getPriceWithVat(), $domainId),
             'remainingPriceWithVat' => $remainingPriceWithVat,
-            'cartItemDiscounts' => $orderPreview->getQuantifiedItemsDiscounts(),
-            'productsPrice' => $productsPrice,
+            'orderPreview' => $orderPreview,
         ]);
     }
 
