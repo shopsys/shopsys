@@ -78,6 +78,22 @@ There you can find links to upgrade notes for other versions too.
             }
         ```
 
+    - upgrading server running in Kubernetes
+        - when upgrading production environment you should turn maintenance on `kubectl exec [pod-name-php] -c [container] -- php phing maintenance-on`
+        - dump current database by running `kubectl exec [pod-name-postgres] -- bash -c "pg_dump -U [postgres-user] [database-name]" > database.sql` (in case you are using more databases repeat this step for each database)
+        - change service version in `kubernetes/deployments/postgres.yml`
+
+            ```diff
+                containers:
+                    -   name: postgres
+            -           image: postgres:10.5-alpine
+            +           image: postgres:12.1-alpine
+            ``` 
+    
+        - apply new configuration `kubectl apply -k kubernetes/kustomize/overlays/<overlay>`
+        - import dumped data into new database server by running `cat database.sql | kubectl exec -i [pod-name-postgres] -- psql -U [postgres-user] -d [database-name]` (this needs to be done for each database dumped from first step)
+        - turn maintenance off `kubectl exec [pod-name-php] -c [container] -- php phing maintenance-off`
+
     - upgrading server running in Docker
         - dump current database by running `docker-compose exec postgres pg_dumpall -l <database_name> -f /var/lib/postgresql/data/<database_name>.backup` (in case you are using more databases repeat this step for each database)
         - backup current database mounted volume `mv var/postgres-data/pgdata var/postgres-data/pgdata.old`
