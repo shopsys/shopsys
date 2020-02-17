@@ -121,7 +121,7 @@ import 'framework/admin/jquery';
 - Update your `assets/js/styleguide/styleguide.js`
 ```diff
 + import 'codemirror/addon/scroll/simplescrollbars';
-+ import CodeMirror from 'codemirror';
+  import CodeMirror from 'codemirror';
 
 - if (typeof window !== 'undefined') global = window;
 
