@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
+use App\Model\Order\Item\OrderItem;
+use App\Model\Product\Type\ProductType;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
@@ -60,5 +62,31 @@ class Order extends BaseOrder
     public function edit(BaseOrderData $orderData): OrderEditResult
     {
         return parent::edit($orderData);
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType[]
+     */
+    public function getAllUsedProductTypes(): array
+    {
+        $productTypes = [];
+        foreach ($this->items as $item) {
+            if ($item->getProductType() !== null) {
+                $productTypes[$item->getProductType()->getId()] = $item->getProductType();
+            }
+        }
+
+        return $productTypes;
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductType|null $productType
+     * @return \App\Model\Order\Item\OrderItem[]
+     */
+    public function getItemsByProductType(?ProductType $productType): array
+    {
+        return array_filter($this->getItems(), function (OrderItem $orderItem) use ($productType) {
+            return $orderItem->getProductType() === $productType;
+        });
     }
 }
