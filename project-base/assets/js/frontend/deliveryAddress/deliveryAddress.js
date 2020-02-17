@@ -63,12 +63,18 @@ export default class DeliveryAddress {
     }
 
     static init ($container) {
+        const $deliveryAddressItem = $container.filterAllNodes('.js-delivery-address-row');
         const $deliveryAddressRemove = $container.filterAllNodes('.js-delivery-address-remove-button');
         const $deliveryAddressOrderInput = $container.filterAllNodes('.js-delivery-address-input');
         const deliveryAddress = new DeliveryAddress();
 
         $deliveryAddressRemove.click((event) => deliveryAddress.onRemove($(event.currentTarget), deliveryAddress));
         $deliveryAddressOrderInput.change((event) => deliveryAddress.onChange($(event.currentTarget)));
+
+        $deliveryAddressItem.on('click', function (event) {
+            $deliveryAddressItem.removeClass('active');
+            $(event.currentTarget).addClass('active');
+        });
     }
 }
 
