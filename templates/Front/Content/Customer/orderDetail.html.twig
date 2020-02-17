@@ -1,5 +1,7 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
 
+{% import 'Front/Content/Customer/orderItemsTableMacro.html.twig' as orderItemsTableMacro %}
+
 {% block meta_robots -%}
     <meta name="robots" content="noindex, follow">
 {% endblock %}
@@ -142,30 +144,7 @@
             <div class="wrap-box">
                 <h2 class="wrap-box__title">{{ 'Items'|trans }}</h2>
                 <div class="wrap-box__in">
-                    <div class="in-scroll margin-bottom-20">
-                        <div class="in-scroll__in">
-                            <table class="table-main box-order-detail__table">
-                                <tr>
-                                    <th>{{ 'Name'|trans }}</th>
-                                    <th class="text-right">{{ 'Unit price including VAT'|trans }}</th>
-                                    <th class="text-right">{{ 'Amount'|trans }}</th>
-                                    <th class="text-right">{{ 'VAT rate'|trans }}</th>
-                                    <th class="text-right">{{ 'Total including VAT'|trans }}</th>
-                                    <th class="text-right">{{ 'Total excluding VAT'|trans }}</th>
-                                </tr>
-                                {% for item in order.items %}
-                                    <tr>
-                                        <td>{{ item.name }}</td>
-                                        <td class="text-right">{{ item.priceWithVat|priceWithCurrency(order.currency) }}</td>
-                                        <td class="text-right">{{ item.quantity|formatNumber }} {{ item.unitName }}</td>
-                                        <td class="text-right">{{ item.vatPercent|formatPercent }}</td>
-                                        <td class="text-right">{{ orderItemTotalPricesById[item.id].priceWithVat|priceWithCurrency(order.currency) }}</td>
-                                        <td class="text-right">{{ orderItemTotalPricesById[item.id].priceWithoutVat|priceWithCurrency(order.currency) }}</td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
+                    {{ orderItemsTableMacro.table(order.items, orderItemTotalPricesById, order.currency) }}
                     <div class="box-order-detail__total">
                         <table class="box-order-detail__total__table">
                             <tr>

@@ -1,0 +1,26 @@
+{% macro table(orderItems, orderItemTotalPricesById, currency) %}
+    <div class="in-scroll margin-bottom-20">
+        <div class="in-scroll__in">
+            <table class="table-main box-order-detail__table">
+                <tr>
+                    <th>{{ 'Name'|trans }}</th>
+                    <th class="text-right">{{ 'Unit price including VAT'|trans }}</th>
+                    <th class="text-right">{{ 'Amount'|trans }}</th>
+                    <th class="text-right">{{ 'VAT rate'|trans }}</th>
+                    <th class="text-right">{{ 'Total including VAT'|trans }}</th>
+                    <th class="text-right">{{ 'Total excluding VAT'|trans }}</th>
+                </tr>
+                {% for item in orderItems %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td class="text-right">{{ item.priceWithVat|priceWithCurrency(currency) }}</td>
+                        <td class="text-right">{{ item.quantity|formatNumber }} {{ item.unitName }}</td>
+                        <td class="text-right">{{ item.vatPercent|formatPercent }}</td>
+                        <td class="text-right">{{ orderItemTotalPricesById[item.id].priceWithVat|priceWithCurrency(currency) }}</td>
+                        <td class="text-right">{{ orderItemTotalPricesById[item.id].priceWithoutVat|priceWithCurrency(currency) }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endmacro %}
