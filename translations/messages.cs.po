@@ -690,3 +690,6 @@ msgstr "plazmová"
 
 msgid "K dispozici za %weeks% týdnů"
 msgstr "K dispozici za %weeks% týdnů"
+
+msgid "{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů"
+msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů"
