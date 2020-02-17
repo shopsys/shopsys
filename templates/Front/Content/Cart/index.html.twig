@@ -23,9 +23,43 @@
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form' }}) }}
                     {{ form_errors(form) }}
 
+                    {% set viewNumber = 0 %}
                     {% for cartView in splitCartView.cartViews %}
+                        {% set viewNumber = viewNumber + 1 %}
+                        {% if splitCartView.moreViews %}
+                            <h2>
+                                {{ 'Zásilka č. %number%'|trans({ '%number%': viewNumber }) }}
+                                -
+                                {{ cartView.productType.name }}
+                            </h2>
+                        {% endif %}
                         {{ cartItemsTableMacro.table(form, cartView.orderPreview) }}
                     {% endfor %}
+
+                    {% if splitCartView.moreViews %}
+                        <table class="table-cart">
+                            <tfoot>
+                                <tr class="table-cart__row">
+                                    <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
+                                        <h3>
+                                            {{ 'Total price including VAT'|trans }}:
+                                            <span>
+                                                {{ splitCartView.totalPrice.priceWithVat|price }}
+                                            </span>
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr class="table-cart__row">
+                                    <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
+                                        {{ 'Total price excluding VAT'|trans }}:
+                                        <span>
+                                            {{ splitCartView.totalPrice.priceWithoutVat|price }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    {% endif %}
 
                     <div class="box-cart-bottom">
                         <div class="box-cart-bottom__info">

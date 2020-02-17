@@ -36,6 +36,14 @@ class SplitCartView
     }
 
     /**
+     * @return bool
+     */
+    public function hasMoreViews(): bool
+    {
+        return count($this->cartViews) > 1;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public function getTotalPrice(): Price
