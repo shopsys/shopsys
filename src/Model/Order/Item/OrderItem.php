@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Item;
 
+use App\Model\Product\Type\ProductType;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
  * @ORM\Table(name="order_items")
@@ -23,10 +25,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
  * @method edit(\App\Model\Order\Item\OrderItemData $orderItemData)
  * @method setTransport(\App\Model\Transport\Transport $transport)
  * @method setPayment(\App\Model\Payment\Payment $payment)
- * @method setProduct(\App\Model\Product\Product|null $product)
  */
 class OrderItem extends BaseOrderItem
 {
+    /**
+     * @var \App\Model\Product\Type\ProductType|null
+     * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType")
+     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=true)
+     */
+    private $productType;
+
     /**
      * @param \App\Model\Order\Order $order
      * @param string $name
@@ -57,5 +65,27 @@ class OrderItem extends BaseOrderItem
             $unitName,
             $catnum
         );
+    }
+
+    /**
+     * @param \App\Model\Product\Product|null $product
+     */
+    public function setProduct(?Product $product): void
+    {
+        parent::setProduct($product);
+
+        if ($product === null) {
+            $this->productType = null;
+        } else {
+            $this->productType = $product->getProductType();
+        }
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType|null
+     */
+    public function getProductType(): ?ProductType
+    {
+        return $this->productType;
     }
 }
