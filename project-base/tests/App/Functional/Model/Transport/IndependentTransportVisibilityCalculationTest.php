@@ -124,8 +124,8 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     }
 
     /**
-     * @param array $enabledForDomains
-     * @return array
+     * @param bool[] $enabledForDomains
+     * @return bool[]
      */
     private function getFilteredEnabledForDomains(array $enabledForDomains): array
     {

@@ -759,8 +759,8 @@ There you can find links to upgrade notes for other versions too.
 
         ```php
         /**
-         * @param array $enabledForDomains
-         * @return array
+         * @param bool[] $enabledForDomains
+         * @return bool[]
          */
         private function getFilteredEnabledForDomains(array $enabledForDomains): array
         {
