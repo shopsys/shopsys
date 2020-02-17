@@ -15,6 +15,22 @@ Typical upgrade sequence should be:
 
 ## [From v8.1.1 to v9.0.0-dev]
 
+- upgrade postgres server running in Docker
+    - dump current database by running `docker-compose exec postgres pg_dumpall -l <database_name> -f /var/lib/postgresql/data/<database_name>.backup` (in case you are using more databases repeat this step for each database)
+    - backup current database mounted volume `mv var/postgres-data/pgdata var/postgres-data/pgdata.old`
+    - change service version in `docker-compose.yml`
+
+        ```diff
+            services:
+                postgres:
+        -           image: postgres:10.5-alpine
+        +           image: postgres:12.1-alpine
+        ``` 
+
+    - rebuild and create containers with `docker-compose up -d --build`
+    - import dumped data into new database server by running `docker-compose exec postgres psql -f /var/lib/postgresql/data/<database_name>.backup <database_name>` (this needs to be done for each database dumped from first step)
+    - if everything works well you may remove backuped data `rm -r var/postgres-data/pgdata.old`
+
 ## [From v8.1.0 to v8.1.1]
 
 ## [From v8.0.1 to v8.1.0]

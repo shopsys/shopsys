@@ -78,12 +78,11 @@ There you can find links to upgrade notes for other versions too.
             }
         ```
 
-    - upgrading server in docker-compose
+    - upgrading server running in Docker
         - dump current database by running `docker-compose exec postgres pg_dumpall -l <database_name> -f /var/lib/postgresql/data/<database_name>.backup` (in case you are using more databases repeat this step for each database)
         - backup current database mounted volume `mv var/postgres-data/pgdata var/postgres-data/pgdata.old`
         - change service version in `docker-compose.yml`
             - you should change it also in all `docker-compose*.dist` files such as:
-                - `docker/conf/docker-compose.prod.yml.dist`
                 - `docker/conf/docker-compose.yml.dist`
                 - `docker/conf/docker-compose-mac.yml.dist`
                 - `docker/conf/docker-compose-win.yml.dist`
@@ -97,6 +96,7 @@ There you can find links to upgrade notes for other versions too.
 
         - rebuild and create containers with `docker-compose up -d --build`
         - import dumped data into new database server by running `docker-compose exec postgres psql -f /var/lib/postgresql/data/<database_name>.backup <database_name>` (this needs to be done for each database dumped from first step)
+        - if everything works well you may remove backuped data `rm -r var/postgres-data/pgdata.old`
     - for native installation we recommend to upgrade to version 11 first and then to version 12
         - to prevent unexpected behavior do not try this in production environment before previous testing
         - you should follow official instructions with using [pg_upgrade](https://www.postgresql.org/docs/12/pgupgrade.html) or [pg_dumpall](https://www.postgresql.org/docs/12/app-pg-dumpall.html)
