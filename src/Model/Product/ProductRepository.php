@@ -115,21 +115,4 @@ class ProductRepository extends BaseProductRepository
             ->getQuery()
             ->iterate();
     }
-
-    /**
-     * @param \App\Model\Product\Type\ProductType $productType
-     * @return bool
-     */
-    public function existsProductWithProductType(ProductType $productType): bool
-    {
-        $productsCount = $this->em->createQueryBuilder()
-            ->select('COUNT(p)')
-            ->from(Product::class, 'p')
-            ->where('p.productType = :productType')
-            ->setParameter('productType', $productType)
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        return $productsCount > 0;
-    }
 }

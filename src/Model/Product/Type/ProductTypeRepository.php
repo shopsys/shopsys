@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Type;
 
+use App\Model\Order\Item\OrderItem;
+use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -69,5 +71,34 @@ class ProductTypeRepository
     public function findByAkeneoCode(string $akeneoCode): ?ProductType
     {
         return $this->getProductTypeRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductType $productType
+     * @return bool
+     */
+    public function existsRelationToProductType(ProductType $productType): bool
+    {
+        $productsCount = $this->em->createQueryBuilder()
+            ->select('COUNT(p)')
+            ->from(Product::class, 'p')
+            ->where('p.productType = :productType')
+            ->setParameter('productType', $productType)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        if ($productsCount > 0) {
+            return true;
+        }
+
+        $orderItemsCount = $this->em->createQueryBuilder()
+            ->select('COUNT(oi)')
+            ->from(OrderItem::class, 'oi')
+            ->where('oi.productType = :productType')
+            ->setParameter('productType', $productType)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $orderItemsCount > 0;
     }
 }
