@@ -56,7 +56,7 @@ class ProductAvailabilityFacade
         $weeks = $this->getDeliveryWeeksByDomainId($domainId);
 
         return tc(
-            '{1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
+            '{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
             $weeks,
             ['%weeks%' => $weeks]
         );
@@ -95,7 +95,7 @@ class ProductAvailabilityFacade
             $weeks = $this->getDeliveryWeeksByDomainId($domainId);
         }
         $outOfStockAvailabilityInformation = tc(
-            '{1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
+            '{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
             $weeks,
             ['%weeks%' => $weeks]
         );

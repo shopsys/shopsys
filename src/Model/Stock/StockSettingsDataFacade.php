@@ -23,8 +23,10 @@ class StockSettingsDataFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
-    public function __construct(Setting $setting, AdminDomainTabsFacade $adminDomainTabsFacade)
-    {
+    public function __construct(
+        Setting $setting,
+        AdminDomainTabsFacade $adminDomainTabsFacade
+    ) {
         $this->setting = $setting;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
