@@ -193,17 +193,21 @@ class IndexFacade
         $indexAlias = $indexDefinition->getIndexAlias();
         $domainId = $indexDefinition->getDomainId();
 
-        // detach objects from manager to prevent memory leaks
-        $this->entityManager->clear();
-        $currentBatchData = $index->getExportDataForIds($domainId, $restrictToIds);
+        $chunkedIdsToExport = array_chunk($restrictToIds, $index->getExportBatchSize());
 
-        if (!empty($currentBatchData)) {
-            $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
-        }
+        foreach ($chunkedIdsToExport as $idsToExport) {
+            // detach objects from manager to prevent memory leaks
+            $this->entityManager->clear();
+            $currentBatchData = $index->getExportDataForIds($domainId, $idsToExport);
 
-        $idsToDelete = array_values(array_diff($restrictToIds, array_keys($currentBatchData)));
-        if (!empty($idsToDelete)) {
-            $this->indexRepository->deleteIds($indexAlias, $idsToDelete);
+            if (!empty($currentBatchData)) {
+                $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
+            }
+
+            $idsToDelete = array_values(array_diff($idsToExport, array_keys($currentBatchData)));
+            if (!empty($idsToDelete)) {
+                $this->indexRepository->deleteIds($indexAlias, $idsToDelete);
+            }
         }
 
         $this->sqlLoggerFacade->reenableLogging();
