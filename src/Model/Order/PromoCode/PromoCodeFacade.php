@@ -43,10 +43,16 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @var \App\Model\Order\PromoCode\PromoCodeCategoryRepository
      */
     private $promoCodeCategoryRepository;
+
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeProductFactory
      */
     private $promoCodeProductFactory;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeCategoryFactory
+     */
+    private $promoCodeCategoryFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -56,6 +62,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory
+     * @param \App\Model\Order\PromoCode\PromoCodeCategoryFactory $promoCodeCategoryFactory
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -65,7 +73,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
         DateTimeHelper $dateTimeHelper,
         PromoCodeProductRepository $promoCodeProductRepository,
         PromoCodeCategoryRepository $promoCodeCategoryRepository,
-        PromoCodeProductFactory $promoCodeProductFactory
+        PromoCodeProductFactory $promoCodeProductFactory,
+        PromoCodeCategoryFactory $promoCodeCategoryFactory
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
         $this->domain = $domain;
@@ -73,6 +82,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->promoCodeProductFactory = $promoCodeProductFactory;
+        $this->promoCodeCategoryFactory = $promoCodeCategoryFactory;
     }
 
     /**
@@ -151,16 +161,14 @@ class PromoCodeFacade extends BasePromoCodeFacade
             }
         }
 
-        foreach ($categories as $category) {
-            if (in_array($category->getId(), $categoryIdsFromStorage, true) === false) {
-                $promoCodeCategory = new PromoCodeCategory($promoCode, $category);
-                $this->em->persist($promoCodeCategory);
-                $needFlush = true;
-            }
-        }
-
         if ($needFlush === true) {
             $this->em->flush();
+        }
+
+        foreach ($categories as $category) {
+            if (in_array($category->getId(), $categoryIdsFromStorage, true) === false) {
+                $this->promoCodeCategoryFactory->create($promoCode, $category);
+            }
         }
     }
 

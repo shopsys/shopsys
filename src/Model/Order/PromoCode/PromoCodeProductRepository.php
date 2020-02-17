@@ -7,6 +7,7 @@ namespace App\Model\Order\PromoCode;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 
 class PromoCodeProductRepository
 {
@@ -26,7 +27,7 @@ class PromoCodeProductRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getQueryBuilder()
+    private function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder();
     }

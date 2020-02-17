@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Order\Preview;
 
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -18,13 +17,25 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculat
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
+/**
+ * @property \App\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
+ * @method \Shopsys\FrameworkBundle\Model\Pricing\Price|null calculateRoundingPrice(\App\Model\Payment\Payment $payment, \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency, \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice, \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice, \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice)
+ */
 class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
+     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
      */
     private $currentPromoCodeFacade;
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
+     * @param \App\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
+     * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
+     */
     public function __construct(
         QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
         QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation,
@@ -32,8 +43,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         PaymentPriceCalculation $paymentPriceCalculation,
         OrderPriceCalculation $orderPriceCalculation,
         CurrentPromoCodeFacade $currentPromoCodeFacade
-    )
-    {
+    ) {
         parent::__construct(
             $quantifiedProductPriceCalculation,
             $quantifiedProductDiscountCalculation,
@@ -48,9 +58,9 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $transport
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     * @param \App\Model\Transport\Transport|null $transport
+     * @param \App\Model\Payment\Payment|null $payment
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
      *
      * @return \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
@@ -64,16 +74,14 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null
     ): OrderPreview {
-
-
-        
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
             $domainId,
             $customerUser
         );
 
-        $promoCodeDiscountPercentPerProduct = $this->currentPromoCodeFacade->getPromoCodeDiscountPercentPerProduct($quantifiedProducts);
+        $promoCodeDiscountPercentPerProduct = $this->currentPromoCodeFacade->getPromoCodeDiscountPercentPerProductByDomainId($quantifiedProducts, $domainId);
+
         $quantifiedItemsDiscounts = $this->quantifiedProductDiscountCalculation->calculateDiscountsPerProductRoundedByCurrency(
             $quantifiedProducts,
             $quantifiedItemsPrices,
@@ -134,5 +142,4 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $promoCodeDiscountPercent
         );
     }
-
 }

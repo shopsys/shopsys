@@ -7,6 +7,8 @@ namespace App\Model\Order\PromoCode;
 use App\Model\Category\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 class PromoCodeCategoryRepository
 {
@@ -26,7 +28,7 @@ class PromoCodeCategoryRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getQueryBuilder()
+    private function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder();
     }
@@ -60,5 +62,30 @@ class PromoCodeCategoryRepository
             ->setParameter('promoCodeId', $promoCodeId)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param int $promoCodeId
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getProductsFromCategoriesByPromoCodeIdAndDomainId(int $promoCodeId, int $domainId): array
+    {
+        $result = $this->getQueryBuilder()
+            ->select('IDENTITY(pcd.product) as id')
+            ->from(PromoCodeCategory::class, 'pcc')
+            ->join(
+                ProductCategoryDomain::class,
+                'pcd',
+                Join::WITH,
+                'pcc.category = pcd.category AND pcd.domainId = :domainId'
+            )
+            ->where('pcc.promoCode = :promoCodeId')
+            ->setParameter('promoCodeId', $promoCodeId)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->execute();
+
+        return array_map('reset', $result);
     }
 }

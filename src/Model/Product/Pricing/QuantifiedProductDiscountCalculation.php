@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Pricing;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
