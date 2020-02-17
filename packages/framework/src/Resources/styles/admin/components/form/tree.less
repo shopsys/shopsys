@@ -128,9 +128,12 @@
         &__name {
             display: block;
             font-size: 14px;
+            cursor: default;
 
             &.ui-sortable-handle {
-                cursor: move;
+                .form-tree--dragable & {
+                    cursor: move;
+                }
             }
 
             input {
