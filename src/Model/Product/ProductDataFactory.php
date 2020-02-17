@@ -116,6 +116,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp3[$domainId] = null;
             $productData->shortDescriptionUsp4[$domainId] = null;
             $productData->shortDescriptionUsp5[$domainId] = null;
+            $productData->lowPriceWithVat[$domainId] = null;
+            $productData->highPriceWithVat[$domainId] = null;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -138,6 +140,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
             $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
             $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
+            $productData->lowPriceWithVat[$domainId] = $product->getLowPriceWithVat($domainId);
+            $productData->highPriceWithVat[$domainId] = $product->getHighPriceWithVat($domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {

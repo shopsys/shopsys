@@ -33,12 +33,30 @@ class AkeneoHelper
     public static function findEshopDomainIdByAkeneoLocale(string $akeneoLocale): ?int
     {
         $domains = [
-            'cs_CZ' => Domain::FIRST_DOMAIN_ID, // musí se změnit přímo na domeny po mergi ukolu ESHOP-116
+            'cs_CZ' => Domain::FIRST_DOMAIN_ID,
             'sk_SK' => Domain::SECOND_DOMAIN_ID,
         ];
 
         if (array_key_exists($akeneoLocale, $domains)) {
             return $domains[$akeneoLocale];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $currencyCode
+     * @return int|null
+     */
+    public static function findEshopDomainIdByCurrencyCode(string $currencyCode): ?int
+    {
+        $domains = [
+            'CZK' => Domain::FIRST_DOMAIN_ID,
+            'EUR' => Domain::SECOND_DOMAIN_ID,
+        ];
+
+        if (array_key_exists($currencyCode, $domains)) {
+            return $domains[$currencyCode];
         }
 
         return null;

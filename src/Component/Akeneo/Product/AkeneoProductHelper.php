@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Akeneo\Product;
 
 use App\Component\Akeneo\AkeneoHelper;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class AkeneoProductHelper
 {
@@ -70,6 +71,33 @@ class AkeneoProductHelper
             $domainId = AkeneoHelper::findEshopDomainIdByAkeneoLocale($data['locale']);
             if ($domainId) {
                 $productData[$domainId] = $data['data'];
+            }
+        }
+
+        return $productData;
+    }
+
+    /**
+     * @param array $productData
+     * @param array|null $akeneoData
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money[]
+     */
+    public static function mapDomainDataPrices(array $productData, ?array $akeneoData): array
+    {
+        foreach ($productData as $key => $value) {
+            $productData[$key] = null;
+        }
+
+        if ($akeneoData === null) {
+            return $productData;
+        }
+
+        foreach ($akeneoData as $akaneoPricesData) {
+            foreach ($akaneoPricesData['data'] as $akaneoPriceData) {
+                $domainId = AkeneoHelper::findEshopDomainIdByCurrencyCode($akaneoPriceData['currency']);
+                if ($domainId) {
+                    $productData[$domainId] = $akaneoPriceData['amount'] ? Money::create($akaneoPriceData['amount']) : null;
+                }
             }
         }
 

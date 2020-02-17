@@ -5,12 +5,18 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Component\Form\FormBuilderHelper;
+use App\Model\Product\Product;
 use Shopsys\FormTypesBundle\MultidomainType;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
@@ -30,6 +36,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'shortDescriptionUsp3',
         'shortDescriptionUsp4',
         'shortDescriptionUsp5',
+        'pricesGroup',
     ];
 
     /**
@@ -38,11 +45,25 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private $formBuilderHelper;
 
     /**
-     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    public function __construct(FormBuilderHelper $formBuilderHelper)
+    private $domain;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     */
+    private $vatFacade;
+
+    /**
+     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
+    public function __construct(FormBuilderHelper $formBuilderHelper, VatFacade $vatFacade, Domain $domain)
     {
         $this->formBuilderHelper = $formBuilderHelper;
+        $this->domain = $domain;
+        $this->vatFacade = $vatFacade;
     }
 
     /**
@@ -51,6 +72,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->changeSeoGroup($builder);
+
+        $product = $options['product'];
+        /* @var $product \App\Model\Product\Product|null */
 
         $builder->add('namePrefix', LocalizedFullWidthType::class, [
             'required' => false,
@@ -82,13 +106,67 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->stocksGroup($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+        $this->setPricesGroup($builder, $product);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Product\Product|null $product
+     */
+    private function setPricesGroup(FormBuilderInterface $builder, ?Product $product): void
+    {
+        $builderPricesGroup = $builder->get('pricesGroup');
+        $builderPricesGroup->remove('productCalculatedPricesGroup');
+        if ($this->isProductMainVariant($product)) {
+            $builderPricesGroup->remove('disabledPricesOnMainVariant');
+        }
+
+        $builderPricesGroup->add('lowPriceWithVat', MultidomainType::class, [
+                'label' => t('Nízká cena s DPH'),
+                'entry_type' => MoneyType::class,
+                'entry_options' => [
+                    'scale' => 6,
+                ],
+                'required' => false,
+            ])
+            ->add('highPriceWithVat', MultidomainType::class, [
+                'label' => t('Vysoká cena s DPH'),
+                'entry_type' => MoneyType::class,
+                'entry_options' => [
+                    'scale' => 6,
+                ],
+                'required' => false,
+            ]);
+
+        $vatsIndexedByDomainId = $builder->create('vatsIndexedByDomainId', FormType::class, [
+            'compound' => true,
+            'render_form_row' => false,
+            'disabled' => $this->isProductMainVariant($product),
+        ]);
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $vatsIndexedByDomainId
+                ->add($domainConfig->getId(), ChoiceType::class, [
+                    'required' => true,
+                    'disabled' => true,
+                    'choices' => $this->vatFacade->getAllForDomainIncludingMarkedForDeletion($domainConfig->getId()),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'constraints' => [
+                        new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
+                    ],
+                    'label' => t('DPH ' . $domainConfig->getName()),
+                ]);
+        }
+
+        $builderPricesGroup->add($vatsIndexedByDomainId);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    protected function setShortDescriptionsUspGroup(FormBuilderInterface $builder, array $options): void
+    private function setShortDescriptionsUspGroup(FormBuilderInterface $builder, array $options): void
     {
         $builderShortDescriptionsUspGroup = $builder->create('shortDescriptionsUspGroups', GroupType::class, [
             'label' => t('Krátký popis USP'),
@@ -170,5 +248,14 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     public function getExtendedType()
     {
         return ProductFormType::class;
+    }
+
+    /**
+     * @param \App\Model\Product\Product|null $product
+     * @return bool
+     */
+    private function isProductMainVariant(?Product $product)
+    {
+        return $product !== null && $product->isMainVariant();
     }
 }

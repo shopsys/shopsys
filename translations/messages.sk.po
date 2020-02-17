@@ -15,3 +15,9 @@ msgstr "IČ DPH"
 
 msgid "Tax number with vat"
 msgstr "DIČ"
+
+msgid "Televize"
+msgstr "Televize"
+
+msgid "plazmová"
+msgstr "plazmová"

@@ -5714,6 +5714,21 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $money;
         }
+
+        $this->setLowAndHighPricesForDomains($productData, $price);
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param string $price
+     */
+    private function setLowAndHighPricesForDomains(ProductData $productData, string $price): void
+    {
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $currencyRate = $domain->getId() * 10;
+            $productData->lowPriceWithVat[$domain->getId()] = Money::create((string)round(($price / 2) / $currencyRate, 2));
+            $productData->highPriceWithVat[$domain->getId()] = Money::create((string)round(($price / $currencyRate), 2));
+        }
     }
 
     /**
