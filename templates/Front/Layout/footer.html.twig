@@ -82,10 +82,12 @@
                                     <a href="#" class="footer__block__list__link">{{ 'Obchodní podmínky e-shopu'|trans }}</a>
                                 </li>
                             </ul>
-                            <h2 class="footer__block__heading">{{ 'Možnosti platby'|trans }}</h2>
-                            <img class="footer__block__img footer__block__img--payment" loading="lazy" data-src="{{ asset('assets/frontend/images/payments/mastercard.svg') }}" alt="{{ 'Mastercard'|trans }}">
-                            <img class="footer__block__img footer__block__img--payment" loading="lazy" data-src="{{ asset('assets/frontend/images/payments/visa.svg') }}" alt="{{ 'VISA'|trans }}">
                          </div>
+                            <h2 class="footer__block__heading footer__block__heading--inner footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-5">{{ 'Možnosti platby'|trans }} <i class="svg svg-arrow"></i></h2>
+                            <div class="footer__block__toggle" id="js-footer-menu-5">
+                                <img class="footer__block__img footer__block__img--payment" loading="lazy" data-src="{{ asset('assets/frontend/images/payments/mastercard.svg') }}" alt="{{ 'Mastercard'|trans }}">
+                                <img class="footer__block__img footer__block__img--payment" loading="lazy" data-src="{{ asset('assets/frontend/images/payments/visa.svg') }}" alt="{{ 'VISA'|trans }}">
+                            </div>
                     </div>
                     <div class="footer__block__menu__item margin-0">
                         <h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-4">{{ 'Prodejny'|trans }} <i class="svg svg-arrow"></i></h2>
