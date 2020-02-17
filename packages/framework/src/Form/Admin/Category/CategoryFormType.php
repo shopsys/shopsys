@@ -145,7 +145,7 @@ class CategoryFormType extends AbstractType
                     return $padding . $category->getName();
                 },
                 'choice_value' => 'id',
-                'label' => t('Ancestor category'),
+                'label' => t('Parent category'),
             ])
             ->add('enabled', DomainsType::class, [
                 'required' => false,
