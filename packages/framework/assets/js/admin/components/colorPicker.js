@@ -1,4 +1,4 @@
-import 'jquery-minicolors';
+import '@claviska/jquery-minicolors';
 import Register from '../../common/utils/register';
 
 export default class ColorPicker {

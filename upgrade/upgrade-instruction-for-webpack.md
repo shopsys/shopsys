@@ -42,6 +42,7 @@ webpack_encore:
 +        "dev": "encore dev",
 +        "watch": "encore dev --watch",
 +        "build": "encore production --progress",
++        "copy-assets": "./assets/js/bin/copyAssets.js",
 +        "trans": "./assets/js/bin/trans.js",
 +        "trans:dump": "./assets/js/bin/transDump.js",
 +        "tests": "npm run tests:unit",
@@ -60,8 +61,8 @@ webpack_encore:
      "devDependencies": {
 +        "@babel/core": "^7.8.3",
 +        "@babel/parser": "^7.7.7",
-+        "@babel/traverse": "^7.7.4",
 +        "@babel/preset-env": "^7.8.3",
++        "@babel/traverse": "^7.7.4",
 +        "@symfony/webpack-encore": "^0.28.0",
          "autoprefixer": "^9.4.4",
 +        "babel-jest": "^25.1.0",
@@ -73,6 +74,7 @@ webpack_encore:
 +        "jest": "^25.1.0",
          "grunt": "^1.0.3",
          "jit-grunt": "^0.10.0",
++        "ncp": "^2.0.0",
 +        "regenerator-runtime": "^0.13.2",
          "stylelint": "^11.1.1",
 -        "time-grunt": "^1.4.0"
@@ -110,12 +112,10 @@ webpack_encore:
 
 - Create file `assets/js/admin/admin.js` with this content
 ```js
-import 'framework/admin';
-```
+import '../jQuery/registerJquery';
+import registerAdmin from 'framework/admin/registerAdmin';
 
-- Create file `assets/js/jquery.js` with this content
-```js
-import 'framework/admin/jquery';
+registerAdmin();
 ```
 
 - Update your `base.html.twig` template
@@ -124,17 +124,14 @@ import 'framework/admin/jquery';
      <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/print' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="print">
  
 -    {# bootstrap/tooltip.js must be imported before bootstrap/popover.js #}
-+    {{ encore_entry_script_tags('jquery') }}
 
-     {{ importJavascripts([
+-     {{ importJavascripts([
 -        'bundles/bmatznerjquery/js/jquery.min.js',
 -        'bundles/bmatznerjquery/js/jquery-migrate.js',
 -        'bundles/fpjsformvalidator/js/fp_js_validator.js',
-+        'bundles/fpjsformvalidator/js/fp_js_validator.js'
-     ]) }}
+-     ]) }}
 
-     {{ js_validator_config() }}
-     {{ init_js_validation() }}
++    {{ encore_entry_script_tags('frontend') }}
 
      {% block html_body %}{% endblock %}
  
@@ -161,9 +158,11 @@ import 'framework/admin/jquery';
 -        'common/components/*.js',
 -        'frontend/components/*.js',
 -    ]) }}
-+    {{ encore_entry_script_tags('app') }}
  
      {% block javascripts_bottom %}{% endblock %}
+
+     {{ js_validator_config() }}
+     {{ init_js_validation() }}
  </body>
 ```
 

@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import 'jquery-ui/slider';
 
 import { parseNumber, formatDecimalNumber } from 'framework/common/utils/number';

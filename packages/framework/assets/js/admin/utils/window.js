@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { KeyCodes } from '../../common/utils/keyCodes';
 import Register from '../../common/utils/register';
 import Translator from 'bazinga-translator';

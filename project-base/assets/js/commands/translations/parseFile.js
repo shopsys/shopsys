@@ -20,25 +20,28 @@ const createObject = (args, domainPosition, localePosition, filePath, line) => {
 
 function parseFile (filePath) {
     const translations = [];
-    const ast = babelParser.parse(fs.readFileSync(filePath).toString(), { sourceType: 'module' });
 
-    traverse(ast, {
-        CallExpression (path) {
-            if (path.node.callee.object && path.node.callee.object.name === 'Translator') {
-                const isTransMethod = path.node.callee.property.name === 'trans';
-                const transObject = createObject(
-                    path.node.arguments,
-                    isTransMethod ? TRANS_DOMAIN_POSITION : TRANSCHOICE_DOMAIN_POSITION,
-                    isTransMethod ? TRANS_LOCALE_POSITION : TRANSCHOICE_LOCALE_POSITION,
-                    filePath,
-                    path.node.callee.loc.start.line
-                );
-                translations.push(transObject);
+    try {
+        const ast = babelParser.parse(fs.readFileSync(filePath).toString(), { sourceType: 'module' });
+        traverse(ast, {
+            CallExpression (path) {
+                if (path.node.callee.object && path.node.callee.object.name === 'Translator') {
+                    const isTransMethod = path.node.callee.property.name === 'trans';
+                    const transObject = createObject(
+                        path.node.arguments,
+                        isTransMethod ? TRANS_DOMAIN_POSITION : TRANSCHOICE_DOMAIN_POSITION,
+                        isTransMethod ? TRANS_LOCALE_POSITION : TRANSCHOICE_LOCALE_POSITION,
+                        filePath,
+                        path.node.callee.loc.start.line
+                    );
+                    translations.push(transObject);
+                }
             }
-        }
-    });
-
-    return translations;
+        });
+        return translations;
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 module.exports = parseFile;

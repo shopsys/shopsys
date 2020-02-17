@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import 'slick-carousel';
 import Register from 'framework/common/utils/register';
 

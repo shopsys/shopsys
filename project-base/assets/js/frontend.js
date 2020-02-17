@@ -1,5 +1,6 @@
 // import 'jquery-ui-touch-punch';
 
+import './jQuery/registerJquery';
 import tooltip from 'framework/common/bootstrap/tooltip';
 
 import 'framework/common/components';
@@ -32,7 +33,7 @@ import './frontend/validation/validationInit';
 import 'framework/common/validation';
 
 import Register from 'framework/common/utils/register';
-const $ = window.jQuery || global.jQuery || jQuery;
+
 tooltip($);
 
 CustomizeBundle.showFormErrorsWindow = showFormErrorsWindowOnFrontend;

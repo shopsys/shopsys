@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Register from '../../common/utils/register';
 
 export default class SideMenu {

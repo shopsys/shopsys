@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { createLoaderOverlay, showLoaderOverlay, removeLoaderOverlay } from './loaderOverlay';
 import Translator from 'bazinga-translator';
 import Window from '../../admin/utils/window';

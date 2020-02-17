@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import FormChangeInfo from '../../components/formChangeInfo';
 import { highlightSubmitButtons } from '../../../common/validation/validation';
 

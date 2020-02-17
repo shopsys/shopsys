@@ -1,7 +1,6 @@
 import Responsive from '../utils/responsive';
 import HoverIntentSetting from './HoverIntentSetting';
 import Register from 'framework/common/utils/register';
-import $ from 'jquery';
 import 'jquery-hoverintent/jquery.hoverIntent';
 import Ajax from 'framework/common/utils/ajax';
 

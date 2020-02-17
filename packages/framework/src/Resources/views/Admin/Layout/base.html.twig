@@ -6,16 +6,7 @@
 
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/styles/index_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
 
-        {{ encore_entry_script_tags('jquery') }}
-
-        {{ importJavascripts([
-            'bundles/fpjsformvalidator/js/fp_js_validator.js'
-        ]) }}
-
         {{ encore_entry_script_tags('admin') }}
-
-        {{ js_validator_config() }}
-        {{ init_js_validation() }}
 
         <script type="text/javascript">
             global = {
@@ -28,5 +19,8 @@
 
     <body>
         {% block html_body %}{% endblock %}
+
+        {{ js_validator_config() }}
+        {{ init_js_validation() }}
     </body>
 </html>

@@ -31,7 +31,7 @@ Let us take look at the first one, that is located in the same file:
 ```xml
 <target
     name="build-deploy-part-1-db-independent"
-    depends="clean,composer-prod,npm,dirs-create,domains-urls-check,assets"
+    depends="clean,composer-prod,dirs-create,domains-urls-check,assets,npm"
     description="First part of application build for production preserving your DB (can be run without maintenance page)."
 />
 ```
@@ -45,9 +45,6 @@ Let us move a little deeper and take a look at the first one, `clean`:
 <target name="clean" description="Cleans up directories with cache and scripts which are generated on demand.">
     <delete failonerror="false" includeemptydirs="true">
         <fileset dir="${path.var}/cache/">
-            <exclude name="/" />
-        </fileset>
-        <fileset dir="${path.web.scripts}/">
             <exclude name="/" />
         </fileset>
     </delete>
