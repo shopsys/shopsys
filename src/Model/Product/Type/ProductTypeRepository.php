@@ -61,7 +61,7 @@ class ProductTypeRepository
      */
     public function getAll(): array
     {
-        return $this->getProductTypeRepository()->findBy([], ['id' => 'asc']);
+        return $this->getProductTypeRepository()->findBy([], ['position' => 'asc']);
     }
 
     /**

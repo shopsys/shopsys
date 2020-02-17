@@ -6,7 +6,9 @@ namespace App\Model\Product\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
@@ -16,8 +18,10 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @method \App\Model\Product\Type\ProductTypeTranslation[] getTranslations()
  * @method \App\Model\Product\Type\ProductTypeTranslation translation(?string $locale)
  */
-class ProductType extends AbstractTranslatableEntity
+class ProductType extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
+    private const GEDMO_SORTABLE_LAST_POSITION = -1;
+
     /**
      * @var int
      *
@@ -42,6 +46,14 @@ class ProductType extends AbstractTranslatableEntity
     protected $akeneoCode;
 
     /**
+     * @var int
+     *
+     * @Gedmo\SortablePosition
+     * @ORM\Column(type="integer")
+     */
+    private $position;
+
+    /**
      * @param \App\Model\Product\Type\ProductTypeData $productTypeData
      */
     public function __construct(ProductTypeData $productTypeData)
@@ -49,6 +61,7 @@ class ProductType extends AbstractTranslatableEntity
         $this->translations = new ArrayCollection();
         $this->setTranslations($productTypeData);
         $this->akeneoCode = $productTypeData->akeneoCode;
+        $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
     }
 
     /**
@@ -101,5 +114,21 @@ class ProductType extends AbstractTranslatableEntity
     {
         $this->setTranslations($productTypeData);
         $this->akeneoCode = $productTypeData->akeneoCode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position): void
+    {
+        $this->position = $position;
     }
 }

@@ -54,7 +54,7 @@ class ProductTypeGridFactory implements GridFactoryInterface
             ->select('pt, ptt')
             ->from(ProductType::class, 'pt')
             ->join('pt.translations', 'ptt', Join::WITH, 'ptt.locale = :locale')
-            ->orderBy('ptt.name')
+            ->orderBy('pt.position')
             ->setParameter('locale', $this->localization->getAdminLocale());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pt.id');
 
@@ -68,6 +68,7 @@ class ProductTypeGridFactory implements GridFactoryInterface
         $grid->addDeleteActionColumn('admin_producttype_delete', ['id' => 'pt.id'])
             ->setConfirmMessage(t('Opravdu si přejete odstranit tento typ produktu?'));
 
+        $grid->enableDragAndDrop(ProductType::class);
         $grid->setTheme('Admin/Content/ProductType/listGrid.html.twig');
 
         return $grid;
