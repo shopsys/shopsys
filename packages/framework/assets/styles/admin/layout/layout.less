@@ -32,7 +32,7 @@ body {
         &__in {
             position: relative;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             margin: 0 auto;
             width: 100%;
@@ -40,6 +40,7 @@ body {
 
             border-bottom-right-radius: @radius;
             background: @admin-header-background;
+            box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
             color: @color-f;
 
             &--small {
@@ -47,9 +48,18 @@ body {
             }
         }
 
+        &__menu {
+            display: block;
+            margin-left: 6px;
+
+            @media @query-lg {
+                display: none;
+            }
+        }
+
         &__logo {
             padding-left: @admin-header-padding;
-            min-width: 160px;
+            width: 130px;
 
             @media @query-lg {
                 width: @width-panel;
@@ -90,17 +100,31 @@ body {
     }
 
     &__panel {
+        display: block;
         position: fixed;
         width: @width-panel-small;
         top: @height-header;
+        left: -@width-panel-small;
         bottom: 0;
         padding-bottom: @height-fixed-bar;
         z-index: 1000;
 
         background-color: @color-f;
+        transition: left 200ms;
+
+        .active-menu & {
+            left: 0;
+
+            transition: left 200ms;
+        }
 
         @media @query-lg {
             width: @width-panel;
+            left: 0;
+
+            .menu-collapsed & {
+                width: @width-panel-small;
+            }
         }
 
         &.open {
@@ -148,13 +172,18 @@ body {
         position: relative;
         margin: 0 auto;
         padding-top: calc(~"@{content-gap} - @{wrap-border-gap}");
-        padding-right: @content-gap;
         padding-bottom: @content-gap;
-        padding-left: @width-panel-small + @content-gap/2;
+        padding-right: @content-gap/2;
+        padding-left: @content-gap/2;
         max-width: @width-content;
 
         @media @query-lg {
             padding-left: @width-panel + @content-gap;
+            padding-right: @content-gap;
+        }
+
+        .menu-collapsed & {
+            padding-left: @width-panel-small + @content-gap;
         }
 
         .web__container--blank & {
@@ -164,6 +193,21 @@ body {
 
         &--padding-top {
             padding-top: 20px;
+        }
+
+        &__overlay {
+            display: none;
+
+            .active-menu & {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+
+                background-color: rgba(0,0,0,0.5);
+            }
         }
     }
 }
