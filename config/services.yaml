@@ -242,3 +242,33 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository: '@App\Model\Customer\User\CustomerUserRepository'
 
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository: '@App\Model\Product\Parameter\ParameterRepository'
+
+    app.maintenance_cache_provider:
+        class: Doctrine\Common\Cache\RedisCache
+        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
+        arguments:
+            - '@snc_redis.global'
+
+    App\Component\Maintenance\MaintenanceModeSubscriber:
+        arguments:
+            - '@app.maintenance_cache_provider'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    App\Command\MaintenanceModeCommand:
+        arguments:
+            - '@app.maintenance_cache_provider'
+
+    App\Component\FileSystem\FileSystemFactoryDecorator:
+        decorates: Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory
+        arguments:
+            $inner: '@App\Component\FileSystem\FilesystemFactoryDecorator.inner'
+            $s3ApiHost: '%env(S3_API_HOST)%'
+            $s3ApiUsername: '%env(S3_API_USERNAME)%'
+            $s3ApiPassword: '%env(S3_API_PASSWORD)%'
+            $s3ApiBucketName: '%env(S3_API_BUCKET_NAME)%'
+
+    App\Component\NinjaMutex\Lock\NullLock: ~
+
+    NinjaMutex\Lock\LockInterface:
+        class: App\Component\NinjaMutex\Lock\NullLock

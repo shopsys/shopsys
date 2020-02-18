@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "613b8963cdd987aac8edbf43e5a9e73d",
+    "content-hash": "b00042b7555a59c98dfb1f45ea404d44",
     "packages": [
         {
             "name": "akeneo/api-php-client",
@@ -1018,61 +1018,6 @@
                 "symmetric key cryptography"
             ],
             "time": "2018-07-24T23:27:56+00:00"
-        },
-        {
-            "name": "devops/kubernetes-deployment",
-            "version": "dev-pk-finalization",
-            "source": {
-                "type": "git",
-                "url": "https://gitlab+deploy-token-132088:x_1ysjMQbLRMTTjVfwEA@gitlab.com/sconto/kubernetes-deployment.git",
-                "reference": "bfa0e5293ad9f33dffbf3ab53a9525a2018d66d9"
-            },
-            "require": {
-                "arvenil/ninja-mutex": "^0.4.1",
-                "doctrine/annotations": "^1.6.0",
-                "doctrine/common": "^2.8.1",
-                "doctrine/doctrine-bundle": "^1.8.1",
-                "league/flysystem": "^1.0",
-                "league/flysystem-aws-s3-v3": "^1.0",
-                "php": "^7.2",
-                "shopsys/framework": "*"
-            },
-            "require-dev": {
-                "phing/phing": "^2.16.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DevOps\\KubernetesDeploymentBundle\\": "src"
-                },
-                "classmap": [
-                    "src"
-                ]
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "DevOps\\KubernetesDeploymentBundle\\": "tests"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jan Górecki",
-                    "email": "jan.gorecki@shopsys.com",
-                    "homepage": "http://shopsys.com"
-                }
-            ],
-            "description": "This bundle provides easy way to deploy Shopsys Framework into Kubernetes platform.",
-            "keywords": [
-                "deploy",
-                "framework",
-                "kubernetes",
-                "shopsys",
-                "symfony"
-            ],
-            "time": "2020-01-28T11:16:29+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -16228,7 +16173,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "devops/kubernetes-deployment": 20,
         "fp/jsformvalidator-bundle": 20,
         "shopsys/form-types-bundle": 20,
         "shopsys/framework": 20,

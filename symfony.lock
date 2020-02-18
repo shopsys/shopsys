@@ -9,7 +9,7 @@
         "version": "0.4.1"
     },
     "aws/aws-sdk-php": {
-        "version": "3.133.6"
+        "version": "3.133.16"
     },
     "barryvdh/elfinder-flysystem-driver": {
         "version": "v0.2.1"
@@ -85,9 +85,6 @@
     },
     "defuse/php-encryption": {
         "version": "v2.2.1"
-    },
-    "devops/kubernetes-deployment": {
-        "version": "dev-pk-finalization"
     },
     "doctrine/annotations": {
         "version": "1.0",

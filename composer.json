@@ -18,12 +18,6 @@
             "Tests\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://gitlab+deploy-token-132088:x_1ysjMQbLRMTTjVfwEA@gitlab.com/sconto/kubernetes-deployment.git"
-        }
-    ],
     "require": {
         "php": "^7.2",
         "ext-bcmath": "*",
@@ -46,7 +40,6 @@
         "commerceguys/intl": "^1.0.0",
         "composer/composer": "^1.6.0",
         "craue/formflow-bundle": "^3.0.3",
-        "devops/kubernetes-deployment": "dev-pk-finalization",
         "doctrine/annotations": "^1.6.0",
         "doctrine/common": "^2.8.1",
         "doctrine/doctrine-bundle": "^1.8.1",
@@ -66,6 +59,7 @@
         "jms/serializer-bundle": "^2.4",
         "jms/translation-bundle": "^1.4.1",
         "joschi127/doctrine-entity-override-bundle": "^0.7.2",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "league/flysystem": "^1.0",
         "phing/phing": "^2.16.1",
         "php-http/guzzle6-adapter": "^2.0",

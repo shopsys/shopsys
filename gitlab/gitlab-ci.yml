@@ -21,7 +21,7 @@ stages:
     needs:
         - build
     script:
-        - apk add --no-cache bash openvpn apache2-utils
+        - apk add --no-cache bash openvpn apache2-utils openrc
         - openvpn --daemon --config $OVPN
         - sleep 10
         - mkdir -p /root/.kube/
