@@ -259,7 +259,7 @@ EOF
      */
     protected function getParser(): Parser
     {
-        if (!$this->parser) {
+        if ($this->parser === null) {
             $this->parser = new Parser();
         }
 
@@ -283,7 +283,7 @@ EOF
     }
 
     /**
-     * @param mixed $fileOrDirectory
+     * @param string $fileOrDirectory
      * @return bool
      */
     protected function isReadable(string $fileOrDirectory): bool

@@ -1,4 +1,4 @@
-import Register from './register';
+import Register from './Register';
 
 const mockCallback = jest.fn();
 

@@ -1,6 +1,6 @@
-import formChangeInfo from './formChangeInfo';
+import formChangeInfo from './FormChangeInfo';
 import { select, deselect, getSelectedValues } from './choiceControl';
-import Register from '../../common/utils/register';
+import Register from '../../common/utils/Register';
 
 export default class FileUploadPreview {
 
