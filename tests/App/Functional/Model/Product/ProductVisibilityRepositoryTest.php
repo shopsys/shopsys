@@ -115,6 +115,11 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
 
         $productData->manualInputPricesByPricingGroupId = $manualInputPrices;
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $productData->lowPriceWithVat[$domainConfig->getId()] = $price;
+            $productData->highPriceWithVat[$domainConfig->getId()] = $price;
+        }
     }
 
     public function testIsVisibleOnAnyDomainWhenHidden()
@@ -389,6 +394,8 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testIsNotVisibleWhenZeroManualPrice()
     {
+        $this->markTestSkipped('manual prices are in sconto deprecated');
+
         $em = $this->getEntityManager();
 
         $productData = $this->getDefaultProductData();
@@ -419,6 +426,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testIsNotVisibleWhenNullManualPrice()
     {
+        $this->markTestSkipped('manual prices are in sconto deprecated');
         $em = $this->getEntityManager();
 
         $productData = $this->getDefaultProductData();
