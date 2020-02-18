@@ -12,12 +12,6 @@ assertVariable "S3_API_BUCKET_NAME"
 # Replace bucket name for S3 images URL
 sed -i "s/S3_BUCKET_NAME/${S3_API_BUCKET_NAME}/g" "${BASE_PATH}/docker/nginx/s3/nginx.conf"
 
-# kubectl create namespace $PROJECT_NAME || echo "$PROJECT_NAME namespace already existing"
-# deploy secret from ~/.docker/config.json if not present
-# kubectl create secret generic dockerhub --namespace=$PROJECT_NAME --from-file=.dockerconfigjson=/root/.docker/config.json --type=kubernetes.io/dockerconfigjson || echo "secret already present"
-# Outputs all manifests by Kustomize and deploy them, manifests that has not be changed from last deploy will be skipped
-# and only changed manifests will be redeployed
-
 echo "Try create namespace if not exists"
 kubectl create namespace ${PROJECT_NAME} || echo "${PROJECT_NAME} namespace already existing"
 
