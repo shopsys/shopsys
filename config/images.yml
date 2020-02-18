@@ -92,8 +92,8 @@
     class: Shopsys\FrameworkBundle\Model\Slider\SliderItem
     sizes:
         -   name: ~
-            width: 1000
-            height: 230
+            width: 1045
+            height: 290
             crop: true
             occurrence: 'Front-end: Main page slider'
             additionalSizes:
