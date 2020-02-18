@@ -16,6 +16,13 @@
         {% block header %}
             <header class="web__header">
                 <div class="web__header__in">
+                    <div class="web__header__menu">
+                        <div class="box-dropdown js-side-menu-mobile">
+                            <div class="box-dropdown__select box-dropdown__select--menu" title="{{ 'Menu'|trans }}">
+                                <i class="svg svg-menu"></i>
+                            </div>
+                        </div>
+                    </div>
                     <div class="web__header__logo">
                         <a href="{{ url('admin_default_dashboard') }}">
                             <img class="web__header__logo__svg" src="{{ asset('bundles/shopsysframework/logo.svg') }}" alt="Shopsys Framework">

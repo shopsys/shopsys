@@ -46,6 +46,16 @@
     {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
         <ul{{ self.attributes(item.childrenAttributes, classes) }}>
             {{ block('children') }}
+            {% if item.name == "root" %}
+                <li class="side-menu__item side-menu__item--collapse js-side-menu-collapse-button">
+                    <span title="{{ 'Collapse menu'|trans }}" class="side-menu__item__link">
+                        <i class="svg svg-arrow-left"></i>
+                        <span class="side-menu__item__text">
+                            {{ 'Collapse menu'|trans }}
+                        </span>
+                    </span>
+                </li>
+            {% endif %}
         </ul>
     {% endif %}
 {% endblock %}

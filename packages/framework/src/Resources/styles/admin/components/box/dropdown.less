@@ -29,6 +29,12 @@
             background: @box-dropdown-bg-hover;
         }
 
+        &--menu {
+            .svg {
+                font-size: 13px;
+            }
+        }
+
         .open & {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
@@ -43,9 +49,13 @@
         }
 
         &__arrow {
-            display: inline-block;
-            width: @box-dropdown-arrow-size;
-            height: @box-dropdown-arrow-size;
+            display: none;
+
+            @media @query-md {
+                display: inline-block;
+                width: @box-dropdown-arrow-size;
+                height: @box-dropdown-arrow-size;
+            }
 
             &--down {
                 .draw-arrow-bottom(5px, @color-base, 5px, 8px);
@@ -62,13 +72,6 @@
                 .open & {
                     display: inline-block;
                 }
-            }
-        }
-
-        &--with-icon {
-            .svg {
-                margin-right: 5px;
-                vertical-align: bottom;
             }
         }
     }
