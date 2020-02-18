@@ -18,4 +18,4 @@ export default class CategoryDescription {
     }
 }
 
-(new Register()).registerCallback(CategoryDescription.init);
+(new Register()).registerCallback(CategoryDescription.init, 'CategoryDescription.init');

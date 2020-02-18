@@ -6,4 +6,4 @@ export default class MassAction {
     }
 }
 
-(new Register()).registerCallback(MassAction.init);
+(new Register()).registerCallback(MassAction.init, 'MassAction.init');

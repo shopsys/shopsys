@@ -86,4 +86,4 @@ export default class GridMultipleDragAndDrop {
     }
 }
 
-(new Register()).registerCallback(GridMultipleDragAndDrop.init);
+(new Register()).registerCallback(GridMultipleDragAndDrop.init, 'GridMultipleDragAndDrop.init');

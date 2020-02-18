@@ -27,4 +27,4 @@ export default function validationCustomer () {
     });
 }
 
-(new Register().registerCallback(validationCustomer));
+(new Register().registerCallback(validationCustomer, 'validationCustomer'));

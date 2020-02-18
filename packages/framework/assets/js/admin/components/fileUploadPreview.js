@@ -2,7 +2,7 @@ import formChangeInfo from './FormChangeInfo';
 import { select, deselect, getSelectedValues } from './choiceControl';
 import Register from '../../common/utils/Register';
 
-export default class FileUploadInit {
+export default class FileUploadPreview {
 
     static initDelete () {
         $('.js-file-upload-file').each(function () {
@@ -47,10 +47,10 @@ export default class FileUploadInit {
     }
 
     static init () {
-        FileUploadInit.initDelete();
-        FileUploadInit.initSort();
+        FileUploadPreview.initDelete();
+        FileUploadPreview.initSort();
     }
 
 }
 
-(new Register()).registerCallback(FileUploadInit.init);
+(new Register()).registerCallback(FileUploadPreview.init, 'FileUploadPreview.init');

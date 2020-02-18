@@ -36,4 +36,4 @@ export default class OrderPreview {
     }
 }
 
-(new Register()).registerCallback(OrderPreview.init);
+(new Register()).registerCallback(OrderPreview.init, 'OrderPreview.init');

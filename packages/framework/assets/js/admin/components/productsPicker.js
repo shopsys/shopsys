@@ -136,4 +136,4 @@ export default class ProductsPicker {
     }
 }
 
-(new Register().registerCallback(ProductsPicker.init));
+(new Register().registerCallback(ProductsPicker.init, 'ProductsPicker.init'));

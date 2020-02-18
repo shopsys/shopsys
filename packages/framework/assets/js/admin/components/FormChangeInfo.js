@@ -77,4 +77,4 @@ export default class FormChangeInfo {
 
 }
 
-(new Register()).registerCallback(FormChangeInfo.init);
+(new Register()).registerCallback(FormChangeInfo.init, 'FormChangeInfo.init');

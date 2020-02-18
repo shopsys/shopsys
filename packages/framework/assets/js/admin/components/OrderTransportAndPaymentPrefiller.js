@@ -37,4 +37,4 @@ export default class OrderTransportAndPaymentPrefiller {
     }
 }
 
-(new Register()).registerCallback(OrderTransportAndPaymentPrefiller.init);
+(new Register()).registerCallback(OrderTransportAndPaymentPrefiller.init, 'OrderTransportAndPaymentPrefiller.init');

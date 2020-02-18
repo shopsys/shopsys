@@ -42,4 +42,4 @@ export default class Statistics {
         });
     }
 }
-(new Register()).registerCallback(Statistics.init);
+(new Register()).registerCallback(Statistics.init, 'Statistics.init');

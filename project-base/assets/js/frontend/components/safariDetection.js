@@ -12,4 +12,4 @@ const safariDetection = () => {
     }
 };
 
-(new Register()).registerCallback(safariDetection);
+(new Register()).registerCallback(safariDetection, 'safariDetection');

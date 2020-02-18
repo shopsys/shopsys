@@ -15,4 +15,4 @@ export default function cookieInit () {
     });
 }
 
-(new Register()).registerCallback(cookieInit);
+(new Register()).registerCallback(cookieInit, 'cookieInit');

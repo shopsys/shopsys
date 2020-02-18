@@ -35,4 +35,4 @@ export default class AjaxConfirm {
     }
 }
 
-(new Register()).registerCallback(AjaxConfirm.init);
+(new Register()).registerCallback(AjaxConfirm.init, 'AjaxConfirm.init');

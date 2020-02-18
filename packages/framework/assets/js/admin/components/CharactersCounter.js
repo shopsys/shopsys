@@ -38,4 +38,4 @@ export default class CharactersCounter {
     }
 }
 
-(new Register()).registerCallback(CharactersCounter.init);
+(new Register()).registerCallback(CharactersCounter.init, 'CharactersCounter.init');

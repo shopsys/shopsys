@@ -23,4 +23,4 @@ export default class FreeTransportAndPayment {
     }
 }
 
-(new Register()).registerCallback(FreeTransportAndPayment.init);
+(new Register()).registerCallback(FreeTransportAndPayment.init, 'FreeTransportAndPayment.init');

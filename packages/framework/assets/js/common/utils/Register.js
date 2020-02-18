@@ -15,15 +15,51 @@ export default class Register {
         return this;
     }
 
-    registerCallback (callback, callPriority) {
-        if (callPriority === undefined) {
-            callPriority = Register.CALL_PRIORITY_NORMAL;
+    registerCallback (callback, arg1, arg2) {
+
+        let callPriority = Register.CALL_PRIORITY_NORMAL;
+        let callbackName = null;
+
+        if (arg1) {
+            if (typeof arg1 === 'number') {
+                callPriority = arg1;
+            }
+            if (typeof arg1 === 'string') {
+                callbackName = arg1;
+            }
+        }
+
+        if (arg2) {
+            if (typeof arg2 === 'number') {
+                callPriority = arg2;
+            }
+            if (typeof arg2 === 'string') {
+                callbackName = arg2;
+            }
         }
 
         this.callbackQueue.push({
-            callback: callback,
-            callPriority: callPriority
+            callbackName,
+            callPriority,
+            callback: callback
         });
+    }
+
+    replaceCallback (callbackName, newCallback) {
+        this.callbackQueue = this.callbackQueue.map(callbackItem => {
+            if (callbackItem.callbackName === callbackName) {
+                return {
+                    ...callbackItem,
+                    callback: newCallback
+                };
+            }
+
+            return callbackItem;
+        });
+    }
+
+    removeCallback (callbackName) {
+        this.callbackQueue = this.callbackQueue.filter(callbackItem => callbackItem.callbackName !== callbackName);
     }
 
     registerNewContent ($container) {

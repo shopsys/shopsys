@@ -22,4 +22,4 @@ export default function validationProduct () {
     });
 }
 
-(new Register()).registerCallback(validationProduct);
+(new Register()).registerCallback(validationProduct, 'validationProduct');

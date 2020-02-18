@@ -6,4 +6,4 @@ export function initBootstrapFileInput ($container) {
     $container.filterAllNodes('.file-inputs').bootstrapFileInput();
 }
 
-(new Register()).registerCallback(initBootstrapFileInput);
+(new Register()).registerCallback(initBootstrapFileInput, 'initBootstrapFileInput');

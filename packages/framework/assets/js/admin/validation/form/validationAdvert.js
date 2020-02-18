@@ -35,4 +35,4 @@ export default function validationAdvert () {
     });
 }
 
-(new Register()).registerCallback(validationAdvert);
+(new Register()).registerCallback(validationAdvert, 'validationAdvert');

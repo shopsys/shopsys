@@ -167,4 +167,4 @@ export default class PaymentTransportRelations {
     }
 }
 
-(new Register()).registerCallback(PaymentTransportRelations.init);
+(new Register()).registerCallback(PaymentTransportRelations.init, 'PaymentTransportRelations.init');

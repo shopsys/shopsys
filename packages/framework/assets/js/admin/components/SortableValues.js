@@ -62,4 +62,4 @@ export default class SortableValues {
     }
 }
 
-(new Register()).registerCallback(SortableValues.init);
+(new Register()).registerCallback(SortableValues.init, 'SortableValues.init');

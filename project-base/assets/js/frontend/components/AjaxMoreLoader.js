@@ -78,4 +78,4 @@ export default class AjaxMoreLoader {
     }
 }
 
-(new Register()).registerCallback(AjaxMoreLoader.init);
+(new Register()).registerCallback(AjaxMoreLoader.init, 'AjaxMoreLoader.init');

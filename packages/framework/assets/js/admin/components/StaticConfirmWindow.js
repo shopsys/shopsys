@@ -27,4 +27,4 @@ export default class StaticConfirmWindow {
     }
 }
 
-(new Register()).registerCallback(StaticConfirmWindow.init);
+(new Register()).registerCallback(StaticConfirmWindow.init, 'StaticConfirmWindow.init');

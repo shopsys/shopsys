@@ -33,4 +33,4 @@ export default class ToggleMenu {
     }
 }
 
-(new Register()).registerCallback(ToggleMenu.init);
+(new Register()).registerCallback(ToggleMenu.init, 'ToggleMenu.init');

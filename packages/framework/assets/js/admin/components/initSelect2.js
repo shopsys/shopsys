@@ -8,4 +8,4 @@ export function initSelect2 ($container) {
     });
 }
 
-(new Register()).registerCallback(initSelect2);
+(new Register()).registerCallback(initSelect2, 'initSelect2');

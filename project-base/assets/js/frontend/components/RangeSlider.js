@@ -74,4 +74,4 @@ export default class RangeSlider {
     }
 }
 
-(new Register()).registerCallback(RangeSlider.init);
+(new Register()).registerCallback(RangeSlider.init, 'RangeSlider.init');

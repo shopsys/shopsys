@@ -48,4 +48,4 @@ export default class EntityUrlsNew {
     }
 }
 
-(new Register()).registerCallback(EntityUrlsNew.init);
+(new Register()).registerCallback(EntityUrlsNew.init, 'EntityUrlsNew.init');

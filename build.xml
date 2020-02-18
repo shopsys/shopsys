@@ -453,6 +453,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="lint:yaml"/>
             <arg value="${path.packages}"/>
+            <arg value="--exclude-regex=~node_modules~"/>
             <arg value="--parse-tags"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">

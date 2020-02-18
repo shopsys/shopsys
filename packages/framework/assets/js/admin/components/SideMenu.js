@@ -37,4 +37,4 @@ export default class SideMenu {
     }
 }
 
-(new Register()).registerCallback(SideMenu.init);
+(new Register()).registerCallback(SideMenu.init, 'SideMenu.init');

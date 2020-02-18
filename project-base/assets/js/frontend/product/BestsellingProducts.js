@@ -11,4 +11,4 @@ class BestsellingProducts {
     }
 }
 
-(new Register()).registerCallback(BestsellingProducts.init);
+(new Register()).registerCallback(BestsellingProducts.init, 'BestsellingProducts.init');

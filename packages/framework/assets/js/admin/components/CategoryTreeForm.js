@@ -18,4 +18,4 @@ export default class CategoryTreeForm {
     }
 }
 
-(new Register()).registerCallback(CategoryTreeForm.init);
+(new Register()).registerCallback(CategoryTreeForm.init, 'CategoryTreeForm.init');

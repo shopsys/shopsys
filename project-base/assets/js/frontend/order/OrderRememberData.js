@@ -34,4 +34,4 @@ export default class OrderRememberData {
 OrderRememberData.delayedSaveDataTimer = null;
 OrderRememberData.delayedSaveDataDelay = 200;
 
-(new Register()).registerCallback(OrderRememberData.init);
+(new Register()).registerCallback(OrderRememberData.init, 'OrderRememberData.init');

@@ -14,7 +14,7 @@ import './EntityUrlsNew';
 import './EntityUrlsRow';
 import './initBootstrapFileInput';
 import './FileUpload';
-import './FileUploadInit';
+import './fileUploadPreview';
 import './FixedBar';
 import './FlashMessage';
 import './FormChangeInfo';

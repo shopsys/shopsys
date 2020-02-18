@@ -23,4 +23,4 @@ export default class CartBox {
     }
 }
 
-(new Register()).registerCallback(CartBox.init);
+(new Register()).registerCallback(CartBox.init, 'CartBox.init');

@@ -43,4 +43,4 @@ export default class MassActionConfirm {
 
 }
 
-(new Register()).registerCallback(MassActionConfirm.init);
+(new Register()).registerCallback(MassActionConfirm.init, 'MassActionConfirm.init');

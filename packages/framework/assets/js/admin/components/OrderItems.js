@@ -170,4 +170,4 @@ export default class OrderItems {
     }
 }
 
-(new Register()).registerCallback(OrderItems.init);
+(new Register()).registerCallback(OrderItems.init, 'OrderItems.init');

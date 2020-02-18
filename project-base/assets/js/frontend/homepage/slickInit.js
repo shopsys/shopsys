@@ -10,4 +10,4 @@ export default function slickInit () {
     });
 }
 
-(new Register()).registerCallback(slickInit);
+(new Register()).registerCallback(slickInit, 'slickInit');
