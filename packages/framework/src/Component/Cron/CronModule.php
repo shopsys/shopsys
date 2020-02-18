@@ -141,21 +141,19 @@ class CronModule
         $this->enabled = $enabled === true;
     }
 
-    /**
-     * @param bool $active
-     */
-    public function setActive(bool $active): void
-    {
-        if ($active === true) {
-            $this->status = self::CRON_STATUS_RUNNING;
-        } else {
-            $this->status = self::CRON_STATUS_OK;
-        }
-    }
-
-    public function setFailed(): void
+    public function setStatusFailed(): void
     {
         $this->status = self::CRON_STATUS_ERROR;
+    }
+
+    public function setStatusOk(): void
+    {
+        $this->status = self::CRON_STATUS_OK;
+    }
+
+    public function setStatusRunning(): void
+    {
+        $this->status = self::CRON_STATUS_RUNNING;
     }
 
     public function updateLastStartedAt(): void

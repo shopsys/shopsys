@@ -110,7 +110,7 @@ class CronModuleFacade
     public function markCronAsStarted(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
-        $cronModule->setActive(true);
+        $cronModule->setStatusRunning();
         $cronModule->updateLastStartedAt();
 
         $this->em->flush($cronModule);
@@ -122,7 +122,7 @@ class CronModuleFacade
     public function markCronAsEnded(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
-        $cronModule->setActive(false);
+        $cronModule->setStatusOk();
         $cronModule->updateLastFinishedAt();
 
         if ($cronModule->getLastFinishedAt() !== null && $cronModule->getLastStartedAt() !== null) {
@@ -139,7 +139,7 @@ class CronModuleFacade
     public function markCronAsFailed(CronModuleConfig $cronModuleConfig): void
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
-        $cronModule->setFailed();
+        $cronModule->setStatusFailed();
 
         $this->em->flush($cronModule);
     }
