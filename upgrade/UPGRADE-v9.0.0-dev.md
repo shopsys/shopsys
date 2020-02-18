@@ -862,6 +862,47 @@ There you can find links to upgrade notes for other versions too.
             - `tests/App/Functional/PersonalData/PersonalDataExportXmlTest.php`
             - `tests/App/Unit/Form/Front/Order/PersonalInfoFormTypeTest.php`
 
+- fix functional tests for single domain usage ([#1682](https://github.com/shopsys/shopsys/pull/1682))
+    - if you do not plan use your project configured with single domain you may skip this
+    - add method following method into `tests/App/Functional/Model/Order/OrderTransportAndPaymentTest.php`, `tests/App/Functional/Model/Payment/IndependentPaymentVisibilityCalculationTest.php`, `tests/App/Functional/Model/Transport/IndependentTransportVisibilityCalculationTest.php`
+
+        ```php
+        /**
+         * @param bool[] $enabledForDomains
+         * @return bool[]
+         */
+        private function getFilteredEnabledForDomains(array $enabledForDomains): array
+        {
+            return array_intersect_key($enabledForDomains, array_flip($this->domain->getAllIds()));
+        }
+        ```
+
+        - find in those classes assignments into `TransportData::enabled` and `PaymentData::enabled` and filter the array by added method `getFilteredEnabledForDomains()` - like in examples bellow
+
+        ```diff
+        -   $transportData->enabled = $enabledForDomains;
+        +   $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
+        ```
+
+        ```diff
+        -   $paymentData->enabled = [
+        +   $paymentData->enabled = $this->getFilteredEnabledForDomains([
+                self::FIRST_DOMAIN_ID => true,
+                self::SECOND_DOMAIN_ID => false,
+        -   ];
+        +   ]);
+        ```
+
+    - skip test when only one domain is configured with adding code bellow at the beginning of test in
+        - `Tests\App\Functional\Model\Payment\PaymentDomainTest::testCreatePaymentWithDifferentVisibilityOnDomains()`
+        - `Tests\App\Functional\Model\Transport\TransportDomainTest::testCreateTransportWithDifferentVisibilityOnDomains()`
+        
+            ```php
+            if (count($this->domain->getAllIds()) === 1) {
+                $this->markTestSkipped('Test is skipped for single domain');
+            }
+            ```
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
