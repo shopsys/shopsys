@@ -136,6 +136,7 @@ deploy:production:
     resource_group: deploy_production
     only:
         - master
+        - /^master-.*$/
         - pk-e106-merged
     environment:
         name: production
