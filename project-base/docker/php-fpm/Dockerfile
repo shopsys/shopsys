@@ -63,7 +63,7 @@ RUN npm install -g grunt-cli
 # install PostgreSQl client for dumping database
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" > /etc/apt/sources.list.d/PostgreSQL.list' && \
-    apt-get update && apt-get install -y postgresql-10 postgresql-client-10 && apt-get clean
+    apt-get update && apt-get install -y postgresql-12 postgresql-client-12 && apt-get clean
 
 # install redis extension
 RUN pecl install redis-4.1.1 && \

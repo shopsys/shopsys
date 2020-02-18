@@ -38,6 +38,88 @@ There you can find links to upgrade notes for other versions too.
         -   RUN npm install -g npm@6.13.2
         ```
 
+- upgrade to PostgreSQL 12 ([#1601](https://github.com/shopsys/shopsys/pull/1601))
+    - update `docker/php-fpm/Dockerfile`
+    
+        ```diff
+            # install PostgreSQl client for dumping database
+            RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+                sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" > /etc/apt/sources.list.d/PostgreSQL.list' && \
+        -       apt-get update && apt-get install -y postgresql-10 postgresql-client-10 && apt-get clean
+        +       apt-get update && apt-get install -y postgresql-12 postgresql-client-12 && apt-get clean
+        ```
+    
+    - update `tests/App/Test/Codeception/Module/Db.php`
+
+        ```diff
+            public function _afterSuite()
+            {
+        -       $this->cleanup();
+                $this->_loadDump();
+            }
+        
+            public function cleanup()
+            {
+                /** @var \Tests\App\Test\Codeception\Helper\SymfonyHelper $symfonyHelper */
+                $symfonyHelper = $this->getModule(SymfonyHelper::class);
+                /** @var \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade */
+                $databaseSchemaFacade = $symfonyHelper->grabServiceFromContainer(DatabaseSchemaFacade::class);
+                $databaseSchemaFacade->dropSchemaIfExists('public');
+        -       $databaseSchemaFacade->createSchema('public');
+        +   }
+        +
+        +   /**
+        +    * @inheritDoc
+        +    */
+        +   public function _loadDump($databaseKey = null, $databaseConfig = null)
+        +   {
+        +       $this->cleanup();
+        +       return parent::_loadDump($databaseKey, $databaseConfig);
+            }
+        ```
+
+    - upgrading server running in Kubernetes
+        - when upgrading production environment you should turn maintenance on `kubectl exec [pod-name-php] -c [container] -- php phing maintenance-on`
+        - dump current database by running `kubectl exec [pod-name-postgres] -- bash -c "pg_dump -U [postgres-user] [database-name]" > database.sql` (in case you are using more databases repeat this step for each database)
+        - change service version in `kubernetes/deployments/postgres.yml`
+
+            ```diff
+                containers:
+                    -   name: postgres
+            -           image: postgres:10.5-alpine
+            +           image: postgres:12.1-alpine
+            ``` 
+    
+        - apply new configuration `kubectl apply -k kubernetes/kustomize/overlays/<overlay>`
+        - import dumped data into new database server by running `cat database.sql | kubectl exec -i [pod-name-postgres] -- psql -U [postgres-user] -d [database-name]` (this needs to be done for each database dumped from first step)
+        - turn maintenance off `kubectl exec [pod-name-php] -c [container] -- php phing maintenance-off`
+
+    - upgrading server running in Docker
+        - dump current database by running `docker-compose exec postgres pg_dumpall -l <database_name> -f /var/lib/postgresql/data/<database_name>.backup` (in case you are using more databases repeat this step for each database)
+        - backup current database mounted volume `mv var/postgres-data/pgdata var/postgres-data/pgdata.old`
+        - change service version in `docker-compose.yml`
+            - you should change it also in all `docker-compose*.dist` files such as:
+                - `docker/conf/docker-compose.yml.dist`
+                - `docker/conf/docker-compose-mac.yml.dist`
+                - `docker/conf/docker-compose-win.yml.dist`
+
+            ```diff
+                services:
+                    postgres:
+            -           image: postgres:10.5-alpine
+            +           image: postgres:12.1-alpine
+            ``` 
+
+        - rebuild and create containers with `docker-compose up -d --build`
+        - import dumped data into new database server by running `docker-compose exec postgres psql -f /var/lib/postgresql/data/<database_name>.backup <database_name>` (this needs to be done for each database dumped from first step)
+        - if everything works well you may remove backuped data `rm -r var/postgres-data/pgdata.old`
+    - for native installation we recommend to upgrade to version 11 first and then to version 12
+        - to prevent unexpected behavior do not try this in production environment before previous testing
+        - you should follow official instructions with using [pg_upgrade](https://www.postgresql.org/docs/12/pgupgrade.html) or [pg_dumpall](https://www.postgresql.org/docs/12/app-pg-dumpall.html)
+            - [migration to version 11](https://www.postgresql.org/docs/11/release-11.html#id-1.11.6.11.4)
+            - [migration to version 12](https://www.postgresql.org/docs/12/release-12.html#id-1.11.6.6.4)
+        - do not forget to check for BC breaks which may be introduced for your project
+
 ### Configuration
 - add trailing slash to all your localized paths for `front_product_search` route ([#1067](https://github.com/shopsys/shopsys/pull/1067))
     - be aware, if you already have such paths (`hledani/`, `search/`) in your application
