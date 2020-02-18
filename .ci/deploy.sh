@@ -17,6 +17,10 @@ declare -A PARAMETERS=(
     ["parameters.database_user"]=${POSTGRES_DATABASE_USER}
     ["parameters.elasticsearch_host"]=${ELASTICSEARCH_IP_ADDRESS_HOST}:${ELASTICSEARCH_HOST_PORT}
     ["parameters.trusted_proxies[+]"]=10.0.0.0/8
+    ["parameters.sconto_bridge_config.enabled"]=${SCONTO_BRIDGE_DEV_ENABLED}
+    ["parameters.sconto_bridge_config.base_uri"]=${SCONTO_BRIDGE_DEV_BASE_URI}
+    ["parameters.sconto_bridge_config.user"]=${SCONTO_BRIDGE_DEV_USER}
+    ["parameters.sconto_bridge_config.password"]=${SCONTO_BRIDGE_DEV_PASSWORD}
 )
 
 VARS=(
