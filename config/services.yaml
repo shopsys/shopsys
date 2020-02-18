@@ -236,3 +236,5 @@ services:
             $logger: '@monolog.logger.cron'
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository: '@App\Model\Customer\User\CustomerUserRepository'
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository: '@App\Model\Product\Parameter\ParameterRepository'

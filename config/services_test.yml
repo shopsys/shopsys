@@ -108,3 +108,5 @@ services:
     App\Model\Product\Search\FilterQueryFactory: ~
 
     Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory: '@App\Model\Product\Search\FilterQueryFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository: '@App\Model\Product\Parameter\ParameterRepository'

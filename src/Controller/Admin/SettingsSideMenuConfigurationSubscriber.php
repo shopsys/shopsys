@@ -26,5 +26,11 @@ class SettingsSideMenuConfigurationSubscriber implements EventSubscriberInterfac
     {
         $listsSubMenu = $event->getMenu()->getChild('lists');
         $listsSubMenu->removeChild('availabilities');
+
+        $seoMenu = $event->getMenu()->getChild('seo');
+        $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Rozšířené SEO kategorií')]);
+        $categorySeoMenu->addChild('new_category', ['route' => 'admin_categoryseo_newcategory', 'label' => t('Rozšířené SEO kategorií - volba kategorie'), 'display' => false]);
+        $categorySeoMenu->addChild('new_filters', ['route' => 'admin_categoryseo_newfilters', 'label' => t('Rozšířené SEO kategorie - filtry'), 'display' => false]);
+        $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Rozšířené SEO kategorie - kombinace'), 'display' => false]);
     }
 }
