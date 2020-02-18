@@ -1,5 +1,6 @@
 @web-footer-with-cookies-margin-bottom: 36px;
 @web-footer-background: @color-light;
+@web-footer-border: 1px solid darken(@web-footer-background, 5%);
 
 img {
     max-width: 100%;
@@ -32,6 +33,10 @@ img {
         &--grey {
             background: @color-light;
         }
+
+        &--grey-bottom-border {
+            border-bottom: @web-footer-border;
+        }
     }
 
     &__container {
@@ -53,7 +58,7 @@ img {
         .web__main--with-panel & {
             padding: 0;
             width: 100%;
-        }
+        } 
     }
 
     &__main {

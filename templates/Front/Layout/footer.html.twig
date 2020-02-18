@@ -4,17 +4,116 @@
             {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction')) }}
         </div>
     </div>
+    <div class="web__line web__line--grey web__line--grey-bottom-border clearfix dont-print">
+        <div class="web__container footer__wrap">
+            <div class="footer__block">
+                <div class="footer__block__contact">
+                     <div class="footer__block__menu__item padding-0">
+                        <img class="footer__block__img footer__block__img--logo" loading="lazy" data-src="{{ asset('assets/frontend/images/logo_footer.svg') }}" alt="{{ 'SCONTO'|trans }}">
+                        <p class="footer__block__paragraph">{{ 'SCONTO Nábytek s.r.o. je součástí německého<br>koncernu Höffner, který patří k největším<br>producentům nábytku v Evropě již od roku 1990.'|trans|raw }}</p>
+                        <div class="footer__block__langs">
+                            <a href="#" class="footer__block__langs__link no-hover-decoration js-not-implemented-yet">
+                                <img class="footer__block__img footer__block__img--lang" loading="lazy" data-src="{{ asset('assets/frontend/images/flags/cz.svg') }}" alt="{{ 'Česká republika'|trans }}">
+                                <span class="footer__block__label">{{ 'Česká republika'|trans }}</span>
+                            </a>
+                            <a href="#" class="footer__block__langs__link no-hover-decoration js-not-implemented-yet">
+                                <img class="footer__block__img footer__block__img--lang" loading="lazy" data-src="{{ asset('assets/frontend/images/flags/sk.svg') }}" alt="{{ 'Slovensko'|trans }}">
+                                <span class="footer__block__label">{{ 'Slovensko'|trans }}</span>
+                            </a>
+                        </div>
+                        <h2 class="footer__block__heading footer__block__heading--inline-xs">{{ 'Sledujte nás'|trans }}</h2>
+                        <a class="no-hover-decoration js-not-implemented-yet" href="https://www.facebook.com/scontonabytekcz/" target="_blank">
+                            <img class="footer__block__img footer__block__img--social" loading="lazy" data-src="{{ asset('assets/frontend/images/social/facebook.svg') }}" alt="{{ 'Facebook'|trans }}">
+                        </a>
+                        <a class="no-hover-decoration js-not-implemented-yet" href="https://www.instagram.com/sconto_nabytek/" target="_blank">
+                            <img class="footer__block__img footer__block__img--social" loading="lazy" data-src="{{ asset('assets/frontend/images/social/instagram.svg') }}" alt="{{ 'Instagram'|trans }}">
+                        </a>
+                    </div>
+                </div>
+                <div class="footer__block__menu js-not-implemented-yet">
+                    <div class="footer__block__menu__item">
+                        <h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-1">{{ 'O Scontu'|trans }} <i class="svg svg-arrow"></i></h2>
+                        <ul class="footer__block__list footer__block__toggle" id="js-footer-menu-1">
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'O nás'|trans }}</a>
+                            </li>
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Práce ve Scontu'|trans }}</a>
+                            </li>
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Spolupráce'|trans }}</a>
+                            </li>
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Pro média'|trans }}</a>
+                            </li>
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Kontakty'|trans }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer__block__menu__item">
+                        <h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-2">{{ 'O nákupu'|trans }} <i class="svg svg-arrow"></i></h2>
+                        <ul class="footer__block__list footer__block__toggle" id="js-footer-menu-2">
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Péče o nábytek'|trans }}</a>
+                            </li>
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Nákup na splátky'|trans }}</a>
+                            </li>
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Reklamace'|trans }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer__block__menu__item">
+                        <h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-3">{{ 'E-shop'|trans }} <i class="svg svg-arrow"></i></h2>
+                        <div class="footer__block__toggle" id="js-footer-menu-3">
+                            <ul class="footer__block__list footer__block__list--bottom-spacing">
+                                <li class="footer__block__list__item">
+                                    <a href="#" class="footer__block__list__link">{{ 'Nejčastější dotazy FAQ'|trans }}</a>
+                                </li>
+                                <li class="footer__block__list__item">
+                                    <a href="#" class="footer__block__list__link">{{ 'Doprava a platba'|trans }}</a>
+                                </li>
+                                <li class="footer__block__list__item">
+                                    <a href="#" class="footer__block__list__link">{{ 'Odstoupení od smlouvy'|trans }}</a>
+                                </li>
+                                <li class="footer__block__list__item">
+                                    <a href="#" class="footer__block__list__link">{{ 'Obchodní podmínky e-shopu'|trans }}</a>
+                                </li>
+                            </ul>
+                         </div>
+                            <h2 class="footer__block__heading footer__block__heading--inner footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-5">{{ 'Možnosti platby'|trans }} <i class="svg svg-arrow"></i></h2>
+                            <div class="footer__block__toggle" id="js-footer-menu-5">
+                                <img class="footer__block__img footer__block__img--payment" loading="lazy" data-src="{{ asset('assets/frontend/images/payments/mastercard.svg') }}" alt="{{ 'Mastercard'|trans }}">
+                                <img class="footer__block__img footer__block__img--payment" loading="lazy" data-src="{{ asset('assets/frontend/images/payments/visa.svg') }}" alt="{{ 'VISA'|trans }}">
+                            </div>
+                    </div>
+                    <div class="footer__block__menu__item margin-0">
+                        <h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-4">{{ 'Prodejny'|trans }} <i class="svg svg-arrow"></i></h2>
+                        <ul class="footer__block__list footer__block__toggle" id="js-footer-menu-4">
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Kde nás najdete'|trans }}</a>
+                            </li>
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Služby obchodních domů'|trans }}</a>
+                            </li>
+                            <li class="footer__block__list__item">
+                                <a href="#" class="footer__block__list__link">{{ 'Obchodní podmínky OD'|trans }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="web__line">
         <footer class="web__container footer__bottom">
             <div class="footer__bottom__copyright dont-print">
-                Made with passion by <a href="http://www.shopsys-framework.com/">Shopsys Framework</a>
+                &copy; {{ 'now' | date('Y') }} {{ 'Copyright Sconto Nábytek, s.r.o.'|trans }}
             </div>
-
             <div class="footer__bottom__articles">
-                {{ getShopInfoPhoneNumber() }}
-                {{ getShopInfoEmail() }}
                 {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction')) }}
-                <a class="menu__item__link" href="{{ url('front_contact') }}">{{ 'Contact'|trans }}</a>
             </div>
         </footer>
     </div>
