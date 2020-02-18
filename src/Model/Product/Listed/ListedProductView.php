@@ -22,17 +22,22 @@ class ListedProductView extends BaseListedProductView
     private $nameSufix;
 
     /**
-     * ListedProductView constructor.
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     */
+    private $nonSellingPrice;
+
+    /**
      * @param int $id
      * @param string $name
      * @param string|null $shortDescription
      * @param string $availability
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $sellingPrice
-     * @param int[] $flagIds
+     * @param array $flagIds
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $action
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
      * @param string|null $namePrefix
      * @param string|null $nameSufix
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null $nonSellingPrice
      */
     public function __construct(
         int $id,
@@ -44,12 +49,14 @@ class ListedProductView extends BaseListedProductView
         ProductActionView $action,
         ?ImageView $image,
         ?string $namePrefix,
-        ?string $nameSufix
+        ?string $nameSufix,
+        ?ProductPrice $nonSellingPrice
     ) {
         parent::__construct($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
 
         $this->namePrefix = $namePrefix;
         $this->nameSufix = $nameSufix;
+        $this->nonSellingPrice = $nonSellingPrice;
     }
 
     /**
@@ -66,5 +73,13 @@ class ListedProductView extends BaseListedProductView
     public function getNameSufix(): ?string
     {
         return $this->nameSufix;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     */
+    public function getNonSellingPrice(): ?ProductPrice
+    {
+        return $this->nonSellingPrice;
     }
 }

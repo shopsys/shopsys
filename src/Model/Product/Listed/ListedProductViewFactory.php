@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Listed;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
@@ -53,7 +56,8 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productActionView,
             $imageView,
             $product->getNamePrefix(),
-            $product->getNameSufix()
+            $product->getNameSufix(),
+            $this->getProductPriceWithVatByMonkey($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero())
         );
     }
 
@@ -76,7 +80,23 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productActionView,
             $imageView,
             $productArray['name_prefix'],
-            $productArray['name_sufix']
+            $productArray['name_sufix'],
+            $this->getProductPriceWithVatByMonkey($productArray['non_selling_price'] === null ? Money::zero() : Money::create($productArray['non_selling_price'] . ''))
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     */
+    private function getProductPriceWithVatByMonkey(Money $priceWithVat): ProductPrice
+    {
+        return new ProductPrice(
+            new Price(
+                Money::zero(),
+                $priceWithVat
+            ),
+            false
         );
     }
 }

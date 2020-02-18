@@ -28,12 +28,8 @@
                                             {{ productView.sellingPrice.priceWithVat|price }}
                                         {% endif %}
                                     </div>
-                                    <div class="list-products__item__info__price__item">
-                                        {% if productView.sellingPrice.priceFrom %}
-                                            {{ 'from %price%'|trans({'%price%': productView.sellingPrice.priceWithoutVat|price}) }}
-                                        {% else %}
-                                            {{ productView.sellingPrice.priceWithoutVat|price }}
-                                        {% endif %}
+                                    <div class="list-products__item__info__price__item list-products__item__info__price__item--high-price">
+                                        {{ productView.nonSellingPrice.priceWithVat|price }}
                                     </div>
                                 </div>
                             {% endif %}

@@ -15,9 +15,9 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
     public function fillEmptyFields(array $product): array
     {
         $result = parent::fillEmptyFields($product);
-
-        $productArray['name_prefix'] = $product['name_prefix'] ?? '';
-        $productArray['name_sufix'] = $product['name_sufix'] ?? '';
+        $result['name_prefix'] = $product['name_prefix'] ?? '';
+        $result['name_sufix'] = $product['name_sufix'] ?? '';
+        $result['non_selling_price'] = $product['non_selling_price'] ?? null;
 
         return $result;
     }

@@ -83,8 +83,8 @@
                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
                                             {{ getProductSellingPrice(product).priceWithVat|price }}
                                         </div>
-                                        <div class="box-detail-add__prices__item">
-                                            {{ getProductSellingPrice(product).priceWithoutVat|price }} {{ 'excluding VAT'|trans }}
+                                        <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
+                                            {{ getProductNonSellingPrice(product, domain.id).priceWithVat|price }}
                                         </div>
                                         <meta itemprop="priceCurrency"
                                             content="{{ currencyCode(domain.id) }}"
