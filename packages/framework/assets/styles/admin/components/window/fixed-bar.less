@@ -52,7 +52,7 @@
 
     &__item {
         display: flex;
-        height: @input-height + 4px;
+        min-height: @input-height + 4px;
         padding-left: 0;
         padding-right: 22px;
         flex: 1;
@@ -99,6 +99,7 @@
             &__icon {
                 position: relative;
                 top: 1px;
+                padding-right: 5px;
             }
 
             .window-fixed-bar--top & {
