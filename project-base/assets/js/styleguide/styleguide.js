@@ -1,16 +1,13 @@
+import 'codemirror/addon/scroll/simplescrollbars';
 import CodeMirror from 'codemirror';
 /**
  * Script used for the Styleguide structure only
  */
 
-// eslint-disable-next-line no-global-assign
-if (typeof window !== 'undefined') global = window;
-
 const StyleguideIndex = {
     init: function () {
         this.$body = $('html, body');
         this.$breakpointsLinks = $('.styleguide-header__breakpoints__item__link');
-        this.$sidebarContent = $('.styleguide-sidebar__content');
         this.$sidebarLinks = $('.styleguide-sidebar__nav__item__link');
         this.$sidebarToggle = $('[class*="styleguide-sidebar__toggle"]');
         this.$iframe = $('.styleguide-iframe-content');

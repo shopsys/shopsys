@@ -118,6 +118,18 @@ import registerAdmin from 'framework/admin/registerAdmin';
 registerAdmin();
 ```
 
+- Update your `assets/js/styleguide/styleguide.js`
+```diff
++ import 'codemirror/addon/scroll/simplescrollbars';
+  import CodeMirror from 'codemirror';
+
+- if (typeof window !== 'undefined') global = window;
+
+  const StyleguideIndex = {
+      // ...
+  }
+```
+
 - Update your `base.html.twig` template
 ```diff
      <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/index' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
