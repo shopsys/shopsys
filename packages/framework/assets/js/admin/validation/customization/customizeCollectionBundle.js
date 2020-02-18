@@ -1,5 +1,5 @@
-import FormChangeInfo from '../../components/formChangeInfo';
-import { highlightSubmitButtons } from '../../../common/validation/validation';
+import FormChangeInfo from '../../components/FormChangeInfo';
+import { highlightSubmitButtons } from '../../../common/validation/validationHelpers';
 
 export function addNewItemToCollection (collectionSelector, itemIndex) {
     $($(collectionSelector)).jsFormValidator('addPrototype', itemIndex);

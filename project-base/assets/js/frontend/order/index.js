@@ -1,3 +1,3 @@
-import './order';
-import './orderRememberData';
-import './preview';
+import './PaymentTransportRelations';
+import './OrderRememberData';
+import './OrderPreview';

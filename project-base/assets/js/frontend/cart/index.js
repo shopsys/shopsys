@@ -1,3 +1,3 @@
-import './cartBox';
-import './cartRecalculator';
-import './cartBoxItemRemover.js';
+import './CartBox';
+import './CartRecalculator';
+import './CartBoxItemRemover';

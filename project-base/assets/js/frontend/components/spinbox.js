@@ -1,5 +1,5 @@
-import Repeater from './repeater';
-import Register from 'framework/common/utils/register';
+import Repeater from './Repeater';
+import Register from 'framework/common/utils/Register';
 
 export default class Spinbox {
 

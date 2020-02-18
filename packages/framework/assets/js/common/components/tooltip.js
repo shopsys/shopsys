@@ -1,4 +1,4 @@
-import Register from '../utils/register';
+import Register from '../utils/Register';
 import '../../common/bootstrap/tooltip';
 
 export const tooltip = ($container) => $container.filterAllNodes('.js-tooltip[title]').tooltip();

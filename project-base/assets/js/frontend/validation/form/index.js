@@ -1,2 +1,2 @@
-import './customer';
-import './order';
+import './customerValidator';
+import './orderValidator';

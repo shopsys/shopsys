@@ -1,5 +1,5 @@
 import './datePicker';
 import './tabs';
-import './toggleElement';
+import './ToggleElement';
 import './tooltip';
-import './checkboxToggle';
+import './CheckboxToggle';
