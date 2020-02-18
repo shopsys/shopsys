@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -128,7 +130,7 @@ class CustomerController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);

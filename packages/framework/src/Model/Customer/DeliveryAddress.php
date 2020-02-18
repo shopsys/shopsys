@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 
 /**
  * @ORM\Table(name="delivery_addresses")
@@ -18,6 +21,14 @@ class DeliveryAddress
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
+     *
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer", inversedBy="deliveryAddresses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $customer;
 
     /**
      * @var string|null
@@ -80,14 +91,8 @@ class DeliveryAddress
      */
     public function __construct(DeliveryAddressData $deliveryAddressData)
     {
-        $this->street = $deliveryAddressData->street;
-        $this->city = $deliveryAddressData->city;
-        $this->postcode = $deliveryAddressData->postcode;
-        $this->companyName = $deliveryAddressData->companyName;
-        $this->firstName = $deliveryAddressData->firstName;
-        $this->lastName = $deliveryAddressData->lastName;
-        $this->telephone = $deliveryAddressData->telephone;
-        $this->country = $deliveryAddressData->country;
+        $this->setData($deliveryAddressData);
+        $this->customer = $deliveryAddressData->customer;
     }
 
     /**
@@ -95,6 +100,14 @@ class DeliveryAddress
      */
     public function edit(DeliveryAddressData $deliveryAddressData)
     {
+        $this->setData($deliveryAddressData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
+     */
+    protected function setData(DeliveryAddressData $deliveryAddressData): void
+    {
         $this->street = $deliveryAddressData->street;
         $this->city = $deliveryAddressData->city;
         $this->postcode = $deliveryAddressData->postcode;
@@ -106,9 +119,17 @@ class DeliveryAddress
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string|null
      */
-    public function getCompanyName()
+    public function getCompanyName(): ?string
     {
         return $this->companyName;
     }
@@ -116,7 +137,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getFirstName()
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
@@ -124,7 +145,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getLastName()
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
@@ -132,7 +153,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getStreet()
+    public function getStreet(): ?string
     {
         return $this->street;
     }
@@ -140,7 +161,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getCity()
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -148,7 +169,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getPostcode()
+    public function getPostcode(): ?string
     {
         return $this->postcode;
     }
@@ -156,7 +177,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getTelephone()
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
@@ -164,8 +185,16 @@ class DeliveryAddress
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
-    public function getCountry()
+    public function getCountry(): ?Country
     {
         return $this->country;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    public function getCustomer(): Customer
+    {
+        return $this->customer;
     }
 }

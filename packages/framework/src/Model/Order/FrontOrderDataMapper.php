@@ -48,18 +48,6 @@ class FrontOrderDataMapper
         $frontOrderData->city = $billingAddress->getCity();
         $frontOrderData->postcode = $billingAddress->getPostcode();
         $frontOrderData->country = $billingAddress->getCountry();
-        if ($customerUser->getDeliveryAddress() !== null) {
-            $frontOrderData->deliveryAddressSameAsBillingAddress = false;
-            $frontOrderData->deliveryFirstName = $customerUser->getDeliveryAddress()->getFirstName();
-            $frontOrderData->deliveryLastName = $customerUser->getDeliveryAddress()->getLastName();
-            $frontOrderData->deliveryCompanyName = $customerUser->getDeliveryAddress()->getCompanyName();
-            $frontOrderData->deliveryTelephone = $customerUser->getDeliveryAddress()->getTelephone();
-            $frontOrderData->deliveryStreet = $customerUser->getDeliveryAddress()->getStreet();
-            $frontOrderData->deliveryCity = $customerUser->getDeliveryAddress()->getCity();
-            $frontOrderData->deliveryPostcode = $customerUser->getDeliveryAddress()->getPostcode();
-            $frontOrderData->deliveryCountry = $customerUser->getDeliveryAddress()->getCountry();
-        } else {
-            $frontOrderData->deliveryAddressSameAsBillingAddress = true;
-        }
+        $frontOrderData->deliveryAddress = $customerUser->getDefaultDeliveryAddress();
     }
 }

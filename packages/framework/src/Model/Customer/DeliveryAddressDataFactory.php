@@ -30,7 +30,6 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
      */
     protected function fillFromDeliveryAddress(DeliveryAddressData $deliveryAddressData, DeliveryAddress $deliveryAddress)
     {
-        $deliveryAddressData->addressFilled = true;
         $deliveryAddressData->companyName = $deliveryAddress->getCompanyName();
         $deliveryAddressData->firstName = $deliveryAddress->getFirstName();
         $deliveryAddressData->lastName = $deliveryAddress->getLastName();
@@ -39,5 +38,6 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
         $deliveryAddressData->city = $deliveryAddress->getCity();
         $deliveryAddressData->postcode = $deliveryAddress->getPostcode();
         $deliveryAddressData->country = $deliveryAddress->getCountry();
+        $deliveryAddressData->customer = $deliveryAddress->getCustomer();
     }
 }

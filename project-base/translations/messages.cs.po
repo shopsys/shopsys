@@ -31,6 +31,9 @@ msgstr "Uplatnit"
 msgid "Attention! You are administrator logged in as the customer."
 msgstr "Pozor! Jste jako administrátor přihlášen za zákazníka."
 
+msgid "Availability"
+msgstr "Dostupnost"
+
 msgid "Back to buying"
 msgstr "Zpět k nákupu"
 
@@ -133,6 +136,15 @@ msgstr "Datum přihlášení"
 msgid "Delivery address"
 msgstr "Dodací adresa"
 
+msgid "Delivery address could not be removed."
+msgstr "Dodací adresu se nepodařilo odstranit."
+
+msgid "Delivery address has been removed."
+msgstr "Dodací adresa byla odstraněna."
+
+msgid "Delivery addresses"
+msgstr "Dodací adresy"
+
 msgid "Delivery data"
 msgstr "Dodací údaje"
 
@@ -144,6 +156,9 @@ msgstr "Sleva"
 
 msgid "Displaying"
 msgstr "Zobrazuji"
+
+msgid "Do you really want to remove this delivery address?"
+msgstr "Opravdu si přejete odebrat tuto dodací adresu?"
 
 msgid "Do you want to receive the newest information about our shop? Subscribe to our email newsletter."
 msgstr "Chcete dostávat nejnovější informace z našeho obchodu? Přihlašte se do našeho e-mailového zpravodaje."
@@ -274,6 +289,9 @@ msgstr "Mé objednávky"
 msgid "Name"
 msgstr "Název"
 
+msgid "New delivery address"
+msgstr "Nová dodací adresa"
+
 msgid "No"
 msgstr "Ne"
 
@@ -300,6 +318,9 @@ msgstr "Není z čeho vybírat."
 
 msgid "Number of items"
 msgstr "Počet položek"
+
+msgid "Ok"
+msgstr ""
 
 msgid "Online shop"
 msgstr "Internetový obchod"
@@ -346,9 +367,6 @@ msgstr "Stránka nenalezena!"
 msgid "Page you are looking for either no longer exists or you entered wrong address."
 msgstr "Stránka, kterou hledáte buďto již neexistuje, nebo jste zadali špatnou adresu."
 
-msgid "Parameters"
-msgstr "Parametry"
-
 msgid "Password"
 msgstr "Heslo"
 
@@ -385,6 +403,9 @@ msgstr "Přehled osobních údajů"
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů"
 
+msgid "Please check the entered values.<br>"
+msgstr "Prosím zkontrolujte zadané hodnoty.<br>"
+
 msgid "Please enter promo code."
 msgstr "Zadejte, prosím, slevový kupón."
 
@@ -406,14 +427,11 @@ msgstr "Rozcestník kategorií"
 msgid "Postcode"
 msgstr "PSČ"
 
-msgid "Price from"
-msgstr "Cena od"
+msgid "Price"
+msgstr "Cena"
 
 msgid "Price including VAT"
 msgstr "Cena s DPH"
-
-msgid "Price to"
-msgstr "Cena do"
 
 msgid "Print"
 msgstr "Vytisknout"
@@ -423,6 +441,9 @@ msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> ({{ quanti
 
 msgid "Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})"
 msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> (celkem již {{ quantity|formatNumber }} {{ unitName }})"
+
+msgid "Product filter"
+msgstr "Filtr produktů"
 
 msgid "Product information"
 msgstr "Informace o produktu"
@@ -460,6 +481,9 @@ msgstr "Registrace"
 msgid "Remember my login"
 msgstr "Zapamatuj si mé přihlášení"
 
+msgid "Remove item"
+msgstr "Odebrat položku"
+
 msgid "Reset password"
 msgstr "Resetovat heslo"
 
@@ -495,9 +519,6 @@ msgstr "Nastavit nové heslo"
 
 msgid "Shipping"
 msgstr "Doprava"
-
-msgid "Shipping address"
-msgstr "Doručovací adresa"
 
 msgid "Shipping and payment"
 msgstr "Doprava a platba"
@@ -564,6 +585,9 @@ msgstr "Tyto stránky používají cookies. Setrváním na stránkách s tímto 
 
 msgid "To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us."
 msgstr "Abychom předešli možnosti zcizení účtu, je třeba změnu e-mailu řešit individuálně. Pokud se Vám e-mailová adresa změnila, tak nás prosím kontaktujte."
+
+msgid "Total"
+msgstr "Celkem"
 
 msgid "Total amount of VAT"
 msgstr "Celková výše DPH"
@@ -666,6 +690,9 @@ msgstr "zboží"
 
 msgid "records"
 msgstr "záznamů"
+
+msgid "to"
+msgstr "do"
 
 msgid "{0} No product found | {1} 1 product found | [2,Inf] %totalProductCount% product found"
 msgstr "{0} Nebyl nalezen žádný produkt | {1} Celkem nalezen 1 produkt | [2,4] Celkem nalezeny %totalProductCount% produkty | [5,Inf] Celkem nalezeno %totalProductCount% produktů"

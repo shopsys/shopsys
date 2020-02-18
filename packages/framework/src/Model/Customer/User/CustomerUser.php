@@ -66,13 +66,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     protected $lastActivity;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress", cascade={"persist"}, orphanRemoval=true)
-     * @ORM\JoinColumn(nullable=true)
-     */
-    protected $deliveryAddress;
-
-    /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
@@ -117,16 +110,19 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     protected $telephone;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress")
+     * @ORM\JoinColumn(name="default_delivery_address_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
-    public function __construct(
-        CustomerUserData $customerUserData,
-        ?DeliveryAddress $deliveryAddress
-    ) {
+    protected $defaultDeliveryAddress;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     */
+    public function __construct(CustomerUserData $customerUserData)
+    {
         $this->firstName = $customerUserData->firstName;
         $this->lastName = $customerUserData->lastName;
-        $this->deliveryAddress = $deliveryAddress;
         if ($customerUserData->createdAt !== null) {
             $this->createdAt = $customerUserData->createdAt;
         } else {
@@ -137,6 +133,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         $this->telephone = $customerUserData->telephone;
         $this->setEmail($customerUserData->email);
         $this->customer = $customerUserData->customer;
+        $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
     }
 
     /**
@@ -148,6 +145,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         $this->lastName = $customerUserData->lastName;
         $this->pricingGroup = $customerUserData->pricingGroup;
         $this->telephone = $customerUserData->telephone;
+        $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
     }
 
     /**
@@ -274,14 +272,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     */
-    public function getDeliveryAddress()
-    {
-        return $this->deliveryAddress;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -334,13 +324,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
      */
     public function unserialize($serialized)
     {
-        list(
+        [
             $this->id,
             $this->email,
             $this->password,
             $timestamp,
             $this->domainId
-        ) = unserialize($serialized);
+        ] = unserialize($serialized);
         $this->lastActivity = new DateTime();
         $this->lastActivity->setTimestamp($timestamp);
     }
@@ -401,10 +391,10 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
-    public function setDeliveryAddress(?DeliveryAddress $deliveryAddress): void
+    public function getDefaultDeliveryAddress(): ?DeliveryAddress
     {
-        $this->deliveryAddress = $deliveryAddress;
+        return $this->defaultDeliveryAddress;
     }
 }

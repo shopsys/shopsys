@@ -355,12 +355,12 @@ class OrderFormType extends AbstractType
     private function createShippingAddressGroup(FormBuilderInterface $builder, array $countries)
     {
         $builderShippingAddressGroup = $builder->create('shippingAddressGroup', GroupType::class, [
-            'label' => t('Shipping address'),
+            'label' => t('Delivery address'),
         ]);
 
         $builderShippingAddressGroup
             ->add('deliveryAddressSameAsBillingAddress', CheckboxType::class, [
-                'label' => t('Shipping address is the same as billing address'),
+                'label' => t('Delivery address is the same as billing address'),
                 'required' => false,
                 'attr' => [
                     'data-checkbox-toggle-container-class' => 'js-delivery-address-fields',

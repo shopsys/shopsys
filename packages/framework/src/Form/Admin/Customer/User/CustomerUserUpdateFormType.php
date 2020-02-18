@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer\User;
 
 use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType;
-use Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType;
+use Shopsys\FrameworkBundle\Form\DeliveryAddressListType;
 use Shopsys\FrameworkBundle\Form\OrderListType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
@@ -50,13 +50,6 @@ class CustomerUserUpdateFormType extends AbstractType
                     'class' => 'wrap-divider',
                 ],
             ])
-            ->add('deliveryAddressData', DeliveryAddressFormType::class, [
-                'domain_id' => $options['domain_id'],
-                'render_form_row' => false,
-                'attr' => [
-                    'class' => 'wrap-divider',
-                ],
-            ])
             ->add('save', SubmitType::class);
 
         if ($options['customerUser'] === null) {
@@ -65,6 +58,9 @@ class CustomerUserUpdateFormType extends AbstractType
                 'label' => t('Send confirmation e-mail about registration to customer'),
             ]);
         } else {
+            $builder->add('deliveryAddresses', DeliveryAddressListType::class, [
+                'customerUser' => $options['customerUser'],
+            ]);
             $builder->add('orders', OrderListType::class, [
                 'customerUser' => $options['customerUser'],
             ]);

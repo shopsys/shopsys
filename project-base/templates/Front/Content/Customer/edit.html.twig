@@ -75,21 +75,24 @@
                 </div>
 
                 <div id="{{ form.deliveryAddressData.vars.id }}" class="wrap-box">
-                    <h2 class="wrap-box__title">{{ 'Shipping address'|trans }}</h2>
+                    <h2 class="wrap-box__title">{{ 'Delivery addresses'|trans }}</h2>
                     <div class="wrap-box__in">
+
+                        {{ form_row(form.customerUserData.defaultDeliveryAddress) }}
                         {{ form_row(form.deliveryAddressData.addressFilled, {
-                            attr: { class: 'js-checkbox-toggle', 'data-checkbox-toggle-container-id': 'js-delivery-address-fields' },
-                            label: 'I want to deliver products to different address than the billing one'|trans})
+                            attr: { class: 'js-checkbox-toggle js-delivery-address-toggle', 'data-checkbox-toggle-container-id': 'js-delivery-address-fields' },
+                            label: 'New delivery address'|trans})
                         }}
+
                         <div id="js-delivery-address-fields">
-                            {{ form_row(form.deliveryAddressData.companyName, { label: 'Company'|trans}) }}
-                            {{ form_row(form.deliveryAddressData.firstName, { label: 'First name'|trans}) }}
-                            {{ form_row(form.deliveryAddressData.lastName, { label: 'Last name'|trans}) }}
-                            {{ form_row(form.deliveryAddressData.telephone, { label: 'Telephone'|trans}) }}
-                            {{ form_row(form.deliveryAddressData.street, { label: 'Street'|trans}) }}
-                            {{ form_row(form.deliveryAddressData.city, { label: 'City'|trans}) }}
-                            {{ form_row(form.deliveryAddressData.postcode, { label: 'Postcode'|trans}) }}
-                            {{ form_row(form.deliveryAddressData.country, { label: 'Country'|trans}) }}
+                            {{ form_row(form.deliveryAddressData.companyName, { label: 'Company'|trans }) }}
+                            {{ form_row(form.deliveryAddressData.firstName, { label: 'First name'|trans }) }}
+                            {{ form_row(form.deliveryAddressData.lastName, { label: 'Last name'|trans }) }}
+                            {{ form_row(form.deliveryAddressData.telephone, { label: 'Telephone'|trans }) }}
+                            {{ form_row(form.deliveryAddressData.street, { label: 'Street'|trans }) }}
+                            {{ form_row(form.deliveryAddressData.city, { label: 'City'|trans }) }}
+                            {{ form_row(form.deliveryAddressData.postcode, { label: 'Postcode'|trans }) }}
+                            {{ form_row(form.deliveryAddressData.country, { label: 'Country'|trans }) }}
                         </div>
                     </div>
                 </div>

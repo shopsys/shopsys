@@ -30,12 +30,33 @@ class Customer
     protected $billingAddresses;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]|\Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress", mappedBy="customer", cascade={"persist"})
+     */
+    protected $deliveryAddresses;
+
+    public function __construct()
+    {
+        $this->billingAddresses = new ArrayCollection();
+        $this->deliveryAddresses = new ArrayCollection();
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      */
     public function addBillingAddress(BillingAddress $billingAddress): void
     {
         $this->billingAddresses = new ArrayCollection();
         $this->billingAddresses->add($billingAddress);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
+     */
+    public function addDeliveryAddress(DeliveryAddress $deliveryAddress): void
+    {
+        $this->deliveryAddresses->add($deliveryAddress);
     }
 
     /**
@@ -52,5 +73,13 @@ class Customer
     public function getBillingAddress(): BillingAddress
     {
         return $this->billingAddresses->first();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]
+     */
+    public function getDeliveryAddresses(): array
+    {
+        return $this->deliveryAddresses->toArray();
     }
 }

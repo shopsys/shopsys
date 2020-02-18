@@ -184,6 +184,7 @@ class OrderController extends FrontBaseController
         if ($customerUser instanceof CustomerUser) {
             $this->orderFacade->prefillFrontOrderData($frontOrderFormData, $customerUser);
         }
+
         $domainId = $this->domain->getId();
         $frontOrderFormData->domainId = $domainId;
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -216,7 +217,8 @@ class OrderController extends FrontBaseController
             if ($orderFlow->nextStep()) {
                 $form = $orderFlow->createForm();
             } elseif ($flashMessageBag->isEmpty()) {
-                $order = $this->orderFacade->createOrderFromFront($orderData);
+                $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
+                $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
 
                 if ($frontOrderFormData->newsletterSubscription) {

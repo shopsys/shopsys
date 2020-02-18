@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Customer\User;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData;
 
@@ -25,13 +24,11 @@ class CustomerUser extends BaseUser
 {
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
     public function __construct(
-        BaseUserData $customerUserData,
-        ?DeliveryAddress $deliveryAddress
+        BaseUserData $customerUserData
     ) {
-        parent::__construct($customerUserData, $deliveryAddress);
+        parent::__construct($customerUserData);
     }
 
     /**

@@ -1,0 +1,38 @@
+{% block delivery_address_list_row %}
+    <div class="wrap-divider">
+        <h2>{{ 'Customer delivery addresses'|trans }}</h2>
+
+        {% if deliveryAddresses|length == 0 %}
+            {{ 'Customer has no delivery addresses.'|trans }}
+        {% else %}
+            <table class="table-main">
+                <thead>
+                    <tr>
+                        <th>{{ 'First name'|trans }}</th>
+                        <th>{{ 'Last name'|trans }}</th>
+                        <th>{{ 'Company name'|trans }}</th>
+                        <th>{{ 'Phone'|trans }}</th>
+                        <th>{{ 'Street'|trans }}</th>
+                        <th>{{ 'City'|trans }}</th>
+                        <th>{{ 'Postcode'|trans }}</th>
+                        <th>{{ 'Country'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for deliveryAddress in deliveryAddresses %}
+                        <tr>
+                            <td>{{ deliveryAddress.firstName }}</td>
+                            <td>{{ deliveryAddress.lastName }}</td>
+                            <td>{{ deliveryAddress.companyName }}</td>
+                            <td>{{ deliveryAddress.telephone }}</td>
+                            <td>{{ deliveryAddress.street }}</td>
+                            <td>{{ deliveryAddress.city }}</td>
+                            <td>{{ deliveryAddress.postcode }}</td>
+                            <td>{{ deliveryAddress.country.name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

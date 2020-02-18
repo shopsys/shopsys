@@ -176,7 +176,7 @@ Defines which entity should the images be assigned to.
 
 ### [OrderListType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/OrderListType.php)
 Displays a list of orders for given `user`.
-The list contains `order number`, `created on`, `billing address`, `shipping address`, `total price including VAT`, `status` and a link to order detail.
+The list contains `order number`, `created on`, `billing address`, `delivery address`, `total price including VAT`, `status` and a link to order detail.
 Displays text `Customer has no orders so far.` if User doesn't have any orders.
 
 #### user

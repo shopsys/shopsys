@@ -29,7 +29,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
         $customerUserData->pricingGroup = $pricingGroup;
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customerUser = new CustomerUser($customerUserData, null);
+        $customerUser = new CustomerUser($customerUserData);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
 
         $currentCustomerUserMock = $this->createMock(CurrentCustomerUser::class);

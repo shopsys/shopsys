@@ -67,7 +67,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $deliveryCountryData->names = ['cs' => 'Slovenská republika'];
         $deliveryCountry = new Country($deliveryCountryData);
         $deliveryAddressData = new DeliveryAddressData();
-        $deliveryAddressData->addressFilled = true;
+        $deliveryAddressData->addressFilled = false;
         $deliveryAddressData->street = 'deliveryStreet';
         $deliveryAddressData->city = 'deliveryCity';
         $deliveryAddressData->postcode = 'deliveryPostcode';
@@ -76,10 +76,14 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $deliveryAddressData->lastName = 'deliveryLastName';
         $deliveryAddressData->telephone = 'deliveryTelephone';
         $deliveryAddressData->country = $deliveryCountry;
+        $deliveryAddressData->customer = $customer;
 
         $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
+        $customer->addDeliveryAddress($this->createDeliveryAddress($deliveryAddressData));
+
         $deliveryAddress = $this->createDeliveryAddress($deliveryAddressData);
-        $customerUser = new CustomerUser($customerUserData, $deliveryAddress);
+
+        $customerUser = new CustomerUser($customerUserData);
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
@@ -123,7 +127,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
             'companyTaxNumber'
         );
 
-        $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder($customerUser, $order);
+        $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder($customerUser, $order, $deliveryAddress);
 
         $this->assertEquals($customerUserData, $customerUserUpdateData->customerUserData);
         $this->assertEquals($billingAddressData, $customerUserUpdateData->billingAddressData);
@@ -154,7 +158,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $billingAddressData = new BillingAddressData();
         $billingAddressData->customer = $customer;
         $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
-        $customerUser = new CustomerUser($customerUserData, null);
+        $customerUser = new CustomerUser($customerUserData);
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
@@ -209,7 +213,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $deliveryAddressData->telephone = $order->getDeliveryTelephone();
         $deliveryAddressData->country = $deliveryCountry;
 
-        $customerUserUpdateData = $customerUserUpdateDataFactory->createAmendedByOrder($customerUser, $order);
+        $customerUserUpdateData = $customerUserUpdateDataFactory->createAmendedByOrder($customerUser, $order, null);
 
         $this->assertEquals($customerUserData, $customerUserUpdateData->customerUserData);
         $this->assertEquals($deliveryAddressData, $customerUserUpdateData->deliveryAddressData);

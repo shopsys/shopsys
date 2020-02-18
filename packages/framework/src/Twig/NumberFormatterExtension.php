@@ -78,6 +78,10 @@ class NumberFormatterExtension extends Twig_Extension
                 'formatPercent',
                 [$this, 'formatPercent']
             ),
+            new \Twig_SimpleFilter(
+                'isInteger',
+                [$this, 'isInteger']
+            ),
         ];
     }
 
@@ -156,5 +160,14 @@ class NumberFormatterExtension extends Twig_Extension
     public function getName()
     {
         return 'number_formatter_extension';
+    }
+
+    /**
+     * @param mixed $number
+     * @return bool
+     */
+    public function isInteger($number)
+    {
+        return is_numeric($number) && (int)$number == $number;
     }
 }
