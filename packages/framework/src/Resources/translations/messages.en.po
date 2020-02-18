@@ -175,7 +175,7 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-msgid "Ancestor category"
+msgid "Parent category"
 msgstr ""
 
 msgid "Applicable variables"
@@ -2529,4 +2529,3 @@ msgstr ""
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr ""
-

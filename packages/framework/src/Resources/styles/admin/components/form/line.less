@@ -98,7 +98,7 @@
         position: absolute;
         top: calc(~"50% - @{form-error-icon-size}/2");
         left: -12px;
-        
+
         .box-login & {
             top: 32px
         }
@@ -190,6 +190,9 @@
         }
 
         &__domain {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             min-height: @form-line-min-height;
 
             &__image {

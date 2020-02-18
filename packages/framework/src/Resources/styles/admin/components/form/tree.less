@@ -119,8 +119,6 @@
             margin-right: 5px;
             margin-left: -5px;
 
-            cursor: move;
-
             &:hover {
                 outline: 1px dotted @color-border;
                 outline-offset: -1px;
@@ -130,6 +128,13 @@
         &__name {
             display: block;
             font-size: 14px;
+            cursor: default;
+
+            &.ui-sortable-handle {
+                .form-tree--dragable & {
+                    cursor: move;
+                }
+            }
 
             input {
                 margin: 0 10px;

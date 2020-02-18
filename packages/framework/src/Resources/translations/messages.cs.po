@@ -175,7 +175,7 @@ msgstr "Všechny výsledky hledání"
 msgid "Amount"
 msgstr "Množství"
 
-msgid "Ancestor category"
+msgid "Parent category"
 msgstr "Nadřazená kategorie"
 
 msgid "Applicable variables"

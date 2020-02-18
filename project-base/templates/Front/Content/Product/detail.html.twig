@@ -146,7 +146,7 @@
                     </div>
                 </div>
 
-                {% if product.isMainVariant %}
+                {% if product.isMainVariant and not product.calculatedSellingDenied %}
                     <table {% if getProductSellingPrice(product) is not null %}itemprop="offers"
                         itemscope
                         itemtype="http://schema.org/AggregateOffer" {% endif %}

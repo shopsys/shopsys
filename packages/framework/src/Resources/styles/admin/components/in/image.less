@@ -23,11 +23,11 @@
     }
 
     &--long-bordered {
+        top: 9px;
         height: @in-image-height;
         line-height: @in-image-height;
         width: 56px;
         box-sizing: content-box;
-        margin-top: 6px;
     }
 
     &__in {
@@ -35,11 +35,19 @@
         display: block;
         color: @color-f;
         width: @in-image-width;
-        height: @in-image-height;
         text-align: center;
+        height: @in-image-height;
 
         font-size: 12px;
         font-weight: bold;
+
+        .input__domain & {
+            height: @in-image-height - 2;
+        }
+
+        img {
+            .center-image();
+        }
 
         &--1 {background: #b04454}
         &--2 {background: #c357a1}
