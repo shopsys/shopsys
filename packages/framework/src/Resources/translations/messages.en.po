@@ -670,6 +670,9 @@ msgstr ""
 msgid "Description can be set on product detail of the main product."
 msgstr ""
 
+msgid "Disable"
+msgstr ""
+
 msgid "Disabled"
 msgstr ""
 
@@ -934,6 +937,9 @@ msgstr ""
 msgid "Editing slider page - %name%"
 msgstr ""
 
+msgid "Enable"
+msgstr ""
+
 msgid "Enter 32-digit code which will be sent to server"
 msgstr ""
 
@@ -961,16 +967,10 @@ msgstr ""
 msgid "Error occurred, try again please."
 msgstr ""
 
-msgid "Every 5 minutes"
-msgstr ""
-
 msgid "Every 5 minutes in %hour% hour"
 msgstr ""
 
 msgid "Every hour"
-msgstr ""
-
-msgid "Every hour and %minutes% minutes"
 msgstr ""
 
 msgid "Everyday at %hour%:%minutes%"
@@ -1216,7 +1216,7 @@ msgstr ""
 msgid "Last action time"
 msgstr ""
 
-msgid "Last duration (sec)"
+msgid "Last duration"
 msgstr ""
 
 msgid "Last finished at"
@@ -1532,6 +1532,9 @@ msgid "Oh, you just tried to log in using default credentials. We do not allow t
 msgstr ""
 
 msgid "Ok"
+msgstr ""
+
+msgid "On each run (usually every 5 minutes)"
 msgstr ""
 
 msgid "Only checked products"

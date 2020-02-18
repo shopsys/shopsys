@@ -283,7 +283,7 @@ class DefaultController extends AdminBaseController
                 'name' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
                 'lastStartedAt' => $cronModule->getLastStartedAt(),
                 'lastFinishedAt' => $cronModule->getLastFinishedAt(),
-                'lastDuration' => $cronModule->getLastDuration(),
+                'lastDuration' => $cronModule->getLastDuration() ? date('i:s', $cronModule->getLastDuration()) : '',
                 'status' => $cronModule->getStatus(),
                 'enabled' => $cronModule->isEnabled(),
                 'readableFrequency' => $cronConfig->getReadableFrequency(),
@@ -300,7 +300,7 @@ class DefaultController extends AdminBaseController
         $cronListGrid->addColumn('readableFrequency', 'readableFrequency', t('Frequency'), false);
         $cronListGrid->addColumn('lastStartedAt', 'lastStartedAt', t('Last started at'), false);
         $cronListGrid->addColumn('lastFinishedAt', 'lastFinishedAt', t('Last finished at'), false);
-        $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration (sec)'), false)->setClassAttribute('table-col table-col-10');
+        $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration'), false)->setClassAttribute('table-col table-col-10');
         $cronListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col table-col-10');
 
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {

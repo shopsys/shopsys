@@ -545,7 +545,7 @@ msgid "Cron overview"
 msgstr "Přehled cronů"
 
 msgid "Cron with serviceID `%serviceId%` was scheduled"
-msgstr "Cron s serviceId `%serviceId%` byl naplánován"
+msgstr "Cron se serviceId `%serviceId%` byl naplánován"
 
 msgid "Cropping"
 msgstr "Ořezávání"
@@ -669,6 +669,9 @@ msgstr "Popis"
 
 msgid "Description can be set on product detail of the main product."
 msgstr "Popis můžete nastavit na kartě hlavní varianty."
+
+msgid "Disable"
+msgstr "Vypnout"
 
 msgid "Disabled"
 msgstr "Vypnuto"
@@ -934,6 +937,9 @@ msgstr "Editace stránky slideru"
 msgid "Editing slider page - %name%"
 msgstr "Editace stránky slideru - %name%"
 
+msgid "Enable"
+msgstr "Zapnout"
+
 msgid "Enter 32-digit code which will be sent to server"
 msgstr "Zadejte 32-číselný kod, který bude odeslán na server"
 
@@ -947,7 +953,7 @@ msgid "Entry price type"
 msgstr "Typ vstupní ceny"
 
 msgid "Error"
-msgstr "Error"
+msgstr "Chyba"
 
 msgid "Error messages"
 msgstr "Chybové hlášky"
@@ -961,17 +967,11 @@ msgstr "Při nahrávání souboru došlo k chybě: %message%"
 msgid "Error occurred, try again please."
 msgstr "Nastala chyba, zkuste to, prosím, znovu."
 
-msgid "Every 5 minutes"
-msgstr "Každých 5 minut"
-
 msgid "Every 5 minutes in %hour% hour"
-msgstr "Každých 5 minut v %hour% hodinu"
+msgstr "[0,1]Každých 5 minut v %hour% hodinu|[2,4]Každých 5 minut ve %hour% hodiny|[2,Inf]Každých 5 minut v %hour% hodin"
 
 msgid "Every hour"
 msgstr "Každou hodinu"
-
-msgid "Every hour and %minutes% minutes"
-msgstr "Každou hodinu a %minutes% minut"
 
 msgid "Everyday at %hour%:%minutes%"
 msgstr "Každý den v %hour%:%minutes%"
@@ -1216,8 +1216,8 @@ msgstr "Jazyk"
 msgid "Last action time"
 msgstr "Čas poslední akce"
 
-msgid "Last duration (sec)"
-msgstr "Poslední doba trvání (sec)"
+msgid "Last duration"
+msgstr "Poslední doba trvání"
 
 msgid "Last finished at"
 msgstr "Poslední dokončení"
@@ -1533,6 +1533,9 @@ msgstr "Pokusili jste se přihlásit výchozími přihlašovacími údaji. V pro
 
 msgid "Ok"
 msgstr "Ok"
+
+msgid "On each run (usually every 5 minutes)"
+msgstr "Po každémm spuštění (obvykle každých 5 minut)"
 
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
@@ -1862,7 +1865,7 @@ msgid "Rounding type"
 msgstr "Typ zaokrouhlení"
 
 msgid "Running"
-msgstr "Běží"
+msgstr "Probíhá"
 
 msgid "SEO"
 msgstr "SEO"

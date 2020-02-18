@@ -119,25 +119,22 @@ class CronModuleConfig implements CronTimeInterface
     public function getReadableFrequency(): string
     {
         if ($this->timeHours === '*' && $this->timeMinutes === '*') {
-            return t('Every 5 minutes');
+            return t('On each run (usually every 5 minutes)');
         }
 
         if ($this->timeHours === '*' && is_numeric($this->timeMinutes)) {
-            if (date('i', (int)$this->timeMinutes) === '00') {
-                return t('Every hour');
-            }
-
-            return t('Every hour and %minutes% minutes', ['%minutes%' => date('i', (int)$this->timeMinutes)]);
+            return t('Every hour');
         }
 
         if (is_numeric($this->timeHours) && $this->timeMinutes === '*') {
-            return t('Every 5 minutes in %hour% hour', ['%hour%' => date('H', (int)$this->timeHours)]);
+            d($this->timeHours); d((int)$this->timeHours);
+            return tc('Every 5 minutes in %hour% hour', (int)$this->timeHours, ['%hour%' => (int)$this->timeHours]);
         }
 
         if (is_numeric($this->timeHours) && is_numeric($this->timeMinutes)) {
             return t('Everyday at %hour%:%minutes%', [
-                '%hour%' => date('H', (int)$this->timeHours),
-                '%minutes%' => date('i', (int)$this->timeMinutes),
+                '%hour%' => date('H', (int)$this->timeHours * 3600),
+                '%minutes%' => date('i', (int)$this->timeMinutes * 60),
             ]);
         }
 
