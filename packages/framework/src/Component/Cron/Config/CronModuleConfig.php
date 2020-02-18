@@ -36,7 +36,7 @@ class CronModuleConfig implements CronTimeInterface
     protected $instanceName;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $readableName;
 
@@ -47,7 +47,7 @@ class CronModuleConfig implements CronTimeInterface
      * @param string $timeMinutes
      * @param string|null $readableName
      */
-    public function __construct($service, $serviceId, $timeHours, $timeMinutes, ?string $readableName = null)
+    public function __construct(object $service, string $serviceId, string $timeHours, string $timeMinutes, ?string $readableName = null)
     {
         $this->service = $service;
         $this->serviceId = $serviceId;
@@ -60,7 +60,7 @@ class CronModuleConfig implements CronTimeInterface
     /**
      * @return \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface
      */
-    public function getService()
+    public function getService(): object
     {
         return $this->service;
     }
@@ -68,7 +68,7 @@ class CronModuleConfig implements CronTimeInterface
     /**
      * @return string
      */
-    public function getServiceId()
+    public function getServiceId(): string
     {
         return $this->serviceId;
     }
@@ -76,7 +76,7 @@ class CronModuleConfig implements CronTimeInterface
     /**
      * @return string
      */
-    public function getTimeMinutes()
+    public function getTimeMinutes(): string
     {
         return $this->timeMinutes;
     }
@@ -84,13 +84,13 @@ class CronModuleConfig implements CronTimeInterface
     /**
      * @return string
      */
-    public function getTimeHours()
+    public function getTimeHours(): string
     {
         return $this->timeHours;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getReadableName(): ?string
     {
