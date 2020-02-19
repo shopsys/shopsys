@@ -84,11 +84,12 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $lastProductsUpdatedAt = $this->setting->get(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME);
 
         $this->lastProductUpdatedAtFromAkeneo = $lastProductsUpdatedAt;
-        $allUpdatedProductsFromLastUpdate = $this->productTransferAkeneoFacade->getAllUpdatedProductsFromLastUpdate($lastProductsUpdatedAt);
 
         $this->logger->addInfo(sprintf('Getting data from API for search greater than last updated : %s', $lastProductsUpdatedAt->format(DATE_ATOM)));
 
-        return $allUpdatedProductsFromLastUpdate;
+        foreach ($this->productTransferAkeneoFacade->getAllUpdatedProductsFromLastUpdate($lastProductsUpdatedAt) as $product) {
+            yield $product;
+        }
     }
 
     protected function doBeforeTransfer(): void
