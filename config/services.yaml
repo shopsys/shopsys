@@ -237,6 +237,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'
 
+    App\Model\Transfer\TransferLoggerFactory:
+        arguments:
+            - '@monolog.logger.cron'
+
     App\Component\ScontoBridge\ScontoBridgeConfig:
         arguments:
             $scontoBridgeConfig: "%sconto_bridge_config%"

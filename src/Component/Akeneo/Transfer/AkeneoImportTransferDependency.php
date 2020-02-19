@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Akeneo\Transfer;
 
 use App\Component\Akeneo\AkeneoConfig;
+use App\Model\Transfer\TransferLoggerFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Symfony\Bridge\Monolog\Logger;
@@ -38,24 +39,32 @@ class AkeneoImportTransferDependency
     private $akeneoConfig;
 
     /**
+     * @var \App\Model\Transfer\TransferLoggerFactory
+     */
+    private $transferLoggerFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      * @param \App\Component\Akeneo\AkeneoConfig $akeneoConfig
+     * @param \App\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
      */
     public function __construct(
         SqlLoggerFacade $sqlLoggerFacade,
         EntityManagerInterface $em,
         Logger $logger,
         ValidatorInterface $validator,
-        AkeneoConfig $akeneoConfig
+        AkeneoConfig $akeneoConfig,
+        TransferLoggerFactory $transferLoggerFactory
     ) {
         $this->em = $em;
         $this->logger = $logger;
         $this->sqlLoggerFacade = $sqlLoggerFacade;
         $this->validator = $validator;
         $this->akeneoConfig = $akeneoConfig;
+        $this->transferLoggerFactory = $transferLoggerFactory;
     }
 
     /**
@@ -96,5 +105,13 @@ class AkeneoImportTransferDependency
     public function getAkeneoConfig(): AkeneoConfig
     {
         return $this->akeneoConfig;
+    }
+
+    /**
+     * @return \App\Model\Transfer\TransferLoggerFactory
+     */
+    public function getTransferLoggerFactory(): TransferLoggerFactory
+    {
+        return $this->transferLoggerFactory;
     }
 }

@@ -135,4 +135,12 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
             $this->lastProductUpdatedAtFromAkeneo = $lastUpdatedDateTime;
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getTransferIdentifier(): string
+    {
+        return 'productTransfer';
+    }
 }

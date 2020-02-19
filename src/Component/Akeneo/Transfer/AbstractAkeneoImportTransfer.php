@@ -20,7 +20,7 @@ abstract class AbstractAkeneoImportTransfer
     protected $em;
 
     /**
-     * @var \Symfony\Bridge\Monolog\Logger
+     * @var \App\Model\Transfer\TransferLoggerInterface
      */
     protected $logger;
 
@@ -46,9 +46,9 @@ abstract class AbstractAkeneoImportTransfer
     {
         $this->sqlLoggerFacade = $akeneoImportTransferDependency->getSqlLoggerFacade();
         $this->em = $akeneoImportTransferDependency->getEm();
-        $this->logger = $akeneoImportTransferDependency->getLogger();
         $this->validator = $akeneoImportTransferDependency->getValidator();
         $this->akeneoConfig = $akeneoImportTransferDependency->getAkeneoConfig();
+        $this->logger = $akeneoImportTransferDependency->getTransferLoggerFactory()->getTransferLoggerByIdentifier($this->getTransferIdentifier());
     }
 
     public function runTransfer(): void
@@ -134,6 +134,8 @@ abstract class AbstractAkeneoImportTransfer
                     $this->validator->reset();
                 }
             }
+
+            $this->logger->persistAllLoggedTransferIssues();
         }
 
         $this->sqlLoggerFacade->reenableLogging();
@@ -152,4 +154,9 @@ abstract class AbstractAkeneoImportTransfer
      * @return \Generator
      */
     abstract protected function getData(): \Generator;
+
+    /**
+     * @return string
+     */
+    abstract public function getTransferIdentifier(): string;
 }
