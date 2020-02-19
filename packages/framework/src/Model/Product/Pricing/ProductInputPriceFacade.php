@@ -141,6 +141,7 @@ class ProductInputPriceFacade
                 );
 
                 $product->changeVatForDomain($newVat, $domainId);
+                $product->markForExport();
             }
         }
 

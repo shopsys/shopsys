@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterFacade
 {
@@ -22,18 +25,26 @@ class ParameterFacade
     protected $parameterFactory;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $em,
         ParameterRepository $parameterRepository,
-        ParameterFactoryInterface $parameterFactory
+        ParameterFactoryInterface $parameterFactory,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->em = $em;
         $this->parameterRepository = $parameterRepository;
         $this->parameterFactory = $parameterFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -63,6 +74,8 @@ class ParameterFacade
         $this->em->persist($parameter);
         $this->em->flush($parameter);
 
+        $this->dispatchParameterEvent($parameter, ParameterEvent::CREATE);
+
         return $parameter;
     }
 
@@ -86,6 +99,8 @@ class ParameterFacade
         $parameter->edit($parameterData);
         $this->em->flush();
 
+        $this->dispatchParameterEvent($parameter, ParameterEvent::UPDATE);
+
         return $parameter;
     }
 
@@ -97,6 +112,9 @@ class ParameterFacade
         $parameter = $this->parameterRepository->getById($parameterId);
 
         $this->em->remove($parameter);
+
+        $this->dispatchParameterEvent($parameter, ParameterEvent::DELETE);
+
         $this->em->flush();
     }
 
@@ -108,5 +126,16 @@ class ParameterFacade
     public function getParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
     {
         return $this->parameterRepository->getParameterValueByValueTextAndLocale($valueText, $locale);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param string $eventType
+     *
+     * @see \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent class
+     */
+    protected function dispatchParameterEvent(Parameter $parameter, string $eventType): void
+    {
+        $this->eventDispatcher->dispatch($eventType, new ParameterEvent($parameter));
     }
 }

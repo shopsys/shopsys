@@ -127,6 +127,39 @@ class IndexFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    public function exportChanged(AbstractIndex $index, IndexDefinition $indexDefinition, OutputInterface $output): void
+    {
+        if (!$index instanceof IndexSupportChangesOnlyInterface) {
+            $output->writeln(sprintf('Index "%s" does not support export of only changed rows. Skipping.', $indexDefinition->getIndexName()));
+
+            return;
+        }
+
+        $output->writeln(sprintf(
+            'Exporting changed data of "%s" on domain "%s"',
+            $indexDefinition->getIndexName(),
+            $indexDefinition->getDomainId()
+        ));
+
+        $progressBar = $this->progressBarFactory->create($output, $index->getChangedCount($indexDefinition->getDomainId()));
+
+        $lastProcessedId = 0;
+        while (($changedIdsBatch = $index->getChangedIdsForBatch($indexDefinition->getDomainId(), $lastProcessedId, $index->getExportBatchSize())) !== []) {
+            $this->exportIds($index, $indexDefinition, $changedIdsBatch);
+
+            $progressBar->advance(count($changedIdsBatch));
+            $lastProcessedId = end($changedIdsBatch);
+        }
+
+        $progressBar->finish();
+        $output->writeln('');
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
@@ -160,17 +193,21 @@ class IndexFacade
         $indexAlias = $indexDefinition->getIndexAlias();
         $domainId = $indexDefinition->getDomainId();
 
-        // detach objects from manager to prevent memory leaks
-        $this->entityManager->clear();
-        $currentBatchData = $index->getExportDataForIds($domainId, $restrictToIds);
+        $chunkedIdsToExport = array_chunk($restrictToIds, $index->getExportBatchSize());
 
-        if (!empty($currentBatchData)) {
-            $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
-        }
+        foreach ($chunkedIdsToExport as $idsToExport) {
+            // detach objects from manager to prevent memory leaks
+            $this->entityManager->clear();
+            $currentBatchData = $index->getExportDataForIds($domainId, $idsToExport);
 
-        $idsToDelete = array_values(array_diff($restrictToIds, array_keys($currentBatchData)));
-        if (!empty($idsToDelete)) {
-            $this->indexRepository->deleteIds($indexAlias, $idsToDelete);
+            if (!empty($currentBatchData)) {
+                $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
+            }
+
+            $idsToDelete = array_values(array_diff($idsToExport, array_keys($currentBatchData)));
+            if (!empty($idsToDelete)) {
+                $this->indexRepository->deleteIds($indexAlias, $idsToDelete);
+            }
         }
 
         $this->sqlLoggerFacade->reenableLogging();

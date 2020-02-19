@@ -6,8 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInterface;
 
-class ProductIndex extends AbstractIndex
+class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -37,6 +38,22 @@ class ProductIndex extends AbstractIndex
     public function getTotalCount(int $domainId): int
     {
         return $this->productExportRepository->getProductTotalCountForDomain($domainId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getChangedCount(int $domainId): int
+    {
+        return $this->productExportRepository->getProductChangedCount();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getChangedIdsForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
+    {
+        return $this->productExportRepository->getProductIdsForChanged($lastProcessedId, $batchSize);
     }
 
     /**

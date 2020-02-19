@@ -814,6 +814,18 @@ There you can find links to upgrade notes for other versions too.
                     return $filter->filterOnlySellable();
                 }
             ```
+- update your project to export to Elasticsearch only changed products ([#1636](https://github.com/shopsys/shopsys/pull/1636))
+    - if you have registered products export by yourself, you can update `config/services/cron.yml` to run frequently export of only changed products and full export at midnight
+    ```diff
+        Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
+            tags:
+    -           - { name: shopsys.cron, hours: '*', minutes: '*' }
+    +           - { name: shopsys.cron, hours: '0', minutes: '0' }
+
+    +   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportChangedCronModule:
+    +       tags:
+    +           - { name: shopsys.cron, hours: '*', minutes: '*' }
+    ```
 
 - update FpJsFormValidator bundle ([#1664](https://github.com/shopsys/shopsys/pull/1664))
     - update your `composer.json`

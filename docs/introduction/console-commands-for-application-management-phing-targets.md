@@ -178,6 +178,9 @@ Especially useful when you need to change the structure and don't need to have f
 #### elasticsearch-export
 Exports all data for index to Elasticsearch.
 
+#### elasticsearch-export-changed
+Exports only changed data for index to Elasticsearch.
+
 ### Coding standards
 
 #### annotations-check

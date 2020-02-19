@@ -30,6 +30,7 @@ The directory is configured using `%shopsys.elasticsearch.structure_dir%` parame
 - elasticsearch-index-recreate
 - elasticsearch-index-migrate
 - elasticsearch-export
+- elasticsearch-export-changed
 
 These commands takes action for all registered indexes. You can also define a single index for given action by defining parameter `elasticsearch.index` (e.g. `elasticsearch-index-recreate -D elasticsearch.index=product` will recreate a structure for index `product`).
 
@@ -89,6 +90,12 @@ Must return all rows for given row ID. It is used for partial exports.
 
 ##### getExportDataForBatch()
 Must return all rows which you want to have exported into elasticsearch.
+
+##### getChangedCount()
+Optional - must return the number of changed rows you want to have exported for given index. Used for export of only changed rows.
+
+##### getChangedIdsForBatch()
+Optional - must return IDs of rows you want to have exported into elasticsearch. Used for export of only changed rows.
 
 ## Where does Elasticsearch run?
 When using docker installation, Elasticsearch API is available on the address [http://127.0.0.1:9200](http://127.0.0.1:9200).

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class UnitFacade
 {
@@ -28,21 +31,29 @@ class UnitFacade
     protected $unitFactory;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitRepository $unitRepository
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface $unitFactory
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $em,
         UnitRepository $unitRepository,
         Setting $setting,
-        UnitFactoryInterface $unitFactory
+        UnitFactoryInterface $unitFactory,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->em = $em;
         $this->unitRepository = $unitRepository;
         $this->setting = $setting;
         $this->unitFactory = $unitFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -64,6 +75,8 @@ class UnitFacade
         $this->em->persist($unit);
         $this->em->flush();
 
+        $this->dispatchUnitEvent($unit, UnitEvent::CREATE);
+
         return $unit;
     }
 
@@ -78,6 +91,8 @@ class UnitFacade
         $unit->edit($unitData);
         $this->em->flush();
 
+        $this->dispatchUnitEvent($unit, UnitEvent::UPDATE);
+
         return $unit;
     }
 
@@ -88,6 +103,9 @@ class UnitFacade
     public function deleteById($unitId, $newUnitId = null)
     {
         $oldUnit = $this->unitRepository->getById($unitId);
+
+        // intentionally called before unit ids in product are changed
+        $this->dispatchUnitEvent($oldUnit, UnitEvent::DELETE);
 
         if ($newUnitId !== null) {
             $newUnit = $this->unitRepository->getById($newUnitId);
@@ -160,5 +178,16 @@ class UnitFacade
     public function isUnitDefault(Unit $unit)
     {
         return $this->getDefaultUnit() === $unit;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
+     * @param string $eventType
+     *
+     * @see \Shopsys\FrameworkBundle\Model\Product\Unit\UnitEvent class
+     */
+    protected function dispatchUnitEvent(Unit $unit, string $eventType): void
+    {
+        $this->eventDispatcher->dispatch($eventType, new UnitEvent($unit));
     }
 }

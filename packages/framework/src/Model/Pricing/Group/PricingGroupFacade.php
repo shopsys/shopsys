@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -8,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PricingGroupFacade
 {
@@ -57,6 +60,11 @@ class PricingGroupFacade
     protected $pricingGroupFactory;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -66,6 +74,7 @@ class PricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository $productCalculatedPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactoryInterface $pricingGroupFactory
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -76,7 +85,8 @@ class PricingGroupFacade
         ProductVisibilityRepository $productVisibilityRepository,
         ProductCalculatedPriceRepository $productCalculatedPriceRepository,
         CustomerUserRepository $customerUserRepository,
-        PricingGroupFactoryInterface $pricingGroupFactory
+        PricingGroupFactoryInterface $pricingGroupFactory,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->em = $em;
         $this->pricingGroupRepository = $pricingGroupRepository;
@@ -87,6 +97,7 @@ class PricingGroupFacade
         $this->productCalculatedPriceRepository = $productCalculatedPriceRepository;
         $this->customerUserRepository = $customerUserRepository;
         $this->pricingGroupFactory = $pricingGroupFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -117,6 +128,8 @@ class PricingGroupFacade
         );
         $this->productCalculatedPriceRepository->createProductCalculatedPricesForPricingGroup($pricingGroup);
 
+        $this->dispatchPricingGroupEvent($pricingGroup, PricingGroupEvent::CREATE);
+
         return $pricingGroup;
     }
 
@@ -133,6 +146,8 @@ class PricingGroupFacade
         $this->em->flush();
 
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
+
+        $this->dispatchPricingGroupEvent($pricingGroup, PricingGroupEvent::UPDATE);
 
         return $pricingGroup;
     }
@@ -156,6 +171,9 @@ class PricingGroupFacade
         }
 
         $this->em->remove($oldPricingGroup);
+
+        $this->dispatchPricingGroupEvent($oldPricingGroup, PricingGroupEvent::DELETE);
+
         $this->em->flush();
     }
 
@@ -198,5 +216,16 @@ class PricingGroupFacade
         }
 
         return $pricingGroupsByDomainId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $eventType
+     *
+     * @see \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent class
+     */
+    protected function dispatchPricingGroupEvent(PricingGroup $pricingGroup, string $eventType): void
+    {
+        $this->eventDispatcher->dispatch($eventType, new PricingGroupEvent($pricingGroup));
     }
 }

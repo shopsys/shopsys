@@ -4,6 +4,7 @@
 * [Configuring Jenkins for Continuous Integration](./jenkins-configuration.md)
 * [Adding a New Entity](./adding-a-new-entity.md)
 * [Adding New Attribute to an Entity](./adding-new-attribute-to-an-entity.md)
+* [Adding a New Elasticsearch Index](./adding-a-new-elasticsearch-index.md)
 * [Adding a New Administration Page](./adding-a-new-administration-page.md)
 * [Adding a New Advert Position](./adding-a-new-advert-position.md)
 * [Adding an Icon into a Button](./adding-an-icon-into-a-button.md)
@@ -15,7 +16,6 @@
 * [Create Basic Grid](./create-basic-grid.md)
 * [Create Advanced Grid](./create-advanced-grid.md)
 * [Extending Product List](./extending-product-list.md)
-* [Adding a New Elasticsearch Index](./adding-a-new-elasticsearch-index.md)
 
 ## Backend API
 

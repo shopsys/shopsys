@@ -536,6 +536,15 @@
         </exec>
     </target>
 
+    <target name="elasticsearch-export-changed" description="Exports only changed indexes data into elasticsearch.">
+        <property name="elasticsearch.index" value=""/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:elasticsearch:changed-data-export"/>
+            <arg value="${elasticsearch.index}"/>
+        </exec>
+    </target>
+
     <target name="elasticsearch-index-create" description="Creates indexes into elasticsearch." hidden="true">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">

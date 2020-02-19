@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
@@ -81,12 +82,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
         $output->writeln($this->getActionStartedMessage());
 
         foreach ($this->getAffectedIndexes($indexName) as $index) {
-            foreach ($this->domain->getAll() as $domainConfig) {
-                $this->executeCommand(
-                    $this->indexDefinitionLoader->getIndexDefinition($index::getName(), $domainConfig->getId()),
-                    $output
-                );
-            }
+            $this->executeForIndex($output, $index);
         }
 
         $symfonyStyleIo->success($this->getActionFinishedMessage());
@@ -103,6 +99,20 @@ abstract class AbstractElasticsearchIndexCommand extends Command
             return [$this->indexRegistry->getIndexByIndexName($indexName)];
         }
         return $this->indexRegistry->getRegisteredIndexes();
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
+     */
+    protected function executeForIndex(OutputInterface $output, AbstractIndex $index): void
+    {
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $this->executeCommand(
+                $this->indexDefinitionLoader->getIndexDefinition($index::getName(), $domainConfig->getId()),
+                $output
+            );
+        }
     }
 
     /**
