@@ -10,7 +10,7 @@
         "trans": "./assets/js/bin/trans.js",
         "trans:dump": "./assets/js/bin/transDump.js",
         "tests": "npm run tests:unit",
-        "tests:unit": "jest"
+        "tests:unit": "jest assets"
     },
     "preferGlobal": false,
     "devDependencies": {

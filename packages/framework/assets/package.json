@@ -7,7 +7,7 @@
   "license": "proprietary",
   "scripts": {
     "tests": "npm run tests:unit",
-    "tests:unit": "jest"
+    "tests:unit": "jest js"
   },
   "dependencies": {
     "@claviska/jquery-minicolors": "^2.3.4",
