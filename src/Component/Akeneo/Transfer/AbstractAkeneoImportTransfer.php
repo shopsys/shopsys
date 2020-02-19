@@ -174,4 +174,12 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
      * @return string
      */
     abstract public function getTransferIdentifier(): string;
+
+    /**
+     * @return string
+     */
+    private function getServiceTransferIdentifier(): string
+    {
+        return 'Akeneo' . ucfirst($this->getTransferIdentifier());
+    }
 }
