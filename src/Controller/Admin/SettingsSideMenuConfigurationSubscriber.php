@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -24,7 +25,16 @@ class SettingsSideMenuConfigurationSubscriber implements EventSubscriberInterfac
      */
     public function configureListsSubMenu(ConfigureMenuEvent $event): void
     {
-        $listsSubMenu = $event->getMenu()->getChild('lists');
+        $configurationMenu = $event->getMenu();
+        $this->hideAvailabilities($configurationMenu);
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $menu
+     */
+    private function hideAvailabilities(ItemInterface $menu): void
+    {
+        $listsSubMenu = $menu->getChild('lists');
         $listsSubMenu->removeChild('availabilities');
 
         $seoMenu = $event->getMenu()->getChild('seo');

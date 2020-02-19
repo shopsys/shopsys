@@ -128,4 +128,15 @@ class TransferIssue
     {
         return $this->deletedAt;
     }
+
+    /**
+     * @param \DateTime $dateTime
+     * @return $this
+     */
+    public function setDeletedAt(DateTime $dateTime): self
+    {
+        $this->deletedAt = $dateTime;
+
+        return $this;
+    }
 }

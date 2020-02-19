@@ -45,4 +45,12 @@ class TransferRepository
 
         return $transfer;
     }
+
+    /**
+     * @return \App\Model\Transfer\Transfer[]
+     */
+    public function getAll(): array
+    {
+        return $this->getRepository()->findAll();
+    }
 }

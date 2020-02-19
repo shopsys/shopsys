@@ -97,6 +97,8 @@ services:
 
     League\Flysystem\FilesystemInterface: '@main_filesystem'
 
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade: '@App\Model\Administrator\AdministratorFacade'
+
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface: '@App\Model\Administrator\AdministratorDataFactory'
 
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface: '@App\Model\Category\CategoryDataFactory'
@@ -158,6 +160,9 @@ services:
             - '%shopsys.domain_images_dir%'
         tags: ['doctrine.fixture.orm']
 
+    Shopsys\FrameworkBundle\Controller\Admin\DefaultController:
+        class: 'App\Controller\Admin\DefaultController'
+
     Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
         class: 'App\Controller\Admin\PromoCodeController'
         arguments:
@@ -181,9 +186,7 @@ services:
     Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface:
         factory: ['@App\Component\Akeneo\AkeneoClientFactory', createClient]
 
-    App\Component\Akeneo\Transfer\AkeneoImportTransferDependency:
-        arguments:
-            $logger: '@monolog.logger.cron'
+    App\Component\Akeneo\Transfer\AkeneoImportTransferDependency: ~
 
     App\Component\Setting\Setting: ~
 

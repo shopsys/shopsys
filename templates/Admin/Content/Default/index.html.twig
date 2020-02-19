@@ -1,0 +1,10 @@
+{% extends '@!ShopsysFramework/Admin/Content/Default/index.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+    <div class="transfers">
+        <h2 class="margin-top-15">{{ 'Přenosy'|trans }}</h2>
+
+        <a href="{{ url('admin_transfer_list') }}" class="btn">{{ 'Přehled logů přenosů'|trans }} ({{ transferIssuesCount }})</a>
+    </div>
+{% endblock %}

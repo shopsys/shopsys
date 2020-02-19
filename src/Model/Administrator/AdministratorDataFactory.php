@@ -26,6 +26,8 @@ class AdministratorDataFactory extends BaseAdministratorDataFactory
     {
         $administratorData = new AdministratorData();
         $this->fillFromAdministrator($administratorData, $administrator);
+        $administratorData->transferIssuesLastSeenDateTime = $administrator->getTransferIssuesLastSeenDateTime();
+
         return $administratorData;
     }
 }

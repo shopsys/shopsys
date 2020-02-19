@@ -48,7 +48,9 @@ abstract class AbstractAkeneoImportTransfer
         $this->em = $akeneoImportTransferDependency->getEm();
         $this->validator = $akeneoImportTransferDependency->getValidator();
         $this->akeneoConfig = $akeneoImportTransferDependency->getAkeneoConfig();
-        $this->logger = $akeneoImportTransferDependency->getTransferLoggerFactory()->getTransferLoggerByIdentifier($this->getTransferIdentifier());
+        $this->logger = $akeneoImportTransferDependency
+            ->getTransferLoggerFactory()
+            ->getTransferLoggerByIdentifier($this->getServiceTransferIdentifier());
     }
 
     public function runTransfer(): void
@@ -159,4 +161,12 @@ abstract class AbstractAkeneoImportTransfer
      * @return string
      */
     abstract public function getTransferIdentifier(): string;
+
+    /**
+     * @return string
+     */
+    private function getServiceTransferIdentifier(): string
+    {
+        return 'Akeneo' . ucfirst($this->getTransferIdentifier());
+    }
 }

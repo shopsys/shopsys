@@ -18,7 +18,17 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             ConfigureMenuEvent::SIDE_MENU_MARKETING => 'configureMarketingMenu',
             ConfigureMenuEvent::SIDE_MENU_PRICING => 'configurePricingMenu',
             ConfigureMenuEvent::SIDE_MENU_PRODUCTS => 'configureStockMenu',
+            ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
         ];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
+     */
+    public function configureDashboardMenu(ConfigureMenuEvent $event)
+    {
+        $dashboardMenu = $event->getMenu();
+        $dashboardMenu->addChild('transferList', ['route' => 'admin_transfer_list', 'display' => false, 'label' => t('Přehled problémů v přenosech')]);
     }
 
     /**
