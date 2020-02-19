@@ -27,7 +27,7 @@ class ProductTypeRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getProductTypeRepository(): EntityRepository
+    private function getRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductType::class);
     }
@@ -38,7 +38,7 @@ class ProductTypeRepository
      */
     public function findById(int $productTypeId): ?ProductType
     {
-        return $this->getProductTypeRepository()->find($productTypeId);
+        return $this->getRepository()->find($productTypeId);
     }
 
     /**
@@ -61,7 +61,7 @@ class ProductTypeRepository
      */
     public function getAll(): array
     {
-        return $this->getProductTypeRepository()->findBy([], ['position' => 'asc']);
+        return $this->getRepository()->findBy([], ['position' => 'asc']);
     }
 
     /**
@@ -70,7 +70,7 @@ class ProductTypeRepository
      */
     public function findByAkeneoCode(string $akeneoCode): ?ProductType
     {
-        return $this->getProductTypeRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
+        return $this->getRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
     }
 
     /**
