@@ -9,6 +9,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Model\Transfer\Transfer;
 
 class TransferIssueFacade
 {
@@ -88,5 +89,19 @@ class TransferIssueFacade
 
         $transferIssue->setDeletedAt(new DateTime());
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Transfer\Issue\TransferIssueData $transferIssueData
+     * @param \App\Model\Transfer\Transfer $transfer
+     * @return \App\Model\Transfer\Issue\TransferIssue
+     */
+    public function create(TransferIssueData $transferIssueData, Transfer $transfer): TransferIssue
+    {
+        $transferIssue = new TransferIssue($transfer, $transferIssueData);
+        $this->em->persist($transferIssue);
+        $this->em->flush();
+
+        return $transferIssue;
     }
 }

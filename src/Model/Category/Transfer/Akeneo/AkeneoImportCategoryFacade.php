@@ -120,6 +120,15 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
      */
     protected function processItem($akeneoCategoryData): void
     {
+        $this->logger->addInfo('Test info');
+        $this->logger->addNotice('Test notice');
+        $this->logger->addError('Test error');
+        $this->logger->addAlert('Test alert');
+        $this->logger->addDebug('Test debug');
+        $this->logger->addEmergency('Test emergency');
+        $this->logger->addCritical('Test critical');
+        $this->logger->addWarning('Test warning');
+
         if ($akeneoCategoryData['code'] === self::ROOT_CATEGORY_CODE) {
             return;
         }
