@@ -32,13 +32,13 @@ class Version20200214104810 extends AbstractMigration
                     ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
 
         $this->sql('INSERT INTO "product_types" ("id", "akeneo_code", "position") VALUES
-            (1,	\'common\', 2),
-            (2,	\'oversized\', 1)');
+            (1, \'zasilka1\', 1),
+            (2, \'zasilka2\', 2)');
         $this->sql('INSERT INTO "product_type_translations" ("id", "translatable_id", "name", "locale") VALUES
-            (1,	1,	\'Běžné zboží\',	\'cs\'),
-            (2,	1,	\'Bežný tovar\',	\'sk\'),
-            (3,	2,	\'Nadrozměrné zboží\',	\'cs\'),
-            (4,	2,	\'Nadrozmený tovar\',	\'sk\')');
+            (1,	1, \'Nadrozměrné zboží\', \'cs\'),
+            (2,	1, \'Nadrozmený tovar\', \'sk\'),
+            (3,	2, \'Běžné zboží\', \'cs\'),
+            (4,	2, \'Bežný tovar\', \'sk\')');
 
         $this->sql('ALTER TABLE products ADD product_type_id INT NOT NULL DEFAULT 1');
         $this->sql('ALTER TABLE products ALTER product_type_id DROP DEFAULT');
