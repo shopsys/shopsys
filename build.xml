@@ -364,6 +364,17 @@
         </exec>
     </target>
 
+    <target name="tests-unit-jest" description="Runs js's unit tests.">
+        <exec executable="${path.npm.executable}" dir="${path.framework}/assets" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="tests:unit"/>
+        </exec>
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="tests:unit"/>
+        </exec>
+    </target>
+
     <target name="translations-dump" depends="domains-info-load" description="Extracts translatable messages in the whole monorepo.">
 
         <phingcall target="shopsys_framework.translations-dump"/>
