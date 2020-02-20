@@ -84,11 +84,6 @@ class ProductController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
-     * @var \App\Model\Stock\ProductStockRepository
-     */
-    private $productStockRepository;
-
-    /**
      * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      */
     private $productAvailabilityFacade;
