@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search\Export;
 
+use App\Model\Product\Availability\ProductAvailabilityFacade;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository as BaseProductSearchExportWithFilterRepository;
 
 /**
  * @property \App\Model\Product\ProductFacade $productFacade
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository, \App\Model\Product\ProductFacade $productFacade, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade)
  * @method int[] extractVariantIds(\App\Model\Product\Product $product)
  * @method string extractDetailUrl(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractFlags(\App\Model\Product\Product $product)
@@ -21,6 +28,43 @@ use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithF
 class ProductSearchExportWithFilterRepository extends BaseProductSearchExportWithFilterRepository
 {
     /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
+    private $productAvailabilityFacade;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \App\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     */
+    public function __construct(
+        EntityManagerInterface $em,
+        ParameterRepository $parameterRepository,
+        ProductFacade $productFacade,
+        FriendlyUrlRepository $friendlyUrlRepository,
+        Domain $domain,
+        ProductVisibilityRepository $productVisibilityRepository,
+        FriendlyUrlFacade $friendlyUrlFacade,
+        ProductAvailabilityFacade $productAvailabilityFacade
+    ) {
+        parent::__construct(
+            $em,
+            $parameterRepository,
+            $productFacade,
+            $friendlyUrlRepository,
+            $domain,
+            $productVisibilityRepository,
+            $friendlyUrlFacade
+        );
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      * @param string $locale
@@ -28,11 +72,43 @@ class ProductSearchExportWithFilterRepository extends BaseProductSearchExportWit
      */
     protected function extractResult(Product $product, int $domainId, string $locale): array
     {
-        $result = parent::extractResult($product, $domainId, $locale);
+        $flagIds = $this->extractFlags($product);
+        $categoryIds = $this->extractCategories($domainId, $product);
+        $parameters = $this->extractParameters($locale, $product);
+        $prices = $this->extractPrices($domainId, $product);
+        $visibility = $this->extractVisibility($domainId, $product);
+        $detailUrl = $this->extractDetailUrl($domainId, $product);
+        $variantIds = $this->extractVariantIds($product);
 
-        $result['name_prefix'] = $product->getNamePrefix($locale);
-        $result['name_sufix'] = $product->getNameSufix($locale);
-
-        return $result;
+        return [
+            'id' => $product->getId(),
+            'catnum' => $product->getCatnum(),
+            'partno' => $product->getPartno(),
+            'ean' => $product->getEan(),
+            'name' => $product->getName($locale),
+            'description' => $product->getDescription($domainId),
+            'short_description' => $product->getShortDescription($domainId),
+            'brand' => $product->getBrand() ? $product->getBrand()->getId() : '',
+            'flags' => $flagIds,
+            'categories' => $categoryIds,
+            'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomain($product, $domainId),
+            'prices' => $prices,
+            'parameters' => $parameters,
+            'ordering_priority' => $product->getOrderingPriority(),
+            'calculated_selling_denied' => $product->getCalculatedSellingDenied(),
+            'selling_denied' => $product->isSellingDenied(),
+            'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
+            'is_main_variant' => $product->isMainVariant(),
+            'detail_url' => $detailUrl,
+            'visibility' => $visibility,
+            'uuid' => $product->getUuid(),
+            'unit' => $product->getUnit()->getName($locale),
+            'is_using_stock' => $product->isUsingStock(),
+            'stock_quantity' => $product->getStockQuantity(),
+            'variants' => $variantIds,
+            'main_variant' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
+            'name_prefix' => $product->getNamePrefix($locale),
+            'name_sufix' => $product->getNameSufix($locale),
+        ];
     }
 }

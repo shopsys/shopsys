@@ -6,7 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
-use App\Model\Stock\ProductStockRepository;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
@@ -84,9 +84,9 @@ class ProductController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
-     * @var \App\Model\Stock\ProductStockRepository
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      */
-    private $productStockRepository;
+    private $productAvailabilityFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
@@ -100,7 +100,7 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
-     * @param \App\Model\Stock\ProductStockRepository $productStockRepository
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -114,7 +114,7 @@ class ProductController extends FrontBaseController
         ModuleFacade $moduleFacade,
         BrandFacade $brandFacade,
         ListedProductViewFacadeInterface $listedProductViewFacade,
-        ProductStockRepository $productStockRepository
+        ProductAvailabilityFacade $productAvailabilityFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -127,7 +127,7 @@ class ProductController extends FrontBaseController
         $this->brandFacade = $brandFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->categoryFacade = $categoryFacade;
-        $this->productStockRepository = $productStockRepository;
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
     /**
@@ -147,7 +147,8 @@ class ProductController extends FrontBaseController
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
-        $productStocks = $this->productStockRepository->getProductStocksExcludeCentralStockByProductAndDomainId($product, $this->domain->getId());
+        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId());
+        $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainId($product, $this->domain->getId());
 
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $product,
@@ -156,7 +157,8 @@ class ProductController extends FrontBaseController
             'productMainCategory' => $productMainCategory,
             'categoryList' => $categoryList,
             'domain' => $this->domain,
-            'productStocks' => $productStocks,
+            'productAvailabilityInformation' => $productAvailabilityInformation,
+            'productStocksAvailabilitiesInformation' => $productStocksAvailabilitiesInformation,
         ]);
     }
 
