@@ -45,7 +45,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
@@ -100,13 +100,14 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData = new ProductData();
         $this->fillFromProduct($productData, $product);
         $this->fillStockProductByProduct($productData, $product);
+
         return $productData;
     }
 
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    protected function fillNew(BaseProductData $productData)
+    protected function fillNew(BaseProductData $productData): void
     {
         parent::fillNew($productData);
 
@@ -130,7 +131,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product $product
      */
-    protected function fillFromProduct(BaseProductData $productData, BaseProduct $product)
+    protected function fillFromProduct(BaseProductData $productData, BaseProduct $product): void
     {
         parent::fillFromProduct($productData, $product);
 
@@ -153,7 +154,7 @@ class ProductDataFactory extends BaseProductDataFactory
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    protected function fillStockProductByStocks(BaseProductData $productData)
+    private function fillStockProductByStocks(BaseProductData $productData): void
     {
         foreach ($this->stockFacade->getAllStocks() as $stock) {
             $productData->stockProductData[$stock->getId()] = $this->stockProductDataFactory->createFromStock($stock);
@@ -164,7 +165,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product $product
      */
-    protected function fillStockProductByProduct(BaseProductData $productData, BaseProduct $product)
+    private function fillStockProductByProduct(BaseProductData $productData, BaseProduct $product): void
     {
         $this->fillStockProductByStocks($productData);
         foreach ($this->stockProductFacade->getProductStocksByProduct($product) as $stockProduct) {

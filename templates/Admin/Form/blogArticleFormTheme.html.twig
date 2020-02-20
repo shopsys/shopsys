@@ -1,0 +1,11 @@
+{% block _blog_article_form_description_widget %}
+    {{ form_row(form.descriptions) }}
+    <div class="form-line" id="descriptions-legend">
+        <div class="form-line__label">
+            {{ 'Legenda:'|trans }}
+        </div>
+        <div class="form-line__side">
+            {{ 'Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Název proměnné je {products=XXXXXX,XXXXXX} kde XXXXXX je katalogové číslo produktu. Zobrazeny jsou produkty, které nejsou skryté a současně nejsou vyřazené z prodeje. '|trans }}
+        </div>
+    </div>
+{% endblock %}

@@ -11,21 +11,15 @@ interface PlaceholderInterface
      * @param string $locale
      * @return string
      */
-    public function convert(string $text, ?string $locale);
+    public function convert(string $text, ?string $locale): string;
 
     /**
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @return string
      */
-    public function getPattern();
-
-    /**
-     * @param string $text
-     * @return mixed
-     */
-    public function isValidText(string $text);
+    public function getPattern(): string;
 }

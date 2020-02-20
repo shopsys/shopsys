@@ -12,15 +12,7 @@ abstract class AbstractPlaceholder implements PlaceholderInterface
     /**
      * @inheritdoc
      */
-    public function isValidText(string $text)
-    {
-        return preg_match($this->getPattern(), $text) === 1;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function convert(string $text, ?string $locale = null)
+    public function convert(string $text, ?string $locale = null): string
     {
         $replaceCallback = function ($matches) use ($locale) {
             return $this->replace($matches, $locale);
@@ -39,5 +31,5 @@ abstract class AbstractPlaceholder implements PlaceholderInterface
      * @param string|null $locale
      * @return string
      */
-    abstract protected function replace(array $matches, ?string $locale);
+    abstract protected function replace(array $matches, ?string $locale): string;
 }
