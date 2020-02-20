@@ -30,7 +30,7 @@
                 <p>{{ blogArticle.createdAt|date('j.n.Y') }}</p>
 
                 <div class="in-user-text">
-                    {{ blogArticle.description|raw }}
+                    {{ blogArticle.description|raw|placeholders }}
                 </div>
             </div>
 

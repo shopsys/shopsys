@@ -12,6 +12,10 @@ services:
         autoconfigure: true
         public: false
 
+    _instanceof:
+        App\Component\Placeholder\PlaceholderInterface:
+            tags: ['shopsys.placeholder']
+
     App\Controller\:
         resource: '../src/Controller/'
         public: true
@@ -251,6 +255,14 @@ services:
     App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency:
         arguments:
             $logger: '@monolog.logger.cron'
+
+    App\Component\Placeholder\:
+        resource: '../src/Component/Placeholder/**/*{Extension,Placeholder,Validator}.php'
+        
+    App\Component\Placeholder\PlaceholderConverter:
+        public: true
+        arguments:
+            $placeholders: !tagged shopsys.placeholder
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository: '@App\Model\Customer\User\CustomerUserRepository'
 
