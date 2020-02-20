@@ -18,6 +18,7 @@ parameters:
             - '*/src/Form/Front/Customer/BillingAddressFormType.php'
             - '*/src/Form/Front/Customer/DeliveryAddressFormType.php'
             - '*/src/Form/Front/Order/PersonalInfoFormType.php'
+            - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
             - '*/tests/App/Functional/EntityExtension/EntityExtensionTest.php'
             - '*/tests/App/Functional/Model/Order/OrderFacadeTest.php'
             - '*/tests/App/Functional/Model/Order/Preview/OrderPreviewCalculationTest.php'
@@ -48,6 +49,7 @@ parameters:
 
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
+            - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/tests/App/Functional/Model/Cart/CartFacadeTest.php'

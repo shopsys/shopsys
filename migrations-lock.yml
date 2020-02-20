@@ -412,3 +412,6 @@
 20200212201654:
     class: App\Migrations\Version20200212201654
     skip: false
+20200214081059:
+    class: App\Migrations\Version20200214081059
+    skip: false

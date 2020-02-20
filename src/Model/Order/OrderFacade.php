@@ -65,7 +65,7 @@ class OrderFacade extends BaseOrderFacade
             );
 
             if ($quantifiedItemDiscount !== null) {
-                $this->addOrderItemDiscount($orderItem, $quantifiedItemDiscount, $locale, $orderPreview->getPromoCodeDiscountPercent());
+                $this->addOrderItemDiscount($orderItem, $quantifiedItemDiscount, $locale, (float)$orderPreview->getPromoCodeDiscountPercent());
             }
         }
     }

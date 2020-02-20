@@ -35,22 +35,54 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private $dateTimeHelper;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeProductRepository
+     */
+    private $promoCodeProductRepository;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeCategoryRepository
+     */
+    private $promoCodeCategoryRepository;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeProductFactory
+     */
+    private $promoCodeProductFactory;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeCategoryFactory
+     */
+    private $promoCodeCategoryFactory;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
+     * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory
+     * @param \App\Model\Order\PromoCode\PromoCodeCategoryFactory $promoCodeCategoryFactory
      */
     public function __construct(
         EntityManagerInterface $em,
         PromoCodeRepository $promoCodeRepository,
         PromoCodeFactoryInterface $promoCodeFactory,
         Domain $domain,
-        DateTimeHelper $dateTimeHelper
+        DateTimeHelper $dateTimeHelper,
+        PromoCodeProductRepository $promoCodeProductRepository,
+        PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        PromoCodeProductFactory $promoCodeProductFactory,
+        PromoCodeCategoryFactory $promoCodeCategoryFactory
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
         $this->domain = $domain;
         $this->dateTimeHelper = $dateTimeHelper;
+        $this->promoCodeProductRepository = $promoCodeProductRepository;
+        $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
+        $this->promoCodeProductFactory = $promoCodeProductFactory;
+        $this->promoCodeCategoryFactory = $promoCodeCategoryFactory;
     }
 
     /**
@@ -82,6 +114,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::create($promoCodeData);
+        $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
+        $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
 
         return $promoCode;
     }
@@ -97,8 +131,80 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::edit($promoCodeId, $promoCodeData);
+        $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
+        $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
 
         return $promoCode;
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param array $categories
+     */
+    private function refreshPromoCodeCategories(PromoCode $promoCode, array $categories): void
+    {
+        $needFlush = false;
+        $categoryIdsFromForm = [];
+        $categoryIdsFromStorage = [];
+        foreach ($categories as $category) {
+            $categoryIdsFromForm[$category->getId()] = $category->getId();
+        }
+
+        $promoCodeCategories = $this->promoCodeCategoryRepository->getAllByPromoCodeId($promoCode->getId());
+        foreach ($promoCodeCategories as $promoCodeCategory) {
+            $categoryId = $promoCodeCategory->getCategory()->getId();
+            if (in_array($categoryId, $categoryIdsFromForm, true) === false) {
+                $this->em->remove($promoCodeCategory);
+                $needFlush = true;
+            } else {
+                $categoryIdsFromStorage[$categoryId] = $categoryId;
+            }
+        }
+
+        if ($needFlush === true) {
+            $this->em->flush();
+        }
+
+        foreach ($categories as $category) {
+            if (in_array($category->getId(), $categoryIdsFromStorage, true) === false) {
+                $this->promoCodeCategoryFactory->create($promoCode, $category);
+            }
+        }
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \App\Model\Product\Product[] $products
+     */
+    private function refreshPromoCodeProducts(PromoCode $promoCode, array $products): void
+    {
+        $needFlush = false;
+        $productIdsFromForm = [];
+        $productIdsFromStorage = [];
+        foreach ($products as $product) {
+            $productIdsFromForm[$product->getId()] = $product->getId();
+        }
+
+        $promoCodeProducts = $this->promoCodeProductRepository->getAllByPromoCodeId($promoCode->getId());
+        foreach ($promoCodeProducts as $promoCodeProduct) {
+            $productId = $promoCodeProduct->getProduct()->getId();
+            if (in_array($productId, $productIdsFromForm, true) === false) {
+                $this->em->remove($promoCodeProduct);
+                $needFlush = true;
+            } else {
+                $productIdsFromStorage[$productId] = $productId;
+            }
+        }
+
+        if ($needFlush === true) {
+            $this->em->flush();
+        }
+
+        foreach ($products as $product) {
+            if (in_array($product->getId(), $productIdsFromStorage, true) === false) {
+                $this->promoCodeProductFactory->create($promoCode, $product);
+            }
+        }
     }
 
     /**
