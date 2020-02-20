@@ -110,3 +110,12 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory: '@App\Model\Product\Search\FilterQueryFactory'
 
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository: '@App\Model\Product\Parameter\ParameterRepository'
+
+    Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory: '@App\Model\Slider\SliderItemDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository: '@App\Model\Slider\SliderItemRepository'
+
+    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory: '@App\Model\Advert\AdvertDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'
+

@@ -229,6 +229,14 @@ services:
         arguments:
             $disableFields: '%disable_form_fields_from_transfer%'
 
+    Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory: '@App\Model\Slider\SliderItemDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository: '@App\Model\Slider\SliderItemRepository'
+
+    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory: '@App\Model\Advert\AdvertDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'
+
     App\Component\ScontoBridge\ScontoBridgeConfig:
         arguments:
             $scontoBridgeConfig: "%sconto_bridge_config%"

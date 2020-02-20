@@ -47,6 +47,13 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType }
 
+    App\Form\Admin\SliderItemFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType }
+
+    App\Form\Admin\AdvertFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Advert\AdvertFormType }
     App\Form\Admin\Customer\BillingAddressFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType }
