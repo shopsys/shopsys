@@ -49,6 +49,7 @@
         "fp/jsformvalidator-bundle": "^1.5.1",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "fzaninotto/faker": "^1.7.1",
+        "guzzlehttp/guzzle": "~6.0",
         "helios-ag/fm-elfinder-bundle": "^9.2",
         "heureka/overeno-zakazniky": "^2.0.6",
         "http-interop/http-factory-guzzle": "^1.0",

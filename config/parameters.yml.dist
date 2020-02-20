@@ -27,10 +27,15 @@ parameters:
 
     akeneo_config:
         enabled: false
-        base_uri: 'https://pim.scontodev.cz/api/oauth/v1/token' # TODO !!!!!
+        base_uri: 'https://pim.scontodev.cz/'
         client_id: ''
         secret: ''
         user: ''
         password: ''
     disable_form_fields_from_transfer: true
 
+    sconto_bridge_config:
+        enabled: false
+        base_uri: 'https://api.scontodev.cz/api/'
+        user: ''
+        password: ''

@@ -29,7 +29,7 @@ class CustomerUser extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=6)
+     * @ORM\Column(type="string", length=6, nullable=true)
      */
     protected $gender;
 
@@ -39,6 +39,23 @@ class CustomerUser extends BaseUser
      * @ORM\Column(type="boolean")
      */
     protected $newsletterSubscription;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(type="integer", nullable=true, unique=true)
+     */
+    protected $erpCustomerNumber;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $lastName;
 
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
@@ -51,6 +68,7 @@ class CustomerUser extends BaseUser
         parent::__construct($customerUserData, $deliveryAddress);
         $this->gender = $customerUserData->gender;
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
+        $this->erpCustomerNumber = $customerUserData->erpCustomerNumber;
     }
 
     /**
@@ -64,9 +82,9 @@ class CustomerUser extends BaseUser
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getGender(): string
+    public function getGender(): ?string
     {
         return $this->gender;
     }
@@ -88,5 +106,29 @@ class CustomerUser extends BaseUser
             self::GENDER_MALE => t('pan'),
             self::GENDER_FEMALE => t('paní/slečna'),
         ];
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getErpCustomerNumber(): ?int
+    {
+        return $this->erpCustomerNumber;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLastName(): ?string
+    {
+        return parent::getLastName();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFullName(): ?string
+    {
+        return parent::getFullName();
     }
 }

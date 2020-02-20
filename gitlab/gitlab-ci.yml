@@ -76,6 +76,10 @@ deploy:review:
         - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.secret ${AKENEO_DEV_SECRET}
         - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.user ${AKENEO_DEV_USER}
         - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.password ${AKENEO_DEV_PASSWORD}
+        - ~/yq write --inplace ~/parameters.yml parameters.sconto_bridge_config.enabled ${SCONTO_BRIDGE_DEV_ENABLED}
+        - ~/yq write --inplace ~/parameters.yml parameters.sconto_bridge_config.base_uri ${SCONTO_BRIDGE_DEV_BASE_URI}
+        - ~/yq write --inplace ~/parameters.yml parameters.sconto_bridge_config.user ${SCONTO_BRIDGE_DEV_USER}
+        - ~/yq write --inplace ~/parameters.yml parameters.sconto_bridge_config.password ${SCONTO_BRIDGE_DEV_PASSWORD}
         - docker cp ~/parameters.yml "${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yml"
         - docker-compose exec --user root -T php-fpm chown www-data:www-data /var/www/html/config/parameters.yml
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${PHP_FPM_IMAGE_NAME}.ci.scontodev.cz/g" config/domains_urls.yml
