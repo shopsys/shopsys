@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\Article\Article;
+use App\Model\Article\ArticleData;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
-use Shopsys\FrameworkBundle\Model\Advert\Advert;
+use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 class ArticleFormTypeExtension extends AbstractTypeExtension
@@ -86,5 +89,30 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
     public function getExtendedType()
     {
         return ArticleFormType::class;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'data_class' => ArticleData::class,
+                'attr' => ['novalidate' => 'novalidate'],
+                'validation_groups' => function (FormInterface $form) {
+                    $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
+
+                    $articleData = $form->getData();
+                    /* @var $articleData \App\Model\Article\ArticleData */
+
+                    if ($articleData->type === Article::TYPE_SITE) {
+                        $validationGroups[] = static::VALIDATION_GROUP_TYPE_SITE;
+                    } elseif ($articleData->type === Article::TYPE_LINK) {
+                        $validationGroups[] = static::VALIDATION_GROUP_TYPE_LINK;
+                    }
+                    return $validationGroups;
+                },
+            ]);
     }
 }

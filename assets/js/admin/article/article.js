@@ -1,6 +1,7 @@
 import Register from 'framework/common/utils/register';
 
 export default function validationArticle () {
+    const VALIDATION_GROUP_DEFAULT = 'Default';
     const VALIDATION_GROUP_TYPE_SITE = 'typeSite';
     const VALIDATION_GROUP_TYPE_LINK = 'typeLink';
     const TYPE_SITE = 'site';
@@ -13,33 +14,32 @@ export default function validationArticle () {
     };
 
     const initArticleForm = function () {
-        let siteGroup = [$('#article_form_articleData_text').closest('.form-line'), $('#article_form_seo').closest('.wrap-divider')];
-        let linkGroup = [$('#article_form_articleData_url').closest('.form-line')];
+        let groups = {
+            site: [$('#article_form_articleData_text').closest('.form-line'), $('#article_form_seo').closest('.wrap-divider')],
+            link: [$('#article_form_articleData_url').closest('.form-line')]
+        };
 
-        $.each($.extend([], siteGroup, linkGroup), (index, item) => {
+        $.each([].concat.apply(groups.site, groups.link), (index, item) => {
             item.hide();
         });
 
-        $.each(eval(getCheckedType() + 'Group'), (index, item) => {
+        $.each(groups[getCheckedType()], (index, item) => {
             item.show();
         });
     };
 
     $articleForm.find('input[name="article_form[articleData][type]"]').change(initArticleForm);
     initArticleForm();
-    console.log('ccccaaass');
-
 
     $articleForm.jsFormValidator({
         'groups': function () {
-console.log('aaaaaaaaaaaaaaaa');
-            const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
+            const groups = [VALIDATION_GROUP_DEFAULT];
 
             const checkedType = getCheckedType();
-            if (checkedType === constant('\\App\\Model\\Article\\Article::TYPE_SITE')) {
-                groups.push(constant('\\App\\Model\\Article\\Article::VALIDATION_GROUP_TYPE_SITE'));
-            } else if (checkedType === constant('\\App\\Model\\Article\\Article::TYPE_LINK')) {
-                groups.push(constant('\\App\\Model\\Article\\Article::VALIDATION_GROUP_TYPE_LINK'));
+            if (checkedType === TYPE_SITE) {
+                groups.push(VALIDATION_GROUP_TYPE_SITE);
+            } else if (checkedType === TYPE_LINK) {
+                groups.push(VALIDATION_GROUP_TYPE_LINK);
             }
 
             return groups;
