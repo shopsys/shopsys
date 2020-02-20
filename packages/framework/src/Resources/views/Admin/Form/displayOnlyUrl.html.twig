@@ -9,14 +9,14 @@
             {% endif %}
 
             <a href="{{ url }}" target="_blank">
-                {% spaceless %}
+                {% apply spaceless %}
                     <i class="svg svg-forward-page in-icon in-icon--link ml5 mr5"></i>
                     {% if route_label is not empty %}
                         {{ route_label }}
                     {% else %}
                         {{ url }}
                     {% endif %}
-                {% endspaceless %}
+                {% endapply %}
             </a>
         </div>
     </div>
