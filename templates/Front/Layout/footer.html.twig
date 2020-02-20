@@ -13,7 +13,12 @@
             <div class="footer__bottom__articles">
                 {{ getShopInfoPhoneNumber() }}
                 {{ getShopInfoEmail() }}
-                {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction')) }}
+
+
+                {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction', {'id': 1, 'title': 'O Scontu'|trans})) }}
+                {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction', {'id': 2, 'title': 'O nákupu'|trans})) }}
+                {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction', {'id': 3, 'title': 'E-shop'|trans})) }}
+                {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction', {'id': 4, 'title': 'Prodejny'|trans})) }}
                 <a class="menu__item__link" href="{{ url('front_contact') }}">{{ 'Contact'|trans }}</a>
             </div>
         </footer>
