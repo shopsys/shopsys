@@ -21,6 +21,9 @@ class ArticleDataFactory extends BaseArticleDataFactory
         $this->fillFromArticle($articleData, $article);
 
         $articleData->createdAt = $article->getCreatedAt() ?? new DateTime();
+        $articleData->external = $article->isExternal();
+        $articleData->type = $article->getType();
+        $articleData->url = $article->getUrl();
 
         return $articleData;
     }
