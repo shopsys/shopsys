@@ -35,8 +35,8 @@ Encore
     })
     .addPlugin(new EventHooksPlugin({
         done: () => {
-            const dirWithJsFiles = './assets/js/';
-            const dirWithTranslations = './translations/';
+            const dirWithJsFiles = './assets/js/**/*';
+            const dirWithTranslations = './translations/*.po';
             const outputDirForExportedTranslations = Encore.isProduction() ? './web/build/' : './assets/js/';
 
             try {

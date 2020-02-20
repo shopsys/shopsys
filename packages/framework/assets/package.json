@@ -1,13 +1,13 @@
 {
   "name": "@shopsys/framework",
-  "version": "9.0.0-dev.1",
+  "version": "9.0.0-dev.3",
   "description": "Shopsys framework assets files",
   "repository": "https://github.com/shopsys/shopsys",
   "author": "Shopsys",
   "license": "proprietary",
   "scripts": {
     "tests": "npm run tests:unit",
-    "tests:unit": "jest"
+    "tests:unit": "jest js"
   },
   "dependencies": {
     "@claviska/jquery-minicolors": "^2.3.4",

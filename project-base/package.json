@@ -10,7 +10,7 @@
         "trans": "./assets/js/bin/trans.js",
         "trans:dump": "./assets/js/bin/transDump.js",
         "tests": "npm run tests:unit",
-        "tests:unit": "jest"
+        "tests:unit": "jest assets"
     },
     "preferGlobal": false,
     "devDependencies": {
@@ -50,7 +50,7 @@
         "webpack-notifier": "^1.6.0"
     },
     "dependencies": {
-        "@shopsys/framework": "9.0.0-dev.1",
+        "@shopsys/framework": "9.0.0-dev.3",
         "codemirror": "^5.49.2",
         "jquery-ui": "^1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",
