@@ -6,9 +6,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class ProductVisibilityExtension extends \Twig_Extension
+class ProductVisibilityExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository
@@ -41,13 +42,13 @@ class ProductVisibilityExtension extends \Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('isVisibleForDefaultPricingGroup', [$this, 'isVisibleForDefaultPricingGroupOnDomain']),
-            new Twig_SimpleFunction(
+            new TwigFunction('isVisibleForDefaultPricingGroup', [$this, 'isVisibleForDefaultPricingGroupOnDomain']),
+            new TwigFunction(
                 'isVisibleForDefaultPricingGroupOnEachDomain',
                 [$this, 'isVisibleForDefaultPricingGroupOnEachDomain']
             ),

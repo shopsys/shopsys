@@ -3,9 +3,10 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class CookiesExtension extends \Twig_Extension
+class CookiesExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade
@@ -21,13 +22,13 @@ class CookiesExtension extends \Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('isCookiesConsentGiven', [$this, 'isCookiesConsentGiven']),
-            new Twig_SimpleFunction('findCookiesArticleByDomainId', [$this, 'findCookiesArticleByDomainId']),
+            new TwigFunction('isCookiesConsentGiven', [$this, 'isCookiesConsentGiven']),
+            new TwigFunction('findCookiesArticleByDomainId', [$this, 'findCookiesArticleByDomainId']),
         ];
     }
 

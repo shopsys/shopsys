@@ -72,10 +72,10 @@ class FilesystemLoader extends BaseFilesystemLoader
                 $multidesignTemplateName = preg_replace('/^(.*)(\.[^\.]*\.twig)$/', '$1.' . $designId . '$2', $templateName);
                 try {
                     return parent::findTemplate($multidesignTemplateName);
-                } catch (\Twig_Error_Loader $loaderException) {
+                } catch (\Twig\Error\LoaderError $loaderException) {
                     if (strpos($loaderException->getMessage(), 'Unable to find template') !== 0) {
                         $message = sprintf('Unexpected exception when trying to load multidesign template `%s`', $multidesignTemplateName);
-                        throw new \Twig_Error_Loader($message, -1, null, $loaderException);
+                        throw new \Twig\Error\LoaderError($message, -1, null, $loaderException);
                     }
                 }
             }

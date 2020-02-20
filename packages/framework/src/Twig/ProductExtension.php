@@ -5,10 +5,11 @@ namespace Shopsys\FrameworkBundle\Twig;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
-use Twig_SimpleFilter;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
-class ProductExtension extends \Twig_Extension
+class ProductExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
@@ -33,35 +34,35 @@ class ProductExtension extends \Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter('productDisplayName', [$this, 'getProductDisplayName']),
-            new Twig_SimpleFilter('productListDisplayName', [$this, 'getProductListDisplayName']),
+            new TwigFilter('productDisplayName', [$this, 'getProductDisplayName']),
+            new TwigFilter('productListDisplayName', [$this, 'getProductListDisplayName']),
         ];
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'productMainCategory',
                 [$this, 'getProductMainCategory']
             ),
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'findProductMainCategory',
                 [$this, 'findProductMainCategory']
             ),
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'getProductSellingPrice',
                 [$this, 'getProductSellingPrice']
             ),
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'getProductParameterValues',
                 [$this, 'getProductParameterValues']
             ),

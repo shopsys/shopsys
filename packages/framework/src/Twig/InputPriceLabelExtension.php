@@ -3,10 +3,10 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class InputPriceLabelExtension extends Twig_Extension
+class InputPriceLabelExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
@@ -28,7 +28,7 @@ class InputPriceLabelExtension extends Twig_Extension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('inputPriceLabel', [$this, 'getInputPriceLabel']),
+            new TwigFunction('inputPriceLabel', [$this, 'getInputPriceLabel']),
         ];
     }
 

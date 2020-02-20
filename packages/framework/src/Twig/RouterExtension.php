@@ -4,10 +4,10 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class RouterExtension extends Twig_Extension
+class RouterExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
@@ -23,12 +23,12 @@ class RouterExtension extends Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'findUrlByDomainId',
                 [$this, 'findUrlByDomainId']
             ),

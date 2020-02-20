@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\FlashMessage;
 
-use Twig_Environment;
+use Twig\Environment;
 
 class FlashMessageSender
 {
@@ -12,17 +12,17 @@ class FlashMessageSender
     protected $flashMessageBag;
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twigEnvironment;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\Bag $flashMessageBag
-     * @param \Twig_Environment $twigEnvironment
+     * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
         Bag $flashMessageBag,
-        Twig_Environment $twigEnvironment
+        Environment $twigEnvironment
     ) {
         $this->flashMessageBag = $flashMessageBag;
         $this->twigEnvironment = $twigEnvironment;

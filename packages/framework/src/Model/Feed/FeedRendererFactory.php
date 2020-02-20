@@ -2,19 +2,19 @@
 
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
-use Twig_Environment;
+use Twig\Environment;
 
 class FeedRendererFactory
 {
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      */
-    public function __construct(Twig_Environment $twig)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }

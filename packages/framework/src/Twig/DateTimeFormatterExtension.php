@@ -7,9 +7,11 @@ use DateTimeImmutable;
 use IntlDateFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Twig_Extension;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
-class DateTimeFormatterExtension extends Twig_Extension
+class DateTimeFormatterExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface
@@ -34,20 +36,20 @@ class DateTimeFormatterExtension extends Twig_Extension
     }
 
     /**
-     * @return \Twig_SimpleFilter[]
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter(
+            new TwigFilter(
                 'formatDate',
                 [$this, 'formatDate']
             ),
-            new \Twig_SimpleFilter(
+            new TwigFilter(
                 'formatTime',
                 [$this, 'formatTime']
             ),
-            new \Twig_SimpleFilter(
+            new TwigFilter(
                 'formatDateTime',
                 [$this, 'formatDateTime']
             ),
@@ -55,12 +57,12 @@ class DateTimeFormatterExtension extends Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'dateOfCreation',
                 [$this, 'dateOfCreation']
             ),

@@ -17,7 +17,7 @@ class TwigEnvironmentTest extends FunctionalTestCase
     {
         $twigEnvironment = $this->getContainer()->get('twig');
         if (!is_callable([$twigEnvironment, 'getFilter'])) {
-            $this->fail('Method "getFilter" is not callable on Twig_Environment class');
+            $this->fail('Method "getFilter" is not callable on Twig\Environment class');
         }
     }
 }

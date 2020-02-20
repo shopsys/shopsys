@@ -9,10 +9,10 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class ImageExtension extends Twig_Extension
+class ImageExtension extends AbstractExtension
 {
     protected const NOIMAGE_FILENAME = 'noimage.png';
 
@@ -71,16 +71,16 @@ class ImageExtension extends Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('imageExists', [$this, 'imageExists']),
-            new Twig_SimpleFunction('imageUrl', [$this, 'getImageUrl']),
-            new Twig_SimpleFunction('image', [$this, 'getImageHtml'], ['is_safe' => ['html']]),
-            new Twig_SimpleFunction('noimage', [$this, 'getNoimageHtml'], ['is_safe' => ['html']]),
-            new Twig_SimpleFunction('getImages', [$this, 'getImages']),
+            new TwigFunction('imageExists', [$this, 'imageExists']),
+            new TwigFunction('imageUrl', [$this, 'getImageUrl']),
+            new TwigFunction('image', [$this, 'getImageHtml'], ['is_safe' => ['html']]),
+            new TwigFunction('noimage', [$this, 'getNoimageHtml'], ['is_safe' => ['html']]),
+            new TwigFunction('getImages', [$this, 'getImages']),
         ];
     }
 

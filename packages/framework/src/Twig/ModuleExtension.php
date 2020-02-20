@@ -3,10 +3,10 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class ModuleExtension extends Twig_Extension
+class ModuleExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
@@ -27,7 +27,7 @@ class ModuleExtension extends Twig_Extension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('isModuleEnabled', [$this, 'isModuleEnabled']),
+            new TwigFunction('isModuleEnabled', [$this, 'isModuleEnabled']),
         ];
     }
 

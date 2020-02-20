@@ -4,10 +4,10 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MailerSettingExtension extends Twig_Extension
+class MailerSettingExtension extends AbstractExtension
 {
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -48,13 +48,13 @@ class MailerSettingExtension extends Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('isMailerSettingUnusual', [$this, 'isMailerSettingUnusual']),
-            new Twig_SimpleFunction('getMailerSettingInfo', [$this, 'getMailerSettingInfo'], ['is_safe' => ['html']]),
+            new TwigFunction('isMailerSettingUnusual', [$this, 'isMailerSettingUnusual']),
+            new TwigFunction('getMailerSettingInfo', [$this, 'getMailerSettingInfo'], ['is_safe' => ['html']]),
         ];
     }
 

@@ -14,11 +14,11 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Twig_Extension;
-use Twig_SimpleFilter;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
-class PriceExtension extends Twig_Extension
+class PriceExtension extends AbstractExtension
 {
     /**
      * @deprecated
@@ -108,36 +108,36 @@ class PriceExtension extends Twig_Extension
     public function getFilters(): array
     {
         return [
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'price',
                 [$this, 'priceFilter']
             ),
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'priceText',
                 [$this, 'priceTextFilter'],
                 ['is_safe' => ['html']]
             ),
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'priceTextWithCurrencyByCurrencyIdAndLocale',
                 [$this, 'priceTextWithCurrencyByCurrencyIdAndLocaleFilter'],
                 ['is_safe' => ['html']]
             ),
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'priceWithCurrency',
                 [$this, 'priceWithCurrencyFilter'],
                 ['is_safe' => ['html']]
             ),
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'priceWithCurrencyAdmin',
                 [$this, 'priceWithCurrencyAdminFilter'],
                 ['is_safe' => ['html']]
             ),
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'priceWithCurrencyByDomainId',
                 [$this, 'priceWithCurrencyByDomainIdFilter'],
                 ['is_safe' => ['html']]
             ),
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'priceWithCurrencyByCurrencyId',
                 [$this, 'priceWithCurrencyByCurrencyIdFilter'],
                 ['is_safe' => ['html']]
@@ -151,22 +151,22 @@ class PriceExtension extends Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'currencySymbolByDomainId',
                 [$this, 'getCurrencySymbolByDomainId'],
                 ['is_safe' => ['html']]
             ),
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'currencySymbolDefault',
                 [$this, 'getDefaultCurrencySymbol'],
                 ['is_safe' => ['html']]
             ),
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'currencySymbolByCurrencyId',
                 [$this, 'getCurrencySymbolByCurrencyId'],
                 ['is_safe' => ['html']]
             ),
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'currencyCode',
                 [$this, 'getCurrencyCodeByDomainId']
             ),

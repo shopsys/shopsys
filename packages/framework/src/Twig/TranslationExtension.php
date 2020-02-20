@@ -2,22 +2,23 @@
 
 namespace Shopsys\FrameworkBundle\Twig;
 
-use Twig_Environment;
-use Twig_SimpleFilter;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class TranslationExtension extends \Twig_Extension
+class TranslationExtension extends AbstractExtension
 {
     /**
-     * @return array
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter('transHtml', [$this, 'transHtml'], [
+            new TwigFilter('transHtml', [$this, 'transHtml'], [
                 'needs_environment' => true,
                 'is_safe' => ['html'],
             ]),
-            new Twig_SimpleFilter('transchoiceHtml', [$this, 'transchoiceHtml'], [
+            new TwigFilter('transchoiceHtml', [$this, 'transchoiceHtml'], [
                 'needs_environment' => true,
                 'is_safe' => ['html'],
             ]),
@@ -38,14 +39,14 @@ class TranslationExtension extends \Twig_Extension
      * Helpful for protection from XSS when providing user input as translation argument
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      *
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param string $message
      * @param array $arguments
      * @param string|null $domain
      * @param string|null $locale
      * @return string
      */
-    public function transHtml(Twig_Environment $twig, $message, array $arguments = [], $domain = null, $locale = null)
+    public function transHtml(Environment $twig, $message, array $arguments = [], $domain = null, $locale = null)
     {
         $defaultTransCallable = $twig->getFilter('trans')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
@@ -59,7 +60,7 @@ class TranslationExtension extends \Twig_Extension
      * Helpful for protection from XSS when providing user input as translation argument
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::transchoice()
      *
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param string $message
      * @param int $count
      * @param array $arguments
@@ -67,7 +68,7 @@ class TranslationExtension extends \Twig_Extension
      * @param string|null $locale
      * @return string
      */
-    public function transchoiceHtml(Twig_Environment $twig, $message, $count, array $arguments = [], $domain = null, $locale = null)
+    public function transchoiceHtml(Environment $twig, $message, $count, array $arguments = [], $domain = null, $locale = null)
     {
         $defaultTranschoiceCallable = $twig->getFilter('transchoice')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
@@ -78,11 +79,11 @@ class TranslationExtension extends \Twig_Extension
     /**
      * Escapes all elements in array with default twig "escape" filter
      *
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $elements
      * @return array
      */
-    protected function getEscapedElements(Twig_Environment $twig, array $elements)
+    protected function getEscapedElements(Environment $twig, array $elements)
     {
         $defaultEscapeFilterCallable = $twig->getFilter('escape')->getCallable();
         $escapedElements = [];

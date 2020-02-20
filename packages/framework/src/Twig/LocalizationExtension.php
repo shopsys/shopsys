@@ -4,9 +4,10 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Asset\Packages;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class LocalizationExtension extends \Twig_Extension
+class LocalizationExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
@@ -36,12 +37,12 @@ class LocalizationExtension extends \Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('localeFlag', [$this, 'getLocaleFlagHtml'], ['is_safe' => ['html']]),
+            new TwigFunction('localeFlag', [$this, 'getLocaleFlagHtml'], ['is_safe' => ['html']]),
         ];
     }
 

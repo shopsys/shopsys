@@ -3,10 +3,10 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Symfony\Component\Form\FormView;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class HoneyPotExtension extends Twig_Extension
+class HoneyPotExtension extends AbstractExtension
 {
     protected const PASSWORD_FIELD_NAME = 'password';
 
@@ -16,7 +16,7 @@ class HoneyPotExtension extends Twig_Extension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'formHoneyPotCheckPasswordAlreadyRendered',
                 [$this, 'formHoneyPotCheckPasswordAlreadyRendered']
             ),

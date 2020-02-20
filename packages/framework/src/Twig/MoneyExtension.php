@@ -3,10 +3,10 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Twig_Extension;
-use Twig_SimpleFilter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class MoneyExtension extends Twig_Extension
+class MoneyExtension extends AbstractExtension
 {
     /**
      * @return array
@@ -14,7 +14,7 @@ class MoneyExtension extends Twig_Extension
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter(
+            new TwigFilter(
                 'moneyFormat',
                 [$this, 'moneyFormatFilter']
             ),

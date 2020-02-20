@@ -13,7 +13,7 @@ use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 use Symplify\MonorepoBuilder\Release\Message;
 use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
-use Twig_Environment;
+use Twig\Environment;
 
 final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -33,7 +33,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     private $versionUpgradeFileManipulator;
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     private $twigEnvironment;
 
@@ -46,13 +46,13 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator
      * @param \Shopsys\Releaser\FileManipulator\GeneralUpgradeFileManipulator $generalUpgradeFileManipulator
      * @param \Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator $versionUpgradeFileManipulator
-     * @param \Twig_Environment $twigEnvironment
+     * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
         MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator,
         GeneralUpgradeFileManipulator $generalUpgradeFileManipulator,
         VersionUpgradeFileManipulator $versionUpgradeFileManipulator,
-        Twig_Environment $twigEnvironment
+        Environment $twigEnvironment
     ) {
         $this->monorepoUpgradeFileManipulator = $monorepoUpgradeFileManipulator;
         $this->generalUpgradeFileManipulator = $generalUpgradeFileManipulator;
