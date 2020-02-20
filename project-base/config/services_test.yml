@@ -86,3 +86,7 @@ services:
     Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
+
+    Shopsys\FrameworkBundle\Model\Feed\FeedFacade: ~
+
+    Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector: ~
