@@ -1,0 +1,13 @@
+<h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-1">{{ title }} <i class="svg {{ icon }}"></i></h2>
+<ul class="footer__block__list footer__block__toggle" id="js-footer-menu-1">
+    {% for article in articles %}
+        <li class="footer__block__list__item">
+            <a class="footer__block__list__link"
+                href="{{ article.isSiteType() ? url('front_article_detail', { id: article.id }) : article.getUrl() }}"
+                {{ article.external ? 'target="_blank"' : '' }}
+            >
+                {{ article.name }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

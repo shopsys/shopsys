@@ -14,6 +14,21 @@ class ArticleData extends BaseArticleData
      */
     public $createdAt;
 
+    /**
+     * @var bool
+     */
+    public $external = false;
+
+    /**
+     * @var string
+     */
+    public $type = Article::TYPE_SITE;
+
+    /**
+     * @var string
+     */
+    public $url;
+
     public function __construct()
     {
         parent::__construct();

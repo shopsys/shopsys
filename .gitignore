@@ -1,4 +1,5 @@
 /.idea
+/.vscode
 /docs/generated
 /nbproject
 /node_modules
