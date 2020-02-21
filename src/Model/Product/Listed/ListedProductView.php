@@ -32,7 +32,7 @@ class ListedProductView extends BaseListedProductView
      * @param string|null $shortDescription
      * @param string $availability
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $sellingPrice
-     * @param array $flagIds
+     * @param int[] $flagIds
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $action
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
      * @param string|null $namePrefix
