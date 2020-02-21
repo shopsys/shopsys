@@ -1,5 +1,6 @@
 import Register from 'framework/common/utils/register';
 
+
 export default function validationArticle () {
     const VALIDATION_GROUP_DEFAULT = 'Default';
     const VALIDATION_GROUP_TYPE_SITE = 'typeSite';
