@@ -508,8 +508,6 @@ services:
     # ContainerControllerResolver fetch RedirectController from container, therefore it must be a public service
     Symfony\Bundle\FrameworkBundle\Controller\RedirectController:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
 
     Symfony\Component\Config\Loader\LoaderInterface: '@routing.loader'
 
