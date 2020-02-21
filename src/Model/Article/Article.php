@@ -110,5 +110,4 @@ class Article extends BaseArticle
     {
         return $this->type === self::TYPE_SITE;
     }
-
 }

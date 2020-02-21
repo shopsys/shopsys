@@ -1,11 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
+use App\Model\Article\Article;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Controller\Admin\ArticleController as BaseArticleController;
-use App\Model\Article\Article;
 
+/**
+ * @property \App\Model\Article\ArticleDataFactory $articleDataFactory
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade, \App\Model\Article\ArticleDataFactory $articleDataFactory, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory, \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade, \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade)
+ */
 class ArticleController extends BaseArticleController
 {
     /**

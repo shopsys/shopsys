@@ -20,7 +20,7 @@ class ArticleData extends BaseArticleData
     public $external;
 
     /**
-     * @var string 
+     * @var string
      */
     public $type;
 

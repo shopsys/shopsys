@@ -44,6 +44,11 @@ class ArticleController extends FrontBaseController
         ]);
     }
 
+    /**
+     * @param int $id
+     * @param string $title
+     * @param string $icon
+     */
     public function footerAction($id, $title, $icon)
     {
         $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(
@@ -53,7 +58,7 @@ class ArticleController extends FrontBaseController
         return $this->render('Front/Content/Article/footerMenu.html.twig', [
             'title' => $title,
             'icon' => $icon,
-            'articles' => $articles
+            'articles' => $articles,
         ]);
     }
 }
