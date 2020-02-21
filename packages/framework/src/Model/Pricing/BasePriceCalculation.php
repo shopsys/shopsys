@@ -79,6 +79,8 @@ class BasePriceCalculation
      */
     public function applyCoefficients(Price $price, Vat $vat, array $coefficients): Price
     {
+        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. This method is not used, only in tests.', __METHOD__), E_USER_DEPRECATED);
+
         $priceWithVatBeforeRounding = $price->getPriceWithVat();
         foreach ($coefficients as $coefficient) {
             $priceWithVatBeforeRounding = $priceWithVatBeforeRounding->multiply($coefficient);
