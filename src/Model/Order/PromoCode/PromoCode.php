@@ -46,6 +46,12 @@ class PromoCode extends BasePromoCode
     protected $datetimeValidTo;
 
     /**
+     * @var int|null
+     * @ORM\Column(type="integer",nullable=true)
+     */
+    protected $remainingUses;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
     public function __construct(PromoCodeData $promoCodeData)
@@ -54,6 +60,7 @@ class PromoCode extends BasePromoCode
         $this->domainId = $promoCodeData->domainId;
         $this->datetimeValidFrom = $promoCodeData->datetimeValidFrom;
         $this->datetimeValidTo = $promoCodeData->datetimeValidTo;
+        $this->remainingUses = $promoCodeData->remainingUses;
     }
 
     /**
@@ -65,6 +72,7 @@ class PromoCode extends BasePromoCode
         $this->domainId = $promoCodeData->domainId;
         $this->datetimeValidFrom = $promoCodeData->datetimeValidFrom;
         $this->datetimeValidTo = $promoCodeData->datetimeValidTo;
+        $this->remainingUses = $promoCodeData->remainingUses;
     }
 
     /**
@@ -89,5 +97,20 @@ class PromoCode extends BasePromoCode
     public function getDatetimeValidTo(): ?\DateTime
     {
         return $this->datetimeValidTo;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getRemainingUses(): ?int
+    {
+        return $this->remainingUses;
+    }
+
+    public function decreaseRemainingUses(): void
+    {
+        if ($this->remainingUses !== null & $this->remainingUses > 0) {
+            $this->remainingUses--;
+        }
     }
 }

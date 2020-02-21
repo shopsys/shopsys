@@ -55,6 +55,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             throw new \Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException($enteredCode);
         }
         $this->validatePromoCodeDatetime($promoCode);
+        $this->validateRemainigUses($promoCode);
 
         $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
     }
@@ -87,6 +88,17 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 
         if ($promoCode->getDatetimeValidTo() !== null && $promoCode->getDatetimeValidTo()->getTimestamp() < $currentTimestamp) {
             throw new NoLongerValidPromoCodeDateTimeException($promoCode->getCode());
+        }
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    public function validateRemainigUses(PromoCode $promoCode): void
+    {
+        $remainingCodeUses = $promoCode->getRemainingUses();
+        if ($remainingCodeUses !== null && $remainingCodeUses == 0) {
+            throw new \Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException($promoCode->getCode());
         }
     }
 

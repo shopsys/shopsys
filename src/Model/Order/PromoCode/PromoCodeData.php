@@ -52,4 +52,9 @@ class PromoCodeData extends BasePromoCodeData
      * @var \App\Model\Category\Category[]
      */
     public $categoriesWithSale = [];
+
+    /**
+     * @var int|null
+     */
+    public $remainingUses;
 }

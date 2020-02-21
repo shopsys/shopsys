@@ -82,6 +82,11 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
 
         $this->buildTimeValidationForm($builder);
 
+        $builder->add('remainingUses', IntegerType::class, [
+            'label' => t('Zbývající počet použití'),
+            'required' => false,
+        ]);
+
         $this->buildProductsWithSaleForm($builder);
         $this->buildCategoriesWithSaleForm($builder);
     }
