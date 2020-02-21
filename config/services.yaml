@@ -222,6 +222,12 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation: '@App\Model\Product\Pricing\ProductPriceCalculation'
 
+    App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: '@App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade: '@App\Model\Product\ProductCachedAttributesFacade'
+
     Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: '@App\Model\Product\Search\Export\ProductSearchExportWithFilterRepository'
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: '@App\Model\Product\ProductVisibilityRepository'

@@ -20,6 +20,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5' }
 
+    # disabled because ProductCalculatesPrice is in this project turned off.
+    # Form prices are used just product_domain.low/high_price....
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCronModule: ~
+
     App\Model\Customer\Transfer\ScontoBridge\ScontoBridgeImportCustomerCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5' }

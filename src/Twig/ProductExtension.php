@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Model\Product\Product;
-use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use App\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -15,17 +13,16 @@ use Twig\TwigFunction;
 class ProductExtension extends AbstractExtension
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
+     * @var \App\Model\Product\ProductCachedAttributesFacade
      */
-    private $basePriceCalculation;
+    private $productCachedAttributesFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
+     * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      */
-    public function __construct(
-        BasePriceCalculation $basePriceCalculation
-    ) {
-        $this->basePriceCalculation = $basePriceCalculation;
+    public function __construct(ProductCachedAttributesFacade $productCachedAttributesFacade)
+    {
+        $this->productCachedAttributesFacade = $productCachedAttributesFacade;
     }
 
     /**
@@ -44,13 +41,10 @@ class ProductExtension extends AbstractExtension
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function getProductNonSellingPrice(Product $product, int $domainId): ProductPrice
+    public function getProductNonSellingPrice(Product $product): ProductPrice
     {
-        $highPrice = new Price(Money::zero(), $product->getHighPriceWithVat($domainId) ?? Money::zero());
-        $highPrice = $this->basePriceCalculation->applyCoefficients($highPrice, $product->getVatForDomain($domainId), []);
-        return new ProductPrice($highPrice, false);
+        return $this->productCachedAttributesFacade->getProductNonSellingPrice($product);
     }
 }

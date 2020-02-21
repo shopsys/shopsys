@@ -57,7 +57,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $imageView,
             $product->getNamePrefix(),
             $product->getNameSufix(),
-            $this->getProductPriceWithVatByMonkey($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero())
+            $this->getProductPriceWithVatByMoney($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero())
         );
     }
 
@@ -81,7 +81,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $imageView,
             $productArray['name_prefix'],
             $productArray['name_sufix'],
-            $this->getProductPriceWithVatByMonkey($productArray['non_selling_price'] === null ? Money::zero() : Money::create($productArray['non_selling_price'] . ''))
+            $this->getProductPriceWithVatByMoney($productArray['non_selling_price'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price']))
         );
     }
 
@@ -89,7 +89,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    private function getProductPriceWithVatByMonkey(Money $priceWithVat): ProductPrice
+    private function getProductPriceWithVatByMoney(Money $priceWithVat): ProductPrice
     {
         return new ProductPrice(
             new Price(

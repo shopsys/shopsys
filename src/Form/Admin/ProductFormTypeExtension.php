@@ -123,7 +123,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         }
 
         $builderPricesGroup->add('lowPriceWithVat', MultidomainType::class, [
-                'label' => t('Nízká cena s DPH'),
+                'label' => t('Nižší cena s DPH'),
                 'entry_type' => MoneyType::class,
                 'entry_options' => [
                     'scale' => 6,
@@ -131,7 +131,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
             ])
             ->add('lowPriceWithoutVat', MultidomainType::class, [
-                'label' => t('Nízká cena bez DPH'),
+                'label' => t('Nižší cena bez DPH'),
                 'entry_type' => MoneyType::class,
                 'entry_options' => [
                     'scale' => 6,
@@ -139,7 +139,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
             ])
             ->add('highPriceWithVat', MultidomainType::class, [
-                'label' => t('Vysoká cena s DPH'),
+                'label' => t('Vyšší cena s DPH'),
                 'entry_type' => MoneyType::class,
                 'entry_options' => [
                     'scale' => 6,
@@ -147,7 +147,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
             ])
             ->add('highPriceWithoutVat', MultidomainType::class, [
-                'label' => t('Vysoká cena bez DPH'),
+                'label' => t('Vyšší cena bez DPH'),
                 'entry_type' => MoneyType::class,
                 'entry_options' => [
                     'scale' => 6,

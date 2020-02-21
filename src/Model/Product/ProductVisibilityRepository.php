@@ -41,13 +41,7 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                         (
                             p.variant_type = :variantTypeMain
                             OR
-                            EXISTS (
-                                SELECT 1
-                                FROM product_domains as pd_in
-                                WHERE pd_in.low_price_with_vat > 0
-                                    AND pd_in.product_id = pv.product_id
-                                    AND pd_in.domain_id = pv.domain_id
-                            )
+                            pd.low_price_with_vat > 0
                         )
                         AND EXISTS (
                             SELECT 1

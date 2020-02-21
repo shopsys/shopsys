@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace App\Model\Product\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation as BaseProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice calculatePrice(\App\Model\Product\Product $product, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
@@ -22,32 +18,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class ProductPriceCalculation extends BaseProductPriceCalculation
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|null $currencyFacade
-     */
-    public function __construct(
-        BasePriceCalculation $basePriceCalculation,
-        PricingSetting $pricingSetting,
-        ProductManualInputPriceRepository $productManualInputPriceRepository,
-        ProductRepository $productRepository,
-        ?CurrencyFacade $currencyFacade = null
-    ) {
-        parent::__construct(
-            $basePriceCalculation,
-            $pricingSetting,
-            $productManualInputPriceRepository,
-            $productRepository,
-            $currencyFacade
-        );
-    }
-
-    /**
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @throws \Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup)
@@ -64,5 +36,18 @@ class ProductPriceCalculation extends BaseProductPriceCalculation
         );
 
         return new ProductPrice($basePrice, false);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     */
+    public function calculateProductNonSellingPrice(Product $product, int $domainId): ProductPrice
+    {
+        $highPrice = new Price(Money::zero(), $product->getHighPriceWithVat($domainId) ?? Money::zero());
+        $highPrice = $this->basePriceCalculation->applyCoefficients($highPrice, $product->getVatForDomain($domainId), []);
+
+        return new ProductPrice($highPrice, false);
     }
 }

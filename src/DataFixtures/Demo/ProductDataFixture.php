@@ -5709,8 +5709,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     protected function setPriceForAllPricingGroups(ProductData $productData, string $price): void
     {
+        $fakePrice = 1;
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money::create($price), $pricingGroup->getDomainId());
+            $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money::create($fakePrice), $pricingGroup->getDomainId());
 
             $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $money;
         }

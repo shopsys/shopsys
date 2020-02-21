@@ -377,9 +377,6 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create((1000 / 1.21) . ''), Domain::FIRST_DOMAIN_ID);
         $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create((80000 / 1.21) . ''), Domain::FIRST_DOMAIN_ID);
 
-//        $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), Domain::FIRST_DOMAIN_ID);
-//        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(80000), Domain::FIRST_DOMAIN_ID);
-
         $countData = new ProductFilterCountData();
         /*
          * availability filter is temporary disabled util stocks will be full implemented,
