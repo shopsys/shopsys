@@ -16,6 +16,8 @@ parameters:
 
     shopsys.image.enable_lazy_load: false
 
+    shopsys.display_cron_overview_for_superadmin_only: true
+
     env(IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK): '0'
     env(REDIS_PREFIX): ''
     env(ELASTIC_SEARCH_INDEX_PREFIX): ''

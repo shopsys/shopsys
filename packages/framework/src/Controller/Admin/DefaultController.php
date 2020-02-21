@@ -246,7 +246,9 @@ class DefaultController extends AdminBaseController
      */
     protected function getCronGridViews(): ?array
     {
-        if ($this->isGranted(Roles::ROLE_SUPER_ADMIN) === false) {
+        if ($this->getParameter('shopsys.display_cron_overview_for_superadmin_only') === true
+            && $this->isGranted(Roles::ROLE_SUPER_ADMIN) === false
+        ) {
             return null;
         }
 

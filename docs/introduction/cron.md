@@ -6,17 +6,7 @@ Periodically executed Cron modules recalculate visibility, generate XML feeds an
 
 By default you can configure your own cron configurations in `config/services/cron.yml` file.
 
-If you want to show Cron overview table for non superadmin users you need to override `DefaulController::getCronGridViews` and remove superadmin protection:
-```diff
-protected function getCronGridViews(): ?array
-{
--   if ($this->isGranted(Roles::ROLE_SUPER_ADMIN) === false) {
--       return null;
--   }
-
-    ...
-}
-```
+If you want to show Cron overview table for non-superadmin users you need add parameter `shopsys.display_cron_overview_for_superadmin_only` set to `false` in your `config/parameters.yml`:
 
 !!! note
     All default crons are translated only to English. If you want to translate it to another language, you need to override `src/Resources/config/services/cron.yml` in `FrameworkBundle` and set `readableName` property.
