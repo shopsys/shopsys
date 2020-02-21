@@ -968,7 +968,7 @@ msgid "Error occurred, try again please."
 msgstr "Nastala chyba, zkuste to, prosím, znovu."
 
 msgid "Every 5 minutes in %hour% hour"
-msgstr "[0,1]Každých 5 minut v %hour% hodinu|[2,4]Každých 5 minut ve %hour% hodiny|[2,Inf]Každých 5 minut v %hour% hodin"
+msgstr "{0}Každých 5 minut v 0 hodin|{1}Každých 5 minut v 1 hodinu|[2,4]Každých 5 minut ve %hour% hodiny|[5,Inf]Každých 5 minut v %hour% hodin"
 
 msgid "Every hour"
 msgstr "Každou hodinu"
@@ -1216,8 +1216,8 @@ msgstr "Jazyk"
 msgid "Last action time"
 msgstr "Čas poslední akce"
 
-msgid "Last duration"
-msgstr "Poslední doba trvání"
+msgid "Last duration (mm:ss)"
+msgstr "Poslední doba trvání (mm:ss)"
 
 msgid "Last finished at"
 msgstr "Poslední dokončení"
@@ -2589,4 +2589,3 @@ msgstr "bez umístění"
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
-

@@ -125,7 +125,7 @@ class CronModuleFacade
         $cronModule->setStatusOk();
         $cronModule->updateLastFinishedAt();
 
-        if ($cronModule->getLastFinishedAt() !== null && $cronModule->getLastStartedAt() !== null) {
+        if ($cronModule->getLastStartedAt() !== null) {
             $lastCronDuration = $cronModule->getLastFinishedAt()->getTimestamp() - $cronModule->getLastStartedAt()->getTimestamp();
             $cronModule->setLastDuration($lastCronDuration);
         }
@@ -146,12 +146,22 @@ class CronModuleFacade
 
     /**
      * @param string $serviceId
-     * @param bool $enabled
      */
-    public function switchCronModule(string $serviceId, bool $enabled): void
+    public function disableCronModuleByServiceId(string $serviceId): void
     {
         $cronModule = $this->getCronModuleByServiceId($serviceId);
-        $cronModule->setEnabled($enabled);
+        $cronModule->disable();
+
+        $this->em->flush($cronModule);
+    }
+
+    /**
+     * @param string $serviceId
+     */
+    public function enableCronModuleByServiceId(string $serviceId): void
+    {
+        $cronModule = $this->getCronModuleByServiceId($serviceId);
+        $cronModule->enable();
 
         $this->em->flush($cronModule);
     }

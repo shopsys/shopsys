@@ -1216,7 +1216,7 @@ msgstr ""
 msgid "Last action time"
 msgstr ""
 
-msgid "Last duration"
+msgid "Last duration (mm:ss)"
 msgstr ""
 
 msgid "Last finished at"

@@ -133,12 +133,14 @@ class CronModule
         return $this->enabled;
     }
 
-    /**
-     * @param bool $enabled
-     */
-    public function setEnabled(bool $enabled): void
+    public function disable(): void
     {
-        $this->enabled = $enabled === true;
+        $this->enabled = false;
+    }
+
+    public function enable(): void
+    {
+        $this->enabled = true;
     }
 
     public function setStatusFailed(): void

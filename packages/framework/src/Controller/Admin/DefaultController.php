@@ -285,7 +285,7 @@ class DefaultController extends AdminBaseController
                 'name' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
                 'lastStartedAt' => $cronModule->getLastStartedAt(),
                 'lastFinishedAt' => $cronModule->getLastFinishedAt(),
-                'lastDuration' => $cronModule->getLastDuration() ? date('i:s', $cronModule->getLastDuration()) : '',
+                'lastDuration' => is_int($cronModule->getLastDuration()) ? date('i:s', $cronModule->getLastDuration()) : '',
                 'status' => $cronModule->getStatus(),
                 'enabled' => $cronModule->isEnabled(),
                 'readableFrequency' => $cronConfig->getReadableFrequency(),
@@ -302,7 +302,7 @@ class DefaultController extends AdminBaseController
         $cronListGrid->addColumn('readableFrequency', 'readableFrequency', t('Frequency'), false);
         $cronListGrid->addColumn('lastStartedAt', 'lastStartedAt', t('Last started at'), false);
         $cronListGrid->addColumn('lastFinishedAt', 'lastFinishedAt', t('Last finished at'), false);
-        $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration'), false)->setClassAttribute('table-col table-col-10');
+        $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration (mm:ss)'), false)->setClassAttribute('table-col table-col-10');
         $cronListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col table-col-10');
 
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
@@ -330,18 +330,30 @@ class DefaultController extends AdminBaseController
     }
 
     /**
-     * @Route("/cron/switch/{serviceId}/{action}", requirements={
-     *     "action": "enable|disable"
-     * }))
+     * @Route("/cron/disable/{serviceId}")
      * @param string $serviceId
-     * @param string $action
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function switchCronAction(string $serviceId, string $action): Response
+    public function cronDisableAction(string $serviceId): Response
     {
-        $this->cronModuleFacade->switchCronModule($serviceId, $action === 'enable');
+        $this->cronModuleFacade->disableCronModuleByServiceId($serviceId);
         $this->getFlashMessageSender()->addSuccessFlash(
-            t('Cron with serviceID `%serviceId%` was scheduled', ['%serviceId%' => $serviceId])
+            t('Cron with serviceID `%serviceId%` was disabled', ['%serviceId%' => $serviceId])
+        );
+
+        return $this->redirectToRoute('admin_default_dashboard');
+    }
+
+    /**
+     * @Route("/cron/enable/{serviceId}")
+     * @param string $serviceId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function cronEnableAction(string $serviceId): Response
+    {
+        $this->cronModuleFacade->enableCronModuleByServiceId($serviceId);
+        $this->getFlashMessageSender()->addSuccessFlash(
+            t('Cron with serviceID `%serviceId%` was enabled', ['%serviceId%' => $serviceId])
         );
 
         return $this->redirectToRoute('admin_default_dashboard');

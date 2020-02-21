@@ -37,16 +37,14 @@
 
     {% if row.enabled == false %}
         <a href="{{ url(
-            'admin_default_switchcron', {
-                serviceId: row.id,
-                action: 'enable'
+            'admin_default_cronenable', {
+                serviceId: row.id
             }
         ) }}" class="in-icon in-icon--edit svg svg-power" style="color: red;" title="{{ 'Enable'|trans }}"></a>
     {% else %}
         <a href="{{ url(
-            'admin_default_switchcron', {
-                serviceId: row.id,
-                action: 'disable'
+            'admin_default_crondisable', {
+                serviceId: row.id
             }
         ) }}" class="in-icon in-icon--edit svg svg-power" style="color: green;" title="{{ 'Disable'|trans }}"></a>
     {% endif %}
