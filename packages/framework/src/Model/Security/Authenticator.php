@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Security;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -14,9 +14,9 @@ use Symfony\Component\Security\Http\SecurityEvents;
 class Authenticator
 {
     /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
      */
-    protected $tokenStorage;
+    protected $tokenStorageInterface;
 
     /**
      * @var \Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher
@@ -24,14 +24,14 @@ class Authenticator
     protected $traceableEventDispatcher;
 
     /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage $tokenStorage
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorageInterface
      * @param \Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher $traceableEventDispatcher
      */
     public function __construct(
-        TokenStorage $tokenStorage,
+        TokenStorageInterface $tokenStorageInterface,
         TraceableEventDispatcher $traceableEventDispatcher
     ) {
-        $this->tokenStorage = $tokenStorage;
+        $this->tokenStorageInterface = $tokenStorageInterface;
         $this->traceableEventDispatcher = $traceableEventDispatcher;
     }
 
@@ -68,7 +68,7 @@ class Authenticator
     public function loginUser(CustomerUser $customerUser, Request $request)
     {
         $token = new UsernamePasswordToken($customerUser, $customerUser->getPassword(), 'frontend', $customerUser->getRoles());
-        $this->tokenStorage->setToken($token);
+        $this->tokenStorageInterface->setToken($token);
 
         // dispatch the login event
         $event = new InteractiveLoginEvent($request, $token);
