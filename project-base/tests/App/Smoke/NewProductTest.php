@@ -31,13 +31,13 @@ class NewProductTest extends FunctionalTestCase
             'HTTP_HOST' => sprintf('%s:%d', parse_url($domainUrl, PHP_URL_HOST), parse_url($domainUrl, PHP_URL_PORT)),
         ];
 
-        $client1 = $this->getClient(false, 'admin', 'admin123');
+        $client1 = $this->findClient(false, 'admin', 'admin123');
         $crawler = $client1->request('GET', $relativeUrl, [], [], $server);
 
         $form = $crawler->filter('form[name=product_form]')->form();
         $this->fillForm($form);
 
-        $client2 = $this->getClient(true, 'admin', 'admin123');
+        $client2 = $this->findClient(true, 'admin', 'admin123');
         /** @var \Doctrine\ORM\EntityManager $em2 */
         $em2 = $client2->getContainer()->get('doctrine.orm.entity_manager');
 

@@ -59,7 +59,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @param array $kernelOptions
      * @return \Symfony\Bundle\FrameworkBundle\Client
      */
-    protected function getClient(
+    protected function findClient(
         $createNew = false,
         $username = null,
         $password = null,
@@ -94,7 +94,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected function getContainer()
     {
-        return $this->getClient()->getContainer();
+        return $this->findClient()->getContainer();
     }
 
     /**

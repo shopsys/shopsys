@@ -23,7 +23,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
 
     protected function setUp(): void
     {
-        $this->client = $this->getClient(true);
+        $this->client = $this->findClient(true);
 
         if (!$this->enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
             $this->markTestSkipped('Frontend API disabled on domain');
