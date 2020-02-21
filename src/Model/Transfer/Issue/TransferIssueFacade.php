@@ -35,13 +35,17 @@ class TransferIssueFacade
     /**
      * @param \App\Model\Transfer\Issue\TransferIssueData $transferIssueData
      * @param \App\Model\Transfer\Transfer $transfer
+     * @param bool $canFlush
      * @return \App\Model\Transfer\Issue\TransferIssue
      */
-    public function create(TransferIssueData $transferIssueData, Transfer $transfer): TransferIssue
+    public function create(TransferIssueData $transferIssueData, Transfer $transfer, bool $canFlush = true): TransferIssue
     {
         $transferIssue = new TransferIssue($transfer, $transferIssueData);
         $this->em->persist($transferIssue);
-        $this->em->flush();
+
+        if ($canFlush) {
+            $this->em->flush();
+        }
 
         return $transferIssue;
     }
@@ -53,8 +57,9 @@ class TransferIssueFacade
     public function saveTransferIssues(array $transferIssuesData, Transfer $transfer): void
     {
         foreach ($transferIssuesData as $transferIssueData) {
-            $this->create($transferIssueData, $transfer);
+            $this->create($transferIssueData, $transfer, false);
         }
+        $this->em->flush();
     }
 
     /**

@@ -94,7 +94,7 @@ class TransferController extends AdminBaseController
         $grid->addColumn('message', 'ti.message', t('Text zprávy'));
         $grid->addColumn('createdAt', 'ti.createdAt', t('Datum a čas'));
         $grid->addDeleteActionColumn('admin_transfer_delete', ['id' => 'ti.id'])
-            ->setConfirmMessage(t('Opravdu chcete tento přenos označit jako vyřešený?'));
+            ->setConfirmMessage(t('Opravdu chcete tento problém označit jako vyřešený?'));
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 
@@ -116,10 +116,10 @@ class TransferController extends AdminBaseController
             $this->transferIssueFacade->deleteById((int)$id);
 
             $this->getFlashMessageSender()->addSuccessFlashTwig(
-                t('Přenos byl označen jako vyřešený')
+                t('Problém v přenosu byl označen jako vyřešený')
             );
         } catch (NotFoundHttpException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Vybraný přenos nebyl nalezen'));
+            $this->getFlashMessageSender()->addErrorFlash(t('Vybraný problém v přenosu nebyl nalezen'));
         }
 
         return $this->redirectToRoute('admin_transfer_list');

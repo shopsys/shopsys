@@ -66,11 +66,11 @@ class TransferLogger implements TransferLoggerInterface
     }
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addDebug($message, array $context = []): bool
+    public function addDebug(string $message, array $context = []): bool
     {
         $this->transferIssueDataList[] = new TransferIssueData($message, TransferIssue::SEVERITY_ERROR);
 
@@ -78,31 +78,31 @@ class TransferLogger implements TransferLoggerInterface
     }
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addInfo($message, array $context = []): bool
+    public function addInfo(string $message, array $context = []): bool
     {
         return $this->logger->addInfo($message, $context);
     }
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addNotice($message, array $context = []): bool
+    public function addNotice(string $message, array $context = []): bool
     {
         return $this->logger->addNotice($message, $context);
     }
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addWarning($message, array $context = []): bool
+    public function addWarning(string $message, array $context = []): bool
     {
         $this->transferIssueDataList[] = new TransferIssueData($message, TransferIssue::SEVERITY_WARNING);
 
@@ -110,11 +110,11 @@ class TransferLogger implements TransferLoggerInterface
     }
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addError($message, array $context = []): bool
+    public function addError(string $message, array $context = []): bool
     {
         $this->transferIssueDataList[] = new TransferIssueData($message, TransferIssue::SEVERITY_ERROR);
 
@@ -122,31 +122,31 @@ class TransferLogger implements TransferLoggerInterface
     }
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addCritical($message, array $context = []): bool
+    public function addCritical(string $message, array $context = []): bool
     {
         return $this->logger->addCritical($message, $context);
     }
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addAlert($message, array $context = []): bool
+    public function addAlert(string $message, array $context = []): bool
     {
         return $this->logger->addAlert($message, $context);
     }
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addEmergency($message, array $context = []): bool
+    public function addEmergency(string $message, array $context = []): bool
     {
         return $this->logger->addEmergency($message, $context);
     }

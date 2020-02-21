@@ -92,7 +92,7 @@ class TransferIssue
     /**
      * @return \App\Model\Transfer\Transfer
      */
-    public function getTransfer(): \App\Model\Transfer\Transfer
+    public function getTransfer(): Transfer
     {
         return $this->transfer;
     }

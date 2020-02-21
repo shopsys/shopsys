@@ -9,60 +9,60 @@ interface TransferLoggerInterface
     public function persistAllLoggedTransferIssues(): void;
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addDebug($message, array $context = []): bool;
+    public function addDebug(string $message, array $context = []): bool;
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addInfo($message, array $context = []): bool;
+    public function addInfo(string $message, array $context = []): bool;
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addNotice($message, array $context = []): bool;
+    public function addNotice(string $message, array $context = []): bool;
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addWarning($message, array $context = []): bool;
+    public function addWarning(string $message, array $context = []): bool;
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addError($message, array $context = []): bool;
+    public function addError(string $message, array $context = []): bool;
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addCritical($message, array $context = []): bool;
+    public function addCritical(string $message, array $context = []): bool;
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addAlert($message, array $context = []): bool;
+    public function addAlert(string $message, array $context = []): bool;
 
     /**
-     * @param mixed $message
+     * @param string $message
      * @param array $context
      * @return bool
      */
-    public function addEmergency($message, array $context = []): bool;
+    public function addEmergency(string $message, array $context = []): bool;
 
     public function close(): void;
 
