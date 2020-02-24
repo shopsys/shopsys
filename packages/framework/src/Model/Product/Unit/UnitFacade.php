@@ -188,6 +188,6 @@ class UnitFacade
      */
     protected function dispatchUnitEvent(Unit $unit, string $eventType): void
     {
-        $this->eventDispatcher->dispatch($eventType, new UnitEvent($unit));
+        $this->eventDispatcher->dispatch(new UnitEvent($unit), $eventType);
     }
 }

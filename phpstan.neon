@@ -34,6 +34,9 @@ parameters:
         -
             message: '#^Access to an undefined property PhpParser\\Node::\$name\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Translation/ConstraintViolationExtractor.php
+        -
+            message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
+            path: %currentWorkingDirectory%/packages/framework/src/*
         # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base
         -
             # Ignore annotations in generated code

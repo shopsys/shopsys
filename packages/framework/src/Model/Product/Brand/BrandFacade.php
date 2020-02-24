@@ -168,6 +168,6 @@ class BrandFacade
      */
     protected function dispatchBrandEvent(Brand $brand, string $eventType): void
     {
-        $this->eventDispatcher->dispatch($eventType, new BrandEvent($brand));
+        $this->eventDispatcher->dispatch(new BrandEvent($brand), $eventType);
     }
 }

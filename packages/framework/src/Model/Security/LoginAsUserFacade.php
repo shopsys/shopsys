@@ -96,6 +96,6 @@ class LoginAsUserFacade
         $this->tokenStorage->setToken($token);
 
         $event = new InteractiveLoginEvent($request, $token);
-        $this->eventDispatcher->dispatch(SecurityEvents::INTERACTIVE_LOGIN, $event);
+        $this->eventDispatcher->dispatch($event, SecurityEvents::INTERACTIVE_LOGIN);
     }
 }

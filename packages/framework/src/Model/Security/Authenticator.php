@@ -72,7 +72,7 @@ class Authenticator
 
         // dispatch the login event
         $event = new InteractiveLoginEvent($request, $token);
-        $this->traceableEventDispatcher->dispatch(SecurityEvents::INTERACTIVE_LOGIN, $event);
+        $this->traceableEventDispatcher->dispatch($event, SecurityEvents::INTERACTIVE_LOGIN);
 
         $request->getSession()->migrate();
     }

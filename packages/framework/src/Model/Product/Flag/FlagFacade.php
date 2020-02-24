@@ -117,6 +117,6 @@ class FlagFacade
      */
     protected function dispatchFlagEvent(Flag $flag, string $eventType): void
     {
-        $this->eventDispatcher->dispatch($eventType, new FlagEvent($flag));
+        $this->eventDispatcher->dispatch(new FlagEvent($flag), $eventType);
     }
 }
