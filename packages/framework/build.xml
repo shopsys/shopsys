@@ -1311,15 +1311,7 @@
         <if>
             <equals arg1="${yaml-standards.executable.exists}" arg2="true"/>
             <then>
-                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true">
-                    <arg value="${project.basedir}"/>
-                    <arg value="--exclude-dir=${path.vendor}"/>
-                    <arg value="--exclude-dir=${path.root}/node_modules"/>
-                    <arg value="--exclude-dir=${path.var}"/>
-                    <arg value="--exclude-file=${path.config}/domains_urls.yml"/>
-                    <arg value="--check-indents-count-of-indents=${yaml-standards.indent-count}"/>
-                    <arg line="${yaml-standards.args}"/>
-                </exec>
+                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true"/>
             </then>
             <else>
                 <echo level="warning" message="The executable '${path.yaml-standards.executable}' is not available, your YAML files cannot be checked."/>
