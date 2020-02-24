@@ -74,7 +74,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
 
         $codeOptions = $builder->get('code')->getOptions();
         $codeOptions['constraints'] = [
-            new Constraints\NotBlank(['message' => 'Prosím vložte kód']),
+            new Constraints\NotBlank(['message' => 'Vyplňte prosím promo kód']),
         ];
         $codeOptions['position'] = 'first';
         $codeOptions['label'] = t('Promo kód');
@@ -217,6 +217,9 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      */
     public function validateUniquePromoCodeByDomain(PromoCodeData $promoCodeData, ExecutionContextInterface $context)
     {
+        if ($promoCodeData->code === null) {
+            return;
+        }
         if ($this->promoCode === null || $promoCodeData->code !== $this->promoCode->getCode()) {
             $promoCode = $this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCodeData->code, $promoCodeData->domainId);
             if ($promoCode !== null) {
