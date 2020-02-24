@@ -992,7 +992,14 @@ There you can find links to upgrade notes for other versions too.
             +   
             +   import './frontend/deliveryAddress';
             ```
-        - add [assets/js/frontend/deliveryAddress/deliveryAddress.js](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js) and [assets/js/frontend/deliveryAddress/index.js]((https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js)) files
+        - add [assets/js/frontend/deliveryAddress/deliveryAddress.js](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js) and [assets/js/frontend/deliveryAddress/index.js]((https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/index.js)) files
+        - add [src/Resources/styles/front/common/components/list/addresses.less](https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/styles/front/common/components/list/addresses.less)
+        - update your `src/Resources/styles/front/common/main.less`
+            ```diff
+                //// list
+            +   @import "components/list/addresses.less";
+                @import "components/list/categories.less";
+            ```
         - update your `config/packages/twig.yaml`
             ```diff
                 - '@ShopsysFramework/Admin/Form/productCalculatedPrices.html.twig'
@@ -1026,6 +1033,7 @@ There you can find links to upgrade notes for other versions too.
             - `src/Form/Front/Order/PersonalInfoFormType.php`
             - `src/Model/Customer/User/CustomerUser.php`
             - `templates/Front/Content/Customer/edit.html.twig`
+            - `templates/Front/Content/Customer/orderDetail.html.twig`
             - `templates/Front/Content/Order/step3.html.twig`
             - `templates/Front/Content/PersonalData/adress.xml.twig`
             - `templates/Front/Content/PersonalData/detail.html.twig`
