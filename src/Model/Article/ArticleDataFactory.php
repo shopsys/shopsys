@@ -46,7 +46,5 @@ class ArticleDataFactory extends BaseArticleDataFactory
         $articleData->external = $article->isExternal();
         $articleData->type = $article->getType();
         $articleData->url = $article->getUrl() ?? Article::EMPTY_STRING;
-
-
     }
 }
