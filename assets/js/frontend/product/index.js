@@ -5,5 +5,4 @@ import './ProductFilterBox';
 import './productList.AjaxFilter';
 import './productList';
 import './CategoryDescription';
-import './productListCategoryToggler';
 import './fancybox';

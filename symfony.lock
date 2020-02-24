@@ -17,12 +17,6 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
-    "bmatzner/jquery-bundle": {
-        "version": "2.2.2"
-    },
-    "bmatzner/jquery-ui-bundle": {
-        "version": "1.10.3"
-    },
     "codeception/codeception": {
         "version": "2.3",
         "recipe": {

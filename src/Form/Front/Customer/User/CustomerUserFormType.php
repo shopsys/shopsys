@@ -77,8 +77,7 @@ class CustomerUserFormType extends AbstractType
                 ],
                 'invalid_message' => 'Passwords do not match',
             ])
-            ->add('defaultDeliveryAddress', DeliveryAddressChoiceType::class);
-            ])
+            ->add('defaultDeliveryAddress', DeliveryAddressChoiceType::class)
             ->add('newsletterSubscription', CheckboxType::class, [
                 'required' => false,
             ]);

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Search\Export;
+namespace App\Model\Product\Elasticsearch;
 
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
-use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository as BaseProductSearchExportWithFilterRepository;
 
 /**
  * @property \App\Model\Product\ProductFacade $productFacade
@@ -25,7 +25,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithF
  * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  */
-class ProductSearchExportWithFilterRepository extends BaseProductSearchExportWithFilterRepository
+class ProductExportRepository extends BaseProductExportRepository
 {
     /**
      * @var \App\Model\Product\Availability\ProductAvailabilityFacade

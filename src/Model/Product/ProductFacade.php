@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInter
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
@@ -31,7 +32,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler;
 
 /**
  * @method \App\Model\Product\Product getById(int $productId)
@@ -44,6 +44,12 @@ use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportSched
  * @method refreshProductAccessories(\App\Model\Product\Product $product, \App\Model\Product\Product[] $accessories)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
+ * @method markProductsForExport(\App\Model\Product\Product[] $products)
+ * @method \App\Model\Product\Product[] getProductsWithAvailability(\Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability)
+ * @method \App\Model\Product\Product[] getProductsWithParameter(\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter)
+ * @method \App\Model\Product\Product[] getProductsWithBrand(\App\Model\Product\Brand\Brand $brand)
+ * @method \App\Model\Product\Product[] getProductsWithFlag(\Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag)
+ * @method \App\Model\Product\Product[] getProductsWithUnit(\Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit)
  */
 class ProductFacade extends BaseProductFacade
 {
@@ -80,7 +86,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
      */
@@ -107,7 +113,7 @@ class ProductFacade extends BaseProductFacade
         ProductParameterValueFactoryInterface $productParameterValueFactory,
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
-        ProductSearchExportScheduler $productSearchExportScheduler,
+        ProductExportScheduler $productExportScheduler,
         ProductStockFacade $productStockFacade,
         StockFacade $stockFacade
     ) {
@@ -134,7 +140,7 @@ class ProductFacade extends BaseProductFacade
             $productParameterValueFactory,
             $productVisibilityFactory,
             $productPriceCalculation,
-            $productSearchExportScheduler
+            $productExportScheduler
         );
         $this->stockFacade = $stockFacade;
         $this->productStockFacade = $productStockFacade;
@@ -207,7 +213,7 @@ class ProductFacade extends BaseProductFacade
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
-        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productToExport->getId());
+        $this->productExportScheduler->scheduleRowIdForImmediateExport($productToExport->getId());
 
         foreach ($productData->stockProductData as $productStockData) {
             $stock = $this->stockFacade->getById($productStockData->stockId);

@@ -2,7 +2,7 @@ import $ from 'jquery';
 import '../components/filterAllNodes';
 import 'magnific-popup';
 import '@fancyapps/fancybox';
-import Register from 'framework/common/utils/register';
+import Register from 'framework/common/utils/Register';
 import Translator from 'bazinga-translator';
 
 class ProductDetailGallery {

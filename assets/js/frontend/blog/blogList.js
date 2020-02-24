@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import Register from 'framework/common/utils/register';
-import AjaxMoreLoader from '../components/ajaxMoreLoader';
+import Register from 'framework/common/utils/Register';
+import AjaxMoreLoader from '../components/AjaxMoreLoader';
 import Translator from 'bazinga-translator';
 
 export default function blogList ($container) {

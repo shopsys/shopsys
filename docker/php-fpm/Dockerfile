@@ -49,6 +49,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 # install necessary tools for running application
 RUN docker-php-ext-install \
     bcmath \
+    calendar \
     fileinfo \
     gd \
     intl \
@@ -56,6 +57,9 @@ RUN docker-php-ext-install \
     pgsql \
     pdo_pgsql \
     zip
+
+# hotfix for https://github.com/npm/cli/issues/613
+RUN npm install -g npm@6.13.2
 
 # install grunt cli used by frontend developers for continuous generating of css files
 RUN npm install -g grunt-cli
