@@ -65,6 +65,10 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
 
     public function testCreatePaymentWithDifferentVisibilityOnDomains()
     {
+        if (count($this->domain->getAllIds()) === 1) {
+            $this->markTestSkipped('Test is skipped for single domain');
+        }
+
         $paymentData = $this->paymentDataFactory->create();
 
         $paymentData->enabled[self::FIRST_DOMAIN_ID] = true;

@@ -63,6 +63,10 @@ class TransportDomainTest extends TransactionFunctionalTestCase
 
     public function testCreateTransportWithDifferentVisibilityOnDomains()
     {
+        if (count($this->domain->getAllIds()) === 1) {
+            $this->markTestSkipped('Test is skipped for single domain');
+        }
+
         $transportData = $this->transportDataFactory->create();
 
         $transportData->enabled[self::FIRST_DOMAIN_ID] = true;

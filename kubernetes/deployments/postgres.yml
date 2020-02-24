@@ -21,7 +21,7 @@ spec:
                                 path: postgres.conf
             containers:
                 -   name: postgres
-                    image: postgres:10.5-alpine
+                    image: postgres:12.1-alpine
                     volumeMounts:
                         -   name: postgres-configuration
                             mountPath: /var/lib/postgresql/data/postgresql.conf

@@ -1,4 +1,4 @@
-import Register from 'framework/common/utils/register';
+import Register from 'framework/common/utils/Register';
 
 const safariDetection = () => {
     if (navigator.vendor
@@ -12,4 +12,4 @@ const safariDetection = () => {
     }
 };
 
-(new Register()).registerCallback(safariDetection);
+(new Register()).registerCallback(safariDetection, 'safariDetection');

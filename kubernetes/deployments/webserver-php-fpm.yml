@@ -61,7 +61,7 @@ spec:
                     image: "{{DOCKER_PHP_FPM_IMAGE}}"
                     securityContext:
                         runAsUser: 33
-                    command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo product-search-recreate-structure product-search-export-products grunt error-pages-generate warmup"]
+                    command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export grunt error-pages-generate warmup"]
                     volumeMounts:
                         -   name: source-codes
                             mountPath: /var/www/html

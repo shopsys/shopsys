@@ -38,7 +38,8 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $customer = new Customer();
         $customer->addBillingAddress($this->createBillingAddress($country, $customer));
         $deliveryAddress = $this->createDeliveryAddress($country);
-        $customerUser = $this->createCustomerUser($deliveryAddress, $customer);
+        $customer->addDeliveryAddress($deliveryAddress);
+        $customerUser = $this->createCustomerUser($customer);
         $status = $this->createMock(OrderStatus::class);
         $currencyData = new CurrencyData();
         $currencyData->name = 'CZK';
@@ -123,12 +124,11 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      *
      * @return \App\Model\Customer\User\CustomerUser
      */
-    private function createCustomerUser(DeliveryAddress $deliveryAddress, Customer $customer)
+    private function createCustomerUser(Customer $customer)
     {
         $customerUserData = new CustomerUserData();
         $customerUserData->firstName = 'Jaromír';
@@ -139,7 +139,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $customerUserData->telephone = '+420987654321';
         $customerUserData->customer = $customer;
 
-        return new CustomerUser($customerUserData, $deliveryAddress);
+        return new CustomerUser($customerUserData);
     }
 
     /**

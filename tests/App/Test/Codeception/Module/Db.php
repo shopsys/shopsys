@@ -15,7 +15,6 @@ class Db extends BaseDb
      */
     public function _afterSuite()
     {
-        $this->cleanup();
         $this->_loadDump();
     }
 
@@ -26,6 +25,14 @@ class Db extends BaseDb
         /** @var \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade */
         $databaseSchemaFacade = $symfonyHelper->grabServiceFromContainer(DatabaseSchemaFacade::class);
         $databaseSchemaFacade->dropSchemaIfExists('public');
-        $databaseSchemaFacade->createSchema('public');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function _loadDump($databaseKey = null, $databaseConfig = null)
+    {
+        $this->cleanup();
+        return parent::_loadDump($databaseKey, $databaseConfig);
     }
 }

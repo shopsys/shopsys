@@ -31,7 +31,8 @@ class OrderCest
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
         $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
-        $me->clickByTranslationFrontend('Go to cart');
+        $me->waitForAjax();
+        $orderPage->clickGoToCartInPopUpWindow();
         $me->clickByTranslationFrontend('Order [verb]');
 
         $orderPage->assertTransportIsNotSelected('Czech post');
@@ -62,7 +63,7 @@ class OrderCest
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
         $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
-        $me->clickByTranslationFrontend('Go to cart');
+        $orderPage->clickGoToCartInPopUpWindow();
         $me->clickByTranslationFrontend('Order [verb]');
 
         $orderPage->assertTransportIsNotSelected('Czech post');
@@ -90,7 +91,7 @@ class OrderCest
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
         $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
-        $me->clickByTranslationFrontend('Go to cart');
+        $orderPage->clickGoToCartInPopUpWindow();
         $me->clickByTranslationFrontend('Order [verb]');
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
         $me->waitForAjax();
@@ -148,7 +149,7 @@ class OrderCest
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
         $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
-        $me->clickByTranslationFrontend('Go to cart');
+        $orderPage->clickGoToCartInPopUpWindow();
         $me->clickByTranslationFrontend('Order [verb]');
 
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);

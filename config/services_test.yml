@@ -64,6 +64,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory: ~
 
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: ~
+
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@App\Model\Product\Brand\BrandDataFactory'
 
     Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade: ~

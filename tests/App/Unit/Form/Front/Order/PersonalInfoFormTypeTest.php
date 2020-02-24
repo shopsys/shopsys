@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormInterface;
@@ -32,6 +33,11 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|\PHPUnit\Framework\MockObject\MockObject
      */
     private $domain;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $currentCustomerUser;
 
     /**
      * @return array
@@ -103,7 +109,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     {
         return [
             new ValidatorExtension(Validation::createValidator()),
-            new PreloadedExtension([new PersonalInfoFormType($this->countryFacade, $this->heurekaFacade, $this->domain)], []),
+            new PreloadedExtension([new PersonalInfoFormType($this->countryFacade, $this->heurekaFacade, $this->domain, $this->currentCustomerUser)], []),
         ];
     }
 
@@ -117,6 +123,8 @@ class PersonalInfoFormTypeTest extends TypeTestCase
 
         $this->domain = $this->createMock(Domain::class);
         $this->domain->method('getId')->willReturn(Domain::FIRST_DOMAIN_ID);
+
+        $this->currentCustomerUser = $this->createMock(CurrentCustomerUser::class);
 
         $this->heurekaFacade = $this->createMock(HeurekaFacade::class);
         parent::setUp();

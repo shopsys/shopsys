@@ -244,4 +244,9 @@ class CartPage extends AbstractPage
 
         return $this->tester->getNumberFromLocalizedFormat($productPriceWithoutCurrencySymbol, $this->tester->getFrontendLocale());
     }
+
+    public function clickGoToCartInPopUpWindow(): void
+    {
+        $this->tester->clickByTranslationFrontend('Go to cart', 'messages', [], WebDriverBy::cssSelector('#window-main-container'));
+    }
 }
