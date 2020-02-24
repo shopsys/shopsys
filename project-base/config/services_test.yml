@@ -1,6 +1,9 @@
 imports:
     - { resource: parameters_test.yml }
 
+framework:
+    test: true
+
 services:
     _defaults:
         autowire: true
@@ -90,3 +93,56 @@ services:
     Shopsys\FrameworkBundle\Model\Feed\FeedFacade: ~
 
     Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector: ~
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade: ~
+
+    Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation: ~
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade: ~
+
+    Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator: ~
+
+    Shopsys\FrameworkBundle\Component\Setting\Setting: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\PricingSetting: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler: ~
+
+    shopsys.component.elasticsearch.tracer:
+        class: Psr\Log\NullLogger
+
+    Elasticsearch\ClientBuilder:
+        class: Elasticsearch\ClientBuilder
+        factory: [Elasticsearch\ClientBuilder, create]
+        calls:
+            -   method: setHosts
+                arguments:
+                    - ['%elasticsearch_host%']
+            -   method: setTracer
+                arguments:
+                    - '@shopsys.component.elasticsearch.tracer'
+
+    Elasticsearch\Client:
+        class: Elasticsearch\Client
+        factory: ['@Elasticsearch\ClientBuilder', build]
+
+    Shopsys\FrameworkBundle\Model\Security\Authenticator:
+        arguments:
+            - '@security.token_storage'
+            - '@Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher'
+
+    Shopsys\FrameworkBundle\Component\Image\ImageLocator:
+        arguments: ['%shopsys.image_dir%']
+
+    Shopsys\ReadModelBundle\Image\ImageViewFacade: ~
+
+    Shopsys\FrameworkBundle\Component\Image\ImageFacade:
+        arguments: ['%shopsys.image_url_prefix%']
