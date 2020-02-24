@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Table(name="countries")
  * @ORM\Entity
  *
- * @method CountryTranslation translation(?string $locale = null)
+ * @method \Shopsys\FrameworkBundle\Model\Country\CountryTranslation translation(?string $locale = null)
  */
 class Country extends AbstractTranslatableEntity
 {

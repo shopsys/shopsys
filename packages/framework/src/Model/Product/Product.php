@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundExcepti
  * )
  * @ORM\Entity
  *
- * @method ProductTranslation translation(?string $locale = null)
+ * @method \Shopsys\FrameworkBundle\Model\Product\ProductTranslation translation(?string $locale = null)
  */
 class Product extends AbstractTranslatableEntity
 {
