@@ -384,6 +384,9 @@
     "nette/robot-loader": {
         "version": "v3.1.1"
     },
+    "nette/schema": {
+        "version": "v1.0.2"
+    },
     "nette/utils": {
         "version": "v2.5.3"
     },
@@ -689,6 +692,9 @@
     "symfony/cache": {
         "version": "v3.4.32"
     },
+    "symfony/cache-contracts": {
+        "version": "v1.1.7"
+    },
     "symfony/class-loader": {
         "version": "v3.4.32"
     },
@@ -735,8 +741,14 @@
     "symfony/dotenv": {
         "version": "v3.4.32"
     },
+    "symfony/error-handler": {
+        "version": "v4.4.4"
+    },
     "symfony/event-dispatcher": {
         "version": "v3.4.32"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.7"
     },
     "symfony/expression-language": {
         "version": "v3.4.32"
@@ -898,6 +910,18 @@
             "project-base/config/packages/security.yaml"
         ]
     },
+    "symfony/security-core": {
+        "version": "v4.4.4"
+    },
+    "symfony/security-csrf": {
+        "version": "v4.4.4"
+    },
+    "symfony/security-guard": {
+        "version": "v4.4.4"
+    },
+    "symfony/security-http": {
+        "version": "v4.4.4"
+    },
     "symfony/service-contracts": {
         "version": "v1.1.8"
     },
@@ -934,6 +958,9 @@
             "translations/.gitignore"
         ]
     },
+    "symfony/translation-contracts": {
+        "version": "v1.1.7"
+    },
     "symfony/twig-bridge": {
         "version": "v3.4.32"
     },
@@ -956,6 +983,9 @@
     },
     "symfony/var-dumper": {
         "version": "v3.4.32"
+    },
+    "symfony/var-exporter": {
+        "version": "v4.4.4"
     },
     "symfony/web-link": {
         "version": "v3.4.33"
