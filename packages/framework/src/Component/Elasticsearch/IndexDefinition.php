@@ -113,6 +113,15 @@ class IndexDefinition
 
     /**
      * @return string
+     * @deprecated This method exists due to backward compatibility and will be removed in next major version
+     */
+    public function getLegacyIndexAlias(): string
+    {
+        return $this->indexPrefix . $this->getIndexName() . $this->getDomainId();
+    }
+
+    /**
+     * @return string
      */
     public function getIndexName(): string
     {

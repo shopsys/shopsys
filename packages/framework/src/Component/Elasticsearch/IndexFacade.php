@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoAliasException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexFacade
@@ -167,7 +168,12 @@ class IndexFacade
     {
         $indexName = $indexDefinition->getIndexName();
         $domainId = $indexDefinition->getDomainId();
-        $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+
+        try {
+            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+        } catch (ElasticsearchNoAliasException $exception) {
+            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getLegacyIndexAlias());
+        }
 
         if ($existingIndexName === $indexDefinition->getVersionedIndexName()) {
             $output->writeln(sprintf('Index "%s" on domain "%s" is up to date', $indexName, $domainId));
