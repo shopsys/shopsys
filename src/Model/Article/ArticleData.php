@@ -17,12 +17,12 @@ class ArticleData extends BaseArticleData
     /**
      * @var bool
      */
-    public $external;
+    public $external = false;
 
     /**
      * @var string
      */
-    public $type;
+    public $type = Article::TYPE_SITE;
 
     /**
      * @var string
@@ -34,7 +34,5 @@ class ArticleData extends BaseArticleData
         parent::__construct();
 
         $this->createdAt = new DateTime();
-        $this->external = $this->external ?: 0;
-        $this->type = $this->type ?: Article::TYPE_SITE;
     }
 }

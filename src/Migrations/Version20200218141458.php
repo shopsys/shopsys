@@ -20,7 +20,8 @@ class Version20200218141458 extends AbstractMigration
         $this->sql('ALTER TABLE articles ADD type VARCHAR(255) NOT NULL DEFAULT \'site\'');
         $this->sql('ALTER TABLE articles ALTER type DROP DEFAULT');
 
-        $this->sql('ALTER TABLE articles ADD url VARCHAR(255) DEFAULT NULL');
+        $this->sql('ALTER TABLE articles ADD url VARCHAR(255) NOT NULL DEFAULT \'\'');
+        $this->sql('ALTER TABLE articles ALTER url DROP DEFAULT');
     }
 
     /**

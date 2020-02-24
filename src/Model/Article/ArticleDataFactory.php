@@ -20,11 +20,6 @@ class ArticleDataFactory extends BaseArticleDataFactory
         $articleData = new ArticleData();
         $this->fillFromArticle($articleData, $article);
 
-        $articleData->createdAt = $article->getCreatedAt() ?? new DateTime();
-        $articleData->external = $article->isExternal();
-        $articleData->type = $article->getType();
-        $articleData->url = $article->getUrl();
-
         return $articleData;
     }
 
@@ -37,5 +32,21 @@ class ArticleDataFactory extends BaseArticleDataFactory
         $this->fillNew($articleData);
 
         return $articleData;
+    }
+
+    /**
+     * @param \App\Model\Article\ArticleData $articleData
+     * @param \App\Model\Article\Article $article
+     */
+    protected function fillFromArticle(BaseArticleData $articleData, BaseArticle $article)
+    {
+        parent::fillFromArticle($articleData, $article);
+
+        $articleData->createdAt = $article->getCreatedAt() ?? new DateTime();
+        $articleData->external = $article->isExternal();
+        $articleData->type = $article->getType();
+        $articleData->url = $article->getUrl() ?? Article::EMPTY_STRING;
+
+
     }
 }

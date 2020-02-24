@@ -57,10 +57,10 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $builderArticleDataGroup->add('url', UrlType::class, [
-            'required' => false,
+            'required' => true,
             'constraints' => [
                 new Constraints\NotBlank([
-                    'message' => 'Please enter URL',
+                    'message' => 'Vyplňte prosím URL',
                     'groups' => [static::VALIDATION_GROUP_TYPE_LINK],
                 ]),
             ],
@@ -70,10 +70,10 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $builderArticleDataGroup->add('text', CKEditorType::class, [
-            'required' => false,
+            'required' => true,
             'constraints' => [
                 new Constraints\NotBlank([
-                    'message' => 'Please enter article content',
+                    'message' => 'Vyplňte prosím obsah článku',
                     'groups' => [static::VALIDATION_GROUP_TYPE_SITE],
                 ]),
             ],
