@@ -161,3 +161,7 @@ services:
     App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: '@App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser'
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface: '@App\Model\Product\Parameter\ParameterDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface: '@App\Model\Product\Parameter\ParameterValueDataFactory'

@@ -383,3 +383,7 @@ services:
     Psr\Http\Message\ServerRequestInterface:
         factory: ['@Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory', 'createRequest']
         arguments: ['@=service("request_stack").getMasterRequest()']
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface: '@App\Model\Product\Parameter\ParameterDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface: '@App\Model\Product\Parameter\ParameterValueDataFactory'

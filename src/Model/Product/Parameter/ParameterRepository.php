@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -79,5 +80,42 @@ class ParameterRepository extends BaseParameterRepository
             ->andWhere('pcd.domainId = :domainId')
             ->setParameter('category', $category)
             ->setParameter('domainId', $domainId);
+    }
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getParameterGroupRepository(): EntityRepository
+    {
+        return $this->em->getRepository(ParameterGroup::class);
+    }
+
+    /**
+     * @param string[] $namesByLocale
+     * @return \App\Model\Product\Parameter\ParameterGroup|null
+     */
+    public function findParameterGroupByNames(array $namesByLocale): ?ParameterGroup
+    {
+        $queryBuilder = $this->getParameterGroupRepository()->createQueryBuilder('pg');
+        $index = 0;
+
+        foreach ($namesByLocale as $locale => $name) {
+            $alias = 'pgt' . $index;
+            $localeParameterName = 'locale' . $index;
+            $nameParameterName = 'name' . $index;
+            $queryBuilder->join(
+                'pg.translations',
+                $alias,
+                Join::WITH,
+                'pg = ' . $alias . '.translatable
+                    AND ' . $alias . '.locale = :' . $localeParameterName . '
+                    AND ' . $alias . '.name = :' . $nameParameterName
+            );
+            $queryBuilder->setParameter($localeParameterName, $locale);
+            $queryBuilder->setParameter($nameParameterName, $name);
+            $index++;
+        }
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 }
