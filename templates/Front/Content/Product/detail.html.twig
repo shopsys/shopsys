@@ -252,20 +252,26 @@
                 {% if productParameterValues > 0 %}
                     <div class="box-detail">
                         <div class="h3">{{ 'Technical parameters'|trans }}</div>
-                        <table class="table-params{% if product.getDescription(domain.id) %} margin-top-20{% endif %}">
-                            <tbody>
+                            {% set lastProductParameterGroup = null %}
                             {% for productParameterValue in productParameterValues %}
-                                <tr>
-                                    <th>
-                                        {{ productParameterValue.parameter.name }}
-                                    </th>
-                                    <td>
-                                        {{ productParameterValue.value.text }}
-                                    </td>
-                                </tr>
+                                {% set productParameterGroup = productParameterValue.parameter.group %}
+                                {% if productParameterGroup != lastProductParameterGroup  %}
+                                    {{ productParameterGroup.name|default('') }}
+                                {% endif %}
+                                <table class="table-params">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                {{ productParameterValue.parameter.name }}
+                                            </th>
+                                            <td>
+                                                {{ productParameterValue.value.text }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {% set lastProductParameterGroup = productParameterValue.parameter.group %}
                             {% endfor %}
-                            </tbody>
-                        </table>
                     </div>
                 {% endif %}
 

@@ -12,14 +12,23 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 /**
  * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductQueryBuilder(\App\Model\Product\Product $product)
- * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductSortedByNameQueryBuilder(\App\Model\Product\Product $product, string $locale)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByName(\App\Model\Product\Product $product, string $locale)
+ * @property \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory, \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory)
+ * @method \App\Model\Product\Parameter\Parameter|null findById(int $parameterId)
+ * @method \App\Model\Product\Parameter\Parameter getById(int $parameterId)
+ * @method \App\Model\Product\Parameter\Parameter[] getAll()
+ * @method \App\Model\Product\Parameter\ParameterValue findOrCreateParameterValueByValueTextAndLocale(string $valueText, string $locale)
+ * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByValueTextAndLocale(string $valueText, string $locale)
  * @method string[][] getParameterValuesIndexedByProductIdAndParameterNameForProducts(\App\Model\Product\Product[] $products, string $locale)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
+ * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
  */
 class ParameterRepository extends BaseParameterRepository
 {
@@ -117,5 +126,30 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $locale
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getProductParameterValuesByProductSortedByNameQueryBuilder(BaseProduct $product, $locale): QueryBuilder
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('ppv')
+            ->from(ProductParameterValue::class, 'ppv')
+            ->join('ppv.parameter', 'p')
+            ->join('p.translations', 'pt')
+            ->leftJoin('p.group', 'pg')
+            ->where('ppv.product = :product_id')
+            ->andWhere('pt.locale = :locale')
+            ->setParameters([
+                                'product_id' => $product->getId(),
+                                'locale' => $locale,
+                            ])
+            ->addOrderBy('pg.orderingPriority', 'ASC')
+            ->addOrderBy('p.orderingPriority', 'ASC');
+
+        return $queryBuilder;
     }
 }

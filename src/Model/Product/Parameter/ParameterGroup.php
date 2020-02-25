@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * @ORM\Table(name="parameter_groups")
  * @ORM\Entity
+ *
+ * @method translation($locale = null): ParameterGroupTranslation
  */
 class ParameterGroup extends AbstractTranslatableEntity
 {
@@ -102,5 +104,14 @@ class ParameterGroup extends AbstractTranslatableEntity
     public function getOrderingPriority(): int
     {
         return $this->orderingPriority;
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string|null
+     */
+    public function getName($locale = null): ?string
+    {
+        return $this->translation($locale)->getName();
     }
 }
