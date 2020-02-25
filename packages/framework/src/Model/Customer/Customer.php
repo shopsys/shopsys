@@ -37,11 +37,18 @@ class Customer
     protected $deliveryAddresses;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $domainId;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      */
     public function __construct(CustomerData $customerData)
     {
         $this->setData($customerData);
+        $this->domainId = $customerData->domainId;
     }
 
     /**
@@ -108,5 +115,13 @@ class Customer
     public function getDeliveryAddresses(): array
     {
         return $this->deliveryAddresses->toArray();
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId()
+    {
+        return $this->domainId;
     }
 }

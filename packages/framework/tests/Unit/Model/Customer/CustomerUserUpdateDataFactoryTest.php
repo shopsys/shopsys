@@ -40,6 +40,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $customerUserUpdateUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 
         $customerData = new CustomerData();
+        $customerData->domainId = Domain::FIRST_DOMAIN_ID;
         $customer = new Customer($customerData);
 
         $customerUserData = new CustomerUserData();
@@ -151,6 +152,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $deliveryCountry = new Country($deliveryCountryData);
 
         $customerData = new CustomerData();
+        $customerData->domainId = Domain::FIRST_DOMAIN_ID;
 
         $customer = new Customer($customerData);
         $customerUserData = new CustomerUserData();

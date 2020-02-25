@@ -16,6 +16,11 @@ class CustomerData
      */
     public $deliveryAddresses;
 
+    /**
+     * @var int
+     */
+    public $domainId;
+
     public function __construct()
     {
         $this->deliveryAddresses = [];

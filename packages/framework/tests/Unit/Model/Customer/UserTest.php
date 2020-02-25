@@ -18,6 +18,7 @@ class UserTest extends TestCase
     public function testGetFullNameReturnsLastnameAndFirstnameForUser()
     {
         $customerData = new CustomerData();
+        $customerData->domainId = Domain::FIRST_DOMAIN_ID;
         $customer = new Customer($customerData);
 
         $customerUserData = new CustomerUserData();
@@ -38,6 +39,7 @@ class UserTest extends TestCase
     public function testGetFullNameReturnsCompanyNameForCompanyUser()
     {
         $customerData = new CustomerData();
+        $customerData->domainId = Domain::FIRST_DOMAIN_ID;
         $customer = new Customer($customerData);
 
         $customerUserData = new CustomerUserData();

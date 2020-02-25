@@ -12,6 +12,12 @@ interface CustomerDataFactoryInterface
     public function create(): CustomerData;
 
     /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
+     */
+    public function createForDomain(int $domainId): CustomerData;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
      */

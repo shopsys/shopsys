@@ -38,6 +38,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $country = $this->createCountry();
 
         $customerData = new CustomerData();
+        $customerData->domainId = Domain::FIRST_DOMAIN_ID;
         $customer = new Customer($customerData);
 
         $customerData->billingAddress = $this->createBillingAddress($country, $customer);

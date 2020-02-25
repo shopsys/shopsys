@@ -15,6 +15,18 @@ class CustomerDataFactory implements CustomerDataFactoryInterface
     }
 
     /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
+     */
+    public function createForDomain(int $domainId): CustomerData
+    {
+        $customerData = $this->create();
+        $customerData->domainId = $domainId;
+
+        return $customerData;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
      */
@@ -23,6 +35,7 @@ class CustomerDataFactory implements CustomerDataFactoryInterface
         $customerData = $this->create();
         $customerData->billingAddress = $customer->getBillingAddress();
         $customerData->deliveryAddresses = $customer->getDeliveryAddresses();
+        $customerData->domainId = $customer->getDomainId();
 
         return $customerData;
     }
