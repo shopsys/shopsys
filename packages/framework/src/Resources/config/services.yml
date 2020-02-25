@@ -1025,3 +1025,7 @@ services:
     Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
+
+    Shopsys\FrameworkBundle\Controller\Admin\FlashMessageController:
+        arguments:
+            $flashMessageBag: '@shopsys.shop.component.flash_message.bag.admin'

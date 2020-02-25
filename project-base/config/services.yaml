@@ -99,3 +99,7 @@ services:
 
     sensio_framework_extra.psr7.http_message_factory:
         class: Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory
+
+    App\Controller\Front\FlashMessageController:
+        arguments:
+            $flashMessageBag: '@shopsys.shop.component.flash_message.bag.front'

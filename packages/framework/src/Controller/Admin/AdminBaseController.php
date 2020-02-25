@@ -2,9 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AdminBaseController extends Controller
+class AdminBaseController extends AbstractController
 {
     /**
      * @return \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender

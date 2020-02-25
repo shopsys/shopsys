@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class FrontBaseController extends Controller
+class FrontBaseController extends AbstractController
 {
     /**
      * @return \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender
