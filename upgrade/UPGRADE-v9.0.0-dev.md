@@ -997,6 +997,31 @@ There you can find links to upgrade notes for other versions too.
             }
             ```
 
+- update your application to refresh administrator roles after edit own profile ([#1514](https://github.com/shopsys/shopsys/pull/1514))
+    - some methods has changed so you might want to update their usage in your application:
+        - `Shopsys\FrameworkBundle\Controller\Admin\AdministratorController::__construct()`
+            ```diff
+                public function __construct(
+                    AdministratorFacade $administratorFacade,
+                    GridFactory $gridFactory, GridFactory $gridFactory,
+                    BreadcrumbOverrider $breadcrumbOverrider,
+                    AdministratorActivityFacade $administratorActivityFacade,
+            -       AdministratorDataFactoryInterface $administratorDataFactory
+            +       AdministratorDataFactoryInterface $administratorDataFactory,
+            +       AdministratorRolesChangedFacade $administratorRolesChangedFacade
+                 )
+            ```
+        - `Shopsys\FrameworkBundle\Controller\Admin\AdministratorController::editAction()`
+            ```diff
+            -   public function editAction(Request $request, $id)
+            +   public function editAction(Request $request, int $id)
+            ```
+        - `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber::__construct()`
+            ```diff
+            -    public function __construct(TokenStorageInterface $tokenStorage, AdministratorFacade $administratorFacade)
+            +    public function __construct(TokenStorageInterface $tokenStorage, AdministratorRolesChangedFacade $administratorRolesChangedFacade)
+            ```
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
