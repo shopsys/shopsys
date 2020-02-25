@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -30,21 +30,21 @@ class MailerSettingExtension extends AbstractExtension
     protected $mailerWhitelistExpressions;
 
     /**
-     * @var \Symfony\Component\Templating\EngineInterface
+     * @var \Twig\Environment
      */
-    protected $templating;
+    protected $twigEnvironment;
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Symfony\Component\Templating\EngineInterface $templating
+     * @param \Twig\Environment $twigEnvironment
      */
-    public function __construct(ContainerInterface $container, EngineInterface $templating)
+    public function __construct(ContainerInterface $container, Environment $twigEnvironment)
     {
         $this->container = $container;
         $this->isDeliveryDisabled = $this->container->getParameter('mailer_disable_delivery');
         $this->mailerMasterEmailAddress = $this->container->getParameter('mailer_master_email_address');
         $this->mailerWhitelistExpressions = $this->container->getParameter('mailer_delivery_whitelist');
-        $this->templating = $templating;
+        $this->twigEnvironment = $twigEnvironment;
     }
 
     /**
@@ -71,7 +71,7 @@ class MailerSettingExtension extends AbstractExtension
      */
     public function getMailerSettingInfo()
     {
-        return $this->templating->render('@ShopsysFramework/Common/Mailer/settingInfo.html.twig', [
+        return $this->twigEnvironment->render('@ShopsysFramework/Common/Mailer/settingInfo.html.twig', [
             'isDeliveryDisabled' => $this->isDeliveryDisabled,
             'mailerMasterEmailAddress' => $this->mailerMasterEmailAddress,
             'mailerWhitelistExpressions' => $this->mailerWhitelistExpressions,

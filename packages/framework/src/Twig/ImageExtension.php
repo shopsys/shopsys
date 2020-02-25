@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -37,9 +37,9 @@ class ImageExtension extends AbstractExtension
     protected $imageFacade;
 
     /**
-     * @var \Symfony\Component\Templating\EngineInterface
+     * @var \Twig\Environment
      */
-    protected $templating;
+    protected $twigEnvironment;
 
     /**
      * @var bool
@@ -51,7 +51,7 @@ class ImageExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface $templating
+     * @param \Twig\Environment $twigEnvironment
      * @param bool $isLazyLoadEnabled
      */
     public function __construct(
@@ -59,14 +59,14 @@ class ImageExtension extends AbstractExtension
         Domain $domain,
         ImageLocator $imageLocator,
         ImageFacade $imageFacade,
-        EngineInterface $templating,
+        Environment $twigEnvironment,
         bool $isLazyLoadEnabled = false
     ) {
         $this->frontDesignImageUrlPrefix = rtrim($frontDesignImageUrlPrefix, '/');
         $this->domain = $domain;
         $this->imageLocator = $imageLocator;
         $this->imageFacade = $imageFacade;
-        $this->templating = $templating;
+        $this->twigEnvironment = $twigEnvironment;
         $this->isLazyLoadEnabled = $isLazyLoadEnabled;
     }
 
@@ -227,7 +227,7 @@ class ImageExtension extends AbstractExtension
             $htmlAttributes['src'] = '';
         }
 
-        return $this->templating->render('@ShopsysFramework/Common/image.html.twig', [
+        return $this->twigEnvironment->render('@ShopsysFramework/Common/image.html.twig', [
             'attr' => $htmlAttributes,
             'additionalImagesData' => $additionalImagesData,
             'imageCssClass' => $this->getImageCssClass($entityName, $attributes['type'], $attributes['size']),

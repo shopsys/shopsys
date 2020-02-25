@@ -3,14 +3,15 @@
 namespace Shopsys\FrameworkBundle\Component\ConfirmDelete;
 
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 class ConfirmDeleteResponseFactory
 {
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface
+     * @var \Twig\Environment
      */
-    protected $templating;
+    protected $twigEnvironment;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector
@@ -18,14 +19,14 @@ class ConfirmDeleteResponseFactory
     protected $routeCsrfProtector;
 
     /**
-     * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface $templating
+     * @param \Twig\Environment $twigEnvironment
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      */
     public function __construct(
-        EngineInterface $templating,
+        Environment $twigEnvironment,
         RouteCsrfProtector $routeCsrfProtector
     ) {
-        $this->templating = $templating;
+        $this->twigEnvironment = $twigEnvironment;
         $this->routeCsrfProtector = $routeCsrfProtector;
     }
 
@@ -37,7 +38,7 @@ class ConfirmDeleteResponseFactory
      */
     public function createDeleteResponse($message, $route, $entityId)
     {
-        return $this->templating->renderResponse('@ShopsysFramework/Components/ConfirmDelete/directDelete.html.twig', [
+        $renderedTemplate = $this->twigEnvironment->render('@ShopsysFramework/Components/ConfirmDelete/directDelete.html.twig', [
             'message' => $message,
             'route' => $route,
             'routeParams' => [
@@ -45,6 +46,8 @@ class ConfirmDeleteResponseFactory
                 RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute($route),
             ],
         ]);
+
+        return new Response($renderedTemplate);
     }
 
     /**
@@ -64,7 +67,7 @@ class ConfirmDeleteResponseFactory
             }
         }
 
-        return $this->templating->renderResponse('@ShopsysFramework/Components/ConfirmDelete/setNewAndDelete.html.twig', [
+        $renderedResponse = $this->twigEnvironment->render('@ShopsysFramework/Components/ConfirmDelete/setNewAndDelete.html.twig', [
             'message' => $message,
             'route' => $route,
             'entityId' => $entityId,
@@ -72,5 +75,7 @@ class ConfirmDeleteResponseFactory
             'possibleReplacements' => $possibleReplacements,
             'CSRF_TOKEN_REQUEST_PARAMETER' => RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER,
         ]);
+
+        return new Response($renderedResponse);
     }
 }

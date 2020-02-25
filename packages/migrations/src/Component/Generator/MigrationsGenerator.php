@@ -5,7 +5,7 @@ namespace Shopsys\MigrationBundle\Component\Generator;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation;
 use SqlFormatter;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 class MigrationsGenerator
 {
@@ -15,9 +15,9 @@ class MigrationsGenerator
     protected const INDENT_TABULATOR_COUNT = 3;
 
     /**
-     * @var \Symfony\Component\Templating\EngineInterface
+     * @var \Twig\Environment
      */
-    private $twigEngine;
+    private $twigEnvironment;
 
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
@@ -25,14 +25,14 @@ class MigrationsGenerator
     private $filesystem;
 
     /**
-     * @param \Symfony\Component\Templating\EngineInterface $twigEngine
+     * @param \Twig\Environment $twigEnvironment
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      */
     public function __construct(
-        EngineInterface $twigEngine,
+        Environment $twigEnvironment,
         Filesystem $filesystem
     ) {
-        $this->twigEngine = $twigEngine;
+        $this->twigEnvironment = $twigEnvironment;
         $this->filesystem = $filesystem;
     }
 
@@ -47,7 +47,7 @@ class MigrationsGenerator
         $formattedSqlCommands = $this->formatSqlCommandsIfLengthOverflow($sqlCommands);
         $escapedFormattedSqlCommands = $this->escapeSqlCommands($formattedSqlCommands);
         $migrationClassName = 'Version' . date('YmdHis');
-        $migrationFileRawData = $this->twigEngine->render('@ShopsysMigration/Migration/migration.php.twig', [
+        $migrationFileRawData = $this->twigEnvironment->render('@ShopsysMigration/Migration/migration.php.twig', [
             'sqlCommands' => $escapedFormattedSqlCommands,
             'migrationClassName' => $migrationClassName,
             'namespace' => $migrationsLocation->getNamespace(),

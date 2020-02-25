@@ -3,9 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Domain\Multidomain\Twig;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader as BaseFilesystemLoader;
-use Symfony\Component\Config\FileLocatorInterface;
-use Symfony\Component\Templating\TemplateNameParserInterface;
+use Twig\Loader\FilesystemLoader as BaseFilesystemLoader;
 
 class FilesystemLoader extends BaseFilesystemLoader
 {
@@ -15,19 +13,16 @@ class FilesystemLoader extends BaseFilesystemLoader
     protected $domain;
 
     /**
-     * @param \Symfony\Component\Config\FileLocatorInterface $locator
-     * @param \Symfony\Component\Templating\TemplateNameParserInterface $parser
      * @param string|null $rootPath
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
      */
     public function __construct(
-        FileLocatorInterface $locator,
-        TemplateNameParserInterface $parser,
         ?string $rootPath = null,
         ?Domain $domain = null
     ) {
+        parent::__construct([], $rootPath);
+
         $this->domain = $domain;
-        parent::__construct($locator, $parser, $rootPath);
         $this->assertDomainDependency();
     }
 

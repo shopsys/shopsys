@@ -144,7 +144,6 @@
         "symfony/proxy-manager-bridge": "^4.4.0",
         "symfony/security-bundle": "^4.4.0",
         "symfony/swiftmailer-bundle": "^3.2.2",
-        "symfony/templating": "^4.4.0",
         "symfony/translation": "^4.4.0",
         "symfony/twig-bundle": "^4.4.0",
         "symfony/validator": "^4.4.0",

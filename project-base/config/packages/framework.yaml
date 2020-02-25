@@ -7,8 +7,6 @@ framework:
     form: ~
     csrf_protection: ~
     validation: { enable_annotations: true }
-    templating:
-        engines: ['twig']
     trusted_hosts: ~
     session:
         handler_id: snc_redis.session.handler
