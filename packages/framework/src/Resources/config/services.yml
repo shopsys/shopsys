@@ -109,13 +109,13 @@ services:
 
     shopsys.doctrine.cache_driver.metadata_cache:
         class: Doctrine\Common\Cache\CacheProvider
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory:create'
+        factory: ['@Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory', 'create']
         arguments:
             - '@snc_redis.doctrine_metadata'
 
     shopsys.framework.cache_driver.annotations_cache:
         class: Doctrine\Common\Cache\CacheProvider
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory:create'
+        factory: ['@Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory', 'create']
         arguments:
             - '@snc_redis.framework_annotations'
 
@@ -127,6 +127,8 @@ services:
             $menuFactory: '@knp_menu.factory'
         tags:
             - { name: knp_menu.menu_builder, method: createMenu, alias: admin_side_menu }
+
+    Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory: ~
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig: ~
 

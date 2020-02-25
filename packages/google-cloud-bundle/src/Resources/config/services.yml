@@ -14,7 +14,7 @@ services:
 
     shopsys.google_cloud.storage_bucket:
         class: Google\Cloud\Storage\Bucket
-        factory: 'shopsys.google_cloud.storage_client:bucket'
+        factory: ['@shopsys.google_cloud.storage_client', 'bucket']
         arguments:
             - '%env(GOOGLE_CLOUD_STORAGE_BUCKET_NAME)%'
 
