@@ -33,31 +33,14 @@ class TransferIssueFacade
     }
 
     /**
-     * @param \App\Model\Transfer\Issue\TransferIssueData $transferIssueData
-     * @param \App\Model\Transfer\Transfer $transfer
-     * @param bool $canFlush
-     * @return \App\Model\Transfer\Issue\TransferIssue
-     */
-    public function create(TransferIssueData $transferIssueData, Transfer $transfer, bool $canFlush = true): TransferIssue
-    {
-        $transferIssue = new TransferIssue($transfer, $transferIssueData);
-        $this->em->persist($transferIssue);
-
-        if ($canFlush) {
-            $this->em->flush();
-        }
-
-        return $transferIssue;
-    }
-
-    /**
      * @param array $transferIssuesData
      * @param \App\Model\Transfer\Transfer $transfer
      */
     public function saveTransferIssues(array $transferIssuesData, Transfer $transfer): void
     {
         foreach ($transferIssuesData as $transferIssueData) {
-            $this->create($transferIssueData, $transfer, false);
+            $transferIssue = new TransferIssue($transfer, $transferIssueData);
+            $this->em->persist($transferIssue);
         }
         $this->em->flush();
     }

@@ -91,11 +91,11 @@ class TransferIssueRepository
     {
         $query = $this->em->createNativeQuery(
             'DELETE FROM transfer_issues
-                WHERE DATE(created_at) < :removeIssuesOfOlderDate',
+                WHERE created_at < :removeIssuesOfOlderDate',
             new ResultSetMapping()
         );
 
-        $removeIssuesOfOlderDate = (new DateTime('- ' . self::TRANSFER_ISSUES_KEEP_DAYS_LIMIT . ' days'))->format('Y-m-d');
+        $removeIssuesOfOlderDate = new DateTime('- ' . self::TRANSFER_ISSUES_KEEP_DAYS_LIMIT . ' days midnight');
         $query->execute(['removeIssuesOfOlderDate' => $removeIssuesOfOlderDate]);
     }
 }

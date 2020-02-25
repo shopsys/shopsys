@@ -65,7 +65,7 @@ abstract class AbstractAkeneoImportTransfer
             $this->sqlLoggerFacade->temporarilyDisableLogging();
 
             foreach ($this->getData() as $item) {
-                $this->handleExceptionsOnProcessedItem($item);
+                $this->handleExceptionsOnProcessingItem($item);
             }
 
             $this->sqlLoggerFacade->reenableLogging();
@@ -75,12 +75,13 @@ abstract class AbstractAkeneoImportTransfer
         }
 
         $this->doAfterTransfer();
+        $this->logger->persistAllLoggedTransferIssues();
     }
 
     /**
      * @param mixed $item
      */
-    private function handleExceptionsOnProcessedItem($item): void
+    private function handleExceptionsOnProcessingItem($item): void
     {
         try {
             $this->em->beginTransaction();
