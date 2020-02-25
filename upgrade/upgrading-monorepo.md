@@ -17,7 +17,9 @@ Typical upgrade sequence should be:
 
 ## [From v7.3.1 to v8.0.0]
 
-## [From v7.3.2 to v7.3.3-dev]
+## [From v7.3.3 to v7.3.4-dev]
+
+## [From v7.3.2 to v7.3.3]
 - add mkdocs container to your `docker-compose.yml` to be able to see rendered documentation ([#1432](https://github.com/shopsys/shopsys/pull/1432))
     - copy proper definition from dist file for your platform from `docker/conf` directory
 
@@ -157,7 +159,8 @@ Typical upgrade sequence should be:
 
 [From v8.0.0 to v8.0.1-dev]: https://github.com/shopsys/shopsys/compare/v8.0.0...8.0
 [From v7.3.1 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.1...v8.0.0
-[From v7.3.2 to v7.3.3-dev]: https://github.com/shopsys/shopsys/compare/v7.3.2...7.3
+[From v7.3.3 to v7.3.4-dev]: https://github.com/shopsys/shopsys/compare/v7.3.3...7.3
+[From v7.3.2 to v7.3.3]: https://github.com/shopsys/shopsys/compare/v7.3.2...v7.3.3
 [From v7.3.1 to v7.3.2]: https://github.com/shopsys/shopsys/compare/v7.3.1...v7.3.2
 [From v7.3.0 to v7.3.1]: https://github.com/shopsys/shopsys/compare/v7.3.0...v7.3.1
 [From v7.2.1 to v7.3.0]: https://github.com/shopsys/shopsys/compare/v7.2.1...v7.3.0
