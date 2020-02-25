@@ -72,6 +72,7 @@ class SliderItem implements OrderableEntityInterface
      */
     public function edit(SliderItemData $sliderItemData)
     {
+        $this->domainId = $sliderItemData->domainId;
         $this->name = $sliderItemData->name;
         $this->link = $sliderItemData->link;
         $this->hidden = $sliderItemData->hidden;
