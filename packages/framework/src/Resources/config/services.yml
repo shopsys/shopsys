@@ -155,10 +155,6 @@ services:
         arguments:
             $environmentFileDirectory: '%shopsys.root_dir%'
 
-    Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade:
-        arguments:
-            - '@shopsys.shop.component.flash_message.sender.front'
-
     Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository:
         tags:
             # must be ran before ProductVisibilityFacade
@@ -231,28 +227,6 @@ services:
             - { name: doctrine.event_listener, event: postUpdate }
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
-
-    shopsys.shop.component.flash_message.bag.admin:
-        class: Shopsys\FrameworkBundle\Component\FlashMessage\Bag
-        public: true
-        arguments: ['admin']
-
-    shopsys.shop.component.flash_message.bag.front:
-        class: Shopsys\FrameworkBundle\Component\FlashMessage\Bag
-        public: true
-        arguments: ['front']
-
-    shopsys.shop.component.flash_message.sender.admin:
-        class: Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender
-        public: true
-        arguments:
-            - '@shopsys.shop.component.flash_message.bag.admin'
-
-    shopsys.shop.component.flash_message.sender.front:
-        class: Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender
-        public: true
-        arguments:
-            - '@shopsys.shop.component.flash_message.bag.front'
 
     Shopsys\FrameworkBundle\Component\Form\TimedSpamValidationListener:
         $options: []
@@ -1027,7 +1001,3 @@ services:
     Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
-
-    Shopsys\FrameworkBundle\Controller\Admin\FlashMessageController:
-        arguments:
-            $flashMessageBag: '@shopsys.shop.component.flash_message.bag.admin'

@@ -81,7 +81,7 @@ class CountryController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->countryFacade->edit($id, $countryData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Country <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                     [
@@ -94,7 +94,7 @@ class CountryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing country - %name%', ['%name%' => $country->getName()]));
@@ -120,7 +120,7 @@ class CountryController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $country = $this->countryFacade->create($countryData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Country <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                     [
@@ -133,7 +133,7 @@ class CountryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Country/new.html.twig', [

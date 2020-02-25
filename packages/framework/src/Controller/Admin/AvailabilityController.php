@@ -71,7 +71,7 @@ class AvailabilityController extends AdminBaseController
             $this->availabilityFacade->deleteById($id, $newId);
 
             if ($newId === null) {
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Availability <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $fullName,
@@ -79,7 +79,7 @@ class AvailabilityController extends AdminBaseController
                 );
             } else {
                 $newAvailability = $this->availabilityFacade->getById($newId);
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Availability <strong>{{ oldName }}</strong> deleted and replaced by availability <strong>{{ newName }}</strong>'),
                     [
                         'oldName' => $fullName,
@@ -88,7 +88,7 @@ class AvailabilityController extends AdminBaseController
                 );
             }
         } catch (\Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected availatibily doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected availatibily doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_availability_list');
@@ -158,7 +158,7 @@ class AvailabilityController extends AdminBaseController
 
             $this->availabilityFacade->setDefaultInStockAvailability($availabilitySettingsFormData['defaultInStockAvailability']);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Default availability for the stock settings modified'));
+            $this->addSuccessFlash(t('Default availability for the stock settings modified'));
 
             return $this->redirectToRoute('admin_availability_list');
         }

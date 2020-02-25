@@ -76,7 +76,7 @@ class TransportController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $transport = $this->transportFacade->create($form->getData());
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Shipping <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                 [
                 'name' => $transport->getName(),
@@ -87,7 +87,7 @@ class TransportController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Transport/new.html.twig', [
@@ -114,7 +114,7 @@ class TransportController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->transportFacade->edit($transport, $transportData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Shipping <strong><a href="{{ url }}">{{ name }}</a></strong> was modified'),
                 [
                     'name' => $transport->getName(),
@@ -125,7 +125,7 @@ class TransportController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing shipping - %name%', ['%name%' => $transport->getName()]));
@@ -149,14 +149,14 @@ class TransportController extends AdminBaseController
 
             $this->transportFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Shipping <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $transportName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected shipping doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected shipping doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_transportandpayment_list');

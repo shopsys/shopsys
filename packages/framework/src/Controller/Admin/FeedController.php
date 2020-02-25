@@ -54,14 +54,14 @@ class FeedController extends AdminBaseController
         try {
             $this->feedFacade->generateFeed($feedName, $domainConfig);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Feed "{{ feedName }}" successfully generated.'),
                 [
                     'feedName' => $feedName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('Feed "{{ feedName }}" not found.'),
                 [
                     'feedName' => $feedName,

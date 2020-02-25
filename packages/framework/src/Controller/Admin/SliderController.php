@@ -113,7 +113,7 @@ class SliderController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $sliderItem = $this->sliderItemFacade->create($form->getData());
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Slider page <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                 [
                     'name' => $sliderItem->getName(),
@@ -124,7 +124,7 @@ class SliderController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Slider/new.html.twig', [
@@ -152,7 +152,7 @@ class SliderController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->sliderItemFacade->edit($id, $sliderItemData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Slider page <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                 [
                     'name' => $sliderItem->getName(),
@@ -164,7 +164,7 @@ class SliderController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing slider page - %name%', ['%name%' => $sliderItem->getName()]));
@@ -187,14 +187,14 @@ class SliderController extends AdminBaseController
 
             $this->sliderItemFacade->delete($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Page <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $name,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected page doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected page doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_slider_list');

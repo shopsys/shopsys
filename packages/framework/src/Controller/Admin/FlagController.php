@@ -57,14 +57,14 @@ class FlagController extends AdminBaseController
 
             $this->flagFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Flag <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected flag doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected flag doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_flag_list');

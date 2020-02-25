@@ -93,12 +93,12 @@ class RegistrationController extends FrontBaseController
             $customerUser = $this->customerUserFacade->register($customerUserData);
             $this->authenticator->loginUser($customerUser, $request);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
+            $this->addSuccessFlash(t('You have been successfully registered.'));
             return $this->redirectToRoute('front_homepage');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('Front/Content/Registration/register.html.twig', [

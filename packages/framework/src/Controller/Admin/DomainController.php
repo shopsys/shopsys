@@ -133,7 +133,7 @@ class DomainController extends AdminBaseController
 
                     $this->domainFacade->editIcon($id, $iconName);
 
-                    $this->getFlashMessageSender()->addSuccessFlashTwig(
+                    $this->addSuccessFlashTwig(
                         t('Domain <strong>{{ name }}</strong> modified. Try clearing your browser cache (CTRL+F5) if you can\'t see the new icon.'),
                         ['name' => $domain->getName()]
                     );
@@ -141,17 +141,16 @@ class DomainController extends AdminBaseController
 
                 return new JsonResponse(['result' => 'valid']);
             } catch (\Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('File type not supported.'));
+                $this->addErrorFlash(t('File type not supported.'));
             } catch (\Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('File upload failed, try again please.'));
+                $this->addErrorFlash(t('File upload failed, try again please.'));
             }
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $flashMessageBag = $this->get('shopsys.shop.component.flash_message.bag.admin');
             return new JsonResponse([
                 'result' => 'invalid',
-                'errors' => $this->errorExtractor->getAllErrorsAsArray($form, $flashMessageBag),
+                'errors' => $this->errorExtractor->getAllErrorsAsArray($form, $this->getErrorMessages()),
             ]);
         }
 

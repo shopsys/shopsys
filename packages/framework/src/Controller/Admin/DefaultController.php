@@ -178,7 +178,7 @@ class DefaultController extends AdminBaseController
     protected function addWarningMessagesOnDashboard(): void
     {
         if ($this->mailTemplateFacade->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">Some required e-mail templates are not fully set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_mail_template'),
@@ -187,7 +187,7 @@ class DefaultController extends AdminBaseController
         }
 
         if (empty($this->unitFacade->getAll())) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">There are no units, you need to create some.</a>'),
                 [
                     'url' => $this->generateUrl('admin_unit_list'),
@@ -196,7 +196,7 @@ class DefaultController extends AdminBaseController
         }
 
         if ($this->setting->get(Setting::DEFAULT_UNIT) === 0) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">Default unit is not set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_unit_list'),
@@ -205,7 +205,7 @@ class DefaultController extends AdminBaseController
         }
 
         if (empty($this->availabilityFacade->getAll())) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">There are no availabilities, you need to create some.</a>'),
                 [
                     'url' => $this->generateUrl('admin_availability_list'),
@@ -214,7 +214,7 @@ class DefaultController extends AdminBaseController
         }
 
         if ($this->setting->get(Setting::DEFAULT_AVAILABILITY_IN_STOCK) === 0) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">Default product in stock availability is not set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_availability_list'),

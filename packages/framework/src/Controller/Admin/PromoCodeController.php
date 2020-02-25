@@ -164,14 +164,14 @@ class PromoCodeController extends AdminBaseController
 
             $this->promoCodeFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Promo code <strong>{{ code }}</strong> deleted.'),
                 [
                     'code' => $code,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected promo code doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected promo code doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_promocode_list');
@@ -194,7 +194,7 @@ class PromoCodeController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $promoCode = $this->promoCodeFacade->create($form->getData());
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Promo code <strong><a href="{{ url }}">{{ code }}</a></strong> created'),
                 [
                     'code' => $promoCode->getCode(),
@@ -205,7 +205,7 @@ class PromoCodeController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/PromoCode/new.html.twig', [
@@ -232,7 +232,7 @@ class PromoCodeController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->promoCodeFacade->edit($id, $promoCodeData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Promo code <strong><a href="{{ url }}">{{ code }}</a></strong> was modified'),
                 [
                     'code' => $promoCode->getCode(),
@@ -243,7 +243,7 @@ class PromoCodeController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing promo code - %code%', ['%code%' => $promoCode->getCode()]));

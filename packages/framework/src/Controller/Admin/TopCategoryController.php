@@ -54,7 +54,7 @@ class TopCategoryController extends AdminBaseController
 
             $this->topCategoryFacade->saveTopCategoriesForDomain($domainId, $categories);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Product settings on the main page successfully changed'));
+            $this->addSuccessFlash(t('Product settings on the main page successfully changed'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/TopCategory/list.html.twig', [

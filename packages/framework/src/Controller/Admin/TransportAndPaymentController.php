@@ -77,13 +77,13 @@ class TransportAndPaymentController extends AdminBaseController
                 $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($domainId, $priceLimit);
             }
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Free shipping and payment settings saved'));
+            $this->addSuccessFlash(t('Free shipping and payment settings saved'));
 
             return $this->redirectToRoute('admin_transportandpayment_freetransportandpaymentlimit');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/TransportAndPayment/freeTransportAndPaymentLimitSetting.html.twig', [

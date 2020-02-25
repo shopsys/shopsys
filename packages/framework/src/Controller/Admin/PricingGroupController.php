@@ -90,7 +90,7 @@ class PricingGroupController extends AdminBaseController
             $this->pricingGroupFacade->delete($id, $newId);
 
             if ($newId === null) {
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Pricing group <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $name,
@@ -98,7 +98,7 @@ class PricingGroupController extends AdminBaseController
                 );
             } else {
                 $newPricingGroup = $this->pricingGroupFacade->getById($newId);
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Pricing group <strong>{{ name }}</strong> deleted and replaced by group <strong>{{ newName }}</strong>.'),
                     [
                         'name' => $name,
@@ -107,7 +107,7 @@ class PricingGroupController extends AdminBaseController
                 );
             }
         } catch (\Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected pricing group doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected pricing group doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_pricinggroup_list');
@@ -175,7 +175,7 @@ class PricingGroupController extends AdminBaseController
 
             $this->pricingGroupSettingFacade->setDefaultPricingGroupForSelectedDomain($pricingGroupSettingsFormData['defaultPricingGroup']);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Default pricing group settings modified'));
+            $this->addSuccessFlash(t('Default pricing group settings modified'));
 
             return $this->redirectToRoute('admin_pricinggroup_list');
         }

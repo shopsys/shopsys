@@ -70,7 +70,7 @@ class HeurekaController extends AdminBaseController
                     $domainId
                 );
 
-                $this->getFlashMessageSender()->addSuccessFlash(t('Settings modified.'));
+                $this->addSuccessFlash(t('Settings modified.'));
             }
             $formView = $form->createView();
         }

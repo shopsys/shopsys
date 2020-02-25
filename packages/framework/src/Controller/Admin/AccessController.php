@@ -18,7 +18,7 @@ class AccessController extends AdminBaseController
      */
     public function deniedAction(Request $request): Response
     {
-        $this->getFlashMessageSender()->addErrorFlashTwig(
+        $this->addErrorFlash(
             t('You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page.')
         );
         return new RedirectResponse($this->generateUrl('admin_default_dashboard'));

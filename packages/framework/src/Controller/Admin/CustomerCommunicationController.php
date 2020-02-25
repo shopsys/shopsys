@@ -49,7 +49,7 @@ class CustomerCommunicationController extends AdminBaseController
             $formData = $form->getData();
             $this->setting->setForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $formData['content'], $domainId);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Order confirmation page content modified'));
+            $this->addSuccessFlash(t('Order confirmation page content modified'));
 
             return $this->redirectToRoute('admin_customercommunication_ordersubmitted');
         }

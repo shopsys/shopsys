@@ -93,14 +93,14 @@ class NewsletterController extends AdminBaseController
 
             $this->newsletterFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Subscriber <strong>{{ email }}</strong> deleted'),
                 [
                     'email' => $email,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected subscriber doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected subscriber doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_newsletter_list');

@@ -100,6 +100,6 @@ services:
     sensio_framework_extra.psr7.http_message_factory:
         class: Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory
 
-    App\Controller\Front\FlashMessageController:
+    App\Controller\Front\RobotsController:
         arguments:
-            $flashMessageBag: '@shopsys.shop.component.flash_message.bag.front'
+            $sitemapsUrlPrefix: '%shopsys.sitemaps_url_prefix%'

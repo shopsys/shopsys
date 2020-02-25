@@ -106,7 +106,7 @@ class SuperadminController extends AdminBaseController
 
             $this->delayedPricingSetting->scheduleSetInputPriceType($pricingSettingData['type']);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Pricing settings modified'));
+            $this->addSuccessFlash(t('Pricing settings modified'));
             return $this->redirectToRoute('admin_superadmin_pricing');
         }
 
@@ -177,7 +177,7 @@ class SuperadminController extends AdminBaseController
                 $this->moduleFacade->setEnabled($moduleName, $isEnabled);
             }
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Modules configuration modified'));
+            $this->addSuccessFlash(t('Modules configuration modified'));
             return $this->redirectToRoute('admin_superadmin_modules');
         }
 

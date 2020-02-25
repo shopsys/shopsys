@@ -55,14 +55,14 @@ class ParameterController extends AdminBaseController
 
             $this->parameterFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Parameter <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected parameter doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected parameter doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_parameter_list');

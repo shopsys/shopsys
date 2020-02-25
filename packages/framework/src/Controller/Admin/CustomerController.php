@@ -144,7 +144,7 @@ class CustomerController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->customerUserFacade->editByAdmin($id, $customerUserUpdateData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                 [
                     'name' => $customerUser->getFullName(),
@@ -156,7 +156,7 @@ class CustomerController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing customer - %name%', ['%name%' => $customerUser->getFullName()]));
@@ -242,7 +242,7 @@ class CustomerController extends AdminBaseController
             $customerUserUpdateData = $form->getData();
             $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                 [
                     'name' => $customerUser->getFullName(),
@@ -254,7 +254,7 @@ class CustomerController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Customer/new.html.twig', [
@@ -274,14 +274,14 @@ class CustomerController extends AdminBaseController
 
             $this->customerUserFacade->delete($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Customer <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected customer doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected customer doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_customer_list');

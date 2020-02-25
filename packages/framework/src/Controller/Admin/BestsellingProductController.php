@@ -91,7 +91,7 @@ class BestsellingProductController extends AdminBaseController
 
             $this->manualBestsellingProductFacade->edit($category, $domainId, $newProducts);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Best-selling products of category <strong><a href="{{ url }}">{{ name }}</a></strong> set.'),
                     [
@@ -106,7 +106,7 @@ class BestsellingProductController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem($category->getName());

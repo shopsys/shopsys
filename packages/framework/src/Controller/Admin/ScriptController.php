@@ -67,7 +67,7 @@ class ScriptController extends AdminBaseController
 
             $script = $this->scriptFacade->create($scriptData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Script <a href="{{ url }}"><strong>{{ name }}</strong></a> created'),
                     [
@@ -103,7 +103,7 @@ class ScriptController extends AdminBaseController
 
             $script = $this->scriptFacade->edit($scriptId, $scriptData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Script <a href="{{ url }}"><strong>{{ name }}</strong></a> modified'),
                     [
@@ -157,14 +157,14 @@ class ScriptController extends AdminBaseController
 
             $this->scriptFacade->delete($scriptId);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Script <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $script->getName(),
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Script\Exception\ScriptNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected script doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected script doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_script_list');
@@ -184,7 +184,7 @@ class ScriptController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->scriptFacade->setGoogleAnalyticsTrackingId($form->getData()['trackingId'], $domainId);
-            $this->getFlashMessageSender()->addSuccessFlashTwig(t('Google script code set'));
+            $this->addSuccessFlashTwig(t('Google script code set'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Script/googleAnalytics.html.twig', [

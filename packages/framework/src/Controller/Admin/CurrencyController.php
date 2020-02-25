@@ -94,18 +94,18 @@ class CurrencyController extends AdminBaseController
             $fullName = $this->currencyFacade->getById($id)->getName();
             $this->currencyFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Currency <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\DeletingNotAllowedToDeleteCurrencyException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(
+            $this->addErrorFlash(
                 t('This currency can\'t be deleted, it is set as default or is saved with order.')
             );
         } catch (\Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected currency doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected currency doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_currency_list');
@@ -145,7 +145,7 @@ class CurrencyController extends AdminBaseController
                 );
             }
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(t('Currency settings modified'));
+            $this->addSuccessFlashTwig(t('Currency settings modified'));
 
             return $this->redirectToRoute('admin_currency_list');
         }

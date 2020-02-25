@@ -56,12 +56,12 @@ class LegalConditionsController extends AdminBaseController
             $this->legalConditionsFacade->setTermsAndConditions($formData['termsAndConditionsArticle'], $domainId);
             $this->legalConditionsFacade->setPrivacyPolicy($formData['privacyPolicyArticle'], $domainId);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(t('Legal conditions settings modified.'));
+            $this->addSuccessFlashTwig(t('Legal conditions settings modified.'));
             return $this->redirectToRoute('admin_legalconditions_setting');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/LegalConditions/setting.html.twig', [

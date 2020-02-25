@@ -54,12 +54,12 @@ class CookiesController extends AdminBaseController
                 $selectedDomainId
             );
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(t('Cookies information settings modified.'));
+            $this->addSuccessFlashTwig(t('Cookies information settings modified.'));
             return $this->redirectToRoute('admin_cookies_setting');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Cookies/setting.html.twig', [

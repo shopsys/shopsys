@@ -169,9 +169,6 @@ class OrderController extends FrontBaseController
 
     public function indexAction()
     {
-        /** @var \Shopsys\FrameworkBundle\Component\FlashMessage\Bag $flashMessageBag */
-        $flashMessageBag = $this->get('shopsys.shop.component.flash_message.bag.front');
-
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         if ($cart === null) {
             return $this->redirectToRoute('front_cart');
@@ -216,7 +213,7 @@ class OrderController extends FrontBaseController
         if ($isValid) {
             if ($orderFlow->nextStep()) {
                 $form = $orderFlow->createForm();
-            } elseif ($flashMessageBag->isEmpty()) {
+            } elseif ($this->isFlashMessageBagEmpty()) {
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
                 $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
@@ -230,7 +227,7 @@ class OrderController extends FrontBaseController
                 try {
                     $this->sendMail($order);
                 } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
-                    $this->getFlashMessageSender()->addErrorFlash(
+                    $this->addErrorFlash(
                         t('Unable to send some emails, please contact us for order verification.')
                     );
                 }
@@ -335,7 +332,7 @@ class OrderController extends FrontBaseController
         );
 
         if ($transportAndPaymentCheckResult->isTransportPriceChanged()) {
-            $this->getFlashMessageSender()->addInfoFlashTwig(
+            $this->addInfoFlashTwig(
                 t('The price of shipping {{ transportName }} changed during ordering process. Check your order, please.'),
                 [
                     'transportName' => $orderData->transport->getName(),
@@ -343,7 +340,7 @@ class OrderController extends FrontBaseController
             );
         }
         if ($transportAndPaymentCheckResult->isPaymentPriceChanged()) {
-            $this->getFlashMessageSender()->addInfoFlashTwig(
+            $this->addInfoFlashTwig(
                 t('The price of payment {{ paymentName }} changed during ordering process. Check your order, please.'),
                 [
                     'paymentName' => $orderData->payment->getName(),

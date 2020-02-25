@@ -58,7 +58,7 @@ class ContactFormSettingsController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->contactFormSettingsFacade->editSettingsForDomain($contactFormSettingsData, $domainId);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Contact form settings modified'));
+            $this->addSuccessFlash(t('Contact form settings modified'));
 
             return $this->redirectToRoute('admin_contactformsettings_index');
         }

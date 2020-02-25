@@ -82,7 +82,7 @@ class CategoryController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryFacade->edit($id, $categoryData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Category<strong><a href="{{ url }}">{{ name }}</a></strong> was modified'),
                 [
                     'name' => $category->getName(),
@@ -93,7 +93,7 @@ class CategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing category - %name%', ['%name%' => $category->getName()]));
@@ -123,7 +123,7 @@ class CategoryController extends AdminBaseController
 
             $category = $this->categoryFacade->create($categoryData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Category <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                 [
                     'name' => $category->getName(),
@@ -135,7 +135,7 @@ class CategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/new.html.twig', [
@@ -213,14 +213,14 @@ class CategoryController extends AdminBaseController
 
             $this->categoryFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Category <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected category doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected category doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_category_list');

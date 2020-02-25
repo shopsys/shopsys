@@ -165,7 +165,7 @@ class ProductController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->productFacade->edit($id, $form->getData());
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Product <strong><a href="{{ url }}">{{ product|productDisplayName }}</a></strong> modified'),
                     [
@@ -178,7 +178,7 @@ class ProductController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)]));
@@ -201,7 +201,7 @@ class ProductController extends AdminBaseController
         try {
             $productData = $this->productDataFactory->create();
         } catch (NotFoundHttpException $e) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please fill all default values before creating a product'));
+            $this->addErrorFlash(t('Please fill all default values before creating a product'));
             return $this->redirectToRoute('admin_product_list');
         }
 
@@ -211,7 +211,7 @@ class ProductController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $this->productFacade->create($form->getData());
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Product <strong><a href="{{ url }}">{{ product|productDisplayName }}</a></strong> created'),
                     [
@@ -224,7 +224,7 @@ class ProductController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Product/new.html.twig', [
@@ -273,7 +273,7 @@ class ProductController extends AdminBaseController
                 array_map('intval', $grid->getSelectedRowIds())
             );
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Bulk editing done'));
+            $this->addSuccessFlash(t('Bulk editing done'));
 
             return $this->redirect($request->headers->get('referer', $this->generateUrl('admin_product_list')));
         }
@@ -304,14 +304,14 @@ class ProductController extends AdminBaseController
 
             $this->productFacade->delete($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Product <strong>{{ product|productDisplayName }}</strong> deleted'),
                 [
                     'product' => $product,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected product doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected product doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_product_list');
@@ -345,7 +345,7 @@ class ProductController extends AdminBaseController
             try {
                 $newMainVariant = $this->productVariantFacade->createVariant($mainVariant, $formData[VariantFormType::VARIANTS]);
 
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Variant <strong><a href="{{ url }}">{{ productVariant|productDisplayName }}</a></strong> successfully created.'),
                     [
                         'productVariant' => $newMainVariant,
@@ -355,7 +355,7 @@ class ProductController extends AdminBaseController
 
                 return $this->redirectToRoute('admin_product_list');
             } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\VariantException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(
+                $this->addErrorFlash(
                     t('Not possible to create variations of products that are already variant or main variant.')
                 );
             }
