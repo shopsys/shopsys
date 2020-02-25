@@ -67,10 +67,10 @@ class TimedFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return FormType::class;
+        yield FormType::class;
     }
 }
