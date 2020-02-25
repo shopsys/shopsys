@@ -120,7 +120,7 @@ class ElasticsearchStructureManager
             if ($this->buildVersion === '0000000000000000' || $this->buildVersion === null) {
                 $message .= ' Please start using build version or delete current index before creating a new one.';
             } else {
-                $message .= ' Maybe you forgot to execute "php phing generate-build-version" before creating new index?';
+                $message .= ' Maybe you forgot to execute "php phing build-version-generate" before creating new index?';
             }
             throw new ElasticsearchStructureException($message);
         }

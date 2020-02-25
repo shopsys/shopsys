@@ -40,6 +40,7 @@ RUN apt-get update && \
     nano \
     mc \
     htop \
+    fontforge \
     autoconf && \
     apt-get clean
 

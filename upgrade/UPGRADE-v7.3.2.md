@@ -20,7 +20,7 @@ There you can find links to upgrade notes for other versions too.
                 libjpeg-dev \
                 libfreetype6-dev \
     ```
-- remove `google_container_engine_versions` data source from `gce-cluster.tf` config to make it set automatically by GKE ([#1198](https://github.com/shopsys/shopsys/pull/1198))
+- remove `google_container_engine_versions` data source from `gke-cluster.tf` config to make it set automatically by GKE ([#1198](https://github.com/shopsys/shopsys/pull/1198))
     ```diff
     - data "google_container_engine_versions" "primary" {
     -   zone = "${var.GOOGLE_CLOUD_REGION}-a"

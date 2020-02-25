@@ -235,6 +235,49 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 - [#1262] add missing strict types and return types into template, Thanks to [@sspooky13]
 
+## [v7.3.3](https://github.com/shopsys/shopsys/compare/v7.3.2...v7.3.3) - 2020-02-24
+
+### [shopsys/coding-standards]
+
+#### Changed
+
+- [#1373] force unix line endings, Thanks to [@machicek]
+- [#1470] FunctionCallSignatureSniff.Indent is now disabled
+
+### [shopsys/framework]
+
+#### Fixed
+
+- [#1462] Correctly create prices for transports and payments, Thanks to [@henzigo]
+- [#1494] handle error when the last cart item has been removed
+- [#1609] fixed phpstan issue with changed namespace of doctrine/persistence
+
+#### Changed
+
+- [#1419] increased slow log priority to prevent miscalculation request time, Thanks to [@henzigo]
+- [#1475] clean redis cache via scan and unlink, Thanks to [@henzigo]
+- [#1502] changed documentation link in toolbar to docs.shopsys.com
+
+### [shopsys/project-base]
+
+#### Fixed
+
+- [#1551] OrderCest is now more reliable
+
+#### Changed
+
+- [#1389] ErrorController uses environment from DIC parameter
+- [#1459] removed usage of non-existing property ProductData::$price
+- [#1668] upgraded npm dependencies
+- [#1679] selling from date moved to the future for not yet sellable product
+
+
+### [shopsys/shopsys]
+
+#### Changed
+
+- [#1549] restricted doctrine/persistence to version 1.2
+
 ## [v7.3.2](https://github.com/shopsys/shopsys/compare/v7.3.1...v7.3.2) - 2019-09-17
 
 ### [shopsys/framework]
@@ -2912,7 +2955,6 @@ That's why is this section formatted differently.
 [#1414]: https://github.com/shopsys/shopsys/pull/1414
 [@hason]: https://github.com/hason
 [@TomasGottvald]: https://github.com/TomasGottvald
-
 [#1262]: https://github.com/shopsys/shopsys/pull/1262
 [#1256]: https://github.com/shopsys/shopsys/pull/1256
 [#1255]: https://github.com/shopsys/shopsys/pull/1255
@@ -2968,6 +3010,21 @@ That's why is this section formatted differently.
 [#906]: https://github.com/shopsys/shopsys/pull/906
 [#875]: https://github.com/shopsys/shopsys/pull/875
 [#539]: https://github.com/shopsys/shopsys/pull/539
+[#1679]: https://github.com/shopsys/shopsys/pull/1679
+[#1668]: https://github.com/shopsys/shopsys/pull/1668
+[#1609]: https://github.com/shopsys/shopsys/pull/1609
+[#1551]: https://github.com/shopsys/shopsys/pull/1551
+[#1549]: https://github.com/shopsys/shopsys/pull/1549
+[#1502]: https://github.com/shopsys/shopsys/pull/1502
+[#1494]: https://github.com/shopsys/shopsys/pull/1494
+[#1475]: https://github.com/shopsys/shopsys/pull/1475
+[#1470]: https://github.com/shopsys/shopsys/pull/1470
+[#1462]: https://github.com/shopsys/shopsys/pull/1462
+[#1459]: https://github.com/shopsys/shopsys/pull/1459
+[#1419]: https://github.com/shopsys/shopsys/pull/1419
+[#1389]: https://github.com/shopsys/shopsys/pull/1389
+[#1373]: https://github.com/shopsys/shopsys/pull/1373
+[@machicek]: https://github.com/machicek
 
 [#1561]: https://github.com/shopsys/shopsys/pull/1561
 [#1560]: https://github.com/shopsys/shopsys/pull/1560
