@@ -19,23 +19,23 @@ class CustomerFacade
     protected $customerFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade
      */
-    protected $billingAddressFactory;
+    protected $billingAddressFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         CustomerFactoryInterface $customerFactory,
-        BillingAddressFactoryInterface $billingAddressFactory
+        BillingAddressFacade $billingAddressFacade
     ) {
         $this->em = $em;
         $this->customerFactory = $customerFactory;
-        $this->billingAddressFactory = $billingAddressFactory;
+        $this->billingAddressFacade = $billingAddressFacade;
     }
 
     /**
@@ -55,7 +55,7 @@ class CustomerFacade
         $customer = $this->createCustomer();
         $billingAddressData->customer = $customer;
 
-        $customer->addBillingAddress($this->billingAddressFactory->create($billingAddressData));
+        $customer->addBillingAddress($this->billingAddressFacade->create($billingAddressData));
         $this->em->persist($customer);
         $this->em->flush($customer);
 
