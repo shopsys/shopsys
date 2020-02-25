@@ -146,3 +146,10 @@ services:
 
     Shopsys\FrameworkBundle\Component\Image\ImageFacade:
         arguments: ['%shopsys.image_url_prefix%']
+
+    Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter:
+        tags:
+            - { name: router, priority: 70 }
+
+    Symfony\Bridge\Twig\Extension\HttpKernelRuntime:
+        arguments: ['@fragment.handler']

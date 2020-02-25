@@ -96,3 +96,6 @@ services:
     App\Controller\Front\ErrorController:
         arguments:
             $environment: '%kernel.environment%'
+
+    sensio_framework_extra.psr7.http_message_factory:
+        class: Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory

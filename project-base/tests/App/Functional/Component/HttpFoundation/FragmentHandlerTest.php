@@ -11,18 +11,21 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 
 class FragmentHandlerTest extends TransactionFunctionalTestCase
 {
+    /**
+     * @var \Symfony\Bridge\Twig\Extension\HttpKernelRuntime
+     * @inject
+     */
+    private $httpKernelRuntime;
+
     public function testRenderingFragmentDoesNotIgnoreException()
     {
-        /** @var \Symfony\Bridge\Twig\Extension\HttpKernelRuntime $httpKernelRuntime */
-        $httpKernelRuntime = $this->getContainer()->get('twig.runtime.httpkernel');
-
         // Rendering a fragment can only be done when handling a Request.
         $this->putFakeRequestToRequestStack();
 
         $this->expectException(\App\Controller\Test\ExpectedTestException::class);
 
         /** This should call @see \Shopsys\FrameworkBundle\Component\HttpFoundation\FragmentHandler::render() */
-        $httpKernelRuntime->renderFragment('/test/error-handler/exception');
+        $this->httpKernelRuntime->renderFragment('/test/error-handler/exception');
     }
 
     private function putFakeRequestToRequestStack()

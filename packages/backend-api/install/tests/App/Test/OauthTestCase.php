@@ -70,7 +70,7 @@ class OauthTestCase extends FunctionalTestCase
             'client_secret' => self::OAUTH_SECRET,
         ];
 
-        $client = $this->getClient();
+        $client = $this->findClient();
         $client->request('POST', $tokenUrl, $oauthParameters);
 
         $response = $client->getResponse();
@@ -86,7 +86,7 @@ class OauthTestCase extends FunctionalTestCase
      */
     protected function runOauthRequest(string $method, string $path, ?array $content = null): Response
     {
-        $client = $this->getClient();
+        $client = $this->findClient();
         $headers = [
             'HTTP_AUTHORIZATION' => sprintf('Bearer %s', $this->createOauthToken()),
             'HTTP_ACCEPT' => '*/*',
