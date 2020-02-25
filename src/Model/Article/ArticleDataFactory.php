@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Article;
 
-use DateTime;
 use Shopsys\FrameworkBundle\Model\Article\Article as BaseArticle;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData as BaseArticleData;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory as BaseArticleDataFactory;
