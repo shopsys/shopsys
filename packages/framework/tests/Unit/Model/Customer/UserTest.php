@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 
@@ -16,14 +17,19 @@ class UserTest extends TestCase
 {
     public function testGetFullNameReturnsLastnameAndFirstnameForUser()
     {
-        $customer = new Customer();
+        $customerData = new CustomerData();
+        $customer = new Customer($customerData);
+
         $customerUserData = new CustomerUserData();
         $customerUserData->firstName = 'Firstname';
         $customerUserData->lastName = 'Lastname';
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
-        $customer->addBillingAddress($this->createBillingAddress());
+
+        $customerData->billingAddress = $this->createBillingAddress();
+        $customer->edit($customerData);
+
         $customerUser = new CustomerUser($customerUserData);
 
         $this->assertSame('Lastname Firstname', $customerUser->getFullName());
@@ -31,7 +37,9 @@ class UserTest extends TestCase
 
     public function testGetFullNameReturnsCompanyNameForCompanyUser()
     {
-        $customer = new Customer();
+        $customerData = new CustomerData();
+        $customer = new Customer($customerData);
+
         $customerUserData = new CustomerUserData();
         $customerUserData->firstName = 'Firstname';
         $customerUserData->lastName = 'Lastname';
@@ -41,7 +49,10 @@ class UserTest extends TestCase
         $billingAddressData = new BillingAddressData();
         $billingAddressData->companyCustomer = true;
         $billingAddressData->companyName = 'CompanyName';
-        $customer->addBillingAddress(new BillingAddress($billingAddressData));
+
+        $customerData->billingAddress = new BillingAddress($billingAddressData);
+        $customer->edit($customerData);
+
         $customerUser = new CustomerUser($customerUserData);
 
         $this->assertSame('CompanyName', $customerUser->getFullName());

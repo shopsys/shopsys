@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -35,10 +36,16 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     public function testExportXml()
     {
         $country = $this->createCountry();
-        $customer = new Customer();
-        $customer->addBillingAddress($this->createBillingAddress($country, $customer));
+
+        $customerData = new CustomerData();
+        $customer = new Customer($customerData);
+
+        $customerData->billingAddress = $this->createBillingAddress($country, $customer);
         $deliveryAddress = $this->createDeliveryAddress($country);
-        $customer->addDeliveryAddress($deliveryAddress);
+        $customerData->deliveryAddresses[] = $deliveryAddress;
+
+        $customer->edit($customerData);
+
         $customerUser = $this->createCustomerUser($customer);
         $status = $this->createMock(OrderStatus::class);
         $currencyData = new CurrencyData();

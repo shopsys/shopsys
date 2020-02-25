@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerData;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
@@ -38,7 +39,8 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
     {
         $customerUserUpdateUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 
-        $customer = new Customer();
+        $customerData = new CustomerData();
+        $customer = new Customer($customerData);
 
         $customerUserData = new CustomerUserData();
         $customerUserData->firstName = 'firstName';
@@ -62,6 +64,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $billingAddressData->companyTaxNumber = 'companyTaxNumber';
         $billingAddressData->country = $billingCountry;
         $billingAddressData->customer = $customer;
+        $billingAddress = $this->createBillingAddress($billingAddressData);
 
         $deliveryCountryData = new CountryData();
         $deliveryCountryData->names = ['cs' => 'Slovenská republika'];
@@ -77,11 +80,11 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $deliveryAddressData->telephone = 'deliveryTelephone';
         $deliveryAddressData->country = $deliveryCountry;
         $deliveryAddressData->customer = $customer;
-
-        $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
-        $customer->addDeliveryAddress($this->createDeliveryAddress($deliveryAddressData));
-
         $deliveryAddress = $this->createDeliveryAddress($deliveryAddressData);
+
+        $customerData->billingAddress = $billingAddress;
+        $customerData->deliveryAddresses[] = $deliveryAddress;
+        $customer->edit($customerData);
 
         $customerUser = new CustomerUser($customerUserData);
 
@@ -146,7 +149,10 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
 
         $billingCountry = new Country($billingCountryData);
         $deliveryCountry = new Country($deliveryCountryData);
-        $customer = new Customer();
+
+        $customerData = new CustomerData();
+
+        $customer = new Customer($customerData);
         $customerUserData = new CustomerUserData();
         $customerUserData->firstName = 'firstName';
         $customerUserData->lastName = 'lastName';
@@ -157,7 +163,11 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
 
         $billingAddressData = new BillingAddressData();
         $billingAddressData->customer = $customer;
-        $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
+        $billingAddress = $this->createBillingAddress($billingAddressData);
+
+        $customerData->billingAddress = $billingAddress;
+        $customer->edit($customerData);
+
         $customerUser = new CustomerUser($customerUserData);
 
         $transportData = new TransportData();
