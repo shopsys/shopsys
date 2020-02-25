@@ -97,7 +97,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
             return null;
         }
 
-        /** @var \App\Model\Product\Parameter\ParameterValue $parameterValuesIndexedByParameterId */
+        /** @var \App\Model\Product\Parameter\ParameterValue[][] $parameterValuesIndexedByParameterId */
         $parameterValuesIndexedByParameterId = [];
         foreach ($value as $parameterFilterData) {
             $parameterId = $parameterFilterData->parameter->getId();
