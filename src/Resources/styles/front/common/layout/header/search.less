@@ -1,33 +1,30 @@
-@search-button-width: 80px;
-@search-form-height: @input-height;
+@search-form-height: 52px;
+@search-form-width-lg: 430px;
+@search-form-bg-color: #f0f3f4;
+@search-form-border-color: @search-form-bg-color;
+@search-form-border-radius: @radius;
 
 .search {
+    display: none;
     position: relative;
+
+    @media @query-md {
+        display: block;
+    }
 
     &__form {
         display: flex;
 
         &__input {
-            width: ~"calc(100% - @{search-button-width})";
             position: relative;
-
-            .input {
-                padding-left: 30px;
-                width: 100%;
-            }
-        }
-
-        &__button {
-            width: @search-button-width;
+            width: @search-form-width-lg;
             height: @search-form-height;
-            line-height: @search-form-height;
-            padding: 0;
         }
 
         &__icon {
             position: absolute;
-            top: 9px;
-            left: 10px;
+            top: 16px;
+            left: 14px;
             transition: @transition color;
 
             color: @color-inactive;
@@ -38,6 +35,15 @@
         }
     }
 
+    &__input {
+        width: 100%;
+        height: 100%;
+        padding-left: 45px;
+
+        border-radius: @search-form-border-radius;
+        background-color: @search-form-bg-color;
+        border-color: @search-form-border-color;
+    }
 
     &__hint {
         .reset-ul();

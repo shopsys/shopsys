@@ -1,69 +1,74 @@
-@cart-content-width: 400px;
-@cart-icon-width: 30px;
-@cart-icon-gap: 10px;
-@cart-z-index: 6000;
+@cart-box-border: 2px solid #f4f6f6;
+@cart-box-border-radius: 6px;
+@cart-box-color: #909194;
 
 .cart {
     display: none;
+    position: relative;
 
     @media @query-lg {
-        display: inline-block;
-        position: relative;
-        .clearfix();
-        text-align: left;
+        display: block;
+    }
 
-        &__block {
-            display: block;
-            padding: 10px;
+    &__block {
+        display: flex;
+        align-items: center;
 
+        text-decoration: none;
+
+        &:hover {
             text-decoration: none;
-            border: 1px solid @color-border;
-
-            &.active {
-                border-bottom: 1px solid @color-f;
-                z-index: @cart-z-index;
-            }
-
-            &.empty {
-                border-bottom: 1px solid @color-border;
-            }
-
-            &:hover {
-                color: @color-link;
-                cursor: pointer;
-                text-decoration: none;
-            }
-
-            &.no-hover {
-                cursor: default;
-                color: @color-0;
-            }
         }
+    }
 
-        &__icon {
-            width: @cart-icon-width;
-            float: left;
-            text-align: center;
+    &__icon {
+        font-size: 40px;
+        line-height: 1;
+    }
 
-            font-size: 20px;
+    &__info {
+        @media @query-md {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            margin-right: 0.5rem;
+            min-width: 65px;
+
+            border: @cart-box-border;
+            border-radius: @cart-box-border-radius;
+            color: @cart-box-color;
         }
+    }
 
-        &__info {
-            margin-left: @cart-icon-width + @cart-icon-gap;
-            max-width: 90px;
+    &__state {
+        display: none;
+
+        @media @query-md {
+            display: block;
         }
+    }
 
-        &__detail {
-            display: none;
-            position: absolute;
-            min-width: @cart-content-width;
-            top: calc(~"100% - 1px");
-            right: 0;
-            z-index: @cart-z-index;
+    &__count {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 0;
+        top: -4px;
+        width: 17px;
+        height: 17px;
 
-            .active & {
-                display: block;
-            }
+        border-radius: 100%;
+        background-color: @color-add;
+        background: linear-gradient(to bottom, #ffb300, @color-add);
+        color: @color-f;
+        font-family: @font-tertiary;
+        font-size: 12px;
+        line-height: 1;
+
+        @media @query-lg {
+            top: 3px;
         }
     }
 }
