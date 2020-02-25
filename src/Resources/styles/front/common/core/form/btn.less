@@ -4,25 +4,25 @@
 @btn-padding-horizontal: 16px;
 @btn-color: @color-primary;
 @btn-color-hover: @color-primary;
-@btn-bg: @color-d; 
+@btn-bg: @color-d;
 @btn-bg-hover: darken(@btn-bg, 5%);
-@btn-border-radius: @radius; 
+@btn-border-radius: @radius;
 
 .btn {
     width: auto;
     min-height: @btn-height;
     padding: @btn-padding-vertical @btn-padding-horizontal;
     line-height: 1;
-    vertical-align: middle; 
+    vertical-align: middle;
     display: inline-block;
     transition: @transition background, @transition color, @transition box-shadow;
-    text-align: center;    
+    text-align: center;
 
     border: 0;
     border-radius: @btn-border-radius;
     color: @btn-color;
     background: @btn-bg;
-    cursor: pointer;    
+    cursor: pointer;
     text-decoration: none;
     font-family: @font-tertiary;
     font-size: 13px;
@@ -67,7 +67,7 @@
         background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
 
         &:hover {
-            color: @btn-primary-color-hover;            
+            color: @btn-primary-color-hover;
             background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
             box-shadow: 0 0 10px 0 @btn-primary-bg;
         }
@@ -81,14 +81,14 @@
     // Outline button
     @btn-outline-border: 2px solid @color-add;
     @btn-outline-bg: transparent;
-    @btn-outline-bg-hover: @color-add;    
+    @btn-outline-bg-hover: @color-add;
 
     &--outline {
         border: @btn-outline-border;
         background-color: @btn-outline-bg;
 
         &:hover {
-            background-color: @btn-outline-bg-hover;            
+            background-color: @btn-outline-bg-hover;
         }
     }
 
@@ -153,6 +153,11 @@
 
         font-size: 11px;
     }
+
+    // Block button
+    &--block {
+        display: block;
+    }
 }
 
 // Button with icon
@@ -191,7 +196,7 @@
 
 // Button with removed styles
 .btn-no-style {
-    padding: 0;    
+    padding: 0;
     min-height: 0;
 
     border: 0;
