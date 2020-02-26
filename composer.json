@@ -103,7 +103,7 @@
         "jdorn/sql-formatter": "^1.2",
         "jms/metadata": "^1.6",
         "jms/serializer-bundle": "^2.4",
-        "jms/translation-bundle": "^1.4.1",
+        "jms/translation-bundle": "^1.4.4",
         "joschi127/doctrine-entity-override-bundle": "^0.7.2",
         "knplabs/knp-menu-bundle": "^2.2.1",
         "league/flysystem": "^1.0",
