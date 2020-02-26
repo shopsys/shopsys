@@ -1,0 +1,66 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% set domain = getDomain() %}
+{% block meta_description %}
+    {{- productSeries.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
+{% endblock %}
+
+{% block title %}
+    {{ productSeries.getSeoTitle(domain.id)|default(productSeries.getName(domain.locale)) }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line">
+        <div class="web__container">
+            <div class="box-detail">
+                <div class="box-detail__info">
+                    <h1 itemprop="name">
+                        {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+                    </h1>
+                    <p>
+                        {{ productSeries.description|raw }}
+                    </p>
+                </div>
+                <div class="box-detail__image">
+                    {% set galleryImages = getImages(productSeries) %}
+                    {% set showGallery = galleryImages|length > 1 %}
+                    <div class="box-detail__image__main">
+                        {% if imageExists(productSeries) %}
+                            <a href="{{ imageUrl(productSeries, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' : 'js-popup-image' }}">
+                                {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
+                            </a>
+                        {% else %}
+                            {{ noimage({ alt: productSeries.name }) }}
+                        {% endif %}
+                    </div>
+
+                    {% if showGallery %}
+                        <div class="box-gallery dont-print js-gallery">
+                            <span class="box-gallery__arrow box-gallery__arrow--prev js-gallery-prev">
+                                <i class="svg svg-arrow"></i>
+                            </span>
+                            <div class="box-gallery__in js-gallery-slides">
+                                {% for galleryImage in galleryImages %}
+                                    <div class="box-gallery__item">
+                                        <a href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link js-gallery-slide-link">
+                                            {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false}) }}
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <span class="box-gallery__arrow box-gallery__arrow--next js-gallery-next">
+                                <i class="svg svg-arrow"></i>
+                            </span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="box-detail__info">
+                    <h2>
+                        {{ "Produkty programu"|trans }}
+                    </h2>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

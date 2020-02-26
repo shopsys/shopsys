@@ -41,6 +41,14 @@ class ProductSeries extends AbstractTranslatableEntity
      */
     protected $domains;
 
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Product\Series\Category\ProductSeriesCategory[]
+     *
+     * @ORM\ManyToMany(targetEntity="App\Model\Product\Series\Category\ProductSeriesCategory", fetch="EXTRA_LAZY")
+     */
+    protected $productSeriesCategories;
+
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
@@ -48,6 +56,7 @@ class ProductSeries extends AbstractTranslatableEntity
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
+        $this->productSeriesCategories = new ArrayCollection();
         $this->setTranslations($productSeriesData);
         $this->createDomains($productSeriesData);
     }
@@ -83,8 +92,8 @@ class ProductSeries extends AbstractTranslatableEntity
         $domainIds = array_keys($productSeriesData->seoTitle);
 
         foreach ($domainIds as $domainId) {
-            $productDomain = new ProductSeriesDomain($this, $domainId);
-            $this->domains->add($productDomain);
+            $productSeriesDomain = new ProductSeriesDomain($this, $domainId);
+            $this->domains->add($productSeriesDomain);
         }
 
         $this->setDomains($productSeriesData);
@@ -108,7 +117,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param int $domainId
      * @return \App\Model\Product\Series\ProductSeriesDomain
      */
-    private function getProductDomain(int $domainId)
+    private function getProductSeriesDomain(int $domainId)
     {
         foreach ($this->domains as $domain) {
             if ($domain->getDomainId() === $domainId) {
@@ -167,7 +176,7 @@ class ProductSeries extends AbstractTranslatableEntity
      */
     public function getSeoTitle(int $domainId)
     {
-        return $this->getProductDomain($domainId)->getSeoTitle();
+        return $this->getProductSeriesDomain($domainId)->getSeoTitle();
     }
 
     /**
@@ -176,7 +185,7 @@ class ProductSeries extends AbstractTranslatableEntity
      */
     public function getSeoMetaDescription(int $domainId)
     {
-        return $this->getProductDomain($domainId)->getSeoMetaDescription();
+        return $this->getProductSeriesDomain($domainId)->getSeoMetaDescription();
     }
 
     /**
@@ -185,7 +194,7 @@ class ProductSeries extends AbstractTranslatableEntity
      */
     public function getSeoH1(int $domainId)
     {
-        return $this->getProductDomain($domainId)->getSeoH1();
+        return $this->getProductSeriesDomain($domainId)->getSeoH1();
     }
 
     /**
@@ -194,6 +203,6 @@ class ProductSeries extends AbstractTranslatableEntity
      */
     public function isHidden(int $domainId)
     {
-        return $this->getProductDomain($domainId)->isHidden();
+        return $this->getProductSeriesDomain($domainId)->isHidden();
     }
 }

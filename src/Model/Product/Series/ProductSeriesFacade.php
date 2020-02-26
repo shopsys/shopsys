@@ -110,6 +110,7 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
         $this->storeUrls($productSeries);
 
         $this->em->flush();
+
         return $productSeries;
     }
 

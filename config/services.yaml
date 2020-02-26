@@ -59,6 +59,8 @@ services:
 
     App\Model\Product\Series\Grid\ProductSeriesGridFactory: ~
 
+    App\Model\Product\Series\Grid\ProductSeriesCategoryGridFactory: ~
+
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlFacade
 
