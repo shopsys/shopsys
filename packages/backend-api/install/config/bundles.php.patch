@@ -1,10 +1,8 @@
-@@ -35,6 +35,9 @@ return [
-     VasekPurchart\ConsoleErrorsBundle\ConsoleErrorsBundle::class => ['all' => true],
-     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
-     Joschi127\DoctrineEntityOverrideBundle\Joschi127DoctrineEntityOverrideBundle::class => ['all' => true],
+@@ -42,4 +42,7 @@ return [
+     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
+     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+     Fp\JsFormValidatorBundle\FpJsFormValidatorBundle::class => ['all' => true],
 +    Shopsys\BackendApiBundle\ShopsysBackendApiBundle::class => ['all' => true],
 +    Trikoder\Bundle\OAuth2Bundle\TrikoderOAuth2Bundle::class => ['all' => true],
 +    FOS\RestBundle\FOSRestBundle::class => ['all' => true],
-     Shopsys\FrameworkBundle\ShopsysFrameworkBundle::class => ['all' => true],
-     Shopsys\ReadModelBundle\ShopsysReadModelBundle::class => ['all' => true],
-     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],
+ ];

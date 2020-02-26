@@ -1,4 +1,4 @@
-@@ -38,6 +38,15 @@ security:
+@@ -37,6 +37,15 @@ security:
                  csrf_token_generator: security.csrf.token_manager
                  csrf_token_id: admin_logout
                  invalidate_session: false
