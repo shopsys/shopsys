@@ -27,7 +27,7 @@ class ProductActionView
     /**
      * @var bool
      */
-    protected $mainVariant;
+    protected $isMainVariant;
 
     /**
      * @var string
@@ -37,14 +37,14 @@ class ProductActionView
     /**
      * @param int $id
      * @param bool $sellingDenied
-     * @param bool $mainVariant
+     * @param bool $isMainVariant
      * @param string $detailUrl
      */
-    public function __construct(int $id, bool $sellingDenied, bool $mainVariant, string $detailUrl)
+    public function __construct(int $id, bool $sellingDenied, bool $isMainVariant, string $detailUrl)
     {
         $this->id = $id;
         $this->sellingDenied = $sellingDenied;
-        $this->mainVariant = $mainVariant;
+        $this->isMainVariant = $isMainVariant;
         $this->detailUrl = $detailUrl;
     }
 
@@ -69,7 +69,7 @@ class ProductActionView
      */
     public function isMainVariant(): bool
     {
-        return $this->mainVariant;
+        return $this->isMainVariant;
     }
 
     /**

@@ -240,7 +240,7 @@
         "variants": {
           "type": "integer"
         },
-        "main_variant": {
+        "main_variant_id": {
           "type": "integer"
         }
       }

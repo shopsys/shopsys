@@ -219,7 +219,7 @@ class ProductExportRepository
             'is_using_stock' => $product->isUsingStock(),
             'stock_quantity' => $product->getStockQuantity(),
             'variants' => $variantIds,
-            'main_variant' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
+            'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
         ];
     }
 

@@ -30,7 +30,8 @@ class ProductElasticsearchConverter
         $result['ordering_priority'] = $product['ordering_priority'] ?? 0;
 
         $result['in_stock'] = $product['in_stock'] ?? false;
-        $result['main_variant'] = $product['main_variant'] ?? false;
+        $result['is_main_variant'] = $product['is_main_variant'] ?? false;
+        $result['main_variant_id'] = $product['main_variant_id'] ?? null;
 
         $result['calculated_selling_denied'] = $product['calculated_selling_denied'] ?? true;
         $result['selling_denied'] = $product['selling_denied'] ?? true;
