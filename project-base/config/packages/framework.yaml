@@ -20,3 +20,4 @@ framework:
         enabled: false
         collect: false
     assets: ~
+    error_controller: 'App\Controller\Front\ErrorController::showAction'
