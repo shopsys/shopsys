@@ -119,6 +119,15 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
                     )
                 );
                 $this->em->rollback();
+            } catch (DuplicateEmailException $invalidDataSilentException) {
+                $this->logger->addWarning(
+                    sprintf(
+                        'Transfer of item with code `%s` was aborted because : %s',
+                        $item['erpCustomerNumber'],
+                        $invalidDataSilentException->getMessage()
+                    )
+                );
+                $this->em->rollback();
             } catch (TransferException $transferException) {
                 $this->logger->addWarning(
                     sprintf(
