@@ -90,7 +90,7 @@
         "fp/jsformvalidator-bundle": "dev-master",
         "friendsofphp/php-cs-fixer": "^2.14.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
-        "friendsofsymfony/rest-bundle": "^2.5",
+        "friendsofsymfony/rest-bundle": "^2.7.1",
         "fzaninotto/faker": "^1.7.1",
         "gedmo/doctrine-extensions": "^2.4.34",
         "google/cloud-storage": "^1.10",
