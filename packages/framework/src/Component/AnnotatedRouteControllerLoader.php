@@ -2,12 +2,12 @@
 
 namespace Shopsys\FrameworkBundle\Component;
 
-use Sensio\Bundle\FrameworkExtraBundle\Routing\AnnotatedRouteControllerLoader as SensioAnnotatedRouteControllerLoader;
+use Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader as BaseAnnotatedRouteControllerLoader;
 
 /**
  * AnnotatedRouteControllerLoader
  */
-class AnnotatedRouteControllerLoader extends SensioAnnotatedRouteControllerLoader
+class AnnotatedRouteControllerLoader extends BaseAnnotatedRouteControllerLoader
 {
     /**
      * Makes the default route name shorter by removing some obvious parts.

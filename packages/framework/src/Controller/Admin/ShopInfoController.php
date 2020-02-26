@@ -2,11 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\ShopInfo\ShopInfoSettingFormType;
 use Shopsys\FrameworkBundle\Model\ShopInfo\ShopInfoSettingFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ShopInfoController extends AdminBaseController
 {

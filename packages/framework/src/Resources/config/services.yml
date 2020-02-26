@@ -97,7 +97,7 @@ services:
         arguments:
             - '%shopsys.root_dir%/var/lock'
 
-    Sensio\Bundle\FrameworkExtraBundle\Routing\AnnotatedRouteControllerLoader:
+    routing.loader.annotation:
         class: Shopsys\FrameworkBundle\Component\AnnotatedRouteControllerLoader
         arguments:
             - '@annotation_reader'

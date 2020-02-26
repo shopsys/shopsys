@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -12,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Script\Script;
 use Shopsys\FrameworkBundle\Model\Script\ScriptDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Script\ScriptFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ScriptController extends AdminBaseController
 {
