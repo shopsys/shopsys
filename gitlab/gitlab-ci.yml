@@ -67,6 +67,7 @@ deploy:review:
     script:
         - curl --location https://github.com/mikefarah/yq/releases/download/2.1.1/yq_linux_amd64 --output ~/yq && chmod +x ~/yq && ~/yq --version
         - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
+        - docker-compose down --rmi all -v
         - docker-compose up -d
         - docker cp ${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yml ~/parameters.yml
         - ~/yq write --inplace ~/parameters.yml parameters.database_name ${PHP_FPM_IMAGE_NAME}

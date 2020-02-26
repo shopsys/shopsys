@@ -1,73 +1,129 @@
-@box-slider-width: @web-width - @web-panel-width - 2*@web-padding;
+@box-slider-width: @web-width;
 @box-slider-point-size: 8px;
-@box-slider-bottom-gap: 30px;
+@box-slider-bottom-gap: 1.5rem;
+@box-slider-bg-color: @color-f;
 
 .box-slider {
-    display: none;
+    display: block;
+    position: relative;
+    width: @box-slider-width;
+    max-width: 100%;
+    padding: 1rem;
+    margin: 0 auto @box-slider-bottom-gap auto;
+
+    border-radius: @radius;
+    background-color: @box-slider-bg-color;
 
     @media @query-lg {
-        display: block;
+        padding: 0;
+        margin-bottom: @box-slider-bottom-gap * 1.5;
+    }
+
+    &__wrap {
+        @media @query-lg {
+            display: flex;
+        }
+    }
+
+    &__in {
+        width: 100%;
+        flex-grow: 2;
+        overflow: hidden;
+    }
+
+    .slick-initialized {
+        visibility: visible;
+    }
+
+    &__item {
+        float: left;
+        width: 0;
         position: relative;
-        width: @box-slider-width;
-        max-width: 100%;
-        margin: 0 auto @box-slider-bottom-gap auto;
-        visibility: hidden;
 
-        &__in {
-            width: 100%;
-            overflow: hidden;
+        img {
+            display: block;
+        }
+    }
 
-            border: 1px solid @color-border;
+    &__item__link {
+        display: none;
+
+        @media @query-lg {
+            display: block;
+            position: absolute;
+            bottom: 7px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            font-size: 13px;
+
+            &__text {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__thumbnails {
+        margin-top: 1.5rem;
+        padding: 1rem;
+
+        @media @query-lg {
+            padding: 1.7rem 1.5rem 2rem;
+            min-width: 345px;
+            max-width: 345px;
+            margin-top: 0;
         }
 
-        .slick-initialized {
-            visibility: visible;
+        &__block {
+            margin-bottom: 0.5rem;
+
+            @media @query-xl {
+                margin-bottom: 1.5rem;
+            }
         }
 
         &__item {
-            float: left;
-            width: 0;
-            position: relative;
+            display: block;
+            padding: 0.5rem 0;
+            width: 100%;
 
-            img {
-                margin: 0 auto;
-                display: block;
+            border: 0;
+            border-bottom: 1px solid #f1f4f5;
+            outline: 0;
+            background: transparent;
+            text-align: left;
+            cursor: pointer;
+
+            &:first-child {
+                padding-top: 0;
             }
-        }
 
-        .slick-dots {
-            .reset-ul();
-            position: absolute;
-            left: 10px;
-            bottom: 10px;
-            z-index: 2;
+            &:last-child {
+                border-bottom-color: transparent;
+            }
 
-            li {
-                display: inline-block;
-
-                button {
-                    display: block;
-                    width: @box-slider-point-size;
-                    height: @box-slider-point-size;
-                    line-height: @box-slider-point-size;
-                    padding: 0;
-                    margin: 0 4px 0 0;
-
-                    text-indent: -9999px;
-                    font-size: 0;
-                    background: @color-base;
-                    cursor: pointer;
-                    border: none;
-
-                    border-radius: 50%;
-                }
-
-                &.slick-active {
-                    button {
-                        background: @color-primary;
+            &:hover {
+                @media @query-lg {
+                    .box-slider__thumbnails__item__text {
+                        text-decoration: underline;
                     }
                 }
             }
+
+            &.slick-active-current {
+                font-family: @font-tertiary;
+                color: @color-0;
+
+                .box-slider__thumbnails__item__text {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        // Working with inline generated styles, by the slick-carousel itself
+        .slick-track,
+        .slick-slide {
+            min-width: 100%;
         }
     }
 }
