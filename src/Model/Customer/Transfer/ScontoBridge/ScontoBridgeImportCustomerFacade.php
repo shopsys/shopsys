@@ -159,7 +159,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
             $newCustomerUser = $this->customerUserFacade->create($customerUserUpdateData);
             $this->logger->addInfo(sprintf('Created customer with eshop ID: %s ', $newCustomerUser->getId()));
         } else {
-            $this->customerUserFacade->edit($customerUser->getId(), $customerUserUpdateData);
+            $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
             $this->em->flush();
             $this->logger->addInfo(sprintf('Updated customer with eshop ID: %s', $customerUser->getId()));
         }

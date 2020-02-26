@@ -9,6 +9,7 @@ use App\Component\ScontoBridge\Transfer\Exception\TransferInvalidDataAdministrat
 use App\Component\ScontoBridge\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
 use Exception;
 use Generator;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 
 abstract class AbstractScontoBridgeImportTransfer
@@ -96,6 +97,15 @@ abstract class AbstractScontoBridgeImportTransfer
                 );
                 $this->em->rollback();
             } catch (TransferInvalidDataAdministratorCriticalException $invalidDataSilentException) {
+                $this->logger->addWarning(
+                    sprintf(
+                        'Transfer of item with code `%s` was aborted because : %s',
+                        $item['erpCustomerNumber'],
+                        $invalidDataSilentException->getMessage()
+                    )
+                );
+                $this->em->rollback();
+            } catch (DuplicateEmailException $invalidDataSilentException) {
                 $this->logger->addWarning(
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
