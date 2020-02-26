@@ -165,7 +165,7 @@ class ProductTransferAkeneoMapper
             $productData->vendorDeliveryDate = intval($vendorDeliveryDate);
         }
 
-        $productData->flags = AkeneoProductHelper::mapDomainDataArray($productData->flags, $this->getProductFlags($akeneoProductData['values']));
+        $productData->flags = $this->getProductFlags($akeneoProductData['values']);
 
         return $productData;
     }

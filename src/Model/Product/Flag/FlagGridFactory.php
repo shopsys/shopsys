@@ -31,6 +31,8 @@ class FlagGridFactory extends BaseFlagGridFactory
         $grid->addColumn('rgbColor', 'a.rgbColor', t('Color'), true);
         $grid->addColumn('visible', 'a.visible', t('Display'), true);
         $grid->addColumn('sale', 'a.sale', t('Označení výprodeje'), true);
+        $grid->addColumn('noticeLowPrice', 'a.noticeLowPrice', t('Hvězdičky pro nižší cenu'), true);
+        $grid->addColumn('noticeHighPrice', 'a.noticeHighPrice', t('Hvězdičky pro vyšší cenu'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 

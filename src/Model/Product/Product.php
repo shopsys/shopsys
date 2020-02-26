@@ -39,6 +39,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Product\Flag\Flag[] getFlags()
  * @method edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
+ * @method editFlags(\App\Model\Product\Flag\Flag[] $flags)
+ * @method \App\Model\Product\Flag\Flag[] getFlags()
  */
 class Product extends BaseProduct
 {

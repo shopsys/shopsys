@@ -40,6 +40,7 @@ class FlagsExtension extends AbstractExtension
     {
         return [
             new TwigFunction('renderFlagsByIds', [$this, 'renderFlagsByIds'], ['is_safe' => ['html']]),
+            new TwigFunction('renderAsterisk', [$this, 'renderAsterisk'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -55,6 +56,22 @@ class FlagsExtension extends AbstractExtension
             [
                 'flags' => $this->flagsProvider->getFlagsByIds($flagIds),
                 'classAddition' => $classAddition,
+            ]
+        );
+    }
+
+    /**
+     * @param array $flagIds
+     * @param string $priceType
+     * @return string
+     */
+    public function renderAsterisk(array $flagIds, string $priceType): string
+    {
+        return $this->twigEnvironment->render(
+            'Front/Inline/Product/productFlagAsterisk.html.twig',
+            [
+                'flags' => $this->flagsProvider->getFlagsByIds($flagIds),
+                'priceType' => $priceType,
             ]
         );
     }

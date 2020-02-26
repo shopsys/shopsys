@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
-use App\Component\Akeneo\AkeneoHelper;
+use App\Component\Akeneo\Attribute\AkeneoAttributeHelper;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Flag\FlagData;
 use App\Model\Product\Flag\FlagDataFactory;
 
 /**
- * @property \App\Model\Product\Transfer\Akeneo\App\Model\Product\Flag\Flag $flag
+ * @property \App\Model\Product\Flag\Flag $flag
  */
 class FlagTransferAkeneoMapper
 {
@@ -41,7 +41,7 @@ class FlagTransferAkeneoMapper
             $flagData = $this->flagDataFactory->createFromFlag($flag);
         }
 
-        $flagData->name = AkeneoHelper::mapLocalizedLabels($flagData->name, $akeneoFlagData);
+        $flagData->name = AkeneoAttributeHelper::mapLocalizedDataString($flagData->name, $akeneoFlagData['labels'] ?? null);
 
         return $flagData;
     }

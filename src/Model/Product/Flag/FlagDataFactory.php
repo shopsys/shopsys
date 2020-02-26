@@ -25,6 +25,8 @@ class FlagDataFactory extends BaseFlagDataFactory
 
         $flagData->sale = $flag->isSale();
         $flagData->akeneoCode = $flag->getAkeneoCode();
+        $flagData->noticeLowPrice = $flag->getNoticeLowPrice();
+        $flagData->noticeHighPrice = $flag->getNoticeHighPrice();
     }
 
     /**
