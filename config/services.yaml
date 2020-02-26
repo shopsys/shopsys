@@ -325,3 +325,7 @@ services:
 
     NinjaMutex\Lock\LockInterface:
         class: App\Component\NinjaMutex\Lock\NullLock
+
+    App\Model\Svg\SvgProvider:
+        arguments:
+            $svgDirectoryPath: "%svg_icon_path%"

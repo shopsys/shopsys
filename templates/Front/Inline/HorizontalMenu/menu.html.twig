@@ -1,0 +1,72 @@
+<div class="menu-horizontal__wrap">
+	<ul class="menu-horizontal js-menuHorizontal" data-hovered="false">
+		<li class="menu-horizontal__item menu-horizontal__item--home active">
+			<a href="{{ url('front_homepage') }}" class="menu-horizontal__item__link">
+				<i class="svg svg-home"></i>
+			</a>
+		</li>
+		{% for itemDetail in itemDetails %}
+			<li class="menu-horizontal__item js-menu-horizontal-item">
+				{% if itemDetail.horizontalMenuItem.url %}
+					<a href="{{ itemDetail.horizontalMenuItem.url }}" class="menu-horizontal__item__link">{{ itemDetail.horizontalMenuItem.name }}<i class="svg svg-arrow-down"></i></a>
+				{% else %}
+					<span class="menu-horizontal__item__link">{{ itemDetail.horizontalMenuItem.name }}<i class="svg svg-arrow-down"></i></span>
+				{% endif %}
+				<div class="menu-horizontal__item__arrow"></div>
+				<div class="menu-horizontal__sub js-menu-horizontal-item-content">
+					<ul class="menu-horizontal__sub__columns js-menu-horizontal-sub-columns">
+						{% for categories in itemDetail.categoryDetailsByColumnNumber %}
+							<li class="menu-horizontal__sub__columns__column js-menu-horizontal-item-container">
+								<ul class="js-menu-horizontal-items">
+									{% for category in categories %}
+											<li>
+												<a href="{{ url('front_product_list', { id: category.id }) }}" class="menu-horizontal__sub__columns__column__title">
+													<div class="menu-horizontal__sub__columns__column__image">
+														<i class="svg-categories{% if category.svgIcon %} svg-{{ category.svgIcon }}{% endif	 %} js-menu-horizontal-icon"></i>
+													</div>
+													<span>
+														{{ category.name }}
+													</span>
+												</a>
+												{% if category.children|length > 0 %}
+													<ul class="margin-left-15 js-menu-horizontal-ul js-menu-horizontal-items">
+														{% for childCategory in category.children %}
+															<li>
+																<a href="{{ url('front_product_list', { id: childCategory.id }) }}">
+																	<span>{{ childCategory.name }}</span>
+																</a>
+															</li>
+														{% endfor %}
+													</ul>
+												{% endif %}
+											</li>
+									{% endfor %}
+								</ul>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+
+
+<div id="js-menu-mobile-wrapper" class="menu-horizontal-mobile display-none">
+	<div class="menu-horizontal-mobile__in js-menu-mobile-template display-none">
+		<div class="js-menu-mobile-link-back display-none menu-horizontal-mobile__back">
+			<a><i class="svg svg-arrow-right"></i>{{ 'Zpět'|trans }}</a>
+			<span class="js-menu-mobile-parent-name menu-horizontal-mobile__back__title"></span>
+		</div>
+		<div class="js-menu-mobile-link-back-home display-none menu-horizontal-mobile__back menu-horizontal-mobile__back--home">
+			<a href="{{ url('front_homepage') }}"><i class="svg svg-home"></i></a>
+			<span class="menu-horizontal-mobile__back__title">Menu</span>
+		</div>
+		<ul class="menu-horizontal-mobile__wrap js-menu-mobile-list">
+			<li class="js-menu-mobile-link-template menu-horizontal-mobile__item display-none">
+				<a href=""></a>
+				<i class="svg svg-arrow-right with-border display-none js-menu-mobile-next"></i>
+			</li>
+		</ul>
+	</div>
+</div>

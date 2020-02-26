@@ -6,6 +6,7 @@ import './disableDoubleSubmit';
 import './pushReloadState';
 import './HoverIntent';
 import './honeyPot';
+import './HorizontalMenu';
 import './lazyLoadInit';
 import './legalConditions';
 import './Login';

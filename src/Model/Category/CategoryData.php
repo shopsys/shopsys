@@ -15,4 +15,9 @@ class CategoryData extends BaseCategoryData
      * @var string|null
      */
     public $akeneoCode;
+
+    /**
+     * @var string|null
+     */
+    public $svgIcon;
 }

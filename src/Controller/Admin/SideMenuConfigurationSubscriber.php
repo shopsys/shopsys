@@ -60,6 +60,10 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $productSeriesCategoryMenu = $productSeriesMenu->addChild('product_series_category', ['route' => 'admin_productseriescategory_list', 'label' => t('Kategorie')]);
         $productSeriesCategoryMenu->addChild('new_product_series_category', ['route' => 'admin_productseriescategory_new', 'display' => false, 'label' => t('Nová kategorie')]);
         $productSeriesCategoryMenu->addChild('edit_product_series_category', ['route' => 'admin_productseriescategory_edit', 'display' => false, 'label' => t('Detail kategorie')]);
+
+        $blogArticles = $marketingMenu->addChild('product_series', ['route' => 'admin_productseries_list', 'label' => t('Programy produktů')]);
+        $blogArticles->addChild('new_product_series', ['route' => 'admin_productseries_new', 'display' => false, 'label' => t('Nový produktový program')]);
+        $blogArticles->addChild('edit_product_series', ['route' => 'admin_productseries_edit', 'display' => false, 'label' => t('Detail produktového programu')]);
     }
 
     /**
@@ -67,11 +71,14 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
      */
     public function configureProductMenu(ConfigureMenuEvent $event): void
     {
-        $productMenu = $event->getMenu();
-        $productMenu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Skladovost')]);
+        $menu = $event->getMenu();
 
-        $stockMenu = $productMenu->getChild('stock');
+        $stockMenu = $menu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Skladovost')]);
         $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
         $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
+
+        $horizontalMenuMenu = $menu->addChild('horizontal_menu', ['route' => 'admin_horizontalmenu_list', 'label' => t('Horizontální menu')]);
+        $horizontalMenuMenu->addChild('horizontal_menu_edit', ['route' => 'admin_horizontalmenu_edit', 'display' => false, 'label' => t('Editace položky')]);
+        $horizontalMenuMenu->addChild('horizontal_menu_new', ['route' => 'admin_horizontalmenu_new', 'display' => false, 'label' => t('Nová položka')]);
     }
 }

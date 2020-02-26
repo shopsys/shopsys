@@ -50,5 +50,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         parent::fillFromCategory($categoryData, $category);
 
         $categoryData->akeneoCode = $category->getAkeneoCode();
+        $categoryData->svgIcon = $category->getSvgIcon();
     }
 }

@@ -34,12 +34,21 @@ class Category extends BaseCategory
     protected $akeneoCode;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    private $svgIcon;
+
+    /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
     public function __construct(BaseCategoryData $categoryData)
     {
         parent::__construct($categoryData);
+
         $this->akeneoCode = $categoryData->akeneoCode;
+        $this->svgIcon = $categoryData->svgIcon;
     }
 
     /**
@@ -48,6 +57,8 @@ class Category extends BaseCategory
     public function edit(BaseCategoryData $categoryData)
     {
         parent::edit($categoryData);
+
+        $this->svgIcon = $categoryData->svgIcon;
     }
 
     /**
@@ -68,5 +79,13 @@ class Category extends BaseCategory
         }
 
         return array_merge([$this->parent], $this->parent->getParentsWithoutRootCategory());
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSvgIcon(): ?string
+    {
+        return $this->svgIcon;
     }
 }

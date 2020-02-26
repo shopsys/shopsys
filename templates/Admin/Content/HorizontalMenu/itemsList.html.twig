@@ -1,0 +1,16 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Horizontální menu'|trans }}{% endblock %}
+{% block h1 %}{{ 'Horizontální menu'|trans }}{% endblock %}
+
+{% block btn %}
+	<a href="{{ url('admin_horizontalmenu_new') }}" class="btn btn--plus wrap-bar__btn">
+		<i class="btn__icon">+</i>{{ 'Vytvořit novou položku'|trans }}
+	</a>
+{% endblock %}
+
+{% block main_content %}
+
+	{{ gridView.render() }}
+
+{% endblock %}

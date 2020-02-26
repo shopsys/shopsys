@@ -44,3 +44,5 @@ parameters:
         base_uri: 'https://api.scontodev.cz/api/'
         user: ''
         password: ''
+
+    svg_icon_path: %kernel.root_dir%/../src/Shopsys/ShopBundle/Resources/svg
