@@ -12,8 +12,8 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagEvent;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitEvent;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class MarkProductForExportSubscriber implements EventSubscriberInterface
 {
@@ -76,7 +76,7 @@ class MarkProductForExportSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\EventDispatcher\Event $event
+     * @param \Symfony\Contracts\EventDispatcher\Event $event
      */
     public function markAll(Event $event): void
     {
