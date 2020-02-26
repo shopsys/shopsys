@@ -56,6 +56,7 @@ class ArticleController extends FrontBaseController
         );
 
         return $this->render('Front/Content/Article/footerMenu.html.twig', [
+            'id' => $id,
             'title' => $title,
             'icon' => $icon,
             'articles' => $articles,
