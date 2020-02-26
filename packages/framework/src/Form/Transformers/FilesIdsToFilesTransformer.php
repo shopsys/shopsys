@@ -52,7 +52,7 @@ class FilesIdsToFilesTransformer implements DataTransformerInterface
                 try {
                     $files[] = $this->uploadedFileFacade->getById((int)$fileId);
                 } catch (\Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('File not found', null, $e);
+                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('File not found', 0, $e);
                 }
             }
         }
