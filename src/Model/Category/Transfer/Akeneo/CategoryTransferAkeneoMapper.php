@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Category\Transfer\Akeneo;
 
+use App\Component\Akeneo\AkeneoHelper;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryData;
 use App\Model\Category\CategoryDataFactory;
@@ -37,8 +38,7 @@ class CategoryTransferAkeneoMapper
             $categoryData = $this->categoryDataFactory->createFromCategory($category);
         }
 
-        $categoryData->name['cs'] = $akeneoCategoryData['labels']['cs_CZ'];
-        $categoryData->name['sk'] = $akeneoCategoryData['labels']['sk_SK'];
+        $categoryData->name = AkeneoHelper::mapLocalizedLabels($categoryData->name, $akeneoCategoryData);
 
         return $categoryData;
     }

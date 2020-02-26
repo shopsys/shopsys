@@ -52,7 +52,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $product->getShortDescription($this->domain->getId()),
             $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId()),
             $this->productCachedAttributesFacade->getProductSellingPrice($product),
-            $this->getFlagIdsForProduct($product),
+            $this->getFlagIdsForProductForDomain($product, $this->domain->getId()),
             $productActionView,
             $imageView,
             $product->getNamePrefix(),
@@ -98,5 +98,20 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             ),
             false
         );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param mixed $domainId
+     * @return int[]
+     */
+    protected function getFlagIdsForProductForDomain(Product $product, $domainId): array
+    {
+        $flagIds = [];
+        foreach ($product->getFlagsForDomain($domainId) as $flag) {
+            $flagIds[] = $flag->getId();
+        }
+
+        return $flagIds;
     }
 }

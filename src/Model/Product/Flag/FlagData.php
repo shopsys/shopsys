@@ -13,9 +13,16 @@ class FlagData extends BaseFlagData
      */
     public $sale;
 
+    /**
+     * @var string|null
+     */
+    public $akeneoCode;
+
     public function __construct()
     {
         parent::__construct();
+
         $this->sale = false;
+        $this->rgbColor = '';
     }
 }

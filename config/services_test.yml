@@ -66,6 +66,12 @@ services:
 
     Shopsys\FrameworkBundle\Model\Category\CategoryRepository: '@App\Model\Category\CategoryRepository'
 
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface: '@App\Model\Product\Flag\FlagDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade: '@App\Model\Product\Flag\FlagFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository: '@App\Model\Product\Flag\FlagRepository'
+
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface: '@App\Model\Customer\User\CustomerUserDataFactory'
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
@@ -155,6 +161,10 @@ services:
     Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory: '@App\Model\Advert\AdvertDataFactory'
 
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
+
+    Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository: '@App\Model\Product\Filter\FlagFilterChoiceRepository'
 
     App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
 

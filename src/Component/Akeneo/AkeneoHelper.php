@@ -61,4 +61,30 @@ class AkeneoHelper
 
         return null;
     }
+
+    /**
+     * @param array $itemData
+     * @param array|null $akeneoData
+     * @return array
+     */
+    public static function mapLocalizedLabels(array $itemData, ?array $akeneoData): array
+    {
+        foreach ($itemData as $key => $value) {
+            $itemData[$key] = null;
+        }
+
+        $labels = $akeneoData['labels'] ?? null;
+        if ($labels === null) {
+            return $itemData;
+        }
+
+        foreach ($labels as $akeneoLocale => $akeneoString) {
+            $locale = self::findEshopLocaleByAkeneoLocale($akeneoLocale);
+            if ($locale) {
+                $itemData[$locale] = $akeneoString;
+            }
+        }
+
+        return $itemData;
+    }
 }

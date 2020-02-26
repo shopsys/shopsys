@@ -19,7 +19,7 @@ class CategorySeoFacade
     private $parameterRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
+     * @var \App\Model\Product\Flag\FlagFacade
      */
     private $flagFacade;
 
@@ -30,7 +30,7 @@ class CategorySeoFacade
 
     /**
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      */
     public function __construct(

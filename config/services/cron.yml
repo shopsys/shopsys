@@ -60,6 +60,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import produktů z Akeneo' }
 
+    App\Model\Product\Transfer\Akeneo\AkeneoImportFlagCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*/5' }
+
     App\Model\Customer\Transfer\ScontoBridge\ScontoBridgeImportCustomerCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import zákazníků z IM' }

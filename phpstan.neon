@@ -23,6 +23,26 @@ parameters:
             # Ignore order tests
             message: '#^Unreachable statement - code above always terminates.$#'
             path: %currentWorkingDirectory%/tests/App/Functional/Model/Order/*
+        -
+            # In data fixtures, we often access persistent references using $this->getReference()
+            message: '#^Property (App|Shopsys)\\.+::\$.+ \((App|Shopsys)\\.+\) does not accept object\.$#'
+            path: %currentWorkingDirectory%/src/DataFixtures/*
+        -
+            # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
+            message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
+            path: %currentWorkingDirectory%/tests/App/*
+        -
+            # In tests, there are helper methods for grabbing services using $container->get()
+            message: '#^Method .+::.+\(\) should return .+ but returns (object|object\|null)\.$#'
+            path: %currentWorkingDirectory%/tests/App/*
+        -
+            # Actually, we are setting an array item using "$array[] = $this->getReference()"
+            message: '#^Array \(array<.+>\) does not accept object\.$#'
+            path: %currentWorkingDirectory%/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php
+        -
+            # We need to have undefined variable for testing purposes
+            message: '#^Undefined variable: \$undefined$#'
+            path: %currentWorkingDirectory%/src/Controller/Test/ErrorHandlerController.php
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

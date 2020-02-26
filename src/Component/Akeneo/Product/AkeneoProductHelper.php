@@ -92,12 +92,37 @@ class AkeneoProductHelper
             return $productData;
         }
 
-        foreach ($akeneoData as $akaneoPricesData) {
-            foreach ($akaneoPricesData['data'] as $akaneoPriceData) {
-                $domainId = AkeneoHelper::findEshopDomainIdByCurrencyCode($akaneoPriceData['currency']);
+        foreach ($akeneoData as $akeneoPricesData) {
+            foreach ($akeneoPricesData['data'] as $akeneoPriceData) {
+                $domainId = AkeneoHelper::findEshopDomainIdByCurrencyCode($akeneoPriceData['currency']);
                 if ($domainId) {
-                    $productData[$domainId] = $akaneoPriceData['amount'] ? Money::create($akaneoPriceData['amount']) : null;
+                    $productData[$domainId] = $akeneoPriceData['amount'] ? Money::create($akeneoPriceData['amount']) : null;
                 }
+            }
+        }
+
+        return $productData;
+    }
+
+    /**
+     * @param array $productData
+     * @param array|null $akeneoData
+     * @return array
+     */
+    public static function mapDomainDataArray(array $productData, ?array $akeneoData): array
+    {
+        foreach ($productData as $key => $value) {
+            $productData[$key] = null;
+        }
+
+        if ($akeneoData === null) {
+            return $productData;
+        }
+
+        foreach ($akeneoData as $locale => $data) {
+            $domainId = AkeneoHelper::findEshopDomainIdByAkeneoLocale($locale);
+            if ($domainId) {
+                $productData[$domainId] = $data;
             }
         }
 

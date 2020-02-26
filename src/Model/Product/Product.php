@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Product\Type\ProductType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
@@ -36,6 +37,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
  * @method editFlags(\App\Model\Product\Flag\Flag[] $flags)
  * @method \App\Model\Product\Flag\Flag[] getFlags()
+ * @method edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
+ * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
  */
 class Product extends BaseProduct
 {
@@ -79,6 +82,7 @@ class Product extends BaseProduct
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
+        $this->flags = new ArrayCollection();
     }
 
     /**
@@ -135,6 +139,7 @@ class Product extends BaseProduct
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
             $productDomain->setProductType($productData->productType[$domainId]);
+            $productDomain->setFlags($productData->flags[$domainId] ?? []);
         }
     }
 
@@ -233,6 +238,15 @@ class Product extends BaseProduct
     public function getHighPriceWithVat(int $domainId): ?Money
     {
         return $this->getProductDomain($domainId)->getHighPriceWithVat();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Product\Flag\Flag[]
+     */
+    public function getFlagsForDomain(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->getFlags();
     }
 
     /**
@@ -408,5 +422,23 @@ class Product extends BaseProduct
     public function getVendorDeliveryDate(): ?int
     {
         return $this->vendorDeliveryDate;
+    }
+
+    /**
+     * @param \App\Model\Product\Flag\Flag[] $flags
+     */
+    protected function editFlags(array $flags)
+    {
+        // Keep this function empty - flags were moved to Domain
+    }
+
+    /**
+     * @return array
+     */
+    public function getFlags()
+    {
+        // Return empty array to override default functionality.
+        // Flags were moved to Domain.
+        return [];
     }
 }

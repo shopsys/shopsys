@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Component\Form\FormBuilderHelper;
+use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Product;
 use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
+use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -48,6 +50,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'parameters',
         'preorder',
         'vendorDeliveryDate',
+        'flags',
     ];
 
     /**
@@ -71,21 +74,29 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private $productTypeFacade;
 
     /**
+     * @var \App\Model\Product\Flag\FlagFacade
+     */
+    private $flagFacade;
+
+    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
+     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      */
     public function __construct(
         FormBuilderHelper $formBuilderHelper,
         VatFacade $vatFacade,
         Domain $domain,
-        ProductTypeFacade $productTypeFacade
+        ProductTypeFacade $productTypeFacade,
+        FlagFacade $flagFacade
     ) {
         $this->formBuilderHelper = $formBuilderHelper;
         $this->domain = $domain;
         $this->vatFacade = $vatFacade;
         $this->productTypeFacade = $productTypeFacade;
+        $this->flagFacade = $flagFacade;
     }
 
     /**
@@ -153,6 +164,23 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                     ],
                 ],
                 'label' => t('Typ'),
+            ])
+
+            ->add('flags', MultidomainType::class, [
+                'entry_type' => ChoiceType::class,
+                'entry_options' => [
+                    'attr' => [
+                        'class' => 'input--full-width',
+                    ],
+                    'choices' => $this->flagFacade->getAll(),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'multiple' => true,
+                    'expanded' => true,
+                ],
+                'required' => false,
+                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+                'label' => t('Flags'),
             ]);
     }
 
