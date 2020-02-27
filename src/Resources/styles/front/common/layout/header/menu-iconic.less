@@ -1,3 +1,7 @@
+@menu-iconic-link-font-size: 14px;
+@menu-iconic-link-padding: 0 10px;
+@menu-iconic-icon-size: 24px;
+
 .menu-iconic {
     display: none;
 
@@ -14,9 +18,9 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                padding: 0 10px;
+                padding: @menu-iconic-link-padding;
 
-                font-size: 14px;
+                font-size: @menu-iconic-link-font-size;
                 text-decoration: none;
 
                 &:hover {
@@ -27,7 +31,7 @@
             &__icon {
                 display: block;
 
-                font-size: 24px;
+                font-size: @menu-iconic-icon-size;
             }
 
             &__text {
@@ -36,9 +40,8 @@
         }
 
         &__sub {
-            display: none;
-
             .reset-ul();
+            display: none;
             position: absolute;
             top: 26px;
             left: 50%;

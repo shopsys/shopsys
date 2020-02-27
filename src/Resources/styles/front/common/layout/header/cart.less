@@ -1,6 +1,8 @@
 @cart-box-border: 2px solid #f4f6f6;
 @cart-box-border-radius: 6px;
 @cart-box-color: #909194;
+@cart-box-items-count-size: 17px;
+@cart-box-items-count-font-size: 12px;
 
 .cart {
     display: none;
@@ -56,15 +58,15 @@
         position: absolute;
         right: 0;
         top: -4px;
-        width: 17px;
-        height: 17px;
+        width: @cart-box-items-count-size;
+        height: @cart-box-items-count-size;
 
         border-radius: 100%;
         background-color: @color-add;
         background: linear-gradient(to bottom, #ffb300, @color-add);
         color: @color-f;
         font-family: @font-tertiary;
-        font-size: 12px;
+        font-size: @cart-box-items-count-font-size;
         line-height: 1;
 
         @media @query-lg {

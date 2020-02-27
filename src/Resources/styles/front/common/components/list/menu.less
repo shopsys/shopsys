@@ -11,6 +11,9 @@
 
 @list-menu-border-color: #e8ecee;
 
+@list-menu-item-sale-color: #ff7a00;
+@list-menu-item-sale-size: 24px;
+
 // global settings
 .list-menu-wrap {
     border-top: 1px solid @list-menu-border-color;
@@ -44,16 +47,16 @@
             right: auto;
             margin-top: -@list-menu-arrow-size/2;
             height: @list-menu-arrow-size;
-            line-height: @list-menu-arrow-size;
             width: @list-menu-arrow-size;
-            text-align: center;
 
+            text-align: center;
             font-size: 11px;
+            line-height: @list-menu-arrow-size;
 
             &:before {
-                will-change: transform;
                 display: block;
 
+                will-change: transform;
                 transition: @transition-type 200ms transform;
             }
 
@@ -69,7 +72,6 @@
     @list-menu-mobile-position: @web-header-mobile-dropdown-position;
 
     .list-menu {
-
         &--root {
             display: none;
             position: absolute;
@@ -100,7 +102,6 @@
                     background-color: @list-menu-border-color;
                     color: @list-menu-font-hover-color;
                 }
-
 
                 &--level-1 {
                     font-family: @font-quartenary;
@@ -173,6 +174,7 @@
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
+
                 background-color: @list-menu-bg;
             }
 
@@ -226,17 +228,17 @@
                     right: 100px;
                     top: 0;
 
-                    color: #ff7a00;
+                    color: @list-menu-item-sale-color;
 
                     &:hover {
-                        color: #ff7a00;
+                        color: @list-menu-item-sale-color;
                     }
 
                     &::before {
                         display: inline-block;
                         vertical-align: middle;
-                        width: 24px;
-                        height: 24px;
+                        width: @list-menu-item-sale-size;
+                        height: @list-menu-item-sale-size;
                         margin-right: 5px;
                         content: '';
 

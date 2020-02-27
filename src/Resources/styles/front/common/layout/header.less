@@ -1,153 +1,146 @@
-@header-cart-width: 50px;
-@header-mobile-button-size: 28px;
-@header-mobile-button-info-size: 16px;
+@header-mobile-button-size: 50px;
+@header-mobile-button-border: 2px solid #f4f6f6;
+@header-mobile-button-border-radius: 5px;
+@header-mobile-button-font-size: 33px;
+@header-mobile-button-search-bg: #f0f3f4;
 @header-mobile-button-dropdown-position: @web-header-mobile-dropdown-position;
+
+@header-padding: 15px 0;
+@header-padding-lg: 5px 0;
+
+@header-middle-width-lg: 280px;
+@header-middle-width-vl: 440px;
+
+@header-cart-width: 50px;
 
 .header {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 0;
+    padding: @header-padding;
 
     @media @query-lg {
-        padding: 5px 0;
-    }
-}
-
-// Left part of header with logo
-.header__logo {
-    display: flex;
-    flex-grow: 1;
-    align-items: center;
-    margin-right: 8px;
-
-    @media @query-lg {
-        padding-right: 20px;
-        margin-right: 0;
-    }
-}
-
-// Middle part of header with search input and info
-.header__middle {
-    display: none;
-    width: 100%;
-    margin: 10px 0;
-
-    @media @query-lg {
-        display: block;
+        padding: @header-padding-lg;
     }
 
-    @media @query-lg {
-        width: 280px;
-        margin: 0;
-    }
-
-    @media @query-vl {
-        width: 440px;
-    }
-}
-
-// Right part of header with cart info
-.header__cart {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: @header-cart-width;
-    margin-left: 4px;
-
-    @media @query-lg {
-        flex: 1;
-        padding-left: 20px;
-        margin-left: 0;
-    }
-}
-
-.header__links {
-    display: flex;
-    align-items: center;
-}
-
-// Mobile part of header visible on small resolution
-.header__mobile {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 8px;
-
-    @media @query-lg {
-        display: none;
-    }
-}
-
-// Mobile buttons from header with dropdowns
-.header__mobile-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    margin-left: 4px;
-
-    border: 2px solid #f4f6f6;
-    border-radius: 5px;
-    outline: 0;
-    cursor: pointer;
-    font-size: 33px;
-
-    @media @query-lg {
-        display: none;
-    }
-
-    &--menu {
-        order: 2;
-    }
-
-    &--search {
-        font-size: 20px;
-        background-color: #f0f3f4;
-    }
-
-    &--login {
-        font-size: 24px;
-    }
-
-    &__in {
+    &__logo {
         display: flex;
+        flex-grow: 1;
         align-items: center;
-        justify-content: center;
-        position: relative;
-        transition: @transition color;
+        margin-right: 8px;
 
-        color: @color-base;
-        text-decoration: none;
-
-        &.active {
-            color: @color-primary;
-            text-decoration: none;
+        @media @query-lg {
+            padding-right: 20px;
+            margin-right: 0;
         }
     }
 
-    .svg {
-        display: flex;
+    &__middle {
+        display: none;
+
+        @media @query-lg {
+            display: block;
+            width: @header-middle-width-lg;
+        }
+
+        @media @query-vl {
+            width: @header-middle-width-vl;
+        }
     }
 
-    &__menu {
+    &__cart {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: @header-cart-width;
+        margin-left: 4px;
+
+        @media @query-lg {
+            flex: 1;
+            padding-left: 20px;
+            margin-left: 0;
+        }
+    }
+
+    &__links {
+        display: flex;
+        align-items: center;
+    }
+
+    &__mobile-button {
         display: none;
-        position: absolute;
-        top: @header-mobile-button-dropdown-position;
-        left: -@web-padding;
-        right: -@web-padding;
 
-        background: @color-f;
-        border-top: 1px solid @color-border;
-        box-shadow: 0 10px 15px rgba(0,0,0, 0.2);
+        @media @query-tablet {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: @header-mobile-button-size;
+            height: @header-mobile-button-size;
+            margin-left: 4px;
 
-        a {
-            display: block;
-            padding: 3px 10px;
+            border: @header-mobile-button-border;
+            border-radius: @header-mobile-button-border-radius;
+            outline: 0;
+            cursor: pointer;
+            font-size: @header-mobile-button-font-size;
 
-            border-bottom: 1px solid @color-border;
-            text-decoration: none;
+            @media @query-lg {
+                display: none;
+            }
+
+            &--menu {
+                order: 2;
+            }
+
+            &--search {
+                font-size: 20px;
+                background-color: @header-mobile-button-search-bg;
+            }
+
+            &--login {
+                font-size: 24px;
+            }
+
+            &__in {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                transition: @transition color;
+
+                color: @color-base;
+                text-decoration: none;
+
+                &.active {
+                    color: @color-primary;
+                    text-decoration: none;
+                }
+            }
+
+            .svg {
+                display: flex;
+            }
+
+            &__menu {
+                display: none;
+                position: absolute;
+                top: @header-mobile-button-dropdown-position;
+                left: -@web-padding;
+                right: -@web-padding;
+
+                background: @color-f;
+                border-top: 1px solid @color-border;
+                box-shadow: 0 10px 15px rgba(0,0,0, 0.2);
+
+                a {
+                    display: block;
+                    padding: 3px 10px;
+
+                    border-bottom: 1px solid @color-border;
+                    text-decoration: none;
+                }
+            }
         }
     }
 }

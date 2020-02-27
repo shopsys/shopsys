@@ -25,8 +25,8 @@
             position: absolute;
             top: 16px;
             left: 14px;
-            transition: @transition color;
 
+            transition: @transition color;
             color: @color-inactive;
 
             .search__input:focus + & {
@@ -62,11 +62,11 @@
             border-top: 1px dashed @color-border;
 
             &__link {
+                .clearfix();
                 display: flex;
                 align-items: center;
                 width: 100%;
                 padding: 10px;
-                .clearfix();
 
                 text-decoration: none;
 
@@ -77,8 +77,8 @@
 
             &--info {
                 padding: 10px 0;
-                text-align: center;
 
+                text-align: center;
                 font-size: 12px;
                 border: none;
             }
