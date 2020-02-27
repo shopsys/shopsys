@@ -2,27 +2,28 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Series\Category;
 
 use App\Model\Product\Series\Category\Exception\ProductSeriesCategoryDomainNotFoundException;
 use App\Model\Product\Series\ProductSeriesTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * Class ProductSeriesCategory
- * @package App\Model\Product\Series\Category
  *
  * @ORM\Table(name="product_series_categories")
  * @ORM\Entity
  *
  * @method ProductSeriesTranslation translation(?string $locale = null)
  */
-class ProductSeriesCategory extends AbstractTranslatableEntity
+class ProductSeriesCategory extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
+    protected const GEDMO_SORTABLE_LAST_POSITION = -1;
 
     /**
      * @var int
@@ -47,10 +48,22 @@ class ProductSeriesCategory extends AbstractTranslatableEntity
      */
     protected $domains;
 
+    /**
+     * @var int
+     *
+     * @Gedmo\SortablePosition
+     * @ORM\Column(type="integer")
+     */
+    protected $position;
+
+    /**
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategoryData $productSeriesCategoryData
+     */
     public function __construct(ProductSeriesCategoryData $productSeriesCategoryData)
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
+        $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->setTranslations($productSeriesCategoryData);
         $this->createDomains($productSeriesCategoryData);
     }
@@ -168,17 +181,25 @@ class ProductSeriesCategory extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string|null
      */
-    public function getName(string $locale = null): ?string
+    public function getName(?string $locale = null): ?string
     {
-        return  $this->translation($locale)->getName();
+        return $this->translation($locale)->getName();
     }
 
     /**
      * @param string|null $locale
      * @return string|null
      */
-    public function getDescription(string $locale = null): ?string
+    public function getDescription(?string $locale = null): ?string
     {
-        return  $this->translation($locale)->getDescription();
+        return $this->translation($locale)->getDescription();
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position): void
+    {
+        $this->position = $position;
     }
 }

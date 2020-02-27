@@ -2,12 +2,9 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controller\Admin;
 
-
 use App\Form\Admin\Product\Series\ProductSeriesCategoryFormType;
-use App\Form\Admin\Product\Series\ProductSeriesFormType;
 use App\Model\Product\Series\Category\Grid\ProductSeriesCategoryGridFactory;
 use App\Model\Product\Series\Category\ProductSeriesCategoryDataFactory;
 use App\Model\Product\Series\Category\ProductSeriesCategoryFacade;
@@ -23,36 +20,45 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductSeriesCategoryController extends AdminBaseController
 {
-
     /**
      * @var \App\Model\Product\Series\Category\Grid\ProductSeriesCategoryGridFactory
      */
     private $productSeriesCategoryGridFactory;
+
     /**
      * @var \App\Model\Product\Series\Category\ProductSeriesCategoryFacade
      */
     private $productSeriesCategoryFacade;
+
     /**
      * @var \App\Model\Product\Series\Category\ProductSeriesCategoryDataFactory
      */
     private $productSeriesCategoryDataFactory;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
     private $localization;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
      */
     private $breadcrumbOverrider;
 
+    /**
+     * @param \App\Model\Product\Series\Category\Grid\ProductSeriesCategoryGridFactory $productSeriesCategoryGridFactory
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategoryFacade $productSeriesCategoryFacade
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategoryDataFactory $productSeriesCategoryDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     */
     public function __construct(
         ProductSeriesCategoryGridFactory $productSeriesCategoryGridFactory,
         ProductSeriesCategoryFacade $productSeriesCategoryFacade,
         ProductSeriesCategoryDataFactory $productSeriesCategoryDataFactory,
         Localization $localization,
         BreadcrumbOverrider $breadcrumbOverrider
-    )
-    {
+    ) {
         $this->productSeriesCategoryGridFactory = $productSeriesCategoryGridFactory;
         $this->productSeriesCategoryFacade = $productSeriesCategoryFacade;
         $this->productSeriesCategoryDataFactory = $productSeriesCategoryDataFactory;
@@ -68,7 +74,6 @@ class ProductSeriesCategoryController extends AdminBaseController
     {
         $grid = $this->productSeriesCategoryGridFactory->create();
 
-
         return $this->render(
             'Admin/Content/ProductSeriesCategory/list.html.twig',
             [
@@ -76,7 +81,6 @@ class ProductSeriesCategoryController extends AdminBaseController
             ]
         );
     }
-
 
     /**
      * @Route("/product-series-category/delete/{id}", requirements={"id" = "\d+"}, name="admin_productseriescategory_delete")

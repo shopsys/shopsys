@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Series\Category\Grid;
 
+use App\Model\Product\Series\Category\ProductSeriesCategory;
 use App\Model\Product\Series\Category\ProductSeriesCategoryRepository;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -41,7 +42,7 @@ class ProductSeriesCategoryGridFactory implements GridFactoryInterface
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'psc.id');
 
         $grid = $this->gridFactory->create('productSeriesCategoryList', $dataSource);
-        $grid->enablePaging();
+        $grid->enableDragAndDrop(ProductSeriesCategory::class);
 
         $grid->addColumn('name', 'psct.name', t('Name'), true);
 

@@ -129,6 +129,14 @@ class ProductSeries extends AbstractTranslatableEntity
     }
 
     /**
+     * @return \App\Model\Product\Series\Category\ProductSeriesCategory[]
+     */
+    public function getProductSeriesCategories()
+    {
+        return $this->productSeriesCategories->toArray();
+    }
+
+    /**
      * @return \App\Model\Product\Series\ProductSeriesTranslation
      */
     public function createTranslation(): ProductSeriesTranslation

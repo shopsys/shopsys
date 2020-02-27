@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Series;
 
+use App\Model\Product\Series\Category\ProductSeriesCategory;
 use App\Model\Product\Series\Exception\MissingBaseFriendlyUrlForDomainException;
 use App\Model\Product\Series\Exception\ProductSeriesNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -186,5 +187,14 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
     public function getAllVisibleProductSeriesByDomainId(int $domainId): array
     {
         return $this->productSeriesRepository->getAllVisibleProductSeriesByDomainId($domainId);
+    }
+
+    /**
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategory $productSeriesCategory
+     * @return \App\Model\Product\Series\ProductSeries[]
+     */
+    public function getByProductSeriesCategoryForCurrentDomain(ProductSeriesCategory $productSeriesCategory): array
+    {
+        return $this->productSeriesRepository->getByProductSeriesCategoryAndDomainId($productSeriesCategory, $this->domain->getId());
     }
 }

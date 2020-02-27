@@ -17,6 +17,11 @@
                     <h1 itemprop="name">
                         {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
                     </h1>
+                    <div class="product-series-categories">
+                        {% for seriesCategory in productSeries.productSeriesCategories %}
+                            <a href="{{ url('front_productseriescategory_detail', { id: seriesCategory.id }) }}">{{ seriesCategory.getName(domain.locale) }}</a>
+                        {% endfor %}
+                    </div>
                     <p>
                         {{ productSeries.description|raw }}
                     </p>

@@ -17,6 +17,11 @@
                 {{ "Zde najdete přehled všech nábytkových programů."|trans }}
             </p>
             {% for series in productSeries %}
+                {% for seriesCategory in series.productSeriesCategories %}
+                    <a href="{{ url('front_productseriescategory_detail', { id: seriesCategory.id }) }}">{{ seriesCategory.getName(domain.locale) }}</a>
+                {% endfor %}
+            {% endfor %}
+            {% for series in productSeries %}
                 <div class="box-detail">
                     <h3><a href="{{ url('front_productseries_detail', { id: series.id }) }}">{{ series.getName(domain.locale) }}</a></h3>
                     <div class="box-detail__image">

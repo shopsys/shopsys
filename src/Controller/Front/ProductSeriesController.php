@@ -24,8 +24,10 @@ class ProductSeriesController extends FrontBaseController
      * @param \App\Model\Product\Series\ProductSeriesFacadeInterface $productSeriesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(ProductSeriesFacadeInterface $productSeriesFacade, Domain $domain)
-    {
+    public function __construct(
+        ProductSeriesFacadeInterface $productSeriesFacade,
+        Domain $domain
+    ) {
         $this->productSeriesFacade = $productSeriesFacade;
         $this->domain = $domain;
     }

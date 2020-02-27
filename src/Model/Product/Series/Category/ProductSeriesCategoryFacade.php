@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Series\Category;
-
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Product\Series\Exception\MissingBaseFriendlyUrlForDomainException;
@@ -15,31 +13,38 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ProductSeriesCategoryFacade
 {
-
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
+
     /**
      * @var \App\Model\Product\Series\Category\ProductSeriesCategoryRepository
      */
     private $productSeriesCategoryRepository;
+
     /**
      * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
     private $friendlyUrlFacade;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategoryRepository $productSeriesCategoryRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
     public function __construct(
         EntityManagerInterface $em,
         ProductSeriesCategoryRepository $productSeriesCategoryRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         Domain $domain
-    )
-    {
+    ) {
         $this->em = $em;
         $this->productSeriesCategoryRepository = $productSeriesCategoryRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
@@ -106,11 +111,10 @@ class ProductSeriesCategoryFacade
     {
         $domains = $this->domain->getAll();
         foreach ($domains as $domain) {
-
             /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade */
             $friendlyUrlFacade = $this->friendlyUrlFacade;
             $friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_productseries_detail',
+                'front_productseriescategory_detail',
                 $productSeriesCategory->getId(),
                 $productSeriesCategory->getName($domain->getLocale()),
                 $domain->getId(),
@@ -124,11 +128,12 @@ class ProductSeriesCategoryFacade
      * @throws \App\Model\Product\Series\Exception\MissingBaseFriendlyUrlForDomainException
      * @return string
      */
-    private function getBaseFriendlyUrlForDomain(DomainConfig $domain)
+    private function getBaseFriendlyUrlForDomain(DomainConfig $domain): string
     {
         if (!array_key_exists($domain->getId(), ProductSeriesFacade::BASE_FRIENDY_URL_BY_DOMAIN_ID)) {
             throw new MissingBaseFriendlyUrlForDomainException($domain->getName());
         }
+
         return ProductSeriesFacade::BASE_FRIENDY_URL_BY_DOMAIN_ID[$domain->getId()];
     }
 
