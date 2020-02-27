@@ -57,7 +57,7 @@ class ProductSeries extends AbstractTranslatableEntity
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
-        $this->productSeriesCategories = new ArrayCollection();
+        $this->productSeriesCategories = new ArrayCollection($productSeriesData->productSeriesCategories);
         $this->setTranslations($productSeriesData);
         $this->createDomains($productSeriesData);
     }
@@ -69,12 +69,24 @@ class ProductSeries extends AbstractTranslatableEntity
     {
         $this->setTranslations($productSeriesData);
         $this->setDomains($productSeriesData);
+        $this->editProductSeriesCategories($productSeriesData->productSeriesCategories);
+    }
+
+    /**
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategory[] $productSeriesCategories
+     */
+    private function editProductSeriesCategories(array $productSeriesCategories): void
+    {
+        $this->productSeriesCategories->clear();
+        foreach ($productSeriesCategories as $productSeriesCategory) {
+            $this->productSeriesCategories->add($productSeriesCategory);
+        }
     }
 
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    private function setTranslations(ProductSeriesData $productSeriesData)
+    private function setTranslations(ProductSeriesData $productSeriesData): void
     {
         foreach ($productSeriesData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -88,7 +100,7 @@ class ProductSeries extends AbstractTranslatableEntity
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    private function createDomains(ProductSeriesData $productSeriesData)
+    private function createDomains(ProductSeriesData $productSeriesData): void
     {
         $domainIds = array_keys($productSeriesData->seoTitle);
 
@@ -103,7 +115,7 @@ class ProductSeries extends AbstractTranslatableEntity
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    private function setDomains(ProductSeriesData $productSeriesData)
+    private function setDomains(ProductSeriesData $productSeriesData): void
     {
         foreach ($this->domains as $productSeriesDomain) {
             $domainId = $productSeriesDomain->getDomainId();
@@ -118,7 +130,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param int $domainId
      * @return \App\Model\Product\Series\ProductSeriesDomain
      */
-    private function getProductSeriesDomain(int $domainId)
+    private function getProductSeriesDomain(int $domainId): ProductSeriesDomain
     {
         foreach ($this->domains as $domain) {
             if ($domain->getDomainId() === $domainId) {
@@ -132,7 +144,7 @@ class ProductSeries extends AbstractTranslatableEntity
     /**
      * @return \App\Model\Product\Series\Category\ProductSeriesCategory[]
      */
-    public function getProductSeriesCategories()
+    public function getProductSeriesCategories(): array
     {
         return $this->productSeriesCategories->toArray();
     }
@@ -165,7 +177,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string|null
      */
-    public function getName($locale = null)
+    public function getName($locale = null): ?string
     {
         return $this->translation($locale)->getName();
     }
@@ -174,7 +186,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string|null
      */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): ?string
     {
         return $this->translation($locale)->getDescription();
     }
@@ -183,7 +195,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoTitle(int $domainId)
+    public function getSeoTitle(int $domainId): ?string
     {
         return $this->getProductSeriesDomain($domainId)->getSeoTitle();
     }
@@ -192,7 +204,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoMetaDescription(int $domainId)
+    public function getSeoMetaDescription(int $domainId): ?string
     {
         return $this->getProductSeriesDomain($domainId)->getSeoMetaDescription();
     }
@@ -201,7 +213,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoH1(int $domainId)
+    public function getSeoH1(int $domainId): ?string
     {
         return $this->getProductSeriesDomain($domainId)->getSeoH1();
     }
@@ -210,7 +222,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param int $domainId
      * @return bool
      */
-    public function isHidden(int $domainId)
+    public function isHidden(int $domainId): bool
     {
         return $this->getProductSeriesDomain($domainId)->isHidden();
     }

@@ -96,6 +96,14 @@ class ProductSeriesCategoryFacade
     }
 
     /**
+     * @return \App\Model\Product\Series\Category\ProductSeriesCategory[]
+     */
+    public function getAll(): array
+    {
+        return $this->productSeriesCategoryRepository->getAllProductSeriesCategories();
+    }
+
+    /**
      * @param int $productSeriesCategoryId
      * @return \App\Model\Product\Series\Category\ProductSeriesCategory
      */

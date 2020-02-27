@@ -2,12 +2,9 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Series\Category;
 
-
 use App\Model\Product\Series\Category\Exception\ProductSeriesCategoryNotFoundException;
-use App\Model\Product\Series\ProductSeriesTranslation;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -20,6 +17,7 @@ class ProductSeriesCategoryRepository
      * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
@@ -71,11 +69,19 @@ class ProductSeriesCategoryRepository
     public function getById(int $productSeriesCategoryId): ProductSeriesCategory
     {
         $productSeriesCategory = $this->findById($productSeriesCategoryId);
-        if($productSeriesCategory === null){
+        if ($productSeriesCategory === null) {
             throw new ProductSeriesCategoryNotFoundException($productSeriesCategoryId);
         }
 
         return $productSeriesCategory;
+    }
+
+    /**
+     * @return \App\Model\Product\Series\Category\ProductSeriesCategory[]
+     */
+    public function getAllProductSeriesCategories(): array
+    {
+        return $this->getRepository()->findAll();
     }
 
     /**

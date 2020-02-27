@@ -89,6 +89,8 @@ class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
                 );
         }
 
+        $productSeriesData->productSeriesCategories = $productSeries->getProductSeriesCategories();
+
         $productSeriesData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($productSeries, null);
         return $productSeriesData;
     }

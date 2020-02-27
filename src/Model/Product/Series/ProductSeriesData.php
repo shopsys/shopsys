@@ -49,6 +49,11 @@ class ProductSeriesData
      */
     public $images;
 
+    /**
+     * @var \App\Model\Product\Series\Category\ProductSeriesCategory[]
+     */
+    public $productSeriesCategories;
+
     public function __construct()
     {
         //by language
@@ -60,6 +65,8 @@ class ProductSeriesData
         $this->seoTitle = [];
         $this->seoMetaDescription = [];
         $this->seoH1 = [];
+
+        $this->productSeriesCategories = [];
 
         $this->url = new UrlListData();
         $this->images = new ImageUploadData();

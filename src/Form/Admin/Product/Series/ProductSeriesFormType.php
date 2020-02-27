@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Product\Series;
 
+use App\Model\Product\Series\Category\ProductSeriesCategoryFacade;
 use App\Model\Product\Series\ProductSeries;
 use App\Model\Product\Series\ProductSeriesData;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
@@ -17,6 +18,7 @@ use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,6 +37,10 @@ class ProductSeriesFormType extends AbstractType
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
+    /**
+     * @var \App\Model\Product\Series\Category\ProductSeriesCategoryFacade
+     */
+    private $productSeriesCategoryFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
@@ -42,10 +48,12 @@ class ProductSeriesFormType extends AbstractType
      */
     public function __construct(
         SeoSettingFacade $seoSettingFacade,
-        Domain $domain
+        Domain $domain,
+        ProductSeriesCategoryFacade $productSeriesCategoryFacade
     ) {
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
+        $this->productSeriesCategoryFacade = $productSeriesCategoryFacade;
     }
 
     /**
@@ -60,6 +68,7 @@ class ProductSeriesFormType extends AbstractType
         $builder->add($this->createImagesGroup($builder, $options));
         $builder->add($this->createSeoGroup($builder, $productSeries));
         $builder->add($this->createVisibilityGroup($builder));
+        $builder->add($this->createCategoriesGroup($builder));
         $builder->add('save', SubmitType::class);
     }
 
@@ -75,6 +84,29 @@ class ProductSeriesFormType extends AbstractType
                 'data_class' => ProductSeriesData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createCategoriesGroup(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $builderCategoriesGroup = $builder->create('categoriesGroup', GroupType::class, [
+            'label' => t('Kategorie produktových programů'),
+        ]);
+
+        $builderCategoriesGroup->add('productSeriesCategories', ChoiceType::class, [
+            'required' => false,
+            'choices' => $this->productSeriesCategoryFacade->getAll(),
+            'choice_label' => 'name',
+            'choice_value' => 'id',
+            'multiple' => true,
+            'expanded' => true,
+            'label' => t('Kategorie'),
+        ]);
+
+        return $builderCategoriesGroup;
     }
 
     /**
