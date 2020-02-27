@@ -118,18 +118,6 @@ class ElasticsearchIndexException extends Exception
      * @param string $alias
      * @return static
      */
-    public static function aliasDoesntExists(string $alias): self
-    {
-        return new static(sprintf(
-            'Can\'t found any index with alias "%s".',
-            $alias
-        ));
-    }
-
-    /**
-     * @param string $alias
-     * @return static
-     */
     public static function noIndexFoundForAlias(string $alias): self
     {
         return new static(sprintf(

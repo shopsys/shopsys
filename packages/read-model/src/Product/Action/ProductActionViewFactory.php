@@ -35,7 +35,7 @@ class ProductActionViewFactory
         return new ProductActionView(
             $productArray['id'],
             $productArray['selling_denied'],
-            $productArray['main_variant'],
+            $productArray['is_main_variant'],
             $productArray['detail_url']
         );
     }

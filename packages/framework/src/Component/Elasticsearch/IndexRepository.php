@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoAliasException;
 
 class IndexRepository
 {
@@ -175,7 +176,7 @@ class IndexRepository
     protected function findIndexNamesForAlias(string $aliasName): array
     {
         if (!$this->isAliasCreated($aliasName)) {
-            throw ElasticsearchIndexException::aliasDoesntExists($aliasName);
+            throw new ElasticsearchNoAliasException($aliasName);
         }
 
         $indexes = $this->elasticsearchClient->indices();

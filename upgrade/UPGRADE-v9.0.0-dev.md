@@ -523,12 +523,12 @@ There you can find links to upgrade notes for other versions too.
         +   "variants": {
         +       "type": "integer"
         +   },
-        +   "main_variant": {
+        +   "main_variant_id": {
         +      "type": "integer"
         +   }
         ```
-        Be aware that to make this change in production environment you'll need to delete old structure and then create
-        a new one because of the change of `type` in `main_variant` field. If you want to know more you can see [this article](../docs/introduction/console-commands-for-application-management-phing-targets.md#elasticsearch-index-migrate)
+        Be aware that to make this change in production environment you'll need to migrate old structure.
+        If you want to know more you can see [this article](../docs/introduction/console-commands-for-application-management-phing-targets.md#elasticsearch-index-migrate)
 
     - change and include new fields in ProductSearchExportWithFilterRepositoryTest
         ```diff
@@ -541,7 +541,7 @@ There you can find links to upgrade notes for other versions too.
         +   'is_using_stock',
         +   'stock_quantity',
         +   'variants',
-        +   'main_variant',
+        +   'main_variant_id',
         ```
     - if you extended these methods in `ProductOnCurrentDomainFacadeInterface`, `ProductOnCurrentDomainFacade` or `ProductOnCurrentDomainElasticFacade`,
      change their definitions (as strict types and typehints were added or changed)

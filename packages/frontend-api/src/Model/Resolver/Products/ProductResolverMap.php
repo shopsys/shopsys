@@ -60,7 +60,7 @@ class ProductResolverMap extends ResolverMap
             'Product' => [
                 self::RESOLVE_TYPE => function ($data) {
                     $isMainVariant = $data instanceof Product ? $data->isMainVariant() : $data['is_main_variant'];
-                    $isVariant = $data instanceof Product ? $data->isVariant() : $data['main_variant'] !== null;
+                    $isVariant = $data instanceof Product ? $data->isVariant() : $data['main_variant_id'] !== null;
 
                     if ($isMainVariant) {
                         return 'MainVariant';
