@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Series\Category;
-
 
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 

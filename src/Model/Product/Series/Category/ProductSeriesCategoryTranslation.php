@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Series\Category;
 
 use Doctrine\ORM\Mapping as ORM;

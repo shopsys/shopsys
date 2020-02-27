@@ -144,5 +144,4 @@ class ProductSeriesCategoryFacade
 
         return ProductSeriesFacade::BASE_FRIENDY_URL_BY_DOMAIN_ID[$domain->getId()];
     }
-
 }

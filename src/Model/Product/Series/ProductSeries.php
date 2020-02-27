@@ -41,7 +41,6 @@ class ProductSeries extends AbstractTranslatableEntity
      */
     protected $domains;
 
-
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Product\Series\Category\ProductSeriesCategory[]
      *
