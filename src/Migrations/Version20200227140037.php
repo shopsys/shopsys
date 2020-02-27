@@ -7,7 +7,7 @@ namespace App\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20200227063749 extends AbstractMigration
+class Version20200227140037 extends AbstractMigration
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
@@ -41,7 +41,7 @@ class Version20200227063749 extends AbstractMigration
         $this->sql('CREATE INDEX IDX_F4D0B5172C2AC5D3 ON product_series_category_translations (translatable_id)');
         $this->sql('
             CREATE UNIQUE INDEX product_series_category_translations_uniq_trans ON product_series_category_translations (translatable_id, locale)');
-        $this->sql('CREATE TABLE product_series_categories (id SERIAL NOT NULL, PRIMARY KEY(id))');
+        $this->sql('CREATE TABLE product_series_categories (id SERIAL NOT NULL, position INT NOT NULL, PRIMARY KEY(id))');
         $this->sql('
             CREATE TABLE product_series_product_series_category (
                 product_series_id INT NOT NULL,

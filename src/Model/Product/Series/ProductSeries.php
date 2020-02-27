@@ -46,6 +46,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Product\Series\Category\ProductSeriesCategory[]
      *
      * @ORM\ManyToMany(targetEntity="App\Model\Product\Series\Category\ProductSeriesCategory", fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     protected $productSeriesCategories;
 

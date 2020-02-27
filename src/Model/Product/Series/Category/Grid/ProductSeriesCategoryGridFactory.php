@@ -39,6 +39,7 @@ class ProductSeriesCategoryGridFactory implements GridFactoryInterface
     public function create(): Grid
     {
         $queryBuilder = $this->productSeriesCategoryRepository->getAllProductSeriesQueryBuilderByMainDomain();
+        $queryBuilder->orderBy('psc.position');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'psc.id');
 
         $grid = $this->gridFactory->create('productSeriesCategoryList', $dataSource);

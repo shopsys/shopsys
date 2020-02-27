@@ -137,12 +137,4 @@ class ProductSeriesCategoryFacade
         return ProductSeriesFacade::BASE_FRIENDY_URL_BY_DOMAIN_ID[$domain->getId()];
     }
 
-    /**
-     * @param int $productSeriesId
-     * @return array
-     */
-    public function getProductSeriesCategoriesByProductSeriesId(int $productSeriesId): array
-    {
-        return [];
-    }
 }
