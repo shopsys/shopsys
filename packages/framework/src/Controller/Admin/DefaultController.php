@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
@@ -323,7 +322,7 @@ class DefaultController extends AdminBaseController
     public function scheduleCronAction(string $serviceId): Response
     {
         $this->cronModuleFacade->schedule($serviceId);
-        $this->getFlashMessageSender()->addSuccessFlash(
+        $this->addSuccessFlash(
             t('Cron with serviceID `%serviceId%` was scheduled', ['%serviceId%' => $serviceId])
         );
 
@@ -338,7 +337,7 @@ class DefaultController extends AdminBaseController
     public function cronDisableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->disableCronModuleByServiceId($serviceId);
-        $this->getFlashMessageSender()->addSuccessFlash(
+        $this->addSuccessFlash(
             t('Cron with serviceID `%serviceId%` was disabled', ['%serviceId%' => $serviceId])
         );
 
@@ -353,7 +352,7 @@ class DefaultController extends AdminBaseController
     public function cronEnableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->enableCronModuleByServiceId($serviceId);
-        $this->getFlashMessageSender()->addSuccessFlash(
+        $this->addSuccessFlash(
             t('Cron with serviceID `%serviceId%` was enabled', ['%serviceId%' => $serviceId])
         );
 

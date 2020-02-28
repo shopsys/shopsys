@@ -311,8 +311,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         return serialize([
             $this->id,
             $this->email,
-            // When unserialized user has empty password,
-            // then UsernamePasswordToken is reloaded and ROLE_ADMIN_AS_CUSTOMER is lost.
             $this->password,
             time(), // lastActivity
             $this->domainId,

@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\SecurityEvents;
 
 class LoginAsUserFacade
 {
-    protected const SESSION_LOGIN_AS = 'loginAsUser';
+    public const SESSION_LOGIN_AS = 'loginAsUser';
 
     /**
      * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
@@ -84,15 +84,14 @@ class LoginAsUserFacade
             throw new \Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException('User not set.');
         }
 
-        $unserializedUser = unserialize($this->session->get(static::SESSION_LOGIN_AS));
         /* @var $unserializedUser \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser */
-        $this->session->remove(static::SESSION_LOGIN_AS);
+        $unserializedUser = unserialize($this->session->get(static::SESSION_LOGIN_AS));
+
         $freshUser = $this->customerUserRepository->getCustomerUserById($unserializedUser->getId());
 
         $password = '';
         $firewallName = 'frontend';
-        $freshUserRoles = array_merge($freshUser->getRoles(), [Roles::ROLE_ADMIN_AS_CUSTOMER]);
-        $token = new UsernamePasswordToken($freshUser, $password, $firewallName, $freshUserRoles);
+        $token = new UsernamePasswordToken($freshUser, $password, $firewallName, $freshUser->getRoles());
         $this->tokenStorage->setToken($token);
 
         $event = new InteractiveLoginEvent($request, $token);
