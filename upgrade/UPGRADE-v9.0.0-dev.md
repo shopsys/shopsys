@@ -120,6 +120,64 @@ There you can find links to upgrade notes for other versions too.
             - [migration to version 12](https://www.postgresql.org/docs/12/release-12.html#id-1.11.6.6.4)
         - do not forget to check for BC breaks which may be introduced for your project
 
+- upgrade to Elasticsearch 7 ([#1602](https://github.com/shopsys/shopsys/pull/1602))
+    - first of all we recommend to take a look at [Breaking changes](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/release-notes-7.0.0.html) section in Elasticsearch documentation to prevent failures
+
+    - update `docker/elasticsearch/Dockerfile`
+
+        ```diff
+        -   FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.2
+        +   FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.5.1
+        ```
+
+    - remove `_doc` node from mapping in `src/Recources/definition` json files
+
+        ```diff
+            "mappings": {
+        -       "_doc": {
+        -           "properties": {
+        -               "name": {
+        -                   "type": "text"
+        -               }
+        -           }
+        -       }
+        +       "properties": {
+        +           "name": {
+        +               "type": "text"
+        +           }
+        +       }
+            }
+        ```
+
+    - add kibana to your `docker-compose.yml`
+
+        ```diff
+        +   kibana:
+        +       image: docker.elastic.co/kibana/kibana-oss:7.5.1
+        +       container_name: shopsys-framework-kibana
+        +       depends_on:
+        +           - elasticsearch
+        +       ports:
+        +           - "5601:5601"
+        ```
+
+        - you should add it also in all `docker-compose*.dist` files such as:
+            - `docker/conf/docker-compose.yml.dist`
+            - `docker/conf/docker-compose-mac.yml.dist`
+            - `docker/conf/docker-compose-win.yml.dist`
+
+    - migrate elasticsearch indexes by `php phing elasticsearch-index-migrate`
+
+    - upgrading server running in Kubernetes
+        - apply new configuration `kubectl apply -k kubernetes/kustomize/overlays/<overlay>`
+        - run elasticsearch migration `kubectl exec -i [pod-name-php-fpm] -- ./phing elasticsearch-index-migrate`
+    
+    - upgrading server running in Docker
+        - rebuild and create containers with `docker-compose up -d --build`
+        - run elasticsearch migration `docker-compose exec php-fpm ./phing elasticsearch-index-migrate`
+    
+    - upgrading native installation we recommend to follow Elasticsearch [documentation](https://www.elastic.co/guide/en/cloud/current/ec-upgrading-v7.html)  
+
 ### Configuration
 - add trailing slash to all your localized paths for `front_product_search` route ([#1067](https://github.com/shopsys/shopsys/pull/1067))
     - be aware, if you already have such paths (`hledani/`, `search/`) in your application
