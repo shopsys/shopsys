@@ -19,45 +19,48 @@ class CustomerFacade
     protected $customerFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository
      */
-    protected $billingAddressFactory;
+    protected $customerRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository
      */
     public function __construct(
         EntityManagerInterface $em,
         CustomerFactoryInterface $customerFactory,
-        BillingAddressFactoryInterface $billingAddressFactory
+        CustomerRepository $customerRepository
     ) {
         $this->em = $em;
         $this->customerFactory = $customerFactory;
-        $this->billingAddressFactory = $billingAddressFactory;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
-    public function createCustomer(): Customer
+    public function create(CustomerData $customerData): Customer
     {
-        return $this->customerFactory->create();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
-     */
-    public function createCustomerWithBillingAddress(BillingAddressData $billingAddressData): Customer
-    {
-        $customer = $this->createCustomer();
-        $billingAddressData->customer = $customer;
-
-        $customer->addBillingAddress($this->billingAddressFactory->create($billingAddressData));
+        $customer = $this->customerFactory->create($customerData);
         $this->em->persist($customer);
-        $this->em->flush($customer);
+        $this->em->flush();
+
+        return $customer;
+    }
+
+    /**
+     * @param int $customerId
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    public function edit(int $customerId, CustomerData $customerData): Customer
+    {
+        $customer = $this->customerRepository->getById($customerId);
+        $customer->edit($customerData);
+        $this->em->flush();
 
         return $customer;
     }

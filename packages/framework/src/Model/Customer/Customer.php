@@ -36,16 +36,50 @@ class Customer
      */
     protected $deliveryAddresses;
 
-    public function __construct()
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $domainId;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
+     */
+    public function __construct(CustomerData $customerData)
+    {
+        $this->setData($customerData);
+        $this->domainId = $customerData->domainId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
+     */
+    public function edit(CustomerData $customerData): void
+    {
+        $this->setData($customerData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
+     */
+    protected function setData(CustomerData $customerData): void
     {
         $this->billingAddresses = new ArrayCollection();
         $this->deliveryAddresses = new ArrayCollection();
+
+        if ($customerData->billingAddress !== null) {
+            $this->addBillingAddress($customerData->billingAddress);
+        }
+
+        foreach ($customerData->deliveryAddresses as $deliveryAddress) {
+            $this->addDeliveryAddress(($deliveryAddress));
+        }
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      */
-    public function addBillingAddress(BillingAddress $billingAddress): void
+    protected function addBillingAddress(BillingAddress $billingAddress): void
     {
         $this->billingAddresses = new ArrayCollection();
         $this->billingAddresses->add($billingAddress);
@@ -54,7 +88,7 @@ class Customer
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
      */
-    public function addDeliveryAddress(DeliveryAddress $deliveryAddress): void
+    protected function addDeliveryAddress(DeliveryAddress $deliveryAddress): void
     {
         $this->deliveryAddresses->add($deliveryAddress);
     }
@@ -81,5 +115,13 @@ class Customer
     public function getDeliveryAddresses(): array
     {
         return $this->deliveryAddresses->toArray();
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId()
+    {
+        return $this->domainId;
     }
 }

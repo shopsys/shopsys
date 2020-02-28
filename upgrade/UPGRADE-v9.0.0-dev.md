@@ -996,6 +996,34 @@ There you can find links to upgrade notes for other versions too.
                 $this->markTestSkipped('Test is skipped for single domain');
             }
             ```
+- update your code to have easier extension of customer related classes ([#1700](https://github.com/shopsys/shopsys/pull/1700/))
+    - `Customer::addBillingAddress()` and `Customer::addDeliveryAddress()` are no longer public, use `CustomerFacade::create()` and `CustomerFacade::edit()` methods instead
+    - `CustomerFacade::createCustomerWithBillingAddress()` no longer exists, use `CustomerFacade::create()` and `BillingAddressFacade::create()` instead
+    - some methods have changed their interface, update your code usages:
+        - `Customer::__construct()`
+            ```diff
+            -   public function __construct()
+            +   public function __construct(CustomerData $customerData)
+            ```
+        - `CustomerFacade::__construct()`
+            ```diff
+            -   public function __construct(EntityManagerInterface $em, CustomerFactoryInterface $customerFactory, BillingAddressFactoryInterface $billingAddressFactory)
+            +   public function __construct(EntityManagerInterface $em, CustomerFactoryInterface $customerFactory, CustomerRepository $customerRepository)
+            ```
+        - `CustomerFactory::create()` and `CustomerFactoryInterface::create()`
+            ```diff
+            -   public function create(): Customer
+            +   public function create(CustomerData $customerData): Customer
+            ```
+        - `CustomerUserFacade::__construct()`
+            ```diff
+                CustomerFacade $customerFacade,
+            -   DeliveryAddressFacade $deliveryAddressFacade
+            +   DeliveryAddressFacade $deliveryAddressFacade,
+            +   CustomerDataFactoryInterface $customerDataFactory,
+            +   BillingAddressFacade $billingAddressFacade
+            ```
+    - `tests/App/Functional/PersonalData/PersonalDataExportXmlTest.php` has been changed, see [diff of PR](https://github.com/shopsys/shopsys/pull/1700/files) to update it
 
 - update your application to refresh administrator roles after edit own profile ([#1514](https://github.com/shopsys/shopsys/pull/1514))
     - some methods has changed so you might want to update their usage in your application:

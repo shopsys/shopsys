@@ -123,6 +123,14 @@ class BillingAddress
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @return bool
      */
     public function isCompanyCustomer()

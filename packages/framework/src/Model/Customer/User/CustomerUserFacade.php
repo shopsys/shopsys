@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
@@ -67,6 +70,16 @@ class CustomerUserFacade
     protected $deliveryAddressFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     */
+    protected $customerDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade
+     */
+    protected $billingAddressFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
@@ -77,6 +90,8 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -88,7 +103,9 @@ class CustomerUserFacade
         CustomerUserFactoryInterface $customerUserFactory,
         CustomerUserPasswordFacade $customerUserPasswordFacade,
         CustomerFacade $customerFacade,
-        DeliveryAddressFacade $deliveryAddressFacade
+        DeliveryAddressFacade $deliveryAddressFacade,
+        CustomerDataFactoryInterface $customerDataFactory,
+        BillingAddressFacade $billingAddressFacade
     ) {
         $this->em = $em;
         $this->customerUserRepository = $customerUserRepository;
@@ -100,11 +117,12 @@ class CustomerUserFacade
         $this->customerUserPasswordFacade = $customerUserPasswordFacade;
         $this->customerFacade = $customerFacade;
         $this->deliveryAddressFacade = $deliveryAddressFacade;
+        $this->customerDataFactory = $customerDataFactory;
+        $this->billingAddressFacade = $billingAddressFacade;
     }
 
     /**
      * @param int $customerUserId
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function getCustomerUserById($customerUserId)
@@ -115,7 +133,6 @@ class CustomerUserFacade
     /**
      * @param string $email
      * @param int $domainId
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function findCustomerUserByEmailAndDomain($email, $domainId)
@@ -125,12 +142,12 @@ class CustomerUserFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function register(CustomerUserData $customerUserData)
     {
-        $customer = $this->customerFacade->createCustomerWithBillingAddress($this->billingAddressDataFactory->create());
+        $customer = $this->createCustomerWithBillingAddress($customerUserData->domainId, $this->billingAddressDataFactory->create());
+
         $customerUser = $this->createCustomerUser($customer, $customerUserData);
 
         $this->customerMailFacade->sendRegistrationMail($customerUser);
@@ -140,17 +157,20 @@ class CustomerUserFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function create(CustomerUserUpdateData $customerUserUpdateData)
     {
-        $customer = $this->customerFacade->createCustomerWithBillingAddress($customerUserUpdateData->billingAddressData);
+        $customer = $this->createCustomerWithBillingAddress($customerUserUpdateData->customerUserData->domainId, $customerUserUpdateData->billingAddressData);
 
         if ($customerUserUpdateData->deliveryAddressData && $customerUserUpdateData->deliveryAddressData->addressFilled) {
             $customerUserUpdateData->deliveryAddressData->customer = $customer;
             $deliveryAddress = $this->deliveryAddressFacade->create($customerUserUpdateData->deliveryAddressData);
-            $customer->addDeliveryAddress($deliveryAddress);
+
+            $customerData = $this->customerDataFactory->createFromCustomer($customer);
+            $customerData->deliveryAddresses[] = $deliveryAddress;
+            $this->customerFacade->edit($customer->getId(), $customerData);
+
             $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
         }
 
@@ -211,7 +231,7 @@ class CustomerUserFacade
             $this->customerUserPasswordFacade->changePassword($customerUser, $customerUserUpdateData->customerUserData->password);
         }
 
-        $customerUser->getCustomer()->getBillingAddress()->edit($customerUserUpdateData->billingAddressData);
+        $this->billingAddressFacade->edit($customerUser->getCustomer()->getBillingAddress()->getId(), $customerUserUpdateData->billingAddressData);
 
         return $customerUser;
     }
@@ -289,5 +309,24 @@ class CustomerUserFacade
         }
 
         $customerUser->setEmail($email);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    protected function createCustomerWithBillingAddress(int $domainId, BillingAddressData $billingAddressData): Customer
+    {
+        $customerData = $this->customerDataFactory->createForDomain($domainId);
+        $customer = $this->customerFacade->create($customerData);
+
+        $billingAddressData->customer = $customer;
+        $billingAddress = $this->billingAddressFacade->create($billingAddressData);
+
+        $customerData->billingAddress = $billingAddress;
+        $this->customerFacade->edit($customer->getId(), $customerData);
+
+        return $customer;
     }
 }
