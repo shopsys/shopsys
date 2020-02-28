@@ -74,8 +74,8 @@ export default class ProductVisibility {
         }
     }
 
-    static init () {
-        $('.js-product-visibility').each(function () {
+    static init ($container) {
+        $container.filterAllNodes('.js-product-visibility').each(function () {
             // eslint-disable-next-line no-new
             new ProductVisibility($(this));
         });
