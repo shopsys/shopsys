@@ -1,0 +1,51 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No crons found.'|trans }}
+{% endblock %}
+
+{% block grid_value_cell_id_lastStartedAt %}
+    {{ value|formatDateTime }}
+{% endblock %}
+
+{% block grid_value_cell_id_lastFinishedAt %}
+    {{ value|formatDateTime}}
+{% endblock %}
+
+{% block grid_value_cell_id_status %}
+    <strong style="line-break: inherit;">
+        {% if row.enabled == false %}
+            <span style="color: grey;"><i class="svg svg-circle-remove"></i> {{ 'Disabled'|trans }}</span>
+        {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_RUNNING') %}
+            <span style="color: lightskyblue;"><i class="svg svg-gear"></i> {{ 'Running'|trans }}</span>
+        {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_ERROR') %}
+            <span style="color: red;"><i class="svg svg-warning"></i> {{ 'Error'|trans }}</span>
+        {% else %}
+            <span style="color: green;"><i class="svg svg-checked"></i> {{ 'Ok'|trans }}</span>
+        {% endif %}
+    </strong>
+{% endblock %}
+
+{% block grid_value_cell_id_actions %}
+    {% if row.scheduled == false and row.enabled != false %}
+        <a href="{{ url(
+            'admin_default_schedulecron', {
+                serviceId: row.id,
+            }
+        ) }}" class="in-icon in-icon--edit svg svg-schedule" title="{{ 'Schedule'|trans }}"></a>
+    {% endif %}
+
+    {% if row.enabled == false %}
+        <a href="{{ url(
+            'admin_default_cronenable', {
+                serviceId: row.id
+            }
+        ) }}" class="in-icon in-icon--edit svg svg-power" style="color: red;" title="{{ 'Enable'|trans }}"></a>
+    {% else %}
+        <a href="{{ url(
+            'admin_default_crondisable', {
+                serviceId: row.id
+            }
+        ) }}" class="in-icon in-icon--edit svg svg-power" style="color: green;" title="{{ 'Disable'|trans }}"></a>
+    {% endif %}
+{% endblock %}

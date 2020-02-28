@@ -28,6 +28,7 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
                         $tag['hours'],
                         $tag['minutes'],
                         $tag['instanceName'] ?? CronModuleConfig::DEFAULT_INSTANCE_NAME,
+                        $tag['readableName'] ?? null,
                     ]
                 );
             }

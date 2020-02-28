@@ -34,8 +34,9 @@ class CronConfig
      * @param string $timeHours
      * @param string $timeMinutes
      * @param string $instanceName
+     * @param string|null $readableName
      */
-    public function registerCronModuleInstance($service, string $serviceId, string $timeHours, string $timeMinutes, string $instanceName): void
+    public function registerCronModuleInstance($service, string $serviceId, string $timeHours, string $timeMinutes, string $instanceName, ?string $readableName = null): void
     {
         if (!$service instanceof SimpleCronModuleInterface && !$service instanceof IteratedCronModuleInterface) {
             throw new \Shopsys\FrameworkBundle\Component\Cron\Exception\InvalidCronModuleException($serviceId);
@@ -43,7 +44,7 @@ class CronConfig
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
         $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 5);
 
-        $cronModuleConfig = new CronModuleConfig($service, $serviceId, $timeHours, $timeMinutes);
+        $cronModuleConfig = new CronModuleConfig($service, $serviceId, $timeHours, $timeMinutes, $readableName);
         $cronModuleConfig->assignToInstance($instanceName);
 
         $this->cronModuleConfigs[] = $cronModuleConfig;

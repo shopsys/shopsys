@@ -70,4 +70,12 @@
             ></canvas>
         </div>
     </div>
+
+    {% if cronGridViews is not null %}
+        {% for instanceName, cronGridView in cronGridViews %}
+            <div class="wrap-bar"></div>
+            <h2>{{ 'Cron overview'|trans }} {% if cronGridViews|length > 1 %}({{ instanceName }}){% endif %}</h2>
+            {{ cronGridView.render() }}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

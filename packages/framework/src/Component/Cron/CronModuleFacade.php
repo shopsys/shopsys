@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -84,10 +86,111 @@ class CronModuleFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
      * @return bool
      */
+    public function isModuleDisabled(CronModuleConfig $cronModuleConfig): bool
+    {
+        $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
+
+        return $cronModule->isEnabled() === false;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
+     * @return bool
+     */
     public function isModuleSuspended(CronModuleConfig $cronModuleConfig)
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
 
         return $cronModule->isSuspended();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
+     */
+    public function markCronAsStarted(CronModuleConfig $cronModuleConfig): void
+    {
+        $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
+        $cronModule->setStatusRunning();
+        $cronModule->updateLastStartedAt();
+
+        $this->em->flush($cronModule);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
+     */
+    public function markCronAsEnded(CronModuleConfig $cronModuleConfig): void
+    {
+        $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
+        $cronModule->setStatusOk();
+        $cronModule->updateLastFinishedAt();
+
+        if ($cronModule->getLastStartedAt() !== null) {
+            $lastCronDuration = $cronModule->getLastFinishedAt()->getTimestamp() - $cronModule->getLastStartedAt()->getTimestamp();
+            $cronModule->setLastDuration($lastCronDuration);
+        }
+
+        $this->em->flush($cronModule);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
+     */
+    public function markCronAsFailed(CronModuleConfig $cronModuleConfig): void
+    {
+        $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
+        $cronModule->setStatusFailed();
+
+        $this->em->flush($cronModule);
+    }
+
+    /**
+     * @param string $serviceId
+     */
+    public function disableCronModuleByServiceId(string $serviceId): void
+    {
+        $cronModule = $this->getCronModuleByServiceId($serviceId);
+        $cronModule->disable();
+
+        $this->em->flush($cronModule);
+    }
+
+    /**
+     * @param string $serviceId
+     */
+    public function enableCronModuleByServiceId(string $serviceId): void
+    {
+        $cronModule = $this->getCronModuleByServiceId($serviceId);
+        $cronModule->enable();
+
+        $this->em->flush($cronModule);
+    }
+
+    /**
+     * @param string $serviceId
+     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule
+     */
+    public function getCronModuleByServiceId(string $serviceId): CronModule
+    {
+        return $this->cronModuleRepository->getCronModuleByServiceId($serviceId);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule[]
+     */
+    public function findAllIndexedByServiceId(): array
+    {
+        return $this->cronModuleRepository->findAllIndexedByServiceId();
+    }
+
+    /**
+     * @param string $serviceId
+     */
+    public function schedule(string $serviceId): void
+    {
+        $cronModule = $this->getCronModuleByServiceId($serviceId);
+        $cronModule->schedule();
+
+        $this->em->flush($cronModule);
     }
 }
