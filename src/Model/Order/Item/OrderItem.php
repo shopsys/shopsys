@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
  * @ORM\Table(name="order_items")
@@ -25,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
  * @method edit(\App\Model\Order\Item\OrderItemData $orderItemData)
  * @method setTransport(\App\Model\Transport\Transport $transport)
  * @method setPayment(\App\Model\Payment\Payment $payment)
+ * @method setProduct(\App\Model\Product\Product|null $product)
  */
 class OrderItem extends BaseOrderItem
 {
@@ -68,24 +68,18 @@ class OrderItem extends BaseOrderItem
     }
 
     /**
-     * @param \App\Model\Product\Product|null $product
-     */
-    public function setProduct(?Product $product): void
-    {
-        parent::setProduct($product);
-
-        if ($product === null) {
-            $this->productType = null;
-        } else {
-            $this->productType = $product->getProductType();
-        }
-    }
-
-    /**
      * @return \App\Model\Product\Type\ProductType|null
      */
     public function getProductType(): ?ProductType
     {
         return $this->productType;
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductType|null $productType
+     */
+    public function setProductType(?ProductType $productType): void
+    {
+        $this->productType = $productType;
     }
 }

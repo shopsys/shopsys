@@ -52,6 +52,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory: '@App\Model\Order\Preview\OrderPreviewFactory'
+
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade: '@App\Model\Order\PromoCode\CurrentPromoCodeFacade'
 
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@App\Model\Transport\TransportDataFactory'

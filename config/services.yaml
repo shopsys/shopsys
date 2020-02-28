@@ -123,6 +123,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory: '@App\Model\Order\Item\OrderItemFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface: '@App\Model\Order\Item\OrderItemFactory'
+
     App\Model\Order\OrderDataMapper: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataMapper: '@App\Model\Order\OrderDataMapper'
