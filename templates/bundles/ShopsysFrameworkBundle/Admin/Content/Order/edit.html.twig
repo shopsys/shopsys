@@ -1,0 +1,16 @@
+{% extends '@!ShopsysFramework/Admin/Content/Order/edit.html.twig' %}
+
+{% block main_content %}
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+            {% block fixed_bar_content %}
+                <a href="{{ url('admin_order_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                {% do form.save.setRendered() %}
+            {% endblock %}
+        {% endembed %}
+    {{ form_end(form) }}
+
+{% endblock %}

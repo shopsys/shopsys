@@ -173,6 +173,9 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\DefaultController:
         class: 'App\Controller\Admin\DefaultController'
 
+    Shopsys\FrameworkBundle\Controller\Admin\OrderController:
+        class: 'App\Controller\Admin\OrderController'
+
     Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
         class: 'App\Controller\Admin\PromoCodeController'
         arguments:

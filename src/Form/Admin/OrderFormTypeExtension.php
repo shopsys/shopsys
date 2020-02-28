@@ -7,6 +7,7 @@ namespace App\Form\Admin;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderFormTypeExtension extends AbstractTypeExtension
 {
@@ -15,6 +16,17 @@ class OrderFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setDefaults([
+                'disabled' => true,
+            ]);
     }
 
     /**
