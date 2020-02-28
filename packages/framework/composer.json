@@ -90,7 +90,6 @@
         "symfony/property-info": "^3.4",
         "symfony/proxy-manager-bridge": "^3.4",
         "symfony/security": "^3.4",
-        "symfony/stopwatch": "^3.4",
         "symfony/swiftmailer-bundle": "^3.2.2",
         "symfony/var-dumper": "^3.4",
         "symfony/web-server-bundle": "^3.4",
