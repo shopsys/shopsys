@@ -20,6 +20,7 @@ class ProductSeriesController extends FrontBaseController
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
+
     /**
      * @var \App\Model\Product\Series\Category\ProductSeriesCategoryFacade
      */
@@ -59,17 +60,11 @@ class ProductSeriesController extends FrontBaseController
     public function listAction(): Response
     {
         $productSeries = $this->productSeriesFacade->getAllVisibleProductSeriesByDomainId($this->domain->getId());
-
-        $productSeriesCategories = [];
-        foreach ($productSeries as $series){
-            foreach ($series->getProductSeriesCategories() as $productSeriesCategory){
-                $productSeriesCategories[$productSeriesCategory->getId()] = $productSeriesCategory;
-            }
-        }
+        $productSeriesCategories = $this->productSeriesCategoryFacade->getSortedProductSeriesCategoriesFilteredByProductSeries($productSeries);
 
         return $this->render('Front/Content/ProductSeries/list.html.twig', [
-            'productSeries' => $productSeries,
-            'productSeriesCategories' => $productSeriesCategories
+            'productSeriesList' => $productSeries,
+            'productSeriesCategories' => $productSeriesCategories,
         ]);
     }
 }

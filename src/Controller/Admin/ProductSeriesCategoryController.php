@@ -126,7 +126,7 @@ class ProductSeriesCategoryController extends AdminBaseController
 
             $this->getFlashMessageSender()
                 ->addSuccessFlashTwig(
-                    t('Produktový program <strong><a href="{{ url }}">{{ productSeriesCategoryName }}</a></strong> je úspěšně vytvořen'),
+                    t('Kategorie produktového programu <strong><a href="{{ url }}">{{ productSeriesCategoryName }}</a></strong> byla úspěšně vytvořena'),
                     [
                         'productSeriesCategoryName' => $productSeriesCategory->getName($this->localization->getLocale()),
                         'url' => $this->generateUrl('admin_productseriescategory_edit', ['id' => $productSeriesCategory->getId()]),

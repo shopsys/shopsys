@@ -37,6 +37,7 @@ class ProductSeriesFormType extends AbstractType
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
+
     /**
      * @var \App\Model\Product\Series\Category\ProductSeriesCategoryFacade
      */
@@ -45,6 +46,7 @@ class ProductSeriesFormType extends AbstractType
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategoryFacade $productSeriesCategoryFacade
      */
     public function __construct(
         SeoSettingFacade $seoSettingFacade,

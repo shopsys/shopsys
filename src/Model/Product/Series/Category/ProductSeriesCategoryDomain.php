@@ -82,27 +82,11 @@ class ProductSeriesCategoryDomain
     }
 
     /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return int
      */
     public function getDomainId(): int
     {
         return $this->domainId;
-    }
-
-    /**
-     * @param int $domainId
-     */
-    public function setDomainId(int $domainId): void
-    {
-        $this->domainId = $domainId;
     }
 
     /**

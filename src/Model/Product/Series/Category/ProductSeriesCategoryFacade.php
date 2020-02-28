@@ -133,7 +133,6 @@ class ProductSeriesCategoryFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @throws \App\Model\Product\Series\Exception\MissingBaseFriendlyUrlForDomainException
      * @return string
      */
     private function getBaseFriendlyUrlForDomain(DomainConfig $domain): string
@@ -143,5 +142,21 @@ class ProductSeriesCategoryFacade
         }
 
         return ProductSeriesFacade::BASE_FRIENDY_URL_BY_DOMAIN_ID[$domain->getId()];
+    }
+
+    /**
+     * @param \App\Model\Product\Series\ProductSeries[] $productSeriesList
+     * @return \App\Model\Product\Series\Category\ProductSeriesCategory[]
+     */
+    public function getSortedProductSeriesCategoriesFilteredByProductSeries(array $productSeriesList): array
+    {
+        $productSeriesCategories = [];
+        foreach ($productSeriesList as $productSeries) {
+            foreach ($productSeries->getProductSeriesCategories() as $productSeriesCategory) {
+                $productSeriesCategories[$productSeriesCategory->getId()] = $productSeriesCategory;
+            }
+        }
+
+        return $this->productSeriesCategoryRepository->getSortedProductSeriesCategoriesFilteredByProductSeriesCategories($productSeriesCategories);
     }
 }

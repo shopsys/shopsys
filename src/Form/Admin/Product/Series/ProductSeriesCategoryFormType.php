@@ -6,15 +6,11 @@ namespace App\Form\Admin\Product\Series;
 
 use App\Model\Product\Series\Category\ProductSeriesCategory;
 use App\Model\Product\Series\Category\ProductSeriesCategoryData;
-use App\Model\Product\Series\ProductSeries;
-use App\Model\Product\Series\ProductSeriesData;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\MultidomainType;
-use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
-use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;

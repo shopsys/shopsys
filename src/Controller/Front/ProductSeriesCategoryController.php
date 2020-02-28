@@ -43,7 +43,7 @@ class ProductSeriesCategoryController extends FrontBaseController
 
         return $this->render('Front/Content/ProductSeriesCategory/detail.html.twig', [
             'productSeriesCategory' => $productSeriesCategory,
-            'productSeries' => $productSeries,
+            'productSeriesList' => $productSeries,
         ]);
     }
 }

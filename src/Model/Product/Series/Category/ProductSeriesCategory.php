@@ -154,7 +154,7 @@ class ProductSeriesCategory extends AbstractTranslatableEntity implements Ordera
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoTitle(int $domainId)
+    public function getSeoTitle(int $domainId): ?string
     {
         return $this->getProductSeriesCategoryDomain($domainId)->getSeoTitle();
     }
@@ -163,7 +163,7 @@ class ProductSeriesCategory extends AbstractTranslatableEntity implements Ordera
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoMetaDescription(int $domainId)
+    public function getSeoMetaDescription(int $domainId): ?string
     {
         return $this->getProductSeriesCategoryDomain($domainId)->getSeoMetaDescription();
     }
@@ -172,25 +172,25 @@ class ProductSeriesCategory extends AbstractTranslatableEntity implements Ordera
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoH1(int $domainId)
+    public function getSeoH1(int $domainId): ?string
     {
         return $this->getProductSeriesCategoryDomain($domainId)->getSeoH1();
     }
 
     /**
      * @param string|null $locale
-     * @return string|null
+     * @return string
      */
-    public function getName(?string $locale = null): ?string
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
 
     /**
      * @param string|null $locale
-     * @return string|null
+     * @return string
      */
-    public function getDescription(?string $locale = null): ?string
+    public function getDescription(?string $locale = null): string
     {
         return $this->translation($locale)->getDescription();
     }

@@ -108,4 +108,18 @@ class ProductSeriesCategoryRepository
             ->orderBy('psc.id', 'DESC')
             ->setParameter('locale', $this->localization->getAdminLocale());
     }
+
+    /**
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategory[] $productSeriesCategories
+     * @return \App\Model\Product\Series\Category\ProductSeriesCategory[]
+     */
+    public function getSortedProductSeriesCategoriesFilteredByProductSeriesCategories(array $productSeriesCategories): array
+    {
+        return $this->getQueryBuilder()
+            ->where('psc.id IN (:productSeriesCategories)')
+            ->setParameter('productSeriesCategories', $productSeriesCategories)
+            ->orderBy('psc.position')
+            ->getQuery()
+            ->execute();
+    }
 }

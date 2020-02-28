@@ -141,7 +141,6 @@ class ProductSeriesRepository
             ->join('ps.productSeriesCategories', 'psc', Join::WITH, 'psc = :productSeriesCategory')
             ->setParameter('productSeriesCategory', $productSeriesCategory)
             ->getQuery()
-            ->execute()
-            ;
+            ->execute();
     }
 }

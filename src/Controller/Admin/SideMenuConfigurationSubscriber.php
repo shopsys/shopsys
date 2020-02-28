@@ -46,18 +46,18 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureMarketingMenu(ConfigureMenuEvent $event): void
     {
         $marketingMenu = $event->getMenu();
-        $marketingMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
-        $promoCodeMenu = $marketingMenu->getChild('promo_codes');
+
+        $promoCodeMenu = $marketingMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
         $promoCodeMenu->addChild('promo_codes_new', ['route' => 'admin_promocode_new', 'display' => false, 'label' => t('Nový slevový kupóny')]);
         $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
 
-        $marketingMenu->addChild('product_series', ['route' => 'admin_productseries_list', 'label' => t('Programy produktů')]);
-        $productSeriesMenu = $marketingMenu->getChild('product_series');
-        $productSeriesMenu->addChild('new_product_series', ['route' => 'admin_productseries_new', 'display' => false, 'label' => t('Nový produktový program')]);
-        $productSeriesMenu->addChild('edit_product_series', ['route' => 'admin_productseries_edit', 'display' => false, 'label' => t('Detail produktového programu')]);
+        $productSeriesMenu = $marketingMenu->addChild('product_series', ['label' => t('Programy produktů')]);
 
-        $productSeriesMenu->addChild('product_series_category',['route' => 'admin_productseriescategory_list', 'label' => t('Kategorie')]);
-        $productSeriesCategoryMenu = $productSeriesMenu->getChild('product_series_category');
+        $productSeriesListMenu = $productSeriesMenu->addChild('product_series_list', ['route' => 'admin_productseries_list', 'label' => t('Programy produktů')]);
+        $productSeriesListMenu->addChild('new_product_series', ['route' => 'admin_productseries_new', 'display' => false, 'label' => t('Nový produktový program')]);
+        $productSeriesListMenu->addChild('edit_product_series', ['route' => 'admin_productseries_edit', 'display' => false, 'label' => t('Detail produktového programu')]);
+
+        $productSeriesCategoryMenu = $productSeriesMenu->addChild('product_series_category', ['route' => 'admin_productseriescategory_list', 'label' => t('Kategorie')]);
         $productSeriesCategoryMenu->addChild('new_product_series_category', ['route' => 'admin_productseriescategory_new', 'display' => false, 'label' => t('Nová kategorie')]);
         $productSeriesCategoryMenu->addChild('edit_product_series_category', ['route' => 'admin_productseriescategory_edit', 'display' => false, 'label' => t('Detail kategorie')]);
     }
