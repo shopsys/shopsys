@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Product\Type\ProductType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview;
+use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation as BaseOrderPreviewCalculation;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -62,8 +63,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
-     *
-     * @return \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
+     * @param \App\Model\Product\Type\ProductType|null $productType
+     * @return \App\Model\Order\Preview\OrderPreview
      */
     public function calculatePreview(
         Currency $currency,
@@ -72,8 +73,9 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         ?Transport $transport = null,
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
-        ?string $promoCodeDiscountPercent = null
-    ): OrderPreview {
+        ?string $promoCodeDiscountPercent = null,
+        ?ProductType $productType = null
+    ): BaseOrderPreview {
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
             $domainId,
@@ -139,7 +141,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $payment,
             $paymentPrice,
             $roundingPrice,
-            $promoCodeDiscountPercent
+            $promoCodeDiscountPercent,
+            $productType
         );
     }
 }

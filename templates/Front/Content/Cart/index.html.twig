@@ -23,20 +23,20 @@
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form' }}) }}
                     {{ form_errors(form) }}
 
-                    {% set viewNumber = 0 %}
-                    {% for cartView in splitCartView.cartViews %}
-                        {% set viewNumber = viewNumber + 1 %}
-                        {% if splitCartView.moreViews %}
+                    {% set previewNumber = 0 %}
+                    {% for orderPreview in splitOrderPreview.orderPreviews %}
+                        {% set previewNumber = previewNumber + 1 %}
+                        {% if splitOrderPreview.morePreviews %}
                             <h2>
-                                {{ 'Zásilka č. %number%'|trans({ '%number%': viewNumber }) }}
+                                {{ 'Zásilka č. %number%'|trans({ '%number%': previewNumber }) }}
                                 -
-                                {{ cartView.productType.name }}
+                                {{ orderPreview.productType.name }}
                             </h2>
                         {% endif %}
-                        {{ cartItemsTableMacro.table(form, cartView.orderPreview) }}
+                        {{ cartItemsTableMacro.table(form, orderPreview) }}
                     {% endfor %}
 
-                    {% if splitCartView.moreViews %}
+                    {% if splitOrderPreview.morePreviews %}
                         <table class="table-cart">
                             <tfoot>
                                 <tr class="table-cart__row">
@@ -44,7 +44,7 @@
                                         <h3>
                                             {{ 'Total price including VAT'|trans }}:
                                             <span>
-                                                {{ splitCartView.totalPrice.priceWithVat|price }}
+                                                {{ splitOrderPreview.totalPrice.priceWithVat|price }}
                                             </span>
                                         </h3>
                                     </td>
@@ -53,7 +53,7 @@
                                     <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
                                         {{ 'Total price excluding VAT'|trans }}:
                                         <span>
-                                            {{ splitCartView.totalPrice.priceWithoutVat|price }}
+                                            {{ splitOrderPreview.totalPrice.priceWithoutVat|price }}
                                         </span>
                                     </td>
                                 </tr>

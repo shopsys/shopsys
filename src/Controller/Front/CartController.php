@@ -6,13 +6,13 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Cart\AddProductFormType;
 use App\Form\Front\Cart\CartFormType;
-use App\Model\Cart\Splitting\CartSplittingFacade;
+use App\Model\Order\Preview\OrderPreviewFactory;
+use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
@@ -45,7 +45,7 @@ class CartController extends FrontBaseController
     private $freeTransportAndPaymentFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
+     * @var \App\Model\Order\Preview\OrderPreviewFactory
      */
     private $orderPreviewFactory;
 
@@ -65,19 +65,19 @@ class CartController extends FrontBaseController
     private $requestStack;
 
     /**
-     * @var \App\Model\Cart\Splitting\CartSplittingFacade
+     * @var \App\Model\Order\Preview\OrderPreviewSplittingFacade
      */
-    private $cartSplittingFacade;
+    private $orderPreviewSplittingFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
+     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \App\Model\Cart\Splitting\CartSplittingFacade $cartSplittingFacade
+     * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $cartSplittingFacade
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -87,7 +87,7 @@ class CartController extends FrontBaseController
         ErrorExtractor $errorExtractor,
         ListedProductViewFacadeInterface $listedProductViewFacade,
         RequestStack $requestStack,
-        CartSplittingFacade $cartSplittingFacade
+        OrderPreviewSplittingFacade $cartSplittingFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -96,7 +96,7 @@ class CartController extends FrontBaseController
         $this->errorExtractor = $errorExtractor;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->requestStack = $requestStack;
-        $this->cartSplittingFacade = $cartSplittingFacade;
+        $this->orderPreviewSplittingFacade = $cartSplittingFacade;
     }
 
     /**
@@ -145,10 +145,10 @@ class CartController extends FrontBaseController
             $domainId
         );
 
-        $splitCartView = $this->cartSplittingFacade->createSplitCartViewForCurrentCustomer();
+        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer();
 
         return $this->render('Front/Content/Cart/index.html.twig', [
-            'splitCartView' => $splitCartView,
+            'splitOrderPreview' => $splitOrderPreview,
             'cart' => $cart,
             'form' => $form->createView(),
             'isFreeTransportAndPaymentActive' => $this->freeTransportAndPaymentFacade->isActive($domainId),

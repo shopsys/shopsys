@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Cart\Splitting;
+namespace App\Model\Order\Preview;
 
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Product\Type\ProductType;
@@ -10,13 +10,12 @@ use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
-class CartSplittingFacade
+class OrderPreviewSplittingFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
+     * @var \App\Model\Order\Preview\OrderPreviewFactory
      */
     private $orderPreviewFactory;
 
@@ -51,7 +50,7 @@ class CartSplittingFacade
     private $productTypeFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
+     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
@@ -78,33 +77,32 @@ class CartSplittingFacade
     }
 
     /**
-     * @return \App\Model\Cart\Splitting\SplitCartView
+     * @return \App\Model\Order\Preview\SplitOrderPreview
      */
-    public function createSplitCartViewForCurrentCustomer(): SplitCartView
+    public function createSplitOrderPreviewForCurrentCustomer(): SplitOrderPreview
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
         $promoCodeDiscountPercent = $this->findAppliedPromoCodePercentDiscount();
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
 
-        $cartViews = [];
+        $orderPreviews = [];
         foreach ($this->productTypeFacade->getAll() as $productType) {
             $productTypeQuantifiedProducts = $this->filterQuantifiedProductsByProductType($quantifiedProducts, $productType);
             if (count($productTypeQuantifiedProducts) > 0) {
-                $orderPreview = $this->orderPreviewFactory->create(
+                $orderPreviews[] = $this->orderPreviewFactory->create(
                     $currency,
                     $this->domain->getId(),
                     $productTypeQuantifiedProducts,
                     null,
                     null,
                     $this->currentCustomerUser->findCurrentCustomerUser(),
-                    $promoCodeDiscountPercent
+                    $promoCodeDiscountPercent,
+                    $productType
                 );
-
-                $cartViews[] = new CartView($orderPreview, $productType);
             }
         }
 
-        return new SplitCartView($cartViews);
+        return new SplitOrderPreview($orderPreviews);
     }
 
     /**
