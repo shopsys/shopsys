@@ -59,4 +59,28 @@ class ParameterGroupFacade
     {
         return $this->parameterRepository->findParameterGroupByNames($names);
     }
+
+    /**
+     * @param string $akeneoCode
+     * @return \App\Model\Product\Parameter\ParameterGroup|null
+     */
+    public function findParameterGroupByAkeneoCode(string $akeneoCode): ?ParameterGroup
+    {
+        return $this->parameterRepository->findParameterGroupByAkeneoCode($akeneoCode);
+    }
+
+    /**
+     * @param int $parameterGroupId
+     * @param \App\Model\Product\Parameter\ParameterGroupData $parameterGroupData
+     * @return \App\Model\Product\Parameter\ParameterGroup
+     */
+    public function edit(int $parameterGroupId, ParameterGroupData $parameterGroupData)
+    {
+        $parameterGroup = $this->parameterRepository->getParameterGroupById($parameterGroupId);
+        $parameterGroup->edit($parameterGroupData);
+
+        $this->em->flush();
+
+        return $parameterGroup;
+    }
 }

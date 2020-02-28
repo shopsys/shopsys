@@ -165,3 +165,5 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface: '@App\Model\Product\Parameter\ParameterDataFactory'
 
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface: '@App\Model\Product\Parameter\ParameterValueDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade: '@App\Model\Product\Parameter\ParameterFacade'

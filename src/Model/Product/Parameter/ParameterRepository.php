@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -126,6 +127,45 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $akeneoCode
+     * @return \App\Model\Product\Parameter\ParameterGroup|null
+     */
+    public function findParameterGroupByAkeneoCode(string $akeneoCode): ?ParameterGroup
+    {
+        /** @var \App\Model\Product\Parameter\ParameterGroup|null $parameterGroup */
+        $parameterGroup = $this->getParameterGroupRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
+
+        return $parameterGroup;
+    }
+
+    /**
+     * @param int $parameterGroupId
+     * @return \App\Model\Product\Parameter\ParameterGroup
+     */
+    public function getParameterGroupById(int $parameterGroupId): ParameterGroup
+    {
+        $parameterGroup = $this->getParameterGroupRepository()->find($parameterGroupId);
+
+        if ($parameterGroup === null) {
+            throw new ParameterGroupNotFoundException(sprintf('Parameter group with ID %s not found', $parameterGroupId));
+        }
+
+        return $parameterGroup;
+    }
+
+    /**
+     * @param string $akeneoCode
+     * @return \App\Model\Product\Parameter\Parameter|null
+     */
+    public function findParameterByAkeneoCode(string $akeneoCode): ?Parameter
+    {
+        /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
+        $parameter = $this->getParameterRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
+
+        return $parameter;
     }
 
     /**

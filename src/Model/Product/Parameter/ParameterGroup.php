@@ -60,6 +60,15 @@ class ParameterGroup extends AbstractTranslatableEntity
     }
 
     /**
+     * @param \App\Model\Product\Parameter\ParameterGroupData $parameterGroupData
+     */
+    public function edit(ParameterGroupData $parameterGroupData): void
+    {
+        $this->setTranslations($parameterGroupData);
+        $this->orderingPriority = $parameterGroupData->orderingPriority;
+    }
+
+    /**
      * @return \App\Model\Product\Parameter\ParameterGroupTranslation
      */
     protected function createTranslation(): ParameterGroupTranslation
@@ -113,5 +122,13 @@ class ParameterGroup extends AbstractTranslatableEntity
     public function getName($locale = null): ?string
     {
         return $this->translation($locale)->getName();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 }

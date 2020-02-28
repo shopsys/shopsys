@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParamet
  * @ORM\Table(name="parameters")
  * @ORM\Entity
  * @method setTranslations(\App\Model\Product\Parameter\ParameterData $parameterData)
- * @method edit(\App\Model\Product\Parameter\ParameterData $parameterData)
  */
 class Parameter extends BaseParameter
 {
@@ -52,6 +51,18 @@ class Parameter extends BaseParameter
     public function __construct(BaseParameterData $parameterData)
     {
         parent::__construct($parameterData);
+        $this->group = $parameterData->group;
+        $this->akeneoCode = $parameterData->akeneoCode;
+        $this->akeneoType = $parameterData->akeneoType;
+        $this->orderingPriority = $parameterData->orderingPriority;
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\ParameterData $parameterData
+     */
+    public function edit(BaseParameterData $parameterData)
+    {
+        parent::edit($parameterData);
         $this->group = $parameterData->group;
         $this->akeneoCode = $parameterData->akeneoCode;
         $this->akeneoType = $parameterData->akeneoType;
