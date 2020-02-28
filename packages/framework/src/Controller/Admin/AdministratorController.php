@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFa
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -45,24 +46,32 @@ class AdministratorController extends AdminBaseController
     protected $administratorDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade
+     */
+    protected $administratorRolesChangedFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface $administratorDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade $administratorRolesChangedFacade
      */
     public function __construct(
         AdministratorFacade $administratorFacade,
         GridFactory $gridFactory,
         BreadcrumbOverrider $breadcrumbOverrider,
         AdministratorActivityFacade $administratorActivityFacade,
-        AdministratorDataFactoryInterface $administratorDataFactory
+        AdministratorDataFactoryInterface $administratorDataFactory,
+        AdministratorRolesChangedFacade $administratorRolesChangedFacade
     ) {
         $this->administratorFacade = $administratorFacade;
         $this->gridFactory = $gridFactory;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
         $this->administratorActivityFacade = $administratorActivityFacade;
         $this->administratorDataFactory = $administratorDataFactory;
+        $this->administratorRolesChangedFacade = $administratorRolesChangedFacade;
     }
 
     /**
@@ -96,7 +105,7 @@ class AdministratorController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $administrator = $this->administratorFacade->getById($id);
 
@@ -124,6 +133,10 @@ class AdministratorController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->administratorFacade->edit($id, $administratorData);
+
+                if ($loggedUser->getId() === $id) {
+                    $this->administratorRolesChangedFacade->refreshAdministratorToken($administrator);
+                }
 
                 $this->getFlashMessageSender()->addSuccessFlashTwig(
                     t('Administrator <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
