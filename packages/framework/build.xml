@@ -433,10 +433,6 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-data:create"/>
         </exec>
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:recalculations"/>
-        </exec>
     </target>
 
     <target name="domains-db-functions-create" description="Creates new domains DB functions." hidden="true">
