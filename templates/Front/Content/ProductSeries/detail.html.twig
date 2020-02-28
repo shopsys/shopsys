@@ -1,6 +1,7 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
 
 {% set domain = getDomain() %}
+{% set showGalleryMaxCount = 4 %}
 {% block meta_description %}
     {{- productSeries.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
 {% endblock %}
@@ -11,6 +12,7 @@
 
 {% block main_content %}
     <div class="web__line">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/fancybox/jquery.fancybox.min-' ~ getCssVersion() ~ '.css') }}">
         <div class="web__container">
             <div class="box-detail">
                 <div class="box-detail__info">
@@ -31,7 +33,7 @@
                     {% set showGallery = galleryImages|length > 1 %}
                     <div class="box-detail__image__main">
                         {% if imageExists(productSeries) %}
-                            <a href="{{ imageUrl(productSeries, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' : 'js-popup-image' }}">
+                            <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(productSeries, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' }}">
                                 {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
                             </a>
                         {% else %}
@@ -41,21 +43,24 @@
 
                     {% if showGallery %}
                         <div class="box-gallery dont-print js-gallery">
-                            <span class="box-gallery__arrow box-gallery__arrow--prev js-gallery-prev">
-                                <i class="svg svg-arrow"></i>
-                            </span>
                             <div class="box-gallery__in js-gallery-slides">
                                 {% for galleryImage in galleryImages %}
-                                    <div class="box-gallery__item">
-                                        <a href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link js-gallery-slide-link">
-                                            {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false}) }}
+                                    {% if loop.index != 1 %}
+                                        <div class="box-gallery__item js-gallery-item {% if loop.index > showGalleryMaxCount %}display-none{% endif %}">
+                                            <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link">
+                                                {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false}) }}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if galleryImages|length > showGalleryMaxCount %}
+                                    <div class="box-gallery__item js-gallery-item-more">
+                                        <a href="#" class="box-gallery__item__link underline">
+                                            {{ 'Další'|trans }} ({{ galleryImages|length - showGalleryMaxCount }})
                                         </a>
                                     </div>
-                                {% endfor %}
+                                {% endif %}
                             </div>
-                            <span class="box-gallery__arrow box-gallery__arrow--next js-gallery-next">
-                                <i class="svg svg-arrow"></i>
-                            </span>
                         </div>
                     {% endif %}
                 </div>
