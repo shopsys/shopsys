@@ -50,7 +50,7 @@ class OrderFacade extends BaseOrderFacade
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();
 
-            /* @var $quantifiedItemPrice \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice */
+            /** @var \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice */
             $quantifiedItemPrice = $quantifiedItemPrices[$index];
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null $quantifiedItemDiscount */
             $quantifiedItemDiscount = $quantifiedItemDiscounts[$index];
