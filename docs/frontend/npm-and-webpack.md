@@ -151,8 +151,8 @@ You certainly know key word `extend`.
 You can use it in javascript's world now.
 
 ```js
-import CategoryTreeSorting from 'framework/admin/components/categoryTree.sorting';
-import Register from 'framework/common/utils/register';
+import CategoryTreeSorting from 'framework/admin/components/CategoryTreeSorting';
+import Register from 'framework/common/utils/Register';
 
 class MyCategoryTreeSorting extends CategoryTreeSorting {
     constructor ($rootTree, $saveButton) {
