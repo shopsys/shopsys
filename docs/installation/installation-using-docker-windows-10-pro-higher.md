@@ -117,6 +117,9 @@ sudo apt install -y --no-install-recommends composer git
 
 Close console window and open it again so the new configuration is loaded.
 
+!!! note
+    Sometimes something may not work correctly, so we highly recommend you do restart system and continue by guide
+
 ## Shopsys Framework Installation
 ### 1. Create new project from Shopsys Framework sources
 After WSL installation use linux console for each command.  
