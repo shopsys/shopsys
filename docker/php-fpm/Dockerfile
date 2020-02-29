@@ -106,12 +106,6 @@ RUN composer global require hirak/prestissimo
 # set COMPOSER_MEMORY_LIMIT to -1 (i.e. unlimited - this is a hotfix until https://github.com/shopsys/shopsys/issues/634 is solved)
 ENV COMPOSER_MEMORY_LIMIT=-1
 
-USER root
-
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-    sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" > /etc/apt/sources.list.d/PostgreSQL.list' && \
-    apt-get update && apt-get install -y postgresql-12 postgresql-client-12 && apt-get clean
-
 USER www-data
 
 ########################################################################################################################
