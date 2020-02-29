@@ -20,6 +20,7 @@ stages:
     stage: deploy
     needs:
         - build
+    allow_failure: false
     script:
         - apk add --no-cache bash openvpn
         - openvpn --daemon --config $OVPN
@@ -137,7 +138,6 @@ deploy:production:
     only:
         - master
         - /^master-.*$/
-        - pk-e106-merged
     environment:
         name: production
         url: https://prod.eshop.scontodev.cz
@@ -147,7 +147,6 @@ deploy:devel:
     resource_group: deploy_devel
     only:
         - devel
-        - pk-e106-merged
     environment:
         name: devel
         url: https://devel.eshop.scontodev.cz
