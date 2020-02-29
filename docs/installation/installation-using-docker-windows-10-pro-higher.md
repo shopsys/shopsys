@@ -76,24 +76,35 @@ sudo apt install -y --no-install-recommends ruby ruby-dev
 sudo gem install docker-sync
 ```
 
-Download, compile and install unison driver.
+Download, compile and install OCaml.
 ```sh
 sudo apt install -y --no-install-recommends build-essential make wget git
-wget -qO- http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06.0.tar.gz | tar xvz
-cd ocaml-4.06.0
+wget http://caml.inria.fr/pub/distrib/ocaml-4.08/ocaml-4.08.1.tar.gz
+tar xvf ocaml-4.08.1.tar.gz
+cd ocaml-4.08.1
 ./configure
 make world opt
 umask 022
 sudo make install clean
-wget -qO- https://github.com/bcpierce00/unison/archive/v2.51.2.tar.gz | tar xvz
+```
+
+Download, compile and install Unison.
+```sh
+wget https://github.com/bcpierce00/unison/archive/v2.51.2.tar.gz
+tar xvf v2.51.2.tar.gz
 cd unison-2.51.2
+# The implementation src/system.ml does not match the interface system.cmi:curl and needs to be patched
+curl https://github.com/bcpierce00/unison/commit/23fa1292.diff?full_index=1 -o patch.diff
+git apply patch.diff
 make UISTYLE=text
 sudo cp src/unison /usr/local/bin/unison
 sudo cp src/unison-fsmonitor /usr/local/bin/unison-fsmonitor
+```
 
-# remove sources of sync tools
+Remove sources of sync tools
+```sh
 cd ../..
-rm -rf ocaml-4.06.0 *.tar.gz
+rm -rf ocaml-4.08.1 *.tar.gz
 ```
 
 Set timezone of the system as docker-sync requirement.
