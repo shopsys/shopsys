@@ -78,7 +78,7 @@ sudo gem install docker-sync
 
 Download, compile and install unison driver.
 ```sh
-sudo apt install -y --no-install-recommends build-essential make
+sudo apt install -y --no-install-recommends build-essential make wget
 wget -qO- http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06.0.tar.gz | tar xvz
 cd ocaml-4.06.0
 ./configure
