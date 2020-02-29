@@ -9,6 +9,9 @@ services:
     #       tags:
     #           - { name: shopsys.cron, hours: '*', minutes: '*' }
 
+    # Error pages are not generated in production because https://github.com/shopsys/shopsys/issues/1628 Cron
+    Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule: ~
+
     App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '0' }
