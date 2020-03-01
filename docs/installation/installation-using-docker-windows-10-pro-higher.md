@@ -78,7 +78,7 @@ sudo gem install docker-sync
 
 Download, compile and install unison driver.
 ```sh
-sudo apt install -y --no-install-recommends build-essential make wget
+sudo apt install -y --no-install-recommends build-essential make wget git
 wget -qO- http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06.0.tar.gz | tar xvz
 cd ocaml-4.06.0
 ./configure
@@ -112,7 +112,7 @@ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gp
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
 
 sudo apt update
-sudo apt install -y --no-install-recommends composer git
+sudo apt install -y --no-install-recommends composer
 ```
 
 Close console window and open it again so the new configuration is loaded.
