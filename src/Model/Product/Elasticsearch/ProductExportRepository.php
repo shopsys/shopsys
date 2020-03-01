@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+ * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -39,7 +40,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
@@ -110,6 +111,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'main_variant' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             'name_prefix' => $product->getNamePrefix($locale),
             'name_sufix' => $product->getNameSufix($locale),
+            'non_selling_price' => $product->getHighPriceWithVat($domainId)->getAmount(),
         ];
     }
 }

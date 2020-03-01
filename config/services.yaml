@@ -196,7 +196,7 @@ services:
 
     App\Component\Setting\Setting: ~
 
-    Shopsys\FrameworkBundle\COmponent\Elasticsearch\IndexRepository: '@App\Component\Elasticsearch\IndexRepository'
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository: '@App\Component\Elasticsearch\IndexRepository'
 
     Shopsys\FrameworkBundle\Component\Setting\Setting: '@App\Component\Setting\Setting'
 
@@ -228,11 +228,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade: '@App\Model\Product\ProductCachedAttributesFacade'
 
-    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: '@App\Model\Product\Search\Export\ProductSearchExportWithFilterRepository'
-
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: '@App\Model\Product\ProductVisibilityRepository'
 
     App\Model\Product\Search\ProductElasticsearchConverter: ~
+
+    App\Model\Product\Search\FilterQuery: ~
 
     Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery: '@App\Model\Product\Search\FilterQuery'
 

@@ -10,9 +10,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade as BaseP
 
 /**
  * @property \App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
- * @method __construct(\App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization)
+ * @method __construct(\App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser, \App\Model\Product\Parameter\ParameterRepository $parameterRepository, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null getProductSellingPrice(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValues(\App\Model\Product\Product $product)
+ * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  */
 class ProductCachedAttributesFacade extends BaseProductCachedAttributesFacade
 {
