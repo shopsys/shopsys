@@ -20,4 +20,15 @@ class CategoryData extends BaseCategoryData
      * @var string|null
      */
     public $svgIcon;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $shortDescription;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->shortDescription = [];
+    }
 }

@@ -4,5 +4,4 @@ import './ProductDetail';
 import './ProductFilterBox';
 import './productList.AjaxFilter';
 import './productList';
-import './CategoryDescription';
 import './fancybox';

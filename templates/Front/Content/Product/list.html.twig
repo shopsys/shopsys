@@ -23,6 +23,12 @@
             <h1>
                 {{ category.getSeoH1(domain.id)|default(category.name) }}
             </h1>
+            {% if category.getShortDescription(domain.id) %}
+                {{ category.getShortDescription(domain.id)|raw }}
+                {% if category.getDescription(domain.id) %}
+                    <a href="#description">{{ 'Číst dál →'|trans }}</a>
+                {% endif %}
+            {% endif %}
             {% if visibleChildren is not empty %}
                 <h2>{{ 'List of subcategories'|trans }}</h2>
 
@@ -63,6 +69,8 @@
                     </div>
 
                     <div class="box-list__description">
+                        <div class="box-list__description__text in-user-text">
+                        <a id="description"></a>
                         <div class="box-list__description__text in-user-text">
                             {{ category.getDescription(domain.id)|raw }}
                         </div>

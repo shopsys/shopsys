@@ -88,4 +88,41 @@ class Category extends BaseCategory
     {
         return $this->svgIcon;
     }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescription(int $domainId)
+    {
+        return $this->getCategoryDomain($domainId)->getShortDescription();
+    }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     */
+    protected function setDomains(BaseCategoryData $categoryData)
+    {
+        parent::setDomains($categoryData);
+
+        foreach ($this->domains as $categoryDomain) {
+            $domainId = $categoryDomain->getDomainId();
+            $categoryDomain->setShortDescription($categoryData->shortDescription[$domainId]);
+        }
+    }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     */
+    protected function createDomains(BaseCategoryData $categoryData): void
+    {
+        $domainIds = array_keys($categoryData->seoTitles);
+
+        foreach ($domainIds as $domainId) {
+            $categoryDomain = new CategoryDomain($this, $domainId);
+            $this->domains->add($categoryDomain);
+        }
+
+        $this->setDomains($categoryData);
+    }
 }
