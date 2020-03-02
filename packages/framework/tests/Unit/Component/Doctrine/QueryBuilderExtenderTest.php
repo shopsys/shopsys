@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
-use Shopsys\ShopBundle\Model\Product\Product;
+use Tests\FrameworkBundle\Unit\Component\Doctrine\__fixtures\Product;
 
 class QueryBuilderExtenderTest extends TestCase
 {
