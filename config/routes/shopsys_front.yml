@@ -22,6 +22,20 @@ front_cart_delete:
     requirements:
         cartItemId: \d+
 
+front_cart_box_detail:
+    path: /cart/box-detail
+    defaults:
+        _controller: App\Controller\Front\CartController:boxDetailAction
+    condition: "request.isXmlHttpRequest()"
+
+front_cart_delete_ajax:
+    path: /cart/delete-ajax/{cartItemId}/
+    defaults:
+        _controller: App\Controller\Front\CartController:deleteAjaxAction
+    requirements:
+        cartItemId: \d+
+    condition: "request.isXmlHttpRequest()"
+
 front_category_branch:
     path: /categoryPanel/{parentCategoryId}/
     defaults:
@@ -172,3 +186,12 @@ front_download_uploaded_file:
     methods: [GET]
     requirements:
         uploadedFileId: \d+
+
+front_customer_delivery_address_delete:
+    path: /customer/delete-delivery-address/{deliveryAddressId}
+    defaults:
+        _controller: App\Controller\Front\CustomerController:deleteDeliveryAddressAction
+    methods: [GET]
+    requirements:
+        deliveryAddressId: \d+
+

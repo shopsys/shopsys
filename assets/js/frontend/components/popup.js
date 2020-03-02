@@ -1,5 +1,5 @@
 import 'magnific-popup';
-import Register from 'framework/common/utils/register';
+import Register from 'framework/common/utils/Register';
 
 export default class Popup {
 

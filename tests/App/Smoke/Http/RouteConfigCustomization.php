@@ -250,6 +250,20 @@ class RouteConfigCustomization
             ->customizeByRouteName('admin_stock_savesettings', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Route just for save stock setting form, route is always redirected without render own page.')
                     ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_categoryseo_newfilters', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('It is forbidden to create category SEO combinations from category with ID 1 as it is the root category.')
+                    ->setExpectedStatusCode(404);
+                $config->addExtraRequestDataSet('Category SEO combinations from non-root category should be OK.')
+                    ->setParameter('categoryId', 2)
+                    ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_categoryseo_newcombinations', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('It is forbidden to create category SEO combinations from category with ID 1 as it is the root category.')
+                    ->setExpectedStatusCode(404);
+                $config->addExtraRequestDataSet('Category SEO combinations from non-root category should be OK.')
+                    ->setParameter('categoryId', 2)
+                    ->setExpectedStatusCode(200);
             });
     }
 

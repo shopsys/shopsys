@@ -42,6 +42,5 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
-    Symfony\Bundle\AsseticBundle\AsseticBundle::class => ['all' => true],
     Fp\JsFormValidatorBundle\FpJsFormValidatorBundle::class => ['all' => true],
 ];

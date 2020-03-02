@@ -46,7 +46,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade

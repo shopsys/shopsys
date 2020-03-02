@@ -39,7 +39,7 @@ front_order_sent:
     defaults: { _controller: App\Controller\Front\OrderController:sentAction }
 
 front_product_search:
-    path: /hledani
+    path: /hledani/
     defaults: { _controller: App\Controller\Front\ProductController:searchAction }
 
 front_registration_register:

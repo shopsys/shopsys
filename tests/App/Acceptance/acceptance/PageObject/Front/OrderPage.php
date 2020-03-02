@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
+use Facebook\WebDriver\WebDriverBy;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
@@ -136,5 +137,10 @@ class OrderPage extends AbstractPage
     protected function scrollToPaymentForm()
     {
         $this->tester->scrollTo(['css' => '#transport_and_payment_form_payment']);
+    }
+
+    public function clickGoToCartInPopUpWindow(): void
+    {
+        $this->tester->clickByTranslationFrontend('Go to cart', 'messages', [], WebDriverBy::cssSelector('#window-main-container'));
     }
 }

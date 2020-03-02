@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
@@ -48,12 +49,18 @@ class CustomerController extends FrontBaseController
     private $customerUserUpdateDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade
+     */
+    private $deliveryAddressFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      */
     public function __construct(
         CustomerUserFacade $customerUserFacade,
@@ -61,7 +68,8 @@ class CustomerController extends FrontBaseController
         Domain $domain,
         OrderItemPriceCalculation $orderItemPriceCalculation,
         LoginAsUserFacade $loginAsUserFacade,
-        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        DeliveryAddressFacade $deliveryAddressFacade
     ) {
         $this->customerUserFacade = $customerUserFacade;
         $this->orderFacade = $orderFacade;
@@ -69,6 +77,7 @@ class CustomerController extends FrontBaseController
         $this->orderItemPriceCalculation = $orderItemPriceCalculation;
         $this->loginAsUserFacade = $loginAsUserFacade;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
+        $this->deliveryAddressFacade = $deliveryAddressFacade;
     }
 
     /**
@@ -85,12 +94,14 @@ class CustomerController extends FrontBaseController
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->getUser();
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+        $customerUserUpdateData->deliveryAddressData = null;
         $isCompanyCustomer = $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer();
 
         $form = $this->createForm(CustomerUserUpdateFormType::class, $customerUserUpdateData, [
             'domain_id' => $this->domain->getId(),
             'is_company_customer' => $isCompanyCustomer,
         ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -203,5 +214,29 @@ class CustomerController extends FrontBaseController
         }
 
         return $this->redirectToRoute('front_homepage');
+    }
+
+    /**
+     * @param int $deliveryAddressId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteDeliveryAddressAction(int $deliveryAddressId)
+    {
+        if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
+            throw $this->createAccessDeniedException('');
+        }
+
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->getUser();
+
+        $deliveryAddress = $this->deliveryAddressFacade->getById($deliveryAddressId);
+
+        if (in_array($deliveryAddress, $customerUser->getCustomer()->getDeliveryAddresses(), true)) {
+            $this->deliveryAddressFacade->delete($deliveryAddressId);
+
+            return Response::create('OK');
+        } else {
+            throw $this->createAccessDeniedException('');
+        }
     }
 }

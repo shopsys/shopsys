@@ -8,6 +8,9 @@
     "arvenil/ninja-mutex": {
         "version": "0.4.1"
     },
+    "aws/aws-sdk-php": {
+        "version": "3.133.16"
+    },
     "barryvdh/elfinder-flysystem-driver": {
         "version": "v0.2.1"
     },
@@ -16,12 +19,6 @@
     },
     "behat/transliterator": {
         "version": "v1.2.0"
-    },
-    "bmatzner/jquery-bundle": {
-        "version": "2.2.2"
-    },
-    "bmatzner/jquery-ui-bundle": {
-        "version": "1.10.3"
     },
     "codeception/codeception": {
         "version": "2.3",
@@ -199,7 +196,7 @@
         "version": "v5.0.0"
     },
     "fp/jsformvalidator-bundle": {
-        "version": "1.5.1"
+        "version": "1.5-dev"
     },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
@@ -345,6 +342,9 @@
     "league/flysystem": {
         "version": "1.0.57"
     },
+    "league/flysystem-aws-s3-v3": {
+        "version": "1.0.23"
+    },
     "league/flysystem-cached-adapter": {
         "version": "1.0.9"
     },
@@ -353,6 +353,9 @@
     },
     "monolog/monolog": {
         "version": "1.25.1"
+    },
+    "mtdowling/jmespath.php": {
+        "version": "2.5.0"
     },
     "myclabs/deep-copy": {
         "version": "1.9.3"
@@ -736,9 +739,6 @@
     },
     "symfony/asset": {
         "version": "v3.4.33"
-    },
-    "symfony/assetic-bundle": {
-        "version": "v2.8.2"
     },
     "symfony/browser-kit": {
         "version": "v3.4.33"

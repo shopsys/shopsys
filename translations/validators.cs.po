@@ -136,3 +136,5 @@ msgstr "Musíte souhlasit s obchodními podmínkami a zpracováním osobních ú
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
 
+msgid "Please check the entered values.<br>"
+msgstr "Zkontrolujte prosím zadané hodnoty.<br>"

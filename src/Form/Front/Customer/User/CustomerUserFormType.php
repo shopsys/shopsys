@@ -7,6 +7,7 @@ namespace App\Form\Front\Customer\User;
 use App\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
+use Shopsys\FrameworkBundle\Form\DeliveryAddressChoiceType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -76,6 +77,7 @@ class CustomerUserFormType extends AbstractType
                 ],
                 'invalid_message' => 'Passwords do not match',
             ])
+            ->add('defaultDeliveryAddress', DeliveryAddressChoiceType::class)
             ->add('newsletterSubscription', CheckboxType::class, [
                 'required' => false,
             ]);

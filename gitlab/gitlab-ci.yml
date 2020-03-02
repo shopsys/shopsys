@@ -6,12 +6,29 @@ services:
 stages:
     - build
     - test
+    - review
     - deploy
 
 .only-default: &only-default
     only:
         - branches
         - master
+
+.deploy: &deploy
+    image:
+        name: shopsys/kubernetes-buildpack:0.3.0-dev
+    stage: deploy
+    needs:
+        - build
+    allow_failure: false
+    script:
+        - apk add --no-cache bash openvpn
+        - openvpn --daemon --config $OVPN
+        - sleep 10
+        - mkdir -p /root/.kube/
+        - cp $KUBE_CONFIG /root/.kube/config
+        - ./.ci/deploy.sh
+
 
 variables:
     TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
@@ -47,12 +64,12 @@ test:functional:
         - docker-compose up -d
         - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev npm dirs-create test-dirs-create assets db-create test-db-create build-demo-dev-quick error-pages-generate tests"
 
-deploy:review:
-    stage: deploy
+review:
+    stage: review
     environment:
         name: "review/$CI_COMMIT_REF_SLUG"
         url: https://$CI_COMMIT_REF_SLUG.ci.scontodev.cz
-        on_stop: deploy:review:stop
+        on_stop: review:stop
     variables:
         CI_NETWORK: ci_default
         CI_NGINX_PROXY_NETWORK: ci_nginx-proxy-network
@@ -89,8 +106,8 @@ deploy:review:
     tags:
         - review
 
-deploy:review:stop:
-    stage: deploy
+review:stop:
+    stage: review
     variables:
         GIT_STRATEGY: none
         CI_NETWORK: ci_default
@@ -113,3 +130,23 @@ deploy:review:stop:
     environment:
         name: review/$CI_COMMIT_REF_SLUG
         action: stop
+
+deploy:production:
+    <<: *deploy
+    when: manual
+    resource_group: deploy_production
+    only:
+        - master
+        - /^master-.*$/
+    environment:
+        name: production
+        url: https://prod.eshop.scontodev.cz
+
+deploy:devel:
+    <<: *deploy
+    resource_group: deploy_devel
+    only:
+        - devel
+    environment:
+        name: devel
+        url: https://devel.eshop.scontodev.cz

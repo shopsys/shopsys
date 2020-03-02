@@ -1,4 +1,6 @@
-FROM henzigo/shopsys-framework:v9.0.0 as base
+FROM pk16011990/shopsys-framework:9.0-dev1 as base
+
+USER www-data
 
 ########################################################################################################################
 
@@ -38,6 +40,6 @@ COPY --chown=www-data:www-data / /var/www/html
 
 RUN composer install --optimize-autoloader --no-interaction --no-progress --dev
 
-RUN php phing composer-dev npm dirs-create test-dirs-create assets standards tests-unit tests-acceptance-build
+RUN php phing composer-dev dirs-create test-dirs-create assets npm standards tests-unit tests-acceptance-build
 
 RUN ./bin/console shopsys:environment:change prod

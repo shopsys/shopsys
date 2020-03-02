@@ -1,7 +1,8 @@
-import './addProduct';
-import './bestsellingProducts';
-import './productFilterBox';
+import './AddProduct';
+import './BestsellingProducts';
+import './ProductDetail';
+import './ProductFilterBox';
 import './productList.AjaxFilter';
 import './productList';
-import './productListCategoryToggler';
+import './CategoryDescription';
 import './fancybox';

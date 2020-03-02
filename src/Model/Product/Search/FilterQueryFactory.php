@@ -11,7 +11,7 @@ class FilterQueryFactory extends BaseFilterQueryFactory
 {
     /**
      * @param string $indexName
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     * @return \App\Model\Product\Search\FilterQuery
      */
     public function create(string $indexName): BaseFilterQuery
     {

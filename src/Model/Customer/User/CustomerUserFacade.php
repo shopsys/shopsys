@@ -8,7 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as BaseCustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface;
@@ -34,11 +35,11 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface $deliveryAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(
@@ -47,23 +48,35 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         CustomerMailFacade $customerMailFacade,
         BillingAddressFactoryInterface $billingAddressFactory,
-        DeliveryAddressFactoryInterface $deliveryAddressFactory,
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         CustomerUserFactoryInterface $customerUserFactory,
         CustomerUserPasswordFacade $customerUserPasswordFacade,
         CustomerFacade $customerFacade,
+        DeliveryAddressFacade $deliveryAddressFacade,
         NewsletterFacade $newsletterFacade
     ) {
-        parent::__construct($em, $customerUserRepository, $customerUserUpdateDataFactory, $customerMailFacade, $billingAddressFactory, $deliveryAddressFactory, $billingAddressDataFactory, $customerUserFactory, $customerUserPasswordFacade, $customerFacade);
+        parent::__construct(
+            $em,
+            $customerUserRepository,
+            $customerUserUpdateDataFactory,
+            $customerMailFacade,
+            $billingAddressFactory,
+            $billingAddressDataFactory,
+            $customerUserFactory,
+            $customerUserPasswordFacade,
+            $customerFacade,
+            $deliveryAddressFacade
+        );
         $this->newsletterFacade = $newsletterFacade;
     }
 
     /**
      * @param int $customerUserId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @return \App\Model\Customer\User\CustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @return \App\Model\Customer\User\CustomerUser|\App\Model\Customer\User\CustomerUser
      */
-    public function edit($customerUserId, CustomerUserUpdateData $customerUserUpdateData)
+    public function edit($customerUserId, CustomerUserUpdateData $customerUserUpdateData, ?DeliveryAddress $deliveryAddress = null)
     {
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */

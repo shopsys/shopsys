@@ -1,4 +1,4 @@
-import Register from 'framework/common/utils/register';
+import Register from 'framework/common/utils/Register';
 import Translator from 'bazinga-translator';
 
 export default class notImplementedYetTooltip {

@@ -10,9 +10,11 @@ use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview;
 
 /**
  * @property \App\Component\Setting\Setting $setting
+ * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
+ * @property \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository, \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository, \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator, \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository, \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade, \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade, \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade, \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory, \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade, \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface $orderFactory, \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper, \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface $orderItemFactory)
  * @method \App\Model\Order\Order createOrder(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, \App\Model\Customer\User\CustomerUser|null $customerUser)
- * @method \App\Model\Order\Order createOrderFromFront(\App\Model\Order\OrderData $orderData)
+ * @method \App\Model\Order\Order createOrderFromFront(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress)
  * @method sendHeurekaOrderInfo(\App\Model\Order\Order $order, bool $disallowHeurekaVerifiedByCustomers)
  * @method \App\Model\Order\Order edit(int $orderId, \App\Model\Order\OrderData $orderData)
  * @method prefillFrontOrderData(\App\Model\Order\FrontOrderData $orderData, \App\Model\Customer\User\CustomerUser $customerUser)
@@ -29,8 +31,7 @@ use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview;
  * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
  * @method refreshOrderItemsWithoutTransportAndPayment(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
  * @method calculateOrderItemDataPrices(\App\Model\Order\Item\OrderItemData $orderItemData, int $domainId)
- * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
- * @property \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
+ * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress)
  */
 class OrderFacade extends BaseOrderFacade
 {

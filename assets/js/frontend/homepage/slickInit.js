@@ -1,6 +1,5 @@
-import $ from 'jquery';
 import 'slick-carousel';
-import Register from 'framework/common/utils/register';
+import Register from 'framework/common/utils/Register';
 
 export default function slickInit () {
     const $hpSlider = $('#js-slider-homepage');
@@ -37,4 +36,4 @@ export default function slickInit () {
     });
 }
 
-(new Register()).registerCallback(slickInit);
+(new Register()).registerCallback(slickInit, 'slickInit');

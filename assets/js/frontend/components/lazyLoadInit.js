@@ -1,5 +1,5 @@
 import MiniLazyload from 'minilazyload';
-import Register from 'framework/common/utils/register';
+import Register from 'framework/common/utils/Register';
 
 /* eslint-disable no-new */
 new MiniLazyload({
@@ -8,10 +8,10 @@ new MiniLazyload({
     placeholder: '/assets/frontend/images/noimage.png'
 }, '', MiniLazyload.IGNORE_NATIVE_LAZYLOAD);
 
-export function lazyLoadCall (container) {
+export function lazyLoadInit (container) {
     $(container).find('[loading=lazy]').each(function () {
         $(this).attr('src', $(this).data('src')).addClass('loaded');
     });
 }
 
-(new Register()).registerCallback(lazyLoadCall);
+(new Register()).registerCallback(lazyLoadInit);
