@@ -127,7 +127,7 @@ There you can find links to upgrade notes for other versions too.
 
         ```diff
         -   FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.2
-        +   FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.5.1
+        +   FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.6.0
         ```
 
     - remove `_doc` node from mapping in `src/Recources/definition` json files
@@ -153,7 +153,7 @@ There you can find links to upgrade notes for other versions too.
 
         ```diff
         +   kibana:
-        +       image: docker.elastic.co/kibana/kibana-oss:7.5.1
+        +       image: docker.elastic.co/kibana/kibana-oss:7.6.0
         +       container_name: shopsys-framework-kibana
         +       depends_on:
         +           - elasticsearch
