@@ -50,6 +50,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     private $lastProductUpdatedAtFromAkeneo;
 
     /**
+     * @param string $productFilesDir
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator

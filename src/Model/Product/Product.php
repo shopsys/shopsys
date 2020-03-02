@@ -58,8 +58,8 @@ class Product extends BaseProduct
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
-        $this->downloadAssemblyInstructionFiles = false;
-        $this->downloadProductTypePlanFiles = false;
+        $this->downloadAssemblyInstructionFiles = $productData->assemblyInstruction;
+        $this->downloadProductTypePlanFiles = $productData->productTypePlan;
     }
 
     /**
@@ -69,6 +69,8 @@ class Product extends BaseProduct
     public function edit(array $productCategoryDomains, BaseProductData $productData)
     {
         parent::edit($productCategoryDomains, $productData);
+        $this->downloadAssemblyInstructionFiles = $productData->assemblyInstruction;
+        $this->downloadProductTypePlanFiles = $productData->productTypePlan;
     }
 
     /**
@@ -110,6 +112,8 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
+            $productDomain->setAssemblyInstructionCode($productData->assemblyInstructionCode[$domainId]);
+            $productDomain->setProductTypePlanCode($productData->productTypePlanCode[$domainId]);
         }
     }
 
