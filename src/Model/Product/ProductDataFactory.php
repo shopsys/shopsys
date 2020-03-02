@@ -170,6 +170,9 @@ class ProductDataFactory extends BaseProductDataFactory
     {
         parent::fillFromProduct($productData, $product);
 
+        $productData->assemblyInstruction = $product->hasAssemblyInstruction();
+        $productData->productTypePlan = $product->hasProductTypePlan();
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $productData->shortDescriptionUsp1[$domainId] = $product->getShortDescriptionUsp1($domainId);
             $productData->shortDescriptionUsp2[$domainId] = $product->getShortDescriptionUsp2($domainId);

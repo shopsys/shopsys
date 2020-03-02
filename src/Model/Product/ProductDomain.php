@@ -72,6 +72,20 @@ class ProductDomain extends BaseProductDomain
     protected $highPriceWithVat;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $assemblyInstructionCode;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $productTypePlanCode;
+
+    /**
      * @return string|null
      */
     public function getShortDescriptionUsp1(): ?string
@@ -181,5 +195,37 @@ class ProductDomain extends BaseProductDomain
     public function setHighPriceWithVat(?Money $highPriceWithVat): void
     {
         $this->highPriceWithVat = $highPriceWithVat;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAssemblyInstructionCode(): ?string
+    {
+        return $this->assemblyInstructionCode;
+    }
+
+    /**
+     * @param string|null $assemblyInstructionCode
+     */
+    public function setAssemblyInstructionCode(?string $assemblyInstructionCode): void
+    {
+        $this->assemblyInstructionCode = $assemblyInstructionCode;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductTypePlanCode(): ?string
+    {
+        return $this->productTypePlanCode;
+    }
+
+    /**
+     * @param string|null $productTypePlanCode
+     */
+    public function setProductTypePlanCode(?string $productTypePlanCode): void
+    {
+        $this->productTypePlanCode = $productTypePlanCode;
     }
 }

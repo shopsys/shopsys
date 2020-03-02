@@ -31,3 +31,7 @@ services:
     App\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
         tags:
             - { name: shopsys.cron, hours: '23', minutes: '10' }
+
+    App\Component\Akeneo\Transfer\MediaFiles\AkeneoMediaFilesCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '23', minutes: '10' }

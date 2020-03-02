@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Component\Akeneo\Transfer\MediaFiles;
+
+use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
+use Psr\Http\Message\ResponseInterface;
+
+class MediaFilesTransferAkeneoFacade
+{
+    public const PAGE_SIZE_LIMIT = 50;
+    public const API_AKENEO_DATETIME_FORMAT = 'Y-m-d H:i:s';
+
+    /**
+     * @var \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface
+     */
+    private $akeneoClient;
+
+    /**
+     * @param \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface $akeneoClient
+     */
+    public function __construct(AkeneoPimEnterpriseClientInterface $akeneoClient)
+    {
+        $this->akeneoClient = $akeneoClient;
+    }
+
+    /**
+     * @param string $code
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getMediaFile(string $code): ResponseInterface
+    {
+        $response = $this->akeneoClient->getAssetMediaFileApi()->download($code);
+        return $response;
+    }
+}

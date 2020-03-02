@@ -74,6 +74,26 @@ class ProductData extends BaseProductData
      */
     public $highPriceWithoutVat;
 
+    /**
+     * @var bool
+     */
+    public $assemblyInstruction = false;
+
+    /**
+     * @var bool
+     */
+    public $productTypePlan = false;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $assemblyInstructionCode;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $productTypePlanCode;
+
     public function __construct()
     {
         parent::__construct();
@@ -90,5 +110,7 @@ class ProductData extends BaseProductData
         $this->highPriceWithVat = [];
         $this->lowPriceWithoutVat = [];
         $this->highPriceWithoutVat = [];
+        $this->assemblyInstructionCode = [];
+        $this->productTypePlanCode = [];
     }
 }

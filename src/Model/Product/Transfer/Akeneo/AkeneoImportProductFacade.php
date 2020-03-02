@@ -6,7 +6,9 @@ namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
+use App\Component\Akeneo\Transfer\MediaFiles\AkeneoImportMediaFilesFacade;
 use App\Component\Setting\Setting;
+use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use DateTime;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -49,6 +51,22 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     private $lastProductUpdatedAtFromAkeneo;
 
     /**
+     * @var int[]
+     */
+    private $processedProductFilesSetupList = [];
+
+    /**
+     * @var \App\Component\Akeneo\Transfer\MediaFiles\AkeneoImportMediaFilesFacade
+     */
+    private $akeneoImportMediaFilesFacade;
+
+    /**
+     * @var string
+     */
+    private $productFilesDir;
+
+    /**
+     * @param string $productFilesDir
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
@@ -56,24 +74,29 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Component\Setting\Setting $setting
+     * @param \App\Component\Akeneo\Transfer\MediaFiles\AkeneoImportMediaFilesFacade $akeneoImportMediaFilesFacade
      */
     public function __construct(
+        string $productFilesDir,
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
         ProductTransferAkeneoFacade $productTransferAkeneoFacade,
         ProductTransferAkeneoValidator $productTransferAkeneoValidator,
         ProductTransferAkeneoMapper $productTransferAkeneoMapper,
         ProductFacade $productFacade,
         ProductVisibilityFacade $productVisibilityFacade,
-        Setting $setting
+        Setting $setting,
+        AkeneoImportMediaFilesFacade $akeneoImportMediaFilesFacade
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
+        $this->productFilesDir = $productFilesDir;
         $this->productTransferAkeneoFacade = $productTransferAkeneoFacade;
         $this->productTransferAkeneoValidator = $productTransferAkeneoValidator;
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
         $this->productFacade = $productFacade;
         $this->productVisibilityFacade = $productVisibilityFacade;
         $this->setting = $setting;
+        $this->akeneoImportMediaFilesFacade = $akeneoImportMediaFilesFacade;
     }
 
     /**
@@ -109,20 +132,24 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 
         if ($product === null) {
             $this->logger->addInfo(sprintf('Creating product catnum: %s', $productData->catnum));
-            $this->productFacade->create($productData);
+            $product = $this->productFacade->create($productData);
         } else {
             $this->logger->addInfo(sprintf('Updating product catnum: %s', $product->getCatnum()));
-            $this->productFacade->edit($product->getId(), $productData);
+            $product = $this->productFacade->edit($product->getId(), $productData);
         }
+
+        $this->logProductForImportFiles($product, $akeneoProductData);
 
         $this->setLastUpdatedProduct($akeneoProductData['updated']);
     }
 
     protected function doAfterTransfer(): void
     {
-        $this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
+        //$this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
         $this->logger->addInfo('Transfer is done.');
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
+
+        $this->importProductFiles();
     }
 
     /**
@@ -135,6 +162,51 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         if ($lastUpdatedDateTime > $this->lastProductUpdatedAtFromAkeneo) {
             $this->lastProductUpdatedAtFromAkeneo = $lastUpdatedDateTime;
         }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoProductData
+     */
+    private function logProductForImportFiles(Product $product, array $akeneoProductData): void
+    {
+        //d($akeneoProductData);
+        $assemblyInstruction = $akeneoProductData['values']['assembly_instruction'][0]['data'] ?? null;
+        $productTypePlan = $akeneoProductData['values']['product_type_plan'][0]['data'] ?? null;
+        if ($assemblyInstruction !== null || $productTypePlan !== null) {
+            $this->processedProductFilesSetupList[] = [
+                'productId' => $product->getId(),
+                'assembly_instruction' => $assemblyInstruction,
+                'product_type_plan' => $productTypePlan,
+            ];
+        }
+    }
+
+    private function importProductFiles(): void
+    {
+        foreach ($this->processedProductFilesSetupList as $productSetup) {
+            $product = $this->productFacade->getById($productSetup['productId']);
+            //set from productSetup
+            $domainId = 1;
+            if ($productSetup['assembly_instruction'] !== null) {
+                $this->importProductAsset($productSetup['assembly_instruction'], $this->productFacade->getAssemblyInstructionFilename($product, $domainId));
+                $product->setAssemblyInstruction(true);
+            }
+
+            if ($productSetup['product_type_plan'] !== null) {
+                $this->importProductAsset($productSetup['product_type_plan'], $this->productFacade->getProductTypePlanFilename($product, $domainId));
+                $product->setProductTypePlan(true);
+            }
+        }
+    }
+
+    /**
+     * @param string $code
+     * @param string $fileName
+     */
+    private function importProductAsset(string $code, string $fileName): void
+    {
+        $this->akeneoImportMediaFilesFacade->downloadMediaFile($code, $this->productFilesDir, $fileName);
     }
 
     /**

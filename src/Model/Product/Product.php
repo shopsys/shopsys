@@ -32,10 +32,21 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection $translations
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
- * @method edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
  */
 class Product extends BaseProduct
 {
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $assemblyInstruction;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $productTypePlan;
+
     /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
@@ -43,6 +54,19 @@ class Product extends BaseProduct
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
+        $this->assemblyInstruction = $productData->assemblyInstruction;
+        $this->productTypePlan = $productData->productTypePlan;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
+     * @param \App\Model\Product\ProductData $productData
+     */
+    public function edit(array $productCategoryDomains, BaseProductData $productData)
+    {
+        parent::edit($productCategoryDomains, $productData);
+        $this->assemblyInstruction = $productData->assemblyInstruction;
+        $this->productTypePlan = $productData->productTypePlan;
     }
 
     /**
@@ -84,6 +108,8 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
+            $productDomain->setAssemblyInstructionCode($productData->assemblyInstructionCode[$domainId]);
+            $productDomain->setProductTypePlanCode($productData->productTypePlanCode[$domainId]);
         }
     }
 
@@ -232,5 +258,55 @@ class Product extends BaseProduct
             . ' '
             . $this->getNameSufix($locale)
         );
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAssemblyInstruction(): bool
+    {
+        return $this->assemblyInstruction;
+    }
+
+    /**
+     * @param bool $assemblyInstruction
+     */
+    public function setAssemblyInstruction(bool $assemblyInstruction): void
+    {
+        $this->assemblyInstruction = $assemblyInstruction;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasProductTypePlan(): bool
+    {
+        return $this->productTypePlan;
+    }
+
+    /**
+     * @param bool $productTypePlan
+     */
+    public function setProductTypePlan(bool $productTypePlan): void
+    {
+        $this->productTypePlan = $productTypePlan;
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getAssemblyInstructionCode(int $domainId): ?string
+    {
+        return $this->getProductDomain($domainId)->getAssemblyInstructionCode();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getProductTypePlanCode(int $domainId): ?string
+    {
+        return $this->getProductDomain($domainId)->getProductTypePlanCode();
     }
 }
