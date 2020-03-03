@@ -1,9 +1,39 @@
 <div class="footer">
-    <div class="web__line clearfix dont-print">
-        <div class="web__container">
-            {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction')) }}
+    {# TODO: Domluvit s programmerem a s PO, aby se vracel obecný priznak - tj. ze jsem v pokladne a podle toho to opodminkovat #}
+    {# PO informovan v ukole SD-376 #}
+    {% if (cart is not defined) and (payments is not defined) %}
+        <div class="web__line clearfix dont-print">
+            <div class="web__container">
+                {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction')) }}
+            </div>
         </div>
-    </div>
+        <div class="web__line">
+            <div class="web__container">
+                <div class="box-info">
+                    <picture>
+                        <source srcset="{{ asset('assets/frontend/images/potrebujete_poradit2x.png') }} 2x" />
+                        <img class="box-info__img" src="{{ asset('assets/frontend/images/potrebujete_poradit.png') }}" alt="{{ 'Potřebujete poradit?'|trans }}">
+                    </picture>
+                    <div class="box-info__content">
+                        <div class="box-info__text">
+                            <h2 class="box-info__title">{{ 'Potřebujete poradit?'|trans }}</h2>
+                            <span class="box-info__hours">{{ 'Po-Pá 8-19h  |  So-Ne 8-16h'|trans }}</span>
+                        </div>
+                        <div class="box-info__contacts">
+                            <a href="tel:257 893 893" class="box-info__contacts__link">
+                                <i class="box-info__contacts__icon box-info__contacts__icon--phone svg svg-phone"></i>
+                                <span class="box-info__contacts__text">{{ '257 893 893'|trans }}</span>
+                            </a>
+                            <a href="mailto:info@sconto.cz" class="box-info__contacts__link">
+                                <i class="box-info__contacts__icon svg svg-email"></i>
+                                <span class="box-info__contacts__text">{{ 'info@sconto.cz'|trans }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     <div class="web__line web__line--grey web__line--grey-bottom-border clearfix dont-print">
         <div class="web__container footer__wrap">
             <div class="footer__block">
