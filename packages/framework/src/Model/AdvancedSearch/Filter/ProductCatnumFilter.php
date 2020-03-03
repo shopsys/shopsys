@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ProductCatnumFilter implements AdvancedSearchFilterInterface
@@ -82,5 +83,7 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
             case self::OPERATOR_NOT_CONTAINS:
                 return 'NOT LIKE';
         }
+
+        throw new AdvancedSearchFilterOperatorNotFoundException($operator);
     }
 }

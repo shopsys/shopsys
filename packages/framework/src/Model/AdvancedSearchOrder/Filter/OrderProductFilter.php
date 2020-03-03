@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Form\ProductType;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 
 class OrderProductFilter implements AdvancedSearchFilterInterface
@@ -80,5 +81,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
             case self::OPERATOR_NOT_CONTAINS:
                 return 'NOT EXISTS';
         }
+
+        throw new AdvancedSearchFilterOperatorNotFoundException($operator);
     }
 }
