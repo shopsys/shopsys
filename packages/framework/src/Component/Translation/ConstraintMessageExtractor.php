@@ -77,6 +77,8 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
                 $this->extractMessagesFromOptions($node->args[0]->value);
             }
         }
+
+        return null;
     }
 
     /**

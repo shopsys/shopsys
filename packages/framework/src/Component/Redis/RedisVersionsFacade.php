@@ -51,6 +51,6 @@ class RedisVersionsFacade
                 }
                 $this->globalClient->unlink($toRemove);
             }
-        } while ($iterator > 0);
+        } while (is_numeric($iterator) && $iterator > 0);
     }
 }

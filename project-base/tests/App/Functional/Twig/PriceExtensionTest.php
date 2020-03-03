@@ -113,20 +113,20 @@ class PriceExtensionTest extends FunctionalTestCase
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface $currencyFactory */
         $currencyFactory = $this->getContainer()->get(CurrencyFactoryInterface::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface $currencyFactory */
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface $currencyDataFactory */
         $currencyDataFactory = $this->getContainer()->get(CurrencyDataFactoryInterface::class);
 
         $domain1DefaultCurrencyData = $currencyDataFactory->create();
         $domain1DefaultCurrencyData->name = 'Czech crown';
         $domain1DefaultCurrencyData->code = Currency::CODE_CZK;
-        $domain1DefaultCurrencyData->exchangeRate = 1;
+        $domain1DefaultCurrencyData->exchangeRate = '1';
         $domain1DefaultCurrencyData->minFractionDigits = 2;
         $domain1DefaultCurrencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
 
         $domain2DefaultCurrencyData = $currencyDataFactory->create();
         $domain2DefaultCurrencyData->name = 'Euro';
         $domain2DefaultCurrencyData->code = Currency::CODE_EUR;
-        $domain2DefaultCurrencyData->exchangeRate = 25;
+        $domain2DefaultCurrencyData->exchangeRate = '25';
         $domain1DefaultCurrencyData->minFractionDigits = 2;
         $domain1DefaultCurrencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
 

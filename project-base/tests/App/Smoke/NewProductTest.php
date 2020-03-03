@@ -126,7 +126,9 @@ class NewProductTest extends FunctionalTestCase
                 'product_form[pricesGroup][productCalculatedPricesGroup][vatsIndexedByDomainId][%s]',
                 $domainId
             );
-            $form[$inputName] = $vat->getId();
+            $form->setValues([
+                $inputName => $vat->getId(),
+            ]);
         }
     }
 }

@@ -86,6 +86,8 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
         } elseif ($node instanceof MethodCall && $this->isAddViolationMethodCall($node)) {
             $this->extractMessage($node);
         }
+
+        return null;
     }
 
     /**
@@ -161,6 +163,8 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
         if ($node instanceof ClassMethod) {
             $this->currentExecutionContextVariableNames = [];
         }
+
+        return null;
     }
 
     /**

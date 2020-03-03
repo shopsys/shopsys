@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Webmozart\Assert\Assert;
 
 /**
  * @ORM\Table(name="cart_items")
@@ -86,7 +87,7 @@ class CartItem
      */
     public function changeQuantity(int $newQuantity): void
     {
-        if (filter_var($newQuantity, FILTER_VALIDATE_INT) === false || $newQuantity <= 0) {
+        if (Assert::integer($newQuantity) === false || $newQuantity <= 0) {
             throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($newQuantity);
         }
 

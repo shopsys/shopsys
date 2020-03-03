@@ -18,6 +18,8 @@ class ScriptPlacementToBooleanTransformer implements DataTransformerInterface
         } elseif ($scriptPlacement === Script::PLACEMENT_ALL_PAGES) {
             return false;
         }
+
+        return false;
     }
 
     /**

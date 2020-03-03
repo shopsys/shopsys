@@ -227,11 +227,9 @@ class RoundingTest extends TestCase
 
             case 2:
                 return Currency::ROUNDING_TYPE_FIFTIES;
-                break;
 
             case 3:
                 return Currency::ROUNDING_TYPE_INTEGER;
-                break;
 
             default:
                 throw new InvalidCurrencyRoundingTypeException(

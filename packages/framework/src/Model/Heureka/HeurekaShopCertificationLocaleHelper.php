@@ -50,5 +50,7 @@ class HeurekaShopCertificationLocaleHelper
         } elseif ($locale === 'sk') {
             return 'Heureka.sk';
         }
+
+        return null;
     }
 }

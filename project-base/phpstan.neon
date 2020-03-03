@@ -1,37 +1,24 @@
 parameters:
+
+    treatPhpDocTypesAsCertain: false
+
     ignoreErrors:
         -
+            # We need to have undefined variable for testing purposes
+            message: '#^Undefined variable: \$undefined$#'
+            path: %currentWorkingDirectory%/src/Controller/Test/ErrorHandlerController.php
+        -
+            # We need to have undefined variable for testing purposes
+            message: '#^Expression "\$undefined\[42\]" on a separate line does not do anything\.$#'
+            path: %currentWorkingDirectory%/src/Controller/Test/ErrorHandlerController.php
+        -
             # Ignore annotations in generated code
-            message: '#^PHPDoc tag @(param|return) has invalid value (.|\n)+ expected TOKEN_IDENTIFIER at offset \d+$#'
+            message: '#^PHPDoc tag @(param|return) has invalid value (.|\n)+ expected type at offset \d+$#'
             path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
             path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
-        -
-            # In data fixtures, we often access persistent references using $this->getReference()
-            message: '#^Property (App|Shopsys)\\.+::\$.+ \((App|Shopsys)\\.+\) does not accept object\.$#'
-            path: %currentWorkingDirectory%/src/DataFixtures/*
-        -
-            # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
-            message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
-            path: %currentWorkingDirectory%/tests/App/*
-        -
-            # In tests, there are helper methods for grabbing services using $container->get()
-            message: '#^Method .+::.+\(\) should return .+ but returns (object|object\|null)\.$#'
-            path: %currentWorkingDirectory%/tests/App/*
-        -
-            # Actually, we are setting an array item using "$array[] = $this->getReference()"
-            message: '#^Array \(array<.+>\) does not accept object\.$#'
-            path: %currentWorkingDirectory%/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php
-        -
-            # Actually, we are setting an array item using "$array[] = $this->getReference()"
-            message: '#^Array \(array<.+>\) does not accept object\.$#'
-            path: %currentWorkingDirectory%/src/DataFixtures/Demo/ProductDataFixture.php
-        -
-            # We need to have undefined variable for testing purposes
-            message: '#^Undefined variable: \$undefined$#'
-            path: %currentWorkingDirectory%/src/Controller/Test/ErrorHandlerController.php
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

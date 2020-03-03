@@ -63,7 +63,7 @@ class MailerSettingExtension extends AbstractExtension
      */
     public function isMailerSettingUnusual()
     {
-        return $this->isDeliveryDisabled || (!$this->isDeliveryDisabled && $this->mailerMasterEmailAddress !== null);
+        return $this->isDeliveryDisabled || ($this->isDeliveryDisabled === false && $this->mailerMasterEmailAddress !== null);
     }
 
     /**
