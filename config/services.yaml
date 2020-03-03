@@ -31,6 +31,10 @@ services:
                 local: '@local_filesystem'
                 main: '@main_filesystem'
 
+    App\Component\Doctrine\QueryBuilderExtender: ~
+
+    Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: '@App\Component\Doctrine\QueryBuilderExtender'
+
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
         class: 'App\Model\Customer\User\CustomerUserUpdateDataFactory'
 
@@ -220,7 +224,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: '@App\Model\Product\ProductOnCurrentDomainFacade'
 
+    Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository: '@App\Model\Product\Filter\PriceRangeRepository'
+
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation: '@App\Model\Product\Pricing\ProductPriceCalculation'
+
+    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminRepository: '@App\Model\Product\Listing\ProductListAdminRepository'
 
     App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
 
