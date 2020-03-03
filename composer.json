@@ -118,7 +118,6 @@
         "psr/log": "^1.0",
         "ramsey/uuid": "^3.8",
         "roave/better-reflection": "^3.5",
-        "sensio/framework-extra-bundle": "^5.5.3",
         "sensiolabs/security-checker": "^6.0",
         "shopsys/doctrine-orm": "^2.6.2",
         "shopsys/ordered-form": "^4.0",
