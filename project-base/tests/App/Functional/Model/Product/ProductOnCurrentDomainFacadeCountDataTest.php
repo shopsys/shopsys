@@ -41,7 +41,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     protected $productOnCurrentDomainFacade;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->productOnCurrentDomainFacade = $this->getProductOnCurrentDomainFacade();
@@ -90,7 +90,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $this->skipTestIfFirstDomainIsNotInEnglish();
 
         foreach ($this->searchTestCasesProvider() as $dataProvider) {
-            /** @var string $category */
+            /** @var string $searchText */
             $searchText = $dataProvider[0];
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData */
             $filterData = $dataProvider[1];

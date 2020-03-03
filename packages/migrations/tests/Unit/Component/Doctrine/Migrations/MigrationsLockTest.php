@@ -20,13 +20,13 @@ class MigrationsLockTest extends TestCase
      */
     private $migrationsLock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         copy(self::MIGRATION_LOCK_TEMPLATE, self::MIGRATION_LOCK);
         $this->migrationsLock = $this->createNewMigrationsLock();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unlink(self::MIGRATION_LOCK);
     }

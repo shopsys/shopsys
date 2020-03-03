@@ -14,7 +14,7 @@ class HeurekaDeliveryFeedItemTest extends TestCase
      */
     private $heurekaDeliveryFeedItemFactory;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->heurekaDeliveryFeedItemFactory = new HeurekaDeliveryFeedItemFactory();
     }

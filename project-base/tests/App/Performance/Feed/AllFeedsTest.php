@@ -36,7 +36,7 @@ class AllFeedsTest extends KernelTestCase
      */
     private $minDuration;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

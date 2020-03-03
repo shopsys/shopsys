@@ -20,7 +20,7 @@ class OauthTestCase extends FunctionalTestCase
      */
     private $connection;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->connection = $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection();
@@ -39,7 +39,7 @@ class OauthTestCase extends FunctionalTestCase
         }
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->removeOauthClientFromDatabase();
     }

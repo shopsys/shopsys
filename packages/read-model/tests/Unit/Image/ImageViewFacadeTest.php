@@ -16,10 +16,12 @@ class ImageViewFacadeTest extends TestCase
     private const IMAGE_EXTENSION = 'jpg';
     private const NOT_EXISTING_PRODUCT_ID = 800;
 
-    /** @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade */
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
+     */
     private $imageFacadeMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

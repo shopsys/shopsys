@@ -33,7 +33,7 @@ class PriceExtensionTest extends FunctionalTestCase
      */
     private $currencyFormatterFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $domainConfig1 = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com', 'example', 'en');
         $domainConfig2 = new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'example', 'cs');

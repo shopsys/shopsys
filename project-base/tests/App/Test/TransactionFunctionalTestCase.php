@@ -14,14 +14,14 @@ abstract class TransactionFunctionalTestCase extends FunctionalTestCase
         return $this->getContainer()->get('doctrine.orm.entity_manager');
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->getEntityManager()->beginTransaction();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->getEntityManager()->rollback();
 

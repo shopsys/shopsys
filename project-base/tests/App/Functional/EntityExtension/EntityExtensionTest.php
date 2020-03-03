@@ -54,7 +54,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
      */
     private $entityNameResolver;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->em = $this->getEntityManager();

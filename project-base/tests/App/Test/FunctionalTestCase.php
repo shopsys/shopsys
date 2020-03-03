@@ -43,7 +43,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpDomain();

@@ -38,7 +38,7 @@ class TranslatorTest extends TestCase
      */
     private $translator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->originalTranslatorMock = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $this->originalTranslatorBagMock = $this->getMockBuilder(TranslatorBagInterface::class)->getMock();
