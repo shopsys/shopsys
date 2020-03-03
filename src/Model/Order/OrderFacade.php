@@ -256,10 +256,10 @@ class OrderFacade extends BaseOrderFacade
         foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
             $this->fillOrderProducts($order, $orderPreview, $locale);
             $this->fillOrderTransport($order, $orderPreview, $locale);
-            $this->fillOrderRounding($order, $orderPreview, $locale);
         }
 
         $this->fillOrderPaymentBySplitOrderPreview($order, $splitOrderPreview, $locale);
+        $this->fillOrderRoundingBySplitOrderPreview($order, $splitOrderPreview, $locale);
     }
 
     /**
@@ -285,6 +285,28 @@ class OrderFacade extends BaseOrderFacade
             $payment
         );
         $order->addItem($orderPayment);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
+     * @param string $locale
+     */
+    private function fillOrderRoundingBySplitOrderPreview(Order $order, SplitOrderPreview $splitOrderPreview, string $locale): void
+    {
+        $roundingPrice = $splitOrderPreview->getRoundingPrice();
+        if ($roundingPrice !== null) {
+            $this->orderItemFactory->createProduct(
+                $order,
+                t('Rounding', [], 'messages', $locale),
+                $roundingPrice,
+                '0',
+                1,
+                null,
+                null,
+                null
+            );
+        }
     }
 
     /**
