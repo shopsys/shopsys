@@ -101,10 +101,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation: ~
 
-    Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass: ~
-
-    Shopsys\FrameworkBundle\Component\Javascript\Compiler\Translator\JsTranslatorCompilerPass: ~
-
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade: ~
 
     Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository: ~

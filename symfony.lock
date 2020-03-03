@@ -614,9 +614,6 @@
     "shopsys/doctrine-orm": {
         "version": "v2.6.3"
     },
-    "shopsys/jparser": {
-        "version": "0.1"
-    },
     "shopsys/ordered-form": {
         "version": "4.0.0"
     },
