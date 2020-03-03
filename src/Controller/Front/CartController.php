@@ -145,7 +145,7 @@ class CartController extends FrontBaseController
             $domainId
         );
 
-        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer();
+        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer(null);
 
         return $this->render('Front/Content/Cart/index.html.twig', [
             'splitOrderPreview' => $splitOrderPreview,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Order\OrderData;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Product\Type\ProductType;
 use App\Model\Product\Type\ProductTypeFacade;
@@ -77,13 +78,21 @@ class OrderPreviewSplittingFacade
     }
 
     /**
+     * @param \App\Model\Order\OrderData|null $orderData
      * @return \App\Model\Order\Preview\SplitOrderPreview
      */
-    public function createSplitOrderPreviewForCurrentCustomer(): SplitOrderPreview
+    public function createSplitOrderPreviewForCurrentCustomer(?OrderData $orderData): SplitOrderPreview
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
         $promoCodeDiscountPercent = $this->findAppliedPromoCodePercentDiscount();
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
+
+        $transport = null;
+        $payment = null;
+        if ($orderData !== null) {
+            $transport = $orderData->transport;
+            $payment = $orderData->payment;
+        }
 
         $orderPreviews = [];
         foreach ($this->productTypeFacade->getAll() as $productType) {
@@ -93,8 +102,8 @@ class OrderPreviewSplittingFacade
                     $currency,
                     $this->domain->getId(),
                     $productTypeQuantifiedProducts,
-                    null,
-                    null,
+                    $transport,
+                    $payment,
                     $this->currentCustomerUser->findCurrentCustomerUser(),
                     $promoCodeDiscountPercent,
                     $productType

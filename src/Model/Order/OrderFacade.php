@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use App\Model\Order\Item\OrderItemDataFactory;
+use App\Model\Order\Preview\OrderPreviewSplittingFacade;
+use App\Model\Order\Preview\SplitOrderPreview;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress as BaseDeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -22,6 +26,8 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
+use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
+use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository;
@@ -59,6 +65,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
  * @property \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
+ * @property \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
  * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress)
  */
 class OrderFacade extends BaseOrderFacade
@@ -67,6 +74,11 @@ class OrderFacade extends BaseOrderFacade
      * @var \App\Model\Order\Item\OrderItemDataFactory
      */
     private $orderItemDataFactory;
+
+    /**
+     * @var \App\Model\Order\Preview\OrderPreviewSplittingFacade
+     */
+    private $cartSplittingFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -96,6 +108,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \App\Model\Order\Item\OrderItemFactory $orderItemFactory
      * @param \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $cartSplittingFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -124,7 +137,8 @@ class OrderFacade extends BaseOrderFacade
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
         OrderItemFactoryInterface $orderItemFactory,
-        OrderItemDataFactory $orderItemDataFactory
+        OrderItemDataFactory $orderItemDataFactory,
+        OrderPreviewSplittingFacade $cartSplittingFacade
     ) {
         parent::__construct(
             $em,
@@ -155,6 +169,96 @@ class OrderFacade extends BaseOrderFacade
             $orderItemFactory
         );
         $this->orderItemDataFactory = $orderItemDataFactory;
+        $this->cartSplittingFacade = $cartSplittingFacade;
+    }
+
+    /**
+     * @param \App\Model\Order\OrderData $orderData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @return \App\Model\Order\Order
+     */
+    public function createOrderFromFront(OrderData $orderData, ?DeliveryAddress $deliveryAddress)
+    {
+        $promoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
+        if ($promoCode) {
+            $promoCode->decreaseRemainingUses();
+        }
+
+        $orderData->status = $this->orderStatusRepository->getDefault();
+        $splitOrderPreview = $this->cartSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        $this->updateOrderDataWithDeliveryAddress($orderData, $deliveryAddress);
+
+        $order = $this->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, $customerUser);
+        $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
+
+        $this->cartFacade->deleteCartOfCurrentCustomerUser();
+        $this->currentPromoCodeFacade->removeEnteredPromoCode();
+
+        if ($customerUser instanceof CustomerUser) {
+            $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
+        }
+
+        return $order;
+    }
+
+    /**
+     * @param \App\Model\Order\OrderData $orderData
+     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     *
+     * @return \App\Model\Order\Order
+     */
+    public function createOrderBySplitOrderPreview(OrderData $orderData, SplitOrderPreview $splitOrderPreview, ?CustomerUser $customerUser): Order
+    {
+        $orderNumber = (string)$this->orderNumberSequenceRepository->getNextNumber();
+        $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
+        $toFlush = [];
+
+        $this->setOrderDataAdministrator($orderData);
+
+        /** @var \App\Model\Order\Order $order */
+        $order = $this->orderFactory->create(
+            $orderData,
+            $orderNumber,
+            $orderUrlHash,
+            $customerUser
+        );
+        $toFlush[] = $order;
+
+        $this->fillOrderItemsBySplitOrderPreview($order, $splitOrderPreview);
+
+        foreach ($order->getItems() as $orderItem) {
+            $this->em->persist($orderItem);
+            $toFlush[] = $orderItem;
+        }
+
+        $order->setTotalPrice(
+            $this->orderPriceCalculation->getOrderTotalPrice($order)
+        );
+
+        $this->em->persist($order);
+        $this->em->flush($toFlush);
+
+        return $order;
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
+     */
+    protected function fillOrderItemsBySplitOrderPreview(Order $order, SplitOrderPreview $splitOrderPreview): void
+    {
+        $locale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
+
+        foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
+            $this->fillOrderProducts($order, $orderPreview, $locale);
+            $this->fillOrderPayment($order, $orderPreview, $locale);
+            $this->fillOrderTransport($order, $orderPreview, $locale);
+            $this->fillOrderRounding($order, $orderPreview, $locale);
+        }
     }
 
     /**
@@ -162,7 +266,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
-    protected function fillOrderProducts(Order $order, OrderPreview $orderPreview, string $locale): void
+    protected function fillOrderProducts(BaseOrder $order, OrderPreview $orderPreview, string $locale): void
     {
         $quantifiedItemPrices = $orderPreview->getQuantifiedItemsPrices();
         $quantifiedItemDiscounts = $orderPreview->getQuantifiedItemsDiscounts();
@@ -199,28 +303,11 @@ class OrderFacade extends BaseOrderFacade
     }
 
     /**
-     * @param \App\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @return \App\Model\Order\Order
-     */
-    public function createOrderFromFront(BaseOrderData $orderData, ?BaseDeliveryAddress $deliveryAddress)
-    {
-        $promoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
-        if ($promoCode) {
-            $promoCode->decreaseRemainingUses();
-        }
-
-        /** @var \App\Model\Order\Order $order */
-        $order = parent::createOrderFromFront($orderData, $deliveryAddress);
-        return $order;
-    }
-
-    /**
      * @param \App\Model\Order\Order $order
      * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
-    protected function fillOrderTransport(Order $order, OrderPreview $orderPreview, string $locale): void
+    protected function fillOrderTransport(BaseOrder $order, OrderPreview $orderPreview, string $locale): void
     {
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $orderPreview->getTransport();
