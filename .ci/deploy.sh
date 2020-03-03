@@ -21,6 +21,12 @@ declare -A PARAMETERS=(
     ["parameters.sconto_bridge_config.base_uri"]=${SCONTO_BRIDGE_DEV_BASE_URI}
     ["parameters.sconto_bridge_config.user"]=${SCONTO_BRIDGE_DEV_USER}
     ["parameters.sconto_bridge_config.password"]=${SCONTO_BRIDGE_DEV_PASSWORD}
+    ["parameters.akeneo_config.enabled"]=${AKENEO_DEV_ENABLED}
+    ["parameters.akeneo_config.base_uri"]=${AKENEO_DEV_BASE_URI}
+    ["parameters.akeneo_config.client_id"]=${AKENEO_DEV_CLIENT_ID}
+    ["parameters.akeneo_config.secret"]=${AKENEO_DEV_SECRET}
+    ["parameters.akeneo_config.user"]=${AKENEO_DEV_USER}
+    ["parameters.akeneo_config.password"]=${AKENEO_DEV_PASSWORD}
 )
 
 VARS=(
