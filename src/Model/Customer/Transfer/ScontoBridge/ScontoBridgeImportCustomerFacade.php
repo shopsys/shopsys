@@ -191,7 +191,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
      */
     public function cronWakeUp(): void
     {
-        $this->lastModificationAtFromScontoBridge = $this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_CUSTOMERS_LAST_UPDATED_DATETIME);
+        $this->lastModificationAtFromScontoBridge = new DateTime($this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_CUSTOMERS_LAST_UPDATED_DATETIME));
         $this->logger->addInfo(
             sprintf('Wake up cron for last modified : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
         );
