@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-
 use App\Model\Order\Item\OrderItemDataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -52,7 +51,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method setOrderDataAdministrator(\App\Model\Order\OrderData $orderData)
  * @method fillOrderItems(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview)
  * @method fillOrderPayment(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
- * @method fillOrderTransport(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  * @method fillOrderRounding(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
  * @method refreshOrderItemsWithoutTransportAndPayment(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
@@ -61,6 +59,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
  * @property \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
+ * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -214,5 +213,56 @@ class OrderFacade extends BaseOrderFacade
         /** @var \App\Model\Order\Order $order */
         $order = parent::createOrderFromFront($orderData, $deliveryAddress);
         return $order;
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @param string $locale
+     */
+    protected function fillOrderTransport(Order $order, OrderPreview $orderPreview, string $locale): void
+    {
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $orderPreview->getTransport();
+        $transportPrice = $this->transportPriceCalculation->calculatePrice(
+            $transport,
+            $order->getCurrency(),
+            $orderPreview->getProductsPrice(),
+            $order->getDomainId()
+        );
+        $orderTransport = $this->orderItemFactory->createTransport(
+            $order,
+            $transport->getName($locale),
+            $transportPrice,
+            $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent(),
+            1,
+            $transport
+        );
+        $order->addItem($orderTransport);
+    }
+
+    /**
+     * @param int $orderId
+     * @return string
+     */
+    public function getOrderSentPageContent($orderId): string
+    {
+        $order = $this->getById($orderId);
+        $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);
+        $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $order->getDomainId());
+
+        $transportsInstructions = [];
+        foreach ($order->getTransports() as $transport) {
+            $transportsInstructions[] = $transport->getInstructions();
+        }
+
+        $variables = [
+            self::VARIABLE_TRANSPORT_INSTRUCTIONS => implode('<br /> ', $transportsInstructions),
+            self::VARIABLE_PAYMENT_INSTRUCTIONS => $order->getPayment()->getInstructions(),
+            self::VARIABLE_ORDER_DETAIL_URL => $orderDetailUrl,
+            self::VARIABLE_NUMBER => $order->getNumber(),
+        ];
+
+        return strtr($orderSentPageContent, $variables);
     }
 }

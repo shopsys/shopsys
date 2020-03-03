@@ -22,7 +22,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  * @property \App\Model\Administrator\Administrator|null $createdAsAdministrator
  * @method \App\Model\Payment\Payment getPayment()
  * @method \App\Model\Order\Item\OrderItem getOrderPayment()
- * @method \App\Model\Transport\Transport getTransport()
  * @method \App\Model\Order\Item\OrderItem getOrderTransport()
  * @method \App\Model\Customer\User\CustomerUser|null getCustomerUser()
  * @method \App\Model\Order\Item\OrderItem[] getItems()
@@ -40,6 +39,16 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  */
 class Order extends BaseOrder
 {
+    /**
+     * REMOVED PROPERTY!
+     * This property is removed from model, because Order has more Transports.
+     *
+     * @var null
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $transport;
+
     /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
@@ -88,5 +97,42 @@ class Order extends BaseOrder
         return array_filter($this->getItems(), function (OrderItem $orderItem) use ($productType) {
             return $orderItem->getProductType() === $productType;
         });
+    }
+
+    /**
+     * Do not use this method! Order has N transports, not just exactly one.
+     * However this method has to return valid value, because it is called in OrderFormType in vendor.
+     * Overriding of OrderFormType is impossible and FormExtension can not disable this calling.
+     * Removing of this calling needs a lot of copy-paste code or removing order detail page in administration.
+     *
+     * @deprecated
+     * @internal
+     * @return \App\Model\Transport\Transport
+     */
+    public function getTransport()
+    {
+        foreach ($this->getItems() as $item) {
+            if ($item->isTypeTransport() === true) {
+                return $item->getTransport();
+            }
+        }
+
+        throw new \RuntimeException('Do not use this method! Order has N transports, and this order has no one. Read comment for method Order::getTransport()');
+    }
+
+    /**
+     * @return \App\Model\Transport\Transport[]
+     */
+    public function getTransports(): array
+    {
+        $transports = [];
+        foreach ($this->getItems() as $item) {
+            if ($item->isTypeTransport() === true) {
+                $transport = $item->getTransport();
+                $transports[$transport->getId()] = $transport;
+            }
+        }
+
+        return $transports;
     }
 }

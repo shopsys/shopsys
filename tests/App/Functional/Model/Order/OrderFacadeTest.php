@@ -113,7 +113,6 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
 
         $orderFromDb = $this->orderRepository->getById($order->getId());
 
-        $this->assertSame($orderData->transport->getId(), $orderFromDb->getTransport()->getId());
         $this->assertSame($orderData->payment->getId(), $orderFromDb->getPayment()->getId());
         $this->assertSame($orderData->firstName, $orderFromDb->getFirstName());
         $this->assertSame($orderData->lastName, $orderFromDb->getLastName());

@@ -33,6 +33,10 @@ services:
 
     App\Component\Doctrine\QueryBuilderExtender: ~
 
+    App\Component\Doctrine\RemoveMappingsSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber, priority: -100 }
+
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: '@App\Component\Doctrine\QueryBuilderExtender'
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
@@ -229,6 +233,10 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderFacade: '@App\Model\Order\OrderFacade'
 
     App\Model\Order\Preview\OrderPreviewCalculation: ~
+
+    App\Model\Order\Mail\OrderMail: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: '@App\Model\Order\Mail\OrderMail'
 
     Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation: '@App\Model\Order\Preview\OrderPreviewCalculation'
 
