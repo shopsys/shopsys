@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Transfer\Issue;
 
-use App\Model\Transfer\Transfer;
+use App\Model\Transfer\TransferRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -23,22 +23,33 @@ class TransferIssueFacade
     private $transferIssueRepository;
 
     /**
+     * @var \App\Model\Transfer\TransferRepository
+     */
+    private $transferRepository;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Transfer\Issue\TransferIssueRepository $transferIssueRepository
+     * @param \App\Model\Transfer\TransferRepository $transferRepository
      */
-    public function __construct(EntityManagerInterface $em, TransferIssueRepository $transferIssueRepository)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        TransferIssueRepository $transferIssueRepository,
+        TransferRepository $transferRepository
+    ) {
         $this->em = $em;
         $this->transferIssueRepository = $transferIssueRepository;
+        $this->transferRepository = $transferRepository;
     }
 
     /**
      * @param array $transferIssuesData
-     * @param \App\Model\Transfer\Transfer $transfer
+     * @param string $serviceTransferIdentifier
      */
-    public function saveTransferIssues(array $transferIssuesData, Transfer $transfer): void
+    public function saveTransferIssues(array $transferIssuesData, string $serviceTransferIdentifier): void
     {
         foreach ($transferIssuesData as $transferIssueData) {
+            $transfer = $this->transferRepository->getTransferByIdentifier($serviceTransferIdentifier);
             $transferIssue = new TransferIssue($transfer, $transferIssueData);
             $this->em->persist($transferIssue);
         }

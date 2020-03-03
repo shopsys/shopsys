@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Form\Admin;
 
+use App\Model\Transfer\Transfer;
 use App\Model\Transfer\TransferFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -39,6 +40,13 @@ class TransferIssueSearchFormType extends AbstractType
                 'required' => false,
                 'choices' => $transfers,
                 'choice_label' => 'name',
+//                function(Transfer $transfer){
+//                    $text = $transfer->getName();
+//                    $text = preg_replace('/([A-Z]+)([A-Z][a-z])/', '\\1 \\2', $text);
+//                    $text = preg_replace('/([a-z\d])([A-Z])/', '\\1 \\2', $text);
+//                    $text = preg_replace('~\bdont\b~', 'don\'t', $text);
+//                    return mb_strtolower($text, 'UTF-8');
+//                },
                 'choice_value' => 'id',
                 'placeholder' => t('-- Vyberte název přenosu --'),
             ])

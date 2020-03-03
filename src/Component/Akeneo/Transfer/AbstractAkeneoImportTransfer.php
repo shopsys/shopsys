@@ -11,7 +11,7 @@ use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorNonC
 use Exception;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 
-abstract class AbstractAkeneoImportTransfer
+abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInterface
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -49,7 +49,7 @@ abstract class AbstractAkeneoImportTransfer
         $this->akeneoConfig = $akeneoImportTransferDependency->getAkeneoConfig();
         $this->logger = $akeneoImportTransferDependency
             ->getTransferLoggerFactory()
-            ->getTransferLoggerByIdentifier($this->getServiceTransferIdentifier());
+            ->getTransferLoggerByIdentifier($this);
     }
 
     public function runTransfer(): void
@@ -159,13 +159,8 @@ abstract class AbstractAkeneoImportTransfer
     /**
      * @return string
      */
-    abstract public function getTransferIdentifier(): string;
-
-    /**
-     * @return string
-     */
-    private function getServiceTransferIdentifier(): string
+    public function getServiceIdentifier(): string
     {
-        return 'Akeneo' . ucfirst($this->getTransferIdentifier());
+        return 'Akeneo';
     }
 }

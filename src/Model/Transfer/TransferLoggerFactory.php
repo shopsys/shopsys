@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Transfer;
 
+use App\Component\Akeneo\Transfer\TransferIdentificationInterface;
+use App\Model\Transfer\Exception\UnknownServiceTransferException;
 use App\Model\Transfer\Issue\TransferIssueFacade;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -20,57 +22,56 @@ class TransferLoggerFactory
     private $transferLoggers = [];
 
     /**
-     * @var \App\Model\Transfer\TransferRepository
-     */
-    private $transferRepository;
-
-    /**
      * @var \App\Model\Transfer\Issue\TransferIssueFacade
      */
     private $transferIssueFacade;
 
     /**
+     * @var \App\Model\Transfer\TransferFacade
+     */
+    private $transferFacade;
+
+    /**
      * @param \Symfony\Bridge\Monolog\Logger $defaultLogger
-     * @param \App\Model\Transfer\TransferRepository $transferRepository
+     * @param \App\Model\Transfer\TransferFacade $transferFacade
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */
     public function __construct(
         Logger $defaultLogger,
-        TransferRepository $transferRepository,
+        TransferFacade $transferFacade,
         TransferIssueFacade $transferIssueFacade
     ) {
         $this->defaultLogger = $defaultLogger;
-        $this->transferRepository = $transferRepository;
         $this->transferIssueFacade = $transferIssueFacade;
+        $this->transferFacade = $transferFacade;
     }
 
     /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
-     * @param string $identifier
+     * @param \App\Component\Akeneo\Transfer\TransferIdentificationInterface $transferIdentification
      * @return \App\Model\Transfer\TransferLoggerInterface
      */
-    private function create(Logger $logger, string $identifier): TransferLoggerInterface
+    public function getTransferLoggerByIdentifier(TransferIdentificationInterface $transferIdentification): TransferLoggerInterface
     {
-        return new TransferLogger(
-            $logger,
-            $identifier,
-            $this->transferRepository,
-            $this->transferIssueFacade
-        );
-    }
+        $serviceTransferIdentifier = $transferIdentification->getServiceIdentifier() . ucfirst($transferIdentification->getTransferIdentifier());
+        $serviceTransferName = $transferIdentification->getServiceIdentifier() . ' ' . ucfirst($transferIdentification->getTransferName());
 
-    /**
-     * @param string $identifier
-     * @return \App\Model\Transfer\TransferLoggerInterface
-     */
-    public function getTransferLoggerByIdentifier(string $identifier): TransferLoggerInterface
-    {
-        if (array_key_exists($identifier, $this->transferLoggers)) {
-            return $this->transferLoggers[$identifier];
+        if (array_key_exists($serviceTransferIdentifier, $this->transferLoggers)) {
+            return $this->transferLoggers[$serviceTransferIdentifier];
         }
 
-        $newLogger = $this->create($this->defaultLogger, $identifier);
-        $this->transferLoggers[$identifier] = $newLogger;
+        try {
+            $this->transferFacade->getTransferByIdentifier($serviceTransferIdentifier);
+        } catch (UnknownServiceTransferException $exception) {
+            $this->transferFacade->create($serviceTransferIdentifier, $serviceTransferName);
+        }
+
+        $newLogger = new TransferLogger(
+            $this->defaultLogger,
+            $serviceTransferIdentifier,
+            $this->transferIssueFacade
+        );
+
+        $this->transferLoggers[$serviceTransferIdentifier] = $newLogger;
 
         return $newLogger;
     }

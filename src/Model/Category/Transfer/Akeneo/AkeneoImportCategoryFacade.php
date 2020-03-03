@@ -229,4 +229,12 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
     {
         return 'categoryTransfer';
     }
+
+    /**
+     * @return string
+     */
+    public function getTransferName(): string
+    {
+        return t('Přenos kategorií');
+    }
 }

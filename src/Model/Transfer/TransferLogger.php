@@ -17,19 +17,9 @@ class TransferLogger implements TransferLoggerInterface
     private $logger;
 
     /**
-     * @var string
-     */
-    private $identifier;
-
-    /**
      * @var \App\Model\Transfer\Issue\TransferIssueData[]
      */
     private $transferIssueDataList = [];
-
-    /**
-     * @var \App\Model\Transfer\TransferRepository
-     */
-    private $transferRepository;
 
     /**
      * @var \App\Model\Transfer\Issue\TransferIssueFacade
@@ -37,20 +27,22 @@ class TransferLogger implements TransferLoggerInterface
     private $transferIssueFacade;
 
     /**
+     * @var string
+     */
+    private $serviceTransferIdentifier;
+
+    /**
      * @param \Monolog\Logger $logger
-     * @param string $identifier
-     * @param \App\Model\Transfer\TransferRepository $transferRepository
+     * @param string $serviceTransferIdentifier
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */
     public function __construct(
         Logger $logger,
-        string $identifier,
-        TransferRepository $transferRepository,
+        string $serviceTransferIdentifier,
         TransferIssueFacade $transferIssueFacade
     ) {
         $this->logger = $logger;
-        $this->identifier = $identifier;
-        $this->transferRepository = $transferRepository;
+        $this->serviceTransferIdentifier = $serviceTransferIdentifier;
         $this->transferIssueFacade = $transferIssueFacade;
     }
 
@@ -58,8 +50,7 @@ class TransferLogger implements TransferLoggerInterface
     {
         $transferIssuesCount = count($this->transferIssueDataList);
         if ($transferIssuesCount > 0) {
-            $transfer = $this->transferRepository->getTransferByIdentifier($this->identifier);
-            $this->transferIssueFacade->saveTransferIssues($this->transferIssueDataList, $transfer);
+            $this->transferIssueFacade->saveTransferIssues($this->transferIssueDataList, $this->serviceTransferIdentifier);
             $this->transferIssueDataList = [];
             $this->addInfo('Transfer logger saves ' . $transferIssuesCount . ' to database');
         }

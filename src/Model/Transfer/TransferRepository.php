@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Transfer;
 
+use App\Model\Transfer\Exception\UnknownServiceTransferException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -38,9 +39,7 @@ class TransferRepository
     {
         $transfer = $this->getRepository()->findOneBy(['identifier' => $identifier]);
         if ($transfer === null) {
-            $transfer = new Transfer($identifier, $identifier);
-            $this->em->persist($transfer);
-            $this->em->flush();
+            throw new UnknownServiceTransferException($identifier);
         }
 
         return $transfer;
