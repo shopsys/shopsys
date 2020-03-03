@@ -153,7 +153,7 @@
         "tracy/tracy": "^2.4.13",
         "trikoder/oauth2-bundle": "^1.1",
         "twig/extensions": "^1.5.1",
-        "twig/twig": "^2.4.8",
+        "twig/twig": "^2.9",
         "vasek-purchart/console-errors-bundle": "^3.0.0",
         "webmozart/assert": "^1.4"
     },
