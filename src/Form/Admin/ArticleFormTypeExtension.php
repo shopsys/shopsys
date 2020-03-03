@@ -80,6 +80,8 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
             'label' => t('Content'),
         ]);
 
+        $this->changeOptionsOfPlacementField($builderArticleDataGroup);
+
         $builder->add($builderArticleDataGroup);
     }
 
@@ -114,5 +116,28 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
                     return $validationGroups;
                 },
             ]);
+    }
+
+    /**
+     * @param mixed $builderArticleDataGroup
+     */
+    private function changeOptionsOfPlacementField($builderArticleDataGroup)
+    {
+        $builderArticleDataGroup->add('placement', ChoiceType::class, [
+            'required' => true,
+            'choices' => [
+                t('in upper menu') => Article::PLACEMENT_TOP_MENU,
+                (t('Articles in footer') . ' 1') => Article::PLACEMENT_FOOTER_1,
+                (t('Articles in footer') . ' 2') => Article::PLACEMENT_FOOTER_2,
+                (t('Articles in footer') . ' 3') => Article::PLACEMENT_FOOTER_3,
+                (t('Articles in footer') . ' 4') => Article::PLACEMENT_FOOTER_4,
+                t('without positioning') => Article::PLACEMENT_NONE,
+            ],
+            'placeholder' => t('-- Choose article position --'),
+            'constraints' => [
+                new Constraints\NotBlank(['message' => 'Please choose article placement']),
+            ],
+            'label' => t('Location'),
+        ]);
     }
 }
