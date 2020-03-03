@@ -111,7 +111,7 @@ class OrderPreviewSplittingFacade
             }
         }
 
-        return new SplitOrderPreview($orderPreviews);
+        return new SplitOrderPreview($orderPreviews, $payment);
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class SplitOrderPreview
@@ -19,11 +20,18 @@ class SplitOrderPreview
     private $totalPrice;
 
     /**
-     * @param \App\Model\Order\Preview\OrderPreview[] $orderPreviews
+     * @var \App\Model\Payment\Payment|null
      */
-    public function __construct(array $orderPreviews)
+    private $payment;
+
+    /**
+     * @param \App\Model\Order\Preview\OrderPreview[] $orderPreviews
+     * @param \App\Model\Payment\Payment|null $payment
+     */
+    public function __construct(array $orderPreviews, ?Payment $payment)
     {
         $this->orderPreviews = $orderPreviews;
+        $this->payment = $payment;
         $this->calculateTotalPrice();
     }
 
@@ -57,5 +65,33 @@ class SplitOrderPreview
         foreach ($this->orderPreviews as $orderPreview) {
             $this->totalPrice = $this->totalPrice->add($orderPreview->getTotalPrice());
         }
+    }
+
+    /**
+     * @return \App\Model\Payment\Payment
+     */
+    public function getPayment(): Payment
+    {
+        if ($this->payment === null) {
+            throw new \RuntimeException('Payment is not set. Please set it for this scenario');
+        }
+        return $this->payment;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getProductsPrice(): Price
+    {
+        $productsPrice = Price::zero();
+        foreach ($this->orderPreviews as $orderPreview) {
+            $productsPrice = $productsPrice->add($orderPreview->getProductsPrice());
+        }
+
+        return $productsPrice;
+    }
+
+    public function getRoundingPrice()
+    {
     }
 }

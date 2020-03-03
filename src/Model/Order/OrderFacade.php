@@ -255,10 +255,36 @@ class OrderFacade extends BaseOrderFacade
 
         foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
             $this->fillOrderProducts($order, $orderPreview, $locale);
-            $this->fillOrderPayment($order, $orderPreview, $locale);
             $this->fillOrderTransport($order, $orderPreview, $locale);
             $this->fillOrderRounding($order, $orderPreview, $locale);
         }
+
+        $this->fillOrderPaymentBySplitOrderPreview($order, $splitOrderPreview, $locale);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
+     * @param string $locale
+     */
+    private function fillOrderPaymentBySplitOrderPreview(Order $order, SplitOrderPreview $splitOrderPreview, string $locale): void
+    {
+        $payment = $splitOrderPreview->getPayment();
+        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
+            $payment,
+            $order->getCurrency(),
+            $splitOrderPreview->getProductsPrice(),
+            $order->getDomainId()
+        );
+        $orderPayment = $this->orderItemFactory->createPayment(
+            $order,
+            $payment->getName($locale),
+            $paymentPrice,
+            $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent(),
+            1,
+            $payment
+        );
+        $order->addItem($orderPayment);
     }
 
     /**
