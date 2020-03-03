@@ -21,7 +21,7 @@ yq write --inplace project-base/config/parameters_test.yml parameters.overwrite_
 
 # Pull or build Docker images for the current commit
 DOCKER_IMAGE_TAG=ci-commit-${GIT_COMMIT}
-DOCKER_ELASTIC_IMAGE_TAG=ci-elasticsearch
+DOCKER_ELASTIC_IMAGE_TAG=ci-elasticsearch-7
 
 ## Build documentation with mkdocs to be available in ./documentation directory
 docker build -t mkdocs-build:latest -f docker/mkdocs/Dockerfile .

@@ -186,6 +186,6 @@ class ProductElasticsearchRepository
      */
     protected function extractTotalCount(array $result): int
     {
-        return (int)$result['hits']['total'];
+        return (int)$result['hits']['total']['value'];
     }
 }

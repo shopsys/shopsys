@@ -100,7 +100,6 @@ class IndexRepository
     {
         $this->elasticsearchClient->deleteByQuery([
             'index' => $indexAlias,
-            'type' => '_doc',
             'body' => [
                 'query' => [
                     'bool' => [
@@ -123,7 +122,6 @@ class IndexRepository
     {
         $this->elasticsearchClient->deleteByQuery([
             'index' => $indexDefinition->getVersionedIndexName(),
-            'type' => '_doc',
             'body' => [
                 'query' => [
                     'bool' => [
@@ -151,7 +149,6 @@ class IndexRepository
             $params['body'][] = [
                 'update' => [
                     '_index' => $indexAlias,
-                    '_type' => '_doc',
                     '_id' => (string)$id,
                 ],
             ];

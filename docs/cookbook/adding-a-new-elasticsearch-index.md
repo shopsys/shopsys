@@ -94,49 +94,47 @@ Example of mapping part for English domain with ID 1 (`category/1.json`)
     }
   },
   "mappings": {
-    "_doc": {
-      "properties": {
-        "name": {
+    "properties": {
+    "name": {
+      "type": "text",
+      "analyzer": "stemming",
+      "fields": {
+        "full_with_diacritic": {
           "type": "text",
-          "analyzer": "stemming",
-          "fields": {
-            "full_with_diacritic": {
-              "type": "text",
-              "analyzer": "full_with_diacritic"
-            },
-            "full_without_diacritic": {
-              "type": "text",
-              "analyzer": "full_without_diacritic"
-            },
-            "edge_ngram_with_diacritic": {
-              "type": "text",
-              "analyzer": "edge_ngram_with_diacritic"
-            },
-            "edge_ngram_without_diacritic": {
-              "type": "text",
-              "analyzer": "edge_ngram_without_diacritic"
-            },
-            "keyword": {
-              "type": "icu_collation_keyword",
-              "language": "en",
-              "index": false
-            }
-          }
+          "analyzer": "full_with_diacritic"
         },
-        "description": {
+        "full_without_diacritic": {
           "type": "text",
-          "analyzer": "edge_ngram_without_diacritic_html"
+          "analyzer": "full_without_diacritic"
         },
-        "parrent_id": {
-          "type": "integer"
+        "edge_ngram_with_diacritic": {
+          "type": "text",
+          "analyzer": "edge_ngram_with_diacritic"
         },
-        "level": {
-          "type": "integer"
+        "edge_ngram_without_diacritic": {
+          "type": "text",
+          "analyzer": "edge_ngram_without_diacritic"
         },
-        "uuid": {
-          "type": "text"
+        "keyword": {
+          "type": "icu_collation_keyword",
+          "language": "en",
+          "index": false
         }
       }
+    },
+    "description": {
+      "type": "text",
+      "analyzer": "edge_ngram_without_diacritic_html"
+    },
+    "parrent_id": {
+      "type": "integer"
+    },
+    "level": {
+      "type": "integer"
+    },
+    "uuid": {
+      "type": "text"
+    }
     }
   }
 }

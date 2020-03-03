@@ -72,11 +72,10 @@ In order to add new attribute to Elasticsearch you need to add it to the structu
 You can do that by adding it to `mappings` in all `src/Resources/definition/product/*.json` files like this:
 ```diff
   "mappings": {
-    "_doc": {
-      "properties": {
-+       "brand_name": {
-+         "type": "text"
-+       },
+    "properties": {
++     "brand_name": {
++       "type": "text"
++     },
 ```
 
 ### 3. Export new attribute to Elasticsearch
