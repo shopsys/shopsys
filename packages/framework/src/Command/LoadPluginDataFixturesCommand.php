@@ -42,5 +42,7 @@ class LoadPluginDataFixturesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->pluginDataFixtureFacade->loadAll();
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

@@ -19,8 +19,7 @@ class DailyFeedCronModuleTest extends TestCase
 {
     public function testSleepExactBetweenFeeds(): void
     {
-        $feedInfoMock = $this->getMockBuilder(FeedInfoInterface::class)
-            ->getMockForAbstractClass();
+        $feedInfoMock = $this->getMockForAbstractClass(FeedInfoInterface::class);
 
         $settingMock = $this->getMockBuilder(Setting::class)
             ->disableOriginalConstructor()
@@ -35,7 +34,7 @@ class DailyFeedCronModuleTest extends TestCase
             ->getMock();
         $feedExportMock->expects($this->atLeastOnce())->method('isFinished')->willReturn(true);
         $feedExportMock->expects($this->any())->method('generateBatch');
-        $feedExportMock->expects($this->any())->method('getFeedInfo')->willReturn(new $feedInfoMock());
+        $feedExportMock->expects($this->any())->method('getFeedInfo')->willReturn($feedInfoMock);
         $feedExportMock->expects($this->any())->method('getDomainConfig')->willReturn($domainConfig);
 
         $logger = new Logger('loggerName');

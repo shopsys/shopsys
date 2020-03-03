@@ -38,7 +38,7 @@ class ServerRunWithCustomRouterCommand extends ServerRunCommand
                 'Environment can be set by file named DEVELOPMENT, PRODUCTION or TEST in project root.',
             ]);
 
-            return 1;
+            return CommandResultCodes::RESULT_FAIL;
         }
 
         return parent::execute($input, $output);

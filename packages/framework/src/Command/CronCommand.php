@@ -73,6 +73,8 @@ class CronCommand extends Command
 
             $this->runCron($input, $this->cronFacade, $this->mutexFactory, $instanceName);
         }
+
+        return CommandResultCodes::RESULT_OK;
     }
 
     /**

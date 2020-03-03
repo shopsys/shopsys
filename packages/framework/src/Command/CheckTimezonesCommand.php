@@ -43,6 +43,8 @@ class CheckTimezonesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->checkUniformityOfTimezones($output);
+
+        return CommandResultCodes::RESULT_OK;
     }
 
     /**

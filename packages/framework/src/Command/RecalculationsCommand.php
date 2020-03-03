@@ -109,5 +109,7 @@ class RecalculationsCommand extends Command
 
         $output->writeln('<fg=green>Products selling denial.</fg=green>');
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForAll();
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

@@ -52,6 +52,8 @@ class CreateDomainsDbFunctionsCommand extends Command
         $this->em->transactional(function () use ($output) {
             $this->doExecute($output);
         });
+
+        return CommandResultCodes::RESULT_OK;
     }
 
     /**

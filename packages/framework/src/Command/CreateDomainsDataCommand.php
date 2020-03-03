@@ -82,7 +82,7 @@ class CreateDomainsDataCommand extends Command
             return $recalculationsCommand->run($input, $output);
         }
 
-        return 0;
+        return CommandResultCodes::RESULT_OK;
     }
 
     /**

@@ -44,5 +44,7 @@ class CreateDatabaseSchemaCommand extends Command
         $output->writeln('Initializing database schema');
         $this->databaseSchemaFacade->createSchema('public');
         $output->writeln('Database schema created successfully!');
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

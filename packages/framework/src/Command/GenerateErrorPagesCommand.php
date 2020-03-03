@@ -42,5 +42,7 @@ class GenerateErrorPagesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->errorPagesFacade->generateAllErrorPagesForProduction();
+
+        return CommandResultCodes::RESULT_OK;
     }
 }
