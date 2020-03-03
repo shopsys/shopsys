@@ -13,8 +13,10 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -171,10 +173,28 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     private function fillPricesFromProductByDomain(ProductData $productData, Product $product, int $domainId): void
     {
+        //TODO-RK ne deprecated zpusob prace s price ale nefunguje spravne zaokrouhleni podle meny,
         $lowPrice = new Price(Money::zero(), $product->getLowPriceWithVat($domainId) ?? Money::zero());
         $highPrice = new Price(Money::zero(), $product->getHighPriceWithVat($domainId) ?? Money::zero());
+
         $lowPrice = $this->basePriceCalculation->applyCoefficients($lowPrice, $product->getVatForDomain($domainId), []);
         $highPrice = $this->basePriceCalculation->applyCoefficients($highPrice, $product->getVatForDomain($domainId), []);
+
+        //TODO-RK deprecate zpusob prace s price
+//        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+//        $lowPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+//            $product->getLowPriceWithVat($domainId) ?? Money::zero(),
+//            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+//            $product->getVatForDomain($domainId),
+//            $currency
+//        );
+//
+//        $highPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+//            $product->getHighPriceWithVat($domainId) ?? Money::zero(),
+//            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+//            $product->getVatForDomain($domainId),
+//            $currency
+//        );
 
         $productData->lowPriceWithVat[$domainId] = $lowPrice->getPriceWithVat();
         $productData->highPriceWithVat[$domainId] = $highPrice->getPriceWithVat();
