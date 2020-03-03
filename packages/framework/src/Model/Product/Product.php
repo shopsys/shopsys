@@ -571,7 +571,7 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
      */
     public function getAvailability()
     {
