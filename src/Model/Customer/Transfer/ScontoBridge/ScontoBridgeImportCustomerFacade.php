@@ -157,7 +157,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
     protected function doAfterTransfer(): void
     {
         $this->logger->addInfo('Importing iterable transfer is done.');
-        $this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_CUSTOMERS_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT));
+        $this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_CUSTOMERS_LAST_UPDATED_DATETIME, (new DateTime())->format(ScontoBridgeClient::DATE_TIME_FORMAT));
     }
 
     /**
