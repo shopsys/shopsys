@@ -12,7 +12,7 @@ use Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 use Symplify\MonorepoBuilder\Release\Message;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symplify\SmartFileSystem\SmartFileInfo;
 use Twig\Environment;
 
 final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker

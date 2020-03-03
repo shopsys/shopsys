@@ -3,8 +3,8 @@
 namespace Shopsys\Releaser\FilesProvider;
 
 use Symfony\Component\Finder\Finder;
-use Symplify\PackageBuilder\FileSystem\FinderSanitizer;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symplify\SmartFileSystem\Finder\FinderSanitizer;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 /**
  * Most of the functionality is inspired and copy-pasted from two classes from symplify/monorepo-builder package.
@@ -21,13 +21,13 @@ class ComposerJsonFilesProvider
     protected $packageDirectories;
 
     /**
-     * @var \Symplify\PackageBuilder\FileSystem\FinderSanitizer
+     * @var \Symplify\SmartFileSystem\Finder\FinderSanitizer
      */
     protected $finderSanitizer;
 
     /**
      * @param string[] $packageDirectories
-     * @param \Symplify\PackageBuilder\FileSystem\FinderSanitizer $finderSanitizer
+     * @param \Symplify\SmartFileSystem\Finder\FinderSanitizer $finderSanitizer
      */
     public function __construct($packageDirectories, FinderSanitizer $finderSanitizer)
     {
@@ -36,7 +36,7 @@ class ComposerJsonFilesProvider
     }
 
     /**
-     * @return \Symplify\PackageBuilder\FileSystem\SmartFileInfo[]
+     * @return \Symplify\SmartFileSystem\SmartFileInfo[]
      */
     public function provideAll(): array
     {
@@ -44,7 +44,7 @@ class ComposerJsonFilesProvider
     }
 
     /**
-     * @return \Symplify\PackageBuilder\FileSystem\SmartFileInfo[]
+     * @return \Symplify\SmartFileSystem\SmartFileInfo[]
      */
     public function provideExcludingMonorepoComposerJson(): array
     {

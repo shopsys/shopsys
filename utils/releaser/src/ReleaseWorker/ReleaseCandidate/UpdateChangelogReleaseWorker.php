@@ -10,7 +10,7 @@ use Shopsys\Releaser\FileManipulator\ChangelogFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 use Symplify\MonorepoBuilder\Split\Git\GitManager;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
 {

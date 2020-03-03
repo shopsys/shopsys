@@ -12,7 +12,7 @@ use Shopsys\Releaser\FileManipulator\ChangelogFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 use Symplify\MonorepoBuilder\Release\Message;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysReleaseWorker
 {

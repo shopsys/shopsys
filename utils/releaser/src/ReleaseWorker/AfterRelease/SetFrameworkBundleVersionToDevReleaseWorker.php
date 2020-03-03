@@ -9,7 +9,7 @@ use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysReleaseWorker
 {

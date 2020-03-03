@@ -14,7 +14,7 @@ services:
     Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer: ~
     Shopsys\CodingStandards\Helper\FqnNameResolver: ~
     PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer: ~
-    Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector: ~
+    Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector: ~
 
     # Slevomat Checkers
     SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff: ~

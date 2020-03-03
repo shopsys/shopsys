@@ -10,7 +10,7 @@ use Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 use Symplify\MonorepoBuilder\Release\Message;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
