@@ -13,12 +13,15 @@ final class IsMoneyEqual extends Constraint
     private $value;
 
     /**
+     * @var \SebastianBergmann\Exporter\Exporter
+     */
+    private $exporter;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $value
      */
     public function __construct(Money $value)
     {
-        parent::__construct();
-
         $this->value = $value;
         $this->exporter = new MoneyExporter();
     }

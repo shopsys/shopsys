@@ -41,10 +41,10 @@ class OrderMailTest extends FunctionalTestCase
         $mailTempleteName2 = OrderMail::getMailTemplateNameByStatus($orderStatus2);
 
         $this->assertNotEmpty($mailTempleteName1);
-        $this->assertInternalType('string', $mailTempleteName1);
+        $this->assertIsString($mailTempleteName1);
 
         $this->assertNotEmpty($mailTempleteName2);
-        $this->assertInternalType('string', $mailTempleteName2);
+        $this->assertIsString($mailTempleteName2);
 
         $this->assertNotSame($mailTempleteName1, $mailTempleteName2);
     }

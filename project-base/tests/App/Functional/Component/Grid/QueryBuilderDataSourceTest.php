@@ -24,7 +24,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 
         $row = $queryBuilderDataSource->getOneRow($this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1'));
 
-        $this->assertInternalType('array', $row);
+        $this->assertIsArray($row);
         $this->assertArrayHasKey('p', $row);
     }
 
@@ -60,11 +60,11 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
         $queryBuilderDataSource = new QueryBuilderDataSource($qb, 'p.id');
 
         $rows = $queryBuilderDataSource->getPaginatedRows()->getResults();
-        $this->assertInternalType('array', $rows);
+        $this->assertIsArray($rows);
         $this->assertCount(5, $rows);
 
         foreach ($rows as $row) {
-            $this->assertInternalType('array', $row);
+            $this->assertIsArray($row);
             $this->assertArrayHasKey('p', $row);
         }
     }

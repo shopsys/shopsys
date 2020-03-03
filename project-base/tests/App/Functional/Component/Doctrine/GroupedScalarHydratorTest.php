@@ -23,14 +23,14 @@ class GroupedScalarHydratorTest extends TransactionFunctionalTestCase
         $rows = $qb->getQuery()->execute(null, GroupedScalarHydrator::HYDRATION_MODE);
         $row = $rows[0];
 
-        $this->assertInternalType('array', $row);
+        $this->assertIsArray($row);
 
         $this->assertCount(2, $row);
         $this->assertArrayHasKey('o', $row);
         $this->assertArrayHasKey('oi', $row);
 
-        $this->assertInternalType('array', $row['o']);
-        $this->assertInternalType('array', $row['oi']);
+        $this->assertIsArray($row['o']);
+        $this->assertIsArray($row['oi']);
 
         $this->assertArrayHasKey('id', $row['o']);
         $this->assertArrayHasKey('id', $row['oi']);

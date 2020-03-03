@@ -27,7 +27,7 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
 
         $row = $dataSource->getOneRow($this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1'));
 
-        $this->assertInternalType('array', $row);
+        $this->assertIsArray($row);
         $this->assertArrayHasKey('newField', $row);
         $this->assertSame('newValue', $row['newField']);
     }
@@ -70,11 +70,11 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
         });
 
         $rows = $dataSource->getPaginatedRows()->getResults();
-        $this->assertInternalType('array', $rows);
+        $this->assertIsArray($rows);
         $this->assertCount(5, $rows);
 
         foreach ($rows as $row) {
-            $this->assertInternalType('array', $row);
+            $this->assertIsArray($row);
             $this->assertArrayHasKey('newField', $row);
             $this->assertSame('newValue' . $row['p']['id'], $row['newField']);
         }
