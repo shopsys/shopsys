@@ -178,6 +178,16 @@ There you can find links to upgrade notes for other versions too.
     
     - upgrading native installation we recommend to follow Elasticsearch [documentation](https://www.elastic.co/guide/en/cloud/current/ec-upgrading-v7.html)  
 
+- upgrade the Adminer Docker image to 4.7.6 ([#1717](https://github.com/shopsys/shopsys/pull/1717))
+    - change the Docker image of Adminer from `adminer:4.7` to `adminer:4.7.6` in your `docker-compose.yml` config, `docker-compose*.yml.dist` templates and `kubernetes/deployments/adminer.yml`:
+
+        ```diff
+        - image: adminer:4.7
+        + image: adminer:4.7.6
+        ```
+
+    - run `docker-compose up -d` so the new image is pulled and used
+
 ### Configuration
 - add trailing slash to all your localized paths for `front_product_search` route ([#1067](https://github.com/shopsys/shopsys/pull/1067))
     - be aware, if you already have such paths (`hledani/`, `search/`) in your application
