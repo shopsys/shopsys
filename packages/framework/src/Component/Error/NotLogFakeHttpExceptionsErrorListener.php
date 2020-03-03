@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Error;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\EventListener\ErrorListener;
 
-class NotLogFakeHttpExceptionsExceptionListener extends ErrorListener
+class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider|null
