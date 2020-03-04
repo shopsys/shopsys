@@ -125,14 +125,13 @@ class AkeneoImportMediaFilesFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @return App\Component\Akeneo\Transfer\MediaFiles\\Generator
+     * @return \Generator
      */
     protected function getData(): \Generator
     {
         $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $this->downloadCode));
 
         yield $this->mediaFilesTransferAkeneoFacade->getMediaFile($this->downloadCode)->getBody();
-        //yield ["downloadedData"];
     }
 
     /**

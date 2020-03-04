@@ -80,5 +80,23 @@ class ProductRepository extends BaseProductRepository
         $queryBuilder->setParameter('domainId', $domainId);
 
         return $queryBuilder;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
+
+class ProductRepository extends BaseProductRepository
+{
+    /**
+     * @return \App\Model\Product\Product[]
+     */
+    public function getProductsWithoutAssemblyInstructionFiles(): array
+    {
+        return $this->getProductRepository()->findBy(['assemblyInstruction' => true]);
+    }
+
+    /**
+     * @return \App\Model\Product\Product[]
+     */
+    public function getProductsWithoutProductTypePlanFiles(): array
+    {
+        return $this->getProductRepository()->findBy(['productTypePlan' => true]);
     }
 }

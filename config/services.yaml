@@ -195,10 +195,10 @@ services:
             $akeneoConfig: "%akeneo_config%"
 
     App\Component\Akeneo\AkeneoClientFactory: ~
+
+    App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesFacade:
         arguments:
             $productFilesDir: "%shopsys.product_files_dir%"
-
-    App\Model\Product\Transfer\Akeneo\AkeneoImportProductFacade:
 
     Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface:
         factory: ['@App\Component\Akeneo\AkeneoClientFactory', createClient]
@@ -226,6 +226,8 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator: '@App\Model\Product\ProductBreadcrumbGenerator'
 
     Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: '@App\Model\Product\Elasticsearch\ProductExportRepository'
 

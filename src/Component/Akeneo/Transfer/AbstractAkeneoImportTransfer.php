@@ -70,7 +70,9 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
 
             $this->sqlLoggerFacade->reenableLogging();
         } catch (RuntimeException $exception) {
-            $this->logger->addError($exception->getMessage());
+            $this->logger->addError('RuntimeException: ' . $exception->getMessage());
+            $this->logger->persistAllLoggedTransferIssues();
+            $this->sqlLoggerFacade->reenableLogging();
             return;
         }
 

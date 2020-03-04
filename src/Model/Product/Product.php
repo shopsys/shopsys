@@ -54,8 +54,8 @@ class Product extends BaseProduct
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
-        $this->assemblyInstruction = $productData->assemblyInstruction;
-        $this->productTypePlan = $productData->productTypePlan;
+        $this->assemblyInstruction = false;
+        $this->productTypePlan = false;
     }
 
     /**
@@ -65,8 +65,6 @@ class Product extends BaseProduct
     public function edit(array $productCategoryDomains, BaseProductData $productData)
     {
         parent::edit($productCategoryDomains, $productData);
-        $this->assemblyInstruction = $productData->assemblyInstruction;
-        $this->productTypePlan = $productData->productTypePlan;
     }
 
     /**
@@ -108,8 +106,25 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
-            $productDomain->setAssemblyInstructionCode($productData->assemblyInstructionCode[$domainId]);
-            $productDomain->setProductTypePlanCode($productData->productTypePlanCode[$domainId]);
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\ProductFilesData $productFilesData
+     */
+    public function editFileAttributes(ProductFilesData $productFilesData): void
+    {
+        foreach ($this->domains as $productDomain) {
+            $domainId = $productDomain->getDomainId();
+            if ($this->getAssemblyInstructionCode($domainId) !== $productFilesData->assemblyInstructionCode[$domainId]) {
+                $productDomain->setAssemblyInstructionCode($productFilesData->assemblyInstructionCode[$domainId]);
+                $this->setAssemblyInstruction(true);
+            }
+
+            if ($this->getProductTypePlanCode($domainId) !== $productFilesData->productTypePlanCode[$domainId]) {
+                $productDomain->setProductTypePlanCode($productFilesData->productTypePlanCode[$domainId]);
+                $this->setProductTypePlan(true);
+            }
         }
     }
 

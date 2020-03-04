@@ -10,6 +10,8 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use App\Model\Product\ProductFilesData;
+use App\Model\Product\ProductFilesDataFactory;
 
 class ProductTransferAkeneoMapper
 {
@@ -19,20 +21,50 @@ class ProductTransferAkeneoMapper
     private $productDataFactory;
 
     /**
+     * @var \App\Model\Product\ProductFilesDataFactory
+     */
+    private $productFilesDataFactory;
+
+    /**
      * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
 
     /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
+     * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         ProductDataFactory $productDataFactory,
-        CategoryFacade $categoryFacade
+        CategoryFacade $categoryFacade,
+        ProductFilesDataFactory $productFilesDataFactory
     ) {
         $this->productDataFactory = $productDataFactory;
         $this->categoryFacade = $categoryFacade;
+        $this->productFilesDataFactory = $productFilesDataFactory;
+    }
+
+    /**
+     * @param array $akeneoProductData
+     * @param \App\Model\Product\Product $product
+     * @return \App\Model\Product\ProductFilesData
+     */
+    public function mapAkeneoProductDataToProductFilesData(array $akeneoProductData, Product $product): ProductFilesData
+    {
+        $productFilesData = $this->productFilesDataFactory->createFromProduct($product);
+
+        $productFilesData->assemblyInstructionCode = AkeneoProductHelper::mapDomainDataStringWithoutClean(
+            $productFilesData->assemblyInstructionCode,
+            $akeneoProductData['values']['assembly_instruction']
+        );
+
+        $productFilesData->productTypePlanCode = AkeneoProductHelper::mapDomainDataStringWithoutClean(
+            $productFilesData->productTypePlanCode,
+            $akeneoProductData['values']['product_type_plan']
+        );
+
+        return $productFilesData;
     }
 
     /**

@@ -57,8 +57,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  */
 class ProductFacade extends BaseProductFacade
 {
-    public const ASSETS_FILE_TYPE = '.pdf';
-
     /**
      * @var \App\Model\Stock\StockFacade
      */
@@ -231,21 +229,11 @@ class ProductFacade extends BaseProductFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
+     * @param \App\Model\Product\ProductFilesData $productFilesData
      */
-    public function getAssemblyInstructionFilename(Product $product, int $domainId): string
+    public function editProductFileAttributes(Product $product, ProductFilesData $productFilesData): void
     {
-        return $product->getAssemblyInstructionCode($domainId) . self::ASSETS_FILE_TYPE;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
-    public function getProductTypePlanFilename(Product $product, int $domainId): string
-    {
-        return $product->getProductTypePlanCode($domainId) . self::ASSETS_FILE_TYPE;
+        $product->editFileAttributes($productFilesData);
+        $this->em->flush();
     }
 }

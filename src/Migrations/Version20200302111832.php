@@ -18,6 +18,8 @@ class Version20200302111832 extends AbstractMigration
         $this->sql('ALTER TABLE products ALTER assembly_instruction DROP DEFAULT;');
         $this->sql('ALTER TABLE products ADD product_type_plan BOOLEAN NOT NULL DEFAULT false');
         $this->sql('ALTER TABLE products ALTER product_type_plan DROP DEFAULT;');
+        $this->sql('ALTER TABLE product_domains ADD assembly_instruction_code VARCHAR(255) DEFAULT NULL');
+        $this->sql('ALTER TABLE product_domains ADD product_type_plan_code VARCHAR(255) DEFAULT NULL');
     }
 
     /**
