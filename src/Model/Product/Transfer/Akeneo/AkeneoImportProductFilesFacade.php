@@ -4,23 +4,38 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
-use App\Component\Akeneo\Transfer\MediaFiles\AkeneoImportMediaFilesFacade;
-use App\Model\Product\Product;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
+use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
+use App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade;
+use League\Flysystem\FileExistsException;
+use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
-class AkeneoImportProductFilesFacade
+class AkeneoImportProductFilesFacade extends AbstractAkeneoImportTransfer
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    private $productRepository;
+    protected const DS = DIRECTORY_SEPARATOR;
 
     /**
-     * @var \App\Component\Akeneo\Transfer\MediaFiles\AkeneoImportMediaFilesFacade
+     * @var \App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade
      */
-    private $akeneoImportMediaFilesFacade;
+    private $mediaFilesTransferAkeneoFacade;
+
+    /**
+     * @var \App\Model\Product\Product|null
+     */
+    private $product;
+
+    /**
+     * @var \League\Flysystem\FilesystemInterface
+     */
+    private $localFilesystem;
+
+    /**
+     * @var \App\Model\Product\ProductRepository
+     */
+    private $productRepository;
 
     /**
      * @var string
@@ -33,104 +48,113 @@ class AkeneoImportProductFilesFacade
     private $domain;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @param string $productFilesDir
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \App\Component\Akeneo\Transfer\MediaFiles\AkeneoImportMediaFilesFacade $akeneoImportMediaFilesFacade
+     * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
+     * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade
+     * @param \League\Flysystem\FilesystemInterface $localFilesystem
      */
     public function __construct(
         string $productFilesDir,
+        AkeneoImportTransferDependency $akeneoImportTransferDependency,
         ProductRepository $productRepository,
-        AkeneoImportMediaFilesFacade $akeneoImportMediaFilesFacade,
         Domain $domain,
-        EntityManagerInterface $em
+        MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade,
+        FilesystemInterface $localFilesystem
     ) {
+        parent::__construct($akeneoImportTransferDependency);
         $this->productRepository = $productRepository;
-        $this->akeneoImportMediaFilesFacade = $akeneoImportMediaFilesFacade;
         $this->productFilesDir = $productFilesDir;
         $this->domain = $domain;
-        $this->em = $em;
+        $this->mediaFilesTransferAkeneoFacade = $mediaFilesTransferAkeneoFacade;
+        $this->localFilesystem = $localFilesystem;
     }
 
-    public function runTransfer()
+    public function download(): void
     {
-        $this->downloadAssemblyInstructionFiles();
-        $this->downloadProductTypePlanFiles();
+        foreach ($this->productRepository->getProductsWithoutAssemblyInstructionFiles() as $row) {
+            $this->product = $row[0];
+            $this->runTransfer();
+        }
     }
 
-    private function downloadAssemblyInstructionFiles(): void
+    /**
+     * @return \Generator
+     */
+    protected function getData(): \Generator
     {
-        $products = $this->productRepository->getProductsWithoutAssemblyInstructionFiles();
 
-        /** @var \App\Model\Product\Product $product */
-        foreach ($products as $product) {
-            foreach ($this->domain->getAllIds() as $domainId) {
-                if($product->getAssemblyInstructionCode($domainId)){
-                    $this->importProductFile(
-                        $product->getAssemblyInstructionCode($domainId),
-                        $this->getAssemblyInstructionFilename($product, $domainId)
-                    );
-                }
+        $akeneoDataPerDomain = [];
+        /** @var \App\Model\Product\ProductDomain $productDomain */
+        foreach ($this->product->getProductDomains() as $productDomain) {
+            if ($productDomain->getAssemblyInstructionCode()) {
+                $akeneoDataPerDomain[$productDomain->getDomainId()] = $this->mediaFilesTransferAkeneoFacade
+                    ->getProductMediaFile($productDomain->getAssemblyInstructionCode())
+                    ->getBody()
+                    ->getContents();
+
+                $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getAssemblyInstructionCode()));
             }
-            $product->setAssemblyInstruction(true);
         }
 
-
-        $this->em->flush();
+        yield $akeneoDataPerDomain;
     }
 
-    private function downloadProductTypePlanFiles(): void
+    /**
+     * @param array $akeneoData
+     */
+    protected function processItem($akeneoData): void
     {
-        $products = $this->productRepository->getProductsWithoutProductTypePlanFiles();
-
-        /** @var \App\Model\Product\Product $product */
-        foreach ($products as $product) {
-            foreach ($this->domain->getAllIds() as $domainId) {
-                if($product->getProductTypePlanCode($domainId) !== null){
-                    $this->importProductFile(
-                        $product->getProductTypePlanCode($domainId),
-                        $this->getProductTypePlanFilename($product, $domainId)
-                    );
-                }
-            }
-            $product->setProductTypePlan(true);
+        foreach ($akeneoData as $domainId => $content){
+            $this->storeFile($this->product->getProductFileNameByType($domainId, 'assemblyInstruction'), $content);
         }
 
+        $this->product->setAssemblyInstruction(false);
         $this->em->flush();
     }
 
     /**
-     * @param string $code
      * @param string $fileName
+     * @param string $content
      */
-    private function importProductFile(string $code, string $fileName): void
+    private function storeFile(string $fileName, string $content): void
     {
-        $this->akeneoImportMediaFilesFacade->downloadMediaFile($code, $this->productFilesDir, $fileName);
+        $fullPathWithFileName = $this->productFilesDir . $fileName;
+        try {
+            $this->localFilesystem->write($fullPathWithFileName, $content);
+            $this->logger->addInfo('File was successfully stored.');
+        } catch (FileExistsException $exception) {
+            try {
+                $this->localFilesystem->delete($fullPathWithFileName);
+            } catch (FileNotFoundException $exception) {
+            }
+
+            $this->storeFile($fileName, $content);
+        } catch (\Throwable $exception) {
+            $this->logger->addError('File save failed', [
+                'reason' => $exception->getMessage(),
+                'dictionary' => $this->productFilesDir,
+                'filename' => $fileName,
+            ]);
+        }
+    }
+
+    protected function doBeforeTransfer(): void
+    {
+        $this->logger->addInfo('Transfer media file data from Akeneo ...');
+    }
+
+    protected function doAfterTransfer(): void
+    {
+        $this->logger->addInfo('Transfer is done.');
     }
 
     /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
      * @return string
      */
-    public function getAssemblyInstructionFilename(Product $product, int $domainId): string
+    public function getTransferIdentifier(): string
     {
-        return $product->getAssemblyInstructionCode($domainId) ?? '';
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
-    public function getProductTypePlanFilename(Product $product, int $domainId): string
-    {
-        return $product->getProductTypePlanCode($domainId) ?? '';
+        return 'productMediaFilesTransfer';
     }
 }

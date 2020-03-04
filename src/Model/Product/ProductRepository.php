@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
 /**
+ * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository, \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
  * @method \App\Model\Product\Product|null findById(int $id)
  * @method \Doctrine\ORM\QueryBuilder getListableInCategoryQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @method \Doctrine\ORM\QueryBuilder getListableForBrandQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Product\Brand\Brand $brand)
@@ -36,17 +38,15 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  * @method \App\Model\Product\Product[] getListableByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getOneByUuid(string $uuid)
- * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
  * @method markProductsForExport(\App\Model\Product\Product[] $products)
  * @method \App\Model\Product\Product[] getProductsWithAvailability(\Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability)
  * @method \App\Model\Product\Product[] getProductsWithBrand(\App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Product[] getProductsWithFlag(\Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag)
  * @method \App\Model\Product\Product[] getProductsWithUnit(\Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit)
- * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  */
 class ProductRepository extends BaseProductRepository
 {
+
     /**
      * @param array $productCatnums
      * @param int $domainId
@@ -80,23 +80,39 @@ class ProductRepository extends BaseProductRepository
         $queryBuilder->setParameter('domainId', $domainId);
 
         return $queryBuilder;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
-
-class ProductRepository extends BaseProductRepository
-{
-    /**
-     * @return \App\Model\Product\Product[]
-     */
-    public function getProductsWithoutAssemblyInstructionFiles(): array
-    {
-        return $this->getProductRepository()->findBy(['assemblyInstruction' => true]);
     }
 
     /**
-     * @return \App\Model\Product\Product[]
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getProductsWithoutProductTypePlanFiles(): array
+    public function getQueryBuilder(): QueryBuilder
     {
-        return $this->getProductRepository()->findBy(['productTypePlan' => true]);
+        return $this->em->createQueryBuilder()
+            ->select('p')
+            ->from(Product::class, 'p');
+    }
+
+    /**
+     * @return \Doctrine\ORM\Internal\Hydration\IterableResult
+     */
+    public function getProductsWithoutProductTypePlanFiles(): IterableResult
+    {
+        return $this->getQueryBuilder()
+            ->where('p.assemblyInstruction = true')
+            ->getQuery()
+            ->iterate()
+            ;;
+    }
+
+    /**
+     * @return \Doctrine\ORM\Internal\Hydration\IterableResult
+     */
+    public function getProductsWithoutAssemblyInstructionFiles(): IterableResult
+    {
+        return $this->getQueryBuilder()
+            ->where('p.assemblyInstruction = true')
+            ->getQuery()
+            ->iterate()
+            ;
     }
 }

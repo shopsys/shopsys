@@ -145,9 +145,9 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
     }
 
     /**
-     * @param array $akeneoData
+     * @param mixed $akeneoData
      */
-    abstract protected function processItem(array $akeneoData): void;
+    abstract protected function processItem($akeneoData): void;
 
     abstract protected function doBeforeTransfer(): void;
 

@@ -118,7 +118,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
     /**
      * @inheritDoc
      */
-    protected function processItem(array $akeneoCategoryData): void
+    protected function processItem($akeneoCategoryData): void
     {
         if ($akeneoCategoryData['code'] === self::ROOT_CATEGORY_CODE) {
             return;

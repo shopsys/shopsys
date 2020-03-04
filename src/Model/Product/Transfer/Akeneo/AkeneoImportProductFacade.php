@@ -101,7 +101,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     /**
      * @param array $akeneoProductData
      */
-    protected function processItem(array $akeneoProductData): void
+    protected function processItem($akeneoProductData): void
     {
         $this->productTransferAkeneoValidator->validate($akeneoProductData);
 

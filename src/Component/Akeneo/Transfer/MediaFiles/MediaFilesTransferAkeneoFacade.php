@@ -29,9 +29,8 @@ class MediaFilesTransferAkeneoFacade
      * @param string $code
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function getMediaFile(string $code): ResponseInterface
+    public function getProductMediaFile(string $code): ResponseInterface
     {
-        $response = $this->akeneoClient->getAssetMediaFileApi()->download($code);
-        return $response;
+        return $this->akeneoClient->getProductMediaFileApi()->download($code);
     }
 }

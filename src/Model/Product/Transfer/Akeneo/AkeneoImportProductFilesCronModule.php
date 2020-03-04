@@ -34,6 +34,6 @@ class AkeneoImportProductFilesCronModule implements SimpleCronModuleInterface
      */
     public function run()
     {
-        $this->akeneoImportProductFilesFacade->runTransfer();
+        $this->akeneoImportProductFilesFacade->download();
     }
 }

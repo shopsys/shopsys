@@ -32,10 +32,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '23', minutes: '10' }
 
-    App\Component\Akeneo\Transfer\MediaFiles\AkeneoMediaFilesCronModule:
-        tags:
-              - { name: shopsys.cron, hours: '23', minutes: '10' }
-
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesCronModule:
         tags:
-              - { name: shopsys.cron, hours: '23', minutes: '10' }
+            - { name: shopsys.cron, hours: '23', minutes: '10' }

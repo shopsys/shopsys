@@ -35,6 +35,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  */
 class Product extends BaseProduct
 {
+    public const PDF_SUFFIX = '.pdf';
+
     /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
@@ -323,5 +325,23 @@ class Product extends BaseProduct
     public function getProductTypePlanCode(int $domainId): ?string
     {
         return $this->getProductDomain($domainId)->getProductTypePlanCode();
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $type
+     * @return string
+     */
+    public function getProductFileNameByType(int $domainId, string $type): string
+    {
+        return $type . '_' . $this->getId() . '_' . $domainId . self::PDF_SUFFIX;
+    }
+
+    /**
+     * @return \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getProductDomains()
+    {
+        return $this->domains;
     }
 }
