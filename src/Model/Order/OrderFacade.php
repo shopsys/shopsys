@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
@@ -40,6 +41,7 @@ use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
@@ -58,7 +60,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method fillOrderItems(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview)
  * @method fillOrderPayment(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  * @method fillOrderRounding(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
- * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
  * @method refreshOrderItemsWithoutTransportAndPayment(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
  * @method calculateOrderItemDataPrices(\App\Model\Order\Item\OrderItemData $orderItemData, int $domainId)
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
@@ -276,13 +277,17 @@ class OrderFacade extends BaseOrderFacade
             $splitOrderPreview->getProductsPrice(),
             $order->getDomainId()
         );
-        $orderPayment = $this->orderItemFactory->createPayment(
-            $order,
-            $payment->getName($locale),
-            $paymentPrice,
-            $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent(),
-            1,
-            $payment
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $payment->getName($locale);
+        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
+        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
+        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+        $orderItemData->payment = $payment;
+        $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData(
+            $orderItemData,
+            $order
         );
         $order->addItem($orderPayment);
     }
@@ -296,14 +301,16 @@ class OrderFacade extends BaseOrderFacade
     {
         $roundingPrice = $splitOrderPreview->getRoundingPrice();
         if ($roundingPrice !== null) {
-            $this->orderItemFactory->createProduct(
+            $orderItemData = $this->orderItemDataFactory->create();
+            $orderItemData->name = t('Rounding', [], 'messages', $locale);
+            $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
+            $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
+            $orderItemData->vatPercent = '0';
+            $orderItemData->quantity = 1;
+
+            $this->orderItemFactory->createProductByOrderItemData(
+                $orderItemData,
                 $order,
-                t('Rounding', [], 'messages', $locale),
-                $roundingPrice,
-                '0',
-                1,
-                null,
-                null,
                 null
             );
         }
@@ -336,7 +343,7 @@ class OrderFacade extends BaseOrderFacade
             $orderItemData->quantity = $quantifiedProduct->getQuantity();
             $orderItemData->unitName = $product->getUnit()->getName($locale);
             $orderItemData->catnum = $product->getCatnum();
-            $orderItemData->productType = $product->getProductType();
+            $orderItemData->productType = $orderPreview->getProductType();
 
             $orderItem = $this->orderItemFactory->createProductByOrderItemData(
                 $orderItemData,
@@ -365,13 +372,18 @@ class OrderFacade extends BaseOrderFacade
             $orderPreview->getProductsPrice(),
             $order->getDomainId()
         );
-        $orderTransport = $this->orderItemFactory->createTransport(
-            $order,
-            $transport->getName($locale),
-            $transportPrice,
-            $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent(),
-            1,
-            $transport
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $transport->getName($locale);
+        $orderItemData->priceWithoutVat = $transportPrice->getPriceWithoutVat();
+        $orderItemData->priceWithVat = $transportPrice->getPriceWithVat();
+        $orderItemData->vatPercent = $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+        $orderItemData->transport = $transport;
+        $orderItemData->productType = $orderPreview->getProductType();
+
+        $orderTransport = $this->orderItemFactory->createTransportByOrderItemData(
+            $orderItemData,
+            $order
         );
         $order->addItem($orderTransport);
     }
@@ -399,5 +411,36 @@ class OrderFacade extends BaseOrderFacade
         ];
 
         return strtr($orderSentPageContent, $variables);
+    }
+
+    /**
+     * @param \App\Model\Order\Item\OrderItem $orderItem
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount
+     * @param string $locale
+     * @param float $discountPercent
+     */
+    protected function addOrderItemDiscount(OrderItem $orderItem, Price $quantifiedItemDiscount, string $locale, float $discountPercent): void
+    {
+        $name = sprintf(
+            '%s %s - %s',
+            t('Promo code', [], 'messages', $locale),
+            $this->numberFormatterExtension->formatPercent(-$discountPercent, $locale),
+            $orderItem->getName()
+        );
+        $discountPrice = $quantifiedItemDiscount->inverse();
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $name;
+        $orderItemData->priceWithoutVat = $discountPrice->getPriceWithoutVat();
+        $orderItemData->priceWithVat = $discountPrice->getPriceWithVat();
+        $orderItemData->vatPercent = $orderItem->getVatPercent();
+        $orderItemData->quantity = 1;
+        $orderItemData->productType = $orderItem->getProductType();
+
+        $this->orderItemFactory->createProductByOrderItemData(
+            $orderItemData,
+            $orderItem->getOrder(),
+            null
+        );
     }
 }
