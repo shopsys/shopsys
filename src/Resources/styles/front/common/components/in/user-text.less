@@ -1,6 +1,31 @@
 @in-user-text-ul-point-size: 6px;
+@in-user-text-heading-font-size: 18px;
+@in-user-text-heading-margin-bottom: 0.6rem;
+@in-user-text-paragraph-margin: 0 0 1.5rem;
 
 .in-user-text {
+    h2,
+    h3 {
+        margin-bottom: @in-user-text-heading-margin-bottom;
+
+        font-size: @in-user-text-heading-font-size;
+        font-family: @font-tertiary;
+        text-transform: none;
+    }
+
+    p {
+        margin: @in-user-text-paragraph-margin;
+    }
+
+    a {
+        color: @color-add-secondary;
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
     ul {
         .reset-ul();
         margin-bottom: @margin-gap;
@@ -29,6 +54,6 @@
     }
 
     img {
-        height: auto !important;
+        height: auto;
     }
 }
