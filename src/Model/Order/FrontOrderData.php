@@ -26,4 +26,9 @@ class FrontOrderData extends BaseFrontOrderData
      * @var string|null
      */
     public $gender;
+
+    /**
+     * @var \App\Model\Transport\Transport[]|null[]
+     */
+    public $transportsByProductTypeId;
 }

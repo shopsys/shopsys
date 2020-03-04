@@ -7,8 +7,6 @@ namespace App\Model\Order\Preview;
 use App\Model\Order\OrderData;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Product\Type\ProductType;
-use App\Model\Product\Type\ProductTypeFacade;
-use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -50,11 +48,6 @@ class OrderPreviewSplittingFacade
     private $currentPromoCodeFacade;
 
     /**
-     * @var \App\Model\Product\Type\ProductTypeFacade
-     */
-    private $productTypeFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation
      */
     private $orderPriceCalculation;
@@ -66,7 +59,6 @@ class OrderPreviewSplittingFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      */
     public function __construct(
@@ -76,7 +68,6 @@ class OrderPreviewSplittingFacade
         CartFacade $cartFacade,
         CurrentCustomerUser $currentCustomerUser,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
-        ProductTypeFacade $productTypeFacade,
         OrderPriceCalculation $orderPriceCalculation
     ) {
         $this->orderPreviewFactory = $orderPreviewFactory;
@@ -85,7 +76,6 @@ class OrderPreviewSplittingFacade
         $this->cartFacade = $cartFacade;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
-        $this->productTypeFacade = $productTypeFacade;
         $this->orderPriceCalculation = $orderPriceCalculation;
     }
 
@@ -97,14 +87,14 @@ class OrderPreviewSplittingFacade
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
 
-        $transport = null;
+        $transportsByProductTypeId = [];
         $payment = null;
         if ($orderData !== null) {
-            $transport = $orderData->transport;
+            $transportsByProductTypeId = $orderData->transportsByProductTypeId;
             $payment = $orderData->payment;
         }
 
-        $orderPreviews = $this->createOrderPreviewsWithProductType($currency, $transport);
+        $orderPreviews = $this->createOrderPreviewsWithProductType($currency, $transportsByProductTypeId);
 
         $sumTotalPrices = $this->sumTotalPrices($orderPreviews);
         $roundingPrice = null;
@@ -168,23 +158,23 @@ class OrderPreviewSplittingFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \App\Model\Transport\Transport|null $transport
+     * @param \App\Model\Transport\Transport[] $transportsByProductTypeId
      * @return \App\Model\Order\Preview\OrderPreview[]
      */
-    private function createOrderPreviewsWithProductType(Currency $currency, ?Transport $transport): array
+    private function createOrderPreviewsWithProductType(Currency $currency, array $transportsByProductTypeId): array
     {
         $promoCodeDiscountPercent = $this->findAppliedPromoCodePercentDiscount();
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
 
         $orderPreviews = [];
-        foreach ($this->productTypeFacade->getAll() as $productType) {
+        foreach ($this->getUsedProductTypesInCurrentCart() as $productType) {
             $productTypeQuantifiedProducts = $this->filterQuantifiedProductsByProductType($quantifiedProducts, $productType);
             if (count($productTypeQuantifiedProducts) > 0) {
                 $orderPreviews[] = $this->orderPreviewFactory->create(
                     $currency,
                     $this->domain->getId(),
                     $productTypeQuantifiedProducts,
-                    $transport,
+                    $transportsByProductTypeId[$productType->getId()] ?? null,
                     null,
                     $this->currentCustomerUser->findCurrentCustomerUser(),
                     $promoCodeDiscountPercent,
@@ -192,6 +182,25 @@ class OrderPreviewSplittingFacade
                 );
             }
         }
+
         return $orderPreviews;
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType[]
+     */
+    public function getUsedProductTypesInCurrentCart(): array
+    {
+        $productTypes = [];
+
+        $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
+        foreach ($quantifiedProducts as $quantifiedProduct) {
+            /** @var \App\Model\Product\Product $product */
+            $product = $quantifiedProduct->getProduct();
+            $productType = $product->getProductType();
+            $productTypes[$productType->getId()] = $productType;
+        }
+
+        return $productTypes;
     }
 }

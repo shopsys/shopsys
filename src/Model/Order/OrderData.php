@@ -17,6 +17,11 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  */
 class OrderData extends BaseOrderData
 {
+    /**
+     * @var \App\Model\Transport\Transport[]
+     */
+    public $transportsByProductTypeId;
+
     public function __construct()
     {
         parent::__construct();

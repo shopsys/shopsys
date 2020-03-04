@@ -1,5 +1,3 @@
-import Register from 'framework/common/utils/Register';
-
 export default class PaymentTransportRelations {
 
     constructor () {
@@ -167,4 +165,5 @@ export default class PaymentTransportRelations {
     }
 }
 
-(new Register()).registerCallback(PaymentTransportRelations.init, 'PaymentTransportRelations.init');
+// TODO fix for more transports in next commit
+// (new Register()).registerCallback(PaymentTransportRelations.init, 'PaymentTransportRelations.init');

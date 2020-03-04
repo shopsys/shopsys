@@ -8,6 +8,7 @@ use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Model\Order\FrontOrderData;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataMapper;
+use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -114,6 +115,11 @@ class OrderController extends FrontBaseController
     private $newsletterFacade;
 
     /**
+     * @var \App\Model\Order\Preview\OrderPreviewSplittingFacade
+     */
+    private $orderPreviewSplittingFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
@@ -130,6 +136,7 @@ class OrderController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
      */
     public function __construct(
         OrderFacade $orderFacade,
@@ -147,7 +154,8 @@ class OrderController extends FrontBaseController
         TransportAndPaymentWatcher $transportAndPaymentWatcher,
         OrderMailFacade $orderMailFacade,
         LegalConditionsFacade $legalConditionsFacade,
-        NewsletterFacade $newsletterFacade
+        NewsletterFacade $newsletterFacade,
+        OrderPreviewSplittingFacade $orderPreviewSplittingFacade
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
@@ -165,6 +173,7 @@ class OrderController extends FrontBaseController
         $this->orderMailFacade = $orderMailFacade;
         $this->legalConditionsFacade = $legalConditionsFacade;
         $this->newsletterFacade = $newsletterFacade;
+        $this->orderPreviewSplittingFacade = $orderPreviewSplittingFacade;
     }
 
     public function indexAction()
@@ -194,6 +203,11 @@ class OrderController extends FrontBaseController
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $frontOrderFormData->currency = $currency;
 
+        $frontOrderFormData->transportsByProductTypeId = [];
+        foreach ($this->orderPreviewSplittingFacade->getUsedProductTypesInCurrentCart() as $productType) {
+            $frontOrderFormData->transportsByProductTypeId[$productType->getId()] = null;
+        }
+
         $orderFlow = $this->domainAwareOrderFlowFactory->create();
         if ($orderFlow->isBackToCartTransition()) {
             return $this->redirectToRoute('front_cart');
@@ -213,6 +227,7 @@ class OrderController extends FrontBaseController
         $isValid = $orderFlow->isValid($form);
         // FormData are filled during isValid() call
         $orderData = $this->orderDataMapper->getOrderDataFromFrontOrderData($frontOrderFormData);
+        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
 
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
@@ -253,6 +268,7 @@ class OrderController extends FrontBaseController
         return $this->render('Front/Content/Order/index.html.twig', [
             'form' => $form->createView(),
             'flow' => $orderFlow,
+            'splitOrderPreview' => $splitOrderPreview,
             'transport' => $transport,
             'payment' => $payment,
             'payments' => $payments,

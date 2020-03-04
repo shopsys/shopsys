@@ -732,6 +732,11 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $product = $this->getReference($productReferenceName);
             $quantifiedProducts[] = new QuantifiedProduct($product, $quantity);
         }
+        /** @var \App\Model\Product\Type\ProductType $productType */
+        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+        $orderData->transportsByProductTypeId = [
+            $productType->getId() => $orderData->transport,
+        ];
         $orderPreview = $this->orderPreviewFactory->create(
             $orderData->currency,
             $orderData->domainId,
@@ -740,7 +745,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData->payment,
             $customerUser,
             null,
-            $this->getReference(ProductTypeDataFixture::TYPE_COMMON)
+            $productType
         );
 
         $splitOrderPreview = new SplitOrderPreview(

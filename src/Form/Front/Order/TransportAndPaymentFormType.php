@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Order;
 
+use App\Model\Order\FrontOrderData;
 use Shopsys\FrameworkBundle\Form\SingleCheckboxChoiceType;
-use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -49,14 +49,18 @@ class TransportAndPaymentFormType extends AbstractType
         $transports = $this->transportFacade->getVisibleByDomainId($options['domain_id'], $payments);
 
         $builder
-            ->add('transport', SingleCheckboxChoiceType::class, [
-                'choices' => $transports,
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new Constraints\NotNull(['message' => 'Please choose shipping type']),
+            ->add('transportsByProductTypeId', CollectionType::class, [
+                'entry_type' => SingleCheckboxChoiceType::class,
+                'allow_add' => true,
+                'entry_options' => [
+                    'choices' => $transports,
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'constraints' => [
+                        new Constraints\NotNull(['message' => 'Please choose shipping type']),
+                    ],
+                    'invalid_message' => 'Please choose shipping type',
                 ],
-                'invalid_message' => 'Please choose shipping type',
             ])
             ->add('payment', SingleCheckboxChoiceType::class, [
                 'choices' => $payments,
@@ -87,23 +91,27 @@ class TransportAndPaymentFormType extends AbstractType
     }
 
     /**
-     * @param \App\Model\Order\OrderData $orderData
+     * @param \App\Model\Order\FrontOrderData $orderData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function validateTransportPaymentRelation(OrderData $orderData, ExecutionContextInterface $context)
+    public function validateTransportPaymentRelation(FrontOrderData $orderData, ExecutionContextInterface $context): void
     {
         $payment = $orderData->payment;
-        $transport = $orderData->transport;
+        $transports = array_filter($orderData->transportsByProductTypeId); // filter NULL values
 
         $relationExists = false;
-        if ($payment instanceof Payment && $transport instanceof Transport) {
-            if (in_array($transport, $payment->getTransports(), true)) {
-                $relationExists = true;
+        if ($payment instanceof Payment && count($transports) > 0) {
+            $relationExists = true;
+            foreach ($transports as $transport) {
+                if (in_array($transport, $payment->getTransports(), true) === false) {
+                    $relationExists = false;
+                    break;
+                }
             }
         }
 
-        if (!$relationExists) {
-            $context->addViolation('Please choose a valid combination of transport and payment');
+        if ($relationExists === false) {
+            $context->addViolation('Please choose a valid combination of transports and payment');
         }
     }
 }
