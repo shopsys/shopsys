@@ -7,8 +7,10 @@ namespace Tests\App\Functional\Model\Order;
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\Model\Order\Item\OrderItemData;
 use App\Model\Order\OrderData;
+use App\Model\Order\Preview\SplitOrderPreview;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -22,13 +24,13 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
     private $cartFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
+     * @var \App\Model\Order\OrderFacade
      * @inject
      */
     private $orderFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
+     * @var \App\Model\Order\Preview\OrderPreviewFactory
      * @inject
      */
     private $orderPreviewFactory;
@@ -108,8 +110,12 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
-        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
-        $order = $this->orderFacade->createOrder($orderData, $orderPreview, null);
+        /** @var \App\Model\Product\Type\ProductType $productType */
+        $productType = $this->persistentReferenceFacade->getReference(ProductTypeDataFixture::TYPE_COMMON);
+
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment, $productType);
+        $splitOrderPreview = new SplitOrderPreview([$orderPreview], $orderData->payment, $orderPreview->getTotalPrice(), $orderPreview->getRoundingPrice());
+        $order = $this->orderFacade->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, null);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());
 
