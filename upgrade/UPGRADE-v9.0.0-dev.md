@@ -1108,6 +1108,9 @@ There you can find links to upgrade notes for other versions too.
             +    public function __construct(TokenStorageInterface $tokenStorage, AdministratorRolesChangedFacade $administratorRolesChangedFacade)
             ```
 
+- add cron overview ([#1407](https://github.com/shopsys/shopsys/pull/1407))
+    - update your files using [this diff](https://github.com/shopsys/project-base/commit/fdac77abc9fd7f167ccd544f4691ee25b2de169d)
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
