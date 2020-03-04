@@ -71,34 +71,30 @@ class AkeneoImportProductFilesFacade extends AbstractAkeneoImportTransfer
         $this->localFilesystem = $localFilesystem;
     }
 
-    public function download(): void
-    {
-        foreach ($this->productRepository->getProductsWithoutAssemblyInstructionFiles() as $row) {
-            $this->product = $row[0];
-            $this->runTransfer();
-        }
-    }
-
     /**
      * @return \Generator
      */
     protected function getData(): \Generator
     {
 
-        $akeneoDataPerDomain = [];
-        /** @var \App\Model\Product\ProductDomain $productDomain */
-        foreach ($this->product->getProductDomains() as $productDomain) {
-            if ($productDomain->getAssemblyInstructionCode()) {
-                $akeneoDataPerDomain[$productDomain->getDomainId()] = $this->mediaFilesTransferAkeneoFacade
-                    ->getProductMediaFile($productDomain->getAssemblyInstructionCode())
-                    ->getBody()
-                    ->getContents();
+        foreach ($this->productRepository->getProductsWithoutAssemblyInstructionFilesIterator() as $row) {
 
-                $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getAssemblyInstructionCode()));
+            $this->product = $row[0];
+            $akeneoDataPerDomain = [];
+            /** @var \App\Model\Product\ProductDomain $productDomain */
+            foreach ($this->product->getProductDomains() as $productDomain) {
+                if ($productDomain->getAssemblyInstructionCode()) {
+                    $akeneoDataPerDomain[$productDomain->getDomainId()] = $this->mediaFilesTransferAkeneoFacade
+                        ->getProductMediaFile($productDomain->getAssemblyInstructionCode())
+                        ->getBody()
+                        ->getContents();
+
+                    $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getAssemblyInstructionCode()));
+                }
             }
-        }
 
-        yield $akeneoDataPerDomain;
+            yield $akeneoDataPerDomain;
+        }
     }
 
     /**

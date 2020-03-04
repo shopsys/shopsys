@@ -95,19 +95,19 @@ class ProductRepository extends BaseProductRepository
     /**
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult
      */
-    public function getProductsWithoutProductTypePlanFiles(): IterableResult
+    public function getProductsWithoutProductTypePlanFilesIterator(): IterableResult
     {
         return $this->getQueryBuilder()
-            ->where('p.assemblyInstruction = true')
+            ->where('p.productTypePlan = true')
             ->getQuery()
             ->iterate()
-            ;;
+            ;
     }
 
     /**
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult
      */
-    public function getProductsWithoutAssemblyInstructionFiles(): IterableResult
+    public function getProductsWithoutAssemblyInstructionFilesIterator(): IterableResult
     {
         return $this->getQueryBuilder()
             ->where('p.assemblyInstruction = true')
