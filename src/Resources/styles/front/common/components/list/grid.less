@@ -41,6 +41,12 @@
             padding-left: @list-grid-item-gap;
         }
 
+        &:hover {
+            .list-grid__item__name__text {
+                text-decoration: underline;
+            }
+        }
+
         &--long {
             @media @query-md {
                 height: @list-grid-item-long-height;
