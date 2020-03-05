@@ -270,31 +270,46 @@
                 {% endif %}
 
                 {% if productStocksAvailabilitiesInformation|length > 0 %}
-                    <div class="h3" id="stocks-availabilities">{{ "Skladové zásoby"|trans }}</div>
-                    <table class="table-grid margin-top-20">
-                        <thead>
-                            <tr>
-                                <th>
-                                    {{ "Sklad"|trans }}
-                                </th>
-                                <th>
-                                    {{ "Dostupnost"|trans }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for productStockAvailabilityInformation in productStocksAvailabilitiesInformation %}
-                            <tr>
-                                <th>
-                                    {{ productStockAvailabilityInformation.stockName }}
-                                </th>
-                                <td>
-                                    {{ productStockAvailabilityInformation.availabilityInformation }}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="box-detail stocks-availabilities">
+                        <div class="h3" id="stocks-availabilities">{{ "Skladové zásoby"|trans }}</div>
+                        <table class="table-grid margin-top-20">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {{ "Sklad"|trans }}
+                                    </th>
+                                    <th>
+                                        {{ "Dostupnost"|trans }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for productStockAvailabilityInformation in productStocksAvailabilitiesInformation %}
+                                <tr>
+                                    <th>
+                                        {{ productStockAvailabilityInformation.stockName }}
+                                    </th>
+                                    <td>
+                                        {{ productStockAvailabilityInformation.availabilityInformation }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+
+                {% if downloadFiles|length > 0 %}
+                    <div class="box-detail download_files">
+                        <div class="h3" id="download_files">{{ "Ke stažení"|trans }}</div>
+                        <ul>
+                            {% for downloadFile in downloadFiles %}
+                                <li>
+                                    <a href="{{ downloadFile['url'] }}" target="_blank">{{ downloadFile['anchor']|trans }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 {% endif %}
 
             </div>

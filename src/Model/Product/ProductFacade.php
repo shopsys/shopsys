@@ -254,4 +254,31 @@ class ProductFacade extends BaseProductFacade
     {
         return $domainUrl . $this->productFilesUrlPrefix . $fileName;
     }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @return array
+     */
+    public function getDownloadFilesForProductByDomain(Product $product, Domain $domain): array
+    {
+        $downloadFileUrls = [];
+        if ($product->getAssemblyInstructionCode($domain->getId()) !== null) {
+            $url = $this->getProductTransferredFileUrl($product->getProductFileNameByType($domain->getId(), Product::ASSEMBLY_INSTRUCTION_TYPE), $domain->getUrl());
+            $downloadFileUrls[] = [
+                'anchor' => t('Instalační manuál'),
+                'url' => $url,
+            ];
+        }
+
+        if ($product->getProductTypePlanCode($domain->getId()) !== null) {
+            $url = $this->getProductTransferredFileUrl($product->getProductFileNameByType($domain->getId(), Product::PRODUCT_TYPE_PLAN_TYPE), $domain->getUrl());
+            $downloadFileUrls[] = [
+                'anchor' => t('Typový plán'),
+                'url' => $url,
+            ];
+        }
+
+        return $downloadFileUrls;
+    }
 }

@@ -127,13 +127,13 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $groupBuilder->add('assemblyInstructionFileUrl', MultidomainType::class, [
-            'label' => t('Pokyny ke složení'),
+            'label' => t('Instalační manuál'),
             'required' => false,
             'entry_type' => UrlType::class,
         ]);
 
         $groupBuilder->add('productTypePlanFileUrl', MultidomainType::class, [
-            'label' => t('Plán typu produktu'),
+            'label' => t('Typový plán'),
             'required' => false,
             'entry_type' => UrlType::class,
         ]);

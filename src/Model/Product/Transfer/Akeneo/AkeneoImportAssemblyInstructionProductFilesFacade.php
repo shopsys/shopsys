@@ -149,6 +149,6 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
      */
     public function getTransferName(): string
     {
-        return t('přenos "assemblyInstruction" souborů');
+        return t('přenos souborů "Instalační manuál"');
     }
 }
