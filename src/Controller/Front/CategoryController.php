@@ -117,6 +117,7 @@ class CategoryController extends FrontBaseController
     /**
      * @param \App\Model\Category\Category[] $categories
      * @param bool $showProductsCountByCategory
+     * @param mixed $cssClass
      */
     public function categoryListAction(array $categories, $showProductsCountByCategory = true, $cssClass = '')
     {
