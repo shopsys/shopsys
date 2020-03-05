@@ -7,13 +7,14 @@ namespace App\Model\Product\Transfer\Akeneo;
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade;
+use App\Model\Product\ProductRepository;
 use League\Flysystem\FileExistsException;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
-class AkeneoImportProductFilesFacade extends AbstractAkeneoImportTransfer
+
+class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoImportTransfer
 {
     protected const DS = DIRECTORY_SEPARATOR;
 
@@ -77,19 +78,19 @@ class AkeneoImportProductFilesFacade extends AbstractAkeneoImportTransfer
     protected function getData(): \Generator
     {
 
-        foreach ($this->productRepository->getProductsWithoutAssemblyInstructionFilesIterator() as $row) {
+        foreach ($this->productRepository->getProductsWithoutProductTypePlanFilesIterator() as $row) {
 
             $this->product = $row[0];
             $akeneoDataPerDomain = [];
             /** @var \App\Model\Product\ProductDomain $productDomain */
             foreach ($this->product->getProductDomains() as $productDomain) {
-                if ($productDomain->getAssemblyInstructionCode()) {
+                if ($productDomain->getProductTypePlanCode()) {
                     $akeneoDataPerDomain[$productDomain->getDomainId()] = $this->mediaFilesTransferAkeneoFacade
-                        ->getProductMediaFile($productDomain->getAssemblyInstructionCode())
+                        ->getProductMediaFile($productDomain->getProductTypePlanCode())
                         ->getBody()
                         ->getContents();
 
-                    $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getAssemblyInstructionCode()));
+                    $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getProductTypePlanCode()));
                 }
             }
 
@@ -103,10 +104,10 @@ class AkeneoImportProductFilesFacade extends AbstractAkeneoImportTransfer
     protected function processItem($akeneoData): void
     {
         foreach ($akeneoData as $domainId => $content){
-            $this->storeFile($this->product->getProductFileNameByType($domainId, 'assemblyInstruction'), $content);
+            $this->storeFile($this->product->getProductFileNameByType($domainId, 'productTypePlan'), $content);
         }
 
-        $this->product->setAssemblyInstruction(false);
+        $this->product->setProductTypePlan(false);
         $this->em->flush();
     }
 

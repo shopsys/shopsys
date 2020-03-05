@@ -10,14 +10,14 @@ use Symfony\Bridge\Monolog\Logger;
 class AkeneoImportProductFilesCronModule implements SimpleCronModuleInterface
 {
     /**
-     * @var \App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesFacade
+     * @var \App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade
      */
     private $akeneoImportProductFilesFacade;
 
     /**
-     * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesFacade $akeneoImportProductFilesFacade
+     * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade $akeneoImportProductFilesFacade
      */
-    public function __construct(AkeneoImportProductFilesFacade $akeneoImportProductFilesFacade)
+    public function __construct(AkeneoImportAssemblyInstructionProductFilesFacade $akeneoImportProductFilesFacade)
     {
         $this->akeneoImportProductFilesFacade = $akeneoImportProductFilesFacade;
     }
@@ -34,6 +34,6 @@ class AkeneoImportProductFilesCronModule implements SimpleCronModuleInterface
      */
     public function run()
     {
-        $this->akeneoImportProductFilesFacade->download();
+        $this->akeneoImportProductFilesFacade->runTransfer();
     }
 }
