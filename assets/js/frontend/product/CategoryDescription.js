@@ -7,13 +7,13 @@ export default class CategoryDescription {
         const descriptionHeight = $description.height();
 
         if (descriptionHeight > 32) {
-            $loadMoreButton.show();
+            $loadMoreButton.addClass('is-visible');
             $description.addClass('box-list__description__text--small');
         }
 
         $loadMoreButton.click(function () {
             $description.removeClass('box-list__description__text--small');
-            $loadMoreButton.closest('.js-category-description-load-more').hide();
+            $loadMoreButton.closest('.js-category-description-load-more').removeClass('is-visible');
         });
     }
 }

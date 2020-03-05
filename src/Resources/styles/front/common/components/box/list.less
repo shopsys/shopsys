@@ -1,5 +1,7 @@
-@box-list-description-line-height: 16px;
+@box-list-description-line-height: 1.8;
+@box-list-top-description-line-height: 1.6;
 @box-list-description-lines: 2;
+@box-list-description-max-width: 930px;
 
 @box-list-producer-image-space-around: 10px;
 
@@ -27,12 +29,24 @@
 
     &__description {
         &__text {
-            margin-bottom: @margin-gap/2;
+            max-width: @box-list-description-max-width;
+            margin: 3rem 0;
+
             line-height: @box-list-description-line-height;
 
             &--small {
                 overflow: hidden;
-                height: @box-list-description-line-height * @box-list-description-lines;
+            }
+
+            &--top {
+                display: none;
+                margin: 0 auto 2rem;
+
+                line-height: @box-list-top-description-line-height;
+
+                @media @query-md {
+                    display: block;
+                }
             }
         }
 
@@ -41,6 +55,14 @@
 
             &__btn {
                 display: none;
+
+                &.is-visible {
+                    display: inline-block;
+                }
+
+                &__icon {
+                    line-height: 0;
+                }
             }
         }
     }
