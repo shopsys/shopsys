@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use Akeneo\Pim\ApiClient\Search\SearchBuilder;
 use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
 use Akeneo\PimEnterprise\ApiClient\Api\PublishedProductApiInterface;
@@ -37,9 +38,9 @@ class ProductTransferAkeneoFacade
 
     /**
      * @param \DateTime $lastUpdatedProducts
-     * @return \Generator
+     * @return \Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface
      */
-    public function getAllUpdatedProductsFromLastUpdate(DateTime $lastUpdatedProducts): \Generator
+    public function getAllUpdatedProductsFromLastUpdate(DateTime $lastUpdatedProducts): ResourceCursorInterface
     {
         $lastUpdatedProducts->setTimezone(new \DateTimeZone('UTC'));
 
@@ -51,8 +52,6 @@ class ProductTransferAkeneoFacade
             'search' => $searchFilters,
         ]);
 
-        foreach ($publishedProducts as $product) {
-            yield $product;
-        }
+        return $publishedProducts;
     }
 }

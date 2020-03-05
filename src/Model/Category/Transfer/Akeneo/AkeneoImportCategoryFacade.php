@@ -104,7 +104,9 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
      */
     protected function getData(): Generator
     {
-        return $this->categoryTransferAkeneoFacade->getAllCategories();
+        foreach ($this->categoryTransferAkeneoFacade->getAllCategories() as $category) {
+            yield $category;
+        }
     }
 
     protected function doBeforeTransfer(): void
@@ -218,5 +220,21 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
             $this->categoryFacade->deleteById($categoryId);
             $this->logger->addWarning(sprintf('Deleted category with ID: %s', $categoryId));
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransferIdentifier(): string
+    {
+        return 'categoryTransfer';
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransferName(): string
+    {
+        return t('Přenos kategorií');
     }
 }

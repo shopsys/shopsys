@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Category\Transfer\Akeneo;
 
 use Akeneo\Pim\ApiClient\Api\CategoryApiInterface;
+use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
 
 class CategoryTransferAkeneoFacade
@@ -33,14 +34,10 @@ class CategoryTransferAkeneoFacade
     }
 
     /**
-     * @return \Generator
+     * @return \Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface
      */
-    public function getAllCategories(): \Generator
+    public function getAllCategories(): ResourceCursorInterface
     {
-        $categories = $this->getCategoryFromApi()->all(self::PAGE_SIZE_LIMIT);
-
-        foreach ($categories as $category) {
-            yield $category;
-        }
+        return $this->getCategoryFromApi()->all(self::PAGE_SIZE_LIMIT);
     }
 }

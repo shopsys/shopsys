@@ -23,3 +23,7 @@ services:
     App\Model\Customer\Transfer\ScontoBridge\ScontoBridgeImportCustomerCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5' }
+
+    App\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '23', minutes: '10' }
