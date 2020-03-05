@@ -49,7 +49,7 @@ class ArticleController extends FrontBaseController
      * @param string $title
      * @param string $icon
      */
-    public function footerAction($id, $title, $icon)
+    public function footerAction(int $id, string $title, string $icon)
     {
         $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(
             constant('App\Model\Article\Article::PLACEMENT_FOOTER_' . $id)
