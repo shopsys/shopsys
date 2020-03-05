@@ -1,7 +1,8 @@
+{% set shopInfoEmail = getShopInfoEmail() %}
+{% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
+
 <div class="footer">
-    {# TODO: Domluvit s programmerem a s PO, aby se vracel obecný priznak - tj. ze jsem v pokladne a podle toho to opodminkovat #}
-    {# PO informovan v ukole SD-376 #}
-    {% if (cart is not defined) and (payments is not defined) %}
+    {% if getRoute() != 'front_cart' and getRoute() != 'front_order_index'  %}
         <div class="web__line clearfix dont-print">
             <div class="web__container">
                 {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction')) }}
@@ -12,7 +13,7 @@
                 <div class="box-info">
                     <picture>
                         <source srcset="{{ asset('assets/frontend/images/potrebujete_poradit2x.png') }} 2x" />
-                        <img class="box-info__img" src="{{ asset('assets/frontend/images/potrebujete_poradit.png') }}" alt="{{ 'Potřebujete poradit?'|trans }}">
+                        <img class="box-info__img" loading="lazy" src="" data-src="{{ asset('assets/frontend/images/potrebujete_poradit.png') }}" alt="{{ 'Potřebujete poradit?'|trans }}">
                     </picture>
                     <div class="box-info__content">
                         <div class="box-info__text">
@@ -20,13 +21,13 @@
                             <span class="box-info__hours">{{ 'Po-Pá 8-19h  |  So-Ne 8-16h'|trans }}</span>
                         </div>
                         <div class="box-info__contacts">
-                            <a href="tel:257 893 893" class="box-info__contacts__link">
+                            <a href="tel:{{ shopInfoPhoneNumber }}" class="box-info__contacts__link">
                                 <i class="box-info__contacts__icon box-info__contacts__icon--phone svg svg-phone"></i>
-                                <span class="box-info__contacts__text">{{ '257 893 893'|trans }}</span>
+                                <span class="box-info__contacts__text">{{ shopInfoPhoneNumber }}</span>
                             </a>
-                            <a href="mailto:info@sconto.cz" class="box-info__contacts__link">
+                            <a href="mailto:{{ shopInfoEmail }}" class="box-info__contacts__link">
                                 <i class="box-info__contacts__icon svg svg-email"></i>
-                                <span class="box-info__contacts__text">{{ 'info@sconto.cz'|trans }}</span>
+                                <span class="box-info__contacts__text">{{ shopInfoEmail }}</span>
                             </a>
                         </div>
                     </div>
