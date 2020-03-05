@@ -1,6 +1,6 @@
 {% if categoriesWithLazyLoadedVisibleChildren|length > 0 %}
     <nav class="list-menu-wrap">
-        <ul class="js-category-list list-menu dont-print
+        <ul class="list-menu dont-print js-category-list
             {% if isFirstLevel %} list-menu--root{% endif %}
             {% if categoriesWithLazyLoadedVisibleChildren[0].category.level > 2 %} list-menu--dropdown{% endif %}"
             {% if isFirstLevel %}id="js-categories"{% endif %}>
