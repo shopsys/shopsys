@@ -30,7 +30,7 @@
             {# TODO: Static category text - until programming will be done #}
             <div class="box-list__description js-not-implemented-yet">
                 <div class="box-list__description__text box-list__description__text--top in-user-text js-category-description">
-                    Obývací pokoj bez pohovky? Tak přece domov nevypadá! Nic se nevyrovná posezení s rodinou či přáteli na rohové sedací soupravě nebo sledování oblíbeného filmu z pohodlí pohovky. V naší nabídce vám nabídneme obojí. Sedací soupravy všech tvarů, rozkládací sedací soupravy i luxusní kožené sedačky. Vyberte si ve Scontu posezení, to pravé posezení pro váš obývací pokoj.
+                    {{ category.getDescription(domain.id)|raw }}
                     <span class="btn btn--next btn-no-style box-list__description__more__btn js-category-description-load-more">
                         {{ 'Číst dál'|trans }}
                         <i class="box-list__description__more__btn__icon btn__icon svg svg-long-arrow-right"></i>
