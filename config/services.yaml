@@ -229,6 +229,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator: '@App\Model\Product\ProductBreadcrumbGenerator'
 
+    App\Model\Product\ProductFacade:
+        arguments:
+            $productFilesUrlPrefix: '%shopsys.product_files_url_prefix%'
+
     Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
 
     Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'

@@ -68,6 +68,12 @@ class ProductFacade extends BaseProductFacade
     private $productStockFacade;
 
     /**
+     * @var string
+     */
+    private $productFilesUrlPrefix;
+
+    /**
+     * @param string $productFilesUrlPrefix
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
@@ -95,6 +101,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
      */
     public function __construct(
+        string $productFilesUrlPrefix,
         EntityManagerInterface $em,
         ProductRepository $productRepository,
         ProductVisibilityFacade $productVisibilityFacade,
@@ -148,6 +155,7 @@ class ProductFacade extends BaseProductFacade
         );
         $this->stockFacade = $stockFacade;
         $this->productStockFacade = $productStockFacade;
+        $this->productFilesUrlPrefix = $productFilesUrlPrefix;
     }
 
     /**
@@ -235,5 +243,15 @@ class ProductFacade extends BaseProductFacade
     {
         $product->editFileAttributes($productFilesData);
         $this->em->flush();
+    }
+
+    /**
+     * @param string $fileName
+     * @param string $domainUrl
+     * @return string
+     */
+    public function getProductTransferredFileUrl(string $fileName, string $domainUrl): string
+    {
+        return $domainUrl . $this->productFilesUrlPrefix . $fileName;
     }
 }

@@ -36,6 +36,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 class Product extends BaseProduct
 {
     public const PDF_SUFFIX = '.pdf';
+    public const ASSEMBLY_INSTRUCTION_TYPE = 'assemblyInstruction';
+    public const PRODUCT_TYPE_PLAN_TYPE = 'productTypePlan';
 
     /**
      * @var bool
@@ -338,7 +340,7 @@ class Product extends BaseProduct
     }
 
     /**
-     * @return \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\ArrayCollection
+     * @return \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection
      */
     public function getProductDomains()
     {

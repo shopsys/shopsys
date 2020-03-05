@@ -197,15 +197,19 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
         );
     }
 
+    /**
+     * @return string
+     */
     public function getTransferName(): string
     {
         return 'customerTransfer';
     }
 
+    /**
+     * @return string
+     */
     public function getTransferIdentifier(): string
     {
         return t('Přenos zákazníků');
     }
-
-
 }

@@ -8,7 +8,6 @@ use App\Component\ScontoBridge\ScontoBridgeConfig;
 use App\Model\Transfer\TransferLoggerFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
-use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ScontoBridgeImportTransferDependency
@@ -32,6 +31,7 @@ class ScontoBridgeImportTransferDependency
      * @var \App\Component\ScontoBridge\ScontoBridgeConfig
      */
     private $scontoBridgeConfig;
+
     /**
      * @var \App\Model\Transfer\TransferLoggerFactory
      */
@@ -97,6 +97,4 @@ class ScontoBridgeImportTransferDependency
     {
         return $this->transferLoggerFactory;
     }
-
-
 }

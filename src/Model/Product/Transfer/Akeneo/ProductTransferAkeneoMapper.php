@@ -9,9 +9,9 @@ use App\Model\Category\CategoryFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ProductTransferAkeneoMapper
 {
@@ -32,8 +32,8 @@ class ProductTransferAkeneoMapper
 
     /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
-     * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
      */
     public function __construct(
         ProductDataFactory $productDataFactory,

@@ -21,7 +21,7 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
     protected $em;
 
     /**
-     * @var \Symfony\Bridge\Monolog\Logger
+     * @var \App\Model\Transfer\TransferLoggerInterface
      */
     protected $logger;
 
@@ -178,10 +178,11 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
      */
     abstract protected function getData(): \Generator;
 
+    /**
+     * @return string
+     */
     public function getServiceIdentifier(): string
     {
         return 'ScontoBridge';
     }
-
-
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -100,8 +101,7 @@ class ProductRepository extends BaseProductRepository
         return $this->getQueryBuilder()
             ->where('p.productTypePlan = true')
             ->getQuery()
-            ->iterate()
-            ;
+            ->iterate();
     }
 
     /**
@@ -112,7 +112,6 @@ class ProductRepository extends BaseProductRepository
         return $this->getQueryBuilder()
             ->where('p.assemblyInstruction = true')
             ->getQuery()
-            ->iterate()
-            ;
+            ->iterate();
     }
 }

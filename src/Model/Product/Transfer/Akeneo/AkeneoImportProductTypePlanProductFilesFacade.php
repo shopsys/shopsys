@@ -7,12 +7,11 @@ namespace App\Model\Product\Transfer\Akeneo;
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade;
+use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
 use League\Flysystem\FileExistsException;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-
 
 class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImportTransfer
 {
@@ -44,15 +43,9 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     private $productFilesDir;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param string $productFilesDir
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade
      * @param \League\Flysystem\FilesystemInterface $localFilesystem
      */
@@ -60,14 +53,12 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
         string $productFilesDir,
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
         ProductRepository $productRepository,
-        Domain $domain,
         MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade,
         FilesystemInterface $localFilesystem
     ) {
         parent::__construct($akeneoImportTransferDependency);
         $this->productRepository = $productRepository;
         $this->productFilesDir = $productFilesDir;
-        $this->domain = $domain;
         $this->mediaFilesTransferAkeneoFacade = $mediaFilesTransferAkeneoFacade;
         $this->localFilesystem = $localFilesystem;
     }
@@ -77,9 +68,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
      */
     protected function getData(): \Generator
     {
-
         foreach ($this->productRepository->getProductsWithoutProductTypePlanFilesIterator() as $row) {
-
             $this->product = $row[0];
             $akeneoDataPerDomain = [];
             /** @var \App\Model\Product\ProductDomain $productDomain */
@@ -103,8 +92,8 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
      */
     protected function processItem($akeneoData): void
     {
-        foreach ($akeneoData as $domainId => $content){
-            $this->storeFile($this->product->getProductFileNameByType($domainId, 'productTypePlan'), $content);
+        foreach ($akeneoData as $domainId => $content) {
+            $this->storeFile($this->product->getProductFileNameByType($domainId, Product::PRODUCT_TYPE_PLAN_TYPE), $content);
         }
 
         $this->product->setProductTypePlan(false);
@@ -162,6 +151,4 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     {
         return t('přenos "productTypePlan" souborů');
     }
-
-
 }

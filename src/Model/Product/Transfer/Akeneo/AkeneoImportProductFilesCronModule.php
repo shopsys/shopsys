@@ -13,6 +13,7 @@ class AkeneoImportProductFilesCronModule implements SimpleCronModuleInterface
      * @var \App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade
      */
     private $akeneoImportAssemblyInstructionProductFilesFacade;
+
     /**
      * @var \App\Model\Product\Transfer\Akeneo\AkeneoImportProductTypePlanProductFilesFacade
      */
@@ -25,8 +26,7 @@ class AkeneoImportProductFilesCronModule implements SimpleCronModuleInterface
     public function __construct(
         AkeneoImportAssemblyInstructionProductFilesFacade $akeneoImportAssemblyInstructionProductFilesFacade,
         AkeneoImportProductTypePlanProductFilesFacade $akeneoImportProductTypePlanProductFilesFacade
-    )
-    {
+    ) {
         $this->akeneoImportAssemblyInstructionProductFilesFacade = $akeneoImportAssemblyInstructionProductFilesFacade;
         $this->akeneoImportProductTypePlanProductFilesFacade = $akeneoImportProductTypePlanProductFilesFacade;
     }

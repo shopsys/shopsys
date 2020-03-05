@@ -94,6 +94,16 @@ class ProductData extends BaseProductData
      */
     public $productTypePlanCode;
 
+    /**
+     * @var string[]|null[]
+     */
+    public $assemblyInstructionFileUrl;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $productTypePlanFileUrl;
+
     public function __construct()
     {
         parent::__construct();
@@ -112,5 +122,7 @@ class ProductData extends BaseProductData
         $this->highPriceWithoutVat = [];
         $this->assemblyInstructionCode = [];
         $this->productTypePlanCode = [];
+        $this->assemblyInstructionFileUrl = [];
+        $this->productTypePlanFileUrl = [];
     }
 }
