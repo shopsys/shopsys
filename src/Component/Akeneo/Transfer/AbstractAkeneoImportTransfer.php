@@ -8,6 +8,7 @@ use Akeneo\Pim\ApiClient\Exception\RuntimeException;
 use App\Component\Akeneo\Transfer\Exception\TransferException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
+use App\Model\Transfer\TransferIdentificationInterface;
 use Exception;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 

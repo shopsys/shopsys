@@ -196,7 +196,11 @@ services:
 
     App\Component\Akeneo\AkeneoClientFactory: ~
 
-    App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesFacade:
+    App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade:
+        arguments:
+            $productFilesDir: "%shopsys.product_files_dir%"
+
+    App\Model\Product\Transfer\Akeneo\AkeneoImportProductTypePlanProductFilesFacade:
         arguments:
             $productFilesDir: "%shopsys.product_files_dir%"
 
@@ -291,9 +295,7 @@ services:
 
     App\Component\ScontoBridge\ScontoBridgeClient: ~
 
-    App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency:
-        arguments:
-            $logger: '@monolog.logger.cron'
+    App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency: ~
 
     App\Component\Placeholder\:
         resource: '../src/Component/Placeholder/**/*{Extension,Placeholder,Validator}.php'

@@ -12,14 +12,23 @@ class AkeneoImportProductFilesCronModule implements SimpleCronModuleInterface
     /**
      * @var \App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade
      */
-    private $akeneoImportProductFilesFacade;
+    private $akeneoImportAssemblyInstructionProductFilesFacade;
+    /**
+     * @var \App\Model\Product\Transfer\Akeneo\AkeneoImportProductTypePlanProductFilesFacade
+     */
+    private $akeneoImportProductTypePlanProductFilesFacade;
 
     /**
-     * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade $akeneoImportProductFilesFacade
+     * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade $akeneoImportAssemblyInstructionProductFilesFacade
+     * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductTypePlanProductFilesFacade $akeneoImportProductTypePlanProductFilesFacade
      */
-    public function __construct(AkeneoImportAssemblyInstructionProductFilesFacade $akeneoImportProductFilesFacade)
+    public function __construct(
+        AkeneoImportAssemblyInstructionProductFilesFacade $akeneoImportAssemblyInstructionProductFilesFacade,
+        AkeneoImportProductTypePlanProductFilesFacade $akeneoImportProductTypePlanProductFilesFacade
+    )
     {
-        $this->akeneoImportProductFilesFacade = $akeneoImportProductFilesFacade;
+        $this->akeneoImportAssemblyInstructionProductFilesFacade = $akeneoImportAssemblyInstructionProductFilesFacade;
+        $this->akeneoImportProductTypePlanProductFilesFacade = $akeneoImportProductTypePlanProductFilesFacade;
     }
 
     /**
@@ -34,6 +43,7 @@ class AkeneoImportProductFilesCronModule implements SimpleCronModuleInterface
      */
     public function run()
     {
-        $this->akeneoImportProductFilesFacade->runTransfer();
+        $this->akeneoImportAssemblyInstructionProductFilesFacade->runTransfer();
+        $this->akeneoImportProductTypePlanProductFilesFacade->runTransfer();
     }
 }

@@ -144,7 +144,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
      */
     protected function processItem(array $scontoBridgeCustomerData): void
     {
-        $this->logger->info(sprintf('Processing customer with ERP id : %s', $scontoBridgeCustomerData['erpCustomerNumber']));
+        $this->logger->addInfo(sprintf('Processing customer with ERP id : %s', $scontoBridgeCustomerData['erpCustomerNumber']));
 
         $this->customerTransferScontoBridgeValidator->validate($scontoBridgeCustomerData);
 
@@ -196,4 +196,16 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
             sprintf('Wake up cron for last modified : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
         );
     }
+
+    public function getTransferName(): string
+    {
+        return 'customerTransfer';
+    }
+
+    public function getTransferIdentifier(): string
+    {
+        return t('Přenos zákazníků');
+    }
+
+
 }

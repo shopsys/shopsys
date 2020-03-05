@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\ScontoBridge\Transfer;
 
 use App\Component\ScontoBridge\ScontoBridgeConfig;
+use App\Model\Transfer\TransferLoggerFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Symfony\Bridge\Monolog\Logger;
@@ -16,11 +17,6 @@ class ScontoBridgeImportTransferDependency
      * @var \Doctrine\ORM\EntityManagerInterface
      */
     protected $em;
-
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    protected $logger;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
@@ -36,26 +32,30 @@ class ScontoBridgeImportTransferDependency
      * @var \App\Component\ScontoBridge\ScontoBridgeConfig
      */
     private $scontoBridgeConfig;
+    /**
+     * @var \App\Model\Transfer\TransferLoggerFactory
+     */
+    private $transferLoggerFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Symfony\Bridge\Monolog\Logger $logger
+     * @param \App\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      * @param \App\Component\ScontoBridge\ScontoBridgeConfig $scontoBridgeConfig
      */
     public function __construct(
         SqlLoggerFacade $sqlLoggerFacade,
         EntityManagerInterface $em,
-        Logger $logger,
+        TransferLoggerFactory $transferLoggerFactory,
         ValidatorInterface $validator,
         ScontoBridgeConfig $scontoBridgeConfig
     ) {
         $this->em = $em;
-        $this->logger = $logger;
         $this->sqlLoggerFacade = $sqlLoggerFacade;
         $this->validator = $validator;
         $this->scontoBridgeConfig = $scontoBridgeConfig;
+        $this->transferLoggerFactory = $transferLoggerFactory;
     }
 
     /**
@@ -75,14 +75,6 @@ class ScontoBridgeImportTransferDependency
     }
 
     /**
-     * @return \Symfony\Bridge\Monolog\Logger
-     */
-    public function getLogger(): Logger
-    {
-        return $this->logger;
-    }
-
-    /**
      * @return \Symfony\Component\Validator\Validator\ValidatorInterface
      */
     public function getValidator(): ValidatorInterface
@@ -97,4 +89,14 @@ class ScontoBridgeImportTransferDependency
     {
         return $this->scontoBridgeConfig;
     }
+
+    /**
+     * @return \App\Model\Transfer\TransferLoggerFactory
+     */
+    public function getTransferLoggerFactory(): TransferLoggerFactory
+    {
+        return $this->transferLoggerFactory;
+    }
+
+
 }

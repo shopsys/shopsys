@@ -14,7 +14,7 @@ use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 
-class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoImportTransfer
+class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImportTransfer
 {
     protected const DS = DIRECTORY_SEPARATOR;
 
@@ -152,6 +152,16 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
      */
     public function getTransferIdentifier(): string
     {
-        return 'productMediaFilesTransfer';
+        return 'productTypePlanMediaFilesTransfer';
     }
+
+    /**
+     * @return string
+     */
+    public function getTransferName(): string
+    {
+        return t('přenos "productTypePlan" souborů');
+    }
+
+
 }

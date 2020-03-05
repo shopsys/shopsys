@@ -152,6 +152,13 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
      */
     public function getTransferIdentifier(): string
     {
-        return 'productMediaFilesTransfer';
+        return 'assemblyInstructionMediaFilesTransfer';
     }
+
+    public function getTransferName(): string
+    {
+        return t('přenos "assemblyInstruction" souborů');
+    }
+
+
 }
