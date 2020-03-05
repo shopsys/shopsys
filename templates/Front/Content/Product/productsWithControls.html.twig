@@ -7,11 +7,11 @@
 
         {{ productList.list(paginationResult.results) }}
 
-        <div class="box-list-pagination">
-            <div class="box-list-pagination__item">
+        <div class="list-pagination">
+            <div class="list-pagination__item">
                 {{ paginator.loadMoreButton(paginationResult) }}
             </div>
-            <div class="box-list-pagination__item">
+            <div class="list-pagination__item">
                 {{ paginator.paginatorNavigation(paginationResult, entityName) }}
             </div>
         </div>
