@@ -7,9 +7,12 @@ namespace Tests\App\Functional\Model\Administrator;
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use DateTime;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class AdministratorRepositoryTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository
      * @inject

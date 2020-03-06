@@ -11,9 +11,12 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     private const ORDER_ID = 10;
     private const PRODUCT_ITEM_ID = 45;
     private const PAYMENT_ITEM_ID = 46;

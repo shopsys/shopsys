@@ -5,38 +5,46 @@ declare(strict_types=1);
 namespace Tests\App\Test;
 
 use Psr\Container\ContainerInterface;
-use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 
 abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Client
      */
     private $client;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
      * @inject
      */
-    protected $domain;
+    protected $persistentReferenceFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
+     * @inject
      */
     private $domainRouterFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     * @inject
      */
     private $priceConverter;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @inject
+     */
+    protected $domain;
 
     protected function setUpDomain()
     {
@@ -47,9 +55,6 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     {
         parent::setUp();
         $this->setUpDomain();
-
-        $this->domainRouterFactory = $this->getContainer()->get(DomainRouterFactory::class);
-        $this->priceConverter = $this->getContainer()->get(PriceConverter::class);
     }
 
     /**
@@ -57,13 +62,15 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @param string $username
      * @param string $password
      * @param array $kernelOptions
+     * @param array $clientOptions
      * @return \Symfony\Bundle\FrameworkBundle\Client
      */
     protected function findClient(
         $createNew = false,
         $username = null,
         $password = null,
-        $kernelOptions = []
+        $kernelOptions = [],
+        $clientOptions = []
     ) {
         $defaultKernelOptions = [
             'environment' => EnvironmentType::TEST,
@@ -73,10 +80,10 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         $kernelOptions = array_replace($defaultKernelOptions, $kernelOptions);
 
         if ($createNew) {
-            $this->client = $this->createClient($kernelOptions);
+            $this->client = $this->createClient($kernelOptions, $clientOptions);
             $this->setUpDomain();
         } elseif (!isset($this->client)) {
-            $this->client = $this->createClient($kernelOptions);
+            $this->client = $this->createClient($kernelOptions, $clientOptions);
         }
 
         if ($username !== null) {
@@ -103,11 +110,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected function getReference($referenceName)
     {
-        /** @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade */
-        $persistentReferenceFacade = $this->getContainer()
-            ->get(PersistentReferenceFacade::class);
-
-        return $persistentReferenceFacade->getReference($referenceName);
+        return $this->persistentReferenceFacade->getReference($referenceName);
     }
 
     /**
@@ -125,11 +128,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected function getReferenceForDomain(string $referenceName, int $domainId)
     {
-        /** @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade */
-        $persistentReferenceFacade = $this->getContainer()
-            ->get(PersistentReferenceFacade::class);
-
-        return $persistentReferenceFacade->getReferenceForDomain($referenceName, $domainId);
+        return $this->persistentReferenceFacade->getReferenceForDomain($referenceName, $domainId);
     }
 
     protected function skipTestIfFirstDomainIsNotInEnglish()

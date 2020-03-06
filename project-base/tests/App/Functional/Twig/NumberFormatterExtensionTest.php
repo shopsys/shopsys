@@ -8,9 +8,12 @@ use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Tests\App\Test\FunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class NumberFormatterExtensionTest extends FunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     protected const NBSP = "\xc2\xa0";
 
     /**

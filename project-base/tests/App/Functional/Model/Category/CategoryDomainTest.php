@@ -6,9 +6,12 @@ namespace Tests\App\Functional\Model\Category;
 
 use App\Model\Category\Category;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class CategoryDomainTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     protected const FIRST_DOMAIN_ID = 1;
     protected const SECOND_DOMAIN_ID = 2;
     protected const DEMONSTRATIVE_SEO_TITLE = 'Demonstrative seo title';

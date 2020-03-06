@@ -11,14 +11,15 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 use Tests\App\Test\FunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class PriceExtensionTest extends FunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     protected const NBSP = "\xc2\xa0";
 
     /**
@@ -32,6 +33,18 @@ class PriceExtensionTest extends FunctionalTestCase
      * @inject
      */
     private $currencyFormatterFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface
+     * @inject
+     */
+    private $currencyFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface
+     * @inject
+     */
+    private $currencyDataFactory;
 
     protected function setUp(): void
     {
@@ -111,27 +124,22 @@ class PriceExtensionTest extends FunctionalTestCase
      */
     private function getPriceExtensionWithMockedConfiguration(): PriceExtension
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface $currencyFactory */
-        $currencyFactory = $this->getContainer()->get(CurrencyFactoryInterface::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface $currencyDataFactory */
-        $currencyDataFactory = $this->getContainer()->get(CurrencyDataFactoryInterface::class);
-
-        $domain1DefaultCurrencyData = $currencyDataFactory->create();
+        $domain1DefaultCurrencyData = $this->currencyDataFactory->create();
         $domain1DefaultCurrencyData->name = 'Czech crown';
         $domain1DefaultCurrencyData->code = Currency::CODE_CZK;
         $domain1DefaultCurrencyData->exchangeRate = '1';
         $domain1DefaultCurrencyData->minFractionDigits = 2;
         $domain1DefaultCurrencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
 
-        $domain2DefaultCurrencyData = $currencyDataFactory->create();
+        $domain2DefaultCurrencyData = $this->currencyDataFactory->create();
         $domain2DefaultCurrencyData->name = 'Euro';
         $domain2DefaultCurrencyData->code = Currency::CODE_EUR;
         $domain2DefaultCurrencyData->exchangeRate = '25';
         $domain1DefaultCurrencyData->minFractionDigits = 2;
         $domain1DefaultCurrencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
 
-        $domain1DefaultCurrency = $currencyFactory->create($domain1DefaultCurrencyData);
-        $domain2DefaultCurrency = $currencyFactory->create($domain2DefaultCurrencyData);
+        $domain1DefaultCurrency = $this->currencyFactory->create($domain1DefaultCurrencyData);
+        $domain2DefaultCurrency = $this->currencyFactory->create($domain2DefaultCurrencyData);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|\PHPUnit\Framework\MockObject\MockObject $currencyFacadeMock */
         $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)

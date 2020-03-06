@@ -7,9 +7,12 @@ namespace Tests\App\Functional\Model\Product\Availability;
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\Model\Product\Product;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
