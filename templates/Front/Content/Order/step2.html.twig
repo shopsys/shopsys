@@ -9,14 +9,24 @@
         <div class="web__container">
             <div class="box-order">
 
-                <div id="{{ form.vars.id }}" class="box-order__info">
+                <div id="{{ form.vars.id }}" class="box-order__info js-no-validate">
 
                     <div id="{{ form.transportsByProductTypeId.vars.id }}">
+                        {% set previewNumber = 0 %}
                         {% for orderPreview in splitOrderPreview.orderPreviews %}
+                            {% set previewNumber = previewNumber + 1 %}
                             {% set transportForm = form.transportsByProductTypeId[orderPreview.productType.id] %}
-                            <div class="box-order__info__item">
+                            <div class="box-order__info__item js-payment-transport-group">
 
-                                <h2 id="js-label-{{ transportForm.vars.id }}">{{ 'Shipping selection'|trans }}</h2>
+                                <h2 id="js-label-{{ transportForm.vars.id }}">
+                                    {{ 'Shipping selection'|trans }}
+                                    {% if splitOrderPreview.morePreviews %}
+                                        -
+                                        {{ 'Zásilka č. %number%'|trans({ '%number%': previewNumber }) }}
+                                        -
+                                        {{ orderPreview.productType.name }}
+                                    {% endif %}
+                                </h2>
 
                                 <div class="box-chooser js-form-group">
                                     {{ form_errors(transportForm, { errors_attr: {class: 'form-error--inline'} }) }}
@@ -25,9 +35,9 @@
                                         {% for child in transportForm %}
                                             {% set choice = transportForm.vars.choices[child.vars.name] %}
                                             {% set transportPrice = transportsPrices[choice.data.id] %}
-                                            <label class="box-chooser__item" for="{{ child.vars.id }}">
+                                            <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
                                                 <span class="box-chooser__item__check">
-                                                    {{ form_widget(child, { attr: { class: 'css-checkbox js-order-transport-input', 'data-id': choice.data.id} }) }}
+                                                    {{ form_widget(child, { attr: { class: 'css-checkbox js-order-transport-input js-payment-transport-checkbox', 'data-id': choice.data.id} }) }}
                                                     <span class="css-checkbox__image"></span>
                                                 </span>
 
@@ -56,6 +66,7 @@
                                             {% do transportForm.setRendered %}
                                             {{ 'Nothing to choose from'|trans }}
                                         {% endfor %}
+                                        <button type="button" class="box-chooser__wide-button js-payment-transport-change-button">{{ 'Změnit způsob dopravy' }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +76,7 @@
                         {% endfor %}
                     </div>
 
-                    <div class="box-order__info__item">
+                    <div class="box-order__info__item js-payment-transport-group">
 
                         <h2 id="js-label-{{ form.payment.vars.id }}">{{ 'Payment selection'|trans }}</h2>
 
@@ -76,9 +87,9 @@
                                 {% for child in form.payment %}
                                     {% set choice = form.payment.vars.choices[child.vars.name] %}
                                     {% set paymentPrice = paymentsPrices[choice.data.id] %}
-                                    <label class="box-chooser__item" for="{{ child.vars.id }}">
+                                    <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
                                         <span class="box-chooser__item__check">
-                                            {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input', 'data-id': choice.data.id} }) }}
+                                            {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input js-payment-transport-checkbox', 'data-id': choice.data.id} }) }}
                                             <span class="css-checkbox__image"></span>
                                         </span>
 
@@ -107,6 +118,7 @@
                                     {% do form.payment.setRendered %}
                                     {{ 'Nothing to choose from'|trans }}
                                 {% endfor %}
+                                <button type="button" class="box-chooser__wide-button js-payment-transport-change-button">{{ 'Změnit způsob platby' }}</button>
                             </div>
                         </div>
                     </div>
