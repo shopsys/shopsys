@@ -28,9 +28,13 @@
                             {% for item in sliderItems|slice(0, 4) %}
                                 <div class="box-slider__item">
                                     <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
-                                    <a href="#" class="box-slider__item__link js-not-implemented-yet text-center">
-                                        <span class="box-slider__item__link__text">{{ 'Pravidla akce zde'|trans }}</span>
+                                    {% if item.sliderExtendedTextLink and item.sliderExtendedText %}
+                                    <a href="{{ item.sliderExtendedTextLink }}" class="box-slider__item__link text-center" target="_blank">
+                                        <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
                                     </a>
+                                    {% elseif item.sliderExtendedText %}
+                                    <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
+                                    {% endif %}
                                 </div>
                             {% endfor %}
                         </div>

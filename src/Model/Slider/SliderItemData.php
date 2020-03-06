@@ -17,4 +17,14 @@ class SliderItemData extends BaseSliderItemData
      * @var \DateTime|null
      */
     public $datetimeVisibleTo;
+
+    /**
+     * @var string|null
+     */
+    public $sliderExtendedText;
+
+    /**
+     * @var string|null
+     */
+    public $sliderExtendedTextLink;
 }
