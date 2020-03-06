@@ -17,7 +17,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         return [
             ConfigureMenuEvent::SIDE_MENU_MARKETING => 'configureMarketingMenu',
             ConfigureMenuEvent::SIDE_MENU_PRICING => 'configurePricingMenu',
-            ConfigureMenuEvent::SIDE_MENU_PRODUCTS => 'configureStockMenu',
+            ConfigureMenuEvent::SIDE_MENU_PRODUCTS => 'configureProductMenu',
             ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
         ];
     }
@@ -46,27 +46,32 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureMarketingMenu(ConfigureMenuEvent $event): void
     {
         $marketingMenu = $event->getMenu();
-        $marketingMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
-        $promoCodeMenu = $marketingMenu->getChild('promo_codes');
+
+        $promoCodeMenu = $marketingMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
         $promoCodeMenu->addChild('promo_codes_new', ['route' => 'admin_promocode_new', 'display' => false, 'label' => t('Nový slevový kupóny')]);
         $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
 
-        $marketingMenu->addChild('product_series', ['route' => 'admin_productseries_list', 'label' => t('Programy produktů')]);
-        $blogArticles = $marketingMenu->getChild('product_series');
-        $blogArticles->addChild('new_product_series', ['route' => 'admin_productseries_new', 'display' => false, 'label' => t('Nový produktový program')]);
-        $blogArticles->addChild('edit_product_series', ['route' => 'admin_productseries_edit', 'display' => false, 'label' => t('Detail produktového programu')]);
+        $productSeriesMenu = $marketingMenu->addChild('product_series', ['label' => t('Programy produktů')]);
+
+        $productSeriesListMenu = $productSeriesMenu->addChild('product_series_list', ['route' => 'admin_productseries_list', 'label' => t('Programy produktů')]);
+        $productSeriesListMenu->addChild('new_product_series', ['route' => 'admin_productseries_new', 'display' => false, 'label' => t('Nový produktový program')]);
+        $productSeriesListMenu->addChild('edit_product_series', ['route' => 'admin_productseries_edit', 'display' => false, 'label' => t('Detail produktového programu')]);
+
+        $productSeriesCategoryMenu = $productSeriesMenu->addChild('product_series_category', ['route' => 'admin_productseriescategory_list', 'label' => t('Kategorie')]);
+        $productSeriesCategoryMenu->addChild('new_product_series_category', ['route' => 'admin_productseriescategory_new', 'display' => false, 'label' => t('Nová kategorie')]);
+        $productSeriesCategoryMenu->addChild('edit_product_series_category', ['route' => 'admin_productseriescategory_edit', 'display' => false, 'label' => t('Detail kategorie')]);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
      */
-    public function configureStockMenu(ConfigureMenuEvent $event): void
+    public function configureProductMenu(ConfigureMenuEvent $event): void
     {
-        $menu = $event->getMenu();
-        $menu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Skladovost')]);
+        $productMenu = $event->getMenu();
+        $productMenu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Skladovost')]);
 
-        $blogArticles = $menu->getChild('stock');
-        $blogArticles->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
-        $blogArticles->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
+        $stockMenu = $productMenu->getChild('stock');
+        $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
+        $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
     }
 }

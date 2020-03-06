@@ -16,16 +16,20 @@
             <p>
                 {{ "Zde najdete přehled všech nábytkových programů."|trans }}
             </p>
-            {% for series in productSeries %}
+            {% for seriesCategory in productSeriesCategories %}
+                <a href="{{ url('front_productseriescategory_detail', { id: seriesCategory.id }) }}">{{ seriesCategory.getName(domain.locale) }}</a>
+            {% endfor %}
+
+            {% for productSeries in productSeriesList %}
                 <div class="box-detail">
-                    <h3><a href="{{ url('front_productseries_detail', { id: series.id }) }}">{{ series.getName(domain.locale) }}</a></h3>
+                    <h3><a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">{{ productSeries.getName(domain.locale) }}</a></h3>
                     <div class="box-detail__image">
                         <div class="box-detail__image__main">
-                            <a href="{{ url('front_productseries_detail', { id: series.id }) }}">
-                                {% if imageExists(series) %}
-                                    {{ image(series, { itemprop: 'image', size: 'preview' }) }}
+                            <a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
+                                {% if imageExists(productSeries) %}
+                                    {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
                                 {% else %}
-                                    {{ noimage({ alt: series.getName(domain.locale) }) }}
+                                    {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
                                 {% endif %}
                             </a>
                         </div>

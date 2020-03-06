@@ -314,6 +314,10 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Use ID 1 as default product series.')
                     ->setParameter('id', 1);
             })
+            ->customizeByRouteName('front_productseriescategory_detail', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Use ID 1 as default product series category.')
+                    ->setParameter('id', 1);
+            })
             ->customizeByRouteName('front_brand_detail', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Use ID 1 as default brand.')
                     ->setParameter('id', 1);

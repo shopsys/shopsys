@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Series;
 
+use App\Model\Product\Series\Category\ProductSeriesCategory;
 use App\Model\Product\Series\Exception\ProductSeriesNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -127,5 +128,19 @@ class ProductSeriesRepository
             ->join(ProductSeriesDomain::class, 'psd', Join::WITH, 'psd.productSeries = ps')
             ->where('psd.domainId = :domainId')
             ->setParameter('domainId', $domainId);
+    }
+
+    /**
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategory $productSeriesCategory
+     * @param int $domainId
+     * @return \App\Model\Product\Series\ProductSeries[]
+     */
+    public function getByProductSeriesCategoryAndDomainId(ProductSeriesCategory $productSeriesCategory, int $domainId): array
+    {
+        return $this->getQueryBuilderByDomainId($domainId)
+            ->join('ps.productSeriesCategories', 'psc', Join::WITH, 'psc = :productSeriesCategory')
+            ->setParameter('productSeriesCategory', $productSeriesCategory)
+            ->getQuery()
+            ->execute();
     }
 }

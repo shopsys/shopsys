@@ -28,3 +28,7 @@ front_blogcategory_detail:
 front_productseries_detail:
     path: friendly-url
     defaults: { _controller: App\Controller\Front\ProductSeriesController:detailAction }
+
+front_productseriescategory_detail:
+    path: friendly-url
+    defaults: { _controller: App\Controller\Front\ProductSeriesCategoryController:detailAction }

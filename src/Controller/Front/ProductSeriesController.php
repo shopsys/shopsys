@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use App\Model\Product\Series\Category\ProductSeriesCategoryFacade;
 use App\Model\Product\Series\ProductSeriesFacadeInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +22,23 @@ class ProductSeriesController extends FrontBaseController
     private $domain;
 
     /**
+     * @var \App\Model\Product\Series\Category\ProductSeriesCategoryFacade
+     */
+    private $productSeriesCategoryFacade;
+
+    /**
      * @param \App\Model\Product\Series\ProductSeriesFacadeInterface $productSeriesFacade
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategoryFacade $productSeriesCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(ProductSeriesFacadeInterface $productSeriesFacade, Domain $domain)
-    {
+    public function __construct(
+        ProductSeriesFacadeInterface $productSeriesFacade,
+        ProductSeriesCategoryFacade $productSeriesCategoryFacade,
+        Domain $domain
+    ) {
         $this->productSeriesFacade = $productSeriesFacade;
         $this->domain = $domain;
+        $this->productSeriesCategoryFacade = $productSeriesCategoryFacade;
     }
 
     /**
@@ -49,9 +60,11 @@ class ProductSeriesController extends FrontBaseController
     public function listAction(): Response
     {
         $productSeries = $this->productSeriesFacade->getAllVisibleProductSeriesByDomainId($this->domain->getId());
+        $productSeriesCategories = $this->productSeriesCategoryFacade->getSortedProductSeriesCategoriesFilteredByProductSeries($productSeries);
 
         return $this->render('Front/Content/ProductSeries/list.html.twig', [
-            'productSeries' => $productSeries,
+            'productSeriesList' => $productSeries,
+            'productSeriesCategories' => $productSeriesCategories,
         ]);
     }
 }

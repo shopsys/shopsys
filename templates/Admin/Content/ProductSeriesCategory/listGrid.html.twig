@@ -1,0 +1,14 @@
+{% extends '@!ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('admin_productseriescategory_edit', { id: row.psc.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_no_data %}
+    <a href="{{ url('admin_productseriescategory_new') }}">{{ 'Žádná kategorie produktového programu neexistuje. Musíte nějakou nejprve vytvořit.'|trans }}</a>
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'productSeriesCategory'|trans %}
+    {{ parent() }}
+{% endblock %}

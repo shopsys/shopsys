@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Series;
+namespace App\Model\Product\Series\Category;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
-class ProductSeriesData
+class ProductSeriesCategoryData
 {
     /**
      * @var string[]|null[]
@@ -18,11 +17,6 @@ class ProductSeriesData
      * @var string[]|null[]
      */
     public $description;
-
-    /**
-     * @var bool[]
-     */
-    public $hidden;
 
     /**
      * @var string[]|null[]
@@ -44,16 +38,6 @@ class ProductSeriesData
      */
     public $url;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
-     */
-    public $images;
-
-    /**
-     * @var \App\Model\Product\Series\Category\ProductSeriesCategory[]
-     */
-    public $productSeriesCategories;
-
     public function __construct()
     {
         //by language
@@ -61,14 +45,10 @@ class ProductSeriesData
         $this->description = [];
 
         //by domain
-        $this->hidden = [];
         $this->seoTitle = [];
         $this->seoMetaDescription = [];
         $this->seoH1 = [];
 
-        $this->productSeriesCategories = [];
-
         $this->url = new UrlListData();
-        $this->images = new ImageUploadData();
     }
 }

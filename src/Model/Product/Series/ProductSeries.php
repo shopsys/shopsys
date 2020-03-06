@@ -42,12 +42,21 @@ class ProductSeries extends AbstractTranslatableEntity
     protected $domains;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Product\Series\Category\ProductSeriesCategory[]
+     *
+     * @ORM\ManyToMany(targetEntity="App\Model\Product\Series\Category\ProductSeriesCategory", fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"position" = "ASC"})
+     */
+    protected $productSeriesCategories;
+
+    /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
     public function __construct(ProductSeriesData $productSeriesData)
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
+        $this->productSeriesCategories = new ArrayCollection($productSeriesData->productSeriesCategories);
         $this->setTranslations($productSeriesData);
         $this->createDomains($productSeriesData);
     }
@@ -59,12 +68,24 @@ class ProductSeries extends AbstractTranslatableEntity
     {
         $this->setTranslations($productSeriesData);
         $this->setDomains($productSeriesData);
+        $this->editProductSeriesCategories($productSeriesData->productSeriesCategories);
+    }
+
+    /**
+     * @param \App\Model\Product\Series\Category\ProductSeriesCategory[] $productSeriesCategories
+     */
+    private function editProductSeriesCategories(array $productSeriesCategories): void
+    {
+        $this->productSeriesCategories->clear();
+        foreach ($productSeriesCategories as $productSeriesCategory) {
+            $this->productSeriesCategories->add($productSeriesCategory);
+        }
     }
 
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    private function setTranslations(ProductSeriesData $productSeriesData)
+    private function setTranslations(ProductSeriesData $productSeriesData): void
     {
         foreach ($productSeriesData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -78,13 +99,13 @@ class ProductSeries extends AbstractTranslatableEntity
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    private function createDomains(ProductSeriesData $productSeriesData)
+    private function createDomains(ProductSeriesData $productSeriesData): void
     {
         $domainIds = array_keys($productSeriesData->seoTitle);
 
         foreach ($domainIds as $domainId) {
-            $productDomain = new ProductSeriesDomain($this, $domainId);
-            $this->domains->add($productDomain);
+            $productSeriesDomain = new ProductSeriesDomain($this, $domainId);
+            $this->domains->add($productSeriesDomain);
         }
 
         $this->setDomains($productSeriesData);
@@ -93,7 +114,7 @@ class ProductSeries extends AbstractTranslatableEntity
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    private function setDomains(ProductSeriesData $productSeriesData)
+    private function setDomains(ProductSeriesData $productSeriesData): void
     {
         foreach ($this->domains as $productSeriesDomain) {
             $domainId = $productSeriesDomain->getDomainId();
@@ -108,7 +129,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param int $domainId
      * @return \App\Model\Product\Series\ProductSeriesDomain
      */
-    private function getProductDomain(int $domainId)
+    private function getProductSeriesDomain(int $domainId): ProductSeriesDomain
     {
         foreach ($this->domains as $domain) {
             if ($domain->getDomainId() === $domainId) {
@@ -117,6 +138,14 @@ class ProductSeries extends AbstractTranslatableEntity
         }
 
         throw new ProductDomainNotFoundException($this->id, $domainId);
+    }
+
+    /**
+     * @return \App\Model\Product\Series\Category\ProductSeriesCategory[]
+     */
+    public function getProductSeriesCategories(): array
+    {
+        return $this->productSeriesCategories->toArray();
     }
 
     /**
@@ -147,7 +176,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string|null
      */
-    public function getName($locale = null)
+    public function getName($locale = null): ?string
     {
         return $this->translation($locale)->getName();
     }
@@ -156,7 +185,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string|null
      */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): ?string
     {
         return $this->translation($locale)->getDescription();
     }
@@ -165,35 +194,35 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoTitle(int $domainId)
+    public function getSeoTitle(int $domainId): ?string
     {
-        return $this->getProductDomain($domainId)->getSeoTitle();
+        return $this->getProductSeriesDomain($domainId)->getSeoTitle();
     }
 
     /**
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoMetaDescription(int $domainId)
+    public function getSeoMetaDescription(int $domainId): ?string
     {
-        return $this->getProductDomain($domainId)->getSeoMetaDescription();
+        return $this->getProductSeriesDomain($domainId)->getSeoMetaDescription();
     }
 
     /**
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoH1(int $domainId)
+    public function getSeoH1(int $domainId): ?string
     {
-        return $this->getProductDomain($domainId)->getSeoH1();
+        return $this->getProductSeriesDomain($domainId)->getSeoH1();
     }
 
     /**
      * @param int $domainId
      * @return bool
      */
-    public function isHidden(int $domainId)
+    public function isHidden(int $domainId): bool
     {
-        return $this->getProductDomain($domainId)->isHidden();
+        return $this->getProductSeriesDomain($domainId)->isHidden();
     }
 }

@@ -1,0 +1,49 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% set domain = getDomain() %}
+{% block meta_description %}
+    {{- productSeriesCategory.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
+{% endblock %}
+
+{% block title %}
+    {{ productSeriesCategory.getSeoTitle(domain.id)|default(productSeriesCategory.getName(domain.locale)) }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line">
+        <div class="web__container">
+            <div class="box-detail">
+                <div>
+                    <h1 itemprop="name">
+                        {{ productSeriesCategory.getSeoH1(domain.id)|default(productSeriesCategory.name) }}
+                    </h1>
+                    <p>
+                        {{ productSeriesCategory.description|raw }}
+                    </p>
+                </div>
+                <div>
+                    <h2>
+                        {{ "Programy produktů"|trans }}
+                    </h2>
+                    {% for productSeries in productSeriesList %}
+                        <div class="box-detail">
+                            <h3><a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">{{ productSeries.getName(domain.locale) }}</a></h3>
+                            <div class="box-detail__image">
+                                <div class="box-detail__image__main">
+                                    <a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
+                                        {% if imageExists(productSeries) %}
+                                            {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
+                                        {% else %}
+                                            {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
