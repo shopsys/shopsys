@@ -119,15 +119,19 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $builder->get('basicInformationGroup')
-            ->add('productType', ChoiceType::class, [
+            ->add('productType', MultidomainType::class, [
                 'required' => true,
-                'choices' => $this->productTypeFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Prosím vyberte typ',
-                    ]),
+                'entry_type' => ChoiceType::class,
+                'entry_options' => [
+                    'required' => true,
+                    'choices' => $this->productTypeFacade->getAll(),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'constraints' => [
+                        new Constraints\NotBlank([
+                            'message' => 'Prosím vyberte typ',
+                        ]),
+                    ],
                 ],
                 'label' => t('Typ'),
             ]);

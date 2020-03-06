@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Type;
 
 use App\Model\Order\Item\OrderItem;
-use App\Model\Product\Product;
+use App\Model\Product\ProductDomain;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -80,9 +80,9 @@ class ProductTypeRepository
     public function existsRelationToProductType(ProductType $productType): bool
     {
         $productsCount = $this->em->createQueryBuilder()
-            ->select('COUNT(p)')
-            ->from(Product::class, 'p')
-            ->where('p.productType = :productType')
+            ->select('COUNT(pd)')
+            ->from(ProductDomain::class, 'pd')
+            ->where('pd.productType = :productType')
             ->setParameter('productType', $productType)
             ->getQuery()
             ->getSingleScalarResult();

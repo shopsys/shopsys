@@ -43,7 +43,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     private $vatFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
+     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private $productDataFactory;
@@ -57,7 +57,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
-        $productData->productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+        $this->setProductTypes($productData);
         $this->setVats($productData);
         $product = Product::create($productData);
 
@@ -78,7 +78,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
-        $productData->productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+        $this->setProductTypes($productData);
         $this->setVats($productData);
         $product = Product::create($productData);
 
@@ -100,5 +100,18 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function setProductTypes(ProductData $productData): void
+    {
+        /** @var \App\Model\Product\Type\ProductType $productType */
+        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productData->productType[$domainId] = $productType;
+        }
     }
 }

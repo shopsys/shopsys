@@ -71,7 +71,7 @@ class ProductTransferAkeneoValidator
             new Assert\Length(['max' => 100]),
         ]);
 
-        $this->validateValueData($violations, $akeneoProductData['values'] ?? null, 'product_type', [
+        $this->validateLocalizedData($violations, $akeneoProductData['values'] ?? null, 'product_type', [
             new Assert\NotBlank(),
             new Assert\Type(['type' => 'string']),
             new Assert\Length(['max' => 20]),
@@ -233,11 +233,12 @@ class ProductTransferAkeneoValidator
         string $validateKeyName,
         array $asserts
     ): void {
-        if ($data === null) {
-            return;
-        }
+        if ($data === null || !array_key_exists($validateKeyName, $data)) {
+            $notBlankAssert = $this->findNotBlankAssert($asserts);
+            if ($notBlankAssert !== null) {
+                $this->addNewViolation($violations, $notBlankAssert->message, $validateKeyName);
+            }
 
-        if (!array_key_exists($validateKeyName, $data)) {
             return;
         }
 

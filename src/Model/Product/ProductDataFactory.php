@@ -176,6 +176,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->highPriceWithoutVat[$domainId] = null;
             $productData->assemblyInstructionFileUrl[$domainId] = null;
             $productData->productTypePlanFileUrl[$domainId] = null;
+            $productData->productType[$domainId] = null;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -203,6 +204,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
             $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
             $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
+            $productData->productType[$domainId] = $product->getProductType($domainId);
 
             $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }
@@ -211,8 +213,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->namePrefix[$locale] = $product->getNamePrefix($locale);
             $productData->nameSufix[$locale] = $product->getNameSufix($locale);
         }
-
-        $productData->productType = $product->getProductType();
     }
 
     /**

@@ -81,7 +81,8 @@ class NewProductTest extends FunctionalTestCase
         $form['product_form[basicInformationGroup][catnum]'] = '123456';
         $form['product_form[basicInformationGroup][partno]'] = '123456';
         $form['product_form[basicInformationGroup][ean]'] = '123456';
-        $form['product_form[basicInformationGroup][productType]']->setValue($productType->getId());
+        $form['product_form[basicInformationGroup][productType][1]']->setValue($productType->getId());
+        $form['product_form[basicInformationGroup][productType][2]']->setValue($productType->getId());
         $form['product_form[descriptionsGroup][descriptions][1]'] = 'test description';
         $this->fillAkeneoPrices($form);
         $form['product_form[displayAvailabilityGroup][sellingFrom]'] = '1.1.1990';

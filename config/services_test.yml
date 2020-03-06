@@ -64,6 +64,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
 
+    App\Model\Product\ProductDataFactory: ~
+
     Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@App\Model\Product\ProductDataFactory'
 
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory: ~

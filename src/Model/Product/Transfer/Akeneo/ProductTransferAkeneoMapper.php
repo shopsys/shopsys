@@ -12,7 +12,6 @@ use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
-use App\Model\Product\Type\ProductType;
 use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
@@ -95,7 +94,7 @@ class ProductTransferAkeneoMapper
         $productData->hidden = $akeneoProductData['enabled'] ? false : true;
 
         $productData->ean = AkeneoProductHelper::mapDataString($akeneoProductData['values']['ean'] ?? null);
-        $productData->productType = $this->getProductType($akeneoProductData);
+        $productData->productType = $this->getProductType($productData->productType, $akeneoProductData);
 
         $productData->namePrefix = AkeneoProductHelper::mapLocalizedDataString($productData->namePrefix, $akeneoProductData['values']['name_prefix'] ?? null);
         $productData->name = AkeneoProductHelper::mapLocalizedDataString($productData->name, $akeneoProductData['values']['name'] ?? null);
@@ -146,20 +145,44 @@ class ProductTransferAkeneoMapper
     }
 
     /**
+     * @param \App\Model\Product\Type\ProductType[]|null[] $productTypesByDomainId
      * @param array $akeneoProductData
-     * @return \App\Model\Product\Type\ProductType
+     * @return \App\Model\Product\Type\ProductType[]
      */
-    private function getProductType(array $akeneoProductData): ProductType
+    private function getProductType(array $productTypesByDomainId, array $akeneoProductData): array
     {
-        $akeneoCode = AkeneoProductHelper::mapDataString($akeneoProductData['values']['product_type']);
-        $productType = $this->productTypeFacade->findByAkeneoCode($akeneoCode);
-        if ($productType === null) {
-            throw TransferInvalidDataException::createWithViolation(
-                sprintf('ProductType with Akeneo code `%s` wasn\'t found.', $akeneoCode),
-                'product_type'
-            );
+        $productTypeAkeneoCodesByDomainId = [];
+        foreach ($productTypesByDomainId as $domainId => $productType) {
+            if ($productType === null) {
+                $productTypeAkeneoCodesByDomainId[$domainId] = null;
+            } else {
+                $productTypeAkeneoCodesByDomainId[$domainId] = $productType->getAkeneoCode();
+            }
         }
 
-        return $productType;
+        $akeneoCodesByDomainId = AkeneoProductHelper::mapDomainDataString(
+            $productTypeAkeneoCodesByDomainId,
+            $akeneoProductData['values']['product_type']
+        );
+        foreach ($akeneoCodesByDomainId as $domainId => $akeneoCode) {
+            if ($akeneoCode === null) {
+                throw TransferInvalidDataException::createWithViolation(
+                    sprintf('ProductType for domain `%s` is required', $domainId),
+                    'product_type'
+                );
+            }
+
+            $productType = $this->productTypeFacade->findByAkeneoCode($akeneoCode);
+            if ($productType === null) {
+                throw TransferInvalidDataException::createWithViolation(
+                    sprintf('ProductType with Akeneo code `%s` wasn\'t found.', $akeneoCode),
+                    'product_type'
+                );
+            }
+
+            $productTypesByDomainId[$domainId] = $productType;
+        }
+
+        return $productTypesByDomainId;
     }
 }

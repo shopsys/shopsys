@@ -53,13 +53,6 @@ class Product extends BaseProduct
     private $downloadProductTypePlanFiles;
 
     /**
-     * @var \App\Model\Product\Type\ProductType
-     * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType")
-     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
-     */
-    private $productType;
-
-    /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */
@@ -68,7 +61,6 @@ class Product extends BaseProduct
         parent::__construct($productData, $variants);
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
-        $this->productType = $productData->productType;
     }
 
     /**
@@ -80,7 +72,6 @@ class Product extends BaseProduct
         parent::edit($productCategoryDomains, $productData);
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
-        $this->productType = $productData->productType;
     }
 
     /**
@@ -122,6 +113,7 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
+            $productDomain->setProductType($productData->productType[$domainId]);
         }
     }
 
@@ -360,10 +352,11 @@ class Product extends BaseProduct
     }
 
     /**
+     * @param int $domainId
      * @return \App\Model\Product\Type\ProductType
      */
-    public function getProductType(): ProductType
+    public function getProductType(int $domainId): ProductType
     {
-        return $this->productType;
+        return $this->getProductDomain($domainId)->getProductType();
     }
 }

@@ -5610,7 +5610,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         static $oddProduct = true;
         $oddProduct = !$oddProduct;
-        $productData->productType = $this->getReference($oddProduct ? ProductTypeDataFixture::TYPE_COMMON : ProductTypeDataFixture::TYPE_OVERSIZED);
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $productData->productType[$domain->getId()] = $this->getReference($oddProduct ? ProductTypeDataFixture::TYPE_COMMON : ProductTypeDataFixture::TYPE_OVERSIZED);
+        }
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->productFacade->create($productData);

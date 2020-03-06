@@ -94,7 +94,7 @@ class OrderPreviewSplittingFacade
             $payment = $orderData->payment;
         }
 
-        $orderPreviews = $this->createOrderPreviewsWithProductType($currency, $transportsByProductTypeId);
+        $orderPreviews = $this->createOrderPreviewsWithProductType($currency, $transportsByProductTypeId, $this->domain->getId());
 
         $sumTotalPrices = $this->sumTotalPrices($orderPreviews);
         $roundingPrice = null;
@@ -126,15 +126,16 @@ class OrderPreviewSplittingFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Product\Type\ProductType $productType
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    private function filterQuantifiedProductsByProductType(array $quantifiedProducts, ProductType $productType): array
+    private function filterQuantifiedProductsByProductType(array $quantifiedProducts, ProductType $productType, int $domainId): array
     {
         $filtered = [];
         foreach ($quantifiedProducts as $index => $quantifiedProduct) {
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();
-            if ($product->getProductType() === $productType) {
+            if ($product->getProductType($domainId) === $productType) {
                 $filtered[$index] = $quantifiedProduct;
             }
         }
@@ -159,16 +160,17 @@ class OrderPreviewSplittingFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param \App\Model\Transport\Transport[] $transportsByProductTypeId
+     * @param int $domainId
      * @return \App\Model\Order\Preview\OrderPreview[]
      */
-    private function createOrderPreviewsWithProductType(Currency $currency, array $transportsByProductTypeId): array
+    private function createOrderPreviewsWithProductType(Currency $currency, array $transportsByProductTypeId, int $domainId): array
     {
         $promoCodeDiscountPercent = $this->findAppliedPromoCodePercentDiscount();
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
 
         $orderPreviews = [];
         foreach ($this->getUsedProductTypesInCurrentCart() as $productType) {
-            $productTypeQuantifiedProducts = $this->filterQuantifiedProductsByProductType($quantifiedProducts, $productType);
+            $productTypeQuantifiedProducts = $this->filterQuantifiedProductsByProductType($quantifiedProducts, $productType, $domainId);
             if (count($productTypeQuantifiedProducts) > 0) {
                 $orderPreviews[] = $this->orderPreviewFactory->create(
                     $currency,
@@ -197,7 +199,7 @@ class OrderPreviewSplittingFacade
         foreach ($quantifiedProducts as $quantifiedProduct) {
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();
-            $productType = $product->getProductType();
+            $productType = $product->getProductType($this->domain->getId());
             $productTypes[$productType->getId()] = $productType;
         }
 

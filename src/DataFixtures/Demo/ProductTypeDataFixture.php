@@ -37,8 +37,8 @@ class ProductTypeDataFixture extends AbstractReferenceFixture
          * Default product types are created in database migration.
          * @see \App\Migrations\Version20200214104810
          */
-        $commonProductType = $this->productTypeFacade->findByAkeneoCode('zasilka2');
-        $oversizedProductType = $this->productTypeFacade->findByAkeneoCode('zasilka1');
+        $commonProductType = $this->productTypeFacade->findByAkeneoCode('zasilka_2');
+        $oversizedProductType = $this->productTypeFacade->findByAkeneoCode('zasilka_1');
         $this->addReference(self::TYPE_COMMON, $commonProductType);
         $this->addReference(self::TYPE_OVERSIZED, $oversizedProductType);
     }
