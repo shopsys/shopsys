@@ -4,6 +4,7 @@ export default class PaymentTransportChooser {
 
     constructor (paymentTransportRelations, $groups) {
         this.$groups = $groups;
+        this.$submitButton = $('#transport_and_payment_form_save');
         this.paymentTransportRelations = {};
 
         paymentTransportRelations.forEach(item => {
@@ -19,6 +20,11 @@ export default class PaymentTransportChooser {
         $groups.find('.js-order-transport-input').bind('change', (event) => this.refreshAvailablePayments());
         $groups.find('.js-payment-transport-change-button').bind('click', (event) => {
             this.unsetGroup($(event.target).closest('.js-payment-transport-group'));
+        });
+        this.$submitButton.click((event) => {
+            if (this.$submitButton.hasClass('btn--disabled')) {
+                event.preventDefault();
+            }
         });
     }
 
@@ -36,6 +42,8 @@ export default class PaymentTransportChooser {
             }
             hasPreviousGroupSelected = $(group).find('.js-payment-transport-checkbox:checked').length > 0;
         });
+
+        this.$submitButton.toggleClass('btn--disabled', hasPreviousGroupSelected === false);
     }
 
     hideOtherCheckboxesInGroupWhenOneIsChecked () {
