@@ -1,6 +1,7 @@
 import 'framework/common/components';
 import Ajax from 'framework/common/utils/Ajax';
 import Register from 'framework/common/utils/Register';
+import Timeout from 'framework/common/utils/Timeout';
 
 export default class OrderPreview {
 
@@ -29,10 +30,21 @@ export default class OrderPreview {
         });
     }
 
+    static littleDelayedLoadOrderPreview () {
+        Timeout.setTimeoutAndClearPrevious(
+            'OrderPreviewLoad',
+            () => {
+                OrderPreview.loadOrderPreview();
+            },
+            20
+        );
+    }
+
     static init ($container) {
         $container
             .filterAllNodes('.js-order-transport-input, .js-order-payment-input')
-            .change(OrderPreview.loadOrderPreview);
+            .bind('change', OrderPreview.loadOrderPreview)
+            .bind('orderPreview.littleDelayedLoadOrderPreview', OrderPreview.loadOrderPreview);
     }
 }
 

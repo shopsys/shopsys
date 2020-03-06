@@ -40,7 +40,8 @@ export default class PaymentTransportChooser {
             if (hasPreviousGroupSelected === false) {
                 $(group).find('.js-payment-transport-checkbox')
                     .prop('checked', false)
-                    .trigger('orderRememberData.littleDelayedSaveData');
+                    .trigger('orderRememberData.littleDelayedSaveData')
+                    .trigger('orderPreview.littleDelayedLoadOrderPreview');
             }
             hasPreviousGroupSelected = $(group).find('.js-payment-transport-checkbox:checked').length > 0;
         });
@@ -79,7 +80,8 @@ export default class PaymentTransportChooser {
     unsetGroup ($group) {
         $group.find('.js-payment-transport-checkbox:checked')
             .prop('checked', false)
-            .trigger('orderRememberData.littleDelayedSaveData');
+            .trigger('orderRememberData.littleDelayedSaveData')
+            .trigger('orderPreview.littleDelayedLoadOrderPreview');
         this.refreshGroupsState();
     }
 
