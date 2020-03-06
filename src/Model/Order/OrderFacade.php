@@ -285,6 +285,7 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
         $orderItemData->quantity = 1;
         $orderItemData->payment = $payment;
+        $orderItemData->productType = $splitOrderPreview->getProductTypeForCommonItems();
         $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData(
             $orderItemData,
             $order
@@ -307,6 +308,7 @@ class OrderFacade extends BaseOrderFacade
             $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
             $orderItemData->vatPercent = '0';
             $orderItemData->quantity = 1;
+            $orderItemData->productType = $splitOrderPreview->getProductTypeForCommonItems();
 
             $this->orderItemFactory->createProductByOrderItemData(
                 $orderItemData,

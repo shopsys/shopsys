@@ -29,9 +29,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 class OrderItem extends BaseOrderItem
 {
     /**
-     * @var \App\Model\Product\Type\ProductType|null
+     * @var \App\Model\Product\Type\ProductType
      * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType")
-     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
      */
     private $productType;
 
@@ -68,17 +68,17 @@ class OrderItem extends BaseOrderItem
     }
 
     /**
-     * @return \App\Model\Product\Type\ProductType|null
+     * @return \App\Model\Product\Type\ProductType
      */
-    public function getProductType(): ?ProductType
+    public function getProductType(): ProductType
     {
         return $this->productType;
     }
 
     /**
-     * @param \App\Model\Product\Type\ProductType|null $productType
+     * @param \App\Model\Product\Type\ProductType $productType
      */
-    public function setProductType(?ProductType $productType): void
+    public function setProductType(ProductType $productType): void
     {
         $this->productType = $productType;
     }

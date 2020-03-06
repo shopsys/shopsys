@@ -8,6 +8,7 @@ use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Model\Order\FrontOrderData;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataMapper;
+use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
@@ -17,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -340,7 +340,7 @@ class OrderController extends FrontBaseController
 
     /**
      * @param \App\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param \App\Model\Transport\Transport[] $transports
      * @param \App\Model\Payment\Payment[] $payments
      */

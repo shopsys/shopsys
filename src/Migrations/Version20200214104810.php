@@ -46,7 +46,8 @@ class Version20200214104810 extends AbstractMigration
             ADD CONSTRAINT FK_B3BA5A5A14959723 FOREIGN KEY (product_type_id) REFERENCES product_types (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE INDEX IDX_B3BA5A5A14959723 ON products (product_type_id)');
 
-        $this->sql('ALTER TABLE order_items ADD product_type_id INT DEFAULT NULL');
+        $this->sql('ALTER TABLE order_items ADD product_type_id INT NOT NULL DEFAULT 2');
+        $this->sql('ALTER TABLE order_items ALTER product_type_id DROP DEFAULT');
         $this->sql('ALTER TABLE order_items 
             ADD CONSTRAINT FK_62809DB014959723 FOREIGN KEY (product_type_id) REFERENCES product_types (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE INDEX IDX_62809DB014959723 ON order_items (product_type_id)');

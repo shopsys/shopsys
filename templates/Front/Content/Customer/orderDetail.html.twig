@@ -150,8 +150,6 @@
                             <h3>{{ 'Zásilka'|trans }} - {{ productType.name }}</h3>
                             {{ orderItemsTableMacro.table(order.itemsByProductType(productType), orderItemTotalPricesById, order.currency) }}
                         {% endfor %}
-                        <h3>{{ 'Ostatní'|trans }}</h3>
-                        {{ orderItemsTableMacro.table(order.itemsByProductType(null), orderItemTotalPricesById, order.currency) }}
                     {% else %}
                         {{ orderItemsTableMacro.table(order.items, orderItemTotalPricesById, order.currency) }}
                     {% endif %}

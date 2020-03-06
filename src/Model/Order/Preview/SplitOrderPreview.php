@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\Preview;
 
 use App\Model\Payment\Payment;
+use App\Model\Product\Type\ProductType;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class SplitOrderPreview
@@ -97,5 +98,18 @@ class SplitOrderPreview
     public function getRoundingPrice(): ?Price
     {
         return $this->roundingPrice;
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType
+     */
+    public function getProductTypeForCommonItems(): ProductType
+    {
+        $firstOrderPreview = reset($this->orderPreviews);
+        if ($firstOrderPreview === false) {
+            throw new \RuntimeException('In this scenario has to be set least one OrderPreview to getting common ProductType.');
+        }
+
+        return $firstOrderPreview->getProductType();
     }
 }

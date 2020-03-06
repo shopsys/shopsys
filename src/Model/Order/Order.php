@@ -80,19 +80,18 @@ class Order extends BaseOrder
     {
         $productTypes = [];
         foreach ($this->items as $item) {
-            if ($item->getProductType() !== null) {
-                $productTypes[$item->getProductType()->getId()] = $item->getProductType();
-            }
+            $productType = $item->getProductType();
+            $productTypes[$productType->getId()] = $productType;
         }
 
         return $productTypes;
     }
 
     /**
-     * @param \App\Model\Product\Type\ProductType|null $productType
+     * @param \App\Model\Product\Type\ProductType $productType
      * @return \App\Model\Order\Item\OrderItem[]
      */
-    public function getItemsByProductType(?ProductType $productType): array
+    public function getItemsByProductType(ProductType $productType): array
     {
         return array_filter($this->getItems(), function (OrderItem $orderItem) use ($productType) {
             return $orderItem->getProductType() === $productType;
