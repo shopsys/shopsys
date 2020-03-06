@@ -29,7 +29,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method refreshVariants(\App\Model\Product\Product[] $currentVariants)
  * @method addNewVariants(\App\Model\Product\Product[] $currentVariants)
  * @method unsetRemovedVariants(\App\Model\Product\Product[] $currentVariants)
- * @method translation(?string $locale = null): ProductTranslation
+ * @method \App\Model\Product\ProductTranslation translation(?string $locale = null)
  * @property \App\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection $translations
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
