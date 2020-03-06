@@ -29,8 +29,8 @@ class DomainsConfigLoader
      */
     public function loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath)
     {
-        $processedConfig = $this->getProcessedConfig($domainsConfigFilepath, new DomainsConfigDefinition());
-        $processedUrlsConfig = $this->getProcessedConfig($domainsUrlsConfigFilepath, new DomainsUrlsConfigDefinition());
+        $processedConfig = $this->getProcessedConfig($domainsConfigFilepath, $this->getDomainsConfigDefinition());
+        $processedUrlsConfig = $this->getProcessedConfig($domainsUrlsConfigFilepath, $this->getDomainsUrlsConfigDefinition());
         $domainConfigsByDomainId = $processedConfig[DomainsConfigDefinition::CONFIG_DOMAINS];
         $domainUrlsConfigsByDomainId = $processedUrlsConfig[DomainsUrlsConfigDefinition::CONFIG_DOMAINS_URLS];
 
@@ -41,9 +41,23 @@ class DomainsConfigLoader
         }
         $processedConfigsWithUrlsByDomainId = $this->addUrlsToProcessedConfig($domainConfigsByDomainId, $domainUrlsConfigsByDomainId);
 
-        $domainConfigs = $this->loadDomainConfigsFromArray($processedConfigsWithUrlsByDomainId);
+        return $this->loadDomainConfigsFromArray($processedConfigsWithUrlsByDomainId);
+    }
 
-        return $domainConfigs;
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigDefinition
+     */
+    protected function getDomainsConfigDefinition(): DomainsConfigDefinition
+    {
+        return new DomainsConfigDefinition();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsUrlsConfigDefinition
+     */
+    protected function getDomainsUrlsConfigDefinition(): DomainsUrlsConfigDefinition
+    {
+        return new DomainsUrlsConfigDefinition();
     }
 
     /**
