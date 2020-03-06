@@ -51,7 +51,7 @@ class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
 
         $productFromDb = $this->productFacade->getById($productId);
 
-        $this->assertSame($this->getReference(AvailabilityDataFixture::AVAILABILITY_ON_REQUEST), $productFromDb->getCalculatedAvailability());
+        $this->assertSame($this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK), $productFromDb->getCalculatedAvailability());
     }
 
     public function testRecalculateOnProductEditUsingStockInStock()
@@ -96,6 +96,6 @@ class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
 
         $productFromDb = $this->productFacade->getById($productId);
 
-        $this->assertSame($this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK), $productFromDb->getCalculatedAvailability());
+        $this->assertSame($this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK), $productFromDb->getCalculatedAvailability());
     }
 }

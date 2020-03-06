@@ -241,6 +241,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: '@App\Model\Product\ProductVisibilityRepository'
 
+    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation: '@App\Model\Product\Availability\ProductAvailabilityCalculation'
+
     App\Model\Product\Search\ProductElasticsearchConverter: ~
 
     App\Model\Product\Search\FilterQuery: ~
