@@ -82,7 +82,7 @@ export default class ProductsPicker {
         this.$itemsContainer.find('.js-products-picker-item-input').each((index, element) => {
             const name = $(element).attr('name');
             const newName = name.substr(0, name.lastIndexOf('[') + 1) + index + ']';
-            $(this).attr('name', newName);
+            $(element).attr('name', newName);
         });
     }
 
