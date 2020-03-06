@@ -11,6 +11,14 @@ export default class OrderRememberData {
         }, OrderRememberData.delayedSaveDataDelay);
     }
 
+    static littleDelayedSaveData () {
+        const $this = $(this);
+        clearTimeout(OrderRememberData.delayedSaveDataTimer);
+        OrderRememberData.delayedSaveDataTimer = setTimeout(function () {
+            $this.trigger('change.orderRememberData');
+        }, 20);
+    }
+
     static saveData (event) {
         clearTimeout(OrderRememberData.delayedSaveDataTimer);
         const $orderForm = $('#js-order-form');
@@ -24,7 +32,8 @@ export default class OrderRememberData {
 
     static init ($container) {
         $container.filterAllNodes('#js-order-form input, #js-order-form select, #js-order-form textarea')
-            .on('change.orderRememberData', OrderRememberData.saveData);
+            .on('change.orderRememberData', OrderRememberData.saveData)
+            .on('orderRememberData.littleDelayedSaveData', OrderRememberData.littleDelayedSaveData);
 
         $container.filterAllNodes('#js-order-form input, #js-order-form textarea')
             .on('keyup.orderRememberData', OrderRememberData.delayedSaveData);
