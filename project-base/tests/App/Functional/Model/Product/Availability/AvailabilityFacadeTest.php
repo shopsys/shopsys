@@ -38,12 +38,6 @@ final class AvailabilityFacadeTest extends TransactionFunctionalTestCase
      */
     private $productFacade;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->em = $this->getEntityManager();
-    }
-
     public function testDeleteByIdAndReplaceProductAvailability(): void
     {
         /** @var \App\Model\Product\Product $product */

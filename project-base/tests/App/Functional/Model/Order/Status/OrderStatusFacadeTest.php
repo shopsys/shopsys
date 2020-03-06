@@ -34,8 +34,6 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
 
     public function testDeleteByIdAndReplace()
     {
-        $em = $this->getEntityManager();
-
         $orderStatusData = new OrderStatusData();
         $orderStatusData->name = ['cs' => 'name'];
         $orderStatusToDelete = $this->orderStatusFacade->create($orderStatusData);
@@ -50,7 +48,7 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
 
         $this->orderStatusFacade->deleteById($orderStatusToDelete->getId(), $orderStatusToReplaceWith->getId());
 
-        $em->refresh($order);
+        $this->em->refresh($order);
 
         $this->assertEquals($orderStatusToReplaceWith, $order->getStatus());
     }

@@ -48,8 +48,6 @@ class VatFacadeTest extends TransactionFunctionalTestCase
 
     public function testDeleteByIdAndReplaceForFirstDomain()
     {
-        $em = $this->getEntityManager();
-
         $vatData = new VatData();
         $vatData->name = 'name';
         $vatData->percent = '10';
@@ -74,8 +72,8 @@ class VatFacadeTest extends TransactionFunctionalTestCase
 
         $this->vatFacade->deleteById($vatToDelete, $vatToReplaceWith);
 
-        $em->refresh($transport->getTransportDomain(Domain::FIRST_DOMAIN_ID));
-        $em->refresh($payment->getPaymentDomain(Domain::FIRST_DOMAIN_ID));
+        $this->em->refresh($transport->getTransportDomain(Domain::FIRST_DOMAIN_ID));
+        $this->em->refresh($payment->getPaymentDomain(Domain::FIRST_DOMAIN_ID));
 
         $this->assertEquals($vatToReplaceWith, $payment->getPaymentDomain(Domain::FIRST_DOMAIN_ID)->getVat());
         $this->assertEquals($vatToReplaceWith, $transport->getTransportDomain(Domain::FIRST_DOMAIN_ID)->getVat());

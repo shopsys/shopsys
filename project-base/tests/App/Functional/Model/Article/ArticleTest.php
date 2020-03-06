@@ -25,17 +25,6 @@ class ArticleTest extends TransactionFunctionalTestCase
      */
     private $articleFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private $em;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->em = $this->getEntityManager();
-    }
-
     public function testArticleIsCorrectlyRestoredFromDatabase()
     {
         /** @var \App\Model\Article\ArticleData $articleData */

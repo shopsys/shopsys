@@ -27,17 +27,6 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
      */
     private $paymentFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private $em;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->em = $this->getEntityManager();
-    }
-
     public function testCreatePaymentEnabledOnDomain()
     {
         $paymentData = $this->paymentDataFactory->create();

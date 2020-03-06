@@ -35,24 +35,20 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
 
     public function testIsIndependentlyVisible()
     {
-        $em = $this->getEntityManager();
-
         $enabledForDomains = [
             self::FIRST_DOMAIN_ID => true,
             self::SECOND_DOMAIN_ID => true,
         ];
         $payment = $this->getDefaultPayment($enabledForDomains, false);
 
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $this->assertTrue($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleEmptyName()
     {
-        $em = $this->getEntityManager();
-
         $paymentData = $this->paymentDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
@@ -67,40 +63,36 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
 
         $payment = new Payment($paymentData);
 
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $this->assertFalse($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleNotOnDomain()
     {
-        $em = $this->getEntityManager();
-
         $enabledForDomains = [
             self::FIRST_DOMAIN_ID => false,
             self::SECOND_DOMAIN_ID => false,
         ];
         $payment = $this->getDefaultPayment($enabledForDomains, false);
 
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $this->assertFalse($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleHidden()
     {
-        $em = $this->getEntityManager();
-
         $enabledForDomains = [
             self::FIRST_DOMAIN_ID => false,
             self::SECOND_DOMAIN_ID => false,
         ];
         $payment = $this->getDefaultPayment($enabledForDomains, false);
 
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $this->assertFalse($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }

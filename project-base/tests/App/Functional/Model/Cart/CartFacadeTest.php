@@ -213,8 +213,8 @@ class CartFacadeTest extends TransactionFunctionalTestCase
         $cartItem = $this->cartItemFactory->create($cart, $product, 1, Money::create(10));
         $cart->addItem($cartItem);
 
-        $this->getEntityManager()->persist($cartItem);
-        $this->getEntityManager()->flush();
+        $this->em->persist($cartItem);
+        $this->em->flush();
 
         $this->assertFalse($cart->isEmpty(), 'Cart should not be empty');
 
@@ -244,7 +244,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     private function createCartFacade(CustomerUserIdentifier $customerUserIdentifier)
     {
         return new CartFacade(
-            $this->getEntityManager(),
+            $this->em,
             $this->cartFactory,
             $this->productRepository,
             $this->getCustomerUserIdentifierFactoryMock($customerUserIdentifier),

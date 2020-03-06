@@ -138,8 +138,6 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
      */
     private function doTestOnKernelResponseRecalculateInputPrices(Money $inputPrice, Money $expectedPrice, $vatPercent, string $scheduleSetInputPricesMethod): void
     {
-        $em = $this->getEntityManager();
-
         $paymentData = $this->paymentDataFactory->create();
         $transportData = $this->transportDataFactory->create();
 
@@ -153,8 +151,8 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);
-        $em->persist($vat);
-        $em->persist($availability);
+        $this->em->persist($vat);
+        $this->em->persist($availability);
 
         $paymentData->name = ['cs' => 'name'];
 
@@ -166,7 +164,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportFacade->create($transportData);
 
-        $em->flush();
+        $this->em->flush();
 
         $filterResponseEventMock = $this->getMockBuilder(FilterResponseEvent::class)
             ->disableOriginalConstructor()
@@ -183,8 +181,8 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
 
         $this->inputPriceRecalculationScheduler->onKernelResponse($filterResponseEventMock);
 
-        $em->refresh($payment);
-        $em->refresh($transport);
+        $this->em->refresh($payment);
+        $this->em->refresh($transport);
 
         $this->assertThat($payment->getPrice(Domain::FIRST_DOMAIN_ID)->getPrice(), new IsMoneyEqual($expectedPrice));
         $this->assertThat($transport->getPrice(Domain::FIRST_DOMAIN_ID)->getPrice(), new IsMoneyEqual($expectedPrice));

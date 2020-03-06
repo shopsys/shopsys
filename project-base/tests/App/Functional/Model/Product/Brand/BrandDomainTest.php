@@ -30,17 +30,6 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     private $brandFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private $em;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->em = $this->getEntityManager();
-    }
-
-    /**
      * @group multidomain
      */
     public function testCreateBrandDomain()

@@ -33,8 +33,6 @@ class PaymentTest extends TransactionFunctionalTestCase
 
     public function testRemoveTransportFromPaymentAfterDelete()
     {
-        $em = $this->getEntityManager();
-
         $transportData = $this->transportDataFactory->create();
         $transportData->name['cs'] = 'name';
         $transport = new Transport($transportData);
@@ -45,9 +43,9 @@ class PaymentTest extends TransactionFunctionalTestCase
         $payment = new Payment($paymentData);
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $this->transportFacade->deleteById($transport->getId());
 

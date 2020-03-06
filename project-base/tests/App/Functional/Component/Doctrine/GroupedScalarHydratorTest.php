@@ -14,7 +14,7 @@ class GroupedScalarHydratorTest extends TransactionFunctionalTestCase
 {
     public function testHydrateAllData()
     {
-        $qb = $this->getEntityManager()->createQueryBuilder()
+        $qb = $this->em->createQueryBuilder()
             ->select('o, oi')
             ->from(Order::class, 'o')
             ->join(OrderItem::class, 'oi', Join::WITH, 'oi.order = o')

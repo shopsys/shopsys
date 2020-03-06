@@ -34,8 +34,6 @@ class UnitFacadeTest extends TransactionFunctionalTestCase
 
     public function testDeleteByIdAndReplace()
     {
-        $em = $this->getEntityManager();
-
         $unitData = new UnitData();
         $unitData->name = ['cs' => 'name'];
         $unitToDelete = $this->unitFacade->create($unitData);
@@ -50,7 +48,7 @@ class UnitFacadeTest extends TransactionFunctionalTestCase
 
         $this->unitFacade->deleteById($unitToDelete->getId(), $unitToReplaceWith->getId());
 
-        $em->refresh($product);
+        $this->em->refresh($product);
 
         $this->assertEquals($unitToReplaceWith, $product->getUnit());
     }

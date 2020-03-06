@@ -33,8 +33,6 @@ class CartItemTest extends TransactionFunctionalTestCase
 
     public function testIsSimilarItemAs()
     {
-        $em = $this->getEntityManager();
-
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
         $availabilityData = new AvailabilityData();
@@ -54,10 +52,10 @@ class CartItemTest extends TransactionFunctionalTestCase
 
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);
-        $em->persist($availability);
-        $em->persist($product1);
-        $em->persist($product2);
-        $em->flush();
+        $this->em->persist($availability);
+        $this->em->persist($product1);
+        $this->em->persist($product2);
+        $this->em->flush();
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());
 

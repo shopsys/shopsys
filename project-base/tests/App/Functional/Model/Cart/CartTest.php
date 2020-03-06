@@ -34,8 +34,6 @@ class CartTest extends TransactionFunctionalTestCase
 
     public function testRemoveItem()
     {
-        $em = $this->getEntityManager();
-
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
         $availabilityData = new AvailabilityData();
@@ -57,17 +55,17 @@ class CartTest extends TransactionFunctionalTestCase
         $cartItem2 = new CartItem($cart, $product2, 3, Money::zero());
         $cart->addItem($cartItem2);
 
-        $em->persist($cart);
-        $em->persist($availability);
-        $em->persist($product1);
-        $em->persist($product2);
-        $em->persist($cartItem1);
-        $em->persist($cartItem2);
-        $em->flush();
+        $this->em->persist($cart);
+        $this->em->persist($availability);
+        $this->em->persist($product1);
+        $this->em->persist($product2);
+        $this->em->persist($cartItem1);
+        $this->em->persist($cartItem2);
+        $this->em->flush();
 
         $cart->removeItemById($cartItem1->getId());
-        $em->remove($cartItem1);
-        $em->flush();
+        $this->em->remove($cartItem1);
+        $this->em->flush();
 
         $this->assertSame(1, $cart->getItemsCount());
     }

@@ -85,8 +85,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 61 days'));
 
-        $em = $this->getEntityManager();
-        $em->flush($cart);
+        $this->em->flush($cart);
 
         $cartFacade->deleteOldCarts();
 
@@ -101,8 +100,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 59 days'));
 
-        $em = $this->getEntityManager();
-        $em->flush($cart);
+        $this->em->flush($cart);
 
         $cartFacade->deleteOldCarts();
 
@@ -117,8 +115,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 121 days'));
 
-        $em = $this->getEntityManager();
-        $em->flush($cart);
+        $this->em->flush($cart);
 
         $cartFacade->deleteOldCarts();
 
@@ -133,8 +130,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 119 days'));
 
-        $em = $this->getEntityManager();
-        $em->flush($cart);
+        $this->em->flush($cart);
 
         $cartFacade->deleteOldCarts();
 
@@ -177,7 +173,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     private function getCartFacadeForCustomerUser(CustomerUserIdentifier $customerUserIdentifier)
     {
         return new CartFacade(
-            $this->getEntityManager(),
+            $this->em,
             $this->cartFactory,
             $this->productRepository,
             $this->getCustomerUserIdentifierFactoryMock($customerUserIdentifier),
@@ -255,15 +251,13 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      */
     private function createCartWithProduct(CustomerUserIdentifier $customerUserIdentifier, CartFacade $cartFacade)
     {
-        $em = $this->getEntityManager();
-
         $product = $this->getProductById(1);
         $cart = $cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
 
         $cartItem = new CartItem($cart, $product, 1, Money::zero());
 
-        $em->persist($cartItem);
-        $em->flush();
+        $this->em->persist($cartItem);
+        $this->em->flush();
 
         $cart->addItem($cartItem);
 

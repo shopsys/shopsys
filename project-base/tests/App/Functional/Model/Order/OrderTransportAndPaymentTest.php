@@ -40,8 +40,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisibleTransport()
     {
-        $em = $this->getEntityManager();
-
         $enabledForDomains = [
             Domain::FIRST_DOMAIN_ID => true,
             Domain::SECOND_DOMAIN_ID => false,
@@ -51,10 +49,10 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->flush();
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->flush();
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
@@ -64,8 +62,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisibleTransportHiddenTransport()
     {
-        $em = $this->getEntityManager();
-
         $enabledOnDomains = [
             1 => true,
             2 => false,
@@ -75,9 +71,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
@@ -87,8 +83,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisibleTransportHiddenPayment()
     {
-        $em = $this->getEntityManager();
-
         $transportEnabledForDomains = [
             1 => true,
             2 => false,
@@ -103,9 +97,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
@@ -115,16 +109,14 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisibleTransportNoPayment()
     {
-        $em = $this->getEntityManager();
-
         $enabledForDomains = [
             1 => true,
             2 => false,
         ];
         $transport = $this->getDefaultTransport($enabledForDomains, false);
 
-        $em->persist($transport);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
@@ -134,8 +126,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisibleTransportOnDifferentDomain()
     {
-        $em = $this->getEntityManager();
-
         $paymentEnabledForDomains = [
             1 => true,
             2 => false,
@@ -150,9 +140,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
@@ -162,8 +152,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisibleTransportPaymentOnDifferentDomain()
     {
-        $em = $this->getEntityManager();
-
         $paymentEnabledForDomains = [
             1 => false,
             2 => true,
@@ -176,9 +164,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $payment = $this->getDefaultPayment($paymentEnabledForDomains, false);
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
@@ -188,8 +176,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisiblePayment()
     {
-        $em = $this->getEntityManager();
-
         $enabledForDomains = [
             1 => true,
             2 => false,
@@ -199,9 +185,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
@@ -210,8 +196,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisiblePaymentHiddenTransport()
     {
-        $em = $this->getEntityManager();
-
         $enabledForDomains = [
             1 => true,
             2 => false,
@@ -221,9 +205,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
@@ -232,8 +216,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisiblePaymentHiddenPayment()
     {
-        $em = $this->getEntityManager();
-
         $enabledForDomains = [
             1 => true,
             2 => false,
@@ -243,9 +225,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
@@ -254,16 +236,14 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisiblePaymentNoTransport()
     {
-        $em = $this->getEntityManager();
-
         $enabledForDomains = [
             1 => true,
             2 => false,
         ];
         $payment = $this->getDefaultPayment($enabledForDomains, false);
 
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
@@ -272,8 +252,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisiblePaymentOnDifferentDomain()
     {
-        $em = $this->getEntityManager();
-
         $transportEnabledForDomains = [
             1 => true,
             2 => false,
@@ -286,9 +264,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $payment = $this->getDefaultPayment($paymentEnabledForDomains, false);
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
@@ -297,8 +275,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
     public function testVisiblePaymentTransportOnDifferentDomain()
     {
-        $em = $this->getEntityManager();
-
         $transportEnabledForDomains = [
             1 => true,
             2 => false,
@@ -312,9 +288,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $payment->addTransport($transport);
 
-        $em->persist($transport);
-        $em->persist($payment);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->persist($payment);
+        $this->em->flush();
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 

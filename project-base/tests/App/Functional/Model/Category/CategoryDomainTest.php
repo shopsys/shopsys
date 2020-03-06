@@ -30,17 +30,6 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
      */
     private $categoryFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private $em;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->em = $this->getEntityManager();
-    }
-
     public function testCreateCategoryEnabledOnDomain()
     {
         $categoryData = $this->categoryDataFactory->create();

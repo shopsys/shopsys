@@ -13,10 +13,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 {
     public function testGetOneRow()
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        $qb = $em->createQueryBuilder();
+        $qb = $this->em->createQueryBuilder();
         $qb->select('p')
             ->from(Product::class, 'p');
 
@@ -30,10 +27,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 
     public function testGetTotalRowsCount()
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        $qb = $em->createQueryBuilder();
+        $qb = $this->em->createQueryBuilder();
         $qb->select('p')
             ->from(Product::class, 'p')
             ->where('p.id >= 1 AND p.id <= 10')
@@ -49,10 +43,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 
     public function testGetRows()
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        $qb = $em->createQueryBuilder();
+        $qb = $this->em->createQueryBuilder();
         $qb->select('p')
             ->from(Product::class, 'p')
             ->setMaxResults(5);
@@ -71,10 +62,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 
     public function testGetRowsInAscOrder()
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        $qb = $em->createQueryBuilder();
+        $qb = $this->em->createQueryBuilder();
         $qb->select('p')
             ->from(Product::class, 'p')
             ->setMaxResults(10);
@@ -96,10 +84,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 
     public function testGetRowsInDescOrder()
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        $qb = $em->createQueryBuilder();
+        $qb = $this->em->createQueryBuilder();
         $qb->select('p')
             ->from(Product::class, 'p')
             ->setMaxResults(10);

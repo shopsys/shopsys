@@ -28,7 +28,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
         $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
-        $this->getEntityManager()->flush($administrator);
+        $this->em->flush($administrator);
 
         $administratorFromDb = $this->administratorRepository->getByValidMultidomainLoginToken($validMultidomainLoginToken);
 
@@ -45,7 +45,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
         $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
-        $this->getEntityManager()->flush($administrator);
+        $this->em->flush($administrator);
 
         $this->expectException('\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException');
 
@@ -61,7 +61,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
         $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
-        $this->getEntityManager()->flush($administrator);
+        $this->em->flush($administrator);
 
         $this->expectException('\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException');
 

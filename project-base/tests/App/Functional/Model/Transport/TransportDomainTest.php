@@ -27,17 +27,6 @@ class TransportDomainTest extends TransactionFunctionalTestCase
      */
     private $transportFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private $em;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->em = $this->getEntityManager();
-    }
-
     public function testCreateTransportEnabledOnDomain()
     {
         $transportData = $this->transportDataFactory->create();

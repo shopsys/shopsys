@@ -35,21 +35,10 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     private $productFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private $em;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
     private $vatFacade;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->em = $this->getEntityManager();
-    }
 
     /**
      * @group multidomain

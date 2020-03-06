@@ -49,8 +49,8 @@ class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
 
         $this->productFacade->edit($productId, $productData);
         $this->productAvailabilityRecalculator->runAllScheduledRecalculations();
-        $this->getEntityManager()->flush();
-        $this->getEntityManager()->clear();
+        $this->em->flush();
+        $this->em->clear();
 
         $productFromDb = $this->productFacade->getById($productId);
 
@@ -71,8 +71,8 @@ class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
 
         $this->productFacade->edit($productId, $productData);
         $this->productAvailabilityRecalculator->runAllScheduledRecalculations();
-        $this->getEntityManager()->flush();
-        $this->getEntityManager()->clear();
+        $this->em->flush();
+        $this->em->clear();
 
         $productFromDb = $this->productFacade->getById($productId);
 
@@ -94,8 +94,8 @@ class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
 
         $this->productFacade->edit($productId, $productData);
         $this->productAvailabilityRecalculator->runAllScheduledRecalculations();
-        $this->getEntityManager()->flush();
-        $this->getEntityManager()->clear();
+        $this->em->flush();
+        $this->em->clear();
 
         $productFromDb = $this->productFacade->getById($productId);
 
