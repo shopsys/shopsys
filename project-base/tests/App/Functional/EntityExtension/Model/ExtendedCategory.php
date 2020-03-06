@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\EntityExtension\Model;
 
-use App\Model\Category\Category;
 use App\Model\Category\CategoryData;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 
 /**
  * @ORM\Entity

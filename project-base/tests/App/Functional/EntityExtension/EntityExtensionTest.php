@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\EntityExtension;
 
-use App\Model\Category\Category;
-use App\Model\Order\Order;
 use App\Model\Order\Order as ExtendedOrder;
 use App\Model\Product\Brand\Brand as ExtendedBrand;
-use App\Model\Product\Product;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\SchemaTool;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductTranslation;
 use Tests\App\Functional\EntityExtension\Model\CategoryManyToManyBidirectionalEntity;
 use Tests\App\Functional\EntityExtension\Model\CategoryOneToManyBidirectionalEntity;
@@ -28,9 +28,12 @@ use Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEnti
 use Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity;
 use Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class EntityExtensionTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     protected const MAIN_PRODUCT_ID = 1;
     protected const ONE_TO_ONE_SELF_REFERENCING_PRODUCT_ID = 2;
     protected const ONE_TO_MANY_SELF_REFERENCING_PRODUCT_ID = 3;
@@ -44,20 +47,20 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     protected const ORDER_ITEM_ID = 1;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private $em;
-
-    /**
      * @var \Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
      * @inject
      */
     private $entityNameResolver;
 
+    /**
+     * @var \Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber
+     * @inject
+     */
+    private $loadORMMetadataSubscriber;
+
     protected function setUp(): void
     {
         parent::setUp();
-        $this->em = $this->getEntityManager();
         $this->registerTestEntities();
 
         $entityExtensionMap = [
@@ -69,7 +72,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
             ProductTranslation::class => ExtendedProductTranslation::class,
         ];
 
-        $applicationEntityExtensionMap = $this->getContainer()->getParameter('shopsys.entity_extension.map');
+        $applicationEntityExtensionMap = static::bootKernel()->getContainer()->getParameter('shopsys.entity_extension.map');
 
         foreach ($applicationEntityExtensionMap as $baseClass => $extendedClass) {
             if (!array_key_exists($baseClass, $entityExtensionMap)) {
@@ -114,10 +117,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
      */
     public function overwriteEntityExtensionMapInServicesInContainer(array $entityExtensionMap): void
     {
-        /** @var \Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber $loadORMMetadataSubscriber */
-        $loadORMMetadataSubscriber = $this->getContainer()->get('joschi127_doctrine_entity_override.event_subscriber.load_orm_metadata');
-
-        $loadORMMetadataSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
+        $this->loadORMMetadataSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
         $this->entityNameResolver->overwriteEntityExtensionMap($entityExtensionMap);
     }
 
