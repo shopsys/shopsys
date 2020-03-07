@@ -21,6 +21,8 @@
             {% if categorySeoFiltersData.useOrdering %}
                 <th>{{ 'Řazení'|trans }}</th>
             {% endif %}
+
+            <th>{{ 'Akce'|trans }}</th>
         </tr>
 
     {% for categorySeoMix in categorySeoMixes %}
@@ -36,6 +38,14 @@
             {% if categorySeoMix.ordering %}
                 <td>{{ categorySeoMix.ordering }}</td>
             {% endif %}
+
+            <td>
+                {{ render(controller('App\\Controller\\Admin\\CategorySeoController:readyCombinationButtonAction', {
+                    categoryId: categoryId,
+                    categorySeoFilterFormTypeAllQueries: categorySeoFilterFormTypeAllQueries,
+                    choseCategorySeoMixCombination: categorySeoMix.choseCategorySeoMixCombination(categorySeoFiltersData.parameters)
+                })) }}
+            </td>
         </tr>
     {% endfor %}
 

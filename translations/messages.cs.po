@@ -723,3 +723,6 @@ msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] 
 
 msgid "Please check the entered values.<br>"
 msgstr "Zkontrolujte prosím zadané hodnoty.<br>"
+
+msgid "readyCategorySeoMixs"
+msgstr "SEO kombinace kategorií"

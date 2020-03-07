@@ -11,6 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
@@ -74,6 +75,22 @@ class ParameterRepository extends BaseParameterRepository
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
 
         return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param int $parameterValueId
+     * @return \App\Model\Product\Parameter\ParameterValue
+     */
+    public function getParameterValueById(int $parameterValueId): ParameterValue
+    {
+        $parameterValue = $this->getParameterValueRepository()->find($parameterValueId);
+
+        if ($parameterValue === null) {
+            $message = 'ParameterValue with ID ' . $parameterValueId . ' not found.';
+            throw new \App\Model\Product\Parameter\Exception\ParameterValueNotFoundException($message);
+        }
+
+        return $parameterValue;
     }
 
     /**

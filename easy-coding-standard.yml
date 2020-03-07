@@ -36,6 +36,8 @@ parameters:
             - '*/src/Component/ScontoBridge/Transfer/AbstractScontoBridgeImportTransfer.php'
             - '*/src/Model/Customer/Transfer/ScontoBridge/CustomerTransferScontoBridgeMapper.php'
             - '*/src/Model/Customer/Transfer/ScontoBridge/CustomerTransferScontoBridgeValidator.php'
+            - '*/src/Migrations/Version20200319113341.php'
+            - '*/src/Controller/Admin/CategorySeoController.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'

@@ -11,6 +11,11 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 class CategorySeoMix
 {
     /**
+     * @var int
+     */
+    private $domainId;
+
+    /**
      * @var \App\Model\Category\Category
      */
     private $category;
@@ -31,11 +36,21 @@ class CategorySeoMix
     private $parameterValues = [];
 
     /**
+     * @param int $domainId
      * @param \App\Model\Category\Category $category
      */
-    public function __construct(Category $category)
+    public function __construct(int $domainId, Category $category)
     {
         $this->category = $category;
+        $this->domainId = $domainId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId(): int
+    {
+        return $this->domainId;
     }
 
     /**
@@ -92,5 +107,25 @@ class CategorySeoMix
     public function addParameterValue(ParameterValue $parameterValue): void
     {
         $this->parameterValues[] = $parameterValue;
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\Parameter[] $parameters
+     * @return \App\Model\CategorySeo\ChoseCategorySeoMixCombination
+     */
+    public function getChoseCategorySeoMixCombination(array $parameters): ChoseCategorySeoMixCombination
+    {
+        $parameterValueIdsByParameterIds = [];
+        foreach ($this->getParameterValues() as $index => $parameterValue) {
+            $parameterValueIdsByParameterIds[$parameters[$index]->getId()] = $parameterValue->getId();
+        }
+
+        return new ChoseCategorySeoMixCombination(
+            $this->getDomainId(),
+            $this->category->getId(),
+            $this->flag !== null ? $this->flag->getId() : null,
+            $this->ordering,
+            $parameterValueIdsByParameterIds
+        );
     }
 }

@@ -1,0 +1,18 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'Nebyly nalezeny žádné kombinace pro SEO kategorií.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'readyCategorySeoMixs'|trans %}
+    {{ parent() }}
+{% endblock %}
+
+{% block grid_value_cell_id_parameters %}
+
+    {% for parameterNameParameterValuePair in getReadyCategoryMixCombinationParametersPairsIterator(row.choseCategorySeoMixCombinationJson) %}
+        {{ parameterNameParameterValuePair }}<br>
+    {% endfor %}
+
+{% endblock %}

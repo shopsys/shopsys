@@ -1,5 +1,8 @@
 // file for temporary styles eg. added by a programmer
 
+@color-blue: #009BD9;
+@color-inactive: @color-a;
+
 .cursor-default {
     cursor: default !important;
 }
@@ -20,5 +23,19 @@
     &__label {
         position: relative;
         float: left;
+    }
+}
+
+.seo-icon {
+    &--active {
+        color: @color-blue;
+        font-size: 16px;
+        height: 16px;
+    }
+
+    &--inactive {
+        color: @color-inactive;
+        font-size: 16px;
+        height: 16px;
     }
 }

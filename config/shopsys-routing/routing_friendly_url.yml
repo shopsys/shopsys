@@ -32,3 +32,6 @@ front_productseries_detail:
 front_productseriescategory_detail:
     path: friendly-url
     defaults: { _controller: App\Controller\Front\ProductSeriesCategoryController:detailAction }
+
+front_category_seo:
+    path: friendly-url

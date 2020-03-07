@@ -279,6 +279,11 @@ class RouteConfigCustomization
                 $config->addExtraRequestDataSet('Category SEO combinations from non-root category should be OK.')
                     ->setParameter('categoryId', 2)
                     ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_categoryseo_readycombination', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Check route with data-fixture parameters.')
+                    ->setParameter('categoryId', 8)
+                    ->setParameter('choseCategorySeoMixCombinationJson', '{"domainId":1,"categoryId":8,"flagId":1,"ordering":null,"parameterValueIdsByParameterIds":{"38":75,"40":79,"37":73,"39":77}}');
             });
     }
 
@@ -456,6 +461,11 @@ class RouteConfigCustomization
             ->customizeByRouteName('front_blogcategory_detail', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Use ID 2 as default blog category.')
                     ->setParameter('id', 2);
+            })
+            ->customizeByRouteName('front_category_seo', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Check not implemented route.')
+                    ->setParameter('id', 1)
+                    ->setExpectedStatusCode(404);
             });
     }
 

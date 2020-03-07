@@ -66,7 +66,7 @@ class CategorySeoFacade
         int $domainId,
         string $locale
     ): array {
-        $categorySeoMixes = [new CategorySeoMix($category)];
+        $categorySeoMixes = [new CategorySeoMix($domainId, $category)];
 
         $categorySeoMixes = $this->getSeoCategoryMixesFromParameters(
             $categorySeoMixes,
