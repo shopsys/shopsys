@@ -5,20 +5,19 @@
             <li class="list-products__item js-list-products-item">
                 <div class="list-products__item__in">
                     <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
-                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
-                            {{ productView.namePrefix }} <br>
-                            {{ productView.name }} {{ productView.nameSufix }}
-                        </{{ productHeadingTagName|default('h2') }}>
-
                         <div class="list-products__item__image dont-print">
                             {{ image(productView.image, { size: 'list', alt: productView.name }) }}
                             {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
                         </div>
-
+                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
+                            <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                            {{ productView.name }}
+                            <span class="list-products__item__title__suffix">{{ productView.nameSufix }}</span>
+                        </{{ productHeadingTagName|default('h2') }}>
                         <div class="list-products__item__info dont-print">
-                            <p class="list-products__item__info__description">
-                                {{ productView.shortDescription }}
-                            </p>
+                            <div class="list-products__item__info__availability">
+                                {{ productView.availability }}
+                            </div>
                             {% if productView.sellingPrice is not null %}
                                 <div class="list-products__item__info__price">
                                     <div class="list-products__item__info__price__item list-products__item__info__price__item--main">
@@ -33,13 +32,8 @@
                                     </div>
                                 </div>
                             {% endif %}
-
-                            <div class="list-products__item__info__availability">
-                                {{ productView.availability }}
-                            </div>
                         </div>
                     </a>
-
                     <div class="list-products__item__action">
                         {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
                     </div>

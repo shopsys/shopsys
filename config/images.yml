@@ -61,7 +61,7 @@
             crop: false
             occurrence: 'Front-end: Thumbnail of images under the main image in product detail'
         -   name: list
-            width: 150
+            width: 280
             height: ~
             crop: false
             occurrence: 'Front-end: Listing of products in section, listing of products on special offer'

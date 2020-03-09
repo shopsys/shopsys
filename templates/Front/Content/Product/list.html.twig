@@ -36,7 +36,10 @@
             {% endif %}
 
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
-
+        </div>
+    </div>
+    <div class="web__line web__line--spacing web__line--bg-color">
+        <div class="web__container">
             <div class="box-list js-product-list-with-filter">
                 {% if paginationResult.results|length > 0 or filterFormSubmitted %}
                     <div class="box-list__panel">
