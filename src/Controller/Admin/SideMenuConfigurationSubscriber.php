@@ -19,6 +19,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             ConfigureMenuEvent::SIDE_MENU_PRICING => 'configurePricingMenu',
             ConfigureMenuEvent::SIDE_MENU_PRODUCTS => 'configureProductMenu',
             ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
+            ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'configureSettingsMenu',
         ];
     }
 
@@ -46,6 +47,16 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureMarketingMenu(ConfigureMenuEvent $event): void
     {
         $marketingMenu = $event->getMenu();
+
+        $blogMenu = $marketingMenu->addChild('blog', ['label' => t('Blog')]);
+
+        $blogCategories = $blogMenu->addChild('blogCategories', ['route' => 'admin_blogcategory_list', 'label' => t('Rubriky blogu')]);
+        $blogCategories->addChild('newBlogCategories', ['route' => 'admin_blogcategory_new', 'display' => false, 'label' => t('Nová rubrika blogu')]);
+        $blogCategories->addChild('editBlogCategories', ['route' => 'admin_blogcategory_edit', 'display' => false]);
+
+        $blogArticles = $blogMenu->addChild('blogArticles', ['route' => 'admin_blogarticle_list', 'label' => t('Články blogu')]);
+        $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('Nový článek blogu')]);
+        $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
 
         $promoCodeMenu = $marketingMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
         $promoCodeMenu->addChild('promo_codes_new', ['route' => 'admin_promocode_new', 'display' => false, 'label' => t('Nový slevový kupóny')]);
@@ -80,5 +91,21 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $horizontalMenuMenu = $menu->addChild('horizontal_menu', ['route' => 'admin_horizontalmenu_list', 'label' => t('Horizontální menu')]);
         $horizontalMenuMenu->addChild('horizontal_menu_edit', ['route' => 'admin_horizontalmenu_edit', 'display' => false, 'label' => t('Editace položky')]);
         $horizontalMenuMenu->addChild('horizontal_menu_new', ['route' => 'admin_horizontalmenu_new', 'display' => false, 'label' => t('Nová položka')]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
+     */
+    public function configureSettingsMenu(ConfigureMenuEvent $event): void
+    {
+        $configurationMenu = $event->getMenu();
+        $listsSubMenu = $configurationMenu->getChild('lists');
+        $listsSubMenu->removeChild('availabilities');
+
+        $seoMenu = $configurationMenu->getChild('seo');
+        $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Rozšířené SEO kategorií')]);
+        $categorySeoMenu->addChild('new_category', ['route' => 'admin_categoryseo_newcategory', 'label' => t('Rozšířené SEO kategorií - volba kategorie'), 'display' => false]);
+        $categorySeoMenu->addChild('new_filters', ['route' => 'admin_categoryseo_newfilters', 'label' => t('Rozšířené SEO kategorie - filtry'), 'display' => false]);
+        $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Rozšířené SEO kategorie - kombinace'), 'display' => false]);
     }
 }
