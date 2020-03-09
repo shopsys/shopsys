@@ -16,17 +16,15 @@
         "friendsofphp/php-cs-fixer": "^2.14.0",
         "jakub-onderka/php-parallel-lint": "^0.9",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
-        "slevomat/coding-standard": "^4.6.0",
-        "squizlabs/php_codesniffer": "^3.2.0",
-        "symplify/easy-coding-standard": "^5.2.17",
-        "symfony/finder": "^3.4.8"
+        "slevomat/coding-standard": "^6.1",
+        "squizlabs/php_codesniffer": "^3.5.0",
+        "symplify/package-builder": "7.2.2",
+        "symplify/easy-coding-standard": "7.2.2",
+        "symfony/finder": "^4.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0",
-        "symplify/easy-coding-standard-tester": "^5.2.17"
-    },
-    "conflict": {
-        "symplify/better-phpdoc-parser": "5.4.14|5.4.15"
+        "phpunit/phpunit": "^8.0",
+        "symplify/easy-coding-standard-tester": "7.2.2"
     },
     "autoload": {
         "psr-4": {

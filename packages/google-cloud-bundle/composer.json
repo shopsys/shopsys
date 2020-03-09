@@ -23,11 +23,11 @@
         "shopsys/migrations": "9.0.x-dev",
         "shopsys/plugin-interface": "9.0.x-dev",
         "superbalist/flysystem-google-storage": "^7.1",
-        "symfony/config": "^3.4",
-        "symfony/dependency-injection": "^3.4",
-        "symfony/framework-bundle": "^3.4",
-        "symfony/http-kernel": "^3.4",
-        "symfony/options-resolver": "^3.4"
+        "symfony/config": "^4.4",
+        "symfony/dependency-injection": "^4.4",
+        "symfony/framework-bundle": "^4.4",
+        "symfony/http-kernel": "^4.4",
+        "symfony/options-resolver": "^4.4"
     },
     "require-dev": {
         "shopsys/coding-standards": "9.0.x-dev"

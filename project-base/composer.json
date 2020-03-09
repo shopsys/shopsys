@@ -58,11 +58,11 @@
         "phing/phing": "^2.16.1",
         "presta/sitemap-bundle": "^1.5.3",
         "prezent/doctrine-translatable-bundle": "^1.0.3",
-        "sensio/generator-bundle": "^3.1.7",
+        "sensio/framework-extra-bundle": "^5.2",
         "sensiolabs/security-checker": "^6.0",
         "shopsys/doctrine-orm": "^2.6.2",
         "shopsys/google-cloud-bundle": "9.0.x-dev",
-        "shopsys/postgres-search-bundle": "^0.1",
+        "shopsys/postgres-search-bundle": "^0.2",
         "shopsys/migrations": "9.0.x-dev",
         "shopsys/form-types-bundle": "9.0.x-dev",
         "shopsys/framework": "9.0.x-dev",
@@ -117,6 +117,7 @@
         "shopsys/http-smoke-testing": "9.0.x-dev",
         "sspooky13/yaml-standards": "^5.0.0",
         "symfony/var-dumper": "^4.4.0",
+        "symfony/browser-kit": "^4.4.0",
         "zalas/phpunit-injector": "^1.4"
     },
     "conflict": {
@@ -159,7 +160,7 @@
         },
         "symfony": {
             "allow-contrib": true,
-            "require": "^3.4"
+            "require": "^4.4"
         },
         "incenteev-parameters": [
             {
