@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 /**
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice calculatePrice(\App\Model\Product\Product $product, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice calculateMainVariantPrice(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
+ * @property \App\Model\Product\ProductRepository $productRepository
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation, \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting, \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository, \App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|null $currencyFacade)
  */
 class ProductPriceCalculation extends BaseProductPriceCalculation
 {

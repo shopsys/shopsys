@@ -12,8 +12,9 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePri
 
 /**
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
- * @method __construct(\Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender)
+ * @method __construct(\App\Model\Product\ProductRepository $productRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange getPriceRangeInCategory(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
+ * @property \App\Model\Product\ProductRepository $productRepository
  */
 class PriceRangeRepository extends BasePriceRangeRepository
 {
