@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
 /**
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository, \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
  * @method \App\Model\Product\Product|null findById(int $id)
  * @method \Doctrine\ORM\QueryBuilder getListableInCategoryQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @method \Doctrine\ORM\QueryBuilder getListableForBrandQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Product\Brand\Brand $brand)
@@ -44,10 +44,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  * @method \App\Model\Product\Product[] getProductsWithBrand(\App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Product[] getProductsWithFlag(\Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag)
  * @method \App\Model\Product\Product[] getProductsWithUnit(\Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit)
+ * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  */
 class ProductRepository extends BaseProductRepository
 {
-
     /**
      * @param array $productCatnums
      * @param int $domainId
@@ -86,7 +86,7 @@ class ProductRepository extends BaseProductRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilder(): QueryBuilder
+    public function getAllProductsQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('p')
@@ -98,8 +98,8 @@ class ProductRepository extends BaseProductRepository
      */
     public function getProductsWithoutProductTypePlanFilesIterator(): IterableResult
     {
-        return $this->getQueryBuilder()
-            ->where('p.productTypePlan = true')
+        return $this->getAllProductsQueryBuilder()
+            ->where('p.downloadProductTypePlanFiles = true')
             ->getQuery()
             ->iterate();
     }
@@ -109,8 +109,8 @@ class ProductRepository extends BaseProductRepository
      */
     public function getProductsWithoutAssemblyInstructionFilesIterator(): IterableResult
     {
-        return $this->getQueryBuilder()
-            ->where('p.assemblyInstruction = true')
+        return $this->getAllProductsQueryBuilder()
+            ->where('p.downloadAssemblyInstructionFiles = true')
             ->getQuery()
             ->iterate();
     }

@@ -109,7 +109,20 @@ class ProductDataFactory extends BaseProductDataFactory
         Setting $setting,
         AvailabilityFacade $availabilityFacade
     ) {
-        parent::__construct($vatFacade, $productInputPriceFacade, $unitFacade, $domain, $productRepository, $parameterRepository, $friendlyUrlFacade, $productAccessoryRepository, $imageFacade, $pluginDataFormExtensionFacade, $productParameterValueDataFactory, $pricingGroupFacade);
+        parent::__construct(
+            $vatFacade,
+            $productInputPriceFacade,
+            $unitFacade,
+            $domain,
+            $productRepository,
+            $parameterRepository,
+            $friendlyUrlFacade,
+            $productAccessoryRepository,
+            $imageFacade,
+            $pluginDataFormExtensionFacade,
+            $productParameterValueDataFactory,
+            $pricingGroupFacade
+        );
         $this->stockProductFacade = $stockProductFacade;
         $this->stockFacade = $stockFacade;
         $this->stockProductDataFactory = $stockProductDataFactory;
@@ -247,14 +260,14 @@ class ProductDataFactory extends BaseProductDataFactory
 
             if ($product->getAssemblyInstructionCode($domainId) !== null) {
                 $productData->assemblyInstructionFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
-                    $product->getProductFileNameByType($domainId, Product::ASSEMBLY_INSTRUCTION_TYPE),
+                    $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE),
                     $domainConfig->getUrl()
                 );
             }
 
             if ($product->getProductTypePlanCode($domainId) !== null) {
                 $productData->productTypePlanFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
-                    $product->getProductFileNameByType($domainId, Product::PRODUCT_TYPE_PLAN_TYPE),
+                    $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE),
                     $domainConfig->getUrl()
                 );
             }

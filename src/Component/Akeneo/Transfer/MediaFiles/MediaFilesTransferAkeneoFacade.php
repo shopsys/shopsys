@@ -9,9 +9,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class MediaFilesTransferAkeneoFacade
 {
-    public const PAGE_SIZE_LIMIT = 50;
-    public const API_AKENEO_DATETIME_FORMAT = 'Y-m-d H:i:s';
-
     /**
      * @var \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface
      */

@@ -69,7 +69,7 @@
                         <div class="box-detail__info__availability">
                             {{ productAvailabilityInformation }}
                             <div>
-                                <a href="#stocks-availabilities">{{ "Dostupnost na pobočkách"|trans }}</a>
+                                <a href="#stocks-availabilities">{{ 'Dostupnost na pobočkách'|trans }}</a>
                             </div>
                         </div>
 
@@ -271,15 +271,15 @@
 
                 {% if productStocksAvailabilitiesInformation|length > 0 %}
                     <div class="box-detail stocks-availabilities">
-                        <div class="h3" id="stocks-availabilities">{{ "Skladové zásoby"|trans }}</div>
+                        <div class="h3" id="stocks-availabilities">{{ 'Skladové zásoby'|trans }}</div>
                         <table class="table-grid margin-top-20">
                             <thead>
                                 <tr>
                                     <th>
-                                        {{ "Sklad"|trans }}
+                                        {{ 'Sklad'|trans }}
                                     </th>
                                     <th>
-                                        {{ "Dostupnost"|trans }}
+                                        {{ 'Dostupnost'|trans }}
                                     </th>
                                 </tr>
                             </thead>
@@ -301,11 +301,11 @@
 
                 {% if downloadFiles|length > 0 %}
                     <div class="box-detail download_files">
-                        <div class="h3" id="download_files">{{ "Ke stažení"|trans }}</div>
+                        <div class="h3" id="download_files">{{ 'Ke stažení'|trans }}</div>
                         <ul>
                             {% for downloadFile in downloadFiles %}
                                 <li>
-                                    <a href="{{ downloadFile['url'] }}" target="_blank">{{ downloadFile['anchor']|trans }}</a>
+                                    <a href="{{ downloadFile['url'] }}" target="_blank">{{ downloadFile['anchor_text']|trans }}</a>
                                 </li>
                             {% endfor %}
                         </ul>

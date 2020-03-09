@@ -116,7 +116,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
             $product = $this->productFacade->edit($product->getId(), $productData);
         }
 
-        $this->logProductForImportFiles($product, $akeneoProductData);
+        $this->setProductForImportFiles($product, $akeneoProductData);
 
         $this->setLastUpdatedProduct($akeneoProductData['updated']);
     }
@@ -144,7 +144,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Product\Product $product
      * @param array $akeneoProductData
      */
-    private function logProductForImportFiles(Product $product, array $akeneoProductData): void
+    private function setProductForImportFiles(Product $product, array $akeneoProductData): void
     {
         $productFilesData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductFilesData($akeneoProductData, $product);
         $this->productFacade->editProductFileAttributes($product, $productFilesData);

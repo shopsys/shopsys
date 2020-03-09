@@ -202,7 +202,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
      */
     public function getTransferName(): string
     {
-        return 'customerTransfer';
+        return t('Přenos zákazníků');
     }
 
     /**
@@ -210,6 +210,6 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
      */
     public function getTransferIdentifier(): string
     {
-        return t('Přenos zákazníků');
+        return 'customerTransfer';
     }
 }

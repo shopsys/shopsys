@@ -56,12 +56,12 @@ class ProductTransferAkeneoMapper
 
         $productFilesData->assemblyInstructionCode = AkeneoProductHelper::mapDomainDataStringWithoutClean(
             $productFilesData->assemblyInstructionCode,
-            $akeneoProductData['values']['assembly_instruction']
+            $akeneoProductData['values']['assembly_instruction'] ?? null
         );
 
         $productFilesData->productTypePlanCode = AkeneoProductHelper::mapDomainDataStringWithoutClean(
             $productFilesData->productTypePlanCode,
-            $akeneoProductData['values']['product_type_plan']
+            $akeneoProductData['values']['product_type_plan'] ?? null
         );
 
         return $productFilesData;

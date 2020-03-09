@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
@@ -264,17 +263,17 @@ class ProductFacade extends BaseProductFacade
     {
         $downloadFileUrls = [];
         if ($product->getAssemblyInstructionCode($domain->getId()) !== null) {
-            $url = $this->getProductTransferredFileUrl($product->getProductFileNameByType($domain->getId(), Product::ASSEMBLY_INSTRUCTION_TYPE), $domain->getUrl());
+            $url = $this->getProductTransferredFileUrl($product->getProductFileNameByType($domain->getId(), Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE), $domain->getUrl());
             $downloadFileUrls[] = [
-                'anchor' => t('Instalační manuál'),
+                'anchor_text' => t('Instalační manuál'),
                 'url' => $url,
             ];
         }
 
         if ($product->getProductTypePlanCode($domain->getId()) !== null) {
-            $url = $this->getProductTransferredFileUrl($product->getProductFileNameByType($domain->getId(), Product::PRODUCT_TYPE_PLAN_TYPE), $domain->getUrl());
+            $url = $this->getProductTransferredFileUrl($product->getProductFileNameByType($domain->getId(), Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE), $domain->getUrl());
             $downloadFileUrls[] = [
-                'anchor' => t('Typový plán'),
+                'anchor_text' => t('Typový plán'),
                 'url' => $url,
             ];
         }

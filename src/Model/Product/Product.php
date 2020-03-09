@@ -36,20 +36,20 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 class Product extends BaseProduct
 {
     public const PDF_SUFFIX = '.pdf';
-    public const ASSEMBLY_INSTRUCTION_TYPE = 'assemblyInstruction';
-    public const PRODUCT_TYPE_PLAN_TYPE = 'productTypePlan';
+    public const FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE = 'assemblyInstruction';
+    public const FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE = 'productTypePlan';
 
     /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $assemblyInstruction;
+    protected $downloadAssemblyInstructionFiles;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $productTypePlan;
+    protected $downloadProductTypePlanFiles;
 
     /**
      * @param \App\Model\Product\ProductData $productData
@@ -58,8 +58,8 @@ class Product extends BaseProduct
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
-        $this->assemblyInstruction = false;
-        $this->productTypePlan = false;
+        $this->downloadAssemblyInstructionFiles = false;
+        $this->downloadProductTypePlanFiles = false;
     }
 
     /**
@@ -122,12 +122,12 @@ class Product extends BaseProduct
             $domainId = $productDomain->getDomainId();
             if ($this->getAssemblyInstructionCode($domainId) !== $productFilesData->assemblyInstructionCode[$domainId]) {
                 $productDomain->setAssemblyInstructionCode($productFilesData->assemblyInstructionCode[$domainId]);
-                $this->setAssemblyInstruction(true);
+                $this->setDownloadAssemblyInstructionFiles(true);
             }
 
             if ($this->getProductTypePlanCode($domainId) !== $productFilesData->productTypePlanCode[$domainId]) {
                 $productDomain->setProductTypePlanCode($productFilesData->productTypePlanCode[$domainId]);
-                $this->setProductTypePlan(true);
+                $this->setDownloadProductTypePlanFiles(true);
             }
         }
     }
@@ -280,35 +280,19 @@ class Product extends BaseProduct
     }
 
     /**
-     * @return bool
+     * @param bool $downloadAssemblyInstructionFiles
      */
-    public function hasAssemblyInstruction(): bool
+    public function setDownloadAssemblyInstructionFiles(bool $downloadAssemblyInstructionFiles): void
     {
-        return $this->assemblyInstruction;
+        $this->downloadAssemblyInstructionFiles = $downloadAssemblyInstructionFiles;
     }
 
     /**
-     * @param bool $assemblyInstruction
+     * @param bool $downloadProductTypePlanFiles
      */
-    public function setAssemblyInstruction(bool $assemblyInstruction): void
+    public function setDownloadProductTypePlanFiles(bool $downloadProductTypePlanFiles): void
     {
-        $this->assemblyInstruction = $assemblyInstruction;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasProductTypePlan(): bool
-    {
-        return $this->productTypePlan;
-    }
-
-    /**
-     * @param bool $productTypePlan
-     */
-    public function setProductTypePlan(bool $productTypePlan): void
-    {
-        $this->productTypePlan = $productTypePlan;
+        $this->downloadProductTypePlanFiles = $downloadProductTypePlanFiles;
     }
 
     /**

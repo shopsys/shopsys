@@ -15,8 +15,6 @@ use League\Flysystem\FilesystemInterface;
 
 class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoImportTransfer
 {
-    protected const DS = DIRECTORY_SEPARATOR;
-
     /**
      * @var \App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade
      */
@@ -74,12 +72,12 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
             /** @var \App\Model\Product\ProductDomain $productDomain */
             foreach ($this->product->getProductDomains() as $productDomain) {
                 if ($productDomain->getAssemblyInstructionCode()) {
+                    $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getAssemblyInstructionCode()));
+
                     $akeneoDataPerDomain[$productDomain->getDomainId()] = $this->mediaFilesTransferAkeneoFacade
                         ->getProductMediaFile($productDomain->getAssemblyInstructionCode())
                         ->getBody()
                         ->getContents();
-
-                    $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getAssemblyInstructionCode()));
                 }
             }
 
@@ -93,10 +91,10 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
     protected function processItem($akeneoData): void
     {
         foreach ($akeneoData as $domainId => $content) {
-            $this->storeFile($this->product->getProductFileNameByType($domainId, Product::ASSEMBLY_INSTRUCTION_TYPE), $content);
+            $this->storeFile($this->product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE), $content);
         }
 
-        $this->product->setAssemblyInstruction(false);
+        $this->product->setDownloadAssemblyInstructionFiles(false);
         $this->em->flush();
     }
 

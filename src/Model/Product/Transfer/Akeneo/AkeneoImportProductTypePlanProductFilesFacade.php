@@ -74,12 +74,12 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
             /** @var \App\Model\Product\ProductDomain $productDomain */
             foreach ($this->product->getProductDomains() as $productDomain) {
                 if ($productDomain->getProductTypePlanCode()) {
+                    $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getProductTypePlanCode()));
+
                     $akeneoDataPerDomain[$productDomain->getDomainId()] = $this->mediaFilesTransferAkeneoFacade
                         ->getProductMediaFile($productDomain->getProductTypePlanCode())
                         ->getBody()
                         ->getContents();
-
-                    $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getProductTypePlanCode()));
                 }
             }
 
@@ -93,10 +93,10 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     protected function processItem($akeneoData): void
     {
         foreach ($akeneoData as $domainId => $content) {
-            $this->storeFile($this->product->getProductFileNameByType($domainId, Product::PRODUCT_TYPE_PLAN_TYPE), $content);
+            $this->storeFile($this->product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE), $content);
         }
 
-        $this->product->setProductTypePlan(false);
+        $this->product->setDownloadProductTypePlanFiles(false);
         $this->em->flush();
     }
 
