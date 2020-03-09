@@ -114,7 +114,13 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $productType = $this->persistentReferenceFacade->getReference(ProductTypeDataFixture::TYPE_COMMON);
 
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment, $productType);
-        $splitOrderPreview = new SplitOrderPreview([$orderPreview], $orderData->payment, $orderPreview->getTotalPrice(), $orderPreview->getRoundingPrice());
+        $splitOrderPreview = new SplitOrderPreview(
+            [$orderPreview],
+            $orderData->payment,
+            $orderPreview->getTotalPrice(),
+            $orderPreview->getRoundingPrice(),
+            $orderPreview->getPaymentPrice()
+        );
         $order = $this->orderFacade->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, null);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());

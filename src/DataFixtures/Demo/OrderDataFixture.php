@@ -752,7 +752,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             [$orderPreview],
             $orderData->payment,
             $orderPreview->getTotalPrice(),
-            $orderPreview->getRoundingPrice()
+            $orderPreview->getRoundingPrice(),
+            $orderPreview->getPaymentPrice()
         );
 
         $order = $this->orderFacade->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, $customerUser);

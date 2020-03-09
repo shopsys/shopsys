@@ -271,12 +271,7 @@ class OrderFacade extends BaseOrderFacade
     private function fillOrderPaymentBySplitOrderPreview(Order $order, SplitOrderPreview $splitOrderPreview, string $locale): void
     {
         $payment = $splitOrderPreview->getPayment();
-        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
-            $payment,
-            $order->getCurrency(),
-            $splitOrderPreview->getProductsPrice(),
-            $order->getDomainId()
-        );
+        $paymentPrice = $splitOrderPreview->getPaymentPrice();
 
         $orderItemData = $this->orderItemDataFactory->create();
         $orderItemData->name = $payment->getName($locale);

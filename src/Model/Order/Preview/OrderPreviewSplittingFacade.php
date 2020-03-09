@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -53,6 +54,11 @@ class OrderPreviewSplittingFacade
     private $orderPriceCalculation;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
+     */
+    private $paymentPriceCalculation;
+
+    /**
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -60,6 +66,7 @@ class OrderPreviewSplittingFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      */
     public function __construct(
         OrderPreviewFactory $orderPreviewFactory,
@@ -68,7 +75,8 @@ class OrderPreviewSplittingFacade
         CartFacade $cartFacade,
         CurrentCustomerUser $currentCustomerUser,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
-        OrderPriceCalculation $orderPriceCalculation
+        OrderPriceCalculation $orderPriceCalculation,
+        PaymentPriceCalculation $paymentPriceCalculation
     ) {
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->domain = $domain;
@@ -77,6 +85,7 @@ class OrderPreviewSplittingFacade
         $this->currentCustomerUser = $currentCustomerUser;
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->orderPriceCalculation = $orderPriceCalculation;
+        $this->paymentPriceCalculation = $paymentPriceCalculation;
     }
 
     /**
@@ -100,14 +109,25 @@ class OrderPreviewSplittingFacade
         $roundingPrice = null;
         $totalPrice = $sumTotalPrices;
 
+        $paymentPrice = null;
         if ($payment !== null) {
+            $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
+                $payment,
+                $currency,
+                $this->sumProductsPrices($orderPreviews),
+                $this->domain->getId()
+            );
+
+            $sumTotalPrices = $sumTotalPrices->add($paymentPrice);
+            $totalPrice = $totalPrice->add($paymentPrice);
+
             $roundingPrice = $this->orderPriceCalculation->calculateOrderRoundingPrice($payment, $currency, $sumTotalPrices);
             if ($roundingPrice !== null) {
                 $totalPrice = $totalPrice->add($roundingPrice);
             }
         }
 
-        return new SplitOrderPreview($orderPreviews, $payment, $totalPrice, $roundingPrice);
+        return new SplitOrderPreview($orderPreviews, $payment, $totalPrice, $roundingPrice, $paymentPrice);
     }
 
     /**
@@ -152,6 +172,20 @@ class OrderPreviewSplittingFacade
         $sumPrice = Price::zero();
         foreach ($orderPreviews as $orderPreview) {
             $sumPrice = $sumPrice->add($orderPreview->getTotalPrice());
+        }
+
+        return $sumPrice;
+    }
+
+    /**
+     * @param \App\Model\Order\Preview\OrderPreview[] $orderPreviews
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private function sumProductsPrices(array $orderPreviews): Price
+    {
+        $sumPrice = Price::zero();
+        foreach ($orderPreviews as $orderPreview) {
+            $sumPrice = $sumPrice->add($orderPreview->getProductsPrice());
         }
 
         return $sumPrice;
