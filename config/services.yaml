@@ -178,6 +178,9 @@ services:
         arguments:
             $useInlineEditation: false
 
+    Shopsys\FrameworkBundle\Controller\Admin\ArticleController:
+        class: 'App\Controller\Admin\ArticleController'
+
     sensio_framework_extra.routing.loader.annot_class:
         class: App\Component\AnnotatedRouteControllerLoader
         arguments:

@@ -1,12 +1,15 @@
 <ul class="menu dont-print">
+    {% if title is defined %}
+        <h6>{{ title }}</h6>
+    {% endif %}
     {% for article in articles %}
         <li class="menu__item">
-            <a class="menu__item__link" href="{{ url('front_article_detail', { id: article.id }) }}">{{ article.name }}</a>
+            <a class="menu__item__link" 
+                href="{{ article.isSiteType() ? url('front_article_detail', { id: article.id }) : article.getUrl() }}"
+                {{ article.external ? 'target="_blank"' : '' }}
+            >
+                {{ article.name }}
+            </a>
         </li>
     {% endfor %}
-    {% if showBlog is same as(true) %}
-        <li class="menu__item">
-            <a class="menu__item__link underline" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ 'Blog'|trans }}</a>
-        </li>
-    {% endif %}
 </ul>

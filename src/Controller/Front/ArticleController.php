@@ -44,13 +44,22 @@ class ArticleController extends FrontBaseController
         ]);
     }
 
-    public function footerAction()
+    /**
+     * @param int $id
+     * @param string $title
+     * @param string $icon
+     */
+    public function footerAction(int $id, string $title, string $icon)
     {
-        $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(Article::PLACEMENT_FOOTER);
+        $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(
+            constant('App\Model\Article\Article::PLACEMENT_FOOTER_' . $id)
+        );
 
-        return $this->render('Front/Content/Article/menu.html.twig', [
+        return $this->render('Front/Content/Article/footerMenu.html.twig', [
+            'id' => $id,
+            'title' => $title,
+            'icon' => $icon,
             'articles' => $articles,
-            'showBlog' => true,
         ]);
     }
 }

@@ -15,12 +15,43 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleData as BaseArticleData;
  */
 class Article extends BaseArticle
 {
+    public const PLACEMENT_FOOTER_1 = 'footer1';
+    public const PLACEMENT_FOOTER_2 = 'footer2';
+    public const PLACEMENT_FOOTER_3 = 'footer3';
+    public const PLACEMENT_FOOTER_4 = 'footer4';
+
+    public const TYPE_SITE = 'site';
+    public const TYPE_LINK = 'link';
+
+    public const EMPTY_STRING = '';
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $external;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $url;
 
     /**
      * @param \App\Model\Article\ArticleData $articleData
@@ -30,6 +61,9 @@ class Article extends BaseArticle
         parent::__construct($articleData);
 
         $this->createdAt = $articleData->createdAt ?? new DateTime();
+        $this->external = $articleData->external;
+        $this->type = $articleData->type;
+        $this->url = $articleData->url ?? self::EMPTY_STRING;
     }
 
     /**
@@ -40,6 +74,9 @@ class Article extends BaseArticle
         parent::edit($articleData);
 
         $this->createdAt = $articleData->createdAt ?? new DateTime();
+        $this->external = $articleData->external;
+        $this->type = $articleData->type;
+        $this->url = $articleData->url ?? self::EMPTY_STRING;
     }
 
     /**
@@ -48,5 +85,37 @@ class Article extends BaseArticle
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExternal(): bool
+    {
+        return $this->external;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSiteType(): bool
+    {
+        return $this->type === self::TYPE_SITE;
     }
 }
