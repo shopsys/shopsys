@@ -17,6 +17,8 @@ parameters:
             - '*/src/Controller/Front/OrderController.php'
             - '*/src/Form/Front/Customer/BillingAddressFormType.php'
             - '*/src/Form/Front/Customer/DeliveryAddressFormType.php'
+            - '*/src/Form/Admin/ProductFormTypeExtension.php'
+            - '*/src/Model/Product/ProductVisibilityRepository.php'
             - '*/src/Form/Front/Order/PersonalInfoFormType.php'
             - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
             - '*/tests/App/Functional/EntityExtension/EntityExtensionTest.php'

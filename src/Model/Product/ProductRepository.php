@@ -37,12 +37,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getOneByUuid(string $uuid)
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository, \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
  * @method markProductsForExport(\App\Model\Product\Product[] $products)
  * @method \App\Model\Product\Product[] getProductsWithAvailability(\Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability)
  * @method \App\Model\Product\Product[] getProductsWithBrand(\App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Product[] getProductsWithFlag(\Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag)
  * @method \App\Model\Product\Product[] getProductsWithUnit(\Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit)
+ * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  */
 class ProductRepository extends BaseProductRepository
 {

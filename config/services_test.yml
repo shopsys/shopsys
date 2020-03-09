@@ -74,6 +74,8 @@ services:
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
 
+    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: '@App\Model\Product\ProductVisibilityRepository'
+
     Shopsys\FrameworkBundle\Model\Localization\Localization:
         arguments:
             $adminLocale: '%shopsys.admin_locale%'
@@ -120,3 +122,7 @@ services:
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'
 
     Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
+
+    App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: '@App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser'

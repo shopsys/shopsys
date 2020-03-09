@@ -63,6 +63,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'stock_quantity',
             'variants',
             'main_variant',
+            'non_selling_price',
         ];
     }
 }

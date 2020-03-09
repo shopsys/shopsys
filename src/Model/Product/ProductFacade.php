@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
@@ -34,6 +35,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
 
 /**
+ * @property \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
  * @method \App\Model\Product\Product getById(int $productId)
  * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method saveParameters(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData)
@@ -87,7 +89,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Stock\StockFacade $stockFacade

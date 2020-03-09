@@ -9,9 +9,14 @@ use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -41,6 +46,11 @@ class ProductDataFactory extends BaseProductDataFactory
     private $stockProductDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
+     */
+    private $basePriceCalculation;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
@@ -56,6 +66,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Stock\ProductStockFacade $stockProductFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Stock\ProductStockDataFactory $stockProductDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      */
     public function __construct(
         VatFacade $vatFacade,
@@ -72,12 +83,14 @@ class ProductDataFactory extends BaseProductDataFactory
         PricingGroupFacade $pricingGroupFacade,
         ProductStockFacade $stockProductFacade,
         StockFacade $stockFacade,
-        ProductStockDataFactory $stockProductDataFactory
+        ProductStockDataFactory $stockProductDataFactory,
+        BasePriceCalculation $basePriceCalculation
     ) {
         parent::__construct($vatFacade, $productInputPriceFacade, $unitFacade, $domain, $productRepository, $parameterRepository, $friendlyUrlFacade, $productAccessoryRepository, $imageFacade, $pluginDataFormExtensionFacade, $productParameterValueDataFactory, $pricingGroupFacade);
         $this->stockProductFacade = $stockProductFacade;
         $this->stockFacade = $stockFacade;
         $this->stockProductDataFactory = $stockProductDataFactory;
+        $this->basePriceCalculation = $basePriceCalculation;
     }
 
     /**
@@ -119,6 +132,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp5[$domainId] = null;
             $productData->lowPriceWithVat[$domainId] = null;
             $productData->highPriceWithVat[$domainId] = null;
+            $productData->lowPriceWithoutVat[$domainId] = null;
+            $productData->highPriceWithoutVat[$domainId] = null;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -141,14 +156,51 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
             $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
             $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
-            $productData->lowPriceWithVat[$domainId] = $product->getLowPriceWithVat($domainId);
-            $productData->highPriceWithVat[$domainId] = $product->getHighPriceWithVat($domainId);
+
+            $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $productData->namePrefix[$locale] = $product->getNamePrefix($locale);
             $productData->nameSufix[$locale] = $product->getNameSufix($locale);
         }
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     */
+    private function fillPricesFromProductByDomain(ProductData $productData, Product $product, int $domainId): void
+    {
+        //TODO-RK ne deprecated zpusob prace s price ale nefunguje spravne zaokrouhleni podle meny,
+        $lowPrice = new Price(Money::zero(), $product->getLowPriceWithVat($domainId) ?? Money::zero());
+        $highPrice = new Price(Money::zero(), $product->getHighPriceWithVat($domainId) ?? Money::zero());
+
+        $lowPrice = $this->basePriceCalculation->applyCoefficients($lowPrice, $product->getVatForDomain($domainId), []);
+        $highPrice = $this->basePriceCalculation->applyCoefficients($highPrice, $product->getVatForDomain($domainId), []);
+
+        //TODO-RK deprecate zpusob prace s price
+//        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+//        $lowPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+//            $product->getLowPriceWithVat($domainId) ?? Money::zero(),
+//            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+//            $product->getVatForDomain($domainId),
+//            $currency
+//        );
+//
+//        $highPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+//            $product->getHighPriceWithVat($domainId) ?? Money::zero(),
+//            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+//            $product->getVatForDomain($domainId),
+//            $currency
+//        );
+
+        $productData->lowPriceWithVat[$domainId] = $lowPrice->getPriceWithVat();
+        $productData->highPriceWithVat[$domainId] = $highPrice->getPriceWithVat();
+
+        $productData->lowPriceWithoutVat[$domainId] = $lowPrice->getPriceWithoutVat();
+        $productData->highPriceWithoutVat[$domainId] = $highPrice->getPriceWithoutVat();
     }
 
     /**

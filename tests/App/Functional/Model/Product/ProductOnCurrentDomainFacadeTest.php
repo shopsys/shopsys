@@ -39,8 +39,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
         $productFilterData = new ProductFilterData();
         $priceWithVat = 1000;
-        $priceWithoutVat = ($priceWithVat / 1.21) . '';
-        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($priceWithoutVat), Domain::FIRST_DOMAIN_ID);
+        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($priceWithVat), Domain::FIRST_DOMAIN_ID);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
         $this->assertCount(22, $paginationResult->getResults());
@@ -52,11 +51,10 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
         $productFilterData = new ProductFilterData();
         $priceWithVat = 10000;
-        $priceWithoutVat = ($priceWithVat / 1.21) . '';
-        $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($priceWithoutVat), Domain::FIRST_DOMAIN_ID);
+        $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($priceWithVat), Domain::FIRST_DOMAIN_ID);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(22, $paginationResult->getResults());
+        $this->assertCount(24, $paginationResult->getResults());
     }
 
     public function testFilterByStockAvailability()

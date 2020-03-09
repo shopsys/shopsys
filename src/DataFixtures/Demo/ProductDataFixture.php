@@ -5709,8 +5709,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     protected function setPriceForAllPricingGroups(ProductData $productData, string $price): void
     {
+        $fakePrice = 1;
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money::create($price), $pricingGroup->getDomainId());
+            $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money::create($fakePrice), $pricingGroup->getDomainId());
 
             $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $money;
         }
@@ -5725,9 +5726,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private function setLowAndHighPricesForDomains(ProductData $productData, string $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $currencyRate = $domain->getId() * 10;
-            $productData->lowPriceWithVat[$domain->getId()] = Money::create((string)round(($price / 2) / $currencyRate, 2));
-            $productData->highPriceWithVat[$domain->getId()] = Money::create((string)round(($price / $currencyRate), 2));
+            $currencyRate = 1;
+            if ($domain->getId() !== Domain::FIRST_DOMAIN_ID) {
+                $currencyRate = $domain->getId() * 10;
+            }
+            $highPrice = 2 * (int)$price;
+
+            $productData->lowPriceWithVat[$domain->getId()] = Money::create((string)round($price / $currencyRate, 2));
+            $productData->highPriceWithVat[$domain->getId()] = Money::create((string)round($highPrice / $currencyRate, 2));
         }
     }
 

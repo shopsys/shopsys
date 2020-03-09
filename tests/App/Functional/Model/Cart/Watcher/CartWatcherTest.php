@@ -68,9 +68,6 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $this->manualInputPriceFacade->refresh($product, $pricingGroup, Money::create(10));
 
-        $modifiedItems2 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
-        $this->assertNotEmpty($modifiedItems2);
-
         $modifiedItems3 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
         $this->assertEmpty($modifiedItems3);
     }

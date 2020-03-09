@@ -6,7 +6,10 @@ namespace App\Model\Product\Listed;
 
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
@@ -23,7 +26,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
@@ -53,7 +56,8 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productActionView,
             $imageView,
             $product->getNamePrefix(),
-            $product->getNameSufix()
+            $product->getNameSufix(),
+            $this->getProductPriceWithVatByMoney($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero())
         );
     }
 
@@ -76,7 +80,23 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productActionView,
             $imageView,
             $productArray['name_prefix'],
-            $productArray['name_sufix']
+            $productArray['name_sufix'],
+            $this->getProductPriceWithVatByMoney($productArray['non_selling_price'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price']))
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     */
+    private function getProductPriceWithVatByMoney(Money $priceWithVat): ProductPrice
+    {
+        return new ProductPrice(
+            new Price(
+                Money::zero(),
+                $priceWithVat
+            ),
+            false
         );
     }
 }
