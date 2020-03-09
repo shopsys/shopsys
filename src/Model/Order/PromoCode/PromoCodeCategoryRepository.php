@@ -69,7 +69,7 @@ class PromoCodeCategoryRepository
      * @param int $domainId
      * @return int[]
      */
-    public function getProductsFromCategoriesByPromoCodeIdAndDomainId(int $promoCodeId, int $domainId): array
+    public function getProductIdsFromCategoriesByPromoCodeIdAndDomainId(int $promoCodeId, int $domainId): array
     {
         $result = $this->getQueryBuilder()
             ->select('IDENTITY(pcd.product) as id')

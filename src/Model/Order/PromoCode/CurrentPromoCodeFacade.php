@@ -6,7 +6,12 @@ namespace App\Model\Order\PromoCode;
 
 use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
+use App\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade as BaseCurrentPromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -26,16 +31,37 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private $promoCodeCategoryRepository;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory
+     */
+    private $customerUserIdentifierFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Cart\CartRepository
+     */
+    private $cartRepository;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
         SessionInterface $session,
         PromoCodeProductRepository $promoCodeProductRepository,
-        PromoCodeCategoryRepository $promoCodeCategoryRepository
+        PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        Domain $domain,
+        CustomerUserIdentifierFactory $customerUserIdentifierFactory,
+        CartRepository $cartRepository
     ) {
         parent::__construct(
             $promoCodeFacade,
@@ -43,6 +69,9 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         );
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
+        $this->domain = $domain;
+        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
+        $this->cartRepository = $cartRepository;
     }
 
     /**
@@ -52,10 +81,11 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
         if ($promoCode === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException($enteredCode);
+            throw new InvalidPromoCodeException($enteredCode);
         }
         $this->validatePromoCodeDatetime($promoCode);
         $this->validateRemainigUses($promoCode);
+        $this->validatePromoCodeByProductsInCart($promoCode);
 
         $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
     }
@@ -103,6 +133,38 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     }
 
     /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    private function validatePromoCodeByProductsInCart(PromoCode $promoCode)
+    {
+        $domainId = $this->domain->getId();
+        $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
+        $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($promoCode->getId(), $domainId);
+
+        $allowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsFromCategories));
+        if (count($allowedProductIds) === 0) {
+            //promo code hasn't any relation with products or product from categories
+            return;
+        }
+
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
+        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
+        $cartItems = $cart === null ? [] : $cart->getItems();
+
+        $isValidPromoCode = false;
+        foreach ($cartItems as $cartItem) {
+            if (in_array($cartItem->getProduct()->getId(), $allowedProductIds, true) == true) {
+                $isValidPromoCode = true;
+                break;
+            }
+        }
+
+        if ($isValidPromoCode === false) {
+            throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
+        }
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
      * @return array
@@ -114,27 +176,47 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             return [];
         }
 
-        $allowedProducts = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($validEnteredPromoCode->getId());
-        $promoCodeDiscountPercentPerProduct = $this->fillPromoCodeDiscounts($quantifiedProducts, $allowedProducts, $validEnteredPromoCode);
+        $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($validEnteredPromoCode->getId());
+        $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($validEnteredPromoCode->getId(), $domainId);
 
-        $allowedProductsFromCategories = $this->promoCodeCategoryRepository->getProductsFromCategoriesByPromoCodeIdAndDomainId($validEnteredPromoCode->getId(), $domainId);
-        $promoCodeDiscountPercentPerProductFromCategories = $this->fillPromoCodeDiscounts($quantifiedProducts, $allowedProductsFromCategories, $validEnteredPromoCode);
+        if (count(array_unique(array_merge($allowedProductIds, $allowedProductIdsFromCategories))) === 0) {
+            return $this->fillPromoCodeDiscountsForAllProducts($quantifiedProducts, $validEnteredPromoCode);
+        }
+
+        $promoCodeDiscountPercentPerProduct = $this->fillPromoCodeDiscounts($quantifiedProducts, $allowedProductIds, $validEnteredPromoCode);
+        $promoCodeDiscountPercentPerProductFromCategories = $this->fillPromoCodeDiscounts($quantifiedProducts, $allowedProductIdsFromCategories, $validEnteredPromoCode);
 
         return array_replace($promoCodeDiscountPercentPerProduct, $promoCodeDiscountPercentPerProductFromCategories);
     }
 
     /**
-     * @param array $quantifiedProducts
-     * @param array $allowedProducts
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
-     * @return array
+     * @return string[]
      */
-    private function fillPromoCodeDiscounts(array $quantifiedProducts, array $allowedProducts, PromoCode $validEnteredPromoCode): array
+    private function fillPromoCodeDiscountsForAllProducts(array $quantifiedProducts, PromoCode $validEnteredPromoCode): array
     {
         $promoCodeDiscountPercentPerProduct = [];
         foreach ($quantifiedProducts as $quantifiedProduct) {
             $productId = $quantifiedProduct->getProduct()->getId();
-            if (in_array($productId, $allowedProducts, true)) {
+            $promoCodeDiscountPercentPerProduct[(string)$productId] = $validEnteredPromoCode->getPercent();
+        }
+
+        return $promoCodeDiscountPercentPerProduct;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param int[] $allowedProductIds
+     * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
+     * @return string[]
+     */
+    private function fillPromoCodeDiscounts(array $quantifiedProducts, array $allowedProductIds, PromoCode $validEnteredPromoCode): array
+    {
+        $promoCodeDiscountPercentPerProduct = [];
+        foreach ($quantifiedProducts as $quantifiedProduct) {
+            $productId = $quantifiedProduct->getProduct()->getId();
+            if (in_array($productId, $allowedProductIds, true)) {
                 $promoCodeDiscountPercentPerProduct[(string)$productId] = $validEnteredPromoCode->getPercent();
             }
         }

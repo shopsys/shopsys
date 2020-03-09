@@ -99,8 +99,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureSettingsMenu(ConfigureMenuEvent $event): void
     {
         $configurationMenu = $event->getMenu();
-        $listsSubMenu = $configurationMenu->getChild('lists');
-        $listsSubMenu->removeChild('availabilities');
 
         $seoMenu = $configurationMenu->getChild('seo');
         $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Rozšířené SEO kategorií')]);

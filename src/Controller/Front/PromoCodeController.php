@@ -7,6 +7,7 @@ namespace App\Controller\Front;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
+use App\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,6 +59,11 @@ class PromoCodeController extends FrontBaseController
             return new JsonResponse([
                 'result' => false,
                 'message' => t('Promo kód už není platný. Zkontrolujte ho, prosím.'),
+            ]);
+        } catch (PromoCodeWithoutRelationWithAnyProductFromCurrentCartException $exception) {
+            return new JsonResponse([
+                'result' => false,
+                'message' => t('Promo kód nelze uplatnit na žádný produkt v košíku. Zkontrolujte ho, prosím.'),
             ]);
         }
 
