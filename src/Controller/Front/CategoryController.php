@@ -117,9 +117,9 @@ class CategoryController extends FrontBaseController
     /**
      * @param \App\Model\Category\Category[] $categories
      * @param bool $showProductsCountByCategory
-     * @param mixed $cssClass
+     * @param string $cssClass
      */
-    public function categoryListAction(array $categories, $showProductsCountByCategory = true, $cssClass = '')
+    public function categoryListAction(array $categories, $showProductsCountByCategory = true, $cssClass = null)
     {
         if ($showProductsCountByCategory === true) {
             $pricingGroup = $this->currentCustomerUser->getPricingGroup();

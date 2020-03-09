@@ -38,7 +38,7 @@
                 </div>
             </div>
             {% if visibleChildren is not empty %}
-                {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', { categories: visibleChildren, cssClass: "is-category-detail" })) }}
+                {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', { categories: visibleChildren, cssClass: " list-categories--detail" })) }}
             {% endif %}
 
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
