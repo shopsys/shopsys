@@ -16,7 +16,9 @@
                                         {{ deliveryAddress.companyName }}<br>
                                     {% endif %}
                                     {{ deliveryAddress.street }}, {{ deliveryAddress.city }} {{ deliveryAddress.postcode }}<br>
-                                    {{ deliveryAddress.country.name }}<br>
+                                    {% if deliveryAddress.country %}
+                                        {{ deliveryAddress.country.name }}<br>
+                                    {% endif %}
                                 </div>
                                 <div class="list-addresses__item__right">
                                     {% if deliveryAddress.telephone %}
