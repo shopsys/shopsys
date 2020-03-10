@@ -89,7 +89,12 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
 
             $this->currentFeedExport = null;
 
-            return $this->getFeedExportCreationDataQueue()->next();
+            $existsNext = $this->getFeedExportCreationDataQueue()->next();
+            if ($existsNext === true) {
+                $this->currentFeedExport = $this->createCurrentFeedExport();
+            }
+
+            return $existsNext;
         }
 
         return true;
@@ -100,10 +105,14 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
      */
     public function sleep(): void
     {
-        $this->currentFeedExport->sleep();
+        $lastSeekId = $this->currentFeedExport !== null ? $this->currentFeedExport->getLastSeekId() : null;
+
+        if ($lastSeekId !== null) {
+            $this->currentFeedExport->sleep();
+        }
+
         $currentFeedName = $this->getFeedExportCreationDataQueue()->getCurrentFeedName();
         $currentDomain = $this->getFeedExportCreationDataQueue()->getCurrentDomain();
-        $lastSeekId = $this->currentFeedExport !== null ? $this->currentFeedExport->getLastSeekId() : null;
 
         $this->setting->set(Setting::FEED_NAME_TO_CONTINUE, $currentFeedName);
         $this->setting->set(Setting::FEED_DOMAIN_ID_TO_CONTINUE, $currentDomain->getId());
