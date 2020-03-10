@@ -33,3 +33,6 @@ TransportDecorator:
                         defaultValue: null
                     size:
                         type: "String"
+            payments:
+                type: "[Payment!]!"
+                description: "List of assigned payments"
