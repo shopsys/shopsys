@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade;
@@ -77,6 +78,11 @@ class ProductDataFactory implements ProductDataFactoryInterface
     protected $pricingGroupFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
+     */
+    protected $availabilityFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
@@ -89,6 +95,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
     public function __construct(
         VatFacade $vatFacade,
@@ -102,7 +109,8 @@ class ProductDataFactory implements ProductDataFactoryInterface
         ImageFacade $imageFacade,
         PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
-        PricingGroupFacade $pricingGroupFacade
+        PricingGroupFacade $pricingGroupFacade,
+        AvailabilityFacade $availabilityFacade
     ) {
         $this->vatFacade = $vatFacade;
         $this->productInputPriceFacade = $productInputPriceFacade;
@@ -116,6 +124,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $this->pluginDataFormExtensionFacade = $pluginDataFormExtensionFacade;
         $this->productParameterValueDataFactory = $productParameterValueDataFactory;
         $this->pricingGroupFacade = $pricingGroupFacade;
+        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**
@@ -167,6 +176,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->name[$locale] = null;
             $productData->variantAlias[$locale] = null;
         }
+        $productData->availability = $this->availabilityFacade->getDefaultInStockAvailability();
     }
 
     /**
