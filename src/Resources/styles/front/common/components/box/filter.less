@@ -1,6 +1,7 @@
 @box-filter-input-width: 80px;
 @box-filter-padding: 20px;
-@box-filter-width: @web-panel-width;
+@box-filter-width-lg: 250px;
+@box-filter-width-xl: @web-panel-width-xl;
 @box-filter-z-index: 10001;
 @box-filter-background: @color-f;
 @box-filter-delimiter-color: @color-d;
@@ -19,8 +20,12 @@
 
     @media @query-lg {
         display: block;
-        width: @box-filter-width;
+        width: @box-filter-width-lg;
         z-index: 0;
+    }
+
+    @media @query-xl {
+        width: @box-filter-width-xl;
     }
 
     &.active {

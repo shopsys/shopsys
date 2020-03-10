@@ -16,7 +16,9 @@
                         </{{ productHeadingTagName|default('h2') }}>
                         <div class="list-products__item__info dont-print">
                             <div class="list-products__item__info__availability">
-                                {{ productView.availability }}
+                                <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
+                                {# TODO: There is no translation, because the text will be dynamic - after programming will be done #}
+                                <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary js-not-implemented-yet">Můžete mít ihned na <strong>5</strong> prodejnách</span>
                             </div>
                             {% if productView.sellingPrice is not null %}
                                 <div class="list-products__item__info__price">
@@ -34,9 +36,6 @@
                             {% endif %}
                         </div>
                     </a>
-                    <div class="list-products__item__action">
-                        {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
-                    </div>
                 </div>
             </li>
         {% endfor %}

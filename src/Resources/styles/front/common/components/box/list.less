@@ -15,14 +15,21 @@
         width: 100%;
 
         @media @query-lg {
-            width: @web-panel-width;
-            padding-right: @web-panel-gap;
+            width: @web-panel-width-lg;
+        }
+
+        @media @query-xl {
+            width: @web-panel-width-xl;
         }
     }
 
     &__content {
         display: flex;
         flex-direction: column;
+
+        @media @query-lg {
+            padding-left: @web-panel-gap * 1.5;
+        }
     }
 
     &__description {
