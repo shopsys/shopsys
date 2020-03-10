@@ -59,6 +59,11 @@ class OrderPreviewSplittingFacade
     private $paymentPriceCalculation;
 
     /**
+     * @var \App\Model\Order\Preview\PricesPreviewFacade
+     */
+    private $pricesPreviewFacade;
+
+    /**
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -67,6 +72,7 @@ class OrderPreviewSplittingFacade
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     * @param \App\Model\Order\Preview\PricesPreviewFacade $pricesPreviewFacade
      */
     public function __construct(
         OrderPreviewFactory $orderPreviewFactory,
@@ -76,7 +82,8 @@ class OrderPreviewSplittingFacade
         CurrentCustomerUser $currentCustomerUser,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
         OrderPriceCalculation $orderPriceCalculation,
-        PaymentPriceCalculation $paymentPriceCalculation
+        PaymentPriceCalculation $paymentPriceCalculation,
+        PricesPreviewFacade $pricesPreviewFacade
     ) {
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->domain = $domain;
@@ -86,6 +93,7 @@ class OrderPreviewSplittingFacade
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->orderPriceCalculation = $orderPriceCalculation;
         $this->paymentPriceCalculation = $paymentPriceCalculation;
+        $this->pricesPreviewFacade = $pricesPreviewFacade;
     }
 
     /**
@@ -105,6 +113,7 @@ class OrderPreviewSplittingFacade
 
         $orderPreviews = $this->createOrderPreviewsWithProductType($currency, $transportsByProductTypeId, $this->domain->getId());
 
+        $productsPrice = $this->sumProductsPrices($orderPreviews);
         $sumTotalPrices = $this->sumTotalPrices($orderPreviews);
         $roundingPrice = null;
         $totalPrice = $sumTotalPrices;
@@ -114,7 +123,7 @@ class OrderPreviewSplittingFacade
             $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
                 $payment,
                 $currency,
-                $this->sumProductsPrices($orderPreviews),
+                $productsPrice,
                 $this->domain->getId()
             );
 
@@ -127,7 +136,17 @@ class OrderPreviewSplittingFacade
             }
         }
 
-        return new SplitOrderPreview($orderPreviews, $payment, $totalPrice, $roundingPrice, $paymentPrice);
+        $splitOrderPreview = new SplitOrderPreview($orderPreviews, $payment, $totalPrice, $productsPrice, $roundingPrice);
+
+        // optimization - prices for all transports and payments are not necessary when OrderData does not exists
+        if ($orderData !== null) {
+            $transportAndPaymentPricesPreview = $this->pricesPreviewFacade->createTransportAndPaymentPricesPreviewForCurrentCustomer(
+                $splitOrderPreview
+            );
+            $splitOrderPreview->setTransportAndPaymentPricesPreview($transportAndPaymentPricesPreview);
+        }
+
+        return $splitOrderPreview;
     }
 
     /**

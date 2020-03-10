@@ -21,10 +21,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,11 +78,6 @@ class OrderController extends FrontBaseController
     private $paymentFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    private $paymentPriceCalculation;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
     private $currencyFacade;
@@ -93,11 +86,6 @@ class OrderController extends FrontBaseController
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      */
     private $transportFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    private $transportPriceCalculation;
 
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
@@ -123,8 +111,6 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
@@ -142,8 +128,6 @@ class OrderController extends FrontBaseController
         OrderFacade $orderFacade,
         CartFacade $cartFacade,
         OrderPreviewFactory $orderPreviewFactory,
-        TransportPriceCalculation $transportPriceCalculation,
-        PaymentPriceCalculation $paymentPriceCalculation,
         Domain $domain,
         TransportFacade $transportFacade,
         PaymentFacade $paymentFacade,
@@ -160,8 +144,6 @@ class OrderController extends FrontBaseController
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->transportPriceCalculation = $transportPriceCalculation;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->domain = $domain;
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
@@ -272,18 +254,6 @@ class OrderController extends FrontBaseController
             'transport' => $transport,
             'payment' => $payment,
             'payments' => $payments,
-            'transportsPrices' => $this->transportPriceCalculation->getCalculatedPricesIndexedByTransportId(
-                $transports,
-                $currency,
-                $orderPreview->getProductsPrice(),
-                $domainId
-            ),
-            'paymentsPrices' => $this->paymentPriceCalculation->getCalculatedPricesIndexedByPaymentId(
-                $payments,
-                $currency,
-                $orderPreview->getProductsPrice(),
-                $domainId
-            ),
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),

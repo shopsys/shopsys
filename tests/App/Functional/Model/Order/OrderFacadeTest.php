@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\Model\Order\Item\OrderItemData;
 use App\Model\Order\OrderData;
 use App\Model\Order\Preview\SplitOrderPreview;
+use App\Model\Order\Preview\TransportAndPaymentPricesPreview;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -118,9 +119,20 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
             [$orderPreview],
             $orderData->payment,
             $orderPreview->getTotalPrice(),
-            $orderPreview->getRoundingPrice(),
-            $orderPreview->getPaymentPrice()
+            $orderPreview->getProductsPrice(),
+            $orderPreview->getRoundingPrice()
         );
+        $transportAndPaymentPricesPreview = new TransportAndPaymentPricesPreview(
+            [
+                $productType->getId() => [
+                    $orderData->transport->getId() => $orderPreview->getTransportPrice(),
+                ],
+            ],
+            [
+                $orderData->payment->getId() => $orderPreview->getPaymentPrice(),
+            ]
+        );
+        $splitOrderPreview->setTransportAndPaymentPricesPreview($transportAndPaymentPricesPreview);
         $order = $this->orderFacade->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, null);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());

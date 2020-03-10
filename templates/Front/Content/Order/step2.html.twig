@@ -35,7 +35,7 @@
                                         {% for child in transportForm %}
                                             {% set choice = transportForm.vars.choices[child.vars.name] %}
                                             {% set transport = choice.data %}
-                                            {% set transportPrice = transportsPrices[transport.id] %}
+                                            {% set transportPrice = splitOrderPreview.transportAndPaymentPricesPreview.getTransportPrice(transport, orderPreview.productType) %}
                                             <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
                                                 <span class="box-chooser__item__check">
                                                     {{ form_widget(child, { attr: { class: 'css-checkbox js-order-transport-input js-payment-transport-checkbox', 'data-id': transport.id} }) }}
@@ -88,7 +88,7 @@
                                 {% for child in form.payment %}
                                     {% set choice = form.payment.vars.choices[child.vars.name] %}
                                     {% set payment = choice.data %}
-                                    {% set paymentPrice = paymentsPrices[payment.id] %}
+                                    {% set paymentPrice = splitOrderPreview.transportAndPaymentPricesPreview.getPaymentPrice(payment) %}
                                     <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
                                         <span class="box-chooser__item__check">
                                             {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input js-payment-transport-checkbox', 'data-id': payment.id} }) }}

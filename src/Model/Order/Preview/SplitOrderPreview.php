@@ -21,6 +21,11 @@ class SplitOrderPreview
     private $totalPrice;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private $productsPrice;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     private $roundingPrice;
@@ -31,29 +36,29 @@ class SplitOrderPreview
     private $payment;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     * @var \App\Model\Order\Preview\TransportAndPaymentPricesPreview|null
      */
-    private $paymentPrice;
+    private $transportAndPaymentPricesPreview;
 
     /**
      * @param \App\Model\Order\Preview\OrderPreview[] $orderPreviews
      * @param \App\Model\Payment\Payment|null $payment
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
      */
     public function __construct(
         array $orderPreviews,
         ?Payment $payment,
         Price $totalPrice,
-        ?Price $roundingPrice,
-        ?Price $paymentPrice
+        Price $productsPrice,
+        ?Price $roundingPrice
     ) {
         $this->orderPreviews = $orderPreviews;
         $this->payment = $payment;
         $this->totalPrice = $totalPrice;
+        $this->productsPrice = $productsPrice;
         $this->roundingPrice = $roundingPrice;
-        $this->paymentPrice = $paymentPrice;
     }
 
     /**
@@ -81,6 +86,14 @@ class SplitOrderPreview
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getProductsPrice(): Price
+    {
+        return $this->productsPrice;
+    }
+
+    /**
      * @return \App\Model\Payment\Payment
      */
     public function getPayment(): Payment
@@ -88,18 +101,8 @@ class SplitOrderPreview
         if ($this->payment === null) {
             throw new \RuntimeException('Payment is not set. Please set it for this scenario');
         }
-        return $this->payment;
-    }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function getPaymentPrice(): Price
-    {
-        if ($this->paymentPrice === null) {
-            throw new \RuntimeException('Payment price is not set. Please set it for this scenario');
-        }
-        return $this->paymentPrice;
+        return $this->payment;
     }
 
     /**
@@ -121,5 +124,29 @@ class SplitOrderPreview
         }
 
         return $firstOrderPreview->getProductType();
+    }
+
+    /**
+     * @return \App\Model\Order\Preview\TransportAndPaymentPricesPreview
+     */
+    public function getTransportAndPaymentPricesPreview(): TransportAndPaymentPricesPreview
+    {
+        if ($this->transportAndPaymentPricesPreview === null) {
+            throw new \RuntimeException('TransportAndPaymentPricesPreview is not set. Please set it for this scenario');
+        }
+
+        return $this->transportAndPaymentPricesPreview;
+    }
+
+    /**
+     * @param \App\Model\Order\Preview\TransportAndPaymentPricesPreview $transportAndPaymentPricesPreview
+     */
+    public function setTransportAndPaymentPricesPreview(TransportAndPaymentPricesPreview $transportAndPaymentPricesPreview): void
+    {
+        if ($this->transportAndPaymentPricesPreview !== null) {
+            throw new \RuntimeException('TransportAndPaymentPricesPreview is already set. It cannot be changed');
+        }
+
+        $this->transportAndPaymentPricesPreview = $transportAndPaymentPricesPreview;
     }
 }

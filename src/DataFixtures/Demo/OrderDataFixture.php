@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Order\Preview\SplitOrderPreview;
+use App\Model\Order\Preview\TransportAndPaymentPricesPreview;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Generator;
@@ -752,9 +753,20 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             [$orderPreview],
             $orderData->payment,
             $orderPreview->getTotalPrice(),
-            $orderPreview->getRoundingPrice(),
-            $orderPreview->getPaymentPrice()
+            $orderPreview->getProductsPrice(),
+            $orderPreview->getRoundingPrice()
         );
+        $transportAndPaymentPricesPreview = new TransportAndPaymentPricesPreview(
+            [
+                $productType->getId() => [
+                    $orderData->transport->getId() => $orderPreview->getTransportPrice(),
+                ],
+            ],
+            [
+                $orderData->payment->getId() => $orderPreview->getPaymentPrice(),
+            ]
+        );
+        $splitOrderPreview->setTransportAndPaymentPricesPreview($transportAndPaymentPricesPreview);
 
         $order = $this->orderFacade->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, $customerUser);
         /* @var $order \App\Model\Order\Order */

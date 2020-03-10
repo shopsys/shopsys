@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use App\Model\Order\Item\OrderItemDataFactory;
+use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Order\Preview\SplitOrderPreview;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,7 +37,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview;
+use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
@@ -68,6 +69,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
  * @property \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
  * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress)
+ * @method fillOrderTransport(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -256,7 +258,7 @@ class OrderFacade extends BaseOrderFacade
 
         foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
             $this->fillOrderProducts($order, $orderPreview, $locale);
-            $this->fillOrderTransport($order, $orderPreview, $locale);
+            $this->fillOrderTransportBySplitOrderPreview($order, $orderPreview, $locale, $splitOrderPreview);
         }
 
         $this->fillOrderPaymentBySplitOrderPreview($order, $splitOrderPreview, $locale);
@@ -271,7 +273,7 @@ class OrderFacade extends BaseOrderFacade
     private function fillOrderPaymentBySplitOrderPreview(Order $order, SplitOrderPreview $splitOrderPreview, string $locale): void
     {
         $payment = $splitOrderPreview->getPayment();
-        $paymentPrice = $splitOrderPreview->getPaymentPrice();
+        $paymentPrice = $splitOrderPreview->getTransportAndPaymentPricesPreview()->getPaymentPrice($payment);
 
         $orderItemData = $this->orderItemDataFactory->create();
         $orderItemData->name = $payment->getName($locale);
@@ -318,7 +320,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
-    protected function fillOrderProducts(BaseOrder $order, OrderPreview $orderPreview, string $locale): void
+    protected function fillOrderProducts(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
     {
         $quantifiedItemPrices = $orderPreview->getQuantifiedItemsPrices();
         $quantifiedItemDiscounts = $orderPreview->getQuantifiedItemsDiscounts();
@@ -358,16 +360,19 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Order $order
      * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
+     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
      */
-    protected function fillOrderTransport(BaseOrder $order, OrderPreview $orderPreview, string $locale): void
-    {
+    protected function fillOrderTransportBySplitOrderPreview(
+        Order $order,
+        OrderPreview $orderPreview,
+        string $locale,
+        SplitOrderPreview $splitOrderPreview
+    ): void {
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $orderPreview->getTransport();
-        $transportPrice = $this->transportPriceCalculation->calculatePrice(
+        $transportPrice = $splitOrderPreview->getTransportAndPaymentPricesPreview()->getTransportPrice(
             $transport,
-            $order->getCurrency(),
-            $orderPreview->getProductsPrice(),
-            $order->getDomainId()
+            $orderPreview->getProductType()
         );
         $orderItemData = $this->orderItemDataFactory->create();
         $orderItemData->name = $transport->getName($locale);
