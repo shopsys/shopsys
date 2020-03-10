@@ -33,3 +33,12 @@ QueryDecorator:
                 args:
                     uuid:
                         type: "ID!"
+            transports:
+                type: '[Transport!]!'
+                resolve: "@=resolver('transports')"
+            transport:
+                type: 'Transport'
+                resolve: "@=resolver('transport', [args['uuid']])"
+                args:
+                    uuid:
+                        type: "ID!"

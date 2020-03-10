@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
 class PriceResolver implements ResolverInterface, AliasedInterface
 {
@@ -44,24 +46,32 @@ class PriceResolver implements ResolverInterface, AliasedInterface
     protected $currencyFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
+     */
+    protected $transportPriceCalculation;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      */
     public function __construct(
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         PaymentPriceCalculation $paymentPriceCalculation,
         Domain $domain,
-        CurrencyFacade $currencyFacade
+        CurrencyFacade $currencyFacade,
+        TransportPriceCalculation $transportPriceCalculation
     ) {
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
+        $this->transportPriceCalculation = $transportPriceCalculation;
     }
 
     /**
@@ -82,6 +92,19 @@ class PriceResolver implements ResolverInterface, AliasedInterface
     {
         return $this->paymentPriceCalculation->calculateIndependentPrice(
             $payment,
+            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
+            $this->domain->getId()
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function resolveByTransport(Transport $transport): Price
+    {
+        return $this->transportPriceCalculation->calculateIndependentPrice(
+            $transport,
             $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
             $this->domain->getId()
         );

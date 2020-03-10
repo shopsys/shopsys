@@ -26,6 +26,7 @@ parameters:
             - '*/tests/App/Functional/Model/Cart/CartMigrationFacadeTest.php'
             - '*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'
             - '*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'
+            - '*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'
