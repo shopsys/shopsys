@@ -6,6 +6,11 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
@@ -24,15 +29,39 @@ class PriceResolver implements ResolverInterface, AliasedInterface
     protected $productOnCurrentDomainFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
+     */
+    protected $paymentPriceCalculation;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    protected $domain;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    protected $currencyFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         ProductCachedAttributesFacade $productCachedAttributesFacade,
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+        PaymentPriceCalculation $paymentPriceCalculation,
+        Domain $domain,
+        CurrencyFacade $currencyFacade
     ) {
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
+        $this->paymentPriceCalculation = $paymentPriceCalculation;
+        $this->domain = $domain;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -43,6 +72,19 @@ class PriceResolver implements ResolverInterface, AliasedInterface
     {
         $product = $data instanceof Product ? $data : $this->productOnCurrentDomainFacade->getVisibleProductById($data['id']);
         return $this->productCachedAttributesFacade->getProductSellingPrice($product);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function resolveByPayment(Payment $payment): Price
+    {
+        return $this->paymentPriceCalculation->calculateIndependentPrice(
+            $payment,
+            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
+            $this->domain->getId()
+        );
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -273,5 +275,14 @@ class PaymentFacade
         }
 
         return $prices;
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
+     */
+    public function getByUuid(string $uuid): Payment
+    {
+        return $this->paymentRepository->getOneByUuid($uuid);
     }
 }

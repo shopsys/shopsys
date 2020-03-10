@@ -1,0 +1,35 @@
+PaymentDecorator:
+    type: interface
+    decorator: true
+    config:
+        description: "Represents a payment"
+        fields:
+            uuid:
+                type: "ID!"
+                description: "UUID"
+            name:
+                type: "String!"
+                description: "Payment name"
+            description:
+                type: "String"
+                description: "Localized payment description (domain dependent)"
+            instruction:
+                type: "String"
+                description: "Localized payment instruction (domain dependent)"
+            position:
+                type: "Int!"
+                description: "Payment position"
+            price:
+                type: "Price"
+                description: "Payment price"
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Price\\PriceResolver").resolveByPayment(value)'
+            images:
+                type: "[Image]!"
+                description: "Payment images"
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByPayment(value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
