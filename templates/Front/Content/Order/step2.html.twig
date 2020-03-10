@@ -34,26 +34,27 @@
                                     <div id="{{ transportForm.vars.id }}">
                                         {% for child in transportForm %}
                                             {% set choice = transportForm.vars.choices[child.vars.name] %}
-                                            {% set transportPrice = transportsPrices[choice.data.id] %}
+                                            {% set transport = choice.data %}
+                                            {% set transportPrice = transportsPrices[transport.id] %}
                                             <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
                                                 <span class="box-chooser__item__check">
-                                                    {{ form_widget(child, { attr: { class: 'css-checkbox js-order-transport-input js-payment-transport-checkbox', 'data-id': choice.data.id} }) }}
+                                                    {{ form_widget(child, { attr: { class: 'css-checkbox js-order-transport-input js-payment-transport-checkbox', 'data-id': transport.id} }) }}
                                                     <span class="css-checkbox__image"></span>
                                                 </span>
 
                                                 <span class="box-chooser__item__image">
-                                                    {% if imageExists(choice.data) %}
-                                                        {{ image(choice.data) }}
+                                                    {% if imageExists(transport) %}
+                                                        {{ image(transport) }}
                                                     {% endif %}
                                                 </span>
 
                                                 <span class="box-chooser__item__title">
                                                     <strong class="box-chooser__item__title__name">
-                                                        {{ choice.data.name }}
+                                                        {{ transport.name }}
                                                     </strong>
-                                                    {% if choice.data.description %}
+                                                    {% if transport.description %}
                                                         <span class="box-chooser__item__title__description">
-                                                            - {{ choice.data.description }}
+                                                            - {{ transport.description }}
                                                         </span>
                                                     {% endif %}
                                                 </span>
@@ -86,26 +87,27 @@
                             <div id="{{ form.payment.vars.id }}">
                                 {% for child in form.payment %}
                                     {% set choice = form.payment.vars.choices[child.vars.name] %}
-                                    {% set paymentPrice = paymentsPrices[choice.data.id] %}
+                                    {% set payment = choice.data %}
+                                    {% set paymentPrice = paymentsPrices[payment.id] %}
                                     <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
                                         <span class="box-chooser__item__check">
-                                            {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input js-payment-transport-checkbox', 'data-id': choice.data.id} }) }}
+                                            {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input js-payment-transport-checkbox', 'data-id': payment.id} }) }}
                                             <span class="css-checkbox__image"></span>
                                         </span>
 
                                         <span class="box-chooser__item__image">
-                                            {% if imageExists(choice.data) %}
-                                                {{ image(choice.data) }}
+                                            {% if imageExists(payment) %}
+                                                {{ image(payment) }}
                                             {% endif %}
                                         </span>
 
                                         <span class="box-chooser__item__title">
                                             <strong class="box-chooser__title__name">
-                                                {{ choice.data.name }}
+                                                {{ payment.name }}
                                             </strong>
-                                            {% if choice.data.description %}
+                                            {% if payment.description %}
                                                 <span class="box-chooser__item__title__description">
-                                                    - {{ choice.data.description }}
+                                                    - {{ payment.description }}
                                                 </span>
                                             {% endif %}
                                         </span>
