@@ -23,6 +23,7 @@ class TransferIssue
 {
     public const SEVERITY_ERROR = 'error';
     public const SEVERITY_WARNING = 'warning';
+    public const SEVERITY_CRITICAL = 'critical';
 
     /**
      * @var int

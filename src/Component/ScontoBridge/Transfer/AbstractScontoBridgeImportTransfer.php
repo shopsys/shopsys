@@ -57,7 +57,10 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
         $this->scontoBridgeConfig = $scontoBridgeImportTransferDependency->getScontoBridgeConfig();
     }
 
-    public function runTransfer()
+    /**
+     * @return bool
+     */
+    public function runTransfer(): bool
     {
         if (!$this->scontoBridgeConfig->isEnabled()) {
             $this->logger->addWarning('Skipping transfer, sconto bridge is disabled from parameters.yml');
@@ -70,6 +73,7 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
         $runNextIteration = $this->processItems($scontoBridgeData);
 
         $this->doAfterTransfer();
+        $this->logger->persistAllLoggedTransferIssues();
 
         return $runNextIteration;
     }
@@ -147,6 +151,8 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
                 if ($this->validator instanceof TraceableValidator) {
                     $this->validator->reset();
                 }
+
+                $this->logger->persistAllLoggedTransferIssues();
             }
 
             if ($processed === $this->cronBatchSize) {
@@ -155,6 +161,8 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
             }
             $processed++;
         }
+
+        $this->logger->persistAllLoggedTransferIssues();
 
         $this->sqlLoggerFacade->reenableLogging();
         return false;

@@ -119,6 +119,8 @@ class TransferLogger implements TransferLoggerInterface
      */
     public function addCritical(string $message, array $context = []): bool
     {
+        $this->transferIssueDataList[] = new TransferIssueData($message, TransferIssue::SEVERITY_CRITICAL);
+
         return $this->logger->addCritical($message, $context);
     }
 
