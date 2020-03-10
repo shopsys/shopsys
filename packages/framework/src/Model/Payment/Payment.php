@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -90,6 +91,13 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     protected $domains;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
      */
     public function __construct(PaymentData $paymentData)
@@ -104,6 +112,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->prices = new ArrayCollection();
         $this->czkRounding = $paymentData->czkRounding;
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
+        $this->uuid = $paymentData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -380,5 +389,13 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
         $message = 'Payment price for domain ID ' . $domainId . ' and payment ID ' . $this->getId() . 'not found.';
         throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException($message);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }
