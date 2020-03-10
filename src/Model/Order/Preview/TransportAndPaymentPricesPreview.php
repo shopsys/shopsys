@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Order\Preview\Exception\PaymentPriceNotFoundException;
+use App\Model\Order\Preview\Exception\TransportPriceNotFoundException;
 use App\Model\Payment\Payment;
 use App\Model\Product\Type\ProductType;
 use App\Model\Transport\Transport;
@@ -38,6 +40,12 @@ class TransportAndPaymentPricesPreview
      */
     public function getTransportPrice(Transport $transport, ProductType $productType): Price
     {
+        if (array_key_exists($productType->getId(), $this->transportPricesByProductTypeIdAndTransportId) === false
+            || array_key_exists($transport->getId(), $this->transportPricesByProductTypeIdAndTransportId[$productType->getId()]) === false
+        ) {
+            throw new TransportPriceNotFoundException($productType, $transport);
+        }
+
         return $this->transportPricesByProductTypeIdAndTransportId[$productType->getId()][$transport->getId()];
     }
 
@@ -47,6 +55,10 @@ class TransportAndPaymentPricesPreview
      */
     public function getPaymentPrice(Payment $payment): Price
     {
+        if (array_key_exists($payment->getId(), $this->paymentPricesByPaymentId) === false) {
+            throw new PaymentPriceNotFoundException($payment);
+        }
+
         return $this->paymentPricesByPaymentId[$payment->getId()];
     }
 }

@@ -6,10 +6,10 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Model\Order\FrontOrderData;
-use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataMapper;
-use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
+use App\Model\Order\Preview\SplitOrderPreview;
+use App\Model\Order\Watcher\SplitTransportAndPaymentWatcher;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
-use Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -68,9 +67,9 @@ class OrderController extends FrontBaseController
     private $orderPreviewFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher
+     * @var \App\Model\Order\Watcher\SplitTransportAndPaymentWatcher
      */
-    private $transportAndPaymentWatcher;
+    private $splitTransportAndPaymentWatcher;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
@@ -118,7 +117,7 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Order\OrderDataMapper $orderDataMapper
      * @param \App\Form\Front\Order\DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher $transportAndPaymentWatcher
+     * @param \App\Model\Order\Watcher\SplitTransportAndPaymentWatcher $splitTransportAndPaymentWatcher
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
@@ -135,7 +134,7 @@ class OrderController extends FrontBaseController
         OrderDataMapper $orderDataMapper,
         DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory,
         SessionInterface $session,
-        TransportAndPaymentWatcher $transportAndPaymentWatcher,
+        SplitTransportAndPaymentWatcher $splitTransportAndPaymentWatcher,
         OrderMailFacade $orderMailFacade,
         LegalConditionsFacade $legalConditionsFacade,
         NewsletterFacade $newsletterFacade,
@@ -151,7 +150,7 @@ class OrderController extends FrontBaseController
         $this->orderDataMapper = $orderDataMapper;
         $this->domainAwareOrderFlowFactory = $domainAwareOrderFlowFactory;
         $this->session = $session;
-        $this->transportAndPaymentWatcher = $transportAndPaymentWatcher;
+        $this->splitTransportAndPaymentWatcher = $splitTransportAndPaymentWatcher;
         $this->orderMailFacade = $orderMailFacade;
         $this->legalConditionsFacade = $legalConditionsFacade;
         $this->newsletterFacade = $newsletterFacade;
@@ -202,9 +201,7 @@ class OrderController extends FrontBaseController
         $form = $orderFlow->createForm();
 
         $payment = $frontOrderFormData->payment;
-        $transport = $frontOrderFormData->transport;
-
-        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
+        $transport = $frontOrderFormData->transport; // TODO remove it!
 
         $isValid = $orderFlow->isValid($form);
         // FormData are filled during isValid() call
@@ -212,8 +209,7 @@ class OrderController extends FrontBaseController
         $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
 
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
-        $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
-        $this->checkTransportAndPaymentChanges($orderData, $orderPreview, $transports, $payments);
+        $this->checkTransportAndPaymentChanges($frontOrderFormData, $splitOrderPreview);
 
         if ($isValid) {
             if ($orderFlow->nextStep()) {
@@ -309,38 +305,26 @@ class OrderController extends FrontBaseController
     }
 
     /**
-     * @param \App\Model\Order\OrderData $orderData
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
-     * @param \App\Model\Transport\Transport[] $transports
-     * @param \App\Model\Payment\Payment[] $payments
+     * @param \App\Model\Order\FrontOrderData $frontOrderData
+     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
      */
     private function checkTransportAndPaymentChanges(
-        OrderData $orderData,
-        OrderPreview $orderPreview,
-        array $transports,
-        array $payments
-    ) {
-        $transportAndPaymentCheckResult = $this->transportAndPaymentWatcher->checkTransportAndPayment(
-            $orderData,
-            $orderPreview,
-            $transports,
-            $payments
+        FrontOrderData $frontOrderData,
+        SplitOrderPreview $splitOrderPreview
+    ): void {
+        $transportAndPaymentCheckResult = $this->splitTransportAndPaymentWatcher->checkTransportsAndPaymentBySplitOrderPreview(
+            $frontOrderData,
+            $splitOrderPreview
         );
 
         if ($transportAndPaymentCheckResult->isTransportPriceChanged()) {
-            $this->getFlashMessageSender()->addInfoFlashTwig(
-                t('The price of shipping {{ transportName }} changed during ordering process. Check your order, please.'),
-                [
-                    'transportName' => $orderData->transport->getName(),
-                ]
+            $this->getFlashMessageSender()->addInfoFlash(
+                t('V průběhu objednávkového procesu byla změněna cena dopravy. Prosím, překontrolujte si objednávku.')
             );
         }
         if ($transportAndPaymentCheckResult->isPaymentPriceChanged()) {
-            $this->getFlashMessageSender()->addInfoFlashTwig(
-                t('The price of payment {{ paymentName }} changed during ordering process. Check your order, please.'),
-                [
-                    'paymentName' => $orderData->payment->getName(),
-                ]
+            $this->getFlashMessageSender()->addInfoFlash(
+                t('V průběhu objednávkového procesu byla změněna cena platby. Prosím, překontrolujte si objednávku.')
             );
         }
     }

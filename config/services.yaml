@@ -103,6 +103,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@App\Form\Front\Order\DomainAwareOrderFlowFactory'
 
+    App\Model\Order\Watcher\SplitTransportAndPaymentWatcher: ~
+
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface: '@App\Model\Article\ArticleDataFactory'
 
     App\Model\Category\CurrentCategoryResolver: ~
