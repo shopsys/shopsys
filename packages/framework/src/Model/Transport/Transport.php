@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -82,6 +83,13 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $payments;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
     public function __construct(TransportData $transportData)
@@ -95,6 +103,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         $this->prices = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->payments = new ArrayCollection();
+        $this->uuid = $transportData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -361,5 +370,13 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
         $message = 'Transport price with domain ID ' . $domainId . ' and payment ID ' . $this->getId() . 'not found.';
         throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException($message);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }
