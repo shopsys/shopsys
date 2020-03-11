@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Vrstva_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="-711 25 512 512" style="enable-background:new -711 25 512 512;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#444444;}
-</style>
-<g>
-	<path class="st0" d="M-455,25c-140.8,0-256,115.2-256,256s115.2,256,256,256s256-115.2,256-256S-314.2,25-455,25L-455,25z
-		 M-487,121h64v64h-64V121L-487,121z M-420.9,404.7c0,21.3-14.9,40.5-32,40.5c-17.1,0-32-17.1-32-40.5V259.7
-		c0-21.3,14.9-40.5,32-40.5c17.1,0,32,17.1,32,40.5V404.7L-420.9,404.7z"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-711 25 512 512"><path d="M-455 25c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256S-314.2 25-455 25zm-32 96h64v64h-64v-64zm66.1 283.7c0 21.3-14.9 40.5-32 40.5s-32-17.1-32-40.5v-145c0-21.3 14.9-40.5 32-40.5s32 17.1 32 40.5v145z" fill="#444"/></svg>
