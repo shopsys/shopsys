@@ -52,7 +52,6 @@ Encore
     ]))
 ;
 
-
 // Frontend Config
 const WebfontsGenerator = require('webfonts-generator');
 const StylelintPlugin = require('stylelint-webpack-plugin');
@@ -60,8 +59,8 @@ var requireContext = require('require-context');
 yaml = require('js-yaml');
 fs = require('fs');
 
-SVGO = require('svgo'),
-svgo = new SVGO();
+SVGO = require('svgo');
+const svgo = new SVGO();
 
 const svgFilesFrontend = requireContext('../../src/Resources/svg/front', false, '.svg');
 var svgFilesFrontendPath = [];
@@ -69,19 +68,17 @@ svgFilesFrontend.keys().forEach((filePathFrontend) => {
     var newFileFrontendPath = './src/Resources/svg/front/' + filePathFrontend;
     svgFilesFrontendPath.push(newFileFrontendPath);
 
-    fs.readFile(newFileFrontendPath, 'utf8', function(err, data) {
-
+    fs.readFile(newFileFrontendPath, 'utf8', function (err, data) {
         if (err) {
             throw err;
         }
-
-        svgo.optimize(data, {path: newFileFrontendPath}).then(function(result) {
-
-            //console.log(result);
-            fs.writeFile(newFileFrontendPath, result.data, function(err){
-                console.log("Frontend SVG icon " + newFileFrontendPath + " optimized");
+        svgo.optimize(data, { path: newFileFrontendPath }).then(function (result) {
+            fs.writeFile(newFileFrontendPath, result.data, function (err) {
+                if (err) {
+                    throw err;
+                }
+                console.log('Frontend SVG icon ' + newFileFrontendPath + ' optimized');
             });
-
         });
     });
 });
@@ -92,19 +89,17 @@ svgFilesAdmin.keys().forEach((filePathAdmin) => {
     var newFileAdminPath = '../packages/framework/src/Resources/svg/admin/' + filePathAdmin;
     svgFilesAdminPath.push(newFileAdminPath);
 
-    fs.readFile(newFileAdminPath, 'utf8', function(err, data) {
-
+    fs.readFile(newFileAdminPath, 'utf8', function (err, data) {
         if (err) {
             throw err;
         }
-
-        svgo.optimize(data, {path: newFileAdminPath}).then(function(result) {
-
-            //console.log(result);
-            fs.writeFile(newFileAdminPath, result.data, function(err){
-                console.log("Admin SVG icon " + newFileAdminPath + " optimized");
+        svgo.optimize(data, { path: newFileAdminPath }).then(function (result) {
+            fs.writeFile(newFileAdminPath, result.data, function (err) {
+                if (err) {
+                    throw err;
+                }
+                console.log('Admin SVG icon ' + newFileAdminPath + ' optimized');
             });
-
         });
     });
 });
@@ -113,19 +108,17 @@ const domainFile = './config/domains.yml';
 var domains = yaml.safeLoad(fs.readFileSync(domainFile, 'utf8'));
 
 domains.domains.forEach((domain) => {
-    if(!domain.styles_directory){
+    if (!domain.styles_directory) {
         domain.styles_directory = 'common';
     }
     Encore
-        .addEntry('frontend-style-'+domain.styles_directory, './src/Resources/styles/front/'+domain.styles_directory+'/main.less')
-        .addEntry('frontend-print-style-'+domain.styles_directory, './src/Resources/styles/front/'+domain.styles_directory+'/print/main.less')
-    ;
-    }
-)
+        .addEntry('frontend-style-' + domain.styles_directory, './src/Resources/styles/front/' + domain.styles_directory + '/main.less')
+        .addEntry('frontend-print-style-' + domain.styles_directory, './src/Resources/styles/front/' + domain.styles_directory + '/print/main.less');
+});
 
 Encore
     .addEntry('admin-style', '../packages/framework/src/Resources/styles/admin/main.less')
-    .addPlugin (
+    .addPlugin(
         new StylelintPlugin({
             configFile: '.stylelintrc',
             files: 'src/**/*.less'
@@ -148,7 +141,7 @@ Encore
                 baseSelector: '.svg',
                 classPrefix: 'svg-'
             }
-        }, function(error) {
+        }, function (error) {
             if (error) {
                 console.log('Frontend SVG Fail!', error);
             } else {
@@ -173,7 +166,7 @@ Encore
                 baseSelector: '.svg',
                 classPrefix: 'svg-'
             }
-        }, function(error) {
+        }, function (error) {
             if (error) {
                 console.log('Admin SVG Fail!', error);
             } else {
@@ -182,8 +175,8 @@ Encore
         })
     )
     .addLoader({
-        test   : /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-        loader : 'file-loader'
+        test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+        loader: 'file-loader'
     })
     .enableLessLoader()
     .enablePostCssLoader()
