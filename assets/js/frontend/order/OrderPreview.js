@@ -7,13 +7,15 @@ export default class OrderPreview {
 
     static loadOrderPreview () {
         const $orderPreview = $('#js-order-preview');
-        const $checkedTransport = $('.js-order-transport-input:checked');
+        const $checkedTransports = $('.js-order-transport-input:checked');
         const $checkedPayment = $('.js-order-payment-input:checked');
         const data = {};
 
-        if ($checkedTransport.length > 0) {
-            data['transportId'] = $checkedTransport.data('id');
-        }
+        data['transportIdsByProductTypeId'] = {};
+        $checkedTransports.each(function () {
+            const productTypeId = $(this).closest('.js-payment-transport-group').data('product-type-id');
+            data['transportIdsByProductTypeId'][productTypeId] = $(this).data('id');
+        });
         if ($checkedPayment.length > 0) {
             data['paymentId'] = $checkedPayment.data('id');
         }

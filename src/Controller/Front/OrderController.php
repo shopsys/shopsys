@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Model\Order\FrontOrderData;
+use App\Model\Order\OrderDataFactory;
 use App\Model\Order\OrderDataMapper;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Order\Preview\SplitOrderPreview;
@@ -18,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -62,11 +62,6 @@ class OrderController extends FrontBaseController
     private $orderFacade;
 
     /**
-     * @var \App\Model\Order\Preview\OrderPreviewFactory
-     */
-    private $orderPreviewFactory;
-
-    /**
      * @var \App\Model\Order\Watcher\SplitTransportAndPaymentWatcher
      */
     private $splitTransportAndPaymentWatcher;
@@ -107,9 +102,13 @@ class OrderController extends FrontBaseController
     private $orderPreviewSplittingFacade;
 
     /**
+     * @var \App\Model\Order\OrderDataFactory
+     */
+    private $orderDataFactory;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
@@ -122,11 +121,11 @@ class OrderController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
+     * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      */
     public function __construct(
         OrderFacade $orderFacade,
         CartFacade $cartFacade,
-        OrderPreviewFactory $orderPreviewFactory,
         Domain $domain,
         TransportFacade $transportFacade,
         PaymentFacade $paymentFacade,
@@ -138,11 +137,11 @@ class OrderController extends FrontBaseController
         OrderMailFacade $orderMailFacade,
         LegalConditionsFacade $legalConditionsFacade,
         NewsletterFacade $newsletterFacade,
-        OrderPreviewSplittingFacade $orderPreviewSplittingFacade
+        OrderPreviewSplittingFacade $orderPreviewSplittingFacade,
+        OrderDataFactory $orderDataFactory
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
-        $this->orderPreviewFactory = $orderPreviewFactory;
         $this->domain = $domain;
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
@@ -155,6 +154,7 @@ class OrderController extends FrontBaseController
         $this->legalConditionsFacade = $legalConditionsFacade;
         $this->newsletterFacade = $newsletterFacade;
         $this->orderPreviewSplittingFacade = $orderPreviewSplittingFacade;
+        $this->orderDataFactory = $orderDataFactory;
     }
 
     public function indexAction()
@@ -199,10 +199,6 @@ class OrderController extends FrontBaseController
         $orderFlow->saveSentStepData();
 
         $form = $orderFlow->createForm();
-
-        $payment = $frontOrderFormData->payment;
-        $transport = $frontOrderFormData->transport; // TODO remove it!
-
         $isValid = $orderFlow->isValid($form);
         // FormData are filled during isValid() call
         $orderData = $this->orderDataMapper->getOrderDataFromFrontOrderData($frontOrderFormData);
@@ -247,8 +243,6 @@ class OrderController extends FrontBaseController
             'form' => $form->createView(),
             'flow' => $orderFlow,
             'splitOrderPreview' => $splitOrderPreview,
-            'transport' => $transport,
-            'payment' => $payment,
             'payments' => $payments,
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
@@ -282,25 +276,34 @@ class OrderController extends FrontBaseController
      */
     public function previewAction(Request $request)
     {
-        $transportId = $request->get('transportId');
+        $transportIdsByProductTypeId = $request->get('transportIdsByProductTypeId');
         $paymentId = $request->get('paymentId');
 
-        if ($transportId === null) {
-            $transport = null;
-        } else {
+        $orderData = $this->orderDataFactory->create();
+
+        if (is_array($transportIdsByProductTypeId) === false) {
+            $transportIdsByProductTypeId = [];
+        }
+
+        $orderData->transportsByProductTypeId = [];
+        foreach ($transportIdsByProductTypeId as $productTypeId => $transportId) {
+            /** @var \App\Model\Transport\Transport $transport */
             $transport = $this->transportFacade->getById($transportId);
+            $orderData->transportsByProductTypeId[$productTypeId] = $transport;
         }
 
         if ($paymentId === null) {
-            $payment = null;
+            $orderData->payment = null;
         } else {
+            /** @var \App\Model\Payment\Payment $payment */
             $payment = $this->paymentFacade->getById($paymentId);
+            $orderData->payment = $payment;
         }
 
-        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
+        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
 
         return $this->render('Front/Content/Order/preview.html.twig', [
-            'orderPreview' => $orderPreview,
+            'splitOrderPreview' => $splitOrderPreview,
         ]);
     }
 

@@ -16,7 +16,7 @@
                         {% for orderPreview in splitOrderPreview.orderPreviews %}
                             {% set previewNumber = previewNumber + 1 %}
                             {% set transportForm = form.transportsByProductTypeId[orderPreview.productType.id] %}
-                            <div class="box-order__info__item js-payment-transport-group">
+                            <div class="box-order__info__item js-payment-transport-group" data-product-type-id="{{ orderPreview.productType.id }}">
 
                                 <h2 id="js-label-{{ transportForm.vars.id }}">
                                     {{ 'Shipping selection'|trans }}
@@ -127,10 +127,10 @@
                 </div>
 
                 <div id="js-order-preview" class="box-order__cart" data-url="{{ url('front_order_preview') }}">
-                    {# TODO: Transport is not one, but more (by product types) #}
+
                     {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                        transportId: null,
-                        paymentId: payment is empty ? null : payment.id
+                        transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
+                        paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null
                     })) }}
                 </div>
             </div>

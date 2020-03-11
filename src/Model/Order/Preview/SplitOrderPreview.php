@@ -106,6 +106,31 @@ class SplitOrderPreview
     }
 
     /**
+     * @return bool
+     */
+    public function hasPayment(): bool
+    {
+        return $this->payment !== null;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getTransportIdsIndexedByProductTypeId(): array
+    {
+        $transportIdsByProductTypeId = [];
+        foreach ($this->orderPreviews as $orderPreview) {
+            $transport = $orderPreview->getTransport();
+            if ($transport !== null) {
+                $productType = $orderPreview->getProductType();
+                $transportIdsByProductTypeId[$productType->getId()] = $transport->getId();
+            }
+        }
+
+        return $transportIdsByProductTypeId;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     public function getRoundingPrice(): ?Price
