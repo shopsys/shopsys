@@ -7,6 +7,7 @@
 * [Understanding the Style Directory](./understanding-the-style-directory.md)
 * [Configuring Image Sizes for Individual Devices Width](./configuring-image-sizes-for-individual-devices-width.md)
 * [Frontend Troubleshooting](./frontend-troubleshooting.md)
+* [Webpack configuration](./webpack-configuration.md)
 
 ## Implementation
 * [Lazyload](./lazyload.md)
