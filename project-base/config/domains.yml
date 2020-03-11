@@ -2,6 +2,7 @@ domains:
     -   id: 1
         name: shopsys
         locale: en
+        styles_directory: common
 
     -   id: 2
         name: 2.shopsys

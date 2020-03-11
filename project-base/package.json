@@ -42,11 +42,18 @@
         "grunt-webfont": "^1.7.2",
         "jest": "^25.1.0",
         "jit-grunt": "^0.10.0",
+        "js-yaml": "^3.13.1",
+        "less-loader": "^4.1.0",
         "ncp": "^2.0.0",
         "pofile": "^1.1.0",
+        "postcss-loader": "^3.0.0",
         "regenerator-runtime": "^0.13.2",
+        "require-context": "^1.1.0",
         "stylelint": "^11.1.1",
+        "stylelint-webpack-plugin": "^1.2.3",
+        "svgo": "1.2.2",
         "time-grunt": "^1.4.0",
+        "webfonts-generator": "^0.4.0",
         "webpack-notifier": "^1.6.0"
     },
     "dependencies": {
