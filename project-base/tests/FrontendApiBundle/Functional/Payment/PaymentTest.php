@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Payment;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentTest extends GraphQlTestCase
@@ -46,13 +45,5 @@ class PaymentTest extends GraphQlTestCase
         ];
 
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getLocaleForFirstDomain(): string
-    {
-        return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
     }
 }

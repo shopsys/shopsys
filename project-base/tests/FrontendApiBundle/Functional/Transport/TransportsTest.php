@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Transport;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportsTest extends GraphQlTestCase
@@ -96,13 +95,5 @@ class TransportsTest extends GraphQlTestCase
         ];
 
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getLocaleForFirstDomain(): string
-    {
-        return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
     }
 }
