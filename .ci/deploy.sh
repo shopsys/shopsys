@@ -27,6 +27,7 @@ declare -A PARAMETERS=(
     ["parameters.akeneo_config.secret"]=${AKENEO_DEV_SECRET}
     ["parameters.akeneo_config.user"]=${AKENEO_DEV_USER}
     ["parameters.akeneo_config.password"]=${AKENEO_DEV_PASSWORD}
+    ["parameters.disable_form_fields_from_transfer"]=${DISABLE_FROM_FIELDS_FROM_TRANSFER}
 )
 
 VARS=(
