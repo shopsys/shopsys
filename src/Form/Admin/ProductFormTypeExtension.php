@@ -39,6 +39,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'shortDescriptionUsp5',
         'pricesGroup',
         'categoriesByDomainId',
+        'transferredFilesGroup',
+        'productTypePlanFileUrl',
+        'assemblyInstructionFileUrl'
     ];
 
     /**
@@ -107,9 +110,11 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $builder->get('displayAvailabilityGroup')->get('stockGroup')->remove('stockQuantity');
         $this->stocksGroup($builder);
 
-        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+
         $this->setPricesGroup($builder, $product);
         $this->buildTransferredFiles($builder, $product);
+
+        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
     /**

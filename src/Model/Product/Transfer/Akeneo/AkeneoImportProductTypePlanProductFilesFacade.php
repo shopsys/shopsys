@@ -80,6 +80,8 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
                         ->getProductMediaFile($productDomain->getProductTypePlanCode())
                         ->getBody()
                         ->getContents();
+                } else {
+                    $akeneoDataPerDomain[$productDomain->getDomainId()] = null;
                 }
             }
 
@@ -93,7 +95,11 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     protected function processItem($akeneoData): void
     {
         foreach ($akeneoData as $domainId => $content) {
-            $this->storeFile($this->product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE), $content);
+            if ($content !== null) {
+                $this->storeFile($this->product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE), $content);
+            } else {
+                $this->removeFile($this->product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE));
+            }
         }
 
         $this->product->setDownloadProductTypePlanFiles(false);
@@ -106,13 +112,12 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
      */
     private function storeFile(string $fileName, string $content): void
     {
-        $fullPathWithFileName = $this->productFilesDir . $fileName;
         try {
-            $this->localFilesystem->write($fullPathWithFileName, $content);
+            $this->localFilesystem->write($this->getFullPathWithName($fileName), $content);
             $this->logger->addInfo('File was successfully stored.');
         } catch (FileExistsException $exception) {
             try {
-                $this->localFilesystem->delete($fullPathWithFileName);
+                $this->localFilesystem->delete($this->getFullPathWithName($fileName));
             } catch (FileNotFoundException $exception) {
             }
 
@@ -124,6 +129,26 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
                 'filename' => $fileName,
             ]);
         }
+    }
+
+    /**
+     * @param string $fileName
+     */
+    private function removeFile(string $fileName): void
+    {
+        try {
+            $this->localFilesystem->delete($this->getFullPathWithName($fileName));
+        } catch (FileNotFoundException $exception) {
+        }
+    }
+
+    /**
+     * @param string $fileName
+     * @return string
+     */
+    private function getFullPathWithName(string $fileName): string
+    {
+        return $this->productFilesDir . $fileName;
     }
 
     protected function doBeforeTransfer(): void

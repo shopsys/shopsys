@@ -43,13 +43,13 @@ class Product extends BaseProduct
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $downloadAssemblyInstructionFiles;
+    private $downloadAssemblyInstructionFiles;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $downloadProductTypePlanFiles;
+    private $downloadProductTypePlanFiles;
 
     /**
      * @param \App\Model\Product\ProductData $productData
@@ -329,5 +329,21 @@ class Product extends BaseProduct
     public function getProductDomains()
     {
         return $this->domains;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDownloadAssemblyInstructionFiles(): bool
+    {
+        return $this->downloadAssemblyInstructionFiles;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDownloadProductTypePlanFiles(): bool
+    {
+        return $this->downloadProductTypePlanFiles;
     }
 }

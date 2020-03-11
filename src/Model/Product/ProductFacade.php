@@ -247,11 +247,12 @@ class ProductFacade extends BaseProductFacade
     /**
      * @param string $fileName
      * @param string $domainUrl
+     * @param string|null $browserCacheCleanerSuffix
      * @return string
      */
-    public function getProductTransferredFileUrl(string $fileName, string $domainUrl): string
+    public function getProductTransferredFileUrl(string $fileName, string $domainUrl, ?string $browserCacheCleanerSuffix = null): string
     {
-        return $domainUrl . $this->productFilesUrlPrefix . $fileName;
+        return $domainUrl . $this->productFilesUrlPrefix . $fileName . ($browserCacheCleanerSuffix !== null ? '?' . md5($browserCacheCleanerSuffix) : '');
     }
 
     /**
@@ -262,16 +263,30 @@ class ProductFacade extends BaseProductFacade
     public function getDownloadFilesForProductByDomain(Product $product, Domain $domain): array
     {
         $downloadFileUrls = [];
-        if ($product->getAssemblyInstructionCode($domain->getId()) !== null) {
-            $url = $this->getProductTransferredFileUrl($product->getProductFileNameByType($domain->getId(), Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE), $domain->getUrl());
+        if ($product->isDownloadAssemblyInstructionFiles() === false && $product->getAssemblyInstructionCode($domain->getId()) !== null) {
+            $url = $this->getProductTransferredFileUrl(
+                $product->getProductFileNameByType(
+                    $domain->getId(),
+                    Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE
+                ),
+                $domain->getUrl(),
+                $product->getAssemblyInstructionCode($domain->getId())
+            );
             $downloadFileUrls[] = [
                 'anchor_text' => t('Instalační manuál'),
                 'url' => $url,
             ];
         }
 
-        if ($product->getProductTypePlanCode($domain->getId()) !== null) {
-            $url = $this->getProductTransferredFileUrl($product->getProductFileNameByType($domain->getId(), Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE), $domain->getUrl());
+        if ($product->isDownloadProductTypePlanFiles() === false && $product->getProductTypePlanCode($domain->getId()) !== null) {
+            $url = $this->getProductTransferredFileUrl(
+                $product->getProductFileNameByType(
+                    $domain->getId(),
+                    Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE
+                ),
+                $domain->getUrl(),
+                $product->getProductTypePlanCode($domain->getId())
+            );
             $downloadFileUrls[] = [
                 'anchor_text' => t('Typový plán'),
                 'url' => $url,

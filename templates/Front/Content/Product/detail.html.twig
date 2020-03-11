@@ -305,7 +305,7 @@
                         <ul>
                             {% for downloadFile in downloadFiles %}
                                 <li>
-                                    <a href="{{ downloadFile['url'] }}" target="_blank">{{ downloadFile['anchor_text']|trans }}</a>
+                                    <a href="{{ downloadFile['url'] }}" download>{{ downloadFile['anchor_text']|trans }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
