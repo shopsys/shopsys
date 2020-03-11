@@ -441,7 +441,7 @@
                 {% endif %}
                 {% if required %}
                     <span class="js-form-compulsory form-compulsory {{ isCheckbox|default(false) or isSimple|default(false) ? '' : 'form-line__compulsory' }} {{ compulsoryClass|default('') }}">
-                        <span class="sprite sprite-star"></span>
+                        <img src="{{ asset('assets/admin/images/icons/star.png') }}" />
                     </span>
                 {% endif %}
             </label>
