@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Product\Series;
 
+use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Series\Category\ProductSeriesCategoryFacade;
 use App\Model\Product\Series\ProductSeries;
 use App\Model\Product\Series\ProductSeriesData;
@@ -28,6 +29,10 @@ use Symfony\Component\Validator\Constraints;
 
 class ProductSeriesFormType extends AbstractType
 {
+    public const DISABLED_FIELDS = [
+        'name',
+    ];
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
      */
@@ -44,18 +49,26 @@ class ProductSeriesFormType extends AbstractType
     private $productSeriesCategoryFacade;
 
     /**
+     * @var \App\Component\Form\FormBuilderHelper
+     */
+    private $formBuilderHelper;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Series\Category\ProductSeriesCategoryFacade $productSeriesCategoryFacade
+     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      */
     public function __construct(
         SeoSettingFacade $seoSettingFacade,
         Domain $domain,
-        ProductSeriesCategoryFacade $productSeriesCategoryFacade
+        ProductSeriesCategoryFacade $productSeriesCategoryFacade,
+        FormBuilderHelper $formBuilderHelper
     ) {
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
         $this->productSeriesCategoryFacade = $productSeriesCategoryFacade;
+        $this->formBuilderHelper = $formBuilderHelper;
     }
 
     /**
@@ -72,6 +85,8 @@ class ProductSeriesFormType extends AbstractType
         $builder->add($this->createVisibilityGroup($builder));
         $builder->add($this->createCategoriesGroup($builder));
         $builder->add('save', SubmitType::class);
+
+        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
     /**
@@ -135,13 +150,8 @@ class ProductSeriesFormType extends AbstractType
         ->add('description', LocalizedType::class, [
             'label' => t('Popis'),
             'entry_type' => CKEditorType::class,
-            'required' => true,
+            'required' => false,
             'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
-            'entry_options' => [
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Popis nábytkového programu musí být vyplněn']),
-                ],
-            ],
         ]);
 
         return $builderDescriptionGroup;

@@ -143,4 +143,27 @@ class ProductSeriesRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param string $akeneoCode
+     * @return \App\Model\Product\Series\ProductSeries|null
+     */
+    public function findByAkeneoCode(string $akeneoCode): ?ProductSeries
+    {
+        return $this->getRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function findProductSeriesIdsWithAkeneoCode(): array
+    {
+        $result = $this->getQueryBuilder()
+            ->select('ps.id')
+            ->where('ps.akeneoCode IS NOT NULL')
+            ->getQuery()
+            ->execute();
+
+        return array_map('reset', $result);
+    }
 }
