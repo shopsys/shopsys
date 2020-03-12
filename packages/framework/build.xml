@@ -1068,7 +1068,7 @@
         </phingcall>
     </target>
 
-    <target name="tests" depends="test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
+    <target name="tests" depends="npm-install-dependencies,error-pages-generate,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
 
     <target name="tests-acceptance" depends="production-protection,clean,clean-redis,test-db-dump" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
         <available file="${path.env.test}" type="file" property="path.env.test.existed"/>
