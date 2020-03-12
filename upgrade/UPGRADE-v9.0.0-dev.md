@@ -1124,8 +1124,45 @@ There you can find links to upgrade notes for other versions too.
 - update your aplication to do not change product availability to default when availability can not be calculated immediately ([#1659](https://github.com/shopsys/shopsys/pull/1659))
     - see #project-base-diff to update your project
 
-- update your application to include transports and payments in your frontend API ([#1726](https://github.com/shopsys/shopsys/pull/1726))
-    - see #project-base-diff to update your project
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!TOOOOOOOOODDDDDDDDOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- minimum memory requirements for installation using docker on macos and windows has changed .... dooooo something about it :)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!TOOOOOOOOODDDDDDDDOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ### Tools
 
