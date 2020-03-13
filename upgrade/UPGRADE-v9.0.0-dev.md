@@ -1095,7 +1095,7 @@ There you can find links to upgrade notes for other versions too.
 
 - update your application to refresh administrator roles after edit own profile ([#1514](https://github.com/shopsys/shopsys/pull/1514))
     - some methods has changed so you might want to update their usage in your application:
-        - `Shopsys\FrameworkBundle\Controller\Admin\AdministratorController::__construct()`
+        - `AdministratorController::__construct()`
             ```diff
                 public function __construct(
                     AdministratorFacade $administratorFacade,
@@ -1107,12 +1107,12 @@ There you can find links to upgrade notes for other versions too.
             +       AdministratorRolesChangedFacade $administratorRolesChangedFacade
                  )
             ```
-        - `Shopsys\FrameworkBundle\Controller\Admin\AdministratorController::editAction()`
+        - `AdministratorController::editAction()`
             ```diff
             -   public function editAction(Request $request, $id)
             +   public function editAction(Request $request, int $id)
             ```
-        - `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber::__construct()`
+        - `SAdministratorRolesChangedSubscriber::__construct()`
             ```diff
             -    public function __construct(TokenStorageInterface $tokenStorage, AdministratorFacade $administratorFacade)
             +    public function __construct(TokenStorageInterface $tokenStorage, AdministratorRolesChangedFacade $administratorRolesChangedFacade)
@@ -1124,45 +1124,206 @@ There you can find links to upgrade notes for other versions too.
 - update your aplication to do not change product availability to default when availability can not be calculated immediately ([#1659](https://github.com/shopsys/shopsys/pull/1659))
     - see #project-base-diff to update your project
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!TOOOOOOOOODDDDDDDDOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-- minimum memory requirements for installation using docker on macos and windows has changed .... dooooo something about it :)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!TOOOOOOOOODDDDDDDDOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- update your application to symfony4 ([#1704](https://github.com/shopsys/shopsys/pull/1704))
+    
+    - see #project-base-diff to update your project
+    
+    - minimum memory requirements for installation using Docker on MacOS and Windows has changed, please read  [Installation Using Docker for MacOS](docs/installation/installation-using-docker-macos.md) or [Installation Using Docker for Windows 10 Pro and higher](docs/installation/installation-using-docker-windows-10-pro-higher.md)
+    
+    - some methods has changed so you might want to update their usage in your application:
+    
+        - `RouterDebugCommandForDomain::__construct()`
+            ```diff
+            -   public function __construct(DomainChoiceHandler $domainChoiceHelper, $router = null)
+            +   public function __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router, ?FileLinkFormatter $fileLinkFormatter = null)
+            ```
+        - `RouterDebugCommandForDomain::__execute()`
+            ```diff
+            -   protected function execute(InputInterface $input, OutputInterface $output)
+            +   protected function execute(InputInterface $input, OutputInterface $output): int
+            ```
+        - `RouterMatchCommandForDomain::__construct()`
+            ```diff
+            -   public function __construct(DomainChoiceHandler $domainChoiceHelper, $router = null)
+            +   public function __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router)
+            ```
+        - `RouterMatchCommandForDomain::execute()`
+            ```diff
+            -   protected function execute(InputInterface $input, OutputInterface $output)
+            +   protected function execute(InputInterface $input, OutputInterface $output): int
+            ```
+        - `ConfirmDeleteResponseFactory::__construct()`
+            ```diff          
+                public function __construct(
+            -       EngineInterface $templating,
+            +       Environment $twigEnvironment,
+                    RouteCsrfProtector $routeCsrfProtector
+                )
+            ```
+        - `FilesystemLoader::__construct`
+            ```diff
+                public function __construct(
+            -       FileLocatorInterface $locator,
+            -       TemplateNameParserInterface $parser,
+                    ?string $rootPath = null,
+                    ?Domain $domain = null
+                ) {
+            ```
+        - `ErrorExtractor::getAllErrorsAsArray()`
+            ```diff           
+            -   public function getAllErrorsAsArray(Form $form, Bag $flashMessageBag)
+            +   public function getAllErrorsAsArray(Form $form, FlashBag $flashMessageBag)
+            ```
+        - `Grid::__construct()`
+            ```diff           
+                public function __construct(
+                    $id,
+                    DataSourceInterface $dataSource,
+                    RequestStack $requestStack,
+                    RouterInterface $router,
+                    RouteCsrfProtector $routeCsrfProtector,
+            -       Twig_Environment $twig
+            +       Environment $twig
+                )
+            ```
+        - `GridFactory::__construct()`
+            ```diff
+                public function __construct(
+                    RequestStack $requestStack,
+                    RouterInterface $router,
+                    RouteCsrfProtector $routeCsrfProtector,
+            -       Twig_Environment $twig
+            +       Environment $twig
+                )
+            ```
+        - `GridView::__construct()`
+            ```diff
+                public function __construct(
+                    Grid $grid,
+                    RequestStack $requestStack,
+                    RouterInterface $router,
+            -       Twig_Environment $twig,
+            +       Environment $twig,
+                    $theme,
+                    array $templateParameters = []
+                )
+            ```
+        - `CustomTransFiltersVisitor::doEnterNode()`
+            ```diff
+            -   protected function doEnterNode(Twig_Node $node, Twig_Environment $env)
+            +   protected function doEnterNode(Node $node, Environment $env)
+            ```
+        - `CustomTransFiltersVisitor::replaceCustomFilterName()`
+            ```diff
+            -   protected function replaceCustomFilterName(Twig_Node_Expression_Filter $filterExpressionNode, $newFilterName)
+            +   protected function replaceCustomFilterName(FilterExpression $filterExpressionNode, $newFilterName)
+            ```
+        - `CustomTransFiltersVisitor::doLeaveNode()`
+            ```
+            -   protected function doLeaveNode(Twig_Node $node, Twig_Environment $env)
+            +   protected function doLeaveNode(Node $node, Environment $env)
+            ```
+        - `CartWatcherFacade::__construct()`
+            ```diff
+                public function __construct(
+            -       FlashMessageSender $flashMessageSender,
+            +       FlashBagInterface $flashBag,
+                    EntityManagerInterface $em,
+                    CartWatcher $cartWatcher,
+            -       CurrentCustomerUser $currentCustomerUser
+            +       CurrentCustomerUser $currentCustomerUser,
+            +       Environment $twigEnvironment
+                ) {
+            ```
+        - `ContactFormFacade::__construct()`
+            ```diff             
+                public function __construct(
+                    MailSettingFacade $mailSettingFacade,
+                    Domain $domain,
+                    Mailer $mailer,
+            -       Twig_Environment $twig
+            +       Environment $twig
+                ) {
+            ```
+        - `FeedRenderer::__construct()`
+            ```diff
+            -   public function __construct(Twig_Environment $twig, Twig_TemplateWrapper $template)
+            +   public function __construct(Environment $twig, TemplateWrapper $template)
+            ```
+        - `FeedRendererFactory::__construct()`
+            ```diff
+            -   public function __construct(Twig_Environment $twig)
+            +   public function __construct(Environment $twig)
+            ```
+        - `OrderMail::__construct()`
+            ```diff
+                public function __construct(
+                    Setting $setting,
+                    DomainRouterFactory $domainRouterFactory,
+            -       Twig_Environment $twig,
+            +       Environment $twig,
+                    OrderItemPriceCalculation $orderItemPriceCalculation,
+                    Domain $domain,
+                    PriceExtension $priceExtension,
+            ```
+        - `Authenticator::__construct()`
+            ```diff
+                public function __construct(
+            -       TokenStorage $tokenStorage,
+            -       TraceableEventDispatcher $traceableEventDispatcher
+            +       TokenStorageInterface $tokenStorage,
+            +       EventDispatcherInterface $eventDispatcher
+              ) {
+            ```
+        - `ImageExtension::__construct()`
+            ```diff
+                public function __construct(
+                    $frontDesignImageUrlPrefix,
+                    Domain $domain,
+                    ImageLocator $imageLocator,
+                    ImageFacade $imageFacade,
+            -       EngineInterface $templating,
+            +       Environment $twigEnvironment,
+                    bool $isLazyLoadEnabled = false
+                ) {
+            ```
+        - `MailerSettingExtension::__construct()`
+            ```diff         
+            -   public function __construct(ContainerInterface $container, EngineInterface $templating)
+            +   public function __construct(ContainerInterface $container, Environment $twigEnvironment)
+           ```
+    
+    - some methods was removed
+        - `AdminBaseController.php::getFlashMessageSender` (you cn use `FlashMessageTrait`)
+        
+    - these classes were removed so you might need to update your application appropriately:
+        - `Bag`(you cn use `FlashMessageTrait`)
+        - `BagNameIsNotValidException`
+        - `FlashMessageException`
+        - `FlashMessageSender` (you cn use `FlashMessageTrait`)
+        - `CannotConvertToJsonException`
+        - `ConstantNotFoundException`
+        - `JsConstantCompilerException`
+        - `JsConstantCompilerPass`
+        - `JsCompiler`
+        - `JsCompilerPassInterface`
+        - `JsTranslatorCompilerPass`
+        - `JsConstantCallParserException`
+        - `JsConstantCall`
+        - `JsConstantCallParser`
+        - `JsParserException`
+        - `UnsupportedNodeException`
+        - `JsFunctionCallParser`
+        - `JsStringParser`
+        - `JsTranslatorCallParserException`
+        - `JsTranslatorCall`
+        - `JsTranslatorCallParser`
+        - `JsTranslatorCallParserFactory`
+        - `JavascriptCompiler`
+        - `NotLogFakeHttpExceptionsExceptionListener` (you can use `NotLogFakeHttpExceptionsErrorListener`)
+      
+    - these constants were removed so you might need to update your application appropriately:
+        - `Roles::ROLE_ADMIN_AS_CUSTOMER`
 
 ### Tools
 
