@@ -1,18 +1,19 @@
 {% if breadcrumbItems is not null %}
     <div class="web__line">
-        <div class="web__container">
+        <div class="web__container web__container--fullwidth web__container--no-spacing">
             <div class="box-breadcrumb">
                 <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
-                    <i class="svg svg-home"></i>
+                    <i class="box-breadcrumb__item__icon svg svg-home"></i>
+                    <span>{{ 'Domů'|trans }}</span>
                 </a>
                 {% for breadcrumbItem in breadcrumbItems %}
-                    <span class="box-breadcrumb__item box-breadcrumb__item--separator"> > </span>
+                    <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
                     {% if breadcrumbItem.routeName is not null %}
                         <a href="{{ url(breadcrumbItem.routeName, breadcrumbItem.routeParameters) }}" class="box-breadcrumb__item">
                             {{- breadcrumbItem.name -}}
                         </a>
                     {% else %}
-                        <span class='box-breadcrumb__item'>
+                        <span class='box-breadcrumb__item box-breadcrumb__item--current'>
                             {{- breadcrumbItem.name -}}
                         </span>
                     {% endif %}

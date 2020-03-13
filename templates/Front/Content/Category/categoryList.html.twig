@@ -1,5 +1,5 @@
 {% if categories|length > 0 %}
-    <ul class="list-categories">
+    <ul class="list-categories{{ cssClass ?? '' }}">
         {% for category in categories %}
             <li class="list-categories__item">
                 <a href="{{ url('front_product_list', { id: category.id }) }}" class="list-categories__item__block">

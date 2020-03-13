@@ -117,8 +117,9 @@ class CategoryController extends FrontBaseController
     /**
      * @param \App\Model\Category\Category[] $categories
      * @param bool $showProductsCountByCategory
+     * @param string $cssClass
      */
-    public function categoryListAction(array $categories, $showProductsCountByCategory = true)
+    public function categoryListAction(array $categories, $showProductsCountByCategory = true, $cssClass = null)
     {
         if ($showProductsCountByCategory === true) {
             $pricingGroup = $this->currentCustomerUser->getPricingGroup();
@@ -132,6 +133,7 @@ class CategoryController extends FrontBaseController
 
         return $this->render('Front/Content/Category/categoryList.html.twig', [
             'categories' => $categories,
+            'cssClass' => $cssClass,
             'listableProductCountsIndexedByCategoryId' => $listableProductCountsIndexedByCategoryId,
         ]);
     }
