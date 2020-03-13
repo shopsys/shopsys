@@ -10,3 +10,22 @@
 
     {% do form.setRendered() %} {# When any stock does not exist, form is not rendered #}
 {% endblock %}
+
+{% block _product_form_basicInformationGroup_productType_row %}
+    <div class="form-line">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+    </div>
+    <div class="form-line">
+        {% for domainId, selectboxForm in form %}
+            <div class="input__wrap">
+                {% set attr = attr|merge({'class': ' input--domain'|trim}) %}
+                {{ form_widget(selectboxForm, { attr: attr }) }}
+                <span class="input__domain">
+                    {{ domainIcon(domainId) }}
+                </span>
+            </div>
+            {{ form_errors(selectboxForm) }}
+        {% endfor %}
+    </div>
+{% endblock %}
