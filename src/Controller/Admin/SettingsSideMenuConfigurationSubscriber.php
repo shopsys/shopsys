@@ -34,9 +34,6 @@ class SettingsSideMenuConfigurationSubscriber implements EventSubscriberInterfac
      */
     private function hideAvailabilities(ItemInterface $menu): void
     {
-        $listsSubMenu = $menu->getChild('lists');
-        $listsSubMenu->removeChild('availabilities');
-
         $seoMenu = $menu->getChild('seo');
         $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Rozšířené SEO kategorií')]);
         $categorySeoMenu->addChild('new_category', ['route' => 'admin_categoryseo_newcategory', 'label' => t('Rozšířené SEO kategorií - volba kategorie'), 'display' => false]);
