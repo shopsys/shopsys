@@ -1,0 +1,156 @@
+@list-grid-item-gap: 30px;
+
+@list-grid-item-height: 140px;
+@list-grid-item-height-lg: 210px;
+@list-grid-item-width: 33%;
+@list-grid-item-long-height: 450px;
+
+@list-grid-item-third-width-md: calc((100% / 3));
+@list-grid-item-quarter-width-md: calc((100% / 4));
+@list-grid-item-sixth-width-lg: calc((100% / 6));
+
+@list-grid-item-name-pos-top: 1rem;
+@list-grid-item-name-pos-left: @list-grid-item-gap + 20px;
+
+@list-grid-item-hover-transform: scale(1.06);
+
+.list-grid {
+    max-width: 345px;
+    margin: 1rem auto @box-component-bottom-spacing auto;
+
+    @media @query-md {
+        max-width: none;
+        margin: 1.5rem 0 @box-component-bottom-spacing * 1.5 -@list-grid-item-gap / 2;
+    }
+
+    @media @query-lg {
+        margin-left: -@list-grid-item-gap;
+    }
+
+    &__row {
+        @media @query-md {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: @list-grid-item-gap / 2;
+        }
+
+        @media @query-lg {
+            margin-bottom: @list-grid-item-gap;
+        }
+    }
+
+    &__item {
+        display: block;
+        position: relative;
+        height: @list-grid-item-height;
+        width: 100%;
+        margin-bottom: @list-grid-item-gap / 2;
+
+        @media @query-md {
+            height: @list-grid-item-height-lg;
+            margin-bottom: 0;
+            padding-left: @list-grid-item-gap / 2;
+        }
+
+        @media @query-lg {
+            padding-left: @list-grid-item-gap;
+        }
+
+        &:hover {
+            .list-grid__item__name__text {
+                text-decoration: underline;
+            }
+        }
+
+        &--long {
+            @media @query-md {
+                height: @list-grid-item-long-height;
+            }
+        }
+
+        &--half-long {
+            @media @query-md {
+                height: calc((@list-grid-item-long-height / 2) - (@list-grid-item-gap / 4));
+            }
+            @media @query-lg {
+                height: calc((@list-grid-item-long-height / 2) - (@list-grid-item-gap / 2));
+            }
+        }
+
+        &--third {
+            @media @query-md {
+                width: @list-grid-item-third-width-md;
+            }
+        }
+
+        &--sixth {
+            @media @query-md {
+                width: @list-grid-item-quarter-width-md;
+            }
+            @media @query-lg {
+                width: @list-grid-item-sixth-width-lg;
+            }
+        }
+
+        &__link {
+            display: block;
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+
+            border-radius: @radius;
+            background-color: @color-light;
+            will-change: transform;
+            transition: transform @transition, box-shadow @transition;
+
+            &:hover {
+                transform: @list-grid-item-hover-transform;
+                box-shadow: @hover-shadow;
+            }
+        }
+
+        &__img {
+            .image-object-fit-cover();
+
+            will-change: transform;
+            transition: transform @transition;
+        }
+
+        // Name element is outside (in HTML) the link element (which received transform hover effect)
+        // because of unwanted blurry effect during transition.
+        &__name {
+            position: absolute;
+            left: @list-grid-item-name-pos-left / 2;
+            top: @list-grid-item-name-pos-top;
+            z-index: 1;
+
+            pointer-events: none;
+
+            @media @query-lg {
+                left: @list-grid-item-name-pos-left;
+            }
+
+            &.btn--next {
+                font-family: @font-tertiary;
+                font-size: 16px;
+                letter-spacing: 0;
+
+                @media @query-md {
+                    font-size: 14px;
+                }
+
+                @media @query-lg {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        &__in {
+            @media @query-md {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+        }
+    }
+}
