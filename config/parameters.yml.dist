@@ -45,4 +45,4 @@ parameters:
         user: ''
         password: ''
 
-    svg_icon_path: %kernel.root_dir%/../src/Shopsys/ShopBundle/Resources/svg
+    svg_icon_path: '%kernel.root_dir%/../src/Shopsys/ShopBundle/Resources/svg'
