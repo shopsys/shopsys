@@ -1,0 +1,75 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Category;
+
+use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+
+/**
+ * @ORM\Table(name="category_parameters")
+ * @ORM\Entity
+ */
+class CategoryParameter
+{
+    /**
+     * @var \App\Model\Category\Category
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="\App\Model\Category\Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     */
+    protected $category;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter")
+     * @ORM\JoinColumn(name="parameter_id", referencedColumnName="id", onDelete="CASCADE", nullable=false )
+     */
+    protected $parameter;
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     */
+    public function __construct(Category $category, Parameter $parameter)
+    {
+        $this->category = $category;
+        $this->parameter = $parameter;
+    }
+
+    /**
+     * @return \App\Model\Category\Category
+     */
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     */
+    public function setCategory(Category $category): void
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+     */
+    public function getParameter(): Parameter
+    {
+        return $this->parameter;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     */
+    public function setParameter(Parameter $parameter): void
+    {
+        $this->parameter = $parameter;
+    }
+}
