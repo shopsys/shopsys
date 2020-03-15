@@ -11,6 +11,8 @@
 
                 <div id="{{ form.vars.id }}" class="box-order__info js-no-validate">
 
+                    {{ form_errors(form.transportsByProductTypeId) }}
+
                     <div id="{{ form.transportsByProductTypeId.vars.id }}">
                         {% set previewNumber = 0 %}
                         {% for orderPreview in splitOrderPreview.orderPreviews %}
