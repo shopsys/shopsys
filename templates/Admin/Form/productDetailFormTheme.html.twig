@@ -21,8 +21,9 @@
             <div class="input__wrap">
                 {% set attr = attr|merge({'class': ' input--domain'|trim}) %}
                 {{ form_widget(selectboxForm, { attr: attr }) }}
-                <span class="input__domain">
+                <span class="input__domain input__domain--long">
                     {{ domainIcon(domainId) }}
+                    <span class="input__domain__label">{{ getDomainName(domainId) }}</span>
                 </span>
             </div>
             {{ form_errors(selectboxForm) }}
