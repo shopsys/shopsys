@@ -21,12 +21,14 @@
                             <div class="box-order__info__item js-payment-transport-group" data-product-type-id="{{ orderPreview.productType.id }}">
 
                                 <h2 id="js-label-{{ transportForm.vars.id }}">
-                                    {{ 'Shipping selection'|trans }}
                                     {% if splitOrderPreview.morePreviews %}
+                                        {{ 'Shipping selection'|trans }}
                                         -
                                         {{ 'Zásilka č. %number%'|trans({ '%number%': previewNumber }) }}
                                         -
                                         {{ orderPreview.productType.name }}
+                                    {% else %}
+                                        {{ 'Doprava pro celý nákup'|trans }}
                                     {% endif %}
                                 </h2>
 
