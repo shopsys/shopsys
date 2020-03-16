@@ -32,27 +32,6 @@ class AkeneoProductHelper
      * @param array|null $akeneoData
      * @return array
      */
-    public static function mapDomainDataStringWithoutClean(array $productData, ?array $akeneoData): array
-    {
-        if ($akeneoData === null) {
-            return $productData;
-        }
-
-        foreach ($akeneoData as $data) {
-            $domainId = AkeneoHelper::findEshopDomainIdByAkeneoLocale($data['locale']);
-            if ($domainId) {
-                $productData[$domainId] = $data['data'];
-            }
-        }
-
-        return $productData;
-    }
-
-    /**
-     * @param array $productData
-     * @param array|null $akeneoData
-     * @return array
-     */
     public static function mapLocalizedDataString(array $productData, ?array $akeneoData): array
     {
         foreach ($productData as $key => $value) {
