@@ -41,7 +41,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'categoriesByDomainId',
         'transferredFilesGroup',
         'productTypePlanFileUrl',
-        'assemblyInstructionFileUrl'
+        'assemblyInstructionFileUrl',
     ];
 
     /**
@@ -109,7 +109,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
         $builder->get('displayAvailabilityGroup')->get('stockGroup')->remove('stockQuantity');
         $this->stocksGroup($builder);
-
 
         $this->setPricesGroup($builder, $product);
         $this->buildTransferredFiles($builder, $product);
