@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade as BaseProductOnCurrentDomainElasticFacade;
 
 /**
+ * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
- * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
+ * @method \App\Model\Product\Product getVisibleProductById(int $productId)
+ * @method \App\Model\Product\Product[] getAccessoriesForProduct(\App\Model\Product\Product $product)
+ * @method \App\Model\Product\Product[] getVariantsForProduct(\App\Model\Product\Product $product)
  * @method __construct(\App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository, \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository, \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsInCategoryFilterQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsForBrandFilterQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $brandId)
@@ -45,5 +49,23 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
 
         return new PaginationResult($page, $limit, $productsResult->getTotal(), $productsResult->getHits());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return array
+     */
+    public function getInSaleProductsHits(ProductFilterData $productFilterData): array
+    {
+        $baseFilterQuery = $this->filterQueryFactory->create($this->getIndexName())
+            ->filterOnlyInSale()
+            ->filterOnlyVisible($this->currentCustomerUser->getPricingGroup())
+            ->odrderByStockQuantity();
+        $baseFilterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery($productFilterData, $baseFilterQuery, $this->currentCustomerUser->getPricingGroup());
+        $baseFilterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $baseFilterQuery);
+
+        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($baseFilterQuery);
+
+        return $productsResult->getHits();
     }
 }

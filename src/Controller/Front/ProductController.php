@@ -47,7 +47,7 @@ class ProductController extends FrontBaseController
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
+     * @var \App\Model\Product\ProductOnCurrentDomainElasticFacade
      */
     private $productOnCurrentDomainFacade;
 
@@ -100,7 +100,7 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+     * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade

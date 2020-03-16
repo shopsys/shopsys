@@ -33,6 +33,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection $translations
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
+ * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
+ * @method editFlags(\App\Model\Product\Flag\Flag[] $flags)
+ * @method \App\Model\Product\Flag\Flag[] getFlags()
  */
 class Product extends BaseProduct
 {
@@ -281,6 +284,19 @@ class Product extends BaseProduct
             . ' '
             . $this->getNameSufix($locale)
         );
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProductInSale(): bool
+    {
+        foreach ($this->getFlags() as $flag) {
+            if ($flag->isSale()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

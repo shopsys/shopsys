@@ -93,4 +93,15 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
 
         return $this->createPaginationResultWithArray($paginationResult);
     }
+
+    /**
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    public function getListedSaleProducts(): array
+    {
+        $productFilterData = new ProductFilterData();
+        $productsArray = $this->productOnCurrentDomainFacade->getInSaleProductsHits($productFilterData);
+
+        return $this->createFromArray($productsArray);
+    }
 }

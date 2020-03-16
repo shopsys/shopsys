@@ -51,7 +51,6 @@
                     </div>
                 </div>
             {% endif %}
-
             <div class="box-block">
                 <div class="box-block__wrap">
                     <div class="box-block__item box-block__item--half box-block__item--left">
@@ -68,6 +67,10 @@
                     </div>
                 </div>
             </div>
+            {% if inSaleProducts|length > 0 %}
+            <h2>{{ 'Výprodej'|trans }}</h2>
+            {{ productList.list(inSaleProducts) }}
+            {% endif %}
         </div>
     </div>
 

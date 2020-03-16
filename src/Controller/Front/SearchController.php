@@ -19,13 +19,13 @@ class SearchController extends FrontBaseController
     private $categoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
+     * @var \App\Model\Product\ProductOnCurrentDomainElasticFacade
      */
     private $productOnCurrentDomainFacade;
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+     * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,

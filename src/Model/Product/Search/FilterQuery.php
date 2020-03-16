@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
 
 /**
@@ -109,6 +110,37 @@ class FilterQuery extends BaseFilterQuery
         unset($query['type']);
 
         return $query;
+    }
+
+    /**
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function filterOnlyInSale(): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'term' => [
+                'is_in_sale' => true,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function odrderByStockQuantity(): self
+    {
+        $clone = clone $this;
+
+        $clone->sorting = [
+            'stock_quantity' => 'desc',
+            'id' => 'asc',
+        ];
+
+        return $clone;
     }
 
     /**

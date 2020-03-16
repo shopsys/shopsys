@@ -21,7 +21,7 @@ class CategorySeoMix
     private $category;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
+     * @var \App\Model\Product\Flag\Flag|null
      */
     private $flag;
 
@@ -62,7 +62,7 @@ class CategorySeoMix
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
+     * @return \App\Model\Product\Flag\Flag|null
      */
     public function getFlag(): ?Flag
     {
@@ -70,7 +70,7 @@ class CategorySeoMix
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
+     * @param \App\Model\Product\Flag\Flag $flag
      */
     public function setFlag(Flag $flag): void
     {

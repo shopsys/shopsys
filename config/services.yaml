@@ -145,7 +145,13 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
 
-    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface: '@Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade'
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagData: '@App\Model\Product\Flag\FlagData'
+
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory: '@App\Model\Product\Flag\FlagDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagGridFactory: '@App\Model\Product\Flag\FlagGridFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface: '@App\Model\Product\ProductOnCurrentDomainElasticFacade'
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
 

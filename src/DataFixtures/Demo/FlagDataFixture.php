@@ -80,7 +80,7 @@ class FlagDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
+     * @param \App\Model\Product\Flag\FlagData $flagData
      * @param string|null $referenceName
      */
     protected function createFlag(FlagData $flagData, $referenceName = null)

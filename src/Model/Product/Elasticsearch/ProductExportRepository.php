@@ -107,12 +107,13 @@ class ProductExportRepository extends BaseProductExportRepository
             'uuid' => $product->getUuid(),
             'unit' => $product->getUnit()->getName($locale),
             'is_using_stock' => $product->isUsingStock(),
-            'stock_quantity' => $product->getStockQuantity(),
+            'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantity($product, $domainId),
             'variants' => $variantIds,
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             'name_prefix' => $product->getNamePrefix($locale),
             'name_sufix' => $product->getNameSufix($locale),
             'non_selling_price' => $highPriceWithVat === null ? null : $highPriceWithVat->getAmount(),
+            'is_in_sale' => $product->isProductInSale(),
         ];
     }
 }

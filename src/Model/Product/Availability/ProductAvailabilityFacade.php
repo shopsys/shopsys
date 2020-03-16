@@ -139,4 +139,23 @@ class ProductAvailabilityFacade
 
         return (int)ceil($transferDays / self::DAYS_IN_WEEK);
     }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return int
+     */
+    public function getGroupedStockQuantity(Product $product, int $domainId): int
+    {
+        $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
+        $groupedStockQuantity = 0;
+
+        foreach ($productStocks as $productStock) {
+            if ($productStock->getStock()->getDomainId() === $domainId) {
+                $groupedStockQuantity += $productStock->getProductQuantity();
+            }
+        }
+
+        return $groupedStockQuantity;
+    }
 }
