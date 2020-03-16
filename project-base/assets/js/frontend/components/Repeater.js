@@ -8,9 +8,9 @@ export default class Repeater {
     startAutorepeat ($input, eventString) {
         $input.trigger(eventString);
         this.stopAutorepeat();
-        this.timerDelay = setTimeout(function () {
+        this.timerDelay = setTimeout(() => {
             $input.trigger(eventString);
-            this.timerRepeat = setInterval(function () {
+            this.timerRepeat = setInterval(() => {
                 $input.trigger(eventString);
             }, 100);
         }, 500);
