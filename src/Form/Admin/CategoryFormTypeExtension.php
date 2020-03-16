@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Model\Category\Category;
+use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Svg\SvgProvider;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\MultidomainType;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
-use Shopsys\FrameworkBundle\Form\GroupType;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,20 +25,20 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     private $svgProvider;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
+     * @var \App\Model\Product\Parameter\ParameterRepository
      */
-    private $parameterFacade;
+    private $parameterRepository;
 
     /**
      * @param \App\Model\Svg\SvgProvider $svgProvider
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      */
     public function __construct(
         SvgProvider $svgProvider,
-        ParameterFacade $parameterFacade
+        ParameterRepository $parameterRepository
     ) {
         $this->svgProvider = $svgProvider;
-        $this->parameterFacade = $parameterFacade;
+        $this->parameterRepository = $parameterRepository;
     }
 
     /**
@@ -69,19 +71,23 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
 
         $builderShortDescriptionGroup->setPosition(['after' => 'seo']);
 
-        $this->buildFilterParameters($builder);
+        $this->buildFilterParameters($builder, $options['category']);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Category\Category|null $category
      */
-    private function buildFilterParameters(FormBuilderInterface $builder): void
+    private function buildFilterParameters(FormBuilderInterface $builder, ?Category $category): void
     {
+        if ($category === null) {
+            return;
+        }
         $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Parametry filtru')]);
         $parametersFilterBuilder->add('parameters', ChoiceType::class, [
             'required' => false,
             'label' => t('Parametry:'),
-            'choices' => $this->parameterFacade->getAll(),
+            'choices' => $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID),
             'expanded' => true,
             'choice_label' => 'name',
             'choice_value' => 'id',
