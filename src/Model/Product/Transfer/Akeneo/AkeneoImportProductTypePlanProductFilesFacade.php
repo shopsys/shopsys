@@ -30,7 +30,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     /**
      * @var \League\Flysystem\FilesystemInterface
      */
-    private $localFilesystem;
+    private $filesystem;
 
     /**
      * @var \App\Model\Product\ProductRepository
@@ -60,7 +60,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
         $this->productRepository = $productRepository;
         $this->productFilesDir = $productFilesDir;
         $this->mediaFilesTransferAkeneoFacade = $mediaFilesTransferAkeneoFacade;
-        $this->localFilesystem = $localFilesystem;
+        $this->filesystem = $localFilesystem;
     }
 
     /**
@@ -113,11 +113,11 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     private function storeFile(string $fileName, string $content): void
     {
         try {
-            $this->localFilesystem->write($this->getFullPathWithName($fileName), $content);
+            $this->filesystem->write($this->getFullPathWithName($fileName), $content);
             $this->logger->addInfo('File was successfully stored.');
         } catch (FileExistsException $exception) {
             try {
-                $this->localFilesystem->delete($this->getFullPathWithName($fileName));
+                $this->filesystem->delete($this->getFullPathWithName($fileName));
             } catch (FileNotFoundException $exception) {
             }
 
@@ -137,7 +137,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     private function removeFile(string $fileName): void
     {
         try {
-            $this->localFilesystem->delete($this->getFullPathWithName($fileName));
+            $this->filesystem->delete($this->getFullPathWithName($fileName));
         } catch (FileNotFoundException $exception) {
         }
     }
