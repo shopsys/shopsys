@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Component\Setting\Setting;
 use App\Model\Stock\ProductStockDataFactory;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
@@ -19,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade;
@@ -51,6 +53,16 @@ class ProductDataFactory extends BaseProductDataFactory
     private $basePriceCalculation;
 
     /**
+     * @var \App\Component\Setting\Setting
+     */
+    private $setting;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
+     */
+    private $availabilityFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
@@ -67,6 +79,8 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Stock\ProductStockDataFactory $stockProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
+     * @param \App\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
     public function __construct(
         VatFacade $vatFacade,
@@ -84,13 +98,17 @@ class ProductDataFactory extends BaseProductDataFactory
         ProductStockFacade $stockProductFacade,
         StockFacade $stockFacade,
         ProductStockDataFactory $stockProductDataFactory,
-        BasePriceCalculation $basePriceCalculation
+        BasePriceCalculation $basePriceCalculation,
+        Setting $setting,
+        AvailabilityFacade $availabilityFacade
     ) {
         parent::__construct($vatFacade, $productInputPriceFacade, $unitFacade, $domain, $productRepository, $parameterRepository, $friendlyUrlFacade, $productAccessoryRepository, $imageFacade, $pluginDataFormExtensionFacade, $productParameterValueDataFactory, $pricingGroupFacade);
         $this->stockProductFacade = $stockProductFacade;
         $this->stockFacade = $stockFacade;
         $this->stockProductDataFactory = $stockProductDataFactory;
         $this->basePriceCalculation = $basePriceCalculation;
+        $this->setting = $setting;
+        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**
@@ -140,6 +158,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->namePrefix[$locale] = null;
             $productData->nameSufix[$locale] = null;
         }
+
+        $productData->availability = $this->availabilityFacade->getById($this->setting->get('defaultAvailabilityInStockId'));
     }
 
     /**
