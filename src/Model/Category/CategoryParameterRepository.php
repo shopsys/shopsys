@@ -47,14 +47,14 @@ class CategoryParameterRepository
      * @param \App\Model\Category\Category $category
      * @return \App\Model\Category\CategoryParameter[]
      */
-    public function findAllByCategory(Category $category): array
+    public function getAllByCategory(Category $category): array
     {
         return $this->getRepository()->findBy(['category' => $category]);
     }
 
     /**
      * @param \App\Model\Category\Category $category
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getParametersByCategory(Category $category): array
     {

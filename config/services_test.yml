@@ -113,6 +113,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory: '@App\Model\Product\Search\FilterQueryFactory'
 
+    Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository: '@App\Model\Product\Filter\PriceRangeRepository'
+
+    Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository: '@App\Model\Product\Filter\ParameterFilterChoiceRepository'
+
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository: '@App\Model\Product\Parameter\ParameterRepository'
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory: '@App\Model\Slider\SliderItemDataFactory'

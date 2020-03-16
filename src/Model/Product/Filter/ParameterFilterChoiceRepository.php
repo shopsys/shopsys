@@ -26,7 +26,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
      * @param \App\Model\Category\Category $category
-     * @return array|\Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
     public function getParameterFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
     {

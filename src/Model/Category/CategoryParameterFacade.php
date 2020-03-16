@@ -36,12 +36,12 @@ class CategoryParameterFacade
      */
     public function saveRelation(Category $category, array $parameters): void
     {
-        $oldCategoryParameters = $this->categoryParameterRepository->findAllByCategory($category);
+        $oldCategoryParameters = $this->categoryParameterRepository->getAllByCategory($category);
         $oldCategoryParametersById = [];
         foreach ($oldCategoryParameters as $oldCategoryParameter) {
             $oldCategoryParametersById[$oldCategoryParameter->getParameter()->getId()] = $oldCategoryParameter;
         }
-
+        $catFlushAfterSaveRelation = false;
         foreach ($parameters as $parameter) {
             if (array_key_exists($parameter->getId(), $oldCategoryParametersById)) {
                 unset($oldCategoryParametersById[$parameter->getId()]);
@@ -49,12 +49,16 @@ class CategoryParameterFacade
             }
             $categoryParameter = new CategoryParameter($category, $parameter);
             $this->em->persist($categoryParameter);
-            $this->em->flush();
+            $catFlushAfterSaveRelation = true;
         }
 
         foreach ($oldCategoryParametersById as $oldCategoryParameter) {
             $this->em->remove($oldCategoryParameter);
+            $catFlushAfterSaveRelation = true;
         }
-        $this->em->flush();
+
+        if ($catFlushAfterSaveRelation) {
+            $this->em->flush();
+        }
     }
 }

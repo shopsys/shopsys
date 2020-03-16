@@ -20,7 +20,7 @@ class CategoryParameter
      * @ORM\ManyToOne(targetEntity="\App\Model\Category\Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
-    protected $category;
+    private $category;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
@@ -29,7 +29,7 @@ class CategoryParameter
      * @ORM\ManyToOne(targetEntity="\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter")
      * @ORM\JoinColumn(name="parameter_id", referencedColumnName="id", onDelete="CASCADE", nullable=false )
      */
-    protected $parameter;
+    private $parameter;
 
     /**
      * @param \App\Model\Category\Category $category
@@ -50,26 +50,10 @@ class CategoryParameter
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     */
-    public function setCategory(Category $category): void
-    {
-        $this->category = $category;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
     public function getParameter(): Parameter
     {
         return $this->parameter;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     */
-    public function setParameter(Parameter $parameter): void
-    {
-        $this->parameter = $parameter;
     }
 }
