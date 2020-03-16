@@ -76,9 +76,9 @@
                                 </div>
                             </div>
                         {% else %}
-                            {% do form.transportsByProductTypeId.setRendered %}
                             {{ 'Nothing to choose from'|trans }}
                         {% endfor %}
+                        {% do form.transportsByProductTypeId.setRendered %} {# When session contains transport for productType without products with them, it must be skipped #}
                     </div>
 
                     <div class="box-order__info__item js-payment-transport-group">

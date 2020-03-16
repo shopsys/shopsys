@@ -51,7 +51,8 @@ class TransportAndPaymentFormType extends AbstractType
         $builder
             ->add('transportsByProductTypeId', CollectionType::class, [
                 'entry_type' => SingleCheckboxChoiceType::class,
-                'extra_fields_message' => 'Došlo ke změně zboží v košíku, která vyžaduje znovu Vámi překontrolovat způsob přepravy.',
+                'allow_add' => true,
+                'allow_delete' => true,
                 'entry_options' => [
                     'choices' => $transports,
                     'choice_label' => 'name',
