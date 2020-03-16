@@ -28,12 +28,12 @@ fi
 
 echo "Apply kubernetes configuration"
 if [ $FIRST_DEPLOY -eq "0" ]; then
-    if $DISPLAY_FINAL_CONFIGURATION ; then
+    if [ $DISPLAY_FINAL_CONFIGURATION ]; then
         kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-deploy"
     fi
     kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-deploy" | kubectl apply -f -
 else
-    if $DISPLAY_FINAL_CONFIGURATION ; then
+    if [ $DISPLAY_FINAL_CONFIGURATION ]; then
         kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/first-deploy"
     fi
 
