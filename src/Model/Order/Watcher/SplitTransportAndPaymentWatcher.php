@@ -87,17 +87,19 @@ class SplitTransportAndPaymentWatcher
     ): bool {
         foreach ($orderPreviews as $orderPreview) {
             $productType = $orderPreview->getProductType();
-            $transport = $transportsByProductTypeId[$productType->getId()];
-            if ($transport !== null) {
-                try {
-                    $rememberedTransportPrice = $rememberedTransportAndPaymentPricesPreview->getTransportPrice($transport, $productType);
-                    $actualTransportPrice = $actualTransportAndPaymentPricesPreview->getTransportPrice($transport, $productType);
+            if (array_key_exists($productType->getId(), $transportsByProductTypeId) === true) {
+                $transport = $transportsByProductTypeId[$productType->getId()];
+                if ($transport !== null) {
+                    try {
+                        $rememberedTransportPrice = $rememberedTransportAndPaymentPricesPreview->getTransportPrice($transport, $productType);
+                        $actualTransportPrice = $actualTransportAndPaymentPricesPreview->getTransportPrice($transport, $productType);
 
-                    if (PricingUtils::equals($rememberedTransportPrice, $actualTransportPrice) === false) {
-                        return true;
+                        if (PricingUtils::equals($rememberedTransportPrice, $actualTransportPrice) === false) {
+                            return true;
+                        }
+                    } catch (TransportPriceNotFoundException $exception) {
+                        // It's okay, remembered prices preview may not contain new selected transport
                     }
-                } catch (TransportPriceNotFoundException $exception) {
-                    // It's okay, remembered prices preview may not contain new selected transport
                 }
             }
         }

@@ -174,4 +174,17 @@ class SplitOrderPreview
 
         $this->transportAndPaymentPricesPreview = $transportAndPaymentPricesPreview;
     }
+
+    /**
+     * @return bool
+     */
+    public function areAllTransportsSet(): bool
+    {
+        foreach ($this->orderPreviews as $orderPreview) {
+            if ($orderPreview->getTransport() === null) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

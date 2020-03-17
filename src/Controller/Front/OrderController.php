@@ -205,11 +205,17 @@ class OrderController extends FrontBaseController
         $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
 
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
         $this->checkTransportAndPaymentChanges($frontOrderFormData, $splitOrderPreview);
 
         if ($isValid) {
             if ($orderFlow->nextStep()) {
                 $form = $orderFlow->createForm();
+            } elseif ($splitOrderPreview->areAllTransportsSet() === false) {
+                $this->getFlashMessageSender()->addInfoFlash(
+                    t('Došlo ke změně v košíku, která vyžaduje, aby jste překontrolovali dopravu objednávky.')
+                );
+                return $this->redirectToRoute('front_order_index');
             } elseif ($flashMessageBag->isEmpty()) {
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
                 $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
@@ -244,6 +250,7 @@ class OrderController extends FrontBaseController
             'flow' => $orderFlow,
             'splitOrderPreview' => $splitOrderPreview,
             'payments' => $payments,
+            'transports' => $transports,
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),

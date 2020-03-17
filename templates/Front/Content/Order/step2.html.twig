@@ -17,10 +17,11 @@
                         {% set previewNumber = 0 %}
                         {% for orderPreview in splitOrderPreview.orderPreviews %}
                             {% set previewNumber = previewNumber + 1 %}
-                            {% set transportForm = form.transportsByProductTypeId[orderPreview.productType.id] %}
+                            {% set transportForm = form.transportsByProductTypeId[orderPreview.productType.id]|default(null) %}
+                            {% set transportFormId = transportForm.vars.id|default(form.transportsByProductTypeId.vars.id ~ '_' ~ orderPreview.productType.id) %}
                             <div class="box-order__info__item js-payment-transport-group" data-product-type-id="{{ orderPreview.productType.id }}">
 
-                                <h2 id="js-label-{{ transportForm.vars.id }}">
+                                <h2 id="js-label-{{ transportFormId }}">
                                     {% if splitOrderPreview.morePreviews %}
                                         {{ 'Shipping selection'|trans }}
                                         -
@@ -33,16 +34,26 @@
                                 </h2>
 
                                 <div class="box-chooser js-form-group">
-                                    {{ form_errors(transportForm, { errors_attr: {class: 'form-error--inline'} }) }}
+                                    {% if transportForm %}
+                                        {{ form_errors(transportForm, { errors_attr: {class: 'form-error--inline'} }) }}
+                                    {% else %}
+                                        <span class="js-validation-errors-list js-validation-error-list-{{ transportFormId }} form-error form-error--inline display-none"></span>
+                                    {% endif %}
 
-                                    <div id="{{ transportForm.vars.id }}">
-                                        {% for child in transportForm %}
-                                            {% set choice = transportForm.vars.choices[child.vars.name] %}
-                                            {% set transport = choice.data %}
+                                    <div id="{{ transportFormId }}">
+                                        {% for transport in transports %}
                                             {% set transportPrice = splitOrderPreview.transportAndPaymentPricesPreview.getTransportPrice(transport, orderPreview.productType) %}
-                                            <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
+                                            <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ transportFormId ~ '_' ~ transport.id }}">
                                                 <span class="box-chooser__item__check">
-                                                    {{ form_widget(child, { attr: { class: 'css-checkbox js-order-transport-input js-payment-transport-checkbox', 'data-id': transport.id} }) }}
+                                                    <input
+                                                            type="checkbox"
+                                                            id="{{ transportFormId ~ '_' ~ transport.id }}"
+                                                            name="{{ form.transportsByProductTypeId.vars.full_name ~ '[' ~ orderPreview.productType.id ~ ']' }}"
+                                                            class="css-checkbox js-order-transport-input js-payment-transport-checkbox"
+                                                            data-id="{{ transport.id }}"
+                                                            value="{{ transport.id }}"
+                                                            {{ orderPreview.transport is same as(transport) ? 'checked' : '' }}
+                                                    >
                                                     <span class="css-checkbox__image"></span>
                                                 </span>
 
@@ -67,9 +78,6 @@
                                                     {{ transportPrice.priceWithVat|priceText }}
                                                 </span>
                                             </label>
-                                        {% else %}
-                                            {% do transportForm.setRendered %}
-                                            {{ 'Nothing to choose from'|trans }}
                                         {% endfor %}
                                         <button type="button" class="box-chooser__wide-button js-payment-transport-change-button">{{ 'Změnit způsob dopravy' }}</button>
                                     </div>
