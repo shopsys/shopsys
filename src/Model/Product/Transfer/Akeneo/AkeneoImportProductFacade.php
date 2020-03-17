@@ -7,6 +7,7 @@ namespace App\Model\Product\Transfer\Akeneo;
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Component\Setting\Setting;
+use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use DateTime;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -100,7 +101,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     /**
      * @param array $akeneoProductData
      */
-    protected function processItem(array $akeneoProductData): void
+    protected function processItem($akeneoProductData): void
     {
         $this->productTransferAkeneoValidator->validate($akeneoProductData);
 
@@ -109,11 +110,13 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 
         if ($product === null) {
             $this->logger->addInfo(sprintf('Creating product catnum: %s', $productData->catnum));
-            $this->productFacade->create($productData);
+            $product = $this->productFacade->create($productData);
         } else {
             $this->logger->addInfo(sprintf('Updating product catnum: %s', $product->getCatnum()));
-            $this->productFacade->edit($product->getId(), $productData);
+            $product = $this->productFacade->edit($product->getId(), $productData);
         }
+
+        $this->setProductForImportFiles($product, $akeneoProductData);
 
         $this->setLastUpdatedProduct($akeneoProductData['updated']);
     }
@@ -135,6 +138,16 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         if ($lastUpdatedDateTime > $this->lastProductUpdatedAtFromAkeneo) {
             $this->lastProductUpdatedAtFromAkeneo = $lastUpdatedDateTime;
         }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoProductData
+     */
+    private function setProductForImportFiles(Product $product, array $akeneoProductData): void
+    {
+        $productFilesData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductFilesData($akeneoProductData, $product);
+        $this->productFacade->editProductFileAttributes($product, $productFilesData);
     }
 
     /**

@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
@@ -68,6 +67,12 @@ class ProductFacade extends BaseProductFacade
     private $productStockFacade;
 
     /**
+     * @var string
+     */
+    private $productFilesUrlPrefix;
+
+    /**
+     * @param string $productFilesUrlPrefix
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
@@ -95,6 +100,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
      */
     public function __construct(
+        string $productFilesUrlPrefix,
         EntityManagerInterface $em,
         ProductRepository $productRepository,
         ProductVisibilityFacade $productVisibilityFacade,
@@ -148,6 +154,7 @@ class ProductFacade extends BaseProductFacade
         );
         $this->stockFacade = $stockFacade;
         $this->productStockFacade = $productStockFacade;
+        $this->productFilesUrlPrefix = $productFilesUrlPrefix;
     }
 
     /**
@@ -225,5 +232,67 @@ class ProductFacade extends BaseProductFacade
         }
 
         return $product;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Product\ProductFilesData $productFilesData
+     */
+    public function editProductFileAttributes(Product $product, ProductFilesData $productFilesData): void
+    {
+        $product->editFileAttributes($productFilesData);
+        $this->em->flush();
+    }
+
+    /**
+     * @param string $fileName
+     * @param string $domainUrl
+     * @param string|null $browserCacheCleanerSuffix
+     * @return string
+     */
+    public function getProductTransferredFileUrl(string $fileName, string $domainUrl, ?string $browserCacheCleanerSuffix = null): string
+    {
+        return $domainUrl . $this->productFilesUrlPrefix . $fileName . ($browserCacheCleanerSuffix !== null ? '?' . md5($browserCacheCleanerSuffix) : '');
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @return array
+     */
+    public function getDownloadFilesForProductByDomain(Product $product, Domain $domain): array
+    {
+        $downloadFileUrls = [];
+        if ($product->isDownloadAssemblyInstructionFiles() === false && $product->getAssemblyInstructionCode($domain->getId()) !== null) {
+            $url = $this->getProductTransferredFileUrl(
+                $product->getProductFileNameByType(
+                    $domain->getId(),
+                    Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE
+                ),
+                $domain->getUrl(),
+                $product->getAssemblyInstructionCode($domain->getId())
+            );
+            $downloadFileUrls[] = [
+                'anchor_text' => t('Instalační manuál'),
+                'url' => $url,
+            ];
+        }
+
+        if ($product->isDownloadProductTypePlanFiles() === false && $product->getProductTypePlanCode($domain->getId()) !== null) {
+            $url = $this->getProductTransferredFileUrl(
+                $product->getProductFileNameByType(
+                    $domain->getId(),
+                    Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE
+                ),
+                $domain->getUrl(),
+                $product->getProductTypePlanCode($domain->getId())
+            );
+            $downloadFileUrls[] = [
+                'anchor_text' => t('Typový plán'),
+                'url' => $url,
+            ];
+        }
+
+        return $downloadFileUrls;
     }
 }

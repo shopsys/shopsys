@@ -8,6 +8,7 @@ use Akeneo\Pim\ApiClient\Exception\RuntimeException;
 use App\Component\Akeneo\Transfer\Exception\TransferException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
+use App\Model\Transfer\TransferIdentificationInterface;
 use Exception;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 
@@ -70,7 +71,9 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
 
             $this->sqlLoggerFacade->reenableLogging();
         } catch (RuntimeException $exception) {
-            $this->logger->addError($exception->getMessage());
+            $this->logger->addError('RuntimeException: ' . $exception->getMessage());
+            $this->logger->persistAllLoggedTransferIssues();
+            $this->sqlLoggerFacade->reenableLogging();
             return;
         }
 
@@ -143,9 +146,9 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
     }
 
     /**
-     * @param array $akeneoData
+     * @param mixed $akeneoData
      */
-    abstract protected function processItem(array $akeneoData): void;
+    abstract protected function processItem($akeneoData): void;
 
     abstract protected function doBeforeTransfer(): void;
 

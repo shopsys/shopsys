@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
 
@@ -38,6 +39,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'shortDescriptionUsp5',
         'pricesGroup',
         'categoriesByDomainId',
+        'transferredFilesGroup',
+        'productTypePlanFileUrl',
+        'assemblyInstructionFileUrl',
     ];
 
     /**
@@ -106,8 +110,39 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $builder->get('displayAvailabilityGroup')->get('stockGroup')->remove('stockQuantity');
         $this->stocksGroup($builder);
 
-        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
         $this->setPricesGroup($builder, $product);
+        $this->buildTransferredFiles($builder, $product);
+
+        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Product\Product|null $product
+     */
+    private function buildTransferredFiles(FormBuilderInterface $builder, ?Product $product): void
+    {
+        if ($product === null) {
+            return;
+        }
+
+        $groupBuilder = $builder->create('transferredFilesGroup', GroupType::class, [
+            'label' => t('Přenesené soubory'),
+        ]);
+
+        $groupBuilder->add('assemblyInstructionFileUrl', MultidomainType::class, [
+            'label' => t('Instalační manuál'),
+            'required' => false,
+            'entry_type' => UrlType::class,
+        ]);
+
+        $groupBuilder->add('productTypePlanFileUrl', MultidomainType::class, [
+            'label' => t('Typový plán'),
+            'required' => false,
+            'entry_type' => UrlType::class,
+        ]);
+
+        $builder->add($groupBuilder);
     }
 
     /**

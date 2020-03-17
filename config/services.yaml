@@ -196,6 +196,14 @@ services:
 
     App\Component\Akeneo\AkeneoClientFactory: ~
 
+    App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade:
+        arguments:
+            $productFilesDir: "%shopsys.product_files_dir%"
+
+    App\Model\Product\Transfer\Akeneo\AkeneoImportProductTypePlanProductFilesFacade:
+        arguments:
+            $productFilesDir: "%shopsys.product_files_dir%"
+
     Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface:
         factory: ['@App\Component\Akeneo\AkeneoClientFactory', createClient]
 
@@ -220,6 +228,10 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation: '@App\Model\Product\Pricing\QuantifiedProductDiscountCalculation'
 
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator: '@App\Model\Product\ProductBreadcrumbGenerator'
+
+    App\Model\Product\ProductFacade:
+        arguments:
+            $productFilesUrlPrefix: '%shopsys.product_files_url_prefix%'
 
     Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
 
@@ -285,9 +297,7 @@ services:
 
     App\Component\ScontoBridge\ScontoBridgeClient: ~
 
-    App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency:
-        arguments:
-            $logger: '@monolog.logger.cron'
+    App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency: ~
 
     App\Component\Placeholder\:
         resource: '../src/Component/Placeholder/**/*{Extension,Placeholder,Validator}.php'

@@ -53,6 +53,11 @@ class ProductDataFactory extends BaseProductDataFactory
     private $basePriceCalculation;
 
     /**
+     * @var \App\Model\Product\ProductFacade
+     */
+    private $productFacade;
+
+    /**
      * @var \App\Component\Setting\Setting
      */
     private $setting;
@@ -79,6 +84,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Stock\ProductStockDataFactory $stockProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
+     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
@@ -99,14 +105,29 @@ class ProductDataFactory extends BaseProductDataFactory
         StockFacade $stockFacade,
         ProductStockDataFactory $stockProductDataFactory,
         BasePriceCalculation $basePriceCalculation,
+        ProductFacade $productFacade,
         Setting $setting,
         AvailabilityFacade $availabilityFacade
     ) {
-        parent::__construct($vatFacade, $productInputPriceFacade, $unitFacade, $domain, $productRepository, $parameterRepository, $friendlyUrlFacade, $productAccessoryRepository, $imageFacade, $pluginDataFormExtensionFacade, $productParameterValueDataFactory, $pricingGroupFacade);
+        parent::__construct(
+            $vatFacade,
+            $productInputPriceFacade,
+            $unitFacade,
+            $domain,
+            $productRepository,
+            $parameterRepository,
+            $friendlyUrlFacade,
+            $productAccessoryRepository,
+            $imageFacade,
+            $pluginDataFormExtensionFacade,
+            $productParameterValueDataFactory,
+            $pricingGroupFacade
+        );
         $this->stockProductFacade = $stockProductFacade;
         $this->stockFacade = $stockFacade;
         $this->stockProductDataFactory = $stockProductDataFactory;
         $this->basePriceCalculation = $basePriceCalculation;
+        $this->productFacade = $productFacade;
         $this->setting = $setting;
         $this->availabilityFacade = $availabilityFacade;
     }
@@ -131,6 +152,7 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData = new ProductData();
         $this->fillFromProduct($productData, $product);
         $this->fillStockProductByProduct($productData, $product);
+        $this->fillProductFilesAttributesFromProduct($productData, $product);
 
         return $productData;
     }
@@ -152,6 +174,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->highPriceWithVat[$domainId] = null;
             $productData->lowPriceWithoutVat[$domainId] = null;
             $productData->highPriceWithoutVat[$domainId] = null;
+            $productData->assemblyInstructionFileUrl[$domainId] = null;
+            $productData->productTypePlanFileUrl[$domainId] = null;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -221,6 +245,33 @@ class ProductDataFactory extends BaseProductDataFactory
 
         $productData->lowPriceWithoutVat[$domainId] = $lowPrice->getPriceWithoutVat();
         $productData->highPriceWithoutVat[$domainId] = $highPrice->getPriceWithoutVat();
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param \App\Model\Product\Product $product
+     */
+    private function fillProductFilesAttributesFromProduct(ProductData $productData, Product $product): void
+    {
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $domainId = $domainConfig->getId();
+            $productData->assemblyInstructionFileUrl[$domainId] = null;
+            $productData->productTypePlanFileUrl[$domainId] = null;
+
+            if ($product->getAssemblyInstructionCode($domainId) !== null) {
+                $productData->assemblyInstructionFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
+                    $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE),
+                    $domainConfig->getUrl()
+                );
+            }
+
+            if ($product->getProductTypePlanCode($domainId) !== null) {
+                $productData->productTypePlanFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
+                    $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE),
+                    $domainConfig->getUrl()
+                );
+            }
+        }
     }
 
     /**

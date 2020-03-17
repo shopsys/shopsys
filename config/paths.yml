@@ -32,3 +32,5 @@ parameters:
     shopsys.js_form_validator_output_vendor_dir: '../vendor'
     shopsys.data_fixtures_images.resources_dir: '%shopsys.data_fixtures.resources_dir%/images/'
     shopsys.elasticsearch.structure_dir: '%shopsys.resources_dir%/definition/'
+    shopsys.product_files_dir: '/web%shopsys.product_files_url_prefix%'
+    shopsys.product_files_url_prefix: '/%shopsys.content_dir_name%/frontend/products/'

@@ -7,12 +7,13 @@ namespace App\Component\ScontoBridge\Transfer;
 use App\Component\ScontoBridge\Transfer\Exception\TransferException;
 use App\Component\ScontoBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use App\Component\ScontoBridge\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
+use App\Model\Transfer\TransferIdentificationInterface;
 use Exception;
 use Generator;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 
-abstract class AbstractScontoBridgeImportTransfer
+abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificationInterface
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -20,7 +21,7 @@ abstract class AbstractScontoBridgeImportTransfer
     protected $em;
 
     /**
-     * @var \Symfony\Bridge\Monolog\Logger
+     * @var \App\Model\Transfer\TransferLoggerInterface
      */
     protected $logger;
 
@@ -51,7 +52,7 @@ abstract class AbstractScontoBridgeImportTransfer
     {
         $this->sqlLoggerFacade = $scontoBridgeImportTransferDependency->getSqlLoggerFacade();
         $this->em = $scontoBridgeImportTransferDependency->getEm();
-        $this->logger = $scontoBridgeImportTransferDependency->getLogger();
+        $this->logger = $scontoBridgeImportTransferDependency->getTransferLoggerFactory()->getTransferLoggerByIdentifier($this);
         $this->validator = $scontoBridgeImportTransferDependency->getValidator();
         $this->scontoBridgeConfig = $scontoBridgeImportTransferDependency->getScontoBridgeConfig();
     }
@@ -176,4 +177,12 @@ abstract class AbstractScontoBridgeImportTransfer
      * @return \Generator
      */
     abstract protected function getData(): \Generator;
+
+    /**
+     * @return string
+     */
+    public function getServiceIdentifier(): string
+    {
+        return 'ScontoBridge';
+    }
 }

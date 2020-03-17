@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Transfer;
 
-use App\Component\Akeneo\Transfer\TransferIdentificationInterface;
 use App\Model\Transfer\Exception\UnknownServiceTransferException;
 use App\Model\Transfer\Issue\TransferIssueFacade;
 use Symfony\Bridge\Monolog\Logger;
@@ -47,7 +46,7 @@ class TransferLoggerFactory
     }
 
     /**
-     * @param \App\Component\Akeneo\Transfer\TransferIdentificationInterface $transferIdentification
+     * @param \App\Model\Transfer\TransferIdentificationInterface $transferIdentification
      * @return \App\Model\Transfer\TransferLoggerInterface
      */
     public function getTransferLoggerByIdentifier(TransferIdentificationInterface $transferIdentification): TransferLoggerInterface

@@ -32,10 +32,25 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection $translations
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
- * @method edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
  */
 class Product extends BaseProduct
 {
+    public const PDF_SUFFIX = '.pdf';
+    public const FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE = 'assemblyInstruction';
+    public const FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE = 'productTypePlan';
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $downloadAssemblyInstructionFiles;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $downloadProductTypePlanFiles;
+
     /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
@@ -43,6 +58,17 @@ class Product extends BaseProduct
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
+        $this->downloadAssemblyInstructionFiles = false;
+        $this->downloadProductTypePlanFiles = false;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
+     * @param \App\Model\Product\ProductData $productData
+     */
+    public function edit(array $productCategoryDomains, BaseProductData $productData)
+    {
+        parent::edit($productCategoryDomains, $productData);
     }
 
     /**
@@ -84,6 +110,25 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\ProductFilesData $productFilesData
+     */
+    public function editFileAttributes(ProductFilesData $productFilesData): void
+    {
+        foreach ($this->domains as $productDomain) {
+            $domainId = $productDomain->getDomainId();
+            if ($this->getAssemblyInstructionCode($domainId) !== $productFilesData->assemblyInstructionCode[$domainId]) {
+                $productDomain->setAssemblyInstructionCode($productFilesData->assemblyInstructionCode[$domainId]);
+                $this->setDownloadAssemblyInstructionFiles(true);
+            }
+
+            if ($this->getProductTypePlanCode($domainId) !== $productFilesData->productTypePlanCode[$domainId]) {
+                $productDomain->setProductTypePlanCode($productFilesData->productTypePlanCode[$domainId]);
+                $this->setDownloadProductTypePlanFiles(true);
+            }
         }
     }
 
@@ -232,5 +277,73 @@ class Product extends BaseProduct
             . ' '
             . $this->getNameSufix($locale)
         );
+    }
+
+    /**
+     * @param bool $downloadAssemblyInstructionFiles
+     */
+    public function setDownloadAssemblyInstructionFiles(bool $downloadAssemblyInstructionFiles): void
+    {
+        $this->downloadAssemblyInstructionFiles = $downloadAssemblyInstructionFiles;
+    }
+
+    /**
+     * @param bool $downloadProductTypePlanFiles
+     */
+    public function setDownloadProductTypePlanFiles(bool $downloadProductTypePlanFiles): void
+    {
+        $this->downloadProductTypePlanFiles = $downloadProductTypePlanFiles;
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getAssemblyInstructionCode(int $domainId): ?string
+    {
+        return $this->getProductDomain($domainId)->getAssemblyInstructionCode();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getProductTypePlanCode(int $domainId): ?string
+    {
+        return $this->getProductDomain($domainId)->getProductTypePlanCode();
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $type
+     * @return string
+     */
+    public function getProductFileNameByType(int $domainId, string $type): string
+    {
+        return $type . '_' . $this->getId() . '_' . $domainId . self::PDF_SUFFIX;
+    }
+
+    /**
+     * @return \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection
+     */
+    public function getProductDomains()
+    {
+        return $this->domains;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDownloadAssemblyInstructionFiles(): bool
+    {
+        return $this->downloadAssemblyInstructionFiles;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDownloadProductTypePlanFiles(): bool
+    {
+        return $this->downloadProductTypePlanFiles;
     }
 }
