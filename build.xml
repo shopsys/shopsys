@@ -274,6 +274,7 @@
             <arg path="${path.utils}/*/src"/>
             <arg path="${path.utils}/*/tests"/>
             <arg value="--level=${phpstan.level}"/>
+            <arg value="--memory-limit=${phpstan.memory-limit}"/>
             <arg value="-vvv"/>
         </exec>
     </target>

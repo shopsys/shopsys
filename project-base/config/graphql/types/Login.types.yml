@@ -1,0 +1,4 @@
+Login:
+    type: input-object
+    inherits:
+        - 'LoginDecorator'

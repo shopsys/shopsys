@@ -1328,6 +1328,8 @@ There you can find links to upgrade notes for other versions too.
       
     - these constants were removed so you might need to update your application appropriately:
         - `Roles::ROLE_ADMIN_AS_CUSTOMER`
+- update your aplication to include login in your frontend API ([#1731](https://github.com/shopsys/shopsys/pull/1731))
+    - see #project-base-diff to update your project
 
 - fix your version of jms/translation-bundle to 1.4.4 in order to prevent problems with translations dumping ([#1732](https://github.com/shopsys/shopsys/pull/1732))
     - see #project-base-diff to update your project

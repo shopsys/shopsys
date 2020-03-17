@@ -1,0 +1,12 @@
+MutationDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            Login:
+                type: Token!
+                description: "Allow to log in as user"
+                args:
+                    input:
+                        type: Login!
+                resolve: "@=mutation('user_login', [args])"

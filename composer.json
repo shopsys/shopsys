@@ -105,6 +105,7 @@
         "jms/translation-bundle": "1.4.4",
         "joschi127/doctrine-entity-override-bundle": "^0.7.2",
         "knplabs/knp-menu-bundle": "^2.2.1",
+        "lcobucci/jwt": "^3.3",
         "league/flysystem": "^1.0",
         "litipk/php-bignumbers": "^0.8",
         "nikic/php-parser": "^4.0",

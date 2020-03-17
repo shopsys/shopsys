@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 use Serializable;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
@@ -117,6 +118,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     protected $defaultDeliveryAddress;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function __construct(CustomerUserData $customerUserData)
@@ -134,6 +142,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         $this->setEmail($customerUserData->email);
         $this->customer = $customerUserData->customer;
         $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
+        $this->uuid = $customerUserData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -394,5 +403,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     public function getDefaultDeliveryAddress(): ?DeliveryAddress
     {
         return $this->defaultDeliveryAddress;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }
