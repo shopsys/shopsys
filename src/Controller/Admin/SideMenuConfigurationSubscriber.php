@@ -71,10 +71,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $productSeriesCategoryMenu = $productSeriesMenu->addChild('product_series_category', ['route' => 'admin_productseriescategory_list', 'label' => t('Kategorie')]);
         $productSeriesCategoryMenu->addChild('new_product_series_category', ['route' => 'admin_productseriescategory_new', 'display' => false, 'label' => t('Nová kategorie')]);
         $productSeriesCategoryMenu->addChild('edit_product_series_category', ['route' => 'admin_productseriescategory_edit', 'display' => false, 'label' => t('Detail kategorie')]);
-
-        $blogArticles = $marketingMenu->addChild('product_series', ['route' => 'admin_productseries_list', 'label' => t('Programy produktů')]);
-        $blogArticles->addChild('new_product_series', ['route' => 'admin_productseries_new', 'display' => false, 'label' => t('Nový produktový program')]);
-        $blogArticles->addChild('edit_product_series', ['route' => 'admin_productseries_edit', 'display' => false, 'label' => t('Detail produktového programu')]);
     }
 
     /**

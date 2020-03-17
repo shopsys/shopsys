@@ -170,7 +170,7 @@ class ProductFacade extends BaseProductFacade
 
         foreach ($productData->stockProductData as $productStockData) {
             $stock = $this->stockFacade->getById($productStockData->stockId);
-            $this->productStockFacade->setProductStockQuantity($product, $stock, (int)$productStockData->productQuantity);
+            $this->productStockFacade->editProductStockRelation($product, $stock, $productStockData);
         }
 
         return $product;
@@ -230,7 +230,7 @@ class ProductFacade extends BaseProductFacade
 
         foreach ($productData->stockProductData as $productStockData) {
             $stock = $this->stockFacade->getById($productStockData->stockId);
-            $this->productStockFacade->setProductStockQuantity($product, $stock, (int)$productStockData->productQuantity);
+            $this->productStockFacade->editProductStockRelation($product, $stock, $productStockData);
         }
 
         return $product;
