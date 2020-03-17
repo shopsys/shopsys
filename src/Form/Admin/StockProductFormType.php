@@ -6,7 +6,6 @@ namespace App\Form\Admin;
 
 use App\Model\Stock\ProductStockData;
 use Shopsys\FormTypesBundle\YesNoType;
-use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,10 +26,9 @@ class StockProductFormType extends AbstractType
                     new Constraints\Regex(['pattern' => '/^\d+$/']),
                 ],
             ])
-            ->add('productExposed', YesNoType::class,[
+            ->add('productExposed', YesNoType::class, [
                 'label' => t('Je vystaven'),
-            ])
-        ;
+            ]);
     }
 
     /**

@@ -113,6 +113,4 @@ class ProductStock
     {
         return $this->productExposed;
     }
-
-
 }

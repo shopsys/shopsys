@@ -281,6 +281,9 @@
                                     <th>
                                         {{ 'Dostupnost'|trans }}
                                     </th>
+                                    <th>
+                                        {{ 'Vystaveno'|trans }}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -291,6 +294,9 @@
                                     </th>
                                     <td>
                                         {{ productStockAvailabilityInformation.availabilityInformation }}
+                                    </td>
+                                    <td>
+                                        {{ productStockAvailabilityInformation.exposedProduct ? "ANO"|trans : "NE"|trans }}
                                     </td>
                                 </tr>
                             {% endfor %}
