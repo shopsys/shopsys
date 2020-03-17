@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportRepository
 {
@@ -107,6 +108,21 @@ class TransportRepository
             throw new \Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException(
                 'Transport with ID ' . $id . ' not found.'
             );
+        }
+
+        return $transport;
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
+     */
+    public function getOneByUuid(string $uuid): Transport
+    {
+        $transport = $this->getTransportRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($transport === null) {
+            throw new TransportNotFoundException('Transport with UUID ' . $uuid . ' does not exist.');
         }
 
         return $transport;

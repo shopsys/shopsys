@@ -1124,6 +1124,9 @@ There you can find links to upgrade notes for other versions too.
 - update your aplication to do not change product availability to default when availability can not be calculated immediately ([#1659](https://github.com/shopsys/shopsys/pull/1659))
     - see #project-base-diff to update your project
 
+- update your application to include transports and payments in your frontend API ([#1726](https://github.com/shopsys/shopsys/pull/1726))
+    - see #project-base-diff to update your project
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class PaymentRepository
@@ -94,5 +97,20 @@ class PaymentRepository
             ->andWhere('t = :transport')->setParameter('transport', $transport)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
+     */
+    public function getOneByUuid(string $uuid): Payment
+    {
+        $payment = $this->getPaymentRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($payment === null) {
+            throw new PaymentNotFoundException('Payment with UUID ' . $uuid . ' does not exist.');
+        }
+
+        return $payment;
     }
 }

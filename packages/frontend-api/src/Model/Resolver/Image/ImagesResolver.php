@@ -11,12 +11,16 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class ImagesResolver implements ResolverInterface
 {
     protected const IMAGE_ENTITY_PRODUCT = 'product';
     protected const IMAGE_ENTITY_CATEGORY = 'category';
+    protected const IMAGE_ENTITY_PAYMENT = 'payment';
+    protected const IMAGE_ENTITY_TRANSPORT = 'transport';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
@@ -69,6 +73,28 @@ class ImagesResolver implements ResolverInterface
     public function resolveByCategory(Category $category, ?string $type, ?string $size): array
     {
         return $this->resolveByEntityId($category->getId(), static::IMAGE_ENTITY_CATEGORY, $type, $size);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     * @param string|null $type
+     * @param string|null $size
+     * @return array
+     */
+    public function resolveByPayment(Payment $payment, ?string $type, ?string $size): array
+    {
+        return $this->resolveByEntityId($payment->getId(), static::IMAGE_ENTITY_PAYMENT, $type, $size);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @param string|null $type
+     * @param string|null $size
+     * @return array
+     */
+    public function resolveByTransport(Transport $transport, ?string $type, ?string $size): array
+    {
+        return $this->resolveByEntityId($transport->getId(), static::IMAGE_ENTITY_TRANSPORT, $type, $size);
     }
 
     /**

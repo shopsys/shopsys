@@ -1,0 +1,4 @@
+Transport:
+    type: object
+    inherits:
+        - 'TransportDecorator'

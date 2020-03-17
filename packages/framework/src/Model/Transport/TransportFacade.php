@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -268,5 +270,14 @@ class TransportFacade
         }
 
         return $prices;
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
+     */
+    public function getByUuid(string $uuid): Transport
+    {
+        return $this->transportRepository->getOneByUuid($uuid);
     }
 }

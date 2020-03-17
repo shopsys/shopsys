@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Test;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -86,5 +87,13 @@ abstract class GraphQlTestCase extends FunctionalTestCase
         );
 
         return $this->client->getResponse();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocaleForFirstDomain(): string
+    {
+        return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
     }
 }

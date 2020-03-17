@@ -56,6 +56,11 @@ class PaymentData
      */
     public $vatsIndexedByDomainId;
 
+    /**
+     * @var string|null
+     */
+    public $uuid;
+
     public function __construct()
     {
         $this->name = [];
