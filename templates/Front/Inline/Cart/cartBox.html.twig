@@ -7,7 +7,10 @@
                     <span class="cart__count">0</span>
                 {% else %}
                     {% transchoice cart.itemsCount with { '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
-                         <span class="cart__count">%itemsCount%</span> <span class="cart__state">%priceWithVat%</span>|[2,Inf] <span class="cart__count">%itemsCount%</span> <span class="cart__state">%priceWithVat%</span>
+                         <span class="cart__count">%itemsCount%</span>
+                         <span class="cart__state">%priceWithVat%</span>|[2,Inf]
+                         <span class="cart__count">%itemsCount%</span>
+                         <span class="cart__state">%priceWithVat%</span>
                     {% endtranschoice %}
                 {% endif %}
             </span>
