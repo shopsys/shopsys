@@ -24,6 +24,11 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
 class FilterQuery extends BaseFilterQuery
 {
     /**
+     * @var array
+     */
+    private $mustNot = [];
+
+    /**
      * @param string $text
      * @return \App\Model\Product\Search\FilterQuery
      */
@@ -54,6 +59,10 @@ class FilterQuery extends BaseFilterQuery
     {
         $query = parent::getQuery();
         unset($query['type']);
+
+        if (count($this->mustNot) > 0) {
+            $query['body']['query']['bool']['must_not'] = $this->mustNot;
+        }
 
         return $query;
     }
@@ -100,5 +109,21 @@ class FilterQuery extends BaseFilterQuery
         unset($query['type']);
 
         return $query;
+    }
+
+    /**
+     * @param int $productId
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function excludeProductByProductId(int $productId): self
+    {
+        $clone = clone $this;
+        $clone->mustNot[] = [
+            'term' => [
+                'id' => $productId,
+            ],
+        ];
+
+        return $clone;
     }
 }

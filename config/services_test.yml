@@ -80,6 +80,10 @@ services:
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
 
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade: '@App\Model\Product\Listed\ListedProductViewElasticFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade: '@App\Model\Product\ProductOnCurrentDomainElasticFacade'
+
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: '@App\Model\Product\ProductVisibilityRepository'
 
     Shopsys\FrameworkBundle\Model\Localization\Localization:
