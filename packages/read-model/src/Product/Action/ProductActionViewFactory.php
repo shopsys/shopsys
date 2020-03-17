@@ -37,7 +37,7 @@ class ProductActionViewFactory
     {
         return $this->create(
             $product->getId(),
-            $product->isSellingDenied(),
+            $product->getCalculatedSellingDenied(),
             $product->isMainVariant(),
             $absoluteUrl
         );
@@ -51,7 +51,7 @@ class ProductActionViewFactory
     {
         return $this->create(
             $productArray['id'],
-            $productArray['selling_denied'],
+            $productArray['calculated_selling_denied'],
             $productArray['is_main_variant'],
             $productArray['detail_url']
         );
