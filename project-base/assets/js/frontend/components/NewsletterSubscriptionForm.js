@@ -2,6 +2,7 @@ import Ajax from 'framework/common/utils/Ajax';
 import Register from 'framework/common/utils/Register';
 import Window from '../utils/Window';
 import Translator from 'bazinga-translator';
+import CustomizeBundle from 'framework/common/validation/customizeBundle';
 
 const subscriptionFormSelector = 'form[name="subscription_form"]';
 
@@ -9,6 +10,11 @@ export default class NewsletterSubscriptionForm {
 
     ajaxSubmit (event, newsletterSubscriptionForm) {
         event.preventDefault();
+
+        if (CustomizeBundle.isFormValid($('form[name="subscription_form"]')) === false) {
+            return;
+        }
+
         Ajax.ajax({
             loaderElement: 'body',
             url: $(event.currentTarget).attr('action'),
@@ -19,9 +25,15 @@ export default class NewsletterSubscriptionForm {
     }
 
     onSuccess (data) {
-        if ($(data).data('success')) {
-            $(subscriptionFormSelector).find('input[name="subscription_form[email]"]').val('');
-            $(subscriptionFormSelector).find('input[name="subscription_form[privacyPolicyAgreement]"]').prop('checked', false);
+
+        if (data['success'] === false) {
+            // eslint-disable-next-line no-new
+            new Window({
+                content: NewsletterSubscriptionForm.formatErrors(data['errors']),
+                buttonCancel: true,
+                textCancel: Translator.trans('Close')
+            });
+        } else {
 
             // eslint-disable-next-line no-new
             new Window({
@@ -30,6 +42,21 @@ export default class NewsletterSubscriptionForm {
                 textCancel: Translator.trans('Close')
             });
         }
+    }
+
+    static formatErrors (arrayOfErrors) {
+        if (!arrayOfErrors || arrayOfErrors.length === 0) {
+            return Translator.trans('Subscription was failed');
+        }
+
+        let errorMessage = '<ul>';
+
+        errorMessage += '</ul>';
+        arrayOfErrors.forEach(error => {
+            errorMessage += '<li>' + error + '</li>';
+        });
+
+        return errorMessage;
     }
 
     static init ($container) {
