@@ -13,8 +13,5 @@
 </div>
 
 <div class="js-product-list-ajax-filter-products-with-controls">
-    <div>
-        {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListAction')) }}
-    </div>
     {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
 </div>

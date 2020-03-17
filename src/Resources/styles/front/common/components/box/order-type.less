@@ -1,30 +1,52 @@
 .box-order-type {
-    margin-bottom: @margin-gap;
     .clearfix();
 
     &__item {
         float: left;
         padding: 5px 10px;
 
-        border: 1px solid transparent;
-        font-size: 12px;
+        border-top-left-radius: @radius;
+        border-top-right-radius: @radius;
 
         @media @query-md {
-            padding: 8px 15px;
+            padding: 15px 18px;
 
             font-size: @font-size;
         }
 
-        @media @query-xl {
-            padding: 10px 20px;
+        @media @query-vl {
+            padding: 20px 25px;
         }
 
         &.active {
-            background: @color-f;
-            border-color: @color-border;
+            position: relative;
+
+            background: @color-light-secondary;
             color: @color-base;
             text-decoration: none;
-            font-weight: bold;
+            font-family: @font-quartenary;
+
+            &::before,
+            &::after {
+                position: absolute;
+                bottom: -11px;
+                width: 22px;
+                height: 22px;
+                z-index: 1;
+                content: '';
+
+                background-color: inherit;
+            }
+
+            &::before {
+                left: -1px;
+                transform: rotate(-45deg);
+            }
+
+            &::after {
+                right: -1px;
+                transform: rotate(45deg);
+            }
         }
     }
 }

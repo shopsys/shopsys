@@ -23,59 +23,69 @@
             <h1>
                 {{ category.getSeoH1(domain.id)|default(category.name) }}
             </h1>
-            {% if category.getShortDescription(domain.id) %}
-                {{ category.getShortDescription(domain.id)|raw }}
-                {% if category.getDescription(domain.id) %}
-                    <a href="#description">{{ 'Číst dál →'|trans }}</a>
-                {% endif %}
-            {% endif %}
             {% if visibleChildren is not empty %}
                 <h2>{{ 'List of subcategories'|trans }}</h2>
-
                 {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
             {% endif %}
-
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
         </div>
     </div>
-    <div class="web__line web__line--spacing web__line--bg-color">
-        <div class="web__container">
+    <div class="web__line web__line--product-list web__line--bg-color">
+        <div class="web__container web__container--full-width web__container--no-padding">
             <div class="box-list js-product-list-with-filter">
-                {% if paginationResult.results|length > 0 or filterFormSubmitted %}
-                    <div class="box-list__panel">
-                        <div class="box-filter__opener">
-                            <button type="button" class="btn btn--primary js-product-filter-open-button">
-                                {{ 'Product filter'|trans }}
-                                <i class="svg svg-arrow"></i>
-                            </button>
-                        </div>
-                        <div class="box-filter js-product-filter">
-                            {{ productFilterForm.filterForm(
-                                filterForm,
-                                url('front_product_list', { id: category.id }),
-                                url('front_product_list', { id: category.id }),
-                                null,
-                                'product_list',
-                                productFilterCountData,
-                                priceRange
-                            ) }}
+                <div class="box-list__top">
+                    <div class="box-list__top__wrap">
+                        {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListAction')) }}
+                        <div class="box-list__top__info">
+                            {{ 'Máme pro vás'|trans }}<strong class="box-list__top__info__count"> {{ paginationResult.totalCount }} </strong>{{ 'produktů'|trans }}
                         </div>
                     </div>
-                {% endif %}
-
-                <div class="box-list__content">
-                    <div class="js-product-list-ajax-filter-products-with-controls">
-                        <div>
-                            {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListAction')) }}
+                </div>
+                <div class="box-list__body">
+                    {% if paginationResult.results|length > 0 or filterFormSubmitted %}
+                        <div class="box-list__panel">
+                            <div class="box-filter__opener">
+                                <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-filter-open-button">
+                                    <i class="box-filter__opener__btn__icon svg svg-filter"></i>
+                                    <span class="box-filter__opener__btn__text">
+                                        {{ 'Filtr'|trans }}
+                                        <span class="box-filter__opener__btn__info box-filter__opener__btn__info--count js-not-implemented-yet">(12)</span>
+                                    </span>
+                                </button>
+                                <button type="button" class="btn btn-no-style box-filter__opener__btn">
+                                    <i class="box-filter__opener__btn__icon svg svg-sort"></i>
+                                    <span class="box-filter__opener__btn__text">
+                                        {{ 'Seřadit'|trans }}
+                                        <span class="box-filter__opener__btn__info box-filter__opener__btn__info--sort js-not-implemented-yet">Nejlevnější</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="box-filter js-product-filter">
+                                {{ productFilterForm.filterForm(
+                                    filterForm,
+                                    url('front_product_list', { id: category.id }),
+                                    url('front_product_list', { id: category.id }),
+                                    null,
+                                    'product_list',
+                                    productFilterCountData,
+                                    priceRange
+                                ) }}
+                            </div>
                         </div>
-                        {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
-                    </div>
-
-                    <div class="box-list__description">
-                        <div class="box-list__description__text in-user-text">
-                        <a id="description"></a>
-                        <div class="box-list__description__text in-user-text">
-                            {{ category.getDescription(domain.id)|raw }}
+                    {% endif %}
+                    <div class="box-list__content">
+                        <div class="js-product-list-ajax-filter-products-with-controls">
+                            {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
+                        </div>
+                        <div class="box-list__description">
+                            <div class="box-list__description__text in-user-text js-category-description">
+                                {{ category.getDescription(domain.id)|raw }}
+                            </div>
+                            <div class="box-list__description__more">
+                                <span class="link-style box-list__description__more__btn js-category-description-load-more">
+                                    {{ 'View more'|trans }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
