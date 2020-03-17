@@ -134,4 +134,19 @@ class Order extends BaseOrder
 
         return $transports;
     }
+
+    /**
+     * @return \App\Model\Order\Item\OrderItem[]
+     */
+    public function getTransportAndPaymentItems(): array
+    {
+        $items = [];
+        foreach ($this->getItems() as $item) {
+            if ($item->isTypeTransport() === true || $item->isTypePayment() === true) {
+                $items[] = $item;
+            }
+        }
+
+        return $items;
+    }
 }

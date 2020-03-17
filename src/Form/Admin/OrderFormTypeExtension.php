@@ -16,6 +16,9 @@ class OrderFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->get('orderItems')
+            ->remove('orderPayment')
+            ->remove('orderTransport');
     }
 
     /**
