@@ -69,7 +69,7 @@ spec:
                     lifecycle:
                         postStart:
                             exec:
-                                command: ["/var/www/html/phing", "clean-cache", "maintenance-off", "clean-redis-old", "prod-warmup"]
+                                command: ["/var/www/html/phing", "maintenance-off", "clean-redis-old"]
                     volumeMounts:
                         -   name: source-codes
                             mountPath: /var/www/html
