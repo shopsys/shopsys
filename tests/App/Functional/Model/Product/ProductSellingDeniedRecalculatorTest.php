@@ -6,9 +6,12 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator
      * @inject
@@ -29,8 +32,6 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 
     public function testCalculateSellingDeniedForProductSellableVariant()
     {
-        $em = $this->getEntityManager();
-
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
         /** @var \App\Model\Product\Product $variant2 */
@@ -46,10 +47,10 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($variant1);
 
-        $em->refresh($variant1);
-        $em->refresh($variant2);
-        $em->refresh($variant3);
-        $em->refresh($mainVariant);
+        $this->em->refresh($variant1);
+        $this->em->refresh($variant2);
+        $this->em->refresh($variant3);
+        $this->em->refresh($mainVariant);
 
         $this->assertTrue($variant1->getCalculatedSellingDenied());
         $this->assertFalse($variant2->getCalculatedSellingDenied());
@@ -59,8 +60,6 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 
     public function testCalculateSellingDeniedForProductNotSellableVariants()
     {
-        $em = $this->getEntityManager();
-
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
         /** @var \App\Model\Product\Product $variant2 */
@@ -82,10 +81,10 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
 
-        $em->refresh($variant1);
-        $em->refresh($variant2);
-        $em->refresh($variant3);
-        $em->refresh($mainVariant);
+        $this->em->refresh($variant1);
+        $this->em->refresh($variant2);
+        $this->em->refresh($variant3);
+        $this->em->refresh($mainVariant);
 
         $this->assertTrue($variant1->getCalculatedSellingDenied());
         $this->assertTrue($variant2->getCalculatedSellingDenied());
@@ -95,8 +94,6 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 
     public function testCalculateSellingDeniedForProductNotSellableMainVariant()
     {
-        $em = $this->getEntityManager();
-
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
         /** @var \App\Model\Product\Product $variant2 */
@@ -112,10 +109,10 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
 
-        $em->refresh($variant1);
-        $em->refresh($variant2);
-        $em->refresh($variant3);
-        $em->refresh($mainVariant);
+        $this->em->refresh($variant1);
+        $this->em->refresh($variant2);
+        $this->em->refresh($variant3);
+        $this->em->refresh($mainVariant);
 
         $this->assertTrue($variant1->getCalculatedSellingDenied());
         $this->assertTrue($variant2->getCalculatedSellingDenied());

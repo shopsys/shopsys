@@ -8,9 +8,12 @@ use App\DataFixtures\Demo\AvailabilityDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 final class ProductVariantCreationTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
@@ -101,6 +104,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
         $productData->usingStock = true;
         $productData->stockQuantity = $quantity;
         $productData->outOfStockAction = $outOfStockAction;
+        $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         if ($outOfStockAvailabilityReference !== null) {
             $productData->outOfStockAvailability = $this->getReference($outOfStockAvailabilityReference);
         }

@@ -6,6 +6,8 @@ namespace Tests\App\Smoke;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
+use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -29,13 +31,13 @@ class NewProductTest extends FunctionalTestCase
             'HTTP_HOST' => sprintf('%s:%d', parse_url($domainUrl, PHP_URL_HOST), parse_url($domainUrl, PHP_URL_PORT)),
         ];
 
-        $client1 = $this->getClient(false, 'admin', 'admin123');
+        $client1 = $this->findClient(false, 'admin', 'admin123');
         $crawler = $client1->request('GET', $relativeUrl, [], [], $server);
 
         $form = $crawler->filter('form[name=product_form]')->form();
         $this->fillForm($form);
 
-        $client2 = $this->getClient(true, 'admin', 'admin123');
+        $client2 = $this->findClient(true, 'admin', 'admin123');
         /** @var \Doctrine\ORM\EntityManager $em2 */
         $em2 = $client2->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -50,12 +52,12 @@ class NewProductTest extends FunctionalTestCase
 
         $em2->rollback();
 
-        /** @var \Shopsys\FrameworkBundle\Component\FlashMessage\Bag $flashMessageBag */
-        $flashMessageBag = $client2->getContainer()->get('shopsys.shop.component.flash_message.bag.admin');
+        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
+        $flashBag = $client2->getContainer()->get('session')->getFlashBag();
 
         $this->assertSame(302, $client2->getResponse()->getStatusCode());
-        $this->assertNotEmpty($flashMessageBag->getSuccessMessages());
-        $this->assertEmpty($flashMessageBag->getErrorMessages());
+        $this->assertNotEmpty($flashBag->get(FlashMessage::KEY_SUCCESS));
+        $this->assertEmpty($flashBag->get(FlashMessage::KEY_ERROR));
     }
 
     /**

@@ -1,6 +1,6 @@
 twig:
     debug: "%kernel.debug%"
-    exception_controller: 'App\Controller\Front\ErrorController::showAction'
+    exception_controller: null
     form_themes:
         - '@ShopsysFramework/Common/Form/theme.html.twig'
         - '@ShopsysFramework/Admin/Form/colorpickerFields.html.twig'

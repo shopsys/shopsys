@@ -74,7 +74,7 @@ class ErrorController extends FrontBaseController
         $this->exceptionController->setDebug(false);
         $this->exceptionController->setShowErrorPagePrototype();
 
-        throw new \Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException($code);
+        throw new \Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException((int)$code);
     }
 
     /**

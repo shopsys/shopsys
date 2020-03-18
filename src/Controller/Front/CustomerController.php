@@ -87,7 +87,7 @@ class CustomerController extends FrontBaseController
     public function editAction(Request $request): Response
     {
         if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
-            $this->getFlashMessageSender()->addErrorFlash(t('You have to be logged in to enter this page'));
+            $this->addErrorFlash(t('You have to be logged in to enter this page'));
             return $this->redirectToRoute('front_login');
         }
 
@@ -109,12 +109,12 @@ class CustomerController extends FrontBaseController
 
             $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Your data had been successfully updated'));
+            $this->addSuccessFlash(t('Your data had been successfully updated'));
             return $this->redirectToRoute('front_customer_edit');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('Front/Content/Customer/edit.html.twig', [
@@ -130,7 +130,7 @@ class CustomerController extends FrontBaseController
     public function ordersAction(): Response
     {
         if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
-            $this->getFlashMessageSender()->addErrorFlash(t('You have to be logged in to enter this page'));
+            $this->addErrorFlash(t('You have to be logged in to enter this page'));
             return $this->redirectToRoute('front_login');
         }
 
@@ -170,7 +170,7 @@ class CustomerController extends FrontBaseController
     {
         if ($orderNumber !== null) {
             if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
-                $this->getFlashMessageSender()->addErrorFlash(t('You have to be logged in to enter this page'));
+                $this->addErrorFlash(t('You have to be logged in to enter this page'));
                 return $this->redirectToRoute('front_login');
             }
 
@@ -179,7 +179,7 @@ class CustomerController extends FrontBaseController
                 /** @var \App\Model\Order\Order $order */
                 $order = $this->orderFacade->getByOrderNumberAndUser($orderNumber, $customerUser);
             } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Order not found'));
+                $this->addErrorFlash(t('Order not found'));
                 return $this->redirectToRoute('front_customer_orders');
             }
         } else {
@@ -204,9 +204,7 @@ class CustomerController extends FrontBaseController
         try {
             $this->loginAsUserFacade->loginAsRememberedUser($request);
         } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $e) {
-            /** @var \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender $adminFlashMessageSender */
-            $adminFlashMessageSender = $this->get('shopsys.shop.component.flash_message.sender.admin');
-            $adminFlashMessageSender->addErrorFlash(t('User not found.'));
+            $this->addErrorFlash(t('User not found.'));
 
             return $this->redirectToRoute('admin_customer_list');
         } catch (\Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException $e) {

@@ -44,8 +44,8 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return CategoryFormType::class;
+        yield CategoryFormType::class;
     }
 }

@@ -6,9 +6,12 @@ namespace Tests\App\Functional\Form\Admin\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOrderFilterTranslation;
 use Tests\App\Test\FunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class AdvancedSearchOrderFilterTranslationTest extends FunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig
      * @inject

@@ -134,13 +134,13 @@ class RegistrationController extends FrontBaseController
             if ($form->isValid()) {
                 $registrationData = $form->getData();
                 $customerUser = $this->registrationFacade->register($registrationData);
-                $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
+                $this->addSuccessFlash(t('You have been successfully registered.'));
 
                 $this->authenticator->loginUser($customerUser, $request);
 
                 return true;
             } else {
-                $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+                $this->addErrorFlash(t('Please check the correctness of all data filled.'));
             }
             $this->activateCommonCustomerRegistrationForm();
         }
@@ -161,13 +161,13 @@ class RegistrationController extends FrontBaseController
                 /** @var \App\Model\Customer\User\RegistrationData $registrationData */
                 $registrationData = $form->getData();
                 $customerUser = $this->registrationFacade->registerCompany($registrationData);
-                $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
+                $this->addSuccessFlash(t('You have been successfully registered.'));
 
                 $this->authenticator->loginUser($customerUser, $request);
 
                 return true;
             } else {
-                $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+                $this->addErrorFlash(t('Please check the correctness of all data filled.'));
             }
             $this->activateCompanyCustomerRegistrationForm();
         }
