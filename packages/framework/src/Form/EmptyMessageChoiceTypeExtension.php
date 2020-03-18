@@ -34,10 +34,10 @@ class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return ChoiceType::class;
+        yield ChoiceType::class;
     }
 }

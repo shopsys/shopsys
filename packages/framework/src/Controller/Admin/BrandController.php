@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -14,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class BrandController extends AdminBaseController
 {
@@ -87,7 +87,7 @@ class BrandController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->brandFacade->edit($id, $brandData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Brand <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                     [
@@ -99,7 +99,7 @@ class BrandController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing brand - %name%', ['%name%' => $brand->getName()]));
@@ -162,7 +162,7 @@ class BrandController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $brand = $this->brandFacade->create($brandData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Brand <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                     [
@@ -174,7 +174,7 @@ class BrandController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Brand/new.html.twig', [
@@ -195,14 +195,14 @@ class BrandController extends AdminBaseController
 
             $this->brandFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Brand <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected brand doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected brand doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_brand_list');

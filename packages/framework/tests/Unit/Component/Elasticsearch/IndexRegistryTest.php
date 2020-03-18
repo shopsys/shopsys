@@ -19,7 +19,7 @@ class IndexRegistryTest extends TestCase
      */
     protected $indexRegistry;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

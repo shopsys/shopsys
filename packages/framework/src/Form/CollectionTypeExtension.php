@@ -34,11 +34,11 @@ class CollectionTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return CollectionType::class;
+        yield CollectionType::class;
     }
 
     /**

@@ -43,10 +43,10 @@ class FormRenderingConfigurationExtension extends AbstractTypeExtension
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return FormType::class;
+        yield FormType::class;
     }
 }

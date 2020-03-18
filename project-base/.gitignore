@@ -25,3 +25,5 @@ yarn-error.log
 
 /assets/js/translations.json
 /assets/js/bundles
+
+/.phpunit.result.cache

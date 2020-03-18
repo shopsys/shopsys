@@ -58,7 +58,7 @@ class ZboziFeedItemTest extends TestCase
      */
     private $defaultProduct;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);

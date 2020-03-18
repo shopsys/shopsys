@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Command\RouterMatchCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Routing\RouterInterface;
 
 class RouterMatchCommandForDomain extends RouterMatchCommand
 {
@@ -24,9 +25,9 @@ class RouterMatchCommandForDomain extends RouterMatchCommand
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler $domainChoiceHelper
-     * @param \Symfony\Component\Routing\RouterInterface|null $router
+     * @param \Symfony\Component\Routing\RouterInterface $router
      */
-    public function __construct(DomainChoiceHandler $domainChoiceHelper, $router = null)
+    public function __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router)
     {
         $this->domainChoiceHelper = $domainChoiceHelper;
 
@@ -36,9 +37,9 @@ class RouterMatchCommandForDomain extends RouterMatchCommand
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $this->domainChoiceHelper->chooseDomainAndSwitch($io);

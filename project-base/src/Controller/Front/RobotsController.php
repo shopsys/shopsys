@@ -21,23 +21,30 @@ class RobotsController extends FrontBaseController
     private $sitemapFilePrefixer;
 
     /**
+     * @var string
+     */
+    private $sitemapsUrlPrefix;
+
+    /**
+     * @param string $sitemapsUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer $sitemapFilePrefixer
      */
     public function __construct(
+        string $sitemapsUrlPrefix,
         Domain $domain,
         SitemapFilePrefixer $sitemapFilePrefixer
     ) {
+        $this->sitemapsUrlPrefix = $sitemapsUrlPrefix;
         $this->domain = $domain;
         $this->sitemapFilePrefixer = $sitemapFilePrefixer;
     }
 
     public function indexAction()
     {
-        $sitemapsUrlPrefix = $this->get('service_container')->getParameter('shopsys.sitemaps_url_prefix');
         $sitemapFilePrefix = $this->sitemapFilePrefixer->getSitemapFilePrefixForDomain($this->domain->getId());
 
-        $sitemapUrl = $this->domain->getUrl() . $sitemapsUrlPrefix . '/' . $sitemapFilePrefix . '.xml';
+        $sitemapUrl = $this->domain->getUrl() . $this->sitemapsUrlPrefix . '/' . $sitemapFilePrefix . '.xml';
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/plain');

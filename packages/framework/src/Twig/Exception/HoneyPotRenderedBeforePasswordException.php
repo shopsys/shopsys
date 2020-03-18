@@ -4,9 +4,9 @@ namespace Shopsys\FrameworkBundle\Twig\Exception;
 
 use Exception;
 use Shopsys\FrameworkBundle\Form\HoneyPotType;
-use Twig_Error;
+use Twig\Error\Error;
 
-class HoneyPotRenderedBeforePasswordException extends Twig_Error implements TwigException
+class HoneyPotRenderedBeforePasswordException extends Error implements TwigException
 {
     /**
      * @param \Exception|null $previous

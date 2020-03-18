@@ -2,13 +2,13 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusInlineEdit;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class OrderStatusController extends AdminBaseController
 {
@@ -69,7 +69,7 @@ class OrderStatusController extends AdminBaseController
             $this->orderStatusFacade->deleteById($id, $newId);
 
             if ($newId === null) {
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Status of orders <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $orderStatus->getName(),
@@ -77,7 +77,7 @@ class OrderStatusController extends AdminBaseController
                 );
             } else {
                 $newOrderStatus = $this->orderStatusFacade->getById($newId);
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted.'),
                     [
                         'oldName' => $orderStatus->getName(),
@@ -86,14 +86,14 @@ class OrderStatusController extends AdminBaseController
                 );
             }
         } catch (\Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException $e) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('Status of orders <strong>{{ name }}</strong> reserved and can\'t be deleted'),
                 [
                     'name' => $e->getOrderStatus()->getName(),
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected order status doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected order status doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_orderstatus_list');

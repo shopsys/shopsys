@@ -190,6 +190,6 @@ class AvailabilityFacade
      */
     protected function dispatchAvailabilityEvent(Availability $availability, string $eventType): void
     {
-        $this->eventDispatcher->dispatch($eventType, new AvailabilityEvent($availability));
+        $this->eventDispatcher->dispatch(new AvailabilityEvent($availability), $eventType);
     }
 }

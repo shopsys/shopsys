@@ -48,8 +48,8 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
         parent::executeForIndex($output, $index);
 
         $this->eventDispatcher->dispatch(
-            IndexExportedEvent::INDEX_EXPORTED,
-            new IndexExportedEvent($index)
+            new IndexExportedEvent($index),
+            IndexExportedEvent::INDEX_EXPORTED
         );
     }
 

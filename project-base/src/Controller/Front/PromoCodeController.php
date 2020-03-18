@@ -47,7 +47,7 @@ class PromoCodeController extends FrontBaseController
                 'message' => t('Promo code invalid. Check it, please.'),
             ]);
         }
-        $this->getFlashMessageSender()->addSuccessFlash(t('Promo code added to order'));
+        $this->addSuccessFlash(t('Promo code added to order'));
 
         return new JsonResponse(['result' => true]);
     }
@@ -55,7 +55,7 @@ class PromoCodeController extends FrontBaseController
     public function removeAction()
     {
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
-        $this->getFlashMessageSender()->addSuccessFlash(t('Promo code removed from order'));
+        $this->addSuccessFlash(t('Promo code removed from order'));
 
         return $this->redirectToRoute('front_cart');
     }

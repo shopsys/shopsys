@@ -21,7 +21,7 @@ class ImageConfigLoaderTest extends TestCase
      */
     private $imageConfigLoader;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $filesystem = new Filesystem();
         $this->imageConfigLoader = new ImageConfigLoader($filesystem);

@@ -41,5 +41,7 @@ class RedisCleanCacheOldCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->redisVersionsFacade->cleanOldCache();
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

@@ -7,17 +7,17 @@ namespace Shopsys\CodingStandards\Sniffs;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\ClassHelper;
-use Symplify\TokenRunner\Analyzer\SnifferAnalyzer\Naming;
+use Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming;
 
 final class ObjectIsCreatedByFactorySniff implements Sniff
 {
     /**
-     * @var \Symplify\TokenRunner\Analyzer\SnifferAnalyzer\Naming
+     * @var \Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming
      */
     private $naming;
 
     /**
-     * @param \Symplify\TokenRunner\Analyzer\SnifferAnalyzer\Naming $naming
+     * @param \Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming $naming
      */
     public function __construct(Naming $naming)
     {
@@ -62,7 +62,7 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
     }
 
     /**
-     * We can not use Symplify\TokenRunner\Analyzer\SnifferAnalyzer\Naming::getClassName()
+     * We can not use Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming::getClassName()
      * as it does not include namespace of declared class.
      *
      * @param \PHP_CodeSniffer\Files\File $file

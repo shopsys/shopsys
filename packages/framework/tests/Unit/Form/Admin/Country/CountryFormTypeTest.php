@@ -120,7 +120,7 @@ class CountryFormTypeTest extends TypeTestCase
         $this->assertTrue($countryForm->isValid(), 'Existing country code on edit');
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $translator = $this->createMock(Translator::class);
         $translator->method('staticTrans')->willReturnArgument(0);

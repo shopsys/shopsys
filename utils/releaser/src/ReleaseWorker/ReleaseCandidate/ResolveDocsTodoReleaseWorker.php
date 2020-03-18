@@ -59,7 +59,7 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
                 'File "%s" has %d todo%s to resolve. Fix them manually.',
                 $fileInfo->getPathname(),
                 count($todoFound),
-                $todoFound > 1 ? 's' : ''
+                count($todoFound) > 1 ? 's' : ''
             ));
         }
 

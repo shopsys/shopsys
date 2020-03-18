@@ -3,21 +3,21 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Symfony\Component\Form\FormView;
-use Twig_Environment;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class FormDetailExtension extends Twig_Extension
+class FormDetailExtension extends AbstractExtension
 {
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twigEnvironment;
 
     /**
-     * @param \Twig_Environment $twigEnvironment
+     * @param \Twig\Environment $twigEnvironment
      */
-    public function __construct(Twig_Environment $twigEnvironment)
+    public function __construct(Environment $twigEnvironment)
     {
         $this->twigEnvironment = $twigEnvironment;
     }
@@ -28,8 +28,8 @@ class FormDetailExtension extends Twig_Extension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('form_id', [$this, 'formId'], ['is_safe' => ['html']]),
-            new Twig_SimpleFunction('form_save', [$this, 'formSave'], ['is_safe' => ['html']]),
+            new TwigFunction('form_id', [$this, 'formId'], ['is_safe' => ['html']]),
+            new TwigFunction('form_save', [$this, 'formSave'], ['is_safe' => ['html']]),
         ];
     }
 

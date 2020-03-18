@@ -1,4 +1,7 @@
 parameters:
+
+    treatPhpDocTypesAsCertain: false
+
     ignoreErrors:
         # Don't forget to add these rules to phpstan.neon in monorepo
         # Ignoring absence of \App\Kernel, which should be provided by project implementation
@@ -36,12 +39,12 @@ parameters:
             message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.#'
             path: %currentWorkingDirectory%/src/Model/Order/Order.php
         -
-            message: '#Access to an undefined property PhpParser\\Node::\$var\.#'
-            path: %currentWorkingDirectory%/src/Component/Translation/ConstraintViolationExtractor.php
+            message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
+            path: %currentWorkingDirectory%/src/*
         -
-            message: '#Access to an undefined property PhpParser\\Node::\$name\.#'
-            path: %currentWorkingDirectory%/src/Component/Translation/ConstraintViolationExtractor.php
-    excludes_analyses:
+            message: '#^Unsafe usage of new static().#'
+            path: %currentWorkingDirectory%/src/*
+    excludes_analyse:
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %currentWorkingDirectory%/tests/Unit/Component/ClassExtension/Source/*
 includes:

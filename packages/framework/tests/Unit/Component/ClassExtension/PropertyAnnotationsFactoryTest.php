@@ -75,6 +75,6 @@ class PropertyAnnotationsFactoryTest extends TestCase
             ReflectionObject::createFromName(ChildClass4::class)
         );
 
-        $this->assertContains('@property \App\Model\Category\CategoryFacade $categoryFacade', $annotationLines);
+        $this->assertStringContainsString('@property \App\Model\Category\CategoryFacade $categoryFacade', $annotationLines);
     }
 }

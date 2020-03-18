@@ -2,11 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\PersonalData\PersonalDataFormType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class PersonalDataController extends AdminBaseController
 {
@@ -54,7 +54,7 @@ class PersonalDataController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->setting->setForDomain(Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT, $form->getData()['personalDataDisplaySiteContent'], $domainId);
             $this->setting->setForDomain(Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $form->getData()['personalDataExportSiteContent'], $domainId);
-            $this->getFlashMessageSender()->addSuccessFlash(t('Personal data site content updated successfully'));
+            $this->addSuccessFlash(t('Personal data site content updated successfully'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/PersonalData/index.html.twig', [

@@ -57,6 +57,8 @@ class ChangeAdminPasswordCommand extends Command
         $this->administratorFacade->changePassword($adminUsername, $password);
 
         $output->writeln(sprintf('Password for administrator "%s" was successfully changed', $adminUsername));
+
+        return CommandResultCodes::RESULT_OK;
     }
 
     /**

@@ -2,12 +2,12 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\LegalConditions\LegalConditionsSettingFormType;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class LegalConditionsController extends AdminBaseController
 {
@@ -56,12 +56,12 @@ class LegalConditionsController extends AdminBaseController
             $this->legalConditionsFacade->setTermsAndConditions($formData['termsAndConditionsArticle'], $domainId);
             $this->legalConditionsFacade->setPrivacyPolicy($formData['privacyPolicyArticle'], $domainId);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(t('Legal conditions settings modified.'));
+            $this->addSuccessFlashTwig(t('Legal conditions settings modified.'));
             return $this->redirectToRoute('admin_legalconditions_setting');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/LegalConditions/setting.html.twig', [

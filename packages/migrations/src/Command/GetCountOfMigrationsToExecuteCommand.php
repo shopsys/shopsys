@@ -36,5 +36,7 @@ class GetCountOfMigrationsToExecuteCommand extends AbstractCommand
         $migrationsToExecute = $migrationsConfiguration->getMigrationsToExecute(Version::DIRECTION_UP, $latestVersion);
 
         $output->writeln('Count of migrations to execute: ' . count($migrationsToExecute));
+
+        return 0;
     }
 }

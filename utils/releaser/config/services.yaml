@@ -27,9 +27,9 @@ services:
             - ['packages', 'project-base']
 
     Twig_Environment:
-        class: Twig_Environment
+        class: Twig\Environment
 
     Twig_LoaderInterface:
-        class: Twig_Loader_Filesystem
+        class: Twig\Loader\FilesystemLoader
         arguments:
             - ['upgrade/template']

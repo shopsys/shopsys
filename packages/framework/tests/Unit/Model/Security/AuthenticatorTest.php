@@ -5,8 +5,8 @@ namespace Tests\FrameworkBundle\Unit\Model\Security;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use stdClass;
-use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AuthenticatorTest extends TestCase
 {
@@ -71,9 +71,9 @@ class AuthenticatorTest extends TestCase
      */
     private function getAuthenticator()
     {
-        $tokenStorageMock = $this->createMock(TokenStorage::class);
-        $traceableEventDispatcherMock = $this->createMock(TraceableEventDispatcher::class);
+        $tokenStorageMock = $this->createMock(TokenStorageInterface::class);
+        $eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
 
-        return new Authenticator($tokenStorageMock, $traceableEventDispatcherMock);
+        return new Authenticator($tokenStorageMock, $eventDispatcherMock);
     }
 }

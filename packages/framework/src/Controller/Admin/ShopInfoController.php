@@ -2,11 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\ShopInfo\ShopInfoSettingFormType;
 use Shopsys\FrameworkBundle\Model\ShopInfo\ShopInfoSettingFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ShopInfoController extends AdminBaseController
 {
@@ -56,13 +56,13 @@ class ShopInfoController extends AdminBaseController
             $this->shopInfoSettingFacade->setEmail($shopInfoSettingData['email'], $selectedDomainId);
             $this->shopInfoSettingFacade->setPhoneHours($shopInfoSettingData['phoneHours'], $selectedDomainId);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('E-shop attributes settings modified'));
+            $this->addSuccessFlash(t('E-shop attributes settings modified'));
 
             return $this->redirectToRoute('admin_shopinfo_setting');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/ShopInfo/shopInfo.html.twig', [

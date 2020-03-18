@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Router;
-use Twig_Environment;
+use Twig\Environment;
 
 class GridTest extends TestCase
 {
@@ -31,7 +31,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
@@ -58,7 +58,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
@@ -100,7 +100,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
@@ -125,7 +125,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
@@ -148,7 +148,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
@@ -170,7 +170,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
@@ -205,7 +205,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);
@@ -229,7 +229,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->getMockBuilder(DataSourceInterface::class)
@@ -258,7 +258,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->getMockBuilder(DataSourceInterface::class)
@@ -290,7 +290,7 @@ class GridTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $twigMock = $this->createMock(Twig_Environment::class);
+        $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
         $dataSourceMock = $this->createMock(DataSourceInterface::class);

@@ -3,26 +3,26 @@
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Twig_Environment;
-use Twig_TemplateWrapper;
+use Twig\Environment;
+use Twig\TemplateWrapper;
 
 class FeedRenderer
 {
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
     /**
-     * @var \Twig_TemplateWrapper
+     * @var \Twig\TemplateWrapper
      */
     protected $template;
 
     /**
-     * @param \Twig_Environment $twig
-     * @param \Twig_TemplateWrapper $template
+     * @param \Twig\Environment $twig
+     * @param \Twig\TemplateWrapper $template
      */
-    public function __construct(Twig_Environment $twig, Twig_TemplateWrapper $template)
+    public function __construct(Environment $twig, TemplateWrapper $template)
     {
         $this->twig = $twig;
         $this->template = $template;

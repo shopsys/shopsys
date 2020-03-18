@@ -2,10 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterInlineEdit;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ParameterController extends AdminBaseController
 {
@@ -55,14 +55,14 @@ class ParameterController extends AdminBaseController
 
             $this->parameterFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Parameter <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected parameter doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected parameter doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_parameter_list');

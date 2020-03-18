@@ -76,7 +76,7 @@ class MethodAnnotationsFactoryTest extends TestCase
             ReflectionObject::createFromName(ChildClass4::class)
         );
 
-        $this->assertContains('@method \App\Model\Category\CategoryFacade getCategoryFacade()', $annotationLines);
-        $this->assertContains('@method setCategory(\App\Model\Category\Category $category)', $annotationLines);
+        $this->assertStringContainsString('@method \App\Model\Category\CategoryFacade getCategoryFacade()', $annotationLines);
+        $this->assertStringContainsString('@method setCategory(\App\Model\Category\Category $category)', $annotationLines);
     }
 }

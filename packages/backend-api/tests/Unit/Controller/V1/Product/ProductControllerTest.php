@@ -31,7 +31,7 @@ class ProductControllerTest extends TestCase
      */
     protected $productController;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $productTransformer = new ApiProductTransformer($this->createDomain());
         $this->productFacade = $this->createMock(ProductFacade::class);

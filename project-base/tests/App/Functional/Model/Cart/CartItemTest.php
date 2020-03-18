@@ -13,9 +13,12 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class CartItemTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
@@ -30,8 +33,6 @@ class CartItemTest extends TransactionFunctionalTestCase
 
     public function testIsSimilarItemAs()
     {
-        $em = $this->getEntityManager();
-
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
         $availabilityData = new AvailabilityData();
@@ -51,10 +52,10 @@ class CartItemTest extends TransactionFunctionalTestCase
 
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);
-        $em->persist($availability);
-        $em->persist($product1);
-        $em->persist($product2);
-        $em->flush();
+        $this->em->persist($availability);
+        $this->em->persist($product1);
+        $this->em->persist($product2);
+        $this->em->flush();
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());
 

@@ -40,11 +40,11 @@
         </span>
     {% else %}
         {% if isVisibleForDefaultPricingGroupOnEachDomain(row.product) %}
-            {% spaceless %}
+            {% apply spaceless %}
                 <a href="{{ findUrlByDomainId('front_product_detail', { id: row.product.id }, getDomain().id) }}">
                     <span class="in-icon svg svg-visible in-icon--visible"></span>
                 </a>
-            {% endspaceless %}
+            {% endapply %}
         {% else %}
             <span class="in-icon svg svg-invisible in-icon--invisible"></span>
         {% endif %}

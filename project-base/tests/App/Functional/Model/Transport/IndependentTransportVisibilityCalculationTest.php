@@ -7,9 +7,12 @@ namespace Tests\App\Functional\Model\Transport;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class IndependentTransportVisibilityCalculationTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      * @inject
@@ -30,8 +33,6 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
 
     public function testIsIndependentlyVisible()
     {
-        $em = $this->getEntityManager();
-
         $enabledOnDomains = [
             Domain::FIRST_DOMAIN_ID => true,
             Domain::SECOND_DOMAIN_ID => false,
@@ -39,16 +40,14 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
 
         $transport = $this->getDefaultTransport($enabledOnDomains, false);
 
-        $em->persist($transport);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->flush();
 
         $this->assertTrue($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleEmptyName()
     {
-        $em = $this->getEntityManager();
-
         $transportData = $this->transportDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
@@ -63,16 +62,14 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
 
         $transport = new Transport($transportData);
 
-        $em->persist($transport);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->flush();
 
         $this->assertFalse($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleNotOnDomain()
     {
-        $em = $this->getEntityManager();
-
         $enabledOnDomains = [
             Domain::FIRST_DOMAIN_ID => false,
             Domain::SECOND_DOMAIN_ID => false,
@@ -80,16 +77,14 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
 
         $transport = $this->getDefaultTransport($enabledOnDomains, false);
 
-        $em->persist($transport);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->flush();
 
         $this->assertFalse($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleHidden()
     {
-        $em = $this->getEntityManager();
-
         $enabledOnDomains = [
             Domain::FIRST_DOMAIN_ID => true,
             Domain::SECOND_DOMAIN_ID => false,
@@ -97,8 +92,8 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
 
         $transport = $this->getDefaultTransport($enabledOnDomains, true);
 
-        $em->persist($transport);
-        $em->flush();
+        $this->em->persist($transport);
+        $this->em->flush();
 
         $this->assertFalse($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
     }

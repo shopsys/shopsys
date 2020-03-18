@@ -1,6 +1,6 @@
 {% block abstract_file_upload_widget %}
     {% import _self as self %}
-    {% spaceless %}
+    {% apply spaceless %}
         {%  set attr = attr|merge({'class': attr.class|default('') ~ ' js-file-upload box-upload'}) %}
         {%  set attr = attr|merge({'data-fileupload-url': url('admin_fileupload_upload')}) %}
         {%  set attr = attr|merge({'data-fileupload-delete-url': url('admin_fileupload_deletetemporaryfile')}) %}
@@ -82,5 +82,5 @@
             </div>
         </div>
 
-    {% endspaceless %}
+    {% endapply %}
 {% endblock abstract_file_upload_widget %}

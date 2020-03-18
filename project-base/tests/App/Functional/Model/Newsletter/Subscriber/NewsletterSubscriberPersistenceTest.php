@@ -20,12 +20,11 @@ class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase
             1
         );
 
-        $em = $this->getEntityManager();
-        $em->persist($newsletterSubscriber);
-        $em->flush();
-        $em->clear();
+        $this->em->persist($newsletterSubscriber);
+        $this->em->flush();
+        $this->em->clear();
 
-        $found = $em->createQueryBuilder()
+        $found = $this->em->createQueryBuilder()
         ->select('ns')
         ->from(NewsletterSubscriber::class, 'ns')
         ->where('ns.email = :email')

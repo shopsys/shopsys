@@ -3,10 +3,10 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class FileUploadExtension extends Twig_Extension
+class FileUploadExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
@@ -22,12 +22,12 @@ class FileUploadExtension extends Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('getLabelByTemporaryFilename', [$this, 'getLabelByTemporaryFilename']),
+            new TwigFunction('getLabelByTemporaryFilename', [$this, 'getLabelByTemporaryFilename']),
         ];
     }
 

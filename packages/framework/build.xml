@@ -42,6 +42,7 @@
     <property name="path.web.styles.styleguide" value="${path.web}/assets/styleguide/styles"/>
     <property name="path.yaml-standards.executable" value="${path.bin}/yaml-standards"/>
     <property name="phpstan.level" value="4"/>
+    <property name="phpstan.memory-limit" value="512M"/>
     <property name="translations.dump.locales" value="en cs" description="This property is @deprecated, see 'domains-info-load' target instead."/>
     <property name="translations.dump.flags" value="--keep"/>
     <property name="yaml-standards.indent-count" value="4"/>
@@ -113,7 +114,7 @@
 
     <target name="build-demo-ci" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
 
-    <target name="build-demo-dev" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-diff" description="Builds application for development with clean demo DB and runs checks on changed files."/>
+    <target name="build-demo-dev" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development with clean demo DB and runs checks on changed files."/>
 
     <target name="build-demo-dev-quick" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,clean-redis-old" description="Builds application for development with clean demo DB while skipping nonessential steps."/>
 
@@ -121,7 +122,7 @@
 
     <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,grunt,error-pages-generate,warmup,clean-redis-old" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
 
-    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-diff" description="Builds application for development preserving your DB and runs checks on changed files."/>
+    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
 
     <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-migrate,grunt,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
 
@@ -762,6 +763,7 @@
             <arg path="${path.tests}"/>
 
             <arg value="--level=${phpstan.level}"/>
+            <arg value="--memory-limit=${phpstan.memory-limit}"/>
             <arg value="-vvv"/>
         </exec>
     </target>
@@ -1066,7 +1068,7 @@
         </phingcall>
     </target>
 
-    <target name="tests" depends="test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
+    <target name="tests" depends="npm-install-dependencies,error-pages-generate,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
 
     <target name="tests-acceptance" depends="production-protection,clean,clean-redis,test-db-dump" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
         <available file="${path.env.test}" type="file" property="path.env.test.existed"/>
@@ -1311,15 +1313,7 @@
         <if>
             <equals arg1="${yaml-standards.executable.exists}" arg2="true"/>
             <then>
-                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true">
-                    <arg value="${project.basedir}"/>
-                    <arg value="--exclude-dir=${path.vendor}"/>
-                    <arg value="--exclude-dir=${path.root}/node_modules"/>
-                    <arg value="--exclude-dir=${path.var}"/>
-                    <arg value="--exclude-file=${path.config}/domains_urls.yml"/>
-                    <arg value="--check-indents-count-of-indents=${yaml-standards.indent-count}"/>
-                    <arg line="${yaml-standards.args}"/>
-                </exec>
+                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true"/>
             </then>
             <else>
                 <echo level="warning" message="The executable '${path.yaml-standards.executable}' is not available, your YAML files cannot be checked."/>

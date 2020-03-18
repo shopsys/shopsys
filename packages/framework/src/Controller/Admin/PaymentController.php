@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -11,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentController extends AdminBaseController
 {
@@ -76,7 +76,7 @@ class PaymentController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $payment = $this->paymentFacade->create($paymentData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Payment <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                 [
                     'name' => $payment->getName(),
@@ -87,7 +87,7 @@ class PaymentController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Payment/new.html.twig', [
@@ -114,7 +114,7 @@ class PaymentController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->paymentFacade->edit($payment, $paymentData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Payment <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                 [
                     'name' => $payment->getName(),
@@ -125,7 +125,7 @@ class PaymentController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing payment - %name%', ['%name%' => $payment->getName()]));
@@ -149,14 +149,14 @@ class PaymentController extends AdminBaseController
 
             $this->paymentFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Payment <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $paymentName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected payment doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected payment doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_transportandpayment_list');

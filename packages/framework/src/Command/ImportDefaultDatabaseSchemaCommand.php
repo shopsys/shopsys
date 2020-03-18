@@ -44,5 +44,7 @@ class ImportDefaultDatabaseSchemaCommand extends Command
         $output->writeln('Importing default database schema...');
         $this->databaseSchemaFacade->importDefaultSchema();
         $output->writeln('Default database schema imported successfully!');
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Heureka\HeurekaShopCertificationFormType;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HeurekaController extends AdminBaseController
 {
@@ -70,7 +70,7 @@ class HeurekaController extends AdminBaseController
                     $domainId
                 );
 
-                $this->getFlashMessageSender()->addSuccessFlash(t('Settings modified.'));
+                $this->addSuccessFlash(t('Settings modified.'));
             }
             $formView = $form->createView();
         }

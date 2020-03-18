@@ -12,8 +12,12 @@ doctrine:
         # See \Doctrine\DBAL\Connection::getDatabasePlatformVersion().
         server_version: "%database_server_version%"
         types:
-            money: \Shopsys\FrameworkBundle\Component\Doctrine\MoneyType
-
+            money:
+                class: \Shopsys\FrameworkBundle\Component\Doctrine\MoneyType
+                commented: false
+            tsvector:
+                class: \Intaro\PostgresSearchBundle\DBAL\TsvectorType
+                commented: false
     orm:
         auto_generate_proxy_classes: false
         dql:

@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 
 class OrderDomainFilter implements AdvancedSearchFilterInterface
 {
@@ -72,5 +73,7 @@ class OrderDomainFilter implements AdvancedSearchFilterInterface
             case self::OPERATOR_IS_NOT:
                 return '!=';
         }
+
+        throw new AdvancedSearchFilterOperatorNotFoundException($operator);
     }
 }

@@ -101,10 +101,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation: ~
 
-    Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass: ~
-
-    Shopsys\FrameworkBundle\Component\Javascript\Compiler\Translator\JsTranslatorCompilerPass: ~
-
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade: ~
 
     Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository: ~
@@ -203,8 +199,6 @@ services:
     Shopsys\FrameworkBundle\Model\Cart\CartRepository: ~
 
     Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade:
-        arguments:
-            - '@shopsys.shop.component.flash_message.sender.front'
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory: ~
 

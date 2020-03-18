@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -19,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AdminBaseController
 {
@@ -118,7 +118,7 @@ class OrderController extends AdminBaseController
             try {
                 $order = $this->orderFacade->edit($id, $orderData);
 
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Order Nr. <strong><a href="{{ url }}">{{ number }}</a></strong> modified'),
                     [
                         'number' => $order->getNumber(),
@@ -127,16 +127,16 @@ class OrderController extends AdminBaseController
                 );
                 return $this->redirectToRoute('admin_order_list');
             } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $e) {
-                $this->getFlashMessageSender()->addErrorFlash(
+                $this->addErrorFlash(
                     t('Entered customer not found, please check entered data.')
                 );
             } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Unable to send updating e-mail'));
+                $this->addErrorFlash(t('Unable to send updating e-mail'));
             }
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()]));
@@ -258,14 +258,14 @@ class OrderController extends AdminBaseController
 
             $this->orderFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Order Nr. <strong>{{ number }}</strong> deleted'),
                 [
                     'number' => $orderNumber,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected order doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected order doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_order_list');

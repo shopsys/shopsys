@@ -116,7 +116,7 @@ class PersonalDataController extends FrontBaseController
                 $this->domain->getId()
             );
             $this->personalDataAccessMailFacade->sendMail($personalData);
-            $this->getFlashMessageSender()->addSuccessFlash(t('Email with a link to the page with your personal data was sent to your email address.'));
+            $this->addSuccessFlash(t('Email with a link to the page with your personal data was sent to your email address.'));
         }
 
         $content = $this->setting->getForDomain(Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT, $this->domain->getId());
@@ -146,7 +146,7 @@ class PersonalDataController extends FrontBaseController
                 $this->domain->getId()
             );
             $this->personalDataAccessMailFacade->sendMail($personalData);
-            $this->getFlashMessageSender()->addSuccessFlash(t('Email with a link to the export of your personal data was sent to your email address.'));
+            $this->addSuccessFlash(t('Email with a link to the export of your personal data was sent to your email address.'));
         }
 
         $content = $this->setting->getForDomain(Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $this->domain->getId());

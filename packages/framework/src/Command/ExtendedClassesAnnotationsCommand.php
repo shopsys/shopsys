@@ -131,11 +131,13 @@ class ExtendedClassesAnnotationsCommand extends Command
         }
         if (empty($filesForReplacingAnnotations) && empty($filesForAddingPropertyOrMethodAnnotations)) {
             $symfonyStyle->success('All good!');
-            return 0;
+            return CommandResultCodes::RESULT_OK;
         } elseif ($isDryRun) {
             $symfonyStyle->note('You can fix the annotations using "annotations-fix" phing command.');
-            return 1;
+            return CommandResultCodes::RESULT_FAIL;
         }
+
+        return CommandResultCodes::RESULT_OK;
     }
 
     /**

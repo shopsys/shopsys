@@ -148,7 +148,7 @@ class ArticleFormType extends AbstractType
                 ->add('urls', UrlListType::class, [
                     'label' => t('URL addresses'),
                     'route_name' => 'front_article_detail',
-                    'entity_id' => $options['article'] !== null ? $options['article']->getId() : null,
+                    'entity_id' => $options['article'] !== null ?? $options['article']->getId(),
                 ]);
         }
 

@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AdminBaseController
 {
@@ -109,7 +109,7 @@ class ArticleController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->articleFacade->edit($id, $articleData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Article <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                     [
@@ -121,7 +121,7 @@ class ArticleController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing article - %name%', ['%name%' => $article->getName()]));
@@ -169,7 +169,7 @@ class ArticleController extends AdminBaseController
 
             $article = $this->articleFacade->create($articleData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Article <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                     [
@@ -181,7 +181,7 @@ class ArticleController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Article/new.html.twig', [
@@ -201,14 +201,14 @@ class ArticleController extends AdminBaseController
 
             $this->articleFacade->delete($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Article <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected article doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected article doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_article_list');

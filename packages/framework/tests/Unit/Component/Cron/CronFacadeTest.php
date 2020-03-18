@@ -25,7 +25,6 @@ class CronFacadeTest extends TestCase
         $cronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
 
         $cronModuleServiceMock->expects($this->once())->method('run');
-        $this->expectMethodCallWithCronModuleConfig($cronModuleFacadeMock, 'unscheduleModule', $serviceId);
 
         $cronConfig = $this->createCronConfigWithRegisteredServices([
             $serviceId => $cronModuleServiceMock,
@@ -46,7 +45,6 @@ class CronFacadeTest extends TestCase
                 return $iterations > 0;
             }
         );
-        $this->expectMethodCallWithCronModuleConfig($cronModuleFacadeMock, 'unscheduleModule', $serviceId);
 
         $cronConfig = $this->createCronConfigWithRegisteredServices([
             $serviceId => $cronModuleServiceMock,
@@ -102,7 +100,6 @@ class CronFacadeTest extends TestCase
             ->willReturnCallback(function () use ($scheduledServiceId, $scheduledCronModuleServiceMock) {
                 return [new CronModuleConfig($scheduledCronModuleServiceMock, $scheduledServiceId, '*', '*')];
             });
-        $this->expectMethodCallWithCronModuleConfig($cronModuleFacadeMock, 'unscheduleModule', $scheduledServiceId);
 
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->runScheduledModulesForInstance(CronModuleConfig::DEFAULT_INSTANCE_NAME);
     }
@@ -130,18 +127,6 @@ class CronFacadeTest extends TestCase
     private function mockCronModuleFacade()
     {
         return $this->createMock(CronModuleFacade::class);
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mock
-     * @param string $methodName
-     * @param string $serviceId
-     */
-    private function expectMethodCallWithCronModuleConfig($mock, $methodName, $serviceId)
-    {
-        $mock->expects($this->atLeastOnce())
-            ->method($methodName)
-            ->with($this->attributeEqualTo('serviceId', $serviceId));
     }
 
     /**

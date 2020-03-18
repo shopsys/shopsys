@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ImageController extends AdminBaseController
 {

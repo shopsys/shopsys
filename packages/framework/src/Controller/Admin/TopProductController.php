@@ -2,11 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\TopProduct\TopProductsFormType;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TopProductController extends AdminBaseController
 {
@@ -51,7 +51,7 @@ class TopProductController extends AdminBaseController
 
             $this->topProductFacade->saveTopProductsForDomain($domainId, $products);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Product settings on the main page successfully changed'));
+            $this->addSuccessFlash(t('Product settings on the main page successfully changed'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/TopProduct/list.html.twig', [

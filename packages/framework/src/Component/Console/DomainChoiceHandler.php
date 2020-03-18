@@ -55,6 +55,8 @@ class DomainChoiceHandler
                 return $domainConfig;
             }
         }
+
+        throw new \Shopsys\FrameworkBundle\Component\Console\Exception\NoDomainSetException();
     }
 
     /**

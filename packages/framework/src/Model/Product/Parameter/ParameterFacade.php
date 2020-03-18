@@ -136,6 +136,6 @@ class ParameterFacade
      */
     protected function dispatchParameterEvent(Parameter $parameter, string $eventType): void
     {
-        $this->eventDispatcher->dispatch($eventType, new ParameterEvent($parameter));
+        $this->eventDispatcher->dispatch(new ParameterEvent($parameter), $eventType);
     }
 }

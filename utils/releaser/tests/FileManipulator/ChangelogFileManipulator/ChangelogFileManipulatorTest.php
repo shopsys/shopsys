@@ -7,7 +7,7 @@ namespace Shopsys\Releaser\Tests\FileManipulator\ChangelogFileManipulator;
 use PharIo\Version\Version;
 use PHPUnit\Framework\TestCase;
 use Shopsys\Releaser\FileManipulator\ChangelogFileManipulator;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class ChangelogFileManipulatorTest extends TestCase
 {

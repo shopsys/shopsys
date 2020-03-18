@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitSettingFormType;
@@ -10,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitInlineEdit;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class UnitController extends AdminBaseController
 {
@@ -117,7 +117,7 @@ class UnitController extends AdminBaseController
             $this->unitFacade->deleteById($id, $newId);
 
             if ($newId === null) {
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Unit <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $fullName,
@@ -125,7 +125,7 @@ class UnitController extends AdminBaseController
                 );
             } else {
                 $newUnit = $this->unitFacade->getById($newId);
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Unit <strong>{{ name }}</strong> deleted and replaced by unit <strong>{{ newName }}</strong>'),
                     [
                         'name' => $fullName,
@@ -134,7 +134,7 @@ class UnitController extends AdminBaseController
                 );
             }
         } catch (\Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected unit doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected unit doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_unit_list');
@@ -161,7 +161,7 @@ class UnitController extends AdminBaseController
 
             $this->unitFacade->setDefaultUnit($unitSettingsFormData['defaultUnit']);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Default unit settings modified'));
+            $this->addSuccessFlash(t('Default unit settings modified'));
 
             return $this->redirectToRoute('admin_unit_list');
         }

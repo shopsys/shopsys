@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\AllMailTemplatesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class MailController extends AdminBaseController
 {
@@ -255,13 +255,13 @@ class MailController extends AdminBaseController
                 $allMailTemplatesData->domainId
             );
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('E-mail templates settings modified'));
+            $this->addSuccessFlash(t('E-mail templates settings modified'));
 
             return $this->redirectToRoute('admin_mail_template');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         $templateParameters = $this->getTemplateParameters();
@@ -292,7 +292,7 @@ class MailController extends AdminBaseController
             $this->mailSettingFacade->setMainAdminMail($mailSettingData['email'], $selectedDomainId);
             $this->mailSettingFacade->setMainAdminMailName($mailSettingData['name'], $selectedDomainId);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('E-mail settings modified.'));
+            $this->addSuccessFlash(t('E-mail settings modified.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Mail/setting.html.twig', [

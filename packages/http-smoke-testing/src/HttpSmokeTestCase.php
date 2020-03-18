@@ -16,7 +16,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before data provider is executed and before each test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

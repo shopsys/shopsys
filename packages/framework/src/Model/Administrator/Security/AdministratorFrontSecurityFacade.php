@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Security;
 
+use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -75,11 +76,7 @@ class AdministratorFrontSecurityFacade
      */
     public function isAdministratorLoggedAsCustomer()
     {
-        try {
-            return $this->authorizationChecker->isGranted(Roles::ROLE_ADMIN_AS_CUSTOMER);
-        } catch (\Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException $e) {
-            return false;
-        }
+        return $this->session->has(LoginAsUserFacade::SESSION_LOGIN_AS);
     }
 
     /**
@@ -88,7 +85,10 @@ class AdministratorFrontSecurityFacade
     public function getCurrentAdministrator()
     {
         if ($this->isAdministratorLogged()) {
-            return $this->getAdministratorToken()->getUser();
+            /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $user */
+            $user = $this->getAdministratorToken()->getUser();
+
+            return $user;
         } else {
             $message = 'Administrator is not logged.';
             throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException($message);

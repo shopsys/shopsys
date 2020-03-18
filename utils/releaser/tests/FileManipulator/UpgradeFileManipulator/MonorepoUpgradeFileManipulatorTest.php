@@ -7,7 +7,7 @@ namespace Shopsys\Releaser\Tests\FileManipulator\UpgradeFileManipulator;
 use PharIo\Version\Version;
 use PHPUnit\Framework\TestCase;
 use Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class MonorepoUpgradeFileManipulatorTest extends TestCase
 {

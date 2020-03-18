@@ -2,11 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Category\TopCategory\TopCategoriesFormType;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TopCategoryController extends AdminBaseController
 {
@@ -54,7 +54,7 @@ class TopCategoryController extends AdminBaseController
 
             $this->topCategoryFacade->saveTopCategoriesForDomain($domainId, $categories);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Product settings on the main page successfully changed'));
+            $this->addSuccessFlash(t('Product settings on the main page successfully changed'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/TopCategory/list.html.twig', [

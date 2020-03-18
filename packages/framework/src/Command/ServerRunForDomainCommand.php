@@ -52,7 +52,7 @@ class ServerRunForDomainCommand extends Command
                 'Environment can be set by file named DEVELOPMENT, PRODUCTION or TEST in project root.',
             ]);
 
-            return 1;
+            return CommandResultCodes::RESULT_FAIL;
         }
 
         $domainConfig = $this->domainChoiceHelper->chooseDomainConfig($io);

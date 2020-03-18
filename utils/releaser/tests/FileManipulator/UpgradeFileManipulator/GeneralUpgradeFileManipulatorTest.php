@@ -5,7 +5,7 @@ namespace Shopsys\Releaser\Tests\FileManipulator\UpgradeFileManipulator;
 use PharIo\Version\Version;
 use PHPUnit\Framework\TestCase;
 use Shopsys\Releaser\FileManipulator\GeneralUpgradeFileManipulator;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 class GeneralUpgradeFileManipulatorTest extends TestCase
 {

@@ -68,9 +68,9 @@ class ContactFormController extends FrontBaseController
 
             try {
                 $this->contactFormFacade->sendMail($contactFormData);
-                $this->getFlashMessageSender()->addSuccessFlash(t('Thank you, your message has been sent.'));
+                $this->addSuccessFlash(t('Thank you, your message has been sent.'));
             } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Error occurred when sending email.'));
+                $this->addErrorFlash(t('Error occurred when sending email.'));
             }
 
             return $this->redirect($this->generateUrl('front_contact'));

@@ -3,12 +3,12 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use DateTime;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Component\Routing\Annotation\Route;
 
 class FeedController extends AdminBaseController
 {
@@ -54,14 +54,14 @@ class FeedController extends AdminBaseController
         try {
             $this->feedFacade->generateFeed($feedName, $domainConfig);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Feed "{{ feedName }}" successfully generated.'),
                 [
                     'feedName' => $feedName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('Feed "{{ feedName }}" not found.'),
                 [
                     'feedName' => $feedName,

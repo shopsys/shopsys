@@ -68,6 +68,8 @@ class MigrateCommand extends AbstractCommand
 
         $migrationVersions = $this->getMigrationsConfiguration()->getMigrations();
         $this->migrationsLock->saveNewMigrations($migrationVersions);
+
+        return 0;
     }
 
     /**

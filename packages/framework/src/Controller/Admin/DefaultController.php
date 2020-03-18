@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
@@ -21,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AdminBaseController
 {
@@ -178,7 +178,7 @@ class DefaultController extends AdminBaseController
     protected function addWarningMessagesOnDashboard(): void
     {
         if ($this->mailTemplateFacade->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">Some required e-mail templates are not fully set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_mail_template'),
@@ -187,7 +187,7 @@ class DefaultController extends AdminBaseController
         }
 
         if (empty($this->unitFacade->getAll())) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">There are no units, you need to create some.</a>'),
                 [
                     'url' => $this->generateUrl('admin_unit_list'),
@@ -196,7 +196,7 @@ class DefaultController extends AdminBaseController
         }
 
         if ($this->setting->get(Setting::DEFAULT_UNIT) === 0) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">Default unit is not set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_unit_list'),
@@ -205,7 +205,7 @@ class DefaultController extends AdminBaseController
         }
 
         if (empty($this->availabilityFacade->getAll())) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">There are no availabilities, you need to create some.</a>'),
                 [
                     'url' => $this->generateUrl('admin_availability_list'),
@@ -214,7 +214,7 @@ class DefaultController extends AdminBaseController
         }
 
         if ($this->setting->get(Setting::DEFAULT_AVAILABILITY_IN_STOCK) === 0) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">Default product in stock availability is not set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_availability_list'),
@@ -322,7 +322,7 @@ class DefaultController extends AdminBaseController
     public function scheduleCronAction(string $serviceId): Response
     {
         $this->cronModuleFacade->schedule($serviceId);
-        $this->getFlashMessageSender()->addSuccessFlash(
+        $this->addSuccessFlash(
             t('Cron with serviceID `%serviceId%` was scheduled', ['%serviceId%' => $serviceId])
         );
 
@@ -337,7 +337,7 @@ class DefaultController extends AdminBaseController
     public function cronDisableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->disableCronModuleByServiceId($serviceId);
-        $this->getFlashMessageSender()->addSuccessFlash(
+        $this->addSuccessFlash(
             t('Cron with serviceID `%serviceId%` was disabled', ['%serviceId%' => $serviceId])
         );
 
@@ -352,7 +352,7 @@ class DefaultController extends AdminBaseController
     public function cronEnableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->enableCronModuleByServiceId($serviceId);
-        $this->getFlashMessageSender()->addSuccessFlash(
+        $this->addSuccessFlash(
             t('Cron with serviceID `%serviceId%` was enabled', ['%serviceId%' => $serviceId])
         );
 

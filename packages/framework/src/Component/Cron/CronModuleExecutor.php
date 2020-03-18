@@ -55,6 +55,8 @@ class CronModuleExecutor
                 return self::RUN_STATUS_OK;
             }
         }
+
+        return self::RUN_STATUS_OK;
     }
 
     /**

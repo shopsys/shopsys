@@ -20,8 +20,8 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return CustomerUserFormType::class;
+        yield CustomerUserFormType::class;
     }
 }

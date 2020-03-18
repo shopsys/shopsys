@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
@@ -16,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
 use Shopsys\FrameworkBundle\Twig\ImageExtension;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class AdvertController extends AdminBaseController
 {
@@ -110,19 +110,18 @@ class AdvertController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->advertFacade->edit($id, $advertData);
 
-            $this->getFlashMessageSender()
-                ->addSuccessFlashTwig(
-                    t('Advertising <a href="{{ url }}"><strong>{{ name }}</strong></a> modified'),
-                    [
-                        'name' => $advert->getName(),
-                        'url' => $this->generateUrl('admin_advert_edit', ['id' => $advert->getId()]),
-                    ]
-                );
+            $this->addSuccessFlashTwig(
+                t('Advertising <a href="{{ url }}"><strong>{{ name }}</strong></a> modified'),
+                [
+                    'name' => $advert->getName(),
+                    'url' => $this->generateUrl('admin_advert_edit', ['id' => $advert->getId()]),
+                ]
+            );
             return $this->redirectToRoute('admin_advert_list');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing advertising - %name%', ['%name%' => $advert->getName()]));
@@ -207,7 +206,7 @@ class AdvertController extends AdminBaseController
 
             $advert = $this->advertFacade->create($advertData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Advertising <a href="{{ url }}"><strong>{{ name }}</strong></a> created'),
                     [
@@ -219,7 +218,7 @@ class AdvertController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Advert/new.html.twig', [
@@ -239,14 +238,14 @@ class AdvertController extends AdminBaseController
 
             $this->advertFacade->delete($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Advertising <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected advertisement doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected advertisement doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_advert_list');

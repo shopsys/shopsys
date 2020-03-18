@@ -8,9 +8,8 @@ use IteratorAggregate;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo as SymfonySplFileInfo;
-use Symplify\EasyCodingStandard\Contract\Finder\CustomSourceProviderInterface;
 
-final class FileFinder implements CustomSourceProviderInterface
+final class FileFinder
 {
     /**
      * @param string[] $source

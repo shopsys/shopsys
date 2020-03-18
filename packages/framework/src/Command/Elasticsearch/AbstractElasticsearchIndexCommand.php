@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command\Elasticsearch;
 
+use Shopsys\FrameworkBundle\Command\CommandResultCodes;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
@@ -86,7 +87,8 @@ abstract class AbstractElasticsearchIndexCommand extends Command
         }
 
         $symfonyStyleIo->success($this->getActionFinishedMessage());
-        return 0;
+
+        return CommandResultCodes::RESULT_OK;
     }
 
     /**

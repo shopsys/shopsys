@@ -96,3 +96,16 @@ services:
     App\Controller\Front\ErrorController:
         arguments:
             $environment: '%kernel.environment%'
+
+    App\Controller\Front\RobotsController:
+        arguments:
+            $sitemapsUrlPrefix: '%shopsys.sitemaps_url_prefix%'
+
+    Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory: ~
+
+    sensio_framework_extra.psr7.http_message_factory:
+        class: Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory
+
+    Psr\Http\Message\ServerRequestInterface:
+        factory: ['@Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory', 'createRequest']
+        arguments: ['@=service("request_stack").getMasterRequest()']

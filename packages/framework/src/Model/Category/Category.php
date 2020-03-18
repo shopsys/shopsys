@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Table(name="categories")
  * @ORM\Entity
  *
- * @method CategoryTranslation translation(?string $locale = null)
+ * @method \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation translation(?string $locale = null)
  */
 class Category extends AbstractTranslatableEntity
 {

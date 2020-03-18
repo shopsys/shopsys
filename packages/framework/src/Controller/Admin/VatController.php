@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
@@ -12,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class VatController extends AdminBaseController
 {
@@ -124,7 +124,7 @@ class VatController extends AdminBaseController
             $this->vatFacade->deleteById($id, $newId);
 
             if ($newId === null) {
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('VAT <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $fullName,
@@ -132,7 +132,7 @@ class VatController extends AdminBaseController
                 );
             } else {
                 $newVat = $this->vatFacade->getById($newId);
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('VAT <strong>{{ name }}</strong> deleted and replaced by <strong>{{ newName }}</strong>.'),
                     [
                         'name' => $fullName,
@@ -141,7 +141,7 @@ class VatController extends AdminBaseController
                 );
             }
         } catch (\Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected VAT doesn\'t exist.'));
+            $this->addErrorFlash(t('Selected VAT doesn\'t exist.'));
         }
 
         return $this->redirectToRoute('admin_vat_list');
@@ -167,11 +167,11 @@ class VatController extends AdminBaseController
                 $this->vatFacade->setDefaultVatForDomain($vatSettingsFormData['defaultVat'], $this->adminDomainTabsFacade->getSelectedDomainId());
                 $this->pricingSetting->setRoundingType($vatSettingsFormData['roundingType']);
 
-                $this->getFlashMessageSender()->addSuccessFlash(t('VAT settings modified'));
+                $this->addSuccessFlash(t('VAT settings modified'));
 
                 return $this->redirectToRoute('admin_vat_list');
             } catch (\Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidRoundingTypeException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Invalid rounding settings'));
+                $this->addErrorFlash(t('Invalid rounding settings'));
             }
         }
 

@@ -4,10 +4,10 @@ namespace Shopsys\FrameworkBundle\Twig\FileThumbnail;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class FileThumbnailExtension extends Twig_Extension
+class FileThumbnailExtension extends AbstractExtension
 {
     public const DEFAULT_ICON_TYPE = 'all';
     protected const IMAGE_THUMBNAIL_QUALITY = 80;
@@ -57,7 +57,7 @@ class FileThumbnailExtension extends Twig_Extension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('getFileThumbnailInfoByTemporaryFilename', [$this, 'getFileThumbnailInfoByTemporaryFilename']),
+            new TwigFunction('getFileThumbnailInfoByTemporaryFilename', [$this, 'getFileThumbnailInfoByTemporaryFilename']),
         ];
     }
 

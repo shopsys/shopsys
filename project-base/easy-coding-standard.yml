@@ -51,3 +51,12 @@ parameters:
         Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff:
             - '*/src/*'
             - '*/tests/App/*'
+
+        PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\MethodDeclarationSniff.Underscore:
+            - '*/tests/App/Test/Codeception/Helper/CloseNewlyOpenedWindowsHelper.php'
+            - '*/tests/App/Test/Codeception/Helper/DatabaseHelper.php'
+            - '*/tests/App/Test/Codeception/Helper/DomainHelper.php'
+            - '*/tests/App/Test/Codeception/Helper/LocalizationHelper.php'
+            - '*/tests/App/Test/Codeception/Helper/NumberFormatHelper.php'
+            - '*/tests/App/Test/Codeception/Helper/SymfonyHelper.php'
+            - '*/tests/App/Test/Codeception/Module/Db.php'

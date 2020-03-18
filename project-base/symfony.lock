@@ -44,6 +44,15 @@
             "tests/unit.suite.yml"
         ]
     },
+    "codeception/lib-asserts": {
+        "version": "1.2.0"
+    },
+    "codeception/module-db": {
+        "version": "1.0.1"
+    },
+    "codeception/module-webdriver": {
+        "version": "1.0.5"
+    },
     "codeception/phpunit-wrapper": {
         "version": "7.7.1"
     },
@@ -351,14 +360,23 @@
     "nesbot/carbon": {
         "version": "2.26.0"
     },
+    "nette/application": {
+        "version": "v3.0.4"
+    },
     "nette/bootstrap": {
         "version": "v2.4.6"
+    },
+    "nette/component-model": {
+        "version": "v3.0.0"
     },
     "nette/di": {
         "version": "v2.4.15"
     },
     "nette/finder": {
         "version": "v2.5.1"
+    },
+    "nette/http": {
+        "version": "v3.0.3"
     },
     "nette/neon": {
         "version": "v3.0.0"
@@ -368,6 +386,9 @@
     },
     "nette/robot-loader": {
         "version": "v3.1.1"
+    },
+    "nette/routing": {
+        "version": "v3.0.0"
     },
     "nette/utils": {
         "version": "v2.5.3"
@@ -419,8 +440,14 @@
     "phing/phing": {
         "version": "2.16.1"
     },
+    "php": {
+        "version": "7.2"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
+    },
+    "php-webdriver/webdriver": {
+        "version": "1.8.2"
     },
     "phpcollection/phpcollection": {
         "version": "0.5.0"
@@ -614,6 +641,9 @@
     "shopsys/migrations": {
         "version": "dev-mg-weird-flex-but-ok"
     },
+    "shopsys/ordered-form": {
+        "version": "4.0.0"
+    },
     "shopsys/plugin-interface": {
         "version": "dev-mg-weird-flex-but-ok"
     },
@@ -704,6 +734,9 @@
     "symfony/cache": {
         "version": "v3.4.33"
     },
+    "symfony/cache-contracts": {
+        "version": "v1.1.7"
+    },
     "symfony/class-loader": {
         "version": "v3.4.33"
     },
@@ -750,8 +783,14 @@
     "symfony/dotenv": {
         "version": "v3.4.33"
     },
+    "symfony/error-handler": {
+        "version": "v4.4.5"
+    },
     "symfony/event-dispatcher": {
         "version": "v3.4.33"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.7"
     },
     "symfony/expression-language": {
         "version": "v3.4.33"
@@ -946,6 +985,9 @@
             "translations/.gitignore"
         ]
     },
+    "symfony/translation-contracts": {
+        "version": "v1.1.7"
+    },
     "symfony/twig-bridge": {
         "version": "v3.4.33"
     },
@@ -968,6 +1010,9 @@
     },
     "symfony/var-dumper": {
         "version": "v3.4.33"
+    },
+    "symfony/var-exporter": {
+        "version": "v4.4.5"
     },
     "symfony/web-link": {
         "version": "v3.4.33"
@@ -995,6 +1040,25 @@
             "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
         }
     },
+    "symfony/webpack-encore-bundle": {
+        "version": "1.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.6",
+            "ref": "69e1d805ad95964088bd510c05995e87dc391564"
+        },
+        "files": [
+            "assets/css/app.css",
+            "assets/js/app.js",
+            "config/packages/assets.yaml",
+            "config/packages/prod/webpack_encore.yaml",
+            "config/packages/test/webpack_encore.yaml",
+            "config/packages/webpack_encore.yaml",
+            "package.json",
+            "webpack.config.js"
+        ]
+    },
     "symfony/workflow": {
         "version": "3.3",
         "recipe": {
@@ -1010,6 +1074,12 @@
     "symfony/yaml": {
         "version": "v3.4.33"
     },
+    "symplify/auto-bind-parameter": {
+        "version": "v7.2.2"
+    },
+    "symplify/autowire-array-parameter": {
+        "version": "v7.2.2"
+    },
     "symplify/better-phpdoc-parser": {
         "version": "v5.4.16"
     },
@@ -1021,6 +1091,12 @@
     },
     "symplify/package-builder": {
         "version": "v5.4.16"
+    },
+    "symplify/set-config-resolver": {
+        "version": "v7.2.3"
+    },
+    "symplify/smart-file-system": {
+        "version": "v7.2.3"
     },
     "symplify/token-runner": {
         "version": "v5.4.13"

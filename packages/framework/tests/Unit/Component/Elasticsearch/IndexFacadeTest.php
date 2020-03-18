@@ -37,7 +37,7 @@ class IndexFacadeTest extends TestCase
      */
     private $entityManagerMock;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -56,5 +56,7 @@ class ConfigureDomainsUrlsCommand extends Command
             $this->localFilesystem->copy($this->configFilepath . '.dist', $this->configFilepath);
             $output->writeln(sprintf('<fg=green>Copied the default configuration into "%s".</fg=green>', $this->configFilepath));
         }
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

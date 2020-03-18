@@ -2,11 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Cookies\CookiesSettingFormType;
 use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CookiesController extends AdminBaseController
 {
@@ -54,12 +54,12 @@ class CookiesController extends AdminBaseController
                 $selectedDomainId
             );
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(t('Cookies information settings modified.'));
+            $this->addSuccessFlashTwig(t('Cookies information settings modified.'));
             return $this->redirectToRoute('admin_cookies_setting');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Cookies/setting.html.twig', [

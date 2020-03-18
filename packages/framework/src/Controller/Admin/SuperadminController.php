@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
@@ -14,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RequestContext;
 
 class SuperadminController extends AdminBaseController
@@ -106,7 +106,7 @@ class SuperadminController extends AdminBaseController
 
             $this->delayedPricingSetting->scheduleSetInputPriceType($pricingSettingData['type']);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Pricing settings modified'));
+            $this->addSuccessFlash(t('Pricing settings modified'));
             return $this->redirectToRoute('admin_superadmin_pricing');
         }
 
@@ -177,7 +177,7 @@ class SuperadminController extends AdminBaseController
                 $this->moduleFacade->setEnabled($moduleName, $isEnabled);
             }
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('Modules configuration modified'));
+            $this->addSuccessFlash(t('Modules configuration modified'));
             return $this->redirectToRoute('admin_superadmin_modules');
         }
 

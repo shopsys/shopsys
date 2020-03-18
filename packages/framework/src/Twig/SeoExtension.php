@@ -4,9 +4,10 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class SeoExtension extends \Twig_Extension
+class SeoExtension extends AbstractExtension
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
@@ -31,13 +32,13 @@ class SeoExtension extends \Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('getSeoTitleAddOn', [$this, 'getSeoTitleAddOn']),
-            new Twig_SimpleFunction('getSeoMetaDescription', [$this, 'getSeoMetaDescription']),
+            new TwigFunction('getSeoTitleAddOn', [$this, 'getSeoTitleAddOn']),
+            new TwigFunction('getSeoMetaDescription', [$this, 'getSeoMetaDescription']),
         ];
     }
 

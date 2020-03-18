@@ -10,9 +10,12 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class PricingGroupFacadeTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      * @inject
@@ -45,7 +48,6 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
 
     public function testCreate()
     {
-        $em = $this->getEntityManager();
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
 
@@ -54,7 +56,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         $domainId = Domain::FIRST_DOMAIN_ID;
         $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $domainId);
         $this->productPriceRecalculator->runAllScheduledRecalculations();
-        $productCalculatedPrice = $em->getRepository(ProductCalculatedPrice::class)->findOneBy([
+        $productCalculatedPrice = $this->em->getRepository(ProductCalculatedPrice::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroup,
         ]);
@@ -64,8 +66,6 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
 
     public function testDeleteAndReplace()
     {
-        $em = $this->getEntityManager();
-
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
         $pricingGroupToDelete = $this->pricingGroupFacade->create($pricingGroupData, Domain::FIRST_DOMAIN_ID);
@@ -82,7 +82,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
 
         $this->pricingGroupFacade->delete($pricingGroupToDelete->getId(), $pricingGroupToReplaceWith->getId());
 
-        $em->refresh($customerUser);
+        $this->em->refresh($customerUser);
 
         $this->assertEquals($pricingGroupToReplaceWith, $customerUser->getPricingGroup());
     }

@@ -226,6 +226,6 @@ class PricingGroupFacade
      */
     protected function dispatchPricingGroupEvent(PricingGroup $pricingGroup, string $eventType): void
     {
-        $this->eventDispatcher->dispatch($eventType, new PricingGroupEvent($pricingGroup));
+        $this->eventDispatcher->dispatch(new PricingGroupEvent($pricingGroup), $eventType);
     }
 }

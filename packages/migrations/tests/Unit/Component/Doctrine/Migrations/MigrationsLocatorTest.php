@@ -25,7 +25,7 @@ class MigrationsLocatorTest extends TestCase
      */
     private $migrationsLocator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kernelMock = $this->createMock(KernelInterface::class);
         $this->filesystemMock = $this->createMock(Filesystem::class);

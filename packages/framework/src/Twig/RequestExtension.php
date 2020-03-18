@@ -3,10 +3,10 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Symfony\Component\HttpFoundation\RequestStack;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class RequestExtension extends Twig_Extension
+class RequestExtension extends AbstractExtension
 {
     /**
      * @var \Symfony\Component\HttpFoundation\RequestStack
@@ -22,20 +22,20 @@ class RequestExtension extends Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'getAllRequestParams',
                 [$this, 'getAllRequestParams']
             ),
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'getRoute',
                 [$this, 'getRoute']
             ),
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'getRouteParams',
                 [$this, 'getRouteParams']
             ),

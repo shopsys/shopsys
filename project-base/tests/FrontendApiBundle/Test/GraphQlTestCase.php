@@ -23,7 +23,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
 
     protected function setUp(): void
     {
-        $this->client = $this->getClient(true);
+        $this->client = $this->findClient(true);
 
         if (!$this->enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
             $this->markTestSkipped('Frontend API disabled on domain');
@@ -72,9 +72,9 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     /**
      * @param string $query
      * @param array $variables
-     * @return \Symfony\Component\HttpFoundation\Response|null
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getResponseForQuery(string $query, array $variables): ?Response
+    private function getResponseForQuery(string $query, array $variables): Response
     {
         $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
 

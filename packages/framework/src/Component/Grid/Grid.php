@@ -6,7 +6,7 @@ use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Twig_Environment;
+use Twig\Environment;
 
 class Grid
 {
@@ -105,7 +105,7 @@ class Grid
     protected $routeCsrfProtector;
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
@@ -160,7 +160,7 @@ class Grid
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      */
     public function __construct(
         $id,
@@ -168,7 +168,7 @@ class Grid
         RequestStack $requestStack,
         RouterInterface $router,
         RouteCsrfProtector $routeCsrfProtector,
-        Twig_Environment $twig
+        Environment $twig
     ) {
         if (empty($id)) {
             $message = 'Grid id cannot be empty.';

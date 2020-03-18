@@ -10,6 +10,8 @@
 /project-base/composer.lock
 /project-base/package-lock.json
 /project-base/migrations-lock.yml
+/project-base/.phpunit.result.cache
 /.env.local
 /.env.local.php
 /.env.*.local
+/utils/releaser/.phpunit.result.cache

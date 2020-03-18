@@ -75,5 +75,7 @@ class ReplaceDomainsUrlsCommand extends Command
                 $output->writeln('Domain ' . $domainConfig->getId() . ' URL is matching URL stored in database.');
             }
         }
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

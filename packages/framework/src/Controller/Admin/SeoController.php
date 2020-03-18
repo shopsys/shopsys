@@ -2,11 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoSettingFormType;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SeoController extends AdminBaseController
 {
@@ -55,13 +55,13 @@ class SeoController extends AdminBaseController
             $this->seoSettingFacade->setDescriptionMainPage($seoSettingData['metaDescription'], $domainId);
             $this->seoSettingFacade->setTitleAddOn($seoSettingData['titleAddOn'], $domainId);
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('SEO attributes settings modified'));
+            $this->addSuccessFlash(t('SEO attributes settings modified'));
 
             return $this->redirectToRoute('admin_seo_index');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Seo/seoSetting.html.twig', [

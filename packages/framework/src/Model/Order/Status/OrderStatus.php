@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Table(name="order_statuses")
  * @ORM\Entity
  *
- * @method OrderStatusTranslation translation(?string $locale = null)
+ * @method \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation translation(?string $locale = null)
  */
 class OrderStatus extends AbstractTranslatableEntity
 {

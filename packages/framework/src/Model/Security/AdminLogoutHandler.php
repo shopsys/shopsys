@@ -37,6 +37,7 @@ class AdminLogoutHandler implements LogoutSuccessHandlerInterface
     {
         $this->administratorLoginFacade->invalidateCurrentAdministratorLoginToken();
         $url = $this->router->generate('admin_login');
+        $request->getSession()->remove(LoginAsUserFacade::SESSION_LOGIN_AS);
         $request->getSession()->migrate();
 
         return new RedirectResponse($url);

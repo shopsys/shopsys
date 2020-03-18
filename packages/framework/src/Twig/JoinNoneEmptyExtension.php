@@ -2,18 +2,18 @@
 
 namespace Shopsys\FrameworkBundle\Twig;
 
-use Twig_Extension;
-use Twig_SimpleFilter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class JoinNoneEmptyExtension extends Twig_Extension
+class JoinNoneEmptyExtension extends AbstractExtension
 {
     /**
-     * @return \Twig_SimpleFilter[]
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters()
     {
         return [
-            new Twig_SimpleFilter('joinNoneEmpty', [$this, 'getArray']),
+            new TwigFilter('joinNoneEmpty', [$this, 'getArray']),
         ];
     }
 

@@ -5,9 +5,10 @@ namespace Shopsys\FrameworkBundle\Twig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
 use Symfony\Component\Asset\Packages;
-use Twig_SimpleFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class DomainExtension extends \Twig_Extension
+class DomainExtension extends AbstractExtension
 {
     /**
      * @var string
@@ -48,15 +49,15 @@ class DomainExtension extends \Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('getDomain', [$this, 'getDomain']),
-            new Twig_SimpleFunction('getDomainName', [$this, 'getDomainNameById']),
-            new Twig_SimpleFunction('domainIcon', [$this, 'getDomainIconHtml'], ['is_safe' => ['html']]),
-            new Twig_SimpleFunction('isMultidomain', [$this, 'isMultidomain']),
+            new TwigFunction('getDomain', [$this, 'getDomain']),
+            new TwigFunction('getDomainName', [$this, 'getDomainNameById']),
+            new TwigFunction('domainIcon', [$this, 'getDomainIconHtml'], ['is_safe' => ['html']]),
+            new TwigFunction('isMultidomain', [$this, 'isMultidomain']),
         ];
     }
 

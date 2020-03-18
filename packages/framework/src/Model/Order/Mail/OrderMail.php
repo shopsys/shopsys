@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Twig_Environment;
+use Twig\Environment;
 
 class OrderMail implements MessageFactoryInterface
 {
@@ -46,7 +46,7 @@ class OrderMail implements MessageFactoryInterface
     protected $domainRouterFactory;
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
@@ -78,7 +78,7 @@ class OrderMail implements MessageFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Twig\PriceExtension $priceExtension
@@ -88,7 +88,7 @@ class OrderMail implements MessageFactoryInterface
     public function __construct(
         Setting $setting,
         DomainRouterFactory $domainRouterFactory,
-        Twig_Environment $twig,
+        Environment $twig,
         OrderItemPriceCalculation $orderItemPriceCalculation,
         Domain $domain,
         PriceExtension $priceExtension,

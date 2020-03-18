@@ -97,7 +97,7 @@ services:
         arguments:
             - '%shopsys.root_dir%/var/lock'
 
-    sensio_framework_extra.routing.loader.annot_class:
+    routing.loader.annotation:
         class: Shopsys\FrameworkBundle\Component\AnnotatedRouteControllerLoader
         arguments:
             - '@annotation_reader'
@@ -109,13 +109,13 @@ services:
 
     shopsys.doctrine.cache_driver.metadata_cache:
         class: Doctrine\Common\Cache\CacheProvider
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory:create'
+        factory: ['@Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory', 'create']
         arguments:
             - '@snc_redis.doctrine_metadata'
 
     shopsys.framework.cache_driver.annotations_cache:
         class: Doctrine\Common\Cache\CacheProvider
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory:create'
+        factory: ['@Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory', 'create']
         arguments:
             - '@snc_redis.framework_annotations'
 
@@ -127,6 +127,8 @@ services:
             $menuFactory: '@knp_menu.factory'
         tags:
             - { name: knp_menu.menu_builder, method: createMenu, alias: admin_side_menu }
+
+    Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory: ~
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig: ~
 
@@ -152,10 +154,6 @@ services:
     Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting:
         arguments:
             $environmentFileDirectory: '%shopsys.root_dir%'
-
-    Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade:
-        arguments:
-            - '@shopsys.shop.component.flash_message.sender.front'
 
     Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository:
         tags:
@@ -230,28 +228,6 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
-    shopsys.shop.component.flash_message.bag.admin:
-        class: Shopsys\FrameworkBundle\Component\FlashMessage\Bag
-        public: true
-        arguments: ['admin']
-
-    shopsys.shop.component.flash_message.bag.front:
-        class: Shopsys\FrameworkBundle\Component\FlashMessage\Bag
-        public: true
-        arguments: ['front']
-
-    shopsys.shop.component.flash_message.sender.admin:
-        class: Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender
-        public: true
-        arguments:
-            - '@shopsys.shop.component.flash_message.bag.admin'
-
-    shopsys.shop.component.flash_message.sender.front:
-        class: Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender
-        public: true
-        arguments:
-            - '@shopsys.shop.component.flash_message.bag.front'
-
     Shopsys\FrameworkBundle\Component\Form\TimedSpamValidationListener:
         $options: []
 
@@ -281,21 +257,6 @@ services:
     Intervention\Image\ImageManager:
         arguments:
             - [driver: 'gd']
-
-    Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass: ~
-
-    Shopsys\FrameworkBundle\Component\Javascript\Compiler\Translator\JsTranslatorCompilerPass: ~
-
-    Shopsys\FrameworkBundle\Component\Javascript\Compiler\JsCompiler:
-        arguments:
-            -
-                - '@Shopsys\FrameworkBundle\Component\Javascript\Compiler\Translator\JsTranslatorCompilerPass'
-                - '@Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass'
-
-    Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParser:
-        class: Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParser
-        factory: ['@Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParserFactory', create]
-        synthetic: false
 
     Shopsys\FrameworkBundle\Component\Log\SlowLogSubscriber:
         arguments:
@@ -508,8 +469,6 @@ services:
     # ContainerControllerResolver fetch RedirectController from container, therefore it must be a public service
     Symfony\Bundle\FrameworkBundle\Controller\RedirectController:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
 
     Symfony\Component\Config\Loader\LoaderInterface: '@routing.loader'
 
@@ -568,13 +527,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
 
-    Shopsys\FrameworkBundle\Twig\Javascript\JavascriptCompiler:
-        arguments:
-            - '%shopsys.web_dir%'
-            - ['%shopsys.javascript_sources_dir%', '%shopsys.framework.javascript_sources_dir%']
-            - '%shopsys.javascript_url_prefix%'
-            - ['admin/', 'common/', 'custom_admin/', 'frontend/', 'styleguide/']
-
     translation.loader.po:
         class: Shopsys\FrameworkBundle\Component\Translation\PoFileLoader
         tags:
@@ -585,10 +537,10 @@ services:
             - '@twig'
             - '%kernel.debug%'
 
-    Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsExceptionListener: '@twig.exception_listener'
+    Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener: '@twig.exception_listener'
 
     twig.exception_listener:
-        class: Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsExceptionListener
+        class: Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener
         tags:
             - { name: 'kernel.event_subscriber' }
             - { name: 'monolog.logger', channel: 'request' }
@@ -599,7 +551,7 @@ services:
             - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
 
     twig.stringloader:
-        class: Twig_Loader_Array
+        class: Twig\Loader\ArrayLoader
 
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\Twig\FilesystemLoader: '@twig.loader.filesystem'
 

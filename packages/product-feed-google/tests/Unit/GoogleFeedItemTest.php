@@ -55,7 +55,7 @@ class GoogleFeedItemTest extends TestCase
      */
     private $defaultProduct;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
