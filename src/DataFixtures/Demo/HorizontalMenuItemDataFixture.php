@@ -8,7 +8,6 @@ use App\Model\Category\Category;
 use App\Model\HorizontalMenu\HorizontalMenuItemData;
 use App\Model\HorizontalMenu\HorizontalMenuItemDataFactory;
 use App\Model\HorizontalMenu\HorizontalMenuItemFacade;
-
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -49,27 +48,27 @@ class HorizontalMenuItemDataFixture extends AbstractReferenceFixture implements 
         $horizontalMenuItemData = $this->horizontalMenuItemDataFactory->createNew();
 
         $horizontalMenuItemData->name = 'Stolky';
-        $horizontalMenuItemData->url = '/stolky';
+        $horizontalMenuItemData->url = '/elektro/';
         $this->addCategoriesToHorizontalMenuItem($horizontalMenuItemData);
         $this->createItem($horizontalMenuItemData);
 
         $horizontalMenuItemData->name = 'Židle';
-        $horizontalMenuItemData->url = '/zidle';
+        $horizontalMenuItemData->url = '#';
         $horizontalMenuItemData->categoriesByColumnNumber[1] = [];
         $horizontalMenuItemData->categoriesByColumnNumber[2] = [];
         $horizontalMenuItemData->categoriesByColumnNumber[3] = [];
         $this->createItem($horizontalMenuItemData);
 
         $horizontalMenuItemData->name = 'Pohovky';
-        $horizontalMenuItemData->url = '/pohovky';
+        $horizontalMenuItemData->url = '#';
         $this->createItem($horizontalMenuItemData);
 
         $horizontalMenuItemData->name = 'Skříně';
-        $horizontalMenuItemData->url = '/skrine';
+        $horizontalMenuItemData->url = '#';
         $this->createItem($horizontalMenuItemData);
 
         $horizontalMenuItemData->name = 'Komody';
-        $horizontalMenuItemData->url = '/komody';
+        $horizontalMenuItemData->url = '#';
         $this->createItem($horizontalMenuItemData);
     }
 
