@@ -99,8 +99,8 @@ const config = Encore.getWebpackConfig();
 
 config.resolve.alias = {
     'jquery-ui': 'jquery-ui/ui/widgets',
-    'jquery-ui-styles': 'jquery-ui',
     'framework': '@shopsys/framework/js',
-    'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery'))
+    'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
+    'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui'))
 };
 module.exports = config;
