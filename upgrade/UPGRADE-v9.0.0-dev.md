@@ -1329,6 +1329,9 @@ There you can find links to upgrade notes for other versions too.
     - these constants were removed so you might need to update your application appropriately:
         - `Roles::ROLE_ADMIN_AS_CUSTOMER`
 
+- fixed your version of jms/translation-bundle to 1.4.4 ([#1732](https://github.com/shopsys/shopsys/pull/1732))
+    - see #project-base-diff to update your project
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
