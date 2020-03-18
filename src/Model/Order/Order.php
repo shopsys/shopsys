@@ -26,7 +26,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  * @method \App\Model\Customer\User\CustomerUser|null getCustomerUser()
  * @method \App\Model\Order\Item\OrderItem[] getItems()
  * @method \App\Model\Order\Item\OrderItem[] getItemsWithoutTransportAndPayment()
- * @method \App\Model\Order\Item\OrderItem[] getTransportAndPaymentItems()
  * @method \App\Model\Order\Item\OrderItem getItemById(int $orderItemId)
  * @method \App\Model\Order\Item\OrderItem[] getProductItems()
  * @method \App\Model\Administrator\Administrator|null getCreatedAsAdministrator()
@@ -83,6 +82,9 @@ class Order extends BaseOrder
             $productType = $item->getProductType();
             $productTypes[$productType->getId()] = $productType;
         }
+        usort($productTypes, static function (ProductType $productType1, ProductType $productType2) {
+            return $productType1->getPosition() <=> $productType2->getPosition();
+        });
 
         return $productTypes;
     }

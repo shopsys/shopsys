@@ -221,8 +221,13 @@ class OrderPreviewSplittingFacade
         $promoCodeDiscountPercent = $this->findAppliedPromoCodePercentDiscount();
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
 
+        $productTypes = $this->getUsedProductTypesInCurrentCart();
+        usort($productTypes, static function (ProductType $productType1, ProductType $productType2) {
+            return $productType1->getPosition() <=> $productType2->getPosition();
+        });
+
         $orderPreviews = [];
-        foreach ($this->getUsedProductTypesInCurrentCart() as $productType) {
+        foreach ($productTypes as $productType) {
             $productTypeQuantifiedProducts = $this->filterQuantifiedProductsByProductType($quantifiedProducts, $productType, $domainId);
             if (count($productTypeQuantifiedProducts) > 0) {
                 $orderPreviews[] = $this->orderPreviewFactory->create(
