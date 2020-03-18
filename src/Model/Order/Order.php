@@ -35,6 +35,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  * @method setDeliveryAddress(\App\Model\Order\OrderData $orderData)
  * @method addItem(\App\Model\Order\Item\OrderItem $item)
  * @method removeItem(\App\Model\Order\Item\OrderItem $item)
+ * @method \App\Model\Order\Item\OrderItem[] getTransportAndPaymentItems()
  */
 class Order extends BaseOrder
 {
@@ -135,5 +136,20 @@ class Order extends BaseOrder
         }
 
         return $transports;
+    }
+
+    /**
+     * @return \App\Model\Order\Item\OrderItem[]
+     */
+    public function getUniqTransportItems(): array
+    {
+        $transportItems = [];
+        foreach ($this->getItems() as $item) {
+            if ($item->isTypeTransport() === true) {
+                $transportItems[$item->getTransport()->getId()] = $item;
+            }
+        }
+
+        return $transportItems;
     }
 }
