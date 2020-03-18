@@ -13,10 +13,10 @@
     display: none;
     position: relative;
     margin-bottom: 20px;
+    z-index: @box-filter-z-index;
 
     background-color: @box-filter-background;
     border: 1px solid @box-filter-delimiter-color;
-    z-index: @box-filter-z-index;
 
     @media @query-lg {
         display: block;
@@ -30,18 +30,15 @@
 
     &.active {
         display: block;
-        width: calc(~"100% - 10px");
-        margin: -20px 5px 20px 5px;
     }
 
     &__opener {
         position: relative;
         display: flex;
-        margin-bottom: 2rem;
-        overflow: hidden;
+        margin-bottom: 1.5rem;
 
         background-color: @color-f;
-        border: 1px solid lighten(@color-border, 5%);
+        border: 1px solid @color-border-light;
         border-radius: @radius;
 
         &::after {
@@ -52,7 +49,7 @@
             height: 100%;
             content: '';
 
-            background-color: lighten(@color-border, 5%);
+            background-color: @color-border-light;
         }
 
         @media @query-lg {
@@ -88,6 +85,7 @@
                 &--sort {
                     display: block;
                     margin-top: 3px;
+                    white-space: nowrap;
 
                     font-size: 13px;
                 }

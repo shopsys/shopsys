@@ -8,6 +8,11 @@ export default class ProductFilterBox {
             $container.filterAllNodes('.js-product-filter').toggleClass('active');
         });
 
+        $container.filterAllNodes('.js-product-sort-open-button').click(event => {
+            $(event.target).toggleClass('active');
+            $container.filterAllNodes('.js-product-sort').toggleClass('active');
+        });
+
         const _this = this;
         $container.filterAllNodes('.js-product-filter-box-arrow').on('click', event => {
             _this.toggleFilterBox($(event.target).closest('.js-product-filter-box'));

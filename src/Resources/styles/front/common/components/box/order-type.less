@@ -1,12 +1,23 @@
 .box-order-type {
     .clearfix();
+    width: 100%;
+
+    @media @query-vl {
+        width: auto;
+    }
 
     &__item {
-        float: left;
-        padding: 5px 10px;
+        position: relative;
+        display: block;
+        padding: 8px 12px;
+        margin-bottom: 6px;
 
         border-top-left-radius: @radius;
         border-top-right-radius: @radius;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
 
         @media @query-md {
             padding: 15px 18px;
@@ -14,38 +25,43 @@
             font-size: @font-size;
         }
 
+        @media @query-lg {
+            float: left;
+            margin-bottom: 0;
+        }
+
         @media @query-vl {
             padding: 20px 25px;
         }
 
         &.active {
-            position: relative;
-
             background: @color-light-secondary;
             color: @color-base;
             text-decoration: none;
             font-family: @font-quartenary;
 
-            &::before,
-            &::after {
-                position: absolute;
-                bottom: -11px;
-                width: 22px;
-                height: 22px;
-                z-index: 1;
-                content: '';
+            @media @query-lg {
+                &::before,
+                &::after {
+                    position: absolute;
+                    bottom: -11px;
+                    width: 22px;
+                    height: 22px;
+                    z-index: 1;
+                    content: '';
 
-                background-color: inherit;
-            }
+                    background-color: inherit;
+                }
 
-            &::before {
-                left: -1px;
-                transform: rotate(-45deg);
-            }
+                &::before {
+                    left: -1px;
+                    transform: rotate(-45deg);
+                }
 
-            &::after {
-                right: -1px;
-                transform: rotate(45deg);
+                &::after {
+                    right: -1px;
+                    transform: rotate(45deg);
+                }
             }
         }
     }
