@@ -8,6 +8,7 @@ use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -27,12 +28,6 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @inject
      */
     protected $persistentReferenceFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     * @inject
-     */
-    private $domainRouterFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
@@ -154,7 +149,8 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = []): string
     {
-        $router = $this->domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
+        $domainRouterFactory = $this->getContainer()->get(DomainRouterFactory::class);
+        $router = $domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
 
         return $router->generate($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
