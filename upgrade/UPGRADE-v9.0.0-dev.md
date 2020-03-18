@@ -1123,6 +1123,10 @@ There you can find links to upgrade notes for other versions too.
 
 - update your aplication to do not change product availability to default when availability can not be calculated immediately ([#1659](https://github.com/shopsys/shopsys/pull/1659))
     - see #project-base-diff to update your project
+    
+- update your application to have czech crowns on czech domain and euro on english domain ([#1542](https://github.com/shopsys/shopsys/pull/1542))
+    - see #project-base-diff to update your project
+    
 
 - update your application to symfony4 ([#1704](https://github.com/shopsys/shopsys/pull/1704))
     

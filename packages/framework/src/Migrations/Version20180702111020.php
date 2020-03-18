@@ -51,10 +51,10 @@ class Version20180702111020 extends AbstractMigration
         $roundingTypeSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;')->fetchColumn(0);
         if ($roundingTypeSettingCount <= 0) {
             /**
-             * value 3 stands for ROUNDING_TYPE_INTEGER
+             * value 3 stands for ROUNDING_TYPE_HUNDREDTHS
              * @see \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
              */
-            $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'roundingType\', 0, 3, \'integer\')');
+            $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'roundingType\', 0, 1, \'integer\')');
         }
     }
 

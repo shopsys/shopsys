@@ -101,6 +101,7 @@ Sometimes you may want to debug individual test without running the whole accept
 ```sh
 # create test database and fill it with demo data and export products to elasticsearch test index
 php phing test-db-demo
+php phing test-elasticsearch-export
 
 # create test database dump with current data which will be restored before each test
 php phing test-db-dump
