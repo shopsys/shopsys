@@ -85,13 +85,20 @@ class PricesPreviewFacade
             $domainId
         );
 
+        /** @var \App\Model\Transport\Transport[] $transports */
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
         $transportPricesByProductTypeIdAndTransportId = [];
         foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
             $productTypeId = $orderPreview->getProductType()->getId();
+            $allowedTransports = [];
+            foreach ($transports as $transport) {
+                if ($transport->hasProductType($orderPreview->getProductType())) {
+                    $allowedTransports[] = $transport;
+                }
+            }
             $transportPricesByProductTypeIdAndTransportId[$productTypeId] = $this->transportPriceCalculation
                 ->getCalculatedPricesIndexedByTransportId(
-                    $transports,
+                    $allowedTransports,
                     $currency,
                     $orderPreview->getProductsPrice(),
                     $domainId

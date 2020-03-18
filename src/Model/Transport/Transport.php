@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
+use App\Model\Product\Type\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
@@ -64,5 +65,14 @@ class Transport extends BaseTransport
     public function getProductTypes(): array
     {
         return $this->productTypes->toArray();
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductType $productType
+     * @return bool
+     */
+    public function hasProductType(ProductType $productType): bool
+    {
+        return $this->productTypes->contains($productType);
     }
 }

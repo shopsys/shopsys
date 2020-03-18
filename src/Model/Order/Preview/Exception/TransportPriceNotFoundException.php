@@ -19,7 +19,7 @@ class TransportPriceNotFoundException extends Exception
     public function __construct(ProductType $productType, Transport $transport, ?Throwable $previous = null)
     {
         $message = sprintf(
-            'Price for Transport (ID=`%s`) and ProductType (ID=`%s`) was not found.',
+            'Price for Transport (ID=`%s`) and ProductType (ID=`%s`) was not found. Is the combination allowed?',
             $transport->getId(),
             $productType->getId()
         );
