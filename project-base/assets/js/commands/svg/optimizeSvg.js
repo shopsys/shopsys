@@ -10,7 +10,7 @@ function optimizeSvg (type) {
         var svgTargetFolder = 'assets/public/frontend/svg';
     }
     if (type == 'admin') {
-        var svgSourceFolder = '../../node_modules/@shopsys/framework/assets/public/svg/admin';
+        var svgSourceFolder = '../../assets/public/admin/svg';
         var svgTargetFolder = 'assets/public/admin/svg';
     }
 

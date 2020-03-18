@@ -53,12 +53,13 @@ Encore
     }))
     .addPlugin(new CopyPlugin([
         { from: 'web/bundles/fpjsformvalidator', to: '../../assets/js/bundles/fpjsformvalidator', force: true },
-        { from: 'assets/public', to: '../../web/public', force: true }
+        { from: 'assets/public', to: '../../web/public', force: true },
+        { from: 'node_modules/@shopsys/framework/public/svg/admin', to: '../../web/public/admin/svg', force: true }
     ]))
 ;
 
-var svgFilesFrontendPath = optimizeSvg('frontend');
-var svgFilesAdminPath = optimizeSvg('admin');
+const svgFilesFrontendPath = optimizeSvg('frontend');
+const svgFilesAdminPath = optimizeSvg('admin');
 
 const domainFile = './config/domains.yml';
 const domains = yaml.safeLoad(fs.readFileSync(domainFile, 'utf8'));
@@ -99,7 +100,7 @@ const config = Encore.getWebpackConfig();
 config.resolve.alias = {
     'jquery-ui': 'jquery-ui/ui/widgets',
     'jquery-ui-styles': 'jquery-ui',
-    'framework': '@shopsys/framework/assets/js',
+    'framework': '@shopsys/framework/js',
     'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery'))
 };
 module.exports = config;
