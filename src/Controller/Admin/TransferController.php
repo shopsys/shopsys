@@ -7,7 +7,6 @@ namespace App\Controller\Admin;
 use App\Form\Admin\TransferIssueSearchFormType;
 use App\Model\Administrator\AdministratorFacade;
 use App\Model\Transfer\Issue\TransferIssueFacade;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
@@ -17,6 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TransferController extends AdminBaseController
 {
@@ -75,7 +75,7 @@ class TransferController extends AdminBaseController
         $form = $this->createForm(TransferIssueSearchFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $filteredTransfer = $form->getData()['transfer'];
 
             if ($filteredTransfer !== null) {

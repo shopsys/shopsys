@@ -80,7 +80,6 @@ class DefaultController extends BaseDefaultController
     {
         /* @var $administrator \App\Model\Administrator\Administrator */
         $administrator = $this->getUser();
-
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
         $registeredInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat($registeredInLastTwoWeeks);
         $registeredInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts($registeredInLastTwoWeeks);
@@ -135,6 +134,7 @@ class DefaultController extends BaseDefaultController
                 'ordersValue' => $currentValueOfOrders,
                 'ordersValueTrend' => $ordersValueTrend,
                 'transferIssuesCount' => $transferIssuesCount,
+                'cronGridViews' => $this->getCronGridViews(),
             ]
         );
     }

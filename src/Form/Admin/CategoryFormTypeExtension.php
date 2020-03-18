@@ -31,13 +31,11 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $settingsBuilder = $builder->get('settings');
-
         $settingsBuilder
             ->add('svgIcon', ChoiceType::class, [
                 'label' => t('Nastavení SVG ikony'),
                 'required' => false,
                 'choices' => $this->svgProvider->getAllSvgIconsNames(),
-                'choices_as_values' => true,
             ]);
     }
 
