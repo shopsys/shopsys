@@ -6,7 +6,9 @@ namespace App\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
@@ -40,6 +42,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(
@@ -53,6 +57,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         CustomerUserPasswordFacade $customerUserPasswordFacade,
         CustomerFacade $customerFacade,
         DeliveryAddressFacade $deliveryAddressFacade,
+        CustomerDataFactoryInterface $customerDataFactory,
+        BillingAddressFacade $billingAddressFacade,
         NewsletterFacade $newsletterFacade
     ) {
         parent::__construct(
@@ -65,7 +71,9 @@ class CustomerUserFacade extends BaseCustomerUserFacade
             $customerUserFactory,
             $customerUserPasswordFacade,
             $customerFacade,
-            $deliveryAddressFacade
+            $deliveryAddressFacade,
+            $customerDataFactory,
+            $billingAddressFacade
         );
         $this->newsletterFacade = $newsletterFacade;
     }

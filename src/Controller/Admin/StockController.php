@@ -141,14 +141,14 @@ class StockController extends AdminBaseController
 
             $this->stockSettingsDataFacade->edit($stockSettingsData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Nastavení ' . $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName() . ' skladů uloženo.')
                 );
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
+            $this->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
         }
         return $this->redirectToRoute('admin_stock_list');
     }
@@ -174,7 +174,7 @@ class StockController extends AdminBaseController
 
             $stock = $this->stockFacade->create($stockData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Stock <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                     [
@@ -186,7 +186,7 @@ class StockController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
+            $this->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
         }
 
         return $this->render('Admin/Content/Stock/new.html.twig', [
@@ -214,7 +214,7 @@ class StockController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->stockFacade->edit($id, $stockData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Stock <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                     [
@@ -226,7 +226,7 @@ class StockController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
+            $this->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editace skladu - %name%', ['%name%' => $stock->getName()]));
@@ -250,14 +250,14 @@ class StockController extends AdminBaseController
 
             $this->stockFacade->delete($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Stock <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (StockNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Vybraný sklad neexistuje.'));
+            $this->addErrorFlash(t('Vybraný sklad neexistuje.'));
         }
 
         return $this->redirectToRoute('admin_stock_list');

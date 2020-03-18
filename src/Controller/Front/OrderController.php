@@ -196,7 +196,6 @@ class OrderController extends FrontBaseController
             return $this->redirectToRoute('front_cart');
         }
         $orderFlow->setIsCompanyCustomer($isCompanyCustomer);
-        $orderFlow->setIsWithoutRegistration($isWithoutRegistration);
         $orderFlow->bind($frontOrderFormData);
         $orderFlow->saveSentStepData();
 

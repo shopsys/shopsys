@@ -115,11 +115,11 @@ class TransferController extends AdminBaseController
         try {
             $this->transferIssueFacade->deleteById((int)$id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Problém v přenosu byl označen jako vyřešený')
             );
         } catch (NotFoundHttpException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Vybraný problém v přenosu nebyl nalezen'));
+            $this->addErrorFlash(t('Vybraný problém v přenosu nebyl nalezen'));
         }
 
         return $this->redirectToRoute('admin_transfer_list');

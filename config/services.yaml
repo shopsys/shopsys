@@ -329,6 +329,7 @@ services:
 
     App\Component\FileSystem\FileSystemFactoryDecorator:
         decorates: Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory
+        decoration_inner_name: 'App\Component\FileSystem\FilesystemFactoryDecorator.inner'
         arguments:
             $inner: '@App\Component\FileSystem\FilesystemFactoryDecorator.inner'
             $s3ApiHost: '%env(S3_API_HOST)%'

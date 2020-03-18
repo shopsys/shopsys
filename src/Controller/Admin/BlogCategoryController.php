@@ -87,7 +87,7 @@ class BlogCategoryController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->blogCategoryFacade->edit($id, $blogCategoryData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Rubrika blogu <strong><a href="{{ url }}">{{ name }}</a></strong> byla upravena'),
                 [
                     'name' => $blogCategory->getName(),
@@ -99,7 +99,7 @@ class BlogCategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
+            $this->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editace rubriky blogu - %name%', ['%name%' => $blogCategory->getName()]));
@@ -128,7 +128,7 @@ class BlogCategoryController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $blogCategory = $this->blogCategoryFacade->create($blogCategoryData);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Rubrika blogu <strong><a href="{{ url }}">{{ name }}</a></strong> byla vytvořena'),
                 [
                     'name' => $blogCategory->getName(),
@@ -140,7 +140,7 @@ class BlogCategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
+            $this->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
         }
 
         return $this->render('Admin/Content/Blog/Category/new.html.twig', [
@@ -223,14 +223,14 @@ class BlogCategoryController extends AdminBaseController
 
             $this->blogCategoryFacade->deleteById($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Rubrika blogu <strong>{{ name }}</strong> byla smazána'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\App\Model\Blog\Category\Exception\BlogCategoryNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Vybraná rubrika blogu neexistuje.'));
+            $this->addErrorFlash(t('Vybraná rubrika blogu neexistuje.'));
         }
 
         return $this->redirectToRoute('admin_blogcategory_list');

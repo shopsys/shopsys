@@ -179,9 +179,9 @@ class ProductSeriesCategoryFormType extends AbstractType
     /**
      * @param string $locale
      * @param \App\Model\Product\Series\Category\ProductSeriesCategory|null $productSeriesCategory
-     * @return string|null
+     * @return string
      */
-    private function getTitlePlaceholder(string $locale, ?ProductSeriesCategory $productSeriesCategory = null): ?string
+    private function getTitlePlaceholder(string $locale, ?ProductSeriesCategory $productSeriesCategory = null): string
     {
         return $productSeriesCategory !== null ? $productSeriesCategory->getName($locale) : '';
     }

@@ -377,63 +377,63 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     {
         $this->markTestSkipped('manual prices are in sconto deprecated');
 
-        $productData = $this->getDefaultProductData();
-        $this->setPriceForAllDomains($productData, Money::create(10));
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-        $pricingGroupWithZeroPriceId = $pricingGroup->getId();
-
-        $productData->manualInputPricesByPricingGroupId[$pricingGroupWithZeroPriceId] = Money::zero();
-
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
-
-        $this->em->clear();
-
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $product,
-            'pricingGroup' => $pricingGroupWithZeroPriceId,
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
-
-        $this->assertFalse($productVisibility->isVisible());
+//        $productData = $this->getDefaultProductData();
+//        $this->setPriceForAllDomains($productData, Money::create(10));
+//
+//        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
+//        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+//        $pricingGroupWithZeroPriceId = $pricingGroup->getId();
+//
+//        $productData->manualInputPricesByPricingGroupId[$pricingGroupWithZeroPriceId] = Money::zero();
+//
+//        $product = $this->productFacade->create($productData);
+//        $this->productPriceRecalculator->runImmediateRecalculations();
+//
+//        $this->em->clear();
+//
+//        $this->productVisibilityRepository->refreshProductsVisibility();
+//
+//        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
+//        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
+//            'product' => $product,
+//            'pricingGroup' => $pricingGroupWithZeroPriceId,
+//            'domainId' => Domain::FIRST_DOMAIN_ID,
+//        ]);
+//
+//        $this->assertFalse($productVisibility->isVisible());
     }
 
     public function testIsNotVisibleWhenNullManualPrice()
     {
         $this->markTestSkipped('manual prices are in sconto deprecated');
 
-        $productData = $this->getDefaultProductData();
-
-        $allPricingGroups = $this->pricingGroupFacade->getAll();
-        foreach ($allPricingGroups as $pricingGroup) {
-            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = Money::create(10);
-        }
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-        $pricingGroupWithNullPriceId = $pricingGroup->getId();
-        $productData->manualInputPricesByPricingGroupId[$pricingGroupWithNullPriceId] = null;
-
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
-
-        $this->em->clear();
-
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $product,
-            'pricingGroup' => $pricingGroupWithNullPriceId,
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
-
-        $this->assertFalse($productVisibility->isVisible());
+//        $productData = $this->getDefaultProductData();
+//
+//        $allPricingGroups = $this->pricingGroupFacade->getAll();
+//        foreach ($allPricingGroups as $pricingGroup) {
+//            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = Money::create(10);
+//        }
+//
+//        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
+//        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+//        $pricingGroupWithNullPriceId = $pricingGroup->getId();
+//        $productData->manualInputPricesByPricingGroupId[$pricingGroupWithNullPriceId] = null;
+//
+//        $product = $this->productFacade->create($productData);
+//        $this->productPriceRecalculator->runImmediateRecalculations();
+//
+//        $this->em->clear();
+//
+//        $this->productVisibilityRepository->refreshProductsVisibility();
+//
+//        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
+//        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
+//            'product' => $product,
+//            'pricingGroup' => $pricingGroupWithNullPriceId,
+//            'domainId' => Domain::FIRST_DOMAIN_ID,
+//        ]);
+//
+//        $this->assertFalse($productVisibility->isVisible());
     }
 
     public function testRefreshProductsVisibilityVisibleVariants()

@@ -107,14 +107,14 @@ class ProductSeriesController extends AdminBaseController
 
             $this->productSeriesFacade->delete($productSeries);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Produktový program <strong>{{ name }}</strong> je smazán'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (ProductSeriesNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Vybraný produktový program neexistuje.'));
+            $this->addErrorFlash(t('Vybraný produktový program neexistuje.'));
         }
 
         return $this->redirectToRoute('admin_productseries_list');
@@ -135,7 +135,7 @@ class ProductSeriesController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $productSeries = $this->productSeriesFacade->create($form->getData());
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Produktový program <strong><a href="{{ url }}">{{ productSeries.name }}</a></strong> je úspěšně vytvořen'),
                     [
@@ -148,7 +148,7 @@ class ProductSeriesController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render(
@@ -177,7 +177,7 @@ class ProductSeriesController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $productSeries = $this->productSeriesFacade->edit($id, $form->getData());
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Produktový program <strong><a href="{{ url }}">{{ productSeries.name }}</a></strong> je úspěšně upraven'),
                     [
@@ -189,7 +189,7 @@ class ProductSeriesController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Úprava produktového programu - %name%', ['%name%' => $productSeries->getName($this->domain->getLocale())]));
