@@ -131,6 +131,25 @@
         }
     }
 
+    @btn-secondary-color: @color-f;
+    @btn-secondary-color-hover: @color-f;
+    @btn-secondary-bg: @color-primary;
+    @btn-secondary-bg-hover: lighten(@color-primary, 8%);
+    @btn-secondary-font-size: 15px;
+
+    &--secondary {
+        font-family: @font-quartenary;
+        font-size: @btn-secondary-font-size;
+        background-color: @btn-secondary-bg;
+        color: @btn-secondary-color;
+        text-transform: none;
+
+        &:hover {
+            background-color: @btn-secondary-bg-hover;
+            color: @btn-secondary-color-hover;
+        }
+    }
+
     @btn-wide-min-width-md: 330px;
     @btn-wide-padding: 1rem;
 
