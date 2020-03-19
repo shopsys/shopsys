@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Item;
 
+use App\Model\Product\Type\ProductType;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
@@ -27,6 +28,13 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
  */
 class OrderItem extends BaseOrderItem
 {
+    /**
+     * @var \App\Model\Product\Type\ProductType
+     * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType")
+     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
+     */
+    private $productType;
+
     /**
      * @param \App\Model\Order\Order $order
      * @param string $name
@@ -57,5 +65,21 @@ class OrderItem extends BaseOrderItem
             $unitName,
             $catnum
         );
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType
+     */
+    public function getProductType(): ProductType
+    {
+        return $this->productType;
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductType $productType
+     */
+    public function setProductType(ProductType $productType): void
+    {
+        $this->productType = $productType;
     }
 }

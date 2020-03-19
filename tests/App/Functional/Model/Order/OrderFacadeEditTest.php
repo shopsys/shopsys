@@ -16,8 +16,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 {
     private const ORDER_ID = 10;
     private const PRODUCT_ITEM_ID = 45;
-    private const PAYMENT_ITEM_ID = 46;
-    private const TRANSPORT_ITEM_ID = 47;
+    private const TRANSPORT_ITEM_ID = 46;
+    private const PAYMENT_ITEM_ID = 47;
 
     /**
      * @var \App\Model\Order\Order
@@ -96,6 +96,9 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
     public function testAddProductItem(): void
     {
+        $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
+            . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
+
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
         $orderItemData = $this->orderItemDataFactory->create();
@@ -119,6 +122,9 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
     public function testAddProductItemWithoutUsingPriceCalculation(): void
     {
+        $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
+            . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
+
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
         $orderItemData = $this->orderItemDataFactory->create();

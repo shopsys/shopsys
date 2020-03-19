@@ -104,6 +104,11 @@ class ProductData extends BaseProductData
      */
     public $productTypePlanFileUrl;
 
+    /**
+     * @var \App\Model\Product\Type\ProductType[]|null[]
+     */
+    public $productType;
+
     public function __construct()
     {
         parent::__construct();
@@ -124,5 +129,6 @@ class ProductData extends BaseProductData
         $this->productTypePlanCode = [];
         $this->assemblyInstructionFileUrl = [];
         $this->productTypePlanFileUrl = [];
+        $this->productType = [];
     }
 }

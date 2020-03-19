@@ -70,12 +70,20 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      */
     public function load(ObjectManager $manager)
     {
+        /** @var \App\Model\Product\Type\ProductType $productTypeCommon */
+        $productTypeCommon = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+        /** @var \App\Model\Product\Type\ProductType $productTypeOversized */
+        $productTypeOversized = $this->getReference(ProductTypeDataFixture::TYPE_OVERSIZED);
+
         $transportData = $this->transportDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
         }
 
+        $transportData->productTypes = [
+            $productTypeCommon,
+        ];
         $this->setPriceForAllDomains($transportData, Money::create('99.95'));
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
@@ -85,6 +93,10 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
         }
 
+        $transportData->productTypes = [
+            $productTypeCommon,
+            $productTypeOversized,
+        ];
         $this->setPriceForAllDomains($transportData, Money::create('199.95'));
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
@@ -96,6 +108,10 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->instructions[$locale] = t('We are looking forward to your visit.', [], 'dataFixtures', $locale);
         }
 
+        $transportData->productTypes = [
+            $productTypeCommon,
+            $productTypeOversized,
+        ];
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
     }
@@ -136,6 +152,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             VatDataFixture::class,
             CurrencyDataFixture::class,
             SettingValueDataFixture::class,
+            ProductTypeDataFixture::class,
         ];
     }
 }

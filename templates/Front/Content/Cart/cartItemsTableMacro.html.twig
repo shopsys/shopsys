@@ -1,0 +1,104 @@
+{% macro table(form, orderPreview) %}
+    <table class="table-cart js-cart">
+        <thead>
+            <tr class="table-cart__row">
+                <th class="table-cart__cell table-cart__cell--image">{{ 'Image'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--name">{{ 'Name'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--price">{{ 'Unit price including VAT'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--price">{{ 'VAT rate'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--amount">{{ 'Amount'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--price">{{ 'Price including VAT'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--action">&nbsp;</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% set cartItemPrices = orderPreview.quantifiedItemsPrices %}
+        {% set cartItemDiscounts = orderPreview.quantifiedItemsDiscounts %}
+        {% for index, quantifiedProduct in orderPreview.quantifiedProducts %}
+            {% set cartItemPrice = cartItemPrices[index] %}
+            {% set cartItemDiscount = cartItemDiscounts[index] %}
+            {% set product = quantifiedProduct.product %}
+            <tr class="table-cart__row js-cart-item">
+                <td class="table-cart__cell table-cart__cell--image">
+                    <a href="{{ url('front_product_detail', {id: product.id}) }}" title="{{ product.fullname }}" class="table-cart__cell__image">
+                        {{ image(product, { size: 'thumbnail' }) }}
+                    </a>
+                </td>
+
+                <td class="table-cart__cell table-cart__cell--name js-cart-item-name">
+                    <a href="{{ url('front_product_detail', {id: product.id}) }}">
+                        {{ product.fullname }}
+                    </a>
+                    <div class="table-cart__cell__price-mobile">
+                        {{ cartItemPrice.totalPrice.priceWithVat|price }}
+                        {% if cartItemDiscount is not null %}
+                            <div>
+                                {{ 'Discount'|trans }}:
+                                {{ cartItemDiscount.priceWithVat|price }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </td>
+
+                <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
+                    {{ cartItemPrice.unitPrice.priceWithVat|price }}
+                </td>
+
+                <td class="table-cart__cell table-cart__cell--price">
+                    {{ product.getVatForDomain(getDomain().id).percent|formatPercent }}
+                </td>
+
+                <td class="table-cart__cell table-cart__cell--amount">
+                    <span class="form-input-spinbox js-spinbox">
+                        {{ form_widget(form.quantities[index], { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1}}) }}
+                        <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">+</button>
+                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">-</button>
+                    </span>
+                </td>
+
+                <td class="table-cart__cell table-cart__cell--price js-cart-item-total-price">
+                    {{ cartItemPrice.totalPrice.priceWithVat|price }}
+                    {% if cartItemDiscount is not null %}
+                        <div>
+                            {{ 'Discount'|trans }}:
+                            {{ cartItemDiscount.priceWithVat|price }}
+                        </div>
+                    {% endif %}
+                </td>
+
+                <td class="table-cart__cell table-cart__cell--action">
+                    <a
+                            href="{{ url('front_cart_delete', { cartItemId: index, _token: csrf_token('front_cart_delete_' ~ index) }) }}"
+                            class="js-cart-item-remove-button"
+                    >
+                        <i class="svg svg-remove"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+        <tfoot>
+            <tr class="table-cart__row">
+                <td class="table-cart__cell table-cart__cell--image">&nbsp;</td>
+                <td class="table-cart__cell table-cart__cell--name">&nbsp;</td>
+                <td class="table-cart__cell  table-cart__cell--price">&nbsp;</td>
+                <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price" colspan="3">
+                    <div>{{ 'Total price including VAT'|trans }}:
+                        <span>
+                            {{ orderPreview.productsPrice.priceWithVat|price }}
+                        </span>
+                    </div>
+                    <div>{{ 'Celková cena bez DPH'|trans }}:
+                        <span>
+                            {{ orderPreview.productsPrice.priceWithoutVat|price }}
+                        </span>
+                    </div>
+                </td>
+                <td class="table-cart__cell">&nbsp;</td>
+            </tr>
+        </tfoot>
+
+    </table>
+{% endmacro %}

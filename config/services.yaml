@@ -33,6 +33,10 @@ services:
 
     App\Component\Doctrine\QueryBuilderExtender: ~
 
+    App\Component\Doctrine\RemoveMappingsSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber, priority: -100 }
+
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: '@App\Component\Doctrine\QueryBuilderExtender'
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
@@ -99,6 +103,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@App\Form\Front\Order\DomainAwareOrderFlowFactory'
 
+    App\Model\Order\Watcher\SplitTransportAndPaymentWatcher: ~
+
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface: '@App\Model\Article\ArticleDataFactory'
 
     App\Model\Category\CurrentCategoryResolver: ~
@@ -122,6 +128,10 @@ services:
     Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper: '@App\Model\Order\FrontOrderDataMapper'
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory: '@App\Model\Order\Item\OrderItemFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface: '@App\Model\Order\Item\OrderItemFactory'
 
     App\Model\Order\OrderDataMapper: ~
 
@@ -173,6 +183,9 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\DefaultController:
         class: 'App\Controller\Admin\DefaultController'
 
+    Shopsys\FrameworkBundle\Controller\Admin\OrderController:
+        class: 'App\Controller\Admin\OrderController'
+
     Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
         class: 'App\Controller\Admin\PromoCodeController'
         arguments:
@@ -223,7 +236,13 @@ services:
 
     App\Model\Order\Preview\OrderPreviewCalculation: ~
 
+    App\Model\Order\Mail\OrderMail: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: '@App\Model\Order\Mail\OrderMail'
+
     Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation: '@App\Model\Order\Preview\OrderPreviewCalculation'
+
+    Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory: '@App\Model\Order\Preview\OrderPreviewFactory'
 
     App\Model\Product\Pricing\QuantifiedProductDiscountCalculation: ~
 

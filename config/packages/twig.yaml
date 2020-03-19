@@ -27,3 +27,4 @@ twig:
     strict_variables: true
     globals:
         globalMultipleFormSetting: '@Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting'
+        parameterDisableFormFieldsFromTransfer: '%disable_form_fields_from_transfer%'

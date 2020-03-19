@@ -8,21 +8,22 @@ use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
+use App\Model\Product\ProductData;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
+     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private $productDataFactory;
@@ -77,12 +78,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $this->setPriceForAllDomains($productData, Money::create(100));
         $this->setVatsForAllDomains($productData);
+        $this->setProductTypeForAllDomains($productData);
 
         return $productData;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \App\Model\Product\ProductData $productData
      */
     private function setVatsForAllDomains(ProductData $productData): void
     {
@@ -100,6 +102,19 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
 
         $productData->vatsIndexedByDomainId = $productVats;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function setProductTypeForAllDomains(ProductData $productData): void
+    {
+        /** @var \App\Model\Product\Type\ProductType $productType */
+        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productData->productType[$domainId] = $productType;
+        }
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Pricing;
 
 use App\DataFixtures\Demo\PricingGroupDataFixture;
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
@@ -42,7 +43,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     private $vatFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
+     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private $productDataFactory;
@@ -53,8 +54,10 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
+        /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $this->setProductTypes($productData);
         $this->setVats($productData);
         $product = Product::create($productData);
 
@@ -72,8 +75,10 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
+        /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $this->setProductTypes($productData);
         $this->setVats($productData);
         $product = Product::create($productData);
 
@@ -95,5 +100,18 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function setProductTypes(ProductData $productData): void
+    {
+        /** @var \App\Model\Product\Type\ProductType $productType */
+        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productData->productType[$domainId] = $productType;
+        }
     }
 }

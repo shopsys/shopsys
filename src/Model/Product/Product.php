@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Product\Type\ProductType;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
@@ -28,7 +29,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method refreshVariants(\App\Model\Product\Product[] $currentVariants)
  * @method addNewVariants(\App\Model\Product\Product[] $currentVariants)
  * @method unsetRemovedVariants(\App\Model\Product\Product[] $currentVariants)
- * @method translation(?string $locale = null): ProductTranslation
+ * @method \App\Model\Product\ProductTranslation translation(?string $locale = null)
  * @property \App\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection $translations
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
@@ -112,6 +113,7 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
+            $productDomain->setProductType($productData->productType[$domainId]);
         }
     }
 
@@ -347,5 +349,14 @@ class Product extends BaseProduct
     public function isDownloadProductTypePlanFiles(): bool
     {
         return $this->downloadProductTypePlanFiles;
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Product\Type\ProductType
+     */
+    public function getProductType(int $domainId): ProductType
+    {
+        return $this->getProductDomain($domainId)->getProductType();
     }
 }

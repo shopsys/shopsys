@@ -52,6 +52,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'
 
+    App\Model\Order\Preview\OrderPreviewFactory: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory: '@App\Model\Order\Preview\OrderPreviewFactory'
+
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade: '@App\Model\Order\PromoCode\CurrentPromoCodeFacade'
 
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@App\Model\Transport\TransportDataFactory'
@@ -59,6 +63,8 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface: '@Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory'
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
+
+    App\Model\Product\ProductDataFactory: ~
 
     Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@App\Model\Product\ProductDataFactory'
 
@@ -100,6 +106,8 @@ services:
     Shopsys\FrameworkBundle\Component\Setting\Setting: '@App\Component\Setting\Setting'
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\Listed\ListedProductViewFactory'
+
+    App\Model\Order\OrderFacade: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderFacade: '@App\Model\Order\OrderFacade'
 
