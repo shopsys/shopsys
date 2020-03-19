@@ -152,4 +152,15 @@ class Order extends BaseOrder
 
         return $transportItems;
     }
+
+    /**
+     * @return \App\Model\Order\Item\OrderItem[]
+     */
+    public function getTransportAndPaymentItems(): array
+    {
+        // make public this method
+        /** @var \App\Model\Order\Item\OrderItem[] $transportAndPaymentItems */
+        $transportAndPaymentItems = parent::getTransportAndPaymentItems();
+        return $transportAndPaymentItems;
+    }
 }
