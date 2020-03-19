@@ -1,7 +1,6 @@
 const Encore = require('@symfony/webpack-encore');
 const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const processTrans = require('./assets/js/commands/translations/process');
-const optimizeSvg = require('./assets/js/commands/svg/optimizeSvg');
 const GenerateWebFont = require('./assets/js/commands/svg/generateWebFont');
 const CopyPlugin = require('copy-webpack-plugin');
 const yaml = require('js-yaml');
@@ -58,9 +57,6 @@ Encore
     ]))
 ;
 
-const svgFilesFrontendPath = optimizeSvg('frontend');
-const svgFilesAdminPath = optimizeSvg('admin');
-
 const domainFile = './config/domains.yml';
 const domains = yaml.safeLoad(fs.readFileSync(domainFile, 'utf8'));
 
@@ -81,12 +77,14 @@ Encore
             files: 'assets/styles/**/*.less'
         })
     )
-    .addLoader(
-        new GenerateWebFont('frontend', svgFilesFrontendPath)
-    )
-    .addLoader(
-        new GenerateWebFont('admin', svgFilesAdminPath)
-    )
+    .addLoader(new GenerateWebFont(
+        'frontend',
+        './assets/public/frontend/svg/*.svg'
+    ))
+    .addLoader(new GenerateWebFont(
+        'admin',
+        './assets/public/admin/svg/*.svg'
+    ))
     .addLoader({
         test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
         loader: 'file-loader'
