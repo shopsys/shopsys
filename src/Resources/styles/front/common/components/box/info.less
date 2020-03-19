@@ -33,8 +33,15 @@
 
     &__img {
         display: block;
+        min-width: @box-info-img-size;
         width: @box-info-img-size;
         height: @box-info-img-size;
+
+        @media screen and (max-width: 340px) {
+            min-width: @box-info-img-size - 15;
+            width: @box-info-img-size - 15;
+            height: @box-info-img-size - 15;
+        }
 
         @media @query-md {
             width: @box-info-img-size-md;
@@ -46,10 +53,14 @@
         position: relative;
         flex-grow: 1;
         margin-left: 1.5rem;
-        padding: 1.5rem;
+        padding: 1rem;
 
         border: 1px solid @box-info-border-color;
         border-radius: @radius;
+
+        @media @query-sm {
+            padding: 1.5rem;
+        }
 
         @media @query-md {
             margin-left: 2.5rem;
@@ -133,7 +144,11 @@
             padding: 0.25rem 0;
 
             font-family: @font-quartenary;
-            font-size: @box-info-link-font-size;
+            font-size: @box-info-link-font-size - 2;
+
+            @media screen and (min-width: 340px) {
+                font-size: @box-info-link-font-size;
+            }
 
             @media @query-md {
                 margin-right: 2rem;
