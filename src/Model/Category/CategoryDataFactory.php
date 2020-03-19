@@ -4,12 +4,47 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory as BaseCategoryDataFactory;
 
 class CategoryDataFactory extends BaseCategoryDataFactory
 {
+    /**
+     * @var \App\Model\Category\CategoryParameterRepository
+     */
+    private $categoryParameterRepository;
+
+    /**
+     * @param \App\Model\Category\CategoryRepository $categoryRepository
+     * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
+     */
+    public function __construct(
+        CategoryRepository $categoryRepository,
+        CategoryParameterRepository $categoryParameterRepository,
+        FriendlyUrlFacade $friendlyUrlFacade,
+        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+        Domain $domain,
+        ?ImageFacade $imageFacade = null
+    ) {
+        parent::__construct(
+            $categoryRepository,
+            $friendlyUrlFacade,
+            $pluginCrudExtensionFacade,
+            $domain,
+            $imageFacade
+        );
+        $this->categoryParameterRepository = $categoryParameterRepository;
+    }
+
     /**
      * @param \App\Model\Category\Category $category
      * @return \App\Model\Category\CategoryData
@@ -39,6 +74,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     protected function fillNew(BaseCategoryData $categoryData)
     {
         parent::fillNew($categoryData);
+        $categoryData->parameters = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->shortDescription[$domainId] = null;
@@ -59,5 +95,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
 
         $categoryData->akeneoCode = $category->getAkeneoCode();
         $categoryData->svgIcon = $category->getSvgIcon();
+        $categoryData->parameters = $this->categoryParameterRepository->getParametersByCategory($category);
     }
 }

@@ -5,15 +5,24 @@ declare(strict_types=1);
 namespace App\Model\Category;
 
 use App\Model\Product\Product;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
+use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
+use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory;
+use Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory;
 
 /**
  * @property \App\Model\Category\CategoryRepository $categoryRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Category\CategoryRepository $categoryRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade, \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade, \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory, \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory, \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory)
  * @method \App\Model\Category\Category getById(int $categoryId)
  * @method \App\Model\Category\Category getByUuid(string $categoryUuid)
- * @method \App\Model\Category\Category create(\App\Model\Category\CategoryData $categoryData)
- * @method \App\Model\Category\Category edit(int $categoryId, \App\Model\Category\CategoryData $categoryData)
  * @method \App\Model\Category\Category[] getTranslatedAll(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method \App\Model\Category\Category[] getAllCategoriesOfCollapsedTree(\App\Model\Category\Category[] $selectedCategories)
  * @method \App\Model\Category\Category[] getFullPathsIndexedByIdsForDomain(int $domainId, string $locale)
@@ -32,6 +41,79 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
  */
 class CategoryFacade extends BaseCategoryFacade
 {
+    /**
+     * @var \App\Model\Category\CategoryParameterFacade
+     */
+    private $categoryParameterFacade;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Category\CategoryRepository $categoryRepository
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
+     * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
+     */
+    public function __construct(
+        EntityManagerInterface $em,
+        CategoryRepository $categoryRepository,
+        Domain $domain,
+        CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler,
+        FriendlyUrlFacade $friendlyUrlFacade,
+        ImageFacade $imageFacade,
+        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+        CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
+        CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
+        CategoryFactoryInterface $categoryFactory,
+        CategoryParameterFacade $categoryParameterFacade
+    ) {
+        parent::__construct(
+            $em,
+            $categoryRepository,
+            $domain,
+            $categoryVisibilityRecalculationScheduler,
+            $friendlyUrlFacade,
+            $imageFacade,
+            $pluginCrudExtensionFacade,
+            $categoryWithPreloadedChildrenFactory,
+            $categoryWithLazyLoadedVisibleChildrenFactory,
+            $categoryFactory
+        );
+        $this->categoryParameterFacade = $categoryParameterFacade;
+    }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     * @return \App\Model\Category\Category
+     */
+    public function create(CategoryData $categoryData): BaseCategory
+    {
+        /** @var \App\Model\Category\Category $category */
+        $category = parent::create($categoryData);
+        $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters);
+
+        return $category;
+    }
+
+    /**
+     * @param int $categoryId
+     * @param \App\Model\Category\CategoryData $categoryData
+     * @return \App\Model\Category\Category
+     */
+    public function edit($categoryId, CategoryData $categoryData): BaseCategory
+    {
+        /** @var \App\Model\Category\Category $category */
+        $category = parent::edit($categoryId, $categoryData);
+        $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters);
+
+        return $category;
+    }
+
     /**
      * @param string $akeneoCode
      * @return \App\Model\Category\Category|null
