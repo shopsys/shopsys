@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "465a567a8fd98e7bbc5d2563bc2a14d1",
+    "content-hash": "532af965ba85265fe98e4e84baf1f78e",
     "packages": [
         {
             "name": "akeneo/api-php-client",
@@ -170,16 +170,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.133.38",
+            "version": "3.133.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "5ec9442162d83f94918bc17136a2b674a04784e5"
+                "reference": "0e3b9e497bd39063cb504115c726d369d8f4d455"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5ec9442162d83f94918bc17136a2b674a04784e5",
-                "reference": "5ec9442162d83f94918bc17136a2b674a04784e5",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0e3b9e497bd39063cb504115c726d369d8f4d455",
+                "reference": "0e3b9e497bd39063cb504115c726d369d8f4d455",
                 "shasum": ""
             },
             "require": {
@@ -250,7 +250,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-03-17T18:16:01+00:00"
+            "time": "2020-03-18T18:13:04+00:00"
         },
         {
             "name": "barryvdh/elfinder-flysystem-driver",
@@ -3867,54 +3867,45 @@
         },
         {
             "name": "jms/translation-bundle",
-            "version": "1.5.0",
+            "version": "1.4.4",
+            "target-dir": "JMS/TranslationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSTranslationBundle.git",
-                "reference": "9c48e6940f45c39aa7db688a839d092e9de7f8d3"
+                "reference": "7bdd5e2feae5c794af1306a408671a998bb84ca5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSTranslationBundle/zipball/9c48e6940f45c39aa7db688a839d092e9de7f8d3",
-                "reference": "9c48e6940f45c39aa7db688a839d092e9de7f8d3",
+                "url": "https://api.github.com/repos/schmittjoh/JMSTranslationBundle/zipball/7bdd5e2feae5c794af1306a408671a998bb84ca5",
+                "reference": "7bdd5e2feae5c794af1306a408671a998bb84ca5",
                 "shasum": ""
             },
             "require": {
                 "nikic/php-parser": "^1.4 || ^2.0 || ^3.0 || ^4.0",
-                "php": "^7.2",
-                "symfony/console": "^3.4 || ^4.3 || ^5.0",
-                "symfony/framework-bundle": "^3.4.31 || ^4.3 || ^5.0",
-                "symfony/translation": "^3.4 || ^4.3 || ^5.0",
-                "symfony/translation-contracts": "^1.1 || ^2.0",
-                "symfony/validator": "^3.4 || ^4.3 || ^5.0",
-                "twig/twig": "^1.42.4 || ^2.12.5 || ^3.0"
+                "php": "^5.3.3 || ^7.0",
+                "symfony/console": "^2.3 || ^3.0 || ^4.0",
+                "symfony/framework-bundle": "^2.3 || ^3.0 || ^4.0",
+                "symfony/validator": "^2.3 || ^3.0 || ^4.0",
+                "twig/twig": "^1.27 || ^2.0"
             },
             "require-dev": {
-                "doctrine/annotations": "^1.8",
-                "doctrine/coding-standard": "^7.0",
-                "matthiasnoback/symfony-dependency-injection-test": "^4.1",
+                "matthiasnoback/symfony-dependency-injection-test": "^1.2",
                 "nyholm/nsa": "^1.0.1",
-                "phpunit/phpunit": "^8.3",
+                "phpunit/phpunit": "^4.8 || ^5.0",
                 "psr/log": "^1.0",
-                "sensio/framework-extra-bundle": "^5.4",
-                "symfony/asset": "^3.4 || ^4.3 || ^5.0",
-                "symfony/browser-kit": "^3.4 || ^4.3 || ^5.0",
-                "symfony/css-selector": "^3.4 || ^4.3 || ^5.0",
-                "symfony/expression-language": "^3.4 || ^4.3 || ^5.0",
-                "symfony/form": "^3.4 || ^4.3 || ^5.0",
-                "symfony/security-csrf": "^3.4 || ^4.3 || ^5.0",
-                "symfony/templating": "^3.4 || ^4.3 || ^5.0",
-                "symfony/twig-bundle": "^3.4.37 || ^4.3.11 || ^5.0"
+                "sensio/framework-extra-bundle": "^2.3 || ^3.0 || ^4.0",
+                "symfony/expression-language": "^2.6 || ^3.0 || ^4.0",
+                "symfony/symfony": "^2.3 || ^3.0 || ^4.0"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "JMS\\TranslationBundle\\": ""
+                "psr-0": {
+                    "JMS\\TranslationBundle": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3939,7 +3930,7 @@
                 "ui",
                 "webinterface"
             ],
-            "time": "2020-03-15T19:18:48+00:00"
+            "time": "2019-05-14T15:55:48+00:00"
         },
         {
             "name": "joschi127/doctrine-entity-override-bundle",
@@ -6912,12 +6903,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/framework.git",
-                "reference": "ca0fcd29466969646fc4a17181ada396b998edac"
+                "reference": "6657e99eb738e01bc935168739ab3fe82413a6d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/framework/zipball/ca0fcd29466969646fc4a17181ada396b998edac",
-                "reference": "ca0fcd29466969646fc4a17181ada396b998edac",
+                "url": "https://api.github.com/repos/shopsys/framework/zipball/6657e99eb738e01bc935168739ab3fe82413a6d8",
+                "reference": "6657e99eb738e01bc935168739ab3fe82413a6d8",
                 "shasum": ""
             },
             "require": {
@@ -6962,7 +6953,7 @@
                 "heureka/overeno-zakazniky": "^2.0.6",
                 "intervention/image": "^2.3.14",
                 "jms/metadata": "^1.6",
-                "jms/translation-bundle": "^1.4.4",
+                "jms/translation-bundle": "1.4.4",
                 "joschi127/doctrine-entity-override-bundle": "^0.7.2",
                 "knplabs/knp-menu-bundle": "^2.2.1",
                 "league/flysystem": "^1.0",
@@ -7031,7 +7022,7 @@
                 "proprietary"
             ],
             "description": "Core of Shopsys Framework - open source framework for building large, scalable, fast-growing e-commerce projects based on Symfony",
-            "time": "2020-03-18T08:17:32+00:00"
+            "time": "2020-03-18T14:56:00+00:00"
         },
         {
             "name": "shopsys/frontend-api",
@@ -7834,16 +7825,16 @@
         },
         {
             "name": "studio-42/elfinder",
-            "version": "2.1.54",
+            "version": "2.1.55",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Studio-42/elFinder.git",
-                "reference": "6ff46f6e168fcc75b206c577519a653fc44f21e9"
+                "reference": "7d7174dbadbadc19b1178ded8b62fbff738df877"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/6ff46f6e168fcc75b206c577519a653fc44f21e9",
-                "reference": "6ff46f6e168fcc75b206c577519a653fc44f21e9",
+                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/7d7174dbadbadc19b1178ded8b62fbff738df877",
+                "reference": "7d7174dbadbadc19b1178ded8b62fbff738df877",
                 "shasum": ""
             },
             "require": {
@@ -7888,7 +7879,7 @@
             ],
             "description": "File manager for web",
             "homepage": "http://elfinder.org",
-            "time": "2020-03-14T14:01:59+00:00"
+            "time": "2020-03-18T11:37:50+00:00"
         },
         {
             "name": "superbalist/flysystem-google-storage",
@@ -11012,6 +11003,56 @@
                 "standards"
             ],
             "time": "2019-11-18T17:27:11+00:00"
+        },
+        {
+            "name": "symfony/stopwatch",
+            "version": "v4.4.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/stopwatch.git",
+                "reference": "abc08d7c48987829bac301347faa10f7e8bbf4fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/abc08d7c48987829bac301347faa10f7e8bbf4fb",
+                "reference": "abc08d7c48987829bac301347faa10f7e8bbf4fb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/service-contracts": "^1.0|^2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Stopwatch\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Stopwatch Component",
+            "homepage": "https://symfony.com",
+            "time": "2020-01-04T13:00:46+00:00"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -15596,56 +15637,6 @@
             "time": "2020-02-29T10:05:28+00:00"
         },
         {
-            "name": "symfony/stopwatch",
-            "version": "v4.4.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/stopwatch.git",
-                "reference": "abc08d7c48987829bac301347faa10f7e8bbf4fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/abc08d7c48987829bac301347faa10f7e8bbf4fb",
-                "reference": "abc08d7c48987829bac301347faa10f7e8bbf4fb",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/service-contracts": "^1.0|^2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Stopwatch\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Stopwatch Component",
-            "homepage": "https://symfony.com",
-            "time": "2020-01-04T13:00:46+00:00"
-        },
-        {
             "name": "symplify/auto-bind-parameter",
             "version": "v7.2.2",
             "source": {
@@ -15898,16 +15889,16 @@
         },
         {
             "name": "symplify/set-config-resolver",
-            "version": "v7.2.6",
+            "version": "v7.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/set-config-resolver.git",
-                "reference": "b8b5348203ee2057456573f26f9680949f8b3b9b"
+                "reference": "a051a20b90fdb70ac3b6744ecaef5a71de658a8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/b8b5348203ee2057456573f26f9680949f8b3b9b",
-                "reference": "b8b5348203ee2057456573f26f9680949f8b3b9b",
+                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/a051a20b90fdb70ac3b6744ecaef5a71de658a8b",
+                "reference": "a051a20b90fdb70ac3b6744ecaef5a71de658a8b",
                 "shasum": ""
             },
             "require": {
@@ -15916,7 +15907,7 @@
                 "symfony/console": "^4.4|^5.0",
                 "symfony/filesystem": "^4.4|^5.0",
                 "symfony/finder": "^4.4|^5.0",
-                "symplify/smart-file-system": "^7.2.6"
+                "symplify/smart-file-system": "^7.2.8"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5|^9.0"
@@ -15937,20 +15928,20 @@
                 "MIT"
             ],
             "description": "Resolve config and sets from configs and cli opptions for CLI applications",
-            "time": "2020-03-18T09:11:00+00:00"
+            "time": "2020-03-18T23:25:54+00:00"
         },
         {
             "name": "symplify/smart-file-system",
-            "version": "v7.2.6",
+            "version": "v7.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/smart-file-system.git",
-                "reference": "9a2d45268ab667ce83a9e24f9e76e7b33efc7141"
+                "reference": "8700182eba87e1c59e7d854c5457bf0a20fb81c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/9a2d45268ab667ce83a9e24f9e76e7b33efc7141",
-                "reference": "9a2d45268ab667ce83a9e24f9e76e7b33efc7141",
+                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/8700182eba87e1c59e7d854c5457bf0a20fb81c9",
+                "reference": "8700182eba87e1c59e7d854c5457bf0a20fb81c9",
                 "shasum": ""
             },
             "require": {
@@ -15980,7 +15971,7 @@
                 "MIT"
             ],
             "description": "Sanitized FileInfo with safe getRealPath() and other handy methods",
-            "time": "2020-03-02T16:35:33+00:00"
+            "time": "2020-03-18T23:14:48+00:00"
         },
         {
             "name": "theseer/tokenizer",
