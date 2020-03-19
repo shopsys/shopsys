@@ -54,6 +54,11 @@ class ProductSeriesData
      */
     public $productSeriesCategories;
 
+    /**
+     * @var string|null
+     */
+    public $akeneoCode;
+
     public function __construct()
     {
         //by language

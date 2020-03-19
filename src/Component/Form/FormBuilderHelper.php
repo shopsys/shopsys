@@ -47,4 +47,12 @@ class FormBuilderHelper
             $this->trackFormElements($element->all(), $disabledFields);
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function hasFormDisabledFields(): bool
+    {
+        return $this->disableFields;
+    }
 }

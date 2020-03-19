@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Series\Grid;
 
+use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Series\ProductSeriesRepository;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -23,13 +24,23 @@ class ProductSeriesGridFactory implements GridFactoryInterface
     private $productSeriesRepository;
 
     /**
+     * @var \App\Component\Form\FormBuilderHelper
+     */
+    private $formBuilderHelper;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \App\Model\Product\Series\ProductSeriesRepository $productSeriesRepository
+     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      */
-    public function __construct(GridFactory $gridFactory, ProductSeriesRepository $productSeriesRepository)
-    {
+    public function __construct(
+        GridFactory $gridFactory,
+        ProductSeriesRepository $productSeriesRepository,
+        FormBuilderHelper $formBuilderHelper
+    ) {
         $this->gridFactory = $gridFactory;
         $this->productSeriesRepository = $productSeriesRepository;
+        $this->formBuilderHelper = $formBuilderHelper;
     }
 
     /**
@@ -47,8 +58,10 @@ class ProductSeriesGridFactory implements GridFactoryInterface
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_productseries_edit', ['id' => 'ps.id']);
-        $grid->addDeleteActionColumn('admin_productseries_delete', ['id' => 'ps.id'])
-            ->setConfirmMessage(t('Opravdu chcete odebrat tento produktový program? Pokud je někde použitý, bude deaktivován.'));
+        if ($this->formBuilderHelper->hasFormDisabledFields() === false) {
+            $grid->addDeleteActionColumn('admin_productseries_delete', ['id' => 'ps.id'])
+                ->setConfirmMessage(t('Opravdu chcete odebrat tento produktový program? Pokud je někde použitý, bude deaktivován.'));
+        }
 
         $grid->setTheme('Admin/Content/ProductSeries/listGrid.html.twig');
 

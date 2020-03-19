@@ -101,6 +101,7 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
     public function edit(int $id, ProductSeriesData $productSeriesData): ProductSeries
     {
         $productSeries = $this->productSeriesRepository->getById($id);
+
         $productSeries->edit($productSeriesData);
         $this->em->persist($productSeries);
 
@@ -113,6 +114,14 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
         $this->em->flush();
 
         return $productSeries;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getAllAkeneoProductSeriesIds(): array
+    {
+        return $this->productSeriesRepository->findProductSeriesIdsWithAkeneoCode();
     }
 
     /**
@@ -196,5 +205,14 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
     public function getByProductSeriesCategoryForCurrentDomain(ProductSeriesCategory $productSeriesCategory): array
     {
         return $this->productSeriesRepository->getByProductSeriesCategoryAndDomainId($productSeriesCategory, $this->domain->getId());
+    }
+
+    /**
+     * @param string $akeneoCode
+     * @return \App\Model\Product\Series\ProductSeries|null
+     */
+    public function findByAkeneoCode(string $akeneoCode): ?ProductSeries
+    {
+        return $this->productSeriesRepository->findByAkeneoCode($akeneoCode);
     }
 }
