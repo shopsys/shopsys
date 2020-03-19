@@ -77,12 +77,12 @@ class ProductData extends BaseProductData
     /**
      * @var bool
      */
-    public $assemblyInstruction = false;
+    public $downloadAssemblyInstructionFiles = false;
 
     /**
      * @var bool
      */
-    public $productTypePlan = false;
+    public $downloadProductTypePlanFiles = false;
 
     /**
      * @var string[]|null[]

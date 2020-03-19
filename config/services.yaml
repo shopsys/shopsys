@@ -195,8 +195,6 @@ services:
             $akeneoConfig: "%akeneo_config%"
 
     App\Component\Akeneo\AkeneoClientFactory: ~
-        arguments:
-            $productFilesDir: "%shopsys.product_files_dir%"
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductFacade:
 

@@ -143,6 +143,7 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
                 if ($this->em->isOpen()) {
                     $this->em->rollback();
                 }
+                $this->logger->persistAllLoggedTransferIssues();
 
                 throw $exception;
             } finally {
