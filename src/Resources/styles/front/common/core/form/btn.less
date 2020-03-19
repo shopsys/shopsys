@@ -130,6 +130,18 @@
             font-size: 30px;
         }
     }
+
+    @btn-wide-min-width-md: 330px;
+    @btn-wide-padding: 1rem;
+
+    &--wide {
+        padding: @btn-wide-padding;
+        width: 100%;
+
+        @media @query-md {
+            min-width: @btn-wide-min-width-md;
+        }
+    }
 }
 
 // Button with icon
