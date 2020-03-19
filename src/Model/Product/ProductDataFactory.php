@@ -194,6 +194,9 @@ class ProductDataFactory extends BaseProductDataFactory
     {
         parent::fillFromProduct($productData, $product);
 
+        $productData->downloadAssemblyInstructionFiles = $product->isDownloadAssemblyInstructionFiles();
+        $productData->downloadProductTypePlanFiles = $product->isDownloadAssemblyInstructionFiles();
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $productData->shortDescriptionUsp1[$domainId] = $product->getShortDescriptionUsp1($domainId);
             $productData->shortDescriptionUsp2[$domainId] = $product->getShortDescriptionUsp2($domainId);

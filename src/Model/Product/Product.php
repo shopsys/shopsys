@@ -58,8 +58,8 @@ class Product extends BaseProduct
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
-        $this->downloadAssemblyInstructionFiles = false;
-        $this->downloadProductTypePlanFiles = false;
+        $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
+        $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
     }
 
     /**
@@ -69,6 +69,8 @@ class Product extends BaseProduct
     public function edit(array $productCategoryDomains, BaseProductData $productData)
     {
         parent::edit($productCategoryDomains, $productData);
+        $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
+        $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
     }
 
     /**

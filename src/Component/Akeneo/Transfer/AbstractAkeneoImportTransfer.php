@@ -140,6 +140,8 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
             if ($this->validator instanceof TraceableValidator) {
                 $this->validator->reset();
             }
+
+            $this->logger->persistAllLoggedTransferIssues();
         }
 
         $this->logger->persistAllLoggedTransferIssues();

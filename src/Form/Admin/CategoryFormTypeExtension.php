@@ -17,6 +17,19 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CategoryFormTypeExtension extends AbstractTypeExtension
 {
     /**
+     * @var \App\Model\Svg\SvgProvider
+     */
+    private $svgProvider;
+
+    /**
+     * @param \App\Model\Svg\SvgProvider $svgProvider
+     */
+    public function __construct(SvgProvider $svgProvider)
+    {
+        $this->svgProvider = $svgProvider;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
