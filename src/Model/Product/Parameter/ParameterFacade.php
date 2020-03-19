@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParam
  * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
  * @method \App\Model\Product\Parameter\Parameter edit(int $parameterId, \App\Model\Product\Parameter\ParameterData $parameterData)
  * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByValueTextAndLocale(string $valueText, string $locale)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Parameter\ParameterRepository $parameterRepository, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory, \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
+ * @method dispatchParameterEvent(\App\Model\Product\Parameter\Parameter $parameter, string $eventType)
  */
 class ParameterFacade extends BaseParameterFacade
 {

@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 class CategoryParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
+     * @var \App\Model\Product\Parameter\ParameterFacade
      */
     private $parameterFacade;
 
@@ -25,7 +25,7 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
     private $categoryParameterFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
      */
     public function __construct(ParameterFacade $parameterFacade, CategoryParameterFacade $categoryParameterFacade)

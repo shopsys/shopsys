@@ -54,7 +54,7 @@ class CategoryParameterRepository
 
     /**
      * @param \App\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     * @return \App\Model\Product\Parameter\Parameter[]
      */
     public function getParametersByCategory(Category $category): array
     {

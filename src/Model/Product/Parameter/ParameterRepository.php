@@ -36,7 +36,7 @@ class ParameterRepository extends BaseParameterRepository
     /**
      * @param \App\Model\Category\Category $category
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     * @return \App\Model\Product\Parameter\Parameter[]
      */
     public function getParametersUsedByProductsInCategory(Category $category, int $domainId): array
     {
@@ -52,10 +52,10 @@ class ParameterRepository extends BaseParameterRepository
 
     /**
      * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param int $domainId
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     * @return \App\Model\Product\Parameter\ParameterValue[]
      */
     public function getParameterValuesUsedByProductsInCategoryByParameter(
         Category $category,

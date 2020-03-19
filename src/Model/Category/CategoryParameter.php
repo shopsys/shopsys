@@ -23,17 +23,17 @@ class CategoryParameter
     private $category;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+     * @var \App\Model\Product\Parameter\Parameter
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter")
+     * @ORM\ManyToOne(targetEntity="\App\Model\Product\Parameter\Parameter")
      * @ORM\JoinColumn(name="parameter_id", referencedColumnName="id", onDelete="CASCADE", nullable=false )
      */
     private $parameter;
 
     /**
      * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param \App\Model\Product\Parameter\Parameter $parameter
      */
     public function __construct(Category $category, Parameter $parameter)
     {
@@ -50,7 +50,7 @@ class CategoryParameter
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+     * @return \App\Model\Product\Parameter\Parameter
      */
     public function getParameter(): Parameter
     {
