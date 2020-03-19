@@ -109,7 +109,7 @@ class CategoryVisibilityRepository
                 SET visible = (
                     cd.enabled = TRUE
                     AND
-                    ct.name IS NOT NULL
+                    (ct.name IS NOT NULL OR ct.name != '')
                     AND
                     parent_cd.visible = TRUE
                 )
