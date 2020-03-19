@@ -376,7 +376,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     public function testIsNotVisibleWhenZeroManualPrice()
     {
         $this->markTestSkipped('manual prices are in sconto deprecated');
-
+        //TODO bude vyreseno v SD-505
 //        $productData = $this->getDefaultProductData();
 //        $this->setPriceForAllDomains($productData, Money::create(10));
 //
@@ -406,7 +406,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     public function testIsNotVisibleWhenNullManualPrice()
     {
         $this->markTestSkipped('manual prices are in sconto deprecated');
-
+        //TODO bude vyreseno v SD-505
 //        $productData = $this->getDefaultProductData();
 //
 //        $allPricingGroups = $this->pricingGroupFacade->getAll();
