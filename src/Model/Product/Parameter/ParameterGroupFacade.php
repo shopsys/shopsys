@@ -74,7 +74,7 @@ class ParameterGroupFacade
      * @param \App\Model\Product\Parameter\ParameterGroupData $parameterGroupData
      * @return \App\Model\Product\Parameter\ParameterGroup
      */
-    public function edit(int $parameterGroupId, ParameterGroupData $parameterGroupData)
+    public function edit(int $parameterGroupId, ParameterGroupData $parameterGroupData): ParameterGroup
     {
         $parameterGroup = $this->parameterRepository->getParameterGroupById($parameterGroupId);
         $parameterGroup->edit($parameterGroupData);

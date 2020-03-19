@@ -95,7 +95,7 @@ class ParameterRepository extends BaseParameterRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getParameterGroupRepository(): EntityRepository
+    private function getParameterGroupRepository(): EntityRepository
     {
         return $this->em->getRepository(ParameterGroup::class);
     }

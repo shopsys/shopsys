@@ -100,12 +100,4 @@ class Parameter extends BaseParameter
     {
         return $this->orderingPriority;
     }
-
-    /**
-     * @param \App\Model\Product\Parameter\ParameterGroup|null $group
-     */
-    public function setGroup(?ParameterGroup $group): void
-    {
-        $this->group = $group;
-    }
 }
