@@ -1,6 +1,8 @@
 @custom-inputs-margin-left: 30px;
 @custom-inputs-filter-margin-left: 25px;
 @custom-inputs-font-size: @font-size;
+@custom-inputs-default-font-color: #8a8b8f;
+@custom-inputs-checked-font-color: @color-primary;
 @custom-inputs-icon-size: 18px;
 @custom-inputs-link-color: @color-base;
 @custom-inputs-link-color-hover: @color-orange;
@@ -27,6 +29,7 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
         line-height: @custom-inputs-font-size;
 
         font-size: @custom-inputs-font-size;
+        color: @custom-inputs-default-font-color;
         cursor: pointer;
 
         &:before {
@@ -60,6 +63,8 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
 
     &:checked {
         & + .css-checkbox__image, & + .css-radio__image {
+            color: @custom-inputs-checked-font-color;
+
             &:before {
                 background-position-y: bottom;
             }
