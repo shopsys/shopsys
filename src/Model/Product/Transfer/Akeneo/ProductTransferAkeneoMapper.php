@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use App\Component\Akeneo\AkeneoHelper;
 use App\Component\Akeneo\Product\AkeneoProductHelper;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataException;
 use App\Model\Category\CategoryFacade;
+use App\Model\Product\Parameter\Parameter;
+use App\Model\Product\Parameter\ParameterFacade;
+use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
@@ -14,6 +18,9 @@ use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
 use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
 
 class ProductTransferAkeneoMapper
 {
@@ -38,21 +45,45 @@ class ProductTransferAkeneoMapper
     private $productTypeFacade;
 
     /**
+     * @var \App\Model\Product\Parameter\ParameterFacade
+     */
+    private $parameterFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface
+     */
+    private $productParameterValueDataFactory;
+
+    /**
+     * @var \App\Model\Product\Parameter\ParameterValueDataFactory
+     */
+    private $parameterValueDataFactory;
+
+    /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
+     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      */
     public function __construct(
         ProductDataFactory $productDataFactory,
         CategoryFacade $categoryFacade,
         ProductFilesDataFactory $productFilesDataFactory,
-        ProductTypeFacade $productTypeFacade
+        ProductTypeFacade $productTypeFacade,
+        ParameterFacade $parameterFacade,
+        ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
+        ParameterValueDataFactoryInterface $parameterValueDataFactory
     ) {
         $this->productDataFactory = $productDataFactory;
         $this->categoryFacade = $categoryFacade;
         $this->productFilesDataFactory = $productFilesDataFactory;
         $this->productTypeFacade = $productTypeFacade;
+        $this->parameterFacade = $parameterFacade;
+        $this->productParameterValueDataFactory = $productParameterValueDataFactory;
+        $this->parameterValueDataFactory = $parameterValueDataFactory;
     }
 
     /**
@@ -115,6 +146,8 @@ class ProductTransferAkeneoMapper
             Domain::FIRST_DOMAIN_ID => $productCategories,
             Domain::SECOND_DOMAIN_ID => $productCategories,
         ];
+
+        $this->mapProductParameters($akeneoProductData, $productData);
 
         return $productData;
     }
@@ -184,5 +217,94 @@ class ProductTransferAkeneoMapper
         }
 
         return $productTypesByDomainId;
+    }
+
+    /**
+     * @param array $akeneoProductData
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function mapProductParameters(array $akeneoProductData, ProductData $productData): void
+    {
+        $akeneoProductParameters = $this->findParametersFromAkeneoData($akeneoProductData);
+        $productData->parameters = [];
+
+        foreach ($akeneoProductParameters as $akeneoProductParameterCode => $akeneoProductParameterData) {
+            $parameter = $this->parameterFacade->findParameterByAkeneoCode($akeneoProductParameterCode);
+            if ($parameter === null) {
+                continue;
+            }
+
+            if (count($akeneoProductParameterData) === 1) {
+                $currentAkeneoProductParameterData = current($akeneoProductParameterData);
+                if (is_array($currentAkeneoProductParameterData['data'])) {
+                    $parameterValueText = (string)$currentAkeneoProductParameterData['data']['amount'];
+                    $parameterValueUnit = $currentAkeneoProductParameterData['data']['unit'];
+                } else {
+                    $parameterValueText = (string)$currentAkeneoProductParameterData['data'];
+                    $parameterValueUnit = null;
+                }
+
+                foreach (['cs', 'sk'] as $locale) {
+                    $productData->parameters[] = $this->createProductParameterValueData(
+                        $parameter,
+                        $locale,
+                        $parameterValueText,
+                        $parameterValueUnit
+                    );
+                }
+            } else {
+                foreach ($akeneoProductParameterData as $currentAkeneoProductParameterData) {
+                    $locale = AkeneoHelper::findEshopLocaleByAkeneoLocale($currentAkeneoProductParameterData['locale']);
+                    if ($locale) {
+                        $productData->parameters[] = $this->createProductParameterValueData(
+                            $parameter,
+                            $locale,
+                            (string)$currentAkeneoProductParameterData['data'],
+                            null
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @param array $akeneoProductData
+     * @return array|null
+     */
+    public function findParametersFromAkeneoData(array $akeneoProductData): ?array
+    {
+        $parameters = null;
+
+        foreach ($akeneoProductData['values'] as $key => $data) {
+            if (strpos($key, AkeneoImportProductParameterFacade::PREFIX_PARAMETER_CODE) === false) {
+                continue;
+            }
+            $parameters[$key] = $data;
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param string $locale
+     * @param string $parameterValueText
+     * @param string|null $parameterValueUnit
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData
+     */
+    private function createProductParameterValueData(Parameter $parameter, string $locale, string $parameterValueText, ?string $parameterValueUnit): ProductParameterValueData
+    {
+        $productParameterValueData = $this->productParameterValueDataFactory->create();
+        $parameterValueData = $this->parameterValueDataFactory->create();
+
+        $parameterValueData->text = $parameterValueText;
+        $parameterValueData->unit = $parameterValueUnit;
+        $parameterValueData->locale = $locale;
+
+        $productParameterValueData->parameterValueData = $parameterValueData;
+        $productParameterValueData->parameter = $parameter;
+
+        return $productParameterValueData;
     }
 }
