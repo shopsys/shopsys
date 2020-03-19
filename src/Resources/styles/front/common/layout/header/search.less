@@ -1,5 +1,7 @@
 @search-form-height: 52px;
-@search-form-width-lg: 430px;
+@search-form-width: 270px;
+@search-form-width-lg: 300px;
+@search-form-width-xl: 430px;
 @search-form-bg-color: #f0f3f4;
 @search-form-border-color: @search-form-bg-color;
 @search-form-border-radius: @radius;
@@ -17,17 +19,29 @@
 
         &__input {
             position: relative;
-            width: @search-form-width-lg;
+            width: @search-form-width;
             height: @search-form-height;
+
+            @media @query-lg {
+                width: @search-form-width-lg;
+            }
+
+            @media @query-xl {
+                width: @search-form-width-xl;
+            }
         }
 
         &__icon {
             position: absolute;
-            top: 16px;
-            left: 14px;
+            top: 11px;
+            left: 10px;
 
             transition: @transition color;
-            color: @color-inactive;
+            color: #8e9a9f;
+
+            .svg {
+                font-size: 30px;
+            }
 
             .search__input:focus + & {
                 color: @color-primary;
@@ -43,6 +57,21 @@
         border-radius: @search-form-border-radius;
         background-color: @search-form-bg-color;
         border-color: @search-form-border-color;
+
+        &::-webkit-input-placeholder { /* Firefox 18- */
+            color: @color-primary;
+            opacity: 0.6;
+        }
+
+        &::-moz-placeholder { /* Firefox 18- */
+            color: @color-primary;
+            opacity: 0.6;
+        }
+
+        &:-ms-input-placeholder { /* Firefox 18- */
+            color: @color-primary;
+            opacity: 0.6;
+        }
     }
 
     &__hint {
