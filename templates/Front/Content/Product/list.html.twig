@@ -16,29 +16,17 @@
     {{ category.getSeoTitle(domain.id)|default(category.name) }}
 {% endblock %}
 
-{% block breadcrumb %}
-{% endblock %}
-
 {% block main_content %}
     <div class="web__line">
-        <div class="web__container web__container--category-detail">
+        <div class="web__container">
             {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productList'})) }}
-            <h1 class="heading heading--primary text-center margin-bottom-0">
+            <h1>
                 {{ category.getSeoH1(domain.id)|default(category.name) }}
             </h1>
-            {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
-            {# TODO: Static category text - until programming will be done #}
-            <div class="box-list__description js-not-implemented-yet">
-                <div class="box-list__description__text box-list__description__text--top in-user-text js-category-description">
-                    {{ category.getDescription(domain.id)|raw }}
-                    <span class="btn btn--next btn-no-style box-list__description__more__btn js-category-description-load-more">
-                        {{ 'Číst dál'|trans }}
-                        <i class="box-list__description__more__btn__icon btn__icon svg svg-long-arrow-right"></i>
-                    </span>
-                </div>
-            </div>
             {% if visibleChildren is not empty %}
-                {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', { categories: visibleChildren, cssClass: " list-categories--detail" })) }}
+                <h2>{{ 'List of subcategories'|trans }}</h2>
+
+                {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
             {% endif %}
 
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
@@ -75,13 +63,8 @@
                     </div>
 
                     <div class="box-list__description">
-                        <div class="box-list__description__text in-user-text js-category-description">
+                        <div class="box-list__description__text in-user-text">
                             {{ category.getDescription(domain.id)|raw }}
-                        </div>
-                        <div class="box-list__description__more">
-                            <span class="link-style box-list__description__more__btn js-category-description-load-more">
-                                {{ 'Číst dál'|trans }}
-                            </span>
                         </div>
                     </div>
                 </div>

@@ -1,79 +1,87 @@
-@in-paging-size: 24px;
+@in-paging-item-width: 40px;
+@in-paging-item-height: 50px;
+@in-paging-item-margin: 0 0.25rem;
+@in-paging-item-font-size: 15px;
+@in-paging-item-arrow-bg: @color-f;
+@in-paging-item-active-bg: @color-f;
+@in-paging-item-icon-font-size: 24px;
+@in-paging-item-separator-font-size: 24px;
+@in-paging-item-inactive-opacity: 0.5;
 
 .in-paging {
-    margin-bottom: @margin-gap;
-
-    @media @query-md {
-        display: flex;
-        align-items: center;
-    }
-
-    &__info {
-        display: none;
-
-        @media @query-md {
-            display: block;
-            flex: 1;
-        }
-    }
-
     &__control {
-        flex: 3;
+        display: flex;
+        justify-content: center;
+
         text-align: center;
 
-        font-size: 0;
-
-        @media @query-md {
-            flex: 2;
-            text-align: right;
+        @media @query-lg {
+            justify-content: flex-start;
         }
 
         &__item {
-            display: inline-block;
-            vertical-align: middle;
-            min-width: @in-paging-size;
-            height: @in-paging-size;
-            line-height: @in-paging-size;
-            margin: 0 1px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            width: @in-paging-item-width;
+            height: @in-paging-item-height;
+            margin: @in-paging-item-margin;
 
-            font-size: @font-size;
+            border-radius: @radius;
+            font-family: @font-quartenary;
+            font-size: @in-paging-item-font-size;
+            text-decoration: underline;
+            color: @color-primary;
+
+            @media @query-md {
+                flex-grow: 0;
+            }
+
+            &:hover {
+                background-color: @color-f;
+                text-decoration: none;
+            }
 
             &--num {
-                text-decoration: none;
-                background: @color-light;
-                color: @color-base;
-
-                &:hover {
-                    background: darken(@color-light, 5%);
-                }
-
                 &--active {
-                    background: @color-primary;
-                    color: @color-f;
-
-                    &:hover {
-                        background: @color-primary;
-                    }
+                    background-color: @in-paging-item-active-bg;
+                    text-decoration: none;
                 }
             }
 
             &--arrow {
-                text-decoration: none;
-                background: @color-light;
-                color: @color-base;
+                order: 1;
 
-                &:hover {
-                    background: darken(@color-light, 5%);
+                background-color: @in-paging-item-arrow-bg;
+                text-decoration: none;
+
+                &--prev {
+                    transform: scaleX(-1);
                 }
 
                 &--inactive {
-                    color: @color-a;
-
-                    &:hover {
-                        background: @color-light;
-                    }
+                    opacity: @in-paging-item-inactive-opacity;
                 }
+            }
+
+            &--separate {
+                text-decoration: none;
+            }
+
+            &__icon {
+                position: relative;
+                top: 2px;
+
+                font-size: @in-paging-item-icon-font-size;
+            }
+
+            &__separate {
+                display: block;
+                position: relative;
+                top: -7px;
+
+                font-size: @in-paging-item-separator-font-size;
             }
         }
     }
