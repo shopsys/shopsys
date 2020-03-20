@@ -14,6 +14,9 @@ security:
         user_identities:
             id: Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
 
+        frontend_api_user_identities:
+            id: Shopsys\FrontendApiBundle\Model\User\FrontendApiCustomerUserProvider
+
     firewalls:
         # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
         administration:
@@ -39,7 +42,7 @@ security:
                 invalidate_session: false
         frontend_api:
             pattern: ^/graphql
-            provider: user_identities
+            provider: frontend_api_user_identities
             stateless: true
             anonymous: true
             guard:

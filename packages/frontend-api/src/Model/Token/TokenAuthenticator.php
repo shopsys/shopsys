@@ -6,8 +6,8 @@ namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use GraphQL\Error\FormattedError;
 use InvalidArgumentException;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrontendApiBundle\Model\User\FrontendApiCustomerUserProvider;
+use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,18 +59,18 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     /**
      * @param string|null $credentials
      * @param \Symfony\Component\Security\Core\User\UserProviderInterface $userProvider
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
+     * @return \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser|null
      */
-    public function getUser($credentials, UserProviderInterface $userProvider): ?CustomerUser
+    public function getUser($credentials, UserProviderInterface $userProvider): ?FrontendApiUser
     {
         if ($credentials === null) {
             return null;
         }
 
-        if (!$userProvider instanceof FrontendCustomerUserProvider) {
+        if (!$userProvider instanceof FrontendApiCustomerUserProvider) {
             throw new InvalidArgumentException(
                 sprintf(
-                    'The user provider must be an instance of FrontendUserProvider ("%s" was given).',
+                    'The user provider must be an instance of FrontendApiCustomerUserProvider ("%s" was given).',
                     get_class($userProvider)
                 )
             );
@@ -78,12 +78,12 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
         $token = $this->tokenFacade->getTokenByString($credentials);
 
-        return $userProvider->loadUserByUsername($token->getClaim('email'));
+        return $userProvider->loadUserFromToken($token);
     }
 
     /**
      * @param string|null $credentials
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $user
+     * @param \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $user
      * @return bool
      */
     public function checkCredentials($credentials, UserInterface $user): bool

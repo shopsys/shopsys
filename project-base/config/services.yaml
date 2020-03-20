@@ -109,3 +109,9 @@ services:
     Psr\Http\Message\ServerRequestInterface:
         factory: ['@Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory', 'createRequest']
         arguments: ['@=service("request_stack").getMasterRequest()']
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiCustomerUserProvider: ~
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory: ~
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface: '@Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory'

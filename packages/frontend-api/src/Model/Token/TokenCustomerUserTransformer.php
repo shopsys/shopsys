@@ -17,7 +17,7 @@ class TokenCustomerUserTransformer
         return [
             'uuid' => $user->getUuid(),
             'email' => $user->getEmail(),
-            'domainId' => $user->getDomainId(),
+            'fullName' => $user->getFullName(),
             'roles' => $user->getRoles(),
         ];
     }
