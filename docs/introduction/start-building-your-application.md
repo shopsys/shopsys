@@ -150,7 +150,7 @@ Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
 ```
 Then change the version in your `docker/php-fpm/Dockerfile`:
 ```diff
-- FROM php:7.3-fpm-stretch as base
+- FROM php:7.4-fpm-buster as base
 + FROM php:7.2.19-fpm-stretch as base
 ```
 After running `docker-compose up -d --build` you'll have the application running on the same PHP.

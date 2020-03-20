@@ -188,6 +188,9 @@ There you can find links to upgrade notes for other versions too.
 
     - run `docker-compose up -d` so the new image is pulled and used
 
+- upgrade PHP to version 7.4 ([#1737](https://github.com/shopsys/shopsys/pull/1737))
+    - see #project-base-diff to update your project
+
 ### Configuration
 - add trailing slash to all your localized paths for `front_product_search` route ([#1067](https://github.com/shopsys/shopsys/pull/1067))
     - be aware, if you already have such paths (`hledani/`, `search/`) in your application
