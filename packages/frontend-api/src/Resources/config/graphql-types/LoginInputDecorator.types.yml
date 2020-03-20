@@ -1,4 +1,4 @@
-LoginDecorator:
+LoginInputDecorator:
     type: input-object
     decorator: true
     config:

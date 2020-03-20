@@ -27,7 +27,7 @@ class FrontendApiCustomerUserProvider implements UserProviderInterface
      * @param \Lcobucci\JWT\Token $token
      * @return \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser
      */
-    public function loadUserFromToken(Token $token): FrontendApiUser
+    public function loadUserByToken(Token $token): FrontendApiUser
     {
         return $this->frontendApiUserFactory->createFromToken($token);
     }
@@ -37,6 +37,7 @@ class FrontendApiCustomerUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
+        new NotImplementedException('Method "loadUserByUsername" is not implement. Use method  "loadUserByToken"');
     }
 
     /**
@@ -44,13 +45,15 @@ class FrontendApiCustomerUserProvider implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
+        new NotImplementedException('Method "refreshUser" is not implement.');
     }
 
     /**
-     * @param mixed $class
+     * @param mixed $frontendApiUser
+     * @return bool
      */
-    public function supportsClass($class)
+    public function supportsClass($frontendApiUser)
     {
-        return $class === FrontendApiUser::class || is_subclass_of($class, FrontendApiUser::class);
+        return $frontendApiUser instanceof FrontendApiUser;
     }
 }

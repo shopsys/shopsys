@@ -29,12 +29,12 @@ class FrontendApiUser implements UserInterface
     protected $roles;
 
     /**
-     * @param $uuid
-     * @param $fullName
-     * @param $email
-     * @param $roles
+     * @param string $uuid
+     * @param string $fullName
+     * @param string $email
+     * @param string[] $roles
      */
-    public function __construct($uuid, $fullName, $email, $roles)
+    public function __construct(string $uuid, string $fullName, string $email, array $roles)
     {
         $this->uuid = $uuid;
         $this->fullName = $fullName;

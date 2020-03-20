@@ -1,0 +1,8 @@
+RefreshTokenInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            refreshToken:
+                type: "String!"
+                description: "The refresh token."

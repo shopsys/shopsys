@@ -65,6 +65,7 @@ class LoginMutation implements MutationInterface, AliasedInterface
 
         return [
             'accessToken' => $this->tokenFacade->generateAccessTokenByCustomerUser($user),
+            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($user),
         ];
     }
 

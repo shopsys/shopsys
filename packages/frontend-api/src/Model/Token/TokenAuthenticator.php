@@ -78,7 +78,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
         $token = $this->tokenFacade->getTokenByString($credentials);
 
-        return $userProvider->loadUserFromToken($token);
+        return $userProvider->loadUserByToken($token);
     }
 
     /**

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
@@ -167,5 +168,21 @@ class CustomerUserRepository
             ->set('u.pricingGroup', ':newPricingGroup')->setParameter('newPricingGroup', $newPricingGroup)
             ->where('u.pricingGroup = :oldPricingGroup')->setParameter('oldPricingGroup', $oldPricingGroup)
             ->getQuery()->execute();
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function getOneByUuid(string $uuid): CustomerUser
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser */
+        $customerUser = $this->getCustomerUserRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($customerUser === null) {
+            throw new CustomerUserNotFoundException('Customer with UUID ' . $uuid . ' does not exist.');
+        }
+
+        return $customerUser;
     }
 }
