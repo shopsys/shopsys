@@ -407,20 +407,12 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleWhenZeroManualPrice()
+    public function testIsNotVisibleWhenZeroAkeneoLowPrice()
     {
-        $this->markTestSkipped('manual prices are in sconto deprecated');
-
         $em = $this->getEntityManager();
 
         $productData = $this->getDefaultProductData();
-        $this->setPriceForAllDomains($productData, Money::create(10));
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-        $pricingGroupWithZeroPriceId = $pricingGroup->getId();
-
-        $productData->manualInputPricesByPricingGroupId[$pricingGroupWithZeroPriceId] = Money::zero();
+        $this->setPriceForAllDomains($productData, Money::zero());
 
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
@@ -432,29 +424,22 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
         $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
-            'pricingGroup' => $pricingGroupWithZeroPriceId,
             'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleWhenNullManualPrice()
+    public function testIsNotVisibleWhenNullAkeneoLowPrice()
     {
-        $this->markTestSkipped('manual prices are in sconto deprecated');
         $em = $this->getEntityManager();
 
         $productData = $this->getDefaultProductData();
 
-        $allPricingGroups = $this->pricingGroupFacade->getAll();
-        foreach ($allPricingGroups as $pricingGroup) {
-            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = Money::create(10);
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $productData->lowPriceWithVat[$domainConfig->getId()] = null;
+            $productData->highPriceWithVat[$domainConfig->getId()] = null;
         }
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-        $pricingGroupWithNullPriceId = $pricingGroup->getId();
-        $productData->manualInputPricesByPricingGroupId[$pricingGroupWithNullPriceId] = null;
 
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
@@ -466,7 +451,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
         $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
-            'pricingGroup' => $pricingGroupWithNullPriceId,
             'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
