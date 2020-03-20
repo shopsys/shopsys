@@ -209,6 +209,7 @@ class ProductController extends FrontBaseController
         );
 
         $productFilterData = new ProductFilterData();
+        $productFilterData->inStock = true;
 
         $productFilterConfig = $this->createProductFilterConfigForCategory($category);
         $filterForm = $this->createForm(ProductFilterFormType::class, $productFilterData, [

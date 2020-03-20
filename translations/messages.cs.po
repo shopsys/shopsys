@@ -556,6 +556,9 @@ msgstr "Technické parametry"
 msgid "Telephone"
 msgstr "Telefon"
 
+msgid "Temporarily sold out"
+msgstr "Dočasně vyprodáno"
+
 msgid "Terms and conditions"
 msgstr "Obchodní podmínky"
 

@@ -8,6 +8,8 @@ use App\Form\Front\Cart\AddProductFormType;
 use App\Form\Front\Cart\CartFormType;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
@@ -70,6 +72,16 @@ class CartController extends FrontBaseController
     private $orderPreviewSplittingFacade;
 
     /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
+    private $productAvailabilityFacade;
+
+    /**
+     * @var \App\Model\Product\ProductFacade
+     */
+    private $productFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
@@ -78,6 +90,8 @@ class CartController extends FrontBaseController
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $cartSplittingFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -87,7 +101,9 @@ class CartController extends FrontBaseController
         ErrorExtractor $errorExtractor,
         ListedProductViewFacadeInterface $listedProductViewFacade,
         RequestStack $requestStack,
-        OrderPreviewSplittingFacade $cartSplittingFacade
+        OrderPreviewSplittingFacade $cartSplittingFacade,
+        ProductAvailabilityFacade $productAvailabilityFacade,
+        ProductFacade $productFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -97,6 +113,8 @@ class CartController extends FrontBaseController
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->requestStack = $requestStack;
         $this->orderPreviewSplittingFacade = $cartSplittingFacade;
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -201,10 +219,16 @@ class CartController extends FrontBaseController
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
+        $productAvailable = $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder(
+            $product,
+            $this->domain->getId()
+        );
+
         return $this->render('Front/Inline/Cart/addProduct.html.twig', [
             'form' => $form->createView(),
             'product' => $product,
             'type' => $type,
+            'productAvailable' => $productAvailable,
         ]);
     }
 
@@ -218,10 +242,18 @@ class CartController extends FrontBaseController
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
+        $product = $this->productFacade->getById($productActionView->getId());
+
+        $productAvailable = $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder(
+            $product,
+            $this->domain->getId()
+        );
+
         return $this->render('Front/Inline/Cart/productAction.html.twig', [
             'form' => $form->createView(),
             'productActionView' => $productActionView,
             'type' => $type,
+            'productAvailable' => $productAvailable,
         ]);
     }
 

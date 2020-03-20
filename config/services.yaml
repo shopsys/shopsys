@@ -302,9 +302,15 @@ services:
 
     Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory: '@App\Model\ProductFeed\Google\FeedItem\GoogleFeedItemFactory'
 
+    Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository: '@App\Model\ProductFeed\Google\GoogleProductRepository'
+
     Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory: '@App\Model\ProductFeed\Heureka\FeedItem\HeurekaFeedItemFactory'
 
+    Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository: '@App\Model\ProductFeed\Heureka\HeurekaProductRepository'
+
     Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory: '@App\Model\ProductFeed\Zbozi\FeedItem\ZboziFeedItemFactory'
+
+    Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductRepository: '@App\Model\ProductFeed\Zbozi\ZboziProductRepository'
 
     App\Component\Form\FormBuilderHelper:
         arguments:

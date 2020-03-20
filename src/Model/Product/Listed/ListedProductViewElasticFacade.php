@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Model\Product\Listed;
 
 use App\Model\Category\CategoryFacade;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Product;
-use App\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\ReadModelBundle\Image\ImageViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
@@ -31,16 +32,22 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
     private $categoryFacade;
 
     /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
+    protected $productAvailabilityFacade;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
-     * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
-     * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -48,11 +55,12 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
         TopProductFacade $topProductFacade,
-        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade,
+        CategoryFacade $categoryFacade,
+        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         ListedProductViewFactory $listedProductViewFactory,
         ProductActionViewFacade $productActionViewFacade,
         ImageViewFacade $imageViewFacade,
-        CategoryFacade $categoryFacade
+        ProductAvailabilityFacade $productAvailabilityFacade
     ) {
         parent::__construct(
             $productFacade,
@@ -65,7 +73,9 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
             $productActionViewFacade,
             $imageViewFacade
         );
+
         $this->categoryFacade = $categoryFacade;
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
     /**
@@ -103,5 +113,30 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         $productsArray = $this->productOnCurrentDomainFacade->getInSaleProductsHits($productFilterData);
 
         return $this->createFromArray($productsArray);
+    }
+
+    /**
+     * @param \App\Model\Product\Product[] $products
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    protected function createFromProducts(array $products): array
+    {
+        $productClassName = 'Shopsys\FrameworkBundle\Model\Product\Product';
+        $imageViews = $this->imageViewFacade->getForEntityIds($productClassName, $this->getIdsForProducts($products));
+        $productActionViews = $this->productActionViewFacade->getForProducts($products);
+
+        $listedProductViews = [];
+        foreach ($products as $product) {
+            $productId = $product->getId();
+            if ($this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId())) {
+                $listedProductViews[$productId] = $this->listedProductViewFactory->createFromProduct(
+                    $product,
+                    $imageViews[$productId],
+                    $productActionViews[$productId]
+                );
+            }
+        }
+
+        return $listedProductViews;
     }
 }

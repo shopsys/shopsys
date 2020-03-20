@@ -177,6 +177,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->assemblyInstructionFileUrl[$domainId] = null;
             $productData->productTypePlanFileUrl[$domainId] = null;
             $productData->productType[$domainId] = null;
+            $productData->preorder = false;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -213,6 +214,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->namePrefix[$locale] = $product->getNamePrefix($locale);
             $productData->nameSufix[$locale] = $product->getNameSufix($locale);
         }
+
+        $productData->preorder = $product->hasPreorder();
     }
 
     /**

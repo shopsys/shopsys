@@ -149,6 +149,12 @@ class ProductTransferAkeneoMapper
 
         $this->mapProductParameters($akeneoProductData, $productData);
 
+        $productData->preorder = isset($akeneoProductData['values']['preorder'])
+            ? $akeneoProductData['values']['preorder'][0]['data']
+            : false;
+
+        $productData->preorder = $akeneoProductData['values']['preorder'][0]['data'] ?? false;
+
         return $productData;
     }
 

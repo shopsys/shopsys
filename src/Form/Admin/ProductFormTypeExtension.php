@@ -8,6 +8,7 @@ use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Product;
 use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FormTypesBundle\MultidomainType;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -45,6 +46,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'assemblyInstructionFileUrl',
         'productType',
         'parameters',
+        'preorder',
     ];
 
     /**
@@ -142,6 +144,13 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $builder->get('displayAvailabilityGroup')->get('stockGroup')->remove('stockQuantity');
         $this->stocksGroup($builder);
 
+        $builder->get('displayAvailabilityGroup')->add('preorder', YesNoType::class, [
+            'required' => false,
+            'disabled' => $this->isProductMainVariant($product),
+            'label' => 'Povolit předobjednávky',
+        ]);
+
+        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
         $this->setPricesGroup($builder, $product);
         $this->buildTransferredFiles($builder, $product);
 

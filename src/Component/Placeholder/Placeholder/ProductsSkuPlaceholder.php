@@ -4,8 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Component\Placeholder\Placeholder;
 
+use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductViewFactory;
 use App\Model\Product\ProductOnCurrentDomainFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\ReadModelBundle\Image\ImageViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 use Twig\Environment;
@@ -42,24 +44,40 @@ final class ProductsSkuPlaceholder extends AbstractPlaceholder
     private $productOnCurrentDomainFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
+    private $productAvailabilityFacade;
+
+    /**
      * @param \App\Model\Product\ProductOnCurrentDomainFacade $productOnCurrentDomainFacade
      * @param \Twig\Environment $templating
      * @param \App\Model\Product\Listed\ListedProductViewFactory $listedProductViewFactory
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         ProductOnCurrentDomainFacade $productOnCurrentDomainFacade,
         Environment $templating,
         ListedProductViewFactory $listedProductViewFactory,
         ImageViewFacade $imageViewFacade,
-        ProductActionViewFacade $productActionViewFacade
+        ProductActionViewFacade $productActionViewFacade,
+        Domain $domain,
+        ProductAvailabilityFacade $productAvailabilityFacade
     ) {
         $this->templating = $templating;
         $this->imageViewFacade = $imageViewFacade;
         $this->productActionViewFacade = $productActionViewFacade;
         $this->listedProductViewFactory = $listedProductViewFactory;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
+        $this->domain = $domain;
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
     /**
@@ -101,7 +119,13 @@ final class ProductsSkuPlaceholder extends AbstractPlaceholder
 
         foreach ($products as $product) {
             $productId = $product->getId();
-            $listedProductViews[$productId] = $this->listedProductViewFactory->createFromProduct($product, $imageViews[$productId], $productActionViews[$productId]);
+            if ($this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId())) {
+                $listedProductViews[$productId] = $this->listedProductViewFactory->createFromProduct(
+                    $product,
+                    $imageViews[$productId],
+                    $productActionViews[$productId]
+                );
+            }
         }
 
         return $this->templating->render('Front/Content/Product/productsSkuPlaceholder.html.twig', [

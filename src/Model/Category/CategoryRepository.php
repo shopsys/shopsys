@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
+use App\Model\Stock\ProductStock;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
@@ -109,5 +111,55 @@ class CategoryRepository extends BaseCategoryRepository
         ]);
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param \App\Model\Category\Category[] $categories
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getListableProductCountsIndexedByCategoryId(
+        array $categories,
+        PricingGroup $pricingGroup,
+        $domainId
+    ) {
+        if (count($categories) === 0) {
+            return [];
+        }
+        $listableProductCountsIndexedByCategoryId = [];
+        foreach ($categories as $category) {
+            // Initialize array with zeros as categories without found products will not be represented in result rows
+            $listableProductCountsIndexedByCategoryId[$category->getId()] = 0;
+        }
+
+        $queryBuilder = $this->productRepository->getAllListableQueryBuilder($domainId, $pricingGroup)
+            ->join(
+                ProductCategoryDomain::class,
+                'pcd',
+                Join::WITH,
+                'pcd.product = p
+                 AND pcd.category IN (:categories)
+                 AND pcd.domainId = :domainId'
+            )
+            ->select('IDENTITY(pcd.category) AS categoryId, COUNT(p) AS productCount')
+            ->setParameter('categories', $categories)
+            ->setParameter('domainId', $domainId)
+            ->groupBy('pcd.category')
+            ->resetDQLPart('orderBy');
+
+        $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
+            ->select('1')
+            ->from(ProductStock::class, 'ps')
+            ->join('ps.stock', 's', Join::WITH, 's.domainId = :domainId')
+            ->where('ps.product = p')
+            ->having('SUM(ps.productQuantity) > 0');
+        $queryBuilder->andWhere('p.preorder = true OR EXISTS(' . $subquery->getDQL() . ')');
+
+        foreach ($queryBuilder->getQuery()->getArrayResult() as $result) {
+            $listableProductCountsIndexedByCategoryId[$result['categoryId']] = $result['productCount'];
+        }
+
+        return $listableProductCountsIndexedByCategoryId;
     }
 }

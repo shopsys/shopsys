@@ -110,6 +110,11 @@ class ProductData extends BaseProductData
      */
     public $productType;
 
+    /**
+     * @var bool
+     */
+    public $preorder;
+
     public function __construct()
     {
         parent::__construct();
@@ -131,5 +136,6 @@ class ProductData extends BaseProductData
         $this->assemblyInstructionFileUrl = [];
         $this->productTypePlanFileUrl = [];
         $this->productType = [];
+        $this->preorder = false;
     }
 }

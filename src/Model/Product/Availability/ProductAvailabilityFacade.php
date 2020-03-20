@@ -83,6 +83,19 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
+     * @return bool
+     */
+    public function isProductAvailableOnDomainOrHasPreorder(Product $product, int $domainId): bool
+    {
+        return $product->hasPreorder() || $this->isProductAvailableOnDomain(
+            $product,
+            $domainId
+        );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return \App\Model\Product\Availability\ProductStockAvailabilityInformation[]
      */
     public function getProductStocksAvailabilitiesInformationByDomainId(Product $product, int $domainId): array

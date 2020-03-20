@@ -56,14 +56,23 @@ class Product extends BaseProduct
     private $downloadProductTypePlanFiles;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $preorder;
+
+    /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
+
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
+        $this->preorder = $productData->preorder;
     }
 
     /**
@@ -73,8 +82,10 @@ class Product extends BaseProduct
     public function edit(array $productCategoryDomains, BaseProductData $productData)
     {
         parent::edit($productCategoryDomains, $productData);
+
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
+        $this->preorder = $productData->preorder;
     }
 
     /**
@@ -374,5 +385,13 @@ class Product extends BaseProduct
     public function getProductType(int $domainId): ProductType
     {
         return $this->getProductDomain($domainId)->getProductType();
+    }
+
+    /**
+     * @return  bool
+     */
+    public function hasPreorder()
+    {
+        return $this->preorder;
     }
 }
