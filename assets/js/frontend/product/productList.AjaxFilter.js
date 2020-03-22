@@ -40,6 +40,7 @@ export default class ProductListAjaxFilter {
         });
 
         this.updateFiltersDisabled();
+        this.updateFiltersVisibleParams();
     }
 
     showProducts ($wrappedData) {
@@ -83,6 +84,21 @@ export default class ProductListAjaxFilter {
         });
     }
 
+    updateFiltersVisibleParams () {
+        $('.js-product-filter-box').each(function (index, element) {
+            const $hiddenParams = $(element).find('.js-form-choice:hidden');
+            const $toggleButton = $(element).find('.js-product-filter-show-more-less');
+            const $checkedItems = $(element).find('.js-form-choice.was-hidden');
+
+            if ($hiddenParams.length) return;
+            if (!$checkedItems.find('input[type="ckeckbox"]:not(:checked)').length) {
+                $toggleButton.removeClass('display-none');
+            } else {
+                $toggleButton.addClass('display-none');
+            }
+        });
+    }
+
     submitFormWithAjax (productListAjaxFilter) {
         Ajax.ajax({
             overlayDelay: 0,
@@ -94,6 +110,7 @@ export default class ProductListAjaxFilter {
                 productListAjaxFilter.showProducts($wrappedData);
                 productListAjaxFilter.updateFiltersCounts($wrappedData);
                 productListAjaxFilter.updateFiltersDisabled();
+                productListAjaxFilter.updateFiltersVisibleParams();
             }
         });
     }

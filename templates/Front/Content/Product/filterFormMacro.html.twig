@@ -3,6 +3,7 @@
         {% form_theme filterForm 'Front/Content/Product/filterFormTheme.html.twig' %}
 
         {% set isSearch = page == 'search' %}
+        {% set paramsVisibleCount = 5 %}
 
         {% if isSearch %}
             <input
@@ -116,7 +117,10 @@
                 </span>
                 <div id="{{ filterForm.brands.vars.id }}" class="box-filter__choice__inputs">
                     {% for brandForm in filterForm.brands %}
-                        <div class="form-choice">
+                        <div class="form-choice js-form-choice
+                            {{ loop.index > paramsVisibleCount and not brandForm.vars.checked ? ' is-hidden'  }}
+                            {{ loop.index > paramsVisibleCount and brandForm.vars.checked ? ' was-hidden' }}
+                        ">
                             {{ form_widget(brandForm, { attr: { class: 'css-checkbox'} }) }}
                             <label class="css-checkbox__image form-choice__label" for="{{ brandForm.vars.id }}">
                                 {{ brandForm.vars.label }}
@@ -133,6 +137,15 @@
                                 {% endif %}
                             </label>
                         </div>
+                        {% if loop.last and filterForm.brands|length > paramsVisibleCount %}
+                            <a
+                                class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
+                                data-text-more="{{ 'Zobrazit více'|trans }}"
+                                data-text-less="{{ 'Zobrazit Méně'|trans }}"
+                                href="#">
+                                    {{ 'Zobrazit více'|trans }}
+                            </a>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -151,7 +164,10 @@
                             </span>
                             <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs">
                                 {% for parameterValueForm in parameterForm %}
-                                    <div class="form-choice js-product-filter-parameter-value">
+                                    <div class="form-choice js-form-choice js-product-filter-parameter-value
+                                        {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' is-hidden'  }}
+                                        {{ loop.index > paramsVisibleCount and parameterValueForm.vars.checked ? ' was-hidden' }}
+                                    ">
                                         {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
                                         <label class="css-checkbox__image form-choice__label" for="{{ parameterValueForm.vars.id }}">
                                             {{ parameterValueForm.vars.label }}
@@ -170,6 +186,15 @@
                                             {% endif %}
                                         </label>
                                     </div>
+                                    {% if loop.last and parameterForm|length > paramsVisibleCount %}
+                                        <a
+                                            class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
+                                            data-text-more="{{ 'Zobrazit více'|trans }}"
+                                            data-text-less="{{ 'Zobrazit Méně'|trans }}"
+                                            href="#">
+                                                {{ 'Zobrazit více'|trans }}
+                                        </a>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
