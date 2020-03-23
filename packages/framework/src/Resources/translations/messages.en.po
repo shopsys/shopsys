@@ -391,8 +391,8 @@ msgstr ""
 msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
-msgid "Colour"
-msgstr "Color"
+msgid "Color"
+msgstr ""
 
 msgid "Communication with customer"
 msgstr ""
