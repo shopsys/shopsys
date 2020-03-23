@@ -40,7 +40,7 @@ msgstr "<a href=\"{{ url }}\">Není nastavena výchozí dostupnost pro produkty 
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr "<a href=\"{{ url }}\">Není nastavena výchozí jednotka.</a>"
 
-msgid "<a href=\"{{ url }}\">Some required e-mail templates are not fully set.</a>"
+msgid "<a href=\"{{ url }}\">Some required email templates are not fully set.</a>"
 msgstr "<a href=\"{{ url }}\">Některé povinné emailové šablony nejsou vyplněny.</a>"
 
 msgid "<a href=\"{{ url }}\">There are no availabilities, you need to create some.</a>"
@@ -157,10 +157,10 @@ msgstr "Reklamní systém"
 msgid "All domains"
 msgstr "Všechny domény"
 
-msgid "All e-mails will be sent only to entered address."
+msgid "All emails will be sent only to entered address."
 msgstr "Všechny maily budou doručeny pouze na uvedenou adresu."
 
-msgid "All e-mails will be sent only to entered addresses."
+msgid "All emails will be sent only to entered addresses."
 msgstr "Všechny maily budou doručeny pouze na uvedené adresy."
 
 msgid "All pages"
@@ -580,7 +580,7 @@ msgstr "Doručovací adresa zákazníka"
 msgid "Customer detail"
 msgstr "Karta zákazníka"
 
-msgid "Customer e-mail address"
+msgid "Customer email address"
 msgstr "Emailová adresa zákazníka"
 
 msgid "Customer has no delivery addresses."
@@ -793,32 +793,32 @@ msgstr "Zde přetáhněte svůj soubor"
 msgid "Drag your files here"
 msgstr "Zde přetáhněte své soubory"
 
-msgid "E-mail"
-msgstr "E-mail"
+msgid "Email"
+msgstr "Email"
 
-msgid "E-mail name"
+msgid "Email name"
 msgstr "Jméno k emailu"
 
-msgid "E-mail newsletter"
+msgid "Email newsletter"
 msgstr "Emaily zpravodaje"
 
-msgid "E-mail settings"
+msgid "Email settings"
 msgstr "Nastavení emailů"
 
-msgid "E-mail settings modified."
+msgid "Email settings modified."
 msgstr "Nastavení emailů bylo upraveno."
 
-msgid "E-mail settings:"
+msgid "Email settings:"
 msgstr "Nastavení emailů:"
 
-msgid "E-mail templates"
+msgid "Email templates"
 msgstr "Šablony emailů"
 
-msgid "E-mail templates settings"
-msgstr "Nastavení šablon e-mailů"
+msgid "Email templates settings"
+msgstr "Nastavení šablon emailů"
 
-msgid "E-mail templates settings modified"
-msgstr "Nastavení šablony e-mailu bylo upraveno"
+msgid "Email templates settings modified"
+msgstr "Nastavení šablony emailu bylo upraveno"
 
 msgid "E-shop URL address"
 msgstr "URL adresa e-shopu"
@@ -991,7 +991,7 @@ msgstr "Bez DPH"
 msgid "Existing icon"
 msgstr "Současná ikona"
 
-msgid "Export e-mail list in CSV format"
+msgid "Export email list in CSV format"
 msgstr "Exportovat seznam emailů jako CSV"
 
 msgid "External scripts"
@@ -1300,7 +1300,7 @@ msgstr "Čas přihlášení"
 msgid "Main URL can't be deleted"
 msgstr "Hlavní URL nelze smazat"
 
-msgid "Main administrator e-mail"
+msgid "Main administrator email"
 msgstr "Hlavní administrátorský email"
 
 msgid "Main category"
@@ -1330,8 +1330,8 @@ msgstr "Provést úpravu"
 msgid "Marketing"
 msgstr "Marketing"
 
-msgid "Master e-mail %masterMail% set"
-msgstr "Je nastaven master e-mail %masterMail%."
+msgid "Master email %masterMail% set"
+msgstr "Je nastaven master email %masterMail%."
 
 msgid "Message"
 msgstr "Vzkaz"
@@ -2023,16 +2023,16 @@ msgstr "Datum stažení"
 msgid "Selling start date"
 msgstr "Datum vložení"
 
-msgid "Send confirmation e-mail about registration to customer"
-msgstr "Odeslat mail s potvrzením registrace zákazníkovi"
+msgid "Send confirmation email about registration to customer"
+msgstr "Odeslat email s potvrzením registrace zákazníkovi"
 
 msgid "Send confirmation of order receipt"
 msgstr "Zasílat potvrzení o přijetí objednávky"
 
-msgid "Send e-mail about change to this status"
-msgstr "Zasílat e-mail o změně na tento stav"
+msgid "Send email about change to this status"
+msgstr "Zasílat email o změně na tento stav"
 
-msgid "Sending e-mails off, no e-mail will be sent from the app."
+msgid "Sending emails off, no email will be sent from the app."
 msgstr "Odesílání mailů je vypnuto, z aplikace nebude odeslán žádný mail."
 
 msgid "Seo"
@@ -2188,7 +2188,7 @@ msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
 msgid "This currency can't be deleted, it is set as default or is saved with order."
 msgstr "Tuto měnu nelze smazat, je nastavena jako výchozí nebo je uložena u objednávky"
 
-msgid "This e-mail was sent from the contact form located below the panel of categories."
+msgid "This email was sent from the contact form located below the panel of categories."
 msgstr "Tento email byl odeslán z kontaktního formuláře umístěného pod panelem kategorií."
 
 msgid "This item can be set in product detail of a specific variant"
@@ -2260,7 +2260,7 @@ msgstr "Nelze přidat"
 msgid "Unable to add product"
 msgstr "Zboží se nepodařilo vložit"
 
-msgid "Unable to send updating e-mail"
+msgid "Unable to send updating email"
 msgstr "Nepodařilo se odeslat aktualizační email"
 
 msgid "Unexpected error occurred, file was not uploaded."

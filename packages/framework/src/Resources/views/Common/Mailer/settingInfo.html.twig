@@ -1,13 +1,13 @@
-<strong>{{ 'E-mail settings:'|trans }}</strong>
+<strong>{{ 'Email settings:'|trans }}</strong>
 {% if isDeliveryDisabled %}
-    {{ 'Sending e-mails off, no e-mail will be sent from the app.'|trans }}
+    {{ 'Sending emails off, no email will be sent from the app.'|trans }}
 {% endif %}
 {% if mailerMasterEmailAddress is not null and not isDeliveryDisabled %}
-    {{ 'Master e-mail %masterMail% set '|trans({'%masterMail%': mailerMasterEmailAddress}) }}
+    {{ 'Master email %masterMail% set '|trans({'%masterMail%': mailerMasterEmailAddress}) }}
     {% if mailerWhitelistExpressions is not empty %}
         {{ 'Following expressions are allowed in whitelist: %whitelist%. '|trans({'%whitelist%': mailerWhitelistExpressions|join(', ')}) }}
-        {{ 'All e-mails will be sent only to entered addresses.'|trans }}
+        {{ 'All emails will be sent only to entered addresses.'|trans }}
     {% else %}
-        {{ 'All e-mails will be sent only to entered address.'|trans }}
+        {{ 'All emails will be sent only to entered address.'|trans }}
     {% endif %}
 {% endif %}

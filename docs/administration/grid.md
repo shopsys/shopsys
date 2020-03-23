@@ -28,7 +28,7 @@ Read more about various data sources in the [Grid data sources](../administratio
     - e.g. `Marketing > XML Feeds`
 - **Display with action**
     - When you need to perform some actions on the grid entries, such as deletion.
-    - e.g. `Marketing > E-mail newsletter`
+    - e.g. `Marketing > Email newsletter`
 - **Inline editable**
     - When the entities in the grid are simple enough and do not need a separate page for editing, you can edit them directly in the grid via AJAX.
     - e.g. `Pricing > Promo codes`

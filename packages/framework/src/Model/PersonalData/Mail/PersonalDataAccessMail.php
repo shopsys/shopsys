@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PersonalDataAccessMail implements MailTypeInterface, MessageFactoryInterface
 {
-    public const VARIABLE_EMAIL = '{e-mail}';
+    public const VARIABLE_EMAIL = '{email}';
     public const VARIABLE_URL = '{url}';
     public const VARIABLE_DOMAIN = '{domain}';
 

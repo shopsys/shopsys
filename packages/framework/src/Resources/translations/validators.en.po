@@ -34,8 +34,8 @@ msgstr ""
 msgid "Country name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "E-mail subject cannot be longer than {{ limit }} characters"
-msgstr "Email subject cannot be longer than {{ limit }} characters"
+msgid "Email subject cannot be longer than {{ limit }} characters"
+msgstr ""
 
 msgid "EAN cannot be longer then {{ limit }} characters"
 msgstr "EAN cannot be longer than {{ limit }} characters"
@@ -118,14 +118,17 @@ msgstr ""
 msgid "Part number cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Password cannot be local part of e-mail."
-msgstr "Password cannot be local part of email."
+msgid "Password cannot be local part of email."
+msgstr ""
 
-msgid "Password cannot be same as e-mail"
-msgstr "Password cannot be same as email"
+msgid "Password cannot be longer then {{ limit }} characters"
+msgstr "Password cannot be longer than {{ limit }} characters"
 
-msgid "Password cannot be same as part of e-mail before at sign"
-msgstr "Password cannot be same as part of email before at sign"
+msgid "Password cannot be same as email"
+msgstr ""
+
+msgid "Password cannot be same as part of email before at sign"
+msgstr ""
 
 msgid "Password cannot be same as username"
 msgstr ""
@@ -232,11 +235,11 @@ msgstr ""
 msgid "Please enter discount percentage"
 msgstr ""
 
-msgid "Please enter e-mail"
-msgstr "Please enter email"
+msgid "Please enter email"
+msgstr ""
 
-msgid "Please enter e-mail content"
-msgstr "Please enter email content"
+msgid "Please enter email content"
+msgstr ""
 
 msgid "Please enter first name"
 msgstr ""
@@ -343,8 +346,8 @@ msgstr ""
 msgid "Please enter valid 3-digit currency code according to ISO 4217 standard (uppercase)"
 msgstr ""
 
-msgid "Please enter valid e-mail"
-msgstr "Please enter valid email"
+msgid "Please enter valid email"
+msgstr ""
 
 msgid "Please enter whole number."
 msgstr ""

@@ -34,8 +34,8 @@ msgstr "Takový kód země již existuje"
 msgid "Country name cannot be longer than {{ limit }} characters"
 msgstr "Název státu nesmí být delší než {{ limit }} znaků"
 
-msgid "E-mail subject cannot be longer than {{ limit }} characters"
-msgstr "Předmět e-mailu nesmí být delší než {{ limit }} znaků"
+msgid "Email subject cannot be longer than {{ limit }} characters"
+msgstr "Předmět emailu nesmí být delší než {{ limit }} znaků"
 
 msgid "EAN cannot be longer then {{ limit }} characters"
 msgstr "EAN nesmí být delší než {{ limit }} znaků"
@@ -44,7 +44,7 @@ msgid "Each parameter can be used only once"
 msgstr "Každý parametr může být nastaven pouze jednou"
 
 msgid "Email cannot be longer then {{ limit }} characters"
-msgstr "E-mail nesmí být delší než {{ limit }} znaků"
+msgstr "Email nesmí být delší než {{ limit }} znaků"
 
 msgid "Email {{ email }} is already registered"
 msgstr "Email {{ email }} je již registrován"
@@ -118,14 +118,17 @@ msgstr "Název parametru nesmí být delší než {{ limit }} znaků"
 msgid "Part number cannot be longer than {{ limit }} characters"
 msgstr "Výrobní číslo nesmí být delší než {{ limit }} znaků"
 
-msgid "Password cannot be local part of e-mail."
-msgstr "Heslo nesmí být stejné jako první část e-mailu."
+msgid "Password cannot be local part of email."
+msgstr "Heslo nesmí být stejné jako první část emailu."
 
-msgid "Password cannot be same as e-mail"
-msgstr "Heslo nesmí být stejné jako přihlašovací e-mail."
+msgid "Password cannot be longer then {{ limit }} characters"
+msgstr "Heslo musí mít minimálně {{ limit }} znaků"
 
-msgid "Password cannot be same as part of e-mail before at sign"
-msgstr "Heslo nesmí být stejné jako část e-mailu před zavináčem."
+msgid "Password cannot be same as email"
+msgstr "Heslo nesmí být stejné jako přihlašovací email."
+
+msgid "Password cannot be same as part of email before at sign"
+msgstr "Heslo nesmí být stejné jako část emailu před zavináčem."
 
 msgid "Password cannot be same as username"
 msgstr "Heslo nesmí být stejné jako přihlašovací jméno"
@@ -232,10 +235,10 @@ msgstr "Prosím zadejte výchozí cenovou skupinu"
 msgid "Please enter discount percentage"
 msgstr "Vyplňte prosím procento slevy."
 
-msgid "Please enter e-mail"
-msgstr "Vyplňte prosím e-mail"
+msgid "Please enter email"
+msgstr "Vyplňte prosím email"
 
-msgid "Please enter e-mail content"
+msgid "Please enter email content"
 msgstr "Vyplňte prosím text emailu"
 
 msgid "Please enter first name"
@@ -343,8 +346,8 @@ msgstr "Vyplňte prosím přihlašovací jméno"
 msgid "Please enter valid 3-digit currency code according to ISO 4217 standard (uppercase)"
 msgstr "Prosím zadejte platný třímístný kód měny podle standardu ISO 4217 (velkými písmeny)"
 
-msgid "Please enter valid e-mail"
-msgstr "Vyplňte prosím platný e-mail"
+msgid "Please enter valid email"
+msgstr "Vyplňte prosím platný email"
 
 msgid "Please enter whole number."
 msgstr "Zadejte prosím celé číslo."
@@ -404,7 +407,7 @@ msgid "This field must be empty"
 msgstr "Toto pole musí zůstat prázdné"
 
 msgid "This value is not a valid email address."
-msgstr "Tato hodnota není platnou e-mailovou adresou."
+msgstr "Tato hodnota není platnou emailovou adresou."
 
 msgid "Unit name cannot be longer than {{ limit }} characters"
 msgstr "Název jednotky nesmí být delší než {{ limit }} znaků"

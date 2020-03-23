@@ -1,7 +1,7 @@
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
-{% block title %}{{ 'E-mail newsletter'|trans }}{% endblock %}
-{% block h1 %}{{ 'E-mail newsletter'|trans }}{% endblock %}
+{% block title %}{{ 'Email newsletter'|trans }}{% endblock %}
+{% block h1 %}{{ 'Email newsletter'|trans }}{% endblock %}
 
 {% block main_content %}
     {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
@@ -24,7 +24,7 @@
 
     <div class="wrap-divider margin-top-20 text-right">
         <a href="{{ url('admin_newsletter_export') }}" class="btn btn--primary">
-            {{ 'Export e-mail list in CSV format'|trans }}
+            {{ 'Export email list in CSV format'|trans }}
         </a>
     </div>
 {% endblock %}

@@ -86,7 +86,7 @@ class AdministratorController extends AdminBaseController
         $grid->setDefaultOrder('realName');
 
         $grid->addColumn('realName', 'a.realName', t('Full name'), true);
-        $grid->addColumn('email', 'a.email', t('E-mail'));
+        $grid->addColumn('email', 'a.email', t('Email'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_administrator_edit', ['id' => 'a.id']);
