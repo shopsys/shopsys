@@ -63,7 +63,7 @@ Encore
     .addPlugin(new CopyPlugin([
         { from: 'web/bundles/fpjsformvalidator', to: '../../assets/js/bundles/fpjsformvalidator', force: true },
         { from: 'assets/public', to: '../../web/public', force: true },
-        { from: 'node_modules/@shopsys/framework/public/svg/admin', to: '../../web/public/admin/svg', force: true }
+        { from: 'node_modules/@shopsys/framework/assets/public/svg/admin', to: '../../web/public/admin/svg', force: true }
     ]))
 ;
 
@@ -95,7 +95,7 @@ const config = Encore.getWebpackConfig();
 
 config.resolve.alias = {
     'jquery-ui': 'jquery-ui/ui/widgets',
-    'framework': '@shopsys/framework/js',
+    'framework': '@shopsys/framework/assets/js',
     'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
     'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui'))
 };
