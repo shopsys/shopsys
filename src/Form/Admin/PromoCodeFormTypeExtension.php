@@ -168,9 +168,12 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             ]);
     }
 
-    public function getExtendedType()
+    /**
+     * {@inheritdoc}
+     */
+    public static function getExtendedTypes(): iterable
     {
-        return PromoCodeFormType::class;
+        yield PromoCodeFormType::class;
     }
 
     /**

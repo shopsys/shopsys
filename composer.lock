@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "532af965ba85265fe98e4e84baf1f78e",
+    "content-hash": "2f1695533a2922b129c855b297d3eb37",
     "packages": [
         {
             "name": "akeneo/api-php-client",
@@ -170,16 +170,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.133.39",
+            "version": "3.133.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0e3b9e497bd39063cb504115c726d369d8f4d455"
+                "reference": "9b4a110de75631339329a4ca45ebbaf7ddd1f7f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0e3b9e497bd39063cb504115c726d369d8f4d455",
-                "reference": "0e3b9e497bd39063cb504115c726d369d8f4d455",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9b4a110de75631339329a4ca45ebbaf7ddd1f7f9",
+                "reference": "9b4a110de75631339329a4ca45ebbaf7ddd1f7f9",
                 "shasum": ""
             },
             "require": {
@@ -250,7 +250,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-03-18T18:13:04+00:00"
+            "time": "2020-03-20T18:10:54+00:00"
         },
         {
             "name": "barryvdh/elfinder-flysystem-driver",
@@ -2205,16 +2205,16 @@
         },
         {
             "name": "doctrine/reflection",
-            "version": "v1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/reflection.git",
-                "reference": "bc420ead87fdfe08c03ecc3549db603a45b06d4c"
+                "reference": "b699ecc7f2784d1e49924fd9858cf1078db6b0e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/reflection/zipball/bc420ead87fdfe08c03ecc3549db603a45b06d4c",
-                "reference": "bc420ead87fdfe08c03ecc3549db603a45b06d4c",
+                "url": "https://api.github.com/repos/doctrine/reflection/zipball/b699ecc7f2784d1e49924fd9858cf1078db6b0e2",
+                "reference": "b699ecc7f2784d1e49924fd9858cf1078db6b0e2",
                 "shasum": ""
             },
             "require": {
@@ -2235,7 +2235,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -2279,7 +2279,7 @@
                 "reflection",
                 "static"
             ],
-            "time": "2020-01-08T19:53:19+00:00"
+            "time": "2020-03-21T11:34:59+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -5595,20 +5595,20 @@
         },
         {
             "name": "phpoption/phpoption",
-            "version": "1.7.2",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-option.git",
-                "reference": "77f7c4d2e65413aff5b5a8cc8b3caf7a28d81959"
+                "reference": "4acfd6a4b33a509d8c88f50e5222f734b6aeebae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/77f7c4d2e65413aff5b5a8cc8b3caf7a28d81959",
-                "reference": "77f7c4d2e65413aff5b5a8cc8b3caf7a28d81959",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/4acfd6a4b33a509d8c88f50e5222f734b6aeebae",
+                "reference": "4acfd6a4b33a509d8c88f50e5222f734b6aeebae",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9 || ^7.0"
+                "php": "^5.5.9 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.3",
@@ -5646,7 +5646,7 @@
                 "php",
                 "type"
             ],
-            "time": "2019-12-15T19:35:24+00:00"
+            "time": "2020-03-21T18:07:53+00:00"
         },
         {
             "name": "presta/sitemap-bundle",
@@ -7992,38 +7992,38 @@
         },
         {
             "name": "symfony-cmf/routing",
-            "version": "2.1.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony-cmf/Routing.git",
-                "reference": "fbba5ec9626f7a5eaa1c8c1a26e8bfa79c32356f"
+                "reference": "12f3f64a0ab89ee0dc5ead8802167de762eac024"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-cmf/Routing/zipball/fbba5ec9626f7a5eaa1c8c1a26e8bfa79c32356f",
-                "reference": "fbba5ec9626f7a5eaa1c8c1a26e8bfa79c32356f",
+                "url": "https://api.github.com/repos/symfony-cmf/Routing/zipball/12f3f64a0ab89ee0dc5ead8802167de762eac024",
+                "reference": "12f3f64a0ab89ee0dc5ead8802167de762eac024",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1",
                 "psr/log": "^1.0",
-                "symfony/http-kernel": "^2.8 || ^3.3 || ^4.0",
-                "symfony/routing": "^2.8 || ^3.3 || ^4.0"
+                "symfony/http-kernel": "^3.4 || ^4.3",
+                "symfony/routing": "^3.4 || ^4.3"
             },
             "require-dev": {
-                "symfony-cmf/testing": "^2.1.0",
-                "symfony/config": "^2.8 || ^3.3 || ^4.0",
-                "symfony/dependency-injection": "^2.8 || ^3.3 || ^4.0",
-                "symfony/event-dispatcher": "^2.8 || ^3.3 || ^4.0",
+                "symfony-cmf/testing": "^3@dev",
+                "symfony/config": "^3.4 || ^4.3",
+                "symfony/dependency-injection": "^3.4 || ^4.3",
+                "symfony/event-dispatcher": "^3.4 || ^4.3",
                 "symfony/phpunit-bridge": "^4.2.2"
             },
             "suggest": {
-                "symfony/event-dispatcher": "DynamicRouter can optionally trigger an event at the start of matching. Minimal version (~2.1)"
+                "symfony/event-dispatcher": "DynamicRouter can optionally trigger an event at the start of matching. Minimal version (^3.4 || ^4.3)"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -8047,7 +8047,7 @@
                 "database",
                 "routing"
             ],
-            "time": "2019-12-10T10:41:58+00:00"
+            "time": "2019-12-10T10:45:30+00:00"
         },
         {
             "name": "symfony-cmf/routing-bundle",
@@ -9396,20 +9396,20 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v4.4.5",
+            "version": "v5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "65ccb6ca4a5a7bf7c244b8a28195fa188521b3d2"
+                "reference": "4240ae267d89db5b694bdb5712e691b1e24cdc26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/65ccb6ca4a5a7bf7c244b8a28195fa188521b3d2",
-                "reference": "65ccb6ca4a5a7bf7c244b8a28195fa188521b3d2",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/4240ae267d89db5b694bdb5712e691b1e24cdc26",
+                "reference": "4240ae267d89db5b694bdb5712e691b1e24cdc26",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1.3",
+                "php": "^7.2.5",
                 "psr/log": "^1.0",
                 "symfony/http-client-contracts": "^1.1.8|^2",
                 "symfony/polyfill-php73": "^1.11",
@@ -9426,14 +9426,14 @@
                 "nyholm/psr7": "^1.0",
                 "php-http/httplug": "^1.0|^2.0",
                 "psr/http-client": "^1.0",
-                "symfony/dependency-injection": "^4.3|^5.0",
-                "symfony/http-kernel": "^4.4",
-                "symfony/process": "^4.2|^5.0"
+                "symfony/dependency-injection": "^4.4|^5.0",
+                "symfony/http-kernel": "^4.4|^5.0",
+                "symfony/process": "^4.4|^5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.4-dev"
+                    "dev-master": "5.0-dev"
                 }
             },
             "autoload": {
@@ -9460,7 +9460,7 @@
             ],
             "description": "Symfony HttpClient component",
             "homepage": "https://symfony.com",
-            "time": "2020-02-25T13:55:11+00:00"
+            "time": "2020-01-31T09:13:47+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -9799,20 +9799,20 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v4.4.5",
+            "version": "v5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "304db017bafd71c122cd5223a9ac2d03dc24da32"
+                "reference": "2a3c7fee1f1a0961fa9cf360d5da553d05095e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/304db017bafd71c122cd5223a9ac2d03dc24da32",
-                "reference": "304db017bafd71c122cd5223a9ac2d03dc24da32",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/2a3c7fee1f1a0961fa9cf360d5da553d05095e59",
+                "reference": "2a3c7fee1f1a0961fa9cf360d5da553d05095e59",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1.3",
+                "php": "^7.2.5",
                 "symfony/polyfill-intl-idn": "^1.10",
                 "symfony/polyfill-mbstring": "^1.0"
             },
@@ -9821,12 +9821,12 @@
             },
             "require-dev": {
                 "egulias/email-validator": "^2.1.10",
-                "symfony/dependency-injection": "^3.4|^4.1|^5.0"
+                "symfony/dependency-injection": "^4.4|^5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.4-dev"
+                    "dev-master": "5.0-dev"
                 }
             },
             "autoload": {
@@ -9857,7 +9857,7 @@
                 "mime",
                 "mime-type"
             ],
-            "time": "2020-02-04T09:32:40+00:00"
+            "time": "2020-01-04T14:08:26+00:00"
         },
         {
             "name": "symfony/monolog-bridge",
@@ -14026,16 +14026,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.17",
+            "version": "0.12.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "b2c37bda79fdb11d801ce208ce391cffc0f572e6"
+                "reference": "1ce27fe29c8660a27926127d350d53d80c4d4286"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b2c37bda79fdb11d801ce208ce391cffc0f572e6",
-                "reference": "b2c37bda79fdb11d801ce208ce391cffc0f572e6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1ce27fe29c8660a27926127d350d53d80c4d4286",
+                "reference": "1ce27fe29c8660a27926127d350d53d80c4d4286",
                 "shasum": ""
             },
             "require": {
@@ -14061,7 +14061,7 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2020-03-17T15:39:11+00:00"
+            "time": "2020-03-22T16:51:47+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
@@ -15641,12 +15641,12 @@
             "version": "v7.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Symplify/AutoBindParameter.git",
+                "url": "https://github.com/symplify/auto-bind-parameter.git",
                 "reference": "d3108315ba89a6dcb79f3028564c5c03f6bfff59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/AutoBindParameter/zipball/d3108315ba89a6dcb79f3028564c5c03f6bfff59",
+                "url": "https://api.github.com/repos/symplify/auto-bind-parameter/zipball/d3108315ba89a6dcb79f3028564c5c03f6bfff59",
                 "reference": "d3108315ba89a6dcb79f3028564c5c03f6bfff59",
                 "shasum": ""
             },
@@ -15683,12 +15683,12 @@
             "version": "v7.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Symplify/AutowireArrayParameter.git",
+                "url": "https://github.com/symplify/autowire-array-parameter.git",
                 "reference": "c4904d4640f8fa13d4494d2d4e817274ba855891"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/AutowireArrayParameter/zipball/c4904d4640f8fa13d4494d2d4e817274ba855891",
+                "url": "https://api.github.com/repos/symplify/autowire-array-parameter/zipball/c4904d4640f8fa13d4494d2d4e817274ba855891",
                 "reference": "c4904d4640f8fa13d4494d2d4e817274ba855891",
                 "shasum": ""
             },
@@ -15725,12 +15725,12 @@
             "version": "v7.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Symplify/CodingStandard.git",
+                "url": "https://github.com/symplify/coding-standard.git",
                 "reference": "569c9febee38e7202835596ef816cc83f5d50c0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/CodingStandard/zipball/569c9febee38e7202835596ef816cc83f5d50c0b",
+                "url": "https://api.github.com/repos/symplify/coding-standard/zipball/569c9febee38e7202835596ef816cc83f5d50c0b",
                 "reference": "569c9febee38e7202835596ef816cc83f5d50c0b",
                 "shasum": ""
             },
@@ -15775,12 +15775,12 @@
             "version": "v7.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Symplify/EasyCodingStandard.git",
+                "url": "https://github.com/symplify/easy-coding-standard.git",
                 "reference": "f6d6fd79d832e03c100665aee6e38c8c00bdec80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/EasyCodingStandard/zipball/f6d6fd79d832e03c100665aee6e38c8c00bdec80",
+                "url": "https://api.github.com/repos/symplify/easy-coding-standard/zipball/f6d6fd79d832e03c100665aee6e38c8c00bdec80",
                 "reference": "f6d6fd79d832e03c100665aee6e38c8c00bdec80",
                 "shasum": ""
             },
@@ -15846,12 +15846,12 @@
             "version": "v7.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Symplify/PackageBuilder.git",
+                "url": "https://github.com/symplify/package-builder.git",
                 "reference": "854b9f35f54edf10c55ae40f010e31213ac8c9b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Symplify/PackageBuilder/zipball/854b9f35f54edf10c55ae40f010e31213ac8c9b5",
+                "url": "https://api.github.com/repos/symplify/package-builder/zipball/854b9f35f54edf10c55ae40f010e31213ac8c9b5",
                 "reference": "854b9f35f54edf10c55ae40f010e31213ac8c9b5",
                 "shasum": ""
             },
@@ -15893,12 +15893,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/set-config-resolver.git",
-                "reference": "a051a20b90fdb70ac3b6744ecaef5a71de658a8b"
+                "reference": "9ed8f39022dd5d22b0d89291fa24eb3b71a8f1b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/a051a20b90fdb70ac3b6744ecaef5a71de658a8b",
-                "reference": "a051a20b90fdb70ac3b6744ecaef5a71de658a8b",
+                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/9ed8f39022dd5d22b0d89291fa24eb3b71a8f1b2",
+                "reference": "9ed8f39022dd5d22b0d89291fa24eb3b71a8f1b2",
                 "shasum": ""
             },
             "require": {
@@ -15936,12 +15936,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/smart-file-system.git",
-                "reference": "8700182eba87e1c59e7d854c5457bf0a20fb81c9"
+                "reference": "3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/8700182eba87e1c59e7d854c5457bf0a20fb81c9",
-                "reference": "8700182eba87e1c59e7d854c5457bf0a20fb81c9",
+                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2",
+                "reference": "3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2",
                 "shasum": ""
             },
             "require": {
@@ -16126,11 +16126,11 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "fp/jsformvalidator-bundle": 20,
-        "shopsys/google-cloud-bundle": 20,
-        "shopsys/migrations": 20,
         "shopsys/form-types-bundle": 20,
         "shopsys/framework": 20,
         "shopsys/frontend-api": 20,
+        "shopsys/google-cloud-bundle": 20,
+        "shopsys/migrations": 20,
         "shopsys/plugin-interface": 20,
         "shopsys/product-feed-google": 20,
         "shopsys/product-feed-heureka": 20,
