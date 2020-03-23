@@ -25,5 +25,7 @@ yarn-error.log
 
 /assets/js/translations.json
 /assets/js/bundles
+/assets/public/admin_svg.less
+/assets/public/frontend_svg.less
 
 /.phpunit.result.cache
