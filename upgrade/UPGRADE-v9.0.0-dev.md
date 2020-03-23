@@ -1335,6 +1335,11 @@ There you can find links to upgrade notes for other versions too.
 - fix your password minimum length constraint message ([#1478](https://github.com/shopsys/shopsys/pull/1478))
     - see #project-base-diff to update your project
 
+- fix your translations ids ([#1738](https://github.com/shopsys/shopsys/pull/1738))
+    - see #project-base-diff to update your project
+    - email template variable has been changed from `{e-mail}` to `{email}`, update your email templates accordingly
+    - run `php phing translations-dump` and check, if some translations are needed to be translated
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
