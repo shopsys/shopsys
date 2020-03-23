@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Product\Pricing\ProductPriceCalculation;
 use App\Model\Product\Type\ProductType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
@@ -13,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -30,12 +32,18 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     private $currentPromoCodeFacade;
 
     /**
+     * @var \App\Model\Product\Pricing\ProductPriceCalculation
+     */
+    private $productPriceCalculation;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      * @param \App\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
+     * @param \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      */
     public function __construct(
         QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
@@ -43,7 +51,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         TransportPriceCalculation $transportPriceCalculation,
         PaymentPriceCalculation $paymentPriceCalculation,
         OrderPriceCalculation $orderPriceCalculation,
-        CurrentPromoCodeFacade $currentPromoCodeFacade
+        CurrentPromoCodeFacade $currentPromoCodeFacade,
+        ProductPriceCalculation $productPriceCalculation
     ) {
         parent::__construct(
             $quantifiedProductPriceCalculation,
@@ -53,6 +62,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $orderPriceCalculation
         );
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
+        $this->productPriceCalculation = $productPriceCalculation;
     }
 
     /**
@@ -130,12 +140,15 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $roundingPrice
         );
 
+        $totalProductHighPrice = $this->calculateTotalProductsHighPriceByDomain($quantifiedProducts, $domainId);
+
         return new OrderPreview(
             $quantifiedProducts,
             $quantifiedItemsPrices,
             $quantifiedItemsDiscounts,
             $productsPrice,
             $totalPrice,
+            $totalProductHighPrice,
             $transport,
             $transportPrice,
             $payment,
@@ -144,5 +157,22 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $promoCodeDiscountPercent,
             $productType
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private function calculateTotalProductsHighPriceByDomain(array $quantifiedProducts, int $domainId): Price
+    {
+        $totalHighPrice = Price::zero();
+        foreach ($quantifiedProducts as $quantifiedProduct) {
+            $product = $quantifiedProduct->getProduct();
+            $productHighPrice = $this->productPriceCalculation->calculateProductNonSellingPrice($product, $domainId);
+            $totalHighPrice = $totalHighPrice->add($productHighPrice);
+        }
+
+        return $totalHighPrice;
     }
 }

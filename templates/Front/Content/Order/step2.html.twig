@@ -137,27 +137,28 @@
                         </div>
                     </div>
                 </div>
+                <div class="box-order__cart">
+                    <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
+                        {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                            transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
+                            paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
+                        })) }}
+                    </div>
+                    <div class="in-action">
+                        <div class="in-action__right">
+                            {{ form_widget(form.save, { label: 'Continue in order'|trans, attr: { class: 'btn btn--success in-action__btn in-action__btn--big js-no-validate-button' } }) }}
+                        </div>
 
-                <div id="js-order-preview" class="box-order__cart" data-url="{{ url('front_order_preview') }}">
-
-                    {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                        transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
-                        paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null
-                    })) }}
+                        <div class="in-action__left">
+                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn in-action__btn js-no-validate-button">
+                                {{ 'Back to cart'|trans }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="in-action">
-                <div class="in-action__right">
-                    {{ form_widget(form.save, { label: 'Continue in order'|trans, attr: { class: 'btn btn--success in-action__btn in-action__btn--big js-no-validate-button' } }) }}
-                </div>
 
-                <div class="in-action__left">
-                    <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn in-action__btn js-no-validate-button">
-                        {{ 'Back to cart'|trans }}
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 {% endblock %}

@@ -281,6 +281,7 @@ class OrderController extends FrontBaseController
     {
         $transportIdsByProductTypeId = $request->get('transportIdsByProductTypeId');
         $paymentId = $request->get('paymentId');
+        $showProducts = $request->get('shopProducts', true);
 
         $orderData = $this->orderDataFactory->create();
 
@@ -306,6 +307,7 @@ class OrderController extends FrontBaseController
         $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
 
         return $this->render('Front/Content/Order/preview.html.twig', [
+            'showProducts' => $showProducts,
             'splitOrderPreview' => $splitOrderPreview,
         ]);
     }
