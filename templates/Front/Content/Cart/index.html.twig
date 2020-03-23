@@ -28,6 +28,7 @@
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form' }}) }}
                     {{ form_errors(form) }}
 
+                    <div class="box-cart-info">
                     {% set previewNumber = 0 %}
                     {% for orderPreview in splitOrderPreview.orderPreviews %}
                         {% set previewNumber = previewNumber + 1 %}
@@ -65,6 +66,15 @@
                             </tfoot>
                         </table>
                     {% endif %}
+                    </div>
+
+                    <div id="js-order-preview" class="box-order__cart" data-url="{{ url('front_order_preview') }}">
+
+                        {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                            transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
+                            paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null
+                        })) }}
+                    </div>
 
                     <div class="box-cart-bottom">
                         <div class="box-cart-bottom__info">
