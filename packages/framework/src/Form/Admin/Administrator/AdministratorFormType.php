@@ -48,14 +48,14 @@ class AdministratorFormType extends AbstractType
             ->add('username', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter username']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Username cannot be longer then {{ limit }} characters']),
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Username cannot be longer than {{ limit }} characters']),
                 ],
                 'label' => t('Login name'),
             ])
             ->add('realName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter full name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Full name cannot be longer then {{ limit }} characters']),
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Full name cannot be longer than {{ limit }} characters']),
                 ],
                 'label' => t('Full name'),
             ])
@@ -64,7 +64,7 @@ class AdministratorFormType extends AbstractType
                 'constraints' => [
                     new Email(['message' => 'Please enter valid email']),
                     new Constraints\NotBlank(['message' => 'Please enter email']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer then {{ limit }} characters']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
                 ],
                 'label' => t('Email'),
             ])

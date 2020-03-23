@@ -109,7 +109,7 @@ class CustomerUserFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
                     new Constraints\Length([
                         'max' => 100,
-                        'maxMessage' => 'First name cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
                 'label' => t('First name'),
@@ -129,7 +129,7 @@ class CustomerUserFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Constraints\Length([
                         'max' => 255,
-                        'maxMessage' => 'Email cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
                     ]),
                     new Email(['message' => 'Please enter valid email']),
                     new UniqueEmail([

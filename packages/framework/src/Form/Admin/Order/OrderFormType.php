@@ -208,7 +208,7 @@ class OrderFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
                     new Constraints\Length([
                         'max' => 100,
-                        'maxMessage' => 'First name cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
             ])
@@ -229,7 +229,7 @@ class OrderFormType extends AbstractType
                     new Email(['message' => 'Please enter valid email']),
                     new Constraints\Length([
                         'max' => 255,
-                        'maxMessage' => 'Email cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
                     ]),
                 ],
             ])
@@ -274,7 +274,7 @@ class OrderFormType extends AbstractType
                 'constraints' => [
                     new Constraints\Length([
                         'max' => 50,
-                        'maxMessage' => 'Identification number cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'Identification number cannot be longer than {{ limit }} characters',
                     ]),
                 ],
             ])
@@ -386,7 +386,7 @@ class OrderFormType extends AbstractType
                             ]),
                             new Constraints\Length([
                                 'max' => 100,
-                                'maxMessage' => 'First name of contact person cannot be longer then {{ limit }} characters',
+                                'maxMessage' => 'First name of contact person cannot be longer than {{ limit }} characters',
                                 'groups' => [static::VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS],
                             ]),
                         ],

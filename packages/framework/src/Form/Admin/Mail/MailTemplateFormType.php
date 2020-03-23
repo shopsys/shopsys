@@ -34,7 +34,7 @@ class MailTemplateFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Email(),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer then {{ limit }} characters']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('subject', TextType::class, [

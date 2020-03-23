@@ -73,7 +73,7 @@ class DeliveryAddressFormType extends AbstractType
                             ]),
                             new Constraints\Length([
                                 'max' => 100,
-                                'maxMessage' => 'First name of contact person cannot be longer then {{ limit }} characters',
+                                'maxMessage' => 'First name of contact person cannot be longer than {{ limit }} characters',
                             ]),
                         ],
                         'label' => t('First name'),

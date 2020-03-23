@@ -13,7 +13,7 @@ msgstr "Tato částka musí být větší nebo rovna nule."
 msgid "Availability name cannot be longer than {{ limit }} characters"
 msgstr "Název dostupnosti nesmí být delší než {{ limit }} znaků"
 
-msgid "Catalogue number cannot be longer then {{ limit }} characters"
+msgid "Catalogue number cannot be longer than {{ limit }} characters"
 msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
 
 msgid "Choose image"
@@ -37,13 +37,13 @@ msgstr "Název státu nesmí být delší než {{ limit }} znaků"
 msgid "Email subject cannot be longer than {{ limit }} characters"
 msgstr "Předmět emailu nesmí být delší než {{ limit }} znaků"
 
-msgid "EAN cannot be longer then {{ limit }} characters"
+msgid "EAN cannot be longer than {{ limit }} characters"
 msgstr "EAN nesmí být delší než {{ limit }} znaků"
 
 msgid "Each parameter can be used only once"
 msgstr "Každý parametr může být nastaven pouze jednou"
 
-msgid "Email cannot be longer then {{ limit }} characters"
+msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "Email nesmí být delší než {{ limit }} znaků"
 
 msgid "Email {{ email }} is already registered"
@@ -64,10 +64,10 @@ msgstr "Přípona souboru {{ value }} je příliš dlouhá. Měla by mít {{ lim
 msgid "File name cannot be longer than {{ limit }} characters"
 msgstr "Název souboru nesmí být delší než {{ limit }} znaků"
 
-msgid "First name cannot be longer then {{ limit }} characters"
+msgid "First name cannot be longer than {{ limit }} characters"
 msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 
-msgid "First name of contact person cannot be longer then {{ limit }} characters"
+msgid "First name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Jméno kontaktní osoby nesmí být delší než {{ limit }} znaků"
 
 msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
@@ -76,7 +76,7 @@ msgstr "Barva příznaku se zadává v hexa kódu, například #3333ff. Nesmí b
 msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr "Název příznaku nesmí být delší než {{ limit }} znaků"
 
-msgid "Full name cannot be longer then {{ limit }} characters"
+msgid "Full name cannot be longer than {{ limit }} characters"
 msgstr "Celé jméno nesmí být delší než {{ limit }} znaků"
 
 msgid "Heading (H1) cannot be longer than {{ limit }} characters"
@@ -85,7 +85,7 @@ msgstr "Nadpis H1 nesmí být delší než {{ limit }} znaků"
 msgid "Heureka API must be {{ limit }} characters"
 msgstr "Heureka API klíč musí mít právě {{ limit }} znaků"
 
-msgid "Identification number cannot be longer then {{ limit }} characters"
+msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr "IČ nesmí být delší než {{ limit }} znaků"
 
 msgid "Image can be only in JPG or PNG format"
@@ -120,9 +120,6 @@ msgstr "Výrobní číslo nesmí být delší než {{ limit }} znaků"
 
 msgid "Password cannot be local part of email."
 msgstr "Heslo nesmí být stejné jako první část emailu."
-
-msgid "Password cannot be longer then {{ limit }} characters"
-msgstr "Heslo musí mít minimálně {{ limit }} znaků"
 
 msgid "Password cannot be same as email"
 msgstr "Heslo nesmí být stejné jako přihlašovací email."
@@ -418,7 +415,7 @@ msgstr "Nahraný soubor je příliš velký ({{ size }} {{ suffix }}). Maximáln
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
 msgstr "Nahraný obrázek je příliš velký ({{ size }} {{ suffix }}). Maximální velikost obrázku je {{ limit }} {{ suffix }}."
 
-msgid "Username cannot be longer then {{ limit }} characters"
+msgid "Username cannot be longer than {{ limit }} characters"
 msgstr "Přihlašovací jméno nesmí být delší než {{ limit }} znaků"
 
 msgid "VAT name cannot be longer than {{ limit }} characters"
@@ -433,7 +430,7 @@ msgstr "Hodnoty jsou duplicitní."
 msgid "Variable {{ needle }} is required"
 msgstr "Proměnná {{ needle }} je povinná"
 
-msgid "Variant alias cannot be longer then {{ limit }} characters"
+msgid "Variant alias cannot be longer than {{ limit }} characters"
 msgstr "Alias varianty nesmí být delší než {{ limit }} znaků"
 
 msgid "You entered same product twice. In list of bestsellers can be product only once. Please correct it and then save form again."

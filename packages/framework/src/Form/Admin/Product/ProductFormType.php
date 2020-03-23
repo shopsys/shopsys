@@ -251,7 +251,7 @@ class ProductFormType extends AbstractType
         $builderBasicInformationGroup->add('catnum', TextType::class, [
             'required' => false,
             'constraints' => [
-                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalogue number cannot be longer then {{ limit }} characters']),
+                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalogue number cannot be longer than {{ limit }} characters']),
             ],
             'disabled' => $this->isProductMainVariant($product),
             'attr' => $disabledItemInMainVariantAttr,
@@ -269,7 +269,7 @@ class ProductFormType extends AbstractType
             ->add('ean', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'EAN cannot be longer then {{ limit }} characters']),
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'EAN cannot be longer than {{ limit }} characters']),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
                 'attr' => $disabledItemInMainVariantAttr,
@@ -784,7 +784,7 @@ class ProductFormType extends AbstractType
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Variant alias cannot be longer then {{ limit }} characters']),
+                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Variant alias cannot be longer than {{ limit }} characters']),
                     ],
                 ],
                 'label' => t('Variant alias'),
