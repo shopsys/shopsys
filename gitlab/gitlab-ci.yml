@@ -82,7 +82,6 @@ review:
         - build
     <<: *only-default
     script:
-        - curl --location https://github.com/mikefarah/yq/releases/download/2.1.1/yq_linux_amd64 --output ~/yq && chmod +x ~/yq && ~/yq --version
         - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
         - docker-compose down --rmi all -v
         - docker-compose up -d
