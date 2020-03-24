@@ -28,12 +28,6 @@ services:
             $internalDirectories: '%internal_directories%'
             $publicDirectories: '%public_directories%'
 
-    Shopsys\FrameworkBundle\Command\GenerateGruntfileCommand:
-        arguments:
-            - '%shopsys.resources_dir%'
-            - '%shopsys.framework.resources_dir%'
-            - '%shopsys.root_dir%'
-
     Shopsys\MigrationBundle\Command\GenerateMigrationCommand:
         arguments:
             - '%shopsys.vendor_dir%'

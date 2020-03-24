@@ -63,7 +63,7 @@ Encore
     .addPlugin(new CopyPlugin([
         { from: 'web/bundles/fpjsformvalidator', to: '../../assets/js/bundles/fpjsformvalidator', force: true },
         { from: 'assets/public', to: '../../web/public', force: true },
-        { from: 'node_modules/@shopsys/framework/assets/public/svg/admin', to: '../../web/public/admin/svg', force: true }
+        { from: 'node_modules/@shopsys/framework/public/svg/admin', to: '../../web/public/admin/svg', force: true }
     ]))
 ;
 
@@ -76,11 +76,13 @@ domains.domains.forEach((domain) => {
     }
     Encore
         .addEntry('frontend-style-' + domain.styles_directory, './assets/styles/frontend/' + domain.styles_directory + '/main.less')
-        .addEntry('frontend-print-style-' + domain.styles_directory, './assets/styles/frontend/' + domain.styles_directory + '/print/main.less');
+        .addEntry('frontend-print-style-' + domain.styles_directory, './assets/styles/frontend/' + domain.styles_directory + '/print/main.less')
+        .addEntry('frontend-wysiwyg-' + domain.id, './assets/styles/frontend/' + domain.styles_directory + '/wysiwyg.less');
 });
 
 Encore
     .addEntry('admin-style', './assets/styles/admin/main.less')
+    .addEntry('admin-wysiwyg', './assets/styles/admin/wysiwyg.less')
     .addPlugin(
         new StylelintPlugin({
             configFile: '.stylelintrc',
@@ -95,7 +97,7 @@ const config = Encore.getWebpackConfig();
 
 config.resolve.alias = {
     'jquery-ui': 'jquery-ui/ui/widgets',
-    'framework': '@shopsys/framework/assets/js',
+    'framework': '@shopsys/framework/js',
     'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
     'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui'))
 };

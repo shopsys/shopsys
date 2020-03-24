@@ -9,7 +9,6 @@
 /PRODUCTION
 /TEST
 /MAINTENANCE
-/Gruntfile.js
 /.php_cs.cache
 /.docker-sync
 .DS_Store

@@ -57,9 +57,6 @@ RUN docker-php-ext-install \
     pdo_pgsql \
     zip
 
-# install grunt cli used by frontend developers for continuous generating of css files
-RUN npm install -g grunt-cli
-
 # install PostgreSQl client for dumping database
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" > /etc/apt/sources.list.d/PostgreSQL.list' && \
