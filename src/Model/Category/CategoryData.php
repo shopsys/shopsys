@@ -22,7 +22,7 @@ class CategoryData extends BaseCategoryData
     public $svgIcon;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     * @var \App\Model\Product\Parameter\Parameter[]
      */
     public $parameters;
 

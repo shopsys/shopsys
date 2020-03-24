@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Parameter\ParameterGroupDataFactory;
+use App\Model\Product\Parameter\ParameterGroupFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -58,24 +61,29 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     protected $productParameterValueDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory
+     * @var \App\Model\Product\Parameter\ParameterValueDataFactory
      */
     protected $parameterValueDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
+     * @var \App\Model\Product\Parameter\ParameterFacade
      */
     protected $parameterFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory
+     * @var \App\Model\Product\Parameter\ParameterDataFactory
      */
     protected $parameterDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     * @var \App\Model\Product\Parameter\Parameter[]
      */
     protected $parameters;
+
+    /**
+     * @var \App\Model\Product\Parameter\ParameterGroup[]
+     */
+    protected $parameterGroups;
 
     /**
      * @var int
@@ -98,16 +106,34 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     protected $setting;
 
     /**
+     * @var \App\Model\Product\Parameter\ParameterGroupDataFactory|\App\Model\Product\Parameter\ParameterGroupDataFactory
+     */
+    private $parameterGroupDataFactory;
+
+    /**
+     * @var \Faker\Generator
+     */
+    private $generator;
+
+    /**
+     * @var \App\Model\Product\Parameter\ParameterGroupFacade
+     */
+    private $parameterGroupFacade;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
+     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \App\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
+     * @param \App\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
+     * @param \Faker\Generator $generator
+     * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -116,10 +142,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         PricingGroupFacade $pricingGroupFacade,
         ProductDataFactoryInterface $productDataFactory,
         ProductParameterValueDataFactory $productParameterValueDataFactory,
-        ParameterValueDataFactory $parameterValueDataFactory,
+        ParameterValueDataFactoryInterface $parameterValueDataFactory,
         ParameterFacade $parameterFacade,
-        ParameterDataFactory $parameterDataFactory,
-        PriceConverter $priceConverter
+        ParameterDataFactoryInterface $parameterDataFactory,
+        PriceConverter $priceConverter,
+        ParameterGroupDataFactory $parameterGroupDataFactory,
+        Generator $generator,
+        ParameterGroupFacade $parameterGroupFacade
     ) {
         $this->productFacade = $productFacade;
         $this->productVariantFacade = $productVariantFacade;
@@ -131,6 +160,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->parameterFacade = $parameterFacade;
         $this->parameterDataFactory = $parameterDataFactory;
         $this->priceConverter = $priceConverter;
+        $this->parameterGroupDataFactory = $parameterGroupDataFactory;
+        $this->generator = $generator;
+        $this->parameterGroupFacade = $parameterGroupFacade;
     }
 
     /**
@@ -156,11 +188,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback', [], 'dataFixtures', $domain->getLocale());
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('27"', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1920×1080 (Full HD)', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('27"', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale));
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale));
+            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1920×1080 (Full HD)', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale));
+            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i, t('Způsob připojení', [], 'dataFixtures', $locale));
+            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i, t('Způsob připojení', [], 'dataFixtures', $locale));
         }
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
@@ -290,7 +322,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], 'dataFixtures', $locale);
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Gaming mouse', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Gaming mouse', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje myš', [], 'dataFixtures', $locale));
             $this->addParameterTranslations($parameterTranslations, t('Ergonomics', [], 'dataFixtures', $locale), t('Right-handed', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Supported OS', [], 'dataFixtures', $locale), t('Windows 2000/XP/Vista/7', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Number of buttons', [], 'dataFixtures', $locale), t('5', [], 'dataFixtures', $locale), $locale, $i);
@@ -5663,9 +5695,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param string[] $parameterNamesByLocale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+     * @param string[]|null $parameterGroupNamesByLocale
+     * @return \App\Model\Product\Parameter\Parameter
      */
-    protected function findParameterByNamesOrCreateNew(array $parameterNamesByLocale): Parameter
+    protected function findParameterByNamesOrCreateNew(array $parameterNamesByLocale, ?array $parameterGroupNamesByLocale): Parameter
     {
         $cacheId = json_encode($parameterNamesByLocale);
 
@@ -5673,12 +5706,21 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             return $this->parameters[$cacheId];
         }
 
+        /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
         $parameter = $this->parameterFacade->findParameterByNames($parameterNamesByLocale);
+
+        $parameterGroup = null;
+        if ($parameterGroupNamesByLocale !== null) {
+            $parameterGroup = $this->findParameterGroupByNamesOrCreateNew($parameterGroupNamesByLocale);
+        }
 
         if ($parameter === null) {
             $parameterData = $this->parameterDataFactory->create();
             $parameterData->name = $parameterNamesByLocale;
             $parameterData->visible = true;
+            $parameterData->group = $parameterGroup;
+
+            /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
             $parameter = $this->parameterFacade->create($parameterData);
         }
 
@@ -5693,10 +5735,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     protected function setParametersByTranslations(ProductData $productData, array $parametersTranslations): void
     {
-        foreach ($parametersTranslations as $paramaterTranslations) {
-            $parameter = $this->findParameterByNamesOrCreateNew($paramaterTranslations['names']);
+        foreach ($parametersTranslations as $parameterTranslations) {
+            $parameter = $this->findParameterByNamesOrCreateNew($parameterTranslations['names'], $parameterTranslations['group_name']);
 
-            foreach ($paramaterTranslations['values'] as $locale => $parameterValue) {
+            foreach ($parameterTranslations['values'] as $locale => $parameterValue) {
                 $productParameterValueData = $this->productParameterValueDataFactory->create();
                 $parameterValueData = $this->parameterValueDataFactory->create();
                 $parameterValueData->text = $parameterValue;
@@ -5749,11 +5791,17 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param string $parameterValue
      * @param string $locale
      * @param int $i
+     * @param string|null $parameterGroupName
      */
-    protected function addParameterTranslations(array &$parameterTranslations, string $parameterName, string $parameterValue, string $locale, int &$i): void
+    protected function addParameterTranslations(array &$parameterTranslations, string $parameterName, string $parameterValue, string $locale, int &$i, ?string $parameterGroupName = null): void
     {
         $parameterTranslations[$i]['names'][$locale] = $parameterName;
         $parameterTranslations[$i]['values'][$locale] = $parameterValue;
+        $parameterTranslations[$i]['group_name'][$locale] = $parameterGroupName;
+
+        if ($parameterGroupName === null) {
+            $parameterTranslations[$i]['group_name'] = null;
+        }
 
         $i++;
     }
@@ -5870,5 +5918,31 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             SettingValueDataFixture::class,
             ProductTypeDataFixture::class,
         ];
+    }
+
+    /**
+     * @param string[] $parameterGroupNameByLocale
+     * @return \App\Model\Product\Parameter\ParameterGroup|mixed|null
+     */
+    private function findParameterGroupByNamesOrCreateNew(array $parameterGroupNameByLocale)
+    {
+        $cacheId = json_encode($parameterGroupNameByLocale);
+
+        if (isset($this->parameterGroups[$cacheId])) {
+            return $this->parameterGroups[$cacheId];
+        }
+
+        $parameterGroup = $this->parameterGroupFacade->findParameterGroupByNames($parameterGroupNameByLocale);
+
+        if ($parameterGroup === null) {
+            $parameterGroupData = $this->parameterGroupDataFactory->create();
+            $parameterGroupData->names = $parameterGroupNameByLocale;
+            $parameterGroupData->akeneoCode = $this->generator->lexify('???????');
+            $parameterGroup = $this->parameterGroupFacade->create($parameterGroupData);
+        }
+
+        $this->parameterGroups[$cacheId] = $parameterGroup;
+
+        return $parameterGroup;
     }
 }

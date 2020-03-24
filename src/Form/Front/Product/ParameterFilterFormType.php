@@ -63,7 +63,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]|null $value
+     * @param \App\Model\Product\Parameter\ParameterValue[][]|null $value
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]|null
      */
     public function reverseTransform($value)
@@ -89,7 +89,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]|null $value
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]|null
+     * @return \App\Model\Product\Parameter\ParameterValue[]|null
      */
     public function transform($value)
     {
@@ -97,6 +97,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
             return null;
         }
 
+        /** @var \App\Model\Product\Parameter\ParameterValue[] $parameterValuesIndexedByParameterId */
         $parameterValuesIndexedByParameterId = [];
         foreach ($value as $parameterFilterData) {
             $parameterId = $parameterFilterData->parameter->getId();

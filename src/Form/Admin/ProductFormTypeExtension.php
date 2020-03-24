@@ -44,6 +44,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'productTypePlanFileUrl',
         'assemblyInstructionFileUrl',
         'productType',
+        'parameters',
     ];
 
     /**

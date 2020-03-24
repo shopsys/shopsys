@@ -60,9 +60,9 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
             return;
         }
 
-        $this->doBeforeTransfer();
-
         try {
+            $this->doBeforeTransfer();
+
             $this->sqlLoggerFacade->temporarilyDisableLogging();
 
             foreach ($this->getData() as $item) {

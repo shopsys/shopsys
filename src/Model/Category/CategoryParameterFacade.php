@@ -32,7 +32,7 @@ class CategoryParameterFacade
 
     /**
      * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] $parameters
+     * @param \App\Model\Product\Parameter\Parameter[] $parameters
      */
     public function saveRelation(Category $category, array $parameters): void
     {

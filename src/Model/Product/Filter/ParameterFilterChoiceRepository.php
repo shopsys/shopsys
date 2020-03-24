@@ -18,6 +18,9 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository)
+ * @method \App\Model\Product\Parameter\Parameter[] getVisibleParametersIndexedByIdOrderedByName(array $rows, string $locale)
+ * @method \App\Model\Product\Parameter\ParameterValue[][] getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, string $locale)
+ * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesIndexedByIdOrderedByText(array $rows, string $locale)
  */
 class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepository
 {
