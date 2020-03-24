@@ -11,9 +11,12 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Elasticsearch\Client
      * @inject

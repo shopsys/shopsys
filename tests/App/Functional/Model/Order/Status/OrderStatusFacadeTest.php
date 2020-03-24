@@ -8,9 +8,12 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class OrderStatusFacadeTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
      * @inject
@@ -31,8 +34,6 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
 
     public function testDeleteByIdAndReplace()
     {
-        $em = $this->getEntityManager();
-
         $orderStatusData = new OrderStatusData();
         $orderStatusData->name = ['cs' => 'name'];
         $orderStatusToDelete = $this->orderStatusFacade->create($orderStatusData);
@@ -47,7 +48,7 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
 
         $this->orderStatusFacade->deleteById($orderStatusToDelete->getId(), $orderStatusToReplaceWith->getId());
 
-        $em->refresh($order);
+        $this->em->refresh($order);
 
         $this->assertEquals($orderStatusToReplaceWith, $order->getStatus());
     }

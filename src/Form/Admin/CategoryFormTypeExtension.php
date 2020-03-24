@@ -47,13 +47,11 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $settingsBuilder = $builder->get('settings');
-
         $settingsBuilder
             ->add('svgIcon', ChoiceType::class, [
                 'label' => t('Nastavení SVG ikony'),
                 'required' => false,
                 'choices' => $this->svgProvider->getAllSvgIconsNames(),
-                'choices_as_values' => true,
             ]);
 
         /** @var \Ivory\OrderedForm\Builder\OrderedFormBuilder $builderShortDescriptionGroup */
@@ -98,8 +96,8 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return CategoryFormType::class;
+        yield CategoryFormType::class;
     }
 }

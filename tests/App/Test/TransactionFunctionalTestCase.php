@@ -4,26 +4,29 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
+
 abstract class TransactionFunctionalTestCase extends FunctionalTestCase
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    protected function getEntityManager()
-    {
-        return $this->getContainer()->get('doctrine.orm.entity_manager');
-    }
+    use SymfonyTestContainer;
 
-    protected function setUp()
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
+     * @inject
+     */
+    protected $em;
+
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->getEntityManager()->beginTransaction();
+        $this->em->beginTransaction();
+        $this->em->getConnection()->setAutoCommit(false);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
-        $this->getEntityManager()->rollback();
+        $this->em->rollback();
 
         parent::tearDown();
     }

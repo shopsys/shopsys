@@ -8,7 +8,7 @@ use App\Model\Product\Listed\ListedProductViewFactory;
 use App\Model\Product\ProductOnCurrentDomainFacade;
 use Shopsys\ReadModelBundle\Image\ImageViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment;
 
 final class ProductsSkuPlaceholder extends AbstractPlaceholder
 {
@@ -17,7 +17,7 @@ final class ProductsSkuPlaceholder extends AbstractPlaceholder
     public const PATTERN = '/(\{products=(?<catnums>[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*)\})/sU';
 
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface
+     * @var \Twig\Environment
      */
     private $templating;
 
@@ -43,14 +43,14 @@ final class ProductsSkuPlaceholder extends AbstractPlaceholder
 
     /**
      * @param \App\Model\Product\ProductOnCurrentDomainFacade $productOnCurrentDomainFacade
-     * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface $templating
+     * @param \Twig\Environment $templating
      * @param \App\Model\Product\Listed\ListedProductViewFactory $listedProductViewFactory
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
      */
     public function __construct(
         ProductOnCurrentDomainFacade $productOnCurrentDomainFacade,
-        EngineInterface $templating,
+        Environment $templating,
         ListedProductViewFactory $listedProductViewFactory,
         ImageViewFacade $imageViewFacade,
         ProductActionViewFacade $productActionViewFacade

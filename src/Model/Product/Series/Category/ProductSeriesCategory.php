@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product\Series\Category;
 
 use App\Model\Product\Series\Category\Exception\ProductSeriesCategoryDomainNotFoundException;
-use App\Model\Product\Series\ProductSeriesTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -19,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Table(name="product_series_categories")
  * @ORM\Entity
  *
- * @method ProductSeriesTranslation translation(?string $locale = null)
+ * @method \App\Model\Product\Series\ProductSeriesTranslation translation(?string $locale = null)
  */
 class ProductSeriesCategory extends AbstractTranslatableEntity implements OrderableEntityInterface
 {

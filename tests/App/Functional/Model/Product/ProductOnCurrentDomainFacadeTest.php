@@ -18,9 +18,12 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
      * @inject
@@ -228,14 +231,12 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
      */
     private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales)
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         $parameterValues = [];
 
         foreach ($valuesTextsByLocales as $valueTextsByLocales) {
             foreach ($valueTextsByLocales as $locale => $text) {
                 /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue */
-                $parameterValue = $em->getRepository(ParameterValue::class)->findOneBy([
+                $parameterValue = $this->em->getRepository(ParameterValue::class)->findOneBy([
                     'text' => $text,
                     'locale' => $locale,
                 ]);
@@ -254,15 +255,15 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), Domain::FIRST_DOMAIN_ID);
 
         $paginationResult = $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 1, 10);
-        $this->assertCount(10, $paginationResult->getResults());
+        $this->assertCount(10, $paginationResult->getResults(), ' page 1 limit 10');
         $this->assertSame(22, $paginationResult->getTotalCount());
 
         $paginationResult = $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 2, 10);
-        $this->assertCount(10, $paginationResult->getResults());
+        $this->assertCount(10, $paginationResult->getResults(), ' page 2 limit 10');
         $this->assertSame(22, $paginationResult->getTotalCount());
 
-        $paginationResult = $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 3, 2);
-        $this->assertCount(2, $paginationResult->getResults());
+        $paginationResult = $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 3, 10);
+        $this->assertCount(2, $paginationResult->getResults(), ' page 3 limit 10');
         $this->assertSame(22, $paginationResult->getTotalCount());
     }
 

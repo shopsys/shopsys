@@ -253,12 +253,24 @@ class BlogCategoryFormType extends AbstractType
             $builderSeoGroup
                 ->add('urls', UrlListType::class, [
                     'route_name' => 'front_blogcategory_detail',
-                    'entity_id' => $options['blogCategory'] !== null ? $options['blogCategory']->getId() : null,
+                    'entity_id' => $this->getBlogCategoryId($options['blogCategory']),
                     'label' => t('URL addresses'),
                 ]);
         }
 
         return $builderSeoGroup;
+    }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategory|null $blogCategory
+     * @return int|null
+     */
+    private function getBlogCategoryId(?BlogCategory $blogCategory): ?int
+    {
+        if ($blogCategory !== null) {
+            return $blogCategory->getId();
+        }
+        return null;
     }
 
     /**

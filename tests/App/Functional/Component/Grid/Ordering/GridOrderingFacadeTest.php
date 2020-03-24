@@ -12,9 +12,7 @@ class GridOrderingFacadeTest extends TransactionFunctionalTestCase
 {
     public function testSetPositionWrongEntity()
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $gridOrderingFacade = new GridOrderingFacade($em);
+        $gridOrderingFacade = new GridOrderingFacade($this->em);
         $entity = new stdClass();
         $this->expectException(\Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException::class);
         $gridOrderingFacade->saveOrdering($entity, []);

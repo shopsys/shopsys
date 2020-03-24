@@ -96,14 +96,14 @@ class ProductSeriesCategoryController extends AdminBaseController
 
             $this->productSeriesCategoryFacade->delete($productSeriesCategory);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Kategorie produktového programu <strong>{{ name }}</strong> je smazána'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (ProductSeriesNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Vybraná kategorie produktového programu již neexistuje.'));
+            $this->addErrorFlash(t('Vybraná kategorie produktového programu již neexistuje.'));
         }
 
         return $this->redirectToRoute('admin_productseries_list');
@@ -124,7 +124,7 @@ class ProductSeriesCategoryController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $productSeriesCategory = $this->productSeriesCategoryFacade->create($form->getData());
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Kategorie produktového programu <strong><a href="{{ url }}">{{ productSeriesCategoryName }}</a></strong> byla úspěšně vytvořena'),
                     [
@@ -137,7 +137,7 @@ class ProductSeriesCategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render(
@@ -166,7 +166,7 @@ class ProductSeriesCategoryController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $productSeriesCategory = $this->productSeriesCategoryFacade->edit($id, $form->getData());
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Kategorie produktového programu <strong><a href="{{ url }}">{{ productSeriesCategory.name }}</a></strong> je úspěšně upravena'),
                     [
@@ -178,7 +178,7 @@ class ProductSeriesCategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Úprava kategorie produktového programu - %name%', ['%name%' => $productSeriesCategory->getName($this->localization->getLocale())]));

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -126,13 +125,5 @@ class CategoryTest extends GraphQlTestCase
         ];
 
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
-    }
-
-    /**
-     * @return string
-     */
-    private function getLocaleForFirstDomain(): string
-    {
-        return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
     }
 }

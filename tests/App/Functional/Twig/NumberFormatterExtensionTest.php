@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Twig;
 
+use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Tests\App\Test\FunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class NumberFormatterExtensionTest extends FunctionalTestCase
 {
-    protected const NBSP = "\xc2\xa0";
+    use SymfonyTestContainer;
 
-    /**
-     * @var \CommerceGuys\Intl\NumberFormat\NumberFormatRepository
-     * @inject
-     */
-    private $numberFormatRepository;
+    protected const NBSP = "\xc2\xa0";
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade
@@ -60,7 +58,7 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
         $localizationMock->expects($this->any())->method('getLocale')
             ->willReturn($locale);
 
-        $numberFormatterExtension = new NumberFormatterExtension($localizationMock, $this->numberFormatRepository, $this->administrationFacade);
+        $numberFormatterExtension = new NumberFormatterExtension($localizationMock, new NumberFormatRepository(), $this->administrationFacade);
 
         $this->assertSame($result, $numberFormatterExtension->formatNumber($input, $locale));
     }

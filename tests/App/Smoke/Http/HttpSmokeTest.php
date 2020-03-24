@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HttpSmokeTest extends HttpSmokeTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

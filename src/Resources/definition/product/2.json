@@ -114,7 +114,7 @@
           },
           "keyword": {
             "type": "icu_collation_keyword",
-            "language": "en",
+            "language": "cs",
             "index": false
           }
         }
@@ -301,7 +301,7 @@
       "variants": {
         "type": "integer"
       },
-      "main_variant": {
+      "main_variant_id": {
         "type": "integer"
       }
     }

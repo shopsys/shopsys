@@ -131,7 +131,7 @@ class CartController extends FrontBaseController
         }
 
         if ($invalidCart) {
-            $this->getFlashMessageSender()->addErrorFlash(
+            $this->addErrorFlash(
                 t('Please make sure that you entered right quantity of all items in cart.')
             );
         }
@@ -241,18 +241,17 @@ class CartController extends FrontBaseController
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
             } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Selected product no longer available or doesn\'t exist.'));
+                $this->addErrorFlash(t('Selected product no longer available or doesn\'t exist.'));
             } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Please enter valid quantity you want to add to cart.'));
+                $this->addErrorFlash(t('Please enter valid quantity you want to add to cart.'));
             } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\CartException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Unable to add product to cart'));
+                $this->addErrorFlash(t('Unable to add product to cart'));
             }
         } else {
             // Form errors list in flash message is temporary solution.
             // We need to determine couse of error when adding product to cart.
-            $flashMessageBag = $this->get('shopsys.shop.component.flash_message.bag.front');
-            $formErrors = $this->errorExtractor->getAllErrorsAsArray($form, $flashMessageBag);
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $formErrors = $this->errorExtractor->getAllErrorsAsArray($form, $this->getErrorMessages());
+            $this->addErrorFlashTwig(
                 t('Unable to add product to cart:<br/><ul><li>{{ errors|raw }}</li></ul>'),
                 [
                     'errors' => implode('</li><li>', $formErrors),
@@ -295,18 +294,17 @@ class CartController extends FrontBaseController
                     'ACCESSORIES_ON_BUY' => ModuleList::ACCESSORIES_ON_BUY,
                 ]);
             } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Selected product no longer available or doesn\'t exist.'));
+                $this->addErrorFlash(t('Selected product no longer available or doesn\'t exist.'));
             } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Please enter valid quantity you want to add to cart.'));
+                $this->addErrorFlash(t('Please enter valid quantity you want to add to cart.'));
             } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\CartException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Unable to add product to cart'));
+                $this->addErrorFlash(t('Unable to add product to cart'));
             }
         } else {
             // Form errors list in flash message is temporary solution.
             // We need to determine couse of error when adding product to cart.
-            $flashMessageBag = $this->get('shopsys.shop.component.flash_message.bag.front');
-            $formErrors = $this->errorExtractor->getAllErrorsAsArray($form, $flashMessageBag);
-            $this->getFlashMessageSender()->addErrorFlashTwig(
+            $formErrors = $this->errorExtractor->getAllErrorsAsArray($form, $this->getErrorMessages());
+            $this->addErrorFlashTwig(
                 t('Unable to add product to cart:<br/><ul><li>{{ errors|raw }}</li></ul>'),
                 [
                     'errors' => implode('</li><li>', $formErrors),
@@ -324,7 +322,7 @@ class CartController extends FrontBaseController
         AddProductResult $addProductResult
     ) {
         if ($addProductResult->getIsNew()) {
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart'),
                 [
                     'name' => $addProductResult->getCartItem()->getName(),
@@ -333,7 +331,7 @@ class CartController extends FrontBaseController
                 ]
             );
         } else {
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})'),
                 [
                     'name' => $addProductResult->getCartItem()->getName(),
@@ -359,15 +357,15 @@ class CartController extends FrontBaseController
 
                 $this->cartFacade->deleteCartItem($cartItemId);
 
-                $this->getFlashMessageSender()->addSuccessFlashTwig(
+                $this->addSuccessFlashTwig(
                     t('Product {{ name }} removed from cart'),
                     ['name' => $productName]
                 );
             } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException $ex) {
-                $this->getFlashMessageSender()->addErrorFlash(t('Unable to remove item from cart. The item is probably already removed.'));
+                $this->addErrorFlash(t('Unable to remove item from cart. The item is probably already removed.'));
             }
         } else {
-            $this->getFlashMessageSender()->addErrorFlash(
+            $this->addErrorFlash(
                 t('Unable to remove item from cart. The link for removing it probably expired, try it again.')
             );
         }

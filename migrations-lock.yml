@@ -496,3 +496,18 @@
 20200317140613:
     class: App\Migrations\Version20200317140613
     skip: false
+20190824181350:
+    class: Shopsys\FrameworkBundle\Migrations\Version20190824181350
+    skip: false
+20200225102504:
+    class: Shopsys\FrameworkBundle\Migrations\Version20200225102504
+    skip: false
+20200310120000:
+    class: Shopsys\FrameworkBundle\Migrations\Version20200310120000
+    skip: false
+20200310130000:
+    class: Shopsys\FrameworkBundle\Migrations\Version20200310130000
+    skip: false
+20200319064048:
+    class: App\Migrations\Version20200319064048
+    skip: false
