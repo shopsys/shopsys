@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer;
 use App\Model\Category\Category;
 use App\Model\Product\Parameter\ParameterRepository;
+use App\Model\Product\Series\ProductSeriesFacade;
 use App\Model\Svg\SvgProvider;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\MultidomainType;
@@ -13,8 +15,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryFormTypeExtension extends AbstractTypeExtension
@@ -30,15 +34,31 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     private $parameterRepository;
 
     /**
+     * @var \App\Model\Product\Series\ProductSeriesFacade
+     */
+    private $productSeriesFacade;
+
+    /**
+     * @var \App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer
+     */
+    private $productSeriesIdsToProductSeriesTransformer;
+
+    /**
      * @param \App\Model\Svg\SvgProvider $svgProvider
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
+     * @param \App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer $productSeriesIdsToProductSeriesTransformer
      */
     public function __construct(
         SvgProvider $svgProvider,
-        ParameterRepository $parameterRepository
+        ParameterRepository $parameterRepository,
+        ProductSeriesFacade $productSeriesFacade,
+        ProductSeriesIdsToProductSeriesTransformer $productSeriesIdsToProductSeriesTransformer
     ) {
         $this->svgProvider = $svgProvider;
         $this->parameterRepository = $parameterRepository;
+        $this->productSeriesFacade = $productSeriesFacade;
+        $this->productSeriesIdsToProductSeriesTransformer = $productSeriesIdsToProductSeriesTransformer;
     }
 
     /**
@@ -70,6 +90,8 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $builderShortDescriptionGroup->setPosition(['after' => 'seo']);
 
         $this->buildFilterParameters($builder, $options['category']);
+
+        $this->buildCategoryProductSeriesBlock($builder);
     }
 
     /**
@@ -91,6 +113,58 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
             'choice_value' => 'id',
             'multiple' => true,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildCategoryProductSeriesBlock(FormBuilderInterface $builder): void
+    {
+        $allProductSeriesNamesById = $this->productSeriesFacade->getAllProductSeriesNamesIndexedById();
+
+        $builderCategoryProductSeriesBlock = $builder->create('categoryProductSeriesSelector', GroupType::class, [
+            'label' => t('Programy produktů kategorie'),
+        ]);
+
+        $builderCategoryProductSeriesBlock->add('productSeriesListTitle', MultidomainType::class, [
+            'entry_type' => TextareaType::class,
+            'required' => false,
+            'macro' => [
+                'name' => 'seoFormRowMacros.multidomainRow',
+                'recommended_length' => null,
+            ],
+            'label' => t('Titulek výpisu produktových programů'),
+        ]);
+
+        $builderCategoryProductSeriesBlock->add('productSeriesListDescription', MultidomainType::class, [
+            'entry_type' => TextareaType::class,
+            'required' => false,
+            'macro' => [
+                'name' => 'seoFormRowMacros.multidomainRow',
+                'recommended_length' => null,
+            ],
+            'label' => t('Popisek výpisu produktových programů'),
+        ]);
+
+        $builderCategoryProductSeriesBlock->add('productSeriesListLink', MultidomainType::class, [
+            'entry_type' => TextareaType::class,
+            'required' => false,
+            'macro' => [
+                'name' => 'seoFormRowMacros.multidomainRow',
+                'recommended_length' => null,
+            ],
+            'label' => t('Odkaz na výpis produktových programů'),
+        ]);
+
+        $builderCategoryProductSeriesBlock->add($builder
+            ->create('categoryProductSeries', SortableValuesType::class, [
+                'labels_by_value' => $allProductSeriesNamesById,
+                'label' => t('Vyberte Program'),
+                'required' => false,
+            ])
+            ->addModelTransformer($this->productSeriesIdsToProductSeriesTransformer));
+
+        $builder->add($builderCategoryProductSeriesBlock);
     }
 
     /**

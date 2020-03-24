@@ -23,6 +23,12 @@
             <h1>
                 {{ category.getSeoH1(domain.id)|default(category.name) }}
             </h1>
+            {% if category.getShortDescription(domain.id) %}
+                {{ category.getShortDescription(domain.id)|raw }}
+                {% if category.getDescription(domain.id) %}
+                    <a href="#description">{{ 'Číst dál →'|trans }}</a>
+                {% endif %}
+            {% endif %}
             {% if visibleChildren is not empty %}
                 <h2>{{ 'List of subcategories'|trans }}</h2>
                 {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
@@ -82,7 +88,36 @@
             </div>
         </div>
     </div>
+    <div class="category-product-series-box">
+        <div class="left-box">
+            <h3>{{ category.getProductSeriesListTitle(domain.id) }}</h3>
+            <p>{{ category.getProductSeriesListDescription(domain.id) }}</p>
+            {% if category.getProductSeriesListLink(domain.id) %}
+                <a href="{{ category.getProductSeriesListLink(domain.id) }}">{{ 'ZOBRAZIT VŠECHNY'|trans }}</a>
+            {% endif %}
+        </div>
+        <div class="right-box">
+            {% for productSeries in categoryProductSeries %}
+                <div class="box-detail">
+                    <h3><a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">{{ productSeries.getName(domain.locale) }}</a></h3>
+                    <div class="box-detail__image">
+                        <div class="box-detail__image__main">
+                            <a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
+                                {% if imageExists(productSeries) %}
+                                    {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
+                                {% else %}
+                                    {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
     <div class="box-list__description">
+        <a id="description"></a>
         <div class="box-list__description__text in-user-text js-category-description">
             {{ category.getDescription(domain.id)|raw }}
         </div>

@@ -180,4 +180,19 @@ class ProductSeriesRepository
 
         return array_map('reset', $result);
     }
+
+    /**
+     * @return \App\Model\Product\Series\ProductSeries[]
+     */
+    public function getNamesWithIds(): array
+    {
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder
+            ->join(ProductSeriesTranslation::class, 'pst', Join::WITH, 'pst.translatable = ps')
+            ->andWhere('pst.locale = :locale')
+            ->orderBy('pst.name', 'ASC')
+            ->setParameter('locale', $this->localization->getAdminLocale());
+
+        return $queryBuilder->getQuery()->execute();
+    }
 }

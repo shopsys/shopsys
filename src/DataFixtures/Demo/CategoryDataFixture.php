@@ -74,6 +74,13 @@ class CategoryDataFixture extends AbstractReferenceFixture
             $categoryData->descriptions[$domainConfig->getId()] = t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, '
                 . 'video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) '
                 . 'and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], 'dataFixtures', $locale);
+            $categoryData->productSeriesListTitle[$domainConfig->getId()] = 'Obývací programy';
+            $categoryData->productSeriesListDescription[$domainConfig->getId()] = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi scelerisque luctus velit.'
+                . ' Fusce dui leo, imperdiet in, aliquam sit amet, feugiat eu, orci. Cras pede libero, dapibus nec, pretium sit amet, tempor quis.'
+                . ' Duis condimentum augue id magna semper rutrum. Pellentesque sapien. Nullam lectus justo, vulputate eget mollis sed, tempor sed magna.'
+                . ' Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. Mauris metus. Proin pede metus, vulputate nec, fermentum fringilla,'
+                . ' vehicula vitae, justo. Etiam egestas wisi a erat.';
+            $categoryData->productSeriesListLink[$domainConfig->getId()] = '/nabytkove-programy/';
         }
         $categoryData->parent = $rootCategory;
         $this->createCategory($categoryData, self::CATEGORY_ELECTRONICS);

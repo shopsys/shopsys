@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
+use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -47,6 +48,11 @@ class CategoryFacade extends BaseCategoryFacade
     private $categoryParameterFacade;
 
     /**
+     * @var \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade
+     */
+    private $categoryProductSeriesFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -58,6 +64,7 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
+     * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -70,7 +77,8 @@ class CategoryFacade extends BaseCategoryFacade
         CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
         CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
         CategoryFactoryInterface $categoryFactory,
-        CategoryParameterFacade $categoryParameterFacade
+        CategoryParameterFacade $categoryParameterFacade,
+        CategoryProductSeriesFacade $categoryProductSeriesFacade
     ) {
         parent::__construct(
             $em,
@@ -85,6 +93,7 @@ class CategoryFacade extends BaseCategoryFacade
             $categoryFactory
         );
         $this->categoryParameterFacade = $categoryParameterFacade;
+        $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
     }
 
     /**
@@ -96,6 +105,7 @@ class CategoryFacade extends BaseCategoryFacade
         /** @var \App\Model\Category\Category $category */
         $category = parent::create($categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters);
+        $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
 
         return $category;
     }
@@ -110,6 +120,7 @@ class CategoryFacade extends BaseCategoryFacade
         /** @var \App\Model\Category\Category $category */
         $category = parent::edit($categoryId, $categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters);
+        $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
 
         return $category;
     }

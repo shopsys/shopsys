@@ -6,9 +6,9 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
+use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
-use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -97,6 +97,11 @@ class ProductController extends FrontBaseController
     private $productFacade;
 
     /**
+     * @var \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade
+     */
+    private $categoryProductSeriesFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -110,6 +115,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -124,7 +130,8 @@ class ProductController extends FrontBaseController
         BrandFacade $brandFacade,
         ListedProductViewElasticFacade $listedProductViewFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        ProductFacade $productFacade
+        ProductFacade $productFacade,
+        CategoryProductSeriesFacade $categoryProductSeriesFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -139,6 +146,7 @@ class ProductController extends FrontBaseController
         $this->categoryFacade = $categoryFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->productFacade = $productFacade;
+        $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
     }
 
     /**
@@ -242,6 +250,7 @@ class ProductController extends FrontBaseController
             'filterFormSubmitted' => $filterForm->isSubmitted(),
             'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId()),
             'priceRange' => $productFilterConfig->getPriceRange(),
+            'categoryProductSeries' => $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category),
         ];
 
         if ($request->isXmlHttpRequest()) {

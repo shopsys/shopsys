@@ -223,4 +223,19 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
     {
         return $this->productSeriesRepository->findProductSeriesCodesWithAkeneoCode();
     }
+
+    /**
+     * @return string[]
+     */
+    public function getAllProductSeriesNamesIndexedById(): array
+    {
+        $productSeriesList = $this->productSeriesRepository->getNamesWithIds();
+        $productSeriesNamesIndexedById = [];
+        foreach ($productSeriesList as $productSeries) {
+            /** @var \App\Model\Product\Series\ProductSeries $productSeries */
+            $productSeriesNamesIndexedById[$productSeries->getId()] = $productSeries->getName();
+        }
+
+        return $productSeriesNamesIndexedById;
+    }
 }

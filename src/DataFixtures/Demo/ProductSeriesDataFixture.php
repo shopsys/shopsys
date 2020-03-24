@@ -24,6 +24,13 @@ class ProductSeriesDataFixture extends AbstractReferenceFixture
     protected const ATTRIBUTE_SEO_META_DESCRIPTION_KEY = 'seoMetaDescription';
     protected const ATTRIBUTE_HIDDEN_KEY = 'hidden';
 
+    public const PRODUCT_SERIES_DANIELA = 'product_series_daniela';
+    public const PRODUCT_SERIES_KARIN = 'product_series_karin';
+    public const PRODUCT_SERIES_CIRRI = 'product_series_cirri';
+    public const PRODUCT_SERIES_GERALT = 'product_series_geralt';
+    public const PRODUCT_SERIES_YENNEFER = 'product_series_yennefer';
+    public const PRODUCT_SERIES_TISIA = 'product_series_tisia';
+
     /**
      * @var \App\Model\Product\Series\ProductSeriesFacadeInterface
      */
@@ -85,6 +92,14 @@ class ProductSeriesDataFixture extends AbstractReferenceFixture
     {
         $productSeriesCategories = $this->getProductSeriesCategories();
         $productSeriesName = ['Daniela', 'Karin', 'Cirri', 'Geralt', 'Yennefer', 'Tisaia'];
+        $productSeriesConstants = [
+            self::PRODUCT_SERIES_DANIELA,
+            self::PRODUCT_SERIES_KARIN,
+            self::PRODUCT_SERIES_CIRRI,
+            self::PRODUCT_SERIES_GERALT,
+            self::PRODUCT_SERIES_YENNEFER,
+            self::PRODUCT_SERIES_TISIA,
+        ];
 
         foreach ($productSeriesName as $productSeriesIndex => $name) {
             $productSeriesData = $this->productSeriesDataFactory->create();
@@ -97,7 +112,9 @@ class ProductSeriesDataFixture extends AbstractReferenceFixture
                     $productSeriesData->productSeriesCategories[] = $productSeriesCategories[$categoryName];
                 }
             }
-            $this->productSeriesFacade->create($productSeriesData);
+            $productSeries = $this->productSeriesFacade->create($productSeriesData);
+
+            $this->addReference($productSeriesConstants[$productSeriesIndex], $productSeries);
         }
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Category;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
@@ -20,12 +21,18 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     private $categoryParameterRepository;
 
     /**
+     * @var \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade
+     */
+    private $categoryProductSeriesFacade;
+
+    /**
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
+     * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
      */
     public function __construct(
         CategoryRepository $categoryRepository,
@@ -33,7 +40,8 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         FriendlyUrlFacade $friendlyUrlFacade,
         PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         Domain $domain,
-        ?ImageFacade $imageFacade = null
+        ?ImageFacade $imageFacade = null,
+        CategoryProductSeriesFacade $categoryProductSeriesFacade
     ) {
         parent::__construct(
             $categoryRepository,
@@ -43,6 +51,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
             $imageFacade
         );
         $this->categoryParameterRepository = $categoryParameterRepository;
+        $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
     }
 
     /**
@@ -78,6 +87,9 @@ class CategoryDataFactory extends BaseCategoryDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->shortDescription[$domainId] = null;
+            $categoryData->productSeriesListTitle[$domainId] = null;
+            $categoryData->productSeriesListDescription[$domainId] = null;
+            $categoryData->productSeriesListLink[$domainId] = null;
         }
     }
 
@@ -91,10 +103,14 @@ class CategoryDataFactory extends BaseCategoryDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->shortDescription[$domainId] = $category->getShortDescription($domainId);
+            $categoryData->productSeriesListTitle[$domainId] = $category->getProductSeriesListTitle($domainId);
+            $categoryData->productSeriesListDescription[$domainId] = $category->getProductSeriesListDescription($domainId);
+            $categoryData->productSeriesListLink[$domainId] = $category->getProductSeriesListLink($domainId);
         }
 
         $categoryData->akeneoCode = $category->getAkeneoCode();
         $categoryData->svgIcon = $category->getSvgIcon();
         $categoryData->parameters = $this->categoryParameterRepository->getParametersByCategory($category);
+        $categoryData->categoryProductSeries = $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category);
     }
 }
