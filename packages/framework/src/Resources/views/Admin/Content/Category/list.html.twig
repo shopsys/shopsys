@@ -19,7 +19,7 @@
             {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
                 <li class="js-category-tree-item form-tree__item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
                     <div class="js-category-tree-item-line form-tree__item__drag">
-                        <img src="{{ asset('assets/admin/images/icons/level.png') }}" class="form-tree__item__icon form-tree__item__icon--level" />
+                        <img src="{{ asset('public/admin/images/icons/level.png') }}" class="form-tree__item__icon form-tree__item__icon--level" />
                         <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name }}</span>
                         <span class="js-category-tree-item-icons form-tree__item__controls">
                             <a href="{{ url('admin_category_edit', {id: categoryWithPreloadedChildren.category.id}) }}" class="form-tree__item__control">

@@ -441,7 +441,7 @@
                 {% endif %}
                 {% if required %}
                     <span class="js-form-compulsory form-compulsory {{ isCheckbox|default(false) or isSimple|default(false) ? '' : 'form-line__compulsory' }} {{ compulsoryClass|default('') }}">
-                        <img src="{{ asset('assets/admin/images/icons/star.png') }}" />
+                        <img src="{{ asset('public/admin/images/icons/star.png') }}" />
                     </span>
                 {% endif %}
             </label>
@@ -686,7 +686,6 @@
 {% use '@FOSCKEditor/Form/ckeditor_widget.html.twig' with ckeditor_widget as base_ckeditor_widget %}
 {% block ckeditor_widget %}
     {% if localized is defined %}
-        {% set config = config|merge({'contentsCss': config.contentsCss|merge(['assets/admin/styles/wysiwyg-localized_' ~ getCssVersion() ~ '.css'])}) %}
         {{ block('base_ckeditor_widget') }}
         <span class="input__wysiwyg">
             <span class="input__flag input__flag--wysiwyg">
