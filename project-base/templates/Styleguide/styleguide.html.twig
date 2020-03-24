@@ -3,7 +3,7 @@
 {% block title %}Shopsys Framework styleguide{% endblock %}
 
 {% block meta_robots %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/styleguide/styles/styleguide_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
+    {{ encore_entry_link_tags('styleguide-style') }}
 {% endblock %}
 
 {% block html_body %}
