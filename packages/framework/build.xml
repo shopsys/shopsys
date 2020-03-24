@@ -1313,7 +1313,9 @@
         <if>
             <equals arg1="${yaml-standards.executable.exists}" arg2="true"/>
             <then>
-                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true"/>
+                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="${yaml-standards.args}"/>
+                </exec>
             </then>
             <else>
                 <echo level="warning" message="The executable '${path.yaml-standards.executable}' is not available, your YAML files cannot be checked."/>
@@ -1323,7 +1325,7 @@
     </target>
 
     <target name="yaml-standards-fix" description="Checks YAML standards and fixes the violations automatically if possible" hidden="true">
-        <property name="yaml-standards.args" value="${yaml-standards.args} --fix" override="true"/>
+        <property name="yaml-standards.args" value="--fix" override="true"/>
         <phingcall target="yaml-standards"/>
     </target>
 </project>
