@@ -17,10 +17,10 @@ function optimizeSvg (svgSourceFolder) {
                         throw err;
                     }
                     svgo.optimize(data, { path: svgFile }).then(function (result) {
-                        fs.writeFile(svgFile, result.data, function (err) {
-                            if (err) {
+                        fs.writeFile(svgFile, result.data, function (errorOptimize) {
+                            if (errorOptimize) {
                                 console.log('ERROR: SVG icon ' + svgFile + ' optimize failed');
-                                throw err;
+                                throw errorOptimize;
                             }
                         });
                     });
