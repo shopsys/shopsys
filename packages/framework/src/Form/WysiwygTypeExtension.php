@@ -48,8 +48,6 @@ class WysiwygTypeExtension extends AbstractTypeExtension
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        //$cssVersion = $this->cssFacade->getCssVersion();
-
         $resolver->setDefaults([
             'config' => [
                 'contentsCss' => $this->getContentCss(),
@@ -59,6 +57,9 @@ class WysiwygTypeExtension extends AbstractTypeExtension
         ]);
     }
 
+    /**
+     * @return array
+     */
     private function getContentCss(): array
     {
         $entrypointsOutput = [];
