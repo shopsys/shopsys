@@ -322,7 +322,7 @@ msgstr ""
 msgid "Calculated price including VAT"
 msgstr ""
 
-msgid "Catalogue number"
+msgid "Catalog number"
 msgstr ""
 
 msgid "Categories"
@@ -1924,7 +1924,7 @@ msgstr "Search"
 msgid "Search [verb]"
 msgstr "Search"
 
-msgid "Search by name, catalogue number, or product part number..."
+msgid "Search by name, catalog number, or product part number..."
 msgstr ""
 
 msgid "Searching in all currencies"
@@ -1933,7 +1933,7 @@ msgstr ""
 msgid "Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?."
 msgstr ""
 
-msgid "Searching searches in name, catalogue number or product part number. It is possible to use wildcards * and ?."
+msgid "Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."

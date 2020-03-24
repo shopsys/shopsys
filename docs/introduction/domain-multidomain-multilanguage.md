@@ -8,7 +8,7 @@ How to work with them during the development of your project is described in the
 ## Domain
 Domain can be understood as one instance of eshop data.
 For example, just furniture can be bough on the domain shopsys-furniture.com while only electronics can be found on the domain shopsys-electro.com.
-It is still one application with one product catalogue.
+It is still one application with one product catalog.
 Access to these individual domains is provided through individual url addresses.
 All domains share one common administration.
 

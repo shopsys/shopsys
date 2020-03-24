@@ -18,7 +18,7 @@ The platform is based on one of the best PHP frameworks on the market - **Symfon
 ### Current State
 
 Shopsys Framework is fully functional e-commerce platform with all basic functionality all e-commerce sites needs:
-* Product catalogue
+* Product catalog
 * Registered customers
 * Basic orders management
 * Back-end administration

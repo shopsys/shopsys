@@ -26,7 +26,7 @@ Specific variants are not displayed in the product list.
 ### Administration - main product:
 - there is the icon "M" for the main product on the products overview
 - it is possible to add/remove variants on the main product card
-- all attributes (except the catalogue number, PartNo, EAN, inventory and price) can be edited on the main product card
+- all attributes (except the catalog number, PartNo, EAN, inventory and price) can be edited on the main product card
 
 ### Administration - variants:
 - there is the icon "V" for the variant on the products overview

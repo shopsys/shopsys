@@ -70,7 +70,7 @@ msgstr ""
 msgid "Cart"
 msgstr ""
 
-msgid "Catalogue number"
+msgid "Catalog number"
 msgstr ""
 
 msgid "Changing password"

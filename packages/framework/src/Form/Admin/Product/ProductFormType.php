@@ -251,11 +251,11 @@ class ProductFormType extends AbstractType
         $builderBasicInformationGroup->add('catnum', TextType::class, [
             'required' => false,
             'constraints' => [
-                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalogue number cannot be longer than {{ limit }} characters']),
+                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']),
             ],
             'disabled' => $this->isProductMainVariant($product),
             'attr' => $disabledItemInMainVariantAttr,
-            'label' => t('Catalogue number'),
+            'label' => t('Catalog number'),
         ])
             ->add('partno', TextType::class, [
                 'required' => false,

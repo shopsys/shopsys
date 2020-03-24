@@ -13,7 +13,7 @@ msgstr ""
 msgid "Availability name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Catalogue number cannot be longer than {{ limit }} characters"
+msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Choose image"

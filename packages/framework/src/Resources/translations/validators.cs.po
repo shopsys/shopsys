@@ -13,7 +13,7 @@ msgstr "Tato částka musí být větší nebo rovna nule."
 msgid "Availability name cannot be longer than {{ limit }} characters"
 msgstr "Název dostupnosti nesmí být delší než {{ limit }} znaků"
 
-msgid "Catalogue number cannot be longer than {{ limit }} characters"
+msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
 
 msgid "Choose image"
