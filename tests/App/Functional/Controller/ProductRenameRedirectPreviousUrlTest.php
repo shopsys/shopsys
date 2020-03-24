@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Controller;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use Faker\Provider\Text;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
-class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
+class ProductRenameRedirectPreviousUrlTest extends FunctionalTestCase
 {
-    private const TESTED_PRODUCT_ID = 1;
+    use SymfonyTestContainer;
+
+    private const TESTED_PRODUCT_ID = 100;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
@@ -30,19 +34,27 @@ class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
      */
     private $friendlyUrlFacade;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
+     * @inject
+     */
+    protected $em;
+
     public function testPreviousUrlRedirect(): void
     {
+        /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . self::TESTED_PRODUCT_ID);
 
         $previousFriendlyUrlSlug = $this->friendlyUrlFacade->findMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, 'front_product_detail', self::TESTED_PRODUCT_ID)->getSlug();
 
-        /** @var \App\Model\Product\Product $product */
         $productData = $this->productDataFactory->createFromProduct($product);
-        $productData->name[$this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()] = 'rename';
+        $productData->name[$this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()] = Text::asciify();
 
         $this->productFacade->edit(self::TESTED_PRODUCT_ID, $productData);
 
-        $client = $this->getClient();
+        $overWriteDomainUrl = preg_replace('#^https?://#', '', $this->getContainer()->getParameter('overwrite_domain_url'));
+
+        $client = $this->findClient(true, null, null, [], ['HTTP_HOST' => $overWriteDomainUrl]);
         $client->request('GET', '/' . $previousFriendlyUrlSlug);
 
         // Should be 301 (moved permanently), because old product urls should be permanently redirected

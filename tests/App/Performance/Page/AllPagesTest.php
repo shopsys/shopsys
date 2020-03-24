@@ -24,7 +24,7 @@ class AllPagesTest extends KernelTestCase
 {
     protected const PASSES = 5;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -226,7 +226,6 @@ class AllPagesTest extends KernelTestCase
             case PerformanceTestSampleQualifier::STATUS_CRITICAL:
             default:
                 $this->fail('Values are above critical threshold');
-                return;
         }
     }
 

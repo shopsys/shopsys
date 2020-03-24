@@ -8,9 +8,12 @@ use App\DataFixtures\Demo\AdministratorDataFixture;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
      * @inject
@@ -23,6 +26,12 @@ class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
      */
     private $administratorActivityFacade;
 
+    /**
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @inject
+     */
+    protected $session;
+
     public function testIsAdministratorLoggedNot()
     {
         $this->assertFalse($this->administratorFrontSecurityFacade->isAdministratorLogged());
@@ -30,16 +39,13 @@ class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
 
     public function testIsAdministratorLogged()
     {
-        /** @var \Symfony\Component\HttpFoundation\Session\SessionInterface $session */
-        $session = $this->getContainer()->get('session');
-
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
         $password = '';
         $roles = $administrator->getRoles();
         $token = new UsernamePasswordToken($administrator, $password, AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, $roles);
 
-        $session->set('_security_' . AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, serialize($token));
+        $this->session->set('_security_' . AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, serialize($token));
 
         $this->administratorActivityFacade->create($administrator, '127.0.0.1');
 

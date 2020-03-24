@@ -149,7 +149,7 @@ class BlogArticleController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->blogArticleFacade->edit($id, $blogArticleData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Článek blogu <strong><a href="{{ url }}">{{ name }}</a></strong> byl změněn'),
                     [
@@ -161,7 +161,7 @@ class BlogArticleController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
+            $this->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editace článku blogu - %name%', ['%name%' => $blogArticle->getName()]));
@@ -189,7 +189,7 @@ class BlogArticleController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $blogArticle = $this->blogArticleFacade->create($blogArticleData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Článek blogu <strong><a href="{{ url }}">{{ name }}</a></strong> byl vytvořen'),
                     [
@@ -201,7 +201,7 @@ class BlogArticleController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
+            $this->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
         }
 
         return $this->render('Admin/Content/Blog/Article/new.html.twig', [
@@ -222,14 +222,14 @@ class BlogArticleController extends AdminBaseController
 
             $this->blogArticleFacade->delete($id);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Článek blogu <strong>{{ name }}</strong> byl smazán'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Vybraný článek blogu neexistuje.'));
+            $this->addErrorFlash(t('Vybraný článek blogu neexistuje.'));
         }
 
         return $this->redirectToRoute('admin_blogarticle_list');

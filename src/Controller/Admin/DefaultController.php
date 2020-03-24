@@ -6,6 +6,10 @@ namespace App\Controller\Admin;
 
 use App\Model\Transfer\Issue\TransferIssueFacade;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
+use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
+use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
+use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Controller\Admin\DefaultController as BaseDefaultController;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -34,6 +38,10 @@ class DefaultController extends BaseDefaultController
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */
     public function __construct(
@@ -43,6 +51,10 @@ class DefaultController extends BaseDefaultController
         UnitFacade $unitFacade,
         Setting $setting,
         AvailabilityFacade $availabilityFacade,
+        CronModuleFacade $cronModuleFacade,
+        GridFactory $gridFactory,
+        CronConfig $cronConfig,
+        CronFacade $cronFacade,
         TransferIssueFacade $transferIssueFacade
     ) {
         parent::__construct(
@@ -51,7 +63,11 @@ class DefaultController extends BaseDefaultController
             $mailTemplateFacade,
             $unitFacade,
             $setting,
-            $availabilityFacade
+            $availabilityFacade,
+            $cronModuleFacade,
+            $gridFactory,
+            $cronConfig,
+            $cronFacade
         );
         $this->transferIssueFacade = $transferIssueFacade;
     }
@@ -64,7 +80,6 @@ class DefaultController extends BaseDefaultController
     {
         /* @var $administrator \App\Model\Administrator\Administrator */
         $administrator = $this->getUser();
-
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
         $registeredInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat($registeredInLastTwoWeeks);
         $registeredInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts($registeredInLastTwoWeeks);
@@ -119,6 +134,7 @@ class DefaultController extends BaseDefaultController
                 'ordersValue' => $currentValueOfOrders,
                 'ordersValueTrend' => $ordersValueTrend,
                 'transferIssuesCount' => $transferIssuesCount,
+                'cronGridViews' => $this->getCronGridViews(),
             ]
         );
     }

@@ -80,7 +80,7 @@ class HorizontalMenuController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $horizontalMenuItem = $this->horizontalMenuItemFacade->create($horizontalMenuItemData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Byla vytvořena položka horizontálního menu <strong><a href="{{ url }}">{{ name }}</a></strong>'),
                     [
@@ -92,7 +92,7 @@ class HorizontalMenuController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte si správnost vyplnění všech údajů'));
+            $this->addErrorFlashTwig(t('Prosím zkontrolujte si správnost vyplnění všech údajů'));
         }
 
         return $this->render('Admin/Content/HorizontalMenu/Item/new.html.twig', [
@@ -121,7 +121,7 @@ class HorizontalMenuController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->horizontalMenuItemFacade->edit($id, $horizontalMenuItemData);
 
-            $this->getFlashMessageSender()
+            $this
                 ->addSuccessFlashTwig(
                     t('Byla upravena položka horizontálního menu <strong><a href="{{ url }}">{{ name }}</a></strong>'),
                     [
@@ -133,7 +133,7 @@ class HorizontalMenuController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte si správnost vyplnění všech údajů'));
+            $this->addErrorFlashTwig(t('Prosím zkontrolujte si správnost vyplnění všech údajů'));
         }
 
         return $this->render('Admin/Content/HorizontalMenu/Item/edit.html.twig', [
@@ -156,14 +156,14 @@ class HorizontalMenuController extends AdminBaseController
 
             $this->horizontalMenuItemFacade->delete($horizontalMenuItem);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Položka menu <strong>{{ name }}</strong> byla smazána'),
                 [
                     'name' => $fullName,
                 ]
             );
         } catch (\App\Model\HorizontalMenu\Exception\HorizontalMenuItemNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Zvolená položka menu neexistuje.'));
+            $this->addErrorFlash(t('Zvolená položka menu neexistuje.'));
         }
 
         return $this->redirectToRoute('admin_horizontalmenu_list');

@@ -108,7 +108,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'is_using_stock' => $product->isUsingStock(),
             'stock_quantity' => $product->getStockQuantity(),
             'variants' => $variantIds,
-            'main_variant' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
+            'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             'name_prefix' => $product->getNamePrefix($locale),
             'name_sufix' => $product->getNameSufix($locale),
             'non_selling_price' => $product->getHighPriceWithVat($domainId)->getAmount(),

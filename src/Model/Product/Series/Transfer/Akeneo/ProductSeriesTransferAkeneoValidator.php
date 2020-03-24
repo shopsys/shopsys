@@ -68,15 +68,9 @@ class ProductSeriesTransferAkeneoValidator
             throw new MissingRequiredAttributeException($validateKeyName);
         }
 
-        $expectedLocales = AkeneoHelper::AKENEO_LOCALES_MAP_ESHOP_LOCALES;
-        foreach ($data[$validateKeyName] as $localeRow) {
-            if (array_key_exists($localeRow['locale'], $expectedLocales)) {
-                unset($expectedLocales[$localeRow['locale']]);
-            }
-        }
-
-        if (count($expectedLocales) > 0) {
-            throw new MissingExpectedLocaleException($validateKeyName, implode(', ', $expectedLocales));
+        $subExpectedAndRealLocales = $this->getSubExpectedAndRealLocales($data[$validateKeyName]);
+        if (count($subExpectedAndRealLocales) > 0) {
+            throw new MissingExpectedLocaleException($validateKeyName, implode(', ', $subExpectedAndRealLocales));
         }
 
         $violations->addAll($this->validator->validate($data, new Assert\Collection([
@@ -99,5 +93,20 @@ class ProductSeriesTransferAkeneoValidator
                 ]),
             ],
         ])));
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function getSubExpectedAndRealLocales(array $data): array
+    {
+        $expectedLocales = AkeneoHelper::AKENEO_LOCALES_MAP_ESHOP_LOCALES;
+        foreach ($data as $localeRow) {
+            if (array_key_exists($localeRow['locale'], $expectedLocales)) {
+                unset($expectedLocales[$localeRow['locale']]);
+            }
+        }
+        return $expectedLocales;
     }
 }

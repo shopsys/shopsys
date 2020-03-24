@@ -57,8 +57,8 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return SliderItemFormType::class;
+        yield SliderItemFormType::class;
     }
 }

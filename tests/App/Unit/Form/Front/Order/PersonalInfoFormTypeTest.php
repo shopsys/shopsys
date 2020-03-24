@@ -113,7 +113,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         ];
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $countryMock = $this->createMock(Country::class);
         $countryMock->method('getId')->willReturn(1);

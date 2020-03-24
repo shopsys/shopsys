@@ -8,7 +8,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -62,36 +61,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     public function load(ObjectManager $manager)
     {
         foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-            $locale = $domainConfig->getLocale();
-
-            $pricingGroupData = $this->pricingGroupDataFactory->create();
-
             $this->editDefaultPricingGroupOnDomain($domainConfig);
-
-            if ($domainId !== Domain::SECOND_DOMAIN_ID) {
-                $pricingGroupData->name = t('Partner', [], 'dataFixtures', $locale);
-                $this->createPricingGroup($pricingGroupData, $domainId, self::PRICING_GROUP_PARTNER);
-            }
-
-            $pricingGroupData->name = t('VIP customer', [], 'dataFixtures', $locale);
-            $this->createPricingGroup($pricingGroupData, $domainId);
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     * @param int $domainId
-     * @param string|null $referenceName
-     */
-    protected function createPricingGroup(
-        PricingGroupData $pricingGroupData,
-        int $domainId,
-        ?string $referenceName = null
-    ): void {
-        $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $domainId);
-        if ($referenceName !== null) {
-            $this->addReferenceForDomain($referenceName, $pricingGroup, $domainId);
         }
     }
 

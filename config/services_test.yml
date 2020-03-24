@@ -1,17 +1,14 @@
 imports:
     - { resource: parameters_test.yml }
 
+framework:
+    test: true
+
 services:
     _defaults:
         autowire: true
         autoconfigure: true
         public: true
-
-    Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter:
-        factory: ['@Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory', create]
-
-    CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
-        class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver:
         class: Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
@@ -20,13 +17,38 @@ services:
 
     Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver: '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
 
-    joschi127_doctrine_entity_override.event_subscriber.load_orm_metadata:
-        class: Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber
+    Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber:
         arguments:
             - "@service_container"
             - "%shopsys.entity_extension.map%"
         tags:
             - { name: doctrine.event_subscriber, priority: -10 }
+
+    Symfony\Bridge\Twig\Extension\HttpKernelRuntime:
+        arguments: ['@fragment.handler']
+
+    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
+
+    Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
+
+    Shopsys\FrameworkBundle\Model\Feed\FeedFacade: ~
+
+    Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector: ~
+
+    Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade: ~
+
+    Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
+        arguments: ['%router.resource%']
+
+    Shopsys\ReadModelBundle\Image\ImageViewFacade: ~
+
+    Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade: ~
+
+    Shopsys\FrameworkBundle\Component\Image\ImageFacade:
+        arguments: ['%shopsys.image_url_prefix%']
+
+    Shopsys\FrameworkBundle\Component\Image\ImageLocator:
+        arguments: ['%shopsys.image_dir%']
 
     League\Flysystem\FilesystemInterface: '@main_filesystem'
 
@@ -79,6 +101,9 @@ services:
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade: ~
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
+    Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter:
+        tags:
+            - { name: router, priority: 70 }
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade: '@App\Model\Product\Listed\ListedProductViewElasticFacade'
 
@@ -90,18 +115,12 @@ services:
         arguments:
             $adminLocale: '%shopsys.admin_locale%'
 
-    Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
-        arguments: ['%router.resource%']
+    CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
+        class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 
     Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory: ~
 
-    Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
-
     Shopsys\FrameworkBundle\Twig\NumberFormatterExtension: ~
-
-    Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade: ~
-
-    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
 

@@ -55,13 +55,13 @@ class ProductVariantTest extends GraphQlTestCase
                     'shortDescription' => t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A', [], 'dataFixtures', $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()),
                     'variants' => [
                         [
-                            'name' => t('Hyundai 22HD44D', [], 'dataFixtures', $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()),
+                            'name' => t('51,5” Hyundai 22HD44D', [], 'dataFixtures', $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()),
                         ],
                         [
                             'name' => t('60” Hyundai 22HD44D', [], 'dataFixtures', $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()),
                         ],
                         [
-                            'name' => t('51,5” Hyundai 22HD44D', [], 'dataFixtures', $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()),
+                            'name' => t('Hyundai 22HD44D', [], 'dataFixtures', $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()),
                         ],
                     ],
                 ],

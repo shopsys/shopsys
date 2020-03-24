@@ -16,7 +16,6 @@ return [
     Presta\SitemapBundle\PrestaSitemapBundle::class => ['all' => true],
     Prezent\Doctrine\TranslatableBundle\PrezentDoctrineTranslatableBundle::class => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
-    Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle::class => ['all' => true],
     Shopsys\FormTypesBundle\ShopsysFormTypesBundle::class => ['all' => true],
     Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
     Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],

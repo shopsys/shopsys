@@ -21,7 +21,6 @@ security:
             user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
             anonymous: ~
             provider: administrators
-            logout_on_user_change: true
             access_denied_url: "/admin/access-denied/"
             form_login:
                 check_path: admin_login_check
@@ -42,7 +41,6 @@ security:
             pattern: ^/
             anonymous: ~
             provider: user_identities
-            logout_on_user_change: true
             form_login:
                 check_path: front_login_check
                 login_path: front_login
@@ -70,6 +68,7 @@ security:
         # same pattern must be in routing_front.yml
         - { path: ^/login-as-remembered-user/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/superadmin/, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/admin/cron/*, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin/translation/list/$, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/authorization/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }

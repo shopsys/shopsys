@@ -88,9 +88,9 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return ArticleFormType::class;
+        yield ArticleFormType::class;
     }
 
     /**

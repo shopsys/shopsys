@@ -50,4 +50,8 @@ class AcceptanceTester extends Actor implements ActorInterface
     {
         $this->waitForJS('return $.active == 0;', $timeout);
     }
+
+    public function pauseExecution()
+    {
+    }
 }

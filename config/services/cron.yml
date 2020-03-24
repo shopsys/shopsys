@@ -7,7 +7,7 @@ services:
     #   Example:
     #   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
     #       tags:
-    #           - { name: shopsys.cron, hours: '*', minutes: '*' }
+    #           - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Product search export' }
 
     # Error pages are not generated in production because https://github.com/shopsys/shopsys/issues/1628 Cron
     Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule: ~

@@ -35,8 +35,8 @@ class OrderFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return OrderFormType::class;
+        yield OrderFormType::class;
     }
 }

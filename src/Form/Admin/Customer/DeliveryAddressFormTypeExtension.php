@@ -39,10 +39,10 @@ class DeliveryAddressFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    public function getExtendedType(): string
+    public static function getExtendedTypes(): iterable
     {
-        return DeliveryAddressFormType::class;
+        yield DeliveryAddressFormType::class;
     }
 }

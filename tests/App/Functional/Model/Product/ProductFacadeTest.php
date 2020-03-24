@@ -12,9 +12,12 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use ReflectionClass;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ProductFacadeTest extends TransactionFunctionalTestCase
 {
+    use SymfonyTestContainer;
+
     /**
      * @var \App\Model\Product\ProductDataFactory
      * @inject
@@ -70,7 +73,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
         $product = $this->productFacade->create($productData);
 
-        $this->getEntityManager()->clear();
+        $this->em->clear();
 
         $productFromDb = $this->productFacade->getById($product->getId());
 

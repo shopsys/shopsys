@@ -69,9 +69,8 @@ class HorizontalMenuItemCategory implements OrderableEntityInterface
 
     /**
      * @param int $position
-     * @return int
      */
-    public function setPosition($position): int
+    public function setPosition($position): void
     {
         $this->position = $position;
     }

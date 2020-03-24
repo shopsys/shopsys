@@ -20,8 +20,8 @@ class BrandFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return BrandFormType::class;
+        yield BrandFormType::class;
     }
 }

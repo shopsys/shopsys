@@ -27,7 +27,7 @@ class TransferInvalidDataException extends TransferException
      * @param string $message
      * @param string $propertyPath
      * @param \Exception|null $previous
-     * @return static
+     * @return \App\Component\Akeneo\Transfer\Exception\TransferInvalidDataException
      */
     public static function createWithViolation(string $message, string $propertyPath, ?Exception $previous = null): self
     {

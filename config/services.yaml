@@ -354,6 +354,7 @@ services:
 
     App\Component\FileSystem\FileSystemFactoryDecorator:
         decorates: Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory
+        decoration_inner_name: 'App\Component\FileSystem\FilesystemFactoryDecorator.inner'
         arguments:
             $inner: '@App\Component\FileSystem\FilesystemFactoryDecorator.inner'
             $s3ApiHost: '%env(S3_API_HOST)%'
@@ -369,3 +370,16 @@ services:
     App\Model\Svg\SvgProvider:
         arguments:
             $svgDirectoryPath: "%svg_icon_path%"
+
+    App\Controller\Front\RobotsController:
+        arguments:
+            $sitemapsUrlPrefix: '%shopsys.sitemaps_url_prefix%'
+
+    Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory: ~
+
+    sensio_framework_extra.psr7.http_message_factory:
+        class: Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory
+
+    Psr\Http\Message\ServerRequestInterface:
+        factory: ['@Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory', 'createRequest']
+        arguments: ['@=service("request_stack").getMasterRequest()']

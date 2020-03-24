@@ -13,10 +13,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 {
     public function testCopyAllMultidomainDataForNewDomainCopiesTestRow()
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
-
-        $em->getConnection()->executeQuery('
+        $this->em->getConnection()->executeQuery('
             CREATE TABLE _test_table (
                 domain_id int NOT NULL,
                 title text NOT NULL,
@@ -24,7 +21,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
             )
         ');
 
-        $em->getConnection()->executeQuery("
+        $this->em->getConnection()->executeQuery("
             INSERT INTO _test_table (domain_id, title, description)
                 VALUES (1, 'asdf', 'qwer')
         ");
@@ -40,13 +37,13 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
                 '_test_table' => ['title'],
             ]);
 
-        $sqlQuoter = new SqlQuoter($em);
+        $sqlQuoter = new SqlQuoter($this->em);
 
-        $multidomainEntityDataCreator = new MultidomainEntityDataCreator($multidomainEntityClassFinderFacadeMock, $em, $sqlQuoter);
+        $multidomainEntityDataCreator = new MultidomainEntityDataCreator($multidomainEntityClassFinderFacadeMock, $this->em, $sqlQuoter);
 
         $multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(1, 2);
 
-        $results = $em->getConnection()->fetchAll('
+        $results = $this->em->getConnection()->fetchAll('
             SELECT domain_id, title, description
             FROM _test_table
             ORDER BY domain_id
@@ -70,17 +67,14 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 
     public function testCopyAllMultidomainDataForNewDomainWithDomainIdDoesNotThrowDriverException()
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
-
-        $em->getConnection()->executeQuery('
+        $this->em->getConnection()->executeQuery('
             CREATE TABLE _test_table (
                 domain_id int NOT NULL,
                 title text NOT NULL
             )
         ');
 
-        $em->getConnection()->executeQuery("
+        $this->em->getConnection()->executeQuery("
             INSERT INTO _test_table (domain_id, title)
                 VALUES (1, 'asdf')
         ");
@@ -96,9 +90,9 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
                 '_test_table' => ['domain_id', 'title'],
             ]);
 
-        $sqlQuoter = new SqlQuoter($em);
+        $sqlQuoter = new SqlQuoter($this->em);
 
-        $multidomainEntityDataCreator = new MultidomainEntityDataCreator($multidomainEntityClassFinderFacadeMock, $em, $sqlQuoter);
+        $multidomainEntityDataCreator = new MultidomainEntityDataCreator($multidomainEntityClassFinderFacadeMock, $this->em, $sqlQuoter);
 
         try {
             $multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(1, 2);
