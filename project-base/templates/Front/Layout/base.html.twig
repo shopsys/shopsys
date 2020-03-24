@@ -9,8 +9,8 @@
 
         {% set entryDirectory = 'frontend-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
         {{ encore_entry_link_tags( entryDirectory ) }}
-
-        <link rel="stylesheet" type="text/css" href="{{ asset('build/frontend-print-style-' ~ getDomain().currentDomainConfig.stylesDirectory ~ '.css') }}" media="print">
+        {% set entryDirectoryPrint = 'frontend-print-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
+        {{ encore_entry_link_tags( entryDirectoryPrint ) }}
 
         {{ render(controller('App\\Controller\\Front\\HeurekaController:embedWidgetAction')) }}
         {{ encore_entry_script_tags('frontend') }}
