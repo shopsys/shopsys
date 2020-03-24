@@ -390,7 +390,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testIsNotVisibleWhenZeroAkeneoLowPrice()
     {
-        $em = $this->getEntityManager();
 
         $productData = $this->getDefaultProductData();
         $this->setPriceForAllDomains($productData, Money::zero());
@@ -398,12 +397,12 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
 
-        $em->clear();
+        $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-        $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
+        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
             'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
@@ -413,7 +412,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testIsNotVisibleWhenNullAkeneoLowPrice()
     {
-        $em = $this->getEntityManager();
+
 
         $productData = $this->getDefaultProductData();
 
@@ -425,12 +424,12 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
 
-        $em->clear();
+        $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-        $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
+        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
             'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);

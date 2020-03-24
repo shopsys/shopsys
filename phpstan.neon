@@ -19,6 +19,10 @@ parameters:
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
             path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
+        -
+            # Ignore order tests
+            message: '#^Unreachable statement - code above always terminates.$#'
+            path: %currentWorkingDirectory%/tests/App/Functional/Model/Order/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

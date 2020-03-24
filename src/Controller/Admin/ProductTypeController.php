@@ -62,16 +62,16 @@ class ProductTypeController extends AdminBaseController
 
             $this->productTypeFacade->delete($productType);
 
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
+            $this->addSuccessFlashTwig(
                 t('Typ produktu <strong>{{ name }}</strong> byl smazán'),
                 [
                     'name' => $productType->getName(),
                 ]
             );
         } catch (\App\Model\Product\Type\Exception\ProductTypeIsBeingUsedException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Zvolený typ je využíván a proto jej nelze nyní odstranit.'));
+            $this->addErrorFlash(t('Zvolený typ je využíván a proto jej nelze nyní odstranit.'));
         } catch (\App\Model\Product\Type\Exception\ProductTypeNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Zvolený typ již neexistuje.'));
+            $this->addErrorFlash(t('Zvolený typ již neexistuje.'));
         }
 
         return $this->redirectToRoute('admin_producttype_list');
