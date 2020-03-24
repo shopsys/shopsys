@@ -68,7 +68,7 @@ review:
     stage: review
     environment:
         name: "review/$CI_COMMIT_REF_SLUG"
-        url: https://$CI_COMMIT_REF_SLUG.ci.scontodev.cz
+        url: https://$CI_AUTH_USERNAME:$CI_AUTH_PASSWORD@$CI_COMMIT_REF_SLUG.ci.scontodev.cz
         on_stop: review:stop
     variables:
         CI_NETWORK: ci_default
