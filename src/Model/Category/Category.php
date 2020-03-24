@@ -19,8 +19,8 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  * @method \App\Model\Category\Category[] getChildren()
  * @method setParent(\App\Model\Category\Category|null $parent)
  * @method setTranslations(\App\Model\Category\CategoryData $categoryData)
- * @method setDomains(\App\Model\Category\CategoryData $categoryData)
- * @method createDomains(\App\Model\Category\CategoryData $categoryData)
+ * @property \App\Model\Category\CategoryDomain[]|\Doctrine\Common\Collections\Collection $domains
+ * @method \App\Model\Category\CategoryDomain getCategoryDomain(int $domainId)
  */
 class Category extends BaseCategory
 {
@@ -87,5 +87,42 @@ class Category extends BaseCategory
     public function getSvgIcon(): ?string
     {
         return $this->svgIcon;
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescription(int $domainId)
+    {
+        return $this->getCategoryDomain($domainId)->getShortDescription();
+    }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     */
+    protected function setDomains(BaseCategoryData $categoryData)
+    {
+        parent::setDomains($categoryData);
+
+        foreach ($this->domains as $categoryDomain) {
+            $domainId = $categoryDomain->getDomainId();
+            $categoryDomain->setShortDescription($categoryData->shortDescription[$domainId]);
+        }
+    }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     */
+    protected function createDomains(BaseCategoryData $categoryData): void
+    {
+        $domainIds = array_keys($categoryData->seoTitles);
+
+        foreach ($domainIds as $domainId) {
+            $categoryDomain = new CategoryDomain($this, $domainId);
+            $this->domains->add($categoryDomain);
+        }
+
+        $this->setDomains($categoryData);
     }
 }

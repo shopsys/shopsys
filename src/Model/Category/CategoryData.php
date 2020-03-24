@@ -20,4 +20,20 @@ class CategoryData extends BaseCategoryData
      * @var string|null
      */
     public $svgIcon;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public $parameters;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $shortDescription;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->shortDescription = [];
+    }
 }

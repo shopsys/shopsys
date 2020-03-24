@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Series;
 
+use App\Model\Product\Series\Exception\ProductSeriesDomainNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
-use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
 
 /**
  * @ORM\Table(name="product_series")
@@ -26,6 +26,13 @@ class ProductSeries extends AbstractTranslatableEntity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $akeneoCode;
 
     /**
      * @var \App\Model\Product\Series\ProductSeriesTranslation[]|\Doctrine\Common\Collections\Collection
@@ -59,6 +66,7 @@ class ProductSeries extends AbstractTranslatableEntity
         $this->productSeriesCategories = new ArrayCollection($productSeriesData->productSeriesCategories);
         $this->setTranslations($productSeriesData);
         $this->createDomains($productSeriesData);
+        $this->akeneoCode = $productSeriesData->akeneoCode;
     }
 
     /**
@@ -69,6 +77,7 @@ class ProductSeries extends AbstractTranslatableEntity
         $this->setTranslations($productSeriesData);
         $this->setDomains($productSeriesData);
         $this->editProductSeriesCategories($productSeriesData->productSeriesCategories);
+        $this->akeneoCode = $productSeriesData->akeneoCode;
     }
 
     /**
@@ -101,7 +110,7 @@ class ProductSeries extends AbstractTranslatableEntity
      */
     private function createDomains(ProductSeriesData $productSeriesData): void
     {
-        $domainIds = array_keys($productSeriesData->seoTitle);
+        $domainIds = array_keys($productSeriesData->hidden);
 
         foreach ($domainIds as $domainId) {
             $productSeriesDomain = new ProductSeriesDomain($this, $domainId);
@@ -137,7 +146,7 @@ class ProductSeries extends AbstractTranslatableEntity
             }
         }
 
-        throw new ProductDomainNotFoundException($this->id, $domainId);
+        throw new ProductSeriesDomainNotFoundException($this);
     }
 
     /**
@@ -224,5 +233,13 @@ class ProductSeries extends AbstractTranslatableEntity
     public function isHidden(int $domainId): bool
     {
         return $this->getProductSeriesDomain($domainId)->isHidden();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAkeneoCode(): ?string
+    {
+        return $this->akeneoCode;
     }
 }

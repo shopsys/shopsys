@@ -6,6 +6,7 @@ namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -43,6 +44,15 @@ class ProductTransferAkeneoValidator
                         new Assert\Length(['max' => 255]),
                     ]),
                 ]),
+                'enabled' => [
+                    new Assert\NotBlank(),
+                    new Assert\Type(['type' => 'bool']),
+                ],
+                // key `values` is mandatory, because some inner fields cannot be empty (eg. `product_type`)
+                'values' => [
+                    new Assert\NotBlank(),
+                    new Assert\Type(['type' => 'array']),
+                ],
             ],
         ]));
 
@@ -59,6 +69,12 @@ class ProductTransferAkeneoValidator
         $this->validateValueData($violations, $akeneoProductData['values'] ?? null, 'ean', [
             new Assert\Type(['type' => 'numeric']),
             new Assert\Length(['max' => 100]),
+        ]);
+
+        $this->validateLocalizedData($violations, $akeneoProductData['values'] ?? null, 'product_type', [
+            new Assert\NotBlank(),
+            new Assert\Type(['type' => 'string']),
+            new Assert\Length(['max' => 20]),
         ]);
 
         $this->validateLocalizedData($violations, $akeneoProductData['values'] ?? null, 'name_prefix', [
@@ -117,17 +133,18 @@ class ProductTransferAkeneoValidator
      * @param string $validateKeyName
      * @param array $asserts
      */
-    protected function validateValueData(
+    private function validateValueData(
         ConstraintViolationListInterface $violations,
         ?array $data,
         string $validateKeyName,
         array $asserts
     ): void {
-        if ($data === null) {
-            return;
-        }
+        if ($data === null || !array_key_exists($validateKeyName, $data)) {
+            $notBlankAssert = $this->findNotBlankAssert($asserts);
+            if ($notBlankAssert !== null) {
+                $this->addNewViolation($violations, $notBlankAssert->message, $validateKeyName);
+            }
 
-        if (!array_key_exists($validateKeyName, $data)) {
             return;
         }
 
@@ -165,11 +182,12 @@ class ProductTransferAkeneoValidator
         string $validateKeyName,
         array $asserts
     ): void {
-        if ($data === null) {
-            return;
-        }
+        if ($data === null || !array_key_exists($validateKeyName, $data)) {
+            $notBlankAssert = $this->findNotBlankAssert($asserts);
+            if ($notBlankAssert !== null) {
+                $this->addNewViolation($violations, $notBlankAssert->message, $validateKeyName);
+            }
 
-        if (!array_key_exists($validateKeyName, $data)) {
             return;
         }
 
@@ -215,11 +233,12 @@ class ProductTransferAkeneoValidator
         string $validateKeyName,
         array $asserts
     ): void {
-        if ($data === null) {
-            return;
-        }
+        if ($data === null || !array_key_exists($validateKeyName, $data)) {
+            $notBlankAssert = $this->findNotBlankAssert($asserts);
+            if ($notBlankAssert !== null) {
+                $this->addNewViolation($violations, $notBlankAssert->message, $validateKeyName);
+            }
 
-        if (!array_key_exists($validateKeyName, $data)) {
             return;
         }
 
@@ -243,5 +262,42 @@ class ProductTransferAkeneoValidator
                 ]),
             ],
         ])));
+    }
+
+    /**
+     * @param \Symfony\Component\Validator\Constraint[] $asserts
+     * @return \Symfony\Component\Validator\Constraints\NotBlank|null
+     */
+    private function findNotBlankAssert(array $asserts): ?Assert\NotBlank
+    {
+        $notBlankAssert = null;
+        foreach ($asserts as $assert) {
+            if ($assert instanceof Assert\NotBlank) {
+                return $assert;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
+     * @param string $message
+     * @param string $validateKeyName
+     */
+    private function addNewViolation(
+        ConstraintViolationListInterface $violations,
+        string $message,
+        string $validateKeyName
+    ): void {
+        $violation = new ConstraintViolation(
+            $message,
+            '',
+            [],
+            '',
+            $validateKeyName,
+            null
+        );
+        $violations->add($violation);
     }
 }

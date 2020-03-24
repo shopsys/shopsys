@@ -23,7 +23,9 @@ parameters:
     shopsys.entity_extension.map:
         Shopsys\FrameworkBundle\Model\Article\Article: App\Model\Article\Article
         Shopsys\FrameworkBundle\Model\Administrator\Administrator: App\Model\Administrator\Administrator
+        Shopsys\FrameworkBundle\Model\Cart\Cart: App\Model\Cart\Cart
         Shopsys\FrameworkBundle\Model\Category\Category: App\Model\Category\Category
+        Shopsys\FrameworkBundle\Model\Category\CategoryDomain: App\Model\Category\CategoryDomain
         Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser: App\Model\Customer\User\CustomerUser
         Shopsys\FrameworkBundle\Model\Order\Order: App\Model\Order\Order
         Shopsys\FrameworkBundle\Model\Order\Item\OrderItem: App\Model\Order\Item\OrderItem

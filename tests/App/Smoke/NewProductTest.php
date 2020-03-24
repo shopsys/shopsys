@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Smoke;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
@@ -70,6 +71,9 @@ class NewProductTest extends FunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability */
         $availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
 
+        /** @var \App\Model\Product\Type\ProductType $productType */
+        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+
         /** @var \Symfony\Component\DomCrawler\Field\InputFormField[] $nameForms */
         $nameForms = $form->get('product_form[name]');
         foreach ($nameForms as $nameForm) {
@@ -78,6 +82,8 @@ class NewProductTest extends FunctionalTestCase
         $form['product_form[basicInformationGroup][catnum]'] = '123456';
         $form['product_form[basicInformationGroup][partno]'] = '123456';
         $form['product_form[basicInformationGroup][ean]'] = '123456';
+        $form['product_form[basicInformationGroup][productType][1]']->setValue($productType->getId());
+        $form['product_form[basicInformationGroup][productType][2]']->setValue($productType->getId());
         $form['product_form[descriptionsGroup][descriptions][1]'] = 'test description';
         $this->fillAkeneoPrices($form);
         $form['product_form[displayAvailabilityGroup][sellingFrom]'] = '1.1.1990';

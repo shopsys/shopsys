@@ -17,13 +17,20 @@ class ProductStockAvailabilityInformation
     private $availabilityInformation;
 
     /**
+     * @var bool
+     */
+    private $exposedProduct;
+
+    /**
      * @param string $stockName
      * @param string $availabilityInformation
+     * @param bool $exposedProduct
      */
-    public function __construct(string $stockName, string $availabilityInformation)
+    public function __construct(string $stockName, string $availabilityInformation, bool $exposedProduct)
     {
         $this->stockName = $stockName;
         $this->availabilityInformation = $availabilityInformation;
+        $this->exposedProduct = $exposedProduct;
     }
 
     /**
@@ -40,5 +47,13 @@ class ProductStockAvailabilityInformation
     public function getAvailabilityInformation(): string
     {
         return $this->availabilityInformation;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExposedProduct(): bool
+    {
+        return $this->exposedProduct;
     }
 }

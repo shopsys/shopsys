@@ -43,16 +43,18 @@ class ProductStockFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Stock\Stock $stock
-     * @param int $productQuantity
+     * @param \App\Model\Stock\ProductStockData $productStockData
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function setProductStockQuantity(Product $product, Stock $stock, int $productQuantity): void
+    public function editProductStockRelation(Product $product, Stock $stock, ProductStockData $productStockData): void
     {
         $productStock = $this->productStockRepository->findProductStockByStockAndProduct($stock, $product);
         if (!$productStock) {
             $productStock = new ProductStock($stock, $product);
             $this->em->persist($productStock);
         }
-        $productStock->setProductQuantity($productQuantity);
+        $productStock->edit($productStockData);
+
         $this->em->flush();
     }
 }

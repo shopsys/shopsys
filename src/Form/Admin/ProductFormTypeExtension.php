@@ -6,6 +6,7 @@ namespace App\Form\Admin;
 
 use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Product;
+use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
@@ -42,6 +43,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'transferredFilesGroup',
         'productTypePlanFileUrl',
         'assemblyInstructionFileUrl',
+        'productType',
     ];
 
     /**
@@ -60,15 +62,26 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private $vatFacade;
 
     /**
+     * @var \App\Model\Product\Type\ProductTypeFacade
+     */
+    private $productTypeFacade;
+
+    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      */
-    public function __construct(FormBuilderHelper $formBuilderHelper, VatFacade $vatFacade, Domain $domain)
-    {
+    public function __construct(
+        FormBuilderHelper $formBuilderHelper,
+        VatFacade $vatFacade,
+        Domain $domain,
+        ProductTypeFacade $productTypeFacade
+    ) {
         $this->formBuilderHelper = $formBuilderHelper;
         $this->domain = $domain;
         $this->vatFacade = $vatFacade;
+        $this->productTypeFacade = $productTypeFacade;
     }
 
     /**
@@ -104,6 +117,24 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'render_form_row' => false,
             'position' => ['after' => 'name'],
         ]);
+
+        $builder->get('basicInformationGroup')
+            ->add('productType', MultidomainType::class, [
+                'required' => true,
+                'entry_type' => ChoiceType::class,
+                'entry_options' => [
+                    'required' => true,
+                    'choices' => $this->productTypeFacade->getAll(),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'constraints' => [
+                        new Constraints\NotBlank([
+                            'message' => 'Prosím vyberte typ',
+                        ]),
+                    ],
+                ],
+                'label' => t('Typ'),
+            ]);
 
         $this->setShortDescriptionsUspGroup($builder, $options);
 

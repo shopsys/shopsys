@@ -30,11 +30,13 @@
             </div>
         </div>
     </div>
-    <div class="wrap-bar">
-        <a href="{{ url('admin_productseries_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-            <i class="btn__icon">+</i>
-            {{ 'Vytvořit nový produtový program'|trans }}
-        </a>
-    </div>
+    {% if hasFormDisabledFields == false %}
+        <div class="wrap-bar">
+            <a href="{{ url('admin_productseries_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+                <i class="btn__icon">+</i>
+                {{ 'Vytvořit nový produktový program'|trans }}
+            </a>
+        </div>
+    {% endif %}
     {{ gridView.render() }}
 {% endblock %}

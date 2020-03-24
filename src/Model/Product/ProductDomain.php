@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Product\Type\ProductType;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
@@ -84,6 +85,13 @@ class ProductDomain extends BaseProductDomain
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $productTypePlanCode;
+
+    /**
+     * @var \App\Model\Product\Type\ProductType
+     * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType")
+     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
+     */
+    private $productType;
 
     /**
      * @return string|null
@@ -227,5 +235,21 @@ class ProductDomain extends BaseProductDomain
     public function setProductTypePlanCode(?string $productTypePlanCode): void
     {
         $this->productTypePlanCode = $productTypePlanCode;
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType
+     */
+    public function getProductType(): ProductType
+    {
+        return $this->productType;
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductType $productType
+     */
+    public function setProductType(ProductType $productType): void
+    {
+        $this->productType = $productType;
     }
 }

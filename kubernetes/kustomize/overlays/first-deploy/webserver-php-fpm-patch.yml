@@ -3,12 +3,12 @@
     value:
         name: init-application
         image: "{{TAG}}"
-        command: ["sh", "-c", "cd /tmp/source-codes && ./phing clean clean dirs-create db-import-basic-structure db-migrations domains-data-create product-search-create-structure product-search-export-products grunt assets error-pages-generate warmup"]
+        command: ["sh", "-c", "cd /var/www/html && ./phing clean clean dirs-create db-import-basic-structure db-migrations domains-data-create product-search-create-structure product-search-export-products grunt assets error-pages-generate warmup"]
         securityContext:
             runAsUser: 33
         volumeMounts:
             -   name: source-codes
-                mountPath: /tmp/source-codes
+                mountPath: /var/www/html
             -   name: domains-urls
                 mountPath: /var/www/html/config/domains_urls.yml
                 subPath: domains_urls.yml

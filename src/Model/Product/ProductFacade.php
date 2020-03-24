@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
@@ -36,7 +37,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
 /**
  * @property \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
  * @method \App\Model\Product\Product getById(int $productId)
- * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method saveParameters(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] getAllProductSellingPricesByDomainId(\App\Model\Product\Product $product, int $domainId)
@@ -56,6 +56,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  */
 class ProductFacade extends BaseProductFacade
 {
+    public const ASSETS_FILE_TYPE = '.pdf';
+
     /**
      * @var \App\Model\Stock\StockFacade
      */
@@ -168,7 +170,7 @@ class ProductFacade extends BaseProductFacade
 
         foreach ($productData->stockProductData as $productStockData) {
             $stock = $this->stockFacade->getById($productStockData->stockId);
-            $this->productStockFacade->setProductStockQuantity($product, $stock, (int)$productStockData->productQuantity);
+            $this->productStockFacade->editProductStockRelation($product, $stock, $productStockData);
         }
 
         return $product;
@@ -204,9 +206,7 @@ class ProductFacade extends BaseProductFacade
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $this->saveParameters($product, $productData->parameters);
-        if (!$product->isMainVariant()) {
-            $this->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
-        } else {
+        if ($product->isMainVariant()) {
             $product->refreshVariants($productData->variants);
         }
         $this->refreshProductAccessories($product, $productData->accessories);
@@ -228,7 +228,7 @@ class ProductFacade extends BaseProductFacade
 
         foreach ($productData->stockProductData as $productStockData) {
             $stock = $this->stockFacade->getById($productStockData->stockId);
-            $this->productStockFacade->setProductStockQuantity($product, $stock, (int)$productStockData->productQuantity);
+            $this->productStockFacade->editProductStockRelation($product, $stock, $productStockData);
         }
 
         return $product;
@@ -242,6 +242,32 @@ class ProductFacade extends BaseProductFacade
     {
         $product->editFileAttributes($productFilesData);
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Product\ProductData $productData
+     */
+    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData)
+    {
+        // Persist of ProductCategoryDomain requires known primary key of Product
+        // @see https://github.com/doctrine/doctrine2/issues/4869
+        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
+        $product->setProductCategoryDomains($productCategoryDomains);
+        $this->em->flush();
+
+        $this->saveParameters($product, $productData->parameters);
+        $this->createProductVisibilities($product);
+        $this->refreshProductAccessories($product, $productData->accessories);
+        $this->productHiddenRecalculator->calculateHiddenForProduct($product);
+        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
+
+        $this->imageFacade->manageImages($product, $productData->images);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
+
+        $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
+        $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
+        $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
     /**
@@ -267,7 +293,7 @@ class ProductFacade extends BaseProductFacade
             $url = $this->getProductTransferredFileUrl(
                 $product->getProductFileNameByType(
                     $domain->getId(),
-                    Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE
+                    \App\Model\Product\Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE
                 ),
                 $domain->getUrl(),
                 $product->getAssemblyInstructionCode($domain->getId())
@@ -282,7 +308,7 @@ class ProductFacade extends BaseProductFacade
             $url = $this->getProductTransferredFileUrl(
                 $product->getProductFileNameByType(
                     $domain->getId(),
-                    Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE
+                    \App\Model\Product\Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE
                 ),
                 $domain->getUrl(),
                 $product->getProductTypePlanCode($domain->getId())
@@ -294,5 +320,25 @@ class ProductFacade extends BaseProductFacade
         }
 
         return $downloadFileUrls;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return string
+     */
+    public function getAssemblyInstructionFilename(Product $product, int $domainId): string
+    {
+        return $product->getAssemblyInstructionCode($domainId) . self::ASSETS_FILE_TYPE;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return string
+     */
+    public function getProductTypePlanFilename(Product $product, int $domainId): string
+    {
+        return $product->getProductTypePlanCode($domainId) . self::ASSETS_FILE_TYPE;
     }
 }

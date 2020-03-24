@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\Stock\ProductStockData;
+use Shopsys\FormTypesBundle\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,12 +20,14 @@ class StockProductFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('productQuantity', TextType::class, [
+        $builder->add('productQuantity', TextType::class, [
                 'constraints' => [
                     new Constraints\GreaterThanOrEqual(['value' => 0]),
                     new Constraints\Regex(['pattern' => '/^\d+$/']),
                 ],
+            ])
+            ->add('productExposed', YesNoType::class, [
+                'label' => t('Je vystaven'),
             ]);
     }
 

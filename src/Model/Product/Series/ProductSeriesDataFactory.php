@@ -47,16 +47,20 @@ class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
     {
         $productSeriesData = new ProductSeriesData();
         $this->fillDefaultData($productSeriesData);
+
         return $productSeriesData;
     }
 
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    private function fillDefaultData(ProductSeriesData $productSeriesData)
+    private function fillDefaultData(ProductSeriesData $productSeriesData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $productSeriesData->hidden[$domainId] = true;
+            $productSeriesData->seoTitle[$domainId] = null;
+            $productSeriesData->seoH1[$domainId] = null;
+            $productSeriesData->seoMetaDescription[$domainId] = null;
         }
     }
 
@@ -92,6 +96,8 @@ class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
         $productSeriesData->productSeriesCategories = $productSeries->getProductSeriesCategories();
 
         $productSeriesData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($productSeries, null);
+
+        $productSeriesData->akeneoCode = $productSeries->getAkeneoCode();
         return $productSeriesData;
     }
 }

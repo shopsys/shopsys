@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Cart;
 
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
+use App\Model\Cart\Cart;
 use App\Model\Cart\Item\CartItem;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
@@ -40,15 +41,17 @@ class CartTest extends TransactionFunctionalTestCase
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);
 
+        /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->availability = $availability;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $this->setProductTypes($productData);
         $this->setVats($productData);
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
         $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
         $cart->addItem($cartItem1);
@@ -76,7 +79,7 @@ class CartTest extends TransactionFunctionalTestCase
 
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
         $cartItem = new CartItem($cart, $product, 1, Money::zero());
         $cart->addItem($cartItem);
@@ -94,6 +97,7 @@ class CartTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = ['cs' => 'Any name'];
+        $this->setProductTypes($productData);
         $this->setVats($productData);
         $product = Product::create($productData);
 
@@ -110,5 +114,18 @@ class CartTest extends TransactionFunctionalTestCase
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function setProductTypes(ProductData $productData): void
+    {
+        /** @var \App\Model\Product\Type\ProductType $productType */
+        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productData->productType[$domainId] = $productType;
+        }
     }
 }

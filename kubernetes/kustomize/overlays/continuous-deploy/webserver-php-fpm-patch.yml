@@ -3,12 +3,12 @@
     value:
         name: upgrade-application
         image: "{{TAG}}"
-        command: ["sh", "-c", "cd /tmp/source-codes && ./phing db-migrations-count-with-maintenance build-deploy-part-2-db-dependent"]
+        command: ["sh", "-c", "cd /var/www/html && ./phing db-migrations-count-with-maintenance build-deploy-part-2-db-dependent"]
         securityContext:
             runAsUser: 33
         volumeMounts:
             -   name: source-codes
-                mountPath: /tmp/source-codes
+                mountPath: /var/www/html
             -   name: domains-urls
                 mountPath: /var/www/html/config/domains_urls.yml
                 subPath: domains_urls.yml

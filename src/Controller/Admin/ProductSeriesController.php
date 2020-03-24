@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Component\Form\FormBuilderHelper;
 use App\Form\Admin\Product\Series\ProductSeriesFormType;
 use App\Model\Product\Series\Exception\ProductSeriesNotFoundException;
 use App\Model\Product\Series\Grid\ProductSeriesGridFactory;
@@ -52,12 +53,18 @@ class ProductSeriesController extends AdminBaseController
     private $localization;
 
     /**
+     * @var \App\Component\Form\FormBuilderHelper
+     */
+    private $formBuilderHelper;
+
+    /**
      * @param \App\Model\Product\Series\ProductSeriesDataFactoryInterface $productSeriesDataFactory
      * @param \App\Model\Product\Series\ProductSeriesFacadeInterface $productSeriesFacade
      * @param \App\Model\Product\Series\Grid\ProductSeriesGridFactory $productSeriesGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      */
     public function __construct(
         ProductSeriesDataFactoryInterface $productSeriesDataFactory,
@@ -65,7 +72,8 @@ class ProductSeriesController extends AdminBaseController
         ProductSeriesGridFactory $productSeriesGridFactory,
         Domain $domain,
         BreadcrumbOverrider $breadcrumbOverrider,
-        Localization $localization
+        Localization $localization,
+        FormBuilderHelper $formBuilderHelper
     ) {
         $this->productSeriesDataFactory = $productSeriesDataFactory;
         $this->productSeriesFacade = $productSeriesFacade;
@@ -73,6 +81,7 @@ class ProductSeriesController extends AdminBaseController
         $this->domain = $domain;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
         $this->localization = $localization;
+        $this->formBuilderHelper = $formBuilderHelper;
     }
 
     /**
@@ -89,6 +98,7 @@ class ProductSeriesController extends AdminBaseController
             [
                 'gridView' => $grid->createView(),
                 'domains' => $domains,
+                'hasFormDisabledFields' => $this->formBuilderHelper->hasFormDisabledFields(),
             ]
         );
     }

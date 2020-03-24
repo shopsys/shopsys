@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Akeneo\Product\AkeneoProductHelper;
+use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataException;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
+use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ProductTransferAkeneoMapper
@@ -31,18 +33,26 @@ class ProductTransferAkeneoMapper
     private $categoryFacade;
 
     /**
+     * @var \App\Model\Product\Type\ProductTypeFacade
+     */
+    private $productTypeFacade;
+
+    /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
+     * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      */
     public function __construct(
         ProductDataFactory $productDataFactory,
         CategoryFacade $categoryFacade,
-        ProductFilesDataFactory $productFilesDataFactory
+        ProductFilesDataFactory $productFilesDataFactory,
+        ProductTypeFacade $productTypeFacade
     ) {
         $this->productDataFactory = $productDataFactory;
         $this->categoryFacade = $categoryFacade;
         $this->productFilesDataFactory = $productFilesDataFactory;
+        $this->productTypeFacade = $productTypeFacade;
     }
 
     /**
@@ -84,6 +94,7 @@ class ProductTransferAkeneoMapper
         $productData->hidden = $akeneoProductData['enabled'] ? false : true;
 
         $productData->ean = AkeneoProductHelper::mapDataString($akeneoProductData['values']['ean'] ?? null);
+        $productData->productType = $this->getProductType($productData->productType, $akeneoProductData);
 
         $productData->namePrefix = AkeneoProductHelper::mapLocalizedDataString($productData->namePrefix, $akeneoProductData['values']['name_prefix'] ?? null);
         $productData->name = AkeneoProductHelper::mapLocalizedDataString($productData->name, $akeneoProductData['values']['name'] ?? null);
@@ -131,5 +142,47 @@ class ProductTransferAkeneoMapper
         }
 
         return $productCategories;
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductType[]|null[] $productTypesByDomainId
+     * @param array $akeneoProductData
+     * @return \App\Model\Product\Type\ProductType[]
+     */
+    private function getProductType(array $productTypesByDomainId, array $akeneoProductData): array
+    {
+        $productTypeAkeneoCodesByDomainId = [];
+        foreach ($productTypesByDomainId as $domainId => $productType) {
+            if ($productType === null) {
+                $productTypeAkeneoCodesByDomainId[$domainId] = null;
+            } else {
+                $productTypeAkeneoCodesByDomainId[$domainId] = $productType->getAkeneoCode();
+            }
+        }
+
+        $akeneoCodesByDomainId = AkeneoProductHelper::mapDomainDataString(
+            $productTypeAkeneoCodesByDomainId,
+            $akeneoProductData['values']['product_type']
+        );
+        foreach ($akeneoCodesByDomainId as $domainId => $akeneoCode) {
+            if ($akeneoCode === null) {
+                throw TransferInvalidDataException::createWithViolation(
+                    sprintf('ProductType for domain `%s` is required', $domainId),
+                    'product_type'
+                );
+            }
+
+            $productType = $this->productTypeFacade->findByAkeneoCode($akeneoCode);
+            if ($productType === null) {
+                throw TransferInvalidDataException::createWithViolation(
+                    sprintf('ProductType with Akeneo code `%s` wasn\'t found.', $akeneoCode),
+                    'product_type'
+                );
+            }
+
+            $productTypesByDomainId[$domainId] = $productType;
+        }
+
+        return $productTypesByDomainId;
     }
 }

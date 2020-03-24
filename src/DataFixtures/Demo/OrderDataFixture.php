@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Order\Preview\SplitOrderPreview;
+use App\Model\Order\Preview\TransportAndPaymentPricesPreview;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Generator;
@@ -38,7 +40,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     protected $orderFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
+     * @var \App\Model\Order\Preview\OrderPreviewFactory
      */
     protected $orderPreviewFactory;
 
@@ -61,7 +63,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Faker\Generator $faker
      * @param \App\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
+     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -731,6 +733,11 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $product = $this->getReference($productReferenceName);
             $quantifiedProducts[] = new QuantifiedProduct($product, $quantity);
         }
+        /** @var \App\Model\Product\Type\ProductType $productType */
+        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+        $orderData->transportsByProductTypeId = [
+            $productType->getId() => $orderData->transport,
+        ];
         $orderPreview = $this->orderPreviewFactory->create(
             $orderData->currency,
             $orderData->domainId,
@@ -738,10 +745,30 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData->transport,
             $orderData->payment,
             $customerUser,
-            null
+            null,
+            $productType
         );
 
-        $order = $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
+        $splitOrderPreview = new SplitOrderPreview(
+            [$orderPreview],
+            $orderData->payment,
+            $orderPreview->getTotalPrice(),
+            $orderPreview->getProductsPrice(),
+            $orderPreview->getRoundingPrice()
+        );
+        $transportAndPaymentPricesPreview = new TransportAndPaymentPricesPreview(
+            [
+                $productType->getId() => [
+                    $orderData->transport->getId() => $orderPreview->getTransportPrice(),
+                ],
+            ],
+            [
+                $orderData->payment->getId() => $orderPreview->getPaymentPrice(),
+            ]
+        );
+        $splitOrderPreview->setTransportAndPaymentPricesPreview($transportAndPaymentPricesPreview);
+
+        $order = $this->orderFacade->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, $customerUser);
         /* @var $order \App\Model\Order\Order */
 
         $referenceName = self::ORDER_PREFIX . $order->getId();
@@ -761,6 +788,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             OrderStatusDataFixture::class,
             CountryDataFixture::class,
             SettingValueDataFixture::class,
+            ProductTypeDataFixture::class,
         ];
     }
 }

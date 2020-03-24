@@ -133,6 +133,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
                 $this->em->rollback();
             }
 
+            $this->logger->persistAllLoggedTransferIssues();
             throw $exception;
         } finally {
             $this->em->clear();
@@ -140,6 +141,8 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
             if ($this->validator instanceof TraceableValidator) {
                 $this->validator->reset();
             }
+
+            $this->logger->persistAllLoggedTransferIssues();
         }
 
         $this->logger->persistAllLoggedTransferIssues();

@@ -8,14 +8,15 @@ use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
+use App\Model\Product\ProductData;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -25,7 +26,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
+     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private $productDataFactory;
@@ -80,12 +81,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $this->setPriceForAllDomains($productData, Money::create(100));
         $this->setVatsForAllDomains($productData);
+        $this->setProductTypeForAllDomains($productData);
 
         return $productData;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \App\Model\Product\ProductData $productData
      */
     private function setVatsForAllDomains(ProductData $productData): void
     {
@@ -101,6 +103,19 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
 
         $productData->vatsIndexedByDomainId = $productVats;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function setProductTypeForAllDomains(ProductData $productData): void
+    {
+        /** @var \App\Model\Product\Type\ProductType $productType */
+        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productData->productType[$domainId] = $productType;
+        }
     }
 
     /**
@@ -373,67 +388,54 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleWhenZeroManualPrice()
+    public function testIsNotVisibleWhenZeroAkeneoLowPrice()
     {
-        $this->markTestSkipped('manual prices are in sconto deprecated');
-        //TODO bude vyreseno v SD-505
-//        $productData = $this->getDefaultProductData();
-//        $this->setPriceForAllDomains($productData, Money::create(10));
-//
-//        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-//        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-//        $pricingGroupWithZeroPriceId = $pricingGroup->getId();
-//
-//        $productData->manualInputPricesByPricingGroupId[$pricingGroupWithZeroPriceId] = Money::zero();
-//
-//        $product = $this->productFacade->create($productData);
-//        $this->productPriceRecalculator->runImmediateRecalculations();
-//
-//        $this->em->clear();
-//
-//        $this->productVisibilityRepository->refreshProductsVisibility();
-//
-//        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-//        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-//            'product' => $product,
-//            'pricingGroup' => $pricingGroupWithZeroPriceId,
-//            'domainId' => Domain::FIRST_DOMAIN_ID,
-//        ]);
-//
-//        $this->assertFalse($productVisibility->isVisible());
+        $em = $this->getEntityManager();
+
+        $productData = $this->getDefaultProductData();
+        $this->setPriceForAllDomains($productData, Money::zero());
+
+        $product = $this->productFacade->create($productData);
+        $this->productPriceRecalculator->runImmediateRecalculations();
+
+        $em->clear();
+
+        $this->productVisibilityRepository->refreshProductsVisibility();
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
+        $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
+            'product' => $product,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
+        ]);
+
+        $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleWhenNullManualPrice()
+    public function testIsNotVisibleWhenNullAkeneoLowPrice()
     {
-        $this->markTestSkipped('manual prices are in sconto deprecated');
-        //TODO bude vyreseno v SD-505
-//        $productData = $this->getDefaultProductData();
-//
-//        $allPricingGroups = $this->pricingGroupFacade->getAll();
-//        foreach ($allPricingGroups as $pricingGroup) {
-//            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = Money::create(10);
-//        }
-//
-//        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-//        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-//        $pricingGroupWithNullPriceId = $pricingGroup->getId();
-//        $productData->manualInputPricesByPricingGroupId[$pricingGroupWithNullPriceId] = null;
-//
-//        $product = $this->productFacade->create($productData);
-//        $this->productPriceRecalculator->runImmediateRecalculations();
-//
-//        $this->em->clear();
-//
-//        $this->productVisibilityRepository->refreshProductsVisibility();
-//
-//        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-//        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-//            'product' => $product,
-//            'pricingGroup' => $pricingGroupWithNullPriceId,
-//            'domainId' => Domain::FIRST_DOMAIN_ID,
-//        ]);
-//
-//        $this->assertFalse($productVisibility->isVisible());
+        $em = $this->getEntityManager();
+
+        $productData = $this->getDefaultProductData();
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $productData->lowPriceWithVat[$domainConfig->getId()] = null;
+            $productData->highPriceWithVat[$domainConfig->getId()] = null;
+        }
+
+        $product = $this->productFacade->create($productData);
+        $this->productPriceRecalculator->runImmediateRecalculations();
+
+        $em->clear();
+
+        $this->productVisibilityRepository->refreshProductsVisibility();
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
+        $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
+            'product' => $product,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
+        ]);
+
+        $this->assertFalse($productVisibility->isVisible());
     }
 
     public function testRefreshProductsVisibilityVisibleVariants()

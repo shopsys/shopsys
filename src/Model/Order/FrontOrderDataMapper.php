@@ -7,10 +7,10 @@ namespace App\Model\Order;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\FrontOrderData;
 use Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper as BaseFrontOrderDataMapper;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 
 /**
  * @method prefillFrontFormData(\App\Model\Order\FrontOrderData $frontOrderData, \App\Model\Customer\User\CustomerUser $customerUser, \App\Model\Order\Order $order)
- * @method prefillTransportAndPaymentFromOrder(\App\Model\Order\FrontOrderData $frontOrderData, \App\Model\Order\Order $order)
  */
 class FrontOrderDataMapper extends BaseFrontOrderDataMapper
 {
@@ -28,5 +28,14 @@ class FrontOrderDataMapper extends BaseFrontOrderDataMapper
         /** @var \App\Model\Customer\BillingAddress $billingAddress */
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
         $frontOrderData->companyNumberWithVat = $billingAddress->getCompanyNumberWithVat();
+    }
+
+    /**
+     * @param \App\Model\Order\FrontOrderData $frontOrderData
+     * @param \App\Model\Order\Order $order
+     */
+    protected function prefillTransportAndPaymentFromOrder(FrontOrderData $frontOrderData, Order $order)
+    {
+        $frontOrderData->payment = $order->getPayment()->isDeleted() ? null : $order->getPayment();
     }
 }

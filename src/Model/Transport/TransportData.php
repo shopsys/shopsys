@@ -11,8 +11,14 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
  */
 class TransportData extends BaseTransportData
 {
+    /**
+     * @var \App\Model\Product\Type\ProductType[]
+     */
+    public $productTypes;
+
     public function __construct()
     {
         parent::__construct();
+        $this->productTypes = [];
     }
 }

@@ -110,7 +110,8 @@ class ProductAvailabilityFacade
 
             $stocksList[] = new ProductStockAvailabilityInformation(
                 $productStock->getStock()->getName(),
-                $availabilityInformation
+                $availabilityInformation,
+                $productStock->isProductExposed()
             );
         }
 

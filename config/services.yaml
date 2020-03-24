@@ -33,6 +33,10 @@ services:
 
     App\Component\Doctrine\QueryBuilderExtender: ~
 
+    App\Component\Doctrine\RemoveMappingsSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber, priority: -100 }
+
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: '@App\Component\Doctrine\QueryBuilderExtender'
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
@@ -99,6 +103,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@App\Form\Front\Order\DomainAwareOrderFlowFactory'
 
+    App\Model\Order\Watcher\SplitTransportAndPaymentWatcher: ~
+
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface: '@App\Model\Article\ArticleDataFactory'
 
     App\Model\Category\CurrentCategoryResolver: ~
@@ -123,6 +129,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory: '@App\Model\Order\Item\OrderItemFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface: '@App\Model\Order\Item\OrderItemFactory'
+
     App\Model\Order\OrderDataMapper: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataMapper: '@App\Model\Order\OrderDataMapper'
@@ -139,7 +149,9 @@ services:
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
 
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade: ~
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade: '@App\Model\Product\Listed\ListedProductViewElasticFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade: '@App\Model\Product\ProductOnCurrentDomainElasticFacade'
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@App\Model\Product\Brand\BrandDataFactory'
 
@@ -173,6 +185,9 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\DefaultController:
         class: 'App\Controller\Admin\DefaultController'
 
+    Shopsys\FrameworkBundle\Controller\Admin\OrderController:
+        class: 'App\Controller\Admin\OrderController'
+
     Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
         class: 'App\Controller\Admin\PromoCodeController'
         arguments:
@@ -195,6 +210,8 @@ services:
             $akeneoConfig: "%akeneo_config%"
 
     App\Component\Akeneo\AkeneoClientFactory: ~
+
+    App\Model\Product\Transfer\Akeneo\AkeneoImportProductFacade:
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade:
         arguments:
@@ -221,7 +238,13 @@ services:
 
     App\Model\Order\Preview\OrderPreviewCalculation: ~
 
+    App\Model\Order\Mail\OrderMail: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: '@App\Model\Order\Mail\OrderMail'
+
     Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation: '@App\Model\Order\Preview\OrderPreviewCalculation'
+
+    Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory: '@App\Model\Order\Preview\OrderPreviewFactory'
 
     App\Model\Product\Pricing\QuantifiedProductDiscountCalculation: ~
 
@@ -240,6 +263,8 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: '@App\Model\Product\ProductOnCurrentDomainFacade'
 
     Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository: '@App\Model\Product\Filter\PriceRangeRepository'
+
+    Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository: '@App\Model\Product\Filter\ParameterFilterChoiceRepository'
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation: '@App\Model\Product\Pricing\ProductPriceCalculation'
 
