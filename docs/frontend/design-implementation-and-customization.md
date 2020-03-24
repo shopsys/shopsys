@@ -2,7 +2,7 @@
 Here are the basic technologies we use in Shopsys Framework for design implementation:
 
 - [LESS pre-processor](http://lesscss.org/) for definition of cascading style sheets (i.e. [CSS](https://www.w3.org/Style/CSS/Overview.en.html))
-    - the LESS files are located in `src/Resources/styles`  
+    - the LESS files are located in `assets/styles/frontend`
     - you can read more about LESS in separate article [Introduction to Less](./introduction-to-less.md)
 - [Grunt task runner](https://gruntjs.com/) for generation of CSS from LESS
     - `Gruntfile.js` is generated from `templates/Grunt/gruntfile.js.twig` during application build using `gruntfile` by [Phing target](../introduction/console-commands-for-application-management-phing-targets.md)
@@ -17,7 +17,7 @@ if you want to know more about this concept, you can read [the separate article]
 In order to change your multidomain appearance, you can set two parameters [`domains.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yml) configuration file:
 
 - `styles_directory`
-    - allows you to define a custom sub-folder with LESS files in `src/Resources/styles`
+    - allows you to define a custom sub-folder with LESS files in `assets/styles/frontend`
     - if you need to use custom styles for a particular domain, put your LESS files in this sub-folder
     - you can create your own directories structure in the sub-folder that suits your needs
 - `design_id`
