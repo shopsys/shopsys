@@ -7,6 +7,8 @@ namespace App\Controller\Front;
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Listed\ListedProductViewElasticFacade;
+use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -15,12 +17,12 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Twig\RequestExtension;
-use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends FrontBaseController
@@ -80,7 +82,7 @@ class ProductController extends FrontBaseController
     private $brandFacade;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
+     * @var \App\Model\Product\Listed\ListedProductViewElasticFacade
      */
     private $listedProductViewFacade;
 
@@ -105,7 +107,7 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      */
@@ -120,7 +122,7 @@ class ProductController extends FrontBaseController
         ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade,
         ModuleFacade $moduleFacade,
         BrandFacade $brandFacade,
-        ListedProductViewFacadeInterface $listedProductViewFacade,
+        ListedProductViewElasticFacade $listedProductViewFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductFacade $productFacade
     ) {
@@ -140,10 +142,16 @@ class ProductController extends FrontBaseController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function detailAction($id)
+    public function detailAction(Request $request, $id)
     {
+        $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
+        if (!$this->isRequestPageValid($requestPage)) {
+            return $this->redirectToRoute('front_product_detail', $this->getRequestParametersWithoutPage());
+        }
+        $page = $requestPage === null ? 1 : (int)$requestPage;
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
@@ -160,6 +168,14 @@ class ProductController extends FrontBaseController
         $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainId($product, $this->domain->getId());
         $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($product, $this->domain);
 
+        $paginatedSimilarProducts = $this->listedProductViewFacade->getSimilarPaginatedProductsFormProductInCategory(
+            $product,
+            $this->domain->getId(),
+            ProductListOrderingConfig::ORDER_BY_PRIORITY,
+            $page,
+            self::PRODUCTS_PER_PAGE
+        );
+
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $product,
             'accessories' => $accessories,
@@ -170,6 +186,7 @@ class ProductController extends FrontBaseController
             'productAvailabilityInformation' => $productAvailabilityInformation,
             'productStocksAvailabilitiesInformation' => $productStocksAvailabilitiesInformation,
             'downloadFiles' => $downloadFiles,
+            'paginatedSimilarProducts' => $paginatedSimilarProducts,
         ]);
     }
 

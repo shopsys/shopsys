@@ -269,6 +269,13 @@
                     </div>
                 {% endif %}
 
+                {% if paginatedSimilarProducts.results|length > 0 %}
+                    <div class="box-detail similar-products">
+                        <div class="h3" id="similar-products">{{ 'Podobné produkty'|trans }}</div>
+                        {% include 'Front/Content/Product/similarProducts.html.twig' with {paginationResult: paginatedSimilarProducts} %}
+                    </div>
+                {% endif %}
+
                 {% if productStocksAvailabilitiesInformation|length > 0 %}
                     <div class="box-detail stocks-availabilities">
                         <div class="h3" id="stocks-availabilities">{{ 'Skladové zásoby'|trans }}</div>
