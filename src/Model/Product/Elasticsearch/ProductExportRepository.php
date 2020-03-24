@@ -81,6 +81,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $visibility = $this->extractVisibility($domainId, $product);
         $detailUrl = $this->extractDetailUrl($domainId, $product);
         $variantIds = $this->extractVariantIds($product);
+        $highPriceWithVat = $product->getHighPriceWithVat($domainId);
 
         return [
             'id' => $product->getId(),
@@ -111,7 +112,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             'name_prefix' => $product->getNamePrefix($locale),
             'name_sufix' => $product->getNameSufix($locale),
-            'non_selling_price' => $product->getHighPriceWithVat($domainId)->getAmount(),
+            'non_selling_price' => $highPriceWithVat === null ? null : $highPriceWithVat->getAmount(),
         ];
     }
 }
