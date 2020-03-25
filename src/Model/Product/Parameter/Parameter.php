@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Model\Product\Parameter\Unit\ParameterUnit;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParameterData;
@@ -45,6 +46,14 @@ class Parameter extends BaseParameter
     protected $orderingPriority;
 
     /**
+     * @var \App\Model\Product\Parameter\Unit\ParameterUnit|null
+     *
+     * @ORM\ManyToOne(targetEntity="App\Model\Product\Parameter\Unit\ParameterUnit")
+     * @ORM\JoinColumn(nullable=true, name="parameter_unit_id", referencedColumnName="id")
+     */
+    protected $parameterUnit;
+
+    /**
      * Parameter constructor.
      * @param \App\Model\Product\Parameter\ParameterData $parameterData
      */
@@ -55,6 +64,7 @@ class Parameter extends BaseParameter
         $this->akeneoCode = $parameterData->akeneoCode;
         $this->akeneoType = $parameterData->akeneoType;
         $this->orderingPriority = $parameterData->orderingPriority;
+        $this->parameterUnit = $parameterData->parameterUnit;
     }
 
     /**
@@ -67,6 +77,7 @@ class Parameter extends BaseParameter
         $this->akeneoCode = $parameterData->akeneoCode;
         $this->akeneoType = $parameterData->akeneoType;
         $this->orderingPriority = $parameterData->orderingPriority;
+        $this->parameterUnit = $parameterData->parameterUnit;
     }
 
     /**
@@ -99,5 +110,13 @@ class Parameter extends BaseParameter
     public function getOrderingPriority(): int
     {
         return $this->orderingPriority;
+    }
+
+    /**
+     * @return \App\Model\Product\Parameter\Unit\ParameterUnit|null
+     */
+    public function getParameterUnit(): ?ParameterUnit
+    {
+        return $this->parameterUnit;
     }
 }
