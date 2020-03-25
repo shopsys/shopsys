@@ -121,9 +121,6 @@ msgstr "Výrobní číslo nesmí být delší než {{ limit }} znaků"
 msgid "Password cannot be local part of e-mail."
 msgstr "Heslo nesmí být stejné jako první část e-mailu."
 
-msgid "Password cannot be longer then {{ limit }} characters"
-msgstr "Heslo musí mít minimálně {{ limit }} znaků"
-
 msgid "Password cannot be same as e-mail"
 msgstr "Heslo nesmí být stejné jako přihlašovací e-mail."
 
@@ -132,6 +129,9 @@ msgstr "Heslo nesmí být stejné jako část e-mailu před zavináčem."
 
 msgid "Password cannot be same as username"
 msgstr "Heslo nesmí být stejné jako přihlašovací jméno"
+
+msgid "Password must be at least {{ limit }} characters long"
+msgstr "Heslo musí mít minimálně {{ limit }} znaků"
 
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"

@@ -121,9 +121,6 @@ msgstr ""
 msgid "Password cannot be local part of e-mail."
 msgstr "Password cannot be local part of email."
 
-msgid "Password cannot be longer then {{ limit }} characters"
-msgstr "Password cannot be longer than {{ limit }} characters"
-
 msgid "Password cannot be same as e-mail"
 msgstr "Password cannot be same as email"
 
@@ -131,6 +128,9 @@ msgid "Password cannot be same as part of e-mail before at sign"
 msgstr "Password cannot be same as part of email before at sign"
 
 msgid "Password cannot be same as username"
+msgstr ""
+
+msgid "Password must be at least {{ limit }} characters long"
 msgstr ""
 
 msgid "Passwords do not match"

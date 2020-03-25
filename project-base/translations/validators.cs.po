@@ -28,14 +28,14 @@ msgstr "Příjmení nesmí být delší než {{ limit }} znaků"
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Příjmení kontaktní osoby nesmí být delší než {{ limit }} znaků"
 
-msgid "Password cannot be longer than {{ limit }} characters"
-msgstr "Heslo musí mít minimálně {{ limit }} znaků"
-
 msgid "Password cannot be same as email"
 msgstr "Heslo nesmí být stejné jako přihlašovací e-mail."
 
 msgid "Password cannot be same as part of email before at sign"
 msgstr "Heslo nesmí být stejné jako část e-mailu před zavináčem."
+
+msgid "Password must be at least {{ limit }} characters long"
+msgstr "Heslo musí mít minimálně {{ limit }} znaků"
 
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"

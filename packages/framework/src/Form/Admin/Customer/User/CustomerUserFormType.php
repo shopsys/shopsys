@@ -196,7 +196,7 @@ class CustomerUserFormType extends AbstractType
     private function getFirstPasswordConstraints($isCreatingNewUser)
     {
         $constraints = [
-            new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer then {{ limit }} characters']),
+            new Constraints\Length(['min' => 6, 'minMessage' => 'Password must be at least {{ limit }} characters long']),
         ];
 
         if ($isCreatingNewUser) {

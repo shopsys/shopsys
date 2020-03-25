@@ -1332,6 +1332,9 @@ There you can find links to upgrade notes for other versions too.
 - fix your version of jms/translation-bundle to 1.4.4 in order to prevent problems with translations dumping ([#1732](https://github.com/shopsys/shopsys/pull/1732))
     - see #project-base-diff to update your project
 
+- fix your password minimum length constraint message ([#1478](https://github.com/shopsys/shopsys/pull/1478))
+    - see #project-base-diff to update your project
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))

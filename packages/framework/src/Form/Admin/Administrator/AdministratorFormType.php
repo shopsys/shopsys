@@ -99,7 +99,7 @@ class AdministratorFormType extends AbstractType
     private function getFirstPasswordConstraints($scenario)
     {
         $constraints = [
-            new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer then {{ limit }} characters']),
+            new Constraints\Length(['min' => 6, 'minMessage' => 'Password must be at least {{ limit }} characters long']),
         ];
 
         if ($scenario === self::SCENARIO_CREATE) {
