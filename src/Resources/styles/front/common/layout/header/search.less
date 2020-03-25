@@ -33,15 +33,16 @@
 
         &__icon {
             position: absolute;
-            top: 11px;
+            top: 10px;
             left: 10px;
+            width: 33px;
+            height: 33px;
 
+            background-image: url('@{path-design}/search.svg');
+            background-size: 33px;
+            background-position: center center;
             transition: @transition color;
             color: #8e9a9f;
-
-            .svg {
-                font-size: 30px;
-            }
 
             .search__input:focus + & {
                 color: @color-primary;

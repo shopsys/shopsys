@@ -33,9 +33,8 @@
             position: relative;
 
             &__icon {
-                position: absolute;
-                left: 0;
-                top: 8px;
+                position: static;
+                margin-top: 2px;
 
                 font-size: 32px;
             }
@@ -251,10 +250,13 @@
                 }
 
                 &--cats {
+                    display: flex;
+                    align-items: center;
                     position: absolute;
                     left: 1rem;
                     top: 0;
-                    padding-left: 2rem;
+                    padding: 0 0.5rem 0 0;
+                    height: 100%;
                 }
             }
 
