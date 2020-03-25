@@ -4,7 +4,55 @@ services:
         autoconfigure: true
         public: false
 
-#   Example:
-#   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
-#       tags:
-#           - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Product search export' }
+    Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '3', minutes: '0', readableName: 'Download Heureka categories' }
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: "Export products to Elasticsearch" }
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportChangedCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: "Export changed products to Elasticsearch" }
+
+    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Delete vats' }
+
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate product prices' }
+
+    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityImmediateCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate immediate product visibilities' }
+
+    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityMidnightCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: 'Recalculate midnight product visibilities' }
+
+    Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: 'Delete old customer carts' }
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate product availabilities' }
+
+    Shopsys\FrameworkBundle\Model\Feed\DailyFeedCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*/6', minutes: '0', readableName: 'Generate daily feeds' }
+
+    Shopsys\FrameworkBundle\Model\Feed\HourlyFeedCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '10', readableName: 'Generate hourly feeds' }
+
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '4', minutes: '0', readableName: 'Generate Sitemap' }
+
+    # This module should run as last because it creates multiple kernels and fake requests.
+    Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '21', minutes: '10', readableName: 'Generate Error pages' }
