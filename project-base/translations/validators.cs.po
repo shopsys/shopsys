@@ -11,7 +11,7 @@ msgid "Company name cannot be longer than {{ limit }} characters"
 msgstr "Název firmy nesmí být delší než {{ limit }} znaků"
 
 msgid "Email cannot be longer than {{ limit }} characters"
-msgstr "Email nesmí být delší než {{ limit }} znaků"
+msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr "Jméno nesmí být delší než {{ limit }} znaků"
@@ -29,10 +29,10 @@ msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Příjmení kontaktní osoby nesmí být delší než {{ limit }} znaků"
 
 msgid "Password cannot be same as email"
-msgstr "Heslo nesmí být stejné jako přihlašovací email."
+msgstr "Heslo nesmí být stejné jako přihlašovací e-mail."
 
 msgid "Password cannot be same as part of email before at sign"
-msgstr "Heslo nesmí být stejné jako část emailu před zavináčem."
+msgstr "Heslo nesmí být stejné jako část e-mailu před zavináčem."
 
 msgid "Password must be at least {{ limit }} characters long"
 msgstr "Heslo musí mít minimálně {{ limit }} znaků"
@@ -65,7 +65,7 @@ msgid "Please enter date of creation"
 msgstr "Vyplňte prosím datum vytvoření"
 
 msgid "Please enter email"
-msgstr "Vyplňte prosím email"
+msgstr "Vyplňte prosím e-mail"
 
 msgid "Please enter first name"
 msgstr "Vyplňte prosím jméno"
@@ -101,7 +101,7 @@ msgid "Please enter telephone number"
 msgstr "Vyplňte prosím telefon"
 
 msgid "Please enter valid email"
-msgstr "Vyplňte prosím platný email"
+msgstr "Vyplňte prosím platný e-mail"
 
 msgid "Please enter valid quantity"
 msgstr "Zadejte prosím platné množství"
@@ -125,7 +125,7 @@ msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr "Telefon nesmí být delší než {{ limit }} znaků"
 
 msgid "This email is already registered"
-msgstr "Tento email je již registrován"
+msgstr "Tento e-mail je již registrován"
 
 msgid "You have to agree with privacy policy"
 msgstr "Musíte souhlasit se zpracováním osobních údajů"
