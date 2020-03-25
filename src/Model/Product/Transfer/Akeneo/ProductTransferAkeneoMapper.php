@@ -271,7 +271,7 @@ class ProductTransferAkeneoMapper
                     $parameterValueUnit = null;
                 }
 
-                foreach (['cs', 'sk'] as $locale) {
+                foreach (AkeneoHelper::AKENEO_LOCALES_MAP_ESHOP_LOCALES as $locale) {
                     $productData->parameters[] = $this->createProductParameterValueData(
                         $parameter,
                         $locale,

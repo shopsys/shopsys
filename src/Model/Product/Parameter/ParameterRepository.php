@@ -209,4 +209,28 @@ class ParameterRepository extends BaseParameterRepository
 
         return $queryBuilder;
     }
+
+    /**
+     * @param \App\Model\Product\Parameter\ParameterValueData $parameterValueData
+     * @return \App\Model\Product\Parameter\ParameterValue
+     */
+    public function findOrCreateParameterValueByParameterValueData(ParameterValueData $parameterValueData): ParameterValue
+    {
+        $parameterValue = $this->getParameterValueRepository()->findOneBy([
+            'text' => $parameterValueData->text,
+            'locale' => $parameterValueData->locale,
+            'unit' => $parameterValueData->unit,
+        ]);
+
+        if ($parameterValue === null) {
+            $parameterValue = $this->parameterValueFactory->create($parameterValueData);
+            $this->em->persist($parameterValue);
+            // Doctrine's identity map is not cache.
+            // We have to flush now, so that next findOneBy() finds new ParameterValue.
+            $this->em->flush();
+        }
+
+        /** @var \App\Model\Product\Parameter\ParameterValue $parameterValue */
+        return $parameterValue;
+    }
 }
