@@ -7,7 +7,9 @@
 .ui-slider {
     display: block;
     height: @ui-slider-height;
+    max-width: calc(100% - 35px);
     position: relative;
+    margin: auto;
 
     background: @ui-slider-bg;
     border-radius: @radius;
@@ -28,6 +30,7 @@
     display: block;
     position: absolute;
     top: -@ui-slider-handle-height / 2 + 2px;
+    margin-left: -@ui-slider-handle-height;
 
     background: @color-f;
     border: 1px solid @ui-slider-handle-border-color;
@@ -36,7 +39,7 @@
     cursor: pointer;
 
     &:last-child {
-        margin-left: -@ui-slider-handle-height;
+        margin-left: 0;
     }
 
     &:hover,
