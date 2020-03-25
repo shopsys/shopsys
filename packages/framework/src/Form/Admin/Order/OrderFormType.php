@@ -188,6 +188,14 @@ class OrderFormType extends AbstractType
                 'user' => $order->getCustomerUser(),
             ]);
 
+        if ($order->getOrigin() !== null) {
+            $builderBasicInformationGroup
+                ->add('origin', DisplayOnlyType::class, [
+                    'label' => 'Origin',
+                    'data' => $order->getOrigin(),
+                ]);
+        }
+
         return $builderBasicInformationGroup;
     }
 

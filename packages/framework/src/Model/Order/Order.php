@@ -299,6 +299,13 @@ class Order
     protected $createdAsAdministratorName;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    protected $origin;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -331,6 +338,7 @@ class Order
         $this->currency = $orderData->currency;
         $this->createdAsAdministrator = $orderData->createdAsAdministrator;
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
+        $this->origin = $orderData->origin;
     }
 
     /**
@@ -921,6 +929,14 @@ class Order
     public function getCreatedAsAdministratorName()
     {
         return $this->createdAsAdministratorName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrigin(): ?string
+    {
+        return $this->origin;
     }
 
     /**

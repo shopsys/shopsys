@@ -171,6 +171,11 @@ class OrderData
      */
     public $orderTransport;
 
+    /**
+     * @var string|null
+     */
+    public $origin;
+
     public function __construct()
     {
         $this->itemsWithoutTransportAndPayment = [];
