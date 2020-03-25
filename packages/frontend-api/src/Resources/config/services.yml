@@ -5,7 +5,7 @@ services:
         public: false
 
     Shopsys\FrontendApiBundle\:
-        resource: '../../**/*{Resolver,Map}.php'
+        resource: '../../**/*{Facade,Map,Mutation,Resolver}.php'
 
     Shopsys\FrontendApiBundle\Controller\FrontendApiController:
         tags: ['controller.service_arguments']
@@ -17,3 +17,5 @@ services:
     Shopsys\FrontendApiBundle\Model\Error\ErrorHandlerListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20}
+
+    Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~

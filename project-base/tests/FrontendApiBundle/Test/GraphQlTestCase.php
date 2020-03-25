@@ -60,11 +60,12 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     /**
      * @param string $query
      * @param array $variables
+     * @param array $customServer
      * @return array
      */
-    protected function getResponseContentForQuery(string $query, array $variables = []): array
+    protected function getResponseContentForQuery(string $query, array $variables = [], array $customServer = []): array
     {
-        $content = $this->getResponseForQuery($query, $variables)->getContent();
+        $content = $this->getResponseForQuery($query, $variables, $customServer)->getContent();
 
         return json_decode($content, true);
     }
@@ -72,18 +73,20 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     /**
      * @param string $query
      * @param array $variables
+     * @param array $customServer
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getResponseForQuery(string $query, array $variables): Response
+    private function getResponseForQuery(string $query, array $variables, array $customServer = []): Response
     {
         $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
+        $server = array_merge(['CONTENT_TYPE' => 'application/graphql'], $customServer);
 
         $this->client->request(
             'GET',
             $path,
             ['query' => $query, 'variables' => json_encode($variables)],
             [],
-            ['CONTENT_TYPE' => 'application/graphql']
+            $server
         );
 
         return $this->client->getResponse();

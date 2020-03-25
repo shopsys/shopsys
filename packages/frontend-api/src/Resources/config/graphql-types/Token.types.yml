@@ -1,0 +1,6 @@
+Token:
+    type: object
+    config:
+        fields:
+            accessToken:
+                type: "String!"

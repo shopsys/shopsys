@@ -68,3 +68,5 @@ services:
     Shopsys\FrameworkBundle\Twig\NumberFormatterExtension: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
+
+    Shopsys\FrontendApiBundle\Model\Token\TokenFacade: ~

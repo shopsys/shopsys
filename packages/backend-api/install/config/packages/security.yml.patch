@@ -1,7 +1,7 @@
-@@ -37,6 +37,15 @@ security:
-                 csrf_token_generator: security.csrf.token_manager
-                 csrf_token_id: admin_logout
-                 invalidate_session: false
+@@ -45,6 +45,15 @@ security:
+             guard:
+                 authenticators:
+                     - Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator
 +        backend_api_token:
 +            pattern: ^/api/token$
 +            security: false

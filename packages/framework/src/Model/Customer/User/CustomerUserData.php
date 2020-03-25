@@ -54,6 +54,11 @@ class CustomerUserData
      */
     public $defaultDeliveryAddress;
 
+    /**
+     * @var string|null
+     */
+    public $uuid;
+
     public function __construct()
     {
     }

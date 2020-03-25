@@ -37,6 +37,14 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 csrf_token_id: admin_logout
                 invalidate_session: false
+        frontend_api:
+            pattern: ^/graphql
+            provider: user_identities
+            stateless: true
+            anonymous: true
+            guard:
+                authenticators:
+                    - Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator
         frontend:
             pattern: ^/
             anonymous: ~
