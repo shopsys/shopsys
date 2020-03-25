@@ -52,6 +52,7 @@ class HeurekaCategoryFacade
                 $this->em->persist($newHeurekaCategory);
             } else {
                 $existingHeurekaCategory = $existingHeurekaCategories[$newHeurekaCategoryData->id];
+                $newHeurekaCategoryData->categories = $existingHeurekaCategory->getCategories();
                 $existingHeurekaCategory->edit($newHeurekaCategoryData);
             }
         }
