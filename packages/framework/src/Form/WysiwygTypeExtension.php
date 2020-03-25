@@ -12,9 +12,9 @@ class WysiwygTypeExtension extends AbstractTypeExtension
 {
     protected const ALLOWED_FORMAT_TAGS = 'p;h2;h3;h4;h5;h6;pre;div;address';
 
-    protected const KEY_LESS_ADMIN = 'admin-wysiwyg';
+    protected const ADMIN_WYSIWYG_ENTRY = 'admin-wysiwyg';
 
-    protected const KEY_LESS_FRONTEND_PREFIX = 'frontend-wysiwyg-';
+    protected const FRONTEND_WYSIWYG_ENTRY_PREFIX = 'frontend-wysiwyg-';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -63,13 +63,15 @@ class WysiwygTypeExtension extends AbstractTypeExtension
     private function getContentCss(): array
     {
         $entrypointsOutput = [];
-        $entrypoints = json_decode(file_get_contents($this->entrypointsPath), true)['entrypoints'];
+        $entrypointsJsonContent = file_get_contents($this->entrypointsPath);
+        $entrypointsArrayContent = json_decode($entrypointsJsonContent, true);
+        $entrypoints = $entrypointsArrayContent['entrypoints'];
 
-        if (array_key_exists(static::KEY_LESS_ADMIN, $entrypoints) === true) {
-            $entrypointsOutput = array_merge($entrypointsOutput, $entrypoints[static::KEY_LESS_ADMIN]['css']);
+        if (array_key_exists(static::ADMIN_WYSIWYG_ENTRY, $entrypoints) === true) {
+            $entrypointsOutput = array_merge($entrypointsOutput, $entrypoints[static::ADMIN_WYSIWYG_ENTRY]['css']);
         }
 
-        $keyOfFrontendWysiwygLess = static::KEY_LESS_FRONTEND_PREFIX . $this->domain->getId();
+        $keyOfFrontendWysiwygLess = static::FRONTEND_WYSIWYG_ENTRY_PREFIX . $this->domain->getId();
         if (array_key_exists($keyOfFrontendWysiwygLess, $entrypoints) === true) {
             $entrypointsOutput = array_merge($entrypointsOutput, $entrypoints[$keyOfFrontendWysiwygLess]['css']);
         }
