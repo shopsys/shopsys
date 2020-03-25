@@ -10,16 +10,11 @@ If you want to know the basic technologies we use for the frontend implementatio
 This is very easy as there are already prepared `less` files for the second domain in `domain2` folder
 that is configured for usage by `styles_directory` parameter in [`domains.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yml).
 
-Edit `src/Resources/styles/front/domain2/core/variables.less`:
+Edit `assets/styles/frontend/domain2/core/variables.less`:
 
 ```diff
 - @color-link: @color-green;
 + @color-link: @color-red;
-```
-
-Generate CSS files from LESS using Grunt
-```sh
-php phing grunt
 ```
 
 !!! hint

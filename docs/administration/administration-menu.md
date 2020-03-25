@@ -19,7 +19,7 @@ The menu template works similarly to the default `knp_menu.html.twig` but it use
 
 ## Javascript
 
-The behavior of the side menu is controlled via the JS component [`Shopsys.sideMenu`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/scripts/admin/sideMenu.js).
+The behavior of the side menu is controlled via the JS component [`Shopsys.sideMenu`](https://github.com/shopsys/shopsys/blob/master/packages/framework/assets/js/admin/sideMenu.js).
 
 ## Icons
 
