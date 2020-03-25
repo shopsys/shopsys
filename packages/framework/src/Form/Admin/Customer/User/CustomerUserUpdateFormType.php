@@ -55,7 +55,7 @@ class CustomerUserUpdateFormType extends AbstractType
         if ($options['customerUser'] === null) {
             $builder->add('sendRegistrationMail', CheckboxType::class, [
                 'required' => false,
-                'label' => t('Send confirmation e-mail about registration to customer'),
+                'label' => t('Send confirmation email about registration to customer'),
             ]);
         } else {
             $builder->add('deliveryAddresses', DeliveryAddressListType::class, [

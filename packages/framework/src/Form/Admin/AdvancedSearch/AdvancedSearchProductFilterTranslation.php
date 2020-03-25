@@ -18,7 +18,7 @@ class AdvancedSearchProductFilterTranslation extends AdvancedSearchFilterTransla
     {
         parent::__construct();
 
-        $this->addFilterTranslation(ProductCatnumFilter::NAME, t('Catalogue number'));
+        $this->addFilterTranslation(ProductCatnumFilter::NAME, t('Catalog number'));
         $this->addFilterTranslation(ProductFlagFilter::NAME, t('Flag'));
         $this->addFilterTranslation(ProductNameFilter::NAME, t('Product name'));
         $this->addFilterTranslation(ProductPartnoFilter::NAME, t('PartNo (serial number)'));

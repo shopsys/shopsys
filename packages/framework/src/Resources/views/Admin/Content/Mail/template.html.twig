@@ -1,8 +1,8 @@
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 {% import _self as self %}
 
-{% block title %}- {{ 'E-mail templates settings'|trans }}{% endblock %}
-{% block h1 %}{{ 'E-mail templates settings'|trans }}{% endblock %}
+{% block title %}- {{ 'Email templates settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Email templates settings'|trans }}{% endblock %}
 
 {% block main_content %}
 
@@ -93,7 +93,7 @@
                             [],
                             orderStatusVariablesLabels,
                             'Only variables for order number and date and time of order creation can be used in the object.'|trans,
-                            'Send e-mail about change to this status'|trans
+                            'Send email about change to this status'|trans
                     ) }}
                 {% endif %}
             {% endfor %}

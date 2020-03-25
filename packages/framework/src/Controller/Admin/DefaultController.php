@@ -179,7 +179,7 @@ class DefaultController extends AdminBaseController
     {
         if ($this->mailTemplateFacade->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()) {
             $this->addErrorFlashTwig(
-                t('<a href="{{ url }}">Some required e-mail templates are not fully set.</a>'),
+                t('<a href="{{ url }}">Some required email templates are not fully set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_mail_template'),
                 ]

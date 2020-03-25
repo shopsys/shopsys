@@ -12,5 +12,5 @@ class NotIdenticalToEmailLocalPart extends Constraint
 
     public $errorPath;
 
-    public $message = 'Password cannot be local part of e-mail.';
+    public $message = 'Password cannot be local part of email.';
 }

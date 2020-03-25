@@ -185,7 +185,7 @@ class SideMenuBuilder
         $bestsellingProductsMenu = $menu->addChild('bestselling_products', ['route' => 'admin_bestsellingproduct_list', 'label' => t('Bestsellers')]);
         $bestsellingProductsMenu->addChild('edit', ['route' => 'admin_bestsellingproduct_detail', 'label' => t('Editing bestseller'), 'display' => false]);
 
-        $menu->addChild('newsletter', ['route' => 'admin_newsletter_list', 'label' => t('E-mail newsletter')]);
+        $menu->addChild('newsletter', ['route' => 'admin_newsletter_list', 'label' => t('Email newsletter')]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
 
@@ -229,8 +229,8 @@ class SideMenuBuilder
         $legalMenu->addChild('cookies', ['route' => 'admin_cookies_setting', 'label' => t('Cookies information')]);
 
         $communicationMenu = $menu->addChild('communication', ['label' => t('Communication with customer')]);
-        $communicationMenu->addChild('mail_settings', ['route' => 'admin_mail_setting', 'label' => t('E-mail settings')]);
-        $communicationMenu->addChild('mail_templates', ['route' => 'admin_mail_template', 'label' => t('E-mail templates')]);
+        $communicationMenu->addChild('mail_settings', ['route' => 'admin_mail_setting', 'label' => t('Email settings')]);
+        $communicationMenu->addChild('mail_templates', ['route' => 'admin_mail_template', 'label' => t('Email templates')]);
         $communicationMenu->addChild('order_confirmation', ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
 
         $listsMenu = $menu->addChild('lists', ['label' => t('Lists and nomenclatures')]);

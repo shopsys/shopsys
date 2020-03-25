@@ -109,7 +109,7 @@ class CustomerUserFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
                     new Constraints\Length([
                         'max' => 100,
-                        'maxMessage' => 'First name cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
                 'label' => t('First name'),
@@ -126,18 +126,18 @@ class CustomerUserFormType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter e-mail']),
+                    new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Constraints\Length([
                         'max' => 255,
-                        'maxMessage' => 'Email cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
                     ]),
-                    new Email(['message' => 'Please enter valid e-mail']),
+                    new Email(['message' => 'Please enter valid email']),
                     new UniqueEmail([
                         'ignoredEmail' => $customerUser !== null ? $customerUser->getEmail() : null,
                         'domainId' => $options['domain_id'],
                     ]),
                 ],
-                'label' => t('E-mail'),
+                'label' => t('Email'),
             ])
             ->add('telephone', TextType::class, [
                 'required' => false,
@@ -225,13 +225,13 @@ class CustomerUserFormType extends AbstractType
                         'field1' => 'email',
                         'field2' => 'password',
                         'errorPath' => 'password',
-                        'message' => 'Password cannot be same as e-mail',
+                        'message' => 'Password cannot be same as email',
                     ]),
                     new NotIdenticalToEmailLocalPart([
                         'password' => 'password',
                         'email' => 'email',
                         'errorPath' => 'password',
-                        'message' => 'Password cannot be same as part of e-mail before at sign',
+                        'message' => 'Password cannot be same as part of email before at sign',
                     ]),
                 ],
             ]);

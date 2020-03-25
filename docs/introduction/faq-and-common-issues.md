@@ -20,7 +20,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [Why are you using entity data instead of entities for Symfony forms?](#why-are-you-using-entity-data-instead-of-entities-for-symfony-forms)
 - [What is the configuration file `services_test.yml` good for?](#what-is-the-configuration-file-services_testyml-good-for)
 - [How to change the behavior of the product search on the front-end?](#how-to-change-the-behavior-of-the-product-search-on-the-front-end)
-- [Why are e-mails not sent immediately but at the end of the script](#why-are-e-mails-sent-before-end-of-the-script-and-not-immediately)
+- [Why are emails not sent immediately but at the end of the script](#why-are-emails-sent-before-end-of-the-script-and-not-immediately)
 - [Where does the business logic belong?](#where-does-the-business-logic-belong)
 - [How can I create a friendly URL for my entity?](#how-can-i-create-a-friendly-url-for-my-entity)
 - [How can I create Front-end Breadcrumb navigation?](#how-can-i-create-front-end-breadcrumb-navigation)
@@ -116,11 +116,11 @@ E.g., by default, all our services are defined as private. However, in tests, we
 Full-text product search on the front-end is handled via Elasticsearch.
 If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](../model/front-end-product-searching.md).
 
-## Why are e-mails sent before end of the script and not immediately
-Project uses `SwiftMailer` package for sending e-mails and defaultly it has set `spool queue` that stores all mails into `memory` until the script execution is at the end.  
+## Why are emails sent before end of the script and not immediately
+Project uses `SwiftMailer` package for sending emails and defaultly it has set `spool queue` that stores all mails into `memory` until the script execution is at the end.
 This spooling method helps the user not to wait for the next page to load while the email is sending.
 However, based on implementations of many projects, project gained functionality that releases spool after the `*cronModule` run is ended in case of `cron` phing target that runs all cron modules at once.
-It is also possible to turn the spool off by removing it from [swiftmailer.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/swiftmailer.yaml) or changing the behavior of storing e-mails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).
+It is also possible to turn the spool off by removing it from [swiftmailer.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/swiftmailer.yaml) or changing the behavior of storing emails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).
 
 ## Where does the business logic belong?
 The business logic should be implemented directly in an entity every time when there is no need for external services.

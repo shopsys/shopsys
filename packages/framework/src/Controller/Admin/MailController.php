@@ -132,7 +132,7 @@ class MailController extends AdminBaseController
         return [
             RegistrationMail::VARIABLE_FIRST_NAME => t('First name'),
             RegistrationMail::VARIABLE_LAST_NAME => t('Last name'),
-            RegistrationMail::VARIABLE_EMAIL => t('E-mail'),
+            RegistrationMail::VARIABLE_EMAIL => t('Email'),
             RegistrationMail::VARIABLE_URL => t('E-shop URL address'),
             RegistrationMail::VARIABLE_LOGIN_PAGE => t('Link to the log in page'),
         ];
@@ -144,7 +144,7 @@ class MailController extends AdminBaseController
     protected function getResetPasswordVariablesLabels()
     {
         return [
-            ResetPasswordMail::VARIABLE_EMAIL => t('E-mail'),
+            ResetPasswordMail::VARIABLE_EMAIL => t('Email'),
             ResetPasswordMail::VARIABLE_NEW_PASSWORD_URL => t('New password settings URL address'),
         ];
     }
@@ -156,7 +156,7 @@ class MailController extends AdminBaseController
     {
         return [
             PersonalDataAccessMail::VARIABLE_DOMAIN => t('E-shop name'),
-            PersonalDataAccessMail::VARIABLE_EMAIL => t('E-mail'),
+            PersonalDataAccessMail::VARIABLE_EMAIL => t('Email'),
             PersonalDataAccessMail::VARIABLE_URL => t('E-shop URL address'),
         ];
     }
@@ -168,7 +168,7 @@ class MailController extends AdminBaseController
     {
         return [
             PersonalDataExportMail::VARIABLE_DOMAIN => t('E-shop name'),
-            PersonalDataExportMail::VARIABLE_EMAIL => t('E-mail'),
+            PersonalDataExportMail::VARIABLE_EMAIL => t('Email'),
             PersonalDataExportMail::VARIABLE_URL => t('E-shop URL address'),
         ];
     }
@@ -255,7 +255,7 @@ class MailController extends AdminBaseController
                 $allMailTemplatesData->domainId
             );
 
-            $this->addSuccessFlash(t('E-mail templates settings modified'));
+            $this->addSuccessFlash(t('Email templates settings modified'));
 
             return $this->redirectToRoute('admin_mail_template');
         }
@@ -292,7 +292,7 @@ class MailController extends AdminBaseController
             $this->mailSettingFacade->setMainAdminMail($mailSettingData['email'], $selectedDomainId);
             $this->mailSettingFacade->setMainAdminMailName($mailSettingData['name'], $selectedDomainId);
 
-            $this->addSuccessFlash(t('E-mail settings modified.'));
+            $this->addSuccessFlash(t('Email settings modified.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Mail/setting.html.twig', [

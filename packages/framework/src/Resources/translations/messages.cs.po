@@ -40,8 +40,8 @@ msgstr "<a href=\"{{ url }}\">Není nastavena výchozí dostupnost pro produkty 
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr "<a href=\"{{ url }}\">Není nastavena výchozí jednotka.</a>"
 
-msgid "<a href=\"{{ url }}\">Some required e-mail templates are not fully set.</a>"
-msgstr "<a href=\"{{ url }}\">Některé povinné emailové šablony nejsou vyplněny.</a>"
+msgid "<a href=\"{{ url }}\">Some required email templates are not fully set.</a>"
+msgstr "<a href=\"{{ url }}\">Některé povinné e-mailové šablony nejsou vyplněny.</a>"
 
 msgid "<a href=\"{{ url }}\">There are no availabilities, you need to create some.</a>"
 msgstr "<a href=\"{{ url }}\">Neexistují žádné dostupnosti, musíte nějakou vytvořit.</a>"
@@ -157,11 +157,11 @@ msgstr "Reklamní systém"
 msgid "All domains"
 msgstr "Všechny domény"
 
-msgid "All e-mails will be sent only to entered address."
-msgstr "Všechny maily budou doručeny pouze na uvedenou adresu."
+msgid "All emails will be sent only to entered address."
+msgstr "Všechny e-maily budou doručeny pouze na uvedenou adresu."
 
-msgid "All e-mails will be sent only to entered addresses."
-msgstr "Všechny maily budou doručeny pouze na uvedené adresy."
+msgid "All emails will be sent only to entered addresses."
+msgstr "Všechny e-maily budou doručeny pouze na uvedené adresy."
 
 msgid "All pages"
 msgstr "Všechny stránky"
@@ -266,7 +266,7 @@ msgid "Because availability \"%name%\" is used with other products also, you hav
 msgstr "Jelikož dostupnost \"%name%\" je používána ještě u některých produktů, musíte zvolit, jaká dostupnost bude použita místo ní. Jakou dostupnost chcete těmto produktům nastavit?"
 
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
-msgstr "Jelikož stav \"%name%\" je používán ještě u některých objednávek, musíte zvolit, jaký stav bude použit místo něj. Jaký stav chcete těmto objednávkám nastavit? Při této změně stavu nebude odeslán email zákazníkům."
+msgstr "Jelikož stav \"%name%\" je používán ještě u některých objednávek, musíte zvolit, jaký stav bude použit místo něj. Jaký stav chcete těmto objednávkám nastavit? Při této změně stavu nebude odeslán e-mail zákazníkům."
 
 msgid "Best-selling products of category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> set."
 msgstr "Bylo nastaveno nejprodávanější zboží kategorie <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
@@ -322,7 +322,7 @@ msgstr "Vypočtená cena bez DPH"
 msgid "Calculated price including VAT"
 msgstr "Vypočtená cena vč. DPH"
 
-msgid "Catalogue number"
+msgid "Catalog number"
 msgstr "Katalogové číslo"
 
 msgid "Categories"
@@ -391,7 +391,7 @@ msgstr "Kód"
 msgid "Code of service Heureka - Verified by Customer"
 msgstr "Kód služby Ověřeno zákazníky"
 
-msgid "Colour"
+msgid "Color"
 msgstr "Barva"
 
 msgid "Communication with customer"
@@ -580,8 +580,8 @@ msgstr "Doručovací adresa zákazníka"
 msgid "Customer detail"
 msgstr "Karta zákazníka"
 
-msgid "Customer e-mail address"
-msgstr "Emailová adresa zákazníka"
+msgid "Customer email address"
+msgstr "E-mailová adresa zákazníka"
 
 msgid "Customer has no delivery addresses."
 msgstr "Zákazník nemá žádné doručovací adresy."
@@ -793,31 +793,31 @@ msgstr "Zde přetáhněte svůj soubor"
 msgid "Drag your files here"
 msgstr "Zde přetáhněte své soubory"
 
-msgid "E-mail"
+msgid "Email"
 msgstr "E-mail"
 
-msgid "E-mail name"
-msgstr "Jméno k emailu"
+msgid "Email name"
+msgstr "Jméno k e-mailu"
 
-msgid "E-mail newsletter"
-msgstr "Emaily zpravodaje"
+msgid "Email newsletter"
+msgstr "E-maily zpravodaje"
 
-msgid "E-mail settings"
-msgstr "Nastavení emailů"
+msgid "Email settings"
+msgstr "Nastavení e-mailů"
 
-msgid "E-mail settings modified."
-msgstr "Nastavení emailů bylo upraveno."
+msgid "Email settings modified."
+msgstr "Nastavení e-mailů bylo upraveno."
 
-msgid "E-mail settings:"
-msgstr "Nastavení emailů:"
+msgid "Email settings:"
+msgstr "Nastavení e-mailů:"
 
-msgid "E-mail templates"
-msgstr "Šablony emailů"
+msgid "Email templates"
+msgstr "Šablony e-mailů"
 
-msgid "E-mail templates settings"
+msgid "Email templates settings"
 msgstr "Nastavení šablon e-mailů"
 
-msgid "E-mail templates settings modified"
+msgid "Email templates settings modified"
 msgstr "Nastavení šablony e-mailu bylo upraveno"
 
 msgid "E-shop URL address"
@@ -991,8 +991,8 @@ msgstr "Bez DPH"
 msgid "Existing icon"
 msgstr "Současná ikona"
 
-msgid "Export e-mail list in CSV format"
-msgstr "Exportovat seznam emailů jako CSV"
+msgid "Export email list in CSV format"
+msgstr "Exportovat seznam e-mailů jako CSV"
 
 msgid "External scripts"
 msgstr "Měřící skripty"
@@ -1300,8 +1300,8 @@ msgstr "Čas přihlášení"
 msgid "Main URL can't be deleted"
 msgstr "Hlavní URL nelze smazat"
 
-msgid "Main administrator e-mail"
-msgstr "Hlavní administrátorský email"
+msgid "Main administrator email"
+msgstr "Hlavní administrátorský e-mail"
 
 msgid "Main category"
 msgstr "Hlavní kategorie"
@@ -1330,7 +1330,7 @@ msgstr "Provést úpravu"
 msgid "Marketing"
 msgstr "Marketing"
 
-msgid "Master e-mail %masterMail% set"
+msgid "Master email %masterMail% set"
 msgstr "Je nastaven master e-mail %masterMail%."
 
 msgid "Message"
@@ -1924,20 +1924,20 @@ msgstr "Hledání"
 msgid "Search [verb]"
 msgstr "Vyhledat"
 
-msgid "Search by name, catalogue number, or product part number..."
+msgid "Search by name, catalog number, or product part number..."
 msgstr "Vyhledat dle názvu, katalogového čísla nebo partno produktu..."
 
 msgid "Searching in all currencies"
 msgstr "Vyhledává se ve všech měnách"
 
 msgid "Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?."
-msgstr "Vyhledávání hledá v příjmení, názvu firmy, emailu a telefonu. Je možné používat operátory * a ?."
+msgstr "Vyhledávání hledá v příjmení, názvu firmy, e-mailu a telefonu. Je možné používat operátory * a ?."
 
-msgid "Searching searches in name, catalogue number or product part number. It is possible to use wildcards * and ?."
+msgid "Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v názvu, katalogovém číslu nebo partno produktu. Je možné používat operátory * a ?."
 
 msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."
-msgstr "Vyhledávání hledá v číslu objednávky, emailu registrovaného zákazníka, emailu zákazníka v objednávce, příjmení zákazníka a názvu firmy. Je možné používat operátory * a ?."
+msgstr "Vyhledávání hledá v číslu objednávky, e-mailu registrovaného zákazníka, e-mailu zákazníka v objednávce, příjmení zákazníka a názvu firmy. Je možné používat operátory * a ?."
 
 msgid "Select new value"
 msgstr "Zvolte novou hodnotu"
@@ -2023,17 +2023,17 @@ msgstr "Datum stažení"
 msgid "Selling start date"
 msgstr "Datum vložení"
 
-msgid "Send confirmation e-mail about registration to customer"
-msgstr "Odeslat mail s potvrzením registrace zákazníkovi"
+msgid "Send confirmation email about registration to customer"
+msgstr "Odeslat e-mail s potvrzením registrace zákazníkovi"
 
 msgid "Send confirmation of order receipt"
 msgstr "Zasílat potvrzení o přijetí objednávky"
 
-msgid "Send e-mail about change to this status"
+msgid "Send email about change to this status"
 msgstr "Zasílat e-mail o změně na tento stav"
 
-msgid "Sending e-mails off, no e-mail will be sent from the app."
-msgstr "Odesílání mailů je vypnuto, z aplikace nebude odeslán žádný mail."
+msgid "Sending emails off, no email will be sent from the app."
+msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-mail."
 
 msgid "Seo"
 msgstr "Seo"
@@ -2188,8 +2188,8 @@ msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
 msgid "This currency can't be deleted, it is set as default or is saved with order."
 msgstr "Tuto měnu nelze smazat, je nastavena jako výchozí nebo je uložena u objednávky"
 
-msgid "This e-mail was sent from the contact form located below the panel of categories."
-msgstr "Tento email byl odeslán z kontaktního formuláře umístěného pod panelem kategorií."
+msgid "This email was sent from the contact form located below the panel of categories."
+msgstr "Tento e-mail byl odeslán z kontaktního formuláře umístěného pod panelem kategorií."
 
 msgid "This item can be set in product detail of a specific variant"
 msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
@@ -2260,8 +2260,8 @@ msgstr "Nelze přidat"
 msgid "Unable to add product"
 msgstr "Zboží se nepodařilo vložit"
 
-msgid "Unable to send updating e-mail"
-msgstr "Nepodařilo se odeslat aktualizační email"
+msgid "Unable to send updating email"
+msgstr "Nepodařilo se odeslat aktualizační e-mail"
 
 msgid "Unexpected error occurred, file was not uploaded."
 msgstr "Došlo k neočekávané chybě, soubor nebyl nahrán."

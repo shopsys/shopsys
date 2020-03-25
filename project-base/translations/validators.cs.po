@@ -11,7 +11,7 @@ msgid "Company name cannot be longer than {{ limit }} characters"
 msgstr "Název firmy nesmí být delší než {{ limit }} znaků"
 
 msgid "Email cannot be longer than {{ limit }} characters"
-msgstr "Email nesmí být delší než {{ limit }} znaků"
+msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr "Jméno nesmí být delší než {{ limit }} znaků"

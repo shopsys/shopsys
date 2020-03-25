@@ -48,7 +48,7 @@ class MailTemplateRepository
     {
         $mailTemplate = $this->findByNameAndDomainId($templateName, $domainId);
         if ($mailTemplate === null) {
-            $message = 'E-mail template with name "' . $templateName . '" was not found on domain with ID ' . $domainId . '.';
+            $message = 'Email template with name "' . $templateName . '" was not found on domain with ID ' . $domainId . '.';
             throw new \Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException($message);
         }
 

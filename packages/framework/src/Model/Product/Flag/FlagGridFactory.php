@@ -58,7 +58,7 @@ class FlagGridFactory implements GridFactoryInterface
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'at.name', t('Name'), true);
-        $grid->addColumn('rgbColor', 'a.rgbColor', t('Colour'), true);
+        $grid->addColumn('rgbColor', 'a.rgbColor', t('Color'), true);
         $grid->addColumn('visible', 'a.visible', t('Filter by'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');

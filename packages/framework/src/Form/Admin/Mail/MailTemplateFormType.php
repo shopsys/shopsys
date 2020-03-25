@@ -34,7 +34,7 @@ class MailTemplateFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Email(),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer then {{ limit }} characters']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('subject', TextType::class, [
@@ -79,7 +79,7 @@ class MailTemplateFormType extends AbstractType
         ]);
         $subjectConstraints[] = new Constraints\Length([
             'max' => 255,
-            'maxMessage' => 'E-mail subject cannot be longer than {{ limit }} characters',
+            'maxMessage' => 'Email subject cannot be longer than {{ limit }} characters',
         ]);
 
         foreach ($options['required_subject_variables'] as $variableName) {
@@ -102,7 +102,7 @@ class MailTemplateFormType extends AbstractType
         $bodyConstraints = [];
 
         $bodyConstraints[] = new Constraints\NotBlank([
-            'message' => 'Please enter e-mail content',
+            'message' => 'Please enter email content',
             'groups' => [static::VALIDATION_GROUP_SEND_MAIL],
         ]);
 
