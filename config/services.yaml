@@ -141,6 +141,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade: '@App\Model\Product\Listing\ProductListOrderingModeForListFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory: '@App\Model\Product\Parameter\ParameterGridFactory'
+
     Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@App\Model\Product\ProductDataFactory'
 
     Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
