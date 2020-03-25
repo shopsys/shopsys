@@ -24,6 +24,10 @@
         padding: @header-padding-lg;
     }
 
+    @media screen and (min-width: 769px) and (max-width: 992px) {
+        padding-bottom: 75px;
+    }
+
     &__logo {
         display: flex;
         flex-grow: 1;
@@ -33,6 +37,10 @@
         @media @query-lg {
             padding-right: 20px;
             margin-right: 0;
+        }
+
+        @media screen and (min-width: 769px) and (max-width: 992px) {
+            flex-grow: 2;
         }
 
         @media @query-xl {
@@ -47,6 +55,17 @@
             display: block;
             width: @header-middle-width-lg;
             margin-right: 0.5rem;
+        }
+
+        @media screen and (min-width: 769px) and (max-width: 992px) {
+            position: absolute;
+            left: 0;
+            bottom: 15px;
+            width: 100%;
+
+            .search__form__input {
+                width: 100%;
+            }
         }
 
         @media @query-vl {
