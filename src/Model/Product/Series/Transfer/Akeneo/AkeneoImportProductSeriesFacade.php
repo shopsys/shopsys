@@ -120,7 +120,7 @@ class AkeneoImportProductSeriesFacade extends AbstractAkeneoImportTransfer
         foreach ($this->nonTransferredAkeneoProductSeriesIds as $productSeriesId) {
             $productSeries = $this->productSeriesFacade->getById($productSeriesId);
             $this->productSeriesFacade->delete($productSeries);
-            $this->logger->addWarning(sprintf('Deleted product series with ID: %s', $productSeriesId));
+            $this->logger->addInfo(sprintf('Deleted product series with ID: %s', $productSeriesId));
         }
     }
 
