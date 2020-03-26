@@ -268,7 +268,7 @@ class ProductTransferAkeneoMapper
                     $parameterValueText = (string)$currentAkeneoProductParameterData['data']['amount'];
                     $parameterValueUnit = $currentAkeneoProductParameterData['data']['unit'];
 
-                    $this->testExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
+                    $this->checkExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
                 } else {
                     $parameterValueText = (string)$currentAkeneoProductParameterData['data'];
                     $parameterValueUnit = null;
@@ -329,14 +329,14 @@ class ProductTransferAkeneoMapper
      * @param string $parameterValueUnit
      * @param string $catnum
      */
-    private function testExpectedParameterUnit(Parameter $parameter, string $parameterValueUnit, string $catnum): void
+    private function checkExpectedParameterUnit(Parameter $parameter, string $parameterValueUnit, string $catnum): void
     {
         if ($parameter->getParameterUnit()->getUnit() !== null
             && $parameter->getParameterUnit()->getUnit() !== $parameterValueUnit
         ) {
             throw new TransferException(
                 sprintf(
-                    'Product "%s" with parameter "%s" has wrong unit, expected is "%s" but incoming is"%s"',
+                    'Product "%s" with parameter "%s" has wrong unit, expected is "%s" but incoming is "%s"',
                     $catnum,
                     $parameter->getName('cs'),
                     $parameter->getParameterUnit()->getUnit(),

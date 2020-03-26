@@ -73,6 +73,8 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
         $this->parameterUnitDataFactory = $parameterUnitDataFactory;
     }
 
+    public const DEFAULT_METRIC_UNIT_AKENEO_KEY = 'default_metric_unit';
+
     /**
      * @inheritDoc
      */
@@ -99,7 +101,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
 
         $parameter = $this->parameterFacade->findParameterByAkeneoCode($akeneoParameterData['code']);
         $parameterData = $this->productParameterTransferAkeneoMapper->mapAkeneoParameterDataToParameterData($akeneoParameterData, $parameter);
-        $parameterData->parameterUnit = $this->saveParameterUnit($akeneoParameterData['default_metric_unit'] ?? null);
+        $parameterData->parameterUnit = $this->saveParameterUnit($akeneoParameterData[self::DEFAULT_METRIC_UNIT_AKENEO_KEY] ?? null);
 
         if ($parameter === null) {
             $this->logger->addInfo(sprintf('Creating parameter group with akeneo code : %s', $parameterData->akeneoCode));

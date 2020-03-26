@@ -88,8 +88,6 @@ class ParameterUnitController extends AdminBaseController
         $grid->addEditActionColumn('admin_parameterunit_edit', ['id' => 'pu.id']);
         $grid->setTheme('Admin/Content/ParameterUnit/listGrid.html.twig');
 
-        $domains = $this->domain->getAll();
-
         return $this->render(
             'Admin/Content/ParameterUnit/list.html.twig',
             [
