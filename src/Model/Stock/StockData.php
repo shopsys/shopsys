@@ -26,6 +26,16 @@ class StockData
      */
     public $externalId;
 
+    /**
+     * @var string|null
+     */
+    public $street;
+
+    /**
+     * @var string|null
+     */
+    public $city;
+
     public function __construct()
     {
         $this->centralStock = false;

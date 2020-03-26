@@ -83,6 +83,26 @@ class StockFormType extends AbstractType
                     new Constraints\Callback([$this, 'sameStockExternalIdValidation']),
                 ],
             ]
+        )->add(
+            'street',
+            TextType::class,
+            [
+                    'required' => false,
+                    'label' => t('Ulice'),
+                    'constraints' => [
+                        new Constraints\Length(['max' => 100, 'maxMessage' => 'Ulice nesmí být delší než {{ limit }} znaků']),
+                    ],
+                ]
+        )->add(
+            'city',
+            TextType::class,
+            [
+                'required' => false,
+                'label' => t('Město'),
+                'constraints' => [
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Město nesmí být delší než {{ limit }} znaků']),
+                ],
+            ]
         );
 
         $builder->add($stockDataBuilder);

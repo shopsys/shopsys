@@ -50,6 +50,20 @@ class Stock
     protected $externalId;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $street;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $city;
+
+    /**
      * @param \App\Model\Stock\StockData $stockData
      */
     public function __construct(StockData $stockData)
@@ -58,6 +72,8 @@ class Stock
         $this->name = $stockData->name;
         $this->centralStock = $stockData->centralStock;
         $this->externalId = $stockData->externalId;
+        $this->street = $stockData->street;
+        $this->city = $stockData->city;
     }
 
     /**
@@ -68,6 +84,8 @@ class Stock
         $this->name = $stockData->name;
         $this->centralStock = $stockData->centralStock;
         $this->externalId = $stockData->externalId;
+        $this->street = $stockData->street;
+        $this->city = $stockData->city;
     }
 
     /**
@@ -108,5 +126,21 @@ class Stock
     public function getExternalId(): string
     {
         return $this->externalId;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCity(): ?string
+    {
+        return $this->city;
     }
 }
