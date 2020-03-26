@@ -9,10 +9,10 @@ By default you can configure your own cron configurations in `config/services/cr
 If you want to show Cron overview table for non-superadmin users you need add parameter `shopsys.display_cron_overview_for_superadmin_only` set to `false` in your `config/parameters.yml`:
 
 !!! note
-    All default crons are translated only to English. If you want to translate it to another language, you need to override `src/Resources/config/services/cron.yml` in `FrameworkBundle` and set `readableName` property.
+    All default crons are translated only to English. If you want to translate it to another language, you need to set `readableName` property for cron in `config/services/cron.yml`.
 
 ## Default Cron Commands
-There is some prepared configuration for Shopsys Framework in a file [`src/Resources/config/services/cron.yml`](https://github.com/shopsys/framework/blob/master/src/Resources/config/services/cron.yml) in `FrameworkBundle`.
+There is some prepared configuration in a file [`config/services/cron.yml`](https://github.com/shopsys/project-base/blob/master/config/services/cron.yml) in `project-base`.
 
 ## Running Cron Jobs
 Do not forget to set up a cron on your server to execute [`php phing cron`](../introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
