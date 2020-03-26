@@ -48,7 +48,7 @@
                     {{ 'Nákupem ušetříte'|trans }}
                 </td>
                 <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                    - {{ orderPreview.getSubHighAndLowPrice.priceWithVat|price }}
+                    -&nbsp;{{ orderPreview.getSubHighAndLowPrice.priceWithVat|price }}
                 </td>
             </tr>
             <tr class="table-cart-preview__row">
@@ -101,6 +101,15 @@
             </td>
             <td class="table-cart-preview__cell table-cart-preview__cell--price">
                 {{ splitOrderPreview.totalPrice.priceWithVat|price }}
+            </td>
+        </tr>
+
+        <tr class="table-cart-preview__row table-cart-preview__row--total">
+            <td class="table-cart-preview__cell">
+                {{ 'Celkem ušetříte'|trans }}:
+            </td>
+            <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                {{ splitOrderPreview.productsSalePrice.priceWithVat|price }}
             </td>
         </tr>
 

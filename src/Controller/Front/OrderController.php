@@ -281,7 +281,7 @@ class OrderController extends FrontBaseController
     {
         $transportIdsByProductTypeId = $request->get('transportIdsByProductTypeId');
         $paymentId = $request->get('paymentId');
-        $showProducts = $request->get('shopProducts', true);
+        $showProducts = $request->get('showProducts', true);
 
         $orderData = $this->orderDataFactory->create();
 

@@ -26,6 +26,11 @@ class SplitOrderPreview
     private $productsPrice;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private $productsSalePrice;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     private $roundingPrice;
@@ -41,10 +46,11 @@ class SplitOrderPreview
     private $transportAndPaymentPricesPreview;
 
     /**
-     * @param \App\Model\Order\Preview\OrderPreview[] $orderPreviews
+     * @param array $orderPreviews
      * @param \App\Model\Payment\Payment|null $payment
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsSalePrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
      */
     public function __construct(
@@ -52,12 +58,14 @@ class SplitOrderPreview
         ?Payment $payment,
         Price $totalPrice,
         Price $productsPrice,
+        Price $productsSalePrice,
         ?Price $roundingPrice
     ) {
         $this->orderPreviews = $orderPreviews;
         $this->payment = $payment;
         $this->totalPrice = $totalPrice;
         $this->productsPrice = $productsPrice;
+        $this->productsSalePrice = $productsSalePrice;
         $this->roundingPrice = $roundingPrice;
     }
 
@@ -91,6 +99,14 @@ class SplitOrderPreview
     public function getProductsPrice(): Price
     {
         return $this->productsPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getProductsSalePrice(): Price
+    {
+        return $this->productsSalePrice;
     }
 
     /**

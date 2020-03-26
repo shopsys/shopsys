@@ -43,11 +43,17 @@ class ProductPriceCalculation extends BaseProductPriceCalculation
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
+     * @param int $multiplier
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function calculateProductNonSellingPrice(Product $product, int $domainId): ProductPrice
+    public function calculateProductNonSellingPrice(Product $product, int $domainId, int $multiplier = 1): ProductPrice
     {
-        $highPrice = new Price(Money::zero(), $product->getHighPriceWithVat($domainId) ?? Money::zero());
+        $highPriceWithVat = $product->getHighPriceWithVat($domainId) ?? Money::zero();
+        if ($multiplier !== 1) {
+            $highPriceWithVat = $highPriceWithVat->multiply($multiplier);
+        }
+
+        $highPrice = new Price(Money::zero(), $highPriceWithVat);
         $highPrice = $this->basePriceCalculation->applyCoefficients($highPrice, $product->getVatForDomain($domainId), []);
 
         return new ProductPrice($highPrice, false);
