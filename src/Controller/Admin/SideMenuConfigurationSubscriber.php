@@ -105,5 +105,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 
         $listMenu = $settingsMenu->getChild('lists');
         $listMenu->addChild('product_types', ['route' => 'admin_producttype_list', 'label' => t('Typy produktů')]);
+        $parameterUnitMenu = $listMenu->addChild('parameter_units', ['route' => 'admin_parameterunit_list', 'label' => t('Měrné jednotky')]);
+        $parameterUnitMenu->addChild('parameter_units_edit', ['route' => 'admin_parameterunit_edit', 'display' => false, 'label' => t('Editace položky')]);
     }
 }

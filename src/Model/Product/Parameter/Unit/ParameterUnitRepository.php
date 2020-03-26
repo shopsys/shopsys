@@ -7,6 +7,7 @@ namespace App\Model\Product\Parameter\Unit;
 use App\Model\Product\Parameter\Unit\Exception\UnitNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 class ParameterUnitRepository
 {
@@ -32,6 +33,16 @@ class ParameterUnitRepository
     }
 
     /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getQueryBuilder(): QueryBuilder
+    {
+        return $this->em->createQueryBuilder()
+            ->select('pu')
+            ->from(ParameterUnit::class, 'pu');
+    }
+
+    /**
      * @param int $id
      * @return \App\Model\Product\Parameter\Unit\ParameterUnit
      */
@@ -52,5 +63,13 @@ class ParameterUnitRepository
     public function findByUnit(string $unit): ?ParameterUnit
     {
         return $this->getRepository()->findOneBy(['unit' => $unit]);
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllParameterUnitQueryBuilder(): QueryBuilder
+    {
+        return $this->getQueryBuilder();
     }
 }
