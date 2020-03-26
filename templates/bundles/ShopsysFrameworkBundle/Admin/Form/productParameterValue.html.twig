@@ -3,6 +3,7 @@
 {% macro parameterRow(parameter, index) %}
     {% set parameterGroupName = parameter.vars.data.parameter.group.name|default('Nezařazeno') %}
     {% set parameterGroupAkeneoCode = parameter.vars.data.parameter.group.akeneoCode|default(null) %}
+    {% set parameterUnit = parameter.parameter.vars.data.parameterUnit ?? null %}
     <tr class="js-parameters-item js-form-group table-form__row" data-index="{{ index }}">
         <td class="table-form__cell table-form__cell--del-before">
             <p title="Akeneo kod: {{ parameterGroupAkeneoCode }}">{{ parameterGroupName }}</p>
@@ -21,6 +22,7 @@
                         {{ localeFlag(locale) }}
                     </span>
                     {{ form_errors(valueTextLocaleForm, { errors_attr: { class: 'table-form__cell__error' } } ) }}
+                    &nbsp;{{ parameterUnit != null ? parameterUnit.getName(locale) : "" }}
                 </div>
             {% endfor %}
         </td>
