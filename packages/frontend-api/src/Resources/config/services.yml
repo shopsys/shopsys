@@ -5,7 +5,13 @@ services:
         public: false
 
     Shopsys\FrontendApiBundle\:
-        resource: '../../**/*{Facade,Map,Mutation,Resolver}.php'
+        resource: '../../**/*{Facade,Mutation,Resolver}.php'
+
+    resolverMaps:
+        namespace: Shopsys\FrontendApiBundle\
+        resource: '../../**/*{Map}.php'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
 
     Shopsys\FrontendApiBundle\Controller\FrontendApiController:
         tags: ['controller.service_arguments']
@@ -17,6 +23,7 @@ services:
     Shopsys\FrontendApiBundle\Model\Error\ErrorHandlerListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20}
+
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~
 

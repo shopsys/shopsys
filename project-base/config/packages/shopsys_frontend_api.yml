@@ -3,8 +3,6 @@ overblog_graphql:
         schema:
             query: Query
             mutation: Mutation
-            resolver_maps:
-                - Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap
         mappings:
             types:
                 -   type: yaml
