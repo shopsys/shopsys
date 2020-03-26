@@ -16,9 +16,15 @@ class TransportData extends BaseTransportData
      */
     public $productTypes;
 
+    /**
+     * @var bool
+     */
+    public $personalPickup;
+
     public function __construct()
     {
         parent::__construct();
         $this->productTypes = [];
+        $this->personalPickup = false;
     }
 }

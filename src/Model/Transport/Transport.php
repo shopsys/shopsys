@@ -31,12 +31,19 @@ class Transport extends BaseTransport
     private $productTypes;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $personalPickup;
+
+    /**
      * @param \App\Model\Transport\TransportData $transportData
      */
     public function __construct(BaseTransportData $transportData)
     {
         parent::__construct($transportData);
         $this->productTypes = new ArrayCollection($transportData->productTypes);
+        $this->personalPickup = $transportData->personalPickup;
     }
 
     /**
@@ -46,6 +53,7 @@ class Transport extends BaseTransport
     {
         parent::edit($transportData);
         $this->editProductTypes($transportData->productTypes);
+        $this->personalPickup = $transportData->personalPickup;
     }
 
     /**
@@ -74,5 +82,13 @@ class Transport extends BaseTransport
     public function hasProductType(ProductType $productType): bool
     {
         return $this->productTypes->contains($productType);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPersonalPickup(): bool
+    {
+        return $this->personalPickup;
     }
 }
