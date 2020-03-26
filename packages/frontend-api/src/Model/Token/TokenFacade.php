@@ -71,7 +71,7 @@ class TokenFacade
             $tokenBuilder->withClaim($key, $value);
         }
 
-        return (string)$tokenBuilder->getToken($this->getSigner(), $this->getKey());
+        return (string)$tokenBuilder->getToken($this->getSigner(), $this->getPrivateKey());
     }
 
     /**
@@ -85,7 +85,7 @@ class TokenFacade
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_UUID, $customerUser->getUuid());
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_SECRET_CHAIN, $secretChain);
 
-        return $tokenBuilder->getToken($this->getSigner(), $this->getKey());
+        return $tokenBuilder->getToken($this->getSigner(), $this->getPrivateKey());
     }
 
     /**
@@ -106,9 +106,17 @@ class TokenFacade
     /**
      * @return \Lcobucci\JWT\Signer\Key
      */
-    public function getKey(): Key
+    public function getPrivateKey(): Key
     {
-        return new Key($this->parameterBag->get('secret'));
+        return new Key(sprintf('file://%s/private.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath')));
+    }
+
+    /**
+     * @return \Lcobucci\JWT\Signer\Key
+     */
+    public function getPublicKey(): Key
+    {
+        return new Key(sprintf('file://%s/public.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath')));
     }
 
     /**
@@ -116,7 +124,7 @@ class TokenFacade
      */
     public function getSigner(): Signer
     {
-        return new Signer\Hmac\Sha256();
+        return new Signer\Rsa\Sha256();
     }
 
     /**
@@ -150,7 +158,7 @@ class TokenFacade
         }
 
         try {
-            if (!$token->verify($this->getSigner(), $this->getKey())) {
+            if (!$token->verify($this->getSigner(), $this->getPublicKey())) {
                 throw new NotVerifiedTokenUserMessageException('Token could not be verified.');
             }
         } catch (BadMethodCallException $badMethodCallException) {

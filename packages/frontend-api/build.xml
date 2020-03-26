@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="frontend_api">
+    <property name="path.openssl.executable" value="openssl"/>
+    <property name="path.defuse-key-generate.executable" value="${path.bin}/generate-defuse-key"/>
+
+    <target name="frontend-api-generate-new-keys" description="Enable frontend API for all domains.">
+        <exec executable="${path.openssl.executable}" checkreturn="true">
+            <arg value="genrsa"/>
+            <arg value="-out"/>
+            <arg value="${path.config}/fe-api/private.key"/>
+            <arg value="2048"/>
+        </exec>
+        <exec executable="${path.openssl.executable}" checkreturn="true">
+            <arg value="rsa"/>
+            <arg value="-in"/>
+            <arg value="${path.config}/fe-api/private.key"/>
+            <arg value="-pubout"/>
+            <arg value="-out"/>
+            <arg value="${path.config}/fe-api/public.key"/>
+        </exec>
+        <exec executable="${path.defuse-key-generate.executable}" checkreturn="true" outputProperty="encryption_key" error="/dev/null">
+        </exec>
+
+        <echo file="${path.config}/fe-api/.encryption_key" append="false">${encryption_key}</echo>
+    </target>
+
+    <target name="frontend-api-enable" depends="frontend-api-generate-new-keys" description="Enable frontend API for all domains.">
+        <copy file="${path.config}/packages/frontend_api.yaml.dist" tofile="${path.config}/packages/frontend_api.yaml" overwrite="true">
+        </copy>
+    </target>
+
+    <target name="frontend-api-disable" description="Disable frontend API for all domains.">
+        <delete file="${path.config}/fe-api/.encryption_key" />
+        <delete file="${path.config}/fe-api/private.key" />
+        <delete file="${path.config}/fe-api/public.key" />
+        <delete file="${path.config}/packages/frontend_api.yaml" />
+    </target>
+</project>
