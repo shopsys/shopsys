@@ -53,7 +53,7 @@ class LocalizationExtension extends AbstractExtension
      */
     public function getLocaleFlagHtml($locale, $showTitle = true)
     {
-        $src = $this->assetPackages->getUrl('bundles/shopsysframework/flags/' . $locale . '.png');
+        $src = $this->assetPackages->getUrl('public/admin/images/flags/' . $locale . '.png');
 
         if (file_exists($this->webDir . $src) === false) {
             return strtoupper($locale);
