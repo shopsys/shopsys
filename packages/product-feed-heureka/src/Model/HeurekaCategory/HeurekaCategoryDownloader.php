@@ -35,7 +35,7 @@ class HeurekaCategoryDownloader
     {
         $xmlCategoryDataObjects = $this->loadXml()->xpath('/HEUREKA//CATEGORY[CATEGORY_FULLNAME]');
 
-        return $this->convertToShopEntities($xmlCategoryDataObjects);
+        return $this->convertToHeurekaCategoriesData($xmlCategoryDataObjects);
     }
 
     /**
@@ -54,7 +54,7 @@ class HeurekaCategoryDownloader
      * @param \SimpleXMLElement[] $xmlCategoryDataObjects
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[]
      */
-    protected function convertToShopEntities(array $xmlCategoryDataObjects)
+    protected function convertToHeurekaCategoriesData(array $xmlCategoryDataObjects)
     {
         $heurekaCategoriesData = [];
 

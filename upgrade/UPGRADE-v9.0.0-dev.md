@@ -1342,6 +1342,9 @@ There you can find links to upgrade notes for other versions too.
     - email template variable has been changed from `{e-mail}` to `{email}`, update your email templates accordingly
     - run `php phing translations-dump` and check, if some translations are needed to be translated
 
+- method name in `HeurekaCategoryDownloader` has been changed ([#1740](https://github.com/shopsys/shopsys/pull/1740))
+    - `HeurekaCategoryDownloader::convertToShopEntities()` has been renamed to `HeurekaCategoryDownloader::convertToHeurekaCategoriesData()` update your project appropriately
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
