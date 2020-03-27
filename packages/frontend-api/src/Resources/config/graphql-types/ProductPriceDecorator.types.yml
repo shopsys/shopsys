@@ -1,0 +1,11 @@
+ProductPriceDecorator:
+    type: object
+    inherits:
+        - 'PriceDecorator'
+    config:
+        description: "Represents the price of the product"
+        fields:
+            isPriceFrom:
+                type: "Boolean!"
+                description: "Determines whether it's a final price or starting price"
+

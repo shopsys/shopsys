@@ -32,7 +32,7 @@ ProductDecorator:
                 type: "[Flag!]!"
                 description: "List of flags"
             price:
-                type: "Price"
+                type: "ProductPrice"
                 description: "Product price"
                 resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Price\\PriceResolver").resolveByProduct(value)'
             images:
