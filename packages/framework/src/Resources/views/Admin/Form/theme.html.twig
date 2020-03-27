@@ -702,7 +702,7 @@
     {% set attr = attr|merge({'rows': (attr.rows|default('8'))}) %}
     {{ parent('textarea_widget') }}
     {% if localized is defined %}
-        <span class="input__flag }}">
+        <span class="input__flag">
             {{ localeFlag(locale) }}
         </span>
     {% endif %}
