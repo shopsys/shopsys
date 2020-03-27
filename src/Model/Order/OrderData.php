@@ -22,6 +22,11 @@ class OrderData extends BaseOrderData
      */
     public $transportsByProductTypeId;
 
+    /**
+     * @var \App\Model\Stock\Stock[]
+     */
+    public $transportPersonalPickupStockByProductTypeId;
+
     public function __construct()
     {
         parent::__construct();

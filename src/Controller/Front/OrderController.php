@@ -11,6 +11,7 @@ use App\Model\Order\OrderDataMapper;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Order\Preview\SplitOrderPreview;
 use App\Model\Order\Watcher\SplitTransportAndPaymentWatcher;
+use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -107,6 +108,11 @@ class OrderController extends FrontBaseController
     private $orderDataFactory;
 
     /**
+     * @var \App\Model\Stock\StockFacade
+     */
+    private $stockFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -122,6 +128,7 @@ class OrderController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \App\Model\Stock\StockFacade $stockFacade
      */
     public function __construct(
         OrderFacade $orderFacade,
@@ -138,7 +145,8 @@ class OrderController extends FrontBaseController
         LegalConditionsFacade $legalConditionsFacade,
         NewsletterFacade $newsletterFacade,
         OrderPreviewSplittingFacade $orderPreviewSplittingFacade,
-        OrderDataFactory $orderDataFactory
+        OrderDataFactory $orderDataFactory,
+        StockFacade $stockFacade
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
@@ -155,6 +163,7 @@ class OrderController extends FrontBaseController
         $this->newsletterFacade = $newsletterFacade;
         $this->orderPreviewSplittingFacade = $orderPreviewSplittingFacade;
         $this->orderDataFactory = $orderDataFactory;
+        $this->stockFacade = $stockFacade;
     }
 
     public function indexAction()
@@ -202,6 +211,8 @@ class OrderController extends FrontBaseController
 
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
+        $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdByStockId($domainId);
+
         $this->checkTransportAndPaymentChanges($frontOrderFormData, $splitOrderPreview);
 
         if ($isValid) {
@@ -247,6 +258,7 @@ class OrderController extends FrontBaseController
             'splitOrderPreview' => $splitOrderPreview,
             'payments' => $payments,
             'transports' => $transports,
+            'stocksById' => $stocksById,
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),

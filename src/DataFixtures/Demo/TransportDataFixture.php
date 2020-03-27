@@ -112,6 +112,9 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $productTypeCommon,
             $productTypeOversized,
         ];
+
+        $transportData->personalPickup = true;
+
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
     }

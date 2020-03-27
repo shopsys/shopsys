@@ -30,6 +30,7 @@ class OrderDataMapper extends BaseOrderDataMapper
         /** @var \App\Model\Order\OrderData $orderData */
         $orderData = parent::getOrderDataFromFrontOrderData($frontOrderData);
         $orderData->transportsByProductTypeId = $frontOrderData->transportsByProductTypeId;
+        $orderData->transportPersonalPickupStockByProductTypeId = $frontOrderData->transportPersonalPickupStockByProductTypeId;
 
         return $orderData;
     }

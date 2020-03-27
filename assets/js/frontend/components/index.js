@@ -13,6 +13,7 @@ import './Login';
 import './NewsletterSubscriptionForm';
 import './notImplementedYetTooltip';
 import './PromoCode';
+import './PersonalPickup';
 import './RangeSlider';
 import './Repeater';
 import './ResponsiveTabsInit';

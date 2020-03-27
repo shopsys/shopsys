@@ -19,6 +19,11 @@
                             {% set previewNumber = previewNumber + 1 %}
                             {% set transportForm = form.transportsByProductTypeId[orderPreview.productType.id]|default(null) %}
                             {% set transportFormId = transportForm.vars.id|default(form.transportsByProductTypeId.vars.id ~ '_' ~ orderPreview.productType.id) %}
+
+                            {% set transportPersonalPickupForm = form.transportPersonalPickupStockByProductTypeId[orderPreview.productType.id]|default(null) %}
+                            {% set transportPersonalPickupFormId = transportPersonalPickupForm.vars.id|default(form.transportPersonalPickupStockByProductTypeId.vars.id ~ '_' ~ orderPreview.productType.id) %}
+                            {% set transportPersonalPickupStockId = form.transportPersonalPickupStockByProductTypeId.vars.value[orderPreview.productType.id] ?? null %}
+
                             <div class="box-order__info__item js-payment-transport-group" data-product-type-id="{{ orderPreview.productType.id }}">
 
                                 <h2 id="js-label-{{ transportFormId }}">
@@ -32,6 +37,13 @@
                                         {{ 'Doprava pro celý nákup'|trans }}
                                     {% endif %}
                                 </h2>
+
+                                <input type="hidden"
+                                    id="{{ transportPersonalPickupFormId }}"
+                                    name="{{ form.transportPersonalPickupStockByProductTypeId.vars.full_name ~ '[' ~ orderPreview.productType.id ~ ']' }}"
+                                    class="js-order-transport-personal-pickup-input"
+                                    value="{{ transportPersonalPickupStockId }}"
+                                >
 
                                 <div class="box-chooser js-form-group">
                                     {% if transportForm %}
@@ -49,8 +61,9 @@
                                                             type="checkbox"
                                                             id="{{ transportFormId ~ '_' ~ transport.id }}"
                                                             name="{{ form.transportsByProductTypeId.vars.full_name ~ '[' ~ orderPreview.productType.id ~ ']' }}"
-                                                            class="css-checkbox js-order-transport-input js-payment-transport-checkbox"
+                                                            class="css-checkbox js-order-transport-input js-payment-transport-checkbox {{ transport.personalPickup ? 'js-transport-personal-pickup-checkbox' : '' }}"
                                                             data-id="{{ transport.id }}"
+                                                            data-hidden-id="{{ transportPersonalPickupFormId }}"
                                                             value="{{ transport.id }}"
                                                             {{ orderPreview.transport is same as(transport) ? 'checked' : '' }}
                                                     >
@@ -68,8 +81,15 @@
                                                         {{ transport.name }}
                                                     </strong>
                                                     {% if transport.description %}
-                                                        <span class="box-chooser__item__title__description">
-                                                            - {{ transport.description }}
+                                                        -
+                                                        <span class="box-chooser__item__title__description" data-origin="{{ transport.description }}">
+                                                            {% if transportPersonalPickupStockId == null %}
+                                                                {{ transport.description }}
+                                                            {% else %}
+                                                                {{ stocksById[transportPersonalPickupStockId].name }}
+                                                                {{ stocksById[transportPersonalPickupStockId].street }}
+                                                                {{ stocksById[transportPersonalPickupStockId].city }}
+                                                            {% endif %}
                                                         </span>
                                                     {% endif %}
                                                 </span>
@@ -87,6 +107,7 @@
                             {{ 'Nothing to choose from'|trans }}
                         {% endfor %}
                         {% do form.transportsByProductTypeId.setRendered %} {# When session contains transport for productType without products with them, it must be skipped #}
+                        {% do form.transportPersonalPickupStockByProductTypeId.setRendered %} {# When session contains transport for productType without products with them, it must be skipped #}
                     </div>
 
                     <div class="box-order__info__item js-payment-transport-group">
@@ -161,4 +182,8 @@
 
         </div>
     </div>
+{% endblock %}
+
+{% block popup %}
+    {{ render(controller('App\\Controller\\Front\\PersonalPickupController:indexAction')) }}
 {% endblock %}
