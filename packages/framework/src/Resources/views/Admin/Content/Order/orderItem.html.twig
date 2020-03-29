@@ -12,7 +12,7 @@
                 {% elseif productItem and not productItem.product %}
                     {{ form_widget(orderItemForm.name, {attr: { class: 'js-order-item-name'}}) }}
                     {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
-                    <i class="in-icon in-icon--after-input svg svg-question js-tooltip" data-toggle="tooltip" data-placement="right" title="{{ 'Product not in e-shop.'|trans }}"></i>
+                    <i class="in-icon in-icon--after-input svg svg-question js-tooltip" data-toggle="tooltip" data-placement="top" title="{{ 'Product not in e-shop.'|trans }}"></i>
                 {% else %}
                     {{ form_widget(orderItemForm.name, { attr: { class: 'js-order-item-name'}}) }}
                     {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
@@ -115,7 +115,7 @@
             title="{{ 'Using price calculation has been disabled, don\'t forget to edit all prices.'|trans }}"
             class="svg svg-warning js-setting-prices-manually-warning js-tooltip table-action cursor-help"
             data-toggle="tooltip"
-            data-placement="right"
+            data-placement="top"
             ></i>
         </span>
         {{ form_errors(priceWithVatForm, {errors_attr: { inline: false }}) }}
