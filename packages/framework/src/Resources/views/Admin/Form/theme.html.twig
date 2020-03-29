@@ -204,7 +204,7 @@
                     {{ form_widget(form) }}
                     {% if form.vars.icon_title is not null %}
                         <i class="svg svg-info in-icon in-icon--after-input cursor-help js-tooltip"
-                           data-toggle="tooltip" data-placement="right"
+                           data-toggle="tooltip" data-placement="top"
                            title="{{ form.vars.icon_title }}"
                         ></i>
                     {% endif %}
@@ -752,7 +752,7 @@
             </div>
             {% if form.vars.icon_title is not null %}
                 <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
-                   data-toggle="tooltip" data-placement="right"
+                   data-toggle="tooltip" data-placement="top"
                    title="{{ form.vars.icon_title }}"
                 ></i>
             {% endif %}
@@ -901,7 +901,7 @@
     </div>
     {% if form.vars.icon_title is not null %}
         <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
-           data-toggle="tooltip" data-placement="right"
+           data-toggle="tooltip" data-placement="top"
            title="{{ form.vars.icon_title }}"
         ></i>
     {% endif %}
