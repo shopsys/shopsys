@@ -112,6 +112,7 @@
         "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
         "overblog/graphiql-bundle": "^0.1",
         "overblog/graphql-bundle": "^0.12",
+        "phar-io/version": "^2.0",
         "phing/phing": "^2.16.1",
         "presta/sitemap-bundle": "^1.5.3",
         "prezent/doctrine-translatable": "^1.2",
