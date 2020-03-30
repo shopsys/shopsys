@@ -64,7 +64,7 @@
                     <li class="menu-iconic__item">
                         <a href="#" class="menu-iconic__item__link">
                             <i class="menu-iconic__item__icon svg svg-user"></i>
-                            <span class="menu-iconic__item__text">{{ app.user.firstName }} {{ app.user.lastName }}</span>
+                            <span class="menu-iconic__item__text">{{ 'Můj účet'|trans }}</span>
                         </a>
                         <ul class="menu-iconic__sub">
                             <li class="menu-iconic__sub__item">
@@ -73,14 +73,12 @@
                             <li class="menu-iconic__sub__item">
                                 <a href="{{ url('front_customer_orders') }}" class="menu-iconic__sub__item__link">{{ 'My orders'|trans }}</a>
                             </li>
+                            <li class="menu-iconic__sub__item">
+                                <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}" class="js-logout-link-desktop menu-iconic__sub__item__link">
+                                    {{ 'Log out'|trans }}
+                                </a>
+                            </li>
                         </ul>
-                    </li>
-                    <li class="menu-iconic__item">
-                        <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}" class="js-logout-link-desktop menu-iconic__item__link">
-                            <span>
-                                {{ 'Log out'|trans }}
-                            </span>
-                        </a>
                     </li>
                 {% else %}
                     <li class="menu-iconic__item">
