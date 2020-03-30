@@ -35,6 +35,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  * @method setDeliveryAddress(\App\Model\Order\OrderData $orderData)
  * @method addItem(\App\Model\Order\Item\OrderItem $item)
  * @method removeItem(\App\Model\Order\Item\OrderItem $item)
+ * @method fillCommonFields(\App\Model\Order\OrderData $orderData)
  */
 class Order extends BaseOrder
 {

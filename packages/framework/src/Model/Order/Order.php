@@ -310,26 +310,15 @@ class Order
         $urlHash,
         ?CustomerUser $customerUser = null
     ) {
+        $this->fillCommonFields($orderData);
+
         $this->transport = $orderData->transport;
         $this->payment = $orderData->payment;
-        $this->firstName = $orderData->firstName;
-        $this->lastName = $orderData->lastName;
-        $this->email = $orderData->email;
-        $this->telephone = $orderData->telephone;
-        $this->street = $orderData->street;
-        $this->city = $orderData->city;
-        $this->postcode = $orderData->postcode;
-        $this->country = $orderData->country;
-        $this->note = $orderData->note;
+
         $this->items = new ArrayCollection();
-        $this->setCompanyInfo(
-            $orderData->companyName,
-            $orderData->companyNumber,
-            $orderData->companyTaxNumber
-        );
-        $this->setDeliveryAddress($orderData);
+
         $this->number = $orderNumber;
-        $this->status = $orderData->status;
+
         $this->customerUser = $customerUser;
         $this->deleted = false;
         if ($orderData->createdAt === null) {
@@ -349,6 +338,17 @@ class Order
      */
     protected function editData(OrderData $orderData)
     {
+        $this->fillCommonFields($orderData);
+
+        $this->editOrderTransport($orderData);
+        $this->editOrderPayment($orderData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     */
+    protected function fillCommonFields(OrderData $orderData): void
+    {
         $this->firstName = $orderData->firstName;
         $this->lastName = $orderData->lastName;
         $this->email = $orderData->email;
@@ -364,11 +364,10 @@ class Order
             $orderData->companyNumber,
             $orderData->companyTaxNumber
         );
-        $this->setDeliveryAddress($orderData);
+
         $this->status = $orderData->status;
 
-        $this->editOrderTransport($orderData);
-        $this->editOrderPayment($orderData);
+        $this->setDeliveryAddress($orderData);
     }
 
     /**
