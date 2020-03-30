@@ -7,6 +7,11 @@ class OrderData
     public const NEW_ITEM_PREFIX = 'new_';
 
     /**
+     * @var string|null
+     */
+    public $uuid;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
     public $transport;

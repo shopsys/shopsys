@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
@@ -26,6 +27,13 @@ class Order
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var string
@@ -339,6 +347,7 @@ class Order
         $this->createdAsAdministrator = $orderData->createdAsAdministrator;
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
         $this->origin = $orderData->origin;
+        $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -614,6 +623,14 @@ class Order
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**
