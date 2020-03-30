@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
@@ -490,6 +491,17 @@ class ProductFacade
     public function getByUuid(string $uuid): Product
     {
         return $this->productRepository->getOneByUuid($uuid);
+    }
+
+    /**
+     * @param string $uuid
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     */
+    public function getSellableByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
+    {
+        return $this->productRepository->getSellableByUuid($uuid, $domainId, $pricingGroup);
     }
 
     /**
