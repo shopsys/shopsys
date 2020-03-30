@@ -28,10 +28,6 @@ services:
         arguments:
             - '%shopsys.product_feed.heureka_bundle.heureka_category_feed_url%'
 
-    Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '3', minutes: '0', readableName: 'Download Heureka categories' }
-
     Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface:
         alias: Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactory
 

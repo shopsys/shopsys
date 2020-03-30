@@ -1345,6 +1345,9 @@ There you can find links to upgrade notes for other versions too.
 - method name in `HeurekaCategoryDownloader` has been changed ([#1740](https://github.com/shopsys/shopsys/pull/1740))
     - `HeurekaCategoryDownloader::convertToShopEntities()` has been renamed to `HeurekaCategoryDownloader::convertToHeurekaCategoriesData()` update your project appropriately
 
+- move cron definitions in your project so it is easier to control them ([#1739](https://github.com/shopsys/shopsys/pull/1739))
+    - see #project-base-diff to update your project
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
