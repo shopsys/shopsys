@@ -63,13 +63,14 @@
             padding: 1.5rem;
         }
 
-        @media @query-xl {
-            margin-left: 2.5rem;
-        }
-
         @media @query-vl {
             display: flex;
             justify-content: space-between;
+        }
+
+        @media @query-xl {
+            margin-left: 2.5rem;
+            padding-right: 5rem;
         }
 
         &::before {
@@ -201,6 +202,16 @@
                     font-size: @box-info-icon-font-size-lg + 4;
                 }
             }
+        }
+    }
+
+    &--in-cart {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+
+        @media @query-lg {
+            margin-top: 0;
+            margin-bottom: 1.75rem;
         }
     }
 }
