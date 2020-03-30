@@ -12,6 +12,12 @@
         display: block;
     }
 
+    &-box.active {
+        .cart__detail {
+            display: block;
+        }
+    }
+
     &__block {
         display: flex;
         align-items: center;
@@ -97,6 +103,17 @@
 
         @media @query-lg {
             top: 3px;
+        }
+    }
+
+    &__detail {
+        display: none;
+        @media @query-lg {
+            position: absolute;
+            min-width: 400px;
+            top: calc(100% - 1px);
+            right: 0;
+            z-index: 6000;
         }
     }
 }
