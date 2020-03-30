@@ -6,19 +6,14 @@
                     type="text"
                     name="{{ SEARCH_TEXT_PARAMETER }}"
                     value="{{ searchText|escape('html_attr') }}"
-                    placeholder="{{ 'Searching'|trans }}"
+                    placeholder="{{ 'Hledejte nábytek a doplňky'|trans }}"
                     class="input search__input"
                     id="js-search-autocomplete-input"
                     autocomplete="off"
                     data-autocomplete-url="{{ url('front_search_autocomplete') }}"
                 />
-                <span class="search__form__icon">
-                    <i class="svg svg-search"></i>
-                </span>
+                <span class="search__form__icon"></span>
             </div>
-            <button type="submit" class="btn search__form__button js-search-autocomplete-submit">
-                {{ 'Search [verb]'|trans }}
-            </button>
         </div>
         <div id="js-search-autocomplete-results"></div>
     </form>

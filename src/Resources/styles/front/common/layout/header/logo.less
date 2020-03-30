@@ -1,16 +1,21 @@
+@logo-height: 50px;
+@logo-height-lg: 60px;
+@logo-max-width: 112px;
+@logo-max-width-lg: 135px;
+
 .logo {
-    display: inline-block;
+    display: flex;
     width: 100%;
-    height: 35px;
-    margin: 0 auto;
-    text-align: center;
+    height: @logo-height;
+    max-width: @logo-max-width;
+    margin: 0;
 
     @media @query-lg {
-        max-width: 200px;
-        text-align: left;
+        max-width: @logo-max-width-lg;
+        height: @logo-height-lg;
     }
 
-    img {
+    &__img {
         max-height: 100%;
     }
 }

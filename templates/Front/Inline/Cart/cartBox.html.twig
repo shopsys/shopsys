@@ -2,28 +2,30 @@
 
 <div id="js-cart-box"
     {% if cart is not null and isCartHoverEnable %}
-        class="display-inline-block js-hover-intent{% if isIntentActive %} active{% endif %}"
+        class="cart-box js-hover-intent{% if isIntentActive %} active{% endif %}"
         data-hover-intent-class-for-open="active"
         data-after-callback-url="{{ url('front_cart_box_detail') }}"
         data-after-replace-selector="#js-cart-box"
     {% endif %}
-    data-reload-url="{{ url('front_cart_box') }}"
->
+    data-reload-url="{{ url('front_cart_box') }}">
     <div class="cart">
-        <a {% if cart is not null %}href="{{ url('front_cart') }}"{% endif %}
-            class="cart__block {% if cart is null %} empty no-hover{% endif %}">
+        <a class="cart__block" href="{{ url('front_cart') }}">
+            <span class="cart__info js-cart-info">
+                {% if cart is null %}
+                    <span class="cart__state">0 {{ currencySymbolByDomainId(getDomain().id) }}</span>
+                    <span class="cart__count">0</span>
+                {% else %}
+                    {% transchoice cart.itemsCount with { '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
+                         <span class="cart__count">%itemsCount%</span>
+                         <span class="cart__state cart__state--active">%priceWithVat%</span>|[2,Inf]
+                         <span class="cart__count">%itemsCount%</span>
+                         <span class="cart__state cart__state--active">%priceWithVat%</span>
+                    {% endtranschoice %}
+                {% endif %}
+            </span>
             <span class="cart__icon">
                 <i class="svg svg-cart"></i>
             </span>
-            <div class="cart__info js-cart-info">
-                {% if cart is null %}
-                    {{ 'Your cart is empty'|trans }}
-                {% else %}
-                    {% transchoice cart.itemsCount with { '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
-                        {1} <strong class="cart__state">%itemsCount%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%itemsCount%</strong> items for <strong class="cart__state">%priceWithVat%</strong>
-                    {% endtranschoice %}
-                {% endif %}
-            </div>
         </a>
         {% if loadItems %}
             <div id="js-cart-box-content" class="cart__detail">
@@ -52,14 +54,11 @@
             </div>
         {% endif %}
     </div>
-
     <div class="cart-mobile header__mobile-button">
         <a href="{{ url('front_cart') }}" class="header__mobile-button__in">
             <i class="svg svg-cart"></i>
             {% if cart is not null %}
-                <span class="header__mobile-button__in__info">
-                    {{ cart.itemsCount }}
-                </span>
+                <span class="cart__count">{{ cart.itemsCount }}</span>
             {% endif %}
         </a>
     </div>

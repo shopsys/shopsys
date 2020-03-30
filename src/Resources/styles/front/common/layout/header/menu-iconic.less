@@ -1,61 +1,54 @@
+@menu-iconic-link-font-size: 14px;
+@menu-iconic-link-padding: 0 10px;
+@menu-iconic-link-padding-xl: 0 15px;
+@menu-iconic-icon-size: 24px;
+
 .menu-iconic {
     display: none;
 
     @media @query-lg {
-        .reset-ul();
-        display: block;
-        text-align: right;
-
-        font-size: 0;
+        display: flex;
+        align-items: center;
+        padding-left: 0;
 
         &__item {
-            display: inline-block;
-            vertical-align: middle;
-            position: relative;
-            line-height: 16px;
-            text-align: left;
-
-            font-size: @font-size;
+            display: block;
 
             &__link {
-                display: block;
-                padding: 5px;
-                margin-right: 5px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: @menu-iconic-link-padding;
 
+                font-size: @menu-iconic-link-font-size;
                 text-decoration: none;
 
-                .svg {
-                    display: inline-block;
-                    vertical-align: middle;
-
-                    font-size: 11px;
-                }
-
-                span {
-                    display: inline-block;
-                    vertical-align: middle;
-
-                    text-decoration: underline;
-                }
-
                 &:hover {
-                    span {
-                        text-decoration: none;
+                    text-decoration: none;
+
+                    .svg {
+                        transform: scale(1.2);
                     }
                 }
             }
 
-            &:hover {
-                .menu-iconic__sub {
-                    display: block;
-                }
+            &__icon {
+                display: block;
+
+                font-size: @menu-iconic-icon-size;
+                will-change: transform;
+                transition: transform .2s ease-in-out;
+            }
+
+            &__text {
+                line-height: 1;
             }
         }
 
         &__sub {
-            display: none;
-
             .reset-ul();
+            display: none;
             position: absolute;
             top: 26px;
             left: 50%;
@@ -81,6 +74,12 @@
                     padding: 5px 10px;
                 }
             }
+        }
+    }
+
+    @media @query-xl {
+        &__item__link {
+            padding: @menu-iconic-link-padding-xl;
         }
     }
 }

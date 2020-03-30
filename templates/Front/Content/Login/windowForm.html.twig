@@ -31,6 +31,9 @@
         <div class="box-login__item box-login__item--info">
             <a href="{{ url('front_registration_reset_password') }}">{{ 'Forgot your password?'|trans }}</a>
         </div>
+        <div class="box-login__item box-login__item--info">
+            <a href="{{ url('front_registration_register') }}" class="js-registration-link-desktop">{{ 'Registration'|trans }}</a>
+        </div>
     </div>
 
 {{ form_end(form) }}
