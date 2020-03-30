@@ -14,38 +14,56 @@
     <div class="web__line">
         <div class="web__container">
             <h1>{{ 'Search results for "%searchText%"'|trans({ '%searchText%': searchText }) }}</h1>
-
             {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: foundCategories})) }}
-
+        </div>
+    </div>
+    <div class="web__line web__line--product-list web__line--bg-color">
+        <div class="web__container web__container--full-width web__container--no-padding">
             <div class="box-list js-product-list-with-filter">
-                {% if paginationResult.results|length > 0 or filterFormSubmitted %}
-                    <div class="box-list__panel">
-                        <div class="box-filter__opener">
-                            <button type="button" class="btn btn--primary js-product-filter-open-button">
-                                {{ 'Product filter'|trans }}
-                                <i class="svg svg-arrow"></i>
-                            </button>
+                <div class="box-filter__opener">
+                    <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-filter-open-button">
+                        <i class="box-filter__opener__btn__icon svg svg-filter"></i>
+                        <span class="box-filter__opener__btn__text">
+                            {{ 'Filtr'|trans }}
+                            <span class="box-filter__opener__btn__info box-filter__opener__btn__info--count js-not-implemented-yet">(xx)</span>
+                        </span>
+                    </button>
+                    <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-sort-open-button">
+                        <i class="box-filter__opener__btn__icon svg svg-sort"></i>
+                        <span class="box-filter__opener__btn__text">
+                            {{ 'Seřadit'|trans }}
+                            <span class="box-filter__opener__btn__info box-filter__opener__btn__info--sort js-not-implemented-yet">Not ready</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="box-list__body">
+                    {% if paginationResult.results|length > 0 or filterFormSubmitted %}
+                        <div class="box-list__panel">
+                            <div class="box-filter js-product-filter">
+                                {{ productFilterForm.filterForm(
+                                    filterForm,
+                                    url('front_product_search'),
+                                    url('front_product_search', { (SEARCH_TEXT_PARAMETER) : searchText }),
+                                    searchText,
+                                    'search',
+                                    productFilterCountData,
+                                    priceRange
+                                ) }}
+                            </div>
                         </div>
-                        <div class="box-filter js-product-filter">
-                            {{ productFilterForm.filterForm(
-                                filterForm,
-                                url('front_product_search'),
-                                url('front_product_search', { (SEARCH_TEXT_PARAMETER) : searchText }),
-                                searchText,
-                                'search',
-                                productFilterCountData,
-                                priceRange
-                            ) }}
+                    {% endif %}
+                    <div class="box-list__content">
+                        <div class="js-product-list-ajax-filter-products-with-controls">
+                            <div class="box-list__top js-product-sort">
+                                <div class="box-list__top__wrap">
+                                    {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForSearchAction')) }}
+                                    <div class="box-list__top__info">
+                                        {% include 'Front/Content/Product/productSortCount.html.twig' with {paginationResult: paginationResult} %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, searchText: searchText} %}
                         </div>
-                    </div>
-                {% endif %}
-
-                <div class="box-list__content">
-                    <div class="js-product-list-ajax-filter-products-with-controls">
-                        <div>
-                            {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForSearchAction')) }}
-                        </div>
-                        {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, searchText: searchText} %}
                     </div>
                 </div>
             </div>

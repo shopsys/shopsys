@@ -1,14 +1,16 @@
-@box-list-description-line-height: 16px;
+@box-list-description-line-height: 1.8;
 @box-list-description-lines: 2;
 
 @box-list-producer-image-space-around: 10px;
 @box-list-sort-info-color: #8a8b8f;
 
 .box-list {
-    padding: 30px @web-padding 0;
+    padding: 30px @web-padding 30px;
+    margin-bottom: 30px;
 
     @media @query-lg {
-        padding: 0;
+        padding: 0 0 54px;
+        margin-bottom: 40px;
     }
 
     &__top {
@@ -126,7 +128,9 @@
 
     &__description {
         &__text {
-            margin-bottom: @margin-gap / 2;
+            max-width: 930px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
             line-height: @box-list-description-line-height;
 
             &--small {

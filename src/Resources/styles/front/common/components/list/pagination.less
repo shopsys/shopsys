@@ -1,7 +1,15 @@
 .list-pagination {
-    @media @query-xl {
+    @media @query-vl {
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    &__item:first-child {
+        margin-bottom: 1rem;
+
+        @media @query-vl {
+            margin-bottom: 0;
+        }
     }
 }

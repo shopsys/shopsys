@@ -77,19 +77,19 @@
                             </div>
                             {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
                         </div>
-                        <div class="box-list__description">
-                            <div class="box-list__description__text in-user-text js-category-description">
-                                {{ category.getDescription(domain.id)|raw }}
-                            </div>
-                            <div class="box-list__description__more">
-                                <span class="link-style box-list__description__more__btn js-category-description-load-more">
-                                    {{ 'View more'|trans }}
-                                </span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="box-list__description">
+        <div class="box-list__description__text in-user-text js-category-description">
+            {{ category.getDescription(domain.id)|raw }}
+        </div>
+        <div class="box-list__description__more">
+            <span class="link-style box-list__description__more__btn js-category-description-load-more">
+                {{ 'View more'|trans }}
+            </span>
         </div>
     </div>
 {% endblock %}
