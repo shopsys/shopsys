@@ -105,13 +105,15 @@ class OrderPreviewSplittingFacade
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
 
         $transportsByProductTypeId = [];
+        $transportPersonalPickupStockByProductTypeId = [];
         $payment = null;
         if ($orderData !== null) {
             $transportsByProductTypeId = $orderData->transportsByProductTypeId;
+            $transportPersonalPickupStockByProductTypeId = $orderData->transportPersonalPickupStockByProductTypeId ?? [];
             $payment = $orderData->payment;
         }
 
-        $orderPreviews = $this->createOrderPreviewsWithProductType($currency, $transportsByProductTypeId, $this->domain->getId());
+        $orderPreviews = $this->createOrderPreviewsWithProductType($currency, $transportsByProductTypeId, $transportPersonalPickupStockByProductTypeId, $this->domain->getId());
 
         $productsPrice = $this->sumProductsPrices($orderPreviews);
         $productsSalePrice = $this->sumProductsSalePrices($orderPreviews);
@@ -228,10 +230,11 @@ class OrderPreviewSplittingFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param \App\Model\Transport\Transport[] $transportsByProductTypeId
+     * @param \App\Model\Stock\Stock[] $transportPersonalPickupStockByProductTypeId
      * @param int $domainId
      * @return \App\Model\Order\Preview\OrderPreview[]
      */
-    private function createOrderPreviewsWithProductType(Currency $currency, array $transportsByProductTypeId, int $domainId): array
+    private function createOrderPreviewsWithProductType(Currency $currency, array $transportsByProductTypeId, array $transportPersonalPickupStockByProductTypeId, int $domainId): array
     {
         $promoCodeDiscountPercent = $this->findAppliedPromoCodePercentDiscount();
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
@@ -253,7 +256,8 @@ class OrderPreviewSplittingFacade
                     null,
                     $this->currentCustomerUser->findCurrentCustomerUser(),
                     $promoCodeDiscountPercent,
-                    $productType
+                    $productType,
+                    $transportPersonalPickupStockByProductTypeId[$productType->getId()] ?? null
                 );
             }
         }

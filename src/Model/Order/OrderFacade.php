@@ -372,8 +372,15 @@ class OrderFacade extends BaseOrderFacade
             $transport,
             $orderPreview->getProductType()
         );
+
+        $transportName = $transport->getName($locale);
+        if ($orderPreview->getPersonalPickupStock() !== null) {
+            $stock = $orderPreview->getPersonalPickupStock();
+            $transportName = sprintf('%s %s %s %s', $transportName, $stock->getName(), $stock->getStreet(), $stock->getCity());
+        }
+
         $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = $transport->getName($locale);
+        $orderItemData->name = $transportName;
         $orderItemData->priceWithoutVat = $transportPrice->getPriceWithoutVat();
         $orderItemData->priceWithVat = $transportPrice->getPriceWithVat();
         $orderItemData->vatPercent = $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent();
