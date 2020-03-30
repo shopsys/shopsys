@@ -133,6 +133,12 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository: '@App\Model\Product\Flag\FlagRepository'
 
+    Shopsys\FrameworkBundle\Model\Cart\CartFacade: '@App\Model\Cart\CartFacade'
+
+    Shopsys\FrameworkBundle\Model\Cart\AddProductResult: '@App\Model\Cart\AddProductResult'
+
+    Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade: '@App\Model\Cart\Watcher\CartWatcherFacade'
+
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface: '@App\Model\Customer\User\CustomerUserDataFactory'
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'
@@ -260,6 +266,8 @@ services:
     Shopsys\FrameworkBundle\Component\Setting\Setting: '@App\Component\Setting\Setting'
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\Listed\ListedProductViewFactory'
+
+    Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory: '@App\Model\Product\Action\ProductActionViewFactory'
 
     Shopsys\FrameworkBundle\Model\Order\OrderFacade: '@App\Model\Order\OrderFacade'
 

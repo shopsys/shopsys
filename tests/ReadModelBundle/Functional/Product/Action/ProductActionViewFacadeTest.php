@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\ReadModelBundle\Functional\Product\Action;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
+use App\Model\Product\Action\ProductActionView;
 use Tests\App\Test\FunctionalTestCase;
 
 class ProductActionViewFacadeTest extends FunctionalTestCase
@@ -29,9 +29,9 @@ class ProductActionViewFacadeTest extends FunctionalTestCase
         $productActionViews = $this->productActionViewFacade->getForProducts($products);
 
         $expected = [
-            1 => new ProductActionView(1, false, false, sprintf('%s/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova/', $url)),
-            2 => new ProductActionView(2, false, false, sprintf('%s/32-philips-32pfl4308/', $url)),
-            3 => new ProductActionView(3, false, false, sprintf('%s/47-lg-47la790v-fhd/', $url)),
+            1 => new ProductActionView(1, false, false, sprintf('%s/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova/', $url), null),
+            2 => new ProductActionView(2, false, false, sprintf('%s/32-philips-32pfl4308/', $url), null),
+            3 => new ProductActionView(3, false, false, sprintf('%s/47-lg-47la790v-fhd/', $url), null),
         ];
 
         $this->assertEquals($expected, $productActionViews);

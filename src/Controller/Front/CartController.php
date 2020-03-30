@@ -31,7 +31,7 @@ class CartController extends FrontBaseController
     public const PAGES_WITH_DISABLED_CART_HOVER = ['front_cart', 'front_error_page', 'front_order_index', 'front_order_sent'];
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+     * @var \App\Model\Cart\CartFacade
      */
     private $cartFacade;
 
@@ -76,7 +76,7 @@ class CartController extends FrontBaseController
     private $productFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
+     * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
@@ -121,12 +121,15 @@ class CartController extends FrontBaseController
         $oversizedCount = 0;
 
         $cartFormData = ['quantities' => []];
+        $maximumOrderQuantity = [];
 
         foreach ($cartItems as $cartItem) {
             $cartFormData['quantities'][$cartItem->getId()] = $cartItem->getQuantity();
             if ($cartItem->getProduct()->isOversized($domainId)) {
                 $oversizedCount++;
             }
+            $maximumOrderQuantity[$cartItem->getProduct()->getId()] =
+                $this->productAvailabilityFacade->getMaximumOrderQuantity($cartItem->getProduct(), $domainId);
         }
 
         $form = $this->createForm(CartFormType::class, $cartFormData);
@@ -160,6 +163,7 @@ class CartController extends FrontBaseController
             'cart' => $cart,
             'form' => $form->createView(),
             'showOversizedMsg' => $oversizedCount !== 0 && $oversizedCount !== count($cartItems),
+            'maximumOrderQuantity' => $maximumOrderQuantity,
         ]);
     }
 
@@ -207,14 +211,29 @@ class CartController extends FrontBaseController
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
-        $productAvailable = !$this->productAvailabilityFacade->isProductExcludedOnDomain($product, $this->domain->getId())
-            && $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId());
+        $productAvailable = $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder(
+            $product,
+            $this->domain->getId()
+        );
+
+        $availableAddQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($product, $this->domain->getId());
+        if (!$product->hasPreorder()) {
+            $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
+            if ($cart) {
+                /** @var \App\Model\Cart\Item\CartItem $cartItem */
+                $cartItem = $cart->findCartItemByProduct($product);
+                if ($cartItem !== null) {
+                    $availableAddQuantity -= $cartItem->getQuantity();
+                }
+            }
+        }
 
         return $this->render('Front/Inline/Cart/addProduct.html.twig', [
             'form' => $form->createView(),
             'product' => $product,
             'type' => $type,
             'productAvailable' => $productAvailable,
+            'availableAddQuantity' => $availableAddQuantity,
         ]);
     }
 
@@ -334,7 +353,7 @@ class CartController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\AddProductResult $addProductResult
+     * @param \App\Model\Cart\AddProductResult $addProductResult
      */
     private function sendAddProductResultFlashMessage(
         AddProductResult $addProductResult
@@ -345,6 +364,14 @@ class CartController extends FrontBaseController
                 [
                     'name' => $addProductResult->getCartItem()->getName(),
                     'quantity' => $addProductResult->getAddedQuantity(),
+                    'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
+                ]
+            );
+        } elseif ($addProductResult->getNotOnStockQuantity() == $addProductResult->getAddedQuantity()) {
+            $this->addErrorFlashTwig(
+                t('V košíku máte maximální dostupné množství, nelze přidat další (celkem již {{ quantity|formatNumber }} {{ unitName }})'),
+                [
+                    'quantity' => $addProductResult->getCartItem()->getQuantity(),
                     'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
                 ]
             );

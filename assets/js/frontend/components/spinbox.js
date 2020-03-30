@@ -1,5 +1,6 @@
 import Repeater from './Repeater';
 import Register from 'framework/common/utils/Register';
+import Window from '../utils/Window';
 
 export default class Spinbox {
 
@@ -39,6 +40,14 @@ export default class Spinbox {
             value = parseInt(value) + 1;
             if (max !== undefined && max < value) {
                 value = max;
+                // eslint-disable-next-line no-new
+                new Window({
+                    content: 'Více zboží nemáme na skladě',
+                    buttonContinue: false
+                });
+            }
+            if (value == 0) {
+                value = value + 1;
             }
             $(this).val(value);
             $(this).change();

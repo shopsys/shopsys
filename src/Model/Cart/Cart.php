@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Cart;
 
+use App\Model\Cart\Item\CartItem;
+use App\Model\Product\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
@@ -32,5 +34,20 @@ class Cart extends BaseCart
         }
 
         return $quantifiedProducts;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return \App\Model\Cart\Item\CartItem|null
+     */
+    public function findCartItemByProduct(Product $product): ?CartItem
+    {
+        foreach ($this->items as $item) {
+            if ($item->getProduct()->getId() === $product->getId()) {
+                return $item;
+            }
+        }
+
+        return null;
     }
 }

@@ -50,7 +50,7 @@
                             </h2>
                         {% endif %}
                         {{ cartFreeTransportMacro.progressBar(orderPreview) }}
-                        {{ cartItemsTableMacro.table(form, orderPreview) }}
+                        {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
                     {% endfor %}
 
                     {% if splitOrderPreview.morePreviews %}

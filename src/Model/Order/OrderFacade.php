@@ -69,6 +69,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress)
  * @method fillOrderTransport(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  * @property \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+ * @property \App\Model\Cart\CartFacade $cartFacade
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -94,7 +95,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
+     * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory

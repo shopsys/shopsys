@@ -5,3 +5,4 @@ import './ProductFilterBox';
 import './productList.AjaxFilter';
 import './productList';
 import './fancybox';
+import './MaximumOrderQuantity';

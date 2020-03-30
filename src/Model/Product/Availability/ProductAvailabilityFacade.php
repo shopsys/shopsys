@@ -197,4 +197,14 @@ class ProductAvailabilityFacade
 
         return $groupedStockQuantity;
     }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return int
+     */
+    public function getMaximumOrderQuantity(Product $product, int $domainId): int
+    {
+        return ($product->hasPreorder()) ? PHP_INT_MAX : $this->getGroupedStockQuantity($product, $domainId);
+    }
 }

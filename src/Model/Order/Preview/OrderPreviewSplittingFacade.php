@@ -34,7 +34,7 @@ class OrderPreviewSplittingFacade
     private $currencyFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+     * @var \App\Model\Cart\CartFacade
      */
     private $cartFacade;
 
@@ -67,7 +67,7 @@ class OrderPreviewSplittingFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
+     * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation

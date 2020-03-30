@@ -15,7 +15,8 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 /**
  * @property \App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
- * @method __construct(\App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade, \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade)
+ * @method __construct(\App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Cart\CartFacade $cartFacade, \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade)
+ * @property \App\Model\Cart\CartFacade $cartFacade
  */
 class OrderPreviewFactory extends BaseOrderPreviewFactory
 {
