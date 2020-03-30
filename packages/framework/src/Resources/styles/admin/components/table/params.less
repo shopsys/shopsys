@@ -1,7 +1,8 @@
 @query-table-param: ~"only screen and (min-width: 1024px)";
 
 @table-param-row-height: 46px;
-
+@table-param-cell-max-width: 315px;
+@table-param-cell-arrow-width: 40px;
 
 .table-params {
     width: 100%;
@@ -65,7 +66,12 @@
         &__label {
             display: block;
             padding: 6px 10px;
-            font-weight: bold;
+
+            font-weight: 700;
+
+            @media @query-lg {
+                width: @table-param-cell-max-width + @table-param-cell-arrow-width + 8px;
+            }
         }
 
         &--arrow {
@@ -78,7 +84,7 @@
             }
 
             @media @query-table-param {
-                width: 40px;
+                width: @table-param-cell-arrow-width;
 
                 .svg {
                     transform: rotate(0);
