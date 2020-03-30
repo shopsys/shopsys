@@ -12,7 +12,7 @@
         <a class="cart__block" href="{{ url('front_cart') }}">
             <span class="cart__info js-cart-info">
                 {% if cart is null %}
-                    <span class="cart__state">{{ '0 Kč'|trans }}</span>
+                    <span class="cart__state">0 {{ currencySymbolByDomainId(getDomain().id) }}</span>
                     <span class="cart__count">0</span>
                 {% else %}
                     {% transchoice cart.itemsCount with { '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
