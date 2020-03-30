@@ -1,15 +1,17 @@
-@ui-slider-bg: @color-light;
-@ui-slider-height: 10px;
-@ui-slider-handle-height: 18px;
+@ui-slider-bg: #b0bec54d;
+@ui-slider-height: 4px;
+@ui-slider-handle-height: 20px;
 @ui-slider-handle-position: 3px;
+@ui-slider-handle-border-color: #b0bec5;
 
 .ui-slider {
     display: block;
     height: @ui-slider-height;
+    max-width: calc(100% - 35px);
     position: relative;
+    margin: auto;
 
     background: @ui-slider-bg;
-    box-shadow: inset 1px 1px 1px rgba(0,0,0, 0.1);
     border-radius: @radius;
 }
 
@@ -18,7 +20,7 @@
     position: absolute;
     top: 0;
 
-    background: @color-primary;
+    background: @color-add-secondary;
     border-radius: @radius;
 }
 
@@ -27,26 +29,21 @@
     width: @ui-slider-handle-height;
     display: block;
     position: absolute;
-    top: -@ui-slider-handle-height/4;
-    margin-left: -@ui-slider-handle-height/2;
+    top: -@ui-slider-handle-height / 2 + 2px;
+    margin-left: -@ui-slider-handle-height;
 
     background: @color-f;
-    border: 1px solid @color-border;
-    border-radius: @radius;
+    border: 1px solid @ui-slider-handle-border-color;
+    border-radius: 100%;
+    outline: 0;
+    cursor: pointer;
 
-    &:before, &:after {
-        content: '';
-        position: absolute;
-        top: @ui-slider-handle-position;
-        bottom: @ui-slider-handle-position;
-        left: @ui-slider-handle-position*2;
-        width: 1px;
-
-        background: @color-border;
+    &:last-child {
+        margin-left: 0;
     }
 
-    &:after {
-        left: auto;
-        right: @ui-slider-handle-position*2;
+    &:hover,
+    &:focus {
+        border-color: @color-add-secondary;
     }
 }

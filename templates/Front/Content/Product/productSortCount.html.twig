@@ -1,0 +1,6 @@
+{% transchoice paginationResult.totalCount with { '%itemsCount%': paginationResult.totalCount } %}
+    {0}
+    |{1} Máme pro vás <strong class="box-list__top__info__count">1</strong> produkt
+    |{2, 3, 4} Máme pro vás <strong class="box-list__top__info__count">%itemsCount%</strong> produkty
+    |]4,Inf[ Máme pro vás <strong class="box-list__top__info__count">%itemsCount%</strong> produktů
+{% endtranschoice %}

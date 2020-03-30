@@ -11,6 +11,9 @@ img {
     flex-direction: column;
     width: 100%;
     min-height: 100%;
+    // On some occasions we`re using together 100vw width and left: calc(-50vw + 50%).
+    // This approach, doesn`t count with existing vertical scrollbar, so overflow-x hidden must be set.
+    overflow-x: hidden;
 
     .is-safari & {
         display: block;
@@ -104,7 +107,7 @@ img {
 
                 @media @query-lg {
                     order: 2;
-                    width: calc(~"100% - @{web-panel-width}");
+                    width: calc(~"100% - @{web-panel-width-lg}");
                 }
             }
         }
