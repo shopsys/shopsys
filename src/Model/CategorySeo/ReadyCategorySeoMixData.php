@@ -17,7 +17,7 @@ class ReadyCategorySeoMixData
     public $category;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
+     * @var \App\Model\Product\Flag\Flag|null
      */
     public $flag;
 

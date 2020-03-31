@@ -53,7 +53,7 @@ class ReadyCategorySeoMix
     private $category;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
+     * @var \App\Model\Product\Flag\Flag|null
      *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\Flag")
      * @ORM\JoinColumn(nullable=true, name="flag_id", referencedColumnName="id", onDelete="CASCADE")
@@ -153,7 +153,7 @@ class ReadyCategorySeoMix
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
+     * @return \App\Model\Product\Flag\Flag|null
      */
     public function getFlag(): ?Flag
     {
@@ -161,7 +161,7 @@ class ReadyCategorySeoMix
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
+     * @param \App\Model\Product\Flag\Flag $flag
      */
     public function setFlag(Flag $flag): void
     {

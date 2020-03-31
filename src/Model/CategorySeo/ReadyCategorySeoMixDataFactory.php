@@ -126,8 +126,12 @@ class ReadyCategorySeoMixDataFactory
             $choseCategorySeoMixCombination->getCategoryId()
         );
 
-        $readyCategorySeoMixData->flag = $choseCategorySeoMixCombination->getFlagId() !== null ?
-            $this->flagFacade->getById($choseCategorySeoMixCombination->getFlagId()) : null;
+        $readyCategorySeoMixData->flag = null;
+        if ($choseCategorySeoMixCombination->getFlagId() !== null) {
+            /** @var \App\Model\Product\Flag\Flag $flag */
+            $flag = $this->flagFacade->getById($choseCategorySeoMixCombination->getFlagId());
+            $readyCategorySeoMixData->flag = $flag;
+        }
 
         $readyCategorySeoMixData->ordering = $choseCategorySeoMixCombination->getOrdering();
 
