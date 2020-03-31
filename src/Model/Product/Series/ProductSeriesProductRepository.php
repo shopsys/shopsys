@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Model\Product\Series;
 
 use App\Model\Product\Product;
+use App\Model\Product\ProductRepository;
 use App\Model\Product\ProductTranslation;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class ProductSeriesProductRepository
@@ -24,13 +26,31 @@ class ProductSeriesProductRepository
     private $localization;
 
     /**
+     * @var \App\Model\Product\ProductRepository
+     */
+    private $productRepository;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(EntityManagerInterface $em, Localization $localization)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        Localization $localization,
+        ProductRepository $productRepository,
+        Domain $domain
+    ) {
         $this->em = $em;
         $this->localization = $localization;
+        $this->productRepository = $productRepository;
+        $this->domain = $domain;
     }
 
     /**
@@ -73,30 +93,19 @@ class ProductSeriesProductRepository
 
     /**
      * @param \App\Model\Product\Series\ProductSeries $productSeries
-     * @return \App\Model\Product\Series\ProductSeriesProduct[]
+     * @return array
      */
-    public function findByProductSeries(ProductSeries $productSeries): array
+    public function findAvailableProductsByProductSeries(ProductSeries $productSeries): array
     {
-        return $this->getQueryBuilder()
-            ->where('psp.productSeries = :productSeries')
+        $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($this->domain->getId());
+
+        $this->productRepository->filterTemporaryExcludedProducts($queryBuilder, $this->domain->getId());
+        $this->productRepository->filterSellingDenied($queryBuilder);
+
+        return $queryBuilder->join(ProductSeriesProduct::class, 'psp', Join::WITH, 'psp.product = p')
+            ->andWhere('psp.productSeries = :productSeries')
             ->setParameter('productSeries', $productSeries)
             ->getQuery()
             ->execute();
-    }
-
-    /**
-     * @param \App\Model\Product\Series\ProductSeries $productSeries
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Product\Series\ProductSeriesProduct|null
-     */
-    public function findByProductSeriesAndProduct(ProductSeries $productSeries, Product $product): ?ProductSeriesProduct
-    {
-        return $this->getQueryBuilder()
-            ->where('psp.product = :product')
-            ->andWhere('psp.productSeries = :productSeries')
-            ->setParameter('product', $product)
-            ->setParameter('productSeries', $productSeries)
-            ->getQuery()
-            ->getOneOrNullResult();
     }
 }

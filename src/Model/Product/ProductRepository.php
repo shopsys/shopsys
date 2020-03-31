@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Stock\ProductStock;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -69,7 +70,7 @@ class ProductRepository extends BaseProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup|null $pricingGroup
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllVisibleQueryBuilder($domainId, ?PricingGroup $pricingGroup): QueryBuilder
+    public function getAllVisibleQueryBuilder($domainId, ?PricingGroup $pricingGroup = null): QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
@@ -114,5 +115,30 @@ class ProductRepository extends BaseProductRepository
             ->where('p.downloadAssemblyInstructionFiles = true')
             ->getQuery()
             ->iterate();
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param int $domainId
+     */
+    public function filterTemporaryExcludedProducts(QueryBuilder $queryBuilder, int $domainId): void
+    {
+        $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
+            ->select('1')
+            ->from(ProductStock::class, 'ps')
+            ->join('ps.stock', 's', Join::WITH, 's.domainId = :domainId')
+            ->where('ps.product = p')
+            ->setParameter('domainId', $domainId)
+            ->having('SUM(ps.productQuantity) > 0');
+
+        $queryBuilder->andWhere('p.preorder = true OR EXISTS(' . $subquery->getDQL() . ')');
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     */
+    public function filterSellingDenied(QueryBuilder $queryBuilder): void
+    {
+        $queryBuilder->andWhere('p.sellingDenied = FALSE');
     }
 }

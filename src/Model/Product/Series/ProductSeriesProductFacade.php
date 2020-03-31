@@ -72,4 +72,13 @@ class ProductSeriesProductFacade
             $this->em->flush();
         }
     }
+
+    /**
+     * @param \App\Model\Product\Series\ProductSeries $productSeries
+     * @return \App\Model\Product\Product[]
+     */
+    public function findAvailableProductsByProductSeries(ProductSeries $productSeries): array
+    {
+        return $this->productSeriesProductRepository->findAvailableProductsByProductSeries($productSeries);
+    }
 }

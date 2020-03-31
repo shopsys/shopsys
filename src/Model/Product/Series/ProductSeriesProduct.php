@@ -44,7 +44,7 @@ class ProductSeriesProduct
     /**
      * @return \App\Model\Product\Series\ProductSeries
      */
-    public function getProductSeries(): \App\Model\Product\Series\ProductSeries
+    public function getProductSeries(): ProductSeries
     {
         return $this->productSeries;
     }
@@ -52,7 +52,7 @@ class ProductSeriesProduct
     /**
      * @return \App\Model\Product\Product
      */
-    public function getProduct(): \App\Model\Product\Product
+    public function getProduct(): Product
     {
         return $this->product;
     }

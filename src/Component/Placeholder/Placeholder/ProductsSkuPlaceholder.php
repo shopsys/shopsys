@@ -110,7 +110,7 @@ final class ProductsSkuPlaceholder extends AbstractPlaceholder
             return '';
         }
 
-        //this have to be here, because framework bug
+        //this has to be here, because framework bug https://github.com/shopsys/shopsys/issues/1693
         $productClassName = 'Shopsys\FrameworkBundle\Model\Product\Product';
         $imageViews = $this->imageViewFacade->getForEntityIds($productClassName, $this->getIdsForProducts($products));
         $productActionViews = $this->productActionViewFacade->getForProducts($products);

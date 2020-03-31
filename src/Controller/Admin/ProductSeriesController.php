@@ -12,7 +12,6 @@ use App\Model\Product\Series\ProductSeries;
 use App\Model\Product\Series\ProductSeriesDataFactoryInterface;
 use App\Model\Product\Series\ProductSeriesFacadeInterface;
 use App\Model\Product\Series\ProductSeriesProductRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -24,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ProductSeriesController extends AdminBaseController
 {
