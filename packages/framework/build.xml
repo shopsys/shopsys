@@ -15,9 +15,12 @@
     <property name="path.composer.executable" value="composer"/>
     <property name="path.config" value="${path.root}/config"/>
     <property name="path.env.test" value="${path.root}/TEST"/>
-    <property name="path.eslint.executable" value="${path.root}/node_modules/.bin/eslint"/>
+    <property name="path.eslint.executable" value="${path.node_modules.bin}/eslint"/>
     <property name="path.framework" value="${project.basedir}"/>
+    <property name="path.framework.assets" value="${path.framework}/assets"/>
     <property name="path.git.executable" value="git"/>
+    <property name="path.node_modules" value="${path.root}/node_modules"/>
+    <property name="path.node_modules.bin" value="${path.node_modules}/.bin"/>
     <property name="path.npm.executable" value="npm"/>
     <property name="path.pg_dump.executable" value="pg_dump"/>
     <property name="path.php.executable" value="php"/>
@@ -30,7 +33,7 @@
     <property name="path.src" value="${path.root}/src"/>
     <property name="path.assets" value="${path.root}/assets"/>
     <property name="path.templates" value="${path.root}/templates"/>
-    <property name="path.stylelint.executable" value="${path.root}/node_modules/.bin/stylelint"/>
+    <property name="path.stylelint.executable" value="${path.node_modules.bin}/stylelint"/>
     <property name="path.test.database.dump" value="${path.var}/cache/test-db-dump.sql"/>
     <property name="path.tests" value="${path.root}/tests"/>
     <property name="path.var" value="${path.root}/var"/>
@@ -699,6 +702,9 @@
             <arg value="trans"/>
             <arg value="--"/>
             <arg value="source-dir=${path.assets}/**/*.js"/>
+            <arg value="source-dir=${path.framework.assets}/js/**/*.js"/>
+            <arg value="translations-dir=${path.root}/translations/*.po"/>
+            <arg value="translations-dir=${path.framework}/src/Resources/translations/*.po"/>
         </exec>
     </target>
 

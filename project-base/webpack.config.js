@@ -7,6 +7,7 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
 const StylelintPlugin = require('stylelint-webpack-plugin');
+const sources = require('./assets/js/bin/helpers/sources');
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
@@ -47,10 +48,15 @@ Encore
                 'admin',
                 './assets/public/admin/svg/*.svg'
             );
-        },
-        done: () => {
-            const dirWithJsFiles = './assets/js/**/*';
-            const dirWithTranslations = './translations/*.po';
+
+            const dirWithJsFiles = [
+                sources.getFrameworkNodeModulesDir() + '/js/**/*.js',
+                './assets/js/**/*.js'
+            ];
+            const dirWithTranslations = [
+                sources.getFrameworkVendorDir() + '/src/Resources/translations/*.po',
+                './translations/*.po',
+            ];
             const outputDirForExportedTranslations = Encore.isProduction() ? './web/build/' : './assets/js/';
 
             try {
@@ -105,6 +111,7 @@ config.resolve.alias = {
     'jquery-ui': 'jquery-ui/ui/widgets',
     'framework': '@shopsys/framework/js',
     'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
-    'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui'))
+    'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui')),
+    'bazinga-translator': path.resolve(path.join(__dirname, 'node_modules', 'bazinga-translator'))
 };
 module.exports = config;
