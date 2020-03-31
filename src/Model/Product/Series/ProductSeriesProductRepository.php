@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Model\Product\Series;
 
 use App\Model\Product\Product;
+use App\Model\Product\ProductTranslation;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class ProductSeriesProductRepository
 {
@@ -16,11 +19,18 @@ class ProductSeriesProductRepository
     private $em;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
-    public function __construct(EntityManagerInterface $em)
+    private $localization;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     */
+    public function __construct(EntityManagerInterface $em, Localization $localization)
     {
         $this->em = $em;
+        $this->localization = $localization;
     }
 
     /**
@@ -44,6 +54,21 @@ class ProductSeriesProductRepository
             ->setParameter('product', $product)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param \App\Model\Product\Series\ProductSeries $productSeries
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getProductSeriesProductsQueryBuilderByProductSeries(ProductSeries $productSeries): QueryBuilder
+    {
+        return $this->getQueryBuilder()
+            ->select('pt.name as name, IDENTITY(psp.product) as id')
+            ->join(ProductTranslation::class, 'pt', Join::WITH, 'pt.translatable = psp.product')
+            ->where('psp.productSeries = :productSeries')
+            ->andWhere('pt.locale = :locale')
+            ->setParameter('productSeries', $productSeries)
+            ->setParameter('locale', $this->localization->getAdminLocale());
     }
 
     /**
