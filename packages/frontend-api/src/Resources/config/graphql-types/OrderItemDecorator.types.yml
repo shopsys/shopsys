@@ -1,0 +1,24 @@
+OrderItemDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represent one item in the order"
+        fields:
+            name:
+                type: "String!"
+                description: "Name of the order item"
+            unitPrice:
+                type: "Price!"
+                description: "Order item price per unit"
+            totalPrice:
+                type: "Price!"
+                description: "Total price for the quantity of order item"
+            vatRate:
+                type: "String!"
+                description: "Applied VAT rate percentage applied to the order item"
+            quantity:
+                type: "Int!"
+                description: "Quantity of order items in the order"
+            unit:
+                type: "String"
+                description: "Unit of measurement used for the order item"

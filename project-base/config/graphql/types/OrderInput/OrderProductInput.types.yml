@@ -1,0 +1,4 @@
+OrderProductInput:
+    type: input-object
+    inherits:
+        - 'OrderProductInputDecorator'

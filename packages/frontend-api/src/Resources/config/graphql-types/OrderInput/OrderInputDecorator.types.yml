@@ -1,0 +1,239 @@
+OrderInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Represents the main input object to create orders"
+        validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation: ~
+        fields:
+            firstName:
+                type: "String!"
+                description: "The customer's first name"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter first name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "First name cannot be longer than {{ limit }} characters"
+            lastName:
+                type: "String!"
+                description: "The customer's last name"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter last name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Last name cannot be longer than {{ limit }} characters"
+            email:
+                type: "String!"
+                description: "The customer's email address"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter email"
+                    -   Email:
+                            message: "Please enter valid email"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"
+            telephone:
+                type: "String!"
+                description: "The customer's telephone number"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter telephone number"
+                    -   Length:
+                            max: 30
+                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
+
+            onCompanyBehalf:
+                type: "Boolean!"
+                description: "Determines whether the order is made on the company behalf."
+            companyName:
+                type: "String"
+                description: "The customer’s company name (required when onCompanyBehalf is true)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter company name"
+                            groups: "onCompanyBehalf"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Company name cannot be longer than {{ limit }} characters"
+                            groups: "onCompanyBehalf"
+            companyNumber:
+                type: "String"
+                description: "The customer’s company identification number (required when onCompanyBehalf is true)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter identification number"
+                            groups: "onCompanyBehalf"
+                    -   Length:
+                            max: 50
+                            maxMessage: "Identification number cannot be longer than {{ limit }} characters"
+                            groups: "onCompanyBehalf"
+            companyTaxNumber:
+                type: "String"
+                description: "The customer’s company tax number (required when onCompanyBehalf is true)"
+                validation:
+                    -   Length:
+                            max: 50
+                            maxMessage: "Tax number cannot be longer than {{ limit }} characters"
+                            groups: "onCompanyBehalf"
+
+            street:
+                type: "String!"
+                description: "Billing address street name (will be on the tax invoice)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter street"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Street name cannot be longer than {{ limit }} characters"
+            city:
+                type: "String!"
+                description: "Billing address city name (will be on the tax invoice)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter city"
+                    -   Length:
+                            max: 100
+                            maxMessage: "City name cannot be longer than {{ limit }} characters"
+
+            postcode:
+                type: "String!"
+                description: "Billing address zip code (will be on the tax invoice)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter zip code"
+                    -   Length:
+                            max: 30
+                            maxMessage: "Zip code cannot be longer than {{ limit }} characters"
+
+            country:
+                type: "String!"
+                description: "Billing address country code (Country will be on the tax invoice)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please choose country"
+                    -   \Shopsys\FrameworkBundle\Form\Constraints\Country: ~
+
+            differentDeliveryAddress:
+                type: "Boolean!"
+                description: "Determines whether to deliver products to a different address than the billing one"
+            deliveryFirstName:
+                type: "String"
+                description: "First name of the contact person for delivery (required when differentDeliveryAddress is true)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter first name of contact person"
+                            groups: "differentDeliveryAddress"
+                    -   Length:
+                            max: 100
+                            maxMessage: "First name of contact person cannot be longer than {{ limit }} characters"
+                            groups: "differentDeliveryAddress"
+            deliveryLastName:
+                type: "String"
+                description: "Last name of the contact person for delivery (required when differentDeliveryAddress is true)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter last name of contact person"
+                            groups: "differentDeliveryAddress"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Last name of contact person cannot be longer than {{ limit }} characters"
+                            groups: "differentDeliveryAddress"
+            deliveryCompanyName:
+                type: "String"
+                description: "Company name for delivery"
+                validation:
+                    -   Length:
+                            max: 100
+                            maxMessage: "Company name cannot be longer than {{ limit }} characters"
+                            groups: "differentDeliveryAddress"
+            deliveryTelephone:
+                type: "String"
+                description: "Contact telephone number for delivery"
+                validation:
+                    -   Length:
+                            max: 30
+                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
+                            groups: "differentDeliveryAddress"
+            deliveryStreet:
+                type: "String"
+                description: "Street name for delivery (required when differentDeliveryAddress is true)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter street"
+                            groups: "differentDeliveryAddress"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Street name cannot be longer than {{ limit }} characters"
+                            groups: "differentDeliveryAddress"
+            deliveryCity:
+                type: "String"
+                description: "City name for delivery (required when differentDeliveryAddress is true)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter city"
+                            groups: "differentDeliveryAddress"
+                    -   Length:
+                            max: 100
+                            maxMessage: "City name cannot be longer than {{ limit }} characters"
+                            groups: "differentDeliveryAddress"
+            deliveryPostcode:
+                type: "String"
+                description: "Zip code for delivery (required when differentDeliveryAddress is true)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter zip code"
+                            groups: "differentDeliveryAddress"
+                    -   Length:
+                            max: 30
+                            maxMessage: "Zip code cannot be longer than {{ limit }} characters"
+                            groups: "differentDeliveryAddress"
+            deliveryCountry:
+                type: "String"
+                description: "Country code for delivery (required when differentDeliveryAddress is true)"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please choose country"
+                            groups: "differentDeliveryAddress"
+                    -   Shopsys\FrameworkBundle\Form\Constraints\Country:
+                            groups: "differentDeliveryAddress"
+
+            note:
+                type: "String"
+                description: "Other information related to the order"
+
+            payment:
+                type: "PaymentInput!"
+                description: "Payment method applied to the order"
+                validation:
+                    -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentCanBeUsed: ~
+            transport:
+                type: "TransportInput!"
+                description: "Transport method applied to the order"
+                validation:
+                    -   Shopsys\FrontendApiBundle\Component\Constraints\TransportCanBeUsed: ~
+
+            products:
+                type: "[OrderProductInput!]!"
+                description: "A list of products to order to"
+                validation:
+                    -   All:
+                            -   Shopsys\FrontendApiBundle\Component\Constraints\ProductCanBeOrdered: ~

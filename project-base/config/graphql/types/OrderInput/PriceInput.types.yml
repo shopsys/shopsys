@@ -1,0 +1,4 @@
+PriceInput:
+    type: input-object
+    inherits:
+        - 'PriceInputDecorator'

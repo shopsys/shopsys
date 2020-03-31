@@ -1,0 +1,13 @@
+TransportInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Represents a transport in order"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            price:
+                type: "PriceInput!"
+                description: "Price for transport"
+
