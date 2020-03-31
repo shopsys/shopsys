@@ -20,6 +20,8 @@ class LoginTest extends GraphQlTestCase
         $responseData = $this->getResponseContentForQuery($this->getLoginQuery())['data']['Login'];
         $this->assertArrayHasKey('accessToken', $responseData);
         $this->assertIsString($responseData['accessToken']);
+        $this->assertArrayHasKey('refreshToken', $responseData);
+        $this->assertIsString($responseData['refreshToken']);
 
         try {
             $this->tokenFacade->getTokenByString($responseData['accessToken']);
@@ -30,6 +32,8 @@ class LoginTest extends GraphQlTestCase
         $authorizationResponseData = $this->getResponseContentForQuery($this->getLoginQuery(), [], ['HTTP_Authorization' => sprintf('Bearer %s', $responseData['accessToken'])])['data']['Login'];
         $this->assertArrayHasKey('accessToken', $authorizationResponseData);
         $this->assertIsString($authorizationResponseData['accessToken']);
+        $this->assertArrayHasKey('refreshToken', $authorizationResponseData);
+        $this->assertIsString($authorizationResponseData['refreshToken']);
     }
 
     public function testInvalidTokenException()
@@ -65,6 +69,7 @@ class LoginTest extends GraphQlTestCase
                     password: "user123"
                 }) {
                     accessToken
+                    refreshToken
                 }
             }
         ';

@@ -19,3 +19,9 @@ services:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20}
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider: ~
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory: ~
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface: '@Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory'

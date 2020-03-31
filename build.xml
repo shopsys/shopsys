@@ -481,7 +481,9 @@
         <if>
             <equals arg1="${yaml-standards.executable.exists}" arg2="true"/>
             <then>
-                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true"/>
+                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="${yaml-standards.args}"/>
+                </exec>
             </then>
             <else>
                 <echo level="warning" message="The executable '${path.yaml-standards.executable}' is not available, your YAML files cannot be checked."/>

@@ -1298,10 +1298,10 @@ There you can find links to upgrade notes for other versions too.
            ```
     
     - some methods was removed
-        - `AdminBaseController.php::getFlashMessageSender` (you cn use `FlashMessageTrait`)
+        - `AdminBaseController.php::getFlashMessageSender` (you can use `FlashMessageTrait`)
         
     - these classes were removed so you might need to update your application appropriately:
-        - `Bag`(you cn use `FlashMessageTrait`)
+        - `Bag`(you can use `FlashMessageTrait`)
         - `BagNameIsNotValidException`
         - `FlashMessageException`
         - `FlashMessageSender` (you cn use `FlashMessageTrait`)
@@ -1328,7 +1328,10 @@ There you can find links to upgrade notes for other versions too.
       
     - these constants were removed so you might need to update your application appropriately:
         - `Roles::ROLE_ADMIN_AS_CUSTOMER`
-- update your aplication to include login in your frontend API ([#1731](https://github.com/shopsys/shopsys/pull/1731))
+- update your application to include login in your frontend API ([#1731](https://github.com/shopsys/shopsys/pull/1731))
+    - see #project-base-diff to update your project
+
+- update your application to include refresh tokens in your frontend API ([#1736](https://github.com/shopsys/shopsys/pull/1736))
     - see #project-base-diff to update your project
 
 - fix your version of jms/translation-bundle to 1.4.4 in order to prevent problems with translations dumping ([#1732](https://github.com/shopsys/shopsys/pull/1732))

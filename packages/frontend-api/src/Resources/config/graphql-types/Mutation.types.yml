@@ -8,5 +8,12 @@ MutationDecorator:
                 description: "Allow to log in as user"
                 args:
                     input:
-                        type: Login!
+                        type: LoginInput!
                 resolve: "@=mutation('user_login', [args])"
+            RefreshTokens:
+                type: Token!
+                description: "Refresh access and refresh tokens"
+                args:
+                    input:
+                        type: RefreshTokenInput!
+                resolve: "@=mutation('refresh_tokens', [args])"

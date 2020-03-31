@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
+use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CurrentCustomerUser
@@ -18,15 +19,23 @@ class CurrentCustomerUser
     protected $pricingGroupSettingFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
+     */
+    protected $customerUserFacade;
+
+    /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
-        PricingGroupSettingFacade $pricingGroupSettingFacade
+        PricingGroupSettingFacade $pricingGroupSettingFacade,
+        CustomerUserFacade $customerUserFacade
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
+        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**
@@ -48,15 +57,21 @@ class CurrentCustomerUser
     public function findCurrentCustomerUser()
     {
         $token = $this->tokenStorage->getToken();
+
         if ($token === null) {
             return null;
         }
 
-        $customerUser = $token->getUser();
-        if (!$customerUser instanceof CustomerUser) {
-            return null;
+        $user = $token->getUser();
+
+        if ($user instanceof FrontendApiUser) {
+            return $this->customerUserFacade->getByUuid($user->getUuid());
         }
 
-        return $customerUser;
+        if ($user instanceof CustomerUser) {
+            return $user;
+        }
+
+        return null;
     }
 }

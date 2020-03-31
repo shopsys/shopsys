@@ -1,0 +1,4 @@
+RefreshTokenInput:
+    type: input-object
+    inherits:
+        - 'RefreshTokenInputDecorator'

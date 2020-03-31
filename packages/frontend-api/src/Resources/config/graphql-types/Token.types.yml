@@ -4,3 +4,5 @@ Token:
         fields:
             accessToken:
                 type: "String!"
+            refreshToken:
+                type: "String!"

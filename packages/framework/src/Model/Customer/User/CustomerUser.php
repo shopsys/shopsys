@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Serializable;
@@ -125,6 +126,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     protected $uuid;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain[]|\Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CustomerUserRefreshTokenChain", mappedBy="customerUser", cascade={"persist"})
+     */
+    protected $refreshTokenChain;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function __construct(CustomerUserData $customerUserData)
@@ -143,6 +151,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         $this->customer = $customerUserData->customer;
         $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
         $this->uuid = $customerUserData->uuid ?: Uuid::uuid4()->toString();
+        $this->refreshTokenChain = new ArrayCollection();
     }
 
     /**
@@ -411,5 +420,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain $customerUserRefreshTokenChain
+     */
+    public function addRefreshTokenChain(CustomerUserRefreshTokenChain $customerUserRefreshTokenChain): void
+    {
+        $this->refreshTokenChain->add($customerUserRefreshTokenChain);
     }
 }

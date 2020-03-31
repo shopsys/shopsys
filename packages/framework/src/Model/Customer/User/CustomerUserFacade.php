@@ -80,6 +80,11 @@ class CustomerUserFacade
     protected $billingAddressFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade
+     */
+    protected $customerUserRefreshTokenChainFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
@@ -92,6 +97,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -105,7 +111,8 @@ class CustomerUserFacade
         CustomerFacade $customerFacade,
         DeliveryAddressFacade $deliveryAddressFacade,
         CustomerDataFactoryInterface $customerDataFactory,
-        BillingAddressFacade $billingAddressFacade
+        BillingAddressFacade $billingAddressFacade,
+        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
     ) {
         $this->em = $em;
         $this->customerUserRepository = $customerUserRepository;
@@ -119,6 +126,7 @@ class CustomerUserFacade
         $this->deliveryAddressFacade = $deliveryAddressFacade;
         $this->customerDataFactory = $customerDataFactory;
         $this->billingAddressFacade = $billingAddressFacade;
+        $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
     }
 
     /**
@@ -328,5 +336,26 @@ class CustomerUserFacade
         $this->customerFacade->edit($customer->getId(), $customerData);
 
         return $customer;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string $refreshTokenChain
+     * @param \DateTime $tokenExpiration
+     */
+    public function addRefreshTokenChain(CustomerUser $customerUser, string $refreshTokenChain, \DateTime $tokenExpiration): void
+    {
+        $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain($customerUser, $refreshTokenChain, $tokenExpiration);
+        $customerUser->addRefreshTokenChain($refreshTokenChain);
+        $this->em->flush();
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function getByUuid(string $uuid): CustomerUser
+    {
+        return $this->customerUserRepository->getOneByUuid($uuid);
     }
 }
