@@ -6,6 +6,8 @@ use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
+use Shopsys\FrameworkBundle\Form\Constraints\FileAllowedExtension;
 use Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -15,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImageUploadType extends AbstractType
@@ -76,7 +79,24 @@ class ImageUploadType extends AbstractType
             'image_type' => null,
             'multiple' => null,
             'image_entity_class' => null,
+            'extensions' => [ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_PNG, ImageProcessor::EXTENSION_GIF],
         ]);
+
+        $resolver->setNormalizer(
+            'file_constraints',
+            function (Options $options, $fileConstraints) {
+                if ($options['extensions'] === null || $options['extensions'] === []) {
+                    return $fileConstraints;
+                }
+
+                return array_merge(
+                    [
+                        new FileAllowedExtension(['extensions' => $options['extensions']]),
+                    ],
+                    $fileConstraints
+                );
+            }
+        );
     }
 
     /**
