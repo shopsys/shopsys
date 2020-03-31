@@ -7,6 +7,7 @@ namespace App\Controller\Front;
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
 use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
+use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use App\Model\Product\ProductFacade;
@@ -22,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBran
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
+use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Twig\RequestExtension;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -102,6 +104,16 @@ class ProductController extends FrontBaseController
     private $categoryProductSeriesFacade;
 
     /**
+     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
+     */
+    private $readyCategorySeoMixFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
+     */
+    private $seoSettingFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -116,6 +128,9 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
+
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -131,7 +146,9 @@ class ProductController extends FrontBaseController
         ListedProductViewElasticFacade $listedProductViewFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductFacade $productFacade,
-        CategoryProductSeriesFacade $categoryProductSeriesFacade
+        CategoryProductSeriesFacade $categoryProductSeriesFacade,
+        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        SeoSettingFacade $seoSettingFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -147,6 +164,8 @@ class ProductController extends FrontBaseController
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->productFacade = $productFacade;
         $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
+        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
+        $this->seoSettingFacade = $seoSettingFacade;
     }
 
     /**
@@ -255,6 +274,8 @@ class ProductController extends FrontBaseController
             'categoryProductSeries' => $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category),
         ];
 
+        $viewParameters = array_merge($viewParameters, $this->getAdditionalSeoViewParameters($category, $readyCategorySeoMixId));
+
         if ($request->isXmlHttpRequest()) {
             return $this->render('Front/Content/Product/ajaxList.html.twig', $viewParameters);
         } else {
@@ -357,6 +378,49 @@ class ProductController extends FrontBaseController
             $viewParameters['foundCategories'] = $this->searchCategories($searchText);
             return $this->render('Front/Content/Product/search.html.twig', $viewParameters);
         }
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param int|null $readyCategorySeoMixId
+     * @return string[]
+     */
+    private function getAdditionalSeoViewParameters(Category $category, ?int $readyCategorySeoMixId = null): array
+    {
+        $domainId = $this->domain->getId();
+
+        if ($readyCategorySeoMixId === null) {
+            $seoH1 = $category->getSeoH1($domainId);
+            $description = $category->getDescription($domainId);
+            $seoTitle = $category->getSeoTitle($domainId);
+            $seoMetaDescription = $category->getSeoMetaDescription($domainId);
+        } else {
+            $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($readyCategorySeoMixId);
+
+            $seoH1 = $readyCategorySeoMix->getH1();
+            $description = $readyCategorySeoMix->getDescription() ?? $category->getDescription($domainId);
+            $seoTitle = $readyCategorySeoMix->getTitle() ?? $category->getSeoTitle($domainId);
+            $seoMetaDescription = $readyCategorySeoMix->getMetaDescription() ?? $category->getSeoMetaDescription($domainId);
+        }
+
+        if ($seoMetaDescription === null) {
+            $seoMetaDescription = $this->seoSettingFacade->getDescriptionMainPage($domainId);
+        }
+
+        if ($seoTitle === null) {
+            $seoTitle = $category->getName();
+        }
+
+        if ($seoH1 === null) {
+            $seoH1 = $category->getName();
+        }
+
+        return [
+            'seoH1' => $seoH1,
+            'description' => $description,
+            'seoTitle' => $seoTitle,
+            'seoMetaDescription' => $seoMetaDescription,
+        ];
     }
 
     /**
