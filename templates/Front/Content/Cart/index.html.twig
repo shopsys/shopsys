@@ -28,6 +28,7 @@
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form' }}) }}
                     {{ form_errors(form) }}
 
+                    <div class="box-cart-info">
                     {% set previewNumber = 0 %}
                     {% for orderPreview in splitOrderPreview.orderPreviews %}
                         {% set previewNumber = previewNumber + 1 %}
@@ -65,6 +66,35 @@
                             </tfoot>
                         </table>
                     {% endif %}
+                    </div>
+
+                    <div class="box-cart__preview">
+                        <div class="box-cart__promo">
+                            {{ render(controller('App\\Controller\\Front\\PromoCodeController:indexAction')) }}
+                        </div>
+
+                        <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
+                            {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                                transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
+                                paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
+                                showProducts: false
+                            })) }}
+                        </div>
+                        <div class="in-action">
+                            {% if cart.itemsCount > 0 %}
+                                <div class="in-action__right">
+                                    {{ form_row(form.submit, { label: 'Order [verb]'|trans, attr: { class: 'btn btn--success in-action__btn in-action__btn--big'}}) }}
+                                </div>
+                            {% endif %}
+
+                            <div class="in-action__left">
+                                <a href="{{ url('front_homepage') }}" class="btn in-action__btn">
+                                    {{ 'Back to buying'|trans }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="box-cart-bottom">
                         <div class="box-cart-bottom__info">
@@ -84,24 +114,9 @@
                                 {% endif %}
                             {% endif %}
                         </div>
-                        <div class="box-cart-bottom__promo">
-                            {{ render(controller('App\\Controller\\Front\\PromoCodeController:indexAction')) }}
-                        </div>
                     </div>
 
-                    <div class="in-action">
-                        {% if cart.itemsCount > 0 %}
-                            <div class="in-action__right">
-                                {{ form_row(form.submit, { label: 'Order [verb]'|trans, attr: { class: 'btn btn--success in-action__btn in-action__btn--big'}}) }}
-                            </div>
-                        {% endif %}
 
-                        <div class="in-action__left">
-                            <a href="{{ url('front_homepage') }}" class="btn in-action__btn">
-                                {{ 'Back to buying'|trans }}
-                            </a>
-                        </div>
-                    </div>
                 {{ form_end(form) }}
             {% else %}
                 <div class="box-cart-empty">

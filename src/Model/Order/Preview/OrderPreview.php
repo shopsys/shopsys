@@ -18,17 +18,23 @@ class OrderPreview extends BaseOrderPreview
     private $productType;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProductsByIndex
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPricesByIndex
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscountsByIndex
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private $totalProductHighPrice;
+
+    /**
+     * @param array $quantifiedProductsByIndex
+     * @param array $quantifiedItemsPricesByIndex
+     * @param array $quantifiedItemsDiscountsByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalProductHighPrice
      * @param \App\Model\Transport\Transport|null $transport
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
      * @param \App\Model\Payment\Payment|null $payment
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
-     * @param float|null $promoCodeDiscountPercent
+     * @param null $promoCodeDiscountPercent
      * @param \App\Model\Product\Type\ProductType|null $productType
      */
     public function __construct(
@@ -37,6 +43,7 @@ class OrderPreview extends BaseOrderPreview
         array $quantifiedItemsDiscountsByIndex,
         Price $productsPrice,
         Price $totalPrice,
+        Price $totalProductHighPrice,
         ?Transport $transport = null,
         ?Price $transportPrice = null,
         ?Payment $payment = null,
@@ -60,6 +67,7 @@ class OrderPreview extends BaseOrderPreview
         );
 
         $this->productType = $productType;
+        $this->totalProductHighPrice = $totalProductHighPrice;
     }
 
     /**
@@ -72,5 +80,21 @@ class OrderPreview extends BaseOrderPreview
         }
 
         return $this->productType;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalProductHighPrice(): Price
+    {
+        return $this->totalProductHighPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getSubHighAndLowPrice(): Price
+    {
+        return $this->totalProductHighPrice->subtract($this->totalPrice);
     }
 }

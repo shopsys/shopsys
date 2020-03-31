@@ -3,40 +3,74 @@
     <tbody>
 
         {% for orderPreview in splitOrderPreview.orderPreviews %}
-            {% for quantifiedProductKey, quantifiedProduct in orderPreview.quantifiedProducts %}
-                {% set quantifiedProductPrice = orderPreview.quantifiedItemsPrices[quantifiedProductKey] %}
-                {% set quantifiedProductDiscount = orderPreview.quantifiedItemsDiscounts[quantifiedProductKey] %}
-                <tr class="table-cart-preview__row">
-                    <td class="table-cart-preview__cell">
-                        <strong>{{ quantifiedProduct.quantity|formatNumber }} {{ quantifiedProduct.product.unit.name }}</strong>
-                        {{ quantifiedProduct.product.fullname }}
-                    </td>
-                    <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                        {{ quantifiedProductPrice.totalPrice.priceWithVat|price }}
-                    </td>
-                </tr>
-                {% if quantifiedProductDiscount is not null %}
-                    <tr>
-                        <td class="table-cart-preview__cell">
-                            {{ 'Promo code'|trans }} {{ (-orderPreview.promoCodeDiscountPercent)|formatPercent }}
-                        </td>
-                        <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                            {{ quantifiedProductDiscount.inverse.priceWithVat|price }}
-                        </td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        {% endfor %}
 
-        {% for orderPreview in splitOrderPreview.orderPreviews if orderPreview.transport is not null %}
             <tr class="table-cart-preview__row">
-                <td class="table-cart-preview__cell">
-                    {{ 'Shipping method'|trans }}: {{ orderPreview.transport.name }}
-                </td>
-                <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                    {{ splitOrderPreview.transportAndPaymentPricesPreview.transportPrice(orderPreview.transport, orderPreview.productType).priceWithVat|priceText }}
+                <td colspan="1" class="table-cart-preview__cell">
+                    {{ 'Zásilka č. '|trans }} {{ orderPreview.productType.id }} {{ orderPreview.productType.name|trans }}
                 </td>
             </tr>
+
+            {% if showProducts %}
+                {% for quantifiedProductKey, quantifiedProduct in orderPreview.quantifiedProducts %}
+                    {% set quantifiedProductPrice = orderPreview.quantifiedItemsPrices[quantifiedProductKey] %}
+                    {% set quantifiedProductDiscount = orderPreview.quantifiedItemsDiscounts[quantifiedProductKey] %}
+                    <tr class="table-cart-preview__row">
+                        <td class="table-cart-preview__cell">
+                            <strong>{{ quantifiedProduct.quantity|formatNumber }} {{ quantifiedProduct.product.unit.name }}</strong>
+                            {{ quantifiedProduct.product.fullname }}
+                        </td>
+                        <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                            {{ quantifiedProductPrice.totalPrice.priceWithVat|price }}
+                        </td>
+                    </tr>
+                    {% if quantifiedProductDiscount is not null %}
+                        <tr>
+                            <td class="table-cart-preview__cell">
+                                {{ 'Promo code'|trans }} {{ (-orderPreview.promoCodeDiscountPercent)|formatPercent }}
+                            </td>
+                            <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                                {{ quantifiedProductDiscount.inverse.priceWithVat|price }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <tr class="table-cart-preview__row">
+                <td class="table-cart-preview__cell">
+                    {{ 'Původní cena'|trans }}
+                </td>
+                <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                    {{ orderPreview.totalProductHighPrice.priceWithVat|price }}
+                </td>
+            </tr>
+            <tr class="table-cart-preview__row">
+                <td class="table-cart-preview__cell">
+                    {{ 'Nákupem ušetříte'|trans }}
+                </td>
+                <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                    -&nbsp;{{ orderPreview.getSubHighAndLowPrice.priceWithVat|price }}
+                </td>
+            </tr>
+            <tr class="table-cart-preview__row">
+                <td class="table-cart-preview__cell">
+                    {{ 'Cena zboží'|trans }}
+                </td>
+                <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                    {{ orderPreview.totalPrice.priceWithVat|price }}
+                </td>
+            </tr>
+
+            {% if orderPreview.transport is not null %}
+                <tr class="table-cart-preview__row">
+                    <td class="table-cart-preview__cell">
+                        {{ 'Shipping method'|trans }}: {{ orderPreview.transport.name }}
+                    </td>
+                    <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                        {{ splitOrderPreview.transportAndPaymentPricesPreview.transportPrice(orderPreview.transport, orderPreview.productType).priceWithVat|priceText }}
+                    </td>
+                </tr>
+            {% endif %}
+
         {% endfor %}
 
         {% if splitOrderPreview.hasPayment() is not empty %}
@@ -67,6 +101,15 @@
             </td>
             <td class="table-cart-preview__cell table-cart-preview__cell--price">
                 {{ splitOrderPreview.totalPrice.priceWithVat|price }}
+            </td>
+        </tr>
+
+        <tr class="table-cart-preview__row table-cart-preview__row--total">
+            <td class="table-cart-preview__cell">
+                {{ 'Celkem ušetříte'|trans }}:
+            </td>
+            <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                {{ splitOrderPreview.productsSalePrice.priceWithVat|price }}
             </td>
         </tr>
 
