@@ -40,7 +40,7 @@ function parseFile (filePath) {
         });
         return translations;
     } catch (e) {
-        console.log(e);
+        throw e;
     }
 }
 
