@@ -1,0 +1,65 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Component\Router\FriendlyUrl;
+
+use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+
+class ReadyCategorySeoMixFriendlyUrlListener
+{
+    /**
+     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
+     */
+    private $readyCategorySeoMixFacade;
+
+    /**
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     */
+    public function __construct(ReadyCategorySeoMixFacade $readyCategorySeoMixFacade)
+    {
+        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+     */
+    public function onKernelRequest(RequestEvent $event)
+    {
+        $request = $event->getRequest();
+
+        if (!$event->isMasterRequest() || !$request->attributes->has('readyCategorySeoMixId')) {
+            return;
+        }
+
+        $this->addReadyCategorySeoMixValuesToQuery($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    private function addReadyCategorySeoMixValuesToQuery(Request $request): void
+    {
+        $queryArray = $request->query->all();
+
+        $readyCategorySeoMixId = $request->attributes->get('readyCategorySeoMixId');
+
+        $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($readyCategorySeoMixId);
+        foreach ($readyCategorySeoMix->getReadyCategorySeoMixParameterParameterValues() as $readyCategorySeoMixParameterParameterValue) {
+            $parameterId = $readyCategorySeoMixParameterParameterValue->getParameter()->getId();
+            $parameterValueId = $readyCategorySeoMixParameterParameterValue->getParameterValue()->getId();
+
+            $queryArray['product_filter_form']['parameters'][$parameterId] = [];
+            $queryArray['product_filter_form']['parameters'][$parameterId][] = $parameterValueId;
+        }
+
+        if ($readyCategorySeoMix->getFlag() !== null) {
+            $queryArray['product_filter_form']['flags'] = [];
+            $queryArray['product_filter_form']['flags'][] = $readyCategorySeoMix->getFlag()->getId();
+        }
+
+        $request->query->replace($queryArray);
+    }
+}

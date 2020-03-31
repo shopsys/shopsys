@@ -512,3 +512,11 @@ services:
     App\Component\Image\Processing\ImageGenerator: ~
 
     App\Component\Image\Kraken\Processing\ImageKrakenProcessor: ~
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
+        class: App\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory
+        arguments: ['%shopsys.router.friendly_url_router_filepath%']
+
+    App\Component\Router\FriendlyUrl\ReadyCategorySeoMixFriendlyUrlListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

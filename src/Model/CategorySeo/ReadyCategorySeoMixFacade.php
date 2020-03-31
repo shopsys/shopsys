@@ -110,7 +110,7 @@ class ReadyCategorySeoMixFacade
      * @param int $id
      * @return \App\Model\CategorySeo\ReadyCategorySeoMix
      */
-    public function getById(int $id): ?ReadyCategorySeoMix
+    public function getById(int $id): ReadyCategorySeoMix
     {
         $readyCategorySeoMix = $this->readyCategorySeoMixRepository->findById($id);
 

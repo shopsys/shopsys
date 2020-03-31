@@ -201,8 +201,10 @@ class ProductController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @param int|null $readyCategorySeoMixId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function listByCategoryAction(Request $request, $id)
+    public function listByCategoryAction(Request $request, int $id, ?int $readyCategorySeoMixId = null)
     {
         $category = $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $id);
 
