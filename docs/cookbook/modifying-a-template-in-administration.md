@@ -29,6 +29,10 @@ See especially the new directory `ShopsysFrameworkBundle` whose title is based o
 Thanks to this exact location, your new copy of the template will be used instead of the original template from the FrameworkBundle during the rendering process.
 At this point, you just need to modify your copy of the template in such a way that product transfer status will be displayed on the page.
 
+!!! note
+    If you want to change only some block you can override the original template. For that, you need to use `extends` macro with an exclamation mark to prevent template cycling. For example: `{% extends '@!ShopsysFramework/Admin/Content/Product/detail.html.twig' %}`
+    More information can be found in [official Symfony documentation](https://symfony.com/doc/current/bundles/override.html#templates)
+
 #### The second step is the modification of the copy itself
 
 The template before the modification:
