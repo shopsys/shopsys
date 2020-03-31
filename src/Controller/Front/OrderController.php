@@ -211,7 +211,7 @@ class OrderController extends FrontBaseController
 
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
-        $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdByStockId($domainId);
+        $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
 
         $this->checkTransportAndPaymentChanges($frontOrderFormData, $splitOrderPreview);
 

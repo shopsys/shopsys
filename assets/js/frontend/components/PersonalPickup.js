@@ -24,26 +24,21 @@ export default class PersonalPickup {
         });
 
         $('.js-payment-transport-change-button').bind('click', (event) => {
-            let $group = $(event.target).closest('.js-payment-transport-group');
+            const $group = $(event.target).closest('.js-payment-transport-group');
+
             this.unsetPersonalPickupInCurrentGroup($group);
-            $group.nextAll('.js-payment-transport-group').each((index, element) => {
-                this.unsetPersonalPickupInCurrentGroup($(element));
-            });
+            this.unsetPersonalPickupInCurrentGroup($group.nextAll('.js-payment-transport-group'));
         });
     }
 
     unsetPersonalPickupInCurrentGroup ($group) {
-        let $transportCheckbox = $group.find('.js-payment-transport-checkbox:checked');
-        if ($transportCheckbox.hasClass('js-transport-personal-pickup-checkbox')) {
-            this.resetPersonalPickupId($transportCheckbox);
-        }
+        $group.find('.js-transport-personal-pickup-checkbox:checked').each((index, element) => {
+            this.resetPersonalPickupId($(element));
+        });
     }
 
     cleanPersonalPickupWindowRadioValues () {
-        this.$personalPickupWindow.filterAllNodes(PERSONAL_PICKUP_STOCK_RADIO_CLASS)
-            .each((index, element) => {
-                $(element).prop('checked', false);
-            });
+        this.$personalPickupWindow.filterAllNodes(PERSONAL_PICKUP_STOCK_RADIO_CLASS).prop('checked', false);
     }
 
     resetPersonalPickupId ($transportCheckbox) {
@@ -51,7 +46,6 @@ export default class PersonalPickup {
         $(transportPersonalPickupHiddenId)
             .val(null)
             .trigger('orderRememberData.littleDelayedSaveData');
-
         this.resetCurrentCheckboxToOrigin($transportCheckbox);
     }
 
@@ -59,6 +53,12 @@ export default class PersonalPickup {
 
         const transportPersonalPickupHiddenId = '#' + $transportCheckbox.data('hidden-id');
         const $personalPickupStockRadio = $window.filterAllNodes(PERSONAL_PICKUP_STOCK_RADIO_CLASS + ':checked');
+
+        if ($personalPickupStockRadio.length === 0) {
+            $transportCheckbox.prop('checked', false).change();
+            this.resetPersonalPickupId($transportCheckbox);
+            return;
+        }
 
         $(transportPersonalPickupHiddenId)
             .val($personalPickupStockRadio.val())

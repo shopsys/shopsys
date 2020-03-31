@@ -117,7 +117,7 @@ class StockFacade
      * @param int $domainId
      * @return \App\Model\Stock\Stock[]
      */
-    public function getStocksWithoutCentralByDomainIdByStockId(int $domainId): array
+    public function getStocksWithoutCentralByDomainIdIndexedByStockId(int $domainId): array
     {
         $stocks = $this->stockRepository->getStocksWithoutCentralByDomainId($domainId);
         $stocksById = [];

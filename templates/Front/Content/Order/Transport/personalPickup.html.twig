@@ -1,11 +1,12 @@
 <div id="js-order-transport-stocks" class="display-none">
     <div>
-        <h3>{{ 'Vyberte prodejnu kde si vyzvednete zásilku' }}</h3>
+        <h3>{{ 'Vyberte prodejnu kde si vyzvednete zásilku'|trans }}</h3>
         <table>
             <tbody>
             {% for stock in stocks %}
                 <tr>
-                    <td><label>
+                    <td>
+                        <label>
                             <input type="radio"
                                 name="personalPickupStock"
                                 value="{{ stock.id }}"
@@ -14,7 +15,9 @@
                                 data-stock-street="{{ stock.street }}"
                                 data-stock-city="{{ stock.city }}"
                             />
-                            {{ stock.name }}</label></td>
+                            {{ stock.name }}
+                        </label>
+                    </td>
                     <td>{{ stock.street }}<br>{{ stock.city }}</td>
                     <td></td>
                     <td></td>

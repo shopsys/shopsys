@@ -37,7 +37,7 @@ class PersonalPickupController extends FrontBaseController
     {
         $domainId = $this->domain->getId();
         return $this->render('Front/Content/Order/Transport/personalPickup.html.twig', [
-            'stocks' => $this->stockFacade->getStocksWithoutCentralByDomainIdByStockId($domainId),
+            'stocks' => $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId),
         ]);
     }
 }

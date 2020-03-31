@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\Item;
 
 use App\Model\Product\Type\ProductType;
+use App\Model\Stock\Stock;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
@@ -34,6 +35,13 @@ class OrderItem extends BaseOrderItem
      * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
      */
     private $productType;
+
+    /**
+     * @var \App\Model\Stock\Stock|null
+     * @ORM\ManyToOne(targetEntity="App\Model\Stock\Stock")
+     * @ORM\JoinColumn(name="personal_pickup_stock_id", referencedColumnName="id", nullable=true)
+     */
+    private $personalPickupStock;
 
     /**
      * @param \App\Model\Order\Order $order
@@ -81,5 +89,21 @@ class OrderItem extends BaseOrderItem
     public function setProductType(ProductType $productType): void
     {
         $this->productType = $productType;
+    }
+
+    /**
+     * @return \App\Model\Stock\Stock|null
+     */
+    public function getPersonalPickupStock(): ?Stock
+    {
+        return $this->personalPickupStock;
+    }
+
+    /**
+     * @param \App\Model\Stock\Stock|null $personalPickupStock
+     */
+    public function setPersonalPickupStock(?Stock $personalPickupStock): void
+    {
+        $this->personalPickupStock = $personalPickupStock;
     }
 }

@@ -94,6 +94,7 @@ export default class Window {
 
         $('body').keyup(function (event) {
             if (event.keyCode === KeyCodes.ESCAPE) {
+                _this.options.eventClose.apply(_this.$window);
                 _this.$window.trigger('windowClose');
                 return false;
             }
@@ -165,6 +166,7 @@ export default class Window {
         Window.showOverlay();
         if (_this.options.closeOnBgClick) {
             Window.getOverlay().click(function () {
+                _this.options.eventClose.apply(_this.$window);
                 _this.$window.trigger('windowClose');
                 return false;
             });
