@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
-use function GuzzleHttp\json_encode as json_encode;
 
 /**
  * @ORM\Table(
@@ -238,39 +237,5 @@ class ReadyCategorySeoMix
     public function getDomainId(): int
     {
         return $this->domainId;
-    }
-
-    public function updateChoseCategorySeoMixCombinationJson(): void
-    {
-        $this->choseCategorySeoMixCombinationJson = $this->createChoseCategorySeoMixCombinationJson();
-    }
-
-    /**
-     * @return array
-     */
-    public function createChoseCategorySeoMixCombination(): array
-    {
-        $parameterValueIdsByParameterIds = [];
-
-        foreach ($this->readyCategorySeoMixParameterParameterValues as $readyCategorySeoMixParameterParameterValue) {
-            $parameterValueIdsByParameterIds[$readyCategorySeoMixParameterParameterValue->getParameter()->getId()] =
-                $readyCategorySeoMixParameterParameterValue->getParameterValue()->getId();
-        }
-
-        return ChoseCategorySeoMixCombination::getChoseCategorySeoMixCombinationArray(
-            $this->getDomainId(),
-            $this->getCategory()->getId(),
-            $this->getFlag() !== null ? $this->getFlag()->getId() : null,
-            $this->getOrdering(),
-            $parameterValueIdsByParameterIds
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function createChoseCategorySeoMixCombinationJson(): string
-    {
-        return json_encode($this->createChoseCategorySeoMixCombination());
     }
 }
