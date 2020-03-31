@@ -18,28 +18,46 @@
 {% block main_content %}
     <div class="web__line">
         <div class="web__container">
-            <div class="box-list">
-                <div class="box-list__content">
-                    <h1>
-                        {{ brand.getSeoH1(domain.id)|default(brand.name) }}
-                    </h1>
-
-                    <div class="box-list__producer">
-                        {% if imageExists(brand) %}
-                            <div class="box-list__producer__image">
-                                {{ image(brand, { alt: brand.name }) }}
-                            </div>
-                        {% endif %}
-                        <div class="box-list__producer__text">
-                            {% if brand.description is not null %}
-                                {{ brand.description|raw }}
-                            {% endif %}
-                        </div>
+            <h1>{{ brand.getSeoH1(domain.id)|default(brand.name) }}</h1>
+            <div class="box-list__producer">
+                {% if imageExists(brand) %}
+                    <div class="box-list__producer__image">
+                        {{ image(brand, { alt: brand.name }) }}
                     </div>
-
-                    <div>
-                        {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListByBrandAction')) }}
-                        {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: false } %}
+                {% endif %}
+                <div class="box-list__producer__text">
+                    {% if brand.description is not null %}
+                        {{ brand.description|raw }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="web__line web__line--product-list web__line--bg-color">
+        <div class="web__container web__container--full-width web__container--no-padding">
+            <div class="box-list js-product-list-with-filter">
+                <div class="box-filter__opener">
+                    <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-sort-open-button">
+                        <i class="box-filter__opener__btn__icon svg svg-sort"></i>
+                        <span class="box-filter__opener__btn__text">
+                            {{ 'Seřadit'|trans }}
+                            <span class="box-filter__opener__btn__info box-filter__opener__btn__info--sort js-not-implemented-yet">Not ready</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="box-list__body">
+                     <div class="box-list__content">
+                        <div class="js-product-list-ajax-filter-products-with-controls">
+                            <div class="box-list__top js-product-sort">
+                                <div class="box-list__top__wrap">
+                                    {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListByBrandAction')) }}
+                                    <div class="box-list__top__info">
+                                        {% include 'Front/Content/Product/productSortCount.html.twig' with {paginationResult: paginationResult} %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: false } %}
+                        </div>
                     </div>
                 </div>
             </div>
