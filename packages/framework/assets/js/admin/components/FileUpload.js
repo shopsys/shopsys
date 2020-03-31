@@ -125,6 +125,7 @@ export default class FileUpload {
         new Window({
             content: Translator.trans('Error occurred while uploading file: %message%', { 'message': message })
         });
+        this.$status.parent().hide();
     }
 
     onFallbackMode () {
