@@ -215,4 +215,12 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
     {
         return $this->productSeriesRepository->findByAkeneoCode($akeneoCode);
     }
+
+    /**
+     * @return string[]
+     */
+    public function findProductSeriesCodesWithAkeneoCode(): array
+    {
+        return $this->productSeriesRepository->findProductSeriesCodesWithAkeneoCode();
+    }
 }

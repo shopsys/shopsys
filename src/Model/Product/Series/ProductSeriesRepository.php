@@ -166,4 +166,18 @@ class ProductSeriesRepository
 
         return array_map('reset', $result);
     }
+
+    /**
+     * @return string[]
+     */
+    public function findProductSeriesCodesWithAkeneoCode(): array
+    {
+        $result = $this->getQueryBuilder()
+            ->select('ps.akeneoCode')
+            ->where('ps.akeneoCode IS NOT NULL')
+            ->getQuery()
+            ->execute();
+
+        return array_map('reset', $result);
+    }
 }
