@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\ExpiredTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\NotVerifiedTokenUserMessageException;
+use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Throwable;
 
@@ -81,8 +82,8 @@ class TokenFacade
     public function generateRefreshTokenByCustomerUser(CustomerUser $customerUser, string $secretChain): Token
     {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::REFRESH_TOKEN_EXPIRATION);
-        $tokenBuilder->withClaim('uuid', $customerUser->getUuid());
-        $tokenBuilder->withClaim('secretChain', $secretChain);
+        $tokenBuilder->withClaim(FrontendApiUser::CLAIM_UUID, $customerUser->getUuid());
+        $tokenBuilder->withClaim(FrontendApiUser::CLAIM_SECRET_CHAIN, $secretChain);
 
         return $tokenBuilder->getToken($this->getSigner(), $this->getKey());
     }

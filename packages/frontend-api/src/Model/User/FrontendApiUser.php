@@ -8,6 +8,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class FrontendApiUser implements UserInterface
 {
+    public const CLAIM_UUID = 'uuid';
+    public const CLAIM_FULL_NAME = 'fullName';
+    public const CLAIM_EMAIL = 'email';
+    public const CLAIM_ROLES = 'roles';
+    public const CLAIM_SECRET_CHAIN = 'secretChain';
+
     /**
      * @var string
      */

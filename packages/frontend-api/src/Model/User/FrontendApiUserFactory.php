@@ -15,10 +15,10 @@ class FrontendApiUserFactory implements FrontendApiUserFactoryInterface
     public function createFromToken(Token $token): FrontendApiUser
     {
         return new FrontendApiUser(
-            $token->getClaim('uuid'),
-            $token->getClaim('fullName'),
-            $token->getClaim('email'),
-            $token->getClaim('roles')
+            $token->getClaim(FrontendApiUser::CLAIM_UUID),
+            $token->getClaim(FrontendApiUser::CLAIM_FULL_NAME),
+            $token->getClaim(FrontendApiUser::CLAIM_EMAIL),
+            $token->getClaim(FrontendApiUser::CLAIM_ROLES)
         );
     }
 }
