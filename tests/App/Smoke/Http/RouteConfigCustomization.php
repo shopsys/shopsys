@@ -473,8 +473,7 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('front_category_seo', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Check not implemented route.')
-                    ->setParameter('id', 1)
-                    ->setExpectedStatusCode(404);
+                    ->setParameter('id', 1);
             });
     }
 
