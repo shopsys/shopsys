@@ -20,7 +20,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~
 
-    Shopsys\FrontendApiBundle\Model\User\FrontendApiCustomerUserProvider: ~
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider: ~
 
     Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory: ~
 

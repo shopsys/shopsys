@@ -15,7 +15,7 @@ security:
             id: Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
 
         frontend_api_user_identities:
-            id: Shopsys\FrontendApiBundle\Model\User\FrontendApiCustomerUserProvider
+            id: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider
 
     firewalls:
         # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade

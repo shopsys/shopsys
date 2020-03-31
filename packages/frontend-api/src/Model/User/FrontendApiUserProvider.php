@@ -8,7 +8,7 @@ use Lcobucci\JWT\Token;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class FrontendApiCustomerUserProvider implements UserProviderInterface
+class FrontendApiUserProvider implements UserProviderInterface
 {
     /**
      * @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface

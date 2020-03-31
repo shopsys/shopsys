@@ -6,8 +6,8 @@ namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use GraphQL\Error\FormattedError;
 use InvalidArgumentException;
-use Shopsys\FrontendApiBundle\Model\User\FrontendApiCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
+use Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,10 +67,11 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
             return null;
         }
 
-        if (!$userProvider instanceof FrontendApiCustomerUserProvider) {
+        if (!$userProvider instanceof FrontendApiUserProvider) {
             throw new InvalidArgumentException(
                 sprintf(
-                    'The user provider must be an instance of FrontendApiCustomerUserProvider ("%s" was given).',
+                    'The user provider must be an instance of %s ("%s" was given).',
+                    FrontendApiUserProvider::class,
                     get_class($userProvider)
                 )
             );
