@@ -3,9 +3,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noindex, nofollow">
+        <link rel="shortcut icon" href="{{ asset('public/frontend/images/favicons/favicon.ico') }}">
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/styles/index_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
-
+        {{ encore_entry_link_tags('admin-style') }}
         {{ encore_entry_script_tags('admin') }}
 
         <script type="text/javascript">

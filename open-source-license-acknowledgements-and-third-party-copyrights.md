@@ -25,11 +25,6 @@ License: Apache License 2.0
 https://github.com/elastic/elasticsearch/blob/master/LICENSE.txt
 Copyright 2013-2014 Elasticsearch
 
-### Grunt: The JavaScript Task Runner
-License: MIT  
-https://github.com/gruntjs/grunt/blob/master/LICENSE  
-Copyright jQuery Foundation and other contributors, https://jquery.org/
-
 ### Phing
 License: LGPL-3.0-only  
 https://github.com/phingofficial/phing/blob/master/LICENSE  
@@ -158,11 +153,6 @@ Copyright 1999-2016 Thomas E. Dickey
 Licens: GPLv2+  
 https://metadata.ftp-master.debian.org/changelogs/main/a/apt/apt_1.4.8_copyright  
 Apt is copyright 1997, 1998, 1999 Jason Gunthorpe and others.
-
-### grunt-cli
-License: MIT  
-https://github.com/gruntjs/grunt-cli/blob/master/LICENSE-MIT  
-Copyright (c) 2016 Tyler Kellen, contributors
 
 ### nodejs-npm
 License: Artistic License 2.0  

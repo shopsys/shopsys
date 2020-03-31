@@ -168,11 +168,11 @@ Especially useful when you need to change the structure and don't need to have f
 * creates alias for the new index
 
 !!! warning
-    If you add field/s to the structure and reindex, they won't be available until `elasticsearch-export` is called.  
+    If you add field/s to the structure and reindex, they won't be available until `elasticsearch-export` is called.
     Your application must handle the properties not being filled correctly until all products are exported.
 
 !!! danger
-    Using this phing target after changing the type of field to another in structure _(eg. changing it from `bool` to `integer`)_ will cause an error.  
+    Using this phing target after changing the type of field to another in structure _(eg. changing it from `bool` to `integer`)_ will cause an error.
     If you need to make this change, please add new field with the correct type and delete the old field instead.
 
 #### elasticsearch-export
@@ -230,7 +230,7 @@ Runs background jobs. Should be executed periodically by system Cron every 5 min
 
 Essential for the production environment. Periodically executed Cron modules recalculate visibility, generate XML feeds and sitemaps, provide error reporting etc.
 
-If you want to have more cron instances registered, you need to create new targets with instance specified.  
+If you want to have more cron instances registered, you need to create new targets with instance specified.
 For example:
 ```xml
 <target name="cron-default" description="Runs background jobs. Should be executed periodically by system Cron every 5 minutes.">
@@ -256,11 +256,6 @@ For more information, see [Working with Multiple Cron Instances](../cookbook/wor
 Lists all available background jobs. If there is more than one cron instance registered, jobs are grouped by instance.
 
 For more information, see [Working with Multiple Cron Instances](../cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](../introduction/cron.md).
-
-#### grunt
-Builds CSS from LESS via Grunt.
-
-Useful when modifying only LESS files.
 
 #### npm-watch
 Webpack keep ‘watch’-ing for any changes we make in our code and once we save the changes, it will rerun by itself to rebuild the package.

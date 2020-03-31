@@ -79,7 +79,7 @@ If you have set a different locale, you can use `translations-dump` that will cr
 #### 2.6 Generate assets for the new domain
 In order to properly display the new domain, assets need to be generated
 ```sh
-php phing grunt
+php phing npm
 ```
 
 #### 2.7. Create elasticsearch definition for the new domain

@@ -42,3 +42,5 @@ services:
     Shopsys\FrameworkBundle\Form\WysiwygTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: FOS\CKEditorBundle\Form\Type\CKEditorType }
+        arguments:
+            $entrypointsPath: '%shopsys.json_entrypoints_path%'

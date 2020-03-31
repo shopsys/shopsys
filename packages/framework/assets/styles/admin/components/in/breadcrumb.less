@@ -1,0 +1,29 @@
+.in-breadcrumb {
+    padding: 15px 0;
+
+    font-size: 12px;
+
+    &__separator {
+        display: inline-block;
+        padding: 0 3px;
+
+        color: @color-a;
+    }
+
+    &__item {
+        display: inline-block;
+        padding: 0 3px;
+
+        &--actual {
+            font-weight: bold;
+        }
+
+        &--home {
+            position: relative;
+            top: -1px;
+
+            font-size: 16px;
+            text-decoration: none;
+        }
+    }
+}

@@ -5,13 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="{% block meta_description %}{% endblock %}">
         <meta http-equiv="X-UA-Compatible" content="IE=11" />
+        <link rel="shortcut icon" href="{{ asset('public/frontend/images/favicons/favicon.ico') }}">
         {% block meta_robots %}{% endblock %}
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/index' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/print' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="print">
+        {% set entryDirectory = 'frontend-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
+        {{ encore_entry_link_tags( entryDirectory ) }}
+        {% set entryDirectoryPrint = 'frontend-print-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
+        {{ encore_entry_link_tags( entryDirectoryPrint ) }}
 
         {{ render(controller('App\\Controller\\Front\\HeurekaController:embedWidgetAction')) }}
-
         {{ encore_entry_script_tags('frontend') }}
         {% block javascripts %}{% endblock %}
 

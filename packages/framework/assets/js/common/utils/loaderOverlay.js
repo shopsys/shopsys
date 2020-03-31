@@ -5,7 +5,7 @@ export function createLoaderOverlay (loaderElement, loaderMessage) {
     const $loaderOverlay = $($.parseHTML(
         '<div class="in-overlay__in">'
         + '<div class="in-overlay__spinner">'
-        + '<span class="in-overlay__spinner__icon"></span>'
+        + '<span class="in-overlay__spinner__icon"><i class="svg svg-spinner"></i></span>'
         + '<span class="in-overlay__spinner__message">' + loaderMessage + '</span>'
         + '</div>'
         + '</div>'));
