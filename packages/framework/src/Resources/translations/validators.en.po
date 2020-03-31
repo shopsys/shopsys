@@ -34,9 +34,6 @@ msgstr ""
 msgid "Country name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Email subject cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "EAN cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -44,6 +41,9 @@ msgid "Each parameter can be used only once"
 msgstr ""
 
 msgid "Email cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Email subject cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Email {{ email }} is already registered"

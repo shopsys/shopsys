@@ -175,9 +175,6 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-msgid "Parent category"
-msgstr ""
-
 msgid "Applicable variables"
 msgstr ""
 
@@ -544,6 +541,12 @@ msgstr ""
 msgid "Cron overview"
 msgstr ""
 
+msgid "Cron with serviceID `%serviceId%` was disabled"
+msgstr ""
+
+msgid "Cron with serviceID `%serviceId%` was enabled"
+msgstr ""
+
 msgid "Cron with serviceID `%serviceId%` was scheduled"
 msgstr ""
 
@@ -793,33 +796,6 @@ msgstr ""
 msgid "Drag your files here"
 msgstr ""
 
-msgid "Email"
-msgstr ""
-
-msgid "Email name"
-msgstr ""
-
-msgid "Email newsletter"
-msgstr ""
-
-msgid "Email settings"
-msgstr ""
-
-msgid "Email settings modified."
-msgstr ""
-
-msgid "Email settings:"
-msgstr ""
-
-msgid "Email templates"
-msgstr ""
-
-msgid "Email templates settings"
-msgstr ""
-
-msgid "Email templates settings modified"
-msgstr ""
-
 msgid "E-shop URL address"
 msgstr ""
 
@@ -935,6 +911,33 @@ msgid "Editing slider page"
 msgstr ""
 
 msgid "Editing slider page - %name%"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Email name"
+msgstr ""
+
+msgid "Email newsletter"
+msgstr ""
+
+msgid "Email settings"
+msgstr ""
+
+msgid "Email settings modified."
+msgstr ""
+
+msgid "Email settings:"
+msgstr ""
+
+msgid "Email templates"
+msgstr ""
+
+msgid "Email templates settings"
+msgstr ""
+
+msgid "Email templates settings modified"
 msgstr ""
 
 msgid "Enable"
@@ -1630,6 +1633,9 @@ msgstr ""
 msgid "Parameters overview"
 msgstr ""
 
+msgid "Parent category"
+msgstr ""
+
 msgid "PartNo (serial number)"
 msgstr ""
 
@@ -1895,9 +1901,6 @@ msgid "Save changes in order"
 msgstr ""
 
 msgid "Schedule"
-msgstr ""
-
-msgid "Scheduled"
 msgstr ""
 
 msgid "Script <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
@@ -2589,3 +2592,4 @@ msgstr ""
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr ""
+

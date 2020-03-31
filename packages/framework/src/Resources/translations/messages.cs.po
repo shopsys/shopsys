@@ -175,9 +175,6 @@ msgstr "Všechny výsledky hledání"
 msgid "Amount"
 msgstr "Množství"
 
-msgid "Parent category"
-msgstr "Nadřazená kategorie"
-
 msgid "Applicable variables"
 msgstr "Použitelné proměnné"
 
@@ -544,6 +541,12 @@ msgstr "Vytvořeno dne"
 msgid "Cron overview"
 msgstr "Přehled cronů"
 
+msgid "Cron with serviceID `%serviceId%` was disabled"
+msgstr "Cron s serviceID `%serviceId%` byl vypnut"
+
+msgid "Cron with serviceID `%serviceId%` was enabled"
+msgstr "Cron s serviceID `%serviceId%` byl zapnut"
+
 msgid "Cron with serviceID `%serviceId%` was scheduled"
 msgstr "Cron se serviceId `%serviceId%` byl naplánován"
 
@@ -793,33 +796,6 @@ msgstr "Zde přetáhněte svůj soubor"
 msgid "Drag your files here"
 msgstr "Zde přetáhněte své soubory"
 
-msgid "Email"
-msgstr "E-mail"
-
-msgid "Email name"
-msgstr "Jméno k e-mailu"
-
-msgid "Email newsletter"
-msgstr "E-maily zpravodaje"
-
-msgid "Email settings"
-msgstr "Nastavení e-mailů"
-
-msgid "Email settings modified."
-msgstr "Nastavení e-mailů bylo upraveno."
-
-msgid "Email settings:"
-msgstr "Nastavení e-mailů:"
-
-msgid "Email templates"
-msgstr "Šablony e-mailů"
-
-msgid "Email templates settings"
-msgstr "Nastavení šablon e-mailů"
-
-msgid "Email templates settings modified"
-msgstr "Nastavení šablony e-mailu bylo upraveno"
-
 msgid "E-shop URL address"
 msgstr "URL adresa e-shopu"
 
@@ -936,6 +912,33 @@ msgstr "Editace stránky slideru"
 
 msgid "Editing slider page - %name%"
 msgstr "Editace stránky slideru - %name%"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Email name"
+msgstr "Jméno k e-mailu"
+
+msgid "Email newsletter"
+msgstr "E-maily zpravodaje"
+
+msgid "Email settings"
+msgstr "Nastavení e-mailů"
+
+msgid "Email settings modified."
+msgstr "Nastavení e-mailů bylo upraveno."
+
+msgid "Email settings:"
+msgstr "Nastavení e-mailů:"
+
+msgid "Email templates"
+msgstr "Šablony e-mailů"
+
+msgid "Email templates settings"
+msgstr "Nastavení šablon e-mailů"
+
+msgid "Email templates settings modified"
+msgstr "Nastavení šablony e-mailu bylo upraveno"
 
 msgid "Enable"
 msgstr "Zapnout"
@@ -1630,6 +1633,9 @@ msgstr "Parametry"
 msgid "Parameters overview"
 msgstr "Přehled parametrů"
 
+msgid "Parent category"
+msgstr "Nadřazená kategorie"
+
 msgid "PartNo (serial number)"
 msgstr "PartNo (výrobní číslo)"
 
@@ -1896,9 +1902,6 @@ msgstr "Uložit změny v pořadí"
 
 msgid "Schedule"
 msgstr "Naplánovat"
-
-msgid "Scheduled"
-msgstr "Naplánován"
 
 msgid "Script <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
 msgstr "Byl vytvořen skript <a href=\"{{ url }}\"><strong>{{ name }}</strong></a>"
@@ -2589,3 +2592,4 @@ msgstr "bez umístění"
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
+
