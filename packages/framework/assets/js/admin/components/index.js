@@ -1,6 +1,7 @@
 import './AdvancedSearch';
 import './AjaxConfirm';
 import './Article';
+import './CategoryDeleteConfirm';
 import './CategoryTreeForm';
 import './CategoryTreeSorting';
 import './CharactersCounter';
