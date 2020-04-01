@@ -117,8 +117,6 @@ class ProductData extends BaseProductData
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(type="integer", nullable=true)
      */
     public $vendorDeliveryDate;
 

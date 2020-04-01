@@ -53,7 +53,12 @@ class ProductAvailabilityFacade
         if ($this->isProductAvailableOnDomain($product, $domainId)) {
             return t('Skladem');
         }
-        $weeks = $this->getDeliveryWeeksByDomainId($domainId);
+
+        if ($product->hasPreorder() === false) {
+            return t('Vyprodáno');
+        }
+
+        $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
 
         return tc(
             '{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
@@ -105,13 +110,18 @@ class ProductAvailabilityFacade
         if ($this->isProductAvailableOnDomain($product, $domainId)) {
             $weeks = $this->getTransferWeeksByDomainId($domainId);
         } else {
-            $weeks = $this->getDeliveryWeeksByDomainId($domainId);
+            $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
         }
+
         $outOfStockAvailabilityInformation = tc(
             '{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
             $weeks,
             ['%weeks%' => $weeks]
         );
+
+        if ($product->hasPreorder() === false) {
+            $outOfStockAvailabilityInformation = t('Vyprodáno');
+        }
 
         $stocksList = [];
         foreach ($productStocks as $productStock) {
@@ -133,11 +143,14 @@ class ProductAvailabilityFacade
 
     /**
      * @param int $domainId
+     * @param \App\Model\Product\Product $product
+     * @throws \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException
      * @return int
      */
-    private function getDeliveryWeeksByDomainId(int $domainId): int
+    private function getDeliveryWeeksByDomainId(int $domainId, Product $product): int
     {
         $deliveryDays = $this->setting->getForDomain(Setting::DELIVERY_DAYS_ON_STOCK, $domainId);
+        $deliveryDays += $product->getVendorDeliveryDate() ?? 0;
 
         return (int)ceil($deliveryDays / self::DAYS_IN_WEEK);
     }
