@@ -1,0 +1,7 @@
+UuidDecorator:
+    type: custom-scalar
+    config:
+        description: "Represents and encapsulates an ISO-8601 encoded UTC date-time value"
+        serialize: ["Shopsys\\FrontendApiBundle\\Model\\ScalarType\\UuidType", "serialize"]
+        parseValue: ["Shopsys\\FrontendApiBundle\\Model\\ScalarType\\UuidType", "parseValue"]
+        parseLiteral: ["Shopsys\\FrontendApiBundle\\Model\\ScalarType\\UuidType", "parseLiteral"]

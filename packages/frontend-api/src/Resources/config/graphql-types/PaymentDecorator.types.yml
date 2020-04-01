@@ -5,7 +5,7 @@ PaymentDecorator:
         description: "Represents a payment"
         fields:
             uuid:
-                type: "ID!"
+                type: "Uuid!"
                 description: "UUID"
             name:
                 type: "String!"

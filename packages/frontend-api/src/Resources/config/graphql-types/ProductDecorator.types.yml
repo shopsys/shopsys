@@ -5,7 +5,7 @@ ProductDecorator:
         description: "Represents a product"
         fields:
             uuid:
-                type: "ID!"
+                type: "Uuid!"
                 description: "UUID"
             name:
                 type: "String"
