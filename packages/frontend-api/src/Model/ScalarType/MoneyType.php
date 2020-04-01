@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Money;
+namespace Shopsys\FrontendApiBundle\Model\ScalarType;
 
 use GraphQL\Language\AST\StringValueNode;
 use Shopsys\FrameworkBundle\Component\Money\Money;
