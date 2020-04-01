@@ -28,13 +28,13 @@ msgstr ""
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Password cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Password cannot be same as email"
 msgstr ""
 
 msgid "Password cannot be same as part of email before at sign"
+msgstr ""
+
+msgid "Password must be at least {{ limit }} characters long"
 msgstr ""
 
 msgid "Passwords do not match"

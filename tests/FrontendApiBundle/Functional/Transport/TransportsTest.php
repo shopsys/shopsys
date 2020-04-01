@@ -41,9 +41,9 @@ class TransportsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 0,
                         'price' => [
-                            'priceWithVat' => '121',
-                            'priceWithoutVat' => '100.00',
-                            'vatAmount' => '21.00',
+                            'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('121'),
+                            'priceWithoutVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('100.00'),
+                            'vatAmount' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('21.00'),
                         ],
                         'images' => [
                             ['url' => 'http://webserver:8080/content-test/images/transport/default/56.jpg'],
@@ -59,9 +59,9 @@ class TransportsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 1,
                         'price' => [
-                            'priceWithVat' => '242',
-                            'priceWithoutVat' => '200.00',
-                            'vatAmount' => '42.00',
+                            'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('242'),
+                            'priceWithoutVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('200.00'),
+                            'vatAmount' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('42.00'),
                         ],
                         'images' => [
                             ['url' => 'http://webserver:8080/content-test/images/transport/default/57.jpg'],
@@ -77,9 +77,9 @@ class TransportsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 2,
                         'price' => [
-                            'priceWithVat' => '0',
-                            'priceWithoutVat' => '0',
-                            'vatAmount' => '0',
+                            'priceWithVat' => '0.00',
+                            'priceWithoutVat' => '0.00',
+                            'vatAmount' => '0.00',
                         ],
                         'images' => [
                             ['url' => 'http://webserver:8080/content-test/images/transport/default/58.jpg'],

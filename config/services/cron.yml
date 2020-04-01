@@ -4,42 +4,74 @@ services:
         autoconfigure: true
         public: false
 
-    #   Example:
-    #   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
-    #       tags:
-    #           - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Product search export' }
+    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Delete vats' }
 
-    # Error pages are not generated in production because https://github.com/shopsys/shopsys/issues/1628 Cron
-    Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule: ~
+    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityImmediateCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate immediate product visibilities' }
+
+    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityMidnightCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: 'Recalculate midnight product visibilities' }
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate product availabilities' }
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: "Export products to Elasticsearch" }
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportChangedCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: "Export changed products to Elasticsearch" }
+
+    Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '3', minutes: '0', readableName: 'Download Heureka categories' }
+
+    Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: 'Delete old customer carts' }
+
+    Shopsys\FrameworkBundle\Model\Feed\DailyFeedCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*/6', minutes: '0', readableName: 'Generate daily feeds' }
+
+    Shopsys\FrameworkBundle\Model\Feed\HourlyFeedCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '10', readableName: 'Generate hourly feeds' }
+
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '4', minutes: '0', readableName: 'Generate Sitemap' }
 
     App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import stromu kategorií z Akeneo' }
 
     App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterCronModule:
         tags:
-            - { name: shopsys.cron, hours: '01', minutes: '30' }
+            - { name: shopsys.cron, hours: '01', minutes: '30', readableName: 'Import číselníku parametrů z Akeneo' }
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5' }
-
-    # disabled because ProductCalculatesPrice is in this project turned off.
-    # Form prices are used just product_domain.low/high_price....
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCronModule: ~
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import produktů z Akeneo' }
 
     App\Model\Customer\Transfer\ScontoBridge\ScontoBridgeImportCustomerCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import zákazníků z IM' }
 
     App\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
         tags:
-            - { name: shopsys.cron, hours: '23', minutes: '10' }
+            - { name: shopsys.cron, hours: '23', minutes: '10', readableName: 'Mazání starých problémů v přenosech' }
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import souborů k produktům z Akeneo' }
 
     App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesCronModule:
         tags:
-            - { name: shopsys.cron, hours: '23', minutes: '10' }
+            - { name: shopsys.cron, hours: '23', minutes: '10', readableName: 'Import nábytkových produktů z Akeneo' }

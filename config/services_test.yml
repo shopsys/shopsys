@@ -96,8 +96,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@App\Model\Product\Brand\BrandDataFactory'
 
-    Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade: ~
-
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade: ~
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
@@ -167,3 +165,5 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface: '@App\Model\Product\Parameter\ParameterValueDataFactory'
 
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade: '@App\Model\Product\Parameter\ParameterFacade'
+
+    Shopsys\FrontendApiBundle\Model\Token\TokenFacade: ~

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f1695533a2922b129c855b297d3eb37",
+    "content-hash": "458abc73380d35ca6e423b41e7a3b05e",
     "packages": [
         {
             "name": "akeneo/api-php-client",
@@ -15958,12 +15958,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/set-config-resolver.git",
-                "reference": "992f7b2f11107835e122a5fa460716803a84cbb1"
+                "reference": "9ed8f39022dd5d22b0d89291fa24eb3b71a8f1b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/992f7b2f11107835e122a5fa460716803a84cbb1",
-                "reference": "992f7b2f11107835e122a5fa460716803a84cbb1",
+                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/9ed8f39022dd5d22b0d89291fa24eb3b71a8f1b2",
+                "reference": "9ed8f39022dd5d22b0d89291fa24eb3b71a8f1b2",
                 "shasum": ""
             },
             "require": {
@@ -16001,12 +16001,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/smart-file-system.git",
-                "reference": "0ece1df8c6904124750eae94c7b33c781ed3d72d"
+                "reference": "3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/0ece1df8c6904124750eae94c7b33c781ed3d72d",
-                "reference": "0ece1df8c6904124750eae94c7b33c781ed3d72d",
+                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2",
+                "reference": "3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2",
                 "shasum": ""
             },
             "require": {

@@ -70,7 +70,7 @@ msgstr "Přehled značek"
 msgid "Cart"
 msgstr "Košík"
 
-msgid "Catalogue number"
+msgid "Catalog number"
 msgstr "Katalogové číslo"
 
 msgid "Changing password"
@@ -191,7 +191,7 @@ msgid "Error occurred"
 msgstr "Nastala chyba"
 
 msgid "Error occurred when sending email."
-msgstr "Nastala chyba při odesílání mailu."
+msgstr "Nastala chyba při odesílání e-mailu."
 
 msgid "Finish the order"
 msgstr "Dokončit objednávku"

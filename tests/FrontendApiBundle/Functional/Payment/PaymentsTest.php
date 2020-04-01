@@ -41,8 +41,8 @@ class PaymentsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 0,
                         'price' => [
-                            'priceWithVat' => '100',
-                            'priceWithoutVat' => '100.00',
+                            'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('100'),
+                            'priceWithoutVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('100.00'),
                             'vatAmount' => '0.00',
                         ],
                         'images' => [
@@ -60,8 +60,8 @@ class PaymentsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 1,
                         'price' => [
-                            'priceWithVat' => '50',
-                            'priceWithoutVat' => '50.00',
+                            'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('50'),
+                            'priceWithoutVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('50.00'),
                             'vatAmount' => '0.00',
                         ],
                         'images' => [
@@ -78,9 +78,9 @@ class PaymentsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 2,
                         'price' => [
-                            'priceWithVat' => '0',
-                            'priceWithoutVat' => '0',
-                            'vatAmount' => '0',
+                            'priceWithVat' => '0.00',
+                            'priceWithoutVat' => '0.00',
+                            'vatAmount' => '0.00',
                         ],
                         'images' => [
                             ['url' => 'http://webserver:8080/content-test/images/payment/default/54.jpg'],
