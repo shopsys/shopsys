@@ -30,11 +30,20 @@ class ReadyCategorySeoMixFriendlyUrlListener
     {
         $request = $event->getRequest();
 
-        if (!$event->isMasterRequest() || !$request->attributes->has('readyCategorySeoMixId')) {
+        if (!$event->isMasterRequest()) {
             return;
         }
 
-        $this->addReadyCategorySeoMixValuesToQuery($request);
+        if ($request->attributes->has('readyCategorySeoMixId')) {
+            $this->addReadyCategorySeoMixValuesToQuery($request);
+        }
+
+        if ($request->attributes->get('_controller')
+            === 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction'
+            && $request->attributes->get('_route') === 'front_category_seo'
+        ) {
+            $this->keepFrontCategorySeoQueryParametersForRedirectAction($request);
+        }
     }
 
     /**
@@ -61,5 +70,20 @@ class ReadyCategorySeoMixFriendlyUrlListener
         }
 
         $request->query->replace($queryArray);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    private function keepFrontCategorySeoQueryParametersForRedirectAction(Request $request): void
+    {
+        $attributeArray = $request->attributes->all();
+
+        $attributeArray['_route_params'] = array_merge(
+            $attributeArray['_route_params'],
+            $request->query->all()
+        );
+
+        $request->attributes->replace($attributeArray);
     }
 }

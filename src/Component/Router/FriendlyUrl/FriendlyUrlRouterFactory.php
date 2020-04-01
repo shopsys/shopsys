@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Component\Router\FriendlyUrl;
 
-use Doctrine\ORM\EntityManagerInterface;
+use App\Model\CategorySeo\ReadyCategorySeoMixRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGenerator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -16,21 +16,21 @@ use Symfony\Component\Routing\RequestContext;
 class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \App\Model\CategorySeo\ReadyCategorySeoMixRepository
      */
-    private $entityManager;
+    private $readyCategorySeoMixRepository;
 
     /**
      * @param mixed $friendlyUrlRouterResourceFilepath
      * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      */
     public function __construct(
         $friendlyUrlRouterResourceFilepath,
         LoaderInterface $configLoader,
         FriendlyUrlRepository $friendlyUrlRepository,
-        EntityManagerInterface $entityManager
+        ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
     ) {
         parent::__construct(
             $friendlyUrlRouterResourceFilepath,
@@ -38,12 +38,13 @@ class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
             $friendlyUrlRepository
         );
 
-        $this->entityManager = $entityManager;
+        $this->readyCategorySeoMixRepository = $readyCategorySeoMixRepository;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Symfony\Component\Routing\RequestContext $context
+     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
      */
     public function createRouter(DomainConfig $domainConfig, RequestContext $context)
     {
@@ -51,7 +52,7 @@ class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
             $context,
             $this->configLoader,
             new FriendlyUrlGenerator($context, $this->friendlyUrlRepository),
-            new FriendlyUrlMatcher($this->friendlyUrlRepository, $this->entityManager),
+            new FriendlyUrlMatcher($this->friendlyUrlRepository, $this->readyCategorySeoMixRepository),
             $domainConfig,
             $this->friendlyUrlRouterResourceFilepath
         );

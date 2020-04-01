@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Component\Router\FriendlyUrl;
 
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
-use App\Model\CategorySeo\ReadyCategorySeoMix;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Model\CategorySeo\ReadyCategorySeoMixRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlMatcher as BaseFriendlyUrlMatcher;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Symfony\Component\Routing\RouteCollection;
@@ -15,21 +15,21 @@ use Symfony\Component\Routing\RouteCollection;
 class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \App\Model\CategorySeo\ReadyCategorySeoMixRepository
      */
-    private $entityManager;
+    private $readyCategorySeoMixRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      */
     public function __construct(
         FriendlyUrlRepository $friendlyUrlRepository,
-        EntityManagerInterface $entityManager
+        ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
     ) {
         parent::__construct($friendlyUrlRepository);
 
-        $this->entityManager = $entityManager;
+        $this->readyCategorySeoMixRepository = $readyCategorySeoMixRepository;
     }
 
     /**
@@ -54,17 +54,14 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
 
         $matchedParameters = $route->getDefaults();
 
-        if ($friendlyUrl->getRouteName() === 'front_category_seo') {
-            $readyCategorySeoMixId = $friendlyUrl->getEntityId();
-            $readyCategorySeoMix = $this->getReadyCategorySeoMixById($readyCategorySeoMixId);
-
-            $matchedParameters['_route'] = 'front_product_list';
-            $matchedParameters['id'] = $readyCategorySeoMix->getCategory()->getId();
-            $matchedParameters['readyCategorySeoMixId'] = $readyCategorySeoMixId;
-        } else {
-            $matchedParameters['_route'] = $friendlyUrl->getRouteName();
-            $matchedParameters['id'] = $friendlyUrl->getEntityId();
+        if ($friendlyUrl->getRouteName() === 'front_category_seo' && $friendlyUrl->isMain() === false) {
+            return $this->getMatchedParametersForNonMainFrontCategorySeoFriendlyUrl($friendlyUrl, $matchedParameters);
+        } elseif ($friendlyUrl->getRouteName() === 'front_category_seo') {
+            return $this->getMatchedParametersForMainFrontCategorySeoFriendlyUrl($friendlyUrl, $matchedParameters);
         }
+
+        $matchedParameters['_route'] = $friendlyUrl->getRouteName();
+        $matchedParameters['id'] = $friendlyUrl->getEntityId();
 
         if (!$friendlyUrl->isMain()) {
             $matchedParameters['_controller'] = 'FrameworkBundle:Redirect:redirect';
@@ -76,19 +73,43 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
     }
 
     /**
-     * Due to circular reference of ReadyCategorySeoMixFacade
-     *
-     * @param int $id
-     * @return \App\Model\CategorySeo\ReadyCategorySeoMix
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
+     * @param array $matchedParameters
+     * @return array
      */
-    public function getReadyCategorySeoMixById(int $id): ReadyCategorySeoMix
+    private function getMatchedParametersForMainFrontCategorySeoFriendlyUrl(FriendlyUrl $friendlyUrl, array $matchedParameters): array
     {
-        $readyCategorySeoMix = $this->entityManager->getRepository(ReadyCategorySeoMix::class)->find($id);
-
+        $readyCategorySeoMixId = $friendlyUrl->getEntityId();
+        $readyCategorySeoMix = $this->readyCategorySeoMixRepository->findById($readyCategorySeoMixId);
         if ($readyCategorySeoMix === null) {
-            throw new ReadyCategorySeoMixNotFoundException(sprintf('ReadyCategorySeoMix with ID %s not found', $id));
+            throw new ReadyCategorySeoMixNotFoundException(sprintf('ReadyCategorySeoMix with ID %s not found', $readyCategorySeoMixId));
         }
 
-        return $readyCategorySeoMix;
+        $matchedParameters['_route'] = 'front_product_list';
+        $matchedParameters['id'] = $readyCategorySeoMix->getCategory()->getId();
+        $matchedParameters['readyCategorySeoMixId'] = $readyCategorySeoMixId;
+
+        return $matchedParameters;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
+     * @param array $matchedParameters
+     * @return array
+     */
+    private function getMatchedParametersForNonMainFrontCategorySeoFriendlyUrl(FriendlyUrl $friendlyUrl, array $matchedParameters): array
+    {
+        $readyCategorySeoMixId = $friendlyUrl->getEntityId();
+
+        $matchedParameters['_controller'] = 'FrameworkBundle:Redirect:redirect';
+
+        // Both are needed
+        $matchedParameters['route'] = $friendlyUrl->getRouteName();
+        $matchedParameters['_route'] = $friendlyUrl->getRouteName();
+
+        $matchedParameters['id'] = $readyCategorySeoMixId;
+        $matchedParameters['permanent'] = true;
+
+        return $matchedParameters;
     }
 }

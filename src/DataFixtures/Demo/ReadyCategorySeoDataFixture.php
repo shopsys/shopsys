@@ -57,7 +57,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             '2 litrové kávovary - novinky',
-            '2-litrove-kavovary-novinky',
+            ['2-litrove-kavovary-novinky', 'nove-2-litrove-kavovary-vedlejsi-adresa-ktera-by-mela-byt-presmerovana-na-hlavni'],
             1
         );
 
@@ -65,7 +65,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             'Nejprodávanější 2 litrové kávovary',
-            'nejprodavanejsi-2-litrove-kavovary',
+            ['nejprodavanejsi-2-litrove-kavovary'],
             1
         );
 
@@ -73,7 +73,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             '2 litrové kávovary v akci',
-            '2-litrove-kavovary-v-akci',
+            ['2-litrove-kavovary-v-akci'],
             1
         );
     }
@@ -81,13 +81,13 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     /**
      * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
      * @param string $h1
-     * @param string $slug
+     * @param string[] $slugs
      * @param int $domainId
      */
     private function createReadyCategorySeoMix(
         ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
         string $h1,
-        string $slug,
+        array $slugs,
         int $domainId
     ): void {
         $readyCategorySeoMixDataForForm = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixDataForForm(
@@ -101,10 +101,13 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $urlListData = new UrlListData();
-        $urlListData->newUrls = [[
-            'domain' => $domainId,
-            'slug' => $slug,
-        ]];
+        $urlListData->newUrls = [];
+        foreach ($slugs as $slug) {
+            $urlListData->newUrls[] = [
+                'domain' => $domainId,
+                'slug' => $slug,
+            ];
+        }
 
         $this->readyCategorySeoMixFacade->createOrEdit(
             $choseCategorySeoMixCombination,
