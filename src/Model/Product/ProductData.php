@@ -115,6 +115,13 @@ class ProductData extends BaseProductData
      */
     public $preorder;
 
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    public $vendorDeliveryDate;
+
     public function __construct()
     {
         parent::__construct();

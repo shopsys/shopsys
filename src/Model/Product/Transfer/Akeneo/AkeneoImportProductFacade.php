@@ -142,6 +142,9 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     protected function processItem($akeneoProductData): void
     {
+//        if ($akeneoProductData['identifier'] == '413670701') {
+//            d($akeneoProductData);
+//        }
         $this->productTransferAkeneoValidator->validate($akeneoProductData);
 
         $product = $this->productFacade->findOneByCatnumExcludeMainVariants($akeneoProductData['identifier']);

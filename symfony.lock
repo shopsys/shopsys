@@ -1074,6 +1074,9 @@
     "symplify/coding-standard": {
         "version": "v5.4.16"
     },
+    "symplify/easy-coding-standard": {
+        "version": "v7.2.2"
+    },
     "symplify/package-builder": {
         "version": "v5.4.16"
     },
