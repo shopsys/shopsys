@@ -6,7 +6,6 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
