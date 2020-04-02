@@ -6,6 +6,8 @@ namespace App\Twig;
 
 use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
 use App\Model\Product\Parameter\ParameterFacade;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -17,12 +19,20 @@ class CategorySeoExtension extends AbstractExtension
     private $parameterFacade;
 
     /**
+     * @var \Symfony\Component\Routing\RouterInterface
+     */
+    private $router;
+
+    /**
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Symfony\Component\Routing\RouterInterface $router
      */
     public function __construct(
-        ParameterFacade $parameterFacade
+        ParameterFacade $parameterFacade,
+        RouterInterface $router
     ) {
         $this->parameterFacade = $parameterFacade;
+        $this->router = $router;
     }
 
     /**
@@ -32,6 +42,7 @@ class CategorySeoExtension extends AbstractExtension
     {
         return [
             new TwigFunction('getReadyCategoryMixCombinationParametersPairsIterator', [$this, 'getReadyCategoryMixCombinationParametersPairsIterator']),
+            new TwigFunction('getAbsoluteUrlOfReadyCategorySeoMix', [$this, 'getAbsoluteUrlOfReadyCategorySeoMix']),
         ];
     }
 
@@ -46,5 +57,12 @@ class CategorySeoExtension extends AbstractExtension
         foreach ($choseCategorySeoMixCombination->getParameterValueIdsByParameterIds() as $parameterId => $parameterValueId) {
             yield $this->parameterFacade->getById($parameterId)->getName() . ': ' . $this->parameterFacade->getParameterValueById($parameterValueId)->getText();
         }
+    }
+
+    public function getAbsoluteUrlOfReadyCategorySeoMix(int $readyCategorySeoMixId)
+    {
+        return $this->router->generate('front_category_seo', [
+            'id' => $readyCategorySeoMixId,
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }
