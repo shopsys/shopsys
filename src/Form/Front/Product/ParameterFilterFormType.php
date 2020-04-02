@@ -30,13 +30,21 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
 
         $this->parameterChoicesIndexedByParameterId = [];
         foreach ($config->getParameterChoices() as $parameterChoice) {
+
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
             $parameter = $parameterChoice->getParameter();
             $parameterValues = $parameterChoice->getValues();
+
+            $unit = '';
+            if ($parameter->getParameterUnit() !== null) {
+                $unit = ' (' . $parameter->getParameterUnit()->getName() . ')';
+            }
+            $label = $parameter->getName() . $unit;
 
             $this->parameterChoicesIndexedByParameterId[$parameter->getId()] = $parameterChoice;
 
             $builder->add($parameter->getId(), ChoiceType::class, [
-                'label' => $parameter->getName(),
+                'label' => $label,
                 'choices' => $parameterValues,
                 'choice_label' => 'text',
                 'choice_value' => 'id',
