@@ -407,6 +407,15 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="translation:extract"/>
+            <arg value="--bundle=ShopsysFrontendApiBundle"/>
+            <arg value="--dir=${path.packages}/frontend-api/src"/>
+            <arg value="--output-format=po"/>
+            <arg value="--output-dir=${path.packages}/frontend-api/src/Resources/translations"/>
+            <arg line="${domains-info.locales}"/>
+        </exec>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="translation:extract"/>
             <arg value="--bundle=ShopsysProductFeedGoogleBundle"/>
             <arg value="--dir=${path.packages}/product-feed-google/src"/>
             <arg value="--output-format=po"/>
