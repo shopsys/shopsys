@@ -59,6 +59,9 @@ class CategorySeoExtension extends AbstractExtension
         }
     }
 
+    /**
+     * @param int $readyCategorySeoMixId
+     */
     public function getAbsoluteUrlOfReadyCategorySeoMix(int $readyCategorySeoMixId)
     {
         return $this->router->generate('front_category_seo', [

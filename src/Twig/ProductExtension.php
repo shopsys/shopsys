@@ -19,19 +19,18 @@ class ProductExtension extends AbstractExtension
     private $productCachedAttributesFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade
+     * @var \App\Model\Product\Listing\ProductListOrderingModeForListFacade
      */
     private $productListOrderingModeForListFacade;
 
     /**
      * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
+     * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      */
     public function __construct(
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
-    )
-    {
+    ) {
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
         $this->productListOrderingModeForListFacade = $productListOrderingModeForListFacade;
     }

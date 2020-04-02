@@ -28,7 +28,7 @@ class ReadyCategorySeoMixParameterParameterValue
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter")
-     * @ORM\JoinColumn(name="parameter_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="parameter_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $parameter;
 
@@ -37,7 +37,7 @@ class ReadyCategorySeoMixParameterParameterValue
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue")
-     * @ORM\JoinColumn(name="parameter_value_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="parameter_value_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $parameterValue;
 
