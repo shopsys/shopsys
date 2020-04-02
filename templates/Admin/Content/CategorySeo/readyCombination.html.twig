@@ -8,7 +8,7 @@
 {% block main_content %}
 
     {{ _self.infoLine('Příznak'|trans, flagName) }}
-    {{ _self.infoLine('Řazení'|trans, choseCategorySeoMixCombination.ordering) }}
+    {{ _self.infoLine('Řazení'|trans, getOrderingNameByOrderingId(choseCategorySeoMixCombination.ordering)) }}
 
     {% for parameterName, parameterValueName in parameterValueNamesIndexedByParameterNames %}
         {{ _self.infoLine(parameterName, parameterValueName) }}

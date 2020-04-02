@@ -6,6 +6,7 @@ namespace App\Twig;
 
 use App\Model\Product\Product;
 use App\Model\Product\ProductCachedAttributesFacade;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -18,11 +19,21 @@ class ProductExtension extends AbstractExtension
     private $productCachedAttributesFacade;
 
     /**
-     * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @var \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade
      */
-    public function __construct(ProductCachedAttributesFacade $productCachedAttributesFacade)
+    private $productListOrderingModeForListFacade;
+
+    /**
+     * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
+     */
+    public function __construct(
+        ProductCachedAttributesFacade $productCachedAttributesFacade,
+        ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
+    )
     {
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
+        $this->productListOrderingModeForListFacade = $productListOrderingModeForListFacade;
     }
 
     /**
@@ -35,6 +46,10 @@ class ProductExtension extends AbstractExtension
             'getProductNonSellingPrice',
             [$this, 'getProductNonSellingPrice']
         );
+        $functions[] = new TwigFunction(
+            'getOrderingNameByOrderingId',
+            [$this, 'getOrderingNameByOrderingId']
+        );
 
         return $functions;
     }
@@ -46,5 +61,22 @@ class ProductExtension extends AbstractExtension
     public function getProductNonSellingPrice(Product $product): ProductPrice
     {
         return $this->productCachedAttributesFacade->getProductNonSellingPrice($product);
+    }
+
+    /**
+     * @param string $orderingId
+     * @return string
+     */
+    public function getOrderingNameByOrderingId(?string $orderingId): string
+    {
+        if ($orderingId === null) {
+            return '';
+        }
+
+        $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
+
+        $supportedOrderingModesNamesIndexedById = $productListOrderingConfig->getSupportedOrderingModesNamesIndexedById();
+
+        return $supportedOrderingModesNamesIndexedById[$orderingId] ?? t('Neplatné řazení') . ' ' . $orderingId;
     }
 }
