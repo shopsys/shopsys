@@ -89,7 +89,7 @@ export default class OrderItems {
 
             // eslint-disable-next-line no-new
             new Window({
-                content: Translator.trans('Do you really want to remove item "<i>%itemName%</i>" from the order?', { '%itemName%': itemName }),
+                content: Translator.trans('Do you really want to remove item "<i>%itemName%</i>" from the order?', { 'itemName': itemName }),
                 buttonCancel: true,
                 buttonContinue: true,
                 eventContinue: () => {
