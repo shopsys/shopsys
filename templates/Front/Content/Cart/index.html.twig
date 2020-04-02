@@ -12,34 +12,33 @@
 {% block breadcrumb %}
 {% endblock %}
 
+{% block header %}
+    {% if cart is not null %}
+        {% include 'Front/Layout/headerCart.html.twig' %}
+    {% else %}
+        {% include 'Front/Layout/header.html.twig' %}
+    {% endif %}
+{% endblock %}
+
 {% block main_content %}
 
     {% set shopInfoEmail = getShopInfoEmail() %}
     {% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
     {% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
 
-    <div class="web__line">
-        <div class="web__container">
+    {% block mainMenu %}
+    {% endblock %}
 
-            {% if cart is not null %}
-                {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
-
+    {% if cart is not null %}
+        {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
+        <div class="web__line web__line--bg-color web__line--spacing">
+            <div class="web__container">
                 <h1>{{ 'Your cart'|trans }}</h1>
-
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form' }}) }}
                     {{ form_errors(form) }}
 
                     <div class="box-cart-info">
-                        {% if showOversizedMsg %}
-                            <div class="box-cart-info__oversized">
-                                <h6>{{ 'Oversized product in cart'|trans }}</h6>
-                                <p>
-                                    {{ 'These goods have different transport requirements'|trans|raw }}
-                                </p>
-                            </div>
-                        {% endif %}
-
-                        {% set previewNumber = 0 %}
+                    {% set previewNumber = 0 %}
                     {% for orderPreview in splitOrderPreview.orderPreviews %}
                         {% set previewNumber = previewNumber + 1 %}
                         {% if splitOrderPreview.morePreviews %}
@@ -55,22 +54,6 @@
                     {% if splitOrderPreview.morePreviews %}
                         <table class="table-cart">
                             <tfoot>
-                                <tr class="table-cart__row">
-                                    <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
-                                        {{ 'Total common price including VAT'|trans }}:
-                                        <span>
-                                            {{ splitOrderPreview.productsCommonPrice.priceWithVat|price }}
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="table-cart__row">
-                                    <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
-                                        {{ 'Total common price excluding VAT'|trans }}:
-                                        <span>
-                                            {{ splitOrderPreview.productsCommonPrice.priceWithoutVat|price }}
-                                        </span>
-                                    </td>
-                                </tr>
                                 <tr class="table-cart__row">
                                     <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
                                         <h3>
@@ -141,10 +124,12 @@
                             {% endif %}
                         </div>
                     </div>
-
-
                 {{ form_end(form) }}
-            {% else %}
+            </div>
+        </div>
+    {% else %}
+        <div class="web__line">
+            <div class="web__container">
                 <div class="box-cart-empty">
                     <div class="box-cart-empty__text">
                         <h1 class="box-cart-empty__heading">{{ 'Váš nákupní košík je prázdný.'|trans }}</h1>
@@ -153,32 +138,14 @@
                         </a>
                     </div>
                     <div class="box-cart-empty__figure">
-                        <img class="box-cart-empty__image" loading="lazy" data-src="{{ asset('public/frontend/images/empty-cart.png') }}" alt="{{ 'Empty cart'|trans }}">
+                        <img class="box-cart-empty__image" loading="lazy" data-src="{{ asset('assets/frontend/images/empty-cart.png') }}" alt="{{ 'Empty cart'|trans }}">
                     </div>
                 </div>
-                <div class="box-info box-info--in-cart">
-                    <picture>
-                        <source srcset="{{ asset('public/frontend/images/potrebujete_poradit2x.png') }} 2x" />
-                        <img class="box-info__img" loading="lazy" src="" data-src="{{ asset('public/frontend/images/potrebujete_poradit.png') }}" alt="{{ 'Potřebujete poradit?'|trans }}">
-                    </picture>
-                    <div class="box-info__content">
-                        <div class="box-info__text">
-                            <h2 class="box-info__title">{{ 'Potřebujete poradit?'|trans }}</h2>
-                            <span class="box-info__hours">{{ shopInfoPhoneHours }}</span>
-                        </div>
-                        <div class="box-info__contacts">
-                            <a href="tel:{{ shopInfoPhoneNumber }}" class="box-info__contacts__link">
-                                <i class="box-info__contacts__icon box-info__contacts__icon--phone svg svg-phone"></i>
-                                <span class="box-info__contacts__text">{{ shopInfoPhoneNumber }}</span>
-                            </a>
-                            <a href="mailto:{{ shopInfoEmail }}" class="box-info__contacts__link">
-                                <i class="box-info__contacts__icon svg svg-email"></i>
-                                <span class="box-info__contacts__text">{{ shopInfoEmail }}</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+                {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : 'box-info--in-cart' } %}
+            </div>
         </div>
-    </div>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

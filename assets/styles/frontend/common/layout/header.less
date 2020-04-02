@@ -175,4 +175,24 @@
             }
         }
     }
+
+    &--cart {
+        .header__logo {
+            max-width: none;
+        }
+
+        .header__button {
+            display: none;
+
+            @media @query-lg {
+                display: block;
+            }
+        }
+
+        @media @query-xl {
+            .menu-iconic__item__link {
+                padding-right: 0;
+            }
+        }
+    }
 }

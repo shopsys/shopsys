@@ -5,52 +5,103 @@
     display: flex;
     align-items: stretch;
     width: 100%;
-    margin-bottom: @margin-gap;
+    margin-top: 3rem;
 
     &__item {
+        position: relative;
         width: 100%/@box-progress-steps-count;
         display: flex;
-        align-items: center;
 
-        background: @color-light;
-        border-left: 1px solid @color-f;
+        border-top-right-radius: @radius;
+        border-top-left-radius: @radius;
+        background-color: @color-f;
+        text-transform: uppercase;
+        font-family: @font-quartenary;
+        letter-spacing: 1px;
+        color: rgba(32,35,48,0.7);
 
-        &:first-child {
-            border-left: 0;
+        @media @query-lg {
+            align-items: center;
         }
 
         &--active {
-            background: @color-primary;
-            color: @color-f;
+            z-index: 1;
+
+            background-color: @color-light-secondary;
+            color: @color-primary;
+
+            &::before,
+            &::after {
+                background-color: @color-light-secondary;
+            }
+
+            .box-progress__item__step {
+                color: @color-add-secondary;
+            }
         }
 
+        &--previous-active,
         &--done {
-            background: @color-base;
-            color: @color-c;
+            border-top-right-radius: 0;
+            background: #cfd3d3;
+
+            &::before,
+            &::after {
+                background-color: #cfd3d3;
+            }
         }
 
-        &--previous-active {
-            background: lighten(@color-base, 10%);
-            color: lighten(@color-c, 10%);
+        &--active,
+        &--previous-active,
+        &--done {
+            &::before,
+            &::after {
+                position: absolute;
+                bottom: -5px;
+                width: 10px;
+                height: 10px;
+                content: '';
+                z-index: 1;
+            }
+
+            &::before {
+                left: -5px;
+                transform: rotate(-45deg);
+            }
+
+            &::after {
+                right: -5px;
+                transform: rotate(45deg);
+            }
         }
 
         &__inner {
-            padding: 10px;
+            padding: 13px 15px 10px;
             width: 100%;
             text-align: center;
 
-            font-size: 12px;
+            font-size: 11px;
+            line-height: 1.4;
 
             @media @query-lg {
-                font-size: 14px;
+                padding: 18px 15px 15px;
+
+                font-size: 13px;
             }
         }
 
         &__step {
+            display: block;
+            margin: 0 auto 5px;
+
             font-weight: bold;
+            color: #b0bec5;
 
             @media @query-lg {
-                font-size: 18px;
+                display: inline-block;
+                margin: 0 4px 0 0;
+
+                font-size: 13px;
             }
         }
     }

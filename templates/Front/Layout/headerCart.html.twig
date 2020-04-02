@@ -1,0 +1,85 @@
+{% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
+{% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
+{% set shopInfoEmail = getShopInfoEmail() %}
+
+<header class="header header--cart">
+    <div class="header__button">
+        <a class="btn btn--header-back" href="{{ url('front_homepage') }}">
+            <i class="btn__icon svg svg-chevron"></i>
+            {{ 'Zpět do obchodu'|trans }}
+        </a>
+    </div>
+    <div class="header__logo">
+        {% block logo %}
+            <a class="logo" href="{{ url('front_homepage') }}">
+                <img class="logo__img" src="{{ asset('assets/frontend/images/logo.svg') }}" alt="{{ 'Online shop'|trans }}">
+            </a>
+        {% endblock %}
+    </div>
+    <div class="header__info-box">
+        {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : 'box-info--in-header' } %}
+    </div>
+    <div class="header__mobile-button header__mobile-button--login">
+        <span class="header__mobile-button__in js-responsive-toggle" data-element="js-user-menu" data-hide-on-click-out="true">
+            <i class="svg svg-user"></i>
+        </span>
+        <div class="header__mobile-button__menu" id="js-user-menu">
+            {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
+                <a href="{{ url('front_customer_edit') }}">
+                    {{ 'Personal data'|trans }}
+                </a>
+                <a href="{{ url('front_customer_orders') }}">
+                    {{ 'Orders'|trans }}
+                </a>
+                <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}">
+                    {{ 'Log out'|trans }}
+                </a>
+            {% else %}
+                <a class="js-login-button" href="{{ url('front_login') }}" data-url="{{ url('front_login_window_form') }}">
+                    {{ 'Log in'|trans }}
+                </a>
+                <a href="{{ url('front_registration_register') }}">
+                    {{ 'Registration'|trans }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="header__links dont-print">
+        <ul class="menu-iconic">
+            {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
+                <li class="menu-iconic__item">
+                    <a href="#" class="menu-iconic__item__link">
+                        <i class="menu-iconic__item__icon svg svg-user"></i>
+                        <span class="menu-iconic__item__text">{{ 'Můj účet'|trans }}</span>
+                    </a>
+                    <ul class="menu-iconic__sub">
+                        <li class="menu-iconic__sub__item">
+                            <a href="{{ url('front_customer_edit') }}" class="menu-iconic__sub__item__link">{{ 'Personal data'|trans }}</a>
+                        </li>
+                        <li class="menu-iconic__sub__item">
+                            <a href="{{ url('front_customer_orders') }}" class="menu-iconic__sub__item__link">{{ 'My orders'|trans }}</a>
+                        </li>
+                        <li class="menu-iconic__sub__item">
+                            <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}" class="js-logout-link-desktop menu-iconic__sub__item__link">
+                                {{ 'Log out'|trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            {% else %}
+                <li class="menu-iconic__item">
+                    <a
+                        href="{{ url('front_login') }}"
+                        data-url="{{ url('front_login_window_form') }}"
+                        class="js-login-link-desktop js-login-button menu-iconic__item__link"
+                    >
+                        <i class="menu-iconic__item__icon svg svg-user"></i>
+                        <span class="menu-iconic__item__text">{{ 'Log in'|trans }}</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</header>
+
+{{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'header'})) }}
