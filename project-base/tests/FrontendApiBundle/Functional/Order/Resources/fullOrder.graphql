@@ -1,0 +1,103 @@
+mutation {
+    CreateOrder(
+        input: {
+            firstName: "firstName"
+            lastName: "lastName"
+            email: "user@example.com"
+            telephone: "+53 123456789"
+            onCompanyBehalf: true
+            companyName: "Airlocks s.r.o."
+            companyNumber: "1234"
+            companyTaxNumber: "EU4321"
+            street: "123 Fake Street"
+            city: "Springfield"
+            postcode: "12345"
+            country: "CZ"
+            note:"Thank You"
+            payment: {
+                uuid: "___UUID_PAYMENT___"
+                price: {
+                    priceWithVat: "2",
+                    priceWithoutVat: "2",
+                    vatAmount: "0"
+                }
+            }
+            transport: {
+                uuid: "___UUID_TRANSPORT___"
+                price: {
+                    priceWithVat: "4.84",
+                    priceWithoutVat: "4",
+                    vatAmount: "0.84"
+                }
+            }
+            differentDeliveryAddress: true
+            deliveryFirstName: "deliveryFirstName"
+            deliveryLastName: "deliveryLastName"
+            deliveryStreet: "deliveryStreet"
+            deliveryCity: "deliveryCity"
+            deliveryCountry: "SK"
+            deliveryPostcode: "13453"
+            products: [
+                {
+                    uuid: "___UUID_PRODUCT___",
+                    price: {
+                        priceWithVat: "139.96",
+                        priceWithoutVat: "115.67",
+                        vatAmount: "24.29"
+                    }
+                    quantity: 10
+                },
+            ]
+        }
+    ) {
+        transport {
+            name
+        }
+        payment {
+            name
+        }
+        status
+        totalPrice {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+        items {
+            name
+            unitPrice {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
+            totalPrice {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
+            quantity
+            vatRate
+            unit
+        }
+        firstName
+        lastName
+        email
+        telephone
+        companyName
+        companyNumber
+        companyTaxNumber
+        street
+        city
+        postcode
+        country
+        differentDeliveryAddress
+        deliveryFirstName
+        deliveryLastName
+        deliveryCompanyName
+        deliveryTelephone
+        deliveryStreet
+        deliveryCity
+        deliveryPostcode
+        deliveryCountry
+        note
+    }
+}
