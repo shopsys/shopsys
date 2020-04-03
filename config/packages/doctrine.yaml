@@ -14,10 +14,10 @@ doctrine:
         types:
             money:
                 class: \Shopsys\FrameworkBundle\Component\Doctrine\MoneyType
-                commented: false
+                commented: true
             tsvector:
                 class: \Intaro\PostgresSearchBundle\DBAL\TsvectorType
-                commented: false
+                commented: true
     orm:
         auto_generate_proxy_classes: false
         dql:
