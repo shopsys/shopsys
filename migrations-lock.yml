@@ -532,3 +532,6 @@
 20200319124638:
     class: Shopsys\FrameworkBundle\Migrations\Version20200319124638
     skip: false
+20200327080840:
+    class: Shopsys\FrameworkBundle\Migrations\Version20200327080840
+    skip: false
