@@ -1131,6 +1131,7 @@ There you can find links to upgrade notes for other versions too.
 - update your application to symfony4 ([#1704](https://github.com/shopsys/shopsys/pull/1704))
     
     - see #project-base-diff to update your project
+    - see also #project-base-diff from [#1764](https://github.com/shopsys/shopsys/pull/1764)
     
     - minimum memory requirements for installation using Docker on MacOS and Windows has changed, please read  [Installation Using Docker for MacOS](docs/installation/installation-using-docker-macos.md) or [Installation Using Docker for Windows 10 Pro and higher](docs/installation/installation-using-docker-windows-10-pro-higher.md)
     
