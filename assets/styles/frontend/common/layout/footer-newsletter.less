@@ -11,8 +11,8 @@
 
 .footer__newsletter {
     position: relative;
-    padding: @footer-newsletter-gap;    
-    margin: 1.5rem 0 3rem;  
+    padding: @footer-newsletter-gap;
+    margin: 1.5rem 0 3rem;
 
     background-color: @color-light;
 
@@ -25,19 +25,19 @@
         padding: @footer-newsletter-gap-lg;
     }
 
-    &::before {        
-        position: absolute;     
+    &::before {
+        position: absolute;
         right: 0;
         top: -18px;
         width: @footer-newsletter-image-width;
         height: @footer-newsletter-image-height;
         content: '';
 
-        background: url(../images/sconto_newsletter.jpg) no-repeat;
+        background: url('@{path-design}/sconto_newsletter.jpg') no-repeat;
         background-position: right top;
         background-size: 75%;
-        
-        @media @query-vl {            
+
+        @media @query-vl {
             top: -24px;
 
             background-size: auto;
@@ -72,7 +72,7 @@
         }
     }
 
-    &__form {        
+    &__form {
         position: relative;
         z-index: 1;
 
@@ -89,12 +89,12 @@
             justify-content: space-between;
             width: 100%;
             padding: 0.75rem;
-            margin-bottom: 5px;            
-            
+            margin-bottom: 5px;
+
             border-radius: @radius;
             background-color: @color-f;
 
-            @media @query-lg {                
+            @media @query-lg {
                 text-align: right;
             }
 
@@ -106,12 +106,12 @@
         &__in {
             position: relative;
             width: 100%;
-        }       
-        
+        }
+
         &__input {
             width: 100%;
 
-            border-color: transparent;  
+            border-color: transparent;
         }
 
         &__btn {
@@ -140,10 +140,10 @@
         margin-top: 0.5rem;
 
         font-size: 12px;
-        color: #8d8f93;        
+        color: #8d8f93;
     }
 
-    .form-choice__label__link { 
+    .form-choice__label__link {
         color: inherit;
         text-decoration: underline;
 
