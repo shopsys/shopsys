@@ -122,12 +122,19 @@ class CartController extends FrontBaseController
      */
     public function indexAction(Request $request)
     {
+        $domainId = $this->domain->getId();
+
+        /** @var \App\Model\Cart\Cart|null $cart */
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         $cartItems = $cart === null ? [] : $cart->getItems();
+        $oversizedCount = 0;
 
         $cartFormData = ['quantities' => []];
         foreach ($cartItems as $cartItem) {
             $cartFormData['quantities'][$cartItem->getId()] = $cartItem->getQuantity();
+            if ($cartItem->getProduct()->isOversized($domainId)) {
+                $oversizedCount++;
+            }
         }
 
         $form = $this->createForm(CartFormType::class, $cartFormData);
@@ -154,8 +161,6 @@ class CartController extends FrontBaseController
             );
         }
 
-        $domainId = $this->domain->getId();
-
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
         $productsPrice = $orderPreview->getProductsPrice();
         $remainingPriceWithVat = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
@@ -172,6 +177,7 @@ class CartController extends FrontBaseController
             'isFreeTransportAndPaymentActive' => $this->freeTransportAndPaymentFacade->isActive($domainId),
             'isPaymentAndTransportFree' => $this->freeTransportAndPaymentFacade->isFree($productsPrice->getPriceWithVat(), $domainId),
             'remainingPriceWithVat' => $remainingPriceWithVat,
+            'showOversizedMsg' => $oversizedCount !== 0 && $oversizedCount !== count($cartItems),
         ]);
     }
 

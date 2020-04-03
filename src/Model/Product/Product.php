@@ -42,6 +42,7 @@ class Product extends BaseProduct
     public const PDF_SUFFIX = '.pdf';
     public const FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE = 'assemblyInstruction';
     public const FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE = 'productTypePlan';
+    public const OVERSIZED_PRODUCT_TYPE_ID = 1;
 
     /**
      * @var bool
@@ -403,6 +404,15 @@ class Product extends BaseProduct
     public function getProductType(int $domainId): ProductType
     {
         return $this->getProductDomain($domainId)->getProductType();
+    }
+
+    /**
+     * @param int $domainId
+     * @return bool
+     */
+    public function isOversized(int $domainId): bool
+    {
+        return $this->getProductType($domainId)->getId() === self::OVERSIZED_PRODUCT_TYPE_ID;
     }
 
     /**

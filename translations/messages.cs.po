@@ -361,6 +361,9 @@ msgstr "Objednávky"
 msgid "Our customers who bought this bought also"
 msgstr "Naši zákaznící k tomuto produktu nejčastěji nakupují"
 
+msgid "Oversized product in cart"
+msgstr "V košíku máte nadrozměrnou položku"
+
 msgid "Page not found!"
 msgstr "Stránka nenalezena!"
 
@@ -573,6 +576,9 @@ msgstr "V průběhu objednávkového procesu byla změněna cena platby {{ payme
 
 msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
 msgstr "V průběhu objednávkového procesu byla změněna cena dopravy {{ transportName }}. Prosím, překontrolujte si objednávku."
+
+msgid "These goods have different transport requirements"
+msgstr "Tohle zboží má kvůli svým rozměrům a náročnosti manipulace jiné požadavky na dopravu.<br />Proto jsme váš nákup rozdělili na více zásilek."
 
 msgid "This account doesn't exist or password is incorrect"
 msgstr "Zadali jste špatné uživatelské jméno nebo heslo"

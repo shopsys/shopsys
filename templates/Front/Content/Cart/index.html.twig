@@ -25,11 +25,21 @@
                 {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
 
                 <h1>{{ 'Your cart'|trans }}</h1>
+
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form' }}) }}
                     {{ form_errors(form) }}
 
                     <div class="box-cart-info">
-                    {% set previewNumber = 0 %}
+                        {% if showOversizedMsg %}
+                            <div class="box-cart-info__oversized">
+                                <h6>{{ 'Oversized product in cart'|trans }}</h6>
+                                <p>
+                                    {{ 'These goods have different transport requirements'|trans|raw }}
+                                </p>
+                            </div>
+                        {% endif %}
+
+                        {% set previewNumber = 0 %}
                     {% for orderPreview in splitOrderPreview.orderPreviews %}
                         {% set previewNumber = previewNumber + 1 %}
                         {% if splitOrderPreview.morePreviews %}
