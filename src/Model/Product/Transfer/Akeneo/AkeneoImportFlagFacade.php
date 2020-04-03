@@ -95,7 +95,7 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
     /**
      * @inheritdoc
      */
-    protected function processItem(array $akeneoFlagData): void
+    protected function processItem($akeneoFlagData): void
     {
         if (strpos($akeneoFlagData['code'], self::PREFIX_FLAG_CODE) === false) {
             return;

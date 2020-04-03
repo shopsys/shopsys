@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag as BaseFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 
 /**
- * @property App\Model\Product\Flag\FlagData $flagData
+ * @property \App\Model\Product\Flag\App\Model\Product\Flag\FlagData $flagData
  *
  * @ORM\Table(name="flags")
  * @ORM\Entity

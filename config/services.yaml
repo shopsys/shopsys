@@ -175,8 +175,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@App\Model\Product\Brand\BrandDataFactory'
 
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagGridFactory: '@App\Model\Product\Flag\FlagGridFactory'
-
     Shopsys\FrameworkBundle\Model\Country\CountryFacade:
         class: 'App\Model\Country\CountryFacade'
 

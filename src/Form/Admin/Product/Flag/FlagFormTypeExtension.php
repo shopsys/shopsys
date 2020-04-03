@@ -43,8 +43,8 @@ class FlagFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public function getExtendedTypes()
     {
-        return FlagFormType::class;
+        yield FlagFormType::class;
     }
 }
