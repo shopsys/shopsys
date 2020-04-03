@@ -6962,12 +6962,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/framework.git",
-                "reference": "2e8c2a6878fb67cf7d4cf452bff85ee9f4f10a80"
+                "reference": "5eb84f14c643b325fc395baa463e20b1a29f3136"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/framework/zipball/2e8c2a6878fb67cf7d4cf452bff85ee9f4f10a80",
-                "reference": "2e8c2a6878fb67cf7d4cf452bff85ee9f4f10a80",
+                "url": "https://api.github.com/repos/shopsys/framework/zipball/5eb84f14c643b325fc395baa463e20b1a29f3136",
+                "reference": "5eb84f14c643b325fc395baa463e20b1a29f3136",
                 "shasum": ""
             },
             "require": {
@@ -7081,7 +7081,7 @@
                 "proprietary"
             ],
             "description": "Core of Shopsys Framework - open source framework for building large, scalable, fast-growing e-commerce projects based on Symfony",
-            "time": "2020-03-30T10:08:22+00:00"
+            "time": "2020-04-01T10:42:57+00:00"
         },
         {
             "name": "shopsys/frontend-api",
@@ -7089,12 +7089,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/frontend-api.git",
-                "reference": "96f1e11c14964677cdf7e50440fdf3a099f6ded0"
+                "reference": "ebc52bed343b9820aab50cec63b2cc3accf3044d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/frontend-api/zipball/96f1e11c14964677cdf7e50440fdf3a099f6ded0",
-                "reference": "96f1e11c14964677cdf7e50440fdf3a099f6ded0",
+                "url": "https://api.github.com/repos/shopsys/frontend-api/zipball/ebc52bed343b9820aab50cec63b2cc3accf3044d",
+                "reference": "ebc52bed343b9820aab50cec63b2cc3accf3044d",
                 "shasum": ""
             },
             "require": {
@@ -7144,7 +7144,7 @@
                 "api",
                 "graphql"
             ],
-            "time": "2020-03-25T10:19:52+00:00"
+            "time": "2020-03-31T11:06:45+00:00"
         },
         {
             "name": "shopsys/google-cloud-bundle",
