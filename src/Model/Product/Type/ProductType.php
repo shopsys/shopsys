@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Type;
 
+use App\Model\Product\Series\Exception\ProductSeriesDomainNotFoundException;
+use App\Model\Product\Series\ProductSeriesData;
+use App\Model\Product\Series\ProductSeriesDomain;
+use App\Model\Product\Type\Exception\ProductTypeDomainNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
@@ -39,6 +44,13 @@ class ProductType extends AbstractTranslatableEntity implements OrderableEntityI
     protected $translations;
 
     /**
+     * @var \App\Model\Product\Type\ProductTypeDomain[]|\Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Model\Product\Type\ProductTypeDomain", mappedBy="productType", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    protected $domains;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=20, unique=true)
@@ -59,9 +71,81 @@ class ProductType extends AbstractTranslatableEntity implements OrderableEntityI
     public function __construct(ProductTypeData $productTypeData)
     {
         $this->translations = new ArrayCollection();
+        $this->domains = new ArrayCollection();
         $this->setTranslations($productTypeData);
+        $this->createDomains($productTypeData);
         $this->akeneoCode = $productTypeData->akeneoCode;
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductTypeData $productTypeData
+     */
+    public function edit(ProductTypeData $productTypeData): void
+    {
+        $this->setTranslations($productTypeData);
+        $this->setDomains($productTypeData);
+        $this->akeneoCode = $productTypeData->akeneoCode;
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductTypeData $productTypeData
+     */
+    protected function setTranslations(ProductTypeData $productTypeData): void
+    {
+        foreach ($productTypeData->name as $locale => $name) {
+            $this->translation($locale)->setName($name);
+        }
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductTypeTranslation
+     */
+    protected function createTranslation(): ProductTypeTranslation
+    {
+        return new ProductTypeTranslation();
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductTypeData $productTypeData
+     */
+    private function createDomains(ProductTypeData $productTypeData): void
+    {
+        $domainIds = array_keys($productTypeData->freeTransport);
+
+        foreach ($domainIds as $domainId) {
+            $productTypeDomain = new ProductTypeDomain($this, $domainId);
+            $this->domains->add($productTypeDomain);
+        }
+
+        $this->setDomains($productTypeData);
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductTypeData $productTypeData
+     */
+    private function setDomains(ProductTypeData $productTypeData): void
+    {
+        foreach ($this->domains as $productTypeDomain) {
+            $domainId = $productTypeDomain->getDomainId();
+            $productTypeDomain->setFreeTransport($productTypeData->freeTransport[$domainId]);
+            $productTypeDomain->setFreeTransportMinimalPrice($productTypeData->freeTransportMinimalPrice[$domainId]);
+        }
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Product\Type\ProductTypeDomain
+     */
+    private function getProductTypeDomain(int $domainId): ProductTypeDomain
+    {
+        foreach ($this->domains as $domain) {
+            if ($domain->getDomainId() === $domainId) {
+                return $domain;
+            }
+        }
+
+        throw new ProductTypeDomainNotFoundException($this);
     }
 
     /**
@@ -90,33 +174,6 @@ class ProductType extends AbstractTranslatableEntity implements OrderableEntityI
     }
 
     /**
-     * @param \App\Model\Product\Type\ProductTypeData $productTypeData
-     */
-    protected function setTranslations(ProductTypeData $productTypeData): void
-    {
-        foreach ($productTypeData->name as $locale => $name) {
-            $this->translation($locale)->setName($name);
-        }
-    }
-
-    /**
-     * @return \App\Model\Product\Type\ProductTypeTranslation
-     */
-    protected function createTranslation(): ProductTypeTranslation
-    {
-        return new ProductTypeTranslation();
-    }
-
-    /**
-     * @param \App\Model\Product\Type\ProductTypeData $productTypeData
-     */
-    public function edit(ProductTypeData $productTypeData): void
-    {
-        $this->setTranslations($productTypeData);
-        $this->akeneoCode = $productTypeData->akeneoCode;
-    }
-
-    /**
      * @return int
      */
     public function getPosition(): int
@@ -130,5 +187,23 @@ class ProductType extends AbstractTranslatableEntity implements OrderableEntityI
     public function setPosition($position): void
     {
         $this->position = $position;
+    }
+
+    /**
+     * @param int $domainId
+     * @return bool
+     */
+    public function isFreeTransport(int $domainId): bool
+    {
+        return $this->getProductTypeDomain($domainId)->isFreeTransport();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getFreeTransportMinimalPrice(int $domainId): Money
+    {
+        return $this->getProductTypeDomain($domainId)->getFreeTransportMinimalPrice();
     }
 }
