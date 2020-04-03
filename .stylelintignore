@@ -1,4 +1,4 @@
-src/**/helpers/*.*
-src/**/libs/*.*
-src/**/libs/**/*.*
-src/**/core/reset.less
+assets/styles/**/helpers/*.*
+assets/**/libs/*.*
+assets/**/libs/**/*.*
+assets/**/core/reset.less
