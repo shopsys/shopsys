@@ -193,6 +193,11 @@ There you can find links to upgrade notes for other versions too.
     - be aware, if you already have such paths (`hledani/`, `search/`) in your application
     - the change might cause problems with your SEO as well
 
+### Database migrations
+- [#1757](https://github.com/shopsys/shopsys/pull/1757)
+    - orders have nullable field `origin` to distinguish origin of the order
+    - orders have mandatory field `uuid`
+
 ### Application
 
 - update your twig files ([#1284](https://github.com/shopsys/shopsys/pull/1284/)):
@@ -210,7 +215,7 @@ There you can find links to upgrade notes for other versions too.
         - `templates/Admin/Content/Category/detail.html.twig`
         - `templates/Admin/Content/Product/detail.html.twig`
 - add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/master/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
-- add optional [Frontend API](https://github.com/shopsys/shopsys/blob/master/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489)):
+- add optional [Frontend API](https://github.com/shopsys/shopsys/blob/master/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489), [#1757](https://github.com/shopsys/shopsys/pull/1757)):
     - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
     - register necessary bundles in `config/bundles.php`
         ```diff
@@ -235,6 +240,9 @@ There you can find links to upgrade notes for other versions too.
         +         - 2
     - update your `easy-coding-standard.yml` file:
         - add `'*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
+        - add `'*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
+        - add `'*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
+        - add `'*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
 - removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437))
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
 - add access denied url to `config/packages/security.yml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
