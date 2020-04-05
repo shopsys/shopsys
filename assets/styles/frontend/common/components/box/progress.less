@@ -32,7 +32,9 @@
 
             &::before,
             &::after {
-                background-color: @color-light-secondary;
+                background-image: url('@{path-design}/radius.png');
+                background-repeat: no-repeat;
+                background-size: contain;
             }
 
             .box-progress__item__step {
@@ -47,8 +49,22 @@
 
             &::before,
             &::after {
-                background-color: #cfd3d3;
+                background-image: url('@{path-design}/radius-active.png');
             }
+        }
+
+        &--previous-active + .box-progress__item--active {
+            left: -2px;
+            width: calc((100% / 3) + 4px);
+        }
+
+        &--done + .box-progress__item--previous-active {
+            border-top-left-radius: 0;
+        }
+
+        &--done + .box-progress__item--previous-active::before ,
+        &--done::after {
+            visibility: hidden;
         }
 
         &--active,
@@ -57,21 +73,20 @@
             &::before,
             &::after {
                 position: absolute;
-                bottom: -5px;
-                width: 10px;
-                height: 10px;
+                bottom: 0;
+                width: 14px;
+                height: 14px;
                 content: '';
                 z-index: 1;
             }
 
             &::before {
-                left: -5px;
-                transform: rotate(-45deg);
+                left: -14px;
             }
 
             &::after {
-                right: -5px;
-                transform: rotate(45deg);
+                right: -14px;
+                transform: scaleX(-1);
             }
         }
 
