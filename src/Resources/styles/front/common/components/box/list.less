@@ -62,7 +62,16 @@
         &__info {
             display: none;
 
+            @media @query-lg {
+                display: block;
+                position: absolute;
+                right: 25px;
+                top: 70px;
+                font-size: 14px;
+            }
+
             @media @query-vl {
+                position: static;
                 display: block;
 
                 font-size: 16px;

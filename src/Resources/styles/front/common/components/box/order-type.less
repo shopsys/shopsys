@@ -15,6 +15,8 @@
         border-top-left-radius: @radius;
         border-top-right-radius: @radius;
 
+        -webkit-font-smoothing: antialiased;
+
         &:last-child {
             margin-bottom: 0;
         }
@@ -36,9 +38,11 @@
 
         &.active {
             background: @color-light-secondary;
-            color: @color-base;
+            color: #202330;
             text-decoration: none;
             font-family: @font-quartenary;
+
+            -webkit-font-smoothing: auto;
 
             @media @query-lg {
                 &::before,
