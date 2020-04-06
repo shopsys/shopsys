@@ -4,52 +4,61 @@ INSTALL_DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 
 PWD_PROJECT_BASE_PATH=`[ -d "$PWD/project-base" ] && echo "$PWD/project-base" || echo "$PWD"`
 
+# ANSI color codes
+RED="\e[31m"
+GREEN="\e[32m"
+ORANGE="\e[38;5;137m"
+GREY="\e[90m"
+NC="\e[0m"
+
 if [ "$1" == "monorepo" ]
 then
     PROJECT_BASE_PATH=`realpath ${INSTALL_DIR}/../../../project-base`
     if [ "$PWD_PROJECT_BASE_PATH" != "$PROJECT_BASE_PATH" ]
     then
-        echo "You have to run install.sh from monorepo root. Eg. /var/www/html"
+        printf "${RED}You have to run install.sh from monorepo root. Eg. /var/www/html${NC}\n"
         exit 1
     fi
 else
     PROJECT_BASE_PATH=`realpath ${INSTALL_DIR}/../../../../`
     if [ "$PWD_PROJECT_BASE_PATH" != "$PROJECT_BASE_PATH" ]
     then
-        echo "You have to run install.sh from the project root. Eg. /var/www/html"
+        printf "${RED}You have to run install.sh from the project root. Eg. /var/www/html{$NC}\n"
         exit 1
     fi
 fi
 
-echo "Copying FOS REST configuration..."
+printf "Copying FOS REST configuration..."
 cp ${INSTALL_DIR}/config/packages/fos_rest.yml ${PROJECT_BASE_PATH}/config/packages/fos_rest.yml
 cp ${INSTALL_DIR}/config/packages/test/fos_rest.yml ${PROJECT_BASE_PATH}/config/packages/test/fos_rest.yml
-echo "Done"
+printf "${GREEN}Done${NC}\n"
 
-echo "Copying OAuth2 configuration..."
+printf "Copying OAuth2 configuration..."
 cp ${INSTALL_DIR}/config/packages/trikoder_oauth2.yml ${PROJECT_BASE_PATH}/config/packages/trikoder_oauth2.yml
 mkdir -p ${PROJECT_BASE_PATH}/config/oauth2
 cp ${INSTALL_DIR}/config/oauth2/.gitignore ${PROJECT_BASE_PATH}/config/oauth2/.gitignore
 cp ${INSTALL_DIR}/config/oauth2/parameters_oauth.yml.dist ${PROJECT_BASE_PATH}/config/oauth2/parameters_oauth.yml.dist
-echo "Done"
+printf "${GREEN}Done${NC}\n"
 
-echo "Creating directory src/Controller/Api/V1..."
+printf "Creating directory src/Controller/Api/V1..."
 mkdir -p ${PROJECT_BASE_PATH}/src/Controller/Api/V1/Product
 touch ${PROJECT_BASE_PATH}/src/Controller/Api/V1/Product/.gitkeep
-echo "Done"
+printf "${GREEN}Done${NC}\n"
 
-echo "Copying tests..."
+printf "Copying tests..."
 cp ${INSTALL_DIR}/tests/App/Smoke/BackendApiTest.php ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiTest.php
 cp ${INSTALL_DIR}/tests/App/Smoke/BackendApiCreateProductTest.php ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiCreateProductTest.php
 cp ${INSTALL_DIR}/tests/App/Smoke/BackendApiDeleteProductTest.php ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiDeleteProductTest.php
 cp ${INSTALL_DIR}/tests/App/Smoke/BackendApiUpdateProductTest.php ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiUpdateProductTest.php
 cp ${INSTALL_DIR}/tests/App/Test/OauthTestCase.php ${PROJECT_BASE_PATH}/tests/App/Test/OauthTestCase.php
-echo "Done"
+printf "${GREEN}Done${NC}\n"
+
+printf "\n"
 
 function apply_patch () {
     if [ -z $1 ]
     then
-        echo "Please provide path as first parameter of apply_patch function"
+        printf "${RED}Please provide path as first parameter of apply_patch function${NC}\n"
         exit 1
     fi
 
@@ -69,21 +78,23 @@ function apply_patch () {
 
     if [ ! -z "${PATCH_REVERSED}" ]
     then
-        echo "Applied patch detected: patch for ${FILE_PATH} already applied. Doing nothing"
+        printf "${ORANGE}Applied patch detected: patch for ${FILE_PATH} already applied. Doing nothing${NC}\n"
     elif [ ! -z "${PATCH_FAIL}" ]
     then
         echo ${PATCH_FAIL}
-        echo "Patch for ${FILE_PATH} cannot be applied!"
+        printf "${RED}Patch for ${FILE_PATH} cannot be applied!${NC}\n"
         AT_LEAST_ONE_PATCH_FAILED=1
     elif [ ! -z "${PATCH_WARNING}" ]
     then
-        echo "Patch can be applied for ${FILE_PATH} however patching did not have perfect match!"
-        echo "Verify patchfile and apply manually with 'patch -t ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch'"
+        printf "${RED}Patch can be applied for ${FILE_PATH} however patching did not have perfect match!${NC}\n"
+        printf "Verify patchfile and apply manually with ${GREY}'patch -t ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch'${NC}\n"
         AT_LEAST_ONE_PATCH_FAILED=1
     else
         patch -t ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch
-        echo "Done"
+        printf "${GREEN}Done${NC}\n"
     fi
+
+    printf "\n"
 }
 
 apply_patch "src/Kernel.php"
@@ -95,16 +106,16 @@ apply_patch "build.xml"
 
 if [ "$1" == "monorepo" ]
 then
-    echo "Running from monorepo, not applying patch for project-base composer.json because it has no effect in monorepo."
+    printf "${GREY}Running from monorepo, not applying patch for project-base composer.json because it has no effect in monorepo.${NC}\n"
 else
     apply_patch "composer.json"
 fi
 
 if [ -z $AT_LEAST_ONE_PATCH_FAILED ]
 then
-    echo "Backend API installation was successful!"
+    printf "${GREEN}Backend API installation was successful!${NC}\n"
     exit 0
 else
-    echo "Backend API installation failed!"
+    printf "${RED}Backend API installation failed!${NC}\n"
     exit 1
 fi
