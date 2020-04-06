@@ -17,15 +17,19 @@
         </div>
     </div>
 {% else %}
-    <div class="in-message in-message--info margin-bottom-20">
+    <div class="in-message in-message--default">
         {% if (filterFormSubmitted) %}
-            {{ 'No results matching filter'|trans }}
+            <strong class="in-message__heading">{{ 'No results matching filter'|trans }}</strong>
+            <p class="in-message__text">
+                {{ 'Pro vaše přesné vyhledávání momentálně nemáme žádné výsledky.<br>
+                Zkuste být více specifičtí, nebo se podívejte, jestli jste nevyfiltrovali neexistující údaje.'|transHtml }}
+            </p>
         {% elseif searchText is defined %}
-            {{ 'Search didn\'t find any products.'|trans }}
+            <strong class="in-message__heading">{{ 'Search didn\'t find any products.'|trans }}</strong>
         {% elseif category is defined %}
-            {{ 'This category contains no products.'|trans }}
+            <strong class="in-message__heading">{{ 'This category contains no products.'|trans }}</strong>
         {% else %}
-            {{ 'No products found for this brand'|trans }}
+            <strong class="in-message__heading">{{ 'No products found for this brand'|trans }}</strong>
         {% endif %}
     </div>
 {% endif %}

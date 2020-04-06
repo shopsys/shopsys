@@ -8,6 +8,10 @@
 @in-message-info-text: #005B7E;
 @in-message-success-text: @color-green;
 
+@in-message-default-bg-color: @color-f;
+@in-message-defailt-heading-color: #15161e;
+@in-message-defailt-text-color: rgba(21, 22, 30, .7);
+
 .in-message {
     display: block;
     padding: 6px 9px;
@@ -19,6 +23,27 @@
 
     &__list {
         .reset-ul();
+    }
+
+    &--default {
+        padding: 1.5rem;
+        margin: 0;
+        text-align: center;
+
+        border-radius: @radius;
+        background-color: @in-message-default-bg-color;
+
+        @media @query-lg {
+            padding: 2rem;
+        }
+
+        @media @query-vl {
+            padding: 3rem;
+        }
+
+        @media @query-xl {
+            padding: 3.5rem;
+        }
     }
 
     &--error {
@@ -49,5 +74,23 @@
         color: @in-message-alert-text;
         border: 1px solid @in-message-alert;
         background: lighten(@in-message-alert, 5%);
+    }
+
+    &__heading {
+        font-size: 22px;
+        line-height: 1.2;
+        font-family: @font-tertiary;
+        color: @in-message-defailt-heading-color;
+
+        @media @query-vl {
+            font-size: 26px;
+            line-height: 1.4;
+        }
+    }
+
+    &__text {
+        margin: 0.75rem 0 0;
+        color: @in-message-defailt-text-color;
+        -webkit-font-smoothing: antialiased;
     }
 }
