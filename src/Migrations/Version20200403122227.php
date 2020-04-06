@@ -32,6 +32,12 @@ class Version20200403122227 extends AbstractMigration
                 product_type_domains
             ADD
                 CONSTRAINT FK_29FEF20314959723 FOREIGN KEY (product_type_id) REFERENCES product_types (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+
+        $this->sql('INSERT INTO "product_type_domains" ("id", "product_type_id", "domain_id", "free_transport") VALUES
+            (1,	1, 1, true),
+            (2,	1, 2, true),
+            (3,	2, 1, false),
+            (4,	2, 2, false)');
     }
 
     /**

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Type;
-
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -16,7 +14,9 @@ class ProductTypeDataFactory
      */
     private $domain;
 
-
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
     public function __construct(Domain $domain)
     {
         $this->domain = $domain;
@@ -69,7 +69,7 @@ class ProductTypeDataFactory
 
         /** @var \App\Model\Product\Type\ProductTypeTranslation[] $translations */
         $translations = $productType->getTranslations();
-        foreach ($translations as $translation){
+        foreach ($translations as $translation) {
             $productTypeData->name[$translation->getLocale()] = $translation->getName();
         }
 
@@ -79,7 +79,5 @@ class ProductTypeDataFactory
         }
 
         $productTypeData->akeneoCode = $productType->getAkeneoCode();
-
     }
-
 }

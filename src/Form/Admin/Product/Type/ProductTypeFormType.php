@@ -7,8 +7,12 @@ namespace App\Form\Admin\Product\Type;
 use App\Model\Product\Type\ProductType;
 use App\Model\Product\Type\ProductTypeData;
 use App\Model\Product\Type\ProductTypeFacade;
+use Shopsys\FormTypesBundle\MultidomainType;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -60,8 +64,36 @@ class ProductTypeFormType extends AbstractType
                         'max' => 20,
                         'maxMessage' => 'Akaneo kód nesmí být delší než {{ limit }} znaků.',
                     ]),
+                    new Constraints\Callback(function ($akeneoCode, ExecutionContextInterface $context) {
+                        $existingProductType = $this->productTypeFacade->findByAkeneoCode($akeneoCode);
+                        if ($existingProductType !== null
+                            && $this->editedProductType !== null
+                            && $existingProductType !== $this->editedProductType
+                        ) {
+                            $context->addViolation(t(
+                                'Zadaný Akeneo kód "%akeneoCode%" již používá jiný typ produktu.',
+                                ['%akeneoCode%' => $akeneoCode]
+                            ));
+                        }
+                    }),
                 ],
+            ])
+            ->add('freeTransport', MultidomainType::class, [
+                'entry_type' => YesNoType::class,
+                'required' => false,
+                'label' => t('Povolit dopravu zdarma'),
+            ])
+            ->add('freeTransportMinimalPrice', MultidomainType::class, [
+                'label' => t('Minimální částka pro dopravu zdarma s DPH'),
+                'entry_type' => MoneyType::class,
+                'error_bubbling' => false,
+                'entry_options' => [
+                    'scale' => 6,
+                ],
+                'required' => false,
             ]);
+
+        $builder->add('save', SubmitType::class);
     }
 
     /**
@@ -76,19 +108,31 @@ class ProductTypeFormType extends AbstractType
                 'data_class' => ProductTypeData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                    new Constraints\Callback(function (ProductTypeData $productTypeData, ExecutionContextInterface $context) {
-                        $existingProductType = $this->productTypeFacade->findByAkeneoCode($productTypeData->akeneoCode);
-                        if ($existingProductType !== null
-                            && $this->editedProductType !== null
-                            && $existingProductType !== $this->editedProductType
-                        ) {
-                            $context->addViolation(t(
-                                'Zadaný Akeneo kód "%akeneoCode%" již používá jiný typ produktu.',
-                                ['%akeneoCode%' => $productTypeData->akeneoCode]
-                            ));
-                        }
-                    }),
+                    new Constraints\Callback([$this, 'validateFreeTransportMinimalPriceByDomain']),
                 ],
             ]);
+    }
+
+    /**
+     * @param \App\Model\Product\Type\ProductTypeData $productTypeData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateFreeTransportMinimalPriceByDomain(ProductTypeData $productTypeData, ExecutionContextInterface $context): void
+    {
+        foreach ($productTypeData->freeTransport as $domainId => $freeTransport) {
+            if ($freeTransport === true) {
+                if ($productTypeData->freeTransportMinimalPrice[$domainId] === null) {
+                    $context->buildViolation('Pokud je povolená doprava zdarma, vyplňte minimální částku pro danou doménu.')
+                        ->atPath('freeTransportMinimalPrice')
+                        ->addViolation();
+                }
+
+                if ($productTypeData->freeTransportMinimalPrice[$domainId]->getAmount() < 0) {
+                    $context->buildViolation('Minimální částka musí větší, nebo rovna 0.')
+                        ->atPath('freeTransportMinimalPrice')
+                        ->addViolation();
+                }
+            }
+        }
     }
 }

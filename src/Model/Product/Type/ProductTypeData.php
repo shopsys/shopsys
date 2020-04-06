@@ -44,6 +44,5 @@ class ProductTypeData
             $this->name[$translate->getLocale()] = $translate->getName();
         }
         $this->akeneoCode = $productType->getAkeneoCode();
-
     }
 }

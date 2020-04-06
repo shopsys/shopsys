@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Type;
 
-use App\Model\Product\Series\Exception\ProductSeriesDomainNotFoundException;
-use App\Model\Product\Series\ProductSeriesData;
-use App\Model\Product\Series\ProductSeriesDomain;
 use App\Model\Product\Type\Exception\ProductTypeDomainNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -200,9 +197,9 @@ class ProductType extends AbstractTranslatableEntity implements OrderableEntityI
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getFreeTransportMinimalPrice(int $domainId): Money
+    public function getFreeTransportMinimalPrice(int $domainId): ?Money
     {
         return $this->getProductTypeDomain($domainId)->getFreeTransportMinimalPrice();
     }

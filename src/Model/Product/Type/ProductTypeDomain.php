@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Type;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -57,6 +56,10 @@ class ProductTypeDomain
      */
     protected $freeTransport;
 
+    /**
+     * @param \App\Model\Product\Type\ProductType $productType
+     * @param int $domainId
+     */
     public function __construct(ProductType $productType, int $domainId)
     {
         $this->productType = $productType;
@@ -73,17 +76,17 @@ class ProductTypeDomain
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getFreeTransportMinimalPrice(): Money
+    public function getFreeTransportMinimalPrice(): ?Money
     {
         return $this->freeTransportMinimalPrice;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $freeTransportMinimalPrice
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $freeTransportMinimalPrice
      */
-    public function setFreeTransportMinimalPrice(Money $freeTransportMinimalPrice): void
+    public function setFreeTransportMinimalPrice(?Money $freeTransportMinimalPrice): void
     {
         $this->freeTransportMinimalPrice = $freeTransportMinimalPrice;
     }
@@ -103,5 +106,4 @@ class ProductTypeDomain
     {
         $this->freeTransport = $freeTransport;
     }
-
 }

@@ -34,8 +34,9 @@ class ProductTypeDataFixture extends AbstractReferenceFixture
     {
 
         /**
-         * Default product types are created in database migration.
+         * Default product types are created in database migrations.
          * @see \App\Migrations\Version20200214104810
+         * @see \App\Migrations\Version20200403122227
          */
         $commonProductType = $this->productTypeFacade->findByAkeneoCode('zasilka_2');
         $oversizedProductType = $this->productTypeFacade->findByAkeneoCode('zasilka_1');

@@ -4,5 +4,11 @@
 {% block h1 %}{{ 'Typy produktů'|trans }}{% endblock %}
 
 {% block main_content %}
+    <div class="wrap-bar">
+        <a href="{{ url('admin_producttype_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Vytvořit nový typ produktu'|trans }}
+        </a>
+    </div>
     {{ gridView.render() }}
 {% endblock %}
