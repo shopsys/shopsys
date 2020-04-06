@@ -78,28 +78,33 @@
             </div>
         </div>
 
-        <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="product_filter_box_availability">
-            <span class="box-filter__choice__title active js-product-filter-box-label">
-                {{ 'Availability'|trans }}
-                <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
-            </span>
-            <div id="product_filter_box_availability" class="box-filter__choice__inputs">
-                <div class="form-choice">
-                    {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox" } }) }}
-                    <label class="css-checkbox__image form-choice__label" for="{{ filterForm.inStock.vars.id }}">
-                            {{ 'Products in stock only'|trans }}
-                            {% if productFilterCountData is not null %}
-                                <span
-                                    class="js-product-filter-count"
-                                    data-form-id="{{ filterForm.inStock.vars.id }}"
-                                >
-                                    ({{ productFilterCountData.countInStock }})
-                                </span>
-                            {% endif %}
-                    </label>
+        {% if productFilterCountData is not null %}
+
+            <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="product_filter_box_availability">
+                <span class="box-filter__choice__title active js-product-filter-box-label">
+                    {{ 'Availability'|trans }}
+                    <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+                </span>
+                <div id="product_filter_box_availability" class="box-filter__choice__inputs">
+                    <div class="form-choice">
+                        {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox" } }) }}
+                        <label class="css-checkbox__image form-choice__label" for="{{ filterForm.inStock.vars.id }}">
+                                {{ 'Products in stock only'|trans }}
+
+                                    <span
+                                        class="js-product-filter-count"
+                                        data-form-id="{{ filterForm.inStock.vars.id }}"
+                                    >
+                                        ({{ productFilterCountData.countInStock }})
+                                    </span>
+
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% else %}
+            {% do filterForm.inStock.setRendered %}
+        {% endif %}
 
         {% if filterForm.brands is empty %}
             {% do filterForm.brands.setRendered %}
