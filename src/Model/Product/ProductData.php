@@ -115,6 +115,11 @@ class ProductData extends BaseProductData
      */
     public $preorder;
 
+    /**
+     * @var int|null
+     */
+    public $vendorDeliveryDate;
+
     public function __construct()
     {
         parent::__construct();

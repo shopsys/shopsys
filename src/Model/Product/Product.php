@@ -57,10 +57,15 @@ class Product extends BaseProduct
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $preorder;
+
+    /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $vendorDeliveryDate;
 
     /**
      * @param \App\Model\Product\ProductData $productData
@@ -73,6 +78,7 @@ class Product extends BaseProduct
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->preorder = $productData->preorder;
+        $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
     }
 
     /**
@@ -86,6 +92,7 @@ class Product extends BaseProduct
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->preorder = $productData->preorder;
+        $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
     }
 
     /**
@@ -390,8 +397,16 @@ class Product extends BaseProduct
     /**
      * @return  bool
      */
-    public function hasPreorder()
+    public function hasPreorder(): bool
     {
         return $this->preorder;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getVendorDeliveryDate(): ?int
+    {
+        return $this->vendorDeliveryDate;
     }
 }
