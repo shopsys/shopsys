@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 class PricesPreviewFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
+     * @var \App\Model\Transport\TransportPriceCalculation
      */
     protected $transportPriceCalculation;
 
@@ -44,7 +44,7 @@ class PricesPreviewFacade
     private $currencyFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @param \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
@@ -97,11 +97,11 @@ class PricesPreviewFacade
                 }
             }
             $transportPricesByProductTypeIdAndTransportId[$productTypeId] = $this->transportPriceCalculation
-                ->getCalculatedPricesIndexedByTransportId(
+                ->getCalculatedPricesIndexedByTransportIdByFreeTransport(
                     $allowedTransports,
                     $currency,
-                    $orderPreview->getProductsPrice(),
-                    $domainId
+                    $domainId,
+                    $orderPreview->isTransportForFree()
                 );
         }
 

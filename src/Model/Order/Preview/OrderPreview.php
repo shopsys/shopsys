@@ -45,6 +45,11 @@ class OrderPreview extends BaseOrderPreview
     private $percentageOfFreeTransport;
 
     /**
+     * @var bool
+     */
+    private $transportForFree;
+
+    /**
      * @param array $quantifiedProductsByIndex
      * @param array $quantifiedItemsPricesByIndex
      * @param array $quantifiedItemsDiscountsByIndex
@@ -62,6 +67,7 @@ class OrderPreview extends BaseOrderPreview
      * @param \App\Model\Stock\Stock|null $personalPickupStock
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $restToFreeTransportPrice
      * @param int|null $percentageOfFreeTransport
+     * @param bool|null $transportForFree
      */
     public function __construct(
         array $quantifiedProductsByIndex,
@@ -80,7 +86,8 @@ class OrderPreview extends BaseOrderPreview
         ?ProductType $productType = null,
         ?Stock $personalPickupStock = null,
         ?Money $restToFreeTransportPrice = null,
-        ?int $percentageOfFreeTransport = null
+        ?int $percentageOfFreeTransport = null,
+        ?bool $transportForFree = false
     ) {
         parent::__construct(
             $quantifiedProductsByIndex,
@@ -102,6 +109,7 @@ class OrderPreview extends BaseOrderPreview
         $this->productsAvailability = $productsAvailability;
         $this->restToFreeTransportPrice = $restToFreeTransportPrice;
         $this->percentageOfFreeTransport = $percentageOfFreeTransport;
+        $this->transportForFree = $transportForFree;
     }
 
     /**
@@ -162,5 +170,13 @@ class OrderPreview extends BaseOrderPreview
     public function getRestToFreeTransportPrice(): ?Money
     {
         return $this->restToFreeTransportPrice;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTransportForFree(): bool
+    {
+        return $this->transportForFree;
     }
 }

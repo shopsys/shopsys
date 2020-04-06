@@ -88,6 +88,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@App\Model\Transport\TransportDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation: '@App\Model\Transport\TransportPriceCalculation'
+
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface: '@Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory'
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'

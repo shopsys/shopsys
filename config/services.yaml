@@ -149,6 +149,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@App\Model\Transport\TransportDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation: '@App\Model\Transport\TransportPriceCalculation'
+
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
 
     Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade: '@App\Model\Product\Listing\ProductListOrderingModeForListFacade'

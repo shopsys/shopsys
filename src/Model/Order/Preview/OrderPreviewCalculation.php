@@ -26,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 /**
  * @property \App\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price|null calculateRoundingPrice(\App\Model\Payment\Payment $payment, \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency, \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice, \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice, \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice)
+ * @property \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  */
 class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 {
@@ -44,7 +45,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      * @param \App\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @param \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
@@ -113,13 +114,28 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 
         $productsPrice = $this->getProductsPrice($quantifiedItemsPrices, $quantifiedItemsDiscounts);
 
+        $restToFreeTransportPrice = Money::zero();
+        $percentageOfFreeTransport = 0;
+        $transportForFree = false;
+        if ($productType !== null && $productType->isFreeTransport($domainId)) {
+            $restToFreeTransportPrice = $productType->getFreeTransportMinimalPrice($domainId)->subtract($productsPrice->getPriceWithVat());
+            $percentageOfFreeTransport = (int)floor($productsPrice->getPriceWithVat()->getAmount() / ($productType->getFreeTransportMinimalPrice($domainId)->getAmount() / 100));
+            if ($productsPrice->getPriceWithVat()->getAmount() > $productType->getFreeTransportMinimalPrice($domainId)->getAmount()) {
+                $transportForFree = true;
+            }
+        }
+
         if ($transport !== null) {
-            $transportPrice = $this->transportPriceCalculation->calculatePrice(
-                $transport,
-                $currency,
-                $productsPrice,
-                $domainId
-            );
+            if ($transportForFree) {
+                $transportPrice = Price::zero();
+            } else {
+                $transportPrice = $this->transportPriceCalculation->calculatePrice(
+                    $transport,
+                    $currency,
+                    $productsPrice,
+                    $domainId
+                );
+            }
         } else {
             $transportPrice = null;
         }
@@ -154,13 +170,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 
         $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
 
-        $restToFreeTransportPrice = Money::zero();
-        $percentageOfFreeTransport = 0;
-        if ($productType !== null && $productType->isFreeTransport($domainId)) {
-            $restToFreeTransportPrice = $productType->getFreeTransportMinimalPrice($domainId)->subtract($productsPrice->getPriceWithVat());
-            $percentageOfFreeTransport = (int)floor($productsPrice->getPriceWithVat()->getAmount() / ($productType->getFreeTransportMinimalPrice($domainId)->getAmount() / 100));
-        }
-
         return new OrderPreview(
             $quantifiedProducts,
             $quantifiedItemsPrices,
@@ -178,7 +187,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $productType,
             $personalPickupStock,
             $restToFreeTransportPrice,
-            $percentageOfFreeTransport
+            $percentageOfFreeTransport,
+            $transportForFree
         );
     }
 
