@@ -48,8 +48,8 @@
                                 -
                                 {{ orderPreview.productType.name }}
                             </h2>
-                            {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                         {% endif %}
+                        {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                         {{ cartItemsTableMacro.table(form, orderPreview) }}
                     {% endfor %}
 
@@ -109,21 +109,7 @@
 
                     <div class="box-cart-bottom">
                         <div class="box-cart-bottom__info">
-                            {% if isFreeTransportAndPaymentActive %}
-                                {% if isPaymentAndTransportFree %}
-                                    <div class="box-free-transport box-free-transport--done">
-                                        {% trans %}
-                                            Shipping and payment <strong>for free!</strong>
-                                        {% endtrans %}
-                                    </div>
-                                {% else %}
-                                    <div class="box-free-transport">
-                                        {% trans with {'%price%': remainingPriceWithVat|price} %}
-                                            You still have to purchase products for <strong> %price% </strong> for <strong> free </strong> shipping and payment.
-                                        {% endtrans %}
-                                    </div>
-                                {% endif %}
-                            {% endif %}
+
                         </div>
                     </div>
                 {{ form_end(form) }}

@@ -1,3 +1,3 @@
 import './customerValidator';
 import './orderValidator';
-import './productTypeValidator';
+import '../../../admin/validation/productTypeValidator';

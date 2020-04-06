@@ -98,11 +98,11 @@ class ProductTypeController extends AdminBaseController
                     t('Typ produktu <strong><a href="{{ url }}">{{ productType.name }}</a></strong> je úspěšně vytvořen'),
                     [
                         'productType' => $productType,
-                        'url' => $this->generateUrl('admin_productype_edit', ['id' => $productType->getId()]),
+                        'url' => $this->generateUrl('admin_producttype_edit', ['id' => $productType->getId()]),
                     ]
                 );
 
-            return $this->redirectToRoute('admin_productype_list');
+            return $this->redirectToRoute('admin_producttype_list');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

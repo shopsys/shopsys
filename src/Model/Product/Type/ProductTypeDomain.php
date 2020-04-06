@@ -26,7 +26,7 @@ class ProductTypeDomain
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var \App\Model\Product\Type\ProductType
@@ -41,20 +41,20 @@ class ProductTypeDomain
      *
      * @ORM\Column(type="integer")
      */
-    protected $domainId;
+    private $domainId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
-    protected $freeTransportMinimalPrice;
+    private $freeTransportMinimalPrice;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected $freeTransport;
+    private $freeTransport;
 
     /**
      * @param \App\Model\Product\Type\ProductType $productType
@@ -65,6 +65,14 @@ class ProductTypeDomain
         $this->productType = $productType;
         $this->domainId = $domainId;
         $this->freeTransport = false;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

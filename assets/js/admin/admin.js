@@ -4,4 +4,6 @@ import '../jQuery/registerJquery';
 import registerAdmin from 'framework/admin/registerAdmin';
 import './order/orderDisablingForm';
 
+import './validation';
+
 registerAdmin();

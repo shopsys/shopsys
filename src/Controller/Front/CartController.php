@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,11 +39,6 @@ class CartController extends FrontBaseController
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade
-     */
-    private $freeTransportAndPaymentFacade;
 
     /**
      * @var \App\Model\Order\Preview\OrderPreviewFactory
@@ -84,7 +78,6 @@ class CartController extends FrontBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
@@ -96,7 +89,6 @@ class CartController extends FrontBaseController
     public function __construct(
         CartFacade $cartFacade,
         Domain $domain,
-        FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
         OrderPreviewFactory $orderPreviewFactory,
         ErrorExtractor $errorExtractor,
         ListedProductViewFacadeInterface $listedProductViewFacade,
@@ -107,7 +99,6 @@ class CartController extends FrontBaseController
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
-        $this->freeTransportAndPaymentFacade = $freeTransportAndPaymentFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->errorExtractor = $errorExtractor;
         $this->listedProductViewFacade = $listedProductViewFacade;
@@ -162,22 +153,12 @@ class CartController extends FrontBaseController
             );
         }
 
-        $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
-        $productsPrice = $orderPreview->getProductsPrice();
-        $remainingPriceWithVat = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
-            $productsPrice->getPriceWithVat(),
-            $domainId
-        );
-
         $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer(null);
 
         return $this->render('Front/Content/Cart/index.html.twig', [
             'splitOrderPreview' => $splitOrderPreview,
             'cart' => $cart,
             'form' => $form->createView(),
-            'isFreeTransportAndPaymentActive' => $this->freeTransportAndPaymentFacade->isActive($domainId),
-            'isPaymentAndTransportFree' => $this->freeTransportAndPaymentFacade->isFree($productsPrice->getPriceWithVat(), $domainId),
-            'remainingPriceWithVat' => $remainingPriceWithVat,
             'showOversizedMsg' => $oversizedCount !== 0 && $oversizedCount !== count($cartItems),
         ]);
     }

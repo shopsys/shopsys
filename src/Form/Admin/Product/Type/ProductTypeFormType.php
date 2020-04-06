@@ -64,7 +64,7 @@ class ProductTypeFormType extends AbstractType
                         'max' => 20,
                         'maxMessage' => 'Akaneo kód nesmí být delší než {{ limit }} znaků.',
                     ]),
-                    new Constraints\Callback(function ($akeneoCode, ExecutionContextInterface $context) {
+                    new Constraints\Callback(function (string $akeneoCode, ExecutionContextInterface $context) {
                         $existingProductType = $this->productTypeFacade->findByAkeneoCode($akeneoCode);
                         if ($existingProductType !== null
                             && $this->editedProductType !== null

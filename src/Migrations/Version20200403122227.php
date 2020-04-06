@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20200403122227 extends AbstractMigration
 {
+    use MultidomainMigrationTrait;
+
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -33,11 +36,24 @@ class Version20200403122227 extends AbstractMigration
             ADD
                 CONSTRAINT FK_29FEF20314959723 FOREIGN KEY (product_type_id) REFERENCES product_types (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
 
-        $this->sql('INSERT INTO "product_type_domains" ("id", "product_type_id", "domain_id", "free_transport") VALUES
-            (1,	1, 1, true),
-            (2,	1, 2, true),
-            (3,	2, 1, false),
-            (4,	2, 2, false)');
+        $allDomainIds = $this->getAllDomainIds();
+        $productTypes = $this->sql('SELECT id FROM product_types')->fetchAll();
+
+        foreach ($productTypes as $productType) {
+            $productTypeId = $productType['id'];
+
+            $freeTransport = 'true';
+            if ($productTypeId % 2 === 0) {
+                $freeTransport = 'false';
+            }
+
+            foreach ($allDomainIds as $domainId) {
+                $this->sql(
+                    sprintf('INSERT INTO "product_type_domains" ("product_type_id", "domain_id", "free_transport", "free_transport_minimal_price") 
+                VALUES (%d, %d, %s, 10000)', $productTypeId, $domainId, $freeTransport)
+                );
+            }
+        }
     }
 
     /**

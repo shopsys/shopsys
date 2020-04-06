@@ -119,7 +119,13 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         $transportForFree = false;
         if ($productType !== null && $productType->isFreeTransport($domainId)) {
             $restToFreeTransportPrice = $productType->getFreeTransportMinimalPrice($domainId)->subtract($productsPrice->getPriceWithVat());
-            $percentageOfFreeTransport = (int)floor($productsPrice->getPriceWithVat()->getAmount() / ($productType->getFreeTransportMinimalPrice($domainId)->getAmount() / 100));
+
+            if ((float)$productType->getFreeTransportMinimalPrice($domainId)->getAmount() === (float)0) {
+                $percentageOfFreeTransport = 100;
+            } else {
+                $percentageOfFreeTransport = (int)floor($productsPrice->getPriceWithVat()->getAmount() / ($productType->getFreeTransportMinimalPrice($domainId)->getAmount() / 100));
+            }
+
             if ($productsPrice->getPriceWithVat()->getAmount() > $productType->getFreeTransportMinimalPrice($domainId)->getAmount()) {
                 $transportForFree = true;
             }

@@ -6,6 +6,7 @@ export default function productTypeValidator ($container) {
         callbacks: {
             validateFreeTransportMinimalPriceByDomain: function () {
                 // JS validation is not necessary
+                // console.log('validateFreeTransportMinimalPriceByDomain');
             }
         }
     });

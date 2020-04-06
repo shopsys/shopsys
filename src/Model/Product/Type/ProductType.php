@@ -142,7 +142,8 @@ class ProductType extends AbstractTranslatableEntity implements OrderableEntityI
             }
         }
 
-        throw new ProductTypeDomainNotFoundException($this);
+        $message = sprintf('Product type domain for domain %s int product type with ID %s not found', $domainId, $this->getId());
+        throw new ProductTypeDomainNotFoundException($message);
     }
 
     /**

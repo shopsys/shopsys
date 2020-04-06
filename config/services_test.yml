@@ -52,6 +52,8 @@ services:
 
     League\Flysystem\FilesystemInterface: '@main_filesystem'
 
+    Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider: '@App\Model\MultidomainEntityClassProvider'
+
     Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface: '@Shopsys\FrameworkBundle\Model\Article\ArticleFactory'
 
     Shopsys\FrameworkBundle\Model\Article\ArticleFactory: ~
