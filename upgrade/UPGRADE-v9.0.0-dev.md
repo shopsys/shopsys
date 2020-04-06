@@ -1350,6 +1350,9 @@ There you can find links to upgrade notes for other versions too.
 
 - move cron definitions in your project so it is easier to control them ([#1739](https://github.com/shopsys/shopsys/pull/1739))
     - see #project-base-diff to update your project
+    
+- compliance with the principle of encapsulation in the project base ([#1640](https://github.com/shopsys/shopsys/pull/1640))
+    - see #project-base-diff to update your project
 
 ### Tools
 

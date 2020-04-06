@@ -18,25 +18,25 @@ class ArticleDataFixture extends AbstractReferenceFixture
     public const ARTICLE_PRIVACY_POLICY = 'article_privacy_policy';
     public const ARTICLE_COOKIES = 'article_cookies';
 
-    protected const ATTRIBUTE_NAME_KEY = 'name';
-    protected const ATTRIBUTE_TEXT_KEY = 'text';
-    protected const ATTRIBUTE_PLACEMENT_KEY = 'placement';
-    protected const REFERENCE_NAME_KEY = 'referenceName';
+    private const ATTRIBUTE_NAME_KEY = 'name';
+    private const ATTRIBUTE_TEXT_KEY = 'text';
+    private const ATTRIBUTE_PLACEMENT_KEY = 'placement';
+    private const REFERENCE_NAME_KEY = 'referenceName';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
      */
-    protected $articleFacade;
+    private $articleFacade;
 
     /**
      * @var \App\Model\Article\ArticleDataFactory
      */
-    protected $articleDataFactory;
+    private $articleDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
@@ -72,7 +72,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
      * @param string $locale
      * @return string[][]
      */
-    protected function getDataForArticles(string $locale): array
+    private function getDataForArticles(string $locale): array
     {
         return [
             [
@@ -106,7 +106,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
      * @param array $articles
      * @param int $domainId
      */
-    protected function createArticlesFromArray(array $articles, int $domainId): void
+    private function createArticlesFromArray(array $articles, int $domainId): void
     {
         foreach ($articles as $article) {
             $this->createArticleFromArray($article, $domainId);
@@ -117,7 +117,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
      * @param array $data
      * @param int $domainId
      */
-    protected function createArticleFromArray(array $data, int $domainId): void
+    private function createArticleFromArray(array $data, int $domainId): void
     {
         $articleData = $this->articleDataFactory->create();
         $articleData->domainId = $domainId;
@@ -132,7 +132,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
      * @param \App\Model\Article\ArticleData $articleData
      * @param string|null $referenceName
      */
-    protected function createArticleFromArticleData(ArticleData $articleData, ?string $referenceName = null): void
+    private function createArticleFromArticleData(ArticleData $articleData, ?string $referenceName = null): void
     {
         $article = $this->articleFacade->create($articleData);
         if ($referenceName !== null) {
@@ -140,7 +140,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
         }
     }
 
-    protected function changeDataForSecondDomain()
+    private function changeDataForSecondDomain()
     {
         /** @var \App\Model\Article\Article $cookiesArticle */
         $cookiesArticle = $this->getReferenceForDomain(self::ARTICLE_COOKIES, Domain::SECOND_DOMAIN_ID);

@@ -17,12 +17,12 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
      */
-    protected $setting;
+    private $setting;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
@@ -96,7 +96,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param int $domainId
      */
-    protected function setDomainDefaultCurrency(int $domainId): void
+    private function setDomainDefaultCurrency(int $domainId): void
     {
         if ($domainId === Domain::SECOND_DOMAIN_ID) {
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $defaultCurrency */

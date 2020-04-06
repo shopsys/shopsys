@@ -11,9 +11,6 @@ use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -25,77 +22,62 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 {
     public const USER_WITH_RESET_PASSWORD_HASH = 'user_with_reset_password_hash';
 
-    protected const KEY_CUSTOMER_USER_DATA = 'customerUserData';
-    protected const KEY_BILLING_ADDRESS = 'billingAddress';
-    protected const KEY_DELIVERY_ADDRESS = 'deliveryAddress';
+    private const KEY_CUSTOMER_USER_DATA = 'customerUserData';
+    private const KEY_BILLING_ADDRESS = 'billingAddress';
+    private const KEY_DELIVERY_ADDRESS = 'deliveryAddress';
 
-    protected const KEY_CUSTOMER_USER_DATA_FIRST_NAME = 'firstName';
-    protected const KEY_CUSTOMER_USER_DATA_LAST_NAME = 'lastName';
-    protected const KEY_CUSTOMER_USER_DATA_EMAIL = 'email';
-    protected const KEY_CUSTOMER_USER_DATA_PASSWORD = 'password';
-    protected const KEY_CUSTOMER_USER_DATA_TELEPHONE = 'telephone';
+    private const KEY_CUSTOMER_USER_DATA_FIRST_NAME = 'firstName';
+    private const KEY_CUSTOMER_USER_DATA_LAST_NAME = 'lastName';
+    private const KEY_CUSTOMER_USER_DATA_EMAIL = 'email';
+    private const KEY_CUSTOMER_USER_DATA_PASSWORD = 'password';
+    private const KEY_CUSTOMER_USER_DATA_TELEPHONE = 'telephone';
 
-    protected const KEY_ADDRESS_COMPANY_CUSTOMER = 'companyCustomer';
-    protected const KEY_ADDRESS_COMPANY_NAME = 'companyName';
-    protected const KEY_ADDRESS_COMPANY_NUMBER = 'companyNumber';
-    protected const KEY_ADDRESS_STREET = 'street';
-    protected const KEY_ADDRESS_CITY = 'city';
-    protected const KEY_ADDRESS_POSTCODE = 'postcode';
-    protected const KEY_ADDRESS_COUNTRY = 'country';
-    protected const KEY_ADDRESS_ADDRESS_FILLED = 'addressFilled';
-    protected const KEY_ADDRESS_TELEPHONE = 'telephone';
-    protected const KEY_ADDRESS_FIRST_NAME = 'firstName';
-    protected const KEY_ADDRESS_LAST_NAME = 'lastName';
+    private const KEY_ADDRESS_COMPANY_CUSTOMER = 'companyCustomer';
+    private const KEY_ADDRESS_COMPANY_NAME = 'companyName';
+    private const KEY_ADDRESS_COMPANY_NUMBER = 'companyNumber';
+    private const KEY_ADDRESS_STREET = 'street';
+    private const KEY_ADDRESS_CITY = 'city';
+    private const KEY_ADDRESS_POSTCODE = 'postcode';
+    private const KEY_ADDRESS_COUNTRY = 'country';
+    private const KEY_ADDRESS_ADDRESS_FILLED = 'addressFilled';
+    private const KEY_ADDRESS_TELEPHONE = 'telephone';
+    private const KEY_ADDRESS_FIRST_NAME = 'firstName';
+    private const KEY_ADDRESS_LAST_NAME = 'lastName';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
-    protected $customerUserFacade;
+    private $customerUserFacade;
 
     /**
      * @var \Faker\Generator
      */
-    protected $faker;
+    private $faker;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
-    protected $em;
+    private $em;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
      */
-    protected $hashGenerator;
+    private $hashGenerator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      */
-    protected $customerUserUpdateDataFactory;
+    private $customerUserUpdateDataFactory;
 
     /**
      * @var \App\Model\Customer\User\CustomerUserDataFactory
      */
-    protected $customerUserDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface
-     */
-    protected $billingAddressDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface
-     */
-    protected $deliveryAddressDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface
-     */
-    protected $customerFactory;
+    private $customerUserDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
@@ -105,9 +87,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      */
     public function __construct(
         CustomerUserFacade $customerUserFacade,
@@ -116,10 +95,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         HashGenerator $hashGenerator,
         Domain $domain,
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        CustomerUserDataFactoryInterface $customerUserDataFactory,
-        BillingAddressDataFactoryInterface $billingAddressDataFactory,
-        DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
-        CustomerFactoryInterface $customerFactory
+        CustomerUserDataFactoryInterface $customerUserDataFactory
     ) {
         $this->customerUserFacade = $customerUserFacade;
         $this->faker = $faker;
@@ -128,9 +104,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         $this->domain = $domain;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerUserDataFactory = $customerUserDataFactory;
-        $this->billingAddressDataFactory = $billingAddressDataFactory;
-        $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
-        $this->customerFactory = $customerFactory;
     }
 
     /**
@@ -165,7 +138,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
-    protected function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
+    private function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $customerUserData = $this->customerUserDataFactory->createForDomainId($domainId);
@@ -207,7 +180,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @return array
      */
-    protected function getDefaultCustomerUsersDataProvider(): array
+    private function getDefaultCustomerUsersDataProvider(): array
     {
         return [
             [
@@ -351,7 +324,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @return array
      */
-    protected function getDistinctCustomerUsersDataProvider(): array
+    private function getDistinctCustomerUsersDataProvider(): array
     {
         return [
             [
@@ -459,7 +432,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \App\Model\Customer\User\CustomerUser $customer
      */
-    protected function resetPassword(CustomerUser $customer)
+    private function resetPassword(CustomerUser $customer)
     {
         $resetPasswordHash = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
         $customer->setResetPasswordHash($resetPasswordHash);

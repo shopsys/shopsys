@@ -6,7 +6,6 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -19,31 +18,23 @@ class CurrencyDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
-    protected $currencyFacade;
+    private $currencyFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface
      */
-    protected $currencyDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    private $currencyDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface $currencyDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         CurrencyFacade $currencyFacade,
-        CurrencyDataFactoryInterface $currencyDataFactory,
-        Domain $domain
+        CurrencyDataFactoryInterface $currencyDataFactory
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->currencyDataFactory = $currencyDataFactory;
-        $this->domain = $domain;
     }
 
     /**

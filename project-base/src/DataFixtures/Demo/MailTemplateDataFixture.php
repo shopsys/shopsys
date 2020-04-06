@@ -17,17 +17,17 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface
      */
-    protected $mailTemplateFactory;
+    private $mailTemplateFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface
      */
-    protected $mailTemplateDataFactory;
+    private $mailTemplateDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory
@@ -144,7 +144,7 @@ team of {domain}
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
      * @param int $domainId
      */
-    protected function createMailTemplate(
+    private function createMailTemplate(
         ObjectManager $manager,
         $name,
         MailTemplateData $mailTemplateData,

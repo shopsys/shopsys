@@ -12,12 +12,12 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
 {
     /** @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade */
-    protected $newsletterFacade;
+    private $newsletterFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
@@ -51,7 +51,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     /**
      * @return string[]
      */
-    protected function getDefaultEmailData(): array
+    private function getDefaultEmailData(): array
     {
         return [
             'james.black@no-reply.com',
@@ -64,7 +64,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     /**
      * @return string[]
      */
-    protected function getDistinctEmailData(): array
+    private function getDistinctEmailData(): array
     {
         return [
             'anna.anina@no-reply.com',

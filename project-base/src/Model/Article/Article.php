@@ -20,7 +20,7 @@ class Article extends BaseArticle
      *
      * @ORM\Column(type="datetime")
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @param \App\Model\Article\ArticleData $articleData
