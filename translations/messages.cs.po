@@ -97,6 +97,9 @@ msgstr "Zavřít"
 msgid "Close (Esc)"
 msgstr "Zavřít (Esc)"
 
+msgid "Common price"
+msgstr "Běžná cena"
+
 msgid "Company"
 msgstr "Firma"
 
@@ -600,6 +603,12 @@ msgstr "Abychom předešli možnosti zcizení účtu, je třeba změnu e-mailu �
 
 msgid "Total"
 msgstr "Celkem"
+
+msgid "Total common price excluding VAT"
+msgstr "Celková běžná cena bez DPH"
+
+msgid "Total common price including VAT"
+msgstr "Celková běžná cena s DPH"
 
 msgid "Total amount of VAT"
 msgstr "Celková výše DPH"

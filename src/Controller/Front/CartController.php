@@ -130,6 +130,7 @@ class CartController extends FrontBaseController
         $oversizedCount = 0;
 
         $cartFormData = ['quantities' => []];
+
         foreach ($cartItems as $cartItem) {
             $cartFormData['quantities'][$cartItem->getId()] = $cartItem->getQuantity();
             if ($cartItem->getProduct()->isOversized($domainId)) {

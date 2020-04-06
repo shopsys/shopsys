@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Pricing\ProductPriceCalculation;
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
@@ -37,6 +38,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
      */
     private $productPriceCalculation;
 
+    private $productAvailabilityFacade;
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      * @param \App\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
@@ -45,6 +48,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
@@ -53,7 +57,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         PaymentPriceCalculation $paymentPriceCalculation,
         OrderPriceCalculation $orderPriceCalculation,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
-        ProductPriceCalculation $productPriceCalculation
+        ProductPriceCalculation $productPriceCalculation,
+        ProductAvailabilityFacade $productAvailabilityFacade
     ) {
         parent::__construct(
             $quantifiedProductPriceCalculation,
@@ -64,6 +69,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         );
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->productPriceCalculation = $productPriceCalculation;
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
     /**
@@ -145,6 +151,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 
         $totalProductHighPrice = $this->calculateTotalProductsHighPriceByDomain($quantifiedProducts, $domainId);
 
+        $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
+
         return new OrderPreview(
             $quantifiedProducts,
             $quantifiedItemsPrices,
@@ -152,6 +160,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $productsPrice,
             $totalPrice,
             $totalProductHighPrice,
+            $productsAvailability,
             $transport,
             $transportPrice,
             $payment,
@@ -182,5 +191,24 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         }
 
         return $totalHighPrice;
+    }
+
+    /**
+     * @param array $quantifiedProducts
+     * @param int $domainId
+     * @return array
+     */
+    protected function getProductsAvailability(array $quantifiedProducts, int $domainId): array
+    {
+        $availability = [];
+        foreach ($quantifiedProducts as $quantifiedProduct) {
+            $availability[$quantifiedProduct->getProduct()->getId()] =
+                $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId(
+                    $quantifiedProduct->getProduct(),
+                    $domainId
+                );
+        }
+
+        return $availability;
     }
 }

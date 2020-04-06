@@ -57,6 +57,22 @@
                             <tfoot>
                                 <tr class="table-cart__row">
                                     <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
+                                        {{ 'Total common price including VAT'|trans }}:
+                                        <span>
+                                            {{ splitOrderPreview.productsCommonPrice.priceWithVat|price }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="table-cart__row">
+                                    <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
+                                        {{ 'Total common price excluding VAT'|trans }}:
+                                        <span>
+                                            {{ splitOrderPreview.productsCommonPrice.priceWithoutVat|price }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="table-cart__row">
+                                    <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
                                         <h3>
                                             {{ 'Total price including VAT'|trans }}:
                                             <span>

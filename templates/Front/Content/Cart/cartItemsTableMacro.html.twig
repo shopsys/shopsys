@@ -4,6 +4,8 @@
             <tr class="table-cart__row">
                 <th class="table-cart__cell table-cart__cell--image">{{ 'Image'|trans }}</th>
                 <th class="table-cart__cell table-cart__cell--name">{{ 'Name'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--name">{{ 'Dostupnost'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--price">{{ 'Common price'|trans }}</th>
                 <th class="table-cart__cell table-cart__cell--price">{{ 'Unit price including VAT'|trans }}</th>
                 <th class="table-cart__cell table-cart__cell--price">{{ 'VAT rate'|trans }}</th>
                 <th class="table-cart__cell table-cart__cell--amount">{{ 'Amount'|trans }}</th>
@@ -39,6 +41,17 @@
                             </div>
                         {% endif %}
                     </div>
+                    <div class="table-cart__cell_sku">
+                        {{ product.catnum }}
+                    </div>
+                </td>
+
+                <td class="table-cart__cell table-cart__cell--name">
+                    {{ orderPreview.productsAvailability[product.id] }}
+                </td>
+
+                <td class="table-cart__cell table-cart__cell--price">
+                    {{ product.getHighPriceWithVat(getDomain().id)|price }}
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
@@ -83,7 +96,18 @@
             <tr class="table-cart__row">
                 <td class="table-cart__cell table-cart__cell--image">&nbsp;</td>
                 <td class="table-cart__cell table-cart__cell--name">&nbsp;</td>
-                <td class="table-cart__cell  table-cart__cell--price">&nbsp;</td>
+                <td class="table-cart__cell  table-cart__cell--price" colspan="2">
+                    <div>{{ 'Celková běžná cena s DPH'|trans }}:
+                        <span>
+                            {{ orderPreview.totalProductHighPrice.priceWithVat|price }}
+                        </span>
+                    </div>
+                    <div>{{ 'Celková běžná cena bez DPH'|trans }}:
+                        <span>
+                            {{ orderPreview.totalProductHighPrice.priceWithoutVat|price }}
+                        </span>
+                    </div>
+                </td>
                 <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price" colspan="3">
                     <div>{{ 'Total price including VAT'|trans }}:
                         <span>

@@ -97,6 +97,9 @@ msgstr ""
 msgid "Close (Esc)"
 msgstr ""
 
+msgid "Common price"
+msgstr ""
+
 msgid "Company"
 msgstr ""
 
@@ -592,6 +595,12 @@ msgstr ""
 msgid "Total amount of VAT"
 msgstr ""
 
+msgid "Total common price excluding VAT"
+msgstr ""
+
+msgid "Total common price including VAT"
+msgstr ""
+
 msgid "Total excluding VAT"
 msgstr ""
 
@@ -705,4 +714,3 @@ msgstr ""
 
 msgid "{1}Load next %loadNextCount% product|[2,Inf]Load next %loadNextCount% products"
 msgstr ""
-

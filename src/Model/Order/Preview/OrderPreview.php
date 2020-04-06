@@ -29,12 +29,18 @@ class OrderPreview extends BaseOrderPreview
     private $personalPickupStock;
 
     /**
+     * @array
+     */
+    private $productsAvailability;
+
+    /**
      * @param array $quantifiedProductsByIndex
      * @param array $quantifiedItemsPricesByIndex
      * @param array $quantifiedItemsDiscountsByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalProductHighPrice
+     * @param array $productsAvailability
      * @param \App\Model\Transport\Transport|null $transport
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
      * @param \App\Model\Payment\Payment|null $payment
@@ -51,6 +57,7 @@ class OrderPreview extends BaseOrderPreview
         Price $productsPrice,
         Price $totalPrice,
         Price $totalProductHighPrice,
+        array $productsAvailability,
         ?Transport $transport = null,
         ?Price $transportPrice = null,
         ?Payment $payment = null,
@@ -77,6 +84,7 @@ class OrderPreview extends BaseOrderPreview
         $this->productType = $productType;
         $this->totalProductHighPrice = $totalProductHighPrice;
         $this->personalPickupStock = $personalPickupStock;
+        $this->productsAvailability = $productsAvailability;
     }
 
     /**
@@ -113,5 +121,13 @@ class OrderPreview extends BaseOrderPreview
     public function getPersonalPickupStock(): ?Stock
     {
         return $this->personalPickupStock;
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductsAvailability()
+    {
+        return $this->productsAvailability;
     }
 }
