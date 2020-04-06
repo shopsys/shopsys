@@ -8,6 +8,7 @@ use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Pricing\ProductPriceCalculation;
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
@@ -153,6 +154,13 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 
         $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
 
+        $restToFreeTransportPrice = Money::zero();
+        $percentageOfFreeTransport = 0;
+        if ($productType !== null && $productType->isFreeTransport($domainId)) {
+            $restToFreeTransportPrice = $productType->getFreeTransportMinimalPrice($domainId)->subtract($productsPrice->getPriceWithVat());
+            $percentageOfFreeTransport = (int)floor($productsPrice->getPriceWithVat()->getAmount() / ($productType->getFreeTransportMinimalPrice($domainId)->getAmount() / 100));
+        }
+
         return new OrderPreview(
             $quantifiedProducts,
             $quantifiedItemsPrices,
@@ -168,7 +176,9 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $roundingPrice,
             $promoCodeDiscountPercent,
             $productType,
-            $personalPickupStock
+            $personalPickupStock,
+            $restToFreeTransportPrice,
+            $percentageOfFreeTransport
         );
     }
 

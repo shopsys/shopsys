@@ -1,5 +1,6 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
 {% import 'Front/Content/Cart/cartItemsTableMacro.html.twig' as cartItemsTableMacro %}
+{% import 'Front/Content/Cart/cartFreeTransportMacro.html.twig' as cartFreeTransportMacro %}
 
 {% block meta_robots -%}
     <meta name="robots" content="noindex, follow">
@@ -47,6 +48,7 @@
                                 -
                                 {{ orderPreview.productType.name }}
                             </h2>
+                            {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                         {% endif %}
                         {{ cartItemsTableMacro.table(form, orderPreview) }}
                     {% endfor %}
