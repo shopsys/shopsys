@@ -30,7 +30,6 @@ export default class ProductFilterBox {
             : $toggleButton.data('text-less');
 
         $toggleButton
-            .toggleClass('is-active')
             .text(toggleText)
             .closest('.js-product-filter-box')
             .find('.js-form-choice.is-hidden')

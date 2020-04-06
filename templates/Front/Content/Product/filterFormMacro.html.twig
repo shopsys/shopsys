@@ -137,16 +137,16 @@
                                 {% endif %}
                             </label>
                         </div>
-                        {% if loop.last and filterForm.brands|length > paramsVisibleCount %}
-                            <a
-                                class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
-                                data-text-more="{{ 'Zobrazit více'|trans }}"
-                                data-text-less="{{ 'Zobrazit Méně'|trans }}"
-                                href="#">
-                                    {{ 'Zobrazit více'|trans }}
-                            </a>
-                        {% endif %}
                     {% endfor %}
+                    {% if filterForm.brands|length > paramsVisibleCount %}
+                        <a
+                            class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
+                            data-text-more="{{ 'Zobrazit více'|trans }}"
+                            data-text-less="{{ 'Zobrazit Méně'|trans }}"
+                            href="#">
+                                {{ 'Zobrazit více'|trans }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
@@ -186,16 +186,16 @@
                                             {% endif %}
                                         </label>
                                     </div>
-                                    {% if loop.last and parameterForm|length > paramsVisibleCount %}
-                                        <a
-                                            class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
-                                            data-text-more="{{ 'Zobrazit více'|trans }}"
-                                            data-text-less="{{ 'Zobrazit Méně'|trans }}"
-                                            href="#">
-                                                {{ 'Zobrazit více'|trans }}
-                                        </a>
-                                    {% endif %}
                                 {% endfor %}
+                                {% if parameterForm|length > paramsVisibleCount %}
+                                    <a
+                                        class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
+                                        data-text-more="{{ 'Zobrazit více'|trans }}"
+                                        data-text-less="{{ 'Zobrazit Méně'|trans }}"
+                                        href="#">
+                                            {{ 'Zobrazit více'|trans }}
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}
