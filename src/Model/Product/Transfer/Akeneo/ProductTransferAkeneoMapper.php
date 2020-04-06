@@ -8,6 +8,7 @@ use App\Component\Akeneo\AkeneoHelper;
 use App\Component\Akeneo\Product\AkeneoProductHelper;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataException;
 use App\Model\Category\CategoryFacade;
+use App\Model\Product\Flag\FlagRepository;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
@@ -60,6 +61,11 @@ class ProductTransferAkeneoMapper
     private $parameterValueDataFactory;
 
     /**
+     * @var \App\Model\Product\Flag\FlagRepository
+     */
+    private $flagRepository;
+
+    /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
@@ -67,6 +73,7 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \App\Model\Product\Flag\FlagRepository $flagRepository
      */
     public function __construct(
         ProductDataFactory $productDataFactory,
@@ -75,7 +82,8 @@ class ProductTransferAkeneoMapper
         ProductTypeFacade $productTypeFacade,
         ParameterFacade $parameterFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
-        ParameterValueDataFactoryInterface $parameterValueDataFactory
+        ParameterValueDataFactoryInterface $parameterValueDataFactory,
+        FlagRepository $flagRepository
     ) {
         $this->productDataFactory = $productDataFactory;
         $this->categoryFacade = $categoryFacade;
@@ -84,6 +92,7 @@ class ProductTransferAkeneoMapper
         $this->parameterFacade = $parameterFacade;
         $this->productParameterValueDataFactory = $productParameterValueDataFactory;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
+        $this->flagRepository = $flagRepository;
     }
 
     /**
@@ -155,6 +164,8 @@ class ProductTransferAkeneoMapper
         if ($vendorDeliveryDate !== null) {
             $productData->vendorDeliveryDate = intval($vendorDeliveryDate);
         }
+
+        $productData->flags = AkeneoProductHelper::mapDomainDataArray($productData->flags, $this->getProductFlags($akeneoProductData['values']));
 
         return $productData;
     }
@@ -273,6 +284,32 @@ class ProductTransferAkeneoMapper
                 }
             }
         }
+    }
+
+    /**
+     * @param array $akeneoProductDataValues
+     * @return array
+     */
+    protected function getProductFlags(array $akeneoProductDataValues): array
+    {
+        $selectedFlags = [];
+        foreach ($this->flagRepository->getAll() as $flag) {
+            if (array_key_exists($flag->getAkeneoCode(), $akeneoProductDataValues)) {
+                foreach ($akeneoProductDataValues[$flag->getAkeneoCode()] as $flagData) {
+                    if ($flagData['data'] === true) {
+                        if ($flagData['locale'] !== null) {
+                            $selectedFlags[$flagData['locale']][] = $flag;
+                        } else {
+                            foreach (array_keys(AkeneoHelper::AKENEO_LOCALES_MAP_ESHOP_LOCALES) as $locale) {
+                                $selectedFlags[$locale][] = $flag;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $selectedFlags;
     }
 
     /**

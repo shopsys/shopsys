@@ -1,0 +1,11 @@
+{
+    "extendingTemplates": {
+        "@ShopsysFramework/Admin/Content/Flag/listGrid.html.twig": [
+            {
+                "name": "grid",
+                "layout": "lines",
+                "parent": false
+            }
+        ]
+    }
+}

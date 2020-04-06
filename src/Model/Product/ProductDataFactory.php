@@ -178,6 +178,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->productTypePlanFileUrl[$domainId] = null;
             $productData->productType[$domainId] = null;
             $productData->preorder = false;
+            $productData->flags[$domainId] = [];
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -198,6 +199,7 @@ class ProductDataFactory extends BaseProductDataFactory
 
         $productData->downloadAssemblyInstructionFiles = $product->isDownloadAssemblyInstructionFiles();
         $productData->downloadProductTypePlanFiles = $product->isDownloadAssemblyInstructionFiles();
+        $productData->flags = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $productData->shortDescriptionUsp1[$domainId] = $product->getShortDescriptionUsp1($domainId);
@@ -208,6 +210,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->productType[$domainId] = $product->getProductType($domainId);
 
             $this->fillPricesFromProductByDomain($productData, $product, $domainId);
+
+            $productData->flags[$domainId] = $product->getFlagsForDomain($domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {

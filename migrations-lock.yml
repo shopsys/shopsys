@@ -535,3 +535,9 @@
 20200401074357:
     class: App\Migrations\Version20200401074357
     skip: false
+20200221155940:
+    class: App\Migrations\Version20200221155940
+    skip: false
+20200323123356:
+    class: App\Migrations\Version20200323123356
+    skip: false

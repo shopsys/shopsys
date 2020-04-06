@@ -140,7 +140,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             14 => 2,
         ];
         $countData->countByFlagId = [
-            1 => 5,
+            4 => 5,
             2 => 2,
         ];
         $countData->countByParameterIdAndValueId = [
@@ -193,7 +193,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_TOP_PRODUCT);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
 
         $countData = new ProductFilterCountData();
 
@@ -206,7 +206,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             2 => 2,
         ];
         $countData->countByFlagId = [
-            1 => 3,
+            4 => 3,
         ];
         $countData->countByParameterIdAndValueId = [
             32 => [
@@ -264,7 +264,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
          */
         $countData->countInStock = 0;
         $countData->countByFlagId = [
-            1 => 3,
+            4 => 3,
             2 => 2,
         ];
         $countData->countByBrandId = [
@@ -320,8 +320,8 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData = new ProductFilterData();
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_CANON);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_HP);
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_TOP_PRODUCT);
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_NEW_PRODUCT);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
 
         $countData = new ProductFilterCountData();
         /*
@@ -391,7 +391,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             14 => 2,
         ];
         $countData->countByFlagId = [
-            1 => 3,
+            4 => 3,
             2 => 2,
         ];
         $countData->countByParameterIdAndValueId = [
@@ -444,7 +444,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_CANON);
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_NEW_PRODUCT);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Dimensions', [], 'dataFixtures', $firstDomainLocale)],
             [[$firstDomainLocale => t('449x304x152 mm', [], 'dataFixtures', $firstDomainLocale)]]
@@ -541,7 +541,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             2 => 5,
         ];
         $countData->countByFlagId = [
-            1 => 3,
+            4 => 3,
             2 => 1,
         ];
         $countData->countByParameterIdAndValueId = [
@@ -667,7 +667,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     private function searchOneFlagTestCase(): array
     {
         $filterData = new ProductFilterData();
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_NEW_PRODUCT);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         $countData = new ProductFilterCountData();
         $countData->countInStock = 11;
         $countData->countByBrandId = [
@@ -718,7 +718,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             9 => 1,
         ];
         $countData->countByFlagId = [
-            1 => 3,
+            4 => 3,
             2 => 2,
         ];
 
@@ -799,7 +799,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     {
         $filterData = new ProductFilterData();
         $filterData->inStock = true;
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_NEW_PRODUCT);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DELONGHI);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DEFENDER);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_GENIUS);

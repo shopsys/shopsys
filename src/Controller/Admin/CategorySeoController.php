@@ -56,7 +56,7 @@ class CategorySeoController extends AdminBaseController
     private $parameterFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
+     * @var \App\Model\Product\Flag\FlagFacade
      */
     private $flagFacade;
 
@@ -81,7 +81,7 @@ class CategorySeoController extends AdminBaseController
      * @param \App\Model\CategorySeo\CategorySeoFacade $categorySeoFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixGridFactory $readyCategorySeoMixGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

@@ -74,7 +74,7 @@ class ProductExportRepository extends BaseProductExportRepository
      */
     protected function extractResult(Product $product, int $domainId, string $locale): array
     {
-        $flagIds = $this->extractFlags($product);
+        $flagIds = $this->extractFlagsForDomain($domainId, $product);
         $categoryIds = $this->extractCategories($domainId, $product);
         $parameters = $this->extractParameters($locale, $product);
         $prices = $this->extractPrices($domainId, $product);
@@ -115,5 +115,20 @@ class ProductExportRepository extends BaseProductExportRepository
             'non_selling_price' => $highPriceWithVat === null ? null : $highPriceWithVat->getAmount(),
             'is_in_sale' => $product->isProductInSale(),
         ];
+    }
+
+    /**
+     * @param int $domainId
+     * @param \App\Model\Product\Product $product
+     * @return int[]
+     */
+    protected function extractFlagsForDomain(int $domainId, Product $product): array
+    {
+        $flagIds = [];
+        foreach ($product->getFlagsForDomain($domainId) as $flag) {
+            $flagIds[] = $flag->getId();
+        }
+
+        return $flagIds;
     }
 }

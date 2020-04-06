@@ -39,7 +39,7 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType }
 
-    App\Form\Admin\FlagFormTypeExtension:
+    App\Form\Admin\Product\Flag\FlagFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\Flag\FlagFormType }
 

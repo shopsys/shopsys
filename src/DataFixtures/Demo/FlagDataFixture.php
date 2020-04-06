@@ -7,23 +7,26 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 
 class FlagDataFixture extends AbstractReferenceFixture
 {
-    public const FLAG_NEW_PRODUCT = 'flag_new_product';
-    public const FLAG_TOP_PRODUCT = 'flag_top_product';
-    public const FLAG_ACTION_PRODUCT = 'flag_action';
+    public const FLAG_PRODUCT_SALE = 'product_sale';
+    public const FLAG_PRODUCT_ACTION = 'product_action';
+    public const FLAG_PRODUCT_SCONTO = 'product_sconto';
+    public const FLAG_PRODUCT_NEW = 'product_new';
+    public const FLAG_PRODUCT_MADEIN_CZ = 'product_madein_cz';
+    public const FLAG_PRODUCT_MADEIN_SK = 'product_madein_sk';
+    public const FLAG_PRODUCT_MADEIN_DE = 'product_madein_de';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
+     * @var \App\Model\Product\Flag\FlagFacade
      */
     protected $flagFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface
+     * @var \App\Model\Product\Flag\FlagDataFactory
      */
     protected $flagDataFactory;
 
@@ -33,8 +36,8 @@ class FlagDataFixture extends AbstractReferenceFixture
     protected $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface $flagDataFactory
+     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \App\Model\Product\Flag\FlagDataFactory $flagDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -48,44 +51,28 @@ class FlagDataFixture extends AbstractReferenceFixture
     }
 
     /**
+     * Flags are created in database migration.
+     * @see \Shopsys\FrameworkBundle\Migrations\Version20200221155940
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        $flagData = $this->flagDataFactory->create();
-
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $flagData->name[$locale] = t('New [noun]', [], 'dataFixtures', $locale);
-        }
-
-        $flagData->rgbColor = '#efd6ff';
-        $flagData->visible = true;
-        $this->createFlag($flagData, self::FLAG_NEW_PRODUCT);
-
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $flagData->name[$locale] = t('TOP', [], 'dataFixtures', $locale);
-        }
-
-        $flagData->rgbColor = '#d6fffa';
-        $flagData->visible = true;
-        $this->createFlag($flagData, self::FLAG_TOP_PRODUCT);
-
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $flagData->name[$locale] = t('Action', [], 'dataFixtures', $locale);
-        }
-
-        $flagData->rgbColor = '#f9ffd6';
-        $flagData->visible = true;
-        $this->createFlag($flagData, self::FLAG_ACTION_PRODUCT);
+        $this->createFlag(1, self::FLAG_PRODUCT_SALE);
+        $this->createFlag(2, self::FLAG_PRODUCT_ACTION);
+        $this->createFlag(3, self::FLAG_PRODUCT_SCONTO);
+        $this->createFlag(4, self::FLAG_PRODUCT_NEW);
+        $this->createFlag(5, self::FLAG_PRODUCT_MADEIN_CZ);
+        $this->createFlag(6, self::FLAG_PRODUCT_MADEIN_SK);
+        $this->createFlag(7, self::FLAG_PRODUCT_MADEIN_DE);
     }
 
     /**
-     * @param \App\Model\Product\Flag\FlagData $flagData
+     * @param int $flagId
      * @param string|null $referenceName
      */
-    protected function createFlag(FlagData $flagData, $referenceName = null)
+    protected function createFlag(int $flagId, ?string $referenceName = null): void
     {
-        $flag = $this->flagFacade->create($flagData);
+        $flag = $this->flagFacade->getById($flagId);
         if ($referenceName !== null) {
             $this->addReference($referenceName, $flag);
         }

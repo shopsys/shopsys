@@ -104,6 +104,9 @@ class RouteConfigCustomization
             ->customizeByRouteName('admin_access_denied', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('This route serves as "access_denied_url" (see security.yml) and always redirects to a referer (or dashboard).')
                     ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_flag_delete', function (RouteConfig $config) {
+                $config->skipRoute('Deletion of flag from ShopSys is disabled.');
             });
     }
 
