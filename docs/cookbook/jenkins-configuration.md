@@ -273,12 +273,12 @@ sed -i "s/container_name:\s*\b/container_name: $JOB_NAME-/" $WORKSPACE/docker-co
 ### Setting application for build
 This section shows configuration of jenkins, which will allow build of application without interaction with user.
 
-#### Create parameters.yml
-Our `parameters.yml.dist` is already set for running application in docker as default so we just need to create `parameters.yml` file from dist file:
+#### Create parameters.yaml
+Our `parameters.yaml.dist` is already set for running application in docker as default so we just need to create `parameters.yaml` file from dist file:
 
 ```sh
-cp $WORKSPACE/project-base/config/parameters.yml.dist $WORKSPACE/project-base/config/parameters.yml
-cp $WORKSPACE/project-base/config/parameters_test.yml.dist $WORKSPACE/project-base/config/parameters_test.yml
+cp $WORKSPACE/project-base/config/parameters.yaml.dist $WORKSPACE/project-base/config/parameters.yaml
+cp $WORKSPACE/project-base/config/parameters_test.yaml.dist $WORKSPACE/project-base/config/parameters_test.yaml
 ```
 
 #### Set domains
@@ -286,20 +286,20 @@ Now we just create domain file, in this case, we use branch name for domain name
 that way domain names are related with the git branches, this makes jenkins more organized.
 
 ```sh
-# Copy domains_urls.yml from the template
-cp $WORKSPACE/project-base/config/domains_urls.yml.dist $WORKSPACE/project-base/config/domains_urls.yml
+# Copy domains_urls.yaml from the template
+cp $WORKSPACE/project-base/config/domains_urls.yaml.dist $WORKSPACE/project-base/config/domains_urls.yaml
 
 # Fetch all domain IDs
-DOMAIN_IDS=$(cat $WORKSPACE/project-base/config/domains_urls.yml|grep -Po 'id: ([0-9]+)$'|sed 's/id: \([0-9]\+\)/\1/')
+DOMAIN_IDS=$(cat $WORKSPACE/project-base/config/domains_urls.yaml|grep -Po 'id: ([0-9]+)$'|sed 's/id: \([0-9]\+\)/\1/')
 
 # Modify public URLs to $DOMAIN_ID.$JOB_NAME.your-server-name.com ($DOMAIN_ID is ommited for first domain)
 for DOMAIN_ID in $DOMAIN_IDS; do
   if [ "$DOMAIN_ID" == "1" ]; then
     # 1st domain has URL without number prefix
-    sed -i "/id: 1/,/url:/{s/url:.*/url: http:\/\/$JOB_NAME.your-server-name.com/}" $WORKSPACE/project-base/config/domains_urls.yml
+    sed -i "/id: 1/,/url:/{s/url:.*/url: http:\/\/$JOB_NAME.your-server-name.com/}" $WORKSPACE/project-base/config/domains_urls.yaml
   else
     # 2nd and subsequent domains have URLs with DOMAIN_ID prefix
-    sed -i "/id: $DOMAIN_ID/,/url:/{s/url:.*/url: http:\/\/$DOMAIN_ID.$JOB_NAME.your-server-name.com/}" $WORKSPACE/project-base/config/domains_urls.yml
+    sed -i "/id: $DOMAIN_ID/,/url:/{s/url:.*/url: http:\/\/$DOMAIN_ID.$JOB_NAME.your-server-name.com/}" $WORKSPACE/project-base/config/domains_urls.yaml
   fi
 done
 ```

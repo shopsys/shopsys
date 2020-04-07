@@ -101,7 +101,7 @@ CategoryDecorator:          # Object is named "Category"
                 description: "Ancestor category"
 ```
 
-The `Category` object type in your project in `config/graphql/types/Category.types.yml` is the one will be really used and you can adjust it as you want.
+The `Category` object type in your project in `config/graphql/types/Category.types.yaml` is the one will be really used and you can adjust it as you want.
 For example adding new field to the `Category` could be like:
 ```diff
  Category:
@@ -131,7 +131,7 @@ QueryDecorator:
                 resolve: "@=resolver('categories')"   # Define the resolver responsible for returning the data. See the resolvers section below.
 ```
 
-And specific `Query` type is defined in `config/graphql/types/Query.types.yml`
+And specific `Query` type is defined in `config/graphql/types/Query.types.yaml`
 ```yaml
 Query:
     type: object

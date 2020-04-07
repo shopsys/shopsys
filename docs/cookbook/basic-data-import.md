@@ -88,9 +88,9 @@ class ImportProductsCronModule implements SimpleCronModuleInterface
 !!! warning
     Cron modules are not suitable for data transfers initialized by an external source, you should implement Web Services for that purpose.
 
-#### 2.2 - Add cron configuration to [`cron.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services/cron.yml)
+#### 2.2 - Add cron configuration to [`cron.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services/cron.yaml)
 ```diff
-# config/services/cron.yml
+# config/services/cron.yaml
 
 services:
     _defaults:
@@ -194,7 +194,7 @@ class ProductRepository extends BaseProductRepository
 ```
 
 Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yml) as well.
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyaml-good-for), you need to add the same line into [`services_test.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yaml) as well.
 
 ```yaml
 Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
@@ -232,8 +232,8 @@ class ProductFacade extends BaseProductFacade
     You should overwrite `protected $productRepository` annotation so IDE knows that you are using the extended `ProductRepository`
 
 Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for),
-you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yml) as well.
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyaml-good-for),
+you need to add the same line into [`services_test.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yaml) as well.
 
 ```yaml
 Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
@@ -438,7 +438,7 @@ class VatFacade extends BaseVatFacade
     You should overwrite `protected $vatRepository` annotation so IDE knows that you are using the extended `VatRepository`
 
 Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yml) as well.
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyaml-good-for), you need to add the same line into [`services_test.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yaml) as well.
 
 ```yaml
 Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade: '@App\Model\Pricing\Vat\VatFacade'
@@ -500,7 +500,7 @@ for changes in all mapped entities and after time it consumes a huge amount of r
     - You should load any entity again after clearing identity map because any attempt to flush the old one will result in an exception.
 - Use streamed input for XML and JSON.
     - So you do not load huge files at once (can lead to memory overflow).
-- Store external source credentials in `config/parameters.yml`.
+- Store external source credentials in `config/parameters.yaml`.
     - Storing credentials in local configuration instead of hard-coding them in source code prevents from accidental corrupting of production data.
 - Restrict editing of the transferred fields in administration.
     - At least, mark them as transferred to avoid confusion when an administrator changes the field value and then data import overrides the value.

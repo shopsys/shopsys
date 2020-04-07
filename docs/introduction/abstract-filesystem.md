@@ -21,7 +21,7 @@ Flysystem supports a huge number of storage adapters. You can find [full list he
 If you want to change the adapter used for Filesystem you must implement factory for `FilesystemFactoryInterface` and register it in `services.yaml` file under `main_filesystem` alias.
 
 #### How to change storage adapter for WYSIWYG
-WYSIWYG configuration is stored in `config/packages/fm_elfinder.yml` file in `fm_elfinder\instances\default\connector\roots` section.
+WYSIWYG configuration is stored in `config/packages/fm_elfinder.yaml` file in `fm_elfinder\instances\default\connector\roots` section.
 For more information how to set up Flysystem with WYSIWYG visit [FMElfinderBundle Documentation](https://github.com/helios-ag/FMElfinderBundle/blob/9.2/docs/flysystem.md).
 
 #### Create Nginx proxy to load files from different storage

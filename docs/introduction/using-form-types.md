@@ -144,10 +144,10 @@ After a file or files are uploaded it shows box for every file and lets you to d
 An array of constraints that should be applied for the uploaded file.
 
 #### file_entity_class
-Defines which entity class (defined in [uploaded_files.yml](https://github.com/shopsys/shopsys/blob/master/config/uploaded_files.yml)) should the files be assigned to.
+Defines which entity class (defined in [uploaded_files.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/uploaded_files.yaml)) should the files be assigned to.
 
 #### file_type
-Defines which type of file (defined in [uploaded_files.yml](https://github.com/shopsys/shopsys/blob/master/config/uploaded_files.yml)) should the files be assigned to.
+Defines which type of file (defined in [uploaded_files.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/uploaded_files.yaml)) should the files be assigned to.
 
 #### info_text
 Required option that needs to be string or null and is a text that is shown under the upload icon.

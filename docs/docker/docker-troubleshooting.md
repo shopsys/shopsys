@@ -84,7 +84,7 @@ That way we can have as many projects running at the same time as many ports the
 
 Remember that after changing these you need to do few things differently.
 
-* You changed `port` of webserver container which affects the domain URL, so you need to change ports in `domains_urls.yml`.
+* You changed `port` of webserver container which affects the domain URL, so you need to change ports in `domains_urls.yaml`.
 * You changed `container_name` of php-fpm which means that in order to get inside the php-fpm container you must now use this name.
   for instance, if your new container name is `my-new-project-name-php-fpm` you need to execute
 

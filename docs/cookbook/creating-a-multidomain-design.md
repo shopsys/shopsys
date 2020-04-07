@@ -8,7 +8,7 @@ If you want to know the basic technologies we use for the frontend implementatio
 ### Scenario 1 - I want to use red color for links on my 2nd domain
 
 This is very easy as there are already prepared `less` files for the second domain in `domain2` folder
-that is configured for usage by `styles_directory` parameter in [`domains.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yml).
+that is configured for usage by `styles_directory` parameter in [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml).
 
 Edit `assets/styles/frontend/domain2/core/variables.less`:
 
@@ -28,7 +28,7 @@ Edit `assets/styles/frontend/domain2/core/variables.less`:
 In the footer, among other things, are on the right side contact phone number and email, list of articles and link to contact page.
 Let us say we want to change the elements so the list of articles goes first, then link to contact page, and the phone number and email are last.
 
-Open [`domains.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yml) and set `design_id` parameter for your 2nd domain.
+Open [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml) and set `design_id` parameter for your 2nd domain.
 
 ```diff
    domains:

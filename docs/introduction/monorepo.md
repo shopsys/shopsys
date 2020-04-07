@@ -60,7 +60,7 @@ It is not generated automatically, so each change made in the `composer.json` of
 also in `composer.json` in the root of monorepo. In monorepo, Shopsys packages are used directly from the directory
 `packages/`, so there are no requirements of those packages in `composer.json`.
 
-* **parameters_monorepo.yml** - overriding of global variables of Shopsys Framework, which makes it possible to run
+* **parameters_monorepo.yaml** - overriding of global variables of Shopsys Framework, which makes it possible to run
 Shopsys Framework in monorepo
 
 ## Installation of monorepo

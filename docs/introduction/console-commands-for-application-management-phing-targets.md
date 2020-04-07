@@ -112,7 +112,7 @@ Useful in a development environment and during deploying to production.
 #### backend-api-oauth-keys-generate
 
 Generates OAuth2 private and public key to directory `config/oauth2/`, be careful never commit private keys.
-Generates also encryption key to file `config/oauth2/parameters_oauth.yml`.
+Generates also encryption key to file `config/oauth2/parameters_oauth.yaml`.
 
 These keys are used by API OAuth2. The private key is used to sign tokens and public key is used to verify the signatures.
 
@@ -121,7 +121,7 @@ These keys are used by API OAuth2. The private key is used to sign tokens and pu
 Generates a Symfony configuration `build-version` variable that is used to distinguish different application builds.
 The variable itself contains current datetime in PHP format `YmdHis` (16 digits, eg. `20190311135223`) and you can use it in any configuration file by `'%build-version%'`.
 
-The variable is generated to file `config/parameters_version.yml` and this file is excluded from git.
+The variable is generated to file `config/parameters_version.yaml` and this file is excluded from git.
 
 ### Database
 
@@ -136,7 +136,7 @@ Executes [database migrations](database-migrations.md) and checks schema.
 #### db-create
 Creates database with required db extensions and collations (that are operating system specific, unfortunately).
 
-The target interactively asks for DB superuser credentials in order to perform all the actions so it is not needed to put superuser credentials into `config/parameters.yml`.
+The target interactively asks for DB superuser credentials in order to perform all the actions so it is not needed to put superuser credentials into `config/parameters.yaml`.
 
 When a locale is not supported by the operating system the command explains the situation and links to the documentation.
 
@@ -220,8 +220,8 @@ Runs performance tests on a newly built test database with performance data.
 
 It may take a few hours as the generation of performance data is very time-consuming. Should be executed on CI server only.
 
-The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yml).
-You can easily override the default values in your `parameters.yml` or `parameters_test.yml` configuration files.
+The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yaml).
+You can easily override the default values in your `parameters.yaml` or `parameters_test.yaml` configuration files.
 
 ### Other
 

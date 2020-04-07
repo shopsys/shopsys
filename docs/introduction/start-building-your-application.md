@@ -64,7 +64,7 @@ You are likely to adjust routing when you need translated routes for a new local
 
 *We use Symfony routing, so please find more in the [official documentation](https://symfony.com/doc/3.4/routing.html)*
 
-You can adjust the routing in `config/shopsys-routing/routing_friendly_url.yml` file and [locale specific](./how-to-set-up-domains-and-locales.md#32-frontend-routes) in `config/shopsys-routing/routing_front_xx.yml` files.
+You can adjust the routing in `config/shopsys-routing/routing_friendly_url.yaml` file and [locale specific](./how-to-set-up-domains-and-locales.md#32-frontend-routes) in `config/shopsys-routing/routing_front_xx.yaml` files.
 
 ## Set up default currency
 
