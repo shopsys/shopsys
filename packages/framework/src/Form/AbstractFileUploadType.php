@@ -114,6 +114,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
                 'allow_add' => true,
                 'entry_options' => [
                     'constraints' => [
+                        new Constraints\NotBlank(['message' => 'Please enter the filename']),
                         new Constraints\Length(['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']),
                     ],
                 ],

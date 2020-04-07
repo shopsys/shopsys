@@ -322,6 +322,9 @@ msgstr ""
 msgid "Please enter telephone number"
 msgstr ""
 
+msgid "Please enter the filename"
+msgstr ""
+
 msgid "Please enter total price with VAT"
 msgstr ""
 
