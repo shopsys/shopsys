@@ -15,7 +15,7 @@ The access token has a short lifetime (15 minutes by default).
 In order to not force users to log in every 15 minutes, we have implemented refresh tokens that have a longer lifetime (14 days in the base).
 You can read more about refresh tokens [here](https://auth0.com/docs/tokens/concepts/refresh-tokens).
 
-Tokens are signed with a private key and verified with its public key in Shopsys framework.
+Tokens are signed with a private key and verified with its public key in Shopsys Framework.
 You can generate them using the command `./phing frontend-api-generate-new-keys`.
 If these keys leak, you can generate a new key pair with the same command.
 Note that when you regenerate the keys, you invalidate all issued access and refresh tokens.
