@@ -79,7 +79,7 @@ class ImageUploadType extends AbstractType
             'image_type' => null,
             'multiple' => null,
             'image_entity_class' => null,
-            'extensions' => [ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_PNG, ImageProcessor::EXTENSION_GIF],
+            'extensions' => ImageProcessor::SUPPORTED_EXTENSIONS,
         ]);
 
         $resolver->setNormalizer(
@@ -138,7 +138,7 @@ class ImageUploadType extends AbstractType
             'multiple' => $this->isMultiple($options),
             'mapped' => false,
             'attr' => [
-                'accept' => 'image/gif|image/jpeg|image/png',
+                'accept' => ImageProcessor::SUPPORTED_IMAGE_MIME_TYPES,
             ],
         ]);
     }
