@@ -25,16 +25,18 @@ export default class ProductFilterBox {
     }
 
     initFilterParamsToogle ($toggleButton) {
-        let toggleText = $toggleButton.hasClass('is-active')
+        const toggleText = $toggleButton.hasClass('is-active')
             ? $toggleButton.data('text-more')
             : $toggleButton.data('text-less');
 
         $toggleButton
             .text(toggleText)
+            .toggleClass('is-active');
+
+        $toggleButton
             .closest('.js-product-filter-box')
             .find('.js-form-choice.is-hidden')
-            .toggleClass('is-visible')
-            .addClass('was-hidden');
+            .toggle();
     }
 
     toggleFilterBox ($parameterContainer) {
