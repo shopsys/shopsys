@@ -7,21 +7,21 @@
         <exec executable="${path.openssl.executable}" checkreturn="true">
             <arg value="genrsa"/>
             <arg value="-out"/>
-            <arg value="${path.config}/fe-api/private.key"/>
+            <arg value="${path.config}/frontend-api/private.key"/>
             <arg value="2048"/>
         </exec>
         <exec executable="${path.openssl.executable}" checkreturn="true">
             <arg value="rsa"/>
             <arg value="-in"/>
-            <arg value="${path.config}/fe-api/private.key"/>
+            <arg value="${path.config}/frontend-api/private.key"/>
             <arg value="-pubout"/>
             <arg value="-out"/>
-            <arg value="${path.config}/fe-api/public.key"/>
+            <arg value="${path.config}/frontend-api/public.key"/>
         </exec>
         <exec executable="${path.defuse-key-generate.executable}" checkreturn="true" outputProperty="encryption_key" error="/dev/null">
         </exec>
 
-        <echo file="${path.config}/fe-api/.encryption_key" append="false">${encryption_key}</echo>
+        <echo file="${path.config}/frontend-api/.encryption_key" append="false">${encryption_key}</echo>
     </target>
 
     <target name="frontend-api-enable" depends="frontend-api-generate-new-keys" description="Enable frontend API for all domains.">
@@ -30,9 +30,9 @@
     </target>
 
     <target name="frontend-api-disable" description="Disable frontend API for all domains.">
-        <delete file="${path.config}/fe-api/.encryption_key" />
-        <delete file="${path.config}/fe-api/private.key" />
-        <delete file="${path.config}/fe-api/public.key" />
+        <delete file="${path.config}/frontend-api/.encryption_key" />
+        <delete file="${path.config}/frontend-api/private.key" />
+        <delete file="${path.config}/frontend-api/public.key" />
         <delete file="${path.config}/packages/frontend_api.yaml" />
     </target>
 </project>
