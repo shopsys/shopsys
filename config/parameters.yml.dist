@@ -47,3 +47,8 @@ parameters:
         password: ''
 
     svg_icon_path: '%kernel.root_dir%/../src/Shopsys/ShopBundle/Resources/svg'
+
+    kraken_config:
+        enabled: false
+        api_key: ''
+        api_secret: ''
