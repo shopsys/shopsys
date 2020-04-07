@@ -3,3 +3,9 @@
 {% block title %}- {{ 'Produktový program editace:'|trans }} {{ productSeries.name }}{% endblock %}
 {% block h1 %}{{ 'Produktový program editace'|trans }} {{ productSeries.name }}{% endblock %}
 
+{% block main_content %}
+    {{ parent() }}
+
+    <h2>{{ 'Produkty v programu'|trans }}</h2>
+    {{ productsGrid.render() }}
+{% endblock %}

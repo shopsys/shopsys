@@ -8,10 +8,14 @@ use App\Component\Form\FormBuilderHelper;
 use App\Form\Admin\Product\Series\ProductSeriesFormType;
 use App\Model\Product\Series\Exception\ProductSeriesNotFoundException;
 use App\Model\Product\Series\Grid\ProductSeriesGridFactory;
+use App\Model\Product\Series\ProductSeries;
 use App\Model\Product\Series\ProductSeriesDataFactoryInterface;
 use App\Model\Product\Series\ProductSeriesFacadeInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use App\Model\Product\Series\ProductSeriesProductRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
+use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -19,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ProductSeriesController extends AdminBaseController
 {
@@ -58,6 +63,16 @@ class ProductSeriesController extends AdminBaseController
     private $formBuilderHelper;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
+     */
+    private $gridFactory;
+
+    /**
+     * @var \App\Model\Product\Series\ProductSeriesProductRepository
+     */
+    private $productSeriesProductRepository;
+
+    /**
      * @param \App\Model\Product\Series\ProductSeriesDataFactoryInterface $productSeriesDataFactory
      * @param \App\Model\Product\Series\ProductSeriesFacadeInterface $productSeriesFacade
      * @param \App\Model\Product\Series\Grid\ProductSeriesGridFactory $productSeriesGridFactory
@@ -65,6 +80,8 @@ class ProductSeriesController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \App\Model\Product\Series\ProductSeriesProductRepository $productSeriesProductRepository
      */
     public function __construct(
         ProductSeriesDataFactoryInterface $productSeriesDataFactory,
@@ -73,7 +90,9 @@ class ProductSeriesController extends AdminBaseController
         Domain $domain,
         BreadcrumbOverrider $breadcrumbOverrider,
         Localization $localization,
-        FormBuilderHelper $formBuilderHelper
+        FormBuilderHelper $formBuilderHelper,
+        GridFactory $gridFactory,
+        ProductSeriesProductRepository $productSeriesProductRepository
     ) {
         $this->productSeriesDataFactory = $productSeriesDataFactory;
         $this->productSeriesFacade = $productSeriesFacade;
@@ -82,6 +101,8 @@ class ProductSeriesController extends AdminBaseController
         $this->breadcrumbOverrider = $breadcrumbOverrider;
         $this->localization = $localization;
         $this->formBuilderHelper = $formBuilderHelper;
+        $this->gridFactory = $gridFactory;
+        $this->productSeriesProductRepository = $productSeriesProductRepository;
     }
 
     /**
@@ -202,14 +223,35 @@ class ProductSeriesController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
+        $productsGrid = $this->getProductsGrid($productSeries);
+
         $this->breadcrumbOverrider->overrideLastItem(t('Úprava produktového programu - %name%', ['%name%' => $productSeries->getName($this->domain->getLocale())]));
 
         return $this->render(
             'Admin/Content/ProductSeries/edit.html.twig',
             [
                 'productSeries' => $productSeries,
+                'productsGrid' => $productsGrid->createView(),
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    /**
+     * @param \App\Model\Product\Series\ProductSeries $productSeries
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    private function getProductsGrid(ProductSeries $productSeries): Grid
+    {
+        $queryBuilder = $this->productSeriesProductRepository->getProductSeriesProductsQueryBuilderByProductSeries($productSeries);
+        $dataSource = new QueryBuilderDataSource($queryBuilder, 'p.id');
+
+        $grid = $this->gridFactory->create('productGrid', $dataSource);
+        $grid->addColumn('name', 'p.name', t('Name'));
+        $grid->addEditActionColumn('admin_product_edit', ['id' => 'p.id']);
+        $grid->setTheme('Admin/Content/ProductSeries/Product/listGrid.html.twig');
+
+        return $grid;
     }
 }
