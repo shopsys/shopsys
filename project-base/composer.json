@@ -164,11 +164,11 @@
         },
         "incenteev-parameters": [
             {
-                "file": "config/parameters.yml",
+                "file": "config/parameters.yaml",
                 "keep-outdated": true
             },
             {
-                "file": "config/parameters_test.yml",
+                "file": "config/parameters_test.yaml",
                 "keep-outdated": true
             }
         ]

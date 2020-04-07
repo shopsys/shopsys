@@ -1,5 +1,5 @@
 imports:
-    - { resource: parameters_test.yml }
+    - { resource: parameters_test.yaml }
 
 framework:
     test: true

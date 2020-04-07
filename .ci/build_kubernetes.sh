@@ -9,15 +9,15 @@ echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-
 FIRST_DOMAIN_HOSTNAME=${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 SECOND_DOMAIN_HOSTNAME=2.${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 
-# Set parameters.yml file and domains_urls
-cp project-base/config/domains_urls.yml.dist project-base/config/domains_urls.yml
-cp project-base/config/parameters_test.yml.dist project-base/config/parameters_test.yml
-cp project-base/config/parameters.yml.dist project-base/config/parameters.yml
-yq write --inplace project-base/config/domains_urls.yml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
-yq write --inplace project-base/config/domains_urls.yml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+# Set parameters.yaml file and domains_urls
+cp project-base/config/domains_urls.yaml.dist project-base/config/domains_urls.yaml
+cp project-base/config/parameters_test.yaml.dist project-base/config/parameters_test.yaml
+cp project-base/config/parameters.yaml.dist project-base/config/parameters.yaml
+yq write --inplace project-base/config/domains_urls.yaml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+yq write --inplace project-base/config/domains_urls.yaml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
 
 # Change "overwrite_domain_url" parameter for Selenium tests as containers "webserver" and "php-fpm" are bundled together in a pod "webserver-php-fpm"
-yq write --inplace project-base/config/parameters_test.yml parameters.overwrite_domain_url http://webserver-php-fpm:8080
+yq write --inplace project-base/config/parameters_test.yaml parameters.overwrite_domain_url http://webserver-php-fpm:8080
 
 # Pull or build Docker images for the current commit
 DOCKER_IMAGE_TAG=ci-commit-${GIT_COMMIT}

@@ -3,8 +3,8 @@
     excludedPaths:
         - ./vendor
         - ./node_modules
-        - ./config/domains_urls.yml
-        - ./config/oauth2/parameters_oauth.yml.dist
+        - ./config/domains_urls.yaml
+        - ./config/oauth2/parameters_oauth.yaml.dist
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:

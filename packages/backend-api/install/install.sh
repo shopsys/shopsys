@@ -29,15 +29,15 @@ else
 fi
 
 printf "Copying FOS REST configuration..."
-cp ${INSTALL_DIR}/config/packages/fos_rest.yml ${PROJECT_BASE_PATH}/config/packages/fos_rest.yml
-cp ${INSTALL_DIR}/config/packages/test/fos_rest.yml ${PROJECT_BASE_PATH}/config/packages/test/fos_rest.yml
+cp ${INSTALL_DIR}/config/packages/fos_rest.yaml ${PROJECT_BASE_PATH}/config/packages/fos_rest.yaml
+cp ${INSTALL_DIR}/config/packages/test/fos_rest.yaml ${PROJECT_BASE_PATH}/config/packages/test/fos_rest.yaml
 printf "${GREEN}Done${NC}\n"
 
 printf "Copying OAuth2 configuration..."
-cp ${INSTALL_DIR}/config/packages/trikoder_oauth2.yml ${PROJECT_BASE_PATH}/config/packages/trikoder_oauth2.yml
+cp ${INSTALL_DIR}/config/packages/trikoder_oauth2.yaml ${PROJECT_BASE_PATH}/config/packages/trikoder_oauth2.yaml
 mkdir -p ${PROJECT_BASE_PATH}/config/oauth2
 cp ${INSTALL_DIR}/config/oauth2/.gitignore ${PROJECT_BASE_PATH}/config/oauth2/.gitignore
-cp ${INSTALL_DIR}/config/oauth2/parameters_oauth.yml.dist ${PROJECT_BASE_PATH}/config/oauth2/parameters_oauth.yml.dist
+cp ${INSTALL_DIR}/config/oauth2/parameters_oauth.yaml.dist ${PROJECT_BASE_PATH}/config/oauth2/parameters_oauth.yaml.dist
 printf "${GREEN}Done${NC}\n"
 
 printf "Creating directory src/Controller/Api/V1..."
@@ -98,9 +98,9 @@ function apply_patch () {
 }
 
 apply_patch "src/Kernel.php"
-apply_patch "config/parameters_common.yml"
-cp ${INSTALL_DIR}/config/routes/backend-api.yml ${PROJECT_BASE_PATH}/config/routes/backend-api.yml
-apply_patch "config/packages/security.yml"
+apply_patch "config/parameters_common.yaml"
+cp ${INSTALL_DIR}/config/routes/backend-api.yaml ${PROJECT_BASE_PATH}/config/routes/backend-api.yaml
+apply_patch "config/packages/security.yaml"
 apply_patch "config/bundles.php"
 apply_patch "build.xml"
 

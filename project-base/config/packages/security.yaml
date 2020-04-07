@@ -76,7 +76,7 @@ security:
                 invalidate_session: false
 
     access_control:
-        # same pattern must be in routing_front.yml
+        # same pattern must be in routing_front.yaml
         - { path: ^/login-as-remembered-user/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/superadmin/, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin/cron/*, roles: ROLE_SUPER_ADMIN }
