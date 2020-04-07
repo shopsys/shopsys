@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Order;
 
+use App\Form\Admin\Transformer\StockIdToStockTransformer;
 use App\Model\Order\FrontOrderData;
 use Shopsys\FrameworkBundle\Form\SingleCheckboxChoiceType;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -11,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,13 +32,23 @@ class TransportAndPaymentFormType extends AbstractType
     private $paymentFacade;
 
     /**
+     * @var \App\Form\Admin\Transformer\StockIdToStockTransformer
+     */
+    private $stockIdToStockTransformer;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \App\Form\Admin\Transformer\StockIdToStockTransformer $stockIdToStockTransformer
      */
-    public function __construct(TransportFacade $transportFacade, PaymentFacade $paymentFacade)
-    {
+    public function __construct(
+        TransportFacade $transportFacade,
+        PaymentFacade $paymentFacade,
+        StockIdToStockTransformer $stockIdToStockTransformer
+    ) {
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
+        $this->stockIdToStockTransformer = $stockIdToStockTransformer;
     }
 
     /**
@@ -63,6 +75,11 @@ class TransportAndPaymentFormType extends AbstractType
                     'invalid_message' => 'Please choose shipping type',
                 ],
             ])
+            ->add('transportPersonalPickupStockByProductTypeId', CollectionType::class, [
+                'entry_type' => HiddenType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ])
             ->add('payment', SingleCheckboxChoiceType::class, [
                 'choices' => $payments,
                 'choice_label' => 'name',
@@ -73,6 +90,8 @@ class TransportAndPaymentFormType extends AbstractType
                 'invalid_message' => 'Please choose payment type',
             ])
             ->add('save', SubmitType::class);
+
+        $builder->get('transportPersonalPickupStockByProductTypeId')->addModelTransformer($this->stockIdToStockTransformer);
     }
 
     /**

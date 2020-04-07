@@ -31,4 +31,9 @@ class FrontOrderData extends BaseFrontOrderData
      * @var \App\Model\Transport\Transport[]|null[]
      */
     public $transportsByProductTypeId;
+
+    /**
+     * @var \App\Model\Stock\Stock[]|null[]
+     */
+    public $transportPersonalPickupStockByProductTypeId;
 }

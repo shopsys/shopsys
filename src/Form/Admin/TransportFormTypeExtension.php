@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\Product\Type\ProductTypeFacade;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -30,17 +31,20 @@ class TransportFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->get('basicInformation')
+        $builder->get('basicInformation')
             ->add('productTypes', ChoiceType::class, [
-            'required' => false,
-            'choices' => $this->productTypeFacade->getAll(),
-            'choice_label' => 'name',
-            'choice_value' => 'id',
-            'multiple' => true,
-            'expanded' => true,
-            'label' => t('Určeno pro typy produktů'),
-        ]);
+                'required' => false,
+                'choices' => $this->productTypeFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'multiple' => true,
+                'expanded' => true,
+                'label' => t('Určeno pro typy produktů'),
+            ])
+            ->add('personalPickup', YesNoType::class, [
+                'required' => false,
+                'label' => t('Osobní odběr SCONTO'),
+            ]);
     }
 
     /**

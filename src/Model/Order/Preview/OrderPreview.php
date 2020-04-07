@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\Preview;
 
 use App\Model\Product\Type\ProductType;
+use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -23,6 +24,11 @@ class OrderPreview extends BaseOrderPreview
     private $totalProductHighPrice;
 
     /**
+     * @var \App\Model\Stock\Stock|null
+     */
+    private $personalPickupStock;
+
+    /**
      * @param array $quantifiedProductsByIndex
      * @param array $quantifiedItemsPricesByIndex
      * @param array $quantifiedItemsDiscountsByIndex
@@ -36,6 +42,7 @@ class OrderPreview extends BaseOrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
      * @param null $promoCodeDiscountPercent
      * @param \App\Model\Product\Type\ProductType|null $productType
+     * @param \App\Model\Stock\Stock|null $personalPickupStock
      */
     public function __construct(
         array $quantifiedProductsByIndex,
@@ -50,7 +57,8 @@ class OrderPreview extends BaseOrderPreview
         ?Price $paymentPrice = null,
         ?Price $roundingPrice = null,
         $promoCodeDiscountPercent = null,
-        ?ProductType $productType = null
+        ?ProductType $productType = null,
+        ?Stock $personalPickupStock = null
     ) {
         parent::__construct(
             $quantifiedProductsByIndex,
@@ -68,6 +76,7 @@ class OrderPreview extends BaseOrderPreview
 
         $this->productType = $productType;
         $this->totalProductHighPrice = $totalProductHighPrice;
+        $this->personalPickupStock = $personalPickupStock;
     }
 
     /**
@@ -96,5 +105,13 @@ class OrderPreview extends BaseOrderPreview
     public function getSubHighAndLowPrice(): Price
     {
         return $this->totalProductHighPrice->subtract($this->totalPrice);
+    }
+
+    /**
+     * @return \App\Model\Stock\Stock|null
+     */
+    public function getPersonalPickupStock(): ?Stock
+    {
+        return $this->personalPickupStock;
     }
 }

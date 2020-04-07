@@ -96,4 +96,16 @@ class StockRepository
     {
         return $this->getStockRepository()->findOneBy(['externalId' => $externalId]);
     }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getStocksWithoutCentralByDomainId(int $domainId): array
+    {
+        return $this->getQueryBuilderByDomain($domainId)
+            ->andWhere('s.centralStock = false')
+            ->getQuery()
+            ->execute();
+    }
 }

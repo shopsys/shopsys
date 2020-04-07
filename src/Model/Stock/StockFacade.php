@@ -112,4 +112,19 @@ class StockFacade
     {
         return $this->stockRepository->findStockByExternalId($externalId);
     }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getStocksWithoutCentralByDomainIdIndexedByStockId(int $domainId): array
+    {
+        $stocks = $this->stockRepository->getStocksWithoutCentralByDomainId($domainId);
+        $stocksById = [];
+        foreach ($stocks as $stock) {
+            $stocksById[$stock->getId()] = $stock;
+        }
+
+        return $stocksById;
+    }
 }
