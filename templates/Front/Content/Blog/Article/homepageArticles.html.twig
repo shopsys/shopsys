@@ -5,13 +5,13 @@
              <div class="box-articles">
                 <div class="box-articles__wrap">
                     <div class="box-articles__text">
-                        <h2 class="box-articles__heading">{{ rootCategory.getName(domain.locale)|upper }}</h2>                
+                        <h2 class="box-articles__heading">{{ rootCategory.getName(domain.locale)|upper }}</h2>
                         <div class="box-articles__desc">{{ rootCategory.getDescription(domain.locale) }}</div>
                         <a class="btn btn--outline dont-print" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "všechny články"|trans }}</a>
                     </div>
-                    <div class="list-articles">
-                        {% for blogArticle in homepageArticles %}                            
-                            <div class="list-articles__item">                                  
+                    <div class="list-articles list-articles--hp">
+                        {% for blogArticle in homepageArticles %}
+                            <div class="list-articles__item">
                                 <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link list-articles__item__link--image" title="{{ blogArticle.name }}">
                                     {{ image(blogArticle, { size: 'list', class: 'list-articles__item__image', alt: blogArticle.name, lazy: true }) }}
                                 </a>
@@ -28,7 +28,7 @@
                                     {{ blogArticle.perex|slice(0,165) }}{% if blogArticle.perex|length > 165 %}&hellip;{% endif %}
                                 </div>
                                 <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="btn btn--next btn-no-style dont-print" title="{{ blogArticle.name }}">
-                                    {{ "Číst dál"|trans }} <span class="btn__icon">&#8594;</span>
+                                    {{ "Číst dál"|trans }} <i class="btn__icon svg svg-long-arrow-right"></i>
                                 </a>
                             </div>
                         {% endfor %}

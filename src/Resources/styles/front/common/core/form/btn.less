@@ -120,6 +120,7 @@
         font-size: 15px;
         text-transform: none;
         text-align: left;
+        letter-spacing: 0;
 
         .btn__icon {
             position: relative;
@@ -159,6 +160,7 @@
 
         @media @query-md {
             min-width: @btn-wide-min-width-md;
+            width: auto;
         }
     }
 }
@@ -211,3 +213,22 @@
     }
 }
 
+// Button as tag
+.btn--tag {
+    min-height: 0;
+    padding: 8px 12px;
+    margin-right: 6px;
+
+    background-color: @color-f;
+    border-radius: 2em;
+    border: 1px solid #dae1e4;
+    font-family: @font-quartenary;
+    font-size: 13px;
+    text-transform: none;
+    letter-spacing: 0;
+    -webkit-font-smoothing: antialiased;
+
+    &:hover {
+        background-color: #dae1e4;
+    }
+}

@@ -1,6 +1,6 @@
 {% if blogCategories is not null %}
     {% for blogCategory in blogCategories %}
-        <a href="{{ url('front_blogcategory_detail', { id: blogCategory.id }) }}" class="box-blog__categories__item
+        <a href="{{ url('front_blogcategory_detail', { id: blogCategory.id }) }}" class="box-blog__categories__item btn btn--tag
             {% if currentBlogCategory.id == blogCategory.id %}current-blog-category{% endif %}
         ">
             {{ blogCategory.name }}
