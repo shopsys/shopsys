@@ -1410,6 +1410,26 @@ There you can find links to upgrade notes for other versions too.
 - javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545), [#1645](https://github.com/shopsys/shopsys/pull/1645))
     - please read [upgrade instruction for webpack](./upgrade-instruction-for-webpack.md)
 
+- css and other assets are managed by webpack ([#1725](https://github.com/shopsys/shopsys/pull/1725))
+    - see #project-base-diff to update your project
+    - move content from `src/resources/styles/front` to `assets/styles/frontend`
+    - move content from `src/resources/styles/admin` to `assets/styles/admin`
+    - move content from `src/resources/svg` to `assets/styles/frontend/svg`
+    - move content from `web/assets/frontend/fonts` to `assets/public/frontend/fonts`
+    - move content from `web/assets/frontend/images` to `assets/public/frontend/images`
+    - move content from `web/assets/admin/fonts` to `assets/public/frontend/fonts`
+    - move content from `web/assets/admin/images` to `assets/public/frontend/images`
+    - move content from `web/assets/styleguide/images` to `assets/public/styleguide/images`
+    - you should remove the `grunt` target from your `build.xml` file
+    - add `styles_directory` into your domains config (you can get inspired in [project-base/config/domains.yml  ](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yml))
+    - change all `asset` function call in your templates
+      ```diff
+        - asset('assets/**/*.*')
+        + asset('public/**/*.*')
+      ```
+    - remove `getCssVersion()` function call from your templates
+    - use full of the webpack, enjoy!
+
 If you have custom frontend you can skip these tasks:
 - hide variant table header when product is denied for sale ([#1634](https://github.com/shopsys/shopsys/pull/1634))
     - add new condition at product detail file: `templates/Front/Content/Product/detail.html.twig`
