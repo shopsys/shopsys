@@ -6,8 +6,8 @@ namespace App\Model\Product;
 
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
-use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -37,7 +37,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
 /**
  * @property \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
  * @method \App\Model\Product\Product getById(int $productId)
- * @method saveParameters(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] getAllProductSellingPricesByDomainId(\App\Model\Product\Product $product, int $domainId)
  * @method refreshProductManualInputPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Money\Money[]|null[] $manualInputPrices)
@@ -53,6 +52,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @method \App\Model\Product\Product[] getProductsWithUnit(\Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Model\Product\ProductRepository $productRepository
+ * @property \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
  */
 class ProductFacade extends BaseProductFacade
 {
@@ -75,7 +75,7 @@ class ProductFacade extends BaseProductFacade
 
     /**
      * @param string $productFilesUrlPrefix
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
@@ -103,7 +103,7 @@ class ProductFacade extends BaseProductFacade
      */
     public function __construct(
         string $productFilesUrlPrefix,
-        EntityManagerInterface $em,
+        EntityManagerDecorator $em,
         ProductRepository $productRepository,
         ProductVisibilityFacade $productVisibilityFacade,
         ParameterRepository $parameterRepository,
@@ -340,5 +340,42 @@ class ProductFacade extends BaseProductFacade
     public function getProductTypePlanFilename(Product $product, int $domainId): string
     {
         return $product->getProductTypePlanCode($domainId) . self::ASSETS_FILE_TYPE;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $productParameterValuesData
+     */
+    protected function saveParameters(Product $product, array $productParameterValuesData)
+    {
+
+        // Doctrine runs INSERTs before DELETEs in UnitOfWork. In case of UNIQUE constraint
+        // in database, this leads in trying to insert duplicate entry.
+        // That's why it's necessary to do remove and flush first.
+
+        $oldProductParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);
+        foreach ($oldProductParameterValues as $oldProductParameterValue) {
+            $this->em->remove($oldProductParameterValue);
+        }
+        $this->em->flush($oldProductParameterValues);
+
+        $toFlush = [];
+        foreach ($productParameterValuesData as $productParameterValueData) {
+            $parameterValue = $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
+                $productParameterValueData->parameterValueData
+            );
+
+            $productParameterValue = $this->productParameterValueFactory->create(
+                $product,
+                $productParameterValueData->parameter,
+                $parameterValue
+            );
+            $this->em->persist($productParameterValue);
+            $toFlush[] = $productParameterValue;
+        }
+
+        if (count($toFlush) > 0) {
+            $this->em->flush($toFlush);
+        }
     }
 }

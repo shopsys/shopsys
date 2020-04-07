@@ -269,6 +269,7 @@
                                             </th>
                                             <td>
                                                 {{ productParameterValue.value.text }}
+                                                {{ productParameterValue.parameter.parameterUnit != null ? productParameterValue.parameter.parameterUnit.name : '' }}
                                             </td>
                                         </tr>
                                     </tbody>

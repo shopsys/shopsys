@@ -30,8 +30,23 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
 
         $this->parameterChoicesIndexedByParameterId = [];
         foreach ($config->getParameterChoices() as $parameterChoice) {
+
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
             $parameter = $parameterChoice->getParameter();
+
+            /** @var \App\Model\Product\Parameter\ParameterValue[] $parameterValues */
             $parameterValues = $parameterChoice->getValues();
+
+            if ($parameter->getParameterUnit() !== null) {
+                $newParameterValues = [];
+                foreach ($parameterValues as $parameterValue) {
+                    $newParameterValue = new \stdClass();
+                    $newParameterValue->id = $parameterValue->getId();
+                    $newParameterValue->text = $parameterValue->getText() . ' ' . $parameter->getParameterUnit()->getName();
+                    $newParameterValues[] = $newParameterValue;
+                }
+                $parameterValues = $newParameterValues;
+            }
 
             $this->parameterChoicesIndexedByParameterId[$parameter->getId()] = $parameterChoice;
 
@@ -63,7 +78,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
     }
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterValue[][]|null $value
+     * @param \App\Model\Product\Parameter\ParameterValue[][]|\stdClass[][]|null $value
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]|null
      */
     public function reverseTransform($value)
@@ -78,9 +93,25 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
                 continue; // invalid parameter IDs are ignored
             }
 
+            $parameterValuesIndexedByParameterId = [];
+            foreach ($this->parameterChoicesIndexedByParameterId[$parameterId]->getValues() as $parameterValue) {
+                $parameterValuesIndexedByParameterId[$parameterValue->getId()] = $parameterValue;
+            }
+
+            $selectedParameterValues = [];
+            foreach ($parameterValues as $parameterValue) {
+                if ($parameterValue instanceof \stdClass) {
+
+                    /** @var \stdClass $parameterValue */
+                    $selectedParameterValues[] = $parameterValuesIndexedByParameterId[$parameterValue->id];
+                } else {
+                    $selectedParameterValues[] = $parameterValue;
+                }
+            }
+
             $parameterFilterData = new ParameterFilterData();
             $parameterFilterData->parameter = $this->parameterChoicesIndexedByParameterId[$parameterId]->getParameter();
-            $parameterFilterData->values = $parameterValues;
+            $parameterFilterData->values = $selectedParameterValues;
             $parametersFilterData[] = $parameterFilterData;
         }
 
