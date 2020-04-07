@@ -35,8 +35,8 @@ export default class ProductFilterBox {
 
         $toggleButton
             .closest('.js-product-filter-box')
-            .find('.js-form-choice.is-hidden')
-            .toggle();
+            .find('.js-form-choice--collapsing')
+            .toggleClass('display-none');
     }
 
     toggleFilterBox ($parameterContainer) {

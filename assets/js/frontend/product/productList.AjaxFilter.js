@@ -86,7 +86,7 @@ export default class ProductListAjaxFilter {
 
     updateFiltersVisibleParams () {
         $('.js-product-filter-box').each(function (index, element) {
-            const $hiddenParams = $(element).find('.js-form-choice.is-hidden');
+            const $hiddenParams = $(element).find('.js-form-choice--collapsing');
             const $toggleButton = $(element).find('.js-product-filter-show-more-less');
 
             if (!$hiddenParams.length) {
