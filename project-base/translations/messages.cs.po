@@ -545,7 +545,7 @@ msgid "Subscription to email newsletter"
 msgstr "Přihlášení k zpravodaji"
 
 msgid "Subscription was failed"
-msgstr ""
+msgstr "Přihlášení k novinkám selhalo"
 
 msgid "Tax number"
 msgstr "DIČ"
