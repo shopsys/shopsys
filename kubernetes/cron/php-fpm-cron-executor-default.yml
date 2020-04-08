@@ -27,7 +27,7 @@ spec:
                             args:
                                 - /bin/sh
                                 - -c
-                                - ./phing grunt cron
+                                - ./phing npm cron
                             securityContext:
                                 runAsUser: 33
                             imagePullPolicy: Always
