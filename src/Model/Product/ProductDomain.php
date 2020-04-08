@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Product\Type\ProductType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
@@ -19,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
  *
  * @ORM\Entity
  * @property \App\Model\Product\Product $product
- * @method __construct(\App\Model\Product\Product $product, int $domainId)
  */
 class ProductDomain extends BaseProductDomain
 {
@@ -92,6 +92,25 @@ class ProductDomain extends BaseProductDomain
      * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
      */
     private $productType;
+
+    /**
+     * @var \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Model\Product\Flag\Flag")
+     * @ORM\JoinTable(name="product_domain_flags")
+     */
+    protected $flags;
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     */
+    public function __construct(Product $product, $domainId)
+    {
+        parent::__construct($product, $domainId);
+
+        $this->flags = new ArrayCollection();
+    }
 
     /**
      * @return string|null
@@ -251,5 +270,26 @@ class ProductDomain extends BaseProductDomain
     public function setProductType(ProductType $productType): void
     {
         $this->productType = $productType;
+    }
+
+    /**
+     * @return \App\Model\Product\Flag\Flag[]
+     */
+    public function getFlags()
+    {
+        return $this->flags->toArray();
+    }
+
+    /**
+     * @param \App\Model\Product\Flag\Flag[] $flags
+     */
+    public function setFlags(array $flags)
+    {
+        $this->flags = $this->flags;
+
+        $this->flags->clear();
+        foreach ($flags as $flag) {
+            $this->flags->add($flag);
+        }
     }
 }

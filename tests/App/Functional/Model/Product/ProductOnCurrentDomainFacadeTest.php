@@ -76,7 +76,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flagTopProduct */
-        $flagTopProduct = $this->getReference(FlagDataFixture::FLAG_TOP_PRODUCT);
+        $flagTopProduct = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
         $productFilterData = new ProductFilterData();
         $productFilterData->flags = [$flagTopProduct];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
@@ -89,14 +89,14 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flagTopProduct */
-        $flagTopProduct = $this->getReference(FlagDataFixture::FLAG_TOP_PRODUCT);
+        $flagTopProduct = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
         /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flagActionProduct */
-        $flagActionProduct = $this->getReference(FlagDataFixture::FLAG_ACTION_PRODUCT);
+        $flagActionProduct = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         $productFilterData = new ProductFilterData();
         $productFilterData->flags = [$flagTopProduct, $flagActionProduct];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(5, $paginationResult->getResults());
+        $this->assertCount(6, $paginationResult->getResults());
     }
 
     public function testFilterByBrand()
@@ -309,7 +309,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData = new ProductFilterData();
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flagTopProduct */
-        $flagTopProduct = $this->getReference(FlagDataFixture::FLAG_NEW_PRODUCT);
+        $flagTopProduct = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         $productFilterData->flags = [$flagTopProduct];
 
         /** @var \App\Model\Product\Brand\Brand $brandCanon */

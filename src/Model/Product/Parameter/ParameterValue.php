@@ -6,12 +6,11 @@ namespace App\Model\Product\Parameter;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
 
 /**
  * @ORM\Table(name="parameter_values")
  * @ORM\Entity
- * @method __construct(\App\Model\Product\Parameter\ParameterValueData $parameterData)
- * @method edit(\App\Model\Product\Parameter\ParameterValueData $parameterData)
  */
 class ParameterValue extends BaseParameterValue
 {
@@ -21,6 +20,24 @@ class ParameterValue extends BaseParameterValue
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $unit;
+
+    /**
+     * @param \App\Model\Product\Parameter\ParameterValueData $parameterData
+     */
+    public function __construct(ParameterValueData $parameterData)
+    {
+        parent::__construct($parameterData);
+        $this->unit = $parameterData->unit;
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\ParameterValueData $parameterData
+     */
+    public function edit(ParameterValueData $parameterData)
+    {
+        parent::edit($parameterData);
+        $this->unit = $parameterData->unit;
+    }
 
     /**
      * @return string|null

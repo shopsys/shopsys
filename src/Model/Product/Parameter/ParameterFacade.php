@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Parameter\ParameterRepository $parameterRepository, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory, \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
  * @method \App\Model\Product\Parameter\Parameter getById(int $parameterId)
  * @method \App\Model\Product\Parameter\Parameter[] getAll()
  * @method \App\Model\Product\Parameter\Parameter create(\App\Model\Product\Parameter\ParameterData $parameterData)
@@ -19,6 +24,34 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParam
  */
 class ParameterFacade extends BaseParameterFacade
 {
+    /**
+     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
+     */
+    private $readyCategorySeoMixFacade;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     */
+    public function __construct(
+        EntityManagerInterface $em,
+        ParameterRepository $parameterRepository,
+        ParameterFactoryInterface $parameterFactory,
+        EventDispatcherInterface $eventDispatcher,
+        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+    ) {
+        parent::__construct(
+            $em,
+            $parameterRepository,
+            $parameterFactory,
+            $eventDispatcher
+        );
+        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
+    }
+
     /**
      * @param string $akeneoCode
      * @return \App\Model\Product\Parameter\Parameter|null
@@ -52,5 +85,16 @@ class ParameterFacade extends BaseParameterFacade
     public function getParameterValueById(int $parameterValueId): ParameterValue
     {
         return $this->parameterRepository->getParameterValueById($parameterValueId);
+    }
+
+    /**
+     * @param int $parameterId
+     */
+    public function deleteById($parameterId): void
+    {
+        $parameter = $this->parameterRepository->getById($parameterId);
+        $this->readyCategorySeoMixFacade->deleteAllWithParameter($parameter);
+
+        parent::deleteById($parameterId);
     }
 }

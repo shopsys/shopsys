@@ -27,4 +27,9 @@ class ParameterData extends BaseParameterData
      * @var int
      */
     public $orderingPriority;
+
+    /**
+     * @var \App\Model\Product\Parameter\Unit\ParameterUnit|null
+     */
+    public $parameterUnit;
 }

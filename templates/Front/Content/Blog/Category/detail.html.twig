@@ -25,12 +25,14 @@
                 <h1 class="box-blog__title">
                     {{ blogCategory.getSeoH1(domain.id) ?? blogCategory.name}}
                 </h1>
+                <div class="box-blog__img">
                 {% if imageExists(blogCategory) %}
                     {{ image(blogCategory, { itemprop: 'image', lazy: true }) }}
                 {% else %}
                     {{ noimage({ alt: blogCategory.name }) }}
                 {% endif %}
-                <div>
+                </div>
+                <div class="box-blog__desc">
                     {{ blogCategory.description|raw }}
                 </div>
                 <div class="box-blog__panel">
@@ -42,9 +44,9 @@
                     <div class="box-blog__list">
                         {% if blogArticlePaginationResult.results|length > 0 %}
                             <div class="js-blog-list-with-paginator">
-                                <ul class="list-articles js-list">
+                                <ul class="list-articles list-articles--grid js-list">
                                     {% for blogArticle in blogArticlePaginationResult.results %}
-                                        <li class="list-articles__item list-articles__item--full-size">
+                                        <li class="list-articles__item list-articles__item--grid">
                                             <div class="list-articles__item__image">
                                                 <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}">
                                                     {{ image(blogArticle, { size: 'list', alt: blogArticle.name, lazy: true }) }}
@@ -61,12 +63,12 @@
                                                         {{ blogArticle.name }}
                                                     </a>
                                                 </h3>
-                                                <div class="list-articles__item__content__text">
+                                                <div class="list-articles__item__desc">
                                                     {{ blogArticle.perex|slice(0,100) }}{% if blogArticle.perex|length > 100 %}&hellip;{% endif %}
                                                 </div>
                                                 <div class="list-articles__item__content__text">
-                                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
-                                                        {{ "číst dále"|trans }} <span class="right-arrow">&#8594;</span>
+                                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="btn btn--next btn-no-style dont-print" title="{{ blogArticle.name }}">
+                                                        {{ "číst dál"|trans }} <i class="btn__icon svg svg-long-arrow-right"></i>
                                                     </a>
                                                 </div>
 

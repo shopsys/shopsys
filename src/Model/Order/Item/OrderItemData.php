@@ -16,4 +16,9 @@ class OrderItemData extends BaseOrderItemData
      * @var \App\Model\Product\Type\ProductType|null
      */
     public $productType;
+
+    /**
+     * @var \App\Model\Stock\Stock|null
+     */
+    public $personalPickupStock;
 }

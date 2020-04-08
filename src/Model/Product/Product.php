@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Product\Type\ProductType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
+use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
@@ -34,8 +36,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
- * @method editFlags(\App\Model\Product\Flag\Flag[] $flags)
- * @method \App\Model\Product\Flag\Flag[] getFlags()
  */
 class Product extends BaseProduct
 {
@@ -57,10 +57,15 @@ class Product extends BaseProduct
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $preorder;
+
+    /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $vendorDeliveryDate;
 
     /**
      * @param \App\Model\Product\ProductData $productData
@@ -73,6 +78,8 @@ class Product extends BaseProduct
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->preorder = $productData->preorder;
+        $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
+        $this->flags = new ArrayCollection();
     }
 
     /**
@@ -86,6 +93,7 @@ class Product extends BaseProduct
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->preorder = $productData->preorder;
+        $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
     }
 
     /**
@@ -128,6 +136,7 @@ class Product extends BaseProduct
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
             $productDomain->setProductType($productData->productType[$domainId]);
+            $productDomain->setFlags($productData->flags[$domainId] ?? []);
         }
     }
 
@@ -226,6 +235,15 @@ class Product extends BaseProduct
     public function getHighPriceWithVat(int $domainId): ?Money
     {
         return $this->getProductDomain($domainId)->getHighPriceWithVat();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Product\Flag\Flag[]
+     */
+    public function getFlagsForDomain(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->getFlags();
     }
 
     /**
@@ -390,8 +408,73 @@ class Product extends BaseProduct
     /**
      * @return  bool
      */
-    public function hasPreorder()
+    public function hasPreorder(): bool
     {
         return $this->preorder;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getVendorDeliveryDate(): ?int
+    {
+        return $this->vendorDeliveryDate;
+    }
+
+    /**
+     * @param \App\Model\Product\Flag\Flag[] $flags
+     */
+    protected function editFlags(array $flags)
+    {
+        // Keep this function empty - flags were moved to Domain
+    }
+
+    /**
+     * @return array
+     */
+    public function getFlags()
+    {
+        // Return empty array to override default functionality.
+        // Flags were moved to Domain.
+        return [];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
+     */
+    public function setProductCategoryDomains(array $productCategoryDomains)
+    {
+        foreach ($this->productCategoryDomains as $productCategoryDomain) {
+            if ($this->isProductCategoryDomainInArray($productCategoryDomain, $productCategoryDomains) === false) {
+                $this->productCategoryDomains->removeElement($productCategoryDomain);
+            }
+        }
+        foreach ($productCategoryDomains as $productCategoryDomain) {
+            if ($this->isProductCategoryDomainInArray($productCategoryDomain, $this->productCategoryDomains->toArray()) === false) {
+                $this->productCategoryDomains->add($productCategoryDomain);
+            }
+        }
+        if ($this->isMainVariant()) {
+            foreach ($this->getVariants() as $variant) {
+                $variant->copyProductCategoryDomains($productCategoryDomains);
+            }
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain $searchProductCategoryDomain
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
+     * @return bool
+     */
+    private function isProductCategoryDomainInArray(ProductCategoryDomain $searchProductCategoryDomain, array $productCategoryDomains)
+    {
+        foreach ($productCategoryDomains as $productCategoryDomain) {
+            if ($productCategoryDomain->getCategory() === $searchProductCategoryDomain->getCategory()
+                && $productCategoryDomain->getDomainId() === $searchProductCategoryDomain->getDomainId()
+            ) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,0 +1,5 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('admin_product_edit', { id: row.id }) }}">{{ row.name }}</a>
+{% endblock %}

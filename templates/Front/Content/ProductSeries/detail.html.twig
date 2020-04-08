@@ -1,4 +1,5 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
 {% set domain = getDomain() %}
 {% set showGalleryMaxCount = 4 %}
@@ -67,6 +68,7 @@
                     <h2>
                         {{ "Produkty programu"|trans }}
                     </h2>
+                    {{ productList.list(products, null, 'h2') }}
                 </div>
             </div>
 

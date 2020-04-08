@@ -1,0 +1,7 @@
+{% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
+
+{% if (priceType == 'sellingPrice') %}
+    {{ asterisk.sellingPrice(flags) }}
+{% else %}
+    {{ asterisk.nonSellingPrice(flags) }}
+{% endif %}

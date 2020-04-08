@@ -6,6 +6,8 @@ namespace App\Model\CategorySeo;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ReadyCategorySeoMixRepository
 {
@@ -48,5 +50,23 @@ class ReadyCategorySeoMixRepository
     public function findById(int $id): ?ReadyCategorySeoMix
     {
         return $this->getRepository()->find($id);
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix[]
+     */
+    public function getAllWithParameter(Parameter $parameter): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('rcsm')
+            ->from(ReadyCategorySeoMix::class, 'rcsm')
+            ->join(ReadyCategorySeoMixParameterParameterValue::class, 'ppv', Join::WITH, 'ppv.readyCategorySeoMix = rcsm')
+            ->where('ppv.parameter = :parameter')
+            ->setParameters([
+                'parameter' => $parameter,
+            ])
+            ->getQuery()
+            ->execute();
     }
 }

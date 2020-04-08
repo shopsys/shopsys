@@ -12,6 +12,7 @@ use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainMainFrien
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ReadyCategorySeoMixFacade
 {
@@ -182,6 +183,20 @@ class ReadyCategorySeoMixFacade
 
         if ($hasMainFriendlyUrl === false) {
             throw new ReadyCategorySeoMixUrlsDoNotContainMainFriendlyUrlException('ReadyCategorySeoMix urls do not contain main FriendlyUrl');
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     */
+    public function deleteAllWithParameter(Parameter $parameter): void
+    {
+        $readyCategorySeoMixes = $this->readyCategorySeoMixRepository->getAllWithParameter($parameter);
+        if (count($readyCategorySeoMixes) > 0) {
+            foreach ($readyCategorySeoMixes as $readyCategorySeoMix) {
+                $this->em->remove($readyCategorySeoMix);
+            }
+            $this->em->flush();
         }
     }
 }

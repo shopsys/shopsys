@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Component\Form\FormBuilderHelper;
+use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Product;
 use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
+use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -47,6 +49,8 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'productType',
         'parameters',
         'preorder',
+        'vendorDeliveryDate',
+        'flags',
     ];
 
     /**
@@ -70,21 +74,29 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private $productTypeFacade;
 
     /**
+     * @var \App\Model\Product\Flag\FlagFacade
+     */
+    private $flagFacade;
+
+    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
+     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      */
     public function __construct(
         FormBuilderHelper $formBuilderHelper,
         VatFacade $vatFacade,
         Domain $domain,
-        ProductTypeFacade $productTypeFacade
+        ProductTypeFacade $productTypeFacade,
+        FlagFacade $flagFacade
     ) {
         $this->formBuilderHelper = $formBuilderHelper;
         $this->domain = $domain;
         $this->vatFacade = $vatFacade;
         $this->productTypeFacade = $productTypeFacade;
+        $this->flagFacade = $flagFacade;
     }
 
     /**
@@ -92,8 +104,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->changeSeoGroup($builder);
-
         $product = $options['product'];
         /* @var $product \App\Model\Product\Product|null */
 
@@ -121,8 +131,25 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'position' => ['after' => 'name'],
         ]);
 
-        $builder->get('basicInformationGroup')
-            ->add('productType', MultidomainType::class, [
+        $this->setBasicInformationGroup($builder);
+        $this->setSeoGroup($builder);
+        $this->setShortDescriptionsUspGroup($builder, $options);
+        $this->setStocksGroup($builder);
+        $this->setDisplayAvailabilityGroup($builder, $product);
+        $this->setPricesGroup($builder, $product);
+        $this->setTransferredFilesGroup($builder, $product);
+
+        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function setBasicInformationGroup(FormBuilderInterface $builder): void
+    {
+        $groupBuilder = $builder->get('basicInformationGroup');
+
+        $groupBuilder->add('productType', MultidomainType::class, [
                 'required' => true,
                 'entry_type' => ChoiceType::class,
                 'entry_options' => [
@@ -137,31 +164,51 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                     ],
                 ],
                 'label' => t('Typ'),
+            ])
+
+            ->add('flags', MultidomainType::class, [
+                'entry_type' => ChoiceType::class,
+                'entry_options' => [
+                    'attr' => [
+                        'class' => 'input--full-width',
+                    ],
+                    'choices' => $this->flagFacade->getAll(),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'multiple' => true,
+                    'expanded' => true,
+                ],
+                'required' => false,
+                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+                'label' => t('Flags'),
             ]);
-
-        $this->setShortDescriptionsUspGroup($builder, $options);
-
-        $builder->get('displayAvailabilityGroup')->get('stockGroup')->remove('stockQuantity');
-        $this->stocksGroup($builder);
-
-        $builder->get('displayAvailabilityGroup')->add('preorder', YesNoType::class, [
-            'required' => false,
-            'disabled' => $this->isProductMainVariant($product),
-            'label' => 'Povolit předobjednávky',
-        ]);
-
-        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
-        $this->setPricesGroup($builder, $product);
-        $this->buildTransferredFiles($builder, $product);
-
-        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \App\Model\Product\Product|null $product
      */
-    private function buildTransferredFiles(FormBuilderInterface $builder, ?Product $product): void
+    private function setDisplayAvailabilityGroup(FormBuilderInterface $builder, ?Product $product): void
+    {
+        $groupBuilder = $builder->get('displayAvailabilityGroup');
+        $groupBuilder->get('stockGroup')->remove('stockQuantity');
+
+        $groupBuilder->add('preorder', YesNoType::class, [
+            'required' => false,
+            'disabled' => $this->isProductMainVariant($product),
+            'label' => 'Povolit předobjednávky',
+        ])
+        ->add('vendorDeliveryDate', TextType::class, [
+            'required' => false,
+            'label' => 'Dodací lhůta dodavatele',
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Product\Product|null $product
+     */
+    private function setTransferredFilesGroup(FormBuilderInterface $builder, ?Product $product): void
     {
         if ($product === null) {
             return;
@@ -310,7 +357,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    private function changeSeoGroup(FormBuilderInterface $builder): void
+    private function setSeoGroup(FormBuilderInterface $builder): void
     {
         $builderSeoGroup = $builder->get('seoGroup');
 
@@ -320,7 +367,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    private function stocksGroup(FormBuilderInterface $builder)
+    private function setStocksGroup(FormBuilderInterface $builder)
     {
         $stockGroupBuilder = $builder->create('stocksGroup', GroupType::class, [
             'label' => t('Stocks'),

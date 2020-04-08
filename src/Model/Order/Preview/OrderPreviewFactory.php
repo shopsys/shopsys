@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\Preview;
 
 use App\Model\Product\Type\ProductType;
+use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory as BaseOrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -51,12 +52,13 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param array $quantifiedProducts
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
-     * @param \App\Model\Product\Type\ProductType $productType
+     * @param \App\Model\Product\Type\ProductType|null $productType
+     * @param \App\Model\Stock\Stock|null $personalPickupStock
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function create(
@@ -67,7 +69,8 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
-        ?ProductType $productType = null
+        ?ProductType $productType = null,
+        ?Stock $personalPickupStock = null
     ): OrderPreview {
         return $this->orderPreviewCalculation->calculatePreview(
             $currency,
@@ -77,7 +80,8 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $payment,
             $customerUser,
             $promoCodeDiscountPercent,
-            $productType
+            $productType,
+            $personalPickupStock
         );
     }
 }

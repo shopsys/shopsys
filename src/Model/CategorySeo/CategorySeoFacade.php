@@ -19,19 +19,19 @@ class CategorySeoFacade
     private $parameterRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
+     * @var \App\Model\Product\Flag\FlagFacade
      */
     private $flagFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade
+     * @var \App\Model\Product\Listing\ProductListOrderingModeForListFacade
      */
     private $productListOrderingModeForListFacade;
 
     /**
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
+     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      */
     public function __construct(
         ParameterRepository $parameterRepository,

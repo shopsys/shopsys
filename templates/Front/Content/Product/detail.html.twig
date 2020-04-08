@@ -1,5 +1,6 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
 {% import 'Front/Inline/Product/productFlagsMacro.html.twig' as productFlags %}
+{% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
 {% set domain = getDomain() %}
@@ -33,7 +34,7 @@
                                 {{ noimage({ alt: product.fullname }) }}
                             {% endif %}
                         </div>
-                        {{ productFlags.list(product) }}
+                        {{ productFlags.list(product.getFlagsForDomain(domain.id)) }}
 
                         {% if showGallery %}
                             <div class="box-gallery dont-print js-gallery">
@@ -81,9 +82,11 @@
                                         class="box-detail-add__prices">
                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
                                             {{ getProductSellingPrice(product).priceWithVat|price }}
+                                            {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
                                         </div>
                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
                                             {{ getProductNonSellingPrice(product).priceWithVat|price }}
+                                            {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
                                         </div>
                                         <meta itemprop="priceCurrency"
                                             content="{{ currencyCode(domain.id) }}"
@@ -265,6 +268,7 @@
                                             </th>
                                             <td>
                                                 {{ productParameterValue.value.text }}
+                                                {{ productParameterValue.parameter.parameterUnit != null ? productParameterValue.parameter.parameterUnit.name : '' }}
                                             </td>
                                         </tr>
                                     </tbody>

@@ -6,8 +6,10 @@ namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Akeneo\AkeneoHelper;
 use App\Component\Akeneo\Product\AkeneoProductHelper;
+use App\Component\Akeneo\Transfer\Exception\TransferException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataException;
 use App\Model\Category\CategoryFacade;
+use App\Model\Product\Flag\FlagRepository;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
@@ -60,6 +62,11 @@ class ProductTransferAkeneoMapper
     private $parameterValueDataFactory;
 
     /**
+     * @var \App\Model\Product\Flag\FlagRepository
+     */
+    private $flagRepository;
+
+    /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
@@ -67,6 +74,7 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \App\Model\Product\Flag\FlagRepository $flagRepository
      */
     public function __construct(
         ProductDataFactory $productDataFactory,
@@ -75,7 +83,8 @@ class ProductTransferAkeneoMapper
         ProductTypeFacade $productTypeFacade,
         ParameterFacade $parameterFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
-        ParameterValueDataFactoryInterface $parameterValueDataFactory
+        ParameterValueDataFactoryInterface $parameterValueDataFactory,
+        FlagRepository $flagRepository
     ) {
         $this->productDataFactory = $productDataFactory;
         $this->categoryFacade = $categoryFacade;
@@ -84,6 +93,7 @@ class ProductTransferAkeneoMapper
         $this->parameterFacade = $parameterFacade;
         $this->productParameterValueDataFactory = $productParameterValueDataFactory;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
+        $this->flagRepository = $flagRepository;
     }
 
     /**
@@ -106,6 +116,15 @@ class ProductTransferAkeneoMapper
         );
 
         return $productFilesData;
+    }
+
+    /**
+     * @param array $akeneoProductData
+     * @return string[]
+     */
+    public function mapAkeneoProductDataToProductSeriesCodeList(array $akeneoProductData): array
+    {
+        return $akeneoProductData['values']['product_series_entities'][0]['data'] ?? [];
     }
 
     /**
@@ -149,11 +168,14 @@ class ProductTransferAkeneoMapper
 
         $this->mapProductParameters($akeneoProductData, $productData);
 
-        $productData->preorder = isset($akeneoProductData['values']['preorder'])
-            ? $akeneoProductData['values']['preorder'][0]['data']
-            : false;
-
         $productData->preorder = $akeneoProductData['values']['preorder'][0]['data'] ?? false;
+
+        $vendorDeliveryDate = $akeneoProductData['values']['vendor_delivery_date'][0]['data'] ?? null;
+        if ($vendorDeliveryDate !== null) {
+            $productData->vendorDeliveryDate = intval($vendorDeliveryDate);
+        }
+
+        $productData->flags = $this->getProductFlags($akeneoProductData['values']);
 
         return $productData;
     }
@@ -245,12 +267,14 @@ class ProductTransferAkeneoMapper
                 if (is_array($currentAkeneoProductParameterData['data'])) {
                     $parameterValueText = (string)$currentAkeneoProductParameterData['data']['amount'];
                     $parameterValueUnit = $currentAkeneoProductParameterData['data']['unit'];
+
+                    $this->checkExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
                 } else {
                     $parameterValueText = (string)$currentAkeneoProductParameterData['data'];
                     $parameterValueUnit = null;
                 }
 
-                foreach (['cs', 'sk'] as $locale) {
+                foreach (AkeneoHelper::AKENEO_LOCALES_MAP_ESHOP_LOCALES as $locale) {
                     $productData->parameters[] = $this->createProductParameterValueData(
                         $parameter,
                         $locale,
@@ -271,6 +295,54 @@ class ProductTransferAkeneoMapper
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * @param array $akeneoProductDataValues
+     * @return array
+     */
+    protected function getProductFlags(array $akeneoProductDataValues): array
+    {
+        $selectedFlags = [];
+        foreach ($this->flagRepository->getAll() as $flag) {
+            if (array_key_exists($flag->getAkeneoCode(), $akeneoProductDataValues)) {
+                foreach ($akeneoProductDataValues[$flag->getAkeneoCode()] as $flagData) {
+                    if ($flagData['data'] === true) {
+                        if ($flagData['locale'] !== null) {
+                            $selectedFlags[$flagData['locale']][] = $flag;
+                        } else {
+                            foreach (array_keys(AkeneoHelper::AKENEO_LOCALES_MAP_ESHOP_LOCALES) as $locale) {
+                                $selectedFlags[$locale][] = $flag;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $selectedFlags;
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param string $parameterValueUnit
+     * @param string $catnum
+     */
+    private function checkExpectedParameterUnit(Parameter $parameter, string $parameterValueUnit, string $catnum): void
+    {
+        if ($parameter->getParameterUnit()->getUnit() !== null
+            && $parameter->getParameterUnit()->getUnit() !== $parameterValueUnit
+        ) {
+            throw new TransferException(
+                sprintf(
+                    'Product "%s" with parameter "%s" has wrong unit, expected is "%s" but incoming is "%s"',
+                    $catnum,
+                    $parameter->getName('cs'),
+                    $parameter->getParameterUnit()->getUnit(),
+                    $parameterValueUnit
+                )
+            );
         }
     }
 

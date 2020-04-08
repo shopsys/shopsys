@@ -30,6 +30,7 @@ class TransportDataFactory extends BaseTransportDataFactory
         $transportData = new TransportData();
         $this->fillFromTransport($transportData, $transport);
         $transportData->productTypes = $transport->getProductTypes();
+        $transportData->personalPickup = $transport->isPersonalPickup();
 
         return $transportData;
     }

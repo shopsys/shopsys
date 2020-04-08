@@ -25,6 +25,8 @@ class StockDataFactory
         $stockData->domainId = $stock->getDomainId();
         $stockData->centralStock = $stock->isCentralStock();
         $stockData->externalId = $stock->getExternalId();
+        $stockData->street = $stock->getStreet();
+        $stockData->city = $stock->getCity();
         return $stockData;
     }
 }

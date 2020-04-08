@@ -6,6 +6,7 @@ namespace App\Model\Order\Preview;
 
 use App\Model\Product\Pricing\ProductPriceCalculation;
 use App\Model\Product\Type\ProductType;
+use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
@@ -68,12 +69,13 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param array $quantifiedProducts
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
      * @param \App\Model\Product\Type\ProductType|null $productType
+     * @param \App\Model\Stock\Stock|null $personalPickupStock
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function calculatePreview(
@@ -84,7 +86,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
-        ?ProductType $productType = null
+        ?ProductType $productType = null,
+        ?Stock $personalPickupStock = null
     ): BaseOrderPreview {
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
@@ -155,7 +158,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $paymentPrice,
             $roundingPrice,
             $promoCodeDiscountPercent,
-            $productType
+            $productType,
+            $personalPickupStock
         );
     }
 

@@ -6,11 +6,11 @@
 .footer__bottom {
     display: flex;
     flex-direction: column;
-    padding: @footer-bottom-padding;    
+    padding: @footer-bottom-padding;
 
-    text-align: center;    
+    text-align: center;
 
-    @media @query-lg {        
+    @media @query-lg {
         align-items: center;
         flex-direction: row;
 
@@ -18,8 +18,8 @@
     }
 
     &__copyright {
-        margin-top: 15px;     
-        order: 1;   
+        margin-top: 15px;
+        order: 1;
 
         color: @footer-bottom-item-color;
         font-size: @footer-bottom-item-font-size;
@@ -31,7 +31,7 @@
         }
     }
 
-    &__articles {        
+    &__articles {
 
         @media @query-lg {
             width: 100% / 2;
@@ -47,6 +47,12 @@
 
             @media @query-xl {
                 margin-left: 2rem;
+            }
+
+            &__icon {
+                display: inline-block;
+                vertical-align: middle;
+                margin: -3px 0 0 1px;
             }
         }
     }

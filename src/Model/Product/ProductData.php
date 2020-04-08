@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Brand\Brand|null $brand
  * @property \App\Model\Product\Product[] $accessories
  * @property \App\Model\Product\Product[] $variants
- * @property \App\Model\Product\Flag\Flag[] $flags
+ * @property \App\Model\Product\Flag\Flag[][] $flags
  */
 class ProductData extends BaseProductData
 {
@@ -115,6 +115,16 @@ class ProductData extends BaseProductData
      */
     public $preorder;
 
+    /**
+     * @var int|null
+     */
+    public $vendorDeliveryDate;
+
+    /**
+     * @var \App\Model\Product\Flag\Flag[][]|null[][]
+     */
+    public $flags;
+
     public function __construct()
     {
         parent::__construct();
@@ -137,5 +147,6 @@ class ProductData extends BaseProductData
         $this->productTypePlanFileUrl = [];
         $this->productType = [];
         $this->preorder = false;
+        $this->flags = [];
     }
 }

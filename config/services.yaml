@@ -39,6 +39,10 @@ services:
 
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: '@App\Component\Doctrine\QueryBuilderExtender'
 
+    App\Component\Doctrine\NotNullableColumnsFinder: ~
+
+    Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder: '@App\Component\Doctrine\NotNullableColumnsFinder'
+
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
         class: 'App\Model\Customer\User\CustomerUserUpdateDataFactory'
 
@@ -121,6 +125,12 @@ services:
 
     Shopsys\FrameworkBundle\Model\Category\CategoryRepository: '@App\Model\Category\CategoryRepository'
 
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface: '@App\Model\Product\Flag\FlagDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade: '@App\Model\Product\Flag\FlagFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository: '@App\Model\Product\Flag\FlagRepository'
+
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface: '@App\Model\Customer\User\CustomerUserDataFactory'
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'
@@ -140,6 +150,10 @@ services:
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@App\Model\Transport\TransportDataFactory'
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade: '@App\Model\Product\Listing\ProductListOrderingModeForListFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory: '@App\Model\Product\Parameter\ParameterGridFactory'
 
     Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@App\Model\Product\ProductDataFactory'
 
@@ -190,6 +204,9 @@ services:
 
     Shopsys\FrameworkBundle\Controller\Admin\DefaultController:
         class: 'App\Controller\Admin\DefaultController'
+
+    Shopsys\FrameworkBundle\Controller\Admin\FlagController:
+        class: 'App\Controller\Admin\FlagController'
 
     Shopsys\FrameworkBundle\Controller\Admin\OrderController:
         class: 'App\Controller\Admin\OrderController'
@@ -267,6 +284,8 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: '@App\Model\Product\Elasticsearch\ProductExportRepository'
 
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: '@App\Model\Product\ProductOnCurrentDomainFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository: '@App\Model\Product\Filter\FlagFilterChoiceRepository'
 
     Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository: '@App\Model\Product\Filter\PriceRangeRepository'
 
