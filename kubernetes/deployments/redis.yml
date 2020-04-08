@@ -1,14 +1,22 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: redis
 spec:
     replicas: 1
+    selector:
+        matchLabels:
+            app: redis
     template:
         metadata:
             labels:
                 app: redis
         spec:
+            volumes:
+                -   name: health
+                    configMap:
+                        name: redis-health-configmap
+                        defaultMode: 0755
             containers:
                 -   name: redis
                     image: redis:4.0-alpine
@@ -16,3 +24,22 @@ spec:
                         -   name: redis
                             containerPort: 6379
                             protocol: TCP
+                    volumeMounts:
+                        -   name: health
+                            mountPath: /health
+                    livenessProbe:
+                        initialDelaySeconds: 30
+                        timeoutSeconds: 5
+                        exec:
+                            command:
+                                - sh
+                                - -c
+                                - /health/liveness.sh 5
+                    readinessProbe:
+                        initialDelaySeconds: 5
+                        timeoutSeconds: 5
+                        exec:
+                            command:
+                                - sh
+                                - -c
+                                - /health/readiness.sh 5

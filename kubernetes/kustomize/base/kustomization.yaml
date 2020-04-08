@@ -9,6 +9,8 @@ resources:
     - ../../ingress.yml
     - ../../namespace.yml
     - ../../nginx-configMap.yml
+    - ../../configmap/nginx.yaml
+    - ../../configmap/redis-health.yaml
 namespace: "{{PROJECT_NAME}}"
 configMapGenerator:
     -   name: domains-urls
