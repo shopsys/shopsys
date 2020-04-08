@@ -50,5 +50,7 @@ parameters:
 
     kraken_config:
         enabled: false
+        sandbox: false # https://kraken.io/docs/sandbox
+        lossy: true
         api_key: ''
         api_secret: ''

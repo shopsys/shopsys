@@ -14,6 +14,16 @@ class KrakenConfig
     private $enabled;
 
     /**
+     * @var bool
+     */
+    private $sandbox;
+
+    /**
+     * @var bool
+     */
+    private $lossy;
+
+    /**
      * @var string
      */
     private $apiKey;
@@ -32,12 +42,22 @@ class KrakenConfig
 
         $optionsResolver->setRequired([
             'enabled',
+            'sandbox',
+            'lossy',
             'api_key',
             'api_secret',
         ]);
 
         $optionsResolver->setAllowedTypes(
             'enabled',
+            ['bool']
+        );
+        $optionsResolver->setAllowedTypes(
+            'sandbox',
+            ['bool']
+        );
+        $optionsResolver->setAllowedTypes(
+            'lossy',
             ['bool']
         );
         $optionsResolver->setAllowedTypes(
@@ -52,6 +72,8 @@ class KrakenConfig
         $optionsResolver->resolve($krakenConfig);
 
         $this->enabled = $krakenConfig['enabled'];
+        $this->sandbox = $krakenConfig['sandbox'];
+        $this->lossy = $krakenConfig['lossy'];
         $this->apiKey = $krakenConfig['api_key'];
         $this->apiSecret = $krakenConfig['api_secret'];
     }
@@ -62,6 +84,22 @@ class KrakenConfig
     public function isEnabled(): bool
     {
         return $this->enabled;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSandbox(): bool
+    {
+        return $this->sandbox;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLossy(): bool
+    {
+        return $this->lossy;
     }
 
     /**

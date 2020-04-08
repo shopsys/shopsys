@@ -465,3 +465,9 @@ services:
     Kraken:
         class: Kraken
         factory: ['@App\Component\Image\Kraken\KrakenFactory', createApi]
+
+    Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator: '@App\Component\Image\Processing\ImageGenerator'
+
+    App\Component\Image\Processing\ImageGenerator: ~
+
+    App\Component\Image\Kraken\Processing\ImageKrakenProcessor: ~
