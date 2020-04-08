@@ -295,6 +295,9 @@
       },
       "main_variant_id": {
         "type": "integer"
+      },
+      "is_sale_exclusion": {
+        "type": "boolean"
       }
     }
   }

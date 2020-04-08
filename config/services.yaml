@@ -339,6 +339,8 @@ services:
         arguments:
             $disableFields: '%disable_form_fields_from_transfer%'
 
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository: '@App\Model\Sitemap\SitemapRepository'
+
     Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory: '@App\Model\Slider\SliderItemDataFactory'
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository: '@App\Model\Slider\SliderItemRepository'

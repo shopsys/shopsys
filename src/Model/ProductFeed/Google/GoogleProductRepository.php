@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\ProductFeed\Google;
 
-use App\Model\Stock\ProductStock;
+use App\Model\Product\ProductRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -14,6 +14,19 @@ use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository as Ba
 
 class GoogleProductRepository extends BaseGoogleProductRepository
 {
+    /**
+     * @var \App\Model\Product\ProductRepository
+     */
+    protected $productRepository;
+
+    /**
+     * @param \App\Model\Product\ProductRepository $productRepository
+     */
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
@@ -31,14 +44,7 @@ class GoogleProductRepository extends BaseGoogleProductRepository
             ->orderBy('p.id', 'asc')
             ->setMaxResults($maxResults);
 
-        $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
-            ->select('1')
-            ->from(ProductStock::class, 'ps')
-            ->join('ps.stock', 's', Join::WITH, 's.domainId = :domainId')
-            ->where('ps.product = p')
-            ->having('SUM(ps.productQuantity) > 0');
-        $queryBuilder->andWhere('p.preorder = true OR EXISTS(' . $subquery->getDQL() . ')');
-
+        $this->productRepository->filterTemporaryExcludedProducts($queryBuilder, $domainConfig->getId());
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
         $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
         $queryBuilder->addSelect('v')->join('pd.vat', 'v');

@@ -23,6 +23,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
  */
 class ProductDomain extends BaseProductDomain
 {
+    public const FLAG_PRODUCT_SALE_AKENEO_CODE = 'flag__product_sale';
+
     /**
      * @var string|null
      *
@@ -100,6 +102,12 @@ class ProductDomain extends BaseProductDomain
      * @ORM\JoinTable(name="product_domain_flags")
      */
     protected $flags;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $saleExclusion;
 
     /**
      * @param \App\Model\Product\Product $product
@@ -275,7 +283,7 @@ class ProductDomain extends BaseProductDomain
     /**
      * @return \App\Model\Product\Flag\Flag[]
      */
-    public function getFlags()
+    public function getFlags(): array
     {
         return $this->flags->toArray();
     }
@@ -283,7 +291,7 @@ class ProductDomain extends BaseProductDomain
     /**
      * @param \App\Model\Product\Flag\Flag[] $flags
      */
-    public function setFlags(array $flags)
+    public function setFlags(array $flags): void
     {
         $this->flags = $this->flags;
 
@@ -291,5 +299,39 @@ class ProductDomain extends BaseProductDomain
         foreach ($flags as $flag) {
             $this->flags->add($flag);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSaleExclusion(): bool
+    {
+        return $this->saleExclusion;
+    }
+
+    /**
+     * @param bool $saleExclusion
+     */
+    public function setSaleExclusion(bool $saleExclusion): void
+    {
+        $this->saleExclusion = $saleExclusion;
+    }
+
+    /**
+     * @param \App\Model\Product\Flag\Flag[] $flags
+     * @return bool
+     */
+    public function calcSaleExclusion($flags): bool
+    {
+        $exclusion = false;
+
+        foreach ($flags as $flag) {
+            if ($flag->getAkeneoCode() === self::FLAG_PRODUCT_SALE_AKENEO_CODE) {
+                $exclusion = true;
+                break;
+            }
+        }
+
+        return $exclusion;
     }
 }

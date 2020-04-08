@@ -207,10 +207,8 @@ class CartController extends FrontBaseController
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
-        $productAvailable = $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder(
-            $product,
-            $this->domain->getId()
-        );
+        $productAvailable = !$this->productAvailabilityFacade->isProductExcludedOnDomain($product, $this->domain->getId())
+            && $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId());
 
         return $this->render('Front/Inline/Cart/addProduct.html.twig', [
             'form' => $form->createView(),

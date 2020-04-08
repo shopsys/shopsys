@@ -49,6 +49,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'productType',
         'parameters',
         'preorder',
+        'saleExclusion',
         'vendorDeliveryDate',
         'flags',
     ];
@@ -193,15 +194,21 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $groupBuilder = $builder->get('displayAvailabilityGroup');
         $groupBuilder->get('stockGroup')->remove('stockQuantity');
 
-        $groupBuilder->add('preorder', YesNoType::class, [
-            'required' => false,
-            'disabled' => $this->isProductMainVariant($product),
-            'label' => 'Povolit předobjednávky',
-        ])
-        ->add('vendorDeliveryDate', TextType::class, [
-            'required' => false,
-            'label' => 'Dodací lhůta dodavatele',
-        ]);
+        $groupBuilder
+            ->add('preorder', YesNoType::class, [
+                'required' => false,
+                'disabled' => $this->isProductMainVariant($product),
+                'label' => 'Povolit předobjednávky',
+            ])
+            ->add('saleExclusion', MultidomainType::class, [
+                'label' => t('Vyřazení z prodeje'),
+                'required' => false,
+                'entry_type' => YesNoType::class,
+            ])
+            ->add('vendorDeliveryDate', TextType::class, [
+                'required' => false,
+                'label' => 'Dodací lhůta dodavatele',
+            ]);
     }
 
     /**

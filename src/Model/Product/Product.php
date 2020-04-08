@@ -138,6 +138,7 @@ class Product extends BaseProduct
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
             $productDomain->setProductType($productData->productType[$domainId]);
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
+            $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
         }
     }
 
@@ -421,6 +422,15 @@ class Product extends BaseProduct
     public function hasPreorder(): bool
     {
         return $this->preorder;
+    }
+
+    /**
+     * @param int $domainId
+     * @return  bool
+     */
+    public function getSaleExclusion(int $domainId): bool
+    {
+        return $this->getProductDomain($domainId)->getSaleExclusion();
     }
 
     /**

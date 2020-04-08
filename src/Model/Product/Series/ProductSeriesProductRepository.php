@@ -101,6 +101,7 @@ class ProductSeriesProductRepository
 
         $this->productRepository->filterTemporaryExcludedProducts($queryBuilder, $this->domain->getId());
         $this->productRepository->filterSellingDenied($queryBuilder);
+        $this->productRepository->addDomain($queryBuilder, $this->domain->getId());
 
         return $queryBuilder->join(ProductSeriesProduct::class, 'psp', Join::WITH, 'psp.product = p')
             ->andWhere('psp.productSeries = :productSeries')

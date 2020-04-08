@@ -177,8 +177,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->assemblyInstructionFileUrl[$domainId] = null;
             $productData->productTypePlanFileUrl[$domainId] = null;
             $productData->productType[$domainId] = null;
-            $productData->preorder = false;
             $productData->flags[$domainId] = [];
+            $productData->saleExclusion[$domainId] = false;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -186,6 +186,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->nameSufix[$locale] = null;
         }
 
+        $productData->preorder = false;
         $productData->availability = $this->availabilityFacade->getById($this->setting->get('defaultAvailabilityInStockId'));
     }
 
@@ -208,10 +209,10 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
             $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
             $productData->productType[$domainId] = $product->getProductType($domainId);
+            $productData->flags[$domainId] = $product->getFlagsForDomain($domainId);
+            $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
 
             $this->fillPricesFromProductByDomain($productData, $product, $domainId);
-
-            $productData->flags[$domainId] = $product->getFlagsForDomain($domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {

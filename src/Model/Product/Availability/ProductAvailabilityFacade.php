@@ -90,6 +90,19 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return bool
      */
+    public function isProductExcludedOnDomain(Product $product, int $domainId): bool
+    {
+        return $product->getSaleExclusion($domainId) && !$this->isProductAvailableOnDomain(
+            $product,
+            $domainId
+        );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return bool
+     */
     public function isProductAvailableOnDomainOrHasPreorder(Product $product, int $domainId): bool
     {
         return $product->hasPreorder() || $this->isProductAvailableOnDomain(

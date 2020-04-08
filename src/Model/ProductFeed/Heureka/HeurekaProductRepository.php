@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\ProductFeed\Heureka;
 
-use App\Model\Stock\ProductStock;
-use Doctrine\ORM\Query\Expr\Join;
+use App\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -13,6 +12,19 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository as 
 
 class HeurekaProductRepository extends BaseHeurekaProductRepository
 {
+    /**
+     * @var \App\Model\Product\ProductRepository
+     */
+    protected $productRepository;
+
+    /**
+     * @param \App\Model\Product\ProductRepository $productRepository
+     */
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
@@ -29,14 +41,7 @@ class HeurekaProductRepository extends BaseHeurekaProductRepository
             ->orderBy('p.id', 'asc')
             ->setMaxResults($maxResults);
 
-        $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
-            ->select('1')
-            ->from(ProductStock::class, 'ps')
-            ->join('ps.stock', 's', Join::WITH, 's.domainId = :domainId')
-            ->where('ps.product = p')
-            ->having('SUM(ps.productQuantity) > 0');
-        $queryBuilder->andWhere('p.preorder = true OR EXISTS(' . $subquery->getDQL() . ')');
-
+        $this->productRepository->filterTemporaryExcludedProducts($queryBuilder, $domainConfig->getId());
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
         $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
 

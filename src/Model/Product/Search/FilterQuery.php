@@ -158,4 +158,31 @@ class FilterQuery extends BaseFilterQuery
 
         return $clone;
     }
+
+    /**
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function filterNotExcludeOrInStock(): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'bool' => [
+                'should' => [
+                    [
+                        'term' => [
+                            'is_sale_exclusion' => false,
+                        ],
+                    ],
+                    [
+                        'term' => [
+                            'in_stock' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        return $clone;
+    }
 }

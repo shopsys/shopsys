@@ -128,7 +128,9 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         $listedProductViews = [];
         foreach ($products as $product) {
             $productId = $product->getId();
-            if ($this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId())) {
+            if (!$this->productAvailabilityFacade->isProductExcludedOnDomain($product, $this->domain->getId())
+                && $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId())
+            ) {
                 $listedProductViews[$productId] = $this->listedProductViewFactory->createFromProduct(
                     $product,
                     $imageViews[$productId],

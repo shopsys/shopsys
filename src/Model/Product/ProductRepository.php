@@ -131,7 +131,7 @@ class ProductRepository extends BaseProductRepository
             ->setParameter('domainId', $domainId)
             ->having('SUM(ps.productQuantity) > 0');
 
-        $queryBuilder->andWhere('p.preorder = true OR EXISTS(' . $subquery->getDQL() . ')');
+        $queryBuilder->andWhere('EXISTS(' . $subquery->getDQL() . ') OR (p.preorder = true AND pd.saleExclusion = false)');
     }
 
     /**

@@ -116,6 +116,11 @@ class ProductData extends BaseProductData
     public $preorder;
 
     /**
+     * @var bool[]
+     */
+    public $saleExclusion;
+
+    /**
      * @var int|null
      */
     public $vendorDeliveryDate;
@@ -147,6 +152,7 @@ class ProductData extends BaseProductData
         $this->productTypePlanFileUrl = [];
         $this->productType = [];
         $this->preorder = false;
+        $this->saleExclusion = [];
         $this->flags = [];
     }
 }

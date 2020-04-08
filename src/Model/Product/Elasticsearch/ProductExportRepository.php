@@ -114,6 +114,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'name_sufix' => $product->getNameSufix($locale),
             'non_selling_price' => $highPriceWithVat === null ? null : $highPriceWithVat->getAmount(),
             'is_in_sale' => $product->isProductInSale(),
+            'is_sale_exclusion' => $product->getSaleExclusion($domainId),
         ];
     }
 
