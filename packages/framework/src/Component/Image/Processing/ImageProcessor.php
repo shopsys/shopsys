@@ -16,6 +16,8 @@ class ImageProcessor
     public const EXTENSION_JPG = 'jpg';
     public const EXTENSION_PNG = 'png';
     public const EXTENSION_GIF = 'gif';
+    public const SUPPORTED_EXTENSIONS = [self::EXTENSION_JPG, self::EXTENSION_JPEG, self::EXTENSION_GIF, self::EXTENSION_PNG];
+    public const SUPPORTED_IMAGE_MIME_TYPES = 'image/jpeg|image/gif|image/png';
 
     /**
      * @var string[]

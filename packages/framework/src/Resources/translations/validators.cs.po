@@ -58,6 +58,9 @@ msgstr "Pole musí obsahovat {{ needle }}."
 msgid "Fields must not be identical"
 msgstr "Pole se musí shodovat."
 
+msgid "File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}."
+msgstr "Přípona souboru {{ value }} není mezi povolenými příponami. Povolené přípony jsou {{ extensions }}."
+
 msgid "File extension {{ value }} is too long. It should have {{ limit }} character or less."
 msgstr "Přípona souboru {{ value }} je příliš dlouhá. Měla by mít {{ limit }} znaků nebo méně."
 

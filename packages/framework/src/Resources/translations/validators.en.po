@@ -58,6 +58,9 @@ msgstr ""
 msgid "Fields must not be identical"
 msgstr ""
 
+msgid "File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}."
+msgstr ""
+
 msgid "File extension {{ value }} is too long. It should have {{ limit }} character or less."
 msgstr ""
 
