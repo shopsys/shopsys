@@ -48,20 +48,33 @@
     display: none;
     width: 100%;
 
+    @media @query-md {
+        padding-left: 5px;
+    }
+
     @media @query-lg {
         display: flex;
         max-width: @web-width;
         margin: 0 auto;
-        padding: 0 100px;
+        padding-right: 100px;
         position: relative;
         top: 0;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
     }
 
     @media @query-sl {
-        padding: 0 220px;
+        padding-left: 220px;
+        padding-right: 220px;
+    }
+
+    @media @query-vl {
+        padding-left: 100px;
+        justify-content: center;
+    }
+
+    @media @query-xl {
+        padding-left: 220px;
     }
 
     .js-sticky-menu-fixed & {
@@ -94,7 +107,11 @@
         height: @menu-horizontal-height;
         overflow: hidden;
 
-        font-size: @menu-horizontal-item-font-size;
+        font-size: @menu-horizontal-item-font-size - 1;
+
+        @media @query-vl {
+            font-size: @menu-horizontal-item-font-size;
+        }
 
         &__arrow {
             display: none;
@@ -155,12 +172,16 @@
             height: @menu-horizontal-height;
             line-height: @menu-horizontal-height;
 
-            font-size: @menu-horizontal-item-font-size;
+            font-size: @menu-horizontal-item-font-size - 1;
             font-family: @font-quartenary;
             color: @menu-horizontal-font-color;
 
             @media @query-sl {
                 padding: 0 15px;
+            }
+
+            @media @query-vl {
+                font-size: @menu-horizontal-item-font-size;
             }
 
             &:hover {
@@ -209,8 +230,12 @@
 
             &--blog {
                 position: absolute;
-                right: 0;
+                right: 5px;
                 top: 0;
+
+                @media @query-vl {
+                    right: 0;
+                }
             }
 
             &--sale {
