@@ -1,26 +1,14 @@
 <nav class="menu-list-menu-wrap dont-print">
 	<ul class="menu-horizontal js-menuHorizontal" data-hovered="false">
-		<li class="menu-horizontal__item js-not-implemented-yet">
-			<a href="#" class="menu-horizontal__item__link menu-horizontal__item__link--cats">
-				<i class="menu-horizontal__item__link__icon svg svg-burger-menu"></i>
-				<span class="menu-horizontal__item__link__text">{{ "Všechny kategorie"|trans }}</span>
-			</a>
-		</li>
 		{% for itemDetail in itemDetails %}
 			<li class="menu-horizontal__item js-menu-horizontal-item">
 				{% if itemDetail.horizontalMenuItem.url %}
 					<a href="{{ itemDetail.horizontalMenuItem.url }}" class="menu-horizontal__item__link">
 						{{ itemDetail.horizontalMenuItem.name }}
-						{% if itemDetail.categoryDetailsByColumnNumber is not empty %}
-							<i class="svg svg-arrow"></i>
-						{% endif %}
 					</a>
 				{% else %}
 					<span class="menu-horizontal__item__link">
 						{{ itemDetail.horizontalMenuItem.name }}
-						{% if itemDetail.categoryDetailsByColumnNumber is not empty %}
-							<i class="svg svg-arrow-down"></i>
-						{% endif %}
 					</span>
 				{% endif %}
 				{% if itemDetail.categoryDetailsByColumnNumber is not empty %}
