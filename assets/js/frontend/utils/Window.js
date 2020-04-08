@@ -1,4 +1,4 @@
-import {KeyCodes} from 'framework/common/utils/KeyCodes';
+import { KeyCodes } from 'framework/common/utils/KeyCodes';
 import Timeout from 'framework/common/utils/Timeout';
 import Translator from 'bazinga-translator';
 
