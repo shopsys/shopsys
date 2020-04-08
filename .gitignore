@@ -11,7 +11,6 @@
 /PRODUCTION
 /TEST
 /MAINTENANCE
-/Gruntfile.js
 /.php_cs.cache
 /.docker-sync
 .DS_Store
@@ -27,5 +26,8 @@ yarn-error.log
 
 /assets/js/translations.json
 /assets/js/bundles
+/assets/public/admin_svg.less
+/assets/public/frontend_svg.less
+
 /web/assets/frontend/files
 /.phpunit.result.cache

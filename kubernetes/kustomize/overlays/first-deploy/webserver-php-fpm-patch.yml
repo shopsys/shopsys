@@ -3,7 +3,7 @@
     value:
         name: init-application
         image: "{{TAG}}"
-        command: ["sh", "-c", "cd /var/www/html && ./phing clean clean dirs-create db-import-basic-structure db-migrations domains-data-create product-search-create-structure product-search-export-products grunt assets error-pages-generate warmup"]
+        command: ["sh", "-c", "cd /var/www/html && ./phing clean clean dirs-create db-import-basic-structure db-migrations domains-data-create product-search-create-structure product-search-export-products npm assets error-pages-generate warmup"]
         securityContext:
             runAsUser: 33
         volumeMounts:

@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as BaseCustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
@@ -45,6 +46,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -59,7 +61,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         DeliveryAddressFacade $deliveryAddressFacade,
         CustomerDataFactoryInterface $customerDataFactory,
         BillingAddressFacade $billingAddressFacade,
-        NewsletterFacade $newsletterFacade
+        NewsletterFacade $newsletterFacade,
+        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
     ) {
         parent::__construct(
             $em,
@@ -73,7 +76,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
             $customerFacade,
             $deliveryAddressFacade,
             $customerDataFactory,
-            $billingAddressFacade
+            $billingAddressFacade,
+            $customerUserRefreshTokenChainFacade
         );
         $this->newsletterFacade = $newsletterFacade;
     }

@@ -1,0 +1,233 @@
+// Default button
+@btn-height: @form-item-height;
+@btn-padding-vertical: 12px;
+@btn-padding-horizontal: 16px;
+@btn-color: @color-primary;
+@btn-color-hover: @color-primary;
+@btn-bg: @color-d;
+@btn-bg-hover: darken(@btn-bg, 5%);
+@btn-border-radius: 4px;
+
+.btn {
+    width: auto;
+    min-height: @btn-height;
+    padding: @btn-padding-vertical @btn-padding-horizontal;
+    line-height: 1;
+    vertical-align: middle;
+    display: inline-block;
+    transition: @transition background, @transition color;
+    text-align: center;
+
+    border: 0;
+    border-radius: @btn-border-radius;
+    color: @btn-color;
+    background: @btn-bg;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: @font-tertiary;
+    font-size: 13px;
+    outline: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+        color: @btn-color-hover;
+        background: @btn-bg-hover;
+        text-decoration: none;
+    }
+}
+
+//// Modifications - color
+.btn {
+    // call to action button
+    @btn-success-color: @color-f;
+    @btn-success-color-hover: @color-f;
+    @btn-success-bg: @color-green;
+    @btn-success-bg-hover: darken(@btn-success-bg, 5%);
+
+    &--success {
+        color: @btn-success-color;
+        background: @btn-success-bg;
+
+        &:hover {
+            color: @btn-success-color-hover;
+            background: @btn-success-bg-hover;
+        }
+    }
+
+    // primary button
+    @btn-primary-color: @color-f;
+    @btn-primary-color-hover: @color-f;
+    @btn-primary-bg: @color-add;
+    @btn-primary-bg-hover: @color-add;
+
+    &--primary {
+        color: @btn-primary-color;
+        background-color: @btn-primary-bg;
+        background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
+
+        &:hover {
+            color: @btn-primary-color-hover;
+            background: @btn-primary-bg-hover;
+            background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
+        }
+    }
+
+    &--disabled {
+        opacity: 0.5;
+        cursor: no-drop;
+    }
+
+    // Outline button
+    @btn-outline-border: 2px solid @color-add;
+    @btn-outline-bg: transparent;
+    @btn-outline-bg-hover: @color-add;
+
+    &--outline {
+        border: @btn-outline-border;
+        background-color: @btn-outline-bg;
+
+        &:hover {
+            background-color: @btn-outline-bg-hover;
+        }
+    }
+}
+
+//// Modifications - size
+.btn {
+    @btn-large-padding-horizontal: 25px;
+
+    &--large {
+        padding-left: @btn-large-padding-horizontal;
+        padding-right: @btn-large-padding-horizontal;
+
+        font-size: 16px;
+    }
+
+    @btn-small-padding-vertical: 5px;
+    @btn-small-padding-horizontal: 10px;
+    @btn-small-height: @btn-height - 10;
+
+    &--small {
+        padding: @btn-small-padding-vertical @btn-small-padding-horizontal;
+        min-height: @btn-small-height;
+
+        font-size: 11px;
+    }
+
+    &--next {
+        font-family: @font-quartenary;
+        font-size: 15px;
+        text-transform: none;
+        text-align: left;
+        letter-spacing: 0;
+
+        .btn__icon {
+            position: relative;
+            top: 2px;
+            padding-left: 0.25rem;
+
+            font-size: 30px;
+        }
+    }
+
+    @btn-secondary-color: @color-f;
+    @btn-secondary-color-hover: @color-f;
+    @btn-secondary-bg: @color-primary;
+    @btn-secondary-bg-hover: lighten(@color-primary, 8%);
+    @btn-secondary-font-size: 15px;
+
+    &--secondary {
+        font-family: @font-quartenary;
+        font-size: @btn-secondary-font-size;
+        background-color: @btn-secondary-bg;
+        color: @btn-secondary-color;
+        text-transform: none;
+
+        &:hover {
+            background-color: @btn-secondary-bg-hover;
+            color: @btn-secondary-color-hover;
+        }
+    }
+
+    @btn-wide-min-width-md: 330px;
+    @btn-wide-padding: 1rem;
+
+    &--wide {
+        padding: @btn-wide-padding;
+        width: 100%;
+
+        @media @query-md {
+            min-width: @btn-wide-min-width-md;
+            width: auto;
+        }
+    }
+}
+
+// Button with icon
+.btn--with-icon {
+    display: inline-flex;
+    align-items: center;
+
+    &:before {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 1;
+        font-weight: normal;
+        font-style: normal;
+        speak: none;
+        text-decoration: inherit;
+        text-transform: none;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family: "svg";
+    }
+
+    &--right {
+        &:before {
+            order: 1;
+            margin-left: 5px;
+        }
+    }
+
+    &--left {
+        &:before {
+            margin-right: 5px;
+        }
+    }
+}
+
+// Button with removed styles
+.btn-no-style {
+    padding: 0;
+    min-height: 0;
+
+    border: 0;
+    background: none;
+    outline: 0;
+
+    &:hover {
+        background: none;
+    }
+}
+
+// Button as tag
+.btn--tag {
+    min-height: 0;
+    padding: 8px 12px;
+    margin-right: 6px;
+
+    background-color: @color-f;
+    border-radius: 2em;
+    border: 1px solid #dae1e4;
+    font-family: @font-quartenary;
+    font-size: 13px;
+    text-transform: none;
+    letter-spacing: 0;
+    -webkit-font-smoothing: antialiased;
+
+    &:hover {
+        background-color: #dae1e4;
+    }
+}
