@@ -1,55 +1,69 @@
-<div class="menu-horizontal__wrap">
+<nav class="menu-list-menu-wrap dont-print">
 	<ul class="menu-horizontal js-menuHorizontal" data-hovered="false">
-		<li class="menu-horizontal__item menu-horizontal__item--home active">
-			<a href="{{ url('front_homepage') }}" class="menu-horizontal__item__link">
-				<i class="svg svg-home"></i>
-			</a>
-		</li>
 		{% for itemDetail in itemDetails %}
 			<li class="menu-horizontal__item js-menu-horizontal-item">
 				{% if itemDetail.horizontalMenuItem.url %}
-					<a href="{{ itemDetail.horizontalMenuItem.url }}" class="menu-horizontal__item__link">{{ itemDetail.horizontalMenuItem.name }}<i class="svg svg-arrow-down"></i></a>
+					<a href="{{ itemDetail.horizontalMenuItem.url }}" class="menu-horizontal__item__link">
+						{{ itemDetail.horizontalMenuItem.name }}
+					</a>
 				{% else %}
-					<span class="menu-horizontal__item__link">{{ itemDetail.horizontalMenuItem.name }}<i class="svg svg-arrow-down"></i></span>
+					<span class="menu-horizontal__item__link">
+						{{ itemDetail.horizontalMenuItem.name }}
+					</span>
 				{% endif %}
-				<div class="menu-horizontal__item__arrow"></div>
-				<div class="menu-horizontal__sub js-menu-horizontal-item-content">
-					<ul class="menu-horizontal__sub__columns js-menu-horizontal-sub-columns">
-						{% for categories in itemDetail.categoryDetailsByColumnNumber %}
-							<li class="menu-horizontal__sub__columns__column js-menu-horizontal-item-container">
-								<ul class="js-menu-horizontal-items">
-									{% for category in categories %}
-											<li>
-												<a href="{{ url('front_product_list', { id: category.id }) }}" class="menu-horizontal__sub__columns__column__title">
-													<div class="menu-horizontal__sub__columns__column__image">
-														<i class="svg-categories{% if category.svgIcon %} svg-{{ category.svgIcon }}{% endif	 %} js-menu-horizontal-icon"></i>
-													</div>
-													<span>
-														{{ category.name }}
-													</span>
-												</a>
-												{% if category.children|length > 0 %}
-													<ul class="margin-left-15 js-menu-horizontal-ul js-menu-horizontal-items">
-														{% for childCategory in category.children %}
-															<li>
-																<a href="{{ url('front_product_list', { id: childCategory.id }) }}">
-																	<span>{{ childCategory.name }}</span>
-																</a>
-															</li>
-														{% endfor %}
-													</ul>
-												{% endif %}
-											</li>
-									{% endfor %}
-								</ul>
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
+				{% if itemDetail.categoryDetailsByColumnNumber is not empty %}
+					<div class="menu-horizontal__sub js-menu-horizontal-item-content">
+						<ul class="menu-horizontal__sub__columns js-menu-horizontal-sub-columns">
+							{% for categories in itemDetail.categoryDetailsByColumnNumber %}
+								<li class="menu-horizontal__sub__columns__column js-menu-horizontal-item-container">
+									<ul class="js-menu-horizontal-items">
+										{% for category in categories %}
+												<li>
+													<a href="{{ url('front_product_list', { id: category.id }) }}" class="menu-horizontal__sub__columns__column__title">
+														<div class="menu-horizontal__sub__columns__column__image">
+															<i class="svg-categories{% if category.svgIcon %} svg-{{ category.svgIcon }}{% endif	 %} js-menu-horizontal-icon"></i>
+														</div>
+														<span>
+															{{ category.name }}
+														</span>
+													</a>
+													{% if category.children|length > 0 %}
+														<ul class="margin-left-15 js-menu-horizontal-ul js-menu-horizontal-items">
+															{% for childCategory in category.children %}
+																<li>
+																	<a href="{{ url('front_product_list', { id: childCategory.id }) }}">
+																		<span>{{ childCategory.name }}</span>
+																	</a>
+																</li>
+															{% endfor %}
+														</ul>
+													{% endif %}
+												</li>
+										{% endfor %}
+									</ul>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
 			</li>
 		{% endfor %}
+		<li class="menu-horizontal__item__item menu-horizontal__item__item--sale">
+			<a
+				href="#"
+				class="menu-horizontal__item__link menu-horizontal__item__link--sale js-not-implemented-yet">
+				<span class="menu-horizontal__item__link__text">{{ "Výprodej"|trans }}</span>
+			</a>
+		</li>
+		<li class="menu-horizontal__item menu-horizontal__item--blog">
+			<a
+				href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}"
+				class="menu-horizontal__item__link menu-horizontal__item__link--blog">
+				{{ "Magazín"|trans }}
+			</a>
+		</li>
 	</ul>
-</div>
+</nav>
 
 
 <div id="js-menu-mobile-wrapper" class="menu-horizontal-mobile display-none">
