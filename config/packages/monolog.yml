@@ -11,4 +11,4 @@ monolog:
         nested:
             type: stream
             path: "%shopsys.log_stream%"
-            level: debug
+            level: info
