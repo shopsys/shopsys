@@ -34,6 +34,12 @@ snc_redis:
             type: 'phpredis'
             alias: 'session'
             dsn: 'redis://%redis_host%'
+        twig:
+            type: 'phpredis'
+            alias: 'twig'
+            dsn: 'redis://%redis_host%'
+            options:
+                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:twig:'
     session:
         client: 'session'
         prefix: '%env(REDIS_PREFIX)%session:'
