@@ -28,7 +28,7 @@
                 </span>
                 <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs">
                     {% for flagForm in filterForm.flags %}
-                        <div class="form-choice">
+                        <div class="form-choice box-filter__choice__input">
                             {{ form_widget(flagForm, { attr: { class: "css-checkbox" } }) }}
                             <label class="css-checkbox__image form-choice__label" for="{{ flagForm.vars.id }}">
                                 {{ flagForm.vars.label }}
@@ -87,7 +87,7 @@
                     <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
                 </span>
                 <div id="product_filter_box_availability" class="box-filter__choice__inputs">
-                    <div class="form-choice">
+                    <div class="form-choice box-filter__choice__input">
                         {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox" } }) }}
                         <label class="css-checkbox__image form-choice__label" for="{{ filterForm.inStock.vars.id }}">
                                 {{ 'Products in stock only'|trans }}
