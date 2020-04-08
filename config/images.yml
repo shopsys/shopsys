@@ -137,6 +137,14 @@
             additionalSizes:
                 - {width: 440, height: ~, media: "(max-width: 479px)"}
                 - {width: 730, height: ~, media: "(max-width: 1023px)"}
+        -   name: cartPreview
+            width: 500
+            height: ~
+            crop: false
+            occurrence: 'Front-end: Advertising in cart (above the cart preview)'
+            additionalSizes:
+                - {width: 440, height: ~, media: "(max-width: 479px)"}
+                - {width: 730, height: ~, media: "(max-width: 1023px)"}
 
 -   name: brand
     class: Shopsys\FrameworkBundle\Model\Product\Brand\Brand

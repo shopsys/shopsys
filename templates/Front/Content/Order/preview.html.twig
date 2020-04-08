@@ -1,3 +1,6 @@
+{% if showAdvert %}
+    {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'cartPreview'})) }}
+{% endif %}
 <h2>{{ 'Products in cart overview'|trans }}</h2>
 <table class="table-cart-preview">
     <tbody>

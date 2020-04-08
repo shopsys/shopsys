@@ -294,6 +294,7 @@ class OrderController extends FrontBaseController
         $transportIdsByProductTypeId = $request->get('transportIdsByProductTypeId');
         $paymentId = $request->get('paymentId');
         $showProducts = $request->get('showProducts', true);
+        $showAdvert = $request->get('showAdvert', true);
 
         $orderData = $this->orderDataFactory->create();
 
@@ -321,6 +322,7 @@ class OrderController extends FrontBaseController
         return $this->render('Front/Content/Order/preview.html.twig', [
             'showProducts' => $showProducts,
             'splitOrderPreview' => $splitOrderPreview,
+            'showAdvert' => $showAdvert,
         ]);
     }
 

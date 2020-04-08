@@ -88,7 +88,8 @@
                             {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
                                 transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
                                 paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
-                                showProducts: false
+                                showProducts: false,
+                                showAdvert: true
                             })) }}
                         </div>
                         <div class="in-action">

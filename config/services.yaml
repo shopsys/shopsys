@@ -349,6 +349,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'
 
+    Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry: '@App\Model\Advert\AdvertPositionRegistry'
+
     App\Model\Transfer\TransferLoggerFactory:
         arguments:
             - '@monolog.logger.cron'
