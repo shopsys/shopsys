@@ -103,7 +103,6 @@ class OrderPreviewSplittingFacade
     public function createSplitOrderPreviewForCurrentCustomer(?OrderData $orderData): SplitOrderPreview
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
-
         $transportsByProductTypeId = [];
         $transportPersonalPickupStockByProductTypeId = [];
         $payment = null;
@@ -114,11 +113,12 @@ class OrderPreviewSplittingFacade
         }
 
         $orderPreviews = $this->createOrderPreviewsWithProductType($currency, $transportsByProductTypeId, $transportPersonalPickupStockByProductTypeId, $this->domain->getId());
-
         $productsPrice = $this->sumProductsPrices($orderPreviews);
         $productsSalePrice = $this->sumProductsSalePrices($orderPreviews);
         $productsCommonPrice = $this->sumProductsCommonPrices($orderPreviews);
         $sumTotalPrices = $this->sumTotalPrices($orderPreviews);
+        $sumTotalPriceDiscount = $this->sumTotalPriceDiscount($orderPreviews);
+        $sumTotalPriceWithoutDiscount = $this->sumTotalPriceWithoutDiscount($orderPreviews);
         $roundingPrice = null;
         $totalPrice = $sumTotalPrices;
 
@@ -147,7 +147,9 @@ class OrderPreviewSplittingFacade
             $productsPrice,
             $productsSalePrice,
             $productsCommonPrice,
-            $roundingPrice
+            $roundingPrice,
+            $sumTotalPriceDiscount,
+            $sumTotalPriceWithoutDiscount
         );
 
         // optimization - prices for all transports and payments are not necessary when OrderData does not exists
@@ -231,6 +233,42 @@ class OrderPreviewSplittingFacade
         $sumPrice = Price::zero();
         foreach ($orderPreviews as $orderPreview) {
             $sumPrice = $sumPrice->add($orderPreview->getSubHighAndLowPrice());
+        }
+
+        return $sumPrice;
+    }
+
+    /**
+     * @param \App\Model\Order\Preview\OrderPreview[] $orderPreviews
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private function sumTotalPriceDiscount(array $orderPreviews): ?Price
+    {
+        $sumPrice = Price::zero();
+        foreach ($orderPreviews as $orderPreview) {
+            $sumPrice = $sumPrice->add($orderPreview->getTotalPriceDiscount());
+        }
+
+        if ($sumPrice->getPriceWithVat()->isZero()) {
+            return null;
+        }
+
+        return $sumPrice;
+    }
+
+    /**
+     * @param \App\Model\Order\Preview\OrderPreview[] $orderPreviews
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private function sumTotalPriceWithoutDiscount(array $orderPreviews): ?Price
+    {
+        $sumPrice = Price::zero();
+        foreach ($orderPreviews as $orderPreview) {
+            $sumPrice = $sumPrice->add($orderPreview->getProductsFullPrice());
+        }
+
+        if ($sumPrice->getPriceWithVat()->isZero()) {
+            return null;
         }
 
         return $sumPrice;

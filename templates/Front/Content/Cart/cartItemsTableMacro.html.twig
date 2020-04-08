@@ -13,14 +13,20 @@
                 <th class="table-cart__cell table-cart__cell--action">&nbsp;</th>
             </tr>
         </thead>
-
         <tbody>
         {% set cartItemPrices = orderPreview.quantifiedItemsPrices %}
         {% set cartItemDiscounts = orderPreview.quantifiedItemsDiscounts %}
+        {% set cartItemDiscountPrices = orderPreview.quantifiedItemsDiscountPrices %}
+        {% set isDiscountInOrderPreview = false %}
         {% for index, quantifiedProduct in orderPreview.quantifiedProducts %}
             {% set cartItemPrice = cartItemPrices[index] %}
             {% set cartItemDiscount = cartItemDiscounts[index] %}
+            {% set cartItemDiscountPrice = cartItemDiscountPrices[index] %}
             {% set product = quantifiedProduct.product %}
+            {% set product = quantifiedProduct.product %}
+            {% if cartItemDiscount is not null %}
+                {% set isDiscountInOrderPreview = true %}
+            {% endif %}
             <tr class="table-cart__row js-cart-item">
                 <td class="table-cart__cell table-cart__cell--image">
                     <a href="{{ url('front_product_detail', {id: product.id}) }}" title="{{ product.fullname }}" class="table-cart__cell__image">
@@ -71,12 +77,15 @@
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--price js-cart-item-total-price">
-                    {{ cartItemPrice.totalPrice.priceWithVat|price }}
+
                     {% if cartItemDiscount is not null %}
+                        <span class="line-through">{{ cartItemPrice.totalPrice.priceWithVat|price }}</span>
+                        <span class="color-purple"><strong>{{ cartItemDiscountPrice.priceWithVat|price }}</strong></span>
                         <div>
-                            {{ 'Discount'|trans }}:
-                            {{ cartItemDiscount.priceWithVat|price }}
+                            <span class="color-purple"><strong>{{ orderPreview.promoCodeCode }}</strong></span>
                         </div>
+                    {% else %}
+                        {{ cartItemPrice.totalPrice.priceWithVat|price }}
                     {% endif %}
                 </td>
 
@@ -109,14 +118,15 @@
                     </div>
                 </td>
                 <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price" colspan="3">
-                    <div>{{ 'Total price including VAT'|trans }}:
+                    <div>
+                        {{ 'Zaplatíte'|trans }}:
+                        {% if isDiscountInOrderPreview %}
+                        <span class="line-through">
+                            {{ orderPreview.productsFullPrice.priceWithVat|price }}
+                        </span>
+                        {% endif %}
                         <span>
                             {{ orderPreview.productsPrice.priceWithVat|price }}
-                        </span>
-                    </div>
-                    <div>{{ 'Celková cena bez DPH'|trans }}:
-                        <span>
-                            {{ orderPreview.productsPrice.priceWithoutVat|price }}
                         </span>
                     </div>
                 </td>

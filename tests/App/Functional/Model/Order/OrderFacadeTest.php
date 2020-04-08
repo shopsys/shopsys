@@ -119,7 +119,9 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
             $orderPreview->getProductsPrice(),
             $orderPreview->getSubHighAndLowPrice(),
             $orderPreview->getTotalProductHighPrice(),
-            $orderPreview->getRoundingPrice()
+            $orderPreview->getRoundingPrice(),
+            null,
+            null
         );
         $transportAndPaymentPricesPreview = new TransportAndPaymentPricesPreview(
             [

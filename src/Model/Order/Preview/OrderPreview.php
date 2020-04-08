@@ -50,6 +50,26 @@ class OrderPreview extends BaseOrderPreview
     private $transportForFree;
 
     /**
+     * @var string|null
+     */
+    private $promoCodeCode;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     */
+    protected $quantifiedItemsDiscountPricesByIndex;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private $productsFullPrice;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private $totalPriceDiscount;
+
+    /**
      * @param array $quantifiedProductsByIndex
      * @param array $quantifiedItemsPricesByIndex
      * @param array $quantifiedItemsDiscountsByIndex
@@ -57,6 +77,9 @@ class OrderPreview extends BaseOrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalProductHighPrice
      * @param array $productsAvailability
+     * @param array $quantifiedItemsDiscountPricesByIndex
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsFullPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPriceDiscount
      * @param \App\Model\Transport\Transport|null $transport
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
      * @param \App\Model\Payment\Payment|null $payment
@@ -68,6 +91,7 @@ class OrderPreview extends BaseOrderPreview
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $restToFreeTransportPrice
      * @param int|null $percentageOfFreeTransport
      * @param bool|null $transportForFree
+     * @param string|null $promoCodeCode;
      */
     public function __construct(
         array $quantifiedProductsByIndex,
@@ -77,6 +101,9 @@ class OrderPreview extends BaseOrderPreview
         Price $totalPrice,
         Price $totalProductHighPrice,
         array $productsAvailability,
+        array $quantifiedItemsDiscountPricesByIndex,
+        Price $productsFullPrice,
+        Price $totalPriceDiscount,
         ?Transport $transport = null,
         ?Price $transportPrice = null,
         ?Payment $payment = null,
@@ -87,7 +114,8 @@ class OrderPreview extends BaseOrderPreview
         ?Stock $personalPickupStock = null,
         ?Money $restToFreeTransportPrice = null,
         ?int $percentageOfFreeTransport = null,
-        ?bool $transportForFree = false
+        ?bool $transportForFree = false,
+        $promoCodeCode = null
     ) {
         parent::__construct(
             $quantifiedProductsByIndex,
@@ -110,6 +138,10 @@ class OrderPreview extends BaseOrderPreview
         $this->restToFreeTransportPrice = $restToFreeTransportPrice;
         $this->percentageOfFreeTransport = $percentageOfFreeTransport;
         $this->transportForFree = $transportForFree;
+        $this->promoCodeCode = $promoCodeCode;
+        $this->quantifiedItemsDiscountPricesByIndex = $quantifiedItemsDiscountPricesByIndex;
+        $this->productsFullPrice = $productsFullPrice;
+        $this->totalPriceDiscount = $totalPriceDiscount;
     }
 
     /**
@@ -178,5 +210,37 @@ class OrderPreview extends BaseOrderPreview
     public function isTransportForFree(): bool
     {
         return $this->transportForFree;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPromoCodeCode(): ?string
+    {
+        return $this->promoCodeCode;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     */
+    public function getQuantifiedItemsDiscountPrices()
+    {
+        return $this->quantifiedItemsDiscountPricesByIndex;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getProductsFullPrice(): Price
+    {
+        return $this->productsFullPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPriceDiscount(): Price
+    {
+        return $this->totalPriceDiscount;
     }
 }

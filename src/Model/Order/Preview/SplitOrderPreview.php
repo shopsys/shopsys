@@ -51,6 +51,16 @@ class SplitOrderPreview
     private $transportAndPaymentPricesPreview;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private $sumTotalPriceDiscount;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private $sumTotalPriceWithoutDiscount;
+
+    /**
      * @param array $orderPreviews
      * @param \App\Model\Payment\Payment|null $payment
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
@@ -58,6 +68,8 @@ class SplitOrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsSalePrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsCommonPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $sumTotalPriceDiscount
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $sumTotalPriceWithoutDiscount
      */
     public function __construct(
         array $orderPreviews,
@@ -66,7 +78,9 @@ class SplitOrderPreview
         Price $productsPrice,
         Price $productsSalePrice,
         Price $productsCommonPrice,
-        ?Price $roundingPrice
+        ?Price $roundingPrice,
+        ?Price $sumTotalPriceDiscount,
+        ?Price $sumTotalPriceWithoutDiscount
     ) {
         $this->orderPreviews = $orderPreviews;
         $this->payment = $payment;
@@ -75,6 +89,8 @@ class SplitOrderPreview
         $this->productsSalePrice = $productsSalePrice;
         $this->productsCommonPrice = $productsCommonPrice;
         $this->roundingPrice = $roundingPrice;
+        $this->sumTotalPriceDiscount = $sumTotalPriceDiscount;
+        $this->sumTotalPriceWithoutDiscount = $sumTotalPriceWithoutDiscount;
     }
 
     /**
@@ -135,6 +151,22 @@ class SplitOrderPreview
         }
 
         return $this->payment;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    public function getSumTotalPriceDiscount(): ?Price
+    {
+        return $this->sumTotalPriceDiscount;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    public function getSumTotalPriceWithoutDiscount(): ?Price
+    {
+        return $this->sumTotalPriceWithoutDiscount;
     }
 
     /**

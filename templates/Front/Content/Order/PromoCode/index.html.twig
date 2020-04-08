@@ -6,16 +6,17 @@
         </label>
         <button type="button" id="js-promo-code-submit-button" class="btn box-promo-code__btn">{{ 'Apply'|trans }}</button>
     {% else %}
+        <p>{{ 'Vaše sleva s kódem byla uplatněna'|trans }}</p>
         <span class="box-promo-code__added">
-            <span class="box-promo-code__added__discount">
-                {{ 'Your discount'|trans }}:
+            <span class="box-promo-code__added__discount color-purple">
                 <strong>
-                    {{ validEnteredPromoCode.percent|formatPercent }}
+                    {{ validEnteredPromoCode.code }}
                 </strong>
             </span>
             <a href="{{ url('front_promo_code_remove') }}" id="js-promo-code-remove-button" class="box-promo-code__added__remove">
                 <i class="svg svg-remove"></i>
             </a>
         </span>
+        <p class="js-not-implemented-yet">{{ 'Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle pravidel'|trans }}</p>
     {% endif %}
 </div>

@@ -2,8 +2,17 @@
 <table class="table-cart-preview">
     <tbody>
 
+        {% set promoCodeCode = '' %}
         {% for orderPreview in splitOrderPreview.orderPreviews %}
-
+            {% set promoCodeCode = orderPreview.promoCodeCode %}
+            {% set cartItemDiscounts = orderPreview.quantifiedItemsDiscounts %}
+            {% set isDiscountInOrderPreview = false %}
+            {% for index, quantifiedProduct in orderPreview.quantifiedProducts %}
+                {% set cartItemDiscount = cartItemDiscounts[index] %}
+                {% if cartItemDiscount is not null %}
+                    {% set isDiscountInOrderPreview = true %}
+                {% endif %}
+            {% endfor %}
             <tr class="table-cart-preview__row">
                 <td colspan="1" class="table-cart-preview__cell">
                     {% if splitOrderPreview.morePreviews %}
@@ -15,7 +24,6 @@
             {% if showProducts %}
                 {% for quantifiedProductKey, quantifiedProduct in orderPreview.quantifiedProducts %}
                     {% set quantifiedProductPrice = orderPreview.quantifiedItemsPrices[quantifiedProductKey] %}
-                    {% set quantifiedProductDiscount = orderPreview.quantifiedItemsDiscounts[quantifiedProductKey] %}
                     <tr class="table-cart-preview__row">
                         <td class="table-cart-preview__cell">
                             <strong>{{ quantifiedProduct.quantity|formatNumber }} {{ quantifiedProduct.product.unit.name }}</strong>
@@ -25,34 +33,26 @@
                             {{ quantifiedProductPrice.totalPrice.priceWithVat|price }}
                         </td>
                     </tr>
-                    {% if quantifiedProductDiscount is not null %}
-                        <tr>
-                            <td class="table-cart-preview__cell">
-                                {{ 'Promo code'|trans }} {{ (-orderPreview.promoCodeDiscountPercent)|formatPercent }}
-                            </td>
-                            <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                                {{ quantifiedProductDiscount.inverse.priceWithVat|price }}
-                            </td>
-                        </tr>
-                    {% endif %}
                 {% endfor %}
             {% endif %}
+            {% if isDiscountInOrderPreview %}
             <tr class="table-cart-preview__row">
                 <td class="table-cart-preview__cell">
-                    {{ 'Původní cena'|trans }}
+                    {{ 'Vaše původní cena'|trans }}
                 </td>
                 <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                    {{ orderPreview.totalProductHighPrice.priceWithVat|price }}
+                    <span class="line-through">{{ orderPreview.productsFullPrice.priceWithVat|price }}</span>
                 </td>
             </tr>
             <tr class="table-cart-preview__row">
                 <td class="table-cart-preview__cell">
-                    {{ 'Nákupem ušetříte'|trans }}
+                    <span class="color-purple">{{ orderPreview.promoCodeCode }}</span>
                 </td>
                 <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                    -&nbsp;{{ orderPreview.getSubHighAndLowPrice.priceWithVat|price }}
+                    <span class="color-purple">-&nbsp;{{ orderPreview.totalPriceDiscount.priceWithVat|price }}</span>
                 </td>
             </tr>
+            {% endif %}
             <tr class="table-cart-preview__row">
                 <td class="table-cart-preview__cell">
                     {{ 'Cena zboží'|trans }}
@@ -74,7 +74,6 @@
             {% endif %}
 
         {% endfor %}
-
         {% if splitOrderPreview.hasPayment() is not empty %}
             <tr class="table-cart-preview__row">
                 <td class="table-cart-preview__cell">
@@ -85,6 +84,15 @@
                 </td>
             </tr>
         {% endif %}
+
+        <tr class="table-cart-preview__row">
+            <td class="table-cart-preview__cell">
+                {{ 'Běžná cena'|trans }}:
+            </td>
+            <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                <span class="line-through">{{ splitOrderPreview.productsCommonPrice.priceWithVat|price }}</span>
+            </td>
+        </tr>
 
         {% if splitOrderPreview.roundingPrice is not empty %}
             <tr class="table-cart-preview__row">
@@ -97,41 +105,32 @@
             </tr>
         {% endif %}
 
+        {% if splitOrderPreview.sumTotalPriceDiscount is not null %}
+        <tr class="table-cart-preview__row">
+            <td class="table-cart-preview__cell">
+                {{ 'Vaše původní cena'|trans }}
+            </td>
+            <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                <span class="line-through">{{ splitOrderPreview.sumTotalPriceWithoutDiscount.priceWithVat|price }}</span>
+            </td>
+        </tr>
+        <tr class="table-cart-preview__row table-cart-preview__row--total">
+            <td class="table-cart-preview__cell">
+                <span class="color-purple">{{ promoCodeCode }}</span>
+            </td>
+            <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                <span class="color-purple">- {{ splitOrderPreview.sumTotalPriceDiscount.priceWithVat|price }}</span>
+            </td>
+        </tr>
+        {% endif %}
         <tr class="table-cart-preview__row table-cart-preview__row--total table-cart-preview__row--important">
             <td class="table-cart-preview__cell">
-                {{ 'Total price including VAT'|trans }}:
+                {{ 'Celkem zaplatíte'|trans }}:
             </td>
             <td class="table-cart-preview__cell table-cart-preview__cell--price">
                 {{ splitOrderPreview.totalPrice.priceWithVat|price }}
+                <span class="preview-vat-info">{{ splitOrderPreview.totalPrice.priceWithoutVat|price }} {{ 'bez DPH'|trans }}</span>
             </td>
         </tr>
-
-        <tr class="table-cart-preview__row table-cart-preview__row--total">
-            <td class="table-cart-preview__cell">
-                {{ 'Celkem ušetříte'|trans }}:
-            </td>
-            <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                {{ splitOrderPreview.productsSalePrice.priceWithVat|price }}
-            </td>
-        </tr>
-
-        <tr class="table-cart-preview__row table-cart-preview__row--total">
-            <td class="table-cart-preview__cell">
-                {{ 'Total price excluding VAT'|trans }}:
-            </td>
-            <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                {{ splitOrderPreview.totalPrice.priceWithoutVat|price }}
-            </td>
-        </tr>
-
-        <tr class="table-cart-preview__row table-cart-preview__row--total">
-            <td class="table-cart-preview__cell">
-                {{ 'Total amount of VAT'|trans }}:
-            </td>
-            <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                {{ splitOrderPreview.totalPrice.vatAmount|price }}
-            </td>
-        </tr>
-
     </tbody>
 </table>

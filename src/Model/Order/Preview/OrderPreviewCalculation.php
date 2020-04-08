@@ -112,6 +112,13 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $currency
         );
 
+        $quantifiedItemsDiscountPrices = $this->quantifiedProductDiscountCalculation->calculateDiscountPricesPerProductRoundedByCurrency(
+            $quantifiedProducts,
+            $quantifiedItemsPrices,
+            $promoCodeDiscountPercentPerProduct,
+            $currency
+        );
+
         $productsPrice = $this->getProductsPrice($quantifiedItemsPrices, $quantifiedItemsDiscounts);
 
         $restToFreeTransportPrice = Money::zero();
@@ -130,6 +137,10 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
                 $transportForFree = true;
             }
         }
+
+        $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
+
+        $totalPriceDiscount = $this->getTotalPriceDiscount($productsFullPrice, $productsPrice);
 
         if ($transport !== null) {
             if ($transportForFree) {
@@ -173,7 +184,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         );
 
         $totalProductHighPrice = $this->calculateTotalProductsHighPriceByDomain($quantifiedProducts, $domainId);
-
+        $promoCodeCode = $this->currentPromoCodeFacade->getPromoCodeCode();
         $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
 
         return new OrderPreview(
@@ -184,6 +195,9 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $totalPrice,
             $totalProductHighPrice,
             $productsAvailability,
+            $quantifiedItemsDiscountPrices,
+            $productsFullPrice,
+            $totalPriceDiscount,
             $transport,
             $transportPrice,
             $payment,
@@ -194,7 +208,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $personalPickupStock,
             $restToFreeTransportPrice,
             $percentageOfFreeTransport,
-            $transportForFree
+            $transportForFree,
+            $promoCodeCode
         );
     }
 
@@ -236,5 +251,15 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         }
 
         return $availability;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsFullPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private function getTotalPriceDiscount(Price $productsFullPrice, Price $productsPrice): Price
+    {
+        return $productsFullPrice->subtract($productsPrice);
     }
 }

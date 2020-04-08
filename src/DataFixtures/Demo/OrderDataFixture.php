@@ -756,7 +756,9 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderPreview->getProductsPrice(),
             $orderPreview->getSubHighAndLowPrice(),
             $orderPreview->getTotalProductHighPrice(),
-            $orderPreview->getRoundingPrice()
+            $orderPreview->getRoundingPrice(),
+            null,
+            null
         );
         $transportAndPaymentPricesPreview = new TransportAndPaymentPricesPreview(
             [

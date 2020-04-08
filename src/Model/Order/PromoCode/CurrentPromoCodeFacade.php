@@ -190,6 +190,19 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     }
 
     /**
+     * @return string|null
+     */
+    public function getPromoCodeCode(): ?string
+    {
+        $validEnteredPromoCode = $this->getValidEnteredPromoCodeOrNull();
+        if ($validEnteredPromoCode === null) {
+            return null;
+        }
+
+        return $validEnteredPromoCode->getCode();
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
      * @return string[]
