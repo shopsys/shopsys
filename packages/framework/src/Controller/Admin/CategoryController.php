@@ -83,7 +83,7 @@ class CategoryController extends AdminBaseController
             $this->categoryFacade->edit($id, $categoryData);
 
             $this->addSuccessFlashTwig(
-                t('Category<strong><a href="{{ url }}">{{ name }}</a></strong> was modified'),
+                t('Category <strong><a href="{{ url }}">{{ name }}</a></strong> was modified'),
                 [
                     'name' => $category->getName(),
                     'url' => $this->generateUrl('admin_category_edit', ['id' => $category->getId()]),
