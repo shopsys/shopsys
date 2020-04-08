@@ -70,14 +70,19 @@ Encore
 const domainFile = './config/domains.yml';
 const domains = yaml.safeLoad(fs.readFileSync(domainFile, 'utf8'));
 
-domains.domains.forEach((domain) => {
+const domainStylesDirectories = new Set(domains.domains.map(domain => {
     if (!domain.styles_directory) {
-        domain.styles_directory = 'common';
+        return 'common';
     }
+
+    return domain.styles_directory;
+}));
+
+domainStylesDirectories.forEach(stylesDirectory => {
     Encore
-        .addEntry('frontend-style-' + domain.styles_directory, './assets/styles/frontend/' + domain.styles_directory + '/main.less')
-        .addEntry('frontend-print-style-' + domain.styles_directory, './assets/styles/frontend/' + domain.styles_directory + '/print/main.less')
-        .addEntry('frontend-wysiwyg-' + domain.id, './assets/styles/frontend/' + domain.styles_directory + '/wysiwyg.less');
+        .addEntry('frontend-style-' + stylesDirectory, './assets/styles/frontend/' + stylesDirectory + '/main.less')
+        .addEntry('frontend-print-style-' + stylesDirectory, './assets/styles/frontend/' + stylesDirectory + '/print/main.less')
+        .addEntry('frontend-wysiwyg-' + stylesDirectory, './assets/styles/frontend/' + stylesDirectory + '/wysiwyg.less');
 });
 
 Encore
