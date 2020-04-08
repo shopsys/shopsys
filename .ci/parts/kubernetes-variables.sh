@@ -16,11 +16,11 @@ unset FILES
 unset VARS
 
 if [ ${RUNNING_PRODUCTION} -eq "1" ]; then
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yml" metadata.annotations."\"nginx.ingress.kubernetes.io/from-to-www-redirect\"" "\"true\""
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/from-to-www-redirect\"" "\"true\""
 else
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-type\"" basic
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-secret\"" http-auth
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-realm\"" "Authentication Required - ok"
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-type\"" basic
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-secret\"" http-auth
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-realm\"" "Authentication Required - ok"
 fi
 
 echo "End of kubernetes-variables.sh"
