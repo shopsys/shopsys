@@ -38,6 +38,13 @@ spec:
                 -   name: nginx-default-config
                     configMap:
                         name: nginx-default-config
+                -   name: nginx-configuration
+                    configMap:
+                        name: nginx-configuration
+                        items:
+                            -   key: nginx.conf
+                                path: default.conf
+
             initContainers:
                 -   name: copy-source-codes-to-volume
                     image: "{{TAG}}"
@@ -112,6 +119,8 @@ spec:
                         -   name: nginx-default-config
                             mountPath: /etc/nginx/nginx.conf
                             subPath: nginx.conf
+                        -   name: nginx-configuration
+                            mountPath: /etc/nginx/conf.d
                         -   name: source-codes
                             mountPath: /var/www/html
                     lifecycle:
