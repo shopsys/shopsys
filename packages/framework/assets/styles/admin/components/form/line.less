@@ -172,7 +172,35 @@
         }
 
         &--info {
-            padding-top: 6px;
+            position: absolute;
+            top: 14px;
+
+            @media @query-md {
+                position: relative;
+                top: 0;
+            }
+
+            .form-line__side & {
+                position: absolute;
+                top: 66px;
+                right: -10px;
+                bottom: auto;
+                width: auto;
+
+                @media @query-md {
+                    position: relative;
+                    top: auto;
+                    bottom: auto;
+                    right: auto;
+                }
+            }
+
+            .form-choice__info & {
+                position: relative;
+                top: 6px;
+                right: auto;
+                bottom: auto;
+            }
         }
 
         &--btn {
