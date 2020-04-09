@@ -7,8 +7,8 @@ data:
         user  nginx;
         worker_processes auto;
 
-        error_log  /var/log/nginx/error.log warn;
-        pid        /var/run/nginx.pid;
+        error_log   /dev/stderr warn;
+        pid         /var/run/nginx.pid;
 
         events {
             # determines how much clients will be served per worker
@@ -25,7 +25,7 @@ data:
                 '$status $body_bytes_sent "$http_referer" '
                 '"$http_user_agent" "$http_x_forwarded_for"';
 
-            access_log  /var/log/nginx/access.log  main;
+            access_log /dev/stdout;
 
             sendfile        on;
             #tcp_nopush     on;

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: redis-health-configmap
+data:
+    readiness.sh: |-
+        response=$(
+            timeout -s 9 $1 \
+            redis-cli \
+            ping
+        )
+        if [ "$response" != "PONG" ]; then
+            echo "$response"
+            exit 1
+        fi
+    liveness.sh: |-
+        response=$(
+            timeout -s 9 $1 \
+            redis-cli \
+            ping
+        )
+        if [ "$response" != "PONG" ] && [ "$response" != "LOADING Redis is loading the dataset in memory" ]; then
+            echo "$response"
+            exit 1
+        fi

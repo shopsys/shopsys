@@ -1,14 +1,15 @@
 resources:
-    - ../../cron/php-fpm-cron-executor-default.yml
-    - ../../deployments/redis.yml
-    - ../../deployments/smtp-server.yml
-    - ../../deployments/webserver-php-fpm.yml
-    - ../../services/redis.yml
-    - ../../services/smtp-server.yml
-    - ../../services/webserver-php-fpm.yml
-    - ../../ingress.yml
-    - ../../namespace.yml
-    - ../../nginx-configMap.yml
+    - ../../cron/php-fpm-cron-executor-default.yaml
+    - ../../deployments/redis.yaml
+    - ../../deployments/smtp-server.yaml
+    - ../../deployments/webserver-php-fpm.yaml
+    - ../../services/redis.yaml
+    - ../../services/smtp-server.yaml
+    - ../../services/webserver-php-fpm.yaml
+    - ../../ingress.yaml
+    - ../../namespace.yaml
+    - ../../configmap/nginx.yaml
+    - ../../configmap/redis-health.yaml
 namespace: "{{PROJECT_NAME}}"
 configMapGenerator:
     -   name: domains-urls

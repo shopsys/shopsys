@@ -6,4 +6,4 @@ patchesJson6902:
             version: v1
             kind: Deployment
             name: webserver-php-fpm
-        path: ./webserver-php-fpm-patch.yml
+        path: ./webserver-php-fpm-patch.yaml
