@@ -368,6 +368,11 @@ With login `superadmin` and password `admin123` we can do it via these urls:
 
 Now we go to `/admin/dashboard/` and fulfill all requests that are demanding for us by red colored links.
 
+If you want to use the frontend API, you have to generate a pair of keys at the first time you deploy. 
+You can do this with `./phing frontend-api-enable` target or, if `packages/frontend_api.yaml` configuration file exist, with `./phing frontend-api-generate-new-keys` target. 
+The keys are stored in the `config/frontend-api/` folder. 
+It is up to you to make sure that the keys in this folder remain for the next deploy.
+
 ### Next Deploys
 
 We have running production shop project and we want to update it with some changes that were made in the project git repository.

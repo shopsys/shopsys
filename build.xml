@@ -7,6 +7,7 @@
     <property name="path.vendor" value="${project.basedir}/vendor"/>
     <property name="path.packages" value="${project.basedir}/packages"/>
     <property name="path.backend-api" value="${path.packages}/backend-api"/>
+    <property name="path.frontend-api" value="${path.packages}/frontend-api"/>
     <property name="path.framework" value="${path.packages}/framework"/>
     <property name="path.framework-assets" value="${path.framework}/assets"/>
     <property name="path.utils" value="${project.basedir}/utils"/>
@@ -14,6 +15,7 @@
 
     <import file="${path.framework}/build.xml"/>
     <import file="${path.backend-api}/build.xml"/>
+    <import file="${path.frontend-api}/build.xml"/>
 
     <target name="backend-api-install" description="Install backend API to the project">
         <exec executable="${path.backend-api}/install/install.sh" checkreturn="true" passthru="true">

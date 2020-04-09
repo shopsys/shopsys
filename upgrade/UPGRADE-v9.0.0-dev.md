@@ -1333,6 +1333,9 @@ There you can find links to upgrade notes for other versions too.
 
 - update your application to include refresh tokens in your frontend API ([#1736](https://github.com/shopsys/shopsys/pull/1736))
     - see #project-base-diff to update your project
+    
+- update your application to signed tokens by private key in your frontend API ([#1742](https://github.com/shopsys/shopsys/pull/1742))
+    - see #project-base-diff to update your project
 
 - fix your version of jms/translation-bundle to 1.4.4 in order to prevent problems with translations dumping ([#1732](https://github.com/shopsys/shopsys/pull/1732))
     - see #project-base-diff to update your project
