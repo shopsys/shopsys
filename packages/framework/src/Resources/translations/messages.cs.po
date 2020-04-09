@@ -334,14 +334,14 @@ msgstr "Kategorie"
 msgid "Category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Byla vytvořena kategorie <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 
+msgid "Category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was modified"
+msgstr "Byla upravena kategorie <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
 msgid "Category <strong>{{ name }}</strong> deleted"
 msgstr "Kategorie <strong>{{ name }}</strong> byla smazána"
 
 msgid "Category guidepost on main page"
 msgstr "Rozcestník kategorií na titulní stránce"
-
-msgid "Category<strong><a href=\"{{ url }}\">{{ name }}</a></strong> was modified"
-msgstr "Byla upravena kategorie <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 
 msgid "Change for"
 msgstr "Změna pro"

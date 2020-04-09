@@ -334,13 +334,13 @@ msgstr ""
 msgid "Category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
+msgid "Category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was modified"
+msgstr ""
+
 msgid "Category <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Category guidepost on main page"
-msgstr ""
-
-msgid "Category<strong><a href=\"{{ url }}\">{{ name }}</a></strong> was modified"
 msgstr ""
 
 msgid "Change for"
