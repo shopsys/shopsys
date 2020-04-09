@@ -13,14 +13,14 @@ MutationDecorator:
                 resolve: "@=mutation('create_order', [args, validator])"
             Login:
                 type: Token!
-                description: "Allow to log in as user"
+                description: "Login user and return access and refresh tokens"
                 args:
                     input:
                         type: LoginInput!
                 resolve: "@=mutation('user_login', [args])"
             RefreshTokens:
                 type: Token!
-                description: "Refresh access and refresh tokens"
+                description: "Refreshes access and refresh tokens"
                 args:
                     input:
                         type: RefreshTokenInput!

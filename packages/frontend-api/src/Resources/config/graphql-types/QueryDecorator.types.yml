@@ -6,16 +6,19 @@ QueryDecorator:
             categories:
                 type: '[Category!]!'
                 resolve: "@=resolver('categories')"
+                description: "Returns complete list of categories"
             products:
                 type: "ProductConnection"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=resolver('products', [args])"
+                description: "Returns list of product that can be paginated using `first`, `last`, `before` and `after` keywords"
             product:
                 type: 'Product'
                 resolve: "@=resolver('product', [args['uuid']])"
                 args:
                     uuid:
                         type: "Uuid!"
+                description: "Returns product filtered using UUID"
             RegularProduct:
                 type: 'RegularProduct'
             category:
@@ -24,21 +27,26 @@ QueryDecorator:
                 args:
                     uuid:
                         type: "Uuid!"
+                description: "Returns category filtered using UUID"
             payments:
                 type: '[Payment!]!'
                 resolve: "@=resolver('payments')"
+                description: "Returns complete list of payment methods"
             payment:
                 type: 'Payment'
                 resolve: "@=resolver('payment', [args['uuid']])"
                 args:
                     uuid:
                         type: "Uuid!"
+                description: "Returns payment filtered using UUID"
             transports:
                 type: '[Transport!]!'
                 resolve: "@=resolver('transports')"
+                description: "Returns complete list of transport methods"
             transport:
                 type: 'Transport'
                 resolve: "@=resolver('transport', [args['uuid']])"
                 args:
                     uuid:
                         type: "Uuid!"
+                description: "Returns complete list of transport methods"
