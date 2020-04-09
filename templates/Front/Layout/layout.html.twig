@@ -26,11 +26,13 @@
                 </div>
             </div>
         </div>
-        <div class="web__line">
-            <div class="web__container web__container--full-width web__container--no-padding">
-                {{ render(controller('App\\Controller\\Front\\HorizontalMenuController:menuAction')) }}
+        {% block mainMenu %}
+            <div class="web__line">
+                <div class="web__container web__container--full-width web__container--no-padding">
+                    {{ render(controller('App\\Controller\\Front\\HorizontalMenuController:menuAction')) }}
+                </div>
             </div>
-        </div>
+        {% endblock %}
 
         {% block content %}{% endblock %}
 

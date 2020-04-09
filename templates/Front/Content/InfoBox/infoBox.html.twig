@@ -1,0 +1,26 @@
+{% set shopInfoEmail = getShopInfoEmail() %}
+{% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
+{% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
+
+<div class="box-info {{ cssClass }}">
+    <picture>
+        <source srcset="{{ asset('assets/frontend/images/potrebujete_poradit2x.png') }} 2x" />
+        <img class="box-info__img" loading="lazy" src="" data-src="{{ asset('assets/frontend/images/potrebujete_poradit.png') }}" alt="{{ 'Potřebujete poradit?'|trans }}">
+    </picture>
+    <div class="box-info__content">
+        <div class="box-info__text">
+            <h2 class="box-info__title">{{ 'Potřebujete poradit?'|trans }}</h2>
+            <span class="box-info__hours">{{ shopInfoPhoneHours }}</span>
+        </div>
+        <div class="box-info__contacts">
+            <a href="tel:{{ shopInfoPhoneNumber }}" class="box-info__contacts__link">
+                <i class="box-info__contacts__icon box-info__contacts__icon--phone svg svg-phone"></i>
+                <span class="box-info__contacts__text">{{ shopInfoPhoneNumber }}</span>
+            </a>
+            <a href="mailto:{{ shopInfoEmail }}" class="box-info__contacts__link">
+                <i class="box-info__contacts__icon svg svg-email"></i>
+                <span class="box-info__contacts__text">{{ shopInfoEmail }}</span>
+            </a>
+        </div>
+    </div>
+</div>

@@ -162,6 +162,35 @@
             width: auto;
         }
     }
+
+    &--header-back {
+        display: flex;
+        align-items: center;
+        height: 60px;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-right: 10px;
+
+        border: 1px solid #e7ebed;
+        background-color: @color-f;
+        font-family: @font-base;
+        font-size: 14px;
+        text-transform: none;
+        transition: box-shadow .3s ease-in-out;
+
+        &:hover {
+            background-color: @color-f;
+            box-shadow: 0 0 0 1px #e7ebed inset;
+        }
+
+        .btn__icon {
+            margin-right: 5px;
+
+            transform: scaleX(-1);
+            color: @color-add-secondary;
+            font-size: 20px;
+        }
+    }
 }
 
 // Button with icon
