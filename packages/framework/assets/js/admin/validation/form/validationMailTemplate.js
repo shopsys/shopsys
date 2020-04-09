@@ -9,7 +9,7 @@ export default function validationMailTemplate () {
         $(this).jsFormValidator({
             'groups': function () {
 
-                const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
+                const groups = [constant('\\Symfony\\Component\\Validator\\Constraint::DEFAULT_GROUP')];
                 if ($(self).find('#' + sendMailId).is(':checked')) {
                     groups.push(constant('\\Shopsys\\FrameworkBundle\\Form\\Admin\\Mail\\MailTemplateFormType::VALIDATION_GROUP_SEND_MAIL'));
                 }
