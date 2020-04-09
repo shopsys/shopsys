@@ -29,7 +29,7 @@
         {% block mainMenu %}
             <div class="web__line">
                 <div class="web__container web__container--full-width web__container--no-padding">
-                    {{ render(controller('App\\Controller\\Front\\CategoryController:panelAction', { request: app.request } )) }}
+                    {{ render(controller('App\\Controller\\Front\\HorizontalMenuController:menuAction')) }}
                 </div>
             </div>
         {% endblock %}
