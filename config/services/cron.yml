@@ -62,7 +62,7 @@ services:
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportFlagCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import číselníku příznaků z Akeneo' }
 
     App\Model\Customer\Transfer\ScontoBridge\ScontoBridgeImportCustomerCronModule:
         tags:
