@@ -16,9 +16,21 @@ class ProductTypeData
      */
     public $akeneoCode;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
+     */
+    public $freeTransportMinimalPrice;
+
+    /**
+     * @var bool[]|null[]
+     */
+    public $freeTransport;
+
     public function __construct()
     {
         $this->name = [];
+        $this->freeTransport = [];
+        $this->freeTransportMinimalPrice = [];
     }
 
     /**

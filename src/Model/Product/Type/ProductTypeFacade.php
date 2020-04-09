@@ -56,12 +56,15 @@ class ProductTypeFacade
     /**
      * @param int $productTypeId
      * @param \App\Model\Product\Type\ProductTypeData $productTypeData
+     * @return \App\Model\Product\Type\ProductType
      */
-    public function edit(int $productTypeId, ProductTypeData $productTypeData): void
+    public function edit(int $productTypeId, ProductTypeData $productTypeData): ProductType
     {
         $productType = $this->getById($productTypeId);
         $productType->edit($productTypeData);
         $this->em->flush();
+
+        return $productType;
     }
 
     /**

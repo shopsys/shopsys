@@ -1,0 +1,21 @@
+{% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Typy produktů'|trans }}{% endblock %}
+{% block h1 %}{{ 'Typy produktů'|trans }}{% endblock %}
+
+
+{% block main_content %}
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_producttype_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+            {{ form_save(productType|default(null), form) }}
+        {% endblock %}
+    {% endembed %}
+
+    {{ form_end(form) }}
+
+{% endblock %}

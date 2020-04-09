@@ -65,6 +65,7 @@ class ProductTypeGridFactory implements GridFactoryInterface
         $grid->addColumn('akeneoCode', 'pt.akeneoCode', t('Akeneo kód'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
+        $grid->addEditActionColumn('admin_producttype_edit', ['id' => 'pt.id']);
         $grid->addDeleteActionColumn('admin_producttype_delete', ['id' => 'pt.id'])
             ->setConfirmMessage(t('Opravdu si přejete odstranit tento typ produktu?'));
 

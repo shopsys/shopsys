@@ -1,0 +1,26 @@
+{% macro progressBar(orderPreview) %}
+    {% if orderPreview.productType.isFreeTransport(getDomain().id) %}
+        {% set restForFreeTransportPriceAmount = orderPreview.getRestToFreeTransportPrice().getAmount() %}
+        {% set restForFreeTransportPrice = orderPreview.getRestToFreeTransportPrice()|price %}
+        {% set percentageOfFreeTransport = orderPreview.getPercentageOfFreeTransport() %}
+        <div class="free-transport-macro">
+            <div class="free-transport-macro-icon"></div>
+            <div class="free-transport-macro-box">
+                {% if restForFreeTransportPriceAmount > 0 %}
+                    <div class="free-transport-macro-description">
+                        {{ 'Nakupte ještě za <strong>%price%</strong> a získáte doručení <strong>Zdarma</strong>'|trans({ '%price%': restForFreeTransportPrice })|raw }}
+                    </div>
+                    <div class="free-transport-macro-progress-bar" style="border: 1px solid black;">
+                        <div class="free-transport-macro-progress-bar-line" style="width: {{ percentageOfFreeTransport }}%;background-color: orange;padding-right: 10px;text-align: right;">
+                            {{ percentageOfFreeTransport }}%
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="free-transport-macro-description">
+                        {{ 'Získali jste doručení <strong>Zdarma</strong>'|trans|raw }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}

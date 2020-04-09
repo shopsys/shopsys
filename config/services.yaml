@@ -37,6 +37,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: -100 }
 
+    Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider: '@App\Model\MultidomainEntityClassProvider'
+
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: '@App\Component\Doctrine\QueryBuilderExtender'
 
     App\Component\Doctrine\NotNullableColumnsFinder: ~
@@ -148,6 +150,8 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderDataMapper: '@App\Model\Order\OrderDataMapper'
 
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@App\Model\Transport\TransportDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation: '@App\Model\Transport\TransportPriceCalculation'
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
 

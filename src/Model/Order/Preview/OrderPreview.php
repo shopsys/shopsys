@@ -6,6 +6,7 @@ namespace App\Model\Order\Preview;
 
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -34,6 +35,21 @@ class OrderPreview extends BaseOrderPreview
     private $productsAvailability;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    private $restToFreeTransportPrice;
+
+    /**
+     * @var int|null
+     */
+    private $percentageOfFreeTransport;
+
+    /**
+     * @var bool
+     */
+    private $transportForFree;
+
+    /**
      * @param array $quantifiedProductsByIndex
      * @param array $quantifiedItemsPricesByIndex
      * @param array $quantifiedItemsDiscountsByIndex
@@ -49,6 +65,9 @@ class OrderPreview extends BaseOrderPreview
      * @param null $promoCodeDiscountPercent
      * @param \App\Model\Product\Type\ProductType|null $productType
      * @param \App\Model\Stock\Stock|null $personalPickupStock
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $restToFreeTransportPrice
+     * @param int|null $percentageOfFreeTransport
+     * @param bool|null $transportForFree
      */
     public function __construct(
         array $quantifiedProductsByIndex,
@@ -65,7 +84,10 @@ class OrderPreview extends BaseOrderPreview
         ?Price $roundingPrice = null,
         $promoCodeDiscountPercent = null,
         ?ProductType $productType = null,
-        ?Stock $personalPickupStock = null
+        ?Stock $personalPickupStock = null,
+        ?Money $restToFreeTransportPrice = null,
+        ?int $percentageOfFreeTransport = null,
+        ?bool $transportForFree = false
     ) {
         parent::__construct(
             $quantifiedProductsByIndex,
@@ -85,6 +107,9 @@ class OrderPreview extends BaseOrderPreview
         $this->totalProductHighPrice = $totalProductHighPrice;
         $this->personalPickupStock = $personalPickupStock;
         $this->productsAvailability = $productsAvailability;
+        $this->restToFreeTransportPrice = $restToFreeTransportPrice;
+        $this->percentageOfFreeTransport = $percentageOfFreeTransport;
+        $this->transportForFree = $transportForFree;
     }
 
     /**
@@ -129,5 +154,29 @@ class OrderPreview extends BaseOrderPreview
     public function getProductsAvailability()
     {
         return $this->productsAvailability;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPercentageOfFreeTransport(): ?int
+    {
+        return $this->percentageOfFreeTransport;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getRestToFreeTransportPrice(): ?Money
+    {
+        return $this->restToFreeTransportPrice;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTransportForFree(): bool
+    {
+        return $this->transportForFree;
     }
 }
