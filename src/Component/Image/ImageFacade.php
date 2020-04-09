@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 
 /**
  * @property \App\Component\Image\ImageRepository $imageRepository
- * @method __construct(mixed $imageUrlPrefix, \Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig, \App\Component\Image\ImageRepository $imageRepository, \League\Flysystem\FilesystemInterface $filesystem, \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload, \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator, \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory, \League\Flysystem\MountManager $mountManager)
+ * @method __construct(mixed $imageUrlPrefix, \Doctrine\ORM\EntityManagerInterface $em, \App\Component\Image\Config\ImageConfig $imageConfig, \App\Component\Image\ImageRepository $imageRepository, \League\Flysystem\FilesystemInterface $filesystem, \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload, \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator, \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory, \League\Flysystem\MountManager $mountManager)
  * @method saveImageOrdering(\App\Component\Image\Image[] $orderedImages)
  * @method \App\Component\Image\Image getImageByEntity(object $entity, string|null $type)
  * @method \App\Component\Image\Image[] getImagesByEntityIndexedById(object $entity, string|null $type)
@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
  * @method \App\Component\Image\Image getById(int $imageId)
  * @method setImagePositionsByOrder(\App\Component\Image\Image[] $orderedImages)
  * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
+ * @property \App\Component\Image\Config\ImageConfig $imageConfig
  */
 class ImageFacade extends BaseImageFacade
 {

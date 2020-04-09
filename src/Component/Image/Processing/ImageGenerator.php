@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 /**
  * @method string generateAdditionalImageSizeAndGetFilepath(\App\Component\Image\Image $image, int $additionalIndex, string|null $sizeName)
  * @method checkSizeNameIsNotOriginal(\App\Component\Image\Image $image, string|null $sizeName)
+ * @property \App\Component\Image\Config\ImageConfig $imageConfig
  */
 class ImageGenerator extends BaseImageGenerator
 {
@@ -27,7 +28,7 @@ class ImageGenerator extends BaseImageGenerator
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
+     * @param \App\Component\Image\Config\ImageConfig $imageConfig
      * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \App\Component\Image\Kraken\Processing\ImageKrakenProcessor $imageKrakenProcessor
      */

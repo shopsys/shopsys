@@ -95,6 +95,15 @@ services:
 
     App\Model\Product\Series\Grid\ProductSeriesGridFactory: ~
 
+    Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig: '@App\Component\Image\Config\ImageConfig'
+
+    Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader: '@App\Component\Image\Config\ImageConfigLoader'
+
+    App\Component\Image\Config\ImageConfig:
+        factory: ['@App\Component\Image\Config\ImageConfigLoader', loadFromYaml]
+        arguments:
+            - '%shopsys.image_config_filepath%'
+
     App\Component\Router\FriendlyUrl\NormalizeUrlTrailingSlashListener:
         public: true
         tags:
