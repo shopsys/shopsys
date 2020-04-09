@@ -6,7 +6,9 @@
 
             <tr class="table-cart-preview__row">
                 <td colspan="1" class="table-cart-preview__cell">
-                    {{ 'Zásilka č. '|trans }} {{ orderPreview.productType.id }} {{ orderPreview.productType.name|trans }}
+                    {% if splitOrderPreview.morePreviews %}
+                        {{ 'Zásilka č. '|trans }} {{ orderPreview.productType.id }} {{ orderPreview.productType.name|trans }}
+                    {% endif %}
                 </td>
             </tr>
 
