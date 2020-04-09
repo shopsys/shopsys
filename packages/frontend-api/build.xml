@@ -18,19 +18,15 @@
             <arg value="-out"/>
             <arg value="${path.config}/frontend-api/public.key"/>
         </exec>
-        <exec executable="${path.defuse-key-generate.executable}" checkreturn="true" outputProperty="encryption_key" error="/dev/null">
-        </exec>
-
-        <echo file="${path.config}/frontend-api/.encryption_key" append="false">${encryption_key}</echo>
+        <exec executable="${path.defuse-key-generate.executable}" checkreturn="true" error="/dev/null" />
     </target>
 
     <target name="frontend-api-enable" depends="frontend-api-generate-new-keys" description="Enable frontend API for all domains.">
-        <copy file="${path.packages}/frontend-api/src/Resources/config/frontend_api.yaml.dist" tofile="${path.config}/packages/frontend_api.yaml" overwrite="true">
+        <copy file="${path.frontend-api}/src/Resources/config/frontend_api.yaml.dist" tofile="${path.config}/packages/frontend_api.yaml" overwrite="true">
         </copy>
     </target>
 
     <target name="frontend-api-disable" description="Disable frontend API for all domains.">
-        <delete file="${path.config}/frontend-api/.encryption_key" />
         <delete file="${path.config}/frontend-api/private.key" />
         <delete file="${path.config}/frontend-api/public.key" />
         <delete file="${path.config}/packages/frontend_api.yaml" />
