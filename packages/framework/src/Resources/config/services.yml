@@ -83,6 +83,8 @@ services:
     main_filesystem:
         class: League\Flysystem\FilesystemInterface
         factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory', create]
+        # public service is necessary for ElFinderBundle
+        public: true
 
     Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory:
         arguments:
