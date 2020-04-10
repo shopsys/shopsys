@@ -26,6 +26,8 @@ class RemoveMappingsSubscriber implements EventSubscriber
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void
     {
+        //TODO-REMOVE pridat promazani nepoužívaných atributů u produktu
+
         $classMetadata = $eventArgs->getClassMetadata();
 
         // Remove Order::$transport because Order has more transports depended on ProductType

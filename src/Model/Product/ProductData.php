@@ -154,5 +154,6 @@ class ProductData extends BaseProductData
         $this->preorder = false;
         $this->saleExclusion = [];
         $this->flags = [];
+        $this->usingStock = true;
     }
 }

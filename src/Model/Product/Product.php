@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
+use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
@@ -24,7 +25,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Product\Brand\Brand|null getBrand()
  * @method \App\Model\Product\Product getMainVariant()
  * @method \App\Model\Product\Product[] getVariants()
- * @method setAvailabilityAndStock(\App\Model\Product\ProductData $productData)
  * @method addVariant(\App\Model\Product\Product $variant)
  * @method addVariants(\App\Model\Product\Product[] $variants)
  * @method setMainVariant(\App\Model\Product\Product $mainVariant)
@@ -139,6 +139,24 @@ class Product extends BaseProduct
             $productDomain->setProductType($productData->productType[$domainId]);
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
             $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     */
+    protected function setAvailabilityAndStock(ProductData $productData): void
+    {
+        $this->usingStock = true;
+        $this->availability = $productData->availability;
+        if ($this->usingStock) {
+            $this->stockQuantity = $productData->stockQuantity;
+            $this->outOfStockAction = $productData->outOfStockAction;
+            $this->outOfStockAvailability = $productData->outOfStockAvailability;
+        } else {
+            $this->stockQuantity = null;
+            $this->outOfStockAction = null;
+            $this->outOfStockAvailability = null;
         }
     }
 
@@ -457,6 +475,63 @@ class Product extends BaseProduct
         // Return empty array to override default functionality.
         // Flags were moved to Domain.
         return [];
+    }
+
+
+    public function isUsingStock()
+    {
+        d('usingStock is solved');
+        return true;
+    }
+
+    public function getOutOfStockAction()
+    {
+        try{
+            throw new \Exception("deprecated");
+        }catch(\Exception $exception){
+            d($exception->getTrace()[0]);
+        }
+        d('outOfStockAction');
+        //TODO-REMOVE
+        return parent::getOutOfStockAction();
+    }
+
+    public function getOutOfStockAvailability()
+    {
+        try{
+            throw new \Exception("deprecated");
+        }catch(\Exception $exception){
+            d($exception->getTrace()[0]);
+        }
+        d('outOfStockAvailability');
+        //TODO-REMOVE
+        return parent::getOutOfStockAvailability();
+    }
+
+    public function getAvailability()
+    {
+        try{
+            throw new \Exception("deprecated");
+        }catch(\Exception $exception){
+            d($exception->getTrace()[0]);
+        }
+
+    }
+
+    public function getStockQuantity()
+    {
+        //this getter isn't possible remove. Because is used in not-extendable code, just return default value.
+        d('stockQuantity is solved');
+        return null;
+    }
+
+    public function getCalculatedAvailability()
+    {
+        try{
+            throw new \Exception("deprecated");
+        }catch(\Exception $exception){
+            d($exception->getTrace()[0]);
+        }
     }
 
     /**

@@ -196,7 +196,52 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     protected function fillFromProduct(BaseProductData $productData, BaseProduct $product): void
     {
-        parent::fillFromProduct($productData, $product);
+        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductTranslation[] $translations */
+        $translations = $product->getTranslations();
+        $names = [];
+        $variantAliases = [];
+        foreach ($translations as $translation) {
+            $names[$translation->getLocale()] = $translation->getName();
+            $variantAliases[$translation->getLocale()] = $translation->getVariantAlias();
+        }
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productData->shortDescriptions[$domainId] = $product->getShortDescription($domainId);
+            $productData->descriptions[$domainId] = $product->getDescription($domainId);
+            $productData->seoH1s[$domainId] = $product->getSeoH1($domainId);
+            $productData->seoTitles[$domainId] = $product->getSeoTitle($domainId);
+            $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
+            $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
+        }
+        $productData->name = $names;
+        $productData->variantAlias = $variantAliases;
+
+        $productData->catnum = $product->getCatnum();
+        $productData->partno = $product->getPartno();
+        $productData->ean = $product->getEan();
+        $productData->sellingFrom = $product->getSellingFrom();
+        $productData->sellingTo = $product->getSellingTo();
+        $productData->sellingDenied = $product->isSellingDenied();
+        $productData->flags = $product->getFlags();
+        $productData->usingStock = $product->isUsingStock();
+
+        $productData->unit = $product->getUnit();
+
+        $productData->hidden = $product->isHidden();
+        $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();
+        $productData->brand = $product->getBrand();
+        $productData->orderingPriority = $product->getOrderingPriority();
+
+        $productData->parameters = $this->getParametersData($product);
+        try {
+            $productData->manualInputPricesByPricingGroupId = $this->productInputPriceFacade->getManualInputPricesDataIndexedByPricingGroupId($product);
+        } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $ex) {
+            $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
+        }
+        $productData->accessories = $this->getAccessoriesData($product);
+        $productData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($product, null);
+        $productData->variants = $product->getVariants();
+        $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
 
         $productData->downloadAssemblyInstructionFiles = $product->isDownloadAssemblyInstructionFiles();
         $productData->downloadProductTypePlanFiles = $product->isDownloadAssemblyInstructionFiles();
