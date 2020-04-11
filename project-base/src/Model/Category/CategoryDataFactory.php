@@ -4,32 +4,20 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
-use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory as BaseCategoryDataFactory;
 
+/**
+ * @method \App\Model\Category\CategoryData createFromCategory(\App\Model\Category\Category $category)
+ * @method \App\Model\Category\CategoryData create()
+ */
 class CategoryDataFactory extends BaseCategoryDataFactory
 {
     /**
-     * @param \App\Model\Category\Category $category
      * @return \App\Model\Category\CategoryData
      */
-    public function createFromCategory(BaseCategory $category): BaseCategoryData
+    protected function createInstance(): BaseCategoryData
     {
-        $categoryData = new CategoryData();
-        $this->fillFromCategory($categoryData, $category);
-
-        return $categoryData;
-    }
-
-    /**
-     * @return \App\Model\Category\CategoryData
-     */
-    public function create(): BaseCategoryData
-    {
-        $categoryData = new CategoryData();
-        $this->fillNew($categoryData);
-
-        return $categoryData;
+        return new CategoryData();
     }
 }

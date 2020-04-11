@@ -7,8 +7,16 @@ class HeurekaCategoryDataFactory implements HeurekaCategoryDataFactoryInterface
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData
      */
-    public function create(): HeurekaCategoryData
+    protected function createInstance(): HeurekaCategoryData
     {
         return new HeurekaCategoryData();
+    }
+
+    /**
+     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData
+     */
+    public function create(): HeurekaCategoryData
+    {
+        return $this->createInstance();
     }
 }

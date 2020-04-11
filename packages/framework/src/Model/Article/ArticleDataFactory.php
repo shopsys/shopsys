@@ -39,12 +39,20 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
+     */
+    protected function createInstance(): ArticleData
+    {
+        return new ArticleData();
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
      * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
      */
     public function createFromArticle(Article $article): ArticleData
     {
-        $articleData = new ArticleData();
+        $articleData = $this->createInstance();
         $this->fillFromArticle($articleData, $article);
 
         return $articleData;
@@ -55,7 +63,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
      */
     public function create(): ArticleData
     {
-        $articleData = new ArticleData();
+        $articleData = $this->createInstance();
         $this->fillNew($articleData);
 
         return $articleData;

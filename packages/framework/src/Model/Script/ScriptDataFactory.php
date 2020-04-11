@@ -7,9 +7,17 @@ class ScriptDataFactory implements ScriptDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Script\ScriptData
      */
-    public function create(): ScriptData
+    protected function createInstance(): ScriptData
     {
         return new ScriptData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Script\ScriptData
+     */
+    public function create(): ScriptData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -18,7 +26,7 @@ class ScriptDataFactory implements ScriptDataFactoryInterface
      */
     public function createFromScript(Script $script): ScriptData
     {
-        $scriptData = new ScriptData();
+        $scriptData = $this->createInstance();
         $this->fillFromScript($scriptData, $script);
 
         return $scriptData;

@@ -24,9 +24,17 @@ class UploadedFileDataFactory implements UploadedFileDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
      */
-    public function create(): UploadedFileData
+    public function createInstance(): UploadedFileData
     {
         return new UploadedFileData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+     */
+    public function create(): UploadedFileData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -36,7 +44,7 @@ class UploadedFileDataFactory implements UploadedFileDataFactoryInterface
      */
     public function createByEntity(object $entity, string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME): UploadedFileData
     {
-        $uploadedFileData = $this->create();
+        $uploadedFileData = $this->createInstance();
 
         $this->fillByUploadedFiles($uploadedFileData, $this->uploadedFileFacade->getUploadedFilesByEntity($entity, $type));
 

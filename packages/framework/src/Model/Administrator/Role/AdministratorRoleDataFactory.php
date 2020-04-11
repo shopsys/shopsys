@@ -9,7 +9,7 @@ class AdministratorRoleDataFactory implements AdministratorRoleDataFactoryInterf
     /**
      * @inheritDoc
      */
-    public function create(): AdministratorRoleData
+    public function createInstance(): AdministratorRoleData
     {
         return new AdministratorRoleData();
     }
@@ -17,9 +17,17 @@ class AdministratorRoleDataFactory implements AdministratorRoleDataFactoryInterf
     /**
      * @inheritDoc
      */
+    public function create(): AdministratorRoleData
+    {
+        return $this->createInstance();
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function createFromAdministratorRole(AdministratorRole $administratorRole): AdministratorRoleData
     {
-        $administratorRoleData = new AdministratorRoleData();
+        $administratorRoleData = $this->createInstance();
         $this->fillFromAdministratorRole($administratorRoleData, $administratorRole);
 
         return $administratorRoleData;

@@ -7,8 +7,16 @@ class GoogleProductDomainDataFactory implements GoogleProductDomainDataFactoryIn
     /**
      * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData
      */
-    public function create(): GoogleProductDomainData
+    protected function createInstance(): GoogleProductDomainData
     {
         return new GoogleProductDomainData();
+    }
+
+    /**
+     * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData
+     */
+    public function create(): GoogleProductDomainData
+    {
+        return $this->createInstance();
     }
 }

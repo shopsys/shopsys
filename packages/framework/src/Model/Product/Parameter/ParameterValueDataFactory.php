@@ -7,9 +7,17 @@ class ParameterValueDataFactory implements ParameterValueDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData
      */
-    public function create(): ParameterValueData
+    protected function createInstance(): ParameterValueData
     {
         return new ParameterValueData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData
+     */
+    public function create(): ParameterValueData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -18,7 +26,7 @@ class ParameterValueDataFactory implements ParameterValueDataFactoryInterface
      */
     public function createFromParameterValue(ParameterValue $parameterValue): ParameterValueData
     {
-        $parameterValueData = new ParameterValueData();
+        $parameterValueData = $this->createInstance();
         $this->fillFromParameterValue($parameterValueData, $parameterValue);
 
         return $parameterValueData;

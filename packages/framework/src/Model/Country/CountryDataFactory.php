@@ -22,9 +22,17 @@ class CountryDataFactory implements CountryDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\CountryData
      */
+    protected function createInstance(): CountryData
+    {
+        return new CountryData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Country\CountryData
+     */
     public function create(): CountryData
     {
-        $countryData = new CountryData();
+        $countryData = $this->createInstance();
         $this->fillNew($countryData);
 
         return $countryData;
@@ -36,7 +44,7 @@ class CountryDataFactory implements CountryDataFactoryInterface
      */
     public function createFromCountry(Country $country): CountryData
     {
-        $countryData = new CountryData();
+        $countryData = $this->createInstance();
         $this->fillFromCountry($countryData, $country);
 
         return $countryData;

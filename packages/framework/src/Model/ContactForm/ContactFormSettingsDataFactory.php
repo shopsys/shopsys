@@ -20,11 +20,19 @@ class ContactFormSettingsDataFactory implements ContactFormSettingsDataFactoryIn
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsData
+     */
+    protected function createInstance(): ContactFormSettingsData
+    {
+        return new ContactFormSettingsData();
+    }
+
+    /**
      * @inheritDoc
      */
     public function createFromSettingsByDomainId(int $domainId): ContactFormSettingsData
     {
-        $contactFormSettingsData = new ContactFormSettingsData();
+        $contactFormSettingsData = $this->createInstance();
         $contactFormSettingsData->mainText = $this->contactFormSettingsFacade->getMainText($domainId);
 
         return $contactFormSettingsData;

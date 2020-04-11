@@ -7,9 +7,17 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData
      */
-    public function create(): AdministratorData
+    protected function createInstance(): AdministratorData
     {
         return new AdministratorData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData
+     */
+    public function create(): AdministratorData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -18,7 +26,7 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
      */
     public function createFromAdministrator(Administrator $administrator): AdministratorData
     {
-        $administratorData = new AdministratorData();
+        $administratorData = $this->createInstance();
         $this->fillFromAdministrator($administratorData, $administrator);
         return $administratorData;
     }

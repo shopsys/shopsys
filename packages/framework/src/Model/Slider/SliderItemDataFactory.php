@@ -39,9 +39,17 @@ class SliderItemDataFactory implements SliderItemDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItemData
      */
-    public function create(): SliderItemData
+    protected function createInstance(): SliderItemData
     {
         return new SliderItemData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItemData
+     */
+    public function create(): SliderItemData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -50,7 +58,7 @@ class SliderItemDataFactory implements SliderItemDataFactoryInterface
      */
     public function createFromSliderItem(SliderItem $sliderItem): SliderItemData
     {
-        $sliderItemData = new SliderItemData();
+        $sliderItemData = $this->createInstance();
         $this->fillFromSliderItem($sliderItemData, $sliderItem);
 
         return $sliderItemData;

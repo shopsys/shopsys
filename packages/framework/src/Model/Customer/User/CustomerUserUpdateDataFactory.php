@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
@@ -52,11 +53,25 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     */
+    protected function createInstance(
+        BillingAddressData $billingAddressData,
+        DeliveryAddressData $deliveryAddressData,
+        CustomerUserData $customerUserData
+    ): CustomerUserUpdateData {
+        return new CustomerUserUpdateData($billingAddressData, $deliveryAddressData, $customerUserData);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     public function create(): CustomerUserUpdateData
     {
-        return new CustomerUserUpdateData(
+        return $this->createInstance(
             $this->billingAddressDataFactory->create(),
             $this->deliveryAddressDataFactory->create(),
             $this->customerUserDataFactory->create()
@@ -70,13 +85,11 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
      */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserUpdateData
     {
-        $customerUserUpdateData = new CustomerUserUpdateData(
+        return $this->createInstance(
             $this->billingAddressDataFactory->createFromBillingAddress($customerUser->getCustomer()->getBillingAddress()),
             $this->getDeliveryAddressDataFromCustomerUser($customerUser),
             $this->customerUserDataFactory->createFromCustomerUser($customerUser)
         );
-
-        return $customerUserUpdateData;
     }
 
     /**
