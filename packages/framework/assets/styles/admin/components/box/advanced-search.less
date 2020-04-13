@@ -6,6 +6,7 @@
     padding: 0 10px;
 
     &__item {
+        position: relative;
         display: flex;
         flex-direction: column;
         margin: 5px -5px;
@@ -16,19 +17,41 @@
         }
 
         &__content {
-            width: 100%;
+            width: 90%;
             margin-bottom: 5px;
             padding: 0 5px;
 
+            @media @query-lg {
+                width: 100%;
+            }
+
             &--small {
+                position: absolute;
+                right: -5px;
+                bottom: 20px;
+
                 padding: 0 5px 0 0;
                 width: 25px;
 
                 text-align: center;
 
+                @media @query-lg {
+                    position: relative;
+                    right: auto;
+                    bottom: auto;
+                }
+
                 i {
                     position: relative;
                     top: -2px;
+                }
+            }
+
+            &--last {
+                bottom: 3px;
+
+                @media @query-lg {
+                    bottom: auto;
                 }
             }
         }
@@ -45,7 +68,7 @@
         text-align: right;
 
         &--button {
-            margin-top: -32px;
+            margin-top: -10px;
 
             @media @query-lg {
                 margin-top: 0;
