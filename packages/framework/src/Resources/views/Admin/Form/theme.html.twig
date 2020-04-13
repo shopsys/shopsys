@@ -499,7 +499,7 @@
                 <button
                 type="button"
                 data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: allow_main_variants, allowVariants: allow_variants}) }}"
-                class="js-product-picker-create-picker-button btn btn--default"
+                class="js-product-picker-create-picker-button btn btn--chooser"
                 title="{{ 'Click to go to product section'|trans }}"
                 type="button"
                 >
@@ -508,9 +508,7 @@
             </span>
         </div>
         {% if enableRemove %}
-            <a href="#" class="js-product-picker-remove-button display-none">
-                {{ 'Remove'|trans }}
-            </a>
+            <a href="#" title="{{ 'Remove'|trans }}" class="in-icon in-icon--delete svg svg-trash form-line__item form-line__item--info-baseline js-product-picker-remove-button display-none"></a>
         {% endif %}
         {{- form_widget(form, {attr: {class: 'js-product-picker-input'}}) -}}
     </span>

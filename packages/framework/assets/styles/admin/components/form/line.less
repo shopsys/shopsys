@@ -203,6 +203,20 @@
             }
         }
 
+        &--info-baseline {
+            position: absolute;
+            left: calc(~"100% - 20px");
+            bottom: 22px;
+            width: 20px;
+            padding-right: 0;
+
+            @media @query-md {
+                position: relative;
+                bottom: auto;
+                left: auto;
+            }
+        }
+
         &--btn {
             padding-top: 3px;
             padding-bottom: 3px;
