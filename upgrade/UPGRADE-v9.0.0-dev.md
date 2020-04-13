@@ -1212,7 +1212,7 @@ There you can find links to upgrade notes for other versions too.
         - `ErrorExtractor::getAllErrorsAsArray()`
             ```diff           
             -   public function getAllErrorsAsArray(Form $form, Bag $flashMessageBag)
-            +   public function getAllErrorsAsArray(Form $form, FlashBag $flashMessageBag)
+            +   public function getAllErrorsAsArray(Form $form, array $errorFlashMessages)
             ```
         - `Grid::__construct()`
             ```diff           
