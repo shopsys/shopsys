@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateMediaException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\WidthAndHeightMissingException;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
@@ -27,11 +28,18 @@ class ImageConfigLoader
     protected $foundEntityNames;
 
     /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
      */
-    public function __construct(Filesystem $filesystem)
+    protected $entityNameResolver;
+
+    /**
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     */
+    public function __construct(Filesystem $filesystem, EntityNameResolver $entityNameResolver)
     {
         $this->filesystem = $filesystem;
+        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**
@@ -56,7 +64,7 @@ class ImageConfigLoader
 
         $preparedConfig = $this->loadFromArray($outputConfig);
 
-        return new ImageConfig($preparedConfig);
+        return new ImageConfig($preparedConfig, $this->entityNameResolver);
     }
 
     /**

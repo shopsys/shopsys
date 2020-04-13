@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Component\Image\Config;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageAdditionalSizeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
@@ -78,10 +79,11 @@ class ImageConfigTest extends TestCase
         ];
 
         $filesystem = new Filesystem();
-        $imageConfigLoader = new ImageConfigLoader($filesystem);
+        $entityNameResolver = new EntityNameResolver([]);
+        $imageConfigLoader = new ImageConfigLoader($filesystem, $entityNameResolver);
         $imageEntityConfigByClass = $imageConfigLoader->loadFromArray($inputConfig);
 
-        return new ImageConfig($imageEntityConfigByClass);
+        return new ImageConfig($imageEntityConfigByClass, $entityNameResolver);
     }
 
     public function testGetEntityName()

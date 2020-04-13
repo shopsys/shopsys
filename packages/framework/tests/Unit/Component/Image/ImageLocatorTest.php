@@ -4,6 +4,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Image;
 
 use League\Flysystem\FilesystemInterface;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigDefinition;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader;
@@ -74,10 +75,11 @@ class ImageLocatorTest extends TestCase
         ];
 
         $filesystem = new Filesystem();
-        $imageConfigLoader = new ImageConfigLoader($filesystem);
+        $entityNameResolver = new EntityNameResolver([]);
+        $imageConfigLoader = new ImageConfigLoader($filesystem, $entityNameResolver);
         $imageEntityConfigByClass = $imageConfigLoader->loadFromArray($inputConfig);
 
-        return new ImageConfig($imageEntityConfigByClass);
+        return new ImageConfig($imageEntityConfigByClass, $entityNameResolver);
     }
 
     public function getRelativeImagePathProvider()

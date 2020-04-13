@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 
 class ImageConfig
@@ -15,11 +16,25 @@ class ImageConfig
     protected $imageEntityConfigsByClass;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
      */
-    public function __construct(array $imageEntityConfigsByClass)
+    protected $entityNameResolver;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     */
+    public function __construct(array $imageEntityConfigsByClass, EntityNameResolver $entityNameResolver)
     {
-        $this->imageEntityConfigsByClass = $imageEntityConfigsByClass;
+        $this->entityNameResolver = $entityNameResolver;
+
+        $imageEntityConfigsByNormalizedClass = [];
+        foreach ($imageEntityConfigsByClass as $class => $imageEntityConfig) {
+            $normalizedClass = $this->entityNameResolver->resolve($class);
+            $imageEntityConfigsByNormalizedClass[$normalizedClass] = $imageEntityConfig;
+        }
+
+        $this->imageEntityConfigsByClass = $imageEntityConfigsByNormalizedClass;
     }
 
     /**
@@ -137,8 +152,9 @@ class ImageConfig
      */
     public function getImageEntityConfigByClass($class)
     {
-        if (array_key_exists($class, $this->imageEntityConfigsByClass)) {
-            return $this->imageEntityConfigsByClass[$class];
+        $normalizedClass = $this->entityNameResolver->resolve($class);
+        if (array_key_exists($normalizedClass, $this->imageEntityConfigsByClass)) {
+            return $this->imageEntityConfigsByClass[$normalizedClass];
         }
 
         throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException($class);
