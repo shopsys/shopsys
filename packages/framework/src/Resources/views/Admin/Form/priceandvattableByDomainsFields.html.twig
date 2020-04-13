@@ -38,9 +38,15 @@
                         </div>
                         <div class="form-line__item--right">
                             <div class="form-line__item__price">
+                                <div class="form-line__item__price__label-mobile">
+                                    {{ 'Excl. VAT'|trans }}
+                                </div>
                                 {{ price.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
                             </div>
                             <div class="form-line__item__price">
+                                <div class="form-line__item__price__label-mobile">
+                                    {{ 'Incl. VAT'|trans }}
+                                </div>
                                 <strong>{{ price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}</strong>
                             </div>
                         </div>
