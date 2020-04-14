@@ -34,6 +34,9 @@ msgstr ""
 msgid "Country name cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Country with code {{ country_code }} does not exists. Available country codes are {{ available_country_codes }}."
+msgstr ""
+
 msgid "EAN cannot be longer than {{ limit }} characters"
 msgstr ""
 

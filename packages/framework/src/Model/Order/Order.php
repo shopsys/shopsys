@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
@@ -26,6 +27,13 @@ class Order
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var string
@@ -299,6 +307,13 @@ class Order
     protected $createdAsAdministratorName;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    protected $origin;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -310,26 +325,15 @@ class Order
         $urlHash,
         ?CustomerUser $customerUser = null
     ) {
+        $this->fillCommonFields($orderData);
+
         $this->transport = $orderData->transport;
         $this->payment = $orderData->payment;
-        $this->firstName = $orderData->firstName;
-        $this->lastName = $orderData->lastName;
-        $this->email = $orderData->email;
-        $this->telephone = $orderData->telephone;
-        $this->street = $orderData->street;
-        $this->city = $orderData->city;
-        $this->postcode = $orderData->postcode;
-        $this->country = $orderData->country;
-        $this->note = $orderData->note;
+
         $this->items = new ArrayCollection();
-        $this->setCompanyInfo(
-            $orderData->companyName,
-            $orderData->companyNumber,
-            $orderData->companyTaxNumber
-        );
-        $this->setDeliveryAddress($orderData);
+
         $this->number = $orderNumber;
-        $this->status = $orderData->status;
+
         $this->customerUser = $customerUser;
         $this->deleted = false;
         if ($orderData->createdAt === null) {
@@ -342,12 +346,25 @@ class Order
         $this->currency = $orderData->currency;
         $this->createdAsAdministrator = $orderData->createdAsAdministrator;
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
+        $this->origin = $orderData->origin;
+        $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
     protected function editData(OrderData $orderData)
+    {
+        $this->fillCommonFields($orderData);
+
+        $this->editOrderTransport($orderData);
+        $this->editOrderPayment($orderData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     */
+    protected function fillCommonFields(OrderData $orderData): void
     {
         $this->firstName = $orderData->firstName;
         $this->lastName = $orderData->lastName;
@@ -364,11 +381,10 @@ class Order
             $orderData->companyNumber,
             $orderData->companyTaxNumber
         );
-        $this->setDeliveryAddress($orderData);
+
         $this->status = $orderData->status;
 
-        $this->editOrderTransport($orderData);
-        $this->editOrderPayment($orderData);
+        $this->setDeliveryAddress($orderData);
     }
 
     /**
@@ -607,6 +623,14 @@ class Order
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**
@@ -922,6 +946,14 @@ class Order
     public function getCreatedAsAdministratorName()
     {
         return $this->createdAsAdministratorName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrigin(): ?string
+    {
+        return $this->origin;
     }
 
     /**

@@ -7,6 +7,7 @@ For more information please see [the specification](https://facebook.github.io/r
 ## Usage
 
 If you want to get eg. paginated products you can use `products` query.
+
 ```text
 {
   products{}
@@ -15,14 +16,14 @@ If you want to get eg. paginated products you can use `products` query.
 
 This query will return a `connection` object which consists of `pageInfo` and `edges`.
 
-`pageInfo` is object that represents information about current page of pagination that you are on.
+`pageInfo` is object that represents information about current page of pagination that you are on.  
+`edges` are array of objects that are generated and represent the products that you get.  
+`edge` need to consist of `cursor` (pointer to products location) and `node` (data of given product that you requested).  
+When you define connection you need to specify what should be the type of `node` (eg. `Product` or `String`)
 
-`edges` are array of objects that are generated and represent the products that you get.
- `edge` need to consist of `cursor` (pointer to products location) and `node` (data of given product that you requested).
- When you define connection you need to specify what should be the type of `node` (eg. `Product` or `String`)
+To get your products you need to simply write query that gets you the data that you need from the `node` field of `edge` with `first` or `last` parameters:
 
- To get your products you need to simply write query that gets you the data that you need from the `node` field of `edge` with `first` or `last` parameters:
- ```text
+```text
 {
   products (first:10) {
     edges {
@@ -50,37 +51,36 @@ This query will return a `connection` object which consists of `pageInfo` and `e
     }
   }
 }
+```
 
- ```
+To get next page you simply need to add the `after` parameter if you are using `first` or `before` of you are using `last` with cursor of a node
 
- To get next page you simply need to add the `after` parameter if you are using `first` or `before` of you are using `last` with cursor of a node
-  ```text
- {
-   products (first:10, after: "YXJyYXljb25uZWN0aW9uOjk=") {
-     edges {
-       cursor
-       node {
-         name
-         link
-         shortDescription
-       }
-     }
-   }
- }
+```text
+{
+  products (first:10, after: "YXJyYXljb25uZWN0aW9uOjk=") {
+    edges {
+      cursor
+      node {
+        name
+        link
+        shortDescription
+      }
+    }
+  }
+}
 
- // OR
+// OR
 
- {
-   products (last:10, before: "YXJyYXljb25uZWN0aW9uOjEw") {
-     edges {
-       cursor
-       node {
-         name
-         link
-         shortDescription
-       }
-     }
-   }
- }
-
-  ```
+{
+  products (last:10, before: "YXJyYXljb25uZWN0aW9uOjEw") {
+    edges {
+      cursor
+      node {
+        name
+        link
+        shortDescription
+      }
+    }
+  }
+}
+```

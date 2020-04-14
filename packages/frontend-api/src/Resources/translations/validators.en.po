@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Payment {{ uuid }} doesn't exist"
+msgstr ""
+
+msgid "Please choose a valid combination of transport and payment"
+msgstr ""
+
+msgid "Price for payment {{ uuid }} has changed"
+msgstr ""
+
+msgid "Price for product {{ uuid }} has changed"
+msgstr ""
+
+msgid "Price for transport {{ uuid }} has changed"
+msgstr ""
+
+msgid "Product {{ uuid }} does not have any selling price"
+msgstr ""
+
+msgid "Product {{ uuid }} no longer available or doesn't exist"
+msgstr ""
+
+msgid "Transport {{ uuid }} doesn't exist"
+msgstr ""
+

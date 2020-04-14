@@ -1612,6 +1612,9 @@ msgstr ""
 msgid "Orders value"
 msgstr ""
 
+msgid "Origin"
+msgstr ""
+
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr ""
 

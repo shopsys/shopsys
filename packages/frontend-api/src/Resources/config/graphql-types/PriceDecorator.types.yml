@@ -1,7 +1,7 @@
 PriceDecorator:
     type: object
     config:
-        description: "Represents the price of the product"
+        description: "Represents the price"
         fields:
             priceWithVat:
                 type: "Money"
@@ -12,6 +12,3 @@ PriceDecorator:
             vatAmount:
                 type: "Money"
                 description: "Total value of VAT"
-            isPriceFrom:
-                type: "Boolean!"
-                description: "Determines whether it's a final price or starting price"

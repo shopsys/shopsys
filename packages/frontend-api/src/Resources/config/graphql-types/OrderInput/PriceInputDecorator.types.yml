@@ -1,0 +1,14 @@
+PriceInputDecorator:
+    type: input-object
+    config:
+        description: "Represents the price"
+        fields:
+            priceWithVat:
+                type: "Money!"
+                description: "Price with VAT"
+            priceWithoutVat:
+                type: "Money!"
+                description: "Price without VAT"
+            vatAmount:
+                type: "Money!"
+                description: "Total value of VAT"

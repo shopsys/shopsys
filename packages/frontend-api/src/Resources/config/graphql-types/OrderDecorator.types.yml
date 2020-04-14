@@ -1,0 +1,105 @@
+OrderDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            number:
+                type: "String!"
+                description: "Unique order number"
+            creationDate:
+                type: "DateTime!"
+                description: "Date and time when the order was created"
+
+            items:
+                type: "[OrderItem!]!"
+                description: "All items in the order including payment and transport"
+
+            transport:
+                type: "Transport!"
+                description: "Transport method applied to the order"
+            payment:
+                type: "Payment!"
+                description: "Payment method applied to the order"
+
+            status:
+                type: "String!"
+                description: "Current status of the order"
+
+            totalPrice:
+                type: "Price!"
+                description: "Total price of the order including transport and payment prices"
+
+            firstName:
+                type: "String!"
+                description: "The customer's first name"
+            lastName:
+                type: "String!"
+                description: "The customer's last name"
+            email:
+                type: "String!"
+                description: "The customer's email address"
+            telephone:
+                type: "String!"
+                description: "The customer's telephone number"
+
+            companyName:
+                type: "String"
+                description: "The customer’s company name (only when ordered on the company behalf)"
+            companyNumber:
+                type: "String"
+                description: "The customer’s company identification number (only when ordered on the company behalf)"
+            companyTaxNumber:
+                type: "String"
+                description: "The customer’s company tax number (only when ordered on the company behalf)"
+
+            street:
+                type: "String!"
+                description: "Billing address street name "
+            city:
+                type: "String!"
+                description: "Billing address city name"
+            postcode:
+                type: "String!"
+                description: "Billing address zip code"
+            country:
+                type: "String!"
+                description: "Billing address country code"
+
+            differentDeliveryAddress:
+                type: "Boolean!"
+                description: "Indicates whether the billing address is other than a delivery address"
+
+            deliveryFirstName:
+                type: "String"
+                description: "First name of the contact person for delivery"
+            deliveryLastName:
+                type: "String"
+                description: "Last name of the contact person for delivery"
+            deliveryCompanyName:
+                type: "String"
+                description: "Company name for delivery"
+            deliveryTelephone:
+                type: "String"
+                description: "Contact telephone number for delivery"
+            deliveryStreet:
+                type: "String"
+                description: "Street name for delivery"
+            deliveryCity:
+                type: "String"
+                description: "City name for delivery"
+            deliveryPostcode:
+                type: "String"
+                description: "Zip code for delivery"
+            deliveryCountry:
+                type: "String"
+                description: "Country code for delivery"
+            note:
+                type: "String"
+                description: "Other information related to the order"
+
+            urlHash:
+                type: "String!"
+                description: "Unique url hash that can be used to "

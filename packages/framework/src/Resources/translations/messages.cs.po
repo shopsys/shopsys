@@ -1612,6 +1612,9 @@ msgstr "Přehled objednávek"
 msgid "Orders value"
 msgstr "Hodnota objednávek"
 
+msgid "Origin"
+msgstr "Původ"
+
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr "Stránka <strong>{{ name }}</strong> byla smazána"
 

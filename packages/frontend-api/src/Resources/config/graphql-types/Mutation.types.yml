@@ -3,6 +3,14 @@ MutationDecorator:
     decorator: true
     config:
         fields:
+            CreateOrder:
+                type: Order!
+                description: "Allow to create order"
+                args:
+                    input:
+                        type: OrderInput!
+                        validation: cascade
+                resolve: "@=mutation('create_order', [args, validator])"
             Login:
                 type: Token!
                 description: "Allow to log in as user"

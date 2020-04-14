@@ -15,7 +15,7 @@ QueryDecorator:
                 resolve: "@=resolver('product', [args['uuid']])"
                 args:
                     uuid:
-                        type: "ID!"
+                        type: "Uuid!"
             RegularProduct:
                 type: 'RegularProduct'
             category:
@@ -23,7 +23,7 @@ QueryDecorator:
                 resolve: "@=resolver('category', [args['uuid']])"
                 args:
                     uuid:
-                        type: "ID!"
+                        type: "Uuid!"
             payments:
                 type: '[Payment!]!'
                 resolve: "@=resolver('payments')"
@@ -32,7 +32,7 @@ QueryDecorator:
                 resolve: "@=resolver('payment', [args['uuid']])"
                 args:
                     uuid:
-                        type: "ID!"
+                        type: "Uuid!"
             transports:
                 type: '[Transport!]!'
                 resolve: "@=resolver('transports')"
@@ -41,4 +41,4 @@ QueryDecorator:
                 resolve: "@=resolver('transport', [args['uuid']])"
                 args:
                     uuid:
-                        type: "ID!"
+                        type: "Uuid!"

@@ -203,15 +203,14 @@ class ProductResolverMap extends ResolverMap
 }
 ```
 
-You  can register `ResolverMap` in `config/packages/shopsys_frontend_api.yml`:
+Each resolver map must be tagged with the `overblog_graphql.resolver_map` tag.
 
 ```yaml
-overblog_graphql:
-    definitions:
-        schema:
-            ...
-            resolver_maps:
-                - Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap
+# config/services.yaml
+services:
+    App\Model\FrontendApi\Resolver\ProductResolverMap:
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
 ```
 
 you can read more info about `ResolveMap` in [documentation](https://github.com/overblog/GraphQLBundle/blob/master/docs/definitions/resolver-map.md).

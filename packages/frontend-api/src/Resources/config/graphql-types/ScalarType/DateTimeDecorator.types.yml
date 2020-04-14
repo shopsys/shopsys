@@ -1,0 +1,7 @@
+DateTimeDecorator:
+    type: custom-scalar
+    config:
+        description: "Represents and encapsulates an ISO-8601 encoded UTC date-time value"
+        serialize: ["Shopsys\\FrontendApiBundle\\Model\\ScalarType\\DateTimeType", "serialize"]
+        parseValue: ["Shopsys\\FrontendApiBundle\\Model\\ScalarType\\DateTimeType", "parseValue"]
+        parseLiteral: ["Shopsys\\FrontendApiBundle\\Model\\ScalarType\\DateTimeType", "parseLiteral"]

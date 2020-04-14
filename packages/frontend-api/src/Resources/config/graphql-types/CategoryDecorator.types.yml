@@ -5,7 +5,7 @@ CategoryDecorator:
         description: "Represents a category"
         fields:
             uuid:
-                type: "ID!"
+                type: "Uuid!"
                 description: "UUID"
             name:
                 type: "String"
