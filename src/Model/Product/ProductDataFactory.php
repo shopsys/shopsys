@@ -14,10 +14,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -196,7 +194,7 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     protected function fillFromProduct(BaseProductData $productData, BaseProduct $product): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductTranslation[] $translations */
+        /** @var \App\Model\Product\ProductTranslation[] $translations */
         $translations = $product->getTranslations();
         $names = [];
         $variantAliases = [];
@@ -225,6 +223,8 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->flags = $product->getFlags();
         $productData->usingStock = $product->isUsingStock();
 
+        $productData->availability = $this->availabilityFacade->getById($this->setting->get('defaultAvailabilityInStockId'));
+
         $productData->unit = $product->getUnit();
 
         $productData->hidden = $product->isHidden();
@@ -238,7 +238,11 @@ class ProductDataFactory extends BaseProductDataFactory
         } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $ex) {
             $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
         }
-        $productData->accessories = $this->getAccessoriesData($product);
+
+        /** @var \App\Model\Product\Product[] $productAccessories */
+        $productAccessories = $this->getAccessoriesData($product);
+
+        $productData->accessories = $productAccessories;
         $productData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($product, null);
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());

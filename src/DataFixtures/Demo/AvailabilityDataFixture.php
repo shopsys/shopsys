@@ -15,9 +15,9 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 class AvailabilityDataFixture extends AbstractReferenceFixture
 {
     public const AVAILABILITY_IN_STOCK = 'availability_in_stock';
-    public const AVAILABILITY_ON_REQUEST = 'availability_on_request';
-    public const AVAILABILITY_OUT_OF_STOCK = 'availability_out_of_stock';
-    public const AVAILABILITY_PREPARING = 'availability_preparing';
+    public const AVAILABILITY_ON_REQUEST = self::AVAILABILITY_IN_STOCK;
+    public const AVAILABILITY_OUT_OF_STOCK = self::AVAILABILITY_IN_STOCK;
+    public const AVAILABILITY_PREPARING = self::AVAILABILITY_IN_STOCK;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
@@ -65,33 +65,12 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         $availabilityData = $this->availabilityDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $availabilityData->name[$locale] = t('Preparing', [], 'dataFixtures', $locale);
-        }
-
-        $availabilityData->dispatchTime = 0;
-        $this->createAvailability($availabilityData, self::AVAILABILITY_PREPARING);
-
-        foreach ($this->domain->getAllLocales() as $locale) {
             $availabilityData->name[$locale] = t('In stock', [], 'dataFixtures', $locale);
         }
 
         $availabilityData->dispatchTime = 0;
         $inStockAvailability = $this->createAvailability($availabilityData, self::AVAILABILITY_IN_STOCK);
         $this->setting->set(Setting::DEFAULT_AVAILABILITY_IN_STOCK, $inStockAvailability->getId());
-
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $availabilityData->name[$locale] = t('On request', [], 'dataFixtures', $locale);
-        }
-
-        $availabilityData->dispatchTime = 0;
-        $this->createAvailability($availabilityData, self::AVAILABILITY_ON_REQUEST);
-
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $availabilityData->name[$locale] = t('Out of stock', [], 'dataFixtures', $locale);
-        }
-
-        $availabilityData->dispatchTime = null;
-        $this->createAvailability($availabilityData, self::AVAILABILITY_OUT_OF_STOCK);
     }
 
     /**

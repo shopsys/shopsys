@@ -6,13 +6,12 @@ namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductTypeDataFixture;
+use App\Model\Product\Availability\ProductAvailabilityCalculation;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
+use App\Model\Product\ProductRepository;
 use Doctrine\ORM\EntityManager;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Tests\App\Test\FunctionalTestCase;
@@ -171,17 +170,17 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $this->setVats($mainVariantData);
         $mainVariant = Product::createMainVariant($mainVariantData, $variants);
 
-        $availabilityFacadeMock = $this->createMock(AvailabilityFacade::class);
+        $availabilityFacadeMock = $this->getMockBuilder(AvailabilityFacade::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $availabilityFacadeMock->expects($this->any())->method('getDefaultInStockAvailability')
+            ->willReturn($this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK));
+
         $productSellingDeniedRecalculatorMock = $this->createMock(ProductSellingDeniedRecalculator::class);
         $productVisibilityFacadeMock = $this->createMock(ProductVisibilityFacade::class);
         $entityManagerMock = $this->createMock(EntityManager::class);
 
         $productRepositoryMock = $this->createMock(ProductRepository::class);
-        $productRepositoryMock
-            ->expects($this->atLeastOnce())
-            ->method('getAtLeastSomewhereSellableVariantsByMainVariant')
-            ->with($this->equalTo($mainVariant))
-            ->willReturn($variants);
 
         $productAvailabilityCalculation = new ProductAvailabilityCalculation(
             $availabilityFacadeMock,
@@ -229,11 +228,6 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $entityManagerMock = $this->createMock(EntityManager::class);
 
         $productRepositoryMock = $this->createMock(ProductRepository::class);
-        $productRepositoryMock
-            ->expects($this->atLeastOnce())
-            ->method('getAtLeastSomewhereSellableVariantsByMainVariant')
-            ->with($this->equalTo($mainVariant))
-            ->willReturn([]);
 
         $productAvailabilityCalculation = new ProductAvailabilityCalculation(
             $availabilityFacadeMock,

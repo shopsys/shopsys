@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Product\Exceptions\DeprecatedAvailabilityPropertyException;
 use App\Model\Product\Type\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
@@ -36,6 +36,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
+ * @method setAvailabilityAndStock(\App\Model\Product\ProductData $productData)
  */
 class Product extends BaseProduct
 {
@@ -143,24 +144,6 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    protected function setAvailabilityAndStock(ProductData $productData): void
-    {
-        $this->usingStock = true;
-        $this->availability = $productData->availability;
-        if ($this->usingStock) {
-            $this->stockQuantity = $productData->stockQuantity;
-            $this->outOfStockAction = $productData->outOfStockAction;
-            $this->outOfStockAvailability = $productData->outOfStockAvailability;
-        } else {
-            $this->stockQuantity = null;
-            $this->outOfStockAction = null;
-            $this->outOfStockAvailability = null;
-        }
-    }
-
-    /**
      * @param \App\Model\Product\ProductFilesData $productFilesData
      */
     public function editFileAttributes(ProductFilesData $productFilesData): void
@@ -193,6 +176,18 @@ class Product extends BaseProduct
 
         $this->setDomains($productData);
     }
+
+//    /**
+//     * @param \App\Model\Product\ProductData $productData
+//     */
+//    protected function setAvailabilityAndStock(BaseProductData $productData): void
+//    {
+//        $this->usingStock = $productData->usingStock;
+//        $this->availability = $productData->availability;
+//        $this->stockQuantity = null;
+//        $this->outOfStockAction = null;
+//        $this->outOfStockAvailability = null;
+//    }
 
     /**
      * @param int $domainId
@@ -477,61 +472,54 @@ class Product extends BaseProduct
         return [];
     }
 
-
+    /**
+     * @return bool
+     */
     public function isUsingStock()
     {
-        d('usingStock is solved');
-        return true;
+        //is always false and is by default set in migration to false.
+        //removing old stock functionality means product.calculatedHidden is always setup by product.hidden
+        return false;
     }
 
+    /**
+     * @return string
+     */
     public function getOutOfStockAction()
     {
-        try{
-            throw new \Exception("deprecated");
-        }catch(\Exception $exception){
-            d($exception->getTrace()[0]);
-        }
-        d('outOfStockAction');
-        //TODO-REMOVE
-        return parent::getOutOfStockAction();
+        throw new \Exception('deprecated - outOfStockAction');
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
+     */
     public function getOutOfStockAvailability()
     {
-        try{
-            throw new \Exception("deprecated");
-        }catch(\Exception $exception){
-            d($exception->getTrace()[0]);
-        }
-        d('outOfStockAvailability');
-        //TODO-REMOVE
-        return parent::getOutOfStockAvailability();
+        throw new DeprecatedAvailabilityPropertyException('outOfStockAvailability', $this->outOfStockAvailability);
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
+     */
     public function getAvailability()
     {
-        try{
-            throw new \Exception("deprecated");
-        }catch(\Exception $exception){
-            d($exception->getTrace()[0]);
-        }
-
+        throw new DeprecatedAvailabilityPropertyException('availability', $this->availability);
     }
 
+    /**
+     * @return int|null
+     */
     public function getStockQuantity()
     {
         //this getter isn't possible remove. Because is used in not-extendable code, just return default value.
-        d('stockQuantity is solved');
         return null;
     }
 
     public function getCalculatedAvailability()
     {
-        try{
-            throw new \Exception("deprecated");
-        }catch(\Exception $exception){
-            d($exception->getTrace()[0]);
-        }
+        //is calculated in ProductAvailabilityCalculation and there is just set from DEFAULT_AVAILABILITY_IN_STOCK
+        //this is used in feeds because there is dispatch time. - possible remove and dispatch time calculate different way
+        return parent::getCalculatedAvailability();
     }
 
     /**

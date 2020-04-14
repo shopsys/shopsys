@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Exceptions\DeprecatedAvailabilityPropertyException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -55,7 +56,11 @@ final class AvailabilityFacadeTest extends TransactionFunctionalTestCase
 
         $this->em->refresh($product);
 
-        $this->assertSame($availabilityToReplaceWith, $product->getAvailability());
+        try {
+            $this->assertSame($availabilityToReplaceWith, $product->getAvailability());
+        } catch (DeprecatedAvailabilityPropertyException $exception) {
+            $this->assertSame($availabilityToReplaceWith, $exception->getAvailability());
+        }
     }
 
     public function testDeleteByIdAndReplaceProductOutOfStockAvailability(): void
@@ -77,7 +82,11 @@ final class AvailabilityFacadeTest extends TransactionFunctionalTestCase
 
         $this->em->refresh($product);
 
-        $this->assertSame($availabilityToReplaceWith, $product->getOutOfStockAvailability());
+        try {
+            $this->assertSame($availabilityToReplaceWith, $product->getOutOfStockAvailability());
+        } catch (DeprecatedAvailabilityPropertyException $exception) {
+            $this->assertSame($availabilityToReplaceWith, $exception->getAvailability());
+        }
     }
 
     /**
