@@ -5,7 +5,7 @@ MutationDecorator:
         fields:
             CreateOrder:
                 type: Order!
-                description: "Allow to create order"
+                description: "Creates complete order with products and addresses"
                 args:
                     input:
                         type: OrderInput!
