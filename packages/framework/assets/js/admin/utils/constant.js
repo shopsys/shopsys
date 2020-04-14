@@ -28,7 +28,8 @@ const constant = {
     '\\Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType::class': 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType',
     '\\Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType::class': 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType',
     '\\Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType::class': 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType',
-    '\\Symfony\\Component\\Validator\\Constraint::DEFAULT_GROUP': 'Default'
+    '\\Symfony\\Component\\Validator\\Constraint::DEFAULT_GROUP': 'Default',
+    '\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT': 'Default',
 };
 
 export default (key) => constant[key];
