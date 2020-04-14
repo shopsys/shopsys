@@ -8,6 +8,9 @@
     "arvenil/ninja-mutex": {
         "version": "0.4.1"
     },
+    "asm89/twig-cache-extension": {
+        "version": "1.4.0"
+    },
     "aws/aws-sdk-php": {
         "version": "3.133.16"
     },

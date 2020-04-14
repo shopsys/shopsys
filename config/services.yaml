@@ -435,3 +435,21 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    twig_cache_extension.cache_provider:
+        class: Doctrine\Common\Cache\RedisCache
+        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
+        arguments:
+            - '@snc_redis.twig'
+
+    twig_cache_extension.cache_strategy:
+        class: App\Twig\Cache\CurrentDomainLifetimeCacheStrategy
+        arguments:
+            - '@twig_cache_extension.cache_provider'
+
+    twig_cache_extension:
+        class: Asm89\Twig\CacheExtension\Extension
+        arguments:
+            - '@twig_cache_extension.cache_strategy'
+        tags:
+            - { name: twig.extension }

@@ -278,12 +278,14 @@
                     </div>
                 {% endif %}
 
-                {% if paginatedSimilarProducts.results|length > 0 %}
-                    <div class="box-detail similar-products">
-                        <div class="h3" id="similar-products">{{ 'Podobné produkty'|trans }}</div>
-                        {% include 'Front/Content/Product/similarProducts.html.twig' with {paginationResult: paginatedSimilarProducts} %}
-                    </div>
-                {% endif %}
+                {% cache 'products_similar_id_'~product.getId() 60*60 %}
+                    {% if paginatedSimilarProducts.results|length > 0 %}
+                        <div class="box-detail similar-products">
+                            <div class="h3" id="similar-products">{{ 'Podobné produkty'|trans }}</div>
+                            {% include 'Front/Content/Product/similarProducts.html.twig' with {paginationResult: paginatedSimilarProducts} %}
+                        </div>
+                    {% endif %}
+                {% endcache %}
 
                 {% if productStocksAvailabilitiesInformation|length > 0 %}
                     <div class="box-detail stocks-availabilities">
