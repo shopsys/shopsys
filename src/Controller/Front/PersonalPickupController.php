@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 
 class PersonalPickupController extends FrontBaseController
 {
@@ -22,22 +23,38 @@ class PersonalPickupController extends FrontBaseController
     private $stockFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+     */
+    private $cartFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         Domain $domain,
-        StockFacade $stockFacade
+        StockFacade $stockFacade,
+        CartFacade $cartFacade
     ) {
         $this->domain = $domain;
         $this->stockFacade = $stockFacade;
+        $this->cartFacade = $cartFacade;
     }
 
     public function indexAction()
     {
         $domainId = $this->domain->getId();
+        $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
+        $stocks = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
+
         return $this->render('Front/Content/Order/Transport/personalPickup.html.twig', [
-            'stocks' => $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId),
+            'stocks' => $stocks,
+            'stockDayAvailabilitiesByStockId' => $this->stockFacade->getStockDayAvailabilitiesIndexedByStockId(
+                $domainId,
+                $stocks,
+                $quantifiedProducts
+            ),
         ]);
     }
 }

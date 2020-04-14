@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Stock;
 
 use App\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 
 class StockSettingsDataFactory
 {
@@ -15,28 +14,22 @@ class StockSettingsDataFactory
     private $setting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
      * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
-    public function __construct(Setting $setting, AdminDomainTabsFacade $adminDomainTabsFacade)
+    public function __construct(Setting $setting)
     {
         $this->setting = $setting;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
+     * @param int $domainId
      * @return \App\Model\Stock\StockSettingsData
      */
-    public function create(): StockSettingsData
+    public function getForDomainId(int $domainId): StockSettingsData
     {
         $settings = new StockSettingsData();
-        $settings->delivery = $this->setting->getForDomain(Setting::DELIVERY_DAYS_ON_STOCK, $this->adminDomainTabsFacade->getSelectedDomainId());
-        $settings->transfer = $this->setting->getForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, $this->adminDomainTabsFacade->getSelectedDomainId());
+        $settings->delivery = $this->setting->getForDomain(Setting::DELIVERY_DAYS_ON_STOCK, $domainId);
+        $settings->transfer = $this->setting->getForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, $domainId);
 
         return $settings;
     }

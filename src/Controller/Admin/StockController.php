@@ -42,12 +42,12 @@ class StockController extends AdminBaseController
     private $gridFactory;
 
     /**
-     * @var \App\Model\Stock\StockFacade|\App\Model\Stock\StockFacade
+     * @var \App\Model\Stock\StockFacade
      */
     private $stockFacade;
 
     /**
-     * @var \App\Model\Stock\StockDataFactory|\App\Model\Stock\StockDataFactory
+     * @var \App\Model\Stock\StockDataFactory
      */
     private $stockDataFactory;
 
@@ -57,7 +57,7 @@ class StockController extends AdminBaseController
     private $stockSettingsDataFacade;
 
     /**
-     * @var \App\Model\Stock\StockSettingsDataFactory|\App\Model\Stock\StockSettingsDataFactory
+     * @var \App\Model\Stock\StockSettingsDataFactory
      */
     private $stockSettingsDataFactory;
 
@@ -120,7 +120,9 @@ class StockController extends AdminBaseController
      */
     private function getStockSettingsForm(): FormInterface
     {
-        $stockSettingsData = $this->stockSettingsDataFactory->create();
+        $stockSettingsData = $this->stockSettingsDataFactory->getForDomainId(
+            $this->adminDomainTabsFacade->getSelectedDomainId()
+        );
         return $this->createForm(StockSettingsFormType::class, $stockSettingsData, [
             'action' => $this->generateUrl('admin_stock_savesettings'),
         ]);

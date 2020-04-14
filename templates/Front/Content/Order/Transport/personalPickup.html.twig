@@ -16,6 +16,11 @@
                                 data-stock-city="{{ stock.city }}"
                             />
                             {{ stock.name }}
+                            <i>(
+                            {% transchoice stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks with {'%daysAvailability%': stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks} %}
+                                {0} Můžete mít ihned | {1} K dispozici do 1 týdne | [2,Inf] K dispozici do %daysAvailability% týdnů
+                            {% endtranschoice %}
+                            )</i>
                         </label>
                     </td>
                     <td>{{ stock.street }}<br>{{ stock.city }}</td>

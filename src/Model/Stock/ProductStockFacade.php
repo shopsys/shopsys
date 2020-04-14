@@ -42,6 +42,38 @@ class ProductStockFacade
 
     /**
      * @param \App\Model\Product\Product $product
+     * @return \App\Model\Stock\ProductStock[]
+     */
+    public function getProductStocksByProductIndexedByStockId(Product $product): array
+    {
+        $productStocks = $this->getProductStocksByProduct($product);
+        $productStocksById = [];
+        foreach ($productStocks as $productStock) {
+            $productStocksById[$productStock->getStock()->getId()] = $productStock;
+        }
+
+        return $productStocksById;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return \App\Model\Stock\ProductStock[]
+     */
+    public function getProductStocksByProductAndDomainIdIndexedByStockId(Product $product, int $domainId): array
+    {
+        $productStocksById = [];
+        foreach ($this->getProductStocksByProductIndexedByStockId($product) as $id => $productStock) {
+            if ($productStock->getStock()->getDomainId() === $domainId) {
+                $productStocksById[$id] = $productStock;
+            }
+        }
+
+        return $productStocksById;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
      * @param \App\Model\Stock\Stock $stock
      * @param \App\Model\Stock\ProductStockData $productStockData
      * @throws \Doctrine\ORM\NonUniqueResultException

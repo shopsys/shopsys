@@ -101,6 +101,17 @@ class StockRepository
      * @param int $domainId
      * @return \App\Model\Stock\Stock[]
      */
+    public function getStocksByDomainId(int $domainId): array
+    {
+        return $this->getQueryBuilderByDomain($domainId)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Stock\Stock[]
+     */
     public function getStocksWithoutCentralByDomainId(int $domainId): array
     {
         return $this->getQueryBuilderByDomain($domainId)
