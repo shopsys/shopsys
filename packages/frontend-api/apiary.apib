@@ -1526,3 +1526,44 @@ Creates complete order with products and addresses
             }
         }
     }
+
+## Create order without supplying required fields
+
+### POST [POST]
+
+Returns validation errors
+
+- Request (application/json)
+    {
+        "errors": [
+            {
+                "message": "validation",
+                "extensions": {
+                    "category": "arguments_validation_error",
+                    "validation": {
+                        "input.companyName": [
+                            {
+                                "message": "Please enter company name",
+                                "code": "c1051bb4-d103-4f74-8988-acbcafc7fdc3"
+                            }
+                        ],
+                        "input.companyNumber": [
+                            {
+                                "message": "Please enter identification number",
+                                "code": "c1051bb4-d103-4f74-8988-acbcafc7fdc3"
+                            }
+                        ]
+                    }
+                },
+                "locations": [
+                    {
+                        "line": 2,
+                        "column": 9
+                    }
+                ],
+                "path": [
+                    "CreateOrder"
+                ]
+            }
+        ]
+    }
