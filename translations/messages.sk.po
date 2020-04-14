@@ -21,3 +21,9 @@ msgstr "Televize"
 
 msgid "plazmová"
 msgstr "plazmová"
+
+msgid "Yes"
+msgstr "Ano"
+
+msgid "No"
+msgstr "Nie"
