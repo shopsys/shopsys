@@ -60,7 +60,7 @@ export default class CustomizeBundle {
 
         let isJsFileUpload = false;
         if ($domNode.hasClass('js-validation-no-file-upload') === false) {
-            isJsFileUpload = $domNode.hasClass('js-validation-no-file-upload') === false || $domNode.closest('.js-file-upload').length > 0;
+            isJsFileUpload = $domNode.closest('.js-file-upload').length > 0;
         }
 
         $domNode
