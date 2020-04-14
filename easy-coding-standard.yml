@@ -55,6 +55,7 @@ parameters:
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
             - '*/src/DataFixtures/Demo/CategoryDataFixture'
+            - '*/src/Controller/Front/OrderController.php'
 
         Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
             - '*/tests/App/Functional/EntityExtension/EntityExtensionTest.php'

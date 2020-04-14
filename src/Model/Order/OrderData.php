@@ -32,6 +32,26 @@ class OrderData extends BaseOrderData
      */
     public $goPayTransactions;
 
+    /**
+     * @var string|null
+     */
+    public $gender;
+
+    /**
+     * @var string|null
+     */
+    public $password;
+
+    /**
+     * @var bool|null
+     */
+    public $isCompanyCustomer = false;
+
+    /**
+     * @var string|null
+     */
+    public $companyNumberWithVat;
+
     public function __construct()
     {
         parent::__construct();

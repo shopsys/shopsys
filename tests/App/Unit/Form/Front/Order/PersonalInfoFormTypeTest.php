@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\App\Unit\Form\Front\Order;
 
 use App\Form\Front\Order\PersonalInfoFormType;
+use App\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
-use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Validation;
 class PersonalInfoFormTypeTest extends TypeTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade|\PHPUnit\Framework\MockObject\MockObject
+     * @var \App\Model\Country\CountryFacade|\PHPUnit\Framework\MockObject\MockObject
      */
     private $countryFacade;
 
@@ -82,6 +82,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $personalInfoFormData['city'] = 'test';
         $personalInfoFormData['postcode'] = '12345';
         $personalInfoFormData['country'] = 1;
+        $personalInfoFormData['password'] = ['first' => 'testtest', 'second' => 'testtest'];
         $personalInfoFormData['legalConditionsAgreement'] = $legalConditionsAgreement;
 
         return $personalInfoFormData;
@@ -118,7 +119,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $countryMock->method('getId')->willReturn(1);
 
         $this->countryFacade = $this->createMock(CountryFacade::class);
-        $this->countryFacade->method('getAllEnabledOnDomain')->willReturn([$countryMock]);
+        $this->countryFacade->method('getCountryOnCurrentDomain')->willReturn($countryMock);
 
         $this->domain = $this->createMock(Domain::class);
         $this->domain->method('getId')->willReturn(Domain::FIRST_DOMAIN_ID);

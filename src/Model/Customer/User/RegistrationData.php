@@ -91,6 +91,11 @@ class RegistrationData
      */
     public $telephone;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Country\Country
+     */
+    public $country;
+
     public function __construct()
     {
     }

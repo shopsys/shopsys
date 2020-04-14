@@ -9,6 +9,7 @@ use App\Form\Front\Customer\Password\ResetPasswordFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CustomerPasswordController extends FrontBaseController
@@ -126,6 +127,35 @@ class CustomerPasswordController extends FrontBaseController
 
         return $this->render('Front/Content/Registration/setNewPassword.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function resetPasswordAjaxAction(Request $request): JsonResponse
+    {
+        $email = $request->get('email');
+        if ($request->isXmlHttpRequest() && $email !== null) {
+            try {
+                $this->customerUserPasswordFacade->resetPassword($email, $this->domain->getId());
+
+                return $this->json([
+                    'success' => true,
+                    'email' => $email,
+                ]);
+            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException $ex) {
+                return $this->json([
+                    'success' => false,
+                    'email' => $email,
+                ]);
+            }
+        }
+
+        return $this->json([
+            'success' => false,
+            'email' => $email,
         ]);
     }
 }

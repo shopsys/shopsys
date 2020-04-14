@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Order;
 
+use App\Model\Country\CountryFacade;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\FrontOrderData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -11,13 +12,14 @@ use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DeliveryAddressChoiceType;
 use Shopsys\FrameworkBundle\Form\Transformers\InverseTransformer;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
-use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,9 +32,10 @@ class PersonalInfoFormType extends AbstractType
 {
     public const VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
     public const VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS = 'differentDeliveryAddress';
+    public const VALIDATION_GROUP_COMMON_CUSTOMER = 'ordinaryCustomer';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
+     * @var \App\Model\Country\CountryFacade
      */
     private $countryFacade;
 
@@ -52,7 +55,7 @@ class PersonalInfoFormType extends AbstractType
     private $currentCustomerUser;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
+     * @param \App\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -75,7 +78,7 @@ class PersonalInfoFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
+        $countries = [$this->countryFacade->getCountryOnCurrentDomain()];
 
         if (!$options['is_company_customer']) {
             $builder
@@ -83,19 +86,36 @@ class PersonalInfoFormType extends AbstractType
                     'choices' => array_flip(CustomerUser::getAllGenders()),
                     'placeholder' => t('-- Vyber oslovení --'),
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Prosím vyberte si oslovení']),
+                        new Constraints\NotBlank([
+                            'message' => 'Prosím vyberte si oslovení',
+                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                        ]),
                     ],
                 ])
                 ->add('firstName', TextType::class, [
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter first name']),
-                        new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
+                        new Constraints\NotBlank([
+                            'message' => 'Please enter first name',
+                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                        ]),
+                        new Constraints\Length([
+                            'max' => 100,
+                            'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
+                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                        ]),
                     ],
                 ])
                 ->add('lastName', TextType::class, [
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter last name']),
-                        new Constraints\Length(['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
+                        new Constraints\NotBlank([
+                            'message' => 'Please enter last name',
+                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                        ]),
+                        new Constraints\Length([
+                            'max' => 100,
+                            'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
+                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                        ]),
                     ],
                 ]);
         }
@@ -307,6 +327,38 @@ class PersonalInfoFormType extends AbstractType
             ])
             ->add('save', SubmitType::class);
 
+        if ($this->currentCustomerUser->findCurrentCustomerUser() === null) {
+            $builder->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'options' => [
+                    'attr' => ['autocomplete' => 'new-password'],
+                ],
+                'first_options' => [
+                    'constraints' => [
+                        new Constraints\NotBlank([
+                            'message' => 'Please enter password',
+                        ]),
+                        new Constraints\Length([
+                            'min' => 6,
+                            'minMessage' => 'Password must be at least {{ limit }} characters long',
+                        ]),
+                    ],
+                ],
+                'second_options' => [
+                    'constraints' => [
+                        new Constraints\NotBlank([
+                            'message' => 'Please enter password',
+                        ]),
+                        new Constraints\Length([
+                            'min' => 6,
+                            'minMessage' => 'Password must be at least {{ limit }} characters long',
+                        ]),
+                    ],
+                ],
+                'invalid_message' => 'Passwords do not match',
+            ]);
+        }
+
         if ($options['domain_id'] == Domain::SECOND_DOMAIN_ID) {
             $builder->add(
                 'companyNumberWithVat',
@@ -363,6 +415,8 @@ class PersonalInfoFormType extends AbstractType
 
                     if ($orderData->companyCustomer) {
                         $validationGroups[] = self::VALIDATION_GROUP_COMPANY_CUSTOMER;
+                    } else {
+                        $validationGroups[] = self::VALIDATION_GROUP_COMMON_CUSTOMER;
                     }
 
                     if (!$orderData->deliveryAddressSameAsBillingAddress && $orderData->deliveryAddress === null) {

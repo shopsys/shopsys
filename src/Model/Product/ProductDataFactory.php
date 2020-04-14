@@ -320,7 +320,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $product->getVatForDomain($domainId),
             $currency
         );
-        
+
         $productData->lowPriceWithVat[$domainId] = $lowPrice->getPriceWithVat();
         $productData->highPriceWithVat[$domainId] = $highPrice->getPriceWithVat();
 

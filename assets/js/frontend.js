@@ -31,6 +31,8 @@ import './frontend/product';
 // cart entry?
 import './frontend/cart';
 
+import './frontend/customer';
+
 import 'framework/common/validation';
 
 import Register from 'framework/common/utils/Register';

@@ -41,4 +41,9 @@ class FrontOrderData extends BaseFrontOrderData
      * @var \App\Model\GoPay\BankSwift\GoPayBankSwift
      */
     public $goPayBankSwift;
+
+    /**
+     * @var string|null
+     */
+    public $password;
 }

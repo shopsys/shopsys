@@ -4,7 +4,8 @@ const constant = {
     '\\App\\Controller\\Front\\CartController::RECALCULATE_ONLY_PARAMETER_NAME': 'recalculateOnly',
     '\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT': 'Default',
     '\\App\\Form\\Front\\Customer\\DeliveryAddressFormType::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS': 'differentDeliveryAddress',
-    '\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER': 'companyCustomer'
+    '\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER': 'companyCustomer',
+    '\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMMON_CUSTOMER': 'ordinaryCustomer'
 };
 
 export default (key) => constant[key];

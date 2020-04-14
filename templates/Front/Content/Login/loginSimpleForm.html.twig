@@ -1,0 +1,85 @@
+{% extends 'Front/Content/Order/step.html.twig' %}
+
+{% block h1 %}
+    {{ 'Order - personal data'|trans }}
+{% endblock %}
+
+{% block content %}
+
+<div class="web__line">
+    <div class="web__container">
+
+        <div class="box-order">
+            <div class="box-order__info">
+                {% if customerEmailExists is null or customerEmailExists == false %}
+                    {% do form.email.setRendered() %}
+                    {% do form.password.setRendered() %}
+                    {% do form.rememberMe.setRendered() %}
+                    {% do form.login.setRendered() %}
+                    <h2>{{ 'Začněte zadáním emailu'|trans }}</h2>
+                    <input type="text" id="check-existing-email" class="input" value="">
+                    <input id="check-existing-email-submit" type="submit" value="{{ 'Pokračovat'|trans }}">
+                {% else %}
+                <h2>{{ 'Vítejte zpět ve Scontu, pro dokončení nákupu se prosím přihlašte'|trans }}</h2>
+            {{ form_start(form, {attr: {'multipleForm': true, 'data-login-url': url('front_login_in_order_ajax'), class: loginFormInOrder ? 'js-login-in-order':''}}) }}
+            {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
+                <dl class="form-line">
+                    <dt>
+                        {{ form_label(form.email, 'Email'|trans) }}
+                    </dt>
+                    <dd>
+                        {% if prefilledCustomerEmail is not null %}
+                            {{ form_widget(form.email, { value: prefilledCustomerEmail }) }}
+                        {% else %}
+                            {{ form_widget(form.email) }}
+                        {% endif %}
+                    </dd>
+                </dl>
+
+                <dl class="form-line">
+                    <dt>
+                        {{ form_label(form.password, 'Heslo'|trans) }}
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.password) }}
+                    </dd>
+                </dl>
+
+                <dl class="form-line">
+                    <dt></dt>
+                    <dd>
+                        <div class="form-choice">
+                            {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
+                            <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
+                                {{ 'Remember my login'|trans }}
+                                <i class="svg svg-info in-icon in-icon--info js-tooltip"
+                                   data-toggle="tooltip"
+                                   data-placement="right"
+                                   title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
+                                ></i>
+                            </label>
+                        </div>
+                    </dd>
+                </dl>
+
+                <dl class="form-line">
+                    <dt></dt>
+                    <dd>
+                        {{ form_widget(form.login, {label: 'Log in'|trans}) }}
+                    </dd>
+                </dl>
+                <dl class="form-line">
+                    <dt></dt>
+                    <dd>
+                        <a id="reset-customer-password" href="{{ url('front_registration_reset_password') }}">{{ 'Forgot your password?'|trans }}</a>
+                    </dd>
+                </dl>
+
+            {{ form_end(form) }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

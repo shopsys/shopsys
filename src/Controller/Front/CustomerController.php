@@ -13,8 +13,10 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CustomerController extends FrontBaseController
 {
@@ -54,6 +56,11 @@ class CustomerController extends FrontBaseController
     private $deliveryAddressFacade;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     */
+    private $session;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Component\Domain\Domain $domain
@@ -61,6 +68,7 @@ class CustomerController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
     public function __construct(
         CustomerUserFacade $customerUserFacade,
@@ -69,7 +77,8 @@ class CustomerController extends FrontBaseController
         OrderItemPriceCalculation $orderItemPriceCalculation,
         LoginAsUserFacade $loginAsUserFacade,
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        DeliveryAddressFacade $deliveryAddressFacade
+        DeliveryAddressFacade $deliveryAddressFacade,
+        SessionInterface $session
     ) {
         $this->customerUserFacade = $customerUserFacade;
         $this->orderFacade = $orderFacade;
@@ -78,6 +87,7 @@ class CustomerController extends FrontBaseController
         $this->loginAsUserFacade = $loginAsUserFacade;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->deliveryAddressFacade = $deliveryAddressFacade;
+        $this->session = $session;
     }
 
     /**
@@ -238,5 +248,30 @@ class CustomerController extends FrontBaseController
         } else {
             throw $this->createAccessDeniedException('');
         }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function findCustomerByEmailAjaxAction(Request $request): JsonResponse
+    {
+        $email = $request->get('email');
+        if ($request->isXmlHttpRequest() && $email !== null) {
+            $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $this->domain->getId());
+            $this->session->set(OrderController::SESSION_PREFILLED_CUSTOMER_EMAIL, $email);
+            if ($customerUser !== null) {
+                $this->session->set(OrderController::SESSION_CUSTOMER_EMAIL_EXISTS, true);
+                return $this->json([
+                    'success' => true,
+                ]);
+            }
+        }
+        $this->session->set(OrderController::SESSION_PREFILLED_CUSTOMER_EMAIL, $email);
+        $this->session->set(OrderController::SESSION_CUSTOMER_EMAIL_EXISTS, false);
+
+        return $this->json([
+            'success' => false,
+        ]);
     }
 }

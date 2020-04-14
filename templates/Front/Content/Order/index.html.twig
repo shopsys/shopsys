@@ -21,15 +21,20 @@
     {% endblock %}
 
     {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: flow.getCurrentStepNumber()} only %}
-
-    {{ form_start(form, { attr: { id: "js-order-form", 'data-ajax-save-url': url('front_order_save_form') }}) }}
-        <div class="web__line">
-            <div class="web__container">
-                {{ form_errors(form) }}
+        {% if displayFormType == 'login'%}
+            {% include 'Front/Content/Login/loginSimpleForm.html.twig' %}
+        {% else %}
+            {{ form_start(form, { attr: { id: "js-order-form", 'data-ajax-save-url': url('front_order_save_form') }}) }}
+            <div class="web__line">
+                <div class="web__container">
+                    {{ form_errors(form) }}
+                </div>
             </div>
-        </div>
-        {% include 'Front/Content/Order/step' ~ flow.getCurrentStepNumber() ~ '.html.twig' %}
-    {{ form_end(form) }}
+            {% include 'Front/Content/Order/step' ~ flow.getCurrentStepNumber() ~ '.html.twig' %}
+            {{ form_end(form) }}
+        {% endif %}
 
+    {% if displayFormType == 'order_flow' %}
     <span class="js-payment-transport-relations" data-relations="{{ paymentTransportRelations }}"></span>
+    {% endif %}
 {% endblock %}

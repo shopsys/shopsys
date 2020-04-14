@@ -200,3 +200,20 @@ front_customer_delivery_address_delete:
     requirements:
         deliveryAddressId: \d+
 
+front_find_customer_by_email_ajax:
+    path: /customer/find-customer-by-email/
+    defaults:
+        _controller: App\Controller\Front\CustomerController:findCustomerByEmailAjaxAction
+    methods: [POST]
+
+front_reset_password_ajax:
+    path: /customer/reset-password-ajax/
+    defaults:
+        _controller: App\Controller\Front\CustomerPasswordController:resetPasswordAjaxAction
+    methods: [POST]
+
+front_login_in_order_ajax:
+    path: /login/login-in-order-ajax/
+    defaults:
+        _controller: App\Controller\Front\LoginController:loginInOrderAction
+    methods: [POST]

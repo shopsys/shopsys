@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
+use App\Model\Country\CountryFacade;
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\RegistrationDataFactory;
+use App\Model\Customer\User\RegistrationFacade;
 use App\Model\GoPay\GoPayTransaction;
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Preview\OrderPreview;
@@ -18,7 +22,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecur
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -95,6 +98,21 @@ class OrderFacade extends BaseOrderFacade
     private $orderDataFactory;
 
     /**
+     * @var \App\Model\Customer\User\RegistrationDataFactory
+     */
+    private $registrationDataFactory;
+
+    /**
+     * @var \App\Model\Customer\User\RegistrationFacade
+     */
+    private $registrationFacade;
+
+    /**
+     * @var \App\Model\Country\CountryFacade
+     */
+    private $countryFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
      * @param \App\Model\Order\OrderRepository $orderRepository
@@ -124,6 +142,9 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $cartSplittingFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \App\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
+     * @param \App\Model\Customer\User\RegistrationFacade $registrationFacade
+     * @param \App\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -154,7 +175,10 @@ class OrderFacade extends BaseOrderFacade
         OrderItemFactoryInterface $orderItemFactory,
         OrderItemDataFactory $orderItemDataFactory,
         OrderPreviewSplittingFacade $cartSplittingFacade,
-        OrderDataFactory $orderDataFactory
+        OrderDataFactory $orderDataFactory,
+        RegistrationDataFactory $registrationDataFactory,
+        RegistrationFacade $registrationFacade,
+        CountryFacade $countryFacade
     ) {
         parent::__construct(
             $em,
@@ -187,6 +211,9 @@ class OrderFacade extends BaseOrderFacade
         $this->orderItemDataFactory = $orderItemDataFactory;
         $this->cartSplittingFacade = $cartSplittingFacade;
         $this->orderDataFactory = $orderDataFactory;
+        $this->registrationDataFactory = $registrationDataFactory;
+        $this->registrationFacade = $registrationFacade;
+        $this->countryFacade = $countryFacade;
     }
 
     /**
@@ -203,8 +230,11 @@ class OrderFacade extends BaseOrderFacade
 
         $orderData->status = $this->orderStatusRepository->getDefault();
         $splitOrderPreview = $this->cartSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        if ($customerUser === null) {
+            $customerUser = $this->tryRegisterUserFromOrderData($orderData);
+        }
 
         $this->updateOrderDataWithDeliveryAddress($orderData, $deliveryAddress);
 
@@ -519,5 +549,39 @@ class OrderFacade extends BaseOrderFacade
         $orderData->orderPayment = $orderPaymentData;
         $order->removeItem($order->getOrderPayment());
         $this->edit($order->getId(), $orderData);
+    }
+
+    /**
+     * @param \App\Model\Order\OrderData $orderData
+     * @return \App\Model\Customer\User\CustomerUser
+     */
+    public function tryRegisterUserFromOrderData(\App\Model\Order\OrderData $orderData): CustomerUser
+    {
+        /** @var \App\Model\Customer\User\CustomerUser $existingUser */
+        $existingUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($orderData->email, $orderData->domainId);
+        if ($existingUser == null) {
+            $registrationData = $this->registrationDataFactory->createForDomainId($orderData->domainId);
+
+            $registrationData->gender = $orderData->gender;
+            $registrationData->firstName = $orderData->firstName;
+            $registrationData->lastName = $orderData->lastName;
+            $registrationData->email = $orderData->email;
+            $registrationData->telephone = $orderData->telephone;
+            $registrationData->companyName = $orderData->companyName;
+            $registrationData->companyNumber = $orderData->companyNumber;
+            $registrationData->companyTaxNumber = $orderData->companyTaxNumber;
+            $registrationData->companyNumberWithVat = $orderData->companyNumberWithVat;
+            $registrationData->street = $orderData->street;
+            $registrationData->city = $orderData->city;
+            $registrationData->postcode = $orderData->postcode;
+            $registrationData->country = $this->countryFacade->getCountryOnCurrentDomain();
+            $registrationData->domainId = $orderData->domainId;
+            $registrationData->password = $orderData->password;
+            $registrationData->companyCustomer = $orderData->isCompanyCustomer;
+
+            return $this->registrationFacade->register($registrationData);
+        }
+
+        return $existingUser;
     }
 }

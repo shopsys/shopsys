@@ -5,24 +5,56 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Login\LoginFormType;
+use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 class LoginController extends FrontBaseController
 {
+    public const SESSION_LOGIN_IN_ORDER_SUCCESS = 'login_in_order_success';
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Security\Authenticator
      */
     private $authenticator;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
      */
-    public function __construct(Authenticator $authenticator)
-    {
+    private $frontendCustomerUserProvider;
+
+    /**
+     * @var \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
+     */
+    private $userPasswordEncoder;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     */
+    private $session;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
+     * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     */
+    public function __construct(
+        Authenticator $authenticator,
+        FrontendCustomerUserProvider $frontendCustomerUserProvider,
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        SessionInterface $session
+    ) {
         $this->authenticator = $authenticator;
+        $this->frontendCustomerUserProvider = $frontendCustomerUserProvider;
+        $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->session = $session;
     }
 
     /**
@@ -62,5 +94,28 @@ class LoginController extends FrontBaseController
         return $this->createForm(LoginFormType::class, null, [
             'action' => $this->generateUrl('front_login_check'),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function loginInOrderAction(Request $request)
+    {
+        $loginSuccess = false;
+        $formData = $request->get('front_login_form');
+
+        try {
+            $user = $this->frontendCustomerUserProvider->loadUserByUsername($formData['email']);
+        } catch (UsernameNotFoundException $e) {
+            $user = null;
+        }
+
+        if ($user !== null && $this->userPasswordEncoder->isPasswordValid($user, $formData['password'])) {
+            $this->authenticator->loginUser($user, $request);
+            $loginSuccess = true;
+            $this->session->set(self::SESSION_LOGIN_IN_ORDER_SUCCESS, true);
+        }
+
+        return new JsonResponse($loginSuccess);
     }
 }

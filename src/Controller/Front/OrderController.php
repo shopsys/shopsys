@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use App\Form\Front\Login\LoginFormType;
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Form\Front\Order\PaymentFormType;
 use App\Model\GoPay\BankSwift\GoPayBankSwift;
@@ -32,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -43,6 +45,8 @@ class OrderController extends FrontBaseController
 {
     public const SESSION_CREATED_ORDER = 'created_order_id';
     public const SESSION_GOPAY_CHOOSEN_SWIFT = 'gopay_choosen_swift';
+    public const SESSION_CUSTOMER_EMAIL_EXISTS = 'customer_email_exists';
+    public const SESSION_PREFILLED_CUSTOMER_EMAIL = 'prefilled_customer_email';
 
     /**
      * @var \App\Form\Front\Order\DomainAwareOrderFlowFactory
@@ -205,15 +209,14 @@ class OrderController extends FrontBaseController
         }
 
         $customerUser = $this->getUser();
-
         $frontOrderFormData = new FrontOrderData();
         $frontOrderFormData->deliveryAddressSameAsBillingAddress = true;
         $isCompanyCustomer = false;
-        $isWithoutRegistration = true;
+        $isWithoutRegistration = false;
         if ($customerUser instanceof CustomerUser) {
             $this->orderFacade->prefillFrontOrderData($frontOrderFormData, $customerUser);
             $isCompanyCustomer = $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer();
-            $isWithoutRegistration = false;
+            $isWithoutRegistration = true;
         }
 
         $domainId = $this->domain->getId();
@@ -228,6 +231,7 @@ class OrderController extends FrontBaseController
         }
 
         $orderFlow = $this->domainAwareOrderFlowFactory->create();
+
         if ($orderFlow->isBackToCartTransition()) {
             return $this->redirectToRoute('front_cart');
         }
@@ -235,6 +239,10 @@ class OrderController extends FrontBaseController
         $orderFlow->bind($frontOrderFormData);
         $orderFlow->saveSentStepData();
 
+        if ($this->session->get(LoginController::SESSION_LOGIN_IN_ORDER_SUCCESS, null) === true) {
+            $orderFlow->nextStep();
+            $this->session->remove(LoginController::SESSION_LOGIN_IN_ORDER_SUCCESS);
+        }
         $form = $orderFlow->createForm();
         $isValid = $orderFlow->isValid($form);
         // FormData are filled during isValid() call
@@ -246,7 +254,6 @@ class OrderController extends FrontBaseController
         $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
 
         $this->checkTransportAndPaymentChanges($frontOrderFormData, $splitOrderPreview);
-
         if ($isValid) {
             if ($orderFlow->nextStep()) {
                 $form = $orderFlow->createForm();
@@ -284,6 +291,21 @@ class OrderController extends FrontBaseController
             $form->addError(new FormError(t('Please check the correctness of all data filled.')));
         }
 
+        if ($isValid && $orderFlow->getCurrentStepNumber() == 3 && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) {
+            $customerEmailExists = $this->session->get(self::SESSION_CUSTOMER_EMAIL_EXISTS, null);
+            $this->session->remove(self::SESSION_CUSTOMER_EMAIL_EXISTS);
+            if ($customerEmailExists !== false) {
+                return $this->render('Front/Content/Order/index.html.twig', [
+                    'form' => $this->getLoginForm()->createView(),
+                    'flow' => $orderFlow,
+                    'displayFormType' => 'login',
+                    'customerEmailExists' => $customerEmailExists,
+                    'loginFormInOrder' => true,
+                    'prefilledCustomerEmail' => $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null),
+                ]);
+            }
+        }
+
         return $this->render('Front/Content/Order/index.html.twig', [
             'form' => $form->createView(),
             'flow' => $orderFlow,
@@ -298,6 +320,8 @@ class OrderController extends FrontBaseController
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),
             'isWithoutRegistration' => $isWithoutRegistration,
             'isCompanyCustomer' => $isCompanyCustomer,
+            'displayFormType' => 'order_flow',
+            'prefilledCustomerEmail' => $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null),
         ]);
     }
 
@@ -666,5 +690,15 @@ class OrderController extends FrontBaseController
         if ($mailTemplate->isSendMail()) {
             $this->orderMailFacade->sendEmail($order);
         }
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function getLoginForm()
+    {
+        return $this->createForm(LoginFormType::class, null, [
+            'action' => $this->generateUrl('front_login_check'),
+        ]);
     }
 }
