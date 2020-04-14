@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
+use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
@@ -36,7 +37,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
- * @method setAvailabilityAndStock(\App\Model\Product\ProductData $productData)
  */
 class Product extends BaseProduct
 {
@@ -68,6 +68,42 @@ class Product extends BaseProduct
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $vendorDeliveryDate;
+
+    /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var null
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $outOfStockAction;
+
+    /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var null
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $outOfStockAvailability;
+
+    /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var null
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $stockQuantity;
+
+    /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var bool
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $usingStock;
 
     /**
      * @param \App\Model\Product\ProductData $productData
@@ -168,7 +204,6 @@ class Product extends BaseProduct
     protected function createDomains(BaseProductData $productData): void
     {
         $domainIds = array_keys($productData->seoTitles);
-
         foreach ($domainIds as $domainId) {
             $productDomain = new ProductDomain($this, $domainId);
             $this->domains->add($productDomain);
@@ -177,17 +212,13 @@ class Product extends BaseProduct
         $this->setDomains($productData);
     }
 
-//    /**
-//     * @param \App\Model\Product\ProductData $productData
-//     */
-//    protected function setAvailabilityAndStock(BaseProductData $productData): void
-//    {
-//        $this->usingStock = $productData->usingStock;
-//        $this->availability = $productData->availability;
-//        $this->stockQuantity = null;
-//        $this->outOfStockAction = null;
-//        $this->outOfStockAvailability = null;
-//    }
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function setAvailabilityAndStock(ProductData $productData): void
+    {
+        $this->availability = $productData->availability;
+    }
 
     /**
      * @param int $domainId
@@ -517,9 +548,7 @@ class Product extends BaseProduct
 
     public function getCalculatedAvailability()
     {
-        //is calculated in ProductAvailabilityCalculation and there is just set from DEFAULT_AVAILABILITY_IN_STOCK
-        //this is used in feeds because there is dispatch time. - possible remove and dispatch time calculate different way
-        return parent::getCalculatedAvailability();
+        throw new DeprecatedAvailabilityPropertyException('calculatedAvailability', $this->calculatedAvailability);
     }
 
     /**

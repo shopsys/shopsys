@@ -63,32 +63,6 @@ final class AvailabilityFacadeTest extends TransactionFunctionalTestCase
         }
     }
 
-    public function testDeleteByIdAndReplaceProductOutOfStockAvailability(): void
-    {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $productData = $this->productDataFactory->createFromProduct($product);
-
-        $availabilityToDelete = $this->createNewAvailability();
-        $productData->usingStock = true;
-        $productData->stockQuantity = 1;
-        $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY;
-        $productData->outOfStockAvailability = $availabilityToDelete;
-
-        $this->productFacade->edit($product->getId(), $productData);
-
-        $availabilityToReplaceWith = $this->createNewAvailability();
-        $this->availabilityFacade->deleteById($availabilityToDelete->getId(), $availabilityToReplaceWith->getId());
-
-        $this->em->refresh($product);
-
-        try {
-            $this->assertSame($availabilityToReplaceWith, $product->getOutOfStockAvailability());
-        } catch (DeprecatedAvailabilityPropertyException $exception) {
-            $this->assertSame($availabilityToReplaceWith, $exception->getAvailability());
-        }
-    }
-
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */

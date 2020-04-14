@@ -96,6 +96,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation: '@App\Model\Product\Availability\ProductAvailabilityCalculation'
 
+    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: '@App\Model\Product\Availability\ProductAvailabilityRecalculator'
+
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
 
     App\Model\Product\ProductDataFactory: ~
@@ -120,6 +122,14 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade: '@App\Model\Product\ProductOnCurrentDomainElasticFacade'
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: '@App\Model\Product\ProductVisibilityRepository'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator: '@App\Model\Product\ProductHiddenRecalculator'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator: '@App\Model\Product\ProductSellingDeniedRecalculator'
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository: '@App\Model\Product\Availability\AvailabilityRepository'
+
+    Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataRepository: '@App\Model\ProductFeed\Heureka\FeedItem\HeurekaDeliveryDataRepository'
 
     Shopsys\FrameworkBundle\Model\Localization\Localization:
         arguments:
@@ -149,6 +159,8 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
 
     Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductFactory: '@App\Model\Product\ProductFactory'
 
     App\Model\Product\Search\FilterQueryFactory: ~
 

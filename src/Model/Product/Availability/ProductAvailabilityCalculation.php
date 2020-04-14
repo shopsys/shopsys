@@ -12,11 +12,13 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
  * @method \Shopsys\FrameworkBundle\Model\Product\Availability\Availability calculateMainVariantAvailability(\App\Model\Product\Product $mainVariant)
  * @method \App\Model\Product\Product[] getAtLeastSomewhereSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant)
  * @property \App\Model\Product\ProductRepository $productRepository
- * @method __construct(\Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade, \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator, \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade, \Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository)
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade, \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator, \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade, \Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository)
+ * @property  $productSellingDeniedRecalculator
  */
 class ProductAvailabilityCalculation extends BaseProductAvailabilityCalculation
 {
     /**
+     * @deprecated
      * @param \App\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */

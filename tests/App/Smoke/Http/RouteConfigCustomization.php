@@ -290,6 +290,9 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_availability_delete', function (RouteConfig $config) {
                 $config->skipRoute('Deleting Availability is no longer available.');
+            })
+            ->customizeByRouteName('admin_availability_deleteconfirm', function (RouteConfig $config) {
+                $config->skipRoute('Deleting Availability is no longer available.');
             });
     }
 
