@@ -1357,6 +1357,9 @@ There you can find links to upgrade notes for other versions too.
 - compliance with the principle of encapsulation in the project base ([#1640](https://github.com/shopsys/shopsys/pull/1640))
     - see #project-base-diff to update your project
 
+- remove unused import in `tests/App/Functional/Model/Product/Availability/ProductAvailabilityCalculationTest.php` ([#1779](https://github.com/shopsys/shopsys/pull/1779))
+    - see #project-base-diff to update your project
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
