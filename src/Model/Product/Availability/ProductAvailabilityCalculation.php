@@ -13,10 +13,14 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
  * @method \App\Model\Product\Product[] getAtLeastSomewhereSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant)
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade, \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator, \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade, \Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository)
- * @property  $productSellingDeniedRecalculator
  */
 class ProductAvailabilityCalculation extends BaseProductAvailabilityCalculation
 {
+    /**
+     * @var \App\Model\Product\ProductSellingDeniedRecalculator
+     */
+    protected $productSellingDeniedRecalculator;
+
     /**
      * @deprecated
      * @param \App\Model\Product\Product $product

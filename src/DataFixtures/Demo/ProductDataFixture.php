@@ -5787,9 +5787,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->productType[$domain->getId()] = $this->getReference($oddProduct ? ProductTypeDataFixture::TYPE_COMMON : ProductTypeDataFixture::TYPE_OVERSIZED);
         }
 
-        //reset default setting:
-        $productData->usingStock = false;
-
         /** @var \App\Model\Product\Product $product */
         $product = $this->productFacade->create($productData);
 

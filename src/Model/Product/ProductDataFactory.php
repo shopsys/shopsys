@@ -221,7 +221,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();
         $productData->flags = $product->getFlags();
-        $productData->usingStock = $product->isUsingStock();
 
         $productData->availability = $this->availabilityFacade->getById($this->setting->get('defaultAvailabilityInStockId'));
 
