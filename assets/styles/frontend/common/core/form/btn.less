@@ -7,6 +7,7 @@
 @btn-bg: @color-d;
 @btn-bg-hover: darken(@btn-bg, 5%);
 @btn-border-radius: 4px;
+@btn-light-border-color: #e7ebed;
 
 .btn {
     width: auto;
@@ -91,6 +92,25 @@
             background-color: @btn-outline-bg-hover;
         }
     }
+
+    &--cookies {
+        padding: 8px 22px;
+        min-height: 34px;
+        width: 100%;
+
+        border: 1px solid @btn-light-border-color;
+        font-size: 12px;
+        background-color: @btn-outline-bg;
+
+        @media @query-md {
+            width: auto;
+        }
+
+        &:hover {
+            background-color: @btn-outline-bg-hover;
+            border-color: @btn-outline-bg-hover;
+        }
+    }
 }
 
 //// Modifications - size
@@ -171,7 +191,7 @@
         padding-bottom: 0;
         margin-right: 10px;
 
-        border: 1px solid #e7ebed;
+        border: 1px solid @btn-light-border-color;
         background-color: @color-f;
         font-family: @font-base;
         font-size: 14px;
@@ -180,7 +200,7 @@
 
         &:hover {
             background-color: @color-f;
-            box-shadow: 0 0 0 1px #e7ebed inset;
+            box-shadow: 0 0 0 1px @btn-light-border-color inset;
         }
 
         .btn__icon {
