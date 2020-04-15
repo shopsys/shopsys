@@ -12,9 +12,27 @@
         display: block;
     }
 
+    &-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: -10px;
+        top: -40px;
+        height: 82px;
+        padding: 0 10px;
+
+        cursor: pointer;
+        transition: box-shadow @transition;
+    }
+
     &-box.active {
+        box-shadow: 0 10px 20px 0 rgba(@color-0, .15);
+
         .cart__detail {
-            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
         }
     }
 
@@ -107,13 +125,33 @@
     }
 
     &__detail {
-        display: none;
+        display: block;
+
+        transition: all @transition;
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.8);
+        transform-origin: top right;
+
+        box-shadow: 0 20px 20px 0 rgba(@color-0, .15);
+
         @media @query-lg {
             position: absolute;
-            min-width: 400px;
-            top: calc(100% - 1px);
-            right: 0;
+            min-width: 510px;
+            top: calc(100% + 15px);
+            right: -10px;
             z-index: 6000;
+
+            &::after {
+                position: absolute;
+                right: 0;
+                top: -1px;
+                width: 208px;
+                height: 1px;
+
+                background-color: lighten(@color-border, 10%);
+                content: '';
+            }
         }
     }
 }

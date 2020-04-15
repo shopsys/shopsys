@@ -127,6 +127,13 @@
         font-size: 16px;
     }
 
+    @btn-larger-padding-verfical: 18px;
+
+    &--larger {
+        padding-top: @btn-larger-padding-verfical;
+        padding-bottom: @btn-larger-padding-verfical;
+    }
+
     @btn-small-padding-vertical: 5px;
     @btn-small-padding-horizontal: 10px;
     @btn-small-height: @btn-height - 10;
@@ -184,6 +191,10 @@
             min-width: @btn-wide-min-width-md;
             width: auto;
         }
+    }
+
+    &--full-width {
+        width: 100%;
     }
 
     &--header-back {

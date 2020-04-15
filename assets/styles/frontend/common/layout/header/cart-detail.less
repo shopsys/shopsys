@@ -5,7 +5,7 @@
 @cart-detail-item-count: 5;
 @cart-detail-item-bottom-gap: 5px;
 @cart-detail-item-height: 71px;
-@cart-detail-item-image-size: 71px;
+@cart-detail-item-image-size: 45px;
 @cart-detail-item-pieces-width: 50px;
 @cart-detail-item-remove-padding-width: 10px;
 @cart-detail-item-remove-width: @cart-detail-remove-size + 2*@cart-detail-item-remove-padding-width;
@@ -28,7 +28,6 @@
         width: 100%;
 
         background-color: @color-f;
-        border: 1px solid @color-border;
     }
 
     &__item {
@@ -43,7 +42,7 @@
         &__image {
             position: relative;
             width: @cart-detail-item-image-size;
-            margin-right: 5px;
+            margin-right: 15px;
 
             img {
                 .center-image();
@@ -52,28 +51,36 @@
 
         &__content {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-
-            @media @query-md {
-                width: @cart-detail-item-content-width;
-            }
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
 
             &__title {
-                display: inline-block;
-                padding-bottom: 5px;
+                flex-grow: 1;
+                padding-right: 35px;
 
-                font-size: @font-size;
-                color: @color-base;
+                font-family: @font-quartenary;
+                font-size: 13px;
+                line-height: 1.4;
+                color: @color-primary;
                 text-decoration: none;
             }
 
             &__price {
-                display: inline-block;
-                width: 100%;
-                padding-bottom: 5px;
+                min-width: 140px;
+                padding-right: 15px;
 
-                font-weight: bold;
+                color: @color-primary;
+                font-family: @font-quartenary;
+                text-align: right;
+                line-height: 1.3;
+
+                &--high {
+                    font-family: @font-base;
+                    font-size: 13px;
+                    line-height: 1;
+                    text-decoration: line-through;
+                }
             }
         }
 
@@ -141,9 +148,9 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: @cart-detail-padding;
+        padding: 0 @cart-detail-padding @cart-detail-padding;
 
-        background-color: @color-border;
+        background-color: @color-f;
 
         @media @query-md {
             flex-direction: row;
