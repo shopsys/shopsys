@@ -319,14 +319,16 @@ class CartController extends FrontBaseController
 
                 $addProductResult = $this->cartFacade->addProductToCart($formData['productId'], (int)$formData['quantity']);
 
-                $this->sendAddProductResultFlashMessage($addProductResult);
-
+                /** @var \App\Model\Product\Product $product */
+                $cartItem = $addProductResult->getCartItem();
                 $accessories = $this->listedProductViewFacade->getAccessories(
-                    $addProductResult->getCartItem()->getProduct()->getId(),
+                    $cartItem->getProduct()->getId(),
                     self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
                 );
 
                 return $this->render('Front/Inline/Cart/afterAddWindow.html.twig', [
+                    'cartItem' => $cartItem,
+                    'domain' => $this->domain,
                     'accessories' => $accessories,
                     'ACCESSORIES_ON_BUY' => ModuleList::ACCESSORIES_ON_BUY,
                 ]);

@@ -1,4 +1,35 @@
-{{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
+{% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
+
+<div>
+    {% set product = cartItem.product %}
+    <div>{{ 'Wonderful choice! Your product has been added to cart'|trans }}</div>
+    <div>
+        <div>
+            {% if imageExists(product) %}
+                {{ image(product, {size: 'galleryThumbnail', lazy: false}) }}
+            {% else %}
+                {{ noimage({size: 'galleryThumbnail', alt: product.fullname}) }}
+            {% endif %}
+        </div>
+        <div>
+            {{ cartItem.quantity }} {{ 'x -' }} {{ product.fullname }}
+            <span>{{ product.catnum }}</span>
+        </div>
+        <div>
+            <div>
+                {{ getProductSellingPrice(product).priceWithVat|price }}
+                {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
+            </div>
+            <div>
+                {{ getProductNonSellingPrice(product).priceWithVat|price }}
+                {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
+            </div>
+        </div>
+    </div>
+    <a href="#">{{ 'Back to shop'|trans }}</a>
+    <span class="js-add-product-url-cart" data-url="{{ url('front_cart') }}"></span>
+</div>
+
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
 {% if isModuleEnabled(ACCESSORIES_ON_BUY) %}
@@ -14,4 +45,3 @@
         <span class="js-add-product-wide-window" data-wide="true"></span>
     {% endif %}
 {% endif %}
-<span class="js-add-product-url-cart" data-url="{{ url('front_cart') }}"></span>

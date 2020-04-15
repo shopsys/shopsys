@@ -442,6 +442,12 @@ msgstr "Cena s DPH"
 msgid "Print"
 msgstr "Vytisknout"
 
+msgid "Wonderful choice! Your product has been added to cart"
+msgstr "Skvělá volba! Vaše zboží jsme přidali do košíku"
+
+msgid "Back to shop"
+msgstr "Zpět do obchodu"
+
 msgid "Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart"
 msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }})"
 
