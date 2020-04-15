@@ -544,6 +544,9 @@ msgstr ""
 msgid "Subscription to email newsletter"
 msgstr ""
 
+msgid "Subscription was failed"
+msgstr ""
+
 msgid "Tax number"
 msgstr ""
 

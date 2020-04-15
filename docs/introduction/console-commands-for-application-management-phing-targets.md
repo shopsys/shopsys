@@ -257,6 +257,12 @@ Lists all available background jobs. If there is more than one cron instance reg
 
 For more information, see [Working with Multiple Cron Instances](../cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](../introduction/cron.md).
 
+#### npm-dev
+This command build assets once in development mode (with source map, without compilation)
+
+#### npm-build
+This command build assets once in production mode (without source map, with compilation)
+
 #### npm-watch
 Webpack keep ‘watch’-ing for any changes we make in our code and once we save the changes, it will rerun by itself to rebuild the package.
 

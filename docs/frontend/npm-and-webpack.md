@@ -34,16 +34,24 @@ Once a dependency is installed you can use it in a JS file in your application.
 For example, if you install `counterup2` you can import and use it:
 
 ```js
-// assets/js/frontend/components/counterUpInit.js
+// assets/js/frontend/components/CounterUp.js
 import counterUp from 'counterup2';
+// ...
 
-export default function counterUpInit () {
-    document.querySelectorAll('.js-counter').forEach(counterItem => {
-        counterUp(counterItem, {
-            // ...
+export default class CounterUp {
+
+    static init () {
+        document.querySelectorAll('.js-counter').forEach(counterItem => {
+            counterUp(counterItem, {
+                duration: 1000,
+                delay: 10
+            });
         });
-    });
+    }
+
 }
+
+// ...
 ```
 
 When compiling your application the process is clever enough to understand when a dependency has already been imported from a different file - meaning that everything is ultimately only ever imported once.
@@ -55,7 +63,7 @@ The addition works just like a component installed over npm except that relative
 
 ```js
     // assets/js/frontend/frontend.js
-    import './components/counterUpInit';
+    import './components/CounterUp';
     // ...
 ```
 
@@ -151,8 +159,8 @@ You certainly know key word `extend`.
 You can use it in javascript's world now.
 
 ```js
-import CategoryTreeSorting from 'framework/admin/components/categoryTree.sorting';
-import Register from 'framework/common/utils/register';
+import CategoryTreeSorting from 'framework/admin/components/CategoryTreeSorting';
+import Register from 'framework/common/utils/Register';
 
 class MyCategoryTreeSorting extends CategoryTreeSorting {
     constructor ($rootTree, $saveButton) {

@@ -11,10 +11,6 @@ function process (dirWithJsFiles, dirWithTranslations, outputDirForExportedTrans
         const translations = [];
 
         filePaths.map(filePath => {
-            if (filePath.match(/(\w*)\.js$/) === null) {
-                return;
-            }
-
             parseFile(filePath).forEach(translation => {
                 if (!translations.includes(translation)) {
                     translations.push(translation.id);
