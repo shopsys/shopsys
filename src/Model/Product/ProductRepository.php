@@ -9,13 +9,14 @@ use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
 /**
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Filter\ProductFilterRepository $productFilterRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
  * @method \App\Model\Product\Product|null findById(int $id)
  * @method \Doctrine\ORM\QueryBuilder getListableInCategoryQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @method \Doctrine\ORM\QueryBuilder getListableForBrandQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Product\Brand\Brand $brand)
@@ -41,12 +42,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getOneByUuid(string $uuid)
  * @method markProductsForExport(\App\Model\Product\Product[] $products)
- * @method \App\Model\Product\Product[] getProductsWithAvailability(\Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability)
  * @method \App\Model\Product\Product[] getProductsWithBrand(\App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Product[] getProductsWithFlag(\App\Model\Product\Flag\Flag $flag)
  * @method \App\Model\Product\Product[] getProductsWithUnit(\Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit)
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  * @method array getProductsWithParameter(\App\Model\Product\Parameter\Parameter $parameter)
+ * @property \App\Model\Product\Filter\ProductFilterRepository $productFilterRepository
  */
 class ProductRepository extends BaseProductRepository
 {
@@ -140,5 +141,18 @@ class ProductRepository extends BaseProductRepository
     public function filterSellingDenied(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->andWhere('p.sellingDenied = FALSE');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
+     * @return \App\Model\Product\Product[]
+     */
+    public function getProductsWithAvailability(Availability $availability): array
+    {
+        return $this->getProductRepository()->createQueryBuilder('p')
+            ->where('p.availability = :availability')
+            ->setParameter('availability', $availability)
+            ->getQuery()
+            ->getResult();
     }
 }

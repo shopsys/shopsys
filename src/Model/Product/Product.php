@@ -106,6 +106,15 @@ class Product extends BaseProduct
     protected $usingStock;
 
     /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var null
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $calculatedAvailability;
+
+    /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */

@@ -322,6 +322,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository: '@App\Model\Product\Filter\ParameterFilterChoiceRepository'
 
+    Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository: '@App\Model\Product\Filter\ProductFilterRepository'
+
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation: '@App\Model\Product\Pricing\ProductPriceCalculation'
 
     Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminRepository: '@App\Model\Product\Listing\ProductListAdminRepository'
@@ -337,6 +339,10 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation: '@App\Model\Product\Availability\ProductAvailabilityCalculation'
 
     Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: '@App\Model\Product\Availability\ProductAvailabilityRecalculator'
+
+    App\Model\AdvancedSearch\Filter\ProductAvailabilityFilter: ~
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductAvailabilityFilter: '@App\Model\AdvancedSearch\Filter\ProductAvailabilityFilter'
 
     App\Model\Product\Search\ProductElasticsearchConverter: ~
 

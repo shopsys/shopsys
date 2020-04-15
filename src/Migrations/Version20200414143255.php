@@ -18,6 +18,7 @@ class Version20200414143255 extends AbstractMigration
         $this->sql('ALTER TABLE products DROP stock_quantity');
         $this->sql('ALTER TABLE products DROP out_of_stock_action');
         $this->sql('ALTER TABLE products DROP using_stock');
+        $this->sql('ALTER TABLE products DROP calculated_availability_id');
     }
 
     /**

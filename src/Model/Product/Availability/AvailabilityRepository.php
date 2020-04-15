@@ -21,11 +21,5 @@ class AvailabilityRepository extends BaseAvailabilityRepository
             ->set('p.availability', ':newAvailability')->setParameter('newAvailability', $newAvailability)
             ->where('p.availability = :oldAvailability')->setParameter('oldAvailability', $oldAvailability)
             ->getQuery()->execute();
-
-        $this->em->createQueryBuilder()
-            ->update(Product::class, 'p')
-            ->set('p.calculatedAvailability', ':newAvailability')->setParameter('newAvailability', $newAvailability)
-            ->where('p.calculatedAvailability = :oldAvailability')->setParameter('oldAvailability', $oldAvailability)
-            ->getQuery()->execute();
     }
 }
