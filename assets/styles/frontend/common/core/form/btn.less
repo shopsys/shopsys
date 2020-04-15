@@ -268,7 +268,7 @@
 .btn--tag {
     min-height: 0;
     padding: 8px 12px;
-    margin-right: 6px;
+    margin: 0 6px 6px 0;
 
     background-color: @color-f;
     border-radius: 2em;
@@ -281,5 +281,29 @@
 
     &:hover {
         background-color: #dae1e4;
+    }
+
+    &--category {
+        margin-bottom: 0.5rem;
+
+        @media @query-lg {
+            padding: 16px 30px;
+            margin: 0 1rem 1rem 0;
+
+            font-size: 15px;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &.selected {
+            border-color: @color-add-secondary;
+
+            &:hover {
+                background-color: @color-add-secondary;
+                color: @color-f;
+            }
+        }
     }
 }
