@@ -24,7 +24,7 @@ export default class ProductsPickerWindow {
             .addClass('cursor-auto btn--success').removeClass('btn--plus btn--light')
             .find('.js-products-picker-label').text(Translator.trans('Added')).end()
             .find('.js-products-picker-icon').addClass('svg svg-checked').empty().end()
-            .on('click.removeProduct', function () {
+            .on('click.removeProduct', () => {
                 this.onClickOnAddedButton($addButton, originalLabelText, originalIconText);
             })
             .click(function () {
@@ -70,7 +70,7 @@ export default class ProductsPickerWindow {
             .addClass('btn--plus btn--light').removeClass('cursor-auto btn--success')
             .find('.js-products-picker-label').text(originalLabelText).end()
             .find('.js-products-picker-icon').removeClass('svg svg-checked').text(originalIconText).end()
-            .on('click.addProduct', () => this.onClickAddButton())
+            .on('click.addProduct', (event) => this.onClickAddButton(event))
             .click(() => false);
     }
 
