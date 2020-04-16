@@ -60,6 +60,7 @@
         "jms/serializer-bundle": "^2.4",
         "jms/translation-bundle": "1.4.4",
         "joschi127/doctrine-entity-override-bundle": "^0.7.2",
+        "kraken-io/kraken-php": "^1.6",
         "league/flysystem": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "phing/phing": "^2.16.1",
