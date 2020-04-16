@@ -46,7 +46,7 @@ Encore
             );
             generateWebFont(
                 'admin',
-                sources.getFrameworkNodeModulesDir() + '/public/svg/',
+                sources.getFrameworkNodeModulesDir() + '/public/admin/svg/',
                 './web/public/admin/svg/'
             );
 
@@ -69,7 +69,7 @@ Encore
     }))
     .addPlugin(new CopyPlugin([
         { from: 'web/bundles/fpjsformvalidator', to: '../../assets/js/bundles/fpjsformvalidator', force: true },
-        { from: 'assets/public', to: '../../web/public', force: true }
+        { from: 'assets/public', to: '../../web/public', ignore: ['assets/public/admin/svg/**/*'], force: true }
     ]))
 ;
 
