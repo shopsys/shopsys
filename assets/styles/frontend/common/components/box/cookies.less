@@ -1,41 +1,111 @@
 @box-cookies-height: @web-footer-with-cookies-margin-bottom;
-@box-cookies-padding: @web-padding;
-@box-cookies-width: @web-width;
+@box-cookies-height-md: @web-footer-with-cookies-margin-bottom-md;
+@box-cookies-padding: 6px 12px;
+@box-cookies-width: 1080px;
 
-@box-cookies-background: #BCE0EE;
+@box-cookies-background: @color-f;
 
 .box-cookies {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
     bottom: 0;
-    left: 0;
+    left: 50%;
     right: 0;
     z-index: 1000;
     padding: 5px 0;
     height: @box-cookies-height;
+    width: @box-cookies-width;
+    max-width: calc(100% - @web-padding-small * 2);
     will-change: transform;
     text-align: center;
+    transform: translateX(-50%);
 
+    box-shadow: 0 0 15px 0 rgba(@color-0, .1);
+    border-top-left-radius: @radius;
+    border-top-right-radius: @radius;
     background: @box-cookies-background;
     transition: @transition transform;
+    transform-origin: center top;
+
+    @media @query-md {
+        height: @box-cookies-height-md;
+        max-width: 100%;
+    }
 
     &--closing {
-        transform: scaleY(0);
+        transform: translateX(-50%) translateY(@box-cookies-height);
     }
 
     &__in {
-        padding: 0 @box-cookies-padding;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        padding: @box-cookies-padding;
         width: 100%;
 
-        @media @query-xl {
-            margin: 0 auto;
-            width: @box-cookies-width;
+        @media @query-md {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+    &__text {
+        display: flex;
+        align-items: center;
+
+        font-size: 12px;
+        color: rgba(21, 22, 30 , 0.5);
+        -webkit-font-smoothing: antialiased;
+
+        &__icon {
+            position: absolute;
+            bottom: 0;
+            left: 12px;
+            display: block;
+
+            @media @query-md {
+                position: relative;
+                left: auto;
+                bottom: auto;
+                top: 1px;
+                margin-right: 10px;
+            }
+        }
+
+        &__in {
+            position: relative;
+            top: -4px;
+            padding-right: 15px;
+            text-align: left;
+
+            @media @query-md {
+                top: 2px;
+            }
+        }
+    }
+
+    &__link {
+        padding-right: 0;
+
+        text-decoration: underline;
+        color: @color-add-secondary;
+
+        white-space: nowrap;
+
+        &:hover {
+            text-decoration: none;
         }
     }
 
     &__btn {
-        padding-left: 10px;
+        position: relative;
+        top: 8px;
+        padding-left: 15px;
+        margin-left: 41px;
+
+        @media @query-md {
+            top: 1px;
+            margin-left: 0;
+        }
     }
 }

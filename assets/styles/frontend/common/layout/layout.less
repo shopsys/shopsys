@@ -1,4 +1,5 @@
-@web-footer-with-cookies-margin-bottom: 36px;
+@web-footer-with-cookies-margin-bottom: 110px;
+@web-footer-with-cookies-margin-bottom-md: 52px;
 @web-footer-background: @color-light;
 @web-footer-border: 1px solid darken(@web-footer-background, 5%);
 
@@ -129,6 +130,10 @@ img {
 
         &--with-cookies {
             padding-bottom: @web-footer-with-cookies-margin-bottom;
+
+            @media @query-md {
+                padding-bottom: @web-footer-with-cookies-margin-bottom-md;
+            }
         }
     }
 }
