@@ -64,15 +64,15 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
         }
 
         $tokenSecretChain = $token->getClaim('secretChain');
-        $isValidSecretChainForUser = $this->customerUserRefreshTokenChainFacade->isValidSecretChainForUser($customerUser, $tokenSecretChain);
+        $customerUserValidRefreshTokenChain = $this->customerUserRefreshTokenChainFacade->getCustomersTokenChainByCustomerUserAndSecretChain($customerUser, $tokenSecretChain);
 
-        if ($isValidSecretChainForUser === false) {
+        if ($customerUserValidRefreshTokenChain === null) {
             throw new UserError('Token is not valid.');
         }
 
         return [
-            'accessToken' => $this->tokenFacade->generateAccessTokenByCustomerUser($customerUser),
-            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser),
+            'accessToken' => $this->tokenFacade->generateAccessTokenByCustomerUserAndDeviceId($customerUser, $customerUserValidRefreshTokenChain->getDeviceId()),
+            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $customerUserValidRefreshTokenChain->getDeviceId()),
         ];
     }
 

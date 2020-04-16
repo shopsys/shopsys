@@ -29,6 +29,8 @@ class TokenFacade
 
     protected const REFRESH_TOKEN_EXPIRATION = 3600 * 24 * 14;
 
+    protected const CLAIM_DEVICE_ID = 'deviceId';
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -61,12 +63,14 @@ class TokenFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string $deviceId
      * @return string
      */
-    public function generateAccessTokenByCustomerUser(CustomerUser $customerUser): string
+    public function generateAccessTokenByCustomerUserAndDeviceId(CustomerUser $customerUser, string $deviceId): string
     {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::ACCESS_TOKEN_EXPIRATION);
 
+        $tokenBuilder->withClaim(static::CLAIM_DEVICE_ID, $deviceId);
         foreach (TokenCustomerUserTransformer::transform($customerUser) as $key => $value) {
             $tokenBuilder->withClaim($key, $value);
         }
@@ -79,7 +83,7 @@ class TokenFacade
      * @param string $secretChain
      * @return \Lcobucci\JWT\Token
      */
-    public function generateRefreshTokenByCustomerUser(CustomerUser $customerUser, string $secretChain): Token
+    public function generateRefreshTokenByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): Token
     {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::REFRESH_TOKEN_EXPIRATION);
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_UUID, $customerUser->getUuid());
@@ -168,15 +172,17 @@ class TokenFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string $deviceId
      * @return string
      */
-    public function createRefreshTokenAsString(CustomerUser $customerUser): string
+    public function createRefreshTokenAsString(CustomerUser $customerUser, string $deviceId): string
     {
         $randomChain = sha1(random_bytes(static::SECRET_CHAIN_LENGTH));
-        $refreshToken = $this->generateRefreshTokenByCustomerUser($customerUser, $randomChain);
+        $refreshToken = $this->generateRefreshTokenByCustomerUserAndSecretChain($customerUser, $randomChain);
         $this->customerUserFacade->addRefreshTokenChain(
             $customerUser,
             $randomChain,
+            $deviceId,
             \DateTime::createFromFormat('U', '' . $refreshToken->getClaim('exp'))
         );
 

@@ -22,6 +22,11 @@ class CustomerUserRefreshTokenChainData
     public $tokenChain;
 
     /**
+     * @var string|null
+     */
+    public $deviceId;
+
+    /**
      * @var \DateTime|null
      */
     public $expiredAt;

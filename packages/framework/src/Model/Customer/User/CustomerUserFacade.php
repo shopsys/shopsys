@@ -341,11 +341,12 @@ class CustomerUserFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $refreshTokenChain
+     * @param string $deviceId
      * @param \DateTime $tokenExpiration
      */
-    public function addRefreshTokenChain(CustomerUser $customerUser, string $refreshTokenChain, \DateTime $tokenExpiration): void
+    public function addRefreshTokenChain(CustomerUser $customerUser, string $refreshTokenChain, string $deviceId, \DateTime $tokenExpiration): void
     {
-        $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain($customerUser, $refreshTokenChain, $tokenExpiration);
+        $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain($customerUser, $refreshTokenChain, $deviceId, $tokenExpiration);
         $customerUser->addRefreshTokenChain($refreshTokenChain);
         $this->em->flush();
     }
