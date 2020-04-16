@@ -27,3 +27,9 @@ msgstr "Ano"
 
 msgid "No"
 msgstr "Nie"
+
+msgid "Skvělá volba! Vaše zboží jsme přidali do košíku"
+msgstr ""
+
+msgid "Zpět do obchodu"
+msgstr ""
