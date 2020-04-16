@@ -8,6 +8,7 @@ use App\Component\Locale\LocaleHelper;
 use App\Model\Category\CategoryFacade;
 use App\Model\HorizontalMenu\HorizontalMenuItem;
 use App\Model\HorizontalMenu\HorizontalMenuItemData;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;
@@ -84,37 +85,44 @@ class HorizontalMenuItemFormType extends AbstractType
                 ],
             ])
             ->add(
-                $builder
-                    ->create('categoriesInFirstColumn', SortableValuesType::class, [
-                        'label' => t('Kategorie prvního sloupce'),
-                        'property_path' => 'categoriesByColumnNumber[1]',
-                        'labels_by_value' => $this->categoryPaths,
-                        'required' => false,
-                    ])
-                    ->addViewTransformer($this->removeDuplicatesTransformer)
-                    ->addModelTransformer($this->categoriesIdsToCategoriesTransformer)
+                'isFurniture',
+                YesNoType::class,
+                [
+                    'label' => t('Nábytek'),
+                    'required' => false,
+                ]
             )
             ->add(
-                $builder
-                    ->create('categoriesInSecondColumn', SortableValuesType::class, [
-                        'label' => t('Kategorie druhého sloupce'),
-                        'property_path' => 'categoriesByColumnNumber[2]',
-                        'labels_by_value' => $this->categoryPaths,
-                        'required' => false,
-                    ])
-                    ->addViewTransformer($this->removeDuplicatesTransformer)
-                    ->addModelTransformer($this->categoriesIdsToCategoriesTransformer)
+                $this->createCategoryColumnBuilder(
+                    'categoriesInFirstColumn',
+                    'Kategorie prvního sloupce',
+                    1,
+                    $builder
+                )
             )
             ->add(
-                $builder
-                    ->create('categoriesInThirdColumn', SortableValuesType::class, [
-                        'label' => t('Kategorie třetího sloupce'),
-                        'property_path' => 'categoriesByColumnNumber[3]',
-                        'labels_by_value' => $this->categoryPaths,
-                        'required' => false,
-                    ])
-                    ->addViewTransformer($this->removeDuplicatesTransformer)
-                    ->addModelTransformer($this->categoriesIdsToCategoriesTransformer)
+                $this->createCategoryColumnBuilder(
+                    'categoriesInSecondColumn',
+                    'Kategorie druhého sloupce',
+                    2,
+                    $builder
+                )
+            )
+            ->add(
+                $this->createCategoryColumnBuilder(
+                    'categoriesInThirdColumn',
+                    'Kategorie třetího sloupce',
+                    3,
+                    $builder
+                )
+            )
+            ->add(
+                $this->createCategoryColumnBuilder(
+                    'categoriesInFourthColumn',
+                    'Kategorie čtvrtého sloupce',
+                    4,
+                    $builder
+                )
             )
             ->add('save', SubmitType::class);
     }
@@ -131,5 +139,29 @@ class HorizontalMenuItemFormType extends AbstractType
             'data_class' => HorizontalMenuItemData::class,
             'attr' => ['novalidate' => 'novalidate'],
         ]);
+    }
+
+    /**
+     * @param string $fieldName
+     * @param string $label
+     * @param int $index
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createCategoryColumnBuilder(
+        string $fieldName,
+        string $label,
+        int $index,
+        FormBuilderInterface $builder
+    ): FormBuilderInterface {
+        return $builder
+            ->create($fieldName, SortableValuesType::class, [
+                'label' => t($label),
+                'property_path' => sprintf('categoriesByColumnNumber[%d]', $index),
+                'labels_by_value' => $this->categoryPaths,
+                'required' => false,
+            ])
+            ->addViewTransformer($this->removeDuplicatesTransformer)
+            ->addModelTransformer($this->categoriesIdsToCategoriesTransformer);
     }
 }
