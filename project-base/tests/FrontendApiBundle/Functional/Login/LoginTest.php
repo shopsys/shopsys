@@ -60,7 +60,7 @@ class LoginTest extends GraphQlTestCase
     /**
      * @return string
      */
-    private function getLoginQuery(): string
+    public static function getLoginQuery(): string
     {
         return '
             mutation {

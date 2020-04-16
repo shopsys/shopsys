@@ -54,7 +54,6 @@ class FrontendApiUser implements UserInterface
         $this->email = $email;
         $this->roles = $roles;
         $this->deviceId = $deviceId;
-        $this->deviceId = $deviceId;
     }
 
     /**

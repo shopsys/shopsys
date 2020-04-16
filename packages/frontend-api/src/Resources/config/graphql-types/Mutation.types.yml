@@ -18,6 +18,10 @@ MutationDecorator:
                     input:
                         type: LoginInput!
                 resolve: "@=mutation('user_login', [args])"
+            Logout:
+                type: Boolean!
+                description: "Logout user"
+                resolve: "@=mutation('user_logout')"
             RefreshTokens:
                 type: Token!
                 description: "Refreshes access and refresh tokens"

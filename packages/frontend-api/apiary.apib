@@ -9,48 +9,54 @@ HOST: https://polls.apiblueprint.org/
 
 Returns list of product that can be paginated using `first`, `last`, `before` and `after` keywords.
 You can read more about Connection specification in [connections article](https://relay.dev/graphql/connections.htm).
+If you use the authorization header, api will return prices according to the user's price group.
+Authorization header is not required.
 
 - Request (application/json)
 
-    {
-        query: products (first: 2) {
-            edges {
-                node {
-                    uuid
-                    name
-                    shortDescription
-                    link
-                    unit {
+    - Headers
+        Authorization: Bearer --ACCESS-TOKEN--
+
+    - Body
+        {
+            query: products (first: 2) {
+                edges {
+                    node {
+                        uuid
                         name
-                    }
-                    availability {
-                        name
-                    }
-                    stockQuantity
-                    categories {
-                        name
-                    }
-                    flags {
-                        name
-                        rgbColor
-                    }
-                    price {
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                    images {
-                        type
-                        position
-                        size
-                        url
-                        width
-                        height
+                        shortDescription
+                        link
+                        unit {
+                            name
+                        }
+                        availability {
+                            name
+                        }
+                        stockQuantity
+                        categories {
+                            name
+                        }
+                        flags {
+                            name
+                            rgbColor
+                        }
+                        price {
+                            priceWithVat
+                            priceWithoutVat
+                            vatAmount
+                        }
+                        images {
+                            type
+                            position
+                            size
+                            url
+                            width
+                            height
+                        }
                     }
                 }
             }
         }
-    }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -219,45 +225,51 @@ You can read more about Connection specification in [connections article](https:
 
 ### POST [POST]
 
-Returns product filtered using UUID
+Returns product filtered using UUID.
+If you use the authorization header, api will return prices according to the user's price group.
+Authorization header is not required.
 
 - Request (application/json)
 
-    {
-        query: product (uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa") {
-            uuid,
-            name
-            shortDescription
-            link
-            unit {
+    - Headers
+        Authorization: Bearer ABCDEF
+
+    - Body
+        {
+            query: product (uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa") {
+                uuid,
                 name
-            }
-            availability {
-                name
-            }
-            stockQuantity
-            categories {
-                name
-            }
-            flags {
-                name
-                rgbColor
-            }
-            price {
-                priceWithVat
-                priceWithoutVat
-                vatAmount
-            }
-            images {
-                type
-                position
-                size
-                url
-                width
-                height
+                shortDescription
+                link
+                unit {
+                    name
+                }
+                availability {
+                    name
+                }
+                stockQuantity
+                categories {
+                    name
+                }
+                flags {
+                    name
+                    rgbColor
+                }
+                price {
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
+                }
+                images {
+                    type
+                    position
+                    size
+                    url
+                    width
+                    height
+                }
             }
         }
-    }
 
 - Response 200 (application/json; charset=utf-8)
     {
@@ -1295,6 +1307,31 @@ Login user and return access and refresh tokens
         }
     }
 
+## Logout [/graphql]
+
+### POST [POST]
+
+Logout user.
+Authorization header is required.
+
+- Request (application/json)
+
+    - Headers
+        Authorization: Bearer ABCDEF
+
+    - Body
+        mutation {
+            Logout
+        }
+
+- Response 200 (application/json; charset=utf-8)
+
+    {
+        "data": {
+            "Logout": true
+        }
+    }
+
 ## Refresh tokens [/graphql]
 
 ### POST [POST]
@@ -1327,113 +1364,119 @@ Refreshes access and refresh tokens
 
 ### POST [POST]
 
-Creates complete order with products and addresses
+Creates complete order with products and addresses.
+If you use the authorization header, api will create order for logged user and check prices according to the user's price group.
+Authorization header is not required.
 
 - Request (application/json)
 
-    mutation {
-        CreateOrder(
-            input: {
-                firstName: "firstName"
-                lastName: "lastName"
-                email: "user@example.com"
-                telephone: "+53 123456789"
-                onCompanyBehalf: true
-                companyName: "Airlocks s.r.o."
-                companyNumber: "1234"
-                companyTaxNumber: "EU4321"
-                street: "123 Fake Street"
-                city: "Springfield"
-                postcode: "12345"
-                country: "CZ"
-                note:"Thank You"
-                payment: {
-                    uuid: "840f9191-c6f2-4ab0-9788-9c038f211ca6"
-                    price: {
-                        priceWithVat: "2"
-                        priceWithoutVat: "2"
-                        vatAmount: "0"
-                    }
-                }
-                transport: {
-                    uuid: "edbafa26-9306-46ed-b1e8-d1570f072832"
-                    price: {
-                        priceWithVat: "4.84"
-                        priceWithoutVat: "4"
-                        vatAmount: "0.84"
-                    }
-                }
-                differentDeliveryAddress: true
-                deliveryFirstName: "deliveryFirstName"
-                deliveryLastName: "deliveryLastName"
-                deliveryStreet: "deliveryStreet"
-                deliveryCity: "deliveryCity"
-                deliveryCountry: "SK"
-                deliveryPostcode: "13453"
-                products: [
-                    {
-                        uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa"
-                        unitPrice: {
-                            priceWithVat: "139.96"
-                            priceWithoutVat: "115.67"
-                            vatAmount: "24.29"
+    - Headers
+        Authorization: Bearer ABCDEF
+
+    - Body
+        mutation {
+            CreateOrder(
+                input: {
+                    firstName: "firstName"
+                    lastName: "lastName"
+                    email: "user@example.com"
+                    telephone: "+53 123456789"
+                    onCompanyBehalf: true
+                    companyName: "Airlocks s.r.o."
+                    companyNumber: "1234"
+                    companyTaxNumber: "EU4321"
+                    street: "123 Fake Street"
+                    city: "Springfield"
+                    postcode: "12345"
+                    country: "CZ"
+                    note:"Thank You"
+                    payment: {
+                        uuid: "840f9191-c6f2-4ab0-9788-9c038f211ca6"
+                        price: {
+                            priceWithVat: "2"
+                            priceWithoutVat: "2"
+                            vatAmount: "0"
                         }
-                        quantity: 10
-                    },
-                ]
-            }
-        ) {
-            transport {
-                name
-            }
-            payment {
-                name
-            }
-            status
-            totalPrice {
-                priceWithVat
-                priceWithoutVat
-                vatAmount
-            }
-            items {
-                name
-                unitPrice {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
+                    }
+                    transport: {
+                        uuid: "edbafa26-9306-46ed-b1e8-d1570f072832"
+                        price: {
+                            priceWithVat: "4.84"
+                            priceWithoutVat: "4"
+                            vatAmount: "0.84"
+                        }
+                    }
+                    differentDeliveryAddress: true
+                    deliveryFirstName: "deliveryFirstName"
+                    deliveryLastName: "deliveryLastName"
+                    deliveryStreet: "deliveryStreet"
+                    deliveryCity: "deliveryCity"
+                    deliveryCountry: "SK"
+                    deliveryPostcode: "13453"
+                    products: [
+                        {
+                            uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa"
+                            unitPrice: {
+                                priceWithVat: "139.96"
+                                priceWithoutVat: "115.67"
+                                vatAmount: "24.29"
+                            }
+                            quantity: 10
+                        },
+                    ]
                 }
+            ) {
+                transport {
+                    name
+                }
+                payment {
+                    name
+                }
+                status
                 totalPrice {
                     priceWithVat
                     priceWithoutVat
                     vatAmount
                 }
-                quantity
-                vatRate
-                unit
+                items {
+                    name
+                    unitPrice {
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                    totalPrice {
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                    quantity
+                    vatRate
+                    unit
+                }
+                firstName
+                lastName
+                email
+                telephone
+                companyName
+                companyNumber
+                companyTaxNumber
+                street
+                city
+                postcode
+                country
+                differentDeliveryAddress
+                deliveryFirstName
+                deliveryLastName
+                deliveryCompanyName
+                deliveryTelephone
+                deliveryStreet
+                deliveryCity
+                deliveryPostcode
+                deliveryCountry
+                note
             }
-            firstName
-            lastName
-            email
-            telephone
-            companyName
-            companyNumber
-            companyTaxNumber
-            street
-            city
-            postcode
-            country
-            differentDeliveryAddress
-            deliveryFirstName
-            deliveryLastName
-            deliveryCompanyName
-            deliveryTelephone
-            deliveryStreet
-            deliveryCity
-            deliveryPostcode
-            deliveryCountry
-            note
         }
-    }
 
 - Response 200 (application/json; charset=utf-8)
 

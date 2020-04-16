@@ -34,8 +34,21 @@ class CustomerUserRefreshTokenChainRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain[]
      */
-    public function getCustomersTokenChains(CustomerUser $customerUser): array
+    public function findCustomersTokenChains(CustomerUser $customerUser): array
     {
         return $this->getCustomerUserRefreshTokenChainRepository()->findBy(['customerUser' => $customerUser]);
+    }
+
+    /**
+     * @param string $deviceId
+     */
+    public function removeCustomerUserRefreshTokenChainsByDeviceId(string $deviceId): void
+    {
+        $this->em->createQueryBuilder()
+            ->delete(CustomerUserRefreshTokenChain::class, 'curtc')
+            ->where('curtc.deviceId = :deviceId')
+            ->setParameter('deviceId', $deviceId)
+            ->getQuery()
+            ->execute();
     }
 }

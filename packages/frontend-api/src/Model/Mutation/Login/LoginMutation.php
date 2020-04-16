@@ -67,7 +67,7 @@ class LoginMutation implements MutationInterface, AliasedInterface
         $deviceId = Uuid::uuid4()->toString();
 
         return [
-            'accessToken' => $this->tokenFacade->generateAccessTokenByCustomerUserAndDeviceId($user, $deviceId),
+            'accessToken' => $this->tokenFacade->createAccessTokenAsString($user, $deviceId),
             'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($user, $deviceId),
         ];
     }
