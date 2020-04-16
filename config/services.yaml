@@ -455,3 +455,19 @@ services:
             - '@twig_cache_extension.cache_strategy'
         tags:
             - { name: twig.extension }
+
+    App\Component\Image\Kraken\KrakenConfig:
+        arguments:
+            $krakenConfig: "%kraken_config%"
+
+    App\Component\Image\Kraken\KrakenFactory: ~
+
+    Kraken:
+        class: Kraken
+        factory: ['@App\Component\Image\Kraken\KrakenFactory', createApi]
+
+    Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator: '@App\Component\Image\Processing\ImageGenerator'
+
+    App\Component\Image\Processing\ImageGenerator: ~
+
+    App\Component\Image\Kraken\Processing\ImageKrakenProcessor: ~
