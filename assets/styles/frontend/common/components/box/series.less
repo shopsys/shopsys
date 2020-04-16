@@ -17,12 +17,13 @@
     &::before {
         position: absolute;
         top: 0;
-        right: 0;
+        right: @web-padding-small;
         width: 70%;
         height: 350px;
         content: "";
 
         background-color: @color-light-secondary;
+        border-radius: @radius;
 
         @media @query-lg {
             top: 35%;
@@ -30,6 +31,8 @@
             right: auto;
             width: 70%;
             height: 150px;
+
+            border-radius: 0;
         }
     }
 
