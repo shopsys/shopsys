@@ -215,6 +215,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'label' => 'Dodací lhůta dodavatele',
             ])
             ->add('usingStock', YesNoType::class, [
+                'data' => true,
                 'required' => false,
                 'disabled' => true,
                 'label' => t('Use stocks'),

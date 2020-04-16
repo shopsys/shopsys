@@ -340,9 +340,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: '@App\Model\Product\Availability\ProductAvailabilityRecalculator'
 
-    App\Model\AdvancedSearch\Filter\ProductAvailabilityFilter: ~
+    App\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
 
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductAvailabilityFilter: '@App\Model\AdvancedSearch\Filter\ProductAvailabilityFilter'
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: '@App\Model\AdvancedSearch\ProductAdvancedSearchConfig'
 
     App\Model\Product\Search\ProductElasticsearchConverter: ~
 
