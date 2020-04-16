@@ -3,6 +3,7 @@
         {% form_theme filterForm 'Front/Content/Product/filterFormTheme.html.twig' %}
 
         {% set isSearch = page == 'search' %}
+        {% set paramsVisibleCount = 5 %}
 
         {% if isSearch %}
             <input
@@ -27,7 +28,7 @@
                 </span>
                 <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs">
                     {% for flagForm in filterForm.flags %}
-                        <div class="form-choice">
+                        <div class="form-choice box-filter__choice__input">
                             {{ form_widget(flagForm, { attr: { class: "css-checkbox" } }) }}
                             <label class="css-checkbox__image form-choice__label" for="{{ flagForm.vars.id }}">
                                 {{ flagForm.vars.label }}
@@ -86,7 +87,7 @@
                     <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
                 </span>
                 <div id="product_filter_box_availability" class="box-filter__choice__inputs">
-                    <div class="form-choice">
+                    <div class="form-choice box-filter__choice__input">
                         {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox" } }) }}
                         <label class="css-checkbox__image form-choice__label" for="{{ filterForm.inStock.vars.id }}">
                                 {{ 'Products in stock only'|trans }}
@@ -116,7 +117,9 @@
                 </span>
                 <div id="{{ filterForm.brands.vars.id }}" class="box-filter__choice__inputs">
                     {% for brandForm in filterForm.brands %}
-                        <div class="form-choice">
+                        <div class="form-choice js-form-choice box-filter__choice__input
+                            {{ loop.index > paramsVisibleCount and not brandForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
+                        ">
                             {{ form_widget(brandForm, { attr: { class: 'css-checkbox'} }) }}
                             <label class="css-checkbox__image form-choice__label" for="{{ brandForm.vars.id }}">
                                 {{ brandForm.vars.label }}
@@ -134,6 +137,15 @@
                             </label>
                         </div>
                     {% endfor %}
+                    {% if filterForm.brands|length > paramsVisibleCount %}
+                        <a
+                            class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
+                            data-text-more="{{ 'Zobrazit více'|trans }}"
+                            data-text-less="{{ 'Zobrazit méně'|trans }}"
+                            href="#">
+                                {{ 'Zobrazit více'|trans }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
@@ -151,7 +163,9 @@
                             </span>
                             <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs">
                                 {% for parameterValueForm in parameterForm %}
-                                    <div class="form-choice js-product-filter-parameter-value">
+                                    <div class="form-choice js-form-choice box-filter__choice__input js-product-filter-parameter-value
+                                        {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
+                                    ">
                                         {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
                                         <label class="css-checkbox__image form-choice__label" for="{{ parameterValueForm.vars.id }}">
                                             {{ parameterValueForm.vars.label }}
@@ -171,6 +185,15 @@
                                         </label>
                                     </div>
                                 {% endfor %}
+                                {% if parameterForm|length > paramsVisibleCount %}
+                                    <a
+                                        class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
+                                        data-text-more="{{ 'Zobrazit více'|trans }}"
+                                        data-text-less="{{ 'Zobrazit méně'|trans }}"
+                                        href="#">
+                                            {{ 'Zobrazit více'|trans }}
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}

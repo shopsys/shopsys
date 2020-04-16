@@ -40,6 +40,7 @@ export default class ProductListAjaxFilter {
         });
 
         this.updateFiltersDisabled();
+        this.updateFiltersVisibleParams();
     }
 
     showProducts ($wrappedData) {
@@ -79,6 +80,17 @@ export default class ProductListAjaxFilter {
             } else {
                 $label.removeClass('in-disable');
                 $formElement.prop('disabled', false);
+            }
+        });
+    }
+
+    updateFiltersVisibleParams () {
+        $('.js-product-filter-box').each(function (index, element) {
+            const $hiddenParams = $(element).find('.js-form-choice--collapsing');
+            const $toggleButton = $(element).find('.js-product-filter-show-more-less');
+
+            if (!$hiddenParams.length) {
+                $toggleButton.addClass('display-none');
             }
         });
     }

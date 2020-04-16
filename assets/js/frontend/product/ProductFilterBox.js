@@ -17,6 +17,26 @@ export default class ProductFilterBox {
         $container.filterAllNodes('.js-product-filter-box-arrow').on('click', event => {
             _this.toggleFilterBox($(event.target).closest('.js-product-filter-box'));
         });
+
+        $container.filterAllNodes('.js-product-filter-show-more-less').on('click', event => {
+            event.preventDefault();
+            _this.initFilterParamsToogle($(event.target));
+        });
+    }
+
+    initFilterParamsToogle ($toggleButton) {
+        const toggleText = $toggleButton.hasClass('is-active')
+            ? $toggleButton.data('text-more')
+            : $toggleButton.data('text-less');
+
+        $toggleButton
+            .text(toggleText)
+            .toggleClass('is-active');
+
+        $toggleButton
+            .closest('.js-product-filter-box')
+            .find('.js-form-choice--collapsing')
+            .toggleClass('display-none');
     }
 
     toggleFilterBox ($parameterContainer) {
