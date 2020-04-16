@@ -36,7 +36,10 @@
                                 </div>
 
                                 {{ form_widget(uploadedFile, { attr: { class: 'js-file-upload-input' }}) }}
-                                {{ form_widget(uploadedFilename, { attr: { class: 'js-file-upload-name-input' }}) }}
+                                <span>
+                                    {{ form_widget(uploadedFilename, { attr: { class: 'js-file-upload-name-input js-validation-no-file-upload' }}) }}
+                                    {{ form_errors(uploadedFilename) }}
+                                </span>
                             </div>
                         </li>
                     {% endmacro %}
