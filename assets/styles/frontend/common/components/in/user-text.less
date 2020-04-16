@@ -1,9 +1,38 @@
-@in-user-text-ul-point-size: 6px;
+@in-user-text-ul-point-size: 5px;
 @in-user-text-heading-font-size: 18px;
-@in-user-text-heading-margin-bottom: 0.6rem;
-@in-user-text-paragraph-margin: 0 0 1.5rem;
+@in-user-text-heading-margin-bottom: 0.8rem;
+@in-user-text-paragraph-margin: 0 0 1.75rem;
+@in-user-text-component-margin: @in-user-text-paragraph-margin;
+@in-user-text-font-size: 16px;
+@in-user-text-line-height: 1.8;
+@in-user-text-font-color: #5b5B61;
 
 .in-user-text {
+    font-size: @in-user-text-font-size;
+    line-height: @in-user-text-line-height;
+    -webkit-font-smoothing: antialiased;
+
+    &__perex {
+        margin-bottom: 2.25rem;
+
+        font-weight: 700;
+        color: @color-primary;
+    }
+
+    .web__container {
+        width: 100%;
+        padding: 0;
+    }
+
+    p,
+    ul,
+    ol,
+    li {
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+    }
+
     h2,
     h3 {
         margin-bottom: @in-user-text-heading-margin-bottom;
@@ -28,23 +57,23 @@
 
     ul {
         .reset-ul();
-        margin-bottom: @margin-gap;
+        margin: @in-user-text-component-margin;
 
         li {
             position: relative;
-            padding-left: 15px;
-            line-height: 18px;
-            margin-bottom: 5px;
+            padding-left: 17px;
+            margin-bottom: 1.25rem;
 
             &:after {
                 position: absolute;
                 content: '';
-                top: @in-user-text-ul-point-size;
+                top: @in-user-text-ul-point-size * 2;
                 left: 0;
                 width: @in-user-text-ul-point-size;
                 height: @in-user-text-ul-point-size;
 
-                background: @color-green;
+                border-radius: 100%;
+                background: @color-primary;
             }
         }
 
@@ -54,6 +83,58 @@
     }
 
     img {
+        display: block;
         height: auto;
+
+        border-radius: @radius;
+    }
+
+    &--blog {
+        img {
+            width: 100%;
+            max-height: 300px;
+            margin: 0 0 2.25rem;
+
+            object-fit: cover;
+
+            @media @query-lg {
+                max-height: 430px;
+            }
+        }
+
+        blockquote {
+            position: relative;
+            padding: 3rem 1.25rem 1.25rem;
+            margin: @in-user-text-component-margin;
+
+            font-style: italic;
+            border-radius: @radius * 2;
+            border: 1px solid @color-border;
+
+            @media @query-lg {
+                padding: 2rem 2rem 2rem 8.5rem;
+            }
+
+            &::before {
+                position: absolute;
+                left: 1.25rem;
+                top: -1rem;
+                width: 72px;
+                height: 50px;
+                content: '';
+
+                background-image: url('@{path-design}/quote.png');
+                background-size: contain;
+
+                @media @query-lg {
+                    top: 2rem;
+                    left: 2rem;
+                }
+            }
+
+            p {
+                margin-bottom: 0;
+            }
+        }
     }
 }
