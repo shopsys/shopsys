@@ -1,7 +1,7 @@
 {% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
 
 <div>
-    {% set product = cartItem.product %}
+    {% set product = addProductResult.cartItem.product %}
     <div>{{ 'Wonderful choice! Your product has been added to cart'|trans }}</div>
     <div>
         <div>
@@ -12,16 +12,17 @@
             {% endif %}
         </div>
         <div>
-            {{ cartItem.quantity }} {{ 'x -' }} {{ product.fullname }}
+            {% set quantity = addProductResult.addedQuantity %}
+            {{ '%quantity%x - %productName%'|trans({'%quantity%': quantity, '%productName%': product.fullname}) }}
             <span>{{ product.catnum }}</span>
         </div>
         <div>
             <div>
-                {{ getProductSellingPrice(product).priceWithVat|price }}
+                {{ getProductSellingPrice(product).priceWithVat.multiply(quantity)|price }}
                 {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
             </div>
             <div>
-                {{ getProductNonSellingPrice(product).priceWithVat|price }}
+                {{ getProductNonSellingPrice(product).priceWithVat.multiply(quantity)|price }}
                 {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
             </div>
         </div>
