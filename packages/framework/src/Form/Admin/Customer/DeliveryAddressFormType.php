@@ -40,15 +40,15 @@ class DeliveryAddressFormType extends AbstractType
     {
         $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
 
-        $builderDeliveryAdress = $builder->create('deliveryAddress', GroupType::class, [
+        $builderDeliveryAddress = $builder->create('deliveryAddress', GroupType::class, [
             'label' => t('Delivery address'),
             'attr' => [
                 'id' => 'customer_form_deliveryAddressData',
             ],
         ]);
-        $builderDeliveryAdress
+        $builderDeliveryAddress
             ->add(
-                $builderDeliveryAdress
+                $builderDeliveryAddress
                     ->create('deliveryAddressFields', FormType::class, [
                         'inherit_data' => true,
                         'attr' => ['class' => 'js-delivery-address-fields form-line__js'],
@@ -159,7 +159,7 @@ class DeliveryAddressFormType extends AbstractType
                     ])
             );
 
-        $builder->add($builderDeliveryAdress);
+        $builder->add($builderDeliveryAddress);
     }
 
     /**
