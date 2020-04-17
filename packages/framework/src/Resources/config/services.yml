@@ -498,11 +498,6 @@ services:
     Shopsys\FrameworkBundle\Model\Security\Authenticator:
         arguments:
             - '@security.token_storage'
-            - '@Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher'
-
-    Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher:
-        arguments:
-            - '@event_dispatcher'
 
     Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator: ~
 
