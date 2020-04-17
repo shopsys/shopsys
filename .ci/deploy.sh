@@ -28,6 +28,10 @@ declare -A PARAMETERS=(
     ["parameters.akeneo_config.user"]=${AKENEO_DEV_USER}
     ["parameters.akeneo_config.password"]=${AKENEO_DEV_PASSWORD}
     ["parameters.disable_form_fields_from_transfer"]=${DISABLE_FROM_FIELDS_FROM_TRANSFER}
+    ["parameters.kraken_config.enabled"]=${KRAKEN_DEV_ENABLED}
+    ["parameters.kraken_config.lossy"]=${KRAKEN_DEV_LOSSY}
+    ["parameters.kraken_config.api_key"]=${KRAKEN_DEV_API_KEY}
+    ["parameters.kraken_config.api_secret"]=${KRAKEN_DEV_API_SECRET}
 )
 
 VARS=(
