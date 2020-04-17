@@ -162,7 +162,16 @@ class ProductAvailabilityFacade
      */
     private function getDeliveryWeeksByDomainId(int $domainId, Product $product): int
     {
-        return (int)ceil($this->getDeliveryDaysByDomainId($product, $domainId) / self::DAYS_IN_WEEK);
+        return self::calculateDaysToWeeks($this->getDeliveryDaysByDomainId($product, $domainId));
+    }
+
+    /**
+     * @param int $days
+     * @return int
+     */
+    public static function calculateDaysToWeeks(int $days): int
+    {
+        return (int)ceil($days / self::DAYS_IN_WEEK);
     }
 
     /**
@@ -184,7 +193,7 @@ class ProductAvailabilityFacade
      */
     private function getTransferWeeksByDomainId(int $domainId): int
     {
-        return (int)ceil($this->getTransferDaysByDomainId($domainId) / self::DAYS_IN_WEEK);
+        return self::calculateDaysToWeeks($this->getTransferDaysByDomainId($domainId));
     }
 
     /**
