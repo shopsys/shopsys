@@ -225,51 +225,45 @@ Authorization header is not required.
 
 ### POST [POST]
 
-Returns product filtered using UUID.
-If you use the authorization header, api will return prices according to the user's price group.
-Authorization header is not required.
+Returns product filtered using UUID
 
 - Request (application/json)
 
-    - Headers
-        Authorization: Bearer ABCDEF
-
-    - Body
-        {
-            query: product (uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa") {
-                uuid,
+    {
+        query: product (uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa") {
+            uuid,
+            name
+            shortDescription
+            link
+            unit {
                 name
-                shortDescription
-                link
-                unit {
-                    name
-                }
-                availability {
-                    name
-                }
-                stockQuantity
-                categories {
-                    name
-                }
-                flags {
-                    name
-                    rgbColor
-                }
-                price {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                images {
-                    type
-                    position
-                    size
-                    url
-                    width
-                    height
-                }
+            }
+            availability {
+                name
+            }
+            stockQuantity
+            categories {
+                name
+            }
+            flags {
+                name
+                rgbColor
+            }
+            price {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
+            images {
+                type
+                position
+                size
+                url
+                width
+                height
             }
         }
+    }
 
 - Response 200 (application/json; charset=utf-8)
     {
@@ -1311,8 +1305,7 @@ Login user and return access and refresh tokens
 
 ### POST [POST]
 
-Logout user.
-Authorization header is required.
+Logout user
 
 - Request (application/json)
 
@@ -1364,119 +1357,113 @@ Refreshes access and refresh tokens
 
 ### POST [POST]
 
-Creates complete order with products and addresses.
-If you use the authorization header, api will create order for logged user and check prices according to the user's price group.
-Authorization header is not required.
+Creates complete order with products and addresses
 
 - Request (application/json)
 
-    - Headers
-        Authorization: Bearer ABCDEF
-
-    - Body
-        mutation {
-            CreateOrder(
-                input: {
-                    firstName: "firstName"
-                    lastName: "lastName"
-                    email: "user@example.com"
-                    telephone: "+53 123456789"
-                    onCompanyBehalf: true
-                    companyName: "Airlocks s.r.o."
-                    companyNumber: "1234"
-                    companyTaxNumber: "EU4321"
-                    street: "123 Fake Street"
-                    city: "Springfield"
-                    postcode: "12345"
-                    country: "CZ"
-                    note:"Thank You"
-                    payment: {
-                        uuid: "840f9191-c6f2-4ab0-9788-9c038f211ca6"
-                        price: {
-                            priceWithVat: "2"
-                            priceWithoutVat: "2"
-                            vatAmount: "0"
-                        }
+    mutation {
+        CreateOrder(
+            input: {
+                firstName: "firstName"
+                lastName: "lastName"
+                email: "user@example.com"
+                telephone: "+53 123456789"
+                onCompanyBehalf: true
+                companyName: "Airlocks s.r.o."
+                companyNumber: "1234"
+                companyTaxNumber: "EU4321"
+                street: "123 Fake Street"
+                city: "Springfield"
+                postcode: "12345"
+                country: "CZ"
+                note:"Thank You"
+                payment: {
+                    uuid: "840f9191-c6f2-4ab0-9788-9c038f211ca6"
+                    price: {
+                        priceWithVat: "2"
+                        priceWithoutVat: "2"
+                        vatAmount: "0"
                     }
-                    transport: {
-                        uuid: "edbafa26-9306-46ed-b1e8-d1570f072832"
-                        price: {
-                            priceWithVat: "4.84"
-                            priceWithoutVat: "4"
-                            vatAmount: "0.84"
-                        }
+                }
+                transport: {
+                    uuid: "edbafa26-9306-46ed-b1e8-d1570f072832"
+                    price: {
+                        priceWithVat: "4.84"
+                        priceWithoutVat: "4"
+                        vatAmount: "0.84"
                     }
-                    differentDeliveryAddress: true
-                    deliveryFirstName: "deliveryFirstName"
-                    deliveryLastName: "deliveryLastName"
-                    deliveryStreet: "deliveryStreet"
-                    deliveryCity: "deliveryCity"
-                    deliveryCountry: "SK"
-                    deliveryPostcode: "13453"
-                    products: [
-                        {
-                            uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa"
-                            unitPrice: {
-                                priceWithVat: "139.96"
-                                priceWithoutVat: "115.67"
-                                vatAmount: "24.29"
-                            }
-                            quantity: 10
-                        },
-                    ]
                 }
-            ) {
-                transport {
-                    name
+                differentDeliveryAddress: true
+                deliveryFirstName: "deliveryFirstName"
+                deliveryLastName: "deliveryLastName"
+                deliveryStreet: "deliveryStreet"
+                deliveryCity: "deliveryCity"
+                deliveryCountry: "SK"
+                deliveryPostcode: "13453"
+                products: [
+                    {
+                        uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa"
+                        unitPrice: {
+                            priceWithVat: "139.96"
+                            priceWithoutVat: "115.67"
+                            vatAmount: "24.29"
+                        }
+                        quantity: 10
+                    },
+                ]
+            }
+        ) {
+            transport {
+                name
+            }
+            payment {
+                name
+            }
+            status
+            totalPrice {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
+            items {
+                name
+                unitPrice {
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
                 }
-                payment {
-                    name
-                }
-                status
                 totalPrice {
                     priceWithVat
                     priceWithoutVat
                     vatAmount
                 }
-                items {
-                    name
-                    unitPrice {
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                    totalPrice {
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                    quantity
-                    vatRate
-                    unit
-                }
-                firstName
-                lastName
-                email
-                telephone
-                companyName
-                companyNumber
-                companyTaxNumber
-                street
-                city
-                postcode
-                country
-                differentDeliveryAddress
-                deliveryFirstName
-                deliveryLastName
-                deliveryCompanyName
-                deliveryTelephone
-                deliveryStreet
-                deliveryCity
-                deliveryPostcode
-                deliveryCountry
-                note
+                quantity
+                vatRate
+                unit
             }
+            firstName
+            lastName
+            email
+            telephone
+            companyName
+            companyNumber
+            companyTaxNumber
+            street
+            city
+            postcode
+            country
+            differentDeliveryAddress
+            deliveryFirstName
+            deliveryLastName
+            deliveryCompanyName
+            deliveryTelephone
+            deliveryStreet
+            deliveryCity
+            deliveryPostcode
+            deliveryCountry
+            note
         }
+    }
 
 - Response 200 (application/json; charset=utf-8)
 
