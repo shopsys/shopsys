@@ -7,6 +7,7 @@ namespace App\Model\Product\Listed;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Product;
+use App\Model\Product\Series\ProductSeriesProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -37,6 +38,11 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
     protected $productAvailabilityFacade;
 
     /**
+     * @var \App\Model\Product\Series\ProductSeriesProductFacade
+     */
+    protected $productSeriesProductFacade;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -48,6 +54,7 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \App\Model\Product\Series\ProductSeriesProductFacade $productSeriesProductFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -60,7 +67,8 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         ListedProductViewFactory $listedProductViewFactory,
         ProductActionViewFacade $productActionViewFacade,
         ImageViewFacade $imageViewFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade
+        ProductAvailabilityFacade $productAvailabilityFacade,
+        ProductSeriesProductFacade $productSeriesProductFacade
     ) {
         parent::__construct(
             $productFacade,
@@ -76,6 +84,7 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
 
         $this->categoryFacade = $categoryFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
+        $this->productSeriesProductFacade = $productSeriesProductFacade;
     }
 
     /**
@@ -140,5 +149,16 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         }
 
         return $listedProductViews;
+    }
+
+    /**
+     * @param \App\Model\Product\Series\ProductSeries $productSeries
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    public function getAvailableProductsByProductSeries($productSeries): array
+    {
+        $products = $this->productSeriesProductFacade->findAvailableProductsByProductSeries($productSeries);
+
+        return $this->createFromProducts($products);
     }
 }

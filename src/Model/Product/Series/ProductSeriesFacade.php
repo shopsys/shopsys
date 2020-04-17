@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Series;
 
+use App\Model\Product\Product;
 use App\Model\Product\Series\Category\ProductSeriesCategory;
 use App\Model\Product\Series\Exception\MissingBaseFriendlyUrlForDomainException;
 use App\Model\Product\Series\Exception\ProductSeriesNotFoundException;
@@ -237,5 +238,15 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
         }
 
         return $productSeriesNamesIndexedById;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @return \App\Model\Product\Series\ProductSeries[]
+     */
+    public function getAllVisibleByProductAndDomainId(Product $product, Domain $domain): array
+    {
+        return $this->productSeriesRepository->getAllVisibleByProductAndDomainId($product, $domain->getId());
     }
 }

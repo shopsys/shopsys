@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Series;
 
+use App\Model\Product\Product;
 use App\Model\Product\Series\Category\ProductSeriesCategory;
 use App\Model\Product\Series\Exception\ProductSeriesNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -194,5 +195,21 @@ class ProductSeriesRepository
             ->setParameter('locale', $this->localization->getAdminLocale());
 
         return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return array
+     */
+    public function getAllVisibleByProductAndDomainId(Product $product, int $domainId): array
+    {
+        return $this->getVisibleQueryBuilderByDomainId($domainId)
+            ->join(ProductSeriesProduct::class, 'psp', Join::WITH, 'psp.productSeries = ps')
+            ->andWhere('psp.product = :product')
+            ->orderBy('ps.id', 'DESC')
+            ->setParameter('product', $product)
+            ->getQuery()
+            ->execute();
     }
 }

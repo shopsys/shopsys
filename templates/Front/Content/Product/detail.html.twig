@@ -251,6 +251,33 @@
                         </div>
                     </div>
                 {% endif %}
+
+                {% if productSeriesList|length > 0 %}
+                    <div class="h3">{{ 'Nábytkové programy'|trans }}</div>
+
+                    <div id="productSeriesList">
+                        {% for productSeries in productSeriesList %}
+                            <div class="box">
+                                <div class="series">
+                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+
+                                    <div class="box-detail__image__main">
+                                        {% if imageExists(productSeries) %}
+                                            <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(productSeries, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' }}">
+                                                {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
+                                            </a>
+                                        {% else %}
+                                            {{ noimage({ alt: productSeries.name }) }}
+                                        {% endif %}
+                                    </div>
+
+                                    {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id]) }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 {% if productParameterValues > 0 %}
                     <div class="box-detail">
                         <div class="h3">{{ 'Technical parameters'|trans }}</div>

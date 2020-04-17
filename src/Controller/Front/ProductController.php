@@ -12,6 +12,7 @@ use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use App\Model\Product\ProductFacade;
+use App\Model\Product\Series\ProductSeriesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
@@ -120,6 +121,11 @@ class ProductController extends FrontBaseController
     private $categoryParameterFacade;
 
     /**
+     * @var \App\Model\Product\Series\ProductSeriesFacade
+     */
+    private $productSeriesFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -137,6 +143,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
+     * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -155,7 +162,8 @@ class ProductController extends FrontBaseController
         CategoryProductSeriesFacade $categoryProductSeriesFacade,
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         SeoSettingFacade $seoSettingFacade,
-        CategoryParameterFacade $categoryParameterFacade
+        CategoryParameterFacade $categoryParameterFacade,
+        ProductSeriesFacade $productSeriesFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -174,6 +182,7 @@ class ProductController extends FrontBaseController
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
         $this->seoSettingFacade = $seoSettingFacade;
         $this->categoryParameterFacade = $categoryParameterFacade;
+        $this->productSeriesFacade = $productSeriesFacade;
     }
 
     /**
@@ -211,6 +220,12 @@ class ProductController extends FrontBaseController
             self::PRODUCTS_PER_PAGE
         );
 
+        $productSeriesList = $this->productSeriesFacade->getAllVisibleByProductAndDomainId($product, $this->domain);
+        $productSeriesProducts = [];
+        foreach ($productSeriesList as $productSeries) {
+            $productSeriesProducts[$productSeries->getId()] = $this->listedProductViewFacade->getAvailableProductsByProductSeries($productSeries);
+        }
+
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $product,
             'accessories' => $accessories,
@@ -222,6 +237,8 @@ class ProductController extends FrontBaseController
             'productStocksAvailabilitiesInformation' => $productStocksAvailabilitiesInformation,
             'downloadFiles' => $downloadFiles,
             'paginatedSimilarProducts' => $paginatedSimilarProducts,
+            'productSeriesList' => $productSeriesList,
+            'productSeriesProductsIndexedByProductSeries' => $productSeriesProducts,
         ]);
     }
 
