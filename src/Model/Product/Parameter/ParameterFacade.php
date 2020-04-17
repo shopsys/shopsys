@@ -6,6 +6,7 @@ namespace App\Model\Product\Parameter;
 
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -30,18 +31,32 @@ class ParameterFacade extends BaseParameterFacade
     private $readyCategorySeoMixFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
+     * @var \App\Model\Product\Parameter\ParameterValueDataFactory
+     */
+    private $parameterValueDataFactory;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      */
     public function __construct(
         EntityManagerInterface $em,
         ParameterRepository $parameterRepository,
         ParameterFactoryInterface $parameterFactory,
         EventDispatcherInterface $eventDispatcher,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        Domain $domain,
+        ParameterValueDataFactory $parameterValueDataFactory
     ) {
         parent::__construct(
             $em,
@@ -50,6 +65,8 @@ class ParameterFacade extends BaseParameterFacade
             $eventDispatcher
         );
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
+        $this->domain = $domain;
+        $this->parameterValueDataFactory = $parameterValueDataFactory;
     }
 
     /**
@@ -96,5 +113,35 @@ class ParameterFacade extends BaseParameterFacade
         $this->readyCategorySeoMixFacade->deleteAllWithParameter($parameter);
 
         parent::deleteById($parameterId);
+    }
+
+    /**
+     * @return \App\Model\Product\Parameter\ParameterValue[][]
+     */
+    public function getListBooleanParameterValuesIndexedByLocaleAndText(): array
+    {
+        $locales = $this->domain->getAllLocales();
+        $translationKeys = ['Yes', 'No'];
+
+        $parameterValuesIndexedByLocaleAndText = [];
+        foreach ($locales as $locale) {
+            foreach ($translationKeys as $translationKey) {
+                $parameterValueData = $this->parameterValueDataFactory->create();
+
+                if ($translationKey === 'Yes') {
+                    $parameterValueData->text = t('Yes', [], null, $locale);
+                } else {
+                    $parameterValueData->text = t('No', [], null, $locale);
+                }
+
+                $parameterValueData->locale = $locale;
+
+                $parameterValuesIndexedByLocaleAndText[$locale][$parameterValueData->text] = $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
+                    $parameterValueData
+                );
+            }
+        }
+
+        return $parameterValuesIndexedByLocaleAndText;
     }
 }

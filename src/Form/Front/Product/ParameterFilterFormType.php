@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Product;
 
+use App\Model\Product\Parameter\Parameter;
+use App\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Symfony\Component\Form\AbstractType;
@@ -15,9 +17,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ParameterFilterFormType extends AbstractType implements DataTransformerInterface
 {
     /**
+     * @var \App\Model\Product\Parameter\ParameterValue[][]
+     */
+    private $booleanParameterValuesIndexedByLocaleAndText;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
     private $parameterChoicesIndexedByParameterId;
+
+    /**
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     */
+    public function __construct(ParameterFacade $parameterFacade)
+    {
+        $this->booleanParameterValuesIndexedByLocaleAndText = $parameterFacade->getListBooleanParameterValuesIndexedByLocaleAndText();
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -29,26 +44,23 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         $config = $options['product_filter_config'];
 
         $this->parameterChoicesIndexedByParameterId = [];
-        foreach ($config->getParameterChoices() as $parameterChoice) {
+        foreach ($config->getParameterChoices() as $parameterFilterChoice) {
 
             /** @var \App\Model\Product\Parameter\Parameter $parameter */
-            $parameter = $parameterChoice->getParameter();
+            $parameter = $parameterFilterChoice->getParameter();
 
             /** @var \App\Model\Product\Parameter\ParameterValue[] $parameterValues */
-            $parameterValues = $parameterChoice->getValues();
+            $parameterValues = $parameterFilterChoice->getValues();
 
-            if ($parameter->getParameterUnit() !== null) {
-                $newParameterValues = [];
-                foreach ($parameterValues as $parameterValue) {
-                    $newParameterValue = new \stdClass();
-                    $newParameterValue->id = $parameterValue->getId();
-                    $newParameterValue->text = $parameterValue->getText() . ' ' . $parameter->getParameterUnit()->getName();
-                    $newParameterValues[] = $newParameterValue;
-                }
-                $parameterValues = $newParameterValues;
+            $this->parameterChoicesIndexedByParameterId[$parameter->getId()] = $parameterFilterChoice;
+
+            if ($parameter->getAkeneoType() === Parameter::AKENEO_ATTRIBUTES_TYPE_BOOLEAN) {
+                $parameterValues = $this->prepareYesNoParameterValues($parameterValues);
             }
 
-            $this->parameterChoicesIndexedByParameterId[$parameter->getId()] = $parameterChoice;
+            if ($parameter->getParameterUnit() !== null) {
+                $parameterValues = $this->prepareParameterUnitsForParameterValues($parameter, $parameterValues);
+            }
 
             $builder->add($parameter->getId(), ChoiceType::class, [
                 'label' => $parameter->getName(),
@@ -62,6 +74,46 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         }
 
         $builder->addViewTransformer($this);
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\ParameterValue[] $parameterValues
+     * @return  \App\Model\Product\Parameter\ParameterValue[]
+     */
+    private function prepareYesNoParameterValues(array $parameterValues): array
+    {
+        if (count($parameterValues) === 1) {
+            $parameterValue = reset($parameterValues);
+            $parameterTextValues = array_keys($this->booleanParameterValuesIndexedByLocaleAndText[$parameterValue->getLocale()]);
+            $parameterTextValues = array_combine($parameterTextValues, $parameterTextValues);
+
+            unset($parameterTextValues[$parameterValue->getText()]);
+            $parameterTextValue = reset($parameterTextValues);
+
+            $parameterValues[] = $this->booleanParameterValuesIndexedByLocaleAndText[$parameterValue->getLocale()][$parameterTextValue];
+        }
+
+        return $parameterValues;
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \App\Model\Product\Parameter\ParameterValue[] $parameterValues
+     * @return array
+     */
+    private function prepareParameterUnitsForParameterValues(
+        Parameter $parameter,
+        array $parameterValues
+    ): array {
+        $newParameterValues = [];
+        foreach ($parameterValues as $parameterValue) {
+            $newParameterValue = new \stdClass();
+            $newParameterValue->id = $parameterValue->getId();
+            $newParameterValue->text = $parameterValue->getText() . ' ' . $parameter->getParameterUnit()->getName();
+            $newParameterValues[] = $newParameterValue;
+        }
+
+        return $newParameterValues;
     }
 
     /**

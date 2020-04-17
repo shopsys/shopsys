@@ -26,8 +26,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFac
 
 class ProductTransferAkeneoMapper
 {
-    public const AKENEO_ATTRIBUTES_TYPE_BOOLEAN = 'pim_catalog_boolean';
-
     /**
      * @var \App\Model\Product\ProductDataFactory
      */
@@ -396,7 +394,7 @@ class ProductTransferAkeneoMapper
      */
     private function prepareParameterValueTextToHumanSpeech(Parameter $parameter, string $locale, string $parameterValueText): string
     {
-        if ($parameter->getAkeneoType() === self::AKENEO_ATTRIBUTES_TYPE_BOOLEAN) {
+        if ($parameter->getAkeneoType() === Parameter::AKENEO_ATTRIBUTES_TYPE_BOOLEAN) {
             switch ($parameterValueText) {
                 case '':
                     return t('No', [], null, $locale);
