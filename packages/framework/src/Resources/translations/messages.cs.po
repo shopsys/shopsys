@@ -1538,7 +1538,7 @@ msgid "Ok"
 msgstr "Ok"
 
 msgid "On each run (usually every 5 minutes)"
-msgstr "Po každémm spuštění (obvykle každých 5 minut)"
+msgstr "Po každém spuštění (obvykle každých 5 minut)"
 
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
