@@ -15,7 +15,6 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $container->initialized('doctrine.orm.default_metadata_driver');
         /** @var \Doctrine\ORM\Mapping\Driver\AnnotationDriver $annotationReader */
         $annotationReader = $container->get('doctrine.orm.default_metadata_driver');
 
@@ -33,6 +32,7 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
             }
         }
 
-        $container->setParameter('shopsys.entity_extension.map', $entityExtensionMap);
+        $currentEntityExtensionMap = $container->getParameter('shopsys.entity_extension.map');
+        $container->setParameter('shopsys.entity_extension.map', array_merge($entityExtensionMap, $currentEntityExtensionMap));
     }
 }
