@@ -34,7 +34,7 @@ mutation {
             products: [
                 {
                     uuid: "___UUID_PRODUCT___",
-                    price: {
+                    unitPrice: {
                         priceWithVat: "139.96",
                         priceWithoutVat: "115.67",
                         vatAmount: "24.29"
