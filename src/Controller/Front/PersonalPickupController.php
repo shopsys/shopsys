@@ -23,14 +23,14 @@ class PersonalPickupController extends FrontBaseController
     private $stockFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+     * @var \App\Model\Cart\CartFacade
      */
     private $cartFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Stock\StockFacade $stockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
+     * @param \App\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         Domain $domain,

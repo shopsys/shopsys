@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository)
- * @method \App\Model\Product\Parameter\Parameter[] getVisibleParametersIndexedByIdOrderedByName(array $rows, string $locale)
  * @method \App\Model\Product\Parameter\ParameterValue[][] getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, string $locale)
  * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesIndexedByIdOrderedByText(array $rows, string $locale)
  */
@@ -65,5 +64,36 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
         }
 
         return $parameterFilterChoices;
+    }
+
+    /**
+     * @param array $rows
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\Parameter[]
+     */
+    protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale): array
+    {
+        $parameterIds = [];
+        foreach ($rows as $row) {
+            $parameterIds[$row['pp']['id']] = $row['pp']['id'];
+        }
+
+        $parametersQueryBuilder = $this->em->createQueryBuilder()
+            ->select('pp, pt')
+            ->from(Parameter::class, 'pp')
+            ->join('pp.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->where('pp.id IN (:parameterIds)')
+            ->orderBy('pt.name', 'asc');
+        $parametersQueryBuilder->setParameter('parameterIds', $parameterIds);
+        $parametersQueryBuilder->setParameter('locale', $locale);
+        $parameters = $parametersQueryBuilder->getQuery()->execute();
+
+        $parametersIndexedById = [];
+        foreach ($parameters as $parameter) {
+            /* @var $parameter \App\Model\Product\Parameter\Parameter */
+            $parametersIndexedById[$parameter->getId()] = $parameter;
+        }
+
+        return $parametersIndexedById;
     }
 }

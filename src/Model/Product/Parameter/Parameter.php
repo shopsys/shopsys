@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException;
 use App\Model\Product\Parameter\Unit\ParameterUnit;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParameterData;
@@ -61,7 +63,9 @@ class Parameter extends BaseParameter
      */
     public function __construct(BaseParameterData $parameterData)
     {
-        parent::__construct($parameterData);
+        $this->translations = new ArrayCollection();
+        $this->setTranslations($parameterData);
+
         $this->group = $parameterData->group;
         $this->akeneoCode = $parameterData->akeneoCode;
         $this->akeneoType = $parameterData->akeneoType;
@@ -74,7 +78,7 @@ class Parameter extends BaseParameter
      */
     public function edit(BaseParameterData $parameterData)
     {
-        parent::edit($parameterData);
+        $this->setTranslations($parameterData);
         $this->group = $parameterData->group;
         $this->akeneoCode = $parameterData->akeneoCode;
         $this->akeneoType = $parameterData->akeneoType;
@@ -120,5 +124,14 @@ class Parameter extends BaseParameter
     public function getParameterUnit(): ?ParameterUnit
     {
         return $this->parameterUnit;
+    }
+
+    /**
+     * @deprecated
+     * @throws \App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException
+     */
+    public function isVisible()
+    {
+        throw new DeprecatedParameterPropertyException('isVisible');
     }
 }

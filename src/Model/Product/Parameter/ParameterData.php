@@ -32,4 +32,9 @@ class ParameterData extends BaseParameterData
      * @var \App\Model\Product\Parameter\Unit\ParameterUnit|null
      */
     public $parameterUnit;
+
+    public function __construct()
+    {
+        $this->name = [];
+    }
 }

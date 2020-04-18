@@ -49,7 +49,11 @@ class ParameterDataFactory extends BaseParameterDataFactory
      */
     protected function fillFromParameter(BaseParameterData $parameterData, BaseParameter $parameter)
     {
-        parent::fillFromParameter($parameterData, $parameter);
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[] $translations */
+        $translations = $parameter->getTranslations();
+        foreach ($translations as $translate) {
+            $parameterData->name[$translate->getLocale()] = $translate->getName();
+        }
 
         $parameterData->group = $parameter->getGroup();
         $parameterData->orderingPriority = $parameter->getOrderingPriority();

@@ -5858,7 +5858,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         if ($parameter === null) {
             $parameterData = $this->parameterDataFactory->create();
             $parameterData->name = $parameterNamesByLocale;
-            $parameterData->visible = true;
             $parameterData->group = $parameterGroup;
 
             /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
