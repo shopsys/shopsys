@@ -234,7 +234,8 @@ class ProductController extends FrontBaseController
         $page = $requestPage === null ? 1 : (int)$requestPage;
 
         $orderingModeId = $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest(
-            $request
+            $request,
+            $readyCategorySeoMixId
         );
 
         $productFilterData = new ProductFilterData();
@@ -272,6 +273,7 @@ class ProductController extends FrontBaseController
             'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId()),
             'priceRange' => $productFilterConfig->getPriceRange(),
             'categoryProductSeries' => $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category),
+            'readyCategorySeoMixId' => $readyCategorySeoMixId,
         ];
 
         $viewParameters = array_merge($viewParameters, $this->getAdditionalSeoViewParameters($category, $readyCategorySeoMixId));
@@ -467,19 +469,23 @@ class ProductController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int|null $readyCategorySeoMixId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function selectOrderingModeForListAction(Request $request)
+    public function selectOrderingModeForListAction(Request $request, ?int $readyCategorySeoMixId = null)
     {
         $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
 
         $orderingModeId = $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest(
-            $request
+            $request,
+            $readyCategorySeoMixId
         );
 
         return $this->render('Front/Content/Product/orderingSetting.html.twig', [
             'orderingModesNames' => $productListOrderingConfig->getSupportedOrderingModesNamesIndexedById(),
             'activeOrderingModeId' => $orderingModeId,
             'cookieName' => $productListOrderingConfig->getCookieName(),
+            'isReadyCategorySeoMixPage' => $readyCategorySeoMixId !== null,
         ]);
     }
 
