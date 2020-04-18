@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Product\Exceptions\DeprecatedAvailabilityPropertyException;
+use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
 use App\Model\Product\Type\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -535,7 +535,7 @@ class Product extends BaseProduct
      */
     public function getOutOfStockAvailability()
     {
-        throw new DeprecatedAvailabilityPropertyException('outOfStockAvailability', $this->outOfStockAvailability);
+        throw new DeprecatedAvailabilityPropertyFromProductException('outOfStockAvailability', $this->outOfStockAvailability);
     }
 
     /**
@@ -543,7 +543,7 @@ class Product extends BaseProduct
      */
     public function getAvailability()
     {
-        throw new DeprecatedAvailabilityPropertyException('availability', $this->availability);
+        throw new DeprecatedAvailabilityPropertyFromProductException('availability', $this->availability);
     }
 
     /**
@@ -557,7 +557,7 @@ class Product extends BaseProduct
 
     public function getCalculatedAvailability()
     {
-        throw new DeprecatedAvailabilityPropertyException('calculatedAvailability', $this->calculatedAvailability);
+        throw new DeprecatedAvailabilityPropertyFromProductException('calculatedAvailability', $this->calculatedAvailability);
     }
 
     /**

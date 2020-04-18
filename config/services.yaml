@@ -186,6 +186,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository: '@App\Model\Product\Availability\AvailabilityRepository'
 
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade: '@App\Model\Product\Availability\AvailabilityFacade'
+
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagData: '@App\Model\Product\Flag\FlagData'
 
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory: '@App\Model\Product\Flag\FlagDataFactory'
@@ -338,7 +340,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation: '@App\Model\Product\Availability\ProductAvailabilityCalculation'
 
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: '@App\Model\Product\Availability\ProductAvailabilityRecalculator'
+    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: ~
 
     App\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
 

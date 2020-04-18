@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StocksDataFixture;
+use App\Model\Product\ProductData;
 use App\Model\Stock\StockSettingsData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -43,13 +44,10 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
      */
     private $stockSettingsDataFacade;
 
-    /**
-     * @dataProvider getTestShippingDaysByDomainIdProvider
-     * @param int $stockQuantity
-     * @param string $settings
-     */
-    public function testShippingDaysByDomainId(int $stockQuantity, string $settings)
+    public function testShippingDaysByDomainIdForEmptyStock()
     {
+        $stockQuantity = 0;
+
         $stockSettingsData = new StockSettingsData();
         $stockSettingsData->transfer = 10;
         $stockSettingsData->delivery = 20;
@@ -61,43 +59,58 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
 
+        $this->setupStockQuantityToProductData($productData, $stockQuantity);
+
+        $this->productFacade->edit($product->getId(), $productData);
+
+        $this->em->refresh($product);
+
+        $this->assertEquals($stockSettingsData->delivery, $this->productAvailabilityFacade->getShippingDaysByDomainId($product, self::FIRST_DOMAIN_ID));
+    }
+
+    public function testShippingDaysByDomainIdForFullStock()
+    {
+        $stockQuantity = 5;
+        $stockSettingsData = new StockSettingsData();
+        $stockSettingsData->transfer = 10;
+        $stockSettingsData->delivery = 20;
+        $this->stockSettingsDataFacade->edit($stockSettingsData);
+
+        /** @var \App\Model\Product\Product $product */
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+
+        /** @var \App\Model\Product\ProductData $productData */
+        $productData = $this->productDataFactory->createFromProduct($product);
+
+        $this->setupStockQuantityToProductData($productData, $stockQuantity);
+
+        $this->productFacade->edit($product->getId(), $productData);
+
+        $this->em->refresh($product);
+
+        $this->assertEquals($stockSettingsData->transfer, $this->productAvailabilityFacade->getShippingDaysByDomainId($product, self::FIRST_DOMAIN_ID));
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param int $stockQuantity
+     */
+    private function setupStockQuantityToProductData(ProductData $productData, int $stockQuantity): void
+    {
         $productData->stockProductData = [];
         foreach ($this->getStocksByDomainId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
             $productData->stockProductData[] = $stockProductData;
         }
-
-        $this->productFacade->edit($product->getId(), $productData);
-
-        $this->em->refresh($product);
-
-        $this->assertEquals($stockSettingsData->$settings, $this->productAvailabilityFacade->getShippingDaysByDomainId($product, self::FIRST_DOMAIN_ID));
-    }
-
-    /**
-     * @return array
-     */
-    public function getTestShippingDaysByDomainIdProvider(): array
-    {
-        return [
-            [
-                'stockQuantity' => 5,
-                'settings' => 'transfer',
-            ],
-            [
-                'stockQuantity' => 0,
-                'settings' => 'delivery',
-            ],
-        ];
     }
 
     /**
      * @dataProvider getTestIsProductAvailableOnDomainProvider
      * @param int $stockQuantity
-     * @param bool $expected
+     * @param bool $expectedIsProductAvailableOnDomain
      */
-    public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expected)
+    public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain)
     {
 
         /** @var \App\Model\Product\Product $product */
@@ -118,7 +131,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
 
         $this->em->refresh($product);
 
-        $this->assertSame($expected, $this->productAvailabilityFacade->isProductAvailableOnDomain($product, self::FIRST_DOMAIN_ID));
+        $this->assertSame($expectedIsProductAvailableOnDomain, $this->productAvailabilityFacade->isProductAvailableOnDomain($product, self::FIRST_DOMAIN_ID));
     }
 
     /**
@@ -129,11 +142,11 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         return [
             [
                 'stockQuantity' => 5,
-                'expected' => true,
+                'expectedIsProductAvailableOnDomain' => true,
             ],
             [
                 'stockQuantity' => 0,
-                'expected' => false,
+                'expectedIsProductAvailableOnDomain' => false,
             ],
         ];
     }

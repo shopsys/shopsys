@@ -55,6 +55,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @property \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
  * @property \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
  * @property \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
+ * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
  */
 class ProductFacade extends BaseProductFacade
 {
@@ -91,7 +92,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface $productAccessoryFactory

@@ -61,7 +61,7 @@ class ProductDataFactory extends BaseProductDataFactory
     private $setting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
+     * @var \App\Model\Product\Availability\AvailabilityFacade
      */
     private $availabilityFacade;
 
@@ -84,7 +84,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
     public function __construct(
         VatFacade $vatFacade,
@@ -196,11 +196,13 @@ class ProductDataFactory extends BaseProductDataFactory
     {
         /** @var \App\Model\Product\ProductTranslation[] $translations */
         $translations = $product->getTranslations();
-        $names = [];
-        $variantAliases = [];
         foreach ($translations as $translation) {
-            $names[$translation->getLocale()] = $translation->getName();
-            $variantAliases[$translation->getLocale()] = $translation->getVariantAlias();
+            $locale = $translation->getLocale();
+
+            $productData->name[$locale] = $translation->getName();
+            $productData->variantAlias[$locale] = $translation->getVariantAlias();
+            $productData->namePrefix[$locale] = $translation->getNamePrefix();
+            $productData->nameSufix[$locale] = $translation->getNameSufix();
         }
 
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -210,9 +212,18 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->seoTitles[$domainId] = $product->getSeoTitle($domainId);
             $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
             $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
+
+            $productData->shortDescriptionUsp1[$domainId] = $product->getShortDescriptionUsp1($domainId);
+            $productData->shortDescriptionUsp2[$domainId] = $product->getShortDescriptionUsp2($domainId);
+            $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
+            $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
+            $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
+            $productData->productType[$domainId] = $product->getProductType($domainId);
+            $productData->flags[$domainId] = $product->getFlagsForDomain($domainId);
+            $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
+
+            $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }
-        $productData->name = $names;
-        $productData->variantAlias = $variantAliases;
 
         $productData->catnum = $product->getCatnum();
         $productData->partno = $product->getPartno();
@@ -220,7 +231,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->sellingFrom = $product->getSellingFrom();
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();
-        $productData->flags = $product->getFlags();
 
         $productData->availability = $this->availabilityFacade->getById($this->setting->get('defaultAvailabilityInStockId'));
 
@@ -248,25 +258,6 @@ class ProductDataFactory extends BaseProductDataFactory
 
         $productData->downloadAssemblyInstructionFiles = $product->isDownloadAssemblyInstructionFiles();
         $productData->downloadProductTypePlanFiles = $product->isDownloadAssemblyInstructionFiles();
-        $productData->flags = [];
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->shortDescriptionUsp1[$domainId] = $product->getShortDescriptionUsp1($domainId);
-            $productData->shortDescriptionUsp2[$domainId] = $product->getShortDescriptionUsp2($domainId);
-            $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
-            $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
-            $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
-            $productData->productType[$domainId] = $product->getProductType($domainId);
-            $productData->flags[$domainId] = $product->getFlagsForDomain($domainId);
-            $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
-
-            $this->fillPricesFromProductByDomain($productData, $product, $domainId);
-        }
-
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $productData->namePrefix[$locale] = $product->getNamePrefix($locale);
-            $productData->nameSufix[$locale] = $product->getNameSufix($locale);
-        }
 
         $productData->preorder = $product->hasPreorder();
         $productData->vendorDeliveryDate = $product->getVendorDeliveryDate();

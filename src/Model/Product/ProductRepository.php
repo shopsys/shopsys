@@ -149,10 +149,6 @@ class ProductRepository extends BaseProductRepository
      */
     public function getProductsWithAvailability(Availability $availability): array
     {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->where('p.availability = :availability')
-            ->setParameter('availability', $availability)
-            ->getQuery()
-            ->getResult();
+        throw new \Exception('Product Availability is deprecated');
     }
 }

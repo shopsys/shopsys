@@ -65,8 +65,8 @@ class RemoveMappingsSubscriber implements EventSubscriber
 
     /**
      * @param string $attributeName
-     * @param array $mapping
-     * @return array
+     * @param string[] $mapping
+     * @return string[]
      */
     private function removeMappingByKey(string $attributeName, array $mapping): array
     {
@@ -79,13 +79,14 @@ class RemoveMappingsSubscriber implements EventSubscriber
 
     /**
      * @param string $attributeName
-     * @param array $mapping
-     * @return array
+     * @param string[] $mapping
+     * @return string[]
      */
     private function removeMappingByValue(string $attributeName, array $mapping): array
     {
-        if (in_array($attributeName, $mapping, true)) {
-            unset($mapping[array_search($attributeName, $mapping, true)]);
+        $key = array_search($attributeName, $mapping, true);
+        if ($key !== false) {
+            unset($mapping[$key]);
         }
 
         return $mapping;

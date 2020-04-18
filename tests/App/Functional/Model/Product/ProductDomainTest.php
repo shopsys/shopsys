@@ -55,7 +55,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->descriptions[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
 
         $this->setProductTypes($productData);
         $this->setVats($productData);
@@ -89,7 +89,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->descriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setProductTypes($productData);
         $this->setVats($productData);
 

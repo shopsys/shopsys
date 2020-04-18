@@ -219,8 +219,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'disabled' => true,
                 'label' => t('Use stocks'),
-            ])
-        ;
+            ]);
     }
 
     /**

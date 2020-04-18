@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\Model\Product\Exceptions\DeprecatedAvailabilityPropertyException;
+use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -58,7 +57,7 @@ final class AvailabilityFacadeTest extends TransactionFunctionalTestCase
 
         try {
             $this->assertSame($availabilityToReplaceWith, $product->getAvailability());
-        } catch (DeprecatedAvailabilityPropertyException $exception) {
+        } catch (DeprecatedAvailabilityPropertyFromProductException $exception) {
             $this->assertSame($availabilityToReplaceWith, $exception->getAvailability());
         }
     }

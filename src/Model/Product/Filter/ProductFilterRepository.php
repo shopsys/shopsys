@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Product\Filter;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository as BaseProductFilterRepository;
 
 /**
@@ -24,15 +25,36 @@ class ProductFilterRepository extends BaseProductFilterRepository
      */
     public function filterByStock(QueryBuilder $productsQueryBuilder, $filterByStock)
     {
-        if ($filterByStock) {
-            $this->queryBuilderExtender->addOrExtendJoin(
-                $productsQueryBuilder,
-                Availability::class,
-                'a',
-                'p.availability = a'
-            );
-            $productsQueryBuilder->andWhere('a.dispatchTime = :dispatchTime');
-            $productsQueryBuilder->setParameter('dispatchTime', static::DAYS_FOR_STOCK_FILTER);
-        }
+        throw new \Exception('Filter by Stock is deprecated');
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     */
+    public function applyFiltering(
+        QueryBuilder $productsQueryBuilder,
+        ProductFilterData $productFilterData,
+        PricingGroup $pricingGroup
+    ) {
+        $this->filterByPrice(
+            $productsQueryBuilder,
+            $productFilterData->minimalPrice,
+            $productFilterData->maximalPrice,
+            $pricingGroup
+        );
+        $this->filterByFlags(
+            $productsQueryBuilder,
+            $productFilterData->flags
+        );
+        $this->filterByBrands(
+            $productsQueryBuilder,
+            $productFilterData->brands
+        );
+        $this->parameterFilterRepository->filterByParameters(
+            $productsQueryBuilder,
+            $productFilterData->parameters
+        );
     }
 }

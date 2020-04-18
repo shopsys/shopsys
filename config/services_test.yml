@@ -96,7 +96,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation: '@App\Model\Product\Availability\ProductAvailabilityCalculation'
 
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: '@App\Model\Product\Availability\ProductAvailabilityRecalculator'
+    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade: '@App\Model\Product\Availability\AvailabilityFacade'
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
 
