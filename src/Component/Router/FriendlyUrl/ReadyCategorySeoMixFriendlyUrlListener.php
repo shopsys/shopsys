@@ -60,7 +60,10 @@ class ReadyCategorySeoMixFriendlyUrlListener
             $parameterId = $readyCategorySeoMixParameterParameterValue->getParameter()->getId();
             $parameterValueId = $readyCategorySeoMixParameterParameterValue->getParameterValue()->getId();
 
-            $queryArray['product_filter_form']['parameters'][$parameterId] = [];
+            if (!isset($queryArray['product_filter_form']['parameters'][$parameterId])) {
+                $queryArray['product_filter_form']['parameters'][$parameterId] = [];
+            }
+
             $queryArray['product_filter_form']['parameters'][$parameterId][] = $parameterValueId;
         }
 

@@ -401,7 +401,7 @@ class ProductController extends FrontBaseController
 
             $seoH1 = $readyCategorySeoMix->getH1();
             $description = $readyCategorySeoMix->getDescription() ?? $category->getDescription($domainId);
-            $seoTitle = $readyCategorySeoMix->getTitle() ?? $category->getSeoTitle($domainId);
+            $seoTitle = $readyCategorySeoMix->getTitle() ?? $seoH1;
             $seoMetaDescription = $readyCategorySeoMix->getMetaDescription() ?? $category->getSeoMetaDescription($domainId);
         }
 
@@ -504,6 +504,7 @@ class ProductController extends FrontBaseController
             'orderingModesNames' => $productListOrderingConfig->getSupportedOrderingModesNamesIndexedById(),
             'activeOrderingModeId' => $orderingModeId,
             'cookieName' => $productListOrderingConfig->getCookieName(),
+            'isReadyCategorySeoMixPage' => false,
         ]);
     }
 
@@ -522,6 +523,7 @@ class ProductController extends FrontBaseController
             'orderingModesNames' => $productListOrderingConfig->getSupportedOrderingModesNamesIndexedById(),
             'activeOrderingModeId' => $orderingModeId,
             'cookieName' => $productListOrderingConfig->getCookieName(),
+            'isReadyCategorySeoMixPage' => false,
         ]);
     }
 

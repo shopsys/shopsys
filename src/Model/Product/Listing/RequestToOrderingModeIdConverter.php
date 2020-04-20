@@ -41,9 +41,9 @@ class RequestToOrderingModeIdConverter extends BaseRequestToOrderingModeIdConver
         }
 
         if ($readyCategorySeoMixId !== null) {
-            $readyCategorySeoMixOrdering = $this->getReadyCategorySeoMixOrderingModeId($readyCategorySeoMixId);
-            if ($readyCategorySeoMixOrdering !== null) {
-                return $readyCategorySeoMixOrdering;
+            $readyCategorySeoMixOrderingModeId = $this->getReadyCategorySeoMixOrderingModeId($readyCategorySeoMixId);
+            if ($readyCategorySeoMixOrderingModeId !== null) {
+                return $readyCategorySeoMixOrderingModeId;
             }
         }
 
@@ -58,7 +58,7 @@ class RequestToOrderingModeIdConverter extends BaseRequestToOrderingModeIdConver
     private function getForceOrderingModeId(
         Request $request,
         ProductListOrderingConfig $productListOrderingConfig
-    ) {
+    ): ?string {
         return $request->cookies->get('force-' . $productListOrderingConfig->getCookieName());
     }
 
@@ -66,7 +66,7 @@ class RequestToOrderingModeIdConverter extends BaseRequestToOrderingModeIdConver
      * @param int $readyCategorySeoMixId
      * @return string|null
      */
-    private function getReadyCategorySeoMixOrderingModeId(?int $readyCategorySeoMixId = null): ?string
+    private function getReadyCategorySeoMixOrderingModeId(int $readyCategorySeoMixId): ?string
     {
         $readyCategorySeoMix = $this->readyCategorySeoMixFacade->findById($readyCategorySeoMixId);
         return $readyCategorySeoMix->getOrdering();

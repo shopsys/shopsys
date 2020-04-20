@@ -23,6 +23,5 @@
 {% endblock %}
 
 {% block grid_value_cell_id_friendlyUrlSlug %}
-    {% set url = getAbsoluteUrlOfReadyCategorySeoMix(row.rcsm_id) %}
-    <a href="{{ url }}" target="_blank">{{ row.fu_slug }}</a>
+    <a href="{{ getAbsoluteUrlOfReadyCategorySeoMix(row.rcsmId) }}" target="_blank">{{ row.fuSlug }}</a>
 {% endblock %}

@@ -48,12 +48,12 @@ class ReadyCategorySeoMixGridFactory
     {
         $queryBuilder = $this->getAllByDomainIdQueryBuilder($domainId, $locale);
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'rcsm_id');
+        $dataSource = new QueryBuilderDataSource($queryBuilder, 'rcsmId');
 
         $grid = $this->gridFactory->create('ready_category_seo_mix', $dataSource);
 
         $grid->addColumn('categoryName', 'categoryName', t('Název kategorie'));
-        $grid->addColumn('friendlyUrlSlug', 'fu_slug', t('Hlavní URL'));
+        $grid->addColumn('friendlyUrlSlug', 'fuSlug', t('Hlavní URL'));
         $grid->addColumn('parameters', 'rcsm.choseCategorySeoMixCombinationJson', t('Kombinace parametrů a jejich hodnot parametrů'));
         $grid->addColumn('flagName', 'flagName', t('Příznak'));
         $grid->addColumn('ordering', 'rcsm.ordering', t('Řazení'));
@@ -63,7 +63,7 @@ class ReadyCategorySeoMixGridFactory
             'categoryId' => 'categoryId',
             'choseCategorySeoMixCombinationJson' => 'rcsm.choseCategorySeoMixCombinationJson',
         ]);
-        $grid->addDeleteActionColumn('admin_categoryseo_delete', ['id' => 'rcsm_id']);
+        $grid->addDeleteActionColumn('admin_categoryseo_delete', ['id' => 'rcsmId']);
 
         $grid->setTheme('Admin/Content/CategorySeo/listGrid.html.twig');
 
@@ -80,7 +80,7 @@ class ReadyCategorySeoMixGridFactory
     public function getAllByDomainIdQueryBuilder(int $domainId, string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()
-            ->select('rcsm.id as rcsm_id, c.id as categoryId, ct.name as categoryName, fu.slug as fu_slug, rcsm.choseCategorySeoMixCombinationJson, ft.name as flagName, rcsm.ordering')
+            ->select('rcsm.id as rcsmId, c.id as categoryId, ct.name as categoryName, fu.slug as fuSlug, rcsm.choseCategorySeoMixCombinationJson, ft.name as flagName, rcsm.ordering')
             ->from(ReadyCategorySeoMix::class, 'rcsm')
             ->andWhere('rcsm.domainId = :domainId')
             ->join('rcsm.category', 'c')

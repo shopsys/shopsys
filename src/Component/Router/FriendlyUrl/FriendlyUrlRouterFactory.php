@@ -23,7 +23,7 @@ class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
     /**
      * @param mixed $friendlyUrlRouterResourceFilepath
      * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      */
     public function __construct(

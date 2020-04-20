@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
+use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -19,20 +20,28 @@ class CategorySeoExtension extends AbstractExtension
     private $parameterFacade;
 
     /**
-     * @var \Symfony\Component\Routing\RouterInterface
+     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
      */
-    private $router;
+    private $domainRouterFactory;
+
+    /**
+     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
+     */
+    private $readyCategorySeoMixFacade;
 
     /**
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(
         ParameterFacade $parameterFacade,
-        RouterInterface $router
+        DomainRouterFactory $domainRouterFactory,
+        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
     ) {
         $this->parameterFacade = $parameterFacade;
-        $this->router = $router;
+        $this->domainRouterFactory = $domainRouterFactory;
+        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
     }
 
     /**
@@ -61,10 +70,19 @@ class CategorySeoExtension extends AbstractExtension
 
     /**
      * @param int $readyCategorySeoMixId
+     * @return string
      */
-    public function getAbsoluteUrlOfReadyCategorySeoMix(int $readyCategorySeoMixId)
+    public function getAbsoluteUrlOfReadyCategorySeoMix(int $readyCategorySeoMixId): string
     {
-        return $this->router->generate('front_category_seo', [
+        $readyCategorySeoMix = $this->readyCategorySeoMixFacade->findById($readyCategorySeoMixId);
+
+        if ($readyCategorySeoMix === null) {
+            return '#';
+        }
+
+        $readyCategorySeoMixDomainRouter = $this->domainRouterFactory->getRouter($readyCategorySeoMix->getDomainId());
+
+        return $readyCategorySeoMixDomainRouter->generate('front_category_seo', [
             'id' => $readyCategorySeoMixId,
         ], UrlGeneratorInterface::ABSOLUTE_URL);
     }

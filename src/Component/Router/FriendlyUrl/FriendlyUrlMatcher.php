@@ -20,7 +20,7 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
     private $readyCategorySeoMixRepository;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      */
     public function __construct(

@@ -72,9 +72,9 @@ class ProductExtension extends AbstractExtension
             return '';
         }
 
-        $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
-
-        $supportedOrderingModesNamesIndexedById = $productListOrderingConfig->getSupportedOrderingModesNamesIndexedById();
+        $supportedOrderingModesNamesIndexedById = $this->productListOrderingModeForListFacade
+            ->getProductListOrderingConfig()
+            ->getSupportedOrderingModesNamesIndexedById();
 
         return $supportedOrderingModesNamesIndexedById[$orderingId] ?? t('Neplatné řazení') . ' ' . $orderingId;
     }
