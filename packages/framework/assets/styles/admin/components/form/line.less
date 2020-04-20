@@ -305,8 +305,14 @@
     }
 
     &__count {
-        display: table;
-        height: 32px;
+        display: inline-block;
+        margin-top: 5px;
+
+        @media @query-lg {
+            display: table;
+            height: 32px;
+            margin-top: 0;
+        }
 
         &__val {
             display: table-cell;
