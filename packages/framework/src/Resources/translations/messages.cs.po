@@ -553,8 +553,8 @@ msgstr "Cron se serviceId `%serviceId%` byl naplánován"
 msgid "Cropping"
 msgstr "Ořezávání"
 
-msgid "Currencies"
-msgstr "Měny"
+msgid "Currencies and rounding"
+msgstr "Měny a zaokrouhlování"
 
 msgid "Currency <strong>{{ name }}</strong> deleted"
 msgstr "Měna <strong>{{ name }}</strong> byla smazána"
@@ -2337,9 +2337,6 @@ msgstr "DPH <strong>{{ name }}</strong> bylo smazáno"
 
 msgid "VAT <strong>{{ name }}</strong> deleted and replaced by <strong>{{ newName }}</strong>."
 msgstr "DPH <strong>{{ name }}</strong> bylo smazáno a bylo nahrazeno <strong>{{ newName }}</strong>."
-
-msgid "VAT and rounding"
-msgstr "DPH a zaokrouhlování"
 
 msgid "VAT rate (%)"
 msgstr "Výše DPH (%)"

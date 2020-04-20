@@ -553,7 +553,7 @@ msgstr ""
 msgid "Cropping"
 msgstr ""
 
-msgid "Currencies"
+msgid "Currencies and rounding"
 msgstr ""
 
 msgid "Currency <strong>{{ name }}</strong> deleted"
@@ -2336,9 +2336,6 @@ msgid "VAT <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "VAT <strong>{{ name }}</strong> deleted and replaced by <strong>{{ newName }}</strong>."
-msgstr ""
-
-msgid "VAT and rounding"
 msgstr ""
 
 msgid "VAT rate (%)"
