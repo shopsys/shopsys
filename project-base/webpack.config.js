@@ -69,6 +69,7 @@ Encore
     }))
     .addPlugin(new CopyPlugin([
         { from: 'web/bundles/fpjsformvalidator', to: '../../assets/js/bundles/fpjsformvalidator', force: true },
+        { from: 'node_modules/@shopsys/framework/public/admin', to: '../../web/public/admin', force: true },
         { from: 'assets/public', to: '../../web/public', ignore: ['assets/public/admin/svg/**/*'], force: true }
     ]))
 ;
