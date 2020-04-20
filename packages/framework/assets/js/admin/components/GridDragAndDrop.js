@@ -6,9 +6,9 @@ import Translator from 'bazinga-translator';
 
 export default class GridDragAndDrop {
 
-    constructor () {
+    constructor ($content) {
         const _this = this;
-        $('.js-drag-and-drop-grid-rows').sortable({
+        $content.find('.js-drag-and-drop-grid-rows').sortable({
             cursor: 'move',
             handle: '.cursor-move',
             items: '.js-grid-row',
@@ -17,12 +17,12 @@ export default class GridDragAndDrop {
             update: (event) => _this.onUpdate(event)
         });
 
-        $('.js-grid').each(function () {
+        $content.find('.js-grid').each(function () {
             const $grid = $(this);
             _this.initGrid($grid);
         });
 
-        this.unifyMultipleGrids();
+        this.unifyMultipleGrids($content);
     }
 
     initGrid ($grid) {
@@ -55,10 +55,10 @@ export default class GridDragAndDrop {
         }
     }
 
-    unifyMultipleGrids () {
-        const $gridSaveButtons = $('.js-drag-and-drop-grid-submit');
-        const $gridsOnPage = $('.js-grid[data-drag-and-drop-ordering-entity-class]');
-        const $saveAllButton = $('.js-drag-and-drop-grid-submit-all');
+    unifyMultipleGrids ($content) {
+        const $gridSaveButtons = $content.find('.js-drag-and-drop-grid-submit');
+        const $gridsOnPage = $content.find('.js-grid[data-drag-and-drop-ordering-entity-class]');
+        const $saveAllButton = $content.find('.js-drag-and-drop-grid-submit-all');
 
         if ($saveAllButton.length === 1) {
             $gridSaveButtons.hide();
@@ -87,7 +87,7 @@ export default class GridDragAndDrop {
 
         const _this = this;
         Ajax.ajax({
-            loaderElement: '.js-drag-and-drop-grid-submit, js-drag-and-drop-grid-submit-all',
+            loaderElement: $grid.find('.js-drag-and-drop-grid-submit, js-drag-and-drop-grid-submit-all'),
             url: $grid.data('drag-and-drop-url-save-ordering'),
             type: 'POST',
             data: data,
@@ -122,9 +122,9 @@ export default class GridDragAndDrop {
         return rowIds;
     }
 
-    static init () {
+    static init ($content) {
         // eslint-disable-next-line no-new
-        new GridDragAndDrop();
+        new GridDragAndDrop($content);
     }
 }
 

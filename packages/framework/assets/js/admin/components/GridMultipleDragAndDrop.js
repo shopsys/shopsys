@@ -5,23 +5,23 @@ import Translator from 'bazinga-translator';
 
 export default class GridMultipleDragAndDrop {
 
-    constructor () {
-        this.toggleRowHolders();
+    constructor ($content) {
+        this.toggleRowHolders($content);
 
         const _this = this;
-        $('.js-multiple-grids-save-all-button').click((event) => this.saveOrdering(event));
-        $('.js-multiple-grids-rows-unified').sortable({
+        $content.find('.js-multiple-grids-save-all-button').click((event) => this.saveOrdering($content, event));
+        $content.find('.js-multiple-grids-rows-unified').sortable({
             cursor: 'move',
             handle: '.cursor-move',
             items: '.js-grid-row, .js-grid-row-holder',
             placeholder: 'in-drop-place',
             revert: 200,
-            change: () => _this.onUpdate(),
-            update: () => _this.onUpdate()
+            change: () => _this.onUpdate($content),
+            update: () => _this.onUpdate($content)
         });
     }
 
-    saveOrdering (event) {
+    saveOrdering ($content, event) {
         const $saveButton = $(event.target);
         const $grids = $saveButton.closest('.js-multiple-grids-rows-unified').find('.js-grid');
         const data = {
@@ -29,7 +29,7 @@ export default class GridMultipleDragAndDrop {
         };
 
         Ajax.ajax({
-            loaderElement: '.js-multiple-grids-save-all-button',
+            loaderElement: $content.find('.js-multiple-grids-save-all-button'),
             url: $saveButton.data('drag-and-drop-url-save-ordering'),
             type: 'POST',
             data: data,
@@ -67,22 +67,22 @@ export default class GridMultipleDragAndDrop {
         return rowIdsIndexedByGridId;
     }
 
-    toggleRowHolders () {
-        $('.js-multiple-grids-rows-unified .js-grid').each(function () {
+    toggleRowHolders ($content) {
+        $content.find('.js-multiple-grids-rows-unified .js-grid').each(function () {
             const gridRowsCount = $(this).find('.js-grid-row:not(.ui-sortable-helper):not(.js-grid-row-holder), .in-drop-place').length;
             const $rowHolder = $(this).find('.js-grid-row-holder');
             $rowHolder.toggle(gridRowsCount === 0);
         });
     }
 
-    onUpdate () {
-        $('.js-multiple-grids-save-all-button').removeClass('btn--disabled');
-        this.toggleRowHolders();
+    onUpdate ($content) {
+        $content.find('.js-multiple-grids-save-all-button').removeClass('btn--disabled');
+        this.toggleRowHolders($content);
     }
 
-    static init () {
+    static init ($content) {
         // eslint-disable-next-line no-new
-        new GridMultipleDragAndDrop();
+        new GridMultipleDragAndDrop($content);
     }
 }
 
