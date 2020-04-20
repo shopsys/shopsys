@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-stretch as base
+FROM php:7.4-fpm-buster as base
 
 ARG project_root=.
 
@@ -44,7 +44,7 @@ RUN apt-get update && \
     apt-get clean
 
 # "gd" extension needs to have specified jpeg and freetype dir for jpg/jpeg images support
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # install necessary tools for running application
 RUN docker-php-ext-install \
