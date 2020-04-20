@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
@@ -17,6 +18,11 @@ use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
 {
     use SymfonyTestContainer;
+
+    /**
+     * @var string[]|null
+     */
+    private static $phpUnitTestCaseProperties;
 
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Client
@@ -50,6 +56,39 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     {
         parent::setUp();
         $this->setUpDomain();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $reflectionClass = new \ReflectionClass($this);
+        $properties = $reflectionClass->getProperties();
+        $excludedProperties = self::getPhpUnitTestCaseProperties();
+        foreach ($properties as $property) {
+            if (in_array($property->getName(), $excludedProperties, true) === false) {
+                $property->setAccessible(true);
+                $property->setValue($this, null);
+            }
+        }
+    }
+
+    /**
+     * @return string[]
+     */
+    private static function getPhpUnitTestCaseProperties(): array
+    {
+        if (self::$phpUnitTestCaseProperties === null) {
+            self::$phpUnitTestCaseProperties = [];
+
+            $testCaseReflectionClass = new \ReflectionClass(TestCase::class);
+            $properties = $testCaseReflectionClass->getProperties();
+            foreach ($properties as $property) {
+                self::$phpUnitTestCaseProperties[] = $property->getName();
+            }
+        }
+
+        return self::$phpUnitTestCaseProperties;
     }
 
     /**
