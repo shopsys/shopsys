@@ -18,10 +18,10 @@ This article describes a quick way to extend your entity and the internals of en
         * `User`
     * keep entity and table annotations
     * you can add new properties and use annotations to configure ORM
-* Add information about the entity extension into the container configuration
+* Entities from namespace `App\` extending entities from namespace `Shopsys\` are automatically extended, if you want to extend from or to different namespace you need to add information about the entity extension into the container configuration
     * add it to the configuration parameter `shopsys.entity_extension.map` placed in `config/parameters_common.yml` file
     * use the parent entity name as a key and the extended entity name as a value
-    * eg. `Shopsys\FrameworkBundle\Model\Product\Product: App\Model\Product\Product`
+    * eg. `MyVendor\MyLibrary\Model\Entity: App\Model\ExtendedEntity`
 * Create a new data object in your `src/Model` directory that extends already existing framework entity data
 * Create a factory for this entity data that extends existing framework factory or implements the factory interface from the framework
     * Rewrite Symfony configuration for the interface to alias your factory
