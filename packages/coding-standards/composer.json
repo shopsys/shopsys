@@ -16,7 +16,7 @@
         "friendsofphp/php-cs-fixer": "^2.14.0",
         "jakub-onderka/php-parallel-lint": "^0.9",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
-        "slevomat/coding-standard": "^6.1",
+        "slevomat/coding-standard": "~6.2.0",
         "squizlabs/php_codesniffer": "^3.5.0",
         "symplify/package-builder": "7.2.2",
         "symplify/easy-coding-standard": "7.2.2",
