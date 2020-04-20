@@ -172,7 +172,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade: '@App\Model\Product\Listing\ProductListOrderingModeForBrandFacade'
+
     Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade: '@App\Model\Product\Listing\ProductListOrderingModeForListFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade: '@App\Model\Product\Listing\ProductListOrderingModeForSearchFacade'
 
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory: '@App\Model\Product\Parameter\ParameterGridFactory'
 
