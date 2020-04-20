@@ -46,12 +46,12 @@
                 </div>
 
 
-                <div id="{{ form.billingAddressData.vars.id }}">
+                <div id="{{ form.billingAddressData.vars.id }}" class="js-billing-address-form">
                     <div class="wrap-box">
                         <h2 class="wrap-box__title">{{ 'Company data'|trans }}</h2>
                         <div class="wrap-box__in">
                             {{ form_row(form.billingAddressData.companyCustomer, {
-                                attr: { class: 'js-checkbox-toggle', 'data-checkbox-toggle-container-id': 'js-company-fields' },
+                                attr: { class: 'js-checkbox-toggle js-billing-address-company-customer', 'data-checkbox-toggle-container-id': 'js-company-fields' },
                                 label: 'I buy on company behalf'|trans})
                             }}
                             <div id="js-company-fields">
@@ -74,13 +74,13 @@
                     </div>
                 </div>
 
-                <div id="{{ form.deliveryAddressData.vars.id }}" class="wrap-box">
+                <div id="{{ form.deliveryAddressData.vars.id }}" class="wrap-box js-delivery-address-form">
                     <h2 class="wrap-box__title">{{ 'Delivery addresses'|trans }}</h2>
                     <div class="wrap-box__in">
 
                         {{ form_row(form.customerUserData.defaultDeliveryAddress) }}
                         {{ form_row(form.deliveryAddressData.addressFilled, {
-                            attr: { class: 'js-checkbox-toggle js-delivery-address-toggle', 'data-checkbox-toggle-container-id': 'js-delivery-address-fields' },
+                            attr: { class: 'js-checkbox-toggle js-delivery-address-address-filled', 'data-checkbox-toggle-container-id': 'js-delivery-address-fields' },
                             label: 'New delivery address'|trans})
                         }}
 
