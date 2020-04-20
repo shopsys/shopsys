@@ -76,7 +76,8 @@ class SliderController extends AdminBaseController
             ->select('s')
             ->from(SliderItem::class, 's')
             ->where('s.domainId = :selectedDomainId')
-            ->setParameter('selectedDomainId', $this->adminDomainTabsFacade->getSelectedDomainId());
+            ->setParameter('selectedDomainId', $this->adminDomainTabsFacade->getSelectedDomainId())
+            ->orderBy('s.position');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
         $grid = $this->gridFactory->create('sliderItemList', $dataSource);
