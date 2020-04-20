@@ -367,13 +367,16 @@ class ProductFacade
 
         $toFlush = [];
         foreach ($productParameterValuesData as $productParameterValueData) {
+            $parameterValue = $this->parameterRepository->findOrCreateParameterValueByValueTextAndLocale(
+                $productParameterValueData->parameterValueData->text,
+                $productParameterValueData->parameterValueData->locale
+            );
+            $parameterValue->edit($productParameterValueData->parameterValueData);
+
             $productParameterValue = $this->productParameterValueFactory->create(
                 $product,
                 $productParameterValueData->parameter,
-                $this->parameterRepository->findOrCreateParameterValueByValueTextAndLocale(
-                    $productParameterValueData->parameterValueData->text,
-                    $productParameterValueData->parameterValueData->locale
-                )
+                $parameterValue
             );
             $this->em->persist($productParameterValue);
             $toFlush[] = $productParameterValue;
