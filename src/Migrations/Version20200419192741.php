@@ -14,7 +14,7 @@ class Version20200419192741 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE horizontal_menu_items ADD is_furniture BOOLEAN NOT NULL default \'no\';');
+        $this->sql('ALTER TABLE horizontal_menu_items ADD is_furniture BOOLEAN NOT NULL default FALSE;');
         $this->sql('ALTER TABLE horizontal_menu_items ALTER is_furniture DROP DEFAULT;');
     }
 
