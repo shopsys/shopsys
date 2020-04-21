@@ -1378,6 +1378,9 @@ There you can find links to upgrade notes for other versions too.
 - use strict comparison in category panel template to prevent errors ([#1782](https://github.com/shopsys/shopsys/pull/1782))
     - see #project-base-diff to update your project
 
+- fix not working popup window on single image ([#1630](https://github.com/shopsys/shopsys/pull/1630))
+    - add missing javascript for popup single image for class `js-popup-image`, see #project-base-diff
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
