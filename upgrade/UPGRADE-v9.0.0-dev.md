@@ -1374,7 +1374,7 @@ There you can find links to upgrade notes for other versions too.
 - remove unnecessary entity extensions from parameters_common.yml ([#1663](https://github.com/shopsys/shopsys/pull/1663))
     - there is no longer need to register entities in `App` namespace extending entities from `Shopsys` namespace, so remove all necessary uses, see #project-base-diff for example
 
-- update to strict comparison in order to avoid errors ([#1782](https://github.com/shopsys/shopsys/pull/1782))
+- use strict comparison in category panel template to prevent errors ([#1782](https://github.com/shopsys/shopsys/pull/1782))
     - see #project-base-diff to update your project
 
 ### Tools
