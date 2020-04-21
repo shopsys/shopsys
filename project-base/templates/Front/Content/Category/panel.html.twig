@@ -5,7 +5,7 @@
         {% if categoriesWithLazyLoadedVisibleChildren[0].category.level > 2 %} list-menu--dropdown{% endif %}"
         {% if isFirstLevel %}id="js-categories"{% endif %}>
         {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
-            {% set isCurrentCategory = (currentCategory is not null and currentCategory == categoryWithLazyLoadedVisibleChildren.category) %}
+            {% set isCurrentCategory = (currentCategory is not null and currentCategory is same as(categoryWithLazyLoadedVisibleChildren.category)) %}
             <li class="list-menu__item js-category-item
                 {% if categoryWithLazyLoadedVisibleChildren.category.level == 1 %}js-hover-intent{% endif %}"
                 data-hover-intent-class-for-open="active intented"
