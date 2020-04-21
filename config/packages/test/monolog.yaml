@@ -1,16 +1,13 @@
 # disable logging in tests
 monolog:
     handlers:
+        # display cron.DEBUG messages in console for -v, -vv and -vvv verbosities
+        console_output:
+            type: "null"
+        cron_output:
+            type: "null"
         main:
             type: "null"
             excluded_404s: false
-        nested:
-            type: "null"
-        cron:
-            type: "null"
-        slow:
-            type: "null"
-        cron_console_output:
-            type: "null"
-        console_output:
+        log_stream:
             type: "null"

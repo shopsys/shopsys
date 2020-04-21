@@ -1,7 +1,28 @@
 monolog:
     handlers:
+        # display cron.DEBUG messages in console for -v, -vv and -vvv verbosities
+        console_output:
+            type: console
+            verbosity_levels:
+                VERBOSITY_NORMAL: INFO
+                VERBOSITY_VERBOSE: DEBUG
+                VERBOSITY_VERY_VERBOSE: DEBUG
+                VERBOSITY_DEBUG: DEBUG
+            channels: cron
+        cron_output:
+            type: stream
+            path: "%shopsys.log_stream%"
+            channels: cron
+            level: debug
+            formatter: "monolog.formatter.line"
+            # log all console output to stream and stop propagation
+            bubble: false
         main:
-            # change "fingers_crossed" handler to "group" that works as a passthrough to "nested"
-            type: group
-            members: [ nested ]
+            type: "null"
+            level: emergency
             excluded_404s: false
+        log_stream:
+            type: stream
+            path: "%shopsys.log_stream%"
+            level: info
+            formatter: "monolog.formatter.line"

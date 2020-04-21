@@ -19,7 +19,7 @@ parameters:
     shopsys.image_url_prefix: '/%shopsys.content_dir_name%/images/'
     shopsys.javascript_sources_dir: '%shopsys.resources_dir%/scripts'
     shopsys.javascript_url_prefix: /assets/scripts/
-    shopsys.log_stream: 'php://stdout'
+    shopsys.log_stream: '/tmp/log-pipe'
     shopsys.resources_dir: '%shopsys.root_dir%/src/Resources'
     shopsys.root_dir: '%kernel.root_dir%/..'
     shopsys.sitemaps_dir: '/web%shopsys.sitemaps_url_prefix%'
