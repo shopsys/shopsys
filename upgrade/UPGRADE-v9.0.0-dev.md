@@ -1381,6 +1381,9 @@ There you can find links to upgrade notes for other versions too.
 - fix not working popup window on single image ([#1630](https://github.com/shopsys/shopsys/pull/1630))
     - add missing javascript for popup single image for class `js-popup-image`, see #project-base-diff
 
+- fix validation of addresses in customer section ([#1797](https://github.com/shopsys/shopsys/pull/1797)
+    - see #project-base-diff to update you
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
