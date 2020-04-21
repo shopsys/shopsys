@@ -36,6 +36,11 @@ class StockData
      */
     public $city;
 
+    /**
+     * @var string|null
+     */
+    public $openingHours;
+
     public function __construct()
     {
         $this->centralStock = false;

@@ -64,6 +64,13 @@ class Stock
     protected $city;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $openingHours;
+
+    /**
      * @param \App\Model\Stock\StockData $stockData
      */
     public function __construct(StockData $stockData)
@@ -74,6 +81,7 @@ class Stock
         $this->externalId = $stockData->externalId;
         $this->street = $stockData->street;
         $this->city = $stockData->city;
+        $this->openingHours = $stockData->openingHours;
     }
 
     /**
@@ -86,6 +94,7 @@ class Stock
         $this->externalId = $stockData->externalId;
         $this->street = $stockData->street;
         $this->city = $stockData->city;
+        $this->openingHours = $stockData->openingHours;
     }
 
     /**
@@ -142,5 +151,13 @@ class Stock
     public function getCity(): ?string
     {
         return $this->city;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOpeningHours(): ?string
+    {
+        return $this->openingHours;
     }
 }

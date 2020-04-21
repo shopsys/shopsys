@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -102,6 +103,13 @@ class StockFormType extends AbstractType
                 'constraints' => [
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'Město nesmí být delší než {{ limit }} znaků']),
                 ],
+            ]
+        )->add(
+            'openingHours',
+            TextareaType::class,
+            [
+                'required' => false,
+                'label' => t('Otevírací doba'),
             ]
         );
 
