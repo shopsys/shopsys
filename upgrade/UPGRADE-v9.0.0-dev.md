@@ -1384,6 +1384,9 @@ There you can find links to upgrade notes for other versions too.
 - fix validation of addresses in customer section ([#1797](https://github.com/shopsys/shopsys/pull/1797)
     - see #project-base-diff to update you
 
+- fix symfony `dump()` function ([#1745](https://github.com/shopsys/shopsys/pull/1745))
+    - see #project-base-diff to update your project
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
