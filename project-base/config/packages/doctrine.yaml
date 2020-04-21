@@ -14,7 +14,6 @@ doctrine:
         types:
             money:
                 class: \Shopsys\FrameworkBundle\Component\Doctrine\MoneyType
-                commented: false
             tsvector:
                 class: \Intaro\PostgresSearchBundle\DBAL\TsvectorType
                 commented: false

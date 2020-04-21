@@ -56,4 +56,13 @@ final class MoneyType extends Type
             throw ConversionException::conversionFailedFormat($value, $this->getName(), 'numeric', $e);
         }
     }
+
+    /**
+     * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
+     * @return bool
+     */
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
+    {
+        return true;
+    }
 }
