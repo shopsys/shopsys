@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Component\Form\FormBuilderHelper;
 use App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer;
 use App\Model\Category\Category;
 use App\Model\Product\Parameter\ParameterRepository;
@@ -23,6 +24,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryFormTypeExtension extends AbstractTypeExtension
 {
+    public const DISABLED_FIELDS = [
+        'name',
+        'parent',
+    ];
+
     /**
      * @var \App\Model\Svg\SvgProvider
      */
@@ -44,21 +50,29 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     private $productSeriesIdsToProductSeriesTransformer;
 
     /**
+     * @var \App\Component\Form\FormBuilderHelper
+     */
+    private $formBuilderHelper;
+
+    /**
      * @param \App\Model\Svg\SvgProvider $svgProvider
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      * @param \App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer $productSeriesIdsToProductSeriesTransformer
+     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      */
     public function __construct(
         SvgProvider $svgProvider,
         ParameterRepository $parameterRepository,
         ProductSeriesFacade $productSeriesFacade,
-        ProductSeriesIdsToProductSeriesTransformer $productSeriesIdsToProductSeriesTransformer
+        ProductSeriesIdsToProductSeriesTransformer $productSeriesIdsToProductSeriesTransformer,
+        FormBuilderHelper $formBuilderHelper
     ) {
         $this->svgProvider = $svgProvider;
         $this->parameterRepository = $parameterRepository;
         $this->productSeriesFacade = $productSeriesFacade;
         $this->productSeriesIdsToProductSeriesTransformer = $productSeriesIdsToProductSeriesTransformer;
+        $this->formBuilderHelper = $formBuilderHelper;
     }
 
     /**
@@ -92,6 +106,8 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $this->buildFilterParameters($builder, $options['category']);
 
         $this->buildCategoryProductSeriesBlock($builder);
+
+        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
     /**
