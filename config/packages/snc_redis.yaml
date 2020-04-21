@@ -24,6 +24,12 @@ snc_redis:
             dsn: 'redis://%redis_host%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:framework:annotations:'
+        friendly_url:
+            type: 'phpredis'
+            alias: 'friendly_url'
+            dsn: 'redis://%redis_host%'
+            options:
+                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:friendly_url:'
         global:
             type: 'phpredis'
             alias: 'global'

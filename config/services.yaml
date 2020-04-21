@@ -92,6 +92,17 @@ services:
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory
 
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository: '@App\Component\Router\FriendlyUrl\FriendlyUrlRepository'
+
+    shopsys.shop.component.friendly_url.cache_provider:
+        class: Doctrine\Common\Cache\RedisCache
+        calls:
+            - { method: setRedis, arguments: ['@snc_redis.friendly_url'] }
+
+    App\Component\Router\FriendlyUrl\FriendlyUrlCacheFacade:
+        arguments:
+            - '@shopsys.shop.component.friendly_url.cache_provider'
+
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface: '@App\Model\Order\PromoCode\PromoCodeDataFactory'

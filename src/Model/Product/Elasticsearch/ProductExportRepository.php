@@ -26,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -38,7 +39,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
