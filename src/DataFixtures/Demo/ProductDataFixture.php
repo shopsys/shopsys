@@ -13,6 +13,7 @@ use App\Model\Stock\StockRepository;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -78,24 +79,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     protected $parameterDataFactory;
 
     /**
-     * @var \App\Model\Product\Parameter\Parameter[]
-     */
-    protected $parameters;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterGroup[]
-     */
-    protected $parameterGroups;
-
-    /**
      * @var int
      */
     protected $productNo = 1;
 
     /**
-     * @var \App\Model\Product\Product[]
+     * @var int[]
      */
-    protected $productsByCatnum = [];
+    protected $productIdsByCatnum = [];
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
@@ -133,6 +124,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     protected $productStockDataFactory;
 
     /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    private $em;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -148,6 +144,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \App\Model\Stock\ProductStockDataFactory $productStockDataFactory
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -164,7 +161,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         Generator $generator,
         ParameterGroupFacade $parameterGroupFacade,
         StockRepository $stockRepository,
-        ProductStockDataFactory $productStockDataFactory
+        ProductStockDataFactory $productStockDataFactory,
+        EntityManagerInterface $em
     ) {
         $this->productFacade = $productFacade;
         $this->productVariantFacade = $productVariantFacade;
@@ -181,6 +179,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->parameterGroupFacade = $parameterGroupFacade;
         $this->stockRepository = $stockRepository;
         $this->productStockDataFactory = $productStockDataFactory;
+        $this->em = $em;
     }
 
     /**
@@ -5822,11 +5821,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
             /** @var \App\Model\Product\Product $mainProduct */
-            $mainProduct = $this->productsByCatnum[$mainVariantCatnum];
+            $mainProduct = $this->getProductFromCacheByCatnum($mainVariantCatnum);
 
             $variants = [];
             foreach ($variantsCatnums as $variantCatnum) {
-                $variants[] = $this->productsByCatnum[$variantCatnum];
+                $variants[] = $this->getProductFromCacheByCatnum($variantCatnum);
             }
 
             $mainVariant = $this->productVariantFacade->createVariant($mainProduct, $variants);
@@ -5841,12 +5840,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     protected function findParameterByNamesOrCreateNew(array $parameterNamesByLocale, ?array $parameterGroupNamesByLocale): Parameter
     {
-        $cacheId = json_encode($parameterNamesByLocale);
-
-        if (isset($this->parameters[$cacheId])) {
-            return $this->parameters[$cacheId];
-        }
-
         /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
         $parameter = $this->parameterFacade->findParameterByNames($parameterNamesByLocale);
 
@@ -5863,8 +5856,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
             $parameter = $this->parameterFacade->create($parameterData);
         }
-
-        $this->parameters[$cacheId] = $parameter;
 
         return $parameter;
     }
@@ -6041,8 +6032,30 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     public function addProductReference(Product $product)
     {
         $this->addReference(self::PRODUCT_PREFIX . $this->productNo, $product);
-        $this->productsByCatnum[$product->getCatnum()] = $product;
         $this->productNo++;
+
+        if (in_array($product->getCatnum(), $this->arrayFlat(self::getVariantCatnumsByMainVariantCatnum()), true)) {
+            $this->saveProductToCache($product);
+        }
+
+        $this->em->clear();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     */
+    private function saveProductToCache(Product $product): void
+    {
+        $this->productIdsByCatnum[$product->getCatnum()] = $product->getId();
+    }
+
+    /**
+     * @param string $catnum
+     * @return \App\Model\Product\Product
+     */
+    private function getProductFromCacheByCatnum(string $catnum): Product
+    {
+        return $this->productFacade->getById($this->productIdsByCatnum[$catnum]);
     }
 
     /**
@@ -6068,12 +6081,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function findParameterGroupByNamesOrCreateNew(array $parameterGroupNameByLocale)
     {
-        $cacheId = json_encode($parameterGroupNameByLocale);
-
-        if (isset($this->parameterGroups[$cacheId])) {
-            return $this->parameterGroups[$cacheId];
-        }
-
         $parameterGroup = $this->parameterGroupFacade->findParameterGroupByNames($parameterGroupNameByLocale);
 
         if ($parameterGroup === null) {
@@ -6082,8 +6089,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $parameterGroupData->akeneoCode = $this->generator->lexify('???????');
             $parameterGroup = $this->parameterGroupFacade->create($parameterGroupData);
         }
-
-        $this->parameterGroups[$cacheId] = $parameterGroup;
 
         return $parameterGroup;
     }
@@ -6100,5 +6105,21 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productStockData->productQuantity = $quantity;
             $productData->stockProductData[$stock->getId()] = $productStockData;
         }
+    }
+
+    /**
+     * @param array $array
+     * @return string[]
+     */
+    private function arrayFlat(array $array): array
+    {
+        $result = [];
+
+        foreach ($array as $key => $values) {
+            $result[] = $key;
+            $result = array_merge($result, $values);
+        }
+
+        return array_unique($result);
     }
 }
