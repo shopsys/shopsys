@@ -193,7 +193,7 @@ class AdministratorController extends AdminBaseController
      */
     public function newAction(Request $request)
     {
-        $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->createInstance(), [
+        $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
             'scenario' => AdministratorFormType::SCENARIO_CREATE,
             'administrator' => null,
         ]);
