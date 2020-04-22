@@ -992,14 +992,21 @@ There you can find links to upgrade notes for other versions too.
             +   
             +   import './frontend/deliveryAddress';
             ```
-        - add [assets/js/frontend/deliveryAddress/deliveryAddress.js](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js) and [assets/js/frontend/deliveryAddress/index.js]((https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js)) files
+        - add [assets/js/frontend/deliveryAddress/deliveryAddress.js](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js) and [assets/js/frontend/deliveryAddress/index.js]((https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/index.js)) files
+        - add [assets/styles/frontend/common/components/list/addresses.less](https://github.com/shopsys/shopsys/blob/master/project-base/assets/styles/frontend/common/components/list/addresses.less)
+        - update your `assets/styles/frontend/common/main.less`
+            ```diff
+                //// list
+            +   @import "components/list/addresses.less";
+                @import "components/list/categories.less";
+            ```
         - update your `config/packages/twig.yaml`
             ```diff
                 - '@ShopsysFramework/Admin/Form/productCalculatedPrices.html.twig'
             +   - '@ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig'
             +   - '@ShopsysFramework/Admin/Form/deliveryAddressListFields.html.twig'
             ```
-        - update your `assets/js/frontend/validation/form/order.js`
+        - update your `assets/js/frontend/validation/form/orderValidator.js`
             ```diff
             +   const selectedDeliveryAddressValue = $orderPersonalInfoForm.find('.js-delivery-address-input:checked').val();
                 const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
@@ -1026,6 +1033,7 @@ There you can find links to upgrade notes for other versions too.
             - `src/Form/Front/Order/PersonalInfoFormType.php`
             - `src/Model/Customer/User/CustomerUser.php`
             - `templates/Front/Content/Customer/edit.html.twig`
+            - `templates/Front/Content/Customer/orderDetail.html.twig`
             - `templates/Front/Content/Order/step3.html.twig`
             - `templates/Front/Content/PersonalData/adress.xml.twig`
             - `templates/Front/Content/PersonalData/detail.html.twig`
