@@ -1,32 +1,35 @@
-{% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
-
-<div>
-    <div>{{ 'Skvělá volba! Vaše zboží jsme přidali do košíku'|trans }}</div>
+{% if successfullyAdded %}
+    {% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
     <div>
-        <div>
-            {% if imageExists(product) %}
-                {{ image(product, {size: 'galleryThumbnail', lazy: false}) }}
-            {% else %}
-                {{ noimage({size: 'galleryThumbnail', alt: product.fullname}) }}
-            {% endif %}
-        </div>
-        <div>
-            {{ '%quantity%x - %productName%'|trans({'%quantity%': addedQuantity, '%productName%': product.fullname}) }}
-            <span>{{ product.catnum }}</span>
-        </div>
+        <div>{{ 'Skvělá volba! Vaše zboží jsme přidali do košíku'|trans }}</div>
         <div>
             <div>
-                {{ getProductSellingPrice(product).priceWithVat.multiply(addedQuantity)|price }}
-                {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
+                {% if imageExists(product) %}
+                    {{ image(product, {size: 'galleryThumbnail', lazy: false}) }}
+                {% else %}
+                    {{ noimage({size: 'galleryThumbnail', alt: product.fullname}) }}
+                {% endif %}
             </div>
             <div>
-                {{ getProductNonSellingPrice(product).priceWithVat.multiply(addedQuantity)|price }}
-                {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
+                {{ '%quantity%x - %productName%'|trans({'%quantity%': addedQuantity, '%productName%': product.fullname}) }}
+                <span>{{ product.catnum }}</span>
+            </div>
+            <div>
+                <div>
+                    {{ getProductSellingPrice(product).priceWithVat.multiply(addedQuantity)|price }}
+                    {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
+                </div>
+                <div>
+                    {{ getProductNonSellingPrice(product).priceWithVat.multiply(addedQuantity)|price }}
+                    {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
+                </div>
             </div>
         </div>
+        <span class="js-add-product-url-cart" data-url="{{ url('front_cart') }}"></span>
     </div>
-    <span class="js-add-product-url-cart" data-url="{{ url('front_cart') }}"></span>
-</div>
+{% else %}
+    {{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
+{% endif %}
 
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
