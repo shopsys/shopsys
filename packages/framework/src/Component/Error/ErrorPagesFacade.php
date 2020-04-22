@@ -164,7 +164,7 @@ class ErrorPagesFacade
     }
 
     /**
-     * @param mixed $content
+     * @param string $content
      * @return string
      */
     protected function removeContactFrom($content): string
