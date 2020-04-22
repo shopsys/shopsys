@@ -158,7 +158,7 @@ firewall-cmd --permanent --zone=public --add-service=postgresql
 firewall-cmd --reload
 ```
 
-### Redis 4.0
+### Redis 5
 
 For storing cache and sessions we need to [install](https://redis.io/download#installation) Redis server.
 Also we want it running as a service.

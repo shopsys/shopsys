@@ -82,7 +82,7 @@ License: BSD-2-Clause
 http://nginx.org/LICENSE
 
 ### Redis
-Image: `Redis:4.0-alpine`  
+Image: `Redis:5.0-alpine`  
 License: BSD-3-Clause  
 https://redis.io/topics/license
 

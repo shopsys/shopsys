@@ -191,7 +191,7 @@ There you can find links to upgrade notes for other versions too.
 - upgrade PHP to version 7.4 ([#1737](https://github.com/shopsys/shopsys/pull/1737))
     - see #project-base-diff to update your project
 
-  update Redis to version 5.2.1 ([#1606](https://github.com/shopsys/shopsys/pull/1606))
+  update Redis client to version 5.2.1 and Redis server to 5.0 ([#1606](https://github.com/shopsys/shopsys/pull/1606))
     - see #project-base-diff to update your project
 
 ### Configuration
