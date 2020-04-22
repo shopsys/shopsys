@@ -125,16 +125,19 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         $percentageOfFreeTransport = 0;
         $transportForFree = false;
         if ($productType !== null && $productType->isFreeTransport($domainId)) {
-            $restToFreeTransportPrice = $productType->getFreeTransportMinimalPrice($domainId)->subtract($productsPrice->getPriceWithVat());
+            $freeTransportMinimalPrice = $productType->getFreeTransportMinimalPrice($domainId);
+            if ($freeTransportMinimalPrice !== null) {
+                $restToFreeTransportPrice = $freeTransportMinimalPrice->subtract($productsPrice->getPriceWithVat());
 
-            if ((float)$productType->getFreeTransportMinimalPrice($domainId)->getAmount() === (float)0) {
-                $percentageOfFreeTransport = 100;
-            } else {
-                $percentageOfFreeTransport = (int)floor($productsPrice->getPriceWithVat()->getAmount() / ($productType->getFreeTransportMinimalPrice($domainId)->getAmount() / 100));
-            }
+                if ((float)$freeTransportMinimalPrice->getAmount() === (float)0) {
+                    $percentageOfFreeTransport = 100;
+                } else {
+                    $percentageOfFreeTransport = (int)floor($productsPrice->getPriceWithVat()->getAmount() / ($freeTransportMinimalPrice->getAmount() / 100));
+                }
 
-            if ($productsPrice->getPriceWithVat()->getAmount() > $productType->getFreeTransportMinimalPrice($domainId)->getAmount()) {
-                $transportForFree = true;
+                if ($productsPrice->getPriceWithVat()->getAmount() > $freeTransportMinimalPrice->getAmount()) {
+                    $transportForFree = true;
+                }
             }
         }
 
