@@ -59,55 +59,10 @@ class FilterQuery extends BaseFilterQuery
     public function getQuery(): array
     {
         $query = parent::getQuery();
-        unset($query['type']);
 
         if (count($this->mustNot) > 0) {
             $query['body']['query']['bool']['must_not'] = $this->mustNot;
         }
-
-        return $query;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAbsoluteNumbersAggregationQuery(): array
-    {
-        $query = parent::getAbsoluteNumbersAggregationQuery();
-        unset($query['type']);
-
-        return $query;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFlagsPlusNumbersQuery(array $selectedFlags): array
-    {
-        $query = parent::getFlagsPlusNumbersQuery($selectedFlags);
-        unset($query['type']);
-
-        return $query;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrandsPlusNumbersQuery(array $selectedBrandsIds): array
-    {
-        $query = parent::getBrandsPlusNumbersQuery($selectedBrandsIds);
-        unset($query['type']);
-
-        return $query;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getParametersPlusNumbersQuery(int $selectedParameterId, array $selectedValuesIds): array
-    {
-        $query = parent::getParametersPlusNumbersQuery($selectedParameterId, $selectedValuesIds);
-        unset($query['type']);
 
         return $query;
     }
@@ -184,5 +139,81 @@ class FilterQuery extends BaseFilterQuery
         ];
 
         return $clone;
+    }
+
+    /**
+     * Answers question "If I add this parameter value, how many products will be added?"
+     * We are looking for count of products that meet all filters and don't have already selected parameter value
+     *
+     * This query makes sense only within a single parameter, so it have to be executed for all parameters
+     * (that have selected value and can have plus numbers)
+     *
+     * @see https://github.com/shopsys/shopsys/pull/1794
+     *
+     * @param int $selectedParameterId
+     * @param array $selectedValuesIds
+     * @return array
+     */
+    public function getParametersPlusNumbersQuery(int $selectedParameterId, array $selectedValuesIds): array
+    {
+        return [
+            'index' => $this->indexName,
+            'body' => [
+                'size' => 0,
+                'aggs' => [
+                    'parameters' => [
+                        'nested' => [
+                            'path' => 'parameters',
+                        ],
+                        'aggs' => [
+                            'filtered_for_parameter' => [
+                                'filter' => [
+                                    'term' => [
+                                        'parameters.parameter_id' => $selectedParameterId,
+                                    ],
+                                ],
+                                'aggs' => [
+                                    'by_parameters' => [
+                                        'terms' => [
+                                            'field' => 'parameters.parameter_id',
+                                            'size' => static::MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT,
+                                        ],
+                                        'aggs' => [
+                                            'by_value' => [
+                                                'terms' => [
+                                                    'field' => 'parameters.parameter_value_id',
+                                                    'size' => static::MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT,
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'query' => [
+                    'bool' => [
+                        'filter' => $this->filters,
+                        'must' => [
+                            [
+                                'nested' => [
+                                    'path' => 'parameters',
+                                    'query' => [
+                                        'bool' => [
+                                            'must_not' => [
+                                                'terms' => [
+                                                    'parameters.parameter_value_id' => $selectedValuesIds,
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 }

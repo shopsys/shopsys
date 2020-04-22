@@ -176,7 +176,7 @@
                                                 >
                                                     {% if not parameterValueForm.vars.checked %}
                                                         (
-                                                            {%- if parameterForm.vars.data is not empty %}+{% endif -%}
+                                                            {%- if parameterForm.vars.data is not empty and productFilterCountData.countByParameterIdAndValueId[parameterId][parameterValueForm.vars.value] ?? false %}+{% endif -%}
                                                             {{- productFilterCountData.countByParameterIdAndValueId[parameterId][parameterValueForm.vars.value]|default(0) -}}
                                                         )
                                                     {% endif %}

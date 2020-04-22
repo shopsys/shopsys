@@ -16,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParamet
  */
 class Parameter extends BaseParameter
 {
+    public const AKENEO_ATTRIBUTES_TYPE_BOOLEAN = 'pim_catalog_boolean';
+
     /**
      * @var \App\Model\Product\Parameter\ParameterGroup|null
      *
