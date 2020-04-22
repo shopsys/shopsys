@@ -25,11 +25,12 @@
                 </div>
             </div>
         </div>
-        <span class="js-add-product-url-cart" data-url="{{ url('front_cart') }}"></span>
     </div>
 {% else %}
     {{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
 {% endif %}
+
+<span class="js-add-product-url-cart" data-url="{{ url('front_cart') }}"></span>
 
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
