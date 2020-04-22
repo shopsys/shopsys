@@ -180,6 +180,14 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
 
+    Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator: '@App\Model\Product\ProductHiddenRecalculator'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator: '@App\Model\Product\ProductSellingDeniedRecalculator'
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository: '@App\Model\Product\Availability\AvailabilityRepository'
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade: '@App\Model\Product\Availability\AvailabilityFacade'
+
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagData: '@App\Model\Product\Flag\FlagData'
 
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory: '@App\Model\Product\Flag\FlagDataFactory'
@@ -304,6 +312,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
 
+    Shopsys\FrameworkBundle\Model\Product\ProductFactory: '@App\Model\Product\ProductFactory'
+
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: '@App\Model\Product\Elasticsearch\ProductExportRepository'
 
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: '@App\Model\Product\ProductOnCurrentDomainFacade'
@@ -313,6 +323,8 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository: '@App\Model\Product\Filter\PriceRangeRepository'
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository: '@App\Model\Product\Filter\ParameterFilterChoiceRepository'
+
+    Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository: '@App\Model\Product\Filter\ProductFilterRepository'
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation: '@App\Model\Product\Pricing\ProductPriceCalculation'
 
@@ -327,6 +339,12 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: '@App\Model\Product\ProductVisibilityRepository'
 
     Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation: '@App\Model\Product\Availability\ProductAvailabilityCalculation'
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: ~
+
+    App\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: '@App\Model\AdvancedSearch\ProductAdvancedSearchConfig'
 
     App\Model\Product\Search\ProductElasticsearchConverter: ~
 
@@ -349,6 +367,8 @@ services:
     Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory: '@App\Model\ProductFeed\Heureka\FeedItem\HeurekaFeedItemFactory'
 
     Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository: '@App\Model\ProductFeed\Heureka\HeurekaProductRepository'
+
+    Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataRepository: '@App\Model\ProductFeed\Heureka\FeedItem\HeurekaDeliveryDataRepository'
 
     Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory: '@App\Model\ProductFeed\Zbozi\FeedItem\ZboziFeedItemFactory'
 

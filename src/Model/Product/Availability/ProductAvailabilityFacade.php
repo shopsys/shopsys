@@ -162,10 +162,29 @@ class ProductAvailabilityFacade
      */
     private function getDeliveryWeeksByDomainId(int $domainId, Product $product): int
     {
+        return self::calculateDaysToWeeks($this->getDeliveryDaysByDomainId($product, $domainId));
+    }
+
+    /**
+     * @param int $days
+     * @return int
+     */
+    public static function calculateDaysToWeeks(int $days): int
+    {
+        return (int)ceil($days / self::DAYS_IN_WEEK);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return int
+     */
+    private function getDeliveryDaysByDomainId(Product $product, int $domainId): int
+    {
         $deliveryDays = $this->setting->getForDomain(Setting::DELIVERY_DAYS_ON_STOCK, $domainId);
         $deliveryDays += $product->getVendorDeliveryDate() ?? 0;
 
-        return (int)ceil($deliveryDays / self::DAYS_IN_WEEK);
+        return $deliveryDays;
     }
 
     /**
@@ -174,9 +193,30 @@ class ProductAvailabilityFacade
      */
     private function getTransferWeeksByDomainId(int $domainId): int
     {
-        $transferDays = $this->setting->getForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, $domainId);
+        return self::calculateDaysToWeeks($this->getTransferDaysByDomainId($domainId));
+    }
 
-        return (int)ceil($transferDays / self::DAYS_IN_WEEK);
+    /**
+     * @param int $domainId
+     * @return int
+     */
+    private function getTransferDaysByDomainId(int $domainId): int
+    {
+        return $this->setting->getForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, $domainId);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return int
+     */
+    public function getShippingDaysByDomainId(Product $product, int $domainId): int
+    {
+        if ($this->isProductAvailableOnDomain($product, $domainId)) {
+            return $this->getTransferDaysByDomainId($domainId);
+        } else {
+            return $this->getDeliveryDaysByDomainId($product, $domainId);
+        }
     }
 
     /**

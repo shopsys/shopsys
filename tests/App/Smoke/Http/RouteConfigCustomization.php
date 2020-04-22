@@ -287,6 +287,12 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Check route with data-fixture parameters.')
                     ->setParameter('categoryId', 8)
                     ->setParameter('choseCategorySeoMixCombinationJson', '{"domainId":1,"categoryId":8,"flagId":1,"ordering":null,"parameterValueIdsByParameterIds":{"38":75,"40":79,"37":73,"39":77}}');
+            })
+            ->customizeByRouteName('admin_availability_delete', function (RouteConfig $config) {
+                $config->skipRoute('Deleting Availability is no longer available.');
+            })
+            ->customizeByRouteName('admin_availability_deleteconfirm', function (RouteConfig $config) {
+                $config->skipRoute('Deleting Availability is no longer available.');
             });
     }
 

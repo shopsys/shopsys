@@ -409,7 +409,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_SALE]);
 
@@ -490,7 +490,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
         $this->setFlags($productData, []);
 
@@ -537,7 +537,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
         $this->setFlags($productData, []);
 
@@ -712,7 +712,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
@@ -831,7 +831,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
@@ -1134,7 +1134,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_SALE]);
 
@@ -1463,7 +1463,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO]);
 
@@ -1505,7 +1505,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
@@ -1583,7 +1583,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_SALE]);
 
@@ -1790,7 +1790,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
         $this->setFlags($productData, []);
 
@@ -1855,7 +1855,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
@@ -1940,7 +1940,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
@@ -1983,7 +1983,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
@@ -2111,7 +2111,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO]);
 
@@ -2306,7 +2306,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO]);
 
@@ -3356,7 +3356,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
         $this->setFlags($productData, []);
 
@@ -3509,7 +3509,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
         $this->setFlags($productData, []);
 
@@ -3542,7 +3542,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
@@ -3593,7 +3593,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
@@ -3691,7 +3691,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
         $this->setFlags($productData, []);
 
@@ -3731,7 +3731,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
         $this->setFlags($productData, []);
 
@@ -3778,7 +3778,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
         $this->setFlags($productData, []);
 

@@ -15,7 +15,9 @@ class StocksDataFixture extends AbstractReferenceFixture
 {
     protected const ATTR_NAME = 'name';
     protected const ATTR_CENTRAL = 'centralStock';
-    protected const ATTR_EXTERNAL = 'externalId';
+    public const ATTR_EXTERNAL = 'externalId';
+
+    public const STOCK_PREFIX = 'stock_';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -51,7 +53,8 @@ class StocksDataFixture extends AbstractReferenceFixture
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             foreach ($this->getDemoData($domainId) as $demoRow) {
-                $this->stockFacade->create($this->initStockData($domainId, $demoRow));
+                $stock = $this->stockFacade->create($this->initStockData($domainId, $demoRow));
+                $this->addReferenceForDomain(self::STOCK_PREFIX . $stock->getExternalId(), $stock, $domainId);
             }
         }
     }
@@ -76,7 +79,7 @@ class StocksDataFixture extends AbstractReferenceFixture
      * @param int $domainId
      * @return array
      */
-    protected function getDemoData(int $domainId): array
+    public static function getDemoData(int $domainId): array
     {
         if ($domainId > 2) {
             $domainId = 1;

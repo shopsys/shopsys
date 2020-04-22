@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
 use App\Model\Product\Type\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
+use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
@@ -24,7 +26,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Product\Brand\Brand|null getBrand()
  * @method \App\Model\Product\Product getMainVariant()
  * @method \App\Model\Product\Product[] getVariants()
- * @method setAvailabilityAndStock(\App\Model\Product\ProductData $productData)
  * @method addVariant(\App\Model\Product\Product $variant)
  * @method addVariants(\App\Model\Product\Product[] $variants)
  * @method setMainVariant(\App\Model\Product\Product $mainVariant)
@@ -67,6 +68,51 @@ class Product extends BaseProduct
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $vendorDeliveryDate;
+
+    /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var null
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $outOfStockAction;
+
+    /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var null
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $outOfStockAvailability;
+
+    /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var null
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $stockQuantity;
+
+    /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var bool
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $usingStock;
+
+    /**
+     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
+     *
+     * @var null
+     * @deprecated
+     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     */
+    protected $calculatedAvailability;
 
     /**
      * @param \App\Model\Product\ProductData $productData
@@ -167,13 +213,20 @@ class Product extends BaseProduct
     protected function createDomains(BaseProductData $productData): void
     {
         $domainIds = array_keys($productData->seoTitles);
-
         foreach ($domainIds as $domainId) {
             $productDomain = new ProductDomain($this, $domainId);
             $this->domains->add($productDomain);
         }
 
         $this->setDomains($productData);
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function setAvailabilityAndStock(ProductData $productData): void
+    {
+        $this->availability = $productData->availability;
     }
 
     /**
@@ -457,6 +510,54 @@ class Product extends BaseProduct
         // Return empty array to override default functionality.
         // Flags were moved to Domain.
         return [];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUsingStock()
+    {
+        //is always false and is by default set in migration to false.
+        //removing old stock functionality means product.calculatedHidden is always setup by product.hidden
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOutOfStockAction()
+    {
+        throw new \Exception('deprecated - outOfStockAction');
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
+     */
+    public function getOutOfStockAvailability()
+    {
+        throw new DeprecatedAvailabilityPropertyFromProductException('outOfStockAvailability', $this->outOfStockAvailability);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
+     */
+    public function getAvailability()
+    {
+        throw new DeprecatedAvailabilityPropertyFromProductException('availability', $this->availability);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getStockQuantity()
+    {
+        //this getter isn't possible remove. Because is used in not-extendable code, just return default value.
+        return null;
+    }
+
+    public function getCalculatedAvailability()
+    {
+        throw new DeprecatedAvailabilityPropertyFromProductException('calculatedAvailability', $this->calculatedAvailability);
     }
 
     /**

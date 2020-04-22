@@ -43,30 +43,22 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     private $vatFacade;
 
     /**
-     * @dataProvider getTestHandleOutOfStockStateDataProvider
+     * @dataProvider getTestCalculationHiddenAndSellingDeniedDataProvider
      * @param mixed $hidden
      * @param mixed $sellingDenied
-     * @param mixed $stockQuantity
-     * @param mixed $outOfStockAction
      * @param mixed $calculatedHidden
      * @param mixed $calculatedSellingDenied
      */
-    public function testHandleOutOfStockState(
+    public function testCalculationHiddenAndSellingDenied(
         $hidden,
         $sellingDenied,
-        $stockQuantity,
-        $outOfStockAction,
         $calculatedHidden,
         $calculatedSellingDenied
     ) {
         $productData = $this->productDataFactory->create();
         $productData->hidden = $hidden;
         $productData->sellingDenied = $sellingDenied;
-        $productData->stockQuantity = $stockQuantity;
-        $productData->outOfStockAction = $outOfStockAction;
-        $productData->usingStock = true;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $this->setProductTypes($productData);
         $this->setVats($productData);
@@ -81,56 +73,32 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied());
     }
 
-    public function getTestHandleOutOfStockStateDataProvider()
+    public function getTestCalculationHiddenAndSellingDeniedDataProvider()
     {
         return [
             [
                 'hidden' => true,
                 'sellingDenied' => true,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY,
                 'calculatedHidden' => true,
                 'calculatedSellingDenied' => true,
             ],
             [
                 'hidden' => false,
                 'sellingDenied' => false,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY,
                 'calculatedHidden' => false,
                 'calculatedSellingDenied' => false,
             ],
             [
                 'hidden' => true,
                 'sellingDenied' => false,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY,
                 'calculatedHidden' => true,
                 'calculatedSellingDenied' => false,
             ],
             [
                 'hidden' => false,
                 'sellingDenied' => true,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY,
                 'calculatedHidden' => false,
                 'calculatedSellingDenied' => true,
-            ],
-            [
-                'hidden' => false,
-                'sellingDenied' => false,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE,
-                'calculatedHidden' => false,
-                'calculatedSellingDenied' => true,
-            ],
-            [
-                'hidden' => false,
-                'sellingDenied' => false,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_HIDE,
-                'calculatedHidden' => true,
-                'calculatedSellingDenied' => false,
             ],
         ];
     }

@@ -105,6 +105,8 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $categorySeoMenu->addChild('new_combination', ['route' => 'admin_categoryseo_readycombination', 'label' => t('Rozšířené SEO kategorie - nastavení kombinace se SEO hodnotami'), 'display' => false]);
 
         $listMenu = $settingsMenu->getChild('lists');
+        $listMenu->removeChild('availabilities');
+
         $productTypeMenu = $listMenu->addChild('product_types', ['route' => 'admin_producttype_list', 'label' => t('Typy produktů')]);
         $productTypeMenu->addChild('new_product_type', ['route' => 'admin_producttype_new', 'display' => false, 'label' => t('Nový typ produktu')]);
         $productTypeMenu->addChild('edit_product_type', ['route' => 'admin_producttype_edit', 'display' => false, 'label' => t('Detail typu produktu')]);

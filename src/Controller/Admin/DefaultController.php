@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @property \App\Component\Setting\Setting $setting
+ * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
  */
 class DefaultController extends BaseDefaultController
 {
@@ -37,7 +38,7 @@ class DefaultController extends BaseDefaultController
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig

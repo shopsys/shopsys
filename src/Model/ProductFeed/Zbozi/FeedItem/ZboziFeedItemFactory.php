@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\ProductFeed\Zbozi\FeedItem;
 
+use App\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItem;
 use Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory as BaseZboziFeedItemFactory;
@@ -12,6 +17,34 @@ use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain;
 
 class ZboziFeedItemFactory extends BaseZboziFeedItemFactory
 {
+    /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
+    private $productAvailabilityFacade;
+
+    /**
+     * @param \App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
+     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader $productParametersBatchLoader
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     */
+    public function __construct(
+        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
+        ProductUrlsBatchLoader $productUrlsBatchLoader,
+        ProductParametersBatchLoader $productParametersBatchLoader,
+        CategoryFacade $categoryFacade,
+        ProductAvailabilityFacade $productAvailabilityFacade
+    ) {
+        parent::__construct(
+            $productPriceCalculationForCustomerUser,
+            $productUrlsBatchLoader,
+            $productParametersBatchLoader,
+            $categoryFacade
+        );
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
+    }
+
     /**
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain|null $zboziProductDomain
@@ -34,7 +67,7 @@ class ZboziFeedItemFactory extends BaseZboziFeedItemFactory
             $this->getBrandName($product),
             $product->getEan(),
             $product->getPartno(),
-            $product->getCalculatedAvailability()->getDispatchTime(),
+            $this->productAvailabilityFacade->getShippingDaysByDomainId($product, $domainConfig->getId()),
             $this->getPrice($product, $domainConfig),
             $this->getPathToMainCategory($product, $domainConfig),
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),

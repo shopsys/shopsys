@@ -14,10 +14,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -63,7 +61,7 @@ class ProductDataFactory extends BaseProductDataFactory
     private $setting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
+     * @var \App\Model\Product\Availability\AvailabilityFacade
      */
     private $availabilityFacade;
 
@@ -86,7 +84,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
     public function __construct(
         VatFacade $vatFacade,
@@ -196,13 +194,25 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     protected function fillFromProduct(BaseProductData $productData, BaseProduct $product): void
     {
-        parent::fillFromProduct($productData, $product);
+        /** @var \App\Model\Product\ProductTranslation[] $translations */
+        $translations = $product->getTranslations();
+        foreach ($translations as $translation) {
+            $locale = $translation->getLocale();
 
-        $productData->downloadAssemblyInstructionFiles = $product->isDownloadAssemblyInstructionFiles();
-        $productData->downloadProductTypePlanFiles = $product->isDownloadAssemblyInstructionFiles();
-        $productData->flags = [];
+            $productData->name[$locale] = $translation->getName();
+            $productData->variantAlias[$locale] = $translation->getVariantAlias();
+            $productData->namePrefix[$locale] = $translation->getNamePrefix();
+            $productData->nameSufix[$locale] = $translation->getNameSufix();
+        }
 
         foreach ($this->domain->getAllIds() as $domainId) {
+            $productData->shortDescriptions[$domainId] = $product->getShortDescription($domainId);
+            $productData->descriptions[$domainId] = $product->getDescription($domainId);
+            $productData->seoH1s[$domainId] = $product->getSeoH1($domainId);
+            $productData->seoTitles[$domainId] = $product->getSeoTitle($domainId);
+            $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
+            $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
+
             $productData->shortDescriptionUsp1[$domainId] = $product->getShortDescriptionUsp1($domainId);
             $productData->shortDescriptionUsp2[$domainId] = $product->getShortDescriptionUsp2($domainId);
             $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
@@ -215,10 +225,39 @@ class ProductDataFactory extends BaseProductDataFactory
             $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }
 
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $productData->namePrefix[$locale] = $product->getNamePrefix($locale);
-            $productData->nameSufix[$locale] = $product->getNameSufix($locale);
+        $productData->catnum = $product->getCatnum();
+        $productData->partno = $product->getPartno();
+        $productData->ean = $product->getEan();
+        $productData->sellingFrom = $product->getSellingFrom();
+        $productData->sellingTo = $product->getSellingTo();
+        $productData->sellingDenied = $product->isSellingDenied();
+
+        $productData->availability = $this->availabilityFacade->getById($this->setting->get('defaultAvailabilityInStockId'));
+
+        $productData->unit = $product->getUnit();
+
+        $productData->hidden = $product->isHidden();
+        $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();
+        $productData->brand = $product->getBrand();
+        $productData->orderingPriority = $product->getOrderingPriority();
+
+        $productData->parameters = $this->getParametersData($product);
+        try {
+            $productData->manualInputPricesByPricingGroupId = $this->productInputPriceFacade->getManualInputPricesDataIndexedByPricingGroupId($product);
+        } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $ex) {
+            $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
         }
+
+        /** @var \App\Model\Product\Product[] $productAccessories */
+        $productAccessories = $this->getAccessoriesData($product);
+
+        $productData->accessories = $productAccessories;
+        $productData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($product, null);
+        $productData->variants = $product->getVariants();
+        $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
+
+        $productData->downloadAssemblyInstructionFiles = $product->isDownloadAssemblyInstructionFiles();
+        $productData->downloadProductTypePlanFiles = $product->isDownloadAssemblyInstructionFiles();
 
         $productData->preorder = $product->hasPreorder();
         $productData->vendorDeliveryDate = $product->getVendorDeliveryDate();

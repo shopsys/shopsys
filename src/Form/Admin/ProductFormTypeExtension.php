@@ -192,7 +192,12 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private function setDisplayAvailabilityGroup(FormBuilderInterface $builder, ?Product $product): void
     {
         $groupBuilder = $builder->get('displayAvailabilityGroup');
-        $groupBuilder->get('stockGroup')->remove('stockQuantity');
+        $groupBuilder->remove('availability');
+
+        $groupBuilder->get('stockGroup')
+            ->remove('stockQuantity')
+            ->remove('outOfStockAction')
+            ->remove('outOfStockAvailability');
 
         $groupBuilder
             ->add('preorder', YesNoType::class, [
@@ -208,6 +213,12 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             ->add('vendorDeliveryDate', TextType::class, [
                 'required' => false,
                 'label' => 'Dodací lhůta dodavatele',
+            ])
+            ->add('usingStock', YesNoType::class, [
+                'data' => true,
+                'required' => false,
+                'disabled' => true,
+                'label' => t('Use stocks'),
             ]);
     }
 
