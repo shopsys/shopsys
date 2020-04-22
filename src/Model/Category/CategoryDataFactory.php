@@ -84,6 +84,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     {
         parent::fillNew($categoryData);
         $categoryData->parameters = [];
+        $categoryData->parametersCollapsed = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->shortDescription[$domainId] = null;
@@ -111,6 +112,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         $categoryData->akeneoCode = $category->getAkeneoCode();
         $categoryData->svgIcon = $category->getSvgIcon();
         $categoryData->parameters = $this->categoryParameterRepository->getParametersByCategory($category);
+        $categoryData->parametersCollapsed = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
         $categoryData->categoryProductSeries = $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category);
     }
 }

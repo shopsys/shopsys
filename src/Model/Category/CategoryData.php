@@ -27,6 +27,11 @@ class CategoryData extends BaseCategoryData
     public $parameters;
 
     /**
+     * @var \App\Model\Product\Parameter\Parameter[]
+     */
+    public $parametersCollapsed;
+
+    /**
      * @var string[]|null[]
      */
     public $shortDescription;

@@ -113,6 +113,16 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
             'choice_value' => 'id',
             'multiple' => true,
         ]);
+
+        $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [
+            'required' => false,
+            'label' => t('Defaultně zavřené parametry ve filtru:'),
+            'choices' => $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID),
+            'expanded' => true,
+            'choice_label' => 'name',
+            'choice_value' => 'id',
+            'multiple' => true,
+        ]);
     }
 
     /**

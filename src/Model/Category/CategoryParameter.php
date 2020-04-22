@@ -32,13 +32,22 @@ class CategoryParameter
     private $parameter;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $collapsed;
+
+    /**
      * @param \App\Model\Category\Category $category
      * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param bool $collapsed
      */
-    public function __construct(Category $category, Parameter $parameter)
+    public function __construct(Category $category, Parameter $parameter, $collapsed)
     {
         $this->category = $category;
         $this->parameter = $parameter;
+        $this->collapsed = $collapsed;
     }
 
     /**
@@ -55,5 +64,21 @@ class CategoryParameter
     public function getParameter(): Parameter
     {
         return $this->parameter;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCollapsed(): bool
+    {
+        return $this->collapsed;
+    }
+
+    /**
+     * @param bool $collapsed
+     */
+    public function setCollapsed(bool $collapsed): void
+    {
+        $this->collapsed = $collapsed;
     }
 }
