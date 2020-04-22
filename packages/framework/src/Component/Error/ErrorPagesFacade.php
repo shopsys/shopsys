@@ -8,6 +8,7 @@ use App\Kernel;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -157,8 +158,25 @@ class ErrorPagesFacade
                 $errorPageResponse->getStatusCode()
             );
         }
+        $content = $errorPageResponse->getContent();
 
-        return $errorPageResponse->getContent();
+        return $this->removeContactFrom($content);
+    }
+
+    /**
+     * @param string $content
+     * @return string
+     */
+    protected function removeContactFrom(string $content): string
+    {
+        $crawler = new Crawler($content);
+        $crawler->filter('form[name="subscription_form"]')->each(function (Crawler $crawler) {
+            foreach ($crawler as $node) {
+                $node->parentNode->removeChild($node);
+            }
+        });
+
+        return $crawler->html();
     }
 
     /**
