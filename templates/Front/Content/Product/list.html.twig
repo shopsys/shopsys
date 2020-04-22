@@ -34,6 +34,36 @@
                 {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
             {% endif %}
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
+            <div class="box-series">
+                <div class="box-series__left">
+                    <h2 class="box-series__heading">{{ category.getProductSeriesListTitle(domain.id) }}</h2>
+                    <div class="box-series__desc">{{ category.getProductSeriesListDescription(domain.id) }}</div>
+                    {% if category.getProductSeriesListLink(domain.id) %}
+                        <a class="btn btn--outline dont-print" href="{{ category.getProductSeriesListLink(domain.id) }}">{{ 'Zobrazit všechny'|trans }}</a>
+                    {% endif %}
+                </div>
+                {% if categoryProductSeries is not empty %}
+                    <div class="box-series__right">
+                        <div class="box-series__grid">
+                            {% for productSeries in categoryProductSeries %}
+                                <div class="box-series__grid__item">
+                                    <a class="box-series__grid__item__link" href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
+                                        {% if imageExists(productSeries) %}
+                                            {{ image(productSeries, { itemprop: 'image', size: 'preview', class: 'box-series__grid__item__image' }) }}
+                                        {% else %}
+                                            {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
+                                        {% endif %}
+                                        <strong class="box-series__grid__item__name btn btn--next btn-no-style dont-print">
+                                            {{ productSeries.getName(domain.locale) }}
+                                            <i class="btn__icon svg svg-long-arrow-right"></i>
+                                        </strong>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
     <div class="web__line web__line--product-list web__line--bg-color">
@@ -88,34 +118,6 @@
             </div>
         </div>
     </div>
-    <div class="category-product-series-box">
-        <div class="left-box">
-            <h3>{{ category.getProductSeriesListTitle(domain.id) }}</h3>
-            <p>{{ category.getProductSeriesListDescription(domain.id) }}</p>
-            {% if category.getProductSeriesListLink(domain.id) %}
-                <a href="{{ category.getProductSeriesListLink(domain.id) }}">{{ 'ZOBRAZIT VŠECHNY'|trans }}</a>
-            {% endif %}
-        </div>
-        <div class="right-box">
-            {% for productSeries in categoryProductSeries %}
-                <div class="box-detail">
-                    <h3><a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">{{ productSeries.getName(domain.locale) }}</a></h3>
-                    <div class="box-detail__image">
-                        <div class="box-detail__image__main">
-                            <a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
-                                {% if imageExists(productSeries) %}
-                                    {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
-                                {% else %}
-                                    {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
-                                {% endif %}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-
     <div class="box-list__description">
         <a id="description"></a>
         <div class="box-list__description__text in-user-text js-category-description">
