@@ -1,5 +1,3 @@
-@box-cart-info-width: (100% / 3 * 2);
-@box-cart-preview-width: ~"calc(100% - @{box-cart-info-width})";
 
 .js-not-implemented-yet + .tooltip {
     .tooltip-inner {
@@ -34,26 +32,6 @@
             background: rgba(0, 0, 0, 0.1);
         }
     }
-}
-
-.box-cart-info {
-    width: @box-cart-info-width;
-    float: left;
-
-    &__oversized {
-        padding: 1.5em;
-        background-color: @color-add;
-
-        p {
-            margin: 0;
-        }
-    }
-}
-
-.box-cart__preview {
-    width: @box-cart-preview-width;
-    float: left;
-    padding-left: 20px;
 }
 
 .color-purple {

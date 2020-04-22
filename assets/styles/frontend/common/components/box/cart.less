@@ -1,0 +1,105 @@
+@box-cart-preview-width: 375px;
+@box-cart-card-padding: 15px;
+@box-cart-card-bg: @color-f;
+
+.box-cart {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    &__col {
+        &--info {
+            width: calc(100% - @box-cart-preview-width - 70px);
+        }
+
+        &--preview {
+            width: @box-cart-preview-width;
+        }
+    }
+
+    &-card {
+        padding: @box-cart-card-padding;
+
+        background-color: @box-cart-card-bg;
+        border-radius: @radius;
+
+        &--preview {
+            position: relative;
+            top: 20px;
+
+            &::before,
+            &::after {
+                position: absolute;
+                left: 0;
+                top: -20px;
+                width: 100%;
+                height: 20px;
+                content: '';
+
+                background-image: url('@{path-design}/spines.png');
+                background-repeat: no-repeat;
+                background-size: contain;
+            }
+
+            &::after {
+                top: auto;
+                bottom: -20px;
+                transform: scaleY(-1);
+            }
+        }
+
+        &__top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        &__title {
+            margin-bottom: 0;
+
+            font-family: @font-quartenary;
+            font-size: 18px;
+            text-transform: none;
+        }
+    }
+
+    &__promo {
+        padding: 15px 10px;
+        margin-bottom: 15px;
+
+        border: 2px solid @color-border-light;
+        border-radius: @radius;
+
+        &__top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        &__link {
+            text-decoration: underline;
+            color: @color-light-tertiary;
+            font-size: 12px;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        .image-noticer-cartPreview {
+            display: block;
+            margin: auto;
+
+            border-radius: @radius;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 45px;
+    }
+}

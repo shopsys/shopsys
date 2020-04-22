@@ -1,17 +1,24 @@
 .table-cart-preview {
     width: 100%;
-    margin-bottom: @margin-gap;
+
+    &__body {
+        display: block;
+        margin: 10px 0 8px;
+        padding: 5px 0;
+
+        border: 1px solid @color-border-light;
+        border-radius: @radius;
+    }
 
     &__row {
-        border-top: 1px solid @color-border;
-
-        &:first-child {
-            border-top: 0;
-        }
+        display: flex;
+        justify-content: space-between;
     }
 
     &__cell {
-        padding: 5px 0;
+        padding: 6px 12px;
+
+        font-size: 12px;
 
         .table-cart-preview__row--total & {
             font-weight: bold;

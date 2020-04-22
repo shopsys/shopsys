@@ -3,20 +3,20 @@
         {% set restForFreeTransportPriceAmount = orderPreview.getRestToFreeTransportPrice().getAmount() %}
         {% set restForFreeTransportPrice = orderPreview.getRestToFreeTransportPrice()|price %}
         {% set percentageOfFreeTransport = orderPreview.getPercentageOfFreeTransport() %}
-        <div class="free-transport-macro">
-            <div class="free-transport-macro-icon"></div>
-            <div class="free-transport-macro-box">
+        <div class="box-free-transport">
+            <div class="box-free-transport__icon">
+                <img class="box-free-transport__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon.png') }}" alt="{{ 'Doprava zdarma'|trans }}">
+            </div>
+            <div class="box-free-transport__content">
                 {% if restForFreeTransportPriceAmount > 0 %}
-                    <div class="free-transport-macro-description">
-                        {{ 'Nakupte ještě za <strong>%price%</strong> a získáte doručení <strong>Zdarma</strong>'|trans({ '%price%': restForFreeTransportPrice })|raw }}
+                    <div class="box-free-transport__desc">
+                        {{ 'Nakupte ještě za <strong class="box-free-transport__desc__strong">%price%</strong> a získáte doručení <strong class="box-free-transport__desc__strong">Zdarma</strong>'|trans({ '%price%': restForFreeTransportPrice })|raw }}
                     </div>
-                    <div class="free-transport-macro-progress-bar" style="border: 1px solid black;">
-                        <div class="free-transport-macro-progress-bar-line" style="width: {{ percentageOfFreeTransport }}%;background-color: orange;padding-right: 10px;text-align: right;">
-                            {{ percentageOfFreeTransport }}%
-                        </div>
+                    <div class="box-free-transport__progress">
+                        <div class="box-free-transport__progress__bar" style="width: {{ percentageOfFreeTransport }}%;"></div>
                     </div>
                 {% else %}
-                    <div class="free-transport-macro-description">
+                    <div class="box-free-transport__desc">
                         {{ 'Získali jste doručení <strong>Zdarma</strong>'|trans|raw }}
                     </div>
                 {% endif %}
