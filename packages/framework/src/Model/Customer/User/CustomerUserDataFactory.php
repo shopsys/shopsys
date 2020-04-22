@@ -23,9 +23,17 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
      */
-    public function create(): CustomerUserData
+    protected function createInstance(): CustomerUserData
     {
         return new CustomerUserData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
+     */
+    public function create(): CustomerUserData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -35,7 +43,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      */
     public function createForCustomer(Customer $customer): CustomerUserData
     {
-        $customerUserData = $this->create();
+        $customerUserData = $this->createInstance();
         $customerUserData->customer = $customer;
         return $customerUserData;
     }
@@ -47,7 +55,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      */
     public function createForDomainId(int $domainId): CustomerUserData
     {
-        $customerUserData = $this->create();
+        $customerUserData = $this->createInstance();
         $this->fillForDomainId($customerUserData, $domainId);
 
         return $customerUserData;
@@ -70,7 +78,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserData
     {
-        $customerUserData = $this->create();
+        $customerUserData = $this->createInstance();
         $this->fillFromUser($customerUserData, $customerUser);
 
         return $customerUserData;

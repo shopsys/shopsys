@@ -9,8 +9,16 @@ class CustomerUserRefreshTokenChainDataFactory implements CustomerUserRefreshTok
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainData
      */
-    public function create(): CustomerUserRefreshTokenChainData
+    protected function createInstance(): CustomerUserRefreshTokenChainData
     {
         return new CustomerUserRefreshTokenChainData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainData
+     */
+    public function create(): CustomerUserRefreshTokenChainData
+    {
+        return $this->createInstance();
     }
 }

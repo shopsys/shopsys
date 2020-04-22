@@ -133,12 +133,20 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory as BaseProductDataF
 class ProductDataFactory extends BaseProductDataFactory
 {
     /**
+     * @return \App\Model\Product\ProductData
+     */
+    protected function createInstance(): BaseProductData
+    {
+        return new ProductData();
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\ProductData
      */
     public function createFromProduct(BaseProduct $product): BaseProductData
     {
-        $productData = new ProductData();
+        $productData = $this->createInstance();
         $this->fillFromProduct($productData, $product);
         $productData->extId = $product->getExtId() ?? 0;
 
@@ -150,7 +158,7 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     public function create(): BaseProductData
     {
-        $productData = new ProductData();
+        $productData = $this->createInstance();
         $this->fillNew($productData);
         $productData->extId = 0;
 
@@ -252,7 +260,7 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     public function createFromProduct(BaseProduct $product): BaseProductData
     {
-        $productData = new ProductData();
+        $productData = $this->createInstance();
         $this->fillFromProduct($productData, $product);
         $productData->extId = $product->getExtId();
 

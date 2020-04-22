@@ -6,12 +6,15 @@ namespace App\Model\Payment;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData as BasePaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory as BasePaymentDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
+/**
+ * @method \App\Model\Payment\PaymentData create()
+ * @method \App\Model\Payment\PaymentData createFromPayment(\App\Model\Payment\Payment $payment)
+ */
 class PaymentDataFactory extends BasePaymentDataFactory
 {
     /**
@@ -32,23 +35,8 @@ class PaymentDataFactory extends BasePaymentDataFactory
     /**
      * @return \App\Model\Payment\PaymentData
      */
-    public function create(): BasePaymentData
+    protected function createInstance(): BasePaymentData
     {
-        $paymentData = new PaymentData();
-        $this->fillNew($paymentData);
-
-        return $paymentData;
-    }
-
-    /**
-     * @param \App\Model\Payment\Payment $payment
-     * @return \App\Model\Payment\PaymentData
-     */
-    public function createFromPayment(BasePayment $payment): BasePaymentData
-    {
-        $paymentData = new PaymentData();
-        $this->fillFromPayment($paymentData, $payment);
-
-        return $paymentData;
+        return new PaymentData();
     }
 }

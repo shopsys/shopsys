@@ -7,8 +7,16 @@ class HeurekaProductDomainDataFactory implements HeurekaProductDomainDataFactory
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData
      */
-    public function create(): HeurekaProductDomainData
+    protected function createInstance(): HeurekaProductDomainData
     {
         return new HeurekaProductDomainData();
+    }
+
+    /**
+     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData
+     */
+    public function create(): HeurekaProductDomainData
+    {
+        return $this->createInstance();
     }
 }

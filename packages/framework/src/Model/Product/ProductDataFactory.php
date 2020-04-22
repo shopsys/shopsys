@@ -121,9 +121,17 @@ class ProductDataFactory implements ProductDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
      */
+    protected function createInstance(): ProductData
+    {
+        return new ProductData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
+     */
     public function create(): ProductData
     {
-        $productData = new ProductData();
+        $productData = $this->createInstance();
         $this->fillNew($productData);
 
         return $productData;
@@ -167,7 +175,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
      */
     public function createFromProduct(Product $product): ProductData
     {
-        $productData = new ProductData();
+        $productData = $this->createInstance();
         $this->fillFromProduct($productData, $product);
 
         return $productData;

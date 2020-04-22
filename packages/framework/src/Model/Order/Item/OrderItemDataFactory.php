@@ -22,9 +22,17 @@ class OrderItemDataFactory implements OrderItemDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
      */
-    public function create(): OrderItemData
+    protected function createInstance(): OrderItemData
     {
         return new OrderItemData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
+     */
+    public function create(): OrderItemData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -33,7 +41,7 @@ class OrderItemDataFactory implements OrderItemDataFactoryInterface
      */
     public function createFromOrderItem(OrderItem $orderItem): OrderItemData
     {
-        $orderItemData = new OrderItemData();
+        $orderItemData = $this->createInstance();
         $this->fillFromOrderItem($orderItemData, $orderItem);
         $this->addFieldsByOrderItemType($orderItemData, $orderItem);
 

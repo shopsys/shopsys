@@ -42,6 +42,30 @@ class ListedProductViewFactory
     }
 
     /**
+     * @param int $id
+     * @param string $name
+     * @param string|null $shortDescription
+     * @param string $availability
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $sellingPrice
+     * @param array $flagIds
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $action
+     * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView
+     */
+    protected function create(
+        int $id,
+        string $name,
+        ?string $shortDescription,
+        string $availability,
+        ProductPrice $sellingPrice,
+        array $flagIds,
+        ProductActionView $action,
+        ?ImageView $image
+    ): ListedProductView {
+        return new ListedProductView($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $imageView
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $productActionView
@@ -49,7 +73,7 @@ class ListedProductViewFactory
      */
     public function createFromProduct(Product $product, ?ImageView $imageView, ProductActionView $productActionView): ListedProductView
     {
-        return new ListedProductView(
+        return $this->create(
             $product->getId(),
             $product->getName(),
             $product->getShortDescription($this->domain->getId()),
@@ -70,7 +94,7 @@ class ListedProductViewFactory
      */
     public function createFromArray(array $productArray, ?ImageView $imageView, ProductActionView $productActionView, PricingGroup $pricingGroup): ListedProductView
     {
-        return new ListedProductView(
+        return $this->create(
             $productArray['id'],
             $productArray['name'],
             $productArray['short_description'],

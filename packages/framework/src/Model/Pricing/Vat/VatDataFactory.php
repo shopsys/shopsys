@@ -7,9 +7,17 @@ class VatDataFactory implements VatDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData
      */
-    public function create(): VatData
+    protected function createInstance(): VatData
     {
         return new VatData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData
+     */
+    public function create(): VatData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -18,7 +26,7 @@ class VatDataFactory implements VatDataFactoryInterface
      */
     public function createFromVat(Vat $vat): VatData
     {
-        $vatData = new VatData();
+        $vatData = $this->createInstance();
         $this->fillFromVat($vatData, $vat);
 
         return $vatData;

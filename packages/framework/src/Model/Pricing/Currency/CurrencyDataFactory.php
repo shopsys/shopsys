@@ -7,9 +7,17 @@ class CurrencyDataFactory implements CurrencyDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData
      */
-    public function create(): CurrencyData
+    protected function createInstance(): CurrencyData
     {
         return new CurrencyData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData
+     */
+    public function create(): CurrencyData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -18,7 +26,7 @@ class CurrencyDataFactory implements CurrencyDataFactoryInterface
      */
     public function createFromCurrency(Currency $currency): CurrencyData
     {
-        $currencyData = new CurrencyData();
+        $currencyData = $this->createInstance();
         $this->fillFromCurrency($currencyData, $currency);
 
         return $currencyData;

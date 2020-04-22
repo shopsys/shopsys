@@ -7,9 +7,17 @@ class PricingGroupDataFactory implements PricingGroupDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData
      */
-    public function create(): PricingGroupData
+    protected function createInstance(): PricingGroupData
     {
         return new PricingGroupData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData
+     */
+    public function create(): PricingGroupData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -18,7 +26,7 @@ class PricingGroupDataFactory implements PricingGroupDataFactoryInterface
      */
     public function createFromPricingGroup(PricingGroup $pricingGroup): PricingGroupData
     {
-        $pricingGroupData = new PricingGroupData();
+        $pricingGroupData = $this->createInstance();
         $this->fillFromPricingGroup($pricingGroupData, $pricingGroup);
 
         return $pricingGroupData;

@@ -7,9 +7,17 @@ class PromoCodeDataFactory implements PromoCodeDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData
      */
-    public function create(): PromoCodeData
+    protected function createInstance(): PromoCodeData
     {
         return new PromoCodeData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData
+     */
+    public function create(): PromoCodeData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -18,7 +26,7 @@ class PromoCodeDataFactory implements PromoCodeDataFactoryInterface
      */
     public function createFromPromoCode(PromoCode $promoCode): PromoCodeData
     {
-        $promoCodeData = new PromoCodeData();
+        $promoCodeData = $this->createInstance();
         $this->fillFromPromoCode($promoCodeData, $promoCode);
 
         return $promoCodeData;

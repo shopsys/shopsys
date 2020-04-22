@@ -39,9 +39,17 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Advert\AdvertData
      */
-    public function create(): AdvertData
+    protected function createInstance(): AdvertData
     {
         return new AdvertData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Advert\AdvertData
+     */
+    public function create(): AdvertData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -50,7 +58,7 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
      */
     public function createFromAdvert(Advert $advert): AdvertData
     {
-        $advertData = new AdvertData();
+        $advertData = $this->createInstance();
         $this->fillFromAdvert($advertData, $advert);
         return $advertData;
     }

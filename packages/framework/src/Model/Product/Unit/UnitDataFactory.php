@@ -22,9 +22,17 @@ class UnitDataFactory implements UnitDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData
      */
+    protected function createInstance(): UnitData
+    {
+        return new UnitData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData
+     */
     public function create(): UnitData
     {
-        $unitData = new UnitData();
+        $unitData = $this->createInstance();
         $this->fillNew($unitData);
         return $unitData;
     }
@@ -45,7 +53,7 @@ class UnitDataFactory implements UnitDataFactoryInterface
      */
     public function createFromUnit(Unit $unit): UnitData
     {
-        $unitData = new UnitData();
+        $unitData = $this->createInstance();
         $this->fillFromUnit($unitData, $unit);
 
         return $unitData;

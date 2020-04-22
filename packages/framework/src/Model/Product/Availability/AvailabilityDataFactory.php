@@ -22,9 +22,17 @@ class AvailabilityDataFactory implements AvailabilityDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData
      */
+    protected function createInstance(): AvailabilityData
+    {
+        return new AvailabilityData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData
+     */
     public function create(): AvailabilityData
     {
-        $availabilityData = new AvailabilityData();
+        $availabilityData = $this->createInstance();
         $this->fillNew($availabilityData);
         return $availabilityData;
     }
@@ -45,7 +53,7 @@ class AvailabilityDataFactory implements AvailabilityDataFactoryInterface
      */
     public function createFromAvailability(Availability $availability): AvailabilityData
     {
-        $availabilityData = new AvailabilityData();
+        $availabilityData = $this->createInstance();
         $this->fillFromAvailability($availabilityData, $availability);
 
         return $availabilityData;

@@ -66,9 +66,17 @@ class BrandDataFactory implements BrandDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData
      */
+    protected function createInstance(): BrandData
+    {
+        return new BrandData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData
+     */
     public function create(): BrandData
     {
-        $brandData = new BrandData();
+        $brandData = $this->createInstance();
         $this->fillNew($brandData);
 
         return $brandData;
@@ -96,7 +104,7 @@ class BrandDataFactory implements BrandDataFactoryInterface
      */
     public function createFromBrand(Brand $brand): BrandData
     {
-        $brandData = new BrandData();
+        $brandData = $this->createInstance();
         $this->fillFromBrand($brandData, $brand);
 
         return $brandData;

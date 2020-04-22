@@ -7,8 +7,16 @@ class ZboziProductDomainDataFactory implements ZboziProductDomainDataFactoryInte
     /**
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData
      */
-    public function create(): ZboziProductDomainData
+    protected function createInstance(): ZboziProductDomainData
     {
         return new ZboziProductDomainData();
+    }
+
+    /**
+     * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData
+     */
+    public function create(): ZboziProductDomainData
+    {
+        return $this->createInstance();
     }
 }

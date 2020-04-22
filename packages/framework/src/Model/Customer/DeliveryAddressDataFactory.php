@@ -7,9 +7,17 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */
-    public function create(): DeliveryAddressData
+    protected function createInstance(): DeliveryAddressData
     {
         return new DeliveryAddressData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
+     */
+    public function create(): DeliveryAddressData
+    {
+        return $this->createInstance();
     }
 
     /**
@@ -18,7 +26,7 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
      */
     public function createFromDeliveryAddress(DeliveryAddress $deliveryAddress): DeliveryAddressData
     {
-        $deliveryAddressData = new DeliveryAddressData();
+        $deliveryAddressData = $this->createInstance();
         $this->fillFromDeliveryAddress($deliveryAddressData, $deliveryAddress);
 
         return $deliveryAddressData;

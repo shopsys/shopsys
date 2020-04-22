@@ -4,32 +4,20 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory as BaseProductDataFactory;
 
+/**
+ * @method \App\Model\Product\ProductData create()
+ * @method \App\Model\Product\ProductData createFromProduct(\App\Model\Product\Product $product)
+ */
 class ProductDataFactory extends BaseProductDataFactory
 {
     /**
      * @return \App\Model\Product\ProductData
      */
-    public function create(): BaseProductData
+    protected function createInstance(): BaseProductData
     {
-        $productData = new ProductData();
-        $this->fillNew($productData);
-
-        return $productData;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Product\ProductData
-     */
-    public function createFromProduct(BaseProduct $product): BaseProductData
-    {
-        $productData = new ProductData();
-        $this->fillFromProduct($productData, $product);
-
-        return $productData;
+        return new ProductData();
     }
 }
