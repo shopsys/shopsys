@@ -993,8 +993,8 @@ There you can find links to upgrade notes for other versions too.
             +   import './frontend/deliveryAddress';
             ```
         - add [assets/js/frontend/deliveryAddress/deliveryAddress.js](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js) and [assets/js/frontend/deliveryAddress/index.js]((https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/index.js)) files
-        - add [src/Resources/styles/front/common/components/list/addresses.less](https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/styles/front/common/components/list/addresses.less)
-        - update your `src/Resources/styles/front/common/main.less`
+        - add [assets/styles/frontend/common/components/list/addresses.less](https://github.com/shopsys/shopsys/blob/master/project-base/assets/styles/frontend/common/components/list/addresses.less)
+        - update your `assets/styles/frontend/common/main.less`
             ```diff
                 //// list
             +   @import "components/list/addresses.less";
@@ -1006,7 +1006,7 @@ There you can find links to upgrade notes for other versions too.
             +   - '@ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig'
             +   - '@ShopsysFramework/Admin/Form/deliveryAddressListFields.html.twig'
             ```
-        - update your `assets/js/frontend/validation/form/order.js`
+        - update your `assets/js/frontend/validation/form/orderValidator.js`
             ```diff
             +   const selectedDeliveryAddressValue = $orderPersonalInfoForm.find('.js-delivery-address-input:checked').val();
                 const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
