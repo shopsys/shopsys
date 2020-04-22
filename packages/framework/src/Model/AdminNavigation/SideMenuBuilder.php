@@ -145,9 +145,9 @@ class SideMenuBuilder
         $menu->setExtra('icon', 'tag');
 
         $menu->addChild('pricing_groups', ['route' => 'admin_pricinggroup_list', 'label' => t('Pricing groups')]);
-        $menu->addChild('vat', ['route' => 'admin_vat_list', 'label' => t('VAT and rounding')]);
+        $menu->addChild('vat', ['route' => 'admin_vat_list', 'label' => t('VAT')]);
         $menu->addChild('free_transport_and_payment', ['route' => 'admin_transportandpayment_freetransportandpaymentlimit', 'label' => t('Free shipping and payment')]);
-        $menu->addChild('currencies', ['route' => 'admin_currency_list', 'label' => t('Currencies')]);
+        $menu->addChild('currencies', ['route' => 'admin_currency_list', 'label' => t('Currencies and rounding')]);
         $promoCodesMenu = $menu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Promo codes')]);
         $promoCodesMenu->addChild('new', ['route' => 'admin_promocode_new', 'label' => t('New promo code'), 'display' => false]);
         $promoCodesMenu->addChild('edit', ['route' => 'admin_promocode_edit', 'label' => t('Editing promo code'), 'display' => false]);
