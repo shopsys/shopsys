@@ -19,7 +19,12 @@
                         </label>
                     </td>
                     <td>{{ stock.street }}<br>{{ stock.city }}</td>
-                    <td></td>
+                    <td>
+                        {% if stock.openingHours is not empty %}
+                            <strong>{{ 'Otevřeno' }}</strong><br/>
+                            {{ stock.openingHours|nl2br }}
+                        {% endif %}
+                    </td>
                     <td></td>
                 </tr>
             {% endfor %}

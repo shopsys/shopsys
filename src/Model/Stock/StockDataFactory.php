@@ -27,6 +27,8 @@ class StockDataFactory
         $stockData->externalId = $stock->getExternalId();
         $stockData->street = $stock->getStreet();
         $stockData->city = $stock->getCity();
+        $stockData->openingHours = $stock->getOpeningHours();
+
         return $stockData;
     }
 }
