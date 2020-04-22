@@ -12,26 +12,24 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    {% if isMainPage is defined and isMainPage is same as(false) %}
-        {{ parent() }}
-    {% endif %}
 {% endblock %}
 
 {% block main_content %}
     {% set entityName = 'blogArticles'|trans %}
     <div class="web__line">
-        <div class="web__container web__container--big-padding">
+        <div class="web__container web__container--no-padding">
             <div class="box-blog">
                 <h1 class="box-blog__title">
                     {{ blogCategory.getSeoH1(domain.id) ?? blogCategory.name}}
                 </h1>
-                <div class="box-blog__img">
-                {% if imageExists(blogCategory) %}
-                    {{ image(blogCategory, { itemprop: 'image', lazy: true }) }}
-                {% else %}
-                    {{ noimage({ alt: blogCategory.name }) }}
-                {% endif %}
+                <div class="box-blog__breadcrumb">
+                    {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
                 </div>
+                {% if imageExists(blogCategory) %}
+                    <div class="box-blog__img">
+                        {{ image(blogCategory, { itemprop: 'image', lazy: true }) }}
+                    </div>
+                {% endif %}
                 <div class="box-blog__desc">
                     {{ blogCategory.description|raw }}
                 </div>
@@ -47,28 +45,26 @@
                                 <ul class="list-articles list-articles--grid js-list">
                                     {% for blogArticle in blogArticlePaginationResult.results %}
                                         <li class="list-articles__item list-articles__item--grid">
-                                            <div class="list-articles__item__image">
-                                                <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}">
-                                                    {{ image(blogArticle, { size: 'list', alt: blogArticle.name, lazy: true }) }}
-                                                </a>
-                                            </div>
+                                            <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link list-articles__item__link--image" title="{{ blogArticle.name }}">
+                                                {{ image(blogArticle, { size: 'list', alt: blogArticle.name, class: "list-articles__item__image", lazy: true }) }}
+                                            </a>
                                             <div class="list-articles__item__content">
                                                 <div class="list-tags">
                                                     <span class="list-tags__tag">
                                                         {{ render(controller('App\\Controller\\Front\\BlogCategoryController::allCategoriesForBlogArticleAction', { blogArticle: blogArticle, currentBlogCategory: blogCategory })) }}
                                                     </span>
                                                 </div>
-                                                <h3>
+                                                <h3 class="list-articles__item__name">
                                                     <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
                                                         {{ blogArticle.name }}
                                                     </a>
                                                 </h3>
                                                 <div class="list-articles__item__desc">
-                                                    {{ blogArticle.perex|slice(0,100) }}{% if blogArticle.perex|length > 100 %}&hellip;{% endif %}
+                                                    {{ blogArticle.perex|slice(0,200) }}{% if blogArticle.perex|length > 200 %}&hellip;{% endif %}
                                                 </div>
                                                 <div class="list-articles__item__content__text">
                                                     <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="btn btn--next btn-no-style dont-print" title="{{ blogArticle.name }}">
-                                                        {{ "číst dál"|trans }} <i class="btn__icon svg svg-long-arrow-right"></i>
+                                                        {{ "Číst dál"|trans }} <i class="btn__icon svg svg-long-arrow-right"></i>
                                                     </a>
                                                 </div>
 
@@ -77,7 +73,7 @@
                                     {% endfor %}
                                 </ul>
 
-                                <div class="text-center margin-bottom-20">
+                                <div class="box-blog__pagination">
                                     {{ paginator.loadMoreButton(blogArticlePaginationResult) }}
                                 </div>
 

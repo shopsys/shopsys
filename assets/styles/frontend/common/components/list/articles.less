@@ -3,6 +3,7 @@
 @list-articles-image-height-vl: 220px;
 @list-articles-image-border-radius: 4px;
 @list-articles-item-name-font-size: 18px;
+@list-articles-item-desc-color: rgba(21, 22, 30, 0.7);
 
 .list-articles {
     display: flex;
@@ -49,6 +50,13 @@
 
         &__desc {
             margin-bottom: 0.75rem;
+
+            color: @list-articles-item-desc-color;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        &__image {
+            .image-object-fit-cover();
         }
 
         &--grid {
@@ -58,6 +66,7 @@
 
             @media @query-lg {
                 width: calc(100% / 3);
+                margin-bottom: 45px;
             }
 
             .list-articles__item__image {
@@ -72,6 +81,7 @@
 
     &--hp {
         display: flex;
+        flex-wrap: nowrap;
         overflow-x: auto;
         overflow-y: hidden;
 
@@ -94,15 +104,6 @@
                 min-width: 50%;
                 // IE11 Fix - only partial support of flexbox
                 max-width: 467px;
-            }
-
-            &__image {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
             }
         }
     }
