@@ -8,9 +8,20 @@ export default class ProductList {
     static init ($container) {
         $container.filterAllNodes('.js-product-list-ordering-mode').click(function () {
             const cookieName = $(this).data('cookie-name');
+            const forceCookieName = 'force-' + cookieName;
             const orderingName = $(this).data('ordering-mode');
+            const isReadyCategorySeoMixPage = $(this).data('is-ready-category-seo-mix-page');
 
-            $.cookie(cookieName, orderingName, { path: '/' });
+            if (isReadyCategorySeoMixPage) {
+                $.cookie(forceCookieName, orderingName, {
+                    path: location.pathname,
+                    expires: 1
+                });
+
+            } else {
+                $.cookie(cookieName, orderingName, { path: '/' });
+            }
+
             location.reload(true);
 
             return false;

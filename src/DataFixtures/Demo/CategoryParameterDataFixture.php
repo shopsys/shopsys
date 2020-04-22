@@ -17,7 +17,8 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
      */
     private $parameterFacade;
 
-    private const DEMO_PARAMETERS = [10, 50, 51];
+    private const CATEGORY_BOOKS_DEMO_PARAMETERS = [10, 50, 51];
+    private const CATEGORY_ELECTRONICS_DEMO_PARAMETERS = [21, 3, 20, 1, 5, 8];
 
     /**
      * @var \App\Model\Category\CategoryParameterFacade
@@ -41,12 +42,17 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS);
-
         $parameters = [];
-        foreach (self::DEMO_PARAMETERS as $parameterId) {
+        foreach (self::CATEGORY_BOOKS_DEMO_PARAMETERS as $parameterId) {
             $parameters[] = $this->parameterFacade->getById($parameterId);
         }
+        $this->categoryParameterFacade->saveRelation($category, $parameters);
 
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $parameters = [];
+        foreach (self::CATEGORY_ELECTRONICS_DEMO_PARAMETERS as $parameterId) {
+            $parameters[] = $this->parameterFacade->getById($parameterId);
+        }
         $this->categoryParameterFacade->saveRelation($category, $parameters);
     }
 

@@ -156,9 +156,9 @@ class CategorySeoFacade
         CategorySeoFiltersData $categorySeoFiltersData
     ) {
         if ($categorySeoFiltersData->useOrdering === true) {
-            $orderings = $this->productListOrderingModeForListFacade
+            $orderings = array_keys($this->productListOrderingModeForListFacade
                 ->getProductListOrderingConfig()
-                ->getSupportedOrderingModesNamesIndexedById();
+                ->getSupportedOrderingModesNamesIndexedById());
 
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,

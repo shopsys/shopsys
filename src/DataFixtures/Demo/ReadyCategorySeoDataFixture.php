@@ -11,6 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 
 class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -57,7 +58,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             '2 litrové kávovary - novinky',
-            '2-litrove-kavovary-novinky',
+            ['2-litrove-kavovary-novinky', 'nove-2-litrove-kavovary-vedlejsi-adresa-ktera-by-mela-byt-presmerovana-na-hlavni'],
             1
         );
 
@@ -65,7 +66,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             'Nejprodávanější 2 litrové kávovary',
-            'nejprodavanejsi-2-litrove-kavovary',
+            ['nejprodavanejsi-2-litrove-kavovary'],
             1
         );
 
@@ -73,7 +74,73 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             '2 litrové kávovary v akci',
-            '2-litrove-kavovary-v-akci',
+            ['2-litrove-kavovary-v-akci'],
+            1
+        );
+
+        $choseCategorySeoMixCombinationArray = [
+            'domainId' => 1,
+            'categoryId' => 2,
+        ];
+
+        $choseCategorySeoMixCombinationArray['flagId'] = 1;
+        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
+        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+            1 => 1,
+            5 => 7,
+        ];
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            'Elektro Novinky - TOP - 27" - HDMI',
+            ['elektro-novinky-top-27-hdmi', 'nakupte-url-elektro-novinky-top-27-hdmi'],
+            1
+        );
+
+        $choseCategorySeoMixCombinationArray['flagId'] = 2;
+        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_NAME_ASC;
+        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+            1 => 1,
+            5 => 11,
+        ];
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            'Elektro nejprodávanější - A-Z - 27" - bez HDMI',
+            ['elektro-nejprodavanejsi-a-z-27-bez-hdmi', 'nakupte-elektro-nejprodavanejsi-a-z-27-bez-hdmi'],
+            1
+        );
+
+        $choseCategorySeoMixCombinationArray['flagId'] = 3;
+        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRICE_ASC;
+        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+            1 => 13,
+            5 => 11,
+        ];
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            'Elektro Akce - od nejlevnějšího - 47 - bez hdmi',
+            ['elektro-akce-od-nejlevnejsiho-47-bez-hdmi', 'nakupte-akce-nejprodavanejsi-od-nejlevnejsiho-47-bez-hdmi'],
+            1
+        );
+
+        $choseCategorySeoMixCombinationArray['flagId'] = null;
+        $choseCategorySeoMixCombinationArray['ordering'] = null;
+        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+            5 => 7,
+        ];
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            'Elektro s HDMI',
+            ['elektro-s-hdmi', 'nakupte-elektro-s-hdmi'],
+            1
+        );
+
+        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+            5 => 11,
+        ];
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            'Elektro bez HDMI',
+            ['elektro-bez-hdmi', 'nakupte-elektro-bez-hdmi'],
             1
         );
     }
@@ -81,13 +148,13 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     /**
      * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
      * @param string $h1
-     * @param string $slug
+     * @param string[] $slugs
      * @param int $domainId
      */
     private function createReadyCategorySeoMix(
         ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
         string $h1,
-        string $slug,
+        array $slugs,
         int $domainId
     ): void {
         $readyCategorySeoMixDataForForm = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixDataForForm(
@@ -101,10 +168,13 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $urlListData = new UrlListData();
-        $urlListData->newUrls = [[
-            'domain' => $domainId,
-            'slug' => $slug,
-        ]];
+        $urlListData->newUrls = [];
+        foreach ($slugs as $slug) {
+            $urlListData->newUrls[] = [
+                'domain' => $domainId,
+                'slug' => $slug,
+            ];
+        }
 
         $this->readyCategorySeoMixFacade->createOrEdit(
             $choseCategorySeoMixCombination,

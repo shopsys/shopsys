@@ -8,21 +8,15 @@
     {{ paginator.metaRobots(paginationResult) }}
 {% endblock %}
 
-{% block meta_description %}
-    {{- category.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
-{% endblock %}
+{% block meta_description %}{{ seoMetaDescription }}{% endblock %}
 
-{% block title %}
-    {{ category.getSeoTitle(domain.id)|default(category.name) }}
-{% endblock %}
+{% block title %}{{ seoTitle }}{% endblock %}
 
 {% block main_content %}
     <div class="web__line">
         <div class="web__container">
             {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productList'})) }}
-            <h1>
-                {{ category.getSeoH1(domain.id)|default(category.name) }}
-            </h1>
+            <h1>{{ seoH1 }}</h1>
             {% if category.getShortDescription(domain.id) %}
                 {{ category.getShortDescription(domain.id)|raw }}
                 {% if category.getDescription(domain.id) %}
@@ -105,7 +99,7 @@
                         <div class="js-product-list-ajax-filter-products-with-controls">
                             <div class="box-list__top js-product-sort">
                                 <div class="box-list__top__wrap">
-                                    {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListAction')) }}
+                                    {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListAction', { readyCategorySeoMixId: readyCategorySeoMixId })) }}
                                     <div class="box-list__top__info">
                                         {% include 'Front/Content/Product/productSortCount.html.twig' with {paginationResult: paginationResult} %}
                                     </div>
@@ -121,7 +115,7 @@
     <div class="box-list__description">
         <a id="description"></a>
         <div class="box-list__description__text in-user-text js-category-description">
-            {{ category.getDescription(domain.id)|raw }}
+            {{ description|raw }}
         </div>
         <div class="box-list__description__more">
             <span class="link-style box-list__description__more__btn js-category-description-load-more">

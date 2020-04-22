@@ -16,3 +16,12 @@
     {% endfor %}
 
 {% endblock %}
+
+
+{% block grid_value_cell_id_ordering %}
+    {{ getOrderingNameByOrderingId(row.ordering) }}
+{% endblock %}
+
+{% block grid_value_cell_id_friendlyUrlSlug %}
+    <a href="{{ getAbsoluteUrlOfReadyCategorySeoMix(row.rcsmId) }}" target="_blank">{{ row.fuSlug }}</a>
+{% endblock %}
