@@ -18,6 +18,13 @@ export default class ProductFilterBox {
             _this.toggleFilterBox($(event.target).closest('.js-product-filter-box'));
         });
 
+        $container.filterAllNodes('.js-product-filter-close-parameter').each(function () {
+            let parameterValuesCheckedCount = $(this).find('input[type="checkbox"]:checked').length;
+            if (parameterValuesCheckedCount === 0) {
+                _this.toggleFilterBox($(this).closest('.js-product-filter-box'));
+            }
+        });
+
         $container.filterAllNodes('.js-product-filter-show-more-less').on('click', event => {
             event.preventDefault();
             _this.initFilterParamsToogle($(event.target));
