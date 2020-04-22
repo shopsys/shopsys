@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
+use App\Model\Category\CategoryParameterFacade;
 use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
@@ -114,6 +115,11 @@ class ProductController extends FrontBaseController
     private $seoSettingFacade;
 
     /**
+     * @var \App\Model\Category\CategoryParameterFacade
+     */
+    private $categoryParameterFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -128,9 +134,9 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
-
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
+     * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -148,7 +154,8 @@ class ProductController extends FrontBaseController
         ProductFacade $productFacade,
         CategoryProductSeriesFacade $categoryProductSeriesFacade,
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        SeoSettingFacade $seoSettingFacade
+        SeoSettingFacade $seoSettingFacade,
+        CategoryParameterFacade $categoryParameterFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -166,6 +173,7 @@ class ProductController extends FrontBaseController
         $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
         $this->seoSettingFacade = $seoSettingFacade;
+        $this->categoryParameterFacade = $categoryParameterFacade;
     }
 
     /**
@@ -273,6 +281,7 @@ class ProductController extends FrontBaseController
             'priceRange' => $productFilterConfig->getPriceRange(),
             'categoryProductSeries' => $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category),
             'readyCategorySeoMixId' => $readyCategorySeoMixId,
+            'filterCollapsedParameters' => $this->categoryParameterFacade->getParametersCollapsedIndexedByIdForCategory($category),
         ];
 
         $viewParameters = array_merge($viewParameters, $this->getAdditionalSeoViewParameters($category, $readyCategorySeoMixId));

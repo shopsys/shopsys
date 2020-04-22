@@ -104,7 +104,7 @@ class CategoryFacade extends BaseCategoryFacade
     {
         /** @var \App\Model\Category\Category $category */
         $category = parent::create($categoryData);
-        $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters);
+        $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters, $categoryData->parametersCollapsed);
         $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
 
         return $category;
@@ -119,7 +119,7 @@ class CategoryFacade extends BaseCategoryFacade
     {
         /** @var \App\Model\Category\Category $category */
         $category = parent::edit($categoryId, $categoryData);
-        $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters);
+        $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters, $categoryData->parametersCollapsed);
         $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
 
         return $category;

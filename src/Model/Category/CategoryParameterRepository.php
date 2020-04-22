@@ -66,4 +66,20 @@ class CategoryParameterRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @return \App\Model\Product\Parameter\Parameter[]
+     */
+    public function getParametersCollapsedByCategory(Category $category): array
+    {
+        return $this->getQueryBuilder()
+            ->select('p')
+            ->join(Parameter::class, 'p', Join::WITH, 'cp.parameter = p')
+            ->where('cp.category = :category')
+            ->andWhere('cp.collapsed = true')
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->execute();
+    }
 }

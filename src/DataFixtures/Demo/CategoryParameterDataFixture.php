@@ -46,14 +46,14 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
         foreach (self::CATEGORY_BOOKS_DEMO_PARAMETERS as $parameterId) {
             $parameters[] = $this->parameterFacade->getById($parameterId);
         }
-        $this->categoryParameterFacade->saveRelation($category, $parameters);
+        $this->categoryParameterFacade->saveRelation($category, $parameters, []);
 
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
         $parameters = [];
         foreach (self::CATEGORY_ELECTRONICS_DEMO_PARAMETERS as $parameterId) {
             $parameters[] = $this->parameterFacade->getById($parameterId);
         }
-        $this->categoryParameterFacade->saveRelation($category, $parameters);
+        $this->categoryParameterFacade->saveRelation($category, $parameters, []);
     }
 
     /**
