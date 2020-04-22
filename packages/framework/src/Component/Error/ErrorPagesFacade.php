@@ -167,7 +167,7 @@ class ErrorPagesFacade
      * @param string $content
      * @return string
      */
-    protected function removeContactFrom($content): string
+    protected function removeContactFrom(string $content): string
     {
         $crawler = new Crawler($content);
         $crawler->filter('form[name="subscription_form"]')->each(function (Crawler $crawler) {
