@@ -109,7 +109,7 @@
         "codeception/module-db": "^1.0",
         "codeception/module-webdriver": "^1.0",
         "codeception/phpunit-wrapper": "^8.0",
-        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan": "^0.12.19",
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpunit/phpunit": "^8.0",

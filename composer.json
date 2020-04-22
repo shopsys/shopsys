@@ -165,7 +165,7 @@
         "codeception/phpunit-wrapper": "^8.0",
         "jakub-onderka/php-parallel-lint": "^0.9",
         "nette/utils": "^3.0",
-        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan": "^0.12.19",
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpunit/phpunit": "^8.0",
