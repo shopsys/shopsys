@@ -1683,6 +1683,14 @@ following methods has changed their interface, update your usages accordingly:
     -   public function __construct(?EntityNameResolver $entityNameResolver = null)
     +   public function __construct(EntityNameResolver $entityNameResolver)
     ```
+- `ShopsysFrameworkDataCollector::__construct()`
+    ```diff
+        public function __construct(
+            Domain $domain,
+    -       ?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null
+    +       DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+        )
+    ```
 - `VatController::__construct()`
     ```diff
         public function __construct(

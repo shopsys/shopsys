@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Collector;
 
-use BadMethodCallException;
 use PharIo\Version\Version;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
@@ -21,37 +20,20 @@ final class ShopsysFrameworkDataCollector extends DataCollector
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null
+     * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface
      */
     protected $displayTimeZoneProvider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null $displayTimeZoneProvider
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
     public function __construct(
         Domain $domain,
-        ?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null
+        DisplayTimeZoneProviderInterface $displayTimeZoneProvider
     ) {
         $this->domain = $domain;
         $this->displayTimeZoneProvider = $displayTimeZoneProvider;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setDisplayTimeZoneProvider(DisplayTimeZoneProviderInterface $displayTimeZoneProvider): void
-    {
-        if ($this->displayTimeZoneProvider !== null && $this->displayTimeZoneProvider !== $displayTimeZoneProvider) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-
-        if ($this->displayTimeZoneProvider === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->displayTimeZoneProvider = $displayTimeZoneProvider;
-        }
     }
 
     /**
