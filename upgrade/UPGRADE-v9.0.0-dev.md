@@ -1623,6 +1623,18 @@ following methods has changed their interface, update your usages accordingly:
     +       ImageFacade $imageFacade
         )
     ```
+- `PriceExtension::__construct()`
+    ```diff
+        public function __construct(
+            CurrencyFacade $currencyFacade,
+            Domain $domain,
+            Localization $localization,
+            NumberFormatRepositoryInterface $numberFormatRepository,
+            CurrencyRepositoryInterface $intlCurrencyRepository,
+    -       ?CurrencyFormatterFactory $currencyFormatterFactory = null
+    +       CurrencyFormatterFactory $currencyFormatterFactory
+       )
+    ```
 
 - `ImageFacade::uploadImage`
     ```diff
@@ -1654,6 +1666,7 @@ following methods were removed. Use corresponding replacement instead:
 - `CurrencyFormatterFactory::create()` was removed, use `CurrencyFormatterFactory::createByLocaleAndCurrency()`
 - `Domain::getAllIdsExcludingFirstDomain()` was removed. Use your implementation if you need the functionality
 - `LocalizationListener::isAdminRequest()` was removed, use `Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade::inInAdmin()` instead
+- `PriceExtension::getCurrencyFormatter()` was removed, use `CurrencyFormatterFactory::createByLocaleAndCurrency()`
 
 following classes were removed and should not be used anywhere in your project:
 - `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
@@ -1662,6 +1675,8 @@ following classes were removed and should not be used anywhere in your project:
 following constants were removed. Create your own constant if needed
 - `CronFacade::TIMEOUT_SECONDS = 240`
 - `CurrencyFormatterFactory::MINIMUM_FRACTION_DIGITS = 2`
+- `PriceExtension::MINIMUM_FRACTION_DIGITS = 2`
+- `PriceExtension::MAXIMUM_FRACTION_DIGITS = 10`
 
 following services are no longer registered. Use corresponding replacement instead
 - `DateTimeFormatter`, use `DateTimeFormatterInterface` instead
