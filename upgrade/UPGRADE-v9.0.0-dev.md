@@ -1587,6 +1587,27 @@ following methods has changed their interface, update your usages accordingly:
         )
     ```
 
+- `ImageFacade::uploadImage`
+    ```diff
+    -   public function uploadImage($entity, $temporaryFilenames, $type)
+    +   protected function uploadImage($entity, $temporaryFilenames, $type): void
+    ```
+- `ImageFacade::saveImageOrdering`
+    ```diff
+    -   public function saveImageOrdering($orderedImages)
+    +   protected function saveImageOrdering($orderedImages): void
+    ```
+- `ImageFacade::uploadImages`
+    ```diff
+    -   public function uploadImages($entity, $temporaryFilenames, $type)
+    +   protected function uploadImages($entity, $temporaryFilenames, $type): void
+    ```
+- `ImageFacade::deleteImages`
+    ```diff
+    -   public function deleteImages($entity, array $images)
+    +   protected function deleteImages($entity, array $images): void
+    ```
+
 following methods were removed. Use corresponding replacement instead:
 - `BasePriceCalculation::calculateBasePrice()` was removed, use `BasePriceCalculation::calculateBasePriceRoundedByCurrency()` instead
 - `BasePriceCalculation::applyCoefficients()` was removed as it was used only in tests. Use your implementation if you need the functionality
