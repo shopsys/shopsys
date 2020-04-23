@@ -89,10 +89,6 @@ services:
             - '%shopsys.domain_images_dir%'
         tags: ['doctrine.fixture.orm']
 
-    Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
-        arguments:
-            $useInlineEditation: false
-
     App\Controller\Front\ErrorController:
         arguments:
             $environment: '%kernel.environment%'

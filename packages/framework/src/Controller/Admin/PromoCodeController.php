@@ -2,13 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,108 +20,44 @@ class PromoCodeController extends AdminBaseController
     protected $promoCodeFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit
-     */
-    protected $promoCodeInlineEdit;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade
      */
     protected $administratorGridFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface|null
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface
      */
     protected $promoCodeDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory|null
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory
      */
     protected $promoCodeGridFactory;
 
     /**
-     * @var bool
-     */
-    protected $useInlineEditation;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider|null
+     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
      */
     protected $breadcrumbOverrider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit $promoCodeInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface|null $promoCodeDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory|null $promoCodeGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider|null $breadcrumbOverrider
-     * @param bool $useInlineEditation
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface $promoCodeDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory $promoCodeGridFactory
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
-        PromoCodeInlineEdit $promoCodeInlineEdit,
         AdministratorGridFacade $administratorGridFacade,
-        ?PromoCodeDataFactoryInterface $promoCodeDataFactory = null,
-        ?PromoCodeGridFactory $promoCodeGridFactory = null,
-        ?BreadcrumbOverrider $breadcrumbOverrider = null,
-        bool $useInlineEditation = true
+        PromoCodeDataFactoryInterface $promoCodeDataFactory,
+        PromoCodeGridFactory $promoCodeGridFactory,
+        BreadcrumbOverrider $breadcrumbOverrider
     ) {
         $this->promoCodeFacade = $promoCodeFacade;
-        $this->promoCodeInlineEdit = $promoCodeInlineEdit;
         $this->administratorGridFacade = $administratorGridFacade;
         $this->promoCodeDataFactory = $promoCodeDataFactory;
         $this->promoCodeGridFactory = $promoCodeGridFactory;
-        $this->useInlineEditation = $useInlineEditation;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface $promoCodeDataFactory
-     */
-    public function setPromoCodeDataFactory(PromoCodeDataFactoryInterface $promoCodeDataFactory)
-    {
-        if ($this->promoCodeDataFactory !== null && $this->promoCodeDataFactory !== $promoCodeDataFactory) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-        if ($this->promoCodeDataFactory === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->promoCodeDataFactory = $promoCodeDataFactory;
-        }
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory $promoCodeGridFactory
-     */
-    public function setPromoCodeGridFactory(PromoCodeGridFactory $promoCodeGridFactory)
-    {
-        if ($this->promoCodeGridFactory !== null && $this->promoCodeGridFactory !== $promoCodeGridFactory) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-        if ($this->promoCodeGridFactory === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->promoCodeGridFactory = $promoCodeGridFactory;
-        }
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     */
-    public function setBreadcrumbOverrider(BreadcrumbOverrider $breadcrumbOverrider)
-    {
-        if ($this->breadcrumbOverrider !== null && $this->breadcrumbOverrider !== $breadcrumbOverrider) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-        if ($this->breadcrumbOverrider === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->breadcrumbOverrider = $breadcrumbOverrider;
-        }
     }
 
     /**
@@ -131,24 +65,17 @@ class PromoCodeController extends AdminBaseController
      */
     public function listAction()
     {
+        /* @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
-        /* @var $administrator \Shopsys\FrameworkBundle\Model\Administrator\Administrator */
 
-        if ($this->useInlineEditation === true) {
-            $grid = $this->promoCodeInlineEdit->getGrid();
+        $grid = $this->promoCodeGridFactory->create(true);
 
-            $grid->enablePaging();
-        } else {
-            $grid = $this->promoCodeGridFactory->create(true);
-
-            $grid->enablePaging();
-        }
+        $grid->enablePaging();
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 
         return $this->render('@ShopsysFramework/Admin/Content/PromoCode/list.html.twig', [
             'gridView' => $grid->createView(),
-            'useInlineEditation' => $this->useInlineEditation,
         ]);
     }
 
@@ -187,7 +114,6 @@ class PromoCodeController extends AdminBaseController
 
         $form = $this->createForm(PromoCodeFormType::class, $promoCodeData, [
             'promo_code' => null,
-            'isInlineEdit' => false,
         ]);
         $form->handleRequest($request);
 
@@ -225,7 +151,6 @@ class PromoCodeController extends AdminBaseController
 
         $form = $this->createForm(PromoCodeFormType::class, $promoCodeData, [
             'promo_code' => $promoCode,
-            'isInlineEdit' => false,
         ]);
         $form->handleRequest($request);
 

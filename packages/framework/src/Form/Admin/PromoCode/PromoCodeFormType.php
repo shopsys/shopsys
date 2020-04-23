@@ -42,7 +42,7 @@ class PromoCodeFormType extends AbstractType
     {
         $this->promoCode = $options['promo_code'];
 
-        if ($this->promoCode instanceof PromoCode && $options['isInlineEdit'] === false) {
+        if ($this->promoCode instanceof PromoCode) {
             $builder->add('formId', DisplayOnlyType::class, [
                 'label' => t('ID'),
                 'data' => $this->promoCode->getId(),
@@ -74,9 +74,7 @@ class PromoCodeFormType extends AbstractType
                 'label' => 'Discount (%)',
             ]);
 
-        if ($options['isInlineEdit'] === false) {
-            $builder->add('save', SubmitType::class);
-        }
+        $builder->add('save', SubmitType::class);
     }
 
     /**
@@ -85,13 +83,10 @@ class PromoCodeFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['promo_code', 'isInlineEdit'])
+            ->setRequired(['promo_code'])
             ->setAllowedTypes('promo_code', [PromoCode::class, 'null'])
-            /** @internal option isInlineEdit will be removed in the next major as inline editing will be removed for promo codes */
-            ->setAllowedTypes('isInlineEdit', 'bool')
             ->setDefaults([
                 'attr' => ['novalidate' => 'novalidate'],
-                'isInlineEdit' => true,
             ]);
     }
 

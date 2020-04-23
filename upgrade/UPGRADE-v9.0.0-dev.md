@@ -1655,6 +1655,21 @@ following methods has changed their interface, update your usages accordingly:
     +       CurrencyFacade $currencyFacade
         )
     ```
+- `PromoCodeController::__construct()`
+    ```diff
+        public function __construct(
+            PromoCodeFacade $promoCodeFacade,
+    -       PromoCodeInlineEdit $promoCodeInlineEdit,
+            AdministratorGridFacade $administratorGridFacade,
+    -       ?PromoCodeDataFactoryInterface $promoCodeDataFactory = null,
+    +       PromoCodeDataFactoryInterface $promoCodeDataFactory,
+    -       ?PromoCodeGridFactory $promoCodeGridFactory = null,
+    +       PromoCodeGridFactory $promoCodeGridFactory,
+    -       ?BreadcrumbOverrider $breadcrumbOverrider = null,
+    +       BreadcrumbOverrider $breadcrumbOverrider
+    -       bool $useInlineEditation = true
+        )
+    ```
 - `QuantifiedProductPriceCalculation::__construct()`
     ```diff
         public function __construct(
@@ -1715,6 +1730,7 @@ following methods were removed. Use corresponding replacement instead:
 following classes were removed and should not be used anywhere in your project:
 - `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
 - `Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory` was removed. `DateTimeFormatter` should be created directly by DI container
+- `Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit` was removed. `PromoCodeGridFactory` should be used instead
 
 following constants were removed. Create your own constant if needed
 - `CronFacade::TIMEOUT_SECONDS = 240`
@@ -1728,4 +1744,8 @@ following constants were removed. Create your own constant if needed
 
 following services are no longer registered. Use corresponding replacement instead
 - `DateTimeFormatter`, use `DateTimeFormatterInterface` instead
+
+following form type options were removed
+- `PromoCodeFormType` no longer has option `isInlineEdit`
+
 [shopsys/framework]: https://github.com/shopsys/framework
