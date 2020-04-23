@@ -1583,6 +1583,7 @@ following methods were removed. Use corresponding replacement instead:
 - `CronFacade::runModulesForInstance()` was removed, use `CronFacade::runModules()` instead
 - `CronFacade::runModule()` was removed, use `CronFacade::runSingleModule()` instead
 - `CurrencyFormatterFactory::create()` was removed, use `CurrencyFormatterFactory::createByLocaleAndCurrency()`
+- `Domain::getAllIdsExcludingFirstDomain()` was removed. Use your implementation if you need the functionality
 
 following classes were removed and should not be used anywhere in your project:
 - `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
