@@ -1550,4 +1550,7 @@ following methods were removed. Use corresponding replacement instead:
 - `BasePriceCalculation::calculateBasePrice()` was removed, use `BasePriceCalculation::calculateBasePriceRoundedByCurrency()` instead
 - `BasePriceCalculation::applyCoefficients()` was removed as it was used only in tests. Use your implementation if you need the functionality
 - `BasePriceCalculation::getBasePriceWithVat()` was removed, use `BasePriceCalculation::getBasePriceWithVatRoundedCurrency()` instead
+
+following classes were removed and should not be used anywhere in your project:
+- `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
 [shopsys/framework]: https://github.com/shopsys/framework
