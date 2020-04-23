@@ -1635,6 +1635,34 @@ following methods has changed their interface, update your usages accordingly:
     +       CurrencyFormatterFactory $currencyFormatterFactory
        )
     ```
+- `ProductInputPriceRecalculator::__construct()`
+    ```diff
+        public function __construct(
+            BasePriceCalculation $basePriceCalculation,
+            InputPriceCalculation $inputPriceCalculation,
+    -       ?CurrencyFacade $currencyFacade = null
+    +       CurrencyFacade $currencyFacade
+        )
+    ```
+- `ProductPriceCalculation::__construct()`
+    ```diff
+        public function __construct(
+            BasePriceCalculation $basePriceCalculation,
+            PricingSetting $pricingSetting,
+            ProductManualInputPriceRepository $productManualInputPriceRepository,
+            ProductRepository $productRepository,
+    -       ?CurrencyFacade $currencyFacade = null
+    +       CurrencyFacade $currencyFacade
+        )
+    ```
+- `QuantifiedProductPriceCalculation::__construct()`
+    ```diff
+        public function __construct(
+            ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
+    -       Rounding $rounding,
+            PriceCalculation $priceCalculation
+        )
+    ```
 - `VatController::__construct()`
     ```diff
         public function __construct(

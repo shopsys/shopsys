@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Product\Pricing;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -49,6 +50,10 @@ class ProductPriceCalculationTest extends TestCase
             ->expects($this->any())->method('getAllSellableVariantsByMainVariant')
             ->willReturn($variants);
 
+        $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $rounding = new Rounding($pricingSettingMock);
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
@@ -57,7 +62,8 @@ class ProductPriceCalculationTest extends TestCase
             $basePriceCalculation,
             $pricingSettingMock,
             $productManualInputPriceRepositoryMock,
-            $productRepositoryMock
+            $productRepositoryMock,
+            $currencyFacadeMock
         );
     }
 
