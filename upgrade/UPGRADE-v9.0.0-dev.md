@@ -1635,6 +1635,16 @@ following methods has changed their interface, update your usages accordingly:
     +       CurrencyFormatterFactory $currencyFormatterFactory
        )
     ```
+- `VatController::__construct()`
+    ```diff
+        public function __construct(
+            VatFacade $vatFacade,
+    -       PricingSetting $pricingSetting,
+            VatInlineEdit $vatInlineEdit,
+            ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+            AdminDomainTabsFacade $adminDomainTabsFacade
+        )
+    ```
 
 - `ImageFacade::uploadImage`
     ```diff
@@ -1667,6 +1677,12 @@ following methods were removed. Use corresponding replacement instead:
 - `Domain::getAllIdsExcludingFirstDomain()` was removed. Use your implementation if you need the functionality
 - `LocalizationListener::isAdminRequest()` was removed, use `Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade::inInAdmin()` instead
 - `PriceExtension::getCurrencyFormatter()` was removed, use `CurrencyFormatterFactory::createByLocaleAndCurrency()`
+- `PricingSetting::getRoundingType()` was removed, rounding type can be set per Currency
+- `PricingSetting::setRoundingType()` was removed, rounding type can be set per Currency
+- `PricingSetting::getRoundingTypes()` was removed, rounding type can be set per Currency
+- `Rounding::roundPriceWithVat()` was removed, use `Rounding::roundPriceWithVatByCurrency()`
+- `QuantifiedProductDiscountCalculation::calculateDiscount()` was removed, use `QuantifiedProductDiscountCalculation::calculateDiscountRoundedByCurrency()`
+- `QuantifiedProductDiscountCalculation::calculateDiscounts()` was removed, use `QuantifiedProductDiscountCalculation::calculateDiscountsRoundedByCurrency()`
 
 following classes were removed and should not be used anywhere in your project:
 - `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
@@ -1677,6 +1693,10 @@ following constants were removed. Create your own constant if needed
 - `CurrencyFormatterFactory::MINIMUM_FRACTION_DIGITS = 2`
 - `PriceExtension::MINIMUM_FRACTION_DIGITS = 2`
 - `PriceExtension::MAXIMUM_FRACTION_DIGITS = 10`
+- `PricingSetting::ROUNDING_TYPE = 'roundingType'`
+- `PricingSetting::ROUNDING_TYPE_HUNDREDTHS = 1`
+- `PricingSetting::ROUNDING_TYPE_FIFTIES = 2`
+- `PricingSetting::ROUNDING_TYPE_INTEGER = 3`
 
 following services are no longer registered. Use corresponding replacement instead
 - `DateTimeFormatter`, use `DateTimeFormatterInterface` instead

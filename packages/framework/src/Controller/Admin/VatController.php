@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Vat\VatSettingsFormType;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,11 +18,6 @@ class VatController extends AdminBaseController
      * @var \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
      */
     protected $confirmDeleteResponseFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
-     */
-    protected $pricingSetting;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
@@ -42,20 +36,17 @@ class VatController extends AdminBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit $vatInlineEdit
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         VatFacade $vatFacade,
-        PricingSetting $pricingSetting,
         VatInlineEdit $vatInlineEdit,
         ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
         AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
         $this->vatFacade = $vatFacade;
-        $this->pricingSetting = $pricingSetting;
         $this->vatInlineEdit = $vatInlineEdit;
         $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
@@ -154,7 +145,6 @@ class VatController extends AdminBaseController
     {
         $vatSettingsFormData = [
             'defaultVat' => $this->vatFacade->getDefaultVatForDomain($this->adminDomainTabsFacade->getSelectedDomainId()),
-            'roundingType' => $this->pricingSetting->getRoundingType(),
         ];
 
         $form = $this->createForm(VatSettingsFormType::class, $vatSettingsFormData);
@@ -163,16 +153,11 @@ class VatController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $vatSettingsFormData = $form->getData();
 
-            try {
-                $this->vatFacade->setDefaultVatForDomain($vatSettingsFormData['defaultVat'], $this->adminDomainTabsFacade->getSelectedDomainId());
-                $this->pricingSetting->setRoundingType($vatSettingsFormData['roundingType']);
+            $this->vatFacade->setDefaultVatForDomain($vatSettingsFormData['defaultVat'], $this->adminDomainTabsFacade->getSelectedDomainId());
 
-                $this->addSuccessFlash(t('VAT settings modified'));
+            $this->addSuccessFlash(t('VAT settings modified'));
 
-                return $this->redirectToRoute('admin_vat_list');
-            } catch (\Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidRoundingTypeException $ex) {
-                $this->addErrorFlash(t('Invalid rounding settings'));
-            }
+            return $this->redirectToRoute('admin_vat_list');
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Vat/vatSettings.html.twig', [

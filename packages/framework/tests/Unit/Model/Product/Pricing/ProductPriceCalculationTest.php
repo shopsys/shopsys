@@ -34,9 +34,6 @@ class ProductPriceCalculationTest extends TestCase
             ->expects($this->any())->method('getInputPriceType')
                 ->willReturn($inputPriceType);
         $pricingSettingMock
-            ->expects($this->any())->method('getRoundingType')
-                ->willReturn(PricingSetting::ROUNDING_TYPE_INTEGER);
-        $pricingSettingMock
             ->expects($this->any())->method('getDomainDefaultCurrencyIdByDomainId')
                 ->willReturn(1);
 
