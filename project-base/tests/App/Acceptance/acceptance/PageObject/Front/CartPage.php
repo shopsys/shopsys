@@ -22,20 +22,6 @@ class CartPage extends AbstractPage
     }
 
     /**
-     * @deprecated test is deprecated and will be removed in the next major
-     *
-     * @param string $productName
-     * @param string $price
-     */
-    public function assertProductPrice($productName, $price)
-    {
-        $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
-        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolOnFrontend(Money::create($convertedPrice));
-        $productPriceCell = $this->getProductTotalPriceCellByName($productName);
-        $this->tester->seeInElement($formattedPriceWithCurrency, $productPriceCell);
-    }
-
-    /**
      * @param string $productName
      * @param string $price
      */
@@ -45,19 +31,6 @@ class CartPage extends AbstractPage
         $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(Money::create($convertedPrice));
         $productPriceCell = $this->getProductTotalPriceCellByName($productName);
         $this->tester->seeInElement($formattedPriceWithCurrency, $productPriceCell);
-    }
-
-    /**
-     * @deprecated test is deprecated and will be removed in the next major
-     *
-     * @param string $price
-     */
-    public function assertTotalPriceWithVat($price)
-    {
-        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolOnFrontend(Money::create($price));
-        $orderPriceCell = $this->getTotalProductsPriceCell();
-        $message = t('Total price including VAT', [], 'messages', $this->tester->getFrontendLocale());
-        $this->tester->seeInElement($message . ': ' . $formattedPriceWithCurrency, $orderPriceCell);
     }
 
     /**
@@ -228,7 +201,7 @@ class CartPage extends AbstractPage
             );
         }
 
-        $this->assertTotalPriceWithVat($totalPrice->getAmount());
+        $this->assertTotalPriceWithVatRoundedByCurrency($totalPrice->getAmount());
     }
 
     /**
