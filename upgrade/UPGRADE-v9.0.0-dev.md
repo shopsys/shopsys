@@ -1731,11 +1731,13 @@ following methods were removed. Use corresponding replacement instead:
 - `Rounding::roundPriceWithVat()` was removed, use `Rounding::roundPriceWithVatByCurrency()`
 - `QuantifiedProductDiscountCalculation::calculateDiscount()` was removed, use `QuantifiedProductDiscountCalculation::calculateDiscountRoundedByCurrency()`
 - `QuantifiedProductDiscountCalculation::calculateDiscounts()` was removed, use `QuantifiedProductDiscountCalculation::calculateDiscountsRoundedByCurrency()`
+- `RedisFacade::hasAnyKey()` was removed. Use your implementation if you need the functionality
 
 following classes were removed and should not be used anywhere in your project:
 - `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
 - `Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory` was removed. `DateTimeFormatter` should be created directly by DI container
 - `Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit` was removed. `PromoCodeGridFactory` should be used instead
+- `Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory` was removed. Use setter injection of the Redis instance in DIC configuration of the `RedisCache` service instead
 
 following constants were removed. Create your own constant if needed
 - `CronFacade::TIMEOUT_SECONDS = 240`
