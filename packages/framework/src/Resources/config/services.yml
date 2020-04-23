@@ -535,9 +535,9 @@ services:
             - { name: 'monolog.logger', channel: 'request' }
         arguments:
             - '%kernel.error_controller%'
+            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
             - '@?logger'
             - '%kernel.debug%'
-            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
 
     twig.stringloader:
         class: Twig\Loader\ArrayLoader

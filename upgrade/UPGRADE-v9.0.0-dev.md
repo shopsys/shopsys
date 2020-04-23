@@ -1575,6 +1575,17 @@ following methods has changed their interface, update your usages accordingly:
     +       DisplayTimeZoneProviderInterface $displayTimeZoneProvider
         )
     ```
+- `ErrorPagesFacade::__construct()`
+    ```diff
+        public function __construct(
+            $errorPagesDir,
+            Domain $domain,
+            DomainRouterFactory $domainRouterFactory,
+            Filesystem $filesystem,
+    -       ?ErrorIdProvider $errorIdProvider = null
+    +       ErrorIdProvider $errorIdProvider
+        )
+    ```
 
 following methods were removed. Use corresponding replacement instead:
 - `BasePriceCalculation::calculateBasePrice()` was removed, use `BasePriceCalculation::calculateBasePriceRoundedByCurrency()` instead
