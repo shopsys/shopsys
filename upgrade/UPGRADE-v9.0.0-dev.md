@@ -1556,12 +1556,28 @@ following methods has changed their interface, update your usages accordingly:
     +       ImageFacade $imageFacade
         )
     ```
+- `CronFacade::__construct()`
+    ```diff
+        public function __construct(
+            Logger $logger,
+            CronConfig $cronConfig,
+            CronModuleFacade $cronModuleFacade,
+            Mailer $mailer,
+    -       ?CronModuleExecutor $cronModuleExecutor = null
+    +       CronModuleExecutor $cronModuleExecutor
+        )
+  ```
 
 following methods were removed. Use corresponding replacement instead:
 - `BasePriceCalculation::calculateBasePrice()` was removed, use `BasePriceCalculation::calculateBasePriceRoundedByCurrency()` instead
 - `BasePriceCalculation::applyCoefficients()` was removed as it was used only in tests. Use your implementation if you need the functionality
 - `BasePriceCalculation::getBasePriceWithVat()` was removed, use `BasePriceCalculation::getBasePriceWithVatRoundedCurrency()` instead
+- `CronFacade::runModulesForInstance()` was removed, use `CronFacade::runModules()` instead
+- `CronFacade::runModule()` was removed, use `CronFacade::runSingleModule()` instead
 
 following classes were removed and should not be used anywhere in your project:
 - `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
+
+following constants were removed. Create your own constant if needed
+- `CronFacade::TIMEOUT_SECONDS = 240`
 [shopsys/framework]: https://github.com/shopsys/framework
