@@ -1678,6 +1678,11 @@ following methods has changed their interface, update your usages accordingly:
             PriceCalculation $priceCalculation
         )
     ```
+- `QueryBuilderExtender::__construct()`
+    ```diff
+    -   public function __construct(?EntityNameResolver $entityNameResolver = null)
+    +   public function __construct(EntityNameResolver $entityNameResolver)
+    ```
 - `VatController::__construct()`
     ```diff
         public function __construct(
