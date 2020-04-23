@@ -1586,6 +1586,15 @@ following methods has changed their interface, update your usages accordingly:
     +       ErrorIdProvider $errorIdProvider
         )
     ```
+- `ImageUploadType::__construct()`
+    ```diff
+        public function __construct(
+            ImageFacade $imageFacade,
+            ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer,
+    -       ?ImageConfig $imageConfig = null
+    +       ImageConfig $imageConfig
+        )
+    ```
 
 - `ImageFacade::uploadImage`
     ```diff
