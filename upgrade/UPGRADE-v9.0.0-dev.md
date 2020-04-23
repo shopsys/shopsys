@@ -1535,6 +1535,16 @@ following methods has changed their interface, update your usages accordingly:
     -   public function __construct(?ImageFacade $imageFacade = null)
     +   public function __construct(ImageFacade $imageFacade)
     ```
+- `BrandDataFactory::__construct()`
+    ```diff
+        public function __construct(
+            FriendlyUrlFacade $friendlyUrlFacade,
+            BrandFacade $brandFacade,
+            Domain $domain,
+    -       ?ImageFacade $imageFacade = null
+    +       ImageFacade $imageFacade
+        )
+    ```
 
 following methods were removed. Use corresponding replacement instead:
 - `BasePriceCalculation::calculateBasePrice()` was removed, use `BasePriceCalculation::calculateBasePriceRoundedByCurrency()` instead
