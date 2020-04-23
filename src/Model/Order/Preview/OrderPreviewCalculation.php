@@ -40,6 +40,9 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
      */
     private $productPriceCalculation;
 
+    /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
     private $productAvailabilityFacade;
 
     /**
@@ -77,7 +80,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
-     * @param array $quantifiedProducts
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
@@ -238,17 +241,19 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     }
 
     /**
-     * @param array $quantifiedProducts
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
-     * @return array
+     * @return string[]
      */
     protected function getProductsAvailability(array $quantifiedProducts, int $domainId): array
     {
         $availability = [];
         foreach ($quantifiedProducts as $quantifiedProduct) {
-            $availability[$quantifiedProduct->getProduct()->getId()] =
+            /** @var \App\Model\Product\Product $product */
+            $product = $quantifiedProduct->getProduct();
+            $availability[$product->getId()] =
                 $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId(
-                    $quantifiedProduct->getProduct(),
+                    $product,
                     $domainId
                 );
         }

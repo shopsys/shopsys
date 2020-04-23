@@ -334,7 +334,7 @@ class BlogCategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param array $blogCategoryIds
+     * @param int[] $blogCategoryIds
      * @return \App\Model\Blog\Category\BlogCategory[]
      */
     public function getByIds(array $blogCategoryIds)

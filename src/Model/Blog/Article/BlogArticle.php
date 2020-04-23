@@ -171,7 +171,7 @@ class BlogArticle extends AbstractTranslatableEntity
 
     /**
      * @param \App\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
-     * @param array $blogCategoriesByDomainId
+     * @param \App\Model\Blog\Category\BlogCategory[][] $blogCategoriesByDomainId
      */
     public function setCategories(
         BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,

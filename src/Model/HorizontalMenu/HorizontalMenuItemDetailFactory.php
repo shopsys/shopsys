@@ -21,7 +21,7 @@ class HorizontalMenuItemDetailFactory
     }
 
     /**
-     * @param array $horizontalMenuItems
+     * @param \App\Model\HorizontalMenu\HorizontalMenuItem[] $horizontalMenuItems
      * @param int $domainId
      * @return \App\Model\HorizontalMenu\HorizontalMenuItemDetail[]
      */

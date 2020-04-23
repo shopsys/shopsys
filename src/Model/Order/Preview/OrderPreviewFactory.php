@@ -53,7 +53,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
-     * @param array $quantifiedProducts
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
