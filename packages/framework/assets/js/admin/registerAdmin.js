@@ -1,5 +1,6 @@
 import '../common/components';
 import '../common/validation';
+import '../common/utils/DoubleFormSubmitProtection';
 
 import './components';
 

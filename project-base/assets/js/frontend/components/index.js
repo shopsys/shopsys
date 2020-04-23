@@ -2,7 +2,6 @@ import './AjaxMoreLoader';
 import './CategoryPanel';
 import './cookieInit';
 import './filterAllNodes';
-import './disableDoubleSubmit';
 import './pushReloadState';
 import './HoverIntent';
 import './honeyPot';

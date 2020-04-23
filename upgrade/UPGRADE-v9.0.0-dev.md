@@ -1393,6 +1393,9 @@ There you can find links to upgrade notes for other versions too.
     
 - add compatibility for edge ([#1804](https://github.com/shopsys/shopsys/pull/1804))
     - see #project-base-diff to update your project
+    
+- add protection before double submit forms ([#1800](https://github.com/shopsys/shopsys/pull/1800))
+    - see #project-base-diff to update your project
 
 - refactored `SelectToggle` component ([#1803](https://github.com/shopsys/shopsys/pull/1803))
     - `ToggleOption` js class has been removed, update your code appropriately

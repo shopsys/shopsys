@@ -5,6 +5,7 @@ import 'jquery-ui-touch-punch';
 import tooltip from 'framework/common/bootstrap/tooltip';
 
 import 'framework/common/components';
+import 'framework/common/utils/DoubleFormSubmitProtection';
 
 import CustomizeBundle from 'framework/common/validation/customizeBundle';
 import showFormErrorsWindowOnFrontend from './frontend/utils/showFormErrorsWindow';
