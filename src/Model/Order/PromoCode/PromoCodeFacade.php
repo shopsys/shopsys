@@ -139,7 +139,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     * @param array $categories
+     * @param \App\Model\Category\Category[] $categories
      */
     private function refreshPromoCodeCategories(PromoCode $promoCode, array $categories): void
     {

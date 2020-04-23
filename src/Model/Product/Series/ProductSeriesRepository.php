@@ -200,7 +200,7 @@ class ProductSeriesRepository
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
-     * @return array
+     * @return \App\Model\Product\Series\ProductSeries[]
      */
     public function getAllVisibleByProductAndDomainId(Product $product, int $domainId): array
     {

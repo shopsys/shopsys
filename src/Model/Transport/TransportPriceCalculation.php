@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation as BaseTra
 class TransportPriceCalculation extends BaseTransportPriceCalculation
 {
     /**
-     * @param array $transports
+     * @param \App\Model\Transport\Transport[] $transports
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      * @param bool $transportForFree

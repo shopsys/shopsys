@@ -167,7 +167,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
-     * @return array
+     * @return string[]
      */
     public function getPromoCodeDiscountPercentPerProductByDomainId(array $quantifiedProducts, int $domainId): array
     {

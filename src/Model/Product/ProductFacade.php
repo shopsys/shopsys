@@ -347,7 +347,7 @@ class ProductFacade extends BaseProductFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param array $productParameterValuesData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
     protected function saveParameters(Product $product, array $productParameterValuesData)
     {
@@ -364,8 +364,10 @@ class ProductFacade extends BaseProductFacade
 
         $toFlush = [];
         foreach ($productParameterValuesData as $productParameterValueData) {
+            /** @var \App\Model\Product\Parameter\ParameterValueData $parameterValueData */
+            $parameterValueData = $productParameterValueData->parameterValueData;
             $parameterValue = $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
-                $productParameterValueData->parameterValueData
+                $parameterValueData
             );
 
             $productParameterValue = $this->productParameterValueFactory->create(

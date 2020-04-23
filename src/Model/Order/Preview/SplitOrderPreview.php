@@ -61,7 +61,7 @@ class SplitOrderPreview
     private $sumTotalPriceWithoutDiscount;
 
     /**
-     * @param array $orderPreviews
+     * @param \App\Model\Order\Preview\OrderPreview[] $orderPreviews
      * @param \App\Model\Payment\Payment|null $payment
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice

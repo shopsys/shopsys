@@ -61,7 +61,7 @@ class FlagsExtension extends AbstractExtension
     }
 
     /**
-     * @param array $flagIds
+     * @param int[] $flagIds
      * @param string $priceType
      * @return string
      */

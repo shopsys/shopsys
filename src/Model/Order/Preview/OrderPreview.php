@@ -70,14 +70,14 @@ class OrderPreview extends BaseOrderPreview
     private $totalPriceDiscount;
 
     /**
-     * @param array $quantifiedProductsByIndex
-     * @param array $quantifiedItemsPricesByIndex
-     * @param array $quantifiedItemsDiscountsByIndex
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProductsByIndex
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPricesByIndex
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscountsByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalProductHighPrice
-     * @param array $productsAvailability
-     * @param array $quantifiedItemsDiscountPricesByIndex
+     * @param string[] $productsAvailability
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[]|null[] $quantifiedItemsDiscountPricesByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsFullPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPriceDiscount
      * @param \App\Model\Transport\Transport|null $transport
