@@ -1574,10 +1574,12 @@ following methods were removed. Use corresponding replacement instead:
 - `BasePriceCalculation::getBasePriceWithVat()` was removed, use `BasePriceCalculation::getBasePriceWithVatRoundedCurrency()` instead
 - `CronFacade::runModulesForInstance()` was removed, use `CronFacade::runModules()` instead
 - `CronFacade::runModule()` was removed, use `CronFacade::runSingleModule()` instead
+- `CurrencyFormatterFactory::create()` was removed, use `CurrencyFormatterFactory::createByLocaleAndCurrency()`
 
 following classes were removed and should not be used anywhere in your project:
 - `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
 
 following constants were removed. Create your own constant if needed
 - `CronFacade::TIMEOUT_SECONDS = 240`
+- `CurrencyFormatterFactory::MINIMUM_FRACTION_DIGITS = 2`
 [shopsys/framework]: https://github.com/shopsys/framework
