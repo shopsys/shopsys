@@ -474,7 +474,7 @@ class CartController extends FrontBaseController
     }
 
     /**
-     * @param AddProductResult $addProductResult
+     * @param \App\Model\Cart\AddProductResult $addProductResult
      */
     private function addMaxStockAmountAlreadyReachedFlash(AddProductResult $addProductResult): void
     {
