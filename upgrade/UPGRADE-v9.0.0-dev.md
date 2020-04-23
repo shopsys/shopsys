@@ -1545,6 +1545,17 @@ following methods has changed their interface, update your usages accordingly:
     +       ImageFacade $imageFacade
         )
     ```
+- `CategoryDataFactory::__construct()`
+    ```diff
+        public function __construct(
+            CategoryRepository $categoryRepository,
+            FriendlyUrlFacade $friendlyUrlFacade,
+            PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+            Domain $domain,
+    -       ?ImageFacade $imageFacade = null
+    +       ImageFacade $imageFacade
+        )
+    ```
 
 following methods were removed. Use corresponding replacement instead:
 - `BasePriceCalculation::calculateBasePrice()` was removed, use `BasePriceCalculation::calculateBasePriceRoundedByCurrency()` instead
