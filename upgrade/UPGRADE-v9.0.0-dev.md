@@ -1691,6 +1691,11 @@ following methods has changed their interface, update your usages accordingly:
     +       DisplayTimeZoneProviderInterface $displayTimeZoneProvider
         )
     ```
+- `SliderItemDataFactory::__construct()`
+    ```diff
+    -   public function __construct(?ImageFacade $imageFacade = null)
+    +   public function __construct(ImageFacade $imageFacade)
+    ```
 - `VatController::__construct()`
     ```diff
         public function __construct(
