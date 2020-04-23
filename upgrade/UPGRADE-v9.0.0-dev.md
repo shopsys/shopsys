@@ -1613,6 +1613,16 @@ following methods has changed their interface, update your usages accordingly:
     -       AdministrationFacade $administrationFacade
         )
     ```
+- `PaymentDataFactory::__construct()`
+    ```diff
+        public function __construct(
+            PaymentFacade $paymentFacade,
+            VatFacade $vatFacade,
+            Domain $domain,
+    -       ?ImageFacade $imageFacade = null
+    +       ImageFacade $imageFacade
+        )
+    ```
 
 - `ImageFacade::uploadImage`
     ```diff
