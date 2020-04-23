@@ -33,6 +33,8 @@ export default class AddProduct {
                 buttonContinue: true,
                 textContinue: Translator.trans('Go to cart'),
                 urlContinue: buttonContinueUrl,
+                buttonCancel: true,
+                textCancel: Translator.trans('Back to shop'),
                 cssClassContinue: 'btn--success'
             });
 

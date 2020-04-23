@@ -217,6 +217,9 @@ msgstr "Celé jméno"
 msgid "Go to cart"
 msgstr "Přejít do košíku"
 
+msgid "Back to shop"
+msgstr "Zpět do obchodu"
+
 msgid "I agree with <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">terms and conditions</a> and <a href=\"%privacyPolicyUrl%\" target=\"_blank\">privacy policy</a>."
 msgstr "Souhlasím s <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">obchodními podmínkami</a> a <a href=\"%privacyPolicyUrl%\" target=\"_blank\">zpracováním osobních údajů</a>."
 

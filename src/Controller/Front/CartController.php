@@ -319,14 +319,23 @@ class CartController extends FrontBaseController
 
                 $addProductResult = $this->cartFacade->addProductToCart($formData['productId'], (int)$formData['quantity']);
 
-                $this->sendAddProductResultFlashMessage($addProductResult);
+                $maxStockAmountAlreadyReached = $this->maxStockAmountAlreadyReached($addProductResult);
+                if ($maxStockAmountAlreadyReached) {
+                    $this->addMaxStockAmountAlreadyReachedFlash($addProductResult);
+                }
 
+                /** @var \App\Model\Product\Product $product */
+                $product = $addProductResult->getCartItem()->getProduct();
                 $accessories = $this->listedProductViewFacade->getAccessories(
-                    $addProductResult->getCartItem()->getProduct()->getId(),
+                    $product->getId(),
                     self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
                 );
 
                 return $this->render('Front/Inline/Cart/afterAddWindow.html.twig', [
+                    'product' => $product,
+                    'maxStockAmountAlreadyReached' => $maxStockAmountAlreadyReached,
+                    'addedQuantity' => $addProductResult->getAddedQuantity(),
+                    'domain' => $this->domain,
                     'accessories' => $accessories,
                     'ACCESSORIES_ON_BUY' => ModuleList::ACCESSORIES_ON_BUY,
                 ]);
@@ -367,14 +376,8 @@ class CartController extends FrontBaseController
                     'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
                 ]
             );
-        } elseif ($addProductResult->getNotOnStockQuantity() == $addProductResult->getAddedQuantity()) {
-            $this->addErrorFlashTwig(
-                t('V košíku máte maximální dostupné množství, nelze přidat další (celkem již {{ quantity|formatNumber }} {{ unitName }})'),
-                [
-                    'quantity' => $addProductResult->getCartItem()->getQuantity(),
-                    'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
-                ]
-            );
+        } elseif ($this->maxStockAmountAlreadyReached($addProductResult)) {
+            $this->addMaxStockAmountAlreadyReachedFlash($addProductResult);
         } else {
             $this->addSuccessFlashTwig(
                 t('Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})'),
@@ -459,5 +462,28 @@ class CartController extends FrontBaseController
         }
 
         return !in_array($masterRequest->get('_route'), self::PAGES_WITH_DISABLED_CART_HOVER, true);
+    }
+
+    /**
+     * @param \App\Model\Cart\AddProductResult $addProductResult
+     * @return bool
+     */
+    private function maxStockAmountAlreadyReached(AddProductResult $addProductResult): bool
+    {
+        return $addProductResult->getNotOnStockQuantity() == $addProductResult->getAddedQuantity();
+    }
+
+    /**
+     * @param \App\Model\Cart\AddProductResult $addProductResult
+     */
+    private function addMaxStockAmountAlreadyReachedFlash(AddProductResult $addProductResult): void
+    {
+        $this->addErrorFlashTwig(
+            t('V košíku máte maximální dostupné množství, nelze přidat další (celkem již {{ quantity|formatNumber }} {{ unitName }})'),
+            [
+                'quantity' => $addProductResult->getCartItem()->getQuantity(),
+                'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
+            ]
+        );
     }
 }
