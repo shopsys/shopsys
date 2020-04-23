@@ -1604,6 +1604,15 @@ following methods has changed their interface, update your usages accordingly:
     +       AdministrationFacade $administrationFacade
         )
     ```
+- `NumberFormatterExtension::__construct()`
+    ```diff
+        public function __construct(
+            Localization $localization,
+            NumberFormatRepositoryInterface $numberFormatRepository,
+    +       ?AdministrationFacade $administrationFacade = null
+    -       AdministrationFacade $administrationFacade
+        )
+    ```
 
 - `ImageFacade::uploadImage`
     ```diff
