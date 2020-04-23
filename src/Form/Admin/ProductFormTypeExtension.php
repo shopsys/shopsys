@@ -140,8 +140,73 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setDisplayAvailabilityGroup($builder, $product);
         $this->setPricesGroup($builder, $product);
         $this->setTransferredFilesGroup($builder, $product);
+        $this->setPackagesGroup($builder, $product);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Product\Product $product
+     */
+    private function setPackagesGroup(FormBuilderInterface $builder, Product $product): void
+    {
+        $groupBuilder = $builder->create('packagesGroup', GroupType::class, [
+            'label' => t('Balení'),
+        ]);
+
+        $groupBuilder->add('mountingState', MultidomainType::class, [
+                'required' => false,
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'required' => false,
+                ],
+                'label' => t('Stav montáže'),
+            ])
+            ->add('embeddedAccessories', MultidomainType::class, [
+                'required' => false,
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'required' => false,
+                ],
+                'label' => t('Dodávané příslušenství'),
+            ])
+            ->add('packageNotIncluded', MultidomainType::class, [
+                'required' => false,
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'required' => false,
+                ],
+                'label' => t('Neobsaženo v balení'),
+            ])
+            ->add('packagingUnit', MultidomainType::class, [
+                'required' => false,
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'required' => false,
+                ],
+                'label' => t('Počet produktů v balení'),
+            ])
+            ->add('countPackages', MultidomainType::class, [
+                'required' => false,
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'required' => false,
+                ],
+                'label' => t('Počet balíků'),
+            ])
+            ->add('totalPackageWeight', MultidomainType::class, [
+                'required' => false,
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'required' => false,
+                ],
+                'label' => t('Celková váha balení'),
+            ])
+
+        ;
+
+        $builder->add($groupBuilder);
     }
 
     /**

@@ -1,0 +1,151 @@
+<?php
+
+declare(strict_types=1);
+
+
+namespace App\Controller\Admin;
+
+use App\Model\Product\Package\ProductPackageRepository;
+use App\Model\Product\Product;
+use App\Model\Product\Series\Category\ProductSeriesCategory;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
+use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Controller\Admin\ProductController as BaseProductController;
+use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
+use Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
+use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
+use Shopsys\FrameworkBundle\Twig\ProductExtension;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ProductController extends BaseProductController
+{
+
+    /**
+     * @var \App\Model\Product\Package\ProductPackageRepository
+     */
+    private $productPackageRepository;
+
+    public function __construct(
+        ProductMassActionFacade $productMassActionFacade,
+        GridFactory $gridFactory,
+        ProductFacade $productFacade,
+        ProductDataFactoryInterface $productDataFactory,
+        BreadcrumbOverrider $breadcrumbOverrider,
+        AdministratorGridFacade $administratorGridFacade,
+        ProductListAdminFacade $productListAdminFacade,
+        AdvancedSearchProductFacade $advancedSearchProductFacade,
+        ProductVariantFacade $productVariantFacade,
+        ProductExtension $productExtension,
+        Domain $domain,
+        UnitFacade $unitFacade,
+        Setting $setting,
+        AvailabilityFacade $availabilityFacade,
+        ProductPackageRepository $productPackageRepository
+    )
+    {
+        parent::__construct(
+            $productMassActionFacade,
+            $gridFactory,
+            $productFacade,
+            $productDataFactory,
+            $breadcrumbOverrider,
+            $administratorGridFacade,
+            $productListAdminFacade,
+            $advancedSearchProductFacade,
+            $productVariantFacade,
+            $productExtension,
+            $domain,
+            $unitFacade,
+            $setting,
+            $availabilityFacade
+        );
+        $this->productPackageRepository = $productPackageRepository;
+    }
+
+    /**
+     * @Route("/product/edit/{id}", requirements={"id" = "\d+"})
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param mixed $id
+     */
+    public function editAction(Request $request, $id)
+    {
+        $product = $this->productFacade->getById($id);
+        $productData = $this->productDataFactory->createFromProduct($product);
+
+        $form = $this->createForm(ProductFormType::class, $productData, ['product' => $product]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productFacade->edit($id, $form->getData());
+
+            $this
+                ->addSuccessFlashTwig(
+                    t('Product <strong><a href="{{ url }}">{{ product|productDisplayName }}</a></strong> modified'),
+                    [
+                        'product' => $product,
+                        'url' => $this->generateUrl('admin_product_edit', ['id' => $product->getId()]),
+                    ]
+                );
+
+            return $this->redirectToRoute('admin_product_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)]));
+
+        $productPackageGridViewListIndexedByDomainName = [];
+        foreach ($this->domain->getAll() as $domainConfig){
+            /** @var Product $product */
+            $productPackageGridViewListIndexedByDomainName[$domainConfig->getName()] = $this->getProductPackageGridByProductAndDomainId($product, $domainConfig->getId())->createView();
+        }
+
+        $viewParameters = [
+            'form' => $form->createView(),
+            'product' => $product,
+            'domains' => $this->domain->getAll(),
+            'productPackageGridViewListIndexedByDomainName' => $productPackageGridViewListIndexedByDomainName,
+        ];
+
+        return $this->render('/Admin/Content/Product/edit.html.twig', $viewParameters);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    private function getProductPackageGridByProductAndDomainId(Product $product, int $domainId): Grid
+    {
+        $queryBuilder = $this->productPackageRepository->getQueryBuilderForProductPackagesByProductAndDomainId($product, $domainId);
+        $queryBuilder->orderBy('pp.position');
+        $dataSource = new QueryBuilderDataSource($queryBuilder, 'pp.id');
+
+        $grid = $this->gridFactory->create('productPackagesList__' . $domainId, $dataSource);
+
+
+        $grid->addColumn('position', 'pp.name', t('Pořadí'));
+        $grid->addColumn('length', 'pp.length', t('Délka'));
+        $grid->addColumn('width', 'pp.width', t('Šířka'));
+        $grid->addColumn('height', 'pp.height', t('Výška'));
+        $grid->addColumn('weight', 'pp.weight', t('Váha'));
+
+
+        return $grid;
+    }
+
+}

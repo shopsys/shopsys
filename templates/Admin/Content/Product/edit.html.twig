@@ -1,0 +1,13 @@
+{% extends '@ShopsysFramework/Admin/Content/Product/edit.html.twig' %}
+
+{% block main_content %}
+
+    {{ parent() }}
+
+    {% for domainName, productPackageGridView in productPackageGridViewListIndexedByDomainName %}
+        <h3>{{ 'Balení produktu:'|trans }} {{ product.name }} - {{ domainName }}</h3>
+        {{ productPackageGridView.render() }}
+        <br>
+    {% endfor %}
+
+{% endblock %}

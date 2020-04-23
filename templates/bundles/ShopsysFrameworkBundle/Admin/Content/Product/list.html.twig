@@ -1,7 +1,6 @@
 {% extends '@!ShopsysFramework/Admin/Content/Product/list.html.twig' %}
 
 {% block btn %}
-    {{ d(parameterDisableFormFieldsFromTransfer) }}
     {% if not parameterDisableFormFieldsFromTransfer %}
         {{ parent() }}
     {% endif %}

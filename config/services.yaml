@@ -263,6 +263,9 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\DefaultController:
         class: 'App\Controller\Admin\DefaultController'
 
+    Shopsys\FrameworkBundle\Controller\Admin\ProductController:
+        class: 'App\Controller\Admin\ProductController'
+
     Shopsys\FrameworkBundle\Controller\Admin\FlagController:
         class: 'App\Controller\Admin\FlagController'
 

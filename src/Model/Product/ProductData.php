@@ -130,6 +130,37 @@ class ProductData extends BaseProductData
      */
     public $flags;
 
+    /**
+     * @var bool[]|null[]
+     */
+    public $mountingState;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $embeddedAccessories;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $packageNotIncluded;
+
+    /**
+     * @var int[]|null[]
+     */
+    public $packagingUnit;
+
+    /**
+     * @var int[]|null[]
+     */
+    public $countPackages;
+
+    /**
+     * @var int[]|null[]
+     */
+    public $totalPackageWeight;
+
+
     public function __construct()
     {
         parent::__construct();
