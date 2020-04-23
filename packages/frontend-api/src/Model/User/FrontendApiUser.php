@@ -13,6 +13,7 @@ class FrontendApiUser implements UserInterface
     public const CLAIM_EMAIL = 'email';
     public const CLAIM_ROLES = 'roles';
     public const CLAIM_SECRET_CHAIN = 'secretChain';
+    public const CLAIM_DEVICE_ID = 'deviceId';
 
     /**
      * @var string
@@ -35,17 +36,24 @@ class FrontendApiUser implements UserInterface
     protected $roles;
 
     /**
+     * @var string
+     */
+    protected $deviceId;
+
+    /**
      * @param string $uuid
      * @param string $fullName
      * @param string $email
+     * @param string $deviceId
      * @param string[] $roles
      */
-    public function __construct(string $uuid, string $fullName, string $email, array $roles)
+    public function __construct(string $uuid, string $fullName, string $email, string $deviceId, array $roles)
     {
         $this->uuid = $uuid;
         $this->fullName = $fullName;
         $this->email = $email;
         $this->roles = $roles;
+        $this->deviceId = $deviceId;
     }
 
     /**
@@ -98,5 +106,13 @@ class FrontendApiUser implements UserInterface
     public function getFullName(): string
     {
         return $this->fullName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeviceId(): string
+    {
+        return $this->deviceId;
     }
 }

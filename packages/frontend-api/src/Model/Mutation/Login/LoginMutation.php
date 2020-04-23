@@ -8,6 +8,7 @@ use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -63,9 +64,11 @@ class LoginMutation implements MutationInterface, AliasedInterface
             throw new UserError('Log in failed.');
         }
 
+        $deviceId = Uuid::uuid4()->toString();
+
         return [
-            'accessToken' => $this->tokenFacade->generateAccessTokenByCustomerUser($user),
-            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($user),
+            'accessToken' => $this->tokenFacade->createAccessTokenAsString($user, $deviceId),
+            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($user, $deviceId),
         ];
     }
 

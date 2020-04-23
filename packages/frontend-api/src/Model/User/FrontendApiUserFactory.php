@@ -18,6 +18,7 @@ class FrontendApiUserFactory implements FrontendApiUserFactoryInterface
             $token->getClaim(FrontendApiUser::CLAIM_UUID),
             $token->getClaim(FrontendApiUser::CLAIM_FULL_NAME),
             $token->getClaim(FrontendApiUser::CLAIM_EMAIL),
+            $token->getClaim(FrontendApiUser::CLAIM_DEVICE_ID),
             $token->getClaim(FrontendApiUser::CLAIM_ROLES)
         );
     }

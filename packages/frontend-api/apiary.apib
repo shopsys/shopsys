@@ -9,48 +9,54 @@ HOST: https://polls.apiblueprint.org/
 
 Returns list of product that can be paginated using `first`, `last`, `before` and `after` keywords.
 You can read more about Connection specification in [connections article](https://relay.dev/graphql/connections.htm).
+If you use the authorization header, api will return prices according to the user's price group.
+Authorization header is not required.
 
 - Request (application/json)
 
-    {
-        query: products (first: 2) {
-            edges {
-                node {
-                    uuid
-                    name
-                    shortDescription
-                    link
-                    unit {
+    - Headers
+        Authorization: Bearer --ACCESS-TOKEN--
+
+    - Body
+        {
+            query: products (first: 2) {
+                edges {
+                    node {
+                        uuid
                         name
-                    }
-                    availability {
-                        name
-                    }
-                    stockQuantity
-                    categories {
-                        name
-                    }
-                    flags {
-                        name
-                        rgbColor
-                    }
-                    price {
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                    images {
-                        type
-                        position
-                        size
-                        url
-                        width
-                        height
+                        shortDescription
+                        link
+                        unit {
+                            name
+                        }
+                        availability {
+                            name
+                        }
+                        stockQuantity
+                        categories {
+                            name
+                        }
+                        flags {
+                            name
+                            rgbColor
+                        }
+                        price {
+                            priceWithVat
+                            priceWithoutVat
+                            vatAmount
+                        }
+                        images {
+                            type
+                            position
+                            size
+                            url
+                            width
+                            height
+                        }
                     }
                 }
             }
         }
-    }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -1292,6 +1298,30 @@ Login user and return access and refresh tokens
                 "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMCIsImF1ZCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwIiwiaWF0IjoxNTg2NDM2NTg3LCJleHAiOjE1ODY0NDAxODcsInV1aWQiOiI0ZDAwNTEyZi1lNDkxLTRmMzEtYjBjYi04ZTViOGU0ODQ5ZDEiLCJlbWFpbCI6Im5vLXJlcGx5QHNob3BzeXMuY29tIiwiZnVsbE5hbWUiOiJTaG9wc3lzIiwicm9sZXMiOlsiUk9MRV9MT0dHRURfQ1VTVE9NRVIiXX0.cTOk-HrBeLh6DsmFY49Dg7VXACmivLi-6MJU5C4XW8o",
                 "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMCIsImF1ZCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwIiwiaWF0IjoxNTg2NDM2NTg3LCJleHAiOjE1ODc2NDYxODcsInV1aWQiOiI0ZDAwNTEyZi1lNDkxLTRmMzEtYjBjYi04ZTViOGU0ODQ5ZDEiLCJzZWNyZXRDaGFpbiI6ImIyMGZkMTNkODIyNTVhNzdmYzJjYWM4OTA1YzU1MWQxZjNjYjc3ODkifQ._mBpd4yQZ1bF4aC6YY3C1BDI1mrH2hV_w0Yh9mKu_i0"
             }
+        }
+    }
+
+## Logout [/graphql]
+
+### POST [POST]
+
+Logout user
+
+- Request (application/json)
+
+    - Headers
+        Authorization: Bearer ABCDEF
+
+    - Body
+        mutation {
+            Logout
+        }
+
+- Response 200 (application/json; charset=utf-8)
+
+    {
+        "data": {
+            "Logout": true
         }
     }
 

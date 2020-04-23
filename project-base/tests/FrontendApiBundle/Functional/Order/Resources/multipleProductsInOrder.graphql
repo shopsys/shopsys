@@ -40,7 +40,7 @@ mutation {
             products: [
                 {
                     uuid: "___UUID_PRODUCT___",
-                    price: {
+                    unitPrice: {
                         priceWithVat: "139.96",
                         priceWithoutVat: "115.67",
                         vatAmount: "24.29"
@@ -49,7 +49,7 @@ mutation {
                 },
                 {
                     uuid: "___UUID_PRODUCT_2___",
-                    price: {
+                    unitPrice: {
                         priceWithVat: "4.84",
                         priceWithoutVat: "4.00",
                         vatAmount: "0.84"
@@ -58,7 +58,7 @@ mutation {
                 },
                 {
                     uuid: "___UUID_PRODUCT_3___",
-                    price: {
+                    unitPrice: {
                         priceWithVat: "300.03",
                         priceWithoutVat: "247.96",
                         vatAmount: "52.07"
@@ -67,7 +67,7 @@ mutation {
                 },
                 {
                     uuid: "___UUID_PRODUCT_4___",
-                    price: {
+                    unitPrice: {
                         priceWithVat: "309.71",
                         priceWithoutVat: "255.96",
                         vatAmount: "53.75"
@@ -76,7 +76,7 @@ mutation {
                 },
                 {
                     uuid: "___UUID_PRODUCT_5___",
-                    price: {
+                    unitPrice: {
                         priceWithVat: "193.55",
                         priceWithoutVat: "159.96",
                         vatAmount: "33.59"
@@ -85,7 +85,7 @@ mutation {
                 },
                 {
                     uuid: "___UUID_PRODUCT_6___",
-                    price: {
+                    unitPrice: {
                         priceWithVat: "395.60",
                         priceWithoutVat: "326.94",
                         vatAmount: "68.66"

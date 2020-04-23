@@ -49,16 +49,18 @@ class CustomerUserRefreshTokenChainFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $tokenChain
+     * @param string $deviceId
      * @param \DateTime $tokenExpiration
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain
      */
-    public function createCustomerUserRefreshTokenChain(CustomerUser $customerUser, string $tokenChain, \DateTime $tokenExpiration): CustomerUserRefreshTokenChain
+    public function createCustomerUserRefreshTokenChain(CustomerUser $customerUser, string $tokenChain, string $deviceId, \DateTime $tokenExpiration): CustomerUserRefreshTokenChain
     {
         $encoder = $this->encoderFactory->getEncoder($customerUser);
 
         $customerUserRefreshTokenChainData = $this->customerUserRefreshTokenChainDataFactory->create();
         $customerUserRefreshTokenChainData->customerUser = $customerUser;
         $customerUserRefreshTokenChainData->tokenChain = $encoder->encodePassword($tokenChain, null);
+        $customerUserRefreshTokenChainData->deviceId = $deviceId;
         $customerUserRefreshTokenChainData->expiredAt = $tokenExpiration;
 
         return $this->customerUserRefreshTokenChainFactory->create($customerUserRefreshTokenChainData);
@@ -67,19 +69,27 @@ class CustomerUserRefreshTokenChainFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $secretChain
-     * @return bool
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain|null
      */
-    public function isValidSecretChainForUser(CustomerUser $customerUser, string $secretChain): bool
+    public function findCustomersTokenChainByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): ?CustomerUserRefreshTokenChain
     {
         $encoder = $this->encoderFactory->getEncoder($customerUser);
-        $customersTokenChains = $this->customerUserRefreshTokenChainRepository->getCustomersTokenChains($customerUser);
+        $customersTokenChains = $this->customerUserRefreshTokenChainRepository->findCustomersTokenChains($customerUser);
 
         foreach ($customersTokenChains as $customersTokenChain) {
             if ($encoder->isPasswordValid($customersTokenChain->getTokenChain(), $secretChain, null)) {
-                return true;
+                return $customersTokenChain;
             }
         }
 
-        return false;
+        return null;
+    }
+
+    /**
+     * @param string $deviceId
+     */
+    public function removeCustomerUserRefreshTokenChainsByDeviceId(string $deviceId): void
+    {
+        $this->customerUserRefreshTokenChainRepository->removeCustomerUserRefreshTokenChainsByDeviceId($deviceId);
     }
 }

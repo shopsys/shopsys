@@ -37,6 +37,13 @@ class CustomerUserRefreshTokenChain
     protected $tokenChain;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="guid", nullable=false)
+     */
+    protected $deviceId;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
@@ -51,6 +58,7 @@ class CustomerUserRefreshTokenChain
         $this->uuid = $customerUserRefreshTokenChainData->uuid ?: Uuid::uuid4()->toString();
         $this->customerUser = $customerUserRefreshTokenChainData->customerUser;
         $this->tokenChain = $customerUserRefreshTokenChainData->tokenChain;
+        $this->deviceId = $customerUserRefreshTokenChainData->deviceId;
         $this->expiredAt = $customerUserRefreshTokenChainData->expiredAt;
     }
 
@@ -60,5 +68,13 @@ class CustomerUserRefreshTokenChain
     public function getTokenChain(): string
     {
         return $this->tokenChain;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeviceId(): string
+    {
+        return $this->deviceId;
     }
 }

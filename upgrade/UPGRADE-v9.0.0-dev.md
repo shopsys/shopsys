@@ -218,7 +218,7 @@ There you can find links to upgrade notes for other versions too.
         - `templates/Admin/Content/Category/detail.html.twig`
         - `templates/Admin/Content/Product/detail.html.twig`
 - add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/master/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
-- add optional [Frontend API](https://github.com/shopsys/shopsys/blob/master/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489), [#1757](https://github.com/shopsys/shopsys/pull/1757)):
+- add optional [Frontend API](https://github.com/shopsys/shopsys/blob/master/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489), [#1757](https://github.com/shopsys/shopsys/pull/1757), [#1731](https://github.com/shopsys/shopsys/pull/1731), [#1736](https://github.com/shopsys/shopsys/pull/1736), [#1742](https://github.com/shopsys/shopsys/pull/1742), [#1788](https://github.com/shopsys/shopsys/pull/1788)):
     - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
     - register necessary bundles in `config/bundles.php`
         ```diff
@@ -233,14 +233,7 @@ There you can find links to upgrade notes for other versions too.
     - copy [type definitions from Github](https://github.com/shopsys/shopsys/tree/master/project-base/config/graphql/types) into `config/graphql/types/` folder
     - copy necessary configuration [shopsys_frontend_api.yml from Github](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/shopsys_frontend_api.yml) to `config/packages/shopsys_frontend_api.yml`
     - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/master/project-base/tests/FrontendApiBundle) to your `tests` folder
-    - enable Frontend API for desired domains in `config/parameters_common.yml` file
-    for example
-        ```diff
-          parmeters:
-              # ...
-        +     shopsys.frontend_api.domains:
-        +         - 1
-        +         - 2
+    - enable Frontend API for all domains by `./phing frontend-api-enable` command (you can manage domains in `config/packages/frontend_api.yaml`)
     - update your `easy-coding-standard.yml` file:
         - add `'*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
         - add `'*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
@@ -1348,14 +1341,7 @@ There you can find links to upgrade notes for other versions too.
       
     - these constants were removed so you might need to update your application appropriately:
         - `Roles::ROLE_ADMIN_AS_CUSTOMER`
-- update your application to include login in your frontend API ([#1731](https://github.com/shopsys/shopsys/pull/1731))
-    - see #project-base-diff to update your project
 
-- update your application to include refresh tokens in your frontend API ([#1736](https://github.com/shopsys/shopsys/pull/1736))
-    - see #project-base-diff to update your project
-    
-- update your application to signed tokens by private key in your frontend API ([#1742](https://github.com/shopsys/shopsys/pull/1742))
-    - see #project-base-diff to update your project
 
 - fix your version of jms/translation-bundle to 1.4.4 in order to prevent problems with translations dumping ([#1732](https://github.com/shopsys/shopsys/pull/1732))
     - see #project-base-diff to update your project
