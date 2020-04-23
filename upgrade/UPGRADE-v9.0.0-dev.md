@@ -1595,6 +1595,15 @@ following methods has changed their interface, update your usages accordingly:
     +       ImageConfig $imageConfig
         )
     ```
+- `LocalizationListener::__construct()`
+    ```diff
+        public function __construct(
+            Domain $domain,
+            Localization $localization,
+    -       ?AdministrationFacade $administrationFacade = null
+    +       AdministrationFacade $administrationFacade
+        )
+    ```
 
 - `ImageFacade::uploadImage`
     ```diff
@@ -1625,6 +1634,7 @@ following methods were removed. Use corresponding replacement instead:
 - `CronFacade::runModule()` was removed, use `CronFacade::runSingleModule()` instead
 - `CurrencyFormatterFactory::create()` was removed, use `CurrencyFormatterFactory::createByLocaleAndCurrency()`
 - `Domain::getAllIdsExcludingFirstDomain()` was removed. Use your implementation if you need the functionality
+- `LocalizationListener::isAdminRequest()` was removed, use `Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade::inInAdmin()` instead
 
 following classes were removed and should not be used anywhere in your project:
 - `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need

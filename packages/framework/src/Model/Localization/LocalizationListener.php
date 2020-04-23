@@ -2,11 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Model\Localization;
 
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -23,39 +21,23 @@ class LocalizationListener implements EventSubscriberInterface
     protected $localization;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade|null
+     * @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade
      */
     protected $administrationFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade|null $administrationFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
      */
     public function __construct(
         Domain $domain,
         Localization $localization,
-        ?AdministrationFacade $administrationFacade = null
+        AdministrationFacade $administrationFacade
     ) {
         $this->domain = $domain;
         $this->localization = $localization;
         $this->administrationFacade = $administrationFacade;
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
-     */
-    public function setAdministrationFacade(AdministrationFacade $administrationFacade)
-    {
-        if ($this->administrationFacade !== null && $this->administrationFacade !== $administrationFacade) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-        if ($this->administrationFacade === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->administrationFacade = $administrationFacade;
-        }
     }
 
     /**
@@ -72,19 +54,6 @@ class LocalizationListener implements EventSubscriberInterface
                 $request->setLocale($this->domain->getLocale());
             }
         }
-    }
-
-    /**
-     * @deprecated
-     * use {@see \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade} method "isInAdmin" instead
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
-    protected function isAdminRequest(Request $request)
-    {
-        @trigger_error(sprintf('This method is deprecated, use %s instead', AdministrationFacade::class . 'isInAdmin()'), E_USER_DEPRECATED);
-
-        return preg_match('/^admin_/', $request->attributes->get('_route')) === 1;
     }
 
     public static function getSubscribedEvents()
