@@ -403,10 +403,6 @@ services:
         arguments:
             $adminLocale: '%shopsys.admin_locale%'
 
-    # @deprecated DateTimeFormatterInterface should be used instead
-    Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter:
-        factory: ['@Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory', create]
-
     Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface:
         class: 'Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter'
 

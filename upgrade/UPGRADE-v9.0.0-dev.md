@@ -1567,6 +1567,14 @@ following methods has changed their interface, update your usages accordingly:
     +       CronModuleExecutor $cronModuleExecutor
         )
   ```
+- `DateTimeFormatter::__construct()`
+    ```diff
+        public function __construct(
+            DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository,
+    -       ?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null
+    +       DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+        )
+    ```
 
 following methods were removed. Use corresponding replacement instead:
 - `BasePriceCalculation::calculateBasePrice()` was removed, use `BasePriceCalculation::calculateBasePriceRoundedByCurrency()` instead
@@ -1578,8 +1586,12 @@ following methods were removed. Use corresponding replacement instead:
 
 following classes were removed and should not be used anywhere in your project:
 - `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
+- `Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory` was removed. `DateTimeFormatter` should be created directly by DI container
 
 following constants were removed. Create your own constant if needed
 - `CronFacade::TIMEOUT_SECONDS = 240`
 - `CurrencyFormatterFactory::MINIMUM_FRACTION_DIGITS = 2`
+
+following services are no longer registered. Use corresponding replacement instead
+- `DateTimeFormatter`, use `DateTimeFormatterInterface` instead
 [shopsys/framework]: https://github.com/shopsys/framework
