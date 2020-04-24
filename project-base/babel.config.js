@@ -4,9 +4,10 @@ module.exports = {
             '@babel/preset-env',
             {
                 targets: {
-                    node: 'current',
-                },
-            },
-        ],
+                    node: 'current'
+                }
+            }
+        ]
     ],
+    plugins: ['@babel/plugin-proposal-object-rest-spread']
 };
