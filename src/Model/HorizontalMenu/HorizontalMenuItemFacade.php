@@ -71,7 +71,7 @@ class HorizontalMenuItemFacade
      */
     public function getOrderedHorizontalMenuItemDetails(int $domainId): array
     {
-        $horizontalMenuItems = $this->getOrderedItemsQueryBuilder()->getQuery()->execute();
+        $horizontalMenuItems = $this->getOrderedItemsByDomainQueryBuilder($domainId)->getQuery()->execute();
 
         return $this->horizontalMenuItemDetailFactory->createDetails($horizontalMenuItems, $domainId);
     }
