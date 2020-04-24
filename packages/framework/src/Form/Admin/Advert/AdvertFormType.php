@@ -96,7 +96,10 @@ class AdvertFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter name of advertisement area']),
                 ],
                 'label' => t('Name'),
-                'icon_title' => t('Name serves only for internal use within the administration'),
+                'attr' => [
+                    'icon' => true,
+                    'iconTitle' => t('Name serves only for internal use within the administration.'),
+                ],
             ])
             ->add('type', ChoiceType::class, [
                 'required' => true,

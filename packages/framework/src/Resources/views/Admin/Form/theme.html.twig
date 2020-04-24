@@ -202,12 +202,6 @@
             <div class="form-line__side">
                 <div class="form-line__item">
                     {{ form_widget(form) }}
-                    {% if form.vars.icon_title is not null %}
-                        <i class="svg svg-info in-icon in-icon--after-input cursor-help js-tooltip"
-                           data-toggle="tooltip" data-placement="top"
-                           title="{{ form.vars.icon_title }}"
-                        ></i>
-                    {% endif %}
                 </div>
                 {{ form_errors(form) }}
             </div>
@@ -748,12 +742,6 @@
 
     {% if isSimple|default(false) == false %}
             </div>
-            {% if form.vars.icon_title is not null %}
-                <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
-                   data-toggle="tooltip" data-placement="top"
-                   title="{{ form.vars.icon_title }}"
-                ></i>
-            {% endif %}
             {{- block('appendix_block') -}}
         </div>
     {% else %}
@@ -897,12 +885,6 @@
             {{- block('appendix_block') -}}
         {% endif %}
     </div>
-    {% if form.vars.icon_title is not null %}
-        <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
-           data-toggle="tooltip" data-placement="top"
-           title="{{ form.vars.icon_title }}"
-        ></i>
-    {% endif %}
 {% endblock yes_no_widget %}
 
 {% block domain_row %}

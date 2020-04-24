@@ -78,7 +78,10 @@ class SeoSettingFormType extends AbstractType
                     ]),
                 ],
                 'label' => t('Complement to title'),
-                'icon_title' => 'Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone S7” the result title for this products page will be “iPhone S7 | My shop”.',
+                'attr' => [
+                    'icon' => true,
+                    'iconTitle' => t('Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone S7” the result title for this products page will be “iPhone S7 | My shop”.'),
+                ],
             ])
             ->add('metaDescription', TextareaType::class, [
                 'required' => false,
