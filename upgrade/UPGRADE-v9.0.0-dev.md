@@ -1381,6 +1381,9 @@ There you can find links to upgrade notes for other versions too.
 - fix symfony `dump()` function ([#1745](https://github.com/shopsys/shopsys/pull/1745))
     - see #project-base-diff to update your project
 
+- refactored `SelectToggle` component ([#1803](https://github.com/shopsys/shopsys/pull/1803))
+    the js class `ToggleOption` from framework node modules was removed
+ 
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
