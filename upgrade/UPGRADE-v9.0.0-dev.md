@@ -1772,6 +1772,10 @@ following constants were removed. Create your own constant if needed
 - `PricingSetting::ROUNDING_TYPE_FIFTIES = 2`
 - `PricingSetting::ROUNDING_TYPE_INTEGER = 3`
 
+following properties were removed from Phing
+- property `is-multidomain` was removed, see `domains-info-load` target instead
+- property `translations.dump.locales` was removed, see `domains-info-load` target instead
+
 following services are no longer registered. Use corresponding replacement instead
 - `DateTimeFormatter`, use `DateTimeFormatterInterface` instead
 
