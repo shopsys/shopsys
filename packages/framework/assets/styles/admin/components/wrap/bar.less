@@ -34,13 +34,25 @@
     }
 
     &__btn {
+        width: 90%;
         float: right;
         margin-left: @wrap-bar-btn-gap;
         margin-top: 3px;
+
+        @media @query-md {
+            width: auto;
+        }
     }
 
     &__tooltip {
+        position: absolute;
+        right: 10px;
         padding: 14px 5px 7px 5px;
-        float: right;
+
+        @media @query-md {
+            position: relative;
+            right: auto;
+            float: right;
+        }
     }
 }
