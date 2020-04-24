@@ -10,6 +10,7 @@ use App\Model\HorizontalMenu\HorizontalMenuItem;
 use App\Model\HorizontalMenu\HorizontalMenuItemData;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
@@ -70,6 +71,10 @@ class HorizontalMenuItemFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('domainId', DomainType::class, [
+                'required' => true,
+                'label' => t('Domain'),
+            ])
             ->add('name', TextType::class, [
                 'label' => t('Název'),
                 'required' => true,

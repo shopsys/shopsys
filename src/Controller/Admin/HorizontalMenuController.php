@@ -9,6 +9,7 @@ use App\Model\HorizontalMenu\HorizontalMenuItem;
 use App\Model\HorizontalMenu\HorizontalMenuItemDataFactory;
 use App\Model\HorizontalMenu\HorizontalMenuItemFacade;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -35,18 +36,26 @@ class HorizontalMenuController extends AdminBaseController
     private $horizontalMenuItemDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    private $adminDomainTabsFacade;
+
+    /**
      * @param \App\Model\HorizontalMenu\HorizontalMenuItemFacade $horizontalMenuItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \App\Model\HorizontalMenu\HorizontalMenuItemDataFactory $horizontalMenuItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         HorizontalMenuItemFacade $horizontalMenuItemFacade,
         GridFactory $gridFactory,
-        HorizontalMenuItemDataFactory $horizontalMenuItemDataFactory
+        HorizontalMenuItemDataFactory $horizontalMenuItemDataFactory,
+        AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
         $this->horizontalMenuItemFacade = $horizontalMenuItemFacade;
         $this->gridFactory = $gridFactory;
         $this->horizontalMenuItemDataFactory = $horizontalMenuItemDataFactory;
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -55,7 +64,9 @@ class HorizontalMenuController extends AdminBaseController
      */
     public function listAction(): Response
     {
-        $grid = $this->getGrid();
+        $grid = $this->getGrid(
+            $this->adminDomainTabsFacade->getSelectedDomainId()
+        );
 
         return $this->render('Admin/Content/HorizontalMenu/itemsList.html.twig', [
             'gridView' => $grid->createView(),
@@ -70,6 +81,7 @@ class HorizontalMenuController extends AdminBaseController
     public function newAction(Request $request): Response
     {
         $horizontalMenuItemData = $this->horizontalMenuItemDataFactory->createNew();
+        $horizontalMenuItemData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $form = $this->createForm(HorizontalMenuItemFormType::class, $horizontalMenuItemData, [
             'horizontalMenuItem' => null,
         ]);
@@ -170,11 +182,12 @@ class HorizontalMenuController extends AdminBaseController
     }
 
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    private function getGrid(): Grid
+    private function getGrid(int $domainId): Grid
     {
-        $queryBuilder = $this->horizontalMenuItemFacade->getOrderedItemsQueryBuilder();
+        $queryBuilder = $this->horizontalMenuItemFacade->getOrderedItemsByDomainQueryBuilder($domainId);
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'hmi.id');
 
