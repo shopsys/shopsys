@@ -6,6 +6,8 @@
 @form-line-border-style: none;
 @form-line-min-height: 44px;
 @form-line-inner-padding: 13px 10px 11px 0;
+@form-line-side-multidomain-change-resolution: 983px;
+@form-line-side-multilanguage-change-resolution: 844px;
 
 .form-line {
     .clearfix();
@@ -82,7 +84,6 @@
             @media @query-lg {
                 padding-bottom: 20px;
             }
-
         }
     }
 
@@ -138,6 +139,18 @@
 
         & + .form-line__side {
             margin-top: 10px;
+
+            &--multilanguage {
+                @media only screen and (min-width: @form-line-side-multilanguage-change-resolution){
+                    margin-left: @form-line-label-size;
+                }
+            }
+
+            &--multidomain {
+                @media only screen and (min-width: @form-line-side-multidomain-change-resolution){
+                    margin-left: @form-line-label-size;
+                }
+            }
         }
 
         .table-grid & {
@@ -181,10 +194,6 @@
             }
 
             .form-line__side & {
-                position: absolute;
-                top: 66px;
-                right: -10px;
-                bottom: auto;
                 width: auto;
 
                 @media @query-md {
@@ -209,6 +218,10 @@
             bottom: 22px;
             width: 20px;
             padding-right: 0;
+
+            @media only screen and (min-width: 392px){
+                left: @input-width + 20px;
+            }
 
             @media @query-md {
                 position: relative;
@@ -255,9 +268,15 @@
             position: absolute;
             text-align: right;
 
+            @media only screen and (min-width: 372px){
+                right: auto;
+                left: @input-width - 50px;
+            }
+
             @media @query-lg {
                 position: relative;
                 right: auto;
+                left: auto;
                 text-align: left;
             }
 

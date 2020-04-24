@@ -157,7 +157,7 @@
 
 {% block text_row -%}
     {% if localized is defined %}
-        <div class="form-line__side">
+        <div class="form-line__side form-line__side--multilanguage">
             <div class="form-line__item">
                 <div class="input__wrap">
                     {% set inputAttr = attr|merge({'class': (attr.class|default('') ~ ' input--flag')|trim}) %}
@@ -170,7 +170,7 @@
             {{ form_errors(form) }}
         </div>
     {% elseif multidomain is defined %}
-        <div class="form-line__side">
+        <div class="form-line__side form-line__side--multidomain">
             <div class="form-line__item">
                 <div class="input__wrap">
                     {% set inputAttr = attr %}
@@ -218,7 +218,7 @@
 
 {% block money_row %}
     {% if multidomain is defined %}
-        <div class="form-line__side">
+        <div class="form-line__side form-line__side--multidomain">
             <div class="form-line__item">
                 <div class="input__wrap">
                     {% set inputAttr = attr %}
@@ -250,7 +250,7 @@
 
 {% block textarea_row -%}
     {% if localized is defined %}
-        <div class="form-line__side">
+        <div class="form-line__side form-line__side--multidomain">
             <div class="form-line__item form-line__item--full-width">
                 <div class="input__wrap">
                     {% set inputAttr = attr|merge({'class': (attr.class|default('') ~ ' input--flag')|trim}) %}
