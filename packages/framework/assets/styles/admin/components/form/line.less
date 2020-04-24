@@ -151,6 +151,10 @@
                     margin-left: @form-line-label-size;
                 }
             }
+
+            .form-line__count {
+                margin-left: 0;
+            }
         }
 
         .table-grid & {
@@ -326,11 +330,15 @@
     &__count {
         display: inline-block;
         margin-top: 5px;
+        width: 100%;
 
-        @media @query-lg {
-            display: table;
-            height: 32px;
-            margin-top: 0;
+        @media only screen and (min-width: @form-line-side-multidomain-change-resolution){
+            margin-left: @form-line-label-size;
+            width: auto;
+        }
+
+        @media @query-xl {
+            margin-left: 0;
         }
 
         &__val {

@@ -39,7 +39,7 @@
             {{ label }}:
         </strong>
         {% for domainId, domainForm in multidomainForm %}
-            <div class="form-line__side {% if not loop.first %}margin-top-5{% endif %} js-characters-counter">
+            <div class="form-line__side form-line__side--multidomain {% if not loop.first %}margin-top-5{% endif %} js-characters-counter">
                 <div class="form-line__item form-line__item--left">
                     <div class="input__wrap">
                         {% set attr = domainForm.vars.attr|merge({class: cssClass ~ ' ' ~ domainForm.vars.attr.class|default('') }) %}
