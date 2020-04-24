@@ -177,6 +177,8 @@ class ProductTransferAkeneoMapper
 
         $productData->flags = AkeneoProductHelper::mapDomainDataArray($productData->flags, $this->getProductFlags($akeneoProductData['values']));
 
+        $this->mapAkeneoProductPackageMainInformationToProductData($akeneoProductData, $productData);
+
         return $productData;
     }
 
@@ -296,6 +298,40 @@ class ProductTransferAkeneoMapper
                 }
             }
         }
+    }
+
+    /**
+     * @param array $akeneoProductData
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function mapAkeneoProductPackageMainInformationToProductData(array $akeneoProductData, ProductData $productData): void
+    {
+
+
+        $productData->embeddedAccessories = AkeneoProductHelper::mapDomainDataString($productData->embeddedAccessories, $akeneoProductData['values']['embedded_accessories'] ?? null);
+        $productData->packageNotIncluded = AkeneoProductHelper::mapDomainDataString($productData->packageNotIncluded, $akeneoProductData['values']['not_included'] ?? null);
+
+        $productData->mountingState = AkeneoProductHelper::mapDataToAllDomains($productData->mountingState, $akeneoProductData['values']['mounting_state'][0]['data'] ?? null);
+        $productData->packagingUnit = AkeneoProductHelper::mapDataToAllDomains($productData->packagingUnit, $akeneoProductData['values']['packaging_unit'][0]['data'] ?? null);
+        $productData->countPackages = AkeneoProductHelper::mapDataToAllDomains($productData->countPackages, /*$akeneoProductData['values']['number_package'][0]['data'] ??*/ null);
+        $productData->totalPackageWeight = AkeneoProductHelper::mapDataToAllDomains($productData->totalPackageWeight, $akeneoProductData['values']['package_weight'][0]['data']['amount'] ?? null);
+
+        foreach ($productData->mountingState as $domainId => $state){
+            $productData->mountingState[$domainId] = AkeneoProductHelper::convertStingToType(str_replace('mounting_state__', '', $state),AkeneoProductHelper::TYPE_BOOLEAN);
+            $productData->packagingUnit[$domainId] = AkeneoProductHelper::convertStingToType($productData->packagingUnit[$domainId], AkeneoProductHelper::TYPE_INT);
+            $productData->countPackages[$domainId] = AkeneoProductHelper::convertStingToType($productData->countPackages[$domainId], AkeneoProductHelper::TYPE_INT);
+            $productData->totalPackageWeight[$domainId] = AkeneoProductHelper::convertStingToType($productData->totalPackageWeight[$domainId], AkeneoProductHelper::TYPE_FLOAT);
+        }
+    }
+
+    /**
+     * @param array $akeneoProductData
+     * @param \App\Model\Product\ProductData $productData
+     * @return array
+     */
+    public function mapAkeneoProductPackageDetailInformationToProductPackageData(array $akeneoProductData, ProductData $productData): array
+    {
+
     }
 
     /**

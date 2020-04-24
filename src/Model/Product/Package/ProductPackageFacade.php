@@ -34,32 +34,26 @@ class ProductPackageFacade
      */
     public function create(ProductPackageData $productPackageData,Product $product): void
     {
-        $isToFlush = false;
-        foreach(array_keys($productPackageData->position) as $domainId){
-            $productPackage = new ProductPackage($product, $domainId);
-            $productPackage->setPosition($productPackageData->position[$domainId]);
-            $productPackage->setHeight($productPackageData->height[$domainId]);
-            $productPackage->setLength($productPackageData->length[$domainId]);
-            $productPackage->setWidth($productPackageData->width[$domainId]);
-            $productPackage->setWeight($productPackageData->weight[$domainId]);
 
-            $this->em->persist($productPackage);
-            $isToFlush = true;
-        }
+        $productPackage = new ProductPackage($product);
+        $productPackage->setPosition($productPackageData->position);
+        $productPackage->setHeight($productPackageData->height);
+        $productPackage->setLength($productPackageData->length);
+        $productPackage->setWidth($productPackageData->width);
+        $productPackage->setWeight($productPackageData->weight);
 
-        if($isToFlush){
-            $this->em->flush();
-        }
+        $this->em->persist($productPackage);
+        $this->em->flush();
+
     }
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param int $domainId
      * @return \App\Model\Product\Package\ProductPackage[]
      */
-    public function findProductPackagesByProductAndDomainId(Product $product, int $domainId): array
+    public function getProductPackagesByProduct(Product $product): array
     {
-        return $this->productPackageRepository->findProductPackagesByProductAndDomainId($product, $domainId);
+        return $this->productPackageRepository->getProductPackagesByProduct($product);
     }
 
 }

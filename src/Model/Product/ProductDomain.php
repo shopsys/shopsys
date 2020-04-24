@@ -142,8 +142,8 @@ class ProductDomain extends BaseProductDomain
     private $countPackages;
 
     /**
-     * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
+     * @var float|null
+     * @ORM\Column(type="float", nullable=true)
      */
     private $totalPackageWeight;
 
@@ -452,17 +452,17 @@ class ProductDomain extends BaseProductDomain
     }
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function getTotalPackageWeight(): ?int
+    public function getTotalPackageWeight(): ?float
     {
         return $this->totalPackageWeight;
     }
 
     /**
-     * @param int|null $totalPackageWeight
+     * @param float|null $totalPackageWeight
      */
-    public function setTotalPackageWeight(?int $totalPackageWeight): void
+    public function setTotalPackageWeight(?float $totalPackageWeight): void
     {
         $this->totalPackageWeight = $totalPackageWeight;
     }

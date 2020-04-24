@@ -5,10 +5,16 @@ declare(strict_types=1);
 namespace App\Component\Akeneo\Product;
 
 use App\Component\Akeneo\AkeneoHelper;
+use phpDocumentor\Reflection\Types\Mixed_;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class AkeneoProductHelper
 {
+    const TYPE_INT = 'int';
+    const TYPE_FLOAT = 'float';
+    const TYPE_DOUBLE = 'double';
+    const TYPE_BOOLEAN = 'bool';
+
     /**
      * @param array|null $arrayData
      * @return string|null
@@ -127,5 +133,52 @@ class AkeneoProductHelper
         }
 
         return $productData;
+    }
+
+    /**
+     * @param array $productData
+     * @param mixed|null $akeneoData
+     * @return array
+     */
+    public static function mapDataToAllDomains(array $productData, $akeneoData): array
+    {
+        foreach ($productData as $key => $value) {
+            $productData[$key] = null;
+        }
+
+        if ($akeneoData === null) {
+            return $productData;
+        }
+
+        foreach ($productData as $key => $value) {
+            $productData[$key] = $akeneoData;
+        }
+
+        return $productData;
+    }
+
+    /**
+     * @param string|null $data
+     * @param string $type
+     * @return mixed
+     */
+    public static function convertStingToType(?string $data, string $type)
+    {
+        if($data === null){
+            return $data;
+        }
+
+        switch ($type){
+            case self::TYPE_INT:
+                return (int) $data;
+            case self::TYPE_FLOAT:
+                return (float) $data;
+            case self::TYPE_DOUBLE:
+                return (double) $data;
+            case self::TYPE_BOOLEAN:
+                return (bool) $data;
+            default:
+                return $data;
+        }
     }
 }

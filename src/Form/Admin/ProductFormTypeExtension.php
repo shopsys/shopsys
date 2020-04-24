@@ -142,6 +142,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setTransferredFilesGroup($builder, $product);
         $this->setPackagesGroup($builder, $product);
 
+
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
@@ -152,16 +153,14 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private function setPackagesGroup(FormBuilderInterface $builder, Product $product): void
     {
         $groupBuilder = $builder->create('packagesGroup', GroupType::class, [
-            'label' => t('Balení'),
+            'label' => t('Informace o balení'),
+            'position' => 'last'
         ]);
 
         $groupBuilder->add('mountingState', MultidomainType::class, [
                 'required' => false,
-                'entry_type' => TextType::class,
-                'entry_options' => [
-                    'required' => false,
-                ],
-                'label' => t('Stav montáže'),
+                'entry_type' => YesNoType::class,
+                'label' => t('Smontováno'),
             ])
             ->add('embeddedAccessories', MultidomainType::class, [
                 'required' => false,

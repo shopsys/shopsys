@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Package;
 
+use App\Model\Product\Product;
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 /**
  * @ORM\Table(
@@ -35,12 +35,6 @@ class ProductPackage
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $product;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    protected $domainId;
 
     /**
      * @var int|null
@@ -75,21 +69,12 @@ class ProductPackage
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param int $domainId
      */
-    public function __construct(Product $product, $domainId)
+    public function __construct(Product $product)
     {
         $this->product = $product;
-        $this->domainId = $domainId;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
-    {
-        return $this->domainId;
-    }
 
     /**
      * @return int

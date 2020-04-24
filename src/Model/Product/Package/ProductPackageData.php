@@ -9,27 +9,27 @@ namespace App\Model\Product\Package;
 class ProductPackageData
 {
     /**
-     * @var int[]|null[]
+     * @var int|null
      */
     public $position;
 
     /**
-     * @var int[]|null[]
+     * @var int|null
      */
     public $length;
 
     /**
-     * @var int[]|null[]
+     * @var int|null
      */
     public $width;
 
     /**
-     * @var int[]|null[]
+     * @var int|null
      */
     public $height;
 
     /**
-     * @var int[]|null[]
+     * @var int|null
      */
     public $weight;
 }

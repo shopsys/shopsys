@@ -44,26 +44,22 @@ class ProductPackageRepository
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param int $domainId
      * @return \App\Model\Product\Package\ProductPackage[]
      */
-    public function findProductPackagesByProductAndDomainId(Product $product, int $domainId): array
+    public function getProductPackagesByProduct(Product $product): array
     {
-        return $this->getRepository()->findBy(['product'=>$product, 'domainId'=>$domainId]);
+        return $this->getRepository()->findBy(['product'=>$product]);
     }
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForProductPackagesByProductAndDomainId(Product $product, int $domainId): QueryBuilder
+    public function getQueryBuilderForProductPackagesByProduct(Product $product): QueryBuilder
     {
         return $this->getQueryBuilder()
             ->where('pp.product = :product')
-            ->andWhere('pp.domainId = :domainId')
-            ->setParameters(['product'=>$product, 'domainId'=>$domainId])
+            ->setParameter('product', $product)
             ;
     }
-
 }

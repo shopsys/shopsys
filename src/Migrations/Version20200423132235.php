@@ -18,7 +18,6 @@ class Version20200423132235 extends AbstractMigration
             CREATE TABLE product_packages (
                 id SERIAL NOT NULL,
                 product_id INT NOT NULL,
-                domain_id INT NOT NULL,
                 position INT NOT NULL,
                 length INT NOT NULL,
                 width INT NOT NULL,
@@ -27,7 +26,6 @@ class Version20200423132235 extends AbstractMigration
                 PRIMARY KEY(id)
             )');
         $this->sql('CREATE INDEX IDX_5005AA304584665A ON product_packages (product_id)');
-        $this->sql('CREATE UNIQUE INDEX product_package ON product_packages (product_id, domain_id)');
         $this->sql('
             ALTER TABLE
                 product_packages
@@ -38,7 +36,7 @@ class Version20200423132235 extends AbstractMigration
         $this->sql('ALTER TABLE product_domains ADD package_not_included VARCHAR(255) DEFAULT NULL');
         $this->sql('ALTER TABLE product_domains ADD packaging_unit INT DEFAULT NULL');
         $this->sql('ALTER TABLE product_domains ADD count_packages INT DEFAULT NULL');
-        $this->sql('ALTER TABLE product_domains ADD total_package_weight INT DEFAULT NULL');
+        $this->sql('ALTER TABLE product_domains ADD total_package_weight FLOAT DEFAULT NULL');
     }
 
     /**

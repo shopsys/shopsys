@@ -185,6 +185,14 @@ class Product extends BaseProduct
             $productDomain->setProductType($productData->productType[$domainId]);
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
             $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
+
+            $productDomain->setEmbeddedAccessories($productData->embeddedAccessories[$domainId]);
+            $productDomain->setPackageNotIncluded($productData->packageNotIncluded[$domainId]);
+
+            $productDomain->setMountingState($productData->mountingState[$domainId]);
+            $productDomain->setPackagingUnit($productData->packagingUnit[$domainId]);
+            $productDomain->setCountPackages($productData->countPackages[$domainId]);
+            $productDomain->setTotalPackageWeight($productData->totalPackageWeight[$domainId]);
         }
     }
 
@@ -507,9 +515,9 @@ class Product extends BaseProduct
 
     /**
      * @param int $domainId
-     * @return int|null
+     * @return float|null
      */
-    public function getTotalPackageWeight(int $domainId): ?int
+    public function getTotalPackageWeight(int $domainId): ?float
     {
         return $this->getProductDomain($domainId)->getTotalPackageWeight();
     }

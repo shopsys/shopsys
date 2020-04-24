@@ -216,6 +216,11 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     {
         $this->productTransferAkeneoValidator->validate($akeneoProductData);
 
+        if($akeneoProductData['identifier'] == 413608301){
+            d($akeneoProductData);
+        }
+
+
         $product = $this->productFacade->findOneByCatnumExcludeMainVariants($akeneoProductData['identifier']);
         $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product);
 
@@ -230,13 +235,14 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->setProductForImportFiles($product, $akeneoProductData);
         $this->setRelationProductSeriesWithProduct($product, $akeneoProductData);
         $this->setProductImages($product, $akeneoProductData);
+        $this->setProductPackageDetailInformationFormProduct($product, $akeneoProductData);
 
         $this->setLastUpdatedProduct($akeneoProductData['updated']);
     }
 
     protected function doAfterTransfer(): void
     {
-        $this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
+        //$this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
         $this->logger->addInfo('Transfer is done.');
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
     }
@@ -271,6 +277,15 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     {
         $productFilesData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductFilesData($akeneoProductData, $product);
         $this->productFacade->editProductFileAttributes($product, $productFilesData);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoProductData
+     */
+    private function setProductPackageDetailInformationFormProduct(Product $product, array $akeneoProductData): void
+    {
+
     }
 
     /**

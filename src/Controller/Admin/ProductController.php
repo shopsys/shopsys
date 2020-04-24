@@ -108,17 +108,14 @@ class ProductController extends BaseProductController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)]));
 
-        $productPackageGridViewListIndexedByDomainName = [];
-        foreach ($this->domain->getAll() as $domainConfig){
-            /** @var Product $product */
-            $productPackageGridViewListIndexedByDomainName[$domainConfig->getName()] = $this->getProductPackageGridByProductAndDomainId($product, $domainConfig->getId())->createView();
-        }
+        /** @var \App\Model\Product\Product $product */
+        $productPackageGridView = $this->getProductPackageGridByProduct($product)->createView();
 
         $viewParameters = [
             'form' => $form->createView(),
             'product' => $product,
             'domains' => $this->domain->getAll(),
-            'productPackageGridViewListIndexedByDomainName' => $productPackageGridViewListIndexedByDomainName,
+            'productPackageGridView' => $productPackageGridView,
         ];
 
         return $this->render('/Admin/Content/Product/edit.html.twig', $viewParameters);
@@ -126,16 +123,15 @@ class ProductController extends BaseProductController
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    private function getProductPackageGridByProductAndDomainId(Product $product, int $domainId): Grid
+    private function getProductPackageGridByProduct(Product $product): Grid
     {
-        $queryBuilder = $this->productPackageRepository->getQueryBuilderForProductPackagesByProductAndDomainId($product, $domainId);
+        $queryBuilder = $this->productPackageRepository->getQueryBuilderForProductPackagesByProduct($product);
         $queryBuilder->orderBy('pp.position');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pp.id');
 
-        $grid = $this->gridFactory->create('productPackagesList__' . $domainId, $dataSource);
+        $grid = $this->gridFactory->create('productPackagesList', $dataSource);
 
 
         $grid->addColumn('position', 'pp.name', t('Pořadí'));
