@@ -1375,7 +1375,7 @@ There you can find links to upgrade notes for other versions too.
 - use strict comparison in category panel template to prevent errors ([#1782](https://github.com/shopsys/shopsys/pull/1782))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/06f09d87deecc9547430394e751fb84273a218a1) to update your project
 
-- fix validation of addresses in customer section ([#1797](https://github.com/shopsys/shopsys/pull/1797)
+- fix validation of addresses in customer section ([#1797](https://github.com/shopsys/shopsys/pull/1797))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/b0b161ac61b7f3ff49a70cd6e646b8f2857af744) to update you
 
 - fix symfony `dump()` function ([#1745](https://github.com/shopsys/shopsys/pull/1745))
