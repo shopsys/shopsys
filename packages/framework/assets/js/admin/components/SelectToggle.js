@@ -21,8 +21,8 @@ export default class SelectToggle {
             $control
                 .on('change', event => {
                     this.showOptionsBySelector($select, '.' + this.optionClassPrefix + event.target.value);
-                    $select.val($select.find('option:not([disabled]):first').val()).change();
                 });
+            this.showOptionsBySelector($select, '.' + this.optionClassPrefix + $control.val());
         }
     }
 
@@ -34,6 +34,7 @@ export default class SelectToggle {
                 $(element).prop('disabled', true);
             }
         });
+        $select.val($select.find('option:not([disabled]):first').val()).change();
     }
 
     static init ($container) {
