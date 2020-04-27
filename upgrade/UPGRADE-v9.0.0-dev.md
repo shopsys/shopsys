@@ -1533,6 +1533,9 @@ There you can find links to upgrade notes for other versions too.
         - now you can rebuild you less files `npm run dev` and you should see your font on frontend page
     - use full of the webpack, enjoy!
 
+- add support for Safari ([#1811](https://github.com/shopsys/shopsys/pull/1811))
+    - see #project-base-diff to update your project
+
 If you have custom frontend you can skip these tasks:
 - hide variant table header when product is denied for sale ([#1634](https://github.com/shopsys/shopsys/pull/1634))
     - add new condition at product detail file: `templates/Front/Content/Product/detail.html.twig`

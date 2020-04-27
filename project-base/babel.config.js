@@ -4,7 +4,10 @@ module.exports = {
             '@babel/preset-env',
             {
                 targets: {
-                    node: 'current'
+                    node: 'current',
+                    browsers: [
+                        'safari >= 8'
+                    ]
                 }
             }
         ]
