@@ -9,6 +9,7 @@ use App\Model\Product\ProductData;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -73,24 +74,24 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $parameterDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
-     */
-    private $parameters;
-
-    /**
      * @var int
      */
     private $productNo = 1;
 
     /**
-     * @var \App\Model\Product\Product[]
+     * @var int[]
      */
-    private $productsByCatnum = [];
+    private $productIdsByCatnum = [];
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
     private $priceConverter;
+
+    /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    private $em;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
@@ -103,6 +104,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -114,7 +116,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ParameterValueDataFactory $parameterValueDataFactory,
         ParameterFacade $parameterFacade,
         ParameterDataFactory $parameterDataFactory,
-        PriceConverter $priceConverter
+        PriceConverter $priceConverter,
+        EntityManagerInterface $em
     ) {
         $this->productFacade = $productFacade;
         $this->productVariantFacade = $productVariantFacade;
@@ -126,6 +129,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->parameterFacade = $parameterFacade;
         $this->parameterDataFactory = $parameterDataFactory;
         $this->priceConverter = $priceConverter;
+        $this->em = $em;
     }
 
     /**
@@ -5636,11 +5640,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
             /** @var \App\Model\Product\Product $mainProduct */
-            $mainProduct = $this->productsByCatnum[$mainVariantCatnum];
+            $mainProduct = $this->getProductFromCacheByCatnum($mainVariantCatnum);
 
             $variants = [];
             foreach ($variantsCatnums as $variantCatnum) {
-                $variants[] = $this->productsByCatnum[$variantCatnum];
+                $variants[] = $this->getProductFromCacheByCatnum($variantCatnum);
             }
 
             $mainVariant = $this->productVariantFacade->createVariant($mainProduct, $variants);
@@ -5654,12 +5658,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function findParameterByNamesOrCreateNew(array $parameterNamesByLocale): Parameter
     {
-        $cacheId = json_encode($parameterNamesByLocale);
-
-        if (isset($this->parameters[$cacheId])) {
-            return $this->parameters[$cacheId];
-        }
-
         $parameter = $this->parameterFacade->findParameterByNames($parameterNamesByLocale);
 
         if ($parameter === null) {
@@ -5668,8 +5666,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $parameterData->visible = true;
             $parameter = $this->parameterFacade->create($parameterData);
         }
-
-        $this->parameters[$cacheId] = $parameter;
 
         return $parameter;
     }
@@ -5817,8 +5813,33 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     public function addProductReference(Product $product)
     {
         $this->addReference(self::PRODUCT_PREFIX . $this->productNo, $product);
-        $this->productsByCatnum[$product->getCatnum()] = $product;
         $this->productNo++;
+
+        if (in_array($product->getCatnum(), $this->arrayFlat(self::getVariantCatnumsByMainVariantCatnum()), true)) {
+            $this->saveProductToCache($product);
+        }
+
+        $this->em->clear();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     */
+    private function saveProductToCache(Product $product): void
+    {
+        $this->productIdsByCatnum[$product->getCatnum()] = $product->getId();
+    }
+
+    /**
+     * @param string $catnum
+     * @return \App\Model\Product\Product
+     */
+    private function getProductFromCacheByCatnum(string $catnum): Product
+    {
+        /** @var \App\Model\Product\Product $product */
+        $product = $this->productFacade->getById($this->productIdsByCatnum[$catnum]);
+
+        return $product;
     }
 
     /**
@@ -5835,5 +5856,21 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             PricingGroupDataFixture::class,
             SettingValueDataFixture::class,
         ];
+    }
+
+    /**
+     * @param array $array
+     * @return string[]
+     */
+    private function arrayFlat(array $array): array
+    {
+        $result = [];
+
+        foreach ($array as $key => $values) {
+            $result[] = $key;
+            $result = array_merge($result, $values);
+        }
+
+        return array_unique($result);
     }
 }
