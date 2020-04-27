@@ -42,11 +42,12 @@ Encore
         beforeRun: () => {
             generateWebFont(
                 'frontend',
-                './assets/public/frontend/svg/*.svg'
+                './assets/public/frontend/svg/'
             );
             generateWebFont(
                 'admin',
-                './assets/public/admin/svg/*.svg'
+                sources.getFrameworkNodeModulesDir() + '/public/admin/svg/',
+                './web/public/admin/svg/'
             );
 
             const dirWithJsFiles = [
@@ -68,8 +69,8 @@ Encore
     }))
     .addPlugin(new CopyPlugin([
         { from: 'web/bundles/fpjsformvalidator', to: '../../assets/js/bundles/fpjsformvalidator', force: true },
-        { from: 'assets/public', to: '../../web/public', force: true },
-        { from: 'node_modules/@shopsys/framework/public/svg/admin', to: '../../web/public/admin/svg', force: true }
+        { from: 'node_modules/@shopsys/framework/public/admin', to: '../../web/public/admin', force: true },
+        { from: 'assets/public', to: '../../web/public', ignore: ['assets/public/admin/svg/**/*'], force: true }
     ]))
 ;
 

@@ -1444,11 +1444,11 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
     - move content from `src/resources/styles/front` to `assets/styles/frontend`
     - move content from `src/resources/styles/admin` to `assets/styles/admin`
-    - move content from `src/resources/svg` to `assets/styles/frontend/svg`
+    - move content from `src/resources/svg` to `assets/public/frontend/svg`
     - move content from `web/assets/frontend/fonts` to `assets/public/frontend/fonts`
     - move content from `web/assets/frontend/images` to `assets/public/frontend/images`
-    - move content from `web/assets/admin/fonts` to `assets/public/frontend/fonts`
-    - move content from `web/assets/admin/images` to `assets/public/frontend/images`
+    - move content from `web/assets/admin/fonts` to `assets/public/admin/fonts`
+    - move content from `web/assets/admin/images` to `assets/public/admin/images`
     - move content from `web/assets/styleguide/images` to `assets/public/styleguide/images`
     - you should remove the `grunt` target from your `build.xml` file
     - add `styles_directory` into your domains config (you can get inspired in [project-base/config/domains.yml  ](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yml))
@@ -1458,6 +1458,59 @@ There you can find links to upgrade notes for other versions too.
         + asset('public/**/*.*')
       ```
     - remove `getCssVersion()` function call from your templates
+    - print styles files are now included by tag `{{ encore_entry_link_tags('app') }}`
+      - but there is no 'media="print"' parameter to set link attribute
+      - so we need to upgrade our `assets/styles/frontend/*/print/main.less` and wrap all content to media query `@media print { ... your content ... }`
+    - In case you are using google fonts, we need to download font files and avoid for using `@import` from external sources. In future we can make some magics in load time performance using FontLoader etc.
+        - Example in `variables.less`
+          ```css
+            @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext');
+          ```
+        - open link in your browser and you will see a lot of `@font-face definitions`
+        - copy these you want to use:
+            ```css
+                /* latin-ext */
+                @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 400;
+                  font-display: swap;
+                  src: local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+                /* latin-ext */
+                @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-display: swap;
+                  src: local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+            ```
+        - replace previous `@import` with it
+        - open all link `https://fonts.gstatic.com/...` in your browser and it will download font file and save them to `assets/public/fronten/fonts`. We are using [fontName][fontWeigh].[extension] filename syntax.
+        - change urls in `variables.less` to:
+            ```css
+              @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 400;
+                  font-display: swap;
+                  src: local('Montserrat Regular'), local('Montserrat-Regular'), url(@{path-font}/Montserrat400.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+                /* latin-ext */
+                @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-display: swap;
+                  src: local('Montserrat Bold'), local('Montserrat-Bold'), url(@{path-font}/Montserrat700.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+            ```
+        - now you can rebuild you less files `npm run dev` and you should see your font on frontend page
     - use full of the webpack, enjoy!
 
 If you have custom frontend you can skip these tasks:
