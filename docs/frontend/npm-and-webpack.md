@@ -74,6 +74,11 @@ Therefore we can use `npm run watch` for development.
 This command checks if a file has changed and if it does, changes are propagated into the resulting bundle.
 The `npm run watch` command launches the webpack in development mode, which means creating source maps to help you debug your project.
 
+### Livereload
+
+The watch command is linked to the [livereload plugin](https://github.com/statianzo/webpack-livereload-plugin).
+The [livereload plugin](https://github.com/statianzo/webpack-livereload-plugin) plugin will refresh your page the moment you change any asset. 
+
 ## Constants and translations
 
 In previous versions, the constants were automatically replaced from the backend to the frontend.
