@@ -53,6 +53,12 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'vendorDeliveryDate',
         'flags',
         'images',
+        'mountingState',
+        'embeddedAccessories',
+        'packageNotIncluded',
+        'packagingUnit',
+        'countPackages',
+        'totalPackageWeight',
     ];
 
     /**

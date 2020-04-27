@@ -171,11 +171,10 @@ class AkeneoProductHelper
             case self::TYPE_INT:
                 return (int)$data;
             case self::TYPE_FLOAT:
-                return (float)$data;
             case self::TYPE_DOUBLE:
                 return (float)$data;
             case self::TYPE_BOOLEAN:
-                return (bool)$data;
+                return filter_var($data, FILTER_VALIDATE_BOOLEAN);
             default:
                 return $data;
         }

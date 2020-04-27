@@ -350,6 +350,81 @@
                     </div>
                 {% endif %}
 
+                <div class="h3" id="package-basic-information">{{ 'Informace o balení'|trans }}</div>
+                <div class="box-detail package-basic-information">
+                    <table class="table-grid margin-top-20">
+                        <tbody>
+                            <tr>
+                                <th>
+                                    {{ 'Stav montáže'|trans }}
+                                </th>
+                                <td>
+                                    {{ product.mountingState(domain.id) ? 'smontováno'|trans : 'demontováno'|trans }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'Dodávané příslušenství'|trans }}
+                                </th>
+                                <td>
+                                    {{ product.embeddedAccessories(domain.id) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'Neobsaženo v balení'|trans }}
+                                </th>
+                                <td>
+                                    {{ product.packageNotIncluded(domain.id) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'Počet produktů v balení'|trans }}
+                                </th>
+                                <td>
+                                    {{ product.packagingUnit(domain.id) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'Počet balíků'|trans }}
+                                </th>
+                                <td>
+                                    {{ product.countPackages(domain.id) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'Celková váha produktu'|trans }}
+                                </th>
+                                <td>
+                                    {{ product.totalPackageWeight(domain.id) }} {{ 'Kg'|trans }}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                {% if productPackages|length > 0 %}
+                <div class="h3" id="package-detail-information">{{ 'Detailní informace o balení'|trans }}</div>
+
+                <div class="box-detail package-detail-information">
+                    {% for productPackage in productPackages %}
+                        <div class="box-package">
+                            <div class="h4">{{ 'Balík č.'|trans }} {{ productPackage.position }}</div>
+                            <ul>
+                                <li>{{ 'Šířka'|trans }} {{ productPackage.width }} {{ 'cm'|trans }}</li>
+                                <li>{{ 'Délka'|trans }} {{ productPackage.length }} {{ 'cm'|trans }}</li>
+                                <li>{{ 'Výška'|trans }} {{ productPackage.height }} {{ 'cm'|trans }}</li>
+                                <li>{{ 'Hmotnost balíku'|trans }} {{ productPackage.weight }} {{ 'Kg'|trans }}</li>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% endif %}
+
                 {% if downloadFiles|length > 0 %}
                     <div class="box-detail download_files">
                         <div class="h3" id="download_files">{{ 'Ke stažení'|trans }}</div>

@@ -289,30 +289,25 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     private function setProductPackageDetailInformationFormProduct(Product $product, array $akeneoProductData): void
     {
-        $dropProductPositions = [];
-        for ($i = ProductTransferAkeneoMapper::PRODUCT_PACKAGE_MINIMAL_INDEX; $i <= ProductTransferAkeneoMapper::PRODUCT_PACKAGE_MAXIMAL_INDEX; $i++) {
-            $dropProductPositions[$i] = $i;
-        }
+        $dontDropProductPositions = [];
 
         $productPackageDataList = $this->productTransferAkeneoMapper->mapAkeneoProductPackageDetailInformationToProductPackageDataList($akeneoProductData);
         foreach ($productPackageDataList as $productPackageData) {
             $this->productPackageFacade->createOrEdit($productPackageData, $product);
-            unset($dropProductPositions[$productPackageData->position]);
+            $dontDropProductPositions[] = $productPackageData->position;
         }
 
-        if (count($dropProductPositions) > 0) {
-            $productPackages = $this->productPackageFacade->getProductPackagesByProduct($product);
-            $canFlush = false;
-            foreach ($productPackages as $productPackage) {
-                if (in_array($productPackage->getPosition(), $dropProductPositions, true)) {
-                    $this->em->remove($productPackages);
-                    $canFlush = true;
-                }
+        $productPackages = $this->productPackageFacade->getProductPackagesByProduct($product);
+        $canFlush = false;
+        foreach ($productPackages as $productPackage) {
+            if (in_array($productPackage->getPosition(), $dontDropProductPositions, true) === false) {
+                $this->em->remove($productPackage);
+                $canFlush = true;
             }
+        }
 
-            if ($canFlush) {
-                $this->em->flush();
-            }
+        if ($canFlush) {
+            $this->em->flush();
         }
     }
 

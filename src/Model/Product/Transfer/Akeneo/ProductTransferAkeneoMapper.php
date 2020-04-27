@@ -321,7 +321,7 @@ class ProductTransferAkeneoMapper
         $productData->embeddedAccessories = AkeneoProductHelper::mapDomainDataString($productData->embeddedAccessories, $akeneoProductData['values']['embedded_accessories'] ?? null);
         $productData->packageNotIncluded = AkeneoProductHelper::mapDomainDataString($productData->packageNotIncluded, $akeneoProductData['values']['not_included'] ?? null);
 
-        $productData->mountingState = AkeneoProductHelper::mapDataToAllDomains($productData->mountingState, $akeneoProductData['values']['mounting_state'][0]['data'] ?? null);
+        $productData->mountingState = AkeneoProductHelper::mapDataToAllDomains($productData->mountingState, $akeneoProductData['values']['mounting_state'][0]['data'] ?? 'false');
         $productData->packagingUnit = AkeneoProductHelper::mapDataToAllDomains($productData->packagingUnit, $akeneoProductData['values']['packaging_unit'][0]['data'] ?? null);
         $productData->countPackages = AkeneoProductHelper::mapDataToAllDomains($productData->countPackages, $akeneoProductData['values']['number_package'][0]['data'] ?? null);
         $productData->totalPackageWeight = AkeneoProductHelper::mapDataToAllDomains($productData->totalPackageWeight, $akeneoProductData['values']['package_weight'][0]['data']['amount'] ?? null);
