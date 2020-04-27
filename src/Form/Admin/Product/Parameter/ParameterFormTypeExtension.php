@@ -6,6 +6,7 @@ namespace App\Form\Admin\Product\Parameter;
 
 use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Parameter\Parameter;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -40,6 +41,8 @@ class ParameterFormTypeExtension extends AbstractTypeExtension
             'required' => false,
             'choices' => Parameter::PARAMETER_TYPES,
         ]);
+
+        $builder->add('useSliderInFilter', YesNoType::class);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
