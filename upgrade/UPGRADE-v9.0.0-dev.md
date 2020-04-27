@@ -189,10 +189,10 @@ There you can find links to upgrade notes for other versions too.
     - run `docker-compose up -d` so the new image is pulled and used
 
 - upgrade PHP to version 7.4 ([#1737](https://github.com/shopsys/shopsys/pull/1737))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/32755202185ed04fcf0e50b1d96d2af0fae8d778) to update your project
 
   update Redis client to version 5.2.1 and Redis server to 5.0 ([#1606](https://github.com/shopsys/shopsys/pull/1606))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/e3adc0c31094b47aca03389ef4fa266977edab25) to update your project
 
 ### Configuration
 - add trailing slash to all your localized paths for `front_product_search` route ([#1067](https://github.com/shopsys/shopsys/pull/1067))
@@ -1136,17 +1136,17 @@ There you can find links to upgrade notes for other versions too.
 - add cron overview ([#1407](https://github.com/shopsys/shopsys/pull/1407))
     - update your files using [this diff](https://github.com/shopsys/project-base/commit/fdac77abc9fd7f167ccd544f4691ee25b2de169d)
 
-- update your aplication to do not change product availability to default when availability can not be calculated immediately ([#1659](https://github.com/shopsys/shopsys/pull/1659))
-    - see #project-base-diff to update your project
+- update your application to do not change product availability to default when availability can not be calculated immediately ([#1659](https://github.com/shopsys/shopsys/pull/1659))
+    - see [project base diff](https://github.com/shopsys/project-base/commit/0be925148d15222e8765efae38386afef1485ebf) to update your project
     
 - update your application to have czech crowns on czech domain and euro on english domain ([#1542](https://github.com/shopsys/shopsys/pull/1542))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/837c86055b6b1e433b65b7cb28d70104ac15c765) to update your project
     
 
 - update your application to symfony4 ([#1704](https://github.com/shopsys/shopsys/pull/1704))
     
-    - see #project-base-diff to update your project
-    - see also #project-base-diff from [#1764](https://github.com/shopsys/shopsys/pull/1764)
+    - see [project base diff](https://github.com/shopsys/project-base/commit/fb3fa6f0c94252c6f51dbf4487bb2964aa4c64b7) to update your project
+    - see also [project base diff](https://github.com/shopsys/project-base/commit/cd37af7d834218d58ddbf1e620e661d8cd441b27) from [#1764](https://github.com/shopsys/shopsys/pull/1764)
     
     - minimum memory requirements for installation using Docker on MacOS and Windows has changed, please read  [Installation Using Docker for MacOS](docs/installation/installation-using-docker-macos.md) or [Installation Using Docker for Windows 10 Pro and higher](docs/installation/installation-using-docker-windows-10-pro-higher.md)
     
@@ -1347,13 +1347,13 @@ There you can find links to upgrade notes for other versions too.
 
 
 - fix your version of jms/translation-bundle to 1.4.4 in order to prevent problems with translations dumping ([#1732](https://github.com/shopsys/shopsys/pull/1732))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/55c113d079e61ee399ad5619f142f1f286808155) to update your project
 
 - fix your password minimum length constraint message ([#1478](https://github.com/shopsys/shopsys/pull/1478))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/89eace30cb0d3d3e18de49d9085deb2e6cd02161) to update your project
 
 - fix your translations ids ([#1738](https://github.com/shopsys/shopsys/pull/1738))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/cbfa2d20aba1a455ce29ae0c81e55a09ff30ffc7) to update your project
     - email template variable has been changed from `{e-mail}` to `{email}`, update your email templates accordingly
     - run `php phing translations-dump` and check, if some translations are needed to be translated
 
@@ -1361,28 +1361,25 @@ There you can find links to upgrade notes for other versions too.
     - `HeurekaCategoryDownloader::convertToShopEntities()` has been renamed to `HeurekaCategoryDownloader::convertToHeurekaCategoriesData()` update your project appropriately
 
 - move cron definitions in your project so it is easier to control them ([#1739](https://github.com/shopsys/shopsys/pull/1739))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/e997bae209a0af2b08554bd9cacaaa64fed29442) to update your project
     
 - compliance with the principle of encapsulation in the project base ([#1640](https://github.com/shopsys/shopsys/pull/1640))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/5311d3568f8a2d935528dbd25594a0530142ac4a) to update your project
 
 - remove unused import in `tests/App/Functional/Model/Product/Availability/ProductAvailabilityCalculationTest.php` ([#1779](https://github.com/shopsys/shopsys/pull/1779))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/0904a42718fbb9997183bcd19d9be2deec9f9367) to update your project
 
 - remove unnecessary entity extensions from parameters_common.yml ([#1663](https://github.com/shopsys/shopsys/pull/1663))
-    - there is no longer need to register entities in `App` namespace extending entities from `Shopsys` namespace, so remove all necessary uses, see #project-base-diff for example
+    - there is no longer need to register entities in `App` namespace extending entities from `Shopsys` namespace, so remove all necessary uses, see [project base diff](https://github.com/shopsys/project-base/commit/2f97c8a2e6dffe8ee4fde09344be7ce719696304) for example
 
 - use strict comparison in category panel template to prevent errors ([#1782](https://github.com/shopsys/shopsys/pull/1782))
-    - see #project-base-diff to update your project
-
-- fix not working popup window on single image ([#1630](https://github.com/shopsys/shopsys/pull/1630))
-    - add missing javascript for popup single image for class `js-popup-image`, see #project-base-diff
+    - see [project base diff](https://github.com/shopsys/project-base/commit/06f09d87deecc9547430394e751fb84273a218a1) to update your project
 
 - fix validation of addresses in customer section ([#1797](https://github.com/shopsys/shopsys/pull/1797)
-    - see #project-base-diff to update you
+    - see [project base diff](https://github.com/shopsys/project-base/commit/b0b161ac61b7f3ff49a70cd6e646b8f2857af744)) to update you
 
 - fix symfony `dump()` function ([#1745](https://github.com/shopsys/shopsys/pull/1745))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/f1a4c5036a1f3eab202524d2cdc6fa29851468a8) to update your project
 
 ### Tools
 
@@ -1440,8 +1437,12 @@ There you can find links to upgrade notes for other versions too.
 - javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545), [#1645](https://github.com/shopsys/shopsys/pull/1645))
     - please read [upgrade instruction for webpack](./upgrade-instruction-for-webpack.md)
 
+- fix not working popup window on single image ([#1630](https://github.com/shopsys/shopsys/pull/1630))
+    - add missing javascript for popup single image for class `js-popup-image`, see [project base diff](https://github.com/shopsys/project-base/commit/ad7a0a20f094d5e936e4bb503946453c5c89ed18)
+
 - css and other assets are managed by webpack ([#1725](https://github.com/shopsys/shopsys/pull/1725))
-    - see #project-base-diff to update your project
+    - see [project base diff](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee) to update your project
+    - see also [project base diff](https://github.com/shopsys/project-base/commit/2b195ae29754e03dca297dad6461cee5693eca79) from [#1781](https://github.com/shopsys/shopsys/pull/1781)
     - move content from `src/resources/styles/front` to `assets/styles/frontend`
     - move content from `src/resources/styles/admin` to `assets/styles/admin`
     - move content from `src/resources/svg` to `assets/public/frontend/svg`
