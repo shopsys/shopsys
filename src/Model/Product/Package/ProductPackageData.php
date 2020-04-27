@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Package;
-
 
 class ProductPackageData
 {
@@ -29,7 +27,7 @@ class ProductPackageData
     public $height;
 
     /**
-     * @var int|null
+     * @var float|null
      */
     public $weight;
 }

@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controller\Admin;
 
 use App\Model\Product\Package\ProductPackageRepository;
 use App\Model\Product\Product;
-use App\Model\Product\Series\Category\ProductSeriesCategory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -29,14 +27,36 @@ use Shopsys\FrameworkBundle\Twig\ProductExtension;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @property \App\Model\Product\ProductFacade $productFacade
+ * @property \App\Model\Product\ProductDataFactory $productDataFactory
+ * @property \App\Component\Setting\Setting $setting
+ * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+ */
 class ProductController extends BaseProductController
 {
-
     /**
      * @var \App\Model\Product\Package\ProductPackageRepository
      */
     private $productPackageRepository;
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \App\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Product\ProductDataFactory $productDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade $productListAdminFacade
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade $advancedSearchProductFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
+     * @param \Shopsys\FrameworkBundle\Twig\ProductExtension $productExtension
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
+     * @param \App\Component\Setting\Setting $setting
+     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \App\Model\Product\Package\ProductPackageRepository $productPackageRepository
+     */
     public function __construct(
         ProductMassActionFacade $productMassActionFacade,
         GridFactory $gridFactory,
@@ -53,8 +73,7 @@ class ProductController extends BaseProductController
         Setting $setting,
         AvailabilityFacade $availabilityFacade,
         ProductPackageRepository $productPackageRepository
-    )
-    {
+    ) {
         parent::__construct(
             $productMassActionFacade,
             $gridFactory,
@@ -133,15 +152,12 @@ class ProductController extends BaseProductController
 
         $grid = $this->gridFactory->create('productPackagesList', $dataSource);
 
-
-        $grid->addColumn('position', 'pp.name', t('Pořadí'));
+        $grid->addColumn('position', 'pp.position', t('Pořadí'));
         $grid->addColumn('length', 'pp.length', t('Délka'));
         $grid->addColumn('width', 'pp.width', t('Šířka'));
         $grid->addColumn('height', 'pp.height', t('Výška'));
         $grid->addColumn('weight', 'pp.weight', t('Váha'));
 
-
         return $grid;
     }
-
 }

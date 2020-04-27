@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Package;
-
 
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +16,9 @@ class ProductPackageRepository
      */
     private $em;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -38,8 +39,7 @@ class ProductPackageRepository
     {
         return $this->em->createQueryBuilder()
             ->select('pp')
-            ->from(ProductPackage::class, 'pp')
-            ;
+            ->from(ProductPackage::class, 'pp');
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductPackageRepository
      */
     public function getProductPackagesByProduct(Product $product): array
     {
-        return $this->getRepository()->findBy(['product'=>$product]);
+        return $this->getRepository()->findBy(['product' => $product], ['position' => 'asc']);
     }
 
     /**
@@ -59,8 +59,7 @@ class ProductPackageRepository
     {
         return $this->getQueryBuilder()
             ->where('pp.product = :product')
-            ->setParameter('product', $product)
-            ;
+            ->setParameter('product', $product);
     }
 
     /**
@@ -70,6 +69,6 @@ class ProductPackageRepository
      */
     public function findProductPackageByProductAndPosition(Product $product, int $position): ?ProductPackage
     {
-        return $this->getRepository()->findBy(['product'=>$product, 'position'=>$position]);
+        return $this->getRepository()->findOneBy(['product' => $product, 'position' => $position]);
     }
 }

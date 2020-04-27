@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Package\ProductPackageDataFactory;
+use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
 use App\Model\Product\Parameter\ParameterGroupFacade;
 use App\Model\Product\Product;
@@ -129,6 +131,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $em;
 
     /**
+     * @var \App\Model\Product\Package\ProductPackageDataFactory
+     */
+    private $productPackageDataFactory;
+
+    /**
+     * @var \App\Model\Product\Package\ProductPackageFacade
+     */
+    private $productPackageFacade;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \App\Component\Domain\Domain $domain
@@ -145,6 +157,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \App\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Product\Package\ProductPackageDataFactory $productPackageDataFactory
+     * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -162,7 +176,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ParameterGroupFacade $parameterGroupFacade,
         StockRepository $stockRepository,
         ProductStockDataFactory $productStockDataFactory,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        ProductPackageDataFactory $productPackageDataFactory,
+        ProductPackageFacade $productPackageFacade
     ) {
         $this->productFacade = $productFacade;
         $this->productVariantFacade = $productVariantFacade;
@@ -180,6 +196,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->stockRepository = $stockRepository;
         $this->productStockDataFactory = $productStockDataFactory;
         $this->em = $em;
+        $this->productPackageDataFactory = $productPackageDataFactory;
+        $this->productPackageFacade = $productPackageFacade;
     }
 
     /**
@@ -5776,6 +5794,48 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Product\ProductData $productData
+     */
+    private function setDefaultPackagesInformationForAlDomains(ProductData $productData): void
+    {
+        static $mountingState = true;
+        $mountingState = !$mountingState;
+
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
+            $productData->embeddedAccessories[$domainConfig->getId()] = t('Nožičky', [], 'dataFixtures', $domainConfig->getLocale());
+            $productData->packageNotIncluded[$domainConfig->getId()] = t('šroubovák', [], 'dataFixtures', $domainConfig->getLocale());
+            $productData->packagingUnit[$domainConfig->getId()] = 2;
+            $productData->countPackages[$domainConfig->getId()] = 3;
+            $productData->totalPackageWeight[$domainConfig->getId()] = 15.5;
+            $productData->mountingState[$domainConfig->getId()] = $mountingState;
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     */
+    private function setDetailProductPackagesInformation(Product $product): void
+    {
+        $productPackageData = $this->productPackageDataFactory->create();
+        $productPackageData->position = 1;
+        $productPackageData->length = 150;
+        $productPackageData->width = 50;
+        $productPackageData->height = 20;
+        $productPackageData->weight = 10.5;
+
+        $this->productPackageFacade->createOrEdit($productPackageData, $product);
+
+        $productPackageData = $this->productPackageDataFactory->create();
+        $productPackageData->position = 2;
+        $productPackageData->length = 100;
+        $productPackageData->width = 30;
+        $productPackageData->height = 10;
+        $productPackageData->weight = 5;
+
+        $this->productPackageFacade->createOrEdit($productPackageData, $product);
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Product
      */
     protected function createProduct(ProductData $productData): Product
@@ -5786,9 +5846,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->productType[$domain->getId()] = $this->getReference($oddProduct ? ProductTypeDataFixture::TYPE_COMMON : ProductTypeDataFixture::TYPE_OVERSIZED);
         }
 
+        $this->setDefaultPackagesInformationForAlDomains($productData);
+
         /** @var \App\Model\Product\Product $product */
         $product = $this->productFacade->create($productData);
 
+        $this->setDetailProductPackagesInformation($product);
         $this->addProductReference($product);
 
         return $product;

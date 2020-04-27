@@ -27,6 +27,9 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFac
 
 class ProductTransferAkeneoMapper
 {
+    public const PRODUCT_PACKAGE_MINIMAL_INDEX = 1;
+    public const PRODUCT_PACKAGE_MAXIMAL_INDEX = 9;
+
     /**
      * @var \App\Model\Product\ProductDataFactory
      */
@@ -66,6 +69,7 @@ class ProductTransferAkeneoMapper
      * @var \App\Model\Product\Flag\FlagRepository
      */
     private $flagRepository;
+
     /**
      * @var \App\Model\Product\Package\ProductPackageDataFactory
      */
@@ -80,6 +84,7 @@ class ProductTransferAkeneoMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Model\Product\Flag\FlagRepository $flagRepository
+     * @param \App\Model\Product\Package\ProductPackageDataFactory $productPackageDataFactory
      */
     public function __construct(
         ProductDataFactory $productDataFactory,
@@ -321,8 +326,8 @@ class ProductTransferAkeneoMapper
         $productData->countPackages = AkeneoProductHelper::mapDataToAllDomains($productData->countPackages, $akeneoProductData['values']['number_package'][0]['data'] ?? null);
         $productData->totalPackageWeight = AkeneoProductHelper::mapDataToAllDomains($productData->totalPackageWeight, $akeneoProductData['values']['package_weight'][0]['data']['amount'] ?? null);
 
-        foreach ($productData->mountingState as $domainId => $state){
-            $productData->mountingState[$domainId] = AkeneoProductHelper::convertStingToType(str_replace('mounting_state__', '', $state),AkeneoProductHelper::TYPE_BOOLEAN);
+        foreach ($productData->mountingState as $domainId => $state) {
+            $productData->mountingState[$domainId] = AkeneoProductHelper::convertStingToType(str_replace('mounting_state__', '', $state), AkeneoProductHelper::TYPE_BOOLEAN);
             $productData->packagingUnit[$domainId] = AkeneoProductHelper::convertStingToType($productData->packagingUnit[$domainId], AkeneoProductHelper::TYPE_INT);
             $productData->countPackages[$domainId] = AkeneoProductHelper::convertStingToType($productData->countPackages[$domainId], AkeneoProductHelper::TYPE_INT);
             $productData->totalPackageWeight[$domainId] = AkeneoProductHelper::convertStingToType($productData->totalPackageWeight[$domainId], AkeneoProductHelper::TYPE_FLOAT);
@@ -331,26 +336,25 @@ class ProductTransferAkeneoMapper
 
     /**
      * @param array $akeneoProductData
-     * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Package\ProductPackageData[]
      */
     public function mapAkeneoProductPackageDetailInformationToProductPackageDataList(array $akeneoProductData): array
     {
         $productPackageDataList = [];
-        for ($i = 1 ; $i < 10 ; $i++){
+        for ($i = self::PRODUCT_PACKAGE_MINIMAL_INDEX; $i <= self::PRODUCT_PACKAGE_MAXIMAL_INDEX; $i++) {
             $position = $akeneoProductData['values']['package_nr_' . $i][0]['data'] ?? null;
-            $length = $akeneoProductData['values']['package_length_' . $i][0]['data'] ?? null;
-            $width = $akeneoProductData['values']['package_width_' . $i][0]['data'] ?? null;
-            $height = $akeneoProductData['values']['package_height_' . $i][0]['data'] ?? null;
+            $length = $akeneoProductData['values']['package_length_' . $i][0]['data']['amount'] ?? null;
+            $width = $akeneoProductData['values']['package_width_' . $i][0]['data']['amount'] ?? null;
+            $height = $akeneoProductData['values']['package_height_' . $i][0]['data']['amount'] ?? null;
             $weight = $akeneoProductData['values']['package_weight_' . $i][0]['data']['amount'] ?? null;
 
-            if($position !== null){
+            if ($position !== null) {
                 $productPackageData = $this->productPackageDataFactory->create();
-                $productPackageData->position = $position;
-                $productPackageData->length = $length;
-                $productPackageData->height = $height;
-                $productPackageData->width = $width;
-                $productPackageData->weight = $weight;
+                $productPackageData->position = AkeneoProductHelper::convertStingToType($position, AkeneoProductHelper::TYPE_INT);
+                $productPackageData->length = AkeneoProductHelper::convertStingToType($length, AkeneoProductHelper::TYPE_INT);
+                $productPackageData->height = AkeneoProductHelper::convertStingToType($height, AkeneoProductHelper::TYPE_INT);
+                $productPackageData->width = AkeneoProductHelper::convertStingToType($width, AkeneoProductHelper::TYPE_INT);
+                $productPackageData->weight = AkeneoProductHelper::convertStingToType($weight, AkeneoProductHelper::TYPE_FLOAT);
                 $productPackageDataList[$position] = $productPackageData;
             }
         }

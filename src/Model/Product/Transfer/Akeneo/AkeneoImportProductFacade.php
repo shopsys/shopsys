@@ -100,6 +100,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @var \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade
      */
     private $akeneoImportProductSeriesFacade;
+
     /**
      * @var \App\Model\Product\Package\ProductPackageFacade
      */
@@ -131,6 +132,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
+     * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
@@ -223,11 +225,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     {
         $this->productTransferAkeneoValidator->validate($akeneoProductData);
 
-        if($akeneoProductData['identifier'] == 413608301){
-            d($akeneoProductData);
-        }
-
-
         $product = $this->productFacade->findOneByCatnumExcludeMainVariants($akeneoProductData['identifier']);
         $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product);
 
@@ -292,9 +289,30 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     private function setProductPackageDetailInformationFormProduct(Product $product, array $akeneoProductData): void
     {
+        $dropProductPositions = [];
+        for ($i = ProductTransferAkeneoMapper::PRODUCT_PACKAGE_MINIMAL_INDEX; $i <= ProductTransferAkeneoMapper::PRODUCT_PACKAGE_MAXIMAL_INDEX; $i++) {
+            $dropProductPositions[$i] = $i;
+        }
+
         $productPackageDataList = $this->productTransferAkeneoMapper->mapAkeneoProductPackageDetailInformationToProductPackageDataList($akeneoProductData);
-        foreach($productPackageDataList as $productPackageData){
+        foreach ($productPackageDataList as $productPackageData) {
             $this->productPackageFacade->createOrEdit($productPackageData, $product);
+            unset($dropProductPositions[$productPackageData->position]);
+        }
+
+        if (count($dropProductPositions) > 0) {
+            $productPackages = $this->productPackageFacade->getProductPackagesByProduct($product);
+            $canFlush = false;
+            foreach ($productPackages as $productPackage) {
+                if (in_array($productPackage->getPosition(), $dropProductPositions, true)) {
+                    $this->em->remove($productPackages);
+                    $canFlush = true;
+                }
+            }
+
+            if ($canFlush) {
+                $this->em->flush();
+            }
         }
     }
 

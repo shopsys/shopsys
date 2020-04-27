@@ -2,31 +2,32 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Package;
-
 
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProductPackageFacade
 {
-
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
+
     /**
      * @var \App\Model\Product\Package\ProductPackageRepository
      */
     private $productPackageRepository;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Product\Package\ProductPackageRepository $productPackageRepository
+     */
     public function __construct(EntityManagerInterface $em, ProductPackageRepository $productPackageRepository)
     {
         $this->em = $em;
         $this->productPackageRepository = $productPackageRepository;
     }
-
 
     /**
      * @param \App\Model\Product\Package\ProductPackageData $productPackageData
@@ -35,7 +36,7 @@ class ProductPackageFacade
     public function createOrEdit(ProductPackageData $productPackageData, Product $product): void
     {
         $productPackage = $this->productPackageRepository->findProductPackageByProductAndPosition($product, $productPackageData->position);
-        if($productPackage === null){
+        if ($productPackage === null) {
             $productPackage = new ProductPackage($product);
             $productPackage->setPosition($productPackageData->position);
             $productPackage->setHeight($productPackageData->height);
@@ -43,7 +44,7 @@ class ProductPackageFacade
             $productPackage->setWidth($productPackageData->width);
             $productPackage->setWeight($productPackageData->weight);
             $this->em->persist($productPackage);
-        }else{
+        } else {
             $productPackage->setPosition($productPackageData->position);
             $productPackage->setHeight($productPackageData->height);
             $productPackage->setLength($productPackageData->length);
@@ -62,7 +63,4 @@ class ProductPackageFacade
     {
         return $this->productPackageRepository->getProductPackagesByProduct($product);
     }
-
-
-
 }

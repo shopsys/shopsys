@@ -118,14 +118,12 @@ class ProductDomain extends BaseProductDomain
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
      */
     private $embeddedAccessories;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
      */
     private $packageNotIncluded;
 
@@ -466,5 +464,4 @@ class ProductDomain extends BaseProductDomain
     {
         $this->totalPackageWeight = $totalPackageWeight;
     }
-
 }

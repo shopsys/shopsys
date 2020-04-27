@@ -183,7 +183,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->packagingUnit[$domainId] = null;
             $productData->totalPackageWeight[$domainId] = null;
             $productData->embeddedAccessories[$domainId] = null;
-
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {

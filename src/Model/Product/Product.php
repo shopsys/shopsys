@@ -190,9 +190,9 @@ class Product extends BaseProduct
             $productDomain->setPackageNotIncluded($productData->packageNotIncluded[$domainId]);
 
             $productDomain->setMountingState($productData->mountingState[$domainId]);
-            $productDomain->setPackagingUnit($productData->packagingUnit[$domainId]);
-            $productDomain->setCountPackages($productData->countPackages[$domainId]);
-            $productDomain->setTotalPackageWeight($productData->totalPackageWeight[$domainId]);
+            $productDomain->setPackagingUnit((int)$productData->packagingUnit[$domainId]);
+            $productDomain->setCountPackages((int)$productData->countPackages[$domainId]);
+            $productDomain->setTotalPackageWeight((float)$productData->totalPackageWeight[$domainId]);
         }
     }
 

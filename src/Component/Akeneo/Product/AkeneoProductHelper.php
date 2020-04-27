@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace App\Component\Akeneo\Product;
 
 use App\Component\Akeneo\AkeneoHelper;
-use phpDocumentor\Reflection\Types\Mixed_;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class AkeneoProductHelper
 {
-    const TYPE_INT = 'int';
-    const TYPE_FLOAT = 'float';
-    const TYPE_DOUBLE = 'double';
-    const TYPE_BOOLEAN = 'bool';
+    public const TYPE_INT = 'int';
+    public const TYPE_FLOAT = 'float';
+    public const TYPE_DOUBLE = 'double';
+    public const TYPE_BOOLEAN = 'bool';
 
     /**
      * @param array|null $arrayData
@@ -164,19 +163,19 @@ class AkeneoProductHelper
      */
     public static function convertStingToType(?string $data, string $type)
     {
-        if($data === null){
+        if ($data === null) {
             return $data;
         }
 
-        switch ($type){
+        switch ($type) {
             case self::TYPE_INT:
-                return (int) $data;
+                return (int)$data;
             case self::TYPE_FLOAT:
-                return (float) $data;
+                return (float)$data;
             case self::TYPE_DOUBLE:
-                return (double) $data;
+                return (float)$data;
             case self::TYPE_BOOLEAN:
-                return (bool) $data;
+                return (bool)$data;
             default:
                 return $data;
         }

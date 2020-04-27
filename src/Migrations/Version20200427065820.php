@@ -7,7 +7,7 @@ namespace App\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20200423132235 extends AbstractMigration
+class Version20200427065820 extends AbstractMigration
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
@@ -19,13 +19,14 @@ class Version20200423132235 extends AbstractMigration
                 id SERIAL NOT NULL,
                 product_id INT NOT NULL,
                 position INT NOT NULL,
-                length INT NULL,
-                width INT NULL,
-                height INT NULL,
-                weight FLOAT NULL,
+                length INT DEFAULT NULL,
+                width INT DEFAULT NULL,
+                height INT DEFAULT NULL,
+                weight DOUBLE PRECISION DEFAULT NULL,
                 PRIMARY KEY(id)
             )');
         $this->sql('CREATE INDEX IDX_5005AA304584665A ON product_packages (product_id)');
+        $this->sql('CREATE UNIQUE INDEX product_package ON product_packages (product_id, position)');
         $this->sql('
             ALTER TABLE
                 product_packages
@@ -36,7 +37,7 @@ class Version20200423132235 extends AbstractMigration
         $this->sql('ALTER TABLE product_domains ADD package_not_included VARCHAR(255) DEFAULT NULL');
         $this->sql('ALTER TABLE product_domains ADD packaging_unit INT DEFAULT NULL');
         $this->sql('ALTER TABLE product_domains ADD count_packages INT DEFAULT NULL');
-        $this->sql('ALTER TABLE product_domains ADD total_package_weight FLOAT DEFAULT NULL');
+        $this->sql('ALTER TABLE product_domains ADD total_package_weight DOUBLE PRECISION DEFAULT NULL');
     }
 
     /**

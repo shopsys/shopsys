@@ -140,21 +140,19 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setDisplayAvailabilityGroup($builder, $product);
         $this->setPricesGroup($builder, $product);
         $this->setTransferredFilesGroup($builder, $product);
-        $this->setPackagesGroup($builder, $product);
-
+        $this->setPackagesGroup($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\Product\Product $product
      */
-    private function setPackagesGroup(FormBuilderInterface $builder, Product $product): void
+    private function setPackagesGroup(FormBuilderInterface $builder): void
     {
         $groupBuilder = $builder->create('packagesGroup', GroupType::class, [
             'label' => t('Informace o balení'),
-            'position' => 'last'
+            'position' => 'last',
         ]);
 
         $groupBuilder->add('mountingState', MultidomainType::class, [
@@ -201,9 +199,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                     'required' => false,
                 ],
                 'label' => t('Celková váha balení'),
-            ])
-
-        ;
+            ]);
 
         $builder->add($groupBuilder);
     }

@@ -66,7 +66,6 @@ class ProductPackage
      */
     protected $weight;
 
-
     /**
      * @param \App\Model\Product\Product $product
      */
@@ -140,20 +139,18 @@ class ProductPackage
     }
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function getWeight(): ?int
+    public function getWeight(): ?float
     {
         return $this->weight;
     }
 
     /**
-     * @param int|null $weight
+     * @param float|null $weight
      */
-    public function setWeight(?int $weight): void
+    public function setWeight(?float $weight): void
     {
         $this->weight = $weight;
     }
-
-
 }

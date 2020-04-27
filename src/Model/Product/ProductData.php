@@ -156,10 +156,9 @@ class ProductData extends BaseProductData
     public $countPackages;
 
     /**
-     * @var int[]|null[]
+     * @var float[]|null[]
      */
     public $totalPackageWeight;
-
 
     public function __construct()
     {
