@@ -9,6 +9,7 @@ use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Component\Image\Image;
 use App\Component\Image\ImageFacade;
 use App\Component\Setting\Setting;
+use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
@@ -99,6 +100,10 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @var \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade
      */
     private $akeneoImportProductSeriesFacade;
+    /**
+     * @var \App\Model\Product\Package\ProductPackageFacade
+     */
+    private $productPackageFacade;
 
     /**
      * @var \App\Component\Image\ImageFacade
@@ -142,7 +147,8 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         ProductSeriesFacade $productSeriesFacade,
         AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade,
         ImageFacade $imageFacade,
-        FileUpload $fileUpload
+        FileUpload $fileUpload,
+        ProductPackageFacade $productPackageFacade
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
@@ -160,6 +166,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->akeneoImportProductSeriesFacade = $akeneoImportProductSeriesFacade;
         $this->imageFacade = $imageFacade;
         $this->fileUpload = $fileUpload;
+        $this->productPackageFacade = $productPackageFacade;
     }
 
     /**
@@ -285,7 +292,10 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     private function setProductPackageDetailInformationFormProduct(Product $product, array $akeneoProductData): void
     {
-
+        $productPackageDataList = $this->productTransferAkeneoMapper->mapAkeneoProductPackageDetailInformationToProductPackageDataList($akeneoProductData);
+        foreach($productPackageDataList as $productPackageData){
+            $this->productPackageFacade->createOrEdit($productPackageData, $product);
+        }
     }
 
     /**

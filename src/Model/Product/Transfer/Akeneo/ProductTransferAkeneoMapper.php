@@ -10,6 +10,7 @@ use App\Component\Akeneo\Transfer\Exception\TransferException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataException;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Flag\FlagRepository;
+use App\Model\Product\Package\ProductPackageDataFactory;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
@@ -65,6 +66,10 @@ class ProductTransferAkeneoMapper
      * @var \App\Model\Product\Flag\FlagRepository
      */
     private $flagRepository;
+    /**
+     * @var \App\Model\Product\Package\ProductPackageDataFactory
+     */
+    private $productPackageDataFactory;
 
     /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
@@ -84,7 +89,8 @@ class ProductTransferAkeneoMapper
         ParameterFacade $parameterFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         ParameterValueDataFactoryInterface $parameterValueDataFactory,
-        FlagRepository $flagRepository
+        FlagRepository $flagRepository,
+        ProductPackageDataFactory $productPackageDataFactory
     ) {
         $this->productDataFactory = $productDataFactory;
         $this->categoryFacade = $categoryFacade;
@@ -94,6 +100,7 @@ class ProductTransferAkeneoMapper
         $this->productParameterValueDataFactory = $productParameterValueDataFactory;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
         $this->flagRepository = $flagRepository;
+        $this->productPackageDataFactory = $productPackageDataFactory;
     }
 
     /**
@@ -306,14 +313,12 @@ class ProductTransferAkeneoMapper
      */
     private function mapAkeneoProductPackageMainInformationToProductData(array $akeneoProductData, ProductData $productData): void
     {
-
-
         $productData->embeddedAccessories = AkeneoProductHelper::mapDomainDataString($productData->embeddedAccessories, $akeneoProductData['values']['embedded_accessories'] ?? null);
         $productData->packageNotIncluded = AkeneoProductHelper::mapDomainDataString($productData->packageNotIncluded, $akeneoProductData['values']['not_included'] ?? null);
 
         $productData->mountingState = AkeneoProductHelper::mapDataToAllDomains($productData->mountingState, $akeneoProductData['values']['mounting_state'][0]['data'] ?? null);
         $productData->packagingUnit = AkeneoProductHelper::mapDataToAllDomains($productData->packagingUnit, $akeneoProductData['values']['packaging_unit'][0]['data'] ?? null);
-        $productData->countPackages = AkeneoProductHelper::mapDataToAllDomains($productData->countPackages, /*$akeneoProductData['values']['number_package'][0]['data'] ??*/ null);
+        $productData->countPackages = AkeneoProductHelper::mapDataToAllDomains($productData->countPackages, $akeneoProductData['values']['number_package'][0]['data'] ?? null);
         $productData->totalPackageWeight = AkeneoProductHelper::mapDataToAllDomains($productData->totalPackageWeight, $akeneoProductData['values']['package_weight'][0]['data']['amount'] ?? null);
 
         foreach ($productData->mountingState as $domainId => $state){
@@ -327,11 +332,30 @@ class ProductTransferAkeneoMapper
     /**
      * @param array $akeneoProductData
      * @param \App\Model\Product\ProductData $productData
-     * @return array
+     * @return \App\Model\Product\Package\ProductPackageData[]
      */
-    public function mapAkeneoProductPackageDetailInformationToProductPackageData(array $akeneoProductData, ProductData $productData): array
+    public function mapAkeneoProductPackageDetailInformationToProductPackageDataList(array $akeneoProductData): array
     {
+        $productPackageDataList = [];
+        for ($i = 1 ; $i < 10 ; $i++){
+            $position = $akeneoProductData['values']['package_nr_' . $i][0]['data'] ?? null;
+            $length = $akeneoProductData['values']['package_length_' . $i][0]['data'] ?? null;
+            $width = $akeneoProductData['values']['package_width_' . $i][0]['data'] ?? null;
+            $height = $akeneoProductData['values']['package_height_' . $i][0]['data'] ?? null;
+            $weight = $akeneoProductData['values']['package_weight_' . $i][0]['data']['amount'] ?? null;
 
+            if($position !== null){
+                $productPackageData = $this->productPackageDataFactory->create();
+                $productPackageData->position = $position;
+                $productPackageData->length = $length;
+                $productPackageData->height = $height;
+                $productPackageData->width = $width;
+                $productPackageData->weight = $weight;
+                $productPackageDataList[$position] = $productPackageData;
+            }
+        }
+
+        return $productPackageDataList;
     }
 
     /**

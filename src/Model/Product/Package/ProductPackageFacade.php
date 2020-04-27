@@ -32,19 +32,26 @@ class ProductPackageFacade
      * @param \App\Model\Product\Package\ProductPackageData $productPackageData
      * @param \App\Model\Product\Product $product
      */
-    public function create(ProductPackageData $productPackageData,Product $product): void
+    public function createOrEdit(ProductPackageData $productPackageData, Product $product): void
     {
+        $productPackage = $this->productPackageRepository->findProductPackageByProductAndPosition($product, $productPackageData->position);
+        if($productPackage === null){
+            $productPackage = new ProductPackage($product);
+            $productPackage->setPosition($productPackageData->position);
+            $productPackage->setHeight($productPackageData->height);
+            $productPackage->setLength($productPackageData->length);
+            $productPackage->setWidth($productPackageData->width);
+            $productPackage->setWeight($productPackageData->weight);
+            $this->em->persist($productPackage);
+        }else{
+            $productPackage->setPosition($productPackageData->position);
+            $productPackage->setHeight($productPackageData->height);
+            $productPackage->setLength($productPackageData->length);
+            $productPackage->setWidth($productPackageData->width);
+            $productPackage->setWeight($productPackageData->weight);
+        }
 
-        $productPackage = new ProductPackage($product);
-        $productPackage->setPosition($productPackageData->position);
-        $productPackage->setHeight($productPackageData->height);
-        $productPackage->setLength($productPackageData->length);
-        $productPackage->setWidth($productPackageData->width);
-        $productPackage->setWeight($productPackageData->weight);
-
-        $this->em->persist($productPackage);
         $this->em->flush();
-
     }
 
     /**
@@ -55,5 +62,7 @@ class ProductPackageFacade
     {
         return $this->productPackageRepository->getProductPackagesByProduct($product);
     }
+
+
 
 }

@@ -62,4 +62,14 @@ class ProductPackageRepository
             ->setParameter('product', $product)
             ;
     }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $position
+     * @return \App\Model\Product\Package\ProductPackage|null
+     */
+    public function findProductPackageByProductAndPosition(Product $product, int $position): ?ProductPackage
+    {
+        return $this->getRepository()->findBy(['product'=>$product, 'position'=>$position]);
+    }
 }

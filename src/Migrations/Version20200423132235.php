@@ -19,10 +19,10 @@ class Version20200423132235 extends AbstractMigration
                 id SERIAL NOT NULL,
                 product_id INT NOT NULL,
                 position INT NOT NULL,
-                length INT NOT NULL,
-                width INT NOT NULL,
-                height INT NOT NULL,
-                weight INT NOT NULL,
+                length INT NULL,
+                width INT NULL,
+                height INT NULL,
+                weight FLOAT NULL,
                 PRIMARY KEY(id)
             )');
         $this->sql('CREATE INDEX IDX_5005AA304584665A ON product_packages (product_id)');

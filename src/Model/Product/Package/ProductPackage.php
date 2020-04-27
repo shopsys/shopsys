@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="product_packages",
  *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="product_package", columns={"product_id", "domain_id"})
+ *         @ORM\UniqueConstraint(name="product_package", columns={"product_id", "position"})
  *     }
  * )
  *
@@ -37,32 +37,32 @@ class ProductPackage
     protected $product;
 
     /**
-     * @var int|null
-     * @ORM\Column(type="integer")
+     * @var int
+     * @ORM\Column(type="integer",nullable=false)
      */
     protected $position;
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     protected $length;
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     protected $width;
 
     /**
      * @var int|null
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     protected $height;
 
     /**
-     * @var int|null
-     * @ORM\Column(type="integer")
+     * @var float|null
+     * @ORM\Column(type="float",nullable=true)
      */
     protected $weight;
 
@@ -74,7 +74,6 @@ class ProductPackage
     {
         $this->product = $product;
     }
-
 
     /**
      * @return int
@@ -93,66 +92,68 @@ class ProductPackage
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getLength(): int
+    public function getLength(): ?int
     {
         return $this->length;
     }
 
     /**
-     * @param int $length
+     * @param int|null $length
      */
-    public function setLength(int $length): void
+    public function setLength(?int $length): void
     {
         $this->length = $length;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getWidth(): int
+    public function getWidth(): ?int
     {
         return $this->width;
     }
 
     /**
-     * @param int $width
+     * @param int|null $width
      */
-    public function setWidth(int $width): void
+    public function setWidth(?int $width): void
     {
         $this->width = $width;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getHeight(): int
+    public function getHeight(): ?int
     {
         return $this->height;
     }
 
     /**
-     * @param int $height
+     * @param int|null $height
      */
-    public function setHeight(int $height): void
+    public function setHeight(?int $height): void
     {
         $this->height = $height;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getWeight(): int
+    public function getWeight(): ?int
     {
         return $this->weight;
     }
 
     /**
-     * @param int $weight
+     * @param int|null $weight
      */
-    public function setWeight(int $weight): void
+    public function setWeight(?int $weight): void
     {
         $this->weight = $weight;
     }
+
+
 }
