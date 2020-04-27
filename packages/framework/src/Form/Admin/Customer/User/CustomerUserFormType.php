@@ -70,7 +70,7 @@ class CustomerUserFormType extends AbstractType
             $builderSystemDataGroup->add('domainIcon', DisplayOnlyDomainIconType::class, [
                 'data' => $customerUser->getDomainId(),
             ]);
-            $pricingGroups = $this->pricingGroupFacade->getByDomainId($options['domain_id']);
+            $pricingGroups = $this->pricingGroupFacade->getByDomainId($customerUser->getDomainId());
             $groupPricingGroupsBy = null;
         } else {
             $builderSystemDataGroup
