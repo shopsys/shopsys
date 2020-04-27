@@ -1382,8 +1382,8 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 
 - refactored `SelectToggle` component ([#1803](https://github.com/shopsys/shopsys/pull/1803))
-    the js class `ToggleOption` from framework node modules was removed
- 
+    - `ToggleOption` js class has been removed, update your code appropriately
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
