@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\DependencyInjection\Compiler;
 
 use Doctrine\Common\Cache\RedisCache;
+use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -23,6 +24,10 @@ class LazyRedisCompilerPass implements CompilerPassInterface
             if ($definition->getClass() === RedisCache::class) {
                 $definition->setLazy(true);
             }
+        }
+
+        if ($container->getParameter('kernel.environment') === EnvironmentType::TEST) {
+            $container->getDefinition('snc_redis.test')->setPublic(true);
         }
     }
 }
