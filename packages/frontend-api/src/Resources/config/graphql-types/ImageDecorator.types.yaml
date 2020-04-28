@@ -12,13 +12,13 @@ ImageDecorator:
                 description: "Position of image in list"
             size:
                 type: "String"
-                description: "Image size defined in images.yml"
+                description: "Image size defined in images.yaml"
             url:
                 type: "String"
                 description: "URL address of image"
             width:
                 type: "Int"
-                description: "Width in pixels defined in images.yml"
+                description: "Width in pixels defined in images.yaml"
             height:
                 type: "Int"
-                description: "Height in pixels defined in images.yml"
+                description: "Height in pixels defined in images.yaml"

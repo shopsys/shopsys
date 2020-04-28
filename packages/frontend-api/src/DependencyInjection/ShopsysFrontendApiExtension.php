@@ -41,11 +41,11 @@ class ShopsysFrontendApiExtension extends Extension implements PrependExtensionI
     public function load(array $config, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
-        $loader->load('parameters.yml');
+        $loader->load('services.yaml');
+        $loader->load('parameters.yaml');
 
         if ($container->getParameter('kernel.environment') === EnvironmentType::TEST) {
-            $loader->load('services_test.yml');
+            $loader->load('services_test.yaml');
         }
     }
 }
