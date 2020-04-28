@@ -1,5 +1,5 @@
 shopsys_api_v1:
-    resource: "@ShopsysBackendApiBundle/Resources/config/v1/routing.yml"
+    resource: "@ShopsysBackendApiBundle/Resources/config/v1/routing.yaml"
 
 oauth2:
     prefix: /api
