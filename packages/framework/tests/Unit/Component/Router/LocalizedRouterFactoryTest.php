@@ -10,7 +10,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class LocalizedRouterFactoryTest extends TestCase
 {
-    protected const LOCALE_ROUTERS_CONFIGURATION_MASK = __DIR__ . '/Resources/routing_front_*.yml';
+    protected const LOCALE_ROUTERS_CONFIGURATION_MASK = __DIR__ . '/Resources/routing_front_*.yaml';
 
     public function testGetRouterRouterNotResolvedException()
     {

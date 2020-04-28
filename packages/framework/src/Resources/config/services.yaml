@@ -1,5 +1,5 @@
 imports:
-    - { resource: services/*.yml }
+    - { resource: services/*.yaml }
 
 parameters:
     # Use Shopsys validator factory for fp/jsformvalidator-bundle

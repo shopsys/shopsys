@@ -5,7 +5,7 @@ parameters:
     # Seed for demo data generation
     faker.seed: 1234
 
-    # Administration locale. Must be registered in domains.yml
+    # Administration locale. Must be registered in domains.yaml
     shopsys.admin_locale: en
 
     # All time values are displayed in this timezone (default is PHP timezone)

@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdministratorFrontSecurityFacade
 {
-    // same as in security.yml
+    // same as in security.yaml
     public const ADMINISTRATION_CONTEXT = 'administration';
 
     /**

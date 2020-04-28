@@ -11,7 +11,7 @@ class UploadedFileConfigLoaderTest extends TestCase
 {
     public function testLoadFromYaml()
     {
-        $configurationFilapath = __DIR__ . '/test_config_uploaded_files.yml';
+        $configurationFilapath = __DIR__ . '/test_config_uploaded_files.yaml';
         $filesystem = new Filesystem();
 
         $uploadedFileConfigLoader = new UploadedFileConfigLoader($filesystem);
