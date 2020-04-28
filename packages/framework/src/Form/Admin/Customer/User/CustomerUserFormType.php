@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
@@ -69,7 +70,7 @@ class CustomerUserFormType extends AbstractType
             $builderSystemDataGroup->add('domainIcon', DisplayOnlyDomainIconType::class, [
                 'data' => $customerUser->getDomainId(),
             ]);
-            $pricingGroups = $this->pricingGroupFacade->getByDomainId($options['domain_id']);
+            $pricingGroups = $this->pricingGroupFacade->getByDomainId($customerUser->getDomainId());
             $groupPricingGroupsBy = null;
         } else {
             $builderSystemDataGroup
@@ -91,7 +92,9 @@ class CustomerUserFormType extends AbstractType
                 'choices' => $pricingGroups,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'group_by' => $groupPricingGroupsBy,
+                'choice_attr' => function (PricingGroup $pricingGroup) {
+                    return ['class' => 'js-select-toggle-option-' . $pricingGroup->getDomainId()];
+                },
                 'label' => t('Pricing group'),
                 'attr' => [
                     'class' => 'js-toggle-opt-group',

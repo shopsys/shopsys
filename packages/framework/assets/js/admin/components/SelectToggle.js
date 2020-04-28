@@ -1,4 +1,3 @@
-import ToggleOption from './ToggleOption';
 import Register from '../../common/utils/Register';
 
 export default class SelectToggle {
@@ -9,51 +8,33 @@ export default class SelectToggle {
         const $selects = $container.filterAllNodes('.js-toggle-opt-group');
 
         if ($selects.length > 0) {
-            const _this = this;
             $selects.each((index, element) => {
-                _this.toggleOptgroupOnControlChange($(element));
+                this.toggleOptgroupOnControlChange($(element));
             });
         }
     }
 
     toggleOptgroupOnControlChange ($select) {
-        this.setOptgroupClassByLabel($select, this.optionClassPrefix);
-
         const $control = $($select.data('js-toggle-opt-group-control'));
 
         if ($control.length > 0) {
-            const _this = this;
             $control
-                .bind('change.selectToggle', function () {
-                    _this.showOptionsBySelector($select, '.' + _this.optionClassPrefix + $control.val());
-                })
-                .trigger('change.selectToggle');
+                .on('change', event => {
+                    this.showOptionsBySelector($select, '.' + this.optionClassPrefix + event.target.value);
+                });
+            this.showOptionsBySelector($select, '.' + this.optionClassPrefix + $control.val());
         }
-    }
-
-    setOptgroupClassByLabel ($select, classPrefix) {
-        $select.find('optgroup').each((groupIndex, optgroup) => {
-            const $optgroup = $(optgroup);
-            const optgroupLabel = $optgroup.attr('label');
-            $optgroup.find('option').each((optionIndex, option) => {
-                $(option)
-                    .addClass(classPrefix + optgroupLabel)
-                    .appendTo($select);
-            });
-
-            $optgroup.remove();
-        });
     }
 
     showOptionsBySelector ($select, optionSelector) {
         $select.find('option').each((index, element) => {
             if ($(element).is(optionSelector)) {
-                ToggleOption.show($(element));
+                $(element).prop('disabled', false);
             } else {
-                ToggleOption.hide($(element));
-                $(element).removeAttr('selected');
+                $(element).prop('disabled', true);
             }
         });
+        $select.val($select.find('option:not([disabled]):first').val()).change();
     }
 
     static init ($container) {
