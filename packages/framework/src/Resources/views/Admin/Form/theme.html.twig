@@ -83,13 +83,13 @@
         {% endif %}
     {% else %}
         {% if form.vars.display_format == 'multidomain_form_rows_no_padding' %}
-            {% if form.vars.label is not null %}
-                <div class="form-line form-line--no-bottom-gap">
-                    {{- form_label(form) -}}
-                    {{- form_errors(form) -}}
-                </div>
-            {% endif %}
-            {{- block('multidomain_form_rows_no_padding') -}}
+            <div class="form-line form-line--no-bottom-gap">
+                {% if form.vars.label is not null %}
+                        {{- form_label(form) -}}
+                        {{- form_errors(form) -}}
+                {% endif %}
+                {{- block('multidomain_form_rows_no_padding') -}}
+            </div>
         {% else %}
             <div class="form-line">
                 {{- form_label(form) -}}
@@ -103,7 +103,7 @@
 
 {% block multidomain_form_rows_no_padding %}
     {% for domainId, contentForm in form %}
-        <div class="form-line">
+        <div class="form-line {% if loop.first %}form-line--first-top-gap{% endif %}">
             <div class="form-line__box js-entity-url-list-domain-{{ domainId }}">
                 {% if isMultidomain() %}
                     <div class="form-line__box__title">

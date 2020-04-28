@@ -4,7 +4,7 @@
     {% endif %}
 
     <div class="form-line">
-        <strong class="form-line__label">
+        <strong class="form-line__label {% if recommendedLength is not null %}form-line__label--with-count{% endif %}">
             {{ form_label(form, label) }}
         </strong>
 

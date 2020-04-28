@@ -36,9 +36,14 @@
         justify-content: center;
         color: @color-f;
         width: @in-image-width;
+        height: 100%;
 
         font-size: 12px;
         font-weight: bold;
+
+        .input__domain & {
+            height: auto;
+        }
 
         &--1 {
             line-height: @in-image-height;
