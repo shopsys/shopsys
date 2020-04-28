@@ -42,7 +42,7 @@ class AppKernel extends Kernel
 ```
 
 ### Register cron
-For the bundle to download Heureka categories each day you need to add cron to your `config/services.cron.yml` if it is not present yet:
+For the bundle to download Heureka categories each day you need to add cron to your `config/services/cron.yaml` if it is not present yet:
 ```yml
     Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
         tags:
