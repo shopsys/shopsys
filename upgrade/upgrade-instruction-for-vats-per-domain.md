@@ -7,7 +7,7 @@ We deleted managing transports and payments prices by currencies  with this upgr
 ## Changes in project-base
 
 ### Form types 
- - config/packages/twig.yml
+ - config/packages/twig.yaml
     ```diff
           '@ShopsysFramework/Admin/Form/imageuploadFields.html.twig'
         - '@ShopsysFramework/Admin/Form/pricetableFields.html.twig'

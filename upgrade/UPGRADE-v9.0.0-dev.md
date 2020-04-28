@@ -231,10 +231,10 @@ There you can find links to upgrade notes for other versions too.
         +   Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
             Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
         ```
-    - add new route file [`config/routes/frontend-api.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/frontend-api.yml) from GitHub
+    - add new route file [`config/routes/frontend-api.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/frontend-api.yaml) from GitHub
     - add new route file [`config/routes/dev/frontend-api-graphiql.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/dev/frontend-api-graphiql.yaml) from GitHub
     - copy [type definitions from Github](https://github.com/shopsys/shopsys/tree/master/project-base/config/graphql/types) into `config/graphql/types/` folder
-    - copy necessary configuration [shopsys_frontend_api.yml from Github](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/shopsys_frontend_api.yml) to `config/packages/shopsys_frontend_api.yml`
+    - copy necessary configuration [shopsys_frontend_api.yaml from Github](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/shopsys_frontend_api.yaml) to `config/packages/shopsys_frontend_api.yaml`
     - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/master/project-base/tests/FrontendApiBundle) to your `tests` folder
     - enable Frontend API for all domains by `./phing frontend-api-enable` command (you can manage domains in `config/packages/frontend_api.yaml`)
     - update your `easy-coding-standard.yml` file:
@@ -244,7 +244,7 @@ There you can find links to upgrade notes for other versions too.
         - add `'*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
 - removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437))
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
-- add access denied url to `config/packages/security.yml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
+- add access denied url to `config/packages/security.yaml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
     ```diff
          administration:
              pattern: ^/(admin/|efconnect|elfinder)
@@ -263,7 +263,7 @@ There you can find links to upgrade notes for other versions too.
              }
     +    })
     +    ->customizeByRouteName('admin_access_denied', function (RouteConfig $config) {
-    +        $config->changeDefaultRequestDataSet('This route serves as "access_denied_url" (see security.yml) and always redirects to a referer (or dashboard).')
+    +        $config->changeDefaultRequestDataSet('This route serves as "access_denied_url" (see security.yaml) and always redirects to a referer (or dashboard).')
     +           ->setExpectedStatusCode(302);
              });
         }
@@ -321,7 +321,7 @@ There you can find links to upgrade notes for other versions too.
                 - '@ShopsysFramework/Admin/Form/fileuploadFields.html.twig'
                 - '@ShopsysFramework/Admin/Form/imageuploadFields.html.twig'
             ```
-        - `config/uploaded_files.yml`
+        - `config/uploaded_files.yaml`
             ```diff
             +   # It is best practice to name first type as "default"
             +   #
@@ -352,7 +352,7 @@ There you can find links to upgrade notes for other versions too.
 
       If you don't want to remove the article, you will need to change path for the new route in the next step
 
-    - add new localized route in all your localized routing `yml` files with translated `path` option
+    - add new localized route in all your localized routing `yaml` files with translated `path` option
         ```diff
         +    front_contact:
         +       path: /contact/
@@ -386,7 +386,7 @@ There you can find links to upgrade notes for other versions too.
         +       fileinfo \
                 gd \
         ```
-    - add this route to the end of your `config/routes/shopsys_front.yml`
+    - add this route to the end of your `config/routes/shopsys_front.yaml`
         ```diff
         +   front_download_uploaded_file:
         +       path: /file/{uploadedFileId}/{uploadedFilename}
@@ -759,7 +759,7 @@ There you can find links to upgrade notes for other versions too.
   
   - Update your `src/Controller/Front/CartController.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-2cc95b0ea7402f2767d208da32b41333)
   
-  - Update your `config/routes/shopsys_front.yml`
+  - Update your `config/routes/shopsys_front.yaml`
       ```diff
       + front_cart_delete_ajax:
       +     path: /cart/delete-ajax/{cartItemId}/
@@ -798,7 +798,7 @@ There you can find links to upgrade notes for other versions too.
            </button>
         ```
 - fix domain icon rendering and loading ([#1655](https://github.com/shopsys/shopsys/pull/1655))
-    - remove trailing slash in `config/paths.yml`
+    - remove trailing slash in `config/paths.yaml`
         ```diff
         -   shopsys.domain_images_url_prefix: '/%shopsys.content_dir_name%/admin/images/domain/'
         +   shopsys.domain_images_url_prefix: '/%shopsys.content_dir_name%/admin/images/domain'
@@ -826,14 +826,14 @@ There you can find links to upgrade notes for other versions too.
         - `test-product-search-delete-structure` was removed, use `test-elasticsearch-index-delete`
         - `test-product-search-export-products` was removed, use `test-elasticsearch-export`
         - `test-product-search-recreate-structure` was removed, use `test-elasticsearch-index-recreate`
-    - update `config/services/cron.yml` if you have registered products export by yourself
+    - update `config/services/cron.yaml` if you have registered products export by yourself
 
         ```diff
         -   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
         +   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
         ```
 
-    - update `config/services_test.yml`
+    - update `config/services_test.yaml`
     
         ```diff
         -   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: ~
@@ -900,7 +900,7 @@ There you can find links to upgrade notes for other versions too.
                 }
             ```
 - update your project to export to Elasticsearch only changed products ([#1636](https://github.com/shopsys/shopsys/pull/1636))
-    - if you have registered products export by yourself, you can update `config/services/cron.yml` to run frequently export of only changed products and full export at midnight
+    - if you have registered products export by yourself, you can update `config/services/cron.yaml` to run frequently export of only changed products and full export at midnight
     ```diff
         Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
             tags:
@@ -1020,7 +1020,7 @@ There you can find links to upgrade notes for other versions too.
             +   if ($orderPersonalInfoForm.find('#order_personal_info_form_deliveryAddressFilled').is(':checked') && (selectedDeliveryAddressValue === '' || selectedDeliveryAddressValue === undefined)) {
                     groups.push(constant('\\App\\Form\\Front\\Customer\\DeliveryAddressFormType::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS'));
             ```
-        - update your `config/routes/shopsys_front.yml` - add to end of file
+        - update your `config/routes/shopsys_front.yaml` - add to end of file
             ```diff
             +   front_customer_delivery_address_delete:
             +       path: /customer/delete-delivery-address/{deliveryAddressId}
@@ -1379,7 +1379,7 @@ There you can find links to upgrade notes for other versions too.
 - remove unused import in `tests/App/Functional/Model/Product/Availability/ProductAvailabilityCalculationTest.php` ([#1779](https://github.com/shopsys/shopsys/pull/1779))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/0904a42718fbb9997183bcd19d9be2deec9f9367) to update your project
 
-- remove unnecessary entity extensions from parameters_common.yml ([#1663](https://github.com/shopsys/shopsys/pull/1663))
+- remove unnecessary entity extensions from parameters_common.yaml ([#1663](https://github.com/shopsys/shopsys/pull/1663))
     - there is no longer need to register entities in `App` namespace extending entities from `Shopsys` namespace, so remove all necessary uses, see [project-base diff](https://github.com/shopsys/project-base/commit/2f97c8a2e6dffe8ee4fde09344be7ce719696304) for example
 
 - use strict comparison in category panel template to prevent errors ([#1782](https://github.com/shopsys/shopsys/pull/1782))
@@ -1474,7 +1474,7 @@ There you can find links to upgrade notes for other versions too.
     - move content from `web/assets/admin/images` to `assets/public/admin/images`
     - move content from `web/assets/styleguide/images` to `assets/public/styleguide/images`
     - you should remove the `grunt` target from your `build.xml` file
-    - add `styles_directory` into your domains config (you can get inspired in [project-base/config/domains.yml  ](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yml))
+    - add `styles_directory` into your domains config (you can get inspired in [project-base/config/domains.yaml  ](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml))
     - change all `asset` function call in your templates
       ```diff
         - asset('assets/**/*.*')
