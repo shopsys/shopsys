@@ -43,7 +43,7 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                         (
                             p.variant_type = :variantTypeMain
                             OR
-                            pd.low_price_with_vat > 0
+                            pd.selling_price_with_vat > 0
                         )
                         AND EXISTS (
                             SELECT 1

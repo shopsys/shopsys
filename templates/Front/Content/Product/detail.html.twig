@@ -8,6 +8,8 @@
 {% set parametersHeadline = 'Technical parameters'|trans %}
 {% set accessoriesHeadline = 'Accessories'|trans %}
 {% set showGalleryMaxCount = 4 %}
+{% set sellingPriceWithVat = getProductSellingPrice(product).priceWithVat %}
+{% set nonSellingPriceWithVat = getProductNonSellingPrice(product).priceWithVat %}
 
 {% block meta_description %}
     {{- product.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
@@ -81,13 +83,15 @@
                                         itemtype="http://schema.org/Offer"
                                         class="box-detail-add__prices">
                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
-                                            {{ getProductSellingPrice(product).priceWithVat|price }}
+                                            {{ sellingPriceWithVat|price }}
                                             {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
                                         </div>
-                                        <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
-                                            {{ getProductNonSellingPrice(product).priceWithVat|price }}
-                                            {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
-                                        </div>
+                                        {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
+                                            <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
+                                                {{ nonSellingPriceWithVat|price }}
+                                                {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
+                                            </div>
+                                        {% endif %}
                                         <meta itemprop="priceCurrency"
                                             content="{{ currencyCode(domain.id) }}"
                                         >

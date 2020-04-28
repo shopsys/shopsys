@@ -182,6 +182,7 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
+            $productDomain->calcSellingPriceWithVat();
             $productDomain->setProductType($productData->productType[$domainId]);
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
             $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
@@ -298,6 +299,15 @@ class Product extends BaseProduct
     public function getHighPriceWithVat(int $domainId): ?Money
     {
         return $this->getProductDomain($domainId)->getHighPriceWithVat();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getSellingPriceWithVat(int $domainId): ?Money
+    {
+        return $this->getProductDomain($domainId)->getSellingPriceWithVat();
     }
 
     /**

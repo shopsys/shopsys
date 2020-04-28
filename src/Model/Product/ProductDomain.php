@@ -75,6 +75,13 @@ class ProductDomain extends BaseProductDomain
     protected $highPriceWithVat;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money
+     *
+     * @ORM\Column(type="money", precision=20, scale=6, nullable=false)
+     */
+    protected $sellingPriceWithVat;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -266,6 +273,25 @@ class ProductDomain extends BaseProductDomain
     public function setHighPriceWithVat(?Money $highPriceWithVat): void
     {
         $this->highPriceWithVat = $highPriceWithVat;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getSellingPriceWithVat(): ?Money
+    {
+        return $this->sellingPriceWithVat;
+    }
+
+    public function calcSellingPriceWithVat(): void
+    {
+        if ($this->lowPriceWithVat && $this->lowPriceWithVat->getAmount() > 0) {
+            $this->sellingPriceWithVat = $this->lowPriceWithVat;
+        } elseif ($this->highPriceWithVat && $this->highPriceWithVat->getAmount() > 0) {
+            $this->sellingPriceWithVat = $this->highPriceWithVat;
+        } else {
+            $this->sellingPriceWithVat = Money::zero();
+        }
     }
 
     /**

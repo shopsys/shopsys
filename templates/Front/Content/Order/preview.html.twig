@@ -88,14 +88,16 @@
             </tr>
         {% endif %}
 
-        <tr class="table-cart-preview__row">
-            <td class="table-cart-preview__cell">
-                {{ 'Běžná cena'|trans }}:
-            </td>
-            <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                <span class="line-through">{{ splitOrderPreview.productsCommonPrice.priceWithVat|price }}</span>
-            </td>
-        </tr>
+        {% if splitOrderPreview.hasAnyProductCommonPrice(getDomain().id) %}
+            <tr class="table-cart-preview__row">
+                <td class="table-cart-preview__cell">
+                    {{ 'Běžná cena'|trans }}:
+                </td>
+                <td class="table-cart-preview__cell table-cart-preview__cell--price">
+                    <span class="line-through">{{ splitOrderPreview.productsCommonPrice.priceWithVat|price }}</span>
+                </td>
+            </tr>
+        {% endif %}
 
         {% if splitOrderPreview.roundingPrice is not empty %}
             <tr class="table-cart-preview__row">

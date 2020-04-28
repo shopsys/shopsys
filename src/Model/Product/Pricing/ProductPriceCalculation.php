@@ -27,7 +27,7 @@ class ProductPriceCalculation extends BaseProductPriceCalculation
     protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup)
     {
         $domainId = $pricingGroup->getDomainId();
-        $inputPrice = $product->getLowPriceWithVat($domainId) ?? Money::zero();
+        $inputPrice = $product->getSellingPriceWithVat($domainId) ?? Money::zero();
         $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         $basePrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
@@ -49,6 +49,10 @@ class ProductPriceCalculation extends BaseProductPriceCalculation
     public function calculateProductNonSellingPrice(Product $product, int $domainId, int $multiplier = 1): ProductPrice
     {
         $highPriceWithVat = $product->getHighPriceWithVat($domainId) ?? Money::zero();
+        if ($highPriceWithVat->isZero()) {
+            $highPriceWithVat = $product->getSellingPriceWithVat($domainId);
+        }
+
         if ($multiplier !== 1) {
             $highPriceWithVat = $highPriceWithVat->multiply($multiplier);
         }

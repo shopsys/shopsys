@@ -20,7 +20,7 @@ class ProductListAdminRepository extends BaseProductListAdminRepository
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
-            ->select('p, pt, pd.lowPriceWithVat AS priceForProductList')
+            ->select('p, pt, pd.sellingPriceWithVat AS priceForProductList')
             ->from(Product::class, 'p')
             ->leftJoin(
                 'p.domains',

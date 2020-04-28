@@ -103,12 +103,19 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         int $limit
     ): PaginationResult {
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = $product->getLowPriceWithVat($domainId)->multiply('0.9');
-        $productFilterData->maximalPrice = $product->getLowPriceWithVat($domainId)->multiply('1.1');
+        $productFilterData->minimalPrice = $product->getSellingPriceWithVat($domainId)->multiply('0.9');
+        $productFilterData->maximalPrice = $product->getSellingPriceWithVat($domainId)->multiply('1.1');
 
         $mainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
 
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInCategoryExcludeProduct($productFilterData, $orderingModeId, $page, $limit, $mainCategory->getId(), $product->getId());
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInCategoryExcludeProduct(
+            $productFilterData,
+            $orderingModeId,
+            $page,
+            $limit,
+            $mainCategory->getId(),
+            $product->getId()
+        );
 
         return $this->createPaginationResultWithArray($paginationResult);
     }

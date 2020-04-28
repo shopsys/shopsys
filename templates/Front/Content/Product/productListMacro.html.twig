@@ -30,10 +30,12 @@
                                         {% endif %}
                                         {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
                                     </div>
-                                    <div class="list-products__item__info__price__item list-products__item__info__price__item--high-price">
-                                        {{ productView.nonSellingPrice.priceWithVat|price }}
-                                        {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
-                                    </div>
+                                    {% if productView.nonSellingPrice.priceWithVat.isGreaterThan(productView.sellingPrice.priceWithVat) %}
+                                        <div class="list-products__item__info__price__item list-products__item__info__price__item--high-price">
+                                            {{ productView.nonSellingPrice.priceWithVat|price }}
+                                            {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
+                                        </div>
+                                    {% endif %}
                                 </div>
                             {% endif %}
                         </div>

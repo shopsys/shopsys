@@ -243,4 +243,28 @@ class OrderPreview extends BaseOrderPreview
     {
         return $this->totalPriceDiscount;
     }
+
+    /**
+     * @param int $domainId
+     * @return bool
+     */
+    public function hasAnyProductCommonPrice(int $domainId): bool
+    {
+        foreach ($this->quantifiedProductsByIndex as $quantifiedproduct) {
+            /**
+             * @var \App\Model\Product\Product
+             */
+            $product = $quantifiedproduct->getProduct();
+            $highPrice = $product->getHighPriceWithVat($domainId);
+
+            if (!is_null($highPrice)
+                && $highPrice->isGreaterThan(Money::zero())
+                && $highPrice->isGreaterThan($product->getSellingPriceWithVat($domainId))
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

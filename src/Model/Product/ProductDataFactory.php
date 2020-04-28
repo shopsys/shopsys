@@ -314,11 +314,20 @@ class ProductDataFactory extends BaseProductDataFactory
             $currency
         );
 
+        $sellingPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+            $product->getSellingPriceWithVat($domainId) ?? Money::zero(),
+            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+            $product->getVatForDomain($domainId),
+            $currency
+        );
+        
         $productData->lowPriceWithVat[$domainId] = $lowPrice->getPriceWithVat();
         $productData->highPriceWithVat[$domainId] = $highPrice->getPriceWithVat();
 
         $productData->lowPriceWithoutVat[$domainId] = $lowPrice->getPriceWithoutVat();
         $productData->highPriceWithoutVat[$domainId] = $highPrice->getPriceWithoutVat();
+
+        $productData->sellingPriceWithVat[$domainId] = $sellingPrice->getPriceWithVat();
     }
 
     /**

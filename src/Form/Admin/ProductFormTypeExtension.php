@@ -60,6 +60,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'countPackages',
         'totalPackageWeight',
         'urls',
+        'sellingPriceWithVat',
     ];
 
     /**
@@ -357,6 +358,14 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             ])
             ->add('highPriceWithoutVat', MultidomainType::class, [
                 'label' => t('Vyšší cena bez DPH'),
+                'entry_type' => MoneyType::class,
+                'entry_options' => [
+                    'scale' => 6,
+                ],
+                'required' => false,
+            ])
+            ->add('sellingPriceWithVat', MultidomainType::class, [
+                'label' => t('Prodejní cena s DPH'),
                 'entry_type' => MoneyType::class,
                 'entry_options' => [
                     'scale' => 6,

@@ -251,4 +251,19 @@ class SplitOrderPreview
         }
         return true;
     }
+
+    /**
+     * @param int $domainId
+     * @return bool
+     */
+    public function hasAnyProductCommonPrice(int $domainId): bool
+    {
+        foreach ($this->orderPreviews as $orderPreview) {
+            if ($orderPreview->hasAnyProductCommonPrice($domainId)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

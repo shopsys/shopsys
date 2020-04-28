@@ -76,6 +76,11 @@ class ProductData extends BaseProductData
     public $highPriceWithoutVat;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
+     */
+    public $sellingPriceWithVat;
+
+    /**
      * @var bool
      */
     public $downloadAssemblyInstructionFiles = false;
