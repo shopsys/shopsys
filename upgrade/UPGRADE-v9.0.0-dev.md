@@ -1523,4 +1523,16 @@ If you have custom frontend you can skip these tasks:
                 <table {% getProductSellingPrice(product) is not null %}itemprop="offers"
         ```
 
+### Removed deprecations
+
+In this major version were removed deprecated features ([#1801](https://github.com/shopsys/shopsys/pull/1801)).
+If you followed all steps in previous upgrades and resolved all deprecations, you shouldn't be worried about this.
+The list here can help you quickly resolve problems with any deprecations left in your application.
+
+following methods has changed their interface, update your usages accordingly:
+- `AdvertDataFactory::__construct()`
+    ```diff
+    -   public function __construct(?ImageFacade $imageFacade = null)
+    +   public function __construct(ImageFacade $imageFacade)
+    ```
 [shopsys/framework]: https://github.com/shopsys/framework
