@@ -1,5 +1,5 @@
-@@ -42,4 +42,7 @@ return [
-     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
+@@ -41,4 +41,7 @@ return [
+     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
      Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
      Fp\JsFormValidatorBundle\FpJsFormValidatorBundle::class => ['all' => true],
 +    Shopsys\BackendApiBundle\ShopsysBackendApiBundle::class => ['all' => true],

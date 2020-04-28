@@ -823,11 +823,18 @@
         </exec>
     </target>
 
-    <target name="server-run" description="Runs PHP built-in web server for a chosen domain. Only for native installation (webserver is always running in Docker setup).">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:server:run"/>
+    <target name="server-run" description="Runs Symfony Local Web Server for the first domain. Only for native installation (webserver is always running in Docker setup).">
+        <exec executable="symfony" passthru="true" returnProperty="symfony.return.code">
+            <arg value="server:start"/>
         </exec>
+        <if>
+            <isfailure code="${symfony.return.code}"/>
+            <then>
+                <echo level="warning" message="Local web server cannot be started."/>
+                <echo level="info" message="Is 'symfony' executable available? You can follow official installation instructions: https://symfony.com/doc/current/setup/symfony_server.html#installation"/>
+                <fail/>
+            </then>
+        </if>
     </target>
 
     <target name="standards" depends="phplint,ecs,annotations-check,phpstan,twig-lint,yaml-standards,eslint-check" description="Checks coding standards."/>

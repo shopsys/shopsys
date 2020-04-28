@@ -93,7 +93,6 @@
         "symfony/validator": "^4.4.0",
         "symfony/web-link": "^4.4.0",
         "symfony/web-profiler-bundle": "^4.4.0",
-        "symfony/web-server-bundle": "^4.4.0",
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/workflow": "^4.4.0",
         "tracy/tracy": "^2.4.13",

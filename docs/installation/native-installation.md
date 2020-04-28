@@ -45,15 +45,28 @@ php phing build-demo-dev
 
 ## Run integrated HTTP server
 
-```sh
-php bin/console server:run
+First follow [installation instructions](https://symfony.com/doc/current/setup/symfony_server.html#installation) for the `symfony` binary which provides its own web server.
+
+Then you can run integrated webserver for the first domain:
+```bash
+symfony server:start
 ```
 
-!!! note
-    you will be prompted for starting one of the 2 localised domains
+If you need to run second domain, you can use a different port for that.  
+First update your `config/domains_urls.yaml` file and set url of second domain to `http://127.0.0.1:8001`
+
+Then you can run integrated webserver for the second domain:
+```bash
+symfony server:start --port 8001
+```
 
 !!! tip
-    you can use Nginx service instead of integrated server, in that case let be inspired by [nginx configuration](https://github.com/shopsys/shopsys/blob/master/project-base/docker/nginx/nginx.conf)
+    With Symfony Local Web Server you can easily setup TLS to detect problems with mixed content early, and to run libraries that only run in HTTPS.  
+    For more information and instructions please refer to the [official Symfony documentation](https://symfony.com/doc/current/setup/symfony_server.html#enabling-tls)
+
+!!! tip
+    You can also use local domain names (eg. http://shopsys.wip) instead of 127.0.0.1:8000  
+    For more information and instructions please refer to the [official Symfony documentation](https://symfony.com/doc/current/setup/symfony_server.html#local-domain-names)
 
 ## See it in your browser!
 
