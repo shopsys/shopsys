@@ -1381,6 +1381,9 @@ There you can find links to upgrade notes for other versions too.
 - fix symfony `dump()` function ([#1745](https://github.com/shopsys/shopsys/pull/1745))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/f1a4c5036a1f3eab202524d2cdc6fa29851468a8) to update your project
 
+- remove deprecated methods from your project ([#1801](https://github.com/shopsys/shopsys/pull/1801))
+    - see #project-base-diff to update your project
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
