@@ -10,7 +10,7 @@ use Symfony\Bridge\Monolog\Logger;
  * In order for your CRON module to be run you must register it as a service tagged as "shopsys.cron".
  * Module is started every time the current system time matches the mask specified in tag attributes
  * named "hours" and "minutes" (e.g. hours: "*", minutes: "0,30" for running every half hour).
- * Module is run every time the current system time matches the mask specified in cron.yml.
+ * Module is run every time the current system time matches the mask specified in cron.yaml.
  * The module should not take more than one minute to run. If you want to process longer
  * taking tasks @see \Shopsys\Plugin\Cron\IteratedCronModuleInterface.
  */
