@@ -36,4 +36,9 @@ class FrontOrderData extends BaseFrontOrderData
      * @var \App\Model\Stock\Stock[]|null[]
      */
     public $transportPersonalPickupStockByProductTypeId;
+
+    /**
+     * @var \App\Model\GoPay\BankSwift\GoPayBankSwift
+     */
+    public $goPayBankSwift;
 }

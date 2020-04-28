@@ -319,6 +319,19 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\OrderFacade: '@App\Model\Order\OrderFacade'
 
+    Shopsys\FrameworkBundle\Model\Order\OrderRepository: '@App\Model\Order\OrderRepository'
+
+    Shopsys\FrameworkBundle\Model\Payment\PaymentFacade: '@App\Model\Payment\PaymentFacade'
+
+    Shopsys\FrameworkBundle\Model\Payment\PaymentRepository: '@App\Model\Payment\PaymentRepository'
+
+    App\Model\GoPay\GoPayClientFactory:
+        arguments:
+            - '%gopay.config%'
+
+    App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade:
+        public: true
+
     App\Model\Order\Preview\OrderPreviewCalculation: ~
 
     App\Model\Order\Mail\OrderMail: ~

@@ -83,3 +83,13 @@ services:
     App\Model\Newsletter\Synchronization\TargitoSynchronizationCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Synchronizace odběratelů v Targitu' }
+
+    App\Model\GoPay\GoPayAvailablePaymentsCronModule:
+        arguments:
+            - '%gopay.config%'
+        tags:
+            - { name: shopsys.cron, hours: '3', minutes: '50', readableFrequency: '1x za den' }
+
+    App\Model\GoPay\OrderGoPayStatusUpdateCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '15', readableFrequency: '1x za hodinu' }

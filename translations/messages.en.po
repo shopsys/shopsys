@@ -43,10 +43,16 @@ msgstr ""
 msgid "Back to orders overview"
 msgstr ""
 
+msgid "Back to overview"
+msgstr ""
+
 msgid "Back to shipping and payment selection"
 msgstr ""
 
 msgid "Back to store"
+msgstr ""
+
+msgid "Basic"
 msgstr ""
 
 msgid "Basic information"
@@ -110,6 +116,9 @@ msgid "Company name"
 msgstr ""
 
 msgid "Company number"
+msgstr ""
+
+msgid "Connection to GoPay gateway failed."
 msgstr ""
 
 msgid "Contact"
@@ -218,6 +227,18 @@ msgid "Go to cart"
 msgstr ""
 
 msgid "Back to shop"
+msgstr ""
+
+msgid "GoPay"
+msgstr ""
+
+msgid "GoPay Fik code"
+msgstr ""
+
+msgid "GoPay payment method"
+msgstr ""
+
+msgid "GoPay payment status"
 msgstr ""
 
 msgid "I agree with <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">terms and conditions</a> and <a href=\"%privacyPolicyUrl%\" target=\"_blank\">privacy policy</a>."
@@ -352,7 +373,16 @@ msgstr "Order"
 msgid "Order completed"
 msgstr ""
 
+msgid "Order could not be paid"
+msgstr ""
+
+msgid "Order has been created but there were problems during payment"
+msgstr ""
+
 msgid "Order not found"
+msgstr ""
+
+msgid "Order not found."
 msgstr ""
 
 msgid "Order number"
@@ -574,6 +604,9 @@ msgstr ""
 msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
 msgstr ""
 
+msgid "There were problems during payment of created order with number %orderNumber%."
+msgstr ""
+
 msgid "This account doesn't exist or password is incorrect"
 msgstr ""
 
@@ -617,6 +650,9 @@ msgid "Total price including VAT"
 msgstr ""
 
 msgid "Try using web search"
+msgstr ""
+
+msgid "Type"
 msgstr ""
 
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
@@ -665,6 +701,9 @@ msgid "You have been successfully registered."
 msgstr ""
 
 msgid "You have been successfully subscribed to our newsletter."
+msgstr ""
+
+msgid "You have successfully paid order via GoPay."
 msgstr ""
 
 msgid "You have to be logged in to enter this page"

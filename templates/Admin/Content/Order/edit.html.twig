@@ -1,0 +1,41 @@
+{% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block main_content %}
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_order_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+            {{ form_widget(form.save, { label: 'Save changes'|trans}) }}
+        {% endblock %}
+    {% endembed %}
+    {{ form_end(form) }}
+
+    {% if order.payment is not null and order.payment.isGopay() is same as (true) %}
+
+        <br><br>
+        <h2>GoPay</h2>
+
+        <div class="form-line">
+            <label class="form-line__label">{{ 'GoPay payment status'|trans }}:</label>
+            <div class="form-line__side">
+                <div class="form-line__item form-line__item--text">
+                    {{ order.goPayStatus }}
+                </div>
+            </div>
+        </div>
+        <div class="form-line">
+            <label class="form-line__label">{{ 'GoPay Fik code'|trans }}:</label>
+            <div class="form-line__side">
+                <div class="form-line__item form-line__item--text">
+                    {{ order.goPayFik|default('~') }}
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+    {% endif %}
+
+{% endblock %}

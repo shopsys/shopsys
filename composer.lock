@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0aebc3e4acc38a327eb7fd2e544911f",
+    "content-hash": "d9031af7cc5a6a0d3986417cea778692",
     "packages": [
         {
             "name": "akeneo/api-php-client",
@@ -3007,6 +3007,57 @@
             "time": "2019-05-09T06:24:58+00:00"
         },
         {
+            "name": "gopay/payments-sdk-php",
+            "version": "v1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gopaycommunity/gopay-php-api.git",
+                "reference": "ee9285c5a560046c4d59eec34295198d2b832e98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gopaycommunity/gopay-php-api/zipball/ee9285c5a560046c4d59eec34295198d2b832e98",
+                "reference": "ee9285c5a560046c4d59eec34295198d2b832e98",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^5.3.1|^6.2.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "hamcrest/hamcrest-php": "*",
+                "phpunit/phpunit": "<6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GoPay\\": "src/"
+                },
+                "files": [
+                    "factory.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "GoPay",
+                    "homepage": "https://github.com/gopaycommunity/gopay-php-api/contributors"
+                }
+            ],
+            "description": "GoPay's PHP SDK for Payments REST API",
+            "keywords": [
+                "api",
+                "gopay",
+                "payments",
+                "rest",
+                "sdk"
+            ],
+            "time": "2019-07-11T12:34:04+00:00"
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "6.5.2",
             "source": {
@@ -4557,6 +4608,60 @@
             ],
             "description": "An adapter decorator to enable meta-data caching.",
             "time": "2018-07-09T20:51:04+00:00"
+        },
+        {
+            "name": "league/iso3166",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/iso3166.git",
+                "reference": "aed3b32fc293afdf2c6c6a322c2408eb5d20804a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/iso3166/zipball/aed3b32fc293afdf2c6c6a322c2408eb5d20804a",
+                "reference": "aed3b32fc293afdf2c6c6a322c2408eb5d20804a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.12",
+                "phpunit/phpunit": "^5.7.11 || ^6.0 || ^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\ISO3166\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com"
+                }
+            ],
+            "description": "ISO 3166-1 PHP Library",
+            "homepage": "https://github.com/thephpleague/iso3166",
+            "keywords": [
+                "3166",
+                "3166-1",
+                "ISO 3166",
+                "countries",
+                "iso",
+                "library"
+            ],
+            "time": "2020-01-29T07:08:12+00:00"
         },
         {
             "name": "litipk/php-bignumbers",
@@ -16050,12 +16155,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/set-config-resolver.git",
-                "reference": "9ed8f39022dd5d22b0d89291fa24eb3b71a8f1b2"
+                "reference": "feca3ff3504ebde54df2485ef6994e55faebcc51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/9ed8f39022dd5d22b0d89291fa24eb3b71a8f1b2",
-                "reference": "9ed8f39022dd5d22b0d89291fa24eb3b71a8f1b2",
+                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/feca3ff3504ebde54df2485ef6994e55faebcc51",
+                "reference": "feca3ff3504ebde54df2485ef6994e55faebcc51",
                 "shasum": ""
             },
             "require": {
@@ -16093,12 +16198,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/smart-file-system.git",
-                "reference": "3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2"
+                "reference": "3f11a9f622bda570dc1f983c05abde580f89cdfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2",
-                "reference": "3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2",
+                "url": "https://api.github.com/repos/symplify/smart-file-system/zipball/3f11a9f622bda570dc1f983c05abde580f89cdfb",
+                "reference": "3f11a9f622bda570dc1f983c05abde580f89cdfb",
                 "shasum": ""
             },
             "require": {

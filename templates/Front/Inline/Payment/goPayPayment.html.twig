@@ -1,0 +1,4 @@
+<script type="text/javascript" src="{{ goPayData['embedJs'] }}"></script>
+<script type="text/javascript">
+    _gopay.checkout({gatewayUrl: '{{ goPayData['gatewayUrl']|escape('js') }}', inline: true});
+</script>

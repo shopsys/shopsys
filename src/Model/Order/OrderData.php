@@ -27,6 +27,16 @@ class OrderData extends BaseOrderData
      */
     public $transportPersonalPickupStockByProductTypeId;
 
+    /**
+     * @var int|null
+     */
+    public $goPayId;
+
+    /**
+     * @var string|null
+     */
+    public $goPayStatus;
+
     public function __construct()
     {
         parent::__construct();

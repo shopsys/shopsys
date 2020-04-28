@@ -9,6 +9,8 @@ use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Order\Preview\SplitOrderPreview;
 use Doctrine\ORM\EntityManagerInterface;
+use GoPay\Definition\Response\PaymentStatus;
+use GoPay\Http\Response;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
@@ -401,31 +403,6 @@ class OrderFacade extends BaseOrderFacade
     }
 
     /**
-     * @param int $orderId
-     * @return string
-     */
-    public function getOrderSentPageContent($orderId): string
-    {
-        $order = $this->getById($orderId);
-        $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);
-        $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $order->getDomainId());
-
-        $transportsInstructions = [];
-        foreach ($order->getTransports() as $transport) {
-            $transportsInstructions[] = $transport->getInstructions();
-        }
-
-        $variables = [
-            self::VARIABLE_TRANSPORT_INSTRUCTIONS => implode('<br /> ', $transportsInstructions),
-            self::VARIABLE_PAYMENT_INSTRUCTIONS => $order->getPayment()->getInstructions(),
-            self::VARIABLE_ORDER_DETAIL_URL => $orderDetailUrl,
-            self::VARIABLE_NUMBER => $order->getNumber(),
-        ];
-
-        return strtr($orderSentPageContent, $variables);
-    }
-
-    /**
      * @param \App\Model\Order\Item\OrderItem $orderItem
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount
      * @param string $locale
@@ -454,5 +431,72 @@ class OrderFacade extends BaseOrderFacade
             $orderItem->getOrder(),
             null
         );
+    }
+
+    /**
+     * @param int $orderId
+     * @return string
+     */
+    public function getOrderSentPageContent($orderId): string
+    {
+        $order = $this->getById($orderId);
+        $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);
+        $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $order->getDomainId());
+
+        $transportsInstructions = [];
+        foreach ($order->getTransports() as $transport) {
+            $transportsInstructions[] = $transport->getInstructions();
+        }
+
+        $variables = [
+            self::VARIABLE_TRANSPORT_INSTRUCTIONS => implode('<br /> ', $transportsInstructions),
+            self::VARIABLE_PAYMENT_INSTRUCTIONS => $order->getPayment()->getInstructions(),
+            self::VARIABLE_ORDER_DETAIL_URL => $orderDetailUrl,
+            self::VARIABLE_NUMBER => $order->getNumber(),
+        ];
+
+        if ($order->getGoPayId() !== null && $order->getGoPayStatus() === PaymentStatus::PAID) {
+//            $orderSentPageContent = str_replace(
+//                $order->getPayment()->getInstructions(),
+//                t('You have successfully paid order via GoPay.'),
+//                $orderSentPageContent
+//            );
+            $variables[$order->getPayment()->getInstructions()] = t('You have successfully paid order via GoPay.');
+        }
+
+        return strtr($orderSentPageContent, $variables);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param string $goPayId
+     */
+    public function setGoPayId(Order $order, string $goPayId): void
+    {
+        $order->setGoPayId($goPayId);
+        $this->em->flush($order);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \GoPay\Http\Response $goPayStatusResponse
+     */
+    public function setGoPayStatusAndFik(Order $order, Response $goPayStatusResponse): void
+    {
+        if (array_key_exists('eet_code', $goPayStatusResponse->json)) {
+            $order->setGoPayFik($goPayStatusResponse->json['eet_code']['fik']);
+        }
+
+        $order->setGoPayStatus($goPayStatusResponse->json['state']);
+        $this->em->flush($order);
+    }
+
+    /**
+     * @param \DateTime $fromDate
+     * @return \App\Model\Order\Order[]
+     */
+    public function getAllUnpaidGoPayOrders(\DateTime $fromDate): array
+    {
+        return $this->orderRepository->getAllUnpaidGoPayOrders($fromDate);
     }
 }

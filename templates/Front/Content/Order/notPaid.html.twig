@@ -1,0 +1,18 @@
+{% extends '/Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block title %}
+    {{ 'Order could not be paid'|trans }}
+{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block main_content %}
+<div class="web__line">
+    <div class="web__container web__container--big-padding">
+        <h1>{{ 'Order has been created but there were problems during payment'|trans }}</h1>
+
+        <p>{{ 'There were problems during payment of created order with number %orderNumber%.'|trans({ '%orderNumber%' : order.number }) }}</p>
+    </div>
+</div>
+{% endblock %}

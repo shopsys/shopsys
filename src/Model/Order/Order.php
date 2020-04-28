@@ -39,6 +39,27 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
 class Order extends BaseOrder
 {
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $goPayId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    private $goPayStatus;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=39, nullable=true)
+     */
+    private $goPayFik;
+
+    /**
      * REMOVED PROPERTY!
      * This property is removed from model, because Order has more Transports.
      *
@@ -61,6 +82,9 @@ class Order extends BaseOrder
         ?CustomerUser $customerUser = null
     ) {
         parent::__construct($orderData, $orderNumber, $urlHash, $customerUser);
+
+        $this->goPayId = $orderData->goPayId;
+        $this->goPayStatus = $orderData->goPayStatus;
     }
 
     /**
@@ -69,7 +93,58 @@ class Order extends BaseOrder
      */
     public function edit(BaseOrderData $orderData): OrderEditResult
     {
+        $this->goPayId = $orderData->goPayId;
+        $this->goPayStatus = $orderData->goPayStatus;
+
         return parent::edit($orderData);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGoPayId(): ?string
+    {
+        return $this->goPayId;
+    }
+
+    /**
+     * @param string|null $goPayId
+     */
+    public function setGoPayId(?string $goPayId): void
+    {
+        $this->goPayId = $goPayId;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGoPayStatus(): ?string
+    {
+        return $this->goPayStatus;
+    }
+
+    /**
+     * @param string $goPayStatus
+     */
+    public function setGoPayStatus(string $goPayStatus): void
+    {
+        $this->goPayStatus = $goPayStatus;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGoPayFik(): ?string
+    {
+        return $this->goPayFik;
+    }
+
+    /**
+     * @param string|null $goPayFik
+     */
+    public function setGoPayFik(?string $goPayFik)
+    {
+        $this->goPayFik = $goPayFik;
     }
 
     /**
