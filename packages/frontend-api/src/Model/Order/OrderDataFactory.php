@@ -98,7 +98,7 @@ class OrderDataFactory
         }
 
         $orderData->domainId = $this->domain->getId();
-        $orderData->origin = self::ORDER_ORIGIN_GRAPHQL;
+        $orderData->origin = static::ORDER_ORIGIN_GRAPHQL;
         $orderData->deliveryAddressSameAsBillingAddress = !$input['differentDeliveryAddress'];
 
         $orderData = $this->withResolvedFields($input, $orderData);
