@@ -31,6 +31,7 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .configureBabel(() => {}, {
+        includeNodeModules: ['@shopsys'],
         useBuiltIns: 'usage',
         corejs: 3
     })
