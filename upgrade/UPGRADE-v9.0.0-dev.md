@@ -1535,4 +1535,9 @@ following methods has changed their interface, update your usages accordingly:
     -   public function __construct(?ImageFacade $imageFacade = null)
     +   public function __construct(ImageFacade $imageFacade)
     ```
+
+following methods were removed. Use corresponding replacement instead:
+- `BasePriceCalculation::calculateBasePrice()` was removed, use `BasePriceCalculation::calculateBasePriceRoundedByCurrency()` instead
+- `BasePriceCalculation::applyCoefficients()` was removed as it was used only in tests. Use your implementation if you need the functionality
+- `BasePriceCalculation::getBasePriceWithVat()` was removed, use `BasePriceCalculation::getBasePriceWithVatRoundedCurrency()` instead
 [shopsys/framework]: https://github.com/shopsys/framework
