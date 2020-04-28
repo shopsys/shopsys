@@ -64,10 +64,6 @@
         padding-right: 0;
     }
 
-    &--first-top-gap {
-        margin-top: 40px;
-    }
-
     .form-group & {
         &:first-child {
             padding-top: 10px;
@@ -112,6 +108,11 @@
 
         &--with-count {
             height: @input-height;
+        }
+
+        // assign to category
+        & + .form-error + .form-line {
+            margin-top: 40px;
         }
     }
 
