@@ -1,3 +1,6 @@
+import 'jquery-ui/sortable';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui-touch-punch';
 import { KeyCodes } from '../../common/utils/KeyCodes';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';

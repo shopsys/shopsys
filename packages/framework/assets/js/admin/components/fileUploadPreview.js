@@ -1,3 +1,6 @@
+import 'jquery-ui/sortable';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui-touch-punch';
 import formChangeInfo from './FormChangeInfo';
 import { select, deselect, getSelectedValues } from './choiceControl';
 import Register from '../../common/utils/Register';
