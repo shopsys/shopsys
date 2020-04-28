@@ -14,8 +14,8 @@ There you can find links to upgrade notes for other versions too.
 ### Infrastructure
 - update your `kubernetes/deployments/webserver-php-fpm.yml` file: ([#1368](https://github.com/shopsys/shopsys/pull/1368))
     ```diff
-    -   command: ["sh", "-c", "cd /var/www/html && ./phing db-create dirs-create db-demo product-search-recreate-structure product-search-export-products grunt error-pages-generate warmup"]
-    +   command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo product-search-recreate-structure product-search-export-products grunt error-pages-generate warmup"]
+    -   command: ["sh", "-c", "cd /var/www/html && ./phing db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export grunt error-pages-generate warmup"]
+    +   command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export grunt error-pages-generate warmup"]
     ```
 - check all the phing targets that depend on the new `production-protection` target
     - if you use any of the targets in your automated build scripts in production environment, you need to pass the confirmation to the phing using `-D production.confirm.action=y`
@@ -816,6 +816,16 @@ There you can find links to upgrade notes for other versions too.
     - form field option `currency` is now rendered with `appendix_block` block (inside span tag) instead of plain text
 
 - update your project to use refactored Elasticsearch related classes ([#1622](https://github.com/shopsys/shopsys/pull/1622))
+    - Phing targets related to Elasticsearch were renamed, change usages
+        - `product-search-create-structure` was removed, use `elasticsearch-index-create`
+        - `product-search-delete-structure` was removed, use `elasticsearch-index-delete`
+        - `product-search-export-products` was removed, use `elasticsearch-export`
+        - `product-search-migrate-structure` was removed, use `elasticsearch-index-migrate`
+        - `product-search-recreate-structure` was removed, use `elasticsearch-index-recreate`
+        - `test-product-search-create-structure` was removed, use `test-elasticsearch-index-create`
+        - `test-product-search-delete-structure` was removed, use `test-elasticsearch-index-delete`
+        - `test-product-search-export-products` was removed, use `test-elasticsearch-export`
+        - `test-product-search-recreate-structure` was removed, use `test-elasticsearch-index-recreate`
     - update `config/services/cron.yml` if you have registered products export by yourself
 
         ```diff
