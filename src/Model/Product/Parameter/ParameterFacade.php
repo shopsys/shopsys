@@ -144,4 +144,12 @@ class ParameterFacade extends BaseParameterFacade
 
         return $parameterValuesIndexedByLocaleAndText;
     }
+
+    /**
+     * @return int[]
+     */
+    public function getAllAkeneoParameterIds(): array
+    {
+        return $this->parameterRepository->getAllAkeneoParameterIds();
+    }
 }

@@ -46,6 +46,16 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     private $parameterUnitDataFactory;
 
     /**
+     * @var int[]
+     */
+    private $notTransferredParameterIds = [];
+
+    /**
+     * @var int
+     */
+    private $parametersFromAkeneoCountBeforeTransfer;
+
+    /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoFacade $productParameterTransferAkeneoFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoMapper $productParameterTransferAkeneoMapper
@@ -86,6 +96,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     protected function doBeforeTransfer(): void
     {
         $this->logger->addInfo('Transfer parameters data from Akeneo ...');
+        $this->loadAkeneoParameterIds();
     }
 
     /**
@@ -109,11 +120,14 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
         } else {
             $this->logger->addInfo(sprintf('Updating parameter group with akeneo code : %s', $parameter->getAkeneoCode()));
             $this->parameterFacade->edit($parameter->getId(), $parameterData);
+            $this->dropParameterFromNotTransferredParameterIds($parameter->getId());
         }
     }
 
     protected function doAfterTransfer(): void
     {
+        $this->deleteNonTransferredParameters();
+
         $this->logger->addInfo('Done');
     }
 
@@ -154,5 +168,33 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
         }
 
         return $parameterUnit;
+    }
+
+    private function loadAkeneoParameterIds(): void
+    {
+        $allAkeneoParameterIds = $this->parameterFacade->getAllAkeneoParameterIds();
+        $this->notTransferredParameterIds = array_combine($allAkeneoParameterIds, $allAkeneoParameterIds);
+        $this->parametersFromAkeneoCountBeforeTransfer = count($this->notTransferredParameterIds);
+    }
+
+    /**
+     * @param int $paramterId
+     */
+    private function dropParameterFromNotTransferredParameterIds(int $paramterId): void
+    {
+        unset($this->notTransferredParameterIds[$paramterId]);
+    }
+
+    private function deleteNonTransferredParameters(): void
+    {
+        if ($this->parametersFromAkeneoCountBeforeTransfer === count($this->notTransferredParameterIds)) {
+            $this->logger->addError('Import parameters from Akeneo probably failed, all parameters with akeneo code should be deleted. Deletion was aborted.');
+            return;
+        }
+
+        foreach ($this->notTransferredParameterIds as $parameterId) {
+            $this->parameterFacade->deleteById($parameterId);
+            $this->logger->addWarning(sprintf('Deleted parameter with ID: %s', $parameterId));
+        }
     }
 }

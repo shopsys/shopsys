@@ -233,4 +233,19 @@ class ParameterRepository extends BaseParameterRepository
         /** @var \App\Model\Product\Parameter\ParameterValue $parameterValue */
         return $parameterValue;
     }
+
+    /**
+     * @return int[]
+     */
+    public function getAllAkeneoParameterIds(): array
+    {
+        $result = $this->em->createQueryBuilder()
+            ->select('p.id')
+            ->from(Parameter::class, 'p')
+            ->where('p.akeneoCode IS NOT NULL')
+            ->getQuery()
+            ->execute();
+
+        return array_map('reset', $result);
+    }
 }
