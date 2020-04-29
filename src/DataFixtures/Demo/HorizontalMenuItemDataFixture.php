@@ -49,11 +49,13 @@ class HorizontalMenuItemDataFixture extends AbstractReferenceFixture implements 
 
         $horizontalMenuItemData->name = 'Stolky';
         $horizontalMenuItemData->url = '/elektro/';
+        $horizontalMenuItemData->isFurniture = false;
         $this->addCategoriesToHorizontalMenuItem($horizontalMenuItemData);
         $this->createItem($horizontalMenuItemData);
 
         $horizontalMenuItemData->name = 'Židle';
         $horizontalMenuItemData->url = '#';
+        $horizontalMenuItemData->isFurniture = false;
         $horizontalMenuItemData->categoriesByColumnNumber[1] = [];
         $horizontalMenuItemData->categoriesByColumnNumber[2] = [];
         $horizontalMenuItemData->categoriesByColumnNumber[3] = [];
@@ -61,14 +63,17 @@ class HorizontalMenuItemDataFixture extends AbstractReferenceFixture implements 
 
         $horizontalMenuItemData->name = 'Pohovky';
         $horizontalMenuItemData->url = '#';
+        $horizontalMenuItemData->isFurniture = false;
         $this->createItem($horizontalMenuItemData);
 
         $horizontalMenuItemData->name = 'Skříně';
         $horizontalMenuItemData->url = '#';
+        $horizontalMenuItemData->isFurniture = true;
         $this->createItem($horizontalMenuItemData);
 
         $horizontalMenuItemData->name = 'Komody';
         $horizontalMenuItemData->url = '#';
+        $horizontalMenuItemData->isFurniture = false;
         $this->createItem($horizontalMenuItemData);
     }
 
