@@ -1,3 +1,6 @@
+import 'jquery-ui/sortable';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui-touch-punch';
 import formChangeInfo from './FormChangeInfo';
 import Ajax from '../../common/utils/Ajax';
 import Window from '../utils/Window';

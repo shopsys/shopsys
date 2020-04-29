@@ -1,6 +1,7 @@
-// import 'jquery-ui-touch-punch';
-
 import './jQuery/registerJquery';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui-touch-punch';
+
 import tooltip from 'framework/common/bootstrap/tooltip';
 
 import 'framework/common/components';

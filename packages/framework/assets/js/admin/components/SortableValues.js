@@ -1,3 +1,6 @@
+import 'jquery-ui/sortable';
+import 'jquery-ui/ui/widgets/mouse';
+import 'jquery-ui-touch-punch';
 import Register from '../../common/utils/Register';
 import { escapeHtml } from '../../common/utils/escapeHtml';
 
