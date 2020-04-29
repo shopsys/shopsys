@@ -14,8 +14,8 @@ There you can find links to upgrade notes for other versions too.
 ### Infrastructure
 - update your `kubernetes/deployments/webserver-php-fpm.yml` file: ([#1368](https://github.com/shopsys/shopsys/pull/1368))
     ```diff
-    -   command: ["sh", "-c", "cd /var/www/html && ./phing db-create dirs-create db-demo product-search-recreate-structure product-search-export-products grunt error-pages-generate warmup"]
-    +   command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo product-search-recreate-structure product-search-export-products grunt error-pages-generate warmup"]
+    -   command: ["sh", "-c", "cd /var/www/html && ./phing db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export grunt error-pages-generate warmup"]
+    +   command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export grunt error-pages-generate warmup"]
     ```
 - check all the phing targets that depend on the new `production-protection` target
     - if you use any of the targets in your automated build scripts in production environment, you need to pass the confirmation to the phing using `-D production.confirm.action=y`
@@ -816,6 +816,16 @@ There you can find links to upgrade notes for other versions too.
     - form field option `currency` is now rendered with `appendix_block` block (inside span tag) instead of plain text
 
 - update your project to use refactored Elasticsearch related classes ([#1622](https://github.com/shopsys/shopsys/pull/1622))
+    - Phing targets related to Elasticsearch were renamed, change usages
+        - `product-search-create-structure` was removed, use `elasticsearch-index-create`
+        - `product-search-delete-structure` was removed, use `elasticsearch-index-delete`
+        - `product-search-export-products` was removed, use `elasticsearch-export`
+        - `product-search-migrate-structure` was removed, use `elasticsearch-index-migrate`
+        - `product-search-recreate-structure` was removed, use `elasticsearch-index-recreate`
+        - `test-product-search-create-structure` was removed, use `test-elasticsearch-index-create`
+        - `test-product-search-delete-structure` was removed, use `test-elasticsearch-index-delete`
+        - `test-product-search-export-products` was removed, use `test-elasticsearch-export`
+        - `test-product-search-recreate-structure` was removed, use `test-elasticsearch-index-recreate`
     - update `config/services/cron.yml` if you have registered products export by yourself
 
         ```diff
@@ -1375,7 +1385,7 @@ There you can find links to upgrade notes for other versions too.
 - use strict comparison in category panel template to prevent errors ([#1782](https://github.com/shopsys/shopsys/pull/1782))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/06f09d87deecc9547430394e751fb84273a218a1) to update your project
 
-- fix validation of addresses in customer section ([#1797](https://github.com/shopsys/shopsys/pull/1797)
+- fix validation of addresses in customer section ([#1797](https://github.com/shopsys/shopsys/pull/1797))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/b0b161ac61b7f3ff49a70cd6e646b8f2857af744) to update you
 
 - fix symfony `dump()` function ([#1745](https://github.com/shopsys/shopsys/pull/1745))
@@ -1386,6 +1396,9 @@ There you can find links to upgrade notes for other versions too.
 
 - refactored `SelectToggle` component ([#1803](https://github.com/shopsys/shopsys/pull/1803))
     - `ToggleOption` js class has been removed, update your code appropriately
+
+- remove deprecated methods from your project ([#1801](https://github.com/shopsys/shopsys/pull/1801))
+    - see #project-base-diff to update your project
 
 ### Tools
 
@@ -1528,5 +1541,264 @@ If you have custom frontend you can skip these tasks:
         +   {% if product.isMainVariant and not product.calculatedSellingDenied %}
                 <table {% getProductSellingPrice(product) is not null %}itemprop="offers"
         ```
+
+### Removed deprecations
+
+In this major version were removed deprecated features ([#1801](https://github.com/shopsys/shopsys/pull/1801)).
+If you followed all steps in previous upgrades and resolved all deprecations, you shouldn't be worried about this.
+The list here can help you quickly resolve problems with any deprecations left in your application.
+
+following methods has changed their interface, update your usages accordingly:
+- `AdvertDataFactory::__construct()`
+    ```diff
+    -   public function __construct(?ImageFacade $imageFacade = null)
+    +   public function __construct(ImageFacade $imageFacade)
+    ```
+- `BrandDataFactory::__construct()`
+    ```diff
+        public function __construct(
+            FriendlyUrlFacade $friendlyUrlFacade,
+            BrandFacade $brandFacade,
+            Domain $domain,
+    -       ?ImageFacade $imageFacade = null
+    +       ImageFacade $imageFacade
+        )
+    ```
+- `CategoryDataFactory::__construct()`
+    ```diff
+        public function __construct(
+            CategoryRepository $categoryRepository,
+            FriendlyUrlFacade $friendlyUrlFacade,
+            PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+            Domain $domain,
+    -       ?ImageFacade $imageFacade = null
+    +       ImageFacade $imageFacade
+        )
+    ```
+- `CronFacade::__construct()`
+    ```diff
+        public function __construct(
+            Logger $logger,
+            CronConfig $cronConfig,
+            CronModuleFacade $cronModuleFacade,
+            Mailer $mailer,
+    -       ?CronModuleExecutor $cronModuleExecutor = null
+    +       CronModuleExecutor $cronModuleExecutor
+        )
+  ```
+- `DateTimeFormatter::__construct()`
+    ```diff
+        public function __construct(
+            DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository,
+    -       ?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null
+    +       DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+        )
+    ```
+- `ErrorPagesFacade::__construct()`
+    ```diff
+        public function __construct(
+            $errorPagesDir,
+            Domain $domain,
+            DomainRouterFactory $domainRouterFactory,
+            Filesystem $filesystem,
+    -       ?ErrorIdProvider $errorIdProvider = null
+    +       ErrorIdProvider $errorIdProvider
+        )
+    ```
+- `ImageUploadType::__construct()`
+    ```diff
+        public function __construct(
+            ImageFacade $imageFacade,
+            ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer,
+    -       ?ImageConfig $imageConfig = null
+    +       ImageConfig $imageConfig
+        )
+    ```
+- `LocalizationListener::__construct()`
+    ```diff
+        public function __construct(
+            Domain $domain,
+            Localization $localization,
+    -       ?AdministrationFacade $administrationFacade = null
+    +       AdministrationFacade $administrationFacade
+        )
+    ```
+- `NumberFormatterExtension::__construct()`
+    ```diff
+        public function __construct(
+            Localization $localization,
+            NumberFormatRepositoryInterface $numberFormatRepository,
+    +       ?AdministrationFacade $administrationFacade = null
+    -       AdministrationFacade $administrationFacade
+        )
+    ```
+- `PaymentDataFactory::__construct()`
+    ```diff
+        public function __construct(
+            PaymentFacade $paymentFacade,
+            VatFacade $vatFacade,
+            Domain $domain,
+    -       ?ImageFacade $imageFacade = null
+    +       ImageFacade $imageFacade
+        )
+    ```
+- `PriceExtension::__construct()`
+    ```diff
+        public function __construct(
+            CurrencyFacade $currencyFacade,
+            Domain $domain,
+            Localization $localization,
+            NumberFormatRepositoryInterface $numberFormatRepository,
+            CurrencyRepositoryInterface $intlCurrencyRepository,
+    -       ?CurrencyFormatterFactory $currencyFormatterFactory = null
+    +       CurrencyFormatterFactory $currencyFormatterFactory
+       )
+    ```
+- `ProductInputPriceRecalculator::__construct()`
+    ```diff
+        public function __construct(
+            BasePriceCalculation $basePriceCalculation,
+            InputPriceCalculation $inputPriceCalculation,
+    -       ?CurrencyFacade $currencyFacade = null
+    +       CurrencyFacade $currencyFacade
+        )
+    ```
+- `ProductPriceCalculation::__construct()`
+    ```diff
+        public function __construct(
+            BasePriceCalculation $basePriceCalculation,
+            PricingSetting $pricingSetting,
+            ProductManualInputPriceRepository $productManualInputPriceRepository,
+            ProductRepository $productRepository,
+    -       ?CurrencyFacade $currencyFacade = null
+    +       CurrencyFacade $currencyFacade
+        )
+    ```
+- `PromoCodeController::__construct()`
+    ```diff
+        public function __construct(
+            PromoCodeFacade $promoCodeFacade,
+    -       PromoCodeInlineEdit $promoCodeInlineEdit,
+            AdministratorGridFacade $administratorGridFacade,
+    -       ?PromoCodeDataFactoryInterface $promoCodeDataFactory = null,
+    +       PromoCodeDataFactoryInterface $promoCodeDataFactory,
+    -       ?PromoCodeGridFactory $promoCodeGridFactory = null,
+    +       PromoCodeGridFactory $promoCodeGridFactory,
+    -       ?BreadcrumbOverrider $breadcrumbOverrider = null,
+    +       BreadcrumbOverrider $breadcrumbOverrider
+    -       bool $useInlineEditation = true
+        )
+    ```
+- `QuantifiedProductPriceCalculation::__construct()`
+    ```diff
+        public function __construct(
+            ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
+    -       Rounding $rounding,
+            PriceCalculation $priceCalculation
+        )
+    ```
+- `QueryBuilderExtender::__construct()`
+    ```diff
+    -   public function __construct(?EntityNameResolver $entityNameResolver = null)
+    +   public function __construct(EntityNameResolver $entityNameResolver)
+    ```
+- `ShopsysFrameworkDataCollector::__construct()`
+    ```diff
+        public function __construct(
+            Domain $domain,
+    -       ?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null
+    +       DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+        )
+    ```
+- `SliderItemDataFactory::__construct()`
+    ```diff
+    -   public function __construct(?ImageFacade $imageFacade = null)
+    +   public function __construct(ImageFacade $imageFacade)
+    ```
+- `TransportDataFactory::__construct()`
+    ```diff
+        public function __construct(
+            TransportFacade $transportFacade,
+            VatFacade $vatFacade,
+            Domain $domain,
+    -       ?ImageFacade $imageFacade = null
+    +       ImageFacade $imageFacade
+        )
+    ```
+- `VatController::__construct()`
+    ```diff
+        public function __construct(
+            VatFacade $vatFacade,
+    -       PricingSetting $pricingSetting,
+            VatInlineEdit $vatInlineEdit,
+            ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+            AdminDomainTabsFacade $adminDomainTabsFacade
+        )
+    ```
+
+- `ImageFacade::uploadImage`
+    ```diff
+    -   public function uploadImage($entity, $temporaryFilenames, $type)
+    +   protected function uploadImage($entity, $temporaryFilenames, $type): void
+    ```
+- `ImageFacade::saveImageOrdering`
+    ```diff
+    -   public function saveImageOrdering($orderedImages)
+    +   protected function saveImageOrdering($orderedImages): void
+    ```
+- `ImageFacade::uploadImages`
+    ```diff
+    -   public function uploadImages($entity, $temporaryFilenames, $type)
+    +   protected function uploadImages($entity, $temporaryFilenames, $type): void
+    ```
+- `ImageFacade::deleteImages`
+    ```diff
+    -   public function deleteImages($entity, array $images)
+    +   protected function deleteImages($entity, array $images): void
+    ```
+
+following methods were removed. Use corresponding replacement instead:
+- `BasePriceCalculation::calculateBasePrice()` was removed, use `BasePriceCalculation::calculateBasePriceRoundedByCurrency()` instead
+- `BasePriceCalculation::applyCoefficients()` was removed as it was used only in tests. Use your implementation if you need the functionality
+- `BasePriceCalculation::getBasePriceWithVat()` was removed, use `BasePriceCalculation::getBasePriceWithVatRoundedCurrency()` instead
+- `CronFacade::runModulesForInstance()` was removed, use `CronFacade::runModules()` instead
+- `CronFacade::runModule()` was removed, use `CronFacade::runSingleModule()` instead
+- `CurrencyFormatterFactory::create()` was removed, use `CurrencyFormatterFactory::createByLocaleAndCurrency()`
+- `Domain::getAllIdsExcludingFirstDomain()` was removed. Use your implementation if you need the functionality
+- `LocalizationListener::isAdminRequest()` was removed, use `Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade::inInAdmin()` instead
+- `PriceExtension::getCurrencyFormatter()` was removed, use `CurrencyFormatterFactory::createByLocaleAndCurrency()`
+- `PricingSetting::getRoundingType()` was removed, rounding type can be set per Currency
+- `PricingSetting::setRoundingType()` was removed, rounding type can be set per Currency
+- `PricingSetting::getRoundingTypes()` was removed, rounding type can be set per Currency
+- `Rounding::roundPriceWithVat()` was removed, use `Rounding::roundPriceWithVatByCurrency()`
+- `QuantifiedProductDiscountCalculation::calculateDiscount()` was removed, use `QuantifiedProductDiscountCalculation::calculateDiscountRoundedByCurrency()`
+- `QuantifiedProductDiscountCalculation::calculateDiscounts()` was removed, use `QuantifiedProductDiscountCalculation::calculateDiscountsRoundedByCurrency()`
+- `RedisFacade::hasAnyKey()` was removed. Use your implementation if you need the functionality
+
+following classes were removed and should not be used anywhere in your project:
+- `Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException` was removed. Use your implementation if you need
+- `Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory` was removed. `DateTimeFormatter` should be created directly by DI container
+- `Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit` was removed. `PromoCodeGridFactory` should be used instead
+- `Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory` was removed. Use setter injection of the Redis instance in DIC configuration of the `RedisCache` service instead
+
+following constants were removed. Create your own constant if needed
+- `CronFacade::TIMEOUT_SECONDS = 240`
+- `CurrencyFormatterFactory::MINIMUM_FRACTION_DIGITS = 2`
+- `PriceExtension::MINIMUM_FRACTION_DIGITS = 2`
+- `PriceExtension::MAXIMUM_FRACTION_DIGITS = 10`
+- `PricingSetting::ROUNDING_TYPE = 'roundingType'`
+- `PricingSetting::ROUNDING_TYPE_HUNDREDTHS = 1`
+- `PricingSetting::ROUNDING_TYPE_FIFTIES = 2`
+- `PricingSetting::ROUNDING_TYPE_INTEGER = 3`
+
+following properties were removed from Phing
+- property `is-multidomain` was removed, see `domains-info-load` target instead
+- property `translations.dump.locales` was removed, see `domains-info-load` target instead
+
+following services are no longer registered. Use corresponding replacement instead
+- `DateTimeFormatter`, use `DateTimeFormatterInterface` instead
+
+following form type options were removed
+- `PromoCodeFormType` no longer has option `isInlineEdit`
 
 [shopsys/framework]: https://github.com/shopsys/framework

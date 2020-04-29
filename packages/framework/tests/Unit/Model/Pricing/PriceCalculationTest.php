@@ -52,12 +52,8 @@ class PriceCalculationTest extends TestCase
         Money $expectedPriceWithVat
     ) {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->setMethods(['getRoundingType'])
             ->disableOriginalConstructor()
             ->getMock();
-        $pricingSettingMock
-            ->expects($this->any())->method('getRoundingType')
-                ->willReturn(PricingSetting::ROUNDING_TYPE_INTEGER);
 
         $rounding = new Rounding($pricingSettingMock);
         $priceCalculation = new PriceCalculation($rounding);
@@ -104,12 +100,8 @@ class PriceCalculationTest extends TestCase
         Money $expectedVatAmount
     ) {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->setMethods(['getRoundingType'])
             ->disableOriginalConstructor()
             ->getMock();
-        $pricingSettingMock
-            ->expects($this->any())->method('getRoundingType')
-                ->willReturn(PricingSetting::ROUNDING_TYPE_INTEGER);
 
         $rounding = new Rounding($pricingSettingMock);
         $priceCalculation = new PriceCalculation($rounding);

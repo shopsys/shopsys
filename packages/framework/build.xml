@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="shopsys_framework" default="list">
 
-    <property name="is-multidomain" value="true" description="This property is @deprecated, see 'domains-info-load' target instead."/>
     <property name="check-and-fix-annotations" value="false"/>
     <property name="path.app" value="${path.root}/app"/>
     <property name="path.bin" value="${path.vendor}/bin"/>
@@ -45,7 +44,6 @@
     <property name="path.yaml-standards.executable" value="${path.bin}/yaml-standards"/>
     <property name="phpstan.level" value="4"/>
     <property name="phpstan.memory-limit" value="2048M"/>
-    <property name="translations.dump.locales" value="en cs" description="This property is @deprecated, see 'domains-info-load' target instead."/>
     <property name="translations.dump.flags" value="--keep"/>
     <property name="yaml-standards.indent-count" value="4"/>
     <property name="yaml-standards.args" value=""/>
@@ -791,41 +789,6 @@
         </exec>
     </target>
 
-    <target name="product-search-create-structure" description="Creates structure for searching via elasticsearch." hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-create' instead."/>
-        <phingcall target="elasticsearch-index-create">
-            <property name="elasticsearch.index" value="product"/>
-        </phingcall>
-    </target>
-
-    <target name="product-search-delete-structure" depends="production-protection" description="Deletes structure for searching via elasticsearch." hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-delete' instead."/>
-        <phingcall target="elasticsearch-index-delete">
-            <property name="elasticsearch.index" value="product"/>
-        </phingcall>
-    </target>
-
-    <target name="product-search-export-products" description="Exports all products for searching via elasticsearch." hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-export' instead."/>
-        <phingcall target="elasticsearch-export">
-            <property name="elasticsearch.index" value="product"/>
-        </phingcall>
-    </target>
-
-    <target name="product-search-migrate-structure" description="Creates new structure, reindexes it from old one, deletes old structure and add alias to new structure." hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-migrate' instead."/>
-        <phingcall target="elasticsearch-index-migrate">
-            <property name="elasticsearch.index" value="product"/>
-        </phingcall>
-    </target>
-
-    <target name="product-search-recreate-structure" depends="production-protection" description="Recreates structure for searching via elasticsearch (deletes existing structure and creates new one)" hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-recreate' instead."/>
-        <phingcall target="elasticsearch-index-recreate">
-            <property name="elasticsearch.index" value="product"/>
-        </phingcall>
-    </target>
-
     <target name="production-protection" depends="environment-load" description="Asks user for confirmation when he or she wants to run a particular action in production environment" hidden="true">
         <if>
             <equals arg1="${environment}" arg2="prod"/>
@@ -1046,34 +1009,6 @@
             <arg value="--env=test"/>
             <arg value="shopsys:plugin-data-fixtures:load"/>
         </exec>
-    </target>
-
-    <target name="test-product-search-create-structure" depends="production-protection" description="Creates structure for searching via elasticsearch for test environment." hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'test-elasticsearch-index-create' instead."/>
-        <phingcall target="test-elasticsearch-index-create">
-            <property name="elasticsearch.index" value="product"/>
-        </phingcall>
-    </target>
-
-    <target name="test-product-search-delete-structure" depends="production-protection" description="Deletes structure for searching via elasticsearch for test environment." hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'test-elasticsearch-index-delete' instead."/>
-        <phingcall target="test-elasticsearch-index-delete">
-            <property name="elasticsearch.index" value="product"/>
-        </phingcall>
-    </target>
-
-    <target name="test-product-search-export-products" depends="production-protection" description="Exports all products for searching via elasticsearch for test environment." hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'test-elasticsearch-export' instead."/>
-        <phingcall target="test-elasticsearch-export">
-            <property name="elasticsearch.index" value="product"/>
-        </phingcall>
-    </target>
-
-    <target name="test-product-search-recreate-structure" depends="production-protection" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)" hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'test-elasticsearch-index-recreate' instead."/>
-        <phingcall target="test-elasticsearch-index-recreate">
-            <property name="elasticsearch.index" value="product"/>
-        </phingcall>
     </target>
 
     <target name="tests" depends="npm-install-dependencies,error-pages-generate,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>

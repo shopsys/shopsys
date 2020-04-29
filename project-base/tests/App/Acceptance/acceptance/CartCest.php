@@ -34,11 +34,11 @@ class CartCest
         $productDetailPage->addProductIntoCart(3);
         $floatingWindowPage->closeFloatingWindow();
 
-        $cartBoxPage->seeCountAndPriceInCartBox(1, '10497');
+        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '10497');
 
         $productDetailPage->addProductIntoCart(3);
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeCountAndPriceInCartBox(1, '20994');
+        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '20994');
 
         $me->amOnLocalizedRoute('front_cart');
 
@@ -69,9 +69,9 @@ class CartCest
             '%unitName%' => $me->getDefaultUnitName(),
         ]);
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeCountAndPriceInCartBox(1, '119');
+        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '119');
         $me->amOnLocalizedRoute('front_cart');
-        $cartPage->assertProductPrice('Defender 2.0 SPK-480', '119');
+        $cartPage->assertProductPriceRoundedByCurrency('Defender 2.0 SPK-480', '119');
     }
 
     /**
@@ -97,9 +97,9 @@ class CartCest
             '%unitName%' => $me->getDefaultUnitName(),
         ]);
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeCountAndPriceInCartBox(1, '3499');
+        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '3499');
         $me->amOnLocalizedRoute('front_cart');
-        $cartPage->assertProductPrice('22" Sencor SLE 22F46DM4 HELLO KITTY', '3499');
+        $cartPage->assertProductPriceRoundedByCurrency('22" Sencor SLE 22F46DM4 HELLO KITTY', '3499');
     }
 
     /**
@@ -125,7 +125,7 @@ class CartCest
             '%unitName%' => $me->getDefaultUnitName(),
         ]);
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeCountAndPriceInCartBox(1, '10497');
+        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '10497');
         $me->amOnLocalizedRoute('front_cart');
         $me->seeTranslationFrontend('22" Sencor SLE 22F46DM4 HELLO KITTY', 'dataFixtures');
     }
@@ -209,13 +209,13 @@ class CartCest
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 1]);
         $productDetailPage->addProductIntoCart();
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeCountAndPriceInCartBox(1, '3499');
+        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '3499');
 
         // canon-pixma-ip7250
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 142]);
         $productDetailPage->addProductIntoCart();
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeCountAndPriceInCartBox(2, '27687');
+        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(2, '27687');
 
         $me->amOnLocalizedRoute('front_cart');
         $cartPage->assertProductIsInCartByName('22" Sencor SLE 22F46DM4 HELLO KITTY');

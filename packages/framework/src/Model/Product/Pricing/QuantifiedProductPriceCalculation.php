@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class QuantifiedProductPriceCalculation
@@ -21,29 +20,19 @@ class QuantifiedProductPriceCalculation
     protected $productPriceCalculationForCustomerUser;
 
     /**
-     * @deprecated Will be removed in the next major release, this service is not used here
-     *
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Rounding
-     */
-    protected $rounding;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation
      */
     protected $priceCalculation;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      */
     public function __construct(
         ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        Rounding $rounding,
         PriceCalculation $priceCalculation
     ) {
         $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
-        $this->rounding = $rounding;
         $this->priceCalculation = $priceCalculation;
     }
 

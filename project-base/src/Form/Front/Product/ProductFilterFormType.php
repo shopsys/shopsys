@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Product;
 
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Form\Constraints\NotNegativeMoneyAmount;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -27,12 +26,9 @@ class ProductFilterFormType extends AbstractType
         /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $config */
         $config = $options['product_filter_config'];
 
-        $moneyBuilder = $builder->create('money', MoneyType::class);
-
         $builder
             ->add('minimalPrice', MoneyType::class, [
                 'required' => false,
-                'attr' => ['placeholder' => $this->transformMoneyToView($config->getPriceRange()->getMinimalPrice(), $moneyBuilder)],
                 'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
                 'constraints' => [
                     new NotNegativeMoneyAmount(['message' => 'Price must be greater or equal to zero']),
@@ -40,7 +36,6 @@ class ProductFilterFormType extends AbstractType
             ])
             ->add('maximalPrice', MoneyType::class, [
                 'required' => false,
-                'attr' => ['placeholder' => $this->transformMoneyToView($config->getPriceRange()->getMaximalPrice(), $moneyBuilder)],
                 'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
                 'constraints' => [
                     new NotNegativeMoneyAmount(['message' => 'Price must be greater or equal to zero']),
@@ -84,28 +79,5 @@ class ProductFilterFormType extends AbstractType
                 'method' => 'GET',
                 'csrf_protection' => false,
             ]);
-    }
-
-    /**
-     * @deprecated This method will be removed in the next major release, it is used for price range widget placeholders
-     * It is recommended to edit placeholders in `filterFormMacro` and set values on your own, e.g you can format
-     * values with price formatter
-     *
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
-     * @param \Symfony\Component\Form\FormBuilderInterface $moneyBuilder
-     * @return string
-     */
-    protected function transformMoneyToView(Money $money, FormBuilderInterface $moneyBuilder): string
-    {
-        foreach ($moneyBuilder->getModelTransformers() as $modelTransformer) {
-            /** @var \Symfony\Component\Form\DataTransformerInterface $modelTransformer */
-            $money = $modelTransformer->transform($money);
-        }
-        foreach ($moneyBuilder->getViewTransformers() as $viewTransformer) {
-            /** @var \Symfony\Component\Form\DataTransformerInterface $viewTransformer */
-            $money = $viewTransformer->transform($money);
-        }
-
-        return $money;
     }
 }

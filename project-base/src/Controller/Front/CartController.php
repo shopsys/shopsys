@@ -185,7 +185,6 @@ class CartController extends FrontBaseController
     /**
      * @param \App\Model\Product\Product $product
      * @param string $type
-     * @deprecated This action is deprecated since 7.3.0, use App\Controller\Front\CartController:productAction instead
      */
     public function addProductFormAction(Product $product, $type = 'normal')
     {

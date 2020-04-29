@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
-use BadMethodCallException;
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
@@ -13,11 +12,6 @@ use Throwable;
 
 class CronFacade
 {
-    /**
-     * @deprecated Will be removed in next major release, create your own constant if needed
-     */
-    protected const TIMEOUT_SECONDS = 4 * 60;
-
     /**
      * @var \Symfony\Bridge\Monolog\Logger
      */
@@ -39,7 +33,7 @@ class CronFacade
     protected $mailer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor|null
+     * @var \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor
      */
     protected $cronModuleExecutor;
 
@@ -55,29 +49,13 @@ class CronFacade
         CronConfig $cronConfig,
         CronModuleFacade $cronModuleFacade,
         Mailer $mailer,
-        ?CronModuleExecutor $cronModuleExecutor = null
+        CronModuleExecutor $cronModuleExecutor
     ) {
         $this->logger = $logger;
         $this->cronConfig = $cronConfig;
         $this->cronModuleFacade = $cronModuleFacade;
         $this->mailer = $mailer;
         $this->cronModuleExecutor = $cronModuleExecutor;
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
-     */
-    public function setCronModuleExecutor(CronModuleExecutor $cronModuleExecutor)
-    {
-        if ($this->cronModuleExecutor !== null && $this->cronModuleExecutor !== $cronModuleExecutor) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-        if ($this->cronModuleExecutor === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->cronModuleExecutor = $cronModuleExecutor;
-        }
     }
 
     /**
@@ -98,22 +76,6 @@ class CronFacade
 
         $scheduledCronModuleConfigs = $this->cronModuleFacade->getOnlyScheduledCronModuleConfigs($cronModuleConfigs);
         $this->runModules($scheduledCronModuleConfigs, $instanceName);
-    }
-
-    /**
-     * @deprecated This method is deprecated and will be removed in the next major version. Please use method runModules() instead
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
-     * @param array $cronModuleConfigs
-     * @param string $instanceName
-     */
-    protected function runModulesForInstance(CronModuleExecutor $cronModuleExecutor, array $cronModuleConfigs, string $instanceName): void
-    {
-        @trigger_error(sprintf('Method %s is deprecated and will be removed in the next major version. Please use method runModules() instead', __METHOD__), E_USER_DEPRECATED);
-
-        $originalCronModuleExecutor = $this->cronModuleExecutor;
-        $this->cronModuleExecutor = $cronModuleExecutor;
-        $this->runModules($cronModuleConfigs, $instanceName);
-        $this->cronModuleExecutor = $originalCronModuleExecutor;
     }
 
     /**
@@ -142,21 +104,6 @@ class CronFacade
         $cronModuleConfig = $this->cronConfig->getCronModuleConfigByServiceId($serviceId);
 
         $this->runSingleModule($cronModuleConfig);
-    }
-
-    /**
-     * @deprecated This method is deprecated and will be removed in the next major version. Please use method runSingleModule() instead
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     */
-    protected function runModule(CronModuleExecutor $cronModuleExecutor, CronModuleConfig $cronModuleConfig)
-    {
-        @trigger_error(sprintf('Method %s is deprecated and will be removed in the next major version. Please use method runSingleModule() instead', __METHOD__), E_USER_DEPRECATED);
-
-        $originalCronModuleExecutor = $this->cronModuleExecutor;
-        $this->cronModuleExecutor = $cronModuleExecutor;
-        $this->runSingleModule($cronModuleConfig);
-        $this->cronModuleExecutor = $originalCronModuleExecutor;
     }
 
     /**

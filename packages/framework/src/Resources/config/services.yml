@@ -403,10 +403,6 @@ services:
         arguments:
             $adminLocale: '%shopsys.admin_locale%'
 
-    # @deprecated DateTimeFormatterInterface should be used instead
-    Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter:
-        factory: ['@Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory', create]
-
     Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface:
         class: 'Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter'
 
@@ -539,9 +535,9 @@ services:
             - { name: 'monolog.logger', channel: 'request' }
         arguments:
             - '%kernel.error_controller%'
+            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
             - '@?logger'
             - '%kernel.debug%'
-            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
 
     twig.stringloader:
         class: Twig\Loader\ArrayLoader

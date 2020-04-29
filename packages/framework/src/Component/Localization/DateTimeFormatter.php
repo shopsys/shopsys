@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Component\Localization;
 
-use BadMethodCallException;
 use DateTime;
 use IntlDateFormatter;
 
@@ -14,37 +13,20 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     protected $customDateTimeFormatPatternRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null
+     * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface
      */
     protected $displayTimeZoneProvider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null $displayTimeZoneProvider
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
     public function __construct(
         DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository,
-        ?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null
+        DisplayTimeZoneProviderInterface $displayTimeZoneProvider
     ) {
         $this->customDateTimeFormatPatternRepository = $customDateTimeFormatPatternRepository;
         $this->displayTimeZoneProvider = $displayTimeZoneProvider;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setDisplayTimeZoneProvider(DisplayTimeZoneProviderInterface $displayTimeZoneProvider): void
-    {
-        if ($this->displayTimeZoneProvider !== null && $this->displayTimeZoneProvider !== $displayTimeZoneProvider) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-
-        if ($this->displayTimeZoneProvider === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->displayTimeZoneProvider = $displayTimeZoneProvider;
-        }
     }
 
     /**

@@ -1201,9 +1201,6 @@ msgstr ""
 msgid "Instructions"
 msgstr ""
 
-msgid "Invalid rounding settings"
-msgstr ""
-
 msgid "It is possible to use this when creating a link: mark the text you want to create the link from with mouse and push the Link button (top right, interconnected staples icon). In the popup menu select the protocol <different> and insert the text \"%orderDetailUrlConstant%\" in the URL field (Including the braces)"
 msgstr ""
 

@@ -10,29 +10,13 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationSched
 class PricingSetting
 {
     public const INPUT_PRICE_TYPE = 'inputPriceType';
-    /**
-     * @deprecated Will be removed in the next major release. Rounding type can be set per Currency
-     */
-    public const ROUNDING_TYPE = 'roundingType';
+
     public const DEFAULT_CURRENCY = 'defaultCurrencyId';
     public const DEFAULT_DOMAIN_CURRENCY = 'defaultDomainCurrencyId';
     public const FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT = 'freeTransportAndPaymentPriceLimit';
 
     public const INPUT_PRICE_TYPE_WITH_VAT = 1;
     public const INPUT_PRICE_TYPE_WITHOUT_VAT = 2;
-
-    /**
-     * @deprecated Will be removed in the next major release. Rounding type can be set per Currency.
-     */
-    public const ROUNDING_TYPE_HUNDREDTHS = 1;
-    /**
-     * @deprecated Will be removed in the next major release. Rounding type can be set per Currency.
-     */
-    public const ROUNDING_TYPE_FIFTIES = 2;
-    /**
-     * @deprecated Will be removed in the next major release. Rounding type can be set per Currency.
-     */
-    public const ROUNDING_TYPE_INTEGER = 3;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
@@ -62,18 +46,6 @@ class PricingSetting
     public function getInputPriceType()
     {
         return $this->setting->get(self::INPUT_PRICE_TYPE);
-    }
-
-    /**
-     * @deprecated Will be removed in the next major release. Rounding type can be set per Currency
-     *
-     * @return int
-     */
-    public function getRoundingType()
-    {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Rounding type can be set per Currency.', __METHOD__), E_USER_DEPRECATED);
-
-        return $this->setting->get(self::ROUNDING_TYPE);
     }
 
     /**
@@ -112,25 +84,6 @@ class PricingSetting
     }
 
     /**
-     * @deprecated Will be removed in the next major release. Rounding type can be set per Currency
-     *
-     * @param int $roundingType
-     */
-    public function setRoundingType($roundingType)
-    {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Rounding type can be set per Currency.', __METHOD__), E_USER_DEPRECATED);
-
-        if (!in_array($roundingType, self::getRoundingTypes(), true)) {
-            throw new \Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidRoundingTypeException(
-                sprintf('Rounding type %s is not valid', $roundingType)
-            );
-        }
-
-        $this->setting->set(self::ROUNDING_TYPE, $roundingType);
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
-    }
-
-    /**
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
@@ -156,22 +109,6 @@ class PricingSetting
         return [
             self::INPUT_PRICE_TYPE_WITHOUT_VAT,
             self::INPUT_PRICE_TYPE_WITH_VAT,
-        ];
-    }
-
-    /**
-     * @deprecated Will be removed in the next major release. Rounding type can be set per Currency.
-     *
-     * @return array
-     */
-    public static function getRoundingTypes()
-    {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Rounding type can be set per Currency.', __METHOD__), E_USER_DEPRECATED);
-
-        return [
-            self::ROUNDING_TYPE_HUNDREDTHS,
-            self::ROUNDING_TYPE_FIFTIES,
-            self::ROUNDING_TYPE_INTEGER,
         ];
     }
 }

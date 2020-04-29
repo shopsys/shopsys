@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Form;
 
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -33,39 +32,23 @@ class ImageUploadType extends AbstractType
     private $imagesIdsToImagesTransformer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig|null
+     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
     private $imageConfig;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig|null $imageConfig
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      */
     public function __construct(
         ImageFacade $imageFacade,
         ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer,
-        ?ImageConfig $imageConfig = null
+        ImageConfig $imageConfig
     ) {
         $this->imageFacade = $imageFacade;
         $this->imagesIdsToImagesTransformer = $imagesIdsToImagesTransformer;
         $this->imageConfig = $imageConfig;
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     */
-    public function setImageConfig(ImageConfig $imageConfig): void
-    {
-        if ($this->imageConfig !== null && $this->imageConfig !== $imageConfig) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-        if ($this->imageConfig === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->imageConfig = $imageConfig;
-        }
     }
 
     /**

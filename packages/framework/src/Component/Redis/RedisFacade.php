@@ -73,17 +73,4 @@ class RedisFacade
             $redis->ping();
         }
     }
-
-    /**
-     * @deprecated This method is deprecated since SSFW 7.3.3
-     *
-     * @param \Redis $redis
-     * @param string $pattern
-     * @return bool
-     */
-    protected function hasAnyKey(Redis $redis, string $pattern): bool
-    {
-        $keyCount = $redis->eval("return table.getn(redis.call('keys', ARGV[1]))", [$pattern]);
-        return (bool)$keyCount;
-    }
 }

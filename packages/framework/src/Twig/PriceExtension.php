@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
-use BadMethodCallException;
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
-use CommerceGuys\Intl\Formatter\CurrencyFormatter;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -20,18 +18,6 @@ use Twig\TwigFunction;
 
 class PriceExtension extends AbstractExtension
 {
-    /**
-     * @deprecated
-     * moved to {@see \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory}
-     */
-    protected const MINIMUM_FRACTION_DIGITS = 2;
-
-    /**
-     * @deprecated
-     * moved to {@see \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory}
-     */
-    protected const MAXIMUM_FRACTION_DIGITS = 10;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
@@ -58,7 +44,7 @@ class PriceExtension extends AbstractExtension
     protected $intlCurrencyRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory|null
+     * @var \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory
      */
     protected $currencyFormatterFactory;
 
@@ -68,7 +54,7 @@ class PriceExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository
      * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
-     * @param \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory|null $currencyFormatterFactory
+     * @param \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory $currencyFormatterFactory
      */
     public function __construct(
         CurrencyFacade $currencyFacade,
@@ -76,7 +62,7 @@ class PriceExtension extends AbstractExtension
         Localization $localization,
         NumberFormatRepositoryInterface $numberFormatRepository,
         CurrencyRepositoryInterface $intlCurrencyRepository,
-        ?CurrencyFormatterFactory $currencyFormatterFactory = null
+        CurrencyFormatterFactory $currencyFormatterFactory
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->domain = $domain;
@@ -84,22 +70,6 @@ class PriceExtension extends AbstractExtension
         $this->numberFormatRepository = $numberFormatRepository;
         $this->intlCurrencyRepository = $intlCurrencyRepository;
         $this->currencyFormatterFactory = $currencyFormatterFactory;
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory $currencyFormatterFactory
-     */
-    public function setCurrencyFormatterFactory(CurrencyFormatterFactory $currencyFormatterFactory)
-    {
-        if ($this->currencyFormatterFactory !== null && $this->currencyFormatterFactory !== $currencyFormatterFactory) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-        if ($this->currencyFormatterFactory === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->currencyFormatterFactory = $currencyFormatterFactory;
-        }
     }
 
     /**
@@ -277,29 +247,6 @@ class PriceExtension extends AbstractExtension
         );
 
         return $currencyFormatter->format($price->getAmount(), $intlCurrency->getCurrencyCode());
-    }
-
-    /**
-     * @deprecated
-     * use create() method of {@see \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory} instead
-     * @param string $locale
-     * @return \CommerceGuys\Intl\Formatter\CurrencyFormatter
-     */
-    protected function getCurrencyFormatter(string $locale): CurrencyFormatter
-    {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the "CurrencyFormatterFactory::create()" instead.', __METHOD__), E_USER_DEPRECATED);
-        $currencyFormatter = new CurrencyFormatter(
-            $this->numberFormatRepository,
-            $this->intlCurrencyRepository,
-            [
-                'locale' => $locale,
-                'style' => 'standard',
-                'minimum_fraction_digits' => static::MINIMUM_FRACTION_DIGITS,
-                'maximum_fraction_digits' => static::MAXIMUM_FRACTION_DIGITS,
-            ]
-        );
-
-        return $currencyFormatter;
     }
 
     /**
