@@ -1,4 +1,4 @@
-import constant from 'framework/admin/utils/constant';
+import constant from '../utils/constant';
 
 (function ($) {
 

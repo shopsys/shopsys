@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Payment\Payment;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -14,15 +15,15 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
-use App\Model\Payment\Payment;
 
 class PaymentDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const PAYMENT_CARD = 'payment_card';
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
+    public const PAYMENT_GOPAY = Payment::TYPE_GOPAY;
 
-    /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade */
+    /** @var \App\Model\Payment\PaymentFacade */
     protected $paymentFacade;
 
     /**
@@ -46,7 +47,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     protected $currencyFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Payment\PaymentDataFactory $paymentDataFactory
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
@@ -115,32 +116,22 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData->name = [
             'cs' => 'GoPay - Platba kartou',
             'sk' => 'GoPay - Platba kartou',
-            'de' => 'GoPay - Pay by card',
         ];
         $paymentData->czkRounding = false;
-        $paymentData->pricesByCurrencyId = [
-            $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::zero(),
-            $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::zero(),
-        ];
+
         $paymentData->goPayPaymentMethod = $this->getReference(GoPayDataFixture::PAYMENT_CARD_METHOD);
-        $paymentData->prices = [
-            $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::zero(),
-            $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::zero(),
-        ];
+
         $paymentData->description = [
             'cs' => '',
             'sk' => '',
-            'de' => '',
         ];
         $paymentData->instructions = [
             'cs' => '<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>',
             'sk' => '',
-            'de' => '',
         ];
-        $paymentData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
-        $paymentData->domains = [Domain::FIRST_DOMAIN_ID];
+
         $paymentData->hidden = false;
-        $this->createPayment(Payment::TYPE_GOPAY, $paymentData, [
+        $this->createPayment(self::PAYMENT_GOPAY, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_PPL,
         ]);
@@ -176,6 +167,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             TransportDataFixture::class,
             VatDataFixture::class,
             CurrencyDataFixture::class,
+            GoPayDataFixture::class,
             SettingValueDataFixture::class,
         ];
     }

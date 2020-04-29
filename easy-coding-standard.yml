@@ -64,6 +64,7 @@ parameters:
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/tests/App/Functional/Model/Cart/CartFacadeTest.php'
+            - '*/src/Model/GoPay/Exception/GoPayPaymentDownloadException.php'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff:
             - '*/src/*'

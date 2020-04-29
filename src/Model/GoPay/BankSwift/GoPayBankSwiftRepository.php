@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace App\Model\GoPay\BankSwift;
 
+use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 
 class GoPayBankSwiftRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
 

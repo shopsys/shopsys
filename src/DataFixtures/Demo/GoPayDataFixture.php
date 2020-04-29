@@ -4,17 +4,17 @@ declare(strict_types = 1);
 
 namespace App\DataFixtures\Demo;
 
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodData;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 
 class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    const PAYMENT_CARD_METHOD = 'gopay_payment_card_method';
+    public const PAYMENT_CARD_METHOD = 'gopay_payment_card_method';
 
     /**
      * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade

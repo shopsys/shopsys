@@ -4,9 +4,17 @@ declare(strict_types=1);
 
 namespace App\Model\Payment;
 
-use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository as BasePaymentRepository;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository as BasePaymentRepository;
 
+/**
+ * @method \App\Model\Payment\Payment[] getAll()
+ * @method \App\Model\Payment\Payment[] getAllIncludingDeleted()
+ * @method \App\Model\Payment\Payment|null findById(int $id)
+ * @method \App\Model\Payment\Payment getById(int $id)
+ * @method \App\Model\Payment\Payment[] getAllByTransport(\App\Model\Transport\Transport $transport)
+ * @method \App\Model\Payment\Payment getOneByUuid(string $uuid)
+ */
 class PaymentRepository extends BasePaymentRepository
 {
     /**

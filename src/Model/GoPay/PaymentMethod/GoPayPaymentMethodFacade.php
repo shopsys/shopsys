@@ -4,20 +4,20 @@ declare(strict_types = 1);
 
 namespace App\Model\GoPay\PaymentMethod;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftRepository;
 use App\Model\GoPay\GoPayClientFactory;
 use App\Model\Payment\PaymentFacade;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class GoPayPaymentMethodFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
 

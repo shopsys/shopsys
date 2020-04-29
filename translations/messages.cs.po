@@ -175,6 +175,9 @@ msgstr "Opravdu si přejete odebrat tuto dodací adresu?"
 msgid "Do you want to receive the newest information about our shop? Subscribe to our email newsletter."
 msgstr "Chcete dostávat nejnovější informace z našeho obchodu? Přihlašte se do našeho e-mailového zpravodaje."
 
+msgid "Dostupné množství k odběru"
+msgstr ""
+
 msgid "Download"
 msgstr "Stáhnout"
 
@@ -786,3 +789,29 @@ msgstr "Zkontrolujte prosím zadané hodnoty.<br>"
 
 msgid "readyCategorySeoMixs"
 msgstr "SEO kombinace kategorií"
+
+msgid "Klikněte zde pro zopakování úhrady objednávky"
+msgstr ""
+
+msgid "Nyní budete přesměrováni na platební bránu GoPay."
+msgstr ""
+
+msgid "Objednávka je již zaplacená."
+msgstr ""
+
+msgid "Objednávka nebyla nalezena."
+msgstr ""
+
+msgid "Opakovat platbu"
+msgstr ""
+
+msgid "Uhrazení objednávky č. %orderNumber% platební kartou."
+msgstr ""
+
+msgid "Zaplatit"
+msgstr ""
+
+msgid "Česko"
+msgstr ""
+
+

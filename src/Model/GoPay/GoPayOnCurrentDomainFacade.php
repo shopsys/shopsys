@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace App\Model\GoPay;
 
-use GoPay\Definition\Response\PaymentStatus;
-use GoPay\Http\Response;
-use Psr\Log\LoggerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use App\Model\GoPay\Exception\GoPayNotConfiguredException;
 use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use App\Model\Order\Order;
 use App\Model\Order\OrderFacade;
+use GoPay\Definition\Response\PaymentStatus;
+use GoPay\Http\Response;
+use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class GoPayOnCurrentDomainFacade
 {
@@ -31,7 +31,7 @@ class GoPayOnCurrentDomainFacade
     private $goPayClientFactory;
 
     /**
-     * @var \Symfony\Bridge\Monolog\Logger
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 
@@ -83,6 +83,28 @@ class GoPayOnCurrentDomainFacade
         throw new \App\Model\GoPay\Exception\GoPaySendPaymentException();
     }
 
+    //TODO transactions
+//    /**
+//     * @param \App\Model\GoPay\GoPayTransaction[] $goPayTransactions
+//     * @param int $domainId
+//     * @return \App\Model\GoPay\GoPayResponseData[]
+//     */
+//    public function getPaymentStatusesResponseDataByGoPayTransactionAndDomainId(array $goPayTransactions, int $domainId): array
+//    {
+//        $responses = [];
+//        $domainConfig = $this->domain->getDomainConfigById($domainId);
+//        $goPayClient = $this->goPayClientFactory->createByLocale($domainConfig->getLocale());
+//
+//        foreach ($goPayTransactions as $goPayTransaction) {
+//            $responses[] = new GoPayResponseData(
+//                $goPayClient->getStatus($goPayTransaction->getGoPayId()),
+//                $goPayTransaction
+//            );
+//        }
+//
+//        return $responses;
+//    }
+
     /**
      * @param \App\Model\Order\Order $order
      * @return \GoPay\Http\Response
@@ -98,7 +120,7 @@ class GoPayOnCurrentDomainFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \App\Model\Order\Order $order
      */
     public function checkOrderGoPayStatus(Order $order): void
     {
@@ -110,20 +132,20 @@ class GoPayOnCurrentDomainFacade
             $goPayStatusResponse = $this->getPaymentStatusResponse($order);
             $this->orderFacade->setGoPayStatusAndFik($order, $goPayStatusResponse);
         } catch (GoPayNotConfiguredException $e) {
-            $this->logger->addError($e);
+            $this->logger->error($e);
             throw $e;
         } catch (GoPayPaymentDownloadException $e) {
-            $this->logger->addError($e);
+            $this->logger->error($e);
             throw $e;
         }
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \App\Model\Order\Order $order
      * @return bool
      */
     public function isOrderGoPayUnpaid(Order $order): bool
     {
-        return $order->getPayment()->isGoPay() && $order->getGoPayStatus() !== PaymentStatus::PAID;
+        return $order->getPayment()->isGoPay() && $order->isGopayPaid() === false;
     }
 }

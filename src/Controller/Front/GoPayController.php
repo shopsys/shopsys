@@ -4,17 +4,17 @@ declare(strict_types = 1);
 
 namespace App\Controller\Front;
 
-use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use App\Model\GoPay\Exception\GoPayNotConfiguredException;
 use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use App\Model\GoPay\GoPayOnCurrentDomainFacade;
+use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Component\HttpFoundation\Response;
 
 class GoPayController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
+     * @var \App\Model\Order\OrderFacade
      */
     private $orderFacade;
 
@@ -24,7 +24,7 @@ class GoPayController extends FrontBaseController
     private $goPayFacadeOnCurrentDomain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
+     * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\GoPay\GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain
      */
     public function __construct(
@@ -57,7 +57,7 @@ class GoPayController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \App\Model\Order\Order $order
      */
     private function checkOrderGoPayStatus(Order $order): void
     {

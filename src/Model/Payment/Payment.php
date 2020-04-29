@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Payment;
 
+use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData as BasePaymentData;
-use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 
 /**
  * @ORM\Table(name="payments")

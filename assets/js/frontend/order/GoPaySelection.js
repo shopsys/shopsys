@@ -1,12 +1,12 @@
 import Register from 'framework/common/utils/Register';
-import PaymentTransportChooser from './PaymentTransportChooser.js';
+// import PaymentTransportChooser from './PaymentTransportChooser.js';
 
 export default class GoPaySelection {
 
     static init ($container) {
         const $goPayBankSwiftInputs = $container.filterAllNodes('.js-order-gopay-bank-swift-input');
         $goPayBankSwiftInputs.on('change', GoPaySelection.onGoPayBankSwiftChange);
-        //$goPayBankSwiftInputs.on('change', GoPaySelection.updateContinueButton);
+        // $goPayBankSwiftInputs.on('change', GoPaySelection.updateContinueButton);
     };
 
     static onGoPayBankSwiftChange (event) {
@@ -37,7 +37,7 @@ export default class GoPaySelection {
             $(event.currentTarget).closest('label.box-chooser__item').removeClass('box-chooser__item--active');
         }
 
-        //PaymentTransportChooser.updateTransports();
+        // PaymentTransportChooser.updateTransports();
     };
 
 }

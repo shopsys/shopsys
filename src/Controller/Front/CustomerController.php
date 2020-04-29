@@ -137,6 +137,7 @@ class CustomerController extends FrontBaseController
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->getUser();
 
+        /** @var \App\Model\Order\Order[] $orders */
         $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
         return $this->render('Front/Content/Customer/orders.html.twig', [
             'orders' => $orders,
@@ -174,6 +175,7 @@ class CustomerController extends FrontBaseController
                 return $this->redirectToRoute('front_login');
             }
 
+            /** @var \App\Model\Customer\User\CustomerUser $customerUser */
             $customerUser = $this->getUser();
             try {
                 /** @var \App\Model\Order\Order $order */

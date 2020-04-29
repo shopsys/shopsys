@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Model\GoPay\PaymentMethod;
 
+use App\Model\GoPay\BankSwift\GoPayBankSwift;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
-use App\Model\GoPay\BankSwift\GoPayBankSwift;
 
 class GoPayPaymentMethodRepository
 {

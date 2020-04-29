@@ -76,7 +76,7 @@ class OrderController extends FrontBaseController
     private $splitTransportAndPaymentWatcher;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
+     * @var \App\Model\Payment\PaymentFacade
      */
     private $paymentFacade;
 
@@ -130,7 +130,7 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\OrderDataMapper $orderDataMapper
      * @param \App\Form\Front\Order\DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory
@@ -138,6 +138,8 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Order\Watcher\SplitTransportAndPaymentWatcher $splitTransportAndPaymentWatcher
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
+     * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
+     * @param \App\Model\GoPay\GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Stock\StockFacade $stockFacade
@@ -396,7 +398,6 @@ class OrderController extends FrontBaseController
 
             try {
                 $goPayData = $this->goPayFacadeOnCurrentDomain->sendPaymentToGoPay($order, $goPayBankSwift);
-
                 $this->orderFacade->setGoPayId($order, (string)$goPayData['goPayId']);
             } catch (\App\Model\GoPay\Exception\GoPayException $e) {
                 $this->addErrorFlash(t('Connection to GoPay gateway failed.'));
@@ -472,6 +473,51 @@ class OrderController extends FrontBaseController
         } catch (GoPayNotConfiguredException | GoPayPaymentDownloadException $e) {
             $this->addErrorFlash(t('Connection to GoPay gateway failed.'));
         }
+    }
+
+    /**
+     * @param string $urlHash
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function repeatGoPayPaymentAction(string $urlHash): Response
+    {
+        try {
+            /** @var \App\Model\Order\Order $order */
+            $order = $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
+        } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $e) {
+            $this->addErrorFlash(t('Objednávka nebyla nalezena.'));
+
+            return $this->redirectToRoute('front_homepage');
+        }
+
+        $goPayData = null;
+
+        if ($order->getPayment()->isGoPay()) {
+            if ($order->isGopayPaid() !== false) {
+                $this->addErrorFlash(t('Objednávka je již zaplacená.'));
+                return $this->redirectToRoute('front_homepage');
+            }
+        } else {
+            $this->addErrorFlash(t('Objednávka nemá nastaven způsob platby prostřednictvím GoPay.'));
+            return $this->redirectToRoute('front_homepage');
+        }
+
+        $goPayBankSwift = $this->session->get(self::SESSION_GOPAY_CHOOSEN_SWIFT, null);
+
+        try {
+            $goPayData = $this->goPayFacadeOnCurrentDomain->sendPaymentToGoPay($order, $goPayBankSwift);
+
+            //TODO transaction
+            //$this->goPayTransactionFacade->createNewTransactionByOrder($order, (string)$goPayData['goPayId']);
+            $this->orderFacade->setGoPayId($order, (string)$goPayData['goPayId']);
+        } catch (\App\Model\GoPay\Exception\GoPayException $e) {
+            $this->addErrorFlash(t('Connection to GoPay gateway failed.'));
+        }
+
+        return $this->render('Front/Content/Order/repeatGoPayPayment.html.twig', [
+            'order' => $order,
+            'goPayData' => $goPayData,
+        ]);
     }
 
     /**

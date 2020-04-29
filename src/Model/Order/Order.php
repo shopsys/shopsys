@@ -7,6 +7,7 @@ namespace App\Model\Order;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Product\Type\ProductType;
 use Doctrine\ORM\Mapping as ORM;
+use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
@@ -145,6 +146,18 @@ class Order extends BaseOrder
     public function setGoPayFik(?string $goPayFik)
     {
         $this->goPayFik = $goPayFik;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isGopayPaid(): ?bool
+    {
+        if ($this->goPayId === null) {
+            return null;
+        }
+
+        return $this->goPayStatus === PaymentStatus::PAID;
     }
 
     /**

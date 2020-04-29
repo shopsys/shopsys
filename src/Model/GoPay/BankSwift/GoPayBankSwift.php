@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Model\GoPay\BankSwift;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(

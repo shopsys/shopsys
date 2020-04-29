@@ -13,6 +13,12 @@
         <h1>{{ 'Order has been created but there were problems during payment'|trans }}</h1>
 
         <p>{{ 'There were problems during payment of created order with number %orderNumber%.'|trans({ '%orderNumber%' : order.number }) }}</p>
+
+        <p>
+            <a href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
+                {{ 'Klikněte zde pro zopakování úhrady objednávky'|trans }}
+            </a>
+        </p>
     </div>
 </div>
 {% endblock %}

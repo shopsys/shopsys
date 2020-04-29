@@ -28,7 +28,7 @@ class OrderData extends BaseOrderData
     public $transportPersonalPickupStockByProductTypeId;
 
     /**
-     * @var int|null
+     * @var string|null
      */
     public $goPayId;
 

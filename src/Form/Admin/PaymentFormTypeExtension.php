@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use App\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;

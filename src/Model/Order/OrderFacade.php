@@ -73,6 +73,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  * @property \App\Model\Cart\CartFacade $cartFacade
  * @property \App\Component\Domain\Domain $domain
+ * @property \App\Model\Order\OrderRepository $orderRepository
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -89,7 +90,7 @@ class OrderFacade extends BaseOrderFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
+     * @param \App\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade

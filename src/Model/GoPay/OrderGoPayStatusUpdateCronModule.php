@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace App\Model\GoPay;
 
+use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
+use App\Model\Order\OrderFacade;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
-use App\Model\Order\OrderFacade;
 use Symfony\Bridge\Monolog\Logger;
 
 class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
@@ -22,7 +22,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
     private $logger;
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
 
@@ -65,10 +65,19 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
         $twentyOneDaysAgo = $now->sub(DateInterval::createFromDateString('21 days'));
         $orders = $this->orderFacade->getAllUnpaidGoPayOrders($twentyOneDaysAgo);
 
-        $this->logger->debug('Downloading status updates for ' . count($orders) . ' orders.');
+        $this->logger->addInfo('Downloading status updates for `' . count($orders) . '` orders.');
 
         foreach ($orders as $order) {
-            $this->logger->debug('Downloading GoPay status for order with ID "' . $order->getId() . '".');
+            $this->logger->addInfo('Downloading GoPay status for order with ID `' . $order->getId() . '`.');
+
+            if ($order->isDeleted()) {
+                $this->logger->addInfo(sprintf(
+                    'Order status of order with ID `%s` has not been changed because is deleted',
+                    $order->getId()
+                ));
+
+                continue;
+            }
 
             $oldOrderGoPayStatus = $order->getGoPayStatus();
 
@@ -80,23 +89,28 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 continue;
             }
 
-            $this->logger->info($goPayStatusResponse);
+            $this->logger->addInfo($goPayStatusResponse);
 
             if (array_key_exists('state', $goPayStatusResponse->json)) {
                 $this->orderFacade->setGoPayStatusAndFik($order, $goPayStatusResponse);
             }
 
             if ($oldOrderGoPayStatus !== $order->getGoPayStatus()) {
-                $this->logger->info('Order with id "' . $order->getId() . '" changed GoPay status from "' . $oldOrderGoPayStatus . '" to "' . $order->getGoPayStatus() . '".');
+                $this->logger->info(
+                    sprintf(
+                        'Order with id `%d` changed GoPay status from `%s` to `%s`.',
+                        $order->getId(),
+                        $oldOrderGoPayStatus,
+                        $order->getGoPayStatus()
+                    )
+                );
             }
 
-            $this->logger->info('Order with id "' . $order->getId() . '" now has GoPay status: "' . $order->getGoPayStatus() . '".');
+            $this->logger->info(sprintf('Order with id `%d` now has GoPay status: `%s`.', $order->getId(), $order->getGoPayStatus()));
 
             if ($oldOrderGoPayStatus !== $order->getGoPayStatus() && $order->getGoPayStatus() === PaymentStatus::PAID) {
-                if ($order->getStatus()->getMailTemplateName() !== null) {
-                    $this->logger->info('Sending order e-mail.');
-                    $this->orderMailFacade->sendEmail($order);
-                }
+                $this->logger->info('Sending order e-mail.');
+                $this->orderMailFacade->sendEmail($order);
             }
         }
 

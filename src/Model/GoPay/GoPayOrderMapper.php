@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Model\GoPay;
 
+use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
+use App\Model\Order\Order;
 use League\ISO3166\ISO3166;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
-use App\Model\Order\Order;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class GoPayOrderMapper
@@ -42,11 +42,14 @@ class GoPayOrderMapper
      */
     public function createGoPayPaymentData(Order $order, ?string $goPayBankSwift): array
     {
+        $orderPayment = $order->getPayment();
+        $defaultPaymentInstrument = $orderPayment->getGoPayPaymentMethod() !== null ? $orderPayment->getGoPayPaymentMethod()->getIdentifier() : '';
+
         $goPayPaymentItemsData = $this->createGoPayPaymentItemsData($order);
         $router = $this->domainRouterFactory->getRouter($order->getDomainId());
         $payment = [
             'payer' => [
-                'default_payment_instrument' => $order->getPayment()->getGoPayPaymentMethod()->getIdentifier(),
+                'default_payment_instrument' => $defaultPaymentInstrument,
                 'allowed_payment_instruments' => $this->goPayPaymentMethodFacade->getAllTypeIdentifiers(),
                 'contact' => $this->createContactData($order),
             ],
@@ -86,7 +89,7 @@ class GoPayOrderMapper
      */
     private function formatPriceForGoPay(Money $price): int
     {
-        return (int)round($price->getAmount() * 100);
+        return (int)round($price->multiply(100)->getAmount());
     }
 
     /**

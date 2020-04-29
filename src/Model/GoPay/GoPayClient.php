@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Model\GoPay;
 
+use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use GoPay\Definition\RequestMethods;
 use GoPay\GoPay;
 use GoPay\Http\JsonBrowser;
@@ -13,11 +14,10 @@ use GoPay\OAuth2;
 use GoPay\Token\CachedOAuth;
 use GoPay\Token\InMemoryTokenCache;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 
 class GoPayClient
 {
-    const RESPONSE_STATUS_CODE_OK = '200';
+    public const RESPONSE_STATUS_CODE_OK = '200';
 
     /**
      * @var array
@@ -53,7 +53,7 @@ class GoPayClient
      * @param array|null $data
      * @return \GoPay\Http\Response
      */
-    private function sendApiRequest(string $urlPath, string $contentType, string $method, array $data = null): Response
+    private function sendApiRequest(string $urlPath, string $contentType, string $method, ?array $data = null): Response
     {
         if ($this->config['goid'] === null) {
             throw new \App\Model\GoPay\Exception\GoPayNotConfiguredException();
@@ -106,7 +106,7 @@ class GoPayClient
 
         $response = $this->sendApiRequest($urlPath, GoPay::FORM, RequestMethods::GET);
 
-        if ($response->statusCode !== self::RESPONSE_STATUS_CODE_OK) {
+        if ((int)$response->statusCode !== (int)self::RESPONSE_STATUS_CODE_OK) {
             throw new GoPayPaymentDownloadException(
                 $this->goPay->buildUrl('api/' . $urlPath),
                 RequestMethods::GET,
@@ -134,7 +134,7 @@ class GoPayClient
             RequestMethods::GET
         );
 
-        if ($response->statusCode !== self::RESPONSE_STATUS_CODE_OK) {
+        if ((int)$response->statusCode !== (int)self::RESPONSE_STATUS_CODE_OK) {
             throw new GoPayPaymentDownloadException(
                 $this->goPay->buildUrl('api/' . $urlPath),
                 RequestMethods::GET,

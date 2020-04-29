@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Model\GoPay;
 
+use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
+use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
-use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
-use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Symfony\Bridge\Monolog\Logger;
 
 class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
@@ -24,7 +24,7 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
     private $paymentMethodFacade;
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
 
@@ -32,12 +32,14 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
+
     /**
      * @var array
      */
     private $goPayConfig;
 
     /**
+     * @param array $goPayConfig
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $paymentMethodFacade
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

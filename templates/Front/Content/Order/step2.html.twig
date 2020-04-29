@@ -159,6 +159,11 @@
                                             {{ paymentPrice.priceWithVat|priceText }}
                                         </span>
                                     </label>
+                                    {# TODO gopay
+                                    this section is temporary disabled. It is a list goPay supported banks. List will be allowed in next US. List should be displayed when is
+                                    checked Payment with goPay type and subtype is bank transfer. For this function is copied JS file GoPyaySelection with original logic.
+                                    In next US update this JS with actual logic in PaymentTransportChooser.js.
+                                     #}
                                     {% if isGoPayBankTransfer %}
                                         <div class="box-chooser__sub-selection js-gopay-list-banks display-none">
                                             {% for goPayBankSwiftFormChild in goPayBankSwiftForm %}

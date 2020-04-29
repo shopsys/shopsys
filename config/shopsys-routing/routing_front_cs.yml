@@ -47,6 +47,10 @@ front_order_gopay_status_notify:
     defaults: { _controller: App\Controller\Front\GoPayController:gopayStatusNotifyAction }
     methods: [GET]
 
+front_order_repeat_gopay_payment:
+    path: /opakovat-platbu/{urlHash}
+    defaults: { _controller: App\Controller\Front\OrderController:repeatGoPayPaymentAction }
+
 front_order_sent:
     path: /potvrzeni-objednavky/
     defaults: { _controller: App\Controller\Front\OrderController:sentAction }

@@ -30,3 +30,24 @@ msgstr "Nie"
 
 msgid "Skvělá volba! Vaše zboží jsme přidali do košíku"
 msgstr ""
+
+msgid "Klikněte zde pro zopakování úhrady objednávky"
+msgstr "Kliknite tu pre zopakovanie úhrady objednávky"
+
+msgid "Nyní budete přesměrováni na platební bránu GoPay."
+msgstr "Teraz budete presmerovaný na platobnú bránu GoPay."
+
+msgid "Objednávka je již zaplacená."
+msgstr "Objednávka je už zaplatená."
+
+msgid "Objednávka nebyla nalezena."
+msgstr "Objednávka nebola nájdená."
+
+msgid "Opakovat platbu"
+msgstr "Opakovať platbu"
+
+msgid "Uhrazení objednávky č. %orderNumber% platební kartou."
+msgstr "Uhradenie objednávky č.%orderNumber% platobnou kartou."
+
+msgid "Zaplatit"
+msgstr "Zaplatiť"

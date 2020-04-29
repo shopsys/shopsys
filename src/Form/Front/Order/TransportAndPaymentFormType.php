@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Form\Front\Order;
 
 use App\Form\Admin\Transformer\StockIdToStockTransformer;
+use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\Order\FrontOrderData;
 use Shopsys\FrameworkBundle\Form\SingleCheckboxChoiceType;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -29,7 +29,7 @@ class TransportAndPaymentFormType extends AbstractType
     private $transportFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
+     * @var \App\Model\Payment\PaymentFacade
      */
     private $paymentFacade;
 
@@ -50,7 +50,7 @@ class TransportAndPaymentFormType extends AbstractType
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Form\Admin\Transformer\StockIdToStockTransformer $stockIdToStockTransformer
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
