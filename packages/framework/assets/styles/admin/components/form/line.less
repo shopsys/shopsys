@@ -415,4 +415,46 @@
             font-weight: bold;
         }
     }
+
+    &__friendly-url {
+        display: flex;
+        flex-direction: column;
+
+        @media @query-md {
+            flex-direction: row;
+        }
+
+        &__domain {
+            display: flex;
+            flex-direction: row;
+
+            .form-line__side {
+                width: 90%;
+                margin-left: 0;
+            }
+        }
+
+        &__divider {
+            line-height: @input-height;
+            height: @input-height;
+            padding-right: 5px;
+            width: 30px;
+            text-align: center;
+        }
+
+        &__input {
+            display: flex;
+            flex-direction: row;
+
+            .input {
+                width: 90%;
+                margin-top: 5px;
+                margin-right: 5px;
+
+                @media @query-md {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
 }

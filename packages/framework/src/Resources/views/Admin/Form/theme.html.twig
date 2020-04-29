@@ -390,22 +390,16 @@
 {%- endblock url_list_widget -%}
 
 {% block friendly_url_widget %}
-    <div class="js-entity-url-list-new-row form-line" data-index="{{ form.vars.name }}">
-        <div class="form-line__label form-line__label--input">
+    <div class="js-entity-url-list-new-row form-line__friendly-url" data-index="{{ form.vars.name }}">
+        <div class="form-line__friendly-url__domain form-line__label--input">
             {{ form_widget(form.domain) }}
+            <div class="form-line__friendly-url__divider">/</div>
         </div>
-        <div class="form-line__side">
-            <div class="form-line__item form-line__item--text">
-                /
-            </div>
-            <div class="form-line__item">
-                {{ form_widget(form.slug) }}
-            </div>
-            <div class="form-line__item">
-                <button class="js-entity-url-list-new-row-delete-button btn-no-style" type="button">
-                    <i class="svg svg-delete-thin in-icon in-icon--delete"></i>
-                </button>
-            </div>
+        <div class="form-line__friendly-url__input">
+            {{ form_widget(form.slug) }}
+            <button class="js-entity-url-list-new-row-delete-button btn-no-style" type="button">
+                <i class="svg svg-delete-thin in-icon in-icon--delete"></i>
+            </button>
         </div>
         {{ form_errors(form.slug) }}
     </div>
