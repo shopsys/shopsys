@@ -1,6 +1,11 @@
 .box-free-transport {
     display: flex;
     align-items: center;
+    margin-top: 10px;
+
+    @media @query-md {
+        margin-top: 0;
+    }
 
     &__content {
         position: relative;
@@ -39,6 +44,7 @@
         color: @color-light-tertiary;
 
         &__strong {
+            font-family: @font-quartenary;
             color: @color-primary;
         }
     }
@@ -65,6 +71,18 @@
     &--done {
         strong {
             color: @color-green;
+        }
+    }
+
+    &--free-delivery {
+        .box-free-transport__desc {
+            margin-bottom: 0;
+
+            font-size: 13px;
+        }
+
+        .box-free-transport__icon {
+            width: 35px;
         }
     }
 }

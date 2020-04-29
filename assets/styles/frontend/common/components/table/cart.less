@@ -19,6 +19,14 @@
             }
         }
 
+        &--footer {
+            &__price-final {
+                font-size: 17px;
+                font-family: @font-quartenary;
+                color: @color-primary;
+            }
+        }
+
         &__image {
             display: inline-block;
             position: relative;
@@ -46,22 +54,38 @@
         &__avail {
             font-family: @font-quartenary;
             color: #73a90c;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
         }
 
-        &__price {
-            color: @color-primary;
-            font-weight: 400;
+        &__caption {
+            font-family: @font-tertiary;
+            color: @color-base;
+        }
 
-            &--final {
-                font-family: @font-quartenary;
+        &__remove {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+
+            border: 1px solid @color-border-light;
+            border-radius: 100%;
+            font-size: 18px;
+            color: lighten(@color-primary, 5%);
+
+            &:hover {
+                border-color: @color-border;
+                color: @color-primary;
             }
         }
     }
 
     &__row {
         &--footer {
-            width: 360px;
-            padding: 0 40px 0 5px;
+            width: 365px;
+            padding: 0 45px 0 5px;
 
             border: 1px solid @color-border;
             border-radius: @radius;
@@ -72,6 +96,16 @@
         display: flex;
         justify-content: flex-end;
         margin-top: -10px;
+    }
+
+    &-preview {
+        &__cell__title {
+            font-family: @font-quartenary;
+            font-size: 14px;
+            color: @color-primary;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
     }
 }
 
@@ -90,13 +124,19 @@
 
         &__row {
             display: block;
-            margin-bottom: 5px;
-            padding: 5px;
+            padding: 12px 0;
             position: relative;
+            max-width: 100%;
 
-            border: 1px solid @color-border;
+            border-bottom: 1px solid @color-border;
 
-            tfoot & {
+            &--footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                width: 100%;
+                margin-top: 10px;
+
                 border: 0;
             }
         }
@@ -104,18 +144,15 @@
         &__cell {
             display: block;
 
-            tfoot & {
-                display: none;
-            }
-
             &--image {
                 float: left;
-                width: 40px;
+                width: 90px;
+                margin-top: 15px;
             }
 
             &--name {
                 padding-left: @table-cart-image-width + @table-cart-image-gap;
-                padding-right: 20px;
+                padding-right: 40px;
             }
 
             &--price {
@@ -123,14 +160,24 @@
             }
 
             &--amount {
-                padding-left: @table-cart-image-width + @table-cart-image-gap;
-                padding-top: 10px;
+                position: absolute;
+                right: 0;
+                bottom: 15px;
             }
 
             &--action {
                 position: absolute;
-                top: 0;
+                top: 3px;
                 right: 0;
+            }
+
+            &--avail,
+            &--price-final {
+                padding-left: @table-cart-image-width + @table-cart-image-gap;
+            }
+
+            &--price-final {
+                padding-top: 6px;
             }
 
             &--total-price {
@@ -165,7 +212,7 @@
             justify-content: space-between;
             align-items: center;
 
-            border-bottom: 1px solid @color-border;
+            border-bottom: 1px solid lighten(@color-border, 5%);
 
             &--content:last-child {
                 border-bottom: 0;
@@ -202,6 +249,8 @@
 
             &--name {
                 flex-grow: 1;
+                padding-left: 15px;
+                padding-right: 50px;
             }
 
             &--avail {

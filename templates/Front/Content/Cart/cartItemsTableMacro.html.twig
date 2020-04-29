@@ -66,25 +66,27 @@
                 <td class="table-cart__cell table-cart__cell--amount">
                     <span class="form-input-spinbox js-spinbox">
                         {{ form_widget(form.quantities[index], { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1, 'data-spinbox-max': dataSpinboxMax}}) }}
-                        <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">+</button>
-                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">-</button>
+                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--plus js-spinbox-plus">
+                            <i class="form-input-spinbox__btn__icon form-input-spinbox__btn__icon--plus svg svg-arrow"></i>
+                        </button>
+                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">
+                            <i class="form-input-spinbox__btn__icon svg svg-arrow"></i>
+                        </button>
                     </span>
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
-                    <strong class="table-cart__cell__price">{{ product.getHighPriceWithVat(getDomain().id)|price }}</strong>
+                    <strong class="cart-price cart-price--secondary">{{ product.getHighPriceWithVat(getDomain().id)|price }}</strong>
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--price-final js-cart-item-total-price">
 
                     {% if cartItemDiscount is not null %}
                         <span class="line-through">{{ cartItemPrice.totalPrice.priceWithVat|price }}</span>
-                        <span class="color-purple"><strong>{{ cartItemDiscountPrice.priceWithVat|price }}</strong></span>
-                        <div>
-                            <span class="color-purple"><strong>{{ orderPreview.promoCodeCode }}</strong></span>
-                        </div>
+                        <strong class="cart-price cart-price--primary cart-price--promo">{{ cartItemDiscountPrice.priceWithVat|price }}</strong>
+                        <strong class="cart-tag cart-tag--promo">{{ orderPreview.promoCodeCode }}</strong>
                     {% else %}
-                        <strong class="table-cart__cell__price table-cart__cell__price--final">{{ cartItemPrice.totalPrice.priceWithVat|price }}</strong>
+                        <strong class="cart-price cart-price--primary">{{ cartItemPrice.totalPrice.priceWithVat|price }}</strong>
                     {% endif %}
                 </td>
 
@@ -93,7 +95,7 @@
                             href="{{ url('front_cart_delete', { cartItemId: index, _token: csrf_token('front_cart_delete_' ~ index) }) }}"
                             class="js-cart-item-remove-button"
                     >
-                        <i class="svg svg-remove"></i>
+                        <i class="table-cart__cell__remove svg svg-remove"></i>
                     </a>
                 </td>
             </tr>
@@ -106,21 +108,14 @@
                     <strong class="table-cart__cell__caption">{{ 'Zaplatíte'|trans }}</strong>
                 </td>
                 <td class="table-cart__cell table-cart__cell--footer table-cart__cell--price">
-                    <span>
+                    <span class="cart-price cart-price--secondary cart-price--previous">
                         {{ orderPreview.totalProductHighPrice.priceWithVat|price }}
                     </span>
                 </td>
                 <td class="table-cart__cell table-cart__cell--footer table-cart__cell--price-final js-cart-total-price">
-                    <div>
-                        {% if isDiscountInOrderPreview %}
-                        <span class="line-through">
-                            {{ orderPreview.productsFullPrice.priceWithVat|price }}
-                        </span>
-                        {% endif %}
-                        <span>
-                            {{ orderPreview.productsPrice.priceWithVat|price }}
-                        </span>
-                    </div>
+                    <span class="cart-price cart-price--primary cart-price--bigger">
+                        {{ orderPreview.productsPrice.priceWithVat|price }}
+                    </span>
                 </td>
             </tr>
         </tfoot>

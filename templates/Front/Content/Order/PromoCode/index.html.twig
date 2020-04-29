@@ -5,17 +5,17 @@
             <button type="button" id="js-promo-code-submit-button" class="btn btn--primary box-promo-code__btn">{{ 'Apply'|trans }}</button>
         </div>
     {% else %}
-        <p>{{ 'Vaše sleva s kódem byla uplatněna'|trans }}</p>
+        <strong class="box-promo-code__title">{{ 'Vaše sleva s kódem byla uplatněna'|trans }}</strong>
         <span class="box-promo-code__added">
             <span class="box-promo-code__added__discount color-purple">
-                <strong>
+                <strong class="cart-tag cart-tag--promo cart-tag cart-tag--promo--primary">
                     {{ validEnteredPromoCode.code }}
+                    <a href="{{ url('front_promo_code_remove') }}" id="js-promo-code-remove-button" class="box-promo-code__added__remove">
+                        <i class="svg svg-remove"></i>
+                    </a>
                 </strong>
             </span>
-            <a href="{{ url('front_promo_code_remove') }}" id="js-promo-code-remove-button" class="box-promo-code__added__remove">
-                <i class="svg svg-remove"></i>
-            </a>
         </span>
-        <p class="js-not-implemented-yet">{{ 'Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle pravidel'|trans }}</p>
+        <p class="box-promo-code__desc js-not-implemented-yet">{{ 'Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle pravidel'|trans }}</p>
     {% endif %}
 </div>

@@ -66,6 +66,7 @@
         color: @btn-primary-color;
         background-color: @btn-primary-bg;
         background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
+        -webkit-font-smoothing: antialiased;
 
         &:hover {
             color: @btn-primary-color-hover;
@@ -226,28 +227,53 @@
         }
     }
 
-    @btn-mini-padding-horizontal-mobile: 2px;
-    @btn-mini-padding-horizontal: 5px;
-    @btn-mini-height: @btn-height - 26;
+    &--prev {
+        font-family: @font-quartenary;
+        text-transform: none;
+        font-size: 15px;
+        letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
 
-    &--mini {
-        height: @btn-mini-height;
-        line-height: @btn-mini-height;
-        min-height: @btn-mini-height;
-        padding: 0 @btn-mini-padding-horizontal-mobile;
+        .btn__icon {
+            margin-right: 3px;
 
-        font-size: 12px;
-
-        @media @query-lg {
-            padding: 0 @btn-mini-padding-horizontal;
+            transform: scaleX(-1);
+            color: inherit;
+            font-size: 20px;
         }
     }
 
-    &--in-text {
-        margin: 0;
+    &--checkout-step {
+        display: flex;
+        align-items: center;
+        padding: 16px 25px 15px;
 
-        @media @query-vl {
-            margin: 0 10px;
+        font-family: @font-quartenary;
+        font-size: 15px;
+        letter-spacing: 0;
+        text-transform: none;
+        background-color: #222631;
+        color: #fff;
+        -webkit-font-smoothing: antialiased;
+
+        @media @query-lg {
+            padding-left: 35px;
+            padding-right: 35px;
+        }
+
+        &::before {
+            order: 1;
+            margin-left: 10px;
+            content: "\f105";
+
+            font-family: svg;
+            color: @color-add;
+            font-size: 20px;
+        }
+
+        &:hover {
+            background-color: lighten(#222631, 10%);
+            color: #fff;
         }
     }
 }

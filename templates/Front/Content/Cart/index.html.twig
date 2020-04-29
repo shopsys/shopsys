@@ -32,68 +32,71 @@
 
     {% if cart is not null %}
         {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
-        <div class="web__line web__line--bg-color web__line--spacing web__line--spacing--big">
+        <div class="web__line web__line--bg-color web__line--cart">
             <div class="web__container">
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form box-cart' }}) }}
                     {{ form_errors(form) }}
                     <div class="box-cart__col box-cart__col--info">
-                        <div class="box-cart-card box-cart-card--info">
-                            {% set previewNumber = 0 %}
-                            {% for orderPreview in splitOrderPreview.orderPreviews %}
-                                {% set previewNumber = previewNumber + 1 %}
-                                {% if loop.first %}
-                                <div class="box-cart-card__top">
-                                    <h1 class="box-cart-card__title">{{ 'Váš košík'|trans }}</h1>
-                                    {{ cartFreeTransportMacro.progressBar(orderPreview) }}
+                        {% set previewNumber = 0 %}
+                        {% for orderPreview in splitOrderPreview.orderPreviews %}
+                            {% set previewNumber = previewNumber + 1 %}
+                            {% if loop.first and not splitOrderPreview.morePreviews %}
+                                <div class="box-cart-card box-cart-card--info">
+                                    <div class="box-cart-card__top">
+                                        <h1 class="box-cart-card__title box-cart-card__title--no-margin">{{ 'Váš košík'|trans }}</h1>
+                                        {{ cartFreeTransportMacro.progressBar(orderPreview) }}
+                                    </div>
+                                    {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
                                 </div>
+                            {% endif %}
+                            {% if splitOrderPreview.morePreviews %}
+                                {% if loop.first %}
+                                    <div class="box-cart-message-box">
+                                        <img class="box-cart-message-box__img" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.png') }}" alt="{{ 'Doprava zdarma'|trans }}">
+                                        <div class="box-cart-message-box__content">
+                                            <strong class="box-cart-message-box__title">{{ 'V košíku máte nadrozměrnou položku'|trans }}</strong>
+                                            <p class="box-cart-message-box__desc">{{ 'Tohle zboží má kvůli svým rozměrům a náročnosti manipulace jiné požadavky na dopravu. Proto jsme váš nákup rozdělili na víc zásilek.'|trans }}</p>
+                                        </div>
+                                    </div>
                                 {% endif %}
-                                {% if splitOrderPreview.morePreviews %}
-                                    <h2>
-                                        {{ 'Zásilka č. %number%'|trans({ '%number%': previewNumber }) }}
-                                        -
-                                        {{ orderPreview.productType.name }}
-                                    </h2>
-                                {% endif %}
-                                {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
-                            {% endfor %}
-                        </div>
-
-                        {% if splitOrderPreview.morePreviews %}
-                            <div class="box-cart-card box-cart-card--info">
-                                <table class="table-cart">
-                                    <tfoot>
-                                        <tr class="table-cart__row">
-                                            <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
-                                                <h3>
-                                                    {{ 'Total price including VAT'|trans }}:
-                                                    <span>
-                                                        {{ splitOrderPreview.totalPrice.priceWithVat|price }}
-                                                    </span>
-                                                </h3>
-                                            </td>
-                                        </tr>
-                                        <tr class="table-cart__row">
-                                            <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price">
-                                                {{ 'Total price excluding VAT'|trans }}:
-                                                <span>
-                                                    {{ splitOrderPreview.totalPrice.priceWithoutVat|price }}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        {% endif %}
+                                <div class="box-cart-card box-cart-card--info box-cart-card--{{ previewNumber }}">
+                                    <div class="box-cart-card__top">
+                                        <h2 class="box-cart-card__title box-cart-card__title--no-margin">
+                                            {{ 'Zásilka č. %number%'|trans({ '%number%': previewNumber }) }}
+                                            -
+                                            {{ orderPreview.productType.name }}
+                                        </h2>
+                                        {% if loop.first %}
+                                            {{ cartFreeTransportMacro.progressBar(orderPreview) }}
+                                        {% endif %}
+                                        {% if loop.last %}
+                                            <div class="box-free-transport box-free-transport--free-delivery js-not-implemented-yet">
+                                                <div class="box-free-transport__icon">
+                                                    <img class="box-free-transport__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.png') }}" alt="{{ 'Doprava zdarma'|trans }}">
+                                                </div>
+                                                <div class="box-free-transport__content">
+                                                    <div class="box-free-transport__desc">
+                                                        {{ 'Doručení na adresu <strong class="box-free-transport__desc__strong">Zdarma</strong><br>Osobní odběr na prodejnách SCONTO <strong class="box-free-transport__desc__strong">Zdarma</strong>'|trans|raw }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
 
                         <div class="box-cart__buttons">
                             <div class="box-cart__buttons__left">
-                                <a href="{{ url('front_homepage') }}" class="btn in-action__btn">
+                                <a href="{{ url('front_homepage') }}" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev">
+                                    <i class="btn__icon svg svg-chevron"></i>
                                     {{ 'Zpět do obchodu'|trans }}
                                 </a>
                             </div>
                             {% if cart.itemsCount > 0 %}
                                 <div class="box-cart__buttons__left">
-                                    {{ form_row(form.submit, { label: 'Další krok'|trans, attr: { class: 'btn btn--success in-action__btn in-action__btn--big'}}) }}
+                                    {{ form_row(form.submit, { label: 'Další krok'|trans, attr: { class: 'btn btn--dark btn--checkout-step'}}) }}
                                 </div>
                             {% endif %}
                         </div>
@@ -107,10 +110,6 @@
                                     showProducts: true,
                                     showAdvert: true
                                 })) }}
-                            </div>
-                        </div>
-                        <div class="box-cart-bottom">
-                            <div class="box-cart-bottom__info">
                             </div>
                         </div>
                     </div>
