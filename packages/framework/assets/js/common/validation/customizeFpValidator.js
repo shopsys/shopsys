@@ -39,6 +39,7 @@ FpJsFormValidator.customizeMethods._submitForm = FpJsFormValidator.customizeMeth
 
 // Custom behavior:
 // - disable JS validation for forms with class js-no-validate
+// - disable JS validation for forms submitted by element with class js-no-validate-button
 // - do not submit if custom "on-submit" code is specified
 // - do not submit if ajax queue is not empty
 // - clears callbacks if ajax queue exists, because while validation is done via ajax,
@@ -46,8 +47,9 @@ FpJsFormValidator.customizeMethods._submitForm = FpJsFormValidator.customizeMeth
 // (the rest is copy&pasted from original method; eg. ajax validation)
 FpJsFormValidator.customizeMethods.submitForm = function (event) {
 
-    const doubleFormSubmitProtection = new DoubleFormSubmitProtection();
-    doubleFormSubmitProtection.protection(event);
+    if ($(':focus').hasClass('js-no-validate-button')) {
+        return;
+    }
 
     $('.js-window-validation-errors').addClass('display-none');
     const $form = $(this);
@@ -56,9 +58,8 @@ FpJsFormValidator.customizeMethods.submitForm = function (event) {
         return;
     }
 
-    if ($(':focus').hasClass('js-no-validate-button')) {
-        return;
-    }
+    const doubleFormSubmitProtection = new DoubleFormSubmitProtection();
+    doubleFormSubmitProtection.protection(event);
 
     FpJsFormValidator.each(this, function (item) {
         const element = item.jsFormValidator;

@@ -1,5 +1,5 @@
 const doubleFormSubmitProtectionAttribute = 'submit-protection';
-const RESET_PROTECTION_TIME = 200;
+const RESET_PROTECTION_TIME = 1500;
 
 export default class DoubleFormSubmitProtection {
 
