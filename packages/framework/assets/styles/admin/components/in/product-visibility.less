@@ -1,10 +1,9 @@
 .in-product-visibility {
     display: none;
     position: absolute;
-    top: 0px;
-    left: -@window-width;
-    right: 20px;
-    width: @window-width;
+    top: 15px;
+    right: 0;
+    width: 320px;
     min-height: @window-height;
     padding: 25px 30px 30px;
     z-index: 10000;
@@ -12,6 +11,25 @@
     border: 1px solid @color-border;
     background: @bg-window;
     box-shadow: 0 0 20px rgba(0,0,0, 0.3);
+
+    @media @query-md {
+        width: @window-width;
+    }
+
+    &--down {
+        top: 5px;
+        left: -13px;
+
+        @media @query-sm {
+            left: 0;
+        }
+    }
+
+    &__title-position {
+        position: absolute;
+        left: 0;
+        top: -15px;
+    }
 
     &__title {
         padding: 0px 15px;
