@@ -1402,6 +1402,9 @@ There you can find links to upgrade notes for other versions too.
 
 - remove deprecated methods from your project ([#1801](https://github.com/shopsys/shopsys/pull/1801))
     - see #project-base-diff to update your project
+    
+- remove subscription newsletter form from error pages ([#1819](https://github.com/shopsys/shopsys/pull/1819))
+    - see #project-base-diff to update your project
 
 ### Tools
 
