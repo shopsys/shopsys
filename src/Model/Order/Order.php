@@ -6,6 +6,7 @@ namespace App\Model\Order;
 
 use App\Model\Order\Item\OrderItem;
 use App\Model\Product\Type\ProductType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -40,25 +41,16 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
 class Order extends BaseOrder
 {
     /**
-     * @var string
+     * @var \App\Model\GoPay\GoPayTransaction[]|\Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\OneToMany(
+     *     targetEntity="App\Model\GoPay\GoPayTransaction",
+     *     mappedBy="order",
+     *     cascade={"remove"},
+     * )
+     * @ORM\OrderBy({"goPayId" = "ASC"})
      */
-    private $goPayId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=30, nullable=true)
-     */
-    private $goPayStatus;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=39, nullable=true)
-     */
-    private $goPayFik;
+    private $goPayTransactions;
 
     /**
      * REMOVED PROPERTY!
@@ -84,8 +76,7 @@ class Order extends BaseOrder
     ) {
         parent::__construct($orderData, $orderNumber, $urlHash, $customerUser);
 
-        $this->goPayId = $orderData->goPayId;
-        $this->goPayStatus = $orderData->goPayStatus;
+        $this->goPayTransactions = new ArrayCollection();
     }
 
     /**
@@ -94,70 +85,55 @@ class Order extends BaseOrder
      */
     public function edit(BaseOrderData $orderData): OrderEditResult
     {
-        $this->goPayId = $orderData->goPayId;
-        $this->goPayStatus = $orderData->goPayStatus;
+        $this->editGoPayTransactions($orderData->goPayTransactions);
 
         return parent::edit($orderData);
     }
 
     /**
-     * @return string|null
+     * @param \App\Model\GoPay\GoPayTransaction[] $goPayTransactions
      */
-    public function getGoPayId(): ?string
+    private function editGoPayTransactions(array $goPayTransactions): void
     {
-        return $this->goPayId;
+        $this->goPayTransactions->clear();
+        foreach ($goPayTransactions as $goPayTransaction) {
+            $this->goPayTransactions->add($goPayTransaction);
+        }
     }
 
     /**
-     * @param string|null $goPayId
+     * @return \App\Model\GoPay\GoPayTransaction[]
      */
-    public function setGoPayId(?string $goPayId): void
+    public function getGoPayTransactions(): array
     {
-        $this->goPayId = $goPayId;
+        return $this->goPayTransactions->toArray();
     }
 
     /**
-     * @return string|null
+     * @return string[]
      */
-    public function getGoPayStatus(): ?string
+    public function getGoPayTransactionsIndexedByGoPayId(): array
     {
-        return $this->goPayStatus;
-    }
-
-    /**
-     * @param string $goPayStatus
-     */
-    public function setGoPayStatus(string $goPayStatus): void
-    {
-        $this->goPayStatus = $goPayStatus;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getGoPayFik(): ?string
-    {
-        return $this->goPayFik;
-    }
-
-    /**
-     * @param string|null $goPayFik
-     */
-    public function setGoPayFik(?string $goPayFik)
-    {
-        $this->goPayFik = $goPayFik;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isGopayPaid(): ?bool
-    {
-        if ($this->goPayId === null) {
-            return null;
+        $returnArray = [];
+        foreach ($this->goPayTransactions as $transaction) {
+            $returnArray[$transaction->getGoPayId()] = $transaction->getGoPayStatus();
         }
 
-        return $this->goPayStatus === PaymentStatus::PAID;
+        return $returnArray;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGoPayPaid(): bool
+    {
+        foreach ($this->goPayTransactions->toArray() as $item) {
+            if ($item->getGoPayStatus() === PaymentStatus::PAID) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

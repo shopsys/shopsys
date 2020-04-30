@@ -10,6 +10,7 @@ use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\GoPay\Exception\GoPayNotConfiguredException;
 use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use App\Model\GoPay\GoPayOnCurrentDomainFacade;
+use App\Model\GoPay\GoPayTransactionFacade;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use App\Model\Order\FrontOrderData;
 use App\Model\Order\Order;
@@ -126,6 +127,11 @@ class OrderController extends FrontBaseController
     private $stockFacade;
 
     /**
+     * @var \App\Model\GoPay\GoPayTransactionFacade
+     */
+    private $goPayTransactionFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
@@ -140,6 +146,7 @@ class OrderController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
      * @param \App\Model\GoPay\GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain
+     * @param \App\Model\GoPay\GoPayTransactionFacade $goPayTransactionFacade
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Stock\StockFacade $stockFacade
@@ -159,6 +166,7 @@ class OrderController extends FrontBaseController
         LegalConditionsFacade $legalConditionsFacade,
         GoPayBankSwiftFacade $goPayBankSwiftFacade,
         GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain,
+        GoPayTransactionFacade $goPayTransactionFacade,
         OrderPreviewSplittingFacade $orderPreviewSplittingFacade,
         OrderDataFactory $orderDataFactory,
         StockFacade $stockFacade
@@ -180,9 +188,13 @@ class OrderController extends FrontBaseController
         $this->orderPreviewSplittingFacade = $orderPreviewSplittingFacade;
         $this->orderDataFactory = $orderDataFactory;
         $this->stockFacade = $stockFacade;
+        $this->goPayTransactionFacade = $goPayTransactionFacade;
     }
 
-    public function indexAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(): Response
     {
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         if ($cart === null) {
@@ -307,8 +319,9 @@ class OrderController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function previewAction(Request $request)
+    public function previewAction(Request $request): Response
     {
         $transportIdsByProductTypeId = $request->get('transportIdsByProductTypeId');
         $paymentId = $request->get('paymentId');
@@ -370,7 +383,10 @@ class OrderController extends FrontBaseController
         }
     }
 
-    public function saveOrderFormAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function saveOrderFormAction(): Response
     {
         $flow = $this->domainAwareOrderFlowFactory->create();
         $flow->bind(new FrontOrderData());
@@ -380,7 +396,10 @@ class OrderController extends FrontBaseController
         return new Response();
     }
 
-    public function sentAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function sentAction(): Response
     {
         $orderId = $this->session->get(self::SESSION_CREATED_ORDER, null);
         $this->session->remove(self::SESSION_CREATED_ORDER);
@@ -398,7 +417,7 @@ class OrderController extends FrontBaseController
 
             try {
                 $goPayData = $this->goPayFacadeOnCurrentDomain->sendPaymentToGoPay($order, $goPayBankSwift);
-                $this->orderFacade->setGoPayId($order, (string)$goPayData['goPayId']);
+                $this->goPayTransactionFacade->createNewTransactionByOrder($order, (string)$goPayData['goPayId']);
             } catch (\App\Model\GoPay\Exception\GoPayException $e) {
                 $this->addErrorFlash(t('Connection to GoPay gateway failed.'));
             }
@@ -424,13 +443,11 @@ class OrderController extends FrontBaseController
             $order = $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
         } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $e) {
             $this->addErrorFlash(t('Order not found.'));
-
             return $this->redirectToRoute('front_cart');
         }
 
         if ($order->getPayment()->isGoPay()) {
             $this->checkOrderGoPayStatus($order);
-
             if ($this->goPayFacadeOnCurrentDomain->isOrderGoPayUnpaid($order)) {
                 return $this->redirectToRoute('front_order_not_paid', ['urlHash' => $urlHash]);
             }
@@ -469,7 +486,7 @@ class OrderController extends FrontBaseController
     private function checkOrderGoPayStatus(Order $order): void
     {
         try {
-            $this->goPayFacadeOnCurrentDomain->checkOrderGoPayStatus($order);
+            $this->goPayTransactionFacade->updateOrderTransactions($order);
         } catch (GoPayNotConfiguredException | GoPayPaymentDownloadException $e) {
             $this->addErrorFlash(t('Connection to GoPay gateway failed.'));
         }
@@ -493,23 +510,19 @@ class OrderController extends FrontBaseController
         $goPayData = null;
 
         if ($order->getPayment()->isGoPay()) {
-            if ($order->isGopayPaid() !== false) {
+            if ($order->isGoPayPaid()) {
                 $this->addErrorFlash(t('Objednávka je již zaplacená.'));
                 return $this->redirectToRoute('front_homepage');
             }
         } else {
-            $this->addErrorFlash(t('Objednávka nemá nastaven způsob platby prostřednictvím GoPay.'));
-            return $this->redirectToRoute('front_homepage');
+            throw $this->createNotFoundException('Objednávka nemá nastaven způsob platby prostřednictvím GoPay.');
         }
 
         $goPayBankSwift = $this->session->get(self::SESSION_GOPAY_CHOOSEN_SWIFT, null);
 
         try {
             $goPayData = $this->goPayFacadeOnCurrentDomain->sendPaymentToGoPay($order, $goPayBankSwift);
-
-            //TODO transaction
-            //$this->goPayTransactionFacade->createNewTransactionByOrder($order, (string)$goPayData['goPayId']);
-            $this->orderFacade->setGoPayId($order, (string)$goPayData['goPayId']);
+            $this->goPayTransactionFacade->createNewTransactionByOrder($order, (string)$goPayData['goPayId']);
         } catch (\App\Model\GoPay\Exception\GoPayException $e) {
             $this->addErrorFlash(t('Connection to GoPay gateway failed.'));
         }
@@ -537,12 +550,18 @@ class OrderController extends FrontBaseController
         }
     }
 
-    public function termsAndConditionsAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function termsAndConditionsAction(): Response
     {
         return $this->getTermsAndConditionsResponse();
     }
 
-    public function termsAndConditionsDownloadAction()
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse
+     */
+    public function termsAndConditionsDownloadAction(): Response
     {
         $response = $this->getTermsAndConditionsResponse();
 
@@ -556,7 +575,7 @@ class OrderController extends FrontBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getTermsAndConditionsResponse()
+    private function getTermsAndConditionsResponse(): Response
     {
         return $this->render('Front/Content/Order/legalConditions.html.twig', [
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
@@ -566,7 +585,7 @@ class OrderController extends FrontBaseController
     /**
      * @param \App\Model\Order\Order $order
      */
-    private function sendMail($order)
+    private function sendMail($order): void
     {
         $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
         if ($mailTemplate->isSendMail()) {

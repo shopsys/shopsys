@@ -22,7 +22,7 @@
             <label class="form-line__label">{{ 'GoPay payment status'|trans }}:</label>
             <div class="form-line__side">
                 <div class="form-line__item form-line__item--text">
-                    {{ order.goPayStatus }}
+                    {{ order.getGoPayTransactions|last.getGoPayStatus }}
                 </div>
             </div>
         </div>

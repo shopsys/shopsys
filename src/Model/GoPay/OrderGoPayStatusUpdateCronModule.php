@@ -9,7 +9,6 @@ use App\Model\Order\OrderFacade;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
@@ -37,26 +36,26 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
     private $orderMailFacade;
 
     /**
-     * @var \App\Model\GoPay\GoPayOnCurrentDomainFacade
+     * @var \App\Model\GoPay\GoPayTransactionFacade
      */
-    private $goPayFacade;
+    private $goPayTransactionFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
-     * @param \App\Model\GoPay\GoPayOnCurrentDomainFacade $goPayFacade
+     * @param \App\Model\GoPay\GoPayTransactionFacade $goPayTransactionFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         OrderFacade $orderFacade,
         OrderMailFacade $orderMailFacade,
-        GoPayOnCurrentDomainFacade $goPayFacade
+        GoPayTransactionFacade $goPayTransactionFacade
     ) {
         $this->em = $em;
         $this->orderFacade = $orderFacade;
         $this->orderMailFacade = $orderMailFacade;
-        $this->goPayFacade = $goPayFacade;
+        $this->goPayTransactionFacade = $goPayTransactionFacade;
     }
 
     public function run(): void
@@ -79,36 +78,34 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 continue;
             }
 
-            $oldOrderGoPayStatus = $order->getGoPayStatus();
+            $oldOrderGoPayStatusIndexedByGoPaiId = $order->getGoPayTransactionsIndexedByGoPayId();
+            $oldIsOrderPaid = $order->isGoPayPaid();
 
             try {
-                $goPayStatusResponse = $this->goPayFacade->getPaymentStatusResponse($order);
+                $this->goPayTransactionFacade->updateOrderTransactions($order);
             } catch (GoPayPaymentDownloadException $e) {
                 $this->logger->addError($e);
 
                 continue;
             }
 
-            $this->logger->addInfo($goPayStatusResponse);
+            foreach ($order->getGoPayTransactions() as $goPayTransaction) {
+                $oldStatus = $oldOrderGoPayStatusIndexedByGoPaiId[$goPayTransaction->getGoPayId()];
+                $newStatus = $goPayTransaction->getGoPayStatus();
 
-            if (array_key_exists('state', $goPayStatusResponse->json)) {
-                $this->orderFacade->setGoPayStatusAndFik($order, $goPayStatusResponse);
+                if ($oldStatus !== $newStatus) {
+                    $this->logger->info(
+                        sprintf(
+                            'Order with id `%d` changed GoPay status from `%s` to `%s`.',
+                            $order->getId(),
+                            $oldStatus,
+                            $newStatus
+                        )
+                    );
+                }
             }
 
-            if ($oldOrderGoPayStatus !== $order->getGoPayStatus()) {
-                $this->logger->info(
-                    sprintf(
-                        'Order with id `%d` changed GoPay status from `%s` to `%s`.',
-                        $order->getId(),
-                        $oldOrderGoPayStatus,
-                        $order->getGoPayStatus()
-                    )
-                );
-            }
-
-            $this->logger->info(sprintf('Order with id `%d` now has GoPay status: `%s`.', $order->getId(), $order->getGoPayStatus()));
-
-            if ($oldOrderGoPayStatus !== $order->getGoPayStatus() && $order->getGoPayStatus() === PaymentStatus::PAID) {
+            if ($oldIsOrderPaid !== $order->isGoPayPaid()) {
                 $this->logger->info('Sending order e-mail.');
                 $this->orderMailFacade->sendEmail($order);
             }

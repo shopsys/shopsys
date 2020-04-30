@@ -48,6 +48,7 @@ parameters:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
             - '*/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php'
             - '*/src/Model/Product/Product.php'
+            - '*/src/Controller/Front/OrderController.php'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'

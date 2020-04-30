@@ -33,10 +33,11 @@ class OrderFormTypeExtension extends AbstractTypeExtension
                 ]);
 
             if ($order->getPayment()->isGoPay() === true) {
+                $transactions = $order->getGoPayTransactions();
                 $builderBasicInformationGroup
                     ->add('gopayStatus', DisplayOnlyType::class, [
                         'label' => t('Stav platby GoPay'),
-                        'data' => $order->getGoPayStatus(),
+                        'data' => end($transactions)->getGoPayStatus(),
                     ]);
             }
         }

@@ -9,7 +9,6 @@ use App\Model\Order\Preview\TransportAndPaymentPricesPreview;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Generator;
-use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -127,8 +126,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
-        $orderData->goPayId = '11111';
-        $orderData->goPayStatus = PaymentStatus::CREATED;
+
         $this->createOrder(
             $orderData,
             [

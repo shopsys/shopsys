@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
+use App\Model\GoPay\GoPayTransaction;
 use App\Model\Payment\Payment;
 use Doctrine\ORM\Query\Expr\Join;
 use GoPay\Definition\Response\PaymentStatus;
@@ -30,8 +31,8 @@ class OrderRepository extends BaseOrderRepository
     {
         $queryBuilder = $this->createOrderQueryBuilder()
             ->join(Payment::class, 'p', Join::WITH, 'o.payment = p.id')
-            ->andWhere('p.type = :type AND (o.goPayStatus != :statusPaid OR o.goPayStatus IS NULL)')
-            ->andWhere('o.goPayId IS NOT NULL')
+            ->join(GoPayTransaction::class, 'gpt', Join::WITH, 'o.id = gpt.order AND gpt.goPayStatus != :statusPaid')
+            ->andWhere('p.type = :type')
             ->andWhere('o.createdAt >= :fromDate')
             ->orderBy('o.createdAt', 'ASC')
             ->setParameter('fromDate', $fromDate)

@@ -38,7 +38,6 @@ class OrderDataFactory extends BaseOrderDataFactory
     {
         parent::fillFromOrder($orderData, $order);
 
-        $orderData->goPayId = $order->getGoPayId();
-        $orderData->goPayStatus = $order->getGoPayStatus();
+        $orderData->goPayTransactions = $order->getGoPayTransactions();
     }
 }
