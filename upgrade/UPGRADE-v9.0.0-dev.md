@@ -206,6 +206,9 @@ There you can find links to upgrade notes for other versions too.
     - be aware, if you already have such paths (`hledani/`, `search/`) in your application
     - the change might cause problems with your SEO as well
 
+- clear cache before any other commands in composer and after docker image is built ([#1820](https://github.com/shopsys/shopsys/pull/1820))
+    - see #project-base-diff to update your project
+
 ### Database migrations
 - [#1757](https://github.com/shopsys/shopsys/pull/1757)
     - orders have nullable field `origin` to distinguish origin of the order

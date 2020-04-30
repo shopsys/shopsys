@@ -127,7 +127,7 @@ COPY --chown=www-data:www-data / /var/www/html
 
 RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev
 
-RUN php phing build-deploy-part-1-db-independent
+RUN php phing build-deploy-part-1-db-independent clean
 
 ########################################################################################################################
 
@@ -140,3 +140,5 @@ RUN composer install --optimize-autoloader --no-interaction --no-progress --dev
 RUN php phing composer-dev dirs-create test-dirs-create assets npm standards tests-unit tests-acceptance-build
 
 RUN ./bin/console shopsys:environment:change prod
+
+RUN php phing clean
