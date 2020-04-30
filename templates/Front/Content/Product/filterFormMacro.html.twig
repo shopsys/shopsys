@@ -159,7 +159,7 @@
                         {% if parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COLOR') %}
                             {% include 'Front/Content/Product/Parameter/colorParameterForm.html.twig' with {parameterForm: parameterForm} %}
                         {% elseif parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_SLIDER') %}
-
+                            {% include 'Front/Content/Product/Parameter/sliderParameterForm.html.twig' with {parameterForm: parameterForm} %}
                         {% else %}
                             {% include 'Front/Content/Product/Parameter/checkboxParameterForm.html.twig' with {parameterForm: parameterForm} %}
                         {% endif %}

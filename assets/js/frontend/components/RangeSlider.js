@@ -11,6 +11,7 @@ export default class RangeSlider {
         this.$maximumInput = $('#' + this.$sliderElement.data('maximumInputId'));
         this.minimalValue = parseNumber(this.$sliderElement.data('minimalValue'));
         this.maximalValue = parseNumber(this.$sliderElement.data('maximalValue'));
+        this.decimals = typeof this.$sliderElement.data('decimals') !== 'undefined' ? this.$sliderElement.data('decimals') : 2;
         this.steps = 100;
     }
 
@@ -52,8 +53,8 @@ export default class RangeSlider {
                 slide: function (event, ui) {
                     const minimumSliderValue = rangeSlider.getValueFromStep(ui.values[0]);
                     const maximumSliderValue = rangeSlider.getValueFromStep(ui.values[1]);
-                    rangeSlider.$minimumInput.val(minimumSliderValue !== rangeSlider.minimalValue ? formatDecimalNumber(minimumSliderValue, 2) : '');
-                    rangeSlider.$maximumInput.val(maximumSliderValue !== rangeSlider.maximalValue ? formatDecimalNumber(maximumSliderValue, 2) : '');
+                    rangeSlider.$minimumInput.val(minimumSliderValue !== rangeSlider.minimalValue ? formatDecimalNumber(minimumSliderValue, rangeSlider.decimals) : '');
+                    rangeSlider.$maximumInput.val(maximumSliderValue !== rangeSlider.maximalValue ? formatDecimalNumber(maximumSliderValue, rangeSlider.decimals) : '');
                 },
                 stop: function () {
                     if (lastMinimumInputValue !== rangeSlider.$minimumInput.val()) {

@@ -1,0 +1,26 @@
+{% block slider_filter_form_row %}
+    <div>
+        {{ form.vars.min }}
+    </div>
+    <div>
+        {{ form.vars.max }}
+    </div>
+    <div class="box-filter__slider__wrap">
+        <div
+            class="box-filter__slider__wrap__range js-range-slider"
+            data-minimum-input-id="{{ form.min.vars.id }}"
+            data-minimal-value="{{ form.vars.min }}"
+            data-maximum-input-id="{{ form.max.vars.id }}"
+            data-maximal-value="{{ form.vars.max }}"
+            data-decimals="0"
+        ></div>
+        <div>
+            <div>
+                {{ form_widget(form.min) }}
+            </div>
+            <div>
+                {{ form_widget(form.max) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -6,10 +6,10 @@ namespace App\Form\Admin\Product\Parameter;
 
 use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Parameter\Parameter;
-use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ParameterFormTypeExtension extends AbstractTypeExtension
@@ -42,7 +42,7 @@ class ParameterFormTypeExtension extends AbstractTypeExtension
             'choices' => Parameter::PARAMETER_TYPES,
         ]);
 
-        $builder->add('useSliderInFilter', YesNoType::class);
+        $builder->add('useSliderInFilter', CheckboxType::class);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }

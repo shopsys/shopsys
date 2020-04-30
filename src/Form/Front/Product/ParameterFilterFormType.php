@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Product;
 
+use App\Form\Front\Product\ParameterFilter\SliderFilterFormType;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
+use App\Model\Product\Parameter\ParameterValue;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Symfony\Component\Form\AbstractType;
@@ -62,16 +65,23 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
                 $parameterValues = $this->prepareParameterUnitsForParameterValues($parameter, $parameterValues);
             }
 
-            $builder->add($parameter->getId(), ChoiceType::class, [
-                'label' => $parameter->getName(),
-                'choices' => $parameterValues,
-                'choice_label' => 'text',
-                'choice_value' => 'id',
-                'choice_name' => 'id',
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => ['parameterType' => $parameter->getParameterType()],
-            ]);
+            if ($parameter->getParameterType() === Parameter::PARAMETER_TYPE_SLIDER) {
+                $builder->add($parameter->getId(), SliderFilterFormType::class, [
+                    'label' => $parameter->getName(),
+                    'slider_config' => $this->createSliderConfig($parameterFilterChoice),
+                ]);
+            } else {
+                $builder->add($parameter->getId(), ChoiceType::class, [
+                    'label' => $parameter->getName(),
+                    'choices' => $parameterValues,
+                    'choice_label' => 'text',
+                    'choice_value' => 'id',
+                    'choice_name' => 'id',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'attr' => ['parameterType' => $parameter->getParameterType()],
+                ]);
+            }
         }
 
         $builder->addViewTransformer($this);
@@ -131,7 +141,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
     }
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterValue[][]|\stdClass[][]|null $value
+     * @param \App\Model\Product\Parameter\ParameterValue[][]|\stdClass[][]|string[][]|null[][]|null $value
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]|null
      */
     public function reverseTransform($value)
@@ -146,20 +156,20 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
                 continue; // invalid parameter IDs are ignored
             }
 
-            $parameterValuesIndexedByParameterId = [];
-            foreach ($this->parameterChoicesIndexedByParameterId[$parameterId]->getValues() as $parameterValue) {
-                $parameterValuesIndexedByParameterId[$parameterValue->getId()] = $parameterValue;
-            }
-
-            $selectedParameterValues = [];
-            foreach ($parameterValues as $parameterValue) {
-                if ($parameterValue instanceof \stdClass) {
-
-                    /** @var \stdClass $parameterValue */
-                    $selectedParameterValues[] = $parameterValuesIndexedByParameterId[$parameterValue->id];
-                } else {
-                    $selectedParameterValues[] = $parameterValue;
+            $parameterChoice = $this->parameterChoicesIndexedByParameterId[$parameterId];
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
+            $parameter = $parameterChoice->getParameter();
+            if ($parameter->isUseSliderInFilter()) {
+                if ($parameterValues['min'] === null && $parameterValues['max'] === null) {
+                    continue;
                 }
+                $selectedParameterValues = $this->resolveValuesForRange(
+                    $this->parseStringAsFloat($parameterValues['min']),
+                    $this->parseStringAsFloat($parameterValues['max']),
+                    $parameterChoice
+                );
+            } else {
+                $selectedParameterValues = $this->resolveValues($parameterValues, $parameterChoice);
             }
 
             $parameterFilterData = new ParameterFilterData();
@@ -189,5 +199,83 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         }
 
         return $parameterValuesIndexedByParameterId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice $parameterFilterChoice
+     * @return array
+     */
+    private function createSliderConfig(ParameterFilterChoice $parameterFilterChoice): array
+    {
+        $choices = $parameterFilterChoice->getValues();
+        $numberChoices = array_map(static function (ParameterValue $v) {
+            return (float)$v->getText();
+        }, $choices);
+
+        return [
+            'min' => min($numberChoices),
+            'max' => max($numberChoices),
+        ];
+    }
+
+    /**
+     * @param float|null $min
+     * @param float|null $max
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice $parameterChoice
+     * @return \App\Model\Product\Parameter\ParameterValue[]
+     */
+    private function resolveValuesForRange(?float $min, ?float $max, ParameterFilterChoice $parameterChoice): array
+    {
+        $selectedParameterValues = [];
+        /** @var \App\Model\Product\Parameter\ParameterValue $parameterValue */
+        foreach ($parameterChoice->getValues() as $parameterValue) {
+            $value = $this->parseStringAsFloat($parameterValue->getText());
+            if (($min === null || $min <= $value) &&
+                ($max === null || $max >= $value)
+            ) {
+                $selectedParameterValues[] = $parameterValue;
+            }
+        }
+
+        return $selectedParameterValues;
+    }
+
+    /**
+     * @param array $parameterValues
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice $parameterChoice
+     * @return \App\Model\Product\Parameter\ParameterValue[]
+     */
+    private function resolveValues(array $parameterValues, ParameterFilterChoice $parameterChoice): array
+    {
+        $selectedParameterValues = [];
+        $parameterValuesIndexedByParameterId = [];
+        foreach ($parameterChoice->getValues() as $parameterValue) {
+            $parameterValuesIndexedByParameterId[$parameterValue->getId()] = $parameterValue;
+        }
+
+        foreach ($parameterValues as $parameterValue) {
+            if ($parameterValue instanceof \stdClass) {
+
+                /** @var \stdClass $parameterValue */
+                $selectedParameterValues[] = $parameterValuesIndexedByParameterId[$parameterValue->id];
+            } else {
+                $selectedParameterValues[] = $parameterValue;
+            }
+        }
+
+        return $selectedParameterValues;
+    }
+
+    /**
+     * @param string $stringNumber
+     * @return float
+     */
+    private function parseStringAsFloat(?string $stringNumber): ?float
+    {
+        if ($stringNumber === null) {
+            return null;
+        }
+
+        return (float)str_replace(',', '.', $stringNumber);
     }
 }

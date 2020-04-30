@@ -5912,6 +5912,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $parameterData = $this->parameterDataFactory->create();
             $parameterData->name = $parameterNamesByLocale;
             $parameterData->group = $parameterGroup;
+            $parameterData->useSliderInFilter = false;
 
             /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
             $parameter = $this->parameterFacade->create($parameterData);
