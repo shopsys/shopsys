@@ -814,4 +814,6 @@ msgstr ""
 msgid "Česko"
 msgstr ""
 
+msgid "Tento způsob platby je skrytý systémem GoPay."
+msgstr ""
 

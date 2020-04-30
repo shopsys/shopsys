@@ -51,3 +51,6 @@ msgstr "Uhradenie objednávky č.%orderNumber% platobnou kartou."
 
 msgid "Zaplatit"
 msgstr "Zaplatiť"
+
+msgid "Tento způsob platby je skrytý systémem GoPay."
+msgstr "Tento spôsob platby je skrytý systémom GoPay."

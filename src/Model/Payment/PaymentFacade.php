@@ -33,7 +33,21 @@ class PaymentFacade extends BasePaymentFacade
         $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
 
         foreach ($payments as $payment) {
-            $payment->hide();
+            $payment->hideByGoPay();
+        }
+
+        $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     */
+    public function unHideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): void
+    {
+        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
+
+        foreach ($payments as $payment) {
+            $payment->unHideByGoPay();
         }
 
         $this->em->flush();

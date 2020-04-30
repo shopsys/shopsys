@@ -134,6 +134,7 @@ class GoPayPaymentMethodFacade
             if (array_key_exists($paymentIdentifier, $paymentMethodByIdentifier)) {
                 $paymentMethod = $paymentMethodByIdentifier[$paymentIdentifier];
                 $this->editByRawData($paymentMethod, $goPayPaymentMethodRawData, $goPayClient->getLanguage());
+                $this->paymentFacade->unHideByGoPayPaymentMethod($paymentMethod);
                 unset($paymentMethodByIdentifier[$paymentIdentifier]);
             } else {
                 $this->createFromRawData($goPayPaymentMethodRawData, $currency, $goPayClient->getLanguage());
@@ -141,7 +142,7 @@ class GoPayPaymentMethodFacade
         }
 
         foreach ($paymentMethodByIdentifier as $paymentMethod) {
-            $this->delete($paymentMethod);
+            $this->paymentFacade->hideByGoPayPaymentMethod($paymentMethod);
         }
     }
 
@@ -206,17 +207,6 @@ class GoPayPaymentMethodFacade
         $this->updateSwiftsFromRawData($paymentMethod, $goPayMethodRawData);
 
         return $paymentMethod;
-    }
-
-    /**
-     * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     */
-    private function delete(GoPayPaymentMethod $goPayPaymentMethod): void
-    {
-        $this->paymentFacade->hideByGoPayPaymentMethod($goPayPaymentMethod);
-
-        $this->em->remove($goPayPaymentMethod);
-        $this->em->flush();
     }
 
     /**

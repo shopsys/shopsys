@@ -42,6 +42,13 @@ class Payment extends BasePayment
     private $goPayPaymentMethod;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $hiddenByGoPay;
+
+    /**
      * @param \App\Model\Payment\PaymentData $paymentData
      */
     public function __construct(BasePaymentData $paymentData)
@@ -50,6 +57,7 @@ class Payment extends BasePayment
 
         $this->type = $paymentData->type;
         $this->setGoPayPaymentMethod($paymentData);
+        $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
     }
 
     /**
@@ -61,6 +69,7 @@ class Payment extends BasePayment
 
         $this->type = $paymentData->type;
         $this->setGoPayPaymentMethod($paymentData);
+        $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
     }
 
     /**
@@ -90,6 +99,24 @@ class Payment extends BasePayment
     public function hide(): void
     {
         $this->hidden = true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHiddenByGoPay(): bool
+    {
+        return $this->hiddenByGoPay;
+    }
+
+    public function hideByGoPay(): void
+    {
+        $this->hiddenByGoPay = true;
+    }
+
+    public function unHideByGoPay(): void
+    {
+        $this->hiddenByGoPay = false;
     }
 
     /**

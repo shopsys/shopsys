@@ -325,6 +325,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentRepository: '@App\Model\Payment\PaymentRepository'
 
+    Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation: '@App\Model\Payment\IndependentPaymentVisibilityCalculation'
+
     App\Model\GoPay\GoPayClientFactory:
         arguments:
             - '%gopay.config%'

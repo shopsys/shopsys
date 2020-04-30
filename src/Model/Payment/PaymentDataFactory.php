@@ -37,6 +37,8 @@ class PaymentDataFactory extends BasePaymentDataFactory
         $paymentData = new PaymentData();
         $this->fillNew($paymentData);
 
+        $paymentData->hiddenByGoPay = false;
+
         return $paymentData;
     }
 
@@ -51,6 +53,7 @@ class PaymentDataFactory extends BasePaymentDataFactory
 
         $paymentData->type = $payment->getType();
         $paymentData->goPayPaymentMethod = $payment->getGoPayPaymentMethod();
+        $paymentData->hiddenByGoPay = $payment->isHiddenByGoPay();
 
         return $paymentData;
     }

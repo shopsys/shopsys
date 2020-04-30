@@ -6,6 +6,7 @@ namespace App\Form\Admin;
 
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use App\Model\Payment\Payment;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -59,6 +60,22 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
                     'class' => 'js-payment-gopay-payment-method',
                 ],
             ]);
+
+        if ($options['payment'] !== null) {
+            /** @var \App\Model\Payment\Payment $payment */
+            $payment = $options['payment'];
+            if ($payment->isHiddenByGoPay()) {
+                $builderBasicInformationGroup->add('hidden', YesNoType::class, [
+                    'label' => t('Hidden'),
+                    'required' => false,
+                    'disabled' => true,
+                    'attr' => [
+                        'icon' => true,
+                        'iconTitle' => t('Tento způsob platby je skrytý systémem GoPay.'),
+                    ],
+                ]);
+            }
+        }
     }
 
     /**
