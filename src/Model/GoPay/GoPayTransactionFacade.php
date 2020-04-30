@@ -79,18 +79,20 @@ class GoPayTransactionFacade
             $goPayTransactions,
             $order->getDomainId()
         );
-        $toFlush = [];
+        $toFlush = false;
 
         foreach ($goPayResponsesData as $goPayStatusResponseData) {
             $goPayStatusResponse = $goPayStatusResponseData->response;
             if (array_key_exists('state', $goPayStatusResponse->json)) {
                 $goPayTransaction = $goPayStatusResponseData->goPayTransaction;
                 $goPayTransaction->setGoPayStatus($goPayStatusResponse->json['state']);
-                $toFlush[] = $goPayTransaction;
+                $toFlush = true;
             }
         }
 
-        $this->em->flush();
+        if ($toFlush) {
+            $this->em->flush();
+        }
     }
 
     /**

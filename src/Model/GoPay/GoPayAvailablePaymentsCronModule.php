@@ -29,7 +29,7 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
     private $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -42,7 +42,7 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
      * @param array $goPayConfig
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $paymentMethodFacade
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         array $goPayConfig,

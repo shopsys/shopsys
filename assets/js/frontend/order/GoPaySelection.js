@@ -7,7 +7,20 @@ export default class GoPaySelection {
         const $goPayBankSwiftInputs = $container.filterAllNodes('.js-order-gopay-bank-swift-input');
         $goPayBankSwiftInputs.on('change', GoPaySelection.onGoPayBankSwiftChange);
         // $goPayBankSwiftInputs.on('change', GoPaySelection.updateContinueButton);
+
+        const $goPayBankPaymentMethodInput = $container.filterAllNodes('.js-gopay-bank-transfer-input');
+        $goPayBankPaymentMethodInput.on('change', GoPaySelection.goPayBankPaymentMethodChange);
     };
+
+    static goPayBankPaymentMethodChange (event) {
+        const isChecked = $(event.currentTarget).prop('checked');
+
+        if (isChecked) {
+            $('.js-gopay-list-banks').removeClass('display-none');
+        } else {
+            $('.js-gopay-list-banks').addClass('display-none');
+        }
+    }
 
     static onGoPayBankSwiftChange (event) {
         const isChecked = $(event.currentTarget).prop('checked');

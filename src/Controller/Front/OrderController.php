@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
+use App\Form\Front\Order\PaymentFormType;
 use App\Model\GoPay\BankSwift\GoPayBankSwift;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\GoPay\Exception\GoPayNotConfiguredException;
@@ -26,12 +27,14 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -473,11 +476,36 @@ class OrderController extends FrontBaseController
             return $this->redirectToRoute('front_cart');
         }
 
-        return $this->render('/Front/Content/Order/notPaid.html.twig', [
-            'goPayBankTransferIdentifier' => GoPayPaymentMethod::IDENTIFIER_BANK_TRANSFER,
-            'urlHash' => $urlHash,
-            'order' => $order,
-        ]);
+        if (!$order->getPayment()->isGoPay()) {
+            return $this->redirectToRoute('front_cart');
+        }
+
+        if ($this->orderFacade->isUnpaidOrderPaymentChangeable($order)) {
+            $payments = $this->paymentFacade->getVisibleOnCurrentDomainByTransport($order->getTransport());
+            $goPayBankSwifts = $this->goPayBankSwiftFacade->getAllByCurrencyId($order->getCurrency()->getId());
+
+            $form = $this->createForm(PaymentFormType::class, [], [
+                'action' => $this->generateUrl('front_order_change_payment_method', ['urlHash' => $order->getUrlHash()]),
+                'method' => 'POST',
+                'payments' => $payments,
+                'goPayBankSwifts' => $goPayBankSwifts,
+            ]);
+
+            return $this->render('Front/Content/Order/changePayment.html.twig', [
+                'form' => $form->createView(),
+                'goPayBankTransferIdentifier' => GoPayPaymentMethod::IDENTIFIER_BANK_TRANSFER,
+                'payments' => $payments,
+                'urlHash' => $urlHash,
+                'unsuccessfulPayment' => $order->getPayment(),
+                'order' => $order,
+            ]);
+        } else {
+            return $this->render('Front/Content/Order/notPaid.html.twig', [
+                'goPayBankTransferIdentifier' => GoPayPaymentMethod::IDENTIFIER_BANK_TRANSFER,
+                'urlHash' => $urlHash,
+                'order' => $order,
+            ]);
+        }
     }
 
     /**
@@ -531,6 +559,53 @@ class OrderController extends FrontBaseController
             'order' => $order,
             'goPayData' => $goPayData,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $urlHash
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function changePaymentAction(Request $request, string $urlHash): RedirectResponse
+    {
+        try {
+            $order = $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
+        } catch (OrderNotFoundException $e) {
+            $this->addErrorFlash(t('Objednávka nebyla nalezena.'));
+            return $this->redirectToRoute('front_homepage');
+        }
+
+        $payments = $this->paymentFacade->getVisibleOnCurrentDomainByTransport($order->getTransport());
+
+        $goPayBankSwifts = $this->goPayBankSwiftFacade->getAllByCurrencyId($order->getCurrency()->getId());
+
+        $form = $this->createForm(PaymentFormType::class, [], [
+            'payments' => $payments,
+            'goPayBankSwifts' => $goPayBankSwifts,
+        ]);
+
+        $form->handleRequest($request);
+
+        /** @var \App\Model\Payment\Payment $selectedPayment */
+        $selectedPayment = $form['payment']->getData();
+        $selectedGoPayPaymentSwift = $form['goPayBankSwift']->getData();
+        $this->setGoPayBankSwiftSession($selectedPayment, $selectedGoPayPaymentSwift);
+
+        $this->orderFacade->changeOrderPayment($order, $selectedPayment, $this->domain->getId());
+
+        $this->session->set(self::SESSION_CREATED_ORDER, $order->getId());
+
+        $this->addInfoFlash(t('Způsob platby byl úspěšně změněn'));
+
+        if ($this->getUser() instanceof CustomerUser) {
+            return $this->redirectToRoute('front_customer_order_detail_registered', [
+                'orderNumber' => $order->getNumber(),
+            ]);
+        } else {
+            return $this->redirectToRoute('front_customer_order_detail_unregistered', [
+                'urlHash' => $order->getUrlHash(),
+            ]);
+        }
     }
 
     /**

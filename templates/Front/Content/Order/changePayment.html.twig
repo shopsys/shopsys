@@ -1,0 +1,61 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block meta_robots -%}
+    <meta name="robots" content="noindex, follow">
+{% endblock %}
+
+{% block title %}
+    {{ 'Změna způsobu platby objednávky'|trans }}
+{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line">
+        <div class="web__container">
+            <div class="js-change-payment-container">
+                {{ form_start(form) }}
+                <div class="display-none">{{ form_errors(form.payment) }}</div>
+
+                <div class="wrap-box wrap-box--with-form">
+                    <div class="wrap-box__in">
+                        <div class="wrap-box__block">
+                            <h2>
+                                {{ 'Během placení objednávky došlo k potížím'|trans }}
+                            </h2>
+                        </div>
+                        <div class="wrap-box__block">
+                            <p>
+                                {% trans with {'%orderNumber%': order.number} %}
+                                    Pro úspěšné dokončení objednávky č. <strong>%orderNumber%</strong> zkuste zopakovat platbu, nebo si zvolte jiný způsob platby
+                                {% endtrans %}
+                            </p>
+                        </div>
+                        <div class="wrap-box__block">
+                            {% for child in form.payment %}
+                                {% set choice = form.payment.vars.choices[child.vars.name] %}
+                                {% set payment = choice.data %}
+
+                                {% if payment is not same as (unsuccessfulPayment) %}
+                                    <label for="{{child.vars.id}}" class="btn wrap-box__button">
+                                        {{ form_widget(child, { attr: { class: 'display-none js-order-change-payment', 'data-id': payment.id} }) }}
+                                        <span class="wrap-box__button__name">{{ payment.name }}</span>
+                                        <span class="wrap-box__button__price">{{ payment.getPrice(getDomain().id).price|priceText }}</span>
+                                    </label>
+                                {% endif %}
+                            {% endfor %}
+                            <a href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}" class="btn wrap-box__button">
+                                <span class="wrap-box__button__name">{{ 'Opakovat platbu'|trans }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {% do form.goPayBankSwift.setRendered %}
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

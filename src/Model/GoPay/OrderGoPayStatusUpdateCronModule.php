@@ -117,7 +117,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }

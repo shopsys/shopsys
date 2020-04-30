@@ -139,8 +139,11 @@
                                         </span>
 
                                         <span class="box-chooser__item__image">
+
                                             {% if imageExists(payment) %}
                                                 {{ image(payment) }}
+                                            {% elseif payment.goPayPaymentMethod is not empty %}
+                                                <img src="{{ payment.goPayPaymentMethod.imageNormalUrl }}" itemprop="image" />
                                             {% endif %}
                                         </span>
 
