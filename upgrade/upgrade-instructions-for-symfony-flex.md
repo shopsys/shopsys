@@ -18,6 +18,7 @@ You can read more about upgrading Symfony application to Flex <https://symfony.c
 - in `easy-coding-standard.yml` replace
     - `*/tests/ShopBundle/` with `*/tests/App/`
     - `*/src/Shopsys/ShopBundle/` with `*/src/`
+- in `.eslintignore` remove `Shopsys/ShopBundle` from all paths
 - replace `phpunit.xml` with [`phpunit.xml` version from GitHub](https://github.com/shopsys/project-base/blob/master/phpunit.xml)
 - replace `phpstan.neon` with [`phpstan.neon` version from GitHub](https://github.com/shopsys/project-base/blob/master/phpstan.neon)
     - add any project-specific configurations
@@ -145,4 +146,3 @@ You can read more about upgrading Symfony application to Flex <https://symfony.c
     - `src/Resources/scripts/frontend/promoCode.js`
 
 - run `composer update`
-- clean caches and regenerate assets with `phing clean clean-redis npm assets grunt`
