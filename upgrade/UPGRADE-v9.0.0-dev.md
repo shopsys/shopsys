@@ -12,12 +12,9 @@ There you can find links to upgrade notes for other versions too.
   All following upgrade instructions are written for upgraded application with Symfony Flex
 
 ### Infrastructure
-- update your `kubernetes/deployments/webserver-php-fpm.yml` file: ([#1368](https://github.com/shopsys/shopsys/pull/1368))
-    ```diff
-    -   command: ["sh", "-c", "cd /var/www/html && ./phing db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export grunt error-pages-generate warmup"]
-    +   command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export grunt error-pages-generate warmup"]
-    ```
 - check all the phing targets that depend on the new `production-protection` target
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/e954f194564c76a2caa97761be48f798afde1a61) to see default files that needs to be updated
+    - change namespace in `app/getEnvironment.php` from `Shopsys` to `App`
     - if you use any of the targets in your automated build scripts in production environment, you need to pass the confirmation to the phing using `-D production.confirm.action=y`
 
 - update your `docker/php-fpm/Dockerfile` ([#1605](https://github.com/shopsys/shopsys/pull/1605))
@@ -230,7 +227,6 @@ There you can find links to upgrade notes for other versions too.
         - `templates/Admin/Content/Brand/detail.html.twig`
         - `templates/Admin/Content/Category/detail.html.twig`
         - `templates/Admin/Content/Product/detail.html.twig`
-- add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/master/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
 - add optional [Frontend API](https://github.com/shopsys/shopsys/blob/master/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489), [#1757](https://github.com/shopsys/shopsys/pull/1757), [#1731](https://github.com/shopsys/shopsys/pull/1731), [#1736](https://github.com/shopsys/shopsys/pull/1736), [#1742](https://github.com/shopsys/shopsys/pull/1742), [#1788](https://github.com/shopsys/shopsys/pull/1788)):
     - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
     - register necessary bundles in `config/bundles.php`
