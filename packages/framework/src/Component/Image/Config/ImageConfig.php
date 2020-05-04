@@ -110,7 +110,7 @@ class ImageConfig
 
     /**
      * @param string $entityName
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
+     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
      */
     public function getEntityConfigByEntityName($entityName)
     {
