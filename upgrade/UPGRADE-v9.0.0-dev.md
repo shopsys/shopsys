@@ -143,6 +143,7 @@ There you can find links to upgrade notes for other versions too.
 - add trailing slash to all your localized paths for `front_product_search` route ([#1067](https://github.com/shopsys/shopsys/pull/1067))
     - be aware, if you already have such paths (`hledani/`, `search/`) in your application
     - the change might cause problems with your SEO as well
+    - if you are ok with both previous warnings, update your files using [project-base diff](https://github.com/shopsys/project-base/commit/09517e6e41cf4b448b12730a6e3a3753d09c88a3)
 
 - clear cache before any other commands in composer and after docker image is built ([#1820](https://github.com/shopsys/shopsys/pull/1820))
     - see #project-base-diff to update your project
