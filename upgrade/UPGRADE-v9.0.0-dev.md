@@ -150,15 +150,8 @@ There you can find links to upgrade notes for other versions too.
 
 ### Application
 
-- update your twig files ([#1284](https://github.com/shopsys/shopsys/pull/1284/)):
-    - `templates/Front/Content/Product/list.html.twig`
-        - remove: `{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}`
-    - `templates/Front/Content/Product/listByBrand.html.twig`
-        - remove: `{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}`
-    - `templates/Front/Content/Product/productListMacro.html.twig`
-        - remove: `{% import 'Front/Inline/Product/productFlagsMacro.html.twig' as productFlags %}`
-    - `templates/Front/Content/Product/search.html.twig`
-        - remove: `{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}`
+- remove unused twig macros ([#1284](https://github.com/shopsys/shopsys/pull/1284/)):
+    - update your project using [project-base diff](https://github.com/shopsys/project-base/commit/30af41a91f75b7485e6c804aaa10a03cb5276224)
     - check your templates if you are extending or importing any of the following templates as imports of unused macros were removed from them:
         - `templates/Admin/Content/Article/detail.html.twig`
         - `templates/Admin/Content/Brand/detail.html.twig`
