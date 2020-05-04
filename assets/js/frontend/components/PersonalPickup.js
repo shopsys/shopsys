@@ -15,6 +15,13 @@ export default class PersonalPickup {
         this.$personalPickupWindow = $personalPickupWindow;
         this.cleanPersonalPickupWindowRadioValues();
 
+        const transportPersonalPickupHiddenId = '#' + $transportPersonalPickupCheckboxes.data('hidden-id');
+        const stockId = $(transportPersonalPickupHiddenId).val();
+
+        if ($transportPersonalPickupCheckboxes.is(':checked') && stockId == 0) {
+            this.openPersonalPickupWindow($transportPersonalPickupCheckboxes);
+        }
+
         $transportPersonalPickupCheckboxes.change((event) => {
             if ($(event.target).is(':checked')) {
                 this.openPersonalPickupWindow($(event.target));
@@ -102,7 +109,6 @@ export default class PersonalPickup {
     }
 
     openPersonalPickupWindow ($transportCheckbox) {
-
         const window = new Window({
             content: this.$personalPickupWindow.html(),
             buttonContinue: true,
