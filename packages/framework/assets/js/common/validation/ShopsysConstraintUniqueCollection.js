@@ -11,17 +11,18 @@
          * Should return an error message or an array of messages
          */
         this.validate = function (value) {
-            let result = '';
+            let result = new Set();
 
             $.each(value, function (key1, value1) {
                 $.each(value, function (key2, value2) {
                     if (key1 !== key2 && areValuesEqual(value1, value2)) {
-                        result = self.message;
+                        result.add(self.message);
                     }
                 });
             });
 
-            return result;
+            // convert Set to array
+            return [...result];
         };
 
         function areValuesEqual (value1, value2) {

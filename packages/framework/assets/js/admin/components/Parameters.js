@@ -13,7 +13,7 @@ export default class Parameters {
 
             const $item = $(this).closest('.js-parameters-item');
             const index = $item.data('index');
-            removeItemFromCollection('#product_form_parameters', index);
+            removeItemFromCollection('.js-parameters', index);
             $item.remove();
 
             Parameters.refreshCount($collection);
@@ -36,7 +36,7 @@ export default class Parameters {
             $collection.append($item);
             (new Register()).registerNewContent($item);
 
-            addNewItemToCollection('#product_form_parameters', index);
+            addNewItemToCollection('.js-parameters', index);
             Parameters.refreshCount($collection);
 
             return false;
