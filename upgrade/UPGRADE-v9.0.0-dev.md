@@ -184,7 +184,7 @@ There you can find links to upgrade notes for other versions too.
             ```
     - update your `build.xml` [using this diff](https://github.com/shopsys/project-base/commit/02ca46eb77d0c96dc6ff1903f434ebb0537248bd#diff-2cccd7bf48b7a9cc113ff564acd802a8)
     - enable Frontend API for all domains by `./phing frontend-api-enable` command (you can manage domains in `config/packages/frontend_api.yaml`)
-- removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437))
+- unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` has been removed ([#1437](https://github.com/shopsys/shopsys/pull/1437))
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
 - add access denied url to `config/packages/security.yaml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
     ```diff
