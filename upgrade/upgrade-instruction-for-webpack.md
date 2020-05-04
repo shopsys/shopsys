@@ -1175,3 +1175,4 @@ git diff master:src/Resources/scripts/frontend/validation/form/order.js assets/j
   {% endblock %}
 
 ```
+- apply changes from this [#project-base diff](https://github.com/shopsys/project-base/commit/946b5bd50f77e7d21a557cd8c8fffe3d8314cb19)
