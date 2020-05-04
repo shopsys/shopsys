@@ -285,36 +285,9 @@ There you can find links to upgrade notes for other versions too.
             +           -   name: default
             +               multiple: true
             ```
-- contact form has been moved to separate page. You can find the whole new setting in administration (`/admin/contact-form/`),
-  where you can edit main text for contact form. ([#1522](https://github.com/shopsys/shopsys/pull/1522))
 
-  There are few steps need to be done, to make contact form work on FE
-    - in `ContactFormController` change previous `indexAction` with [the new one](https://github.com/shopsys/shopsys/blob/master/project-base/src/Controller/Front/ContactFormController.php). Please pay attention if you have some modification in previous implementation.
-    - in `ContactFormController` add `ContactFormSettingsFacade` as dependency in constructor
-    - in `ContactFormController` remove action `sendAction()`, it is not needed anymore
-    - remove `src/Resources/scripts/frontend/contactForm.js`, it is not needed anymore
-    - new localized route `front_contact` has been introduced with slug `contact`. This slug can be already in use in your project, because
-      previous SSFW versions have an article called `Contact` which is used as the contact page. Please move the article's content to the new contact page and completely remove the article.
-      To remove the article, please create [new migration](https://github.com/shopsys/shopsys/blob/master/project-base/src/Migrations/Version20191121171000.php) in you project which removes the article and its slug.
-
-      If you don't want to remove the article, you will need to change path for the new route in the next step
-
-    - add new localized route in all your localized routing `yaml` files with translated `path` option
-        ```diff
-        +    front_contact:
-        +       path: /contact/
-        +       defaults: { _controller: App\Controller\Front\ContactFormController:indexAction }
-        ```
-    - add new template [`templates/Front/Content/ContactForm/index.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/ContactForm/index.html.twig)
-    - add link to new contact page somewhere in templates (e.g in `footer.html.twig`)
-        ```diff
-            <div class="footer__bottom__articles">
-               {{ getShopInfoPhoneNumber() }}
-               {{ getShopInfoEmail() }}
-               {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction')) }}
-        +      <a class="menu__item__link" href="{{ url('front_contact') }}">{{ 'Contact'|trans }}</a>
-            </div>
-        ```
+- contact form has been moved to separate page. You can find the whole new setting in administration (`/admin/contact-form/`), where you can edit main text for contact form. ([#1522](https://github.com/shopsys/shopsys/pull/1522))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/ab412377d40d671db46607a5d5f7b13221e6ba71) to update your project
 
 - vats can be created and managed per domains ([#1498](https://github.com/shopsys/shopsys/pull/1498))
     - please read [upgrade instruction for vats per domain](https://github.com/shopsys/shopsys/blob/master/upgrade/upgrade-instruction-for-vats-per-domain.md)
