@@ -186,6 +186,7 @@ There you can find links to upgrade notes for other versions too.
     - enable Frontend API for all domains by `./phing frontend-api-enable` command (you can manage domains in `config/packages/frontend_api.yaml`)
 - unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` has been removed ([#1437](https://github.com/shopsys/shopsys/pull/1437))
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
+
 - add access denied url to `config/packages/security.yaml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
     ```diff
          administration:
@@ -223,6 +224,10 @@ There you can find links to upgrade notes for other versions too.
     -           ->setExpectedStatusCode(404);
     +           ->setExpectedStatusCode(302);
     ```
+
+- update your project to be fully functional with administrator roles stored in database ([#1504](https://github.com/shopsys/shopsys/pull/1504))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/bf4e52ce7f3bc5b9650ab0a66269743af98dafe3) to update your project
+
 - update your project to use refactored FileUpload functionality with added support for multiple files ([#1531](https://github.com/shopsys/shopsys/pull/1531/))
     - there were changes in framework classes, styles and scripts so update your project appropriately:
         - `UploadedFileEntityConfigNotFoundException::getEntityClassOrName()` has been removed
