@@ -158,26 +158,32 @@ There you can find links to upgrade notes for other versions too.
         - `templates/Admin/Content/Category/detail.html.twig`
         - `templates/Admin/Content/Product/detail.html.twig`
 - add optional [Frontend API](https://github.com/shopsys/shopsys/blob/master/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489), [#1757](https://github.com/shopsys/shopsys/pull/1757), [#1731](https://github.com/shopsys/shopsys/pull/1731), [#1736](https://github.com/shopsys/shopsys/pull/1736), [#1742](https://github.com/shopsys/shopsys/pull/1742), [#1788](https://github.com/shopsys/shopsys/pull/1788)):
-    - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
-    - register necessary bundles in `config/bundles.php`
-        ```diff
-            Shopsys\FormTypesBundle\ShopsysFormTypesBundle::class => ['all' => true],
-        +   Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
-        +   Overblog\GraphQLBundle\OverblogGraphQLBundle::class => ['all' => true],
-        +   Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
-            Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
-        ```
-    - add new route file [`config/routes/frontend-api.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/frontend-api.yaml) from GitHub
-    - add new route file [`config/routes/dev/frontend-api-graphiql.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/dev/frontend-api-graphiql.yaml) from GitHub
-    - copy [type definitions from Github](https://github.com/shopsys/shopsys/tree/master/project-base/config/graphql/types) into `config/graphql/types/` folder
-    - copy necessary configuration [shopsys_frontend_api.yaml from Github](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/shopsys_frontend_api.yaml) to `config/packages/shopsys_frontend_api.yaml`
+    - run these steps only in case you have not recently updated to Symfony Flex as is described at beginning of this file
+        - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
+        - register necessary bundles in `config/bundles.php`
+            ```diff
+                Shopsys\FormTypesBundle\ShopsysFormTypesBundle::class => ['all' => true],
+            +   Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
+            +   Overblog\GraphQLBundle\OverblogGraphQLBundle::class => ['all' => true],
+            +   Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
+                Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
+            ```
+        - add new route file [`config/routes/frontend-api.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/frontend-api.yaml) from GitHub
+        - add new route file [`config/routes/dev/frontend-api-graphiql.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/dev/frontend-api-graphiql.yaml) from GitHub
+        - copy [type definitions from Github](https://github.com/shopsys/shopsys/tree/master/project-base/config/graphql/types) into `config/graphql/types/` folder
+        - copy necessary configuration [shopsys_frontend_api.yaml from Github](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/shopsys_frontend_api.yaml) to `config/packages/shopsys_frontend_api.yaml`
+        - update your `security.yaml` configuration [using this diff](https://github.com/shopsys/project-base/commit/3e9a056f032b3fb49e4aaac912fa89cae13725c6#diff-e092a3a494858e808395bb5a24bb8f83)
     - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/master/project-base/tests/FrontendApiBundle) to your `tests` folder
+    - update your `easy-coding-standard.yaml` file:
+        - add these in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
+            ```diff
+                - '*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'
+                - '*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'
+                - '*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'
+                - '*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'
+            ```
+    - update your `build.xml` [using this diff](https://github.com/shopsys/project-base/commit/02ca46eb77d0c96dc6ff1903f434ebb0537248bd#diff-2cccd7bf48b7a9cc113ff564acd802a8)
     - enable Frontend API for all domains by `./phing frontend-api-enable` command (you can manage domains in `config/packages/frontend_api.yaml`)
-    - update your `easy-coding-standard.yml` file:
-        - add `'*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
-        - add `'*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
-        - add `'*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
-        - add `'*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
 - removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437))
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
 - add access denied url to `config/packages/security.yaml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
