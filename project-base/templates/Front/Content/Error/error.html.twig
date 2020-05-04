@@ -4,12 +4,6 @@
     {{ 'Error occurred'|trans }}: {{ status_text }}
 {% endblock %}
 
-{% block footer %}
-    {% embed 'Front/Layout/footer.html.twig' %}
-        {% block newsletter_subscription %}{% endblock %}
-    {% endembed %}
-{% endblock %}
-
 {% block content %}
     <div class="web__line">
         <div class="web__container">
@@ -57,4 +51,10 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block footer %}
+    {% embed 'Front/Layout/footer.html.twig' %}
+        {% block newsletter_subscription %}{% endblock %}
+    {% endembed %}
 {% endblock %}
