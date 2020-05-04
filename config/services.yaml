@@ -235,6 +235,9 @@ services:
             - '%shopsys.domain_images_dir%'
         tags: ['doctrine.fixture.orm']
 
+    Shopsys\FrameworkBundle\Controller\Admin\CategoryController:
+        class: 'App\Controller\Admin\CategoryController'
+
     Shopsys\FrameworkBundle\Controller\Admin\DefaultController:
         class: 'App\Controller\Admin\DefaultController'
 
