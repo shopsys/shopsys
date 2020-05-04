@@ -129,7 +129,7 @@ There you can find links to upgrade notes for other versions too.
 - upgrade PHP to version 7.4 ([#1737](https://github.com/shopsys/shopsys/pull/1737))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/32755202185ed04fcf0e50b1d96d2af0fae8d778) to update your project
 
-  update Redis client to version 5.2.1 and Redis server to 5.0 ([#1606](https://github.com/shopsys/shopsys/pull/1606))
+- upgrade Redis client to version 5.2.1 and Redis server to 5.0 ([#1606](https://github.com/shopsys/shopsys/pull/1606))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/e3adc0c31094b47aca03389ef4fa266977edab25) to update your project
 
 - stop using symfony/web-server-bundle ([#1817](https://github.com/shopsys/shopsys/pull/1817)
