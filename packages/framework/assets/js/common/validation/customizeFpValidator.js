@@ -1,5 +1,6 @@
 import constant from '../../admin/utils/constant';
 import CustomizeBundle from './customizeBundle';
+import DoubleFormSubmitProtection from '../utils/DoubleFormSubmitProtection';
 
 const FpJsFormValidator = window.FpJsFormValidator;
 
@@ -23,49 +24,72 @@ FpJsFormValidator.preparePrototype = function (prototype, name) {
     return prototype;
 };
 
+FpJsFormValidator.ajax._checkQueue = FpJsFormValidator.ajax.checkQueue;
+FpJsFormValidator.ajax.checkQueue = function () {
+    if (FpJsFormValidator.ajax.queue === 0) {
+        for (let i in this.callbacks) {
+            if (typeof this.callbacks[i] === 'function') {
+                this.callbacks[i]();
+            }
+        }
+    }
+};
+
 FpJsFormValidator.customizeMethods._submitForm = FpJsFormValidator.customizeMethods.submitForm;
 
 // Custom behavior:
 // - disable JS validation for forms with class js-no-validate
+// - disable JS validation for forms submitted by element with class js-no-validate-button
 // - do not submit if custom "on-submit" code is specified
 // - do not submit if ajax queue is not empty
 // - clears callbacks if ajax queue exists, because while validation is done via ajax,
 //   there can be loaded callbacks from last form submit which can cause duplicated form error windows
 // (the rest is copy&pasted from original method; eg. ajax validation)
 FpJsFormValidator.customizeMethods.submitForm = function (event) {
+
+    if ($(':focus').hasClass('js-no-validate-button')) {
+        return;
+    }
+
     $('.js-window-validation-errors').addClass('display-none');
     const $form = $(this);
-    if (!$form.hasClass('js-no-validate')) {
-        FpJsFormValidator.each(this, function (item) {
-            const element = item.jsFormValidator;
-            element.validateRecursively();
-            element.onValidate.apply(element.domNode, [FpJsFormValidator.getAllErrors(element, {}), event]);
-        });
 
-        if (!FpJsFormValidator.ajax.queue) {
-            if (!CustomizeBundle.isFormValid(this)) {
-                event.preventDefault();
-                CustomizeBundle.showFormErrorsWindow(this);
-            } else if (CustomizeBundle.isFormValid($form) === true && $form.data('on-submit') !== undefined) {
-                $(this).trigger($(this).data('on-submit'));
-                event.preventDefault();
-            }
-        } else {
+    if ($form.hasClass('js-no-validate')) {
+        return;
+    }
+
+    const doubleFormSubmitProtection = new DoubleFormSubmitProtection();
+    doubleFormSubmitProtection.protection(event);
+
+    FpJsFormValidator.each(this, function (item) {
+        const element = item.jsFormValidator;
+        element.validateRecursively();
+        element.onValidate.apply(element.domNode, [FpJsFormValidator.getAllErrors(element, {}), event]);
+    });
+
+    if (!FpJsFormValidator.ajax.queue) {
+        if (!CustomizeBundle.isFormValid(this)) {
             event.preventDefault();
-
-            FpJsFormValidator.ajax.callbacks.push(function () {
-                FpJsFormValidator.ajax.callbacks = [];
-
-                if (!CustomizeBundle.isFormValid($form)) {
-                    CustomizeBundle.showFormErrorsWindow($form[0]);
-                } else if ($form.data('on-submit') !== undefined) {
-                    $form.trigger($form.data('on-submit'));
-                } else {
-                    $form.addClass('js-no-validate');
-                    $form.unbind('submit').submit();
-                }
-            });
+            CustomizeBundle.showFormErrorsWindow(this);
+        } else if (CustomizeBundle.isFormValid($form) === true && $form.data('on-submit') !== undefined) {
+            $(this).trigger($(this).data('on-submit'));
+            event.preventDefault();
         }
+    } else {
+        event.preventDefault();
+
+        FpJsFormValidator.ajax.callbacks.push(function () {
+            FpJsFormValidator.ajax.callbacks = [];
+
+            if (!CustomizeBundle.isFormValid($form)) {
+                CustomizeBundle.showFormErrorsWindow($form[0]);
+            } else if ($form.data('on-submit') !== undefined) {
+                $form.trigger($form.data('on-submit'));
+            } else {
+                $form.addClass('js-no-validate');
+                $form.unbind('submit').submit();
+            }
+        });
     }
 };
 
