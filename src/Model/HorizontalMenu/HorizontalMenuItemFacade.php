@@ -57,11 +57,21 @@ class HorizontalMenuItemFacade
 
     /**
      * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getOrderedItemsByDomainQueryBuilder(int $domainId): QueryBuilder
+    {
+        return $this->getOrderedItemsQueryBuilder()->where('hmi.domainId = :domainId')
+            ->setParameter(':domainId', $domainId);
+    }
+
+    /**
+     * @param int $domainId
      * @return \App\Model\HorizontalMenu\HorizontalMenuItemDetail[]
      */
     public function getOrderedHorizontalMenuItemDetails(int $domainId): array
     {
-        $horizontalMenuItems = $this->getOrderedItemsQueryBuilder()->getQuery()->execute();
+        $horizontalMenuItems = $this->getOrderedItemsByDomainQueryBuilder($domainId)->getQuery()->execute();
 
         return $this->horizontalMenuItemDetailFactory->createDetails($horizontalMenuItems, $domainId);
     }

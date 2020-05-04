@@ -25,4 +25,9 @@ class HorizontalMenuItemData
      * @var \App\Model\Category\Category[][]
      */
     public $categoriesByColumnNumber = [];
+
+    /**
+     * @var int
+     */
+    public $domainId;
 }

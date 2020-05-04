@@ -10,6 +10,7 @@ use App\Model\HorizontalMenu\HorizontalMenuItem;
 use App\Model\HorizontalMenu\HorizontalMenuItemData;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
@@ -70,6 +71,10 @@ class HorizontalMenuItemFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('domainId', DomainType::class, [
+                'required' => true,
+                'label' => t('Domain'),
+            ])
             ->add('name', TextType::class, [
                 'label' => t('Název'),
                 'required' => true,
@@ -91,40 +96,9 @@ class HorizontalMenuItemFormType extends AbstractType
                     'label' => t('Nábytek'),
                     'required' => false,
                 ]
-            )
-            ->add(
-                $this->createCategoryColumnBuilder(
-                    'categoriesInFirstColumn',
-                    'Kategorie prvního sloupce',
-                    1,
-                    $builder
-                )
-            )
-            ->add(
-                $this->createCategoryColumnBuilder(
-                    'categoriesInSecondColumn',
-                    'Kategorie druhého sloupce',
-                    2,
-                    $builder
-                )
-            )
-            ->add(
-                $this->createCategoryColumnBuilder(
-                    'categoriesInThirdColumn',
-                    'Kategorie třetího sloupce',
-                    3,
-                    $builder
-                )
-            )
-            ->add(
-                $this->createCategoryColumnBuilder(
-                    'categoriesInFourthColumn',
-                    'Kategorie čtvrtého sloupce',
-                    4,
-                    $builder
-                )
-            )
-            ->add('save', SubmitType::class);
+            );
+        $this->addColumnFields($builder);
+        $builder->add('save', SubmitType::class);
     }
 
     /**
@@ -163,5 +137,44 @@ class HorizontalMenuItemFormType extends AbstractType
             ])
             ->addViewTransformer($this->removeDuplicatesTransformer)
             ->addModelTransformer($this->categoriesIdsToCategoriesTransformer);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function addColumnFields(FormBuilderInterface $builder): void
+    {
+        $builder->add(
+            $this->createCategoryColumnBuilder(
+                'categoriesInFirstColumn',
+                'Kategorie prvního sloupce',
+                1,
+                $builder
+            )
+        )
+        ->add(
+            $this->createCategoryColumnBuilder(
+                'categoriesInSecondColumn',
+                'Kategorie druhého sloupce',
+                2,
+                $builder
+            )
+        )
+        ->add(
+            $this->createCategoryColumnBuilder(
+                'categoriesInThirdColumn',
+                'Kategorie třetího sloupce',
+                3,
+                $builder
+            )
+        )
+        ->add(
+            $this->createCategoryColumnBuilder(
+                'categoriesInFourthColumn',
+                'Kategorie čtvrtého sloupce',
+                4,
+                $builder
+            )
+        );
     }
 }
