@@ -102,48 +102,7 @@ There you can find links to upgrade notes for other versions too.
 - upgrade to Elasticsearch 7 ([#1602](https://github.com/shopsys/shopsys/pull/1602))
     - first of all we recommend to take a look at [Breaking changes](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/release-notes-7.0.0.html) section in Elasticsearch documentation to prevent failures
 
-    - update `docker/elasticsearch/Dockerfile`
-
-        ```diff
-        -   FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.2
-        +   FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.6.0
-        ```
-
-    - remove `_doc` node from mapping in `src/Recources/definition` json files
-
-        ```diff
-            "mappings": {
-        -       "_doc": {
-        -           "properties": {
-        -               "name": {
-        -                   "type": "text"
-        -               }
-        -           }
-        -       }
-        +       "properties": {
-        +           "name": {
-        +               "type": "text"
-        +           }
-        +       }
-            }
-        ```
-
-    - add kibana to your `docker-compose.yml`
-
-        ```diff
-        +   kibana:
-        +       image: docker.elastic.co/kibana/kibana-oss:7.6.0
-        +       container_name: shopsys-framework-kibana
-        +       depends_on:
-        +           - elasticsearch
-        +       ports:
-        +           - "5601:5601"
-        ```
-
-        - you should add it also in all `docker-compose*.dist` files such as:
-            - `docker/conf/docker-compose.yml.dist`
-            - `docker/conf/docker-compose-mac.yml.dist`
-            - `docker/conf/docker-compose-win.yml.dist`
+    - upgrade your project files [using this diff](https://github.com/shopsys/project-base/commit/6f71d95a58e23bf7ad3368047eb420d80b014f9a)
 
     - migrate elasticsearch indexes by `php phing elasticsearch-index-migrate`
 
