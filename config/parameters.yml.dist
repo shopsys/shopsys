@@ -55,5 +55,10 @@ parameters:
         api_key: ''
         api_secret: ''
 
+    targito_config:
+        enabled: false
+        eshop_to_targito_account_id: ''
+        eshop_to_targito_password: ''
+
     # When you do not want to use CDN, it is used value '//' as workaround by https://github.com/symfony/symfony/issues/28391
     env(CDN_DOMAIN): '//'

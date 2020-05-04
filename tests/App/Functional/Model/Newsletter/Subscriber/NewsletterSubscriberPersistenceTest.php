@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Newsletter\Subscriber;
 
+use App\Model\Newsletter\NewsletterSubscriber;
 use DateTimeImmutable;
 use PHPUnit\Framework\Assert;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase

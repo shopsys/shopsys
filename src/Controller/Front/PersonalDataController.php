@@ -41,7 +41,7 @@ class PersonalDataController extends FrontBaseController
     private $orderFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
+     * @var \App\Model\Newsletter\NewsletterFacade
      */
     private $newsletterFacade;
 
@@ -70,7 +70,7 @@ class PersonalDataController extends FrontBaseController
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \App\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade $personalDataAccessMailFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory

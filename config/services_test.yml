@@ -90,6 +90,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface: '@App\Model\Customer\User\CustomerUserDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade: '@App\Model\Newsletter\NewsletterFacade'
+
+    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository: '@App\Model\Newsletter\NewsletterRepository'
+
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface: '@Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory'

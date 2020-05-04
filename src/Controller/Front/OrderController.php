@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
-use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -93,11 +92,6 @@ class OrderController extends FrontBaseController
     private $legalConditionsFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    private $newsletterFacade;
-
-    /**
      * @var \App\Model\Order\Preview\OrderPreviewSplittingFacade
      */
     private $orderPreviewSplittingFacade;
@@ -125,7 +119,6 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Order\Watcher\SplitTransportAndPaymentWatcher $splitTransportAndPaymentWatcher
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Stock\StockFacade $stockFacade
@@ -143,7 +136,6 @@ class OrderController extends FrontBaseController
         SplitTransportAndPaymentWatcher $splitTransportAndPaymentWatcher,
         OrderMailFacade $orderMailFacade,
         LegalConditionsFacade $legalConditionsFacade,
-        NewsletterFacade $newsletterFacade,
         OrderPreviewSplittingFacade $orderPreviewSplittingFacade,
         OrderDataFactory $orderDataFactory,
         StockFacade $stockFacade
@@ -160,7 +152,6 @@ class OrderController extends FrontBaseController
         $this->splitTransportAndPaymentWatcher = $splitTransportAndPaymentWatcher;
         $this->orderMailFacade = $orderMailFacade;
         $this->legalConditionsFacade = $legalConditionsFacade;
-        $this->newsletterFacade = $newsletterFacade;
         $this->orderPreviewSplittingFacade = $orderPreviewSplittingFacade;
         $this->orderDataFactory = $orderDataFactory;
         $this->stockFacade = $stockFacade;
@@ -227,10 +218,6 @@ class OrderController extends FrontBaseController
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
                 $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
-
-                if ($frontOrderFormData->newsletterSubscription) {
-                    $this->newsletterFacade->addSubscribedEmail($frontOrderFormData->email, $this->domain->getId());
-                }
 
                 $orderFlow->reset();
 

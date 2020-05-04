@@ -28,7 +28,7 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
+     * @var \App\Model\Newsletter\NewsletterFacade
      */
     private $newsletterFacade;
 
@@ -45,7 +45,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \App\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      */
     public function __construct(
@@ -95,13 +95,17 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         $customerUser = parent::edit($customerUserId, $customerUserUpdateData);
 
         $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId($customerUser->getEmail(), $customerUser->getDomainId());
-        if ($newsletterSubscriber == null && $customerUser->isNewsletterSubscription()) {
+
+        if ($newsletterSubscriber == null && $customerUser->isNewsletterSubscription()
+            || ($newsletterSubscriber !== null && $newsletterSubscriber->isDeleted() === true)
+        ) {
             $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
         }
 
         if ($newsletterSubscriber != null && !$customerUser->isNewsletterSubscription()) {
             $this->newsletterFacade->deleteById($newsletterSubscriber->getId());
         }
+
         return $customerUser;
     }
 

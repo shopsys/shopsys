@@ -170,6 +170,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface: '@App\Model\Customer\User\CustomerUserDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade: '@App\Model\Newsletter\NewsletterFacade'
+
+    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository: '@App\Model\Newsletter\NewsletterRepository'
+
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'
 
     Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper: '@App\Model\Order\FrontOrderDataMapper'
@@ -424,6 +428,12 @@ services:
             $scontoBridgeConfig: "%sconto_bridge_config%"
 
     App\Component\ScontoBridge\ScontoBridgeClient: ~
+
+    App\Component\Targito\TargitoConfig:
+        arguments:
+            $targitoConfig: "%targito_config%"
+
+    App\Component\Targito\TargitoClient: ~
 
     App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency: ~
 

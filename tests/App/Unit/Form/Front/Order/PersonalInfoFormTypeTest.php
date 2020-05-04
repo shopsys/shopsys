@@ -83,7 +83,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $personalInfoFormData['postcode'] = '12345';
         $personalInfoFormData['country'] = 1;
         $personalInfoFormData['legalConditionsAgreement'] = $legalConditionsAgreement;
-        $personalInfoFormData['newsletterSubscription'] = false;
 
         return $personalInfoFormData;
     }

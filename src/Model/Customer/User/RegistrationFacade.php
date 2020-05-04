@@ -6,7 +6,6 @@ namespace App\Model\Customer\User;
 
 use App\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 class RegistrationFacade implements RegistrationFacadeInterface
 {
@@ -26,26 +25,18 @@ class RegistrationFacade implements RegistrationFacadeInterface
     private $customerUserFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    private $newsletterFacade;
-
-    /**
      * @param \App\Model\Country\CountryFacade $countryFacade
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(
         CountryFacade $countryFacade,
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        CustomerUserFacade $customerUserFacade,
-        NewsletterFacade $newsletterFacade
+        CustomerUserFacade $customerUserFacade
     ) {
         $this->countryFacade = $countryFacade;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerUserFacade = $customerUserFacade;
-        $this->newsletterFacade = $newsletterFacade;
     }
 
     /**
@@ -61,9 +52,6 @@ class RegistrationFacade implements RegistrationFacadeInterface
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
-        if ($customerUser->isNewsletterSubscription()) {
-            $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
-        }
         return $customerUser;
     }
 

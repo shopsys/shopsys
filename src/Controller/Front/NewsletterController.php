@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class NewsletterController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
+     * @var \App\Model\Newsletter\NewsletterFacade
      */
     private $newsletterFacade;
 
@@ -30,7 +30,7 @@ class NewsletterController extends FrontBaseController
     private $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \App\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \App\Component\Domain\Domain $domain
      */

@@ -32,6 +32,9 @@ declare -A PARAMETERS=(
     ["parameters.kraken_config.lossy"]=${KRAKEN_DEV_LOSSY}
     ["parameters.kraken_config.api_key"]=${KRAKEN_DEV_API_KEY}
     ["parameters.kraken_config.api_secret"]=${KRAKEN_DEV_API_SECRET}
+    ["parameters.targito_config.enabled"]=${TARGITO_DEV_ENABLED}
+    ["parameters.targito_config.eshop_to_targito_account_id"]=${TARGITO_ESHOP_TO_TARGITO_ACCOUNT_ID}
+    ["parameters.targito_config.eshop_to_targito_password"]=${TARGITO_ESHOP_TO_TARGITO_PASSWORD}
     ["parameters.env(CDN_DOMAIN)"]=${CDN_DOMAIN}
 )
 

@@ -305,9 +305,6 @@ class PersonalInfoFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('newsletterSubscription', CheckboxType::class, [
-                'required' => false,
-            ])
             ->add('save', SubmitType::class);
 
         if ($options['domain_id'] == Domain::SECOND_DOMAIN_ID) {
