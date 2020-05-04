@@ -917,7 +917,7 @@ There you can find links to upgrade notes for other versions too.
       ```diff
             "require": {
       -         "fp/jsformvalidator-bundle": "^1.5.1",
-      +         "fp/jsformvalidator-bundle": "1.5.x-dev",
+      +         "fp/jsformvalidator-bundle": "^1.6.1",
             }
       ```
     - update your `.eslintignore`
