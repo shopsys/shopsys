@@ -8,7 +8,7 @@ use JsonSerializable;
 use Litipk\BigNumbers\Decimal;
 use Shopsys\FrameworkBundle\Component\Money\Exception\UnsupportedTypeException;
 
-final class Money implements JsonSerializable
+class Money implements JsonSerializable
 {
     /**
      * @var \Litipk\BigNumbers\Decimal
