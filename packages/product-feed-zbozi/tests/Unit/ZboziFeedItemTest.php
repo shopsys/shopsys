@@ -44,7 +44,7 @@ class ZboziFeedItemTest extends TestCase
     private $categoryFacadeMock;
 
     /**
-     * @var \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory::__construct
+     * @var \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory
      */
     private $zboziFeedItemFactory;
 
