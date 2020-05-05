@@ -36,6 +36,15 @@
             <div class="web__container">
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form box-cart' }}) }}
                     {{ form_errors(form) }}
+                    {% if splitOrderPreview.morePreviews %}
+                        <div class="box-cart-message-box">
+                            <img class="box-cart-message-box__img" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.png') }}" alt="{{ 'Doprava zdarma'|trans }}">
+                            <div class="box-cart-message-box__content">
+                                <strong class="box-cart-message-box__title">{{ 'V košíku máte nadrozměrnou položku'|trans }}</strong>
+                                <p class="box-cart-message-box__desc">{{ 'Tohle zboží má kvůli svým rozměrům a náročnosti manipulace jiné požadavky na dopravu. Proto jsme váš nákup rozdělili na víc zásilek.'|trans }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
                     <div class="box-cart__col box-cart__col--info">
                         {% set previewNumber = 0 %}
                         {% for orderPreview in splitOrderPreview.orderPreviews %}
@@ -49,16 +58,6 @@
                                     {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
                                 </div>
                             {% endif %}
-                            {% if splitOrderPreview.morePreviews %}
-                                {% if loop.first %}
-                                    <div class="box-cart-message-box">
-                                        <img class="box-cart-message-box__img" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.png') }}" alt="{{ 'Doprava zdarma'|trans }}">
-                                        <div class="box-cart-message-box__content">
-                                            <strong class="box-cart-message-box__title">{{ 'V košíku máte nadrozměrnou položku'|trans }}</strong>
-                                            <p class="box-cart-message-box__desc">{{ 'Tohle zboží má kvůli svým rozměrům a náročnosti manipulace jiné požadavky na dopravu. Proto jsme váš nákup rozdělili na víc zásilek.'|trans }}</p>
-                                        </div>
-                                    </div>
-                                {% endif %}
                                 <div class="box-cart-card box-cart-card--info box-cart-card--{{ previewNumber }}">
                                     <div class="box-cart-card__top">
                                         <h2 class="box-cart-card__title box-cart-card__title--no-margin">
@@ -84,7 +83,6 @@
                                     </div>
                                     {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
                                 </div>
-                            {% endif %}
                         {% endfor %}
 
                         <div class="box-cart__buttons">
