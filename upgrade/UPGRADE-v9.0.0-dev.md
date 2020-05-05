@@ -293,47 +293,8 @@ There you can find links to upgrade notes for other versions too.
     - please read [upgrade instruction for vats per domain](https://github.com/shopsys/shopsys/blob/master/upgrade/upgrade-instruction-for-vats-per-domain.md)
 
 - apply these changes to add support for naming uploaded files([#1547](https://github.com/shopsys/shopsys/pull/1547))
-    - update your `composer.json`
-        ```diff
-            "ext-curl": "*",
-        +   "ext-fileinfo": "*",
-            "ext-gd": "*",
-        ```
-    - update your `docker/php-fpm/Dockerfile`
-        ```diff
-            RUN docker-php-ext-install \
-                bcmath \
-        +       fileinfo \
-                gd \
-        ```
-    - add this route to the end of your `config/routes/shopsys_front.yaml`
-        ```diff
-        +   front_download_uploaded_file:
-        +       path: /file/{uploadedFileId}/{uploadedFilename}
-        +       defaults: { _controller: App\Controller\Front\UploadedFileController:downloadAction }
-        +       methods: [GET]
-        +       requirements:
-        +           uploadedFileId: \d+
-        ```
-    - update your `src/Controller/Front/OrderController.php`
-        ```diff
-             return new DownloadFileResponse(
-                 $this->legalConditionsFacade->getTermsAndConditionsDownloadFilename(),
-        -        $response->getContent()
-        +        $response->getContent(),
-        +        'text/html'
-             );
-        ```
-    - update your `tests/App/Smoke/Http/RouteConfigCustomization.php`
-        ```diff
-                $config->addExtraRequestDataSet('Check personal data XML export with right hash')
-                    ->setParameter('hash', $personalDataAccessRequest->getHash())
-                    ->setExpectedStatusCode(200);
-        +   })->customizeByRouteName(['front_download_uploaded_file'], function (RouteConfig $config) {
-        +       $config->skipRoute('Downloading uploaded files is not tested.');
-            });
-        ```
-    - add [src/Controller/Front/UploadedFileController.php](https://github.com/shopsys/shopsys/blob/master/project-base/src/Controller/Front/UploadedFileController.php) to your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/1a2fb6dff9f111ed36c91114d00d45fe9054baaa) to update your project
+
     - `MessageData::attachmentsFilepaths` has been replaced by `MessageData::attachments` that accepts array of `UploadedFile`
     - `MailTemplateFacade::getMailTemplateAttachmentsFilepaths()` has been replaced by `MailTemplateFacade::getMailTemplateAttachmentFilepath()` that accepts single `UploadedFile`
     - following methods has changed their interface, update your usages accordingly:
@@ -377,22 +338,22 @@ There you can find links to upgrade notes for other versions too.
              - public function __construct($toEmail, $bccEmail, $body, $subject, $fromEmail, $fromName, array $variablesReplacementsForBody = [], array $variablesReplacementsForSubject = [], array $attachments = [], $replyTo = null)
              + public function __construct($toEmail, $bccEmail, $body, $subject, $fromEmail, $fromName, array $variablesReplacementsForBody = [], array $variablesReplacementsForSubject = [], array $attachmentsFilepaths = [], $replyTo = null)
             ```
-        - `UploadedFileFacade::__uploadFile()`
+        - `UploadedFileFacade::uploadFile()`
             ```diff
              - protected function uploadFile(object $entity, string $entityName, string $type, array $temporaryFilenames): void
              + protected function uploadFile(object $entity, string $entityName, string $type, string $temporaryFilename, string $uploadedFileName): void
             ```
-        - `UploadedFileFacade::__uploadFiles()`
+        - `UploadedFileFacade::uploadFiles()`
             ```diff
              - protected function uploadFiles(object $entity, string $entityName, string $type, array $temporaryFilenames, int $existingFilesCount): void
              + protected function uploadFiles(object $entity, string $entityName, string $type, array $temporaryFilenames, array $uploadedFileNames, int $existingFilesCount): void
             ```
-        - `UploadedFileFactory::__create()` and `UploadedFileFactoryInterface::__create()`
+        - `UploadedFileFactory::create()` and `UploadedFileFactoryInterface::create()`
             ```diff
              - public function create(string $entityName, int $entityId, string $type, string $temporaryFilename, int $position = 0): UploadedFile
              + public function create(string $entityName, int $entityId, string $type, string $temporaryFilename, string $uploadedFilename, int $position = 0): UploadedFile
             ```
-        - `UploadedFileFactory::__createMultiple()` and `UploadedFileFactoryInterface::__createMultiple()`
+        - `UploadedFileFactory::createMultiple()` and `UploadedFileFactoryInterface::createMultiple()`
             ```diff
              - public function createMultiple(string $entityName, int $entityId, string $type, array $temporaryFilenames, array $uploadedFilenames, int $existingFilesCount): array
              + public function createMultiple(string $entityName, int $entityId, string $type, array $temporaryFilenames, int $existingFilesCount): array
