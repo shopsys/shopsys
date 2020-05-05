@@ -32,6 +32,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @property \App\Model\Product\ProductDataFactory $productDataFactory
  * @property \App\Component\Setting\Setting $setting
  * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+ * @property \App\Component\Domain\Domain $domain
  */
 class ProductController extends BaseProductController
 {
@@ -51,7 +52,7 @@ class ProductController extends BaseProductController
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade $advancedSearchProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Twig\ProductExtension $productExtension
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade

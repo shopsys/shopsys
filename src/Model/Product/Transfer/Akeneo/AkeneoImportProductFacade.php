@@ -246,7 +246,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 
     protected function doAfterTransfer(): void
     {
-        //$this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
+        $this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
         $this->logger->addInfo('Transfer is done.');
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
     }
