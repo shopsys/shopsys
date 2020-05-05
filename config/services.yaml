@@ -514,6 +514,13 @@ services:
         class: Kraken
         factory: ['@App\Component\Image\Kraken\KrakenFactory', createApi]
 
+    Shopsys\FrameworkBundle\Component\Image\ImageFacade: '@App\Component\Image\ImageFacade'
+
+    App\Component\Image\ImageFacade:
+        arguments: ['%shopsys.image_url_prefix%']
+        calls:
+            - { method: setCdnDomain, arguments: ['%env(CDN_DOMAIN)%'] }
+
     Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator: '@App\Component\Image\Processing\ImageGenerator'
 
     App\Component\Image\Processing\ImageGenerator: ~
