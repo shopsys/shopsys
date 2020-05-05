@@ -21,6 +21,19 @@ else
     yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-type\"" basic
     yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-secret\"" http-auth
     yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-realm\"" "Authentication Required - ok"
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/configuration-snippet\"" "satisfy any;
+allow 213.151.92.78;
+allow 93.185.110.99/32;
+allow 93.185.110.100/32;
+allow 93.185.110.101/32;
+allow 185.198.191.147/32;
+allow 204.145.66.226/32;
+allow 77.81.119.26/32;
+allow 86.105.155.150/32;
+allow 185.115.0.0/24;
+allow 77.247.124.1/32;
+allow 193.165.237.218;
+deny all;"
 fi
 
 echo "End of kubernetes-variables.sh"
