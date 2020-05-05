@@ -54,3 +54,6 @@ parameters:
         lossy: true
         api_key: ''
         api_secret: ''
+
+    # When you do not want to use CDN, it is used value '//' as workaround by https://github.com/symfony/symfony/issues/28391
+    env(CDN_DOMAIN): '//'

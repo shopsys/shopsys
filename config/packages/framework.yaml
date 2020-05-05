@@ -19,5 +19,8 @@ framework:
     profiler:
         enabled: false
         collect: false
-    assets: ~
+    assets:
+        base_urls:
+            # When you do not want to use CDN, it is used value '//' as workaround by https://github.com/symfony/symfony/issues/28391
+            - '%env(CDN_DOMAIN)%'
     error_controller: 'App\Controller\Front\ErrorController::showAction'
