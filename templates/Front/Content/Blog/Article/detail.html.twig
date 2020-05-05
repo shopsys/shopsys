@@ -8,36 +8,56 @@
     {{- blogArticle.getSeoMetaDescription(domainId)|default(getSeoMetaDescription()) -}}
 {% endblock %}
 
+{% block breadcrumb %}
+{% endblock %}
+
 {% block main_content %}
 <div class="web__line">
     <div class="web__container">
-        <div class="box-blog">
+        <div class="box-blog box-blog--detail">
             <div class="box-blog__content box-blog__content--with-mobile-gap">
-                <h1>
-                    {% if blogArticle.getSeoH1(domainId) is not null %}
-                        {{ blogArticle.getSeoH1(domainId) }}
-                    {% else %}
-                        {{ blogArticle.name }}
+                <div class="box-blog__figure{{ imageExists(blogArticle) ? ' box-blog__figure--has-image' }}">
+                    {% if imageExists(blogArticle) %}
+                        {{ image(blogArticle, { itemprop: 'image', lazy:true }) }}
                     {% endif %}
-                </h1>
-
-                {% if imageExists(blogArticle) %}
-                    {{ image(blogArticle, { itemprop: 'image', lazy:true }) }}
-                {% else %}
-                    {{ noimage({ alt: blogArticle.name }) }}
-                {% endif %}
-
-                <p>{{ blogArticle.createdAt|date('j.n.Y') }}</p>
-
-                <div class="in-user-text">
-                    {{ blogArticle.description|placeholders|raw }}
+                    <h1 class="box-blog__title">
+                        {% if blogArticle.getSeoH1(domainId) is not null %}
+                            {{ blogArticle.getSeoH1(domainId) }}
+                        {% else %}
+                            {{ blogArticle.name }}
+                        {% endif %}
+                    </h1>
+                </div>
+                <div class="box-blog__top-panel">
+                    <div class="box-blog__breadcrumb">
+                        {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+                    </div>
+                    <div class="box-blog__panel">
+                        {{ render(controller('App\\Controller\\Front\\BlogCategoryController:listAction', { currentBlogCategory: blogCategory })) }}
+                        <a class="btn btn--next btn-no-style" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">
+                            {{ "Všechny články"|trans }}
+                            <i class="btn__icon svg svg-long-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="box-blog__content__wrap">
+                    <div class="in-user-text in-user-text--blog">
+                        {% if blogArticle.perex is not empty %}
+                            <div class="in-user-text__perex">
+                                {{ blogArticle.perex }}
+                            </div>
+                        {% endif %}
+                        {{ blogArticle.description|placeholders|raw }}
+                        <div class="box-blog__socials js-not-implemented-yet">
+                            <h2 class="box-blog__socials__title">{{ "Líbí se vám článek? Sdílejte jej s přáteli"|trans }}</h2>
+                            <span>Soc. plugin not implemented yet</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="box-blog__panel">
-                {{ render(controller('App\\Controller\\Front\\BlogCategoryController:listAction', { currentBlogCategory: blogCategory })) }}
-            </div>
-
+        </div>
+        <div class="box-blog-articles js-not-implemented-yet">
+            {{ render(controller('App\\Controller\\Front\\BlogArticleController:homepageArticlesAction')) }}
         </div>
     </div>
 </div>
