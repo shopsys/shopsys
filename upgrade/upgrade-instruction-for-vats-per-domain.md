@@ -5,6 +5,7 @@ You can set VATs per domains, set default VAT per domain, set product's VAT per 
 We deleted managing transports and payments prices by currencies  with this upgrade.
 
 ## Changes in project-base
+- see [project-base diff](https://github.com/shopsys/project-base/commit/85143a0fd5b89de1a19b058e3e20e1f7f3a9078d) to update your project
 
 ### Form types 
  - config/packages/twig.yaml
@@ -144,7 +145,7 @@ We deleted managing transports and payments prices by currencies  with this upgr
  - tests/App/Smoke/NewProductTest.php
     - look at [diff](https://github.com/shopsys/shopsys/pull/1498/files#diff-f96ae419b9841369f8e31b8921b9af6d)
 
- ## Following methods have changed their signatures:
+## Following methods have changed their signatures:
 ```diff
 - VatController::__construct(VatFacade $vatFacade, PricingSetting $pricingSetting, VatInlineEdit $vatInlineEdit, ConfirmDeleteResponseFactory $confirmDeleteResponseFactory)
 + VatController::__construct(VatFacade $vatFacade, PricingSetting $pricingSetting, VatInlineEdit $vatInlineEdit, ConfirmDeleteResponseFactory $confirmDeleteResponseFactory, AdminDomainTabsFacade $adminDomainTabsFacade)
