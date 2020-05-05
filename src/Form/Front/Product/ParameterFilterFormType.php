@@ -208,8 +208,8 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
     private function createSliderConfig(ParameterFilterChoice $parameterFilterChoice): array
     {
         $choices = $parameterFilterChoice->getValues();
-        $numberChoices = array_map(static function (ParameterValue $v) {
-            return (float)$v->getText();
+        $numberChoices = array_map(function (ParameterValue $parameterValue) {
+            return $this->parseStringAsFloat($parameterValue->getText());
         }, $choices);
 
         return [
