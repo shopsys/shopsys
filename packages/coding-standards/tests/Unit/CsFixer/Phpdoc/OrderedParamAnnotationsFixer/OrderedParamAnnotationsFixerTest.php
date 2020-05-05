@@ -55,6 +55,6 @@ final class OrderedParamAnnotationsFixerTest extends AbstractCheckerTestCase
      */
     protected function provideConfig(): string
     {
-        return __DIR__ . '/config.yml';
+        return __DIR__ . '/config.yaml';
     }
 }

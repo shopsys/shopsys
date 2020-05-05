@@ -112,7 +112,7 @@ class AdministratorController extends AdminBaseController
         $loggedUser = $this->getUser();
         if (!$loggedUser instanceof Administrator) {
             throw new AccessDeniedException(sprintf(
-                'Logged user is not instance of "%s". That should not happen due to security.yml configuration.',
+                'Logged user is not instance of "%s". That should not happen due to security.yaml configuration.',
                 Administrator::class
             ));
         }

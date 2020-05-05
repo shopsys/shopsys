@@ -34,7 +34,7 @@ Behavior of the filter is defined in the class `Shopsys\FrameworkBundle\Model\Pr
 Each filtering method calls appropriate method in `Shopsys\FrameworkBundle\Model\Product\ProductRepository` class in which a Doctrine `QueryBuilder` object is composed to get proper products with SQL query.
 
 ## Choose an Implementation
-You can choose which one of them will be used by setting one of the previously mentioned implementations in your `services.yaml` and `services_test.yml` configuration.
+You can choose which one of them will be used by setting one of the previously mentioned implementations in your `services.yaml` and `services_test.yaml` configuration.
 
 Along with filtering the choice will influence the data source for the product lists and product data of front-end API for increased performance.
 

@@ -3,10 +3,10 @@
     excludedPaths:
         - ./vendor
         - ./project-base/node_modules
-        - ./project-base/config/domains_urls.yml
-        - ./project-base/config/oauth2/parameters_oauth.yml.dist
+        - ./project-base/config/domains_urls.yaml
+        - ./project-base/config/oauth2/parameters_oauth.yaml.dist
         - ./packages/framework/assets/node_modules
-        - ./packages/backend-api/install/config/oauth2/parameters_oauth.yml.dist
+        - ./packages/backend-api/install/config/oauth2/parameters_oauth.yaml.dist
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:

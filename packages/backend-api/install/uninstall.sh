@@ -28,10 +28,10 @@ else
     fi
 fi
 
-rm -f ${PROJECT_BASE_PATH}/config/packages/fos_rest.yml
-rm -f ${PROJECT_BASE_PATH}/config/packages/test/fos_rest.yml
+rm -f ${PROJECT_BASE_PATH}/config/packages/fos_rest.yaml
+rm -f ${PROJECT_BASE_PATH}/config/packages/test/fos_rest.yaml
 
-rm -f ${PROJECT_BASE_PATH}/config/packages/trikoder_oauth2.yml
+rm -f ${PROJECT_BASE_PATH}/config/packages/trikoder_oauth2.yaml
 rm -rf ${PROJECT_BASE_PATH}/config/oauth2
 
 rm -rf ${PROJECT_BASE_PATH}/src/Controller/Api
@@ -87,9 +87,9 @@ function apply_patch_reverse () {
 }
 
 apply_patch_reverse "src/Kernel.php"
-apply_patch_reverse "config/parameters_common.yml"
-rm -r ${PROJECT_BASE_PATH}/config/routes/backend-api.yml
-apply_patch_reverse "config/packages/security.yml"
+apply_patch_reverse "config/parameters_common.yaml"
+rm -r ${PROJECT_BASE_PATH}/config/routes/backend-api.yaml
+apply_patch_reverse "config/packages/security.yaml"
 apply_patch_reverse "config/bundles.php"
 apply_patch_reverse "build.xml"
 

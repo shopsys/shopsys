@@ -39,13 +39,13 @@ You can read more about upgrading Symfony application to Flex <https://symfony.c
     - copy all config files to your project from the [config folder from the new version](https://github.com/shopsys/project-base/tree/master/config)
     - merge your project-specific configurations from `app/config` and `src/Shopsys/ShopBundle/resources/config` folders into `config`. Keep in mind, that
         - `config.yml`, `config_dev.yml`, and `config_test.yml` should be deleted as they're no longer necessary
-        - in `parameters_common.yml` all extended entities in `shopsys.entity_extension.map` have to have new namespace `App\...`
-        - some paths in `paths.yml` have changed, so be extra careful when changing with your modifications
+        - in `parameters_common.yaml` all extended entities in `shopsys.entity_extension.map` have to have new namespace `App\...`
+        - some paths in `paths.yaml` have changed, so be extra careful when changing with your modifications
         - routing files (`routing.yml`, `routing_dev.yml`, and `routing_test.yml`) are no longer necessary
         - any project-specific routes have to be moved into `routes`, `routes/dev`, or `routes/test` folders into a separate file
-        - any project-specific form extensions have to be added into `config/forms.yml`
-        - any project-specific image configurations have to be added into `config/images.yml`
-        - any project-specific cron definitions have to be added into `config/services/cron.yml`
+        - any project-specific form extensions have to be added into `config/forms.yaml`
+        - any project-specific image configurations have to be added into `config/images.yaml`
+        - any project-specific cron definitions have to be added into `config/services/cron.yaml`
 
 - move templates from `src/Shopsys/ShopBundle/Resources/views/` to `templates/` folder
 - remove `@ShopsysShop` Twig namespace in every template, eg.

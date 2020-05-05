@@ -1,2 +1,0 @@
-shopsys_framework:
-    resource: "@ShopsysFrameworkBundle/Resources/config/routing.yml"

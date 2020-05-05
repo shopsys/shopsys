@@ -12,11 +12,11 @@ For an explanation of the basic terms, please read [domain, multidomain and mult
 ### 1. How to create a single domain application
 
 #### 1.1 Domain configuration
-Modify the configuration of the domain in `config/domains.yml`.
+Modify the configuration of the domain in `config/domains.yaml`.
 This configuration file contains information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
 #### 1.2 Set up the url address
-Set the url address for the domain in `config/domains_urls.yml`.
+Set the url address for the domain in `config/domains_urls.yaml`.
 
 #### 1.3 Locale settings
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
@@ -47,11 +47,11 @@ If you want to use already created tests for your specific configuration, you ma
 ### 2. How to add a new domain
 
 #### 2.1 Domain configuration
-Modify the configuration of the domain in `config/domains.yml`.
+Modify the configuration of the domain in `config/domains.yaml`.
 This configuration file contains pieces of information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
 #### 2.2 Set up the url address
-Set the url address for the domain in `config/domains_urls.yml`.
+Set the url address for the domain in `config/domains_urls.yaml`.
 
 !!! note
     When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
@@ -98,12 +98,12 @@ php phing elasticsearch-export
 Some parts of these instructions are already prepared for the locales `en` and `cs`.
 
 #### 3.1 Set up the locale for domain
-Set up the locale of the domain in `config/domains.yml`.
+Set up the locale of the domain in `config/domains.yaml`.
 This configuration file contains pieces of information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
 #### 3.2 Frontend routes
 Create a file with the frontend routes for the added locale if this file is not already created for this locale.
-Create this file in the directory `config/shopsys-routing` with the name `routing_front_xx.yml` where `xx` replace for the code of added locale.
+Create this file in the directory `config/shopsys-routing` with the name `routing_front_xx.yaml` where `xx` replace for the code of added locale.
 
 #### 3.3 Translations and messages
 In order to correctly display the labels like *Registration*, *Cart*, ..., create a file with translations of messages in `translations` directory.
@@ -136,7 +136,7 @@ If you have set a different locale, you can use `translations-dump` that will cr
 #### 3.6 Locale in administration
 Administration is by default in `en` locale.
 This means that for example product list in administration tries to display translations of product names in `en` locale.
-If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yml` configuration to desired locale.
+If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yaml` configuration to desired locale.
 However, the selected locale has to be one of registered domains locale.
 When you change admin locale, you have to update acceptance tests, to have administration use cases tested properly.
 
@@ -165,13 +165,13 @@ An example for domain that uses English language:
 In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g. `Product::getName()` and you get the proper translation.
 However, sometimes, there is no request (i.e. in CLI commands or in tests) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
 
-To change the default application locale, set `locale` parameter to you desired locale (e.g. `es` for Spanish) in your [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yml).
+To change the default application locale, set `locale` parameter to you desired locale (e.g. `es` for Spanish) in your [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yaml).
 The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`config/packages/translation.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/translation.yaml) config).
 
 ### 4. Change the url address for an existing domain
 
 #### 4.1 Change the url address
-Change the url address in the configuration of the domain in `config/domains_urls.yml`.
+Change the url address in the configuration of the domain in `config/domains_urls.yaml`.
 
 !!! note
     When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
@@ -188,7 +188,7 @@ This scenario is not supported by default because of the fact, that change of th
 However, there is workaround even for this scenario.
 
 #### 5.1 Change the locale to the locale that is already used by another domain
-If you need to change the locale of a specific domain to another locale that is already used by another domain, just set the required locale for this domain in the `config/domains.yml`.
+If you need to change the locale of a specific domain to another locale that is already used by another domain, just set the required locale for this domain in the `config/domains.yaml`.
 
 #### 5.2 Change the locale to the locale that is not yet used by another domain
 If you need to change the locale of a specific domain to another locale that is not yet already used by another domain, add new temporary domain with this new locale and follow the instructions of [How to add a new domain](#2-how-to-add-a-new-domain).

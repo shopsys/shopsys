@@ -1,0 +1,23 @@
+parameters:
+    # Default Redis keys prefix
+    build-version: '0000000000000000'
+
+    # Seed for demo data generation
+    faker.seed: 1234
+
+    # Administration locale. Must be registered in domains.yaml
+    shopsys.admin_locale: en
+
+    # All time values are displayed in this timezone (default is PHP timezone)
+    shopsys.display_timezone: ~
+
+    # Default extended classes mapping
+    shopsys.entity_extension.map: {}
+
+    shopsys.image.enable_lazy_load: false
+
+    shopsys.display_cron_overview_for_superadmin_only: true
+
+    env(IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK): '0'
+    env(REDIS_PREFIX): ''
+    env(ELASTIC_SEARCH_INDEX_PREFIX): ''

@@ -19,6 +19,6 @@ final class ForceLateStaticBindingForProtectedConstantsSniffTest extends Abstrac
      */
     protected function provideConfig(): string
     {
-        return __DIR__ . '/config.yml';
+        return __DIR__ . '/config.yaml';
     }
 }

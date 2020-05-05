@@ -1,10 +1,10 @@
 imports:
-    - { resource: forms.yml }
-    - { resource: services/*.yml }
-    - { resource: paths.yml }
-    - { resource: parameters_common.yml }
-    - { resource: parameters.yml }
-    - { resource: directories.yml }
+    - { resource: forms.yaml }
+    - { resource: services/*.yaml }
+    - { resource: paths.yaml }
+    - { resource: parameters_common.yaml }
+    - { resource: parameters.yaml }
+    - { resource: directories.yaml }
 
 services:
     _defaults:

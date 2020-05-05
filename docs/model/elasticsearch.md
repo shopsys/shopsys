@@ -73,7 +73,7 @@ You can learn more about [Product searching](../model/front-end-product-searchin
 which ensures that alphabetical sorting is correct for every language and its set of rules.
 
 ### Adding new index
-To add another index to export, you need to configure mapping in JSON file, create an index class which extends `AbstractIndex` and implement all abstract methods and register it into `services.yml`.
+To add another index to export, you need to configure mapping in JSON file, create an index class which extends `AbstractIndex` and implement all abstract methods and register it into `services.yaml`.
 The index will be immediately available for phing commands. For detailed explanation see a [cookbook](../cookbook/adding-a-new-elasticsearch-index.md)
 
 #### AbstractIndex methods

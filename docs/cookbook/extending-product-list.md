@@ -108,7 +108,7 @@ class ProductExportRepository extends BaseProductExportRepository
 }
 ```
 
-You need to register your new class as an alias for the one from the FrameworkBundle in `services.yaml` and `services_test.yml`:
+You need to register your new class as an alias for the one from the FrameworkBundle in `services.yaml` and `services_test.yaml`:
 
 ```yml
 Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: '@App\Model\Product\Search\Export\ProductExportRepository'

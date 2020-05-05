@@ -26,7 +26,7 @@ The read model is implemented in a separate [`shopsys/read-model`](https://githu
 Currently, you can choose between two implementations of `ListedProductViewFacadeInterface` that represents read model:
 
 ### Option 1 - use data from Elasticsearch
-- use `ListedProductViewElasticFacade` *(default)* implementation of `ListedProductViewFacadeInterface` in `services.yaml` and `services_test.yml`
+- use `ListedProductViewElasticFacade` *(default)* implementation of `ListedProductViewFacadeInterface` in `services.yaml` and `services_test.yaml`
 ```yaml
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface: '@Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade'
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
@@ -35,7 +35,7 @@ Currently, you can choose between two implementations of `ListedProductViewFacad
 - to use this implementation you need to use `ProductOnCurrentDomainElasticFacade` as well. You can find more about this topic in [Front-end product filtering](./front-end-product-filtering.md)
 
 ### Option 2 - use data from SQL database
-- use `ListedProductViewFacade` implementation of `ListedProductViewFacadeInterface` in `services.yaml` and `services_test.yml`
+- use `ListedProductViewFacade` implementation of `ListedProductViewFacadeInterface` in `services.yaml` and `services_test.yaml`
 ```yaml
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface: '@Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade'
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade'

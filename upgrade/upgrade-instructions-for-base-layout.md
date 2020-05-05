@@ -5,7 +5,7 @@ There is a new base html layout with horizontal menu and product filter placed i
 
 - remove left panel web layout and add horizontal menu ([#1540](https://github.com/shopsys/shopsys/pull/1540))
     - because of removing left panel, we also removed unnecessary advert position called `leftSidebar`. You can remove it by creating migration and update data fixtures. If you want to remove it, please make sure that all stuff linked to old position is moved to a new position.
-    - remove configuration for `leftSidebar` from `images.yml` file
+    - remove configuration for `leftSidebar` from `images.yaml` file
         ```diff
                 additionalSizes:
                     - {width: 440, height: ~, media: "(max-width: 479px)"}

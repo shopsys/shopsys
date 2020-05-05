@@ -18,7 +18,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [How do I change the environment (PRODUCTION/DEVELOPMENT/TEST)?](#how-do-i-change-the-environment-productiondevelopmenttest)
 - [Are some periodic tasks part of the Shopsys Framework (cron)?](#are-some-periodic-tasks-part-of-the-shopsys-framework-cron)
 - [Why are you using entity data instead of entities for Symfony forms?](#why-are-you-using-entity-data-instead-of-entities-for-symfony-forms)
-- [What is the configuration file `services_test.yml` good for?](#what-is-the-configuration-file-services_testyml-good-for)
+- [What is the configuration file `services_test.yaml` good for?](#what-is-the-configuration-file-services_testyaml-good-for)
 - [How to change the behavior of the product search on the front-end?](#how-to-change-the-behavior-of-the-product-search-on-the-front-end)
 - [Why are emails not sent immediately but at the end of the script](#why-are-emails-sent-before-end-of-the-script-and-not-immediately)
 - [Where does the business logic belong?](#where-does-the-business-logic-belong)
@@ -42,7 +42,7 @@ Demo data are used for automatic tests and also for installation of demo shop wi
 
 ## How to change a domain URL?
 The change of domain url requires two steps.
-In the first step, you need to modify the domain url in the configuration file `config/domains_urls.yml`.
+In the first step, you need to modify the domain url in the configuration file `config/domains_urls.yaml`.
 In the second step, you need to replace all occurrences of the old url address in the database with the new url address.
 This scenario is described in more detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#4-change-the-url-address-for-an-existing-domain).
 
@@ -62,7 +62,7 @@ Modifications are detected via git by comparison against the origin/master versi
 
 ## Is the application https ready or does it need some extra setting?
 Shopsys Framework is fully prepared for HTTPS.
-You can just use `https://<your-domain>` in your `config/domains_urls.yml` configuration file.
+You can just use `https://<your-domain>` in your `config/domains_urls.yaml` configuration file.
 Of course, an SSL certificate must be installed on your server.
 
 ## How can I easily translate and set up my new language constants?
@@ -77,7 +77,7 @@ See how to install Shopsys Framework in production and how to proceed when deplo
 
 ## How to set up the administration with a different locale/language (e.g. Czech)?
 The administration uses `en` locale by default.
-If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yml` configuration.
+If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yaml` configuration.
 However, the selected locale has to be one of registered domains locale.
 This scenario is described in more detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#36-locale-in-administration).
 
@@ -99,15 +99,15 @@ If the command `composer install --no-dev` is executed, the file `PRODUCTION` is
 You can change the environment manually by using the command `php bin/console shopsys:environment:change`.
 
 ## Are some periodic tasks part of the Shopsys Framework (cron)?
-Yes, there is some prepared configuration for Shopsys Framework cron commands in a file `src/Resources/config/services/cron.yml` in `FrameworkBundle`.
+Yes, there is some prepared configuration for Shopsys Framework cron commands in a file `src/Resources/config/services/cron.yaml` in `FrameworkBundle`.
 Do not forget to set up a cron on your server to execute [`php phing cron`](./console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
 
 ## Why are you using entity data instead of entities for Symfony forms?
 We are using [entity data objects](../model/entities.md#entity-data) instead of [entities](../model/introduction-to-model-architecture.md#entity)
 because Symfony forms need setters for all fields and we don't want to mess entities with them.
 
-## What is the configuration file `services_test.yml` good for?
-[`services_test.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yml)
+## What is the configuration file `services_test.yaml` good for?
+[`services_test.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yaml)
 is a service configuration file that is loaded in TEST environment in addition to
 the standard configuration defined in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml) as sometimes the configuration differs from the standard one and we need to override it.
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.

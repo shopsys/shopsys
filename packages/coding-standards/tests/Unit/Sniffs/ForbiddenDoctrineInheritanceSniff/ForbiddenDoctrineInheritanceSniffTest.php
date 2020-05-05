@@ -25,6 +25,6 @@ final class ForbiddenDoctrineInheritanceSniffTest extends AbstractCheckerTestCas
      */
     protected function provideConfig(): string
     {
-        return __DIR__ . '/config.yml';
+        return __DIR__ . '/config.yaml';
     }
 }

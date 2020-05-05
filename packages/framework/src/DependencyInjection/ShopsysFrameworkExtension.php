@@ -21,17 +21,17 @@ class ShopsysFrameworkExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('directories.yml');
-        $loader->load('parameters_common.yml');
-        $loader->load('services.yml');
-        $loader->load('paths.yml');
+        $loader->load('directories.yaml');
+        $loader->load('parameters_common.yaml');
+        $loader->load('services.yaml');
+        $loader->load('paths.yaml');
 
         if ($container->getParameter('kernel.environment') === EnvironmentType::DEVELOPMENT) {
-            $loader->load('services_dev.yml');
+            $loader->load('services_dev.yaml');
         }
 
         if ($container->getParameter('kernel.environment') === EnvironmentType::TEST) {
-            $loader->load('services_test.yml');
+            $loader->load('services_test.yaml');
         }
 
         $this->configureVarDumperTwigExtension($container);

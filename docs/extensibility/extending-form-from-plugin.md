@@ -123,7 +123,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
 
 ```
 
-Then you need to add configuration to `services.yml` in our example `product-feed-heureka/src/Resources/services.yml`.
+Then you need to add configuration to `services.yaml` in our example `product-feed-heureka/src/Resources/services.yaml`.
 ```yaml
 services:
 

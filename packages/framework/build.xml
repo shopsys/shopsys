@@ -128,12 +128,12 @@
 
     <target name="build-new" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-rebuild,error-pages-generate,warmup,elasticsearch-index-recreate,clean-redis-old" description="Builds application for production with clean DB (with base data only)."/>
 
-    <target name="build-version-generate" description="Generates parameters_version.yml config file with a new build version number.">
+    <target name="build-version-generate" description="Generates parameters_version.yaml config file with a new build version number.">
         <exec executable="${path.php.executable}" checkreturn="true" outputProperty="version">
             <arg value="-r"/>
             <arg value="echo date('YmdHis');"/>
         </exec>
-        <copy file="${path.config}/parameters_version.yml.dist" tofile="${path.config}/parameters_version.yml" overwrite="true">
+        <copy file="${path.config}/parameters_version.yaml.dist" tofile="${path.config}/parameters_version.yaml" overwrite="true">
             <filterchain>
                 <replacetokens begintoken="%%" endtoken="%%">
                     <token key="version" value="${version}"/>
@@ -429,7 +429,7 @@
         </exec>
     </target>
 
-    <target name="domains-data-create" depends="domains-db-functions-create" description="Creates domains data for newly configured domains. You should run it when you modify domains.yml">
+    <target name="domains-data-create" depends="domains-db-functions-create" description="Creates domains data for newly configured domains. You should run it when you modify domains.yaml">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-data:create"/>
@@ -469,7 +469,7 @@
         </if>
     </target>
 
-    <target name="domains-urls-replace" description="Replaces domains urls in database by urls in configuration. You should run it when you modify domains_urls.yml">
+    <target name="domains-urls-replace" description="Replaces domains urls in database by urls in configuration. You should run it when you modify domains_urls.yaml">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-urls:replace"/>

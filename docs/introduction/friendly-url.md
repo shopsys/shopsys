@@ -15,7 +15,7 @@ The rest of the work is done automatically and URLs provided by these providers 
 
     - `getFriendlyUrlData` method that generates `FriendlyUrlData` for all your entities
 
-    - `getRouteName` method returns name of route that you have to declare in `routing_friendly_url.yml` file like:
+    - `getRouteName` method returns name of route that you have to declare in `routing_friendly_url.yaml` file like:
 
 ```yaml
 front_<entity_name>_detail:

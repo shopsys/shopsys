@@ -197,7 +197,7 @@ class CategoryIndex extends AbstractIndex
 }
 ```
 
-Register new index into `config/services.yml`
+Register new index into `config/services.yaml`
 
 ```yaml
     App\Model\Category\Elasticsearch\CategoryIndex: ~

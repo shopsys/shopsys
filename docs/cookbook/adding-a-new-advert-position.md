@@ -50,7 +50,7 @@ Render the new advert on the product detail page (or wherever else you want) by 
 If you misspell the position name (or otherwise use a non-registered one) an exception will be thrown including the list of all registered positions.
 So don't worry about calling the controller in a wrong way.
 
-Add new entry into `noticer` section in `config/images.yml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
+Add new entry into `noticer` section in `config/images.yaml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
 
 ```yaml
 -   name: noticer

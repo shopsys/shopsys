@@ -221,11 +221,11 @@
         },
         "incenteev-parameters": [
             {
-                "file": "project-base/config/parameters.yml",
+                "file": "project-base/config/parameters.yaml",
                 "keep-outdated": true
             },
             {
-                "file": "project-base/config/parameters_test.yml",
+                "file": "project-base/config/parameters_test.yaml",
                 "keep-outdated": true
             }
         ]

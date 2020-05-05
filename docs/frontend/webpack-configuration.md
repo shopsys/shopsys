@@ -12,7 +12,7 @@ Webpack configuration for CSS, Images, Svg font is devided by JS Comment `// Fro
 `const StylelintPlugin = require('stylelint-webpack-plugin');` - plugin for coding standards in less files (see also [StyleLint Settings](./stylelint-settings.md))
 
 ```
-const domainFile = './config/domains.yml';
+const domainFile = './config/domains.yaml';
 const domains = yaml.safeLoad(fs.readFileSync(domainFile, 'utf8'));
 
 domains.domains.forEach((domain) => {
@@ -24,7 +24,7 @@ domains.domains.forEach((domain) => {
         .addEntry('frontend-print-style-' + domain.styles_directory, './assets/styles/frontend/' + domain.styles_directory + '/print/main.less');
 });
 ```
-We can specify different design for each domain. This is specified by `styles_directory` value in `./config/domains.yml` file. By default we have `common` and `domain2`. For all these folders we need to create `.addEntry` for style and for print style. These entries are loaded in `base.html.twig` by:
+We can specify different design for each domain. This is specified by `styles_directory` value in `./config/domains.yaml` file. By default we have `common` and `domain2`. For all these folders we need to create `.addEntry` for style and for print style. These entries are loaded in `base.html.twig` by:
 ```
 {% set entryDirectory = 'frontend-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
 {{ encore_entry_link_tags( entryDirectory ) }}
