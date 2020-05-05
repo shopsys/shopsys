@@ -10,6 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class SliderFilterFormType extends AbstractType
 {
@@ -23,9 +25,19 @@ class SliderFilterFormType extends AbstractType
 
         $builder->add('min', TextType::class, [
             'attr' => ['placeholder' => $config['min']],
+            'constraints' => [
+                new GreaterThanOrEqual([
+                    'value' => $config['min'],
+                ])
+            ]
         ]);
         $builder->add('max', TextType::class, [
             'attr' => ['placeholder' => $config['max']],
+            'constraints' => [
+                new LessThanOrEqual([
+                    'value' => $config['max'],
+                ])
+            ]
         ]);
     }
 
