@@ -50,6 +50,8 @@ class FilterQuery extends BaseFilterQuery
         $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.edge_ngram_with_diacritic^40';
         $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.edge_ngram_without_diacritic^35';
 
+        $clonedQuery->match['multi_match']['operator'] = 'and';
+
         return $clonedQuery;
     }
 

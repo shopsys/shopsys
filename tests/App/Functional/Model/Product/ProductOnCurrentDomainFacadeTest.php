@@ -318,7 +318,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
         $paginationResult = $this->getPaginationResultInSearch($productFilterData, 'mg3550');
 
-        $this->assertCount(3, $paginationResult->getResults());
+        $this->assertCount(1, $paginationResult->getResults());
     }
 
     /**
@@ -345,7 +345,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     {
         $paginationResult = $this->getSearchAutocompleteProducts('mg3550');
 
-        $this->assertCount(4, $paginationResult->getResults());
+        $this->assertCount(1, $paginationResult->getResults());
     }
 
     /**
