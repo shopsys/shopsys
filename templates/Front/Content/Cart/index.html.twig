@@ -58,6 +58,7 @@
                                     {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
                                 </div>
                             {% endif %}
+                            {% if splitOrderPreview.morePreviews %}
                                 <div class="box-cart-card box-cart-card--info box-cart-card--{{ previewNumber }}">
                                     <div class="box-cart-card__top">
                                         <h2 class="box-cart-card__title box-cart-card__title--no-margin">
@@ -83,6 +84,7 @@
                                     </div>
                                     {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
                                 </div>
+                            {% endif %}
                         {% endfor %}
 
                         <div class="box-cart__buttons">
