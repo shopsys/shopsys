@@ -39,7 +39,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
     private $blogCategoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -62,7 +62,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      * @param \App\Model\Blog\Article\BlogArticleDataFactory $blogArticleDataFactory
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Blog\BlogVisibilityFacade $blogVisibilityFacade
      * @param \App\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
      */

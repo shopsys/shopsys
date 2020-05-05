@@ -37,6 +37,24 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: -100 }
 
+    Shopsys\FrameworkBundle\Component\Domain\Domain: '@App\Component\Domain\Domain'
+
+    App\Component\Domain\Domain:
+        factory: ['@App\Component\Domain\DomainFactory', createWithCdn]
+        arguments:
+            - '%shopsys.domain_config_filepath%'
+            - '%shopsys.domain_urls_config_filepath%'
+            - '%env(CDN_DOMAIN)%'
+        lazy: true
+
+    Shopsys\FrameworkBundle\Model\Localization\LocalizationListener: '@App\Model\Localization\LocalizationListener'
+
+    Shopsys\FrameworkBundle\Component\Collector\ShopsysFrameworkDataCollector: '@App\Component\Collector\ShopsysFrameworkDataCollector'
+
+    App\Component\Collector\ShopsysFrameworkDataCollector:
+        tags:
+            - { name: data_collector, id: shopsys_framework_core, template: '@ShopsysFramework/Components/Collector/shopsysFramework.html.twig', priority: -300 }
+
     Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider: '@App\Model\MultidomainEntityClassProvider'
 
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: '@App\Component\Doctrine\QueryBuilderExtender'

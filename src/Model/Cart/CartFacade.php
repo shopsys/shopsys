@@ -33,6 +33,7 @@ use Twig\Environment;
  * @method \App\Model\Cart\Cart|null findCartOfCurrentCustomerUser()
  * @method \App\Model\Cart\Cart getCartOfCurrentCustomerUserCreateIfNotExists()
  * @method \App\Model\Cart\Cart getCartByCustomerUserIdentifierCreateIfNotExists(\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier)
+ * @property \App\Component\Domain\Domain $domain
  */
 class CartFacade extends BaseCartFacade
 {
@@ -56,7 +57,7 @@ class CartFacade extends BaseCartFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation

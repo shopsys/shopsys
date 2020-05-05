@@ -11,12 +11,12 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
+     * @var \App\Component\Image\ImageFacade
      */
     private $imageFacade;
 
@@ -26,8 +26,8 @@ class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
     private $friendlyUrlFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \App\Component\Domain\Domain $domain
+     * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(

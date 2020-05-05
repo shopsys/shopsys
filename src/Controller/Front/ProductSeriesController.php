@@ -21,7 +21,7 @@ class ProductSeriesController extends FrontBaseController
     private $productSeriesFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -57,7 +57,7 @@ class ProductSeriesController extends FrontBaseController
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
      * @param \App\Model\Product\Listed\ListedProductViewFactory $listedProductViewFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         ProductSeriesFacadeInterface $productSeriesFacade,

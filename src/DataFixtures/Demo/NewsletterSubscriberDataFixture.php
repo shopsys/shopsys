@@ -15,13 +15,13 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     protected $newsletterFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     protected $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(NewsletterFacade $newsletterFacade, Domain $domain)
     {

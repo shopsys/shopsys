@@ -23,14 +23,14 @@ class BlogArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     private $blogCategoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         BlogArticleRepository $blogArticleRepository,

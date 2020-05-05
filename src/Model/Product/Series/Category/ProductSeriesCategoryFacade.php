@@ -29,7 +29,7 @@ class ProductSeriesCategoryFacade
     private $friendlyUrlFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -37,7 +37,7 @@ class ProductSeriesCategoryFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Series\Category\ProductSeriesCategoryRepository $productSeriesCategoryRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         EntityManagerInterface $em,

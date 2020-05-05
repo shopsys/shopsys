@@ -10,8 +10,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator as BaseProd
 /**
  * @method \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[] getCategoryBreadcrumbItems(\App\Model\Category\Category $category)
  * @property \App\Model\Category\CategoryFacade $categoryFacade
- * @method __construct(\App\Model\Product\ProductRepository $productRepository, \App\Model\Category\CategoryFacade $categoryFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
+ * @method __construct(\App\Model\Product\ProductRepository $productRepository, \App\Model\Category\CategoryFacade $categoryFacade, \App\Component\Domain\Domain $domain)
  * @property \App\Model\Product\ProductRepository $productRepository
+ * @property \App\Component\Domain\Domain $domain
  */
 class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator
 {

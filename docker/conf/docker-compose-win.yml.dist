@@ -28,6 +28,9 @@ services:
             - "8000:8080"
 
     php-fpm:
+        # It is for testing CDN on localhost
+        #        environment:
+        #             CDN_DOMAIN: 'http://127.0.0.127:8000'
         build:
             context: .
             dockerfile: docker/php-fpm/Dockerfile

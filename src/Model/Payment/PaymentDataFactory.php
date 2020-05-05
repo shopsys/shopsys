@@ -17,8 +17,8 @@ class PaymentDataFactory extends BasePaymentDataFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \App\Component\Domain\Domain $domain
+     * @param \App\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
         PaymentFacade $paymentFacade,

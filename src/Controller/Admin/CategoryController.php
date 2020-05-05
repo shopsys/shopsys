@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @property \App\Model\Category\CategoryDataFactory $categoryDataFactory
  * @property \App\Model\Category\CategoryFacade $categoryFacade
+ * @property \App\Component\Domain\Domain $domain
  */
 class CategoryController extends BaseCategoryController
 {
@@ -29,7 +30,7 @@ class CategoryController extends BaseCategoryController
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      */
