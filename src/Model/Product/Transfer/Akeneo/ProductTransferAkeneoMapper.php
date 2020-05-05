@@ -253,7 +253,7 @@ class ProductTransferAkeneoMapper
      */
     private function mapProductParameters(array $akeneoProductData, ProductData $productData): void
     {
-        $akeneoProductParameters = $this->findParametersFromAkeneoData($akeneoProductData);
+        $akeneoProductParameters = $this->getParametersFromAkeneoData($akeneoProductData);
         $productData->parameters = [];
 
         foreach ($akeneoProductParameters as $akeneoProductParameterCode => $akeneoProductParameterData) {
@@ -348,11 +348,11 @@ class ProductTransferAkeneoMapper
 
     /**
      * @param array $akeneoProductData
-     * @return array|null
+     * @return array
      */
-    public function findParametersFromAkeneoData(array $akeneoProductData): ?array
+    public function getParametersFromAkeneoData(array $akeneoProductData): array
     {
-        $parameters = null;
+        $parameters = [];
 
         foreach ($akeneoProductData['values'] as $key => $data) {
             if (strpos($key, AkeneoImportProductParameterFacade::PREFIX_PARAMETER_CODE) === false) {

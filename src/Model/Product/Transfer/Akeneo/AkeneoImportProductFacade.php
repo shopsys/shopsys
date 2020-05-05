@@ -263,7 +263,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     public function checkIsAllParametersExistFromAkeneoData(array $akeneoProductData): bool
     {
-        $akeneoProductParameters = $this->productTransferAkeneoMapper->findParametersFromAkeneoData($akeneoProductData);
+        $akeneoProductParameters = $this->productTransferAkeneoMapper->getParametersFromAkeneoData($akeneoProductData);
 
         foreach ($akeneoProductParameters as $akeneoParameterCode => $parameterValue) {
             $parameter = $this->parameterFacade->findParameterByAkeneoCode($akeneoParameterCode);
