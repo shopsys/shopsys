@@ -94,6 +94,8 @@ spec:
                             value: "{{S3_API_PASSWORD}}"
                         -   name: S3_API_BUCKET_NAME
                             value: "{{S3_API_BUCKET_NAME}}"
+                        -   name: CDN_DOMAIN
+                            value: "{{CDN_DOMAIN}}"
                         -   name: REDIS_PREFIX
                             value: "{{REDIS_PREFIX}}"
                         -   name: ELASTIC_SEARCH_INDEX_PREFIX
