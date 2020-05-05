@@ -34,9 +34,9 @@
 
         {% block content %}{% endblock %}
 
-        <div class="web__footer{% if not isCookiesConsentGiven() %} web__footer--with-cookies js-eu-cookies-consent-footer-gap{% endif %}">
-            {% include 'Front/Layout/footer.html.twig' %}
-        </div>
+        {% block footer %}
+            {% embed 'Front/Layout/footer.html.twig' %}{% endembed %}
+        {% endblock %}
     </div>
     {% if not isCookiesConsentGiven() %}
         {% set cookiesArticle = findCookiesArticleByDomainId(getDomain().id) %}
