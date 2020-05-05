@@ -1,5 +1,7 @@
 parameters:
-
+    # limit maximum concurrent job count to prevent server overload
+    parallel:
+        maximumNumberOfProcesses: 5
     treatPhpDocTypesAsCertain: false
 
     ignoreErrors:
