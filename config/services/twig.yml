@@ -6,3 +6,9 @@ services:
 
     App\Twig\:
         resource: '../../src/Twig/'
+
+    App\Twig\LocalizationExtension:
+        arguments:
+            - '%shopsys.web_dir%'
+
+    Shopsys\FrameworkBundle\Twig\LocalizationExtension: '@App\Twig\LocalizationExtension'
