@@ -125,6 +125,7 @@ class ProductTypeFormType extends AbstractType
                     $context->buildViolation('Pokud je povolená doprava zdarma, vyplňte minimální částku pro danou doménu.')
                         ->atPath('freeTransportMinimalPrice')
                         ->addViolation();
+                    continue;
                 }
 
                 if ($productTypeData->freeTransportMinimalPrice[$domainId]->getAmount() < 0) {
