@@ -6,6 +6,7 @@ namespace App\Component\Image;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Image;
+use Shopsys\FrameworkBundle\Component\Image\Image as BaseImage;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 
 class ImageFacade extends BaseImageFacade
@@ -128,5 +129,55 @@ class ImageFacade extends BaseImageFacade
         }
 
         return $additionalImagesData;
+    }
+
+    /**
+     * @param object $entity
+     * @param array $temporaryFilenames
+     * @param string|null $type
+     * @param bool $deleteOldImage
+     * @return \App\Component\Image\Image|null
+     */
+    public function uploadImage($entity, $temporaryFilenames, $type, bool $deleteOldImage = true): ?BaseImage
+    {
+        $newImage = null;
+
+        if (count($temporaryFilenames) > 0) {
+            $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
+            $entityId = $this->getEntityId($entity);
+            $oldImage = $this->imageRepository->findImageByEntity($imageEntityConfig->getEntityName(), $entityId, $type);
+
+            if ($oldImage !== null && $deleteOldImage === true) {
+                $this->em->remove($oldImage);
+            }
+
+            $newImage = $this->imageFactory->create(
+                $imageEntityConfig->getEntityName(),
+                $entityId,
+                $type,
+                array_pop($temporaryFilenames)
+            );
+            $this->em->persist($newImage);
+
+            $this->em->flush();
+        }
+
+        /** @var \App\Component\Image\Image|null $newImage */
+        return $newImage;
+    }
+
+    /**
+     * @param object $entity
+     * @param string $akeneoImageType
+     * @throws \Shopsys\FrameworkBundle\Component\Image\Exception\EntityIdentifierException
+     * @return \App\Component\Image\Image|null
+     */
+    public function findImageByEntityForAkeneoImageType($entity, string $akeneoImageType): ?Image
+    {
+        return $this->imageRepository->findImageByEntityForAkeneoImageType(
+            $this->imageConfig->getEntityName($entity),
+            $this->getEntityId($entity),
+            $akeneoImageType
+        );
     }
 }

@@ -52,6 +52,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'saleExclusion',
         'vendorDeliveryDate',
         'flags',
+        'images',
     ];
 
     /**
