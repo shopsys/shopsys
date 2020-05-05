@@ -103,7 +103,6 @@
         "shopsys/coding-standards": "9.0.x-dev",
         "sspooky13/yaml-standards": "^5.0.0",
         "symfony/var-dumper": "^4.4",
-        "symfony/web-server-bundle": "^4.4"
     },
     "suggest": {
         "ext-pgsql": "Required for dumping the Postgres database in shopsys:database:dump command"

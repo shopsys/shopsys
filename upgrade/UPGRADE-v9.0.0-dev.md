@@ -194,6 +194,13 @@ There you can find links to upgrade notes for other versions too.
   update Redis client to version 5.2.1 and Redis server to 5.0 ([#1606](https://github.com/shopsys/shopsys/pull/1606))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/e3adc0c31094b47aca03389ef4fa266977edab25) to update your project
 
+- stop using symfony/web-server-bundle ([#1817](https://github.com/shopsys/shopsys/pull/1817)
+    - see #project-base-diff to update your project
+    - command `php bin/console shopsys:server:run` (class `Shopsys\FrameworkBundle\Command\ServerRunForDomainCommand`) was removed
+    - command `php bin/console server:start` (class `Shopsys\FrameworkBundle\Command\ServerStartWithCustomRouterCommand`) was removed
+    - command `php bin/console server:run` (class `Shopsys\FrameworkBundle\Command\ServerRunWithCustomRouterCommand`) was removed
+    - Symfony local server can be used instead. You can read more about how to start using it in [Native Installation Guide](https://docs.shopsys.com/en/latest/installation/native-installation/#run-integrated-http-server)
+
 ### Configuration
 - add trailing slash to all your localized paths for `front_product_search` route ([#1067](https://github.com/shopsys/shopsys/pull/1067))
     - be aware, if you already have such paths (`hledani/`, `search/`) in your application
