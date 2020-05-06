@@ -1,27 +1,30 @@
 import Register from '../../common/utils/Register';
+const jsSideMenuSubmenuSelector = '.js-side-menu-submenu';
+const jsSideMenuItemSelector = '.js-side-menu-item';
+const jsSideMenuSelector = '.js-side-menu';
 
 export default class SideMenu {
 
     constructor ($sideMenu) {
+
         this.$webPanel = $('.js-web-panel');
         this.$sideMenuMobile = $('.js-side-menu-mobile');
         this.$sideMenuOverlay = $('.js-side-menu-overlay');
         this.$sideMenuCollapseButton = $('.js-side-menu-collapse-button');
         this.$sideMenu = $sideMenu;
-        this.$items = this.$sideMenu.filterAllNodes('.js-side-menu-item');
-        const _this = this;
+        this.$items = this.$sideMenu.filterAllNodes(jsSideMenuItemSelector);
 
         this.$items.click(event => {
             if ($(event.currentTarget).hasClass('open')) {
-                $(event.currentTarget).filterAllNodes('.js-side-menu-submenu').addClass('hidden');
+                $(event.currentTarget).filterAllNodes(jsSideMenuSubmenuSelector).addClass('hidden');
                 $(event.currentTarget).removeClass('open');
-                _this.$webPanel.removeClass('open');
-                _this.$webPanel.filterAllNodes('.js-side-menu-submenu').addClass('hidden');
-                _this.$webPanel.filterAllNodes('.js-side-menu-item').removeClass('open');
+                this.$webPanel.removeClass('open');
+                this.$webPanel.filterAllNodes(jsSideMenuSubmenuSelector).addClass('hidden');
+                this.$webPanel.filterAllNodes(jsSideMenuItemSelector).removeClass('open');
             } else {
-                $(event.currentTarget).filterAllNodes('.js-side-menu-submenu').removeClass('hidden');
+                $(event.currentTarget).filterAllNodes(jsSideMenuSubmenuSelector).removeClass('hidden');
                 $(event.currentTarget).addClass('open');
-                _this.$webPanel.addClass('open');
+                this.$webPanel.addClass('open');
             }
         });
 
@@ -30,7 +33,7 @@ export default class SideMenu {
         }
 
         // show left menu on mobile devices
-        this.$sideMenuMobile.click(event => {
+        this.$sideMenuMobile.click(() => {
             if (!$('body').hasClass('active-menu')) {
                 $('body').addClass('active-menu');
                 this.$webPanel.addClass('open');
@@ -41,13 +44,13 @@ export default class SideMenu {
         });
 
         // close left menu on overlay click
-        this.$sideMenuOverlay.click(event => {
+        this.$sideMenuOverlay.click(() => {
             $('body').removeClass('active-menu');
             this.$webPanel.removeClass('open');
         });
 
         // show/hide left menu on desktop
-        this.$sideMenuCollapseButton.click(event => {
+        this.$sideMenuCollapseButton.click(() => {
             $('body').toggleClass('menu-collapsed');
             if (!this.$webPanel.hasClass('active-menu')) {
                 this.$webPanel.removeClass('open');
@@ -66,13 +69,13 @@ export default class SideMenu {
     }
 
     closeMenus () {
-        this.$webPanel.filterAllNodes('.js-side-menu-submenu').addClass('hidden');
+        this.$webPanel.filterAllNodes(jsSideMenuSubmenuSelector).addClass('hidden');
         this.$items.removeClass('open');
         this.$webPanel.removeClass('open');
     }
 
     static init ($container) {
-        $container.filterAllNodes('.js-side-menu').each(function () {
+        $container.filterAllNodes(jsSideMenuSelector).each(function () {
             // eslint-disable-next-line no-new
             new SideMenu($(this));
         });
