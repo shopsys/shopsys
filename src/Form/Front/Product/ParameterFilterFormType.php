@@ -175,6 +175,9 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
             $parameterFilterData = new ParameterFilterData();
             $parameterFilterData->parameter = $this->parameterChoicesIndexedByParameterId[$parameterId]->getParameter();
             $parameterFilterData->values = $selectedParameterValues;
+            if ($parameter->isUseSliderInFilter() && count($selectedParameterValues) === 0 ) {
+                $parameterFilterData->parameterFilteredBySlider = true;
+            }
             $parametersFilterData[] = $parameterFilterData;
         }
 
