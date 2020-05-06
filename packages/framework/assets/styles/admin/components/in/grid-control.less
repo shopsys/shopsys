@@ -1,5 +1,5 @@
 @in-grid-height: @input-height-small;
-@in-grid-item-width: calc(~"99.99% / 3");
+@in-grid-item-width: calc(~"@{calc-base} / 3");
 
 .in-grid-control {
     display: flex;
@@ -21,7 +21,7 @@
         font-size: 12px;
 
         @media @query-lg {
-            width: calc(~"99.99% / 3");
+            width: calc(~"@{calc-base} / 3");
         }
 
         &--paging {
@@ -71,7 +71,6 @@
 
         &--show {
             line-height: @in-grid-height;
-
             text-align: center;
 
             @media @query-lg {

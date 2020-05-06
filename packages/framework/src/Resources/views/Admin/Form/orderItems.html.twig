@@ -11,13 +11,13 @@
                         <thead>
                             <tr>
                                 <th><span class="padding-left-10">{{ 'Name'|trans }}</span></th>
-                                    <th class="text-right">{{ 'Catalog number'|trans }}</th>
+                                <th class="text-right">{{ 'Catalog number'|trans }}</th>
                                 <th class="text-right"><span class="table-main__column-with-info">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</span></th>
                                 <th class="text-right">{{ 'Amount'|trans }}</th>
                                 <th class="text-right">{{ 'Unit'|trans }}</th>
                                 <th class="text-right">{{ 'VAT rate (%)'|trans }}</th>
                                 <th class="text-center">
-                                        <span class="display-inline-block min-width-80">
+                                    <span class="display-inline-block min-width-80">
                                         {{ 'Set prices manually'|trans }}
                                         <i class="svg svg-info cursor-help js-tooltip"
                                            data-toggle="tooltip" data-placement="bottom"
@@ -29,7 +29,7 @@
                                 <th class="text-right">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
                                 <th class="text-right">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
                                 <th></th>
-                        </tr>
+                            </tr>
                         </thead>
                         <tbody
                             id="js-order-items"

@@ -10,13 +10,13 @@
     border-radius: @radius;
 
     thead {
-        background: @color-f;
+        background-color: @color-f;
         color: @color-base;
-        font-weight: bold;
+        font-weight: 700;
     }
 
     tbody {
-        background: @color-f;
+        background-color: @color-f;
     }
 
     &__wrap {
@@ -27,15 +27,15 @@
     &__row {
         display: flex;
         flex-direction: column;
-        background: @color-f;
+        background-color: @color-f;
         border-bottom: 1px solid @table-grid-line-color;
 
         &--group {
-            background: @bg-info;
+            background-color: @bg-info;
         }
 
         thead & {
-            background: @bg-table;
+            background-color: @bg-table;
         }
 
         @media @query-table-param {
@@ -154,7 +154,7 @@
         &__group-name {
             line-height: 26px;
 
-            font-weight: bold;
+            font-weight: 700;
         }
 
         &__move {
