@@ -194,29 +194,7 @@ class OrderMail implements MessageFactoryInterface
     }
 
     /**
-     * @return array
-     */
-    public function getTemplateVariables()
-    {
-        return [
-            self::VARIABLE_NUMBER,
-            self::VARIABLE_DATE,
-            self::VARIABLE_URL,
-            self::VARIABLE_TRANSPORT,
-            self::VARIABLE_PAYMENT,
-            self::VARIABLE_TOTAL_PRICE,
-            self::VARIABLE_BILLING_ADDRESS,
-            self::VARIABLE_DELIVERY_ADDRESS,
-            self::VARIABLE_NOTE,
-            self::VARIABLE_PRODUCTS,
-            self::VARIABLE_ORDER_DETAIL_URL,
-            self::VARIABLE_TRANSPORT_INSTRUCTIONS,
-            self::VARIABLE_PAYMENT_INSTRUCTIONS,
-        ];
-    }
-
-    /**
-     * @param  \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     protected function getFormattedPrice(Order $order)
@@ -229,7 +207,7 @@ class OrderMail implements MessageFactoryInterface
     }
 
     /**
-     * @param  \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     protected function getFormattedDateTime(Order $order)

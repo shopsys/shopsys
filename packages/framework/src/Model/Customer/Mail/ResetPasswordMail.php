@@ -6,13 +6,12 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
-use Shopsys\FrameworkBundle\Model\Mail\MailTypeInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Mail\MessageFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ResetPasswordMail implements MailTypeInterface, MessageFactoryInterface
+class ResetPasswordMail implements MessageFactoryInterface
 {
     public const VARIABLE_EMAIL = '{email}';
     public const VARIABLE_NEW_PASSWORD_URL = '{new_password_url}';
@@ -37,43 +36,6 @@ class ResetPasswordMail implements MailTypeInterface, MessageFactoryInterface
     ) {
         $this->setting = $setting;
         $this->domainRouterFactory = $domainRouterFactory;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getBodyVariables()
-    {
-        return [
-            self::VARIABLE_EMAIL,
-            self::VARIABLE_NEW_PASSWORD_URL,
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getSubjectVariables()
-    {
-        return $this->getBodyVariables();
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getRequiredBodyVariables()
-    {
-        return [
-            self::VARIABLE_NEW_PASSWORD_URL,
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getRequiredSubjectVariables()
-    {
-        return [];
     }
 
     /**

@@ -1,0 +1,23 @@
+{% macro applicableVariables(heading, variables, requiredVariables, labeledVariables) %}
+    <table class="table-main">
+        <thead>
+        <tr>
+            <th>{{ heading }}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key in variables %}
+            <tr>
+                <td>
+                    {{ key }}
+                    {% if key in requiredVariables %}
+                        <span class="form-input-required">*</span>
+                    {% endif %}
+                </td>
+                <td>{{ labeledVariables[key] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

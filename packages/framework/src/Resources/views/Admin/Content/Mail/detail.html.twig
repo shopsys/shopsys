@@ -1,0 +1,32 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% import '@ShopsysFramework/Admin/Content/Mail/variablesList.html.twig' as applicableVariablesMacro %}
+
+{% block title %}- {{ 'Email template'|trans }}{% endblock %}
+
+{% block h1 %}{{ 'Email template'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="js-mail-template">
+        {{ form_start(form, { 'attr': {'class': 'js-mail-template'} }) }}
+            {{ form_errors(form) }}
+
+            {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+                {% block fixed_bar_content %}
+                    <a href="{{ url('admin_mail_template') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                    {{ form_save(entity|default(null), form) }}
+                {% endblock %}
+            {% endembed %}
+
+            {{ form_rest(form) }}
+
+            {% if subjectVariables %}
+                {{ applicableVariablesMacro.applicableVariables('Applicable variables for Subject'|trans, subjectVariables, requiredSubjectVariables, labeledVariables) }}
+            {% endif %}
+
+            {% if bodyVariables %}
+                {{ applicableVariablesMacro.applicableVariables('Applicable variables for Content'|trans, bodyVariables, requiredBodyVariables, labeledVariables) }}
+            {% endif %}
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
