@@ -396,9 +396,9 @@ There you can find links to upgrade notes for other versions too.
             - `Shopsys\FrameworkBundle\Model\Customer\UserData` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData`
             - `Shopsys\FrameworkBundle\Model\Customer\UserDataFactory` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory`
             - `Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface`
-            - `Shopsys\FrameworkBundle\Model\Customer\UserFacade` to `Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade`
-            - `Shopsys\FrameworkBundle\Model\Customer\UserFactory` to `Shopsys\FrameworkBundle\Model\Customer\UserFactory`
-            - `Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface`
+            - `Shopsys\FrameworkBundle\Model\Customer\CustomerFacade` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserFactory` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface`
             - `Shopsys\FrameworkBundle\Model\Customer\UserRepository` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository`
             - `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser` to `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser`
             - `Tests\App\Functional\Model\Customer\CustomerFacadeTest` to `Tests\App\Functional\Model\Customer\CustomerUserFacadeTest`
@@ -409,20 +409,17 @@ There you can find links to upgrade notes for other versions too.
             - `Shopsys\FrameworkBundle\Model\Cart\CartFacade::getCartByCustomerIdentifierCreateIfNotExists()` to `Shopsys\FrameworkBundle\Model\Cart\CartFacade::getCartByCustomerUserIdentifierCreateIfNotExists()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserDataFactory::createFromUser()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory::createFromCustomerUser()`
             - `Shopsys\FrameworkBundle\Model\Order\OrderFacade::getCustomerOrderList()` to `Shopsys\FrameworkBundle\Model\Order\OrderFacade::getCustomerUserOrderList()`
+            - `Shopsys\FrameworkBundle\Model\Order\OrderRepository::getCustomerOrderList()` to `Shopsys\FrameworkBundle\Model\Order\OrderRepository::getCustomerUserOrderList()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::findUserByEmailAndDomain()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::findCustomerUserByEmailAndDomain()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserRepository::findUserByEmailAndDomain()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository::findCustomerUserByEmailAndDomain()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::getUserById()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::getCustomerUserById()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserRepository::getUserById()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository::getCustomerUserById()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::editByCustomer()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::editByCustomerUser()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::amendUserDataFromOrder()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::amendCustomerUserDataFromOrder()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserRepository::getUserRepository()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository::getCustomerUserRepository()`
         - to keep your tests working you need tu update `UserDataFixture`
-            - inject `CustomerFactoryInterface` via constructor into the class
-            - create and assign an entity of `Customer` to `BillingAddressData` and `UserData`
-                ```diff
-                +   $customerUserData = $this->customerUserDataFactory->create();
-                    $userData = $this->userDataFactory->createForDomainId($domainId);
-                -   $billingAddressData = $this->billingAddressDataFactory->create();
-                +   $userData->customer = $customerUserData->userData->customer;
-                +   $billingAddressData = $customerUserData->billingAddressData;
-                ```
+            - see [Demo\UserDataFixture diff](https://github.com/shopsys/project-base/commit/9a5b86f91204e6da20e7eeb2680cf3678483ddb5#diff-ccdf8e1de68d2285f963bdfcf1f66e5d)
+            - see [Performance\UserDataFixture diff](https://github.com/shopsys/project-base/commit/9a5b86f91204e6da20e7eeb2680cf3678483ddb5#diff-16653e45020c9193be989fd362dc8062)
         - as the `BillingAddress` is being connected with a customer, you are able to remove it from `User`
             ```diff
                 public function __construct(
@@ -438,6 +435,7 @@ There you can find links to upgrade notes for other versions too.
                 +   {% set address = user.customer.billingAddress %}
                 ```
         - method `Shopsys\FrameworkBundle\Model\Customer\UserFacade::createCustomerWithBillingAddress()` was extracted to new class `Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade`
+        - review all templates, controllers and form types and rename all occurrences of user to customerUser [see project-base diff](https://github.com/shopsys/project-base/commit/9a5b86f91204e6da20e7eeb2680cf3678483ddb5) for inspiration
 
 - add hover timeout to horizontal menu ([#1564](https://github.com/shopsys/shopsys/pull/1564))
     - you can skip this task if you have your custom design
