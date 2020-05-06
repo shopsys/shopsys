@@ -1485,6 +1485,76 @@ There you can find links to upgrade notes for other versions too.
     - don't forget to rebuild your grunt file by command `php phing gruntfile` and update your npm dependencies by command `npm install`
     - to fix all your less files in command line by command `php phing stylelint-fix`
 
+- make email templates editable on separate page ([#1828](https://github.com/shopsys/shopsys/pull/1828))
+    - if you have your own mail templates implemented, please refer the [Adding a New Email Template](https://docs.shopsys.com/en/latest/cookbook/adding-a-new-email-template) cookbook to add your templates into the administration
+    - these methods have changed so you might want to update usages in your application:
+        - `MailController::__construct()`
+            ```diff
+                public function __construct(
+            -       ResetPasswordMail $resetPasswordMail,
+            -       OrderMail $orderMail,
+            -       RegistrationMail $registrationMail,
+                    AdminDomainTabsFacade $adminDomainTabsFacade,
+                    MailTemplateFacade $mailTemplateFacade,
+                    MailSettingFacade $mailSettingFacade,
+            -       OrderStatusFacade $orderStatusFacade,
+            -       PersonalDataAccessMail $personalDataAccessMail,
+            -       PersonalDataExportMail $personalDataExportMail
+            +       BreadcrumbOverrider $breadcrumbOverrider,
+            +       MailTemplateGridFactory $mailTemplateGridFactory,
+            +       MailTemplateConfiguration $mailTemplateConfiguration,
+            +       MailTemplateDataFactory $mailTemplateDataFactory
+                )
+            ```
+        - `MailTemplateFacade::__construct()`
+            ```diff
+                public function __construct(
+                    EntityManagerInterface $em,
+                    MailTemplateRepository $mailTemplateRepository,
+            -       OrderStatusRepository $orderStatusRepository,
+                    Domain $domain,
+                    UploadedFileFacade $uploadedFileFacade,
+                    MailTemplateFactoryInterface $mailTemplateFactory,
+                    MailTemplateDataFactoryInterface $mailTemplateDataFactory,
+                    MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
+                     )
+            ```
+
+    - these methods were removed
+        - `MailController::getOrderStatusVariablesLabels()` (labels are managed with `MailTemplateVariables` class)
+        - `MailController::getRegistrationVariablesLabel()` (labels are managed with `MailTemplateVariables` class)
+        - `MailController::getResetPasswordVariablesLabels()` (labels are managed with `MailTemplateVariables` class)
+        - `MailController::getPersonalDataAccessVariablesLabels()` (labels are managed with `MailTemplateVariables` class)
+        - `MailController::getPersonalExportVariablesLabels()` (labels are managed with `MailTemplateVariables` class)
+        - `MailController::getTemplateParameters()` (template parameters are managed with `MailTemplateVariables` class)
+        - `RegistrationMail::getTemplateVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `ResetPasswordMail::getBodyVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `ResetPasswordMail::getSubjectVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `ResetPasswordMail::getRequiredBodyVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `ResetPasswordMail::getRequiredSubjectVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `MailTemplateFacade::getOrderStatusMailTemplatesIndexedByOrderStatusId()`
+        - `MailTemplateFacade::getFilteredOrderStatusMailTemplatesIndexedByOrderStatusId()`
+        - `MailTemplateFacade::saveMailTemplatesData()`
+        - `MailTemplateFacade::getAllMailTemplatesDataByDomainId()`
+        - `OrderMail::getTemplateVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `PersonalDataAccessMail::getBodyVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `PersonalDataAccessMail::getSubjectVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `PersonalDataAccessMail::getRequiredBodyVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `PersonalDataAccessMail::getRequiredSubjectVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `PersonalDataExportMail::getBodyVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `PersonalDataExportMail::getSubjectVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `PersonalDataExportMail::getRequiredBodyVariables()` (variables are managed with `MailTemplateVariables` class)
+        - `PersonalDataExportMail::getRequiredSubjectVariables()` (variables are managed with `MailTemplateVariables` class)
+
+    - these classes were removed so you might need to update your application appropriately:
+        - `Shopsys\FrameworkBundle\Form\Admin\Mail\AllMailTemplatesFormType` (it's no longer necessary to manage all mail templates at once)
+        - `Shopsys\FrameworkBundle\Model\Mail\AllMailTemplatesData` (it's no longer necessary to manage all mail templates at once)
+        - `Shopsys\FrameworkBundle\Model\Mail\DummyMailType`
+        - `Shopsys\FrameworkBundle\Model\Mail\MailTypeInterface` (no classes now implement this interface)
+       
+    - these Twig templates were removed
+        - `@ShopsysFramework/Admin/Content/Mail/template.html.twig`
+
 ### Frontend
 
 - javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545), [#1645](https://github.com/shopsys/shopsys/pull/1645))
