@@ -790,25 +790,6 @@ There you can find links to upgrade notes for other versions too.
     +       tags:
     +           - { name: shopsys.cron, hours: '*', minutes: '*' }
     ```
-
-- update FpJsFormValidator bundle ([#1664](https://github.com/shopsys/shopsys/pull/1664))
-    - update your `composer.json`
-      ```diff
-            "require": {
-      -         "fp/jsformvalidator-bundle": "^1.5.1",
-      +         "fp/jsformvalidator-bundle": "^1.6.1",
-            }
-      ```
-    - update your `.eslintignore`
-      ```diff
-        /assets/js/commands/translations/mocks
-      + /assets/js/bundles
-      ```
-    - update your `.gitignore`
-      ```diff
-        /assets/js/translations.json
-      + /assets/js/bundles
-      ```
 - update your application to support multiple delivery addresses ([#1635](https://github.com/shopsys/shopsys/pull/1635))
     - some methods has changed so you might want to update their usage in your application:
         - `Customer::getDeliveryAddress()` and `Customer::setDeliveryAddress()` has been removed you can use `Customer::getDeliveryAddresses()` or `CustomerUser::getDefaultDeliveryAddress()` instead
@@ -1428,6 +1409,25 @@ There you can find links to upgrade notes for other versions too.
 
 - javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545), [#1645](https://github.com/shopsys/shopsys/pull/1645))
     - please read [upgrade instruction for webpack](./upgrade-instruction-for-webpack.md)
+
+- update FpJsFormValidator bundle ([#1664](https://github.com/shopsys/shopsys/pull/1664))
+    - update your `composer.json`
+      ```diff
+            "require": {
+      -         "fp/jsformvalidator-bundle": "^1.5.1",
+      +         "fp/jsformvalidator-bundle": "^1.6.1",
+            }
+      ```
+    - update your `.eslintignore`
+      ```diff
+        /assets/js/commands/translations/mocks
+      + /assets/js/bundles
+      ```
+    - update your `.gitignore`
+      ```diff
+        /assets/js/translations.json
+      + /assets/js/bundles
+      ```
 
 - fix not working popup window on single image ([#1630](https://github.com/shopsys/shopsys/pull/1630))
     - add missing javascript for popup single image for class `js-popup-image`, see [project-base diff](https://github.com/shopsys/project-base/commit/ad7a0a20f094d5e936e4bb503946453c5c89ed18)
