@@ -1419,6 +1419,15 @@ There you can find links to upgrade notes for other versions too.
 - fix validation of parameters uniqueness ([#1822](https://github.com/shopsys/shopsys/pull/1822))
     - see #project-base-diff to update your project
 
+- split error page templates to allow to render new 410 error response ([#1829](https://github.com/shopsys/shopsys/pull/1829))
+    - see #project-base-diff to update your project
+    - following methods has changed their interface, update your usages accordingly:
+        - `BrandFacade::deleteById()`
+            ```diff
+            - public function deleteById($brandId)
+            + public function deleteById(int $brandId): void
+            ```
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
