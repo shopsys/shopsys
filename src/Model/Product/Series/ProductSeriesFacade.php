@@ -42,12 +42,12 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
     private $friendlyUrlFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
+     * @var \App\Component\Image\ImageFacade
      */
     private $imageFacade;
 
@@ -56,8 +56,8 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
      * @param \App\Model\Product\Series\ProductSeriesFactoryInterface $productSeriesFactory
      * @param \App\Model\Product\Series\ProductSeriesRepository $productSeriesRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \App\Component\Domain\Domain $domain
+     * @param \App\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -242,7 +242,7 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @return \App\Model\Product\Series\ProductSeries[]
      */
     public function getAllVisibleByProductAndDomainId(Product $product, Domain $domain): array

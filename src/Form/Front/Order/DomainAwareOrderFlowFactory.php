@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class DomainAwareOrderFlowFactory implements OrderFlowFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -39,7 +39,7 @@ class DomainAwareOrderFlowFactory implements OrderFlowFactoryInterface
     private $dataManager;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory

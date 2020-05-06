@@ -30,8 +30,8 @@ class CategoryDataFactory extends BaseCategoryDataFactory
      * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
+     * @param \App\Component\Domain\Domain $domain
+     * @param \App\Component\Image\ImageFacade|null $imageFacade
      * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
      */
     public function __construct(

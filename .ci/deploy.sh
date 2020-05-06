@@ -32,6 +32,7 @@ declare -A PARAMETERS=(
     ["parameters.kraken_config.lossy"]=${KRAKEN_DEV_LOSSY}
     ["parameters.kraken_config.api_key"]=${KRAKEN_DEV_API_KEY}
     ["parameters.kraken_config.api_secret"]=${KRAKEN_DEV_API_SECRET}
+    ["parameters.env(CDN_DOMAIN)"]=${CDN_DOMAIN}
 )
 
 VARS=(
@@ -46,6 +47,8 @@ VARS=(
     S3_API_USERNAME
     S3_API_PASSWORD
     S3_API_BUCKET_NAME
+
+    CDN_DOMAIN
 
     REDIS_PREFIX
     ELASTIC_SEARCH_INDEX_PREFIX

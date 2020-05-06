@@ -60,6 +60,7 @@ parameters:
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
             - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
+            - '*/src/Component/Domain/DomainFactoryOverwritingDomainUrl.php'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/tests/App/Functional/Model/Cart/CartFacadeTest.php'

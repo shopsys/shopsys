@@ -19,7 +19,7 @@ class CustomerPasswordController extends FrontBaseController
     private $customerUserPasswordFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -29,7 +29,7 @@ class CustomerPasswordController extends FrontBaseController
     private $authenticator;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      */

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class RobotsController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -27,7 +27,7 @@ class RobotsController extends FrontBaseController
 
     /**
      * @param string $sitemapsUrlPrefix
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer $sitemapFilePrefixer
      */
     public function __construct(

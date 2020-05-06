@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParameterUnitController extends AdminBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -50,7 +50,7 @@ class ParameterUnitController extends AdminBaseController
     private $parameterUnitDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \App\Model\Product\Parameter\Unit\ParameterUnitRepository $parameterUnitRepository

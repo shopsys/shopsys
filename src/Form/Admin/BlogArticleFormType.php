@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace App\Form\Admin;
 
 use App\Form\BlogCategoriesType;
-
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleData;
 use DateTime;
@@ -34,7 +33,7 @@ use Symfony\Component\Validator\Constraints;
 class BlogArticleFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -49,7 +48,7 @@ class BlogArticleFormType extends AbstractType
     private $removeDuplicatesTransformer;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
      */

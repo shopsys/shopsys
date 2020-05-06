@@ -23,7 +23,7 @@ class BlogCategoryController extends FrontBaseController
     private $blogCategoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -35,7 +35,7 @@ class BlogCategoryController extends FrontBaseController
     /**
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         BlogCategoryFacade $blogCategoryFacade,

@@ -60,7 +60,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private $formBuilderHelper;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -82,7 +82,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      */

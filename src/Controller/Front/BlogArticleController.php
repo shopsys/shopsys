@@ -22,13 +22,13 @@ class BlogArticleController extends FrontBaseController
     private $blogArticleFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(BlogArticleFacade $blogArticleFacade, Domain $domain)
     {

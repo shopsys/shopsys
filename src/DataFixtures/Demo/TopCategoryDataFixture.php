@@ -18,13 +18,13 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     protected $topCategoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     protected $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(TopCategoryFacade $topCategoryFacade, Domain $domain)
     {

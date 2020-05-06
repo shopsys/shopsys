@@ -10,9 +10,10 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCust
 
 /**
  * @property \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
- * @method __construct(\App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
+ * @method __construct(\App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade, \App\Component\Domain\Domain $domain)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice calculatePriceForCurrentUser(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice calculatePriceForCustomerUserAndDomainId(\App\Model\Product\Product $product, int $domainId, \App\Model\Customer\User\CustomerUser|null $customerUser)
+ * @property \App\Component\Domain\Domain $domain
  */
 class ProductPriceCalculationForCustomerUser extends BaseProductPriceCalculationForCustomerUser
 {

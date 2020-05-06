@@ -18,13 +18,13 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
     protected $manualBestsellingProductFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     protected $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade $manualBestsellingProductFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         ManualBestsellingProductFacade $manualBestsellingProductFacade,

@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory as BaseFlagDataFa
  * @method fillNew(\App\Model\Product\Flag\FlagData $flagData)
  * @property \App\Model\Product\Flag\Flag $flag
  * @property \App\Model\Product\Flag\FlagData $flagData
+ * @property \App\Component\Domain\Domain $domain
+ * @method __construct(\App\Component\Domain\Domain $domain)
  */
 class FlagDataFactory extends BaseFlagDataFactory
 {

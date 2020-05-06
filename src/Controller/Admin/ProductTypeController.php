@@ -34,7 +34,7 @@ class ProductTypeController extends AdminBaseController
     private $productTypeDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -45,7 +45,7 @@ class ProductTypeController extends AdminBaseController
 
     /**
      * ProductTypeController constructor.
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      * @param \App\Model\Product\Type\ProductTypeDataFactory $productTypeDataFactory

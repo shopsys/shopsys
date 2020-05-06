@@ -29,13 +29,13 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
     private $formBuilderHelper;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(FormBuilderHelper $formBuilderHelper, Domain $domain)
     {

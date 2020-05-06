@@ -41,7 +41,7 @@ class BlogArticleFacade
     private $blogArticleBlogCategoryDomainFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
+     * @var \App\Component\Image\ImageFacade
      */
     private $imageFacade;
 
@@ -56,7 +56,7 @@ class BlogArticleFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Blog\Article\BlogArticleFactory $blogArticleFactory
      * @param \App\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
      */
     public function __construct(

@@ -43,7 +43,7 @@ class ProductSeriesController extends AdminBaseController
     private $productSeriesGridFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -76,7 +76,7 @@ class ProductSeriesController extends AdminBaseController
      * @param \App\Model\Product\Series\ProductSeriesDataFactoryInterface $productSeriesDataFactory
      * @param \App\Model\Product\Series\ProductSeriesFacadeInterface $productSeriesFacade
      * @param \App\Model\Product\Series\Grid\ProductSeriesGridFactory $productSeriesGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper

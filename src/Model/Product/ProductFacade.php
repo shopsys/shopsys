@@ -56,6 +56,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @property \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
  * @property \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
  * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+ * @property \App\Component\Domain\Domain $domain
+ * @property \App\Component\Image\ImageFacade $imageFacade
  */
 class ProductFacade extends BaseProductFacade
 {
@@ -82,8 +84,8 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \App\Component\Domain\Domain $domain
+     * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
@@ -286,7 +288,7 @@ class ProductFacade extends BaseProductFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @return array
      */
     public function getDownloadFilesForProductByDomain(Product $product, Domain $domain): array

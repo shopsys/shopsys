@@ -42,7 +42,7 @@ class ProductSeriesDataFixture extends AbstractReferenceFixture
     private $productSeriesDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -64,7 +64,7 @@ class ProductSeriesDataFixture extends AbstractReferenceFixture
     /**
      * @param \App\Model\Product\Series\ProductSeriesFacadeInterface $productSeriesFacade
      * @param \App\Model\Product\Series\ProductSeriesDataFactoryInterface $productSeriesDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Faker\Generator $generator
      * @param \App\Model\Product\Series\Category\ProductSeriesCategoryFacade $productSeriesCategoryFacade
      * @param \App\Model\Product\Series\Category\ProductSeriesCategoryDataFactory $productSeriesCategoryDataFactory

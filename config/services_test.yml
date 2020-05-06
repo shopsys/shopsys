@@ -27,6 +27,20 @@ services:
     Symfony\Bridge\Twig\Extension\HttpKernelRuntime:
         arguments: ['@fragment.handler']
 
+    Shopsys\FrameworkBundle\Component\Domain\Domain: '@App\Component\Domain\Domain'
+
+    App\Component\Domain\Domain:
+        factory: ['@App\Component\Domain\DomainFactoryOverwritingDomainUrl', create]
+        arguments:
+            - '%shopsys.domain_config_filepath%'
+            - '%shopsys.domain_urls_config_filepath%'
+        lazy: true
+
+    App\Component\Domain\DomainFactoryOverwritingDomainUrl:
+        class: App\Component\Domain\DomainFactoryOverwritingDomainUrl
+        arguments:
+            - '%overwrite_domain_url%'
+
     Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
 
     Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~

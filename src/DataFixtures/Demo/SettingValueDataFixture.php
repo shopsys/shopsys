@@ -20,13 +20,13 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     protected $setting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     protected $domain;
 
     /**
      * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(Setting $setting, Domain $domain)
     {

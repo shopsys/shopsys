@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @property \App\Model\Order\OrderFacade $orderFacade
  * @property \App\Model\Order\OrderDataFactory $orderDataFactory
- * @method __construct(\App\Model\Order\OrderFacade $orderFacade, \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade $advancedSearchOrderFacade, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade $orderItemFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Model\Order\OrderDataFactory $orderDataFactory)
+ * @method __construct(\App\Model\Order\OrderFacade $orderFacade, \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade $advancedSearchOrderFacade, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade $orderItemFacade, \App\Component\Domain\Domain $domain, \App\Model\Order\OrderDataFactory $orderDataFactory)
+ * @property \App\Component\Domain\Domain $domain
  */
 class OrderController extends BaseOrderController
 {

@@ -19,13 +19,13 @@ class CurrentDomainLifetimeCacheStrategy implements CacheStrategyInterface
     private $cacheProvider;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \Doctrine\Common\Cache\CacheProvider $cacheProvider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(CacheProvider $cacheProvider, Domain $domain)
     {

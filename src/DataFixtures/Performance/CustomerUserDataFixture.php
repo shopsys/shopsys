@@ -32,7 +32,7 @@ class CustomerUserDataFixture
     private $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -79,7 +79,7 @@ class CustomerUserDataFixture
     /**
      * @param int $userCountPerDomain
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserEditFacade
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory

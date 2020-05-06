@@ -32,7 +32,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
     protected $setting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     protected $domain;
 
@@ -40,7 +40,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
      * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface $availabilityDataFactory
      * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         AvailabilityFacade $availabilityFacade,

@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository as BasePro
  * @method markProductsForRecalculationAffectedByCategory(\App\Model\Category\Category $category)
  * @method \Shopsys\FrameworkBundle\Model\Product\ProductVisibility getProductVisibility(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  * @method \Shopsys\FrameworkBundle\Model\Product\ProductVisibility[] findProductVisibilitiesByDomainIdAndProduct(int $domainId, \App\Model\Product\Product $product)
+ * @property \App\Component\Domain\Domain $domain
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository)
  */
 class ProductVisibilityRepository extends BaseProductVisibilityRepository
 {

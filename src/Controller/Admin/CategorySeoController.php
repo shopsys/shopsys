@@ -71,7 +71,7 @@ class CategorySeoController extends AdminBaseController
     private $readyCategorySeoMixGridFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Component\Domain\Domain
      */
     private $domain;
 
@@ -84,7 +84,7 @@ class CategorySeoController extends AdminBaseController
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixGridFactory $readyCategorySeoMixGridFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         AdminDomainTabsFacade $adminDomainTabsFacade,
