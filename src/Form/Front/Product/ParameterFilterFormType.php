@@ -216,8 +216,8 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         }, $choices);
 
         return [
-            'min' => min($numberChoices),
-            'max' => max($numberChoices),
+            'min' => round(min($numberChoices),0, PHP_ROUND_HALF_DOWN),
+            'max' => round(max($numberChoices), 0, PHP_ROUND_HALF_UP),
         ];
     }
 
