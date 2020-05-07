@@ -1,0 +1,25 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block title %}
+    {{ 'Error occurred'|trans }}: {{ status_text }}
+{% endblock %}
+
+{% block content %}
+    <div class="web__line">
+        <div class="web__container">
+            <div class="row">
+                {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+
+                <div class="box-error-page">
+                    {% block error_content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% embed 'Front/Layout/footer.html.twig' %}
+        {% block newsletter_subscription %}{% endblock %}
+    {% endembed %}
+{% endblock %}
