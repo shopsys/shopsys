@@ -9,6 +9,22 @@ use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\Image as BaseImage;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 
+/**
+ * @property \App\Component\Image\ImageRepository $imageRepository
+ * @method __construct(mixed $imageUrlPrefix, \Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig, \App\Component\Image\ImageRepository $imageRepository, \League\Flysystem\FilesystemInterface $filesystem, \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload, \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator, \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory, \League\Flysystem\MountManager $mountManager)
+ * @method saveImageOrdering(\App\Component\Image\Image[] $orderedImages)
+ * @method deleteImages(object $entity, \App\Component\Image\Image[] $images)
+ * @method \App\Component\Image\Image getImageByEntity(object $entity, string|null $type)
+ * @method \App\Component\Image\Image[] getImagesByEntityIndexedById(object $entity, string|null $type)
+ * @method \App\Component\Image\Image[] getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, string|null $type)
+ * @method \App\Component\Image\Image[] getAllImagesByEntity(object $entity)
+ * @method deleteImageFiles(\App\Component\Image\Image $image)
+ * @method \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] getAdditionalImagesData(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, \App\Component\Image\Image $imageOrEntity, string|null $sizeName, string|null $type)
+ * @method \App\Component\Image\Image getImageByObject(\App\Component\Image\Image|object $imageOrEntity, string|null $type)
+ * @method \App\Component\Image\Image getById(int $imageId)
+ * @method setImagePositionsByOrder(\App\Component\Image\Image[] $orderedImages)
+ * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
+ */
 class ImageFacade extends BaseImageFacade
 {
     /**
@@ -29,7 +45,7 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
+     * @param \App\Component\Image\Image|Object $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
      * @return string
@@ -88,7 +104,7 @@ class ImageFacade extends BaseImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $additionalSizeIndex
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
+     * @param \App\Component\Image\Image $image
      * @param string|null $sizeName
      * @return string
      */

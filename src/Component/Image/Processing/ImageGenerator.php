@@ -13,6 +13,10 @@ use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator as BaseImageGenerator;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 
+/**
+ * @method string generateAdditionalImageSizeAndGetFilepath(\App\Component\Image\Image $image, int $additionalIndex, string|null $sizeName)
+ * @method checkSizeNameIsNotOriginal(\App\Component\Image\Image $image, string|null $sizeName)
+ */
 class ImageGenerator extends BaseImageGenerator
 {
     /**
@@ -39,7 +43,7 @@ class ImageGenerator extends BaseImageGenerator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
+     * @param \App\Component\Image\Image $image
      * @param string|null $sizeName
      * @return string
      */
