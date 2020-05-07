@@ -28,16 +28,16 @@ class SliderFilterFormType extends AbstractType
             'constraints' => [
                 new GreaterThanOrEqual([
                     'value' => $config['min'],
-                ])
-            ]
+                ]),
+            ],
         ]);
         $builder->add('max', TextType::class, [
             'attr' => ['placeholder' => $config['max']],
             'constraints' => [
                 new LessThanOrEqual([
                     'value' => $config['max'],
-                ])
-            ]
+                ]),
+            ],
         ]);
     }
 
