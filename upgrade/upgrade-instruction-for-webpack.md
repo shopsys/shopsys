@@ -1,5 +1,7 @@
 # Necessary steps to build application 
 
+Below are described all necessary steps needed to upgrade to webpack. Some diffs might be not fully understandable, so we add [project-base diff 1](https://github.com/shopsys/project-base/commit/e429575844e88722122d27aa9f6be156798521ec) and [project-base diff 2](https://github.com/shopsys/project-base/commit/17edc350483ab684c000413ece3c3263c6859b1e) that you might find helpful.
+
 - Update your `composer.json`
 ```diff
      "arvenil/ninja-mutex": "^0.4.1",
