@@ -26,6 +26,7 @@
 {% block product_parameter_value_widget %}
     {% import _self as self %}
     <div class="js-form-group form-group">
+        {{ form_errors(form) }}
         <table class="table-form" id="product_form_parameters">
             <thead>
             <tr class="table-form__row">

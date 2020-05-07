@@ -35,10 +35,10 @@ return [
     VasekPurchart\ConsoleErrorsBundle\ConsoleErrorsBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     Joschi127\DoctrineEntityOverrideBundle\Joschi127DoctrineEntityOverrideBundle::class => ['all' => true],
+    Fp\JsFormValidatorBundle\FpJsFormValidatorBundle::class => ['all' => true], // JsFormValidatorBundle have to loaded before FrameworkBundle because otherwise the parameters will be overwritten
     Shopsys\FrameworkBundle\ShopsysFrameworkBundle::class => ['all' => true],
     Shopsys\ReadModelBundle\ShopsysReadModelBundle::class => ['all' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
-    Fp\JsFormValidatorBundle\FpJsFormValidatorBundle::class => ['all' => true],
 ];

@@ -856,6 +856,7 @@ class ProductFormType extends AbstractType
                         'message' => 'Each parameter can be used only once',
                     ]),
                 ],
+                'invalid_message' => 'Each parameter can be used only once',
                 'error_bubbling' => false,
                 'render_form_row' => false,
             ])
