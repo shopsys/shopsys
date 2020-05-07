@@ -24,18 +24,18 @@ class SliderFilterFormType extends AbstractType
         $config = $options['slider_config'];
 
         $builder->add('min', TextType::class, [
-            'attr' => ['placeholder' => $config['min']],
+            'attr' => ['placeholder' => $this->buildPlaceholder($config['min'])],
             'constraints' => [
                 new GreaterThanOrEqual([
-                    'value' => $config['min'],
+                    'value' => $config['min']['value'],
                 ]),
             ],
         ]);
         $builder->add('max', TextType::class, [
-            'attr' => ['placeholder' => $config['max']],
+            'attr' => ['placeholder' => $this->buildPlaceholder($config['max'])],
             'constraints' => [
                 new LessThanOrEqual([
-                    'value' => $config['max'],
+                    'value' => $config['max']['value'],
                 ]),
             ],
         ]);
@@ -60,5 +60,14 @@ class SliderFilterFormType extends AbstractType
     {
         $resolver->setRequired('slider_config')
             ->setAllowedTypes('slider_config', 'array');
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    private function buildPlaceholder(array $data): string
+    {
+        return sprintf('%d %s', $data['value'], $data['unit']);
     }
 }

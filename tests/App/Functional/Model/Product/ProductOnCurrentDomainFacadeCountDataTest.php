@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Filter\ParameterFilterData;
+use App\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
@@ -593,7 +594,9 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
     {
+        /** @var \App\Model\Product\Parameter\Parameter $parameter */
         $parameter = $this->parameterRepository->findParameterByNames($namesByLocale);
+        /** @var \App\Model\Product\Parameter\ParameterValue[] $parameterValues */
         $parameterValues = $this->getParameterValuesByLocalesAndTexts($valuesTextsByLocales);
 
         $parameterFilterData = new ParameterFilterData();

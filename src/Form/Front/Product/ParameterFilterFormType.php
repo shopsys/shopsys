@@ -173,7 +173,9 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
             }
 
             $parameterFilterData = new ParameterFilterData();
-            $parameterFilterData->parameter = $this->parameterChoicesIndexedByParameterId[$parameterId]->getParameter();
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
+            $parameter = $this->parameterChoicesIndexedByParameterId[$parameterId]->getParameter();
+            $parameterFilterData->parameter = $parameter;
             $parameterFilterData->values = $selectedParameterValues;
             if ($parameter->isUseSliderInFilter() && count($selectedParameterValues) === 0) {
                 $parameterFilterData->parameterFilteredBySlider = true;
@@ -215,9 +217,19 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
             return $this->parseStringAsFloat($parameterValue->getText());
         }, $choices);
 
+        /** @var \App\Model\Product\Parameter\Parameter $parameter */
+        $parameter = $parameterFilterChoice->getParameter();
+        $unit = $parameter->getParameterUnit() !== null ? $parameter->getParameterUnit()->getName() : '';
+
         return [
-            'min' => round(min($numberChoices),0, PHP_ROUND_HALF_DOWN),
-            'max' => round(max($numberChoices), 0, PHP_ROUND_HALF_UP),
+            'min' => [
+                'value' => round(min($numberChoices), 0, PHP_ROUND_HALF_DOWN),
+                'unit' => $unit,
+            ],
+            'max' => [
+                'value' => round(max($numberChoices), 0, PHP_ROUND_HALF_UP),
+                'unit' => $unit,
+            ],
         ];
     }
 

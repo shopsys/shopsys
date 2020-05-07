@@ -595,7 +595,6 @@
 20200418102440:
     class: App\Migrations\Version20200418102440
     skip: false
-<<<<<<< HEAD
 20200419192741:
     class: App\Migrations\Version20200419192741
     skip: false
