@@ -6,6 +6,8 @@ namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
+use App\Component\Image\Image;
+use App\Component\Image\ImageFacade;
 use App\Component\Setting\Setting;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade;
@@ -16,10 +18,23 @@ use App\Model\Product\Series\ProductSeriesFacade;
 use App\Model\Product\Series\ProductSeriesProductFacade;
 use App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade;
 use DateTime;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 {
+    private const AKENEO_IMAGES_KEYS = [
+        'image_main',
+        'image_dimensions',
+        'image_inspiration',
+    ];
+
+    private const AKENEO_IMAGES_TYPE_POSITION = [
+        'image_main' => 0,
+        'image_dimensions' => 1,
+        'image_inspiration' => 2,
+    ];
+
     /**
      * @var \App\Component\Setting\Setting
      */
@@ -86,6 +101,16 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     private $akeneoImportProductSeriesFacade;
 
     /**
+     * @var \App\Component\Image\ImageFacade
+     */
+    private $imageFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
+     */
+    private $fileUpload;
+
+    /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
@@ -99,6 +124,8 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Product\Series\ProductSeriesProductFacade $productSeriesProductFacade
      * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      * @param \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade
+     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
@@ -113,7 +140,9 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         ParameterFacade $parameterFacade,
         ProductSeriesProductFacade $productSeriesProductFacade,
         ProductSeriesFacade $productSeriesFacade,
-        AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade
+        AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade,
+        ImageFacade $imageFacade,
+        FileUpload $fileUpload
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
@@ -129,6 +158,8 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->productSeriesProductFacade = $productSeriesProductFacade;
         $this->productSeriesFacade = $productSeriesFacade;
         $this->akeneoImportProductSeriesFacade = $akeneoImportProductSeriesFacade;
+        $this->imageFacade = $imageFacade;
+        $this->fileUpload = $fileUpload;
     }
 
     /**
@@ -198,6 +229,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 
         $this->setProductForImportFiles($product, $akeneoProductData);
         $this->setRelationProductSeriesWithProduct($product, $akeneoProductData);
+        $this->setProductImages($product, $akeneoProductData);
 
         $this->setLastUpdatedProduct($akeneoProductData['updated']);
     }
@@ -289,5 +321,80 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         }
 
         return true;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoProductData
+     */
+    private function setProductImages(Product $product, array $akeneoProductData): void
+    {
+        $processedAkeneoImageKeyType = [];
+
+        foreach (self::AKENEO_IMAGES_KEYS as $akeneoImageKeyType) {
+            if (array_key_exists($akeneoImageKeyType, $akeneoProductData['values'])) {
+                $akeneoMediaFileData = current($akeneoProductData['values'][$akeneoImageKeyType]);
+                $processedAkeneoImageKeyType[] = $akeneoImageKeyType;
+
+                $oldImage = $this->imageFacade->findImageByEntityForAkeneoImageType($product, $akeneoImageKeyType);
+                if ($oldImage === null) {
+                    $this->createProductImage($product, $akeneoMediaFileData, $akeneoImageKeyType);
+                    continue;
+                }
+
+                if ($oldImage->getAkeneoCode() !== $akeneoMediaFileData['data']) {
+                    $this->imageFacade->deleteImages($product, [$oldImage]);
+                    $this->createProductImage($product, $akeneoMediaFileData, $akeneoImageKeyType);
+                }
+            }
+        }
+
+        $akeneoImageKeyTypeForDelete = array_diff(self::AKENEO_IMAGES_KEYS, $processedAkeneoImageKeyType);
+        foreach ($akeneoImageKeyTypeForDelete as $akeneoImageKeyType) {
+            $oldImage = $this->imageFacade->findImageByEntityForAkeneoImageType($product, $akeneoImageKeyType);
+            if ($oldImage !== null) {
+                $this->imageFacade->deleteImages($product, [$oldImage]);
+                $this->em->flush();
+            }
+        }
+
+        if (count($processedAkeneoImageKeyType) > 0) {
+            foreach (self::AKENEO_IMAGES_TYPE_POSITION as $akeneoImageKeyType => $position) {
+                $image = $this->imageFacade->findImageByEntityForAkeneoImageType($product, $akeneoImageKeyType);
+                if ($image !== null) {
+                    $image->setPosition($position);
+                    $this->em->flush();
+                }
+            }
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoMediaFileData
+     * @param string $akeneoImageType
+     */
+    private function createProductImage(Product $product, array $akeneoMediaFileData, string $akeneoImageType): void
+    {
+        $mediaFileResponse = $this->productTransferAkeneoFacade->getProductMediaFileFromApi($akeneoMediaFileData['data']);
+        $akeneoMediaFileName = $akeneoMediaFileData['data'];
+
+        $tempFileName = $this->fileUpload->getTemporaryFilepath($akeneoMediaFileName);
+        $uploadDirectory = $this->fileUpload->getTemporaryDirectory();
+        if (!is_dir($uploadDirectory)) {
+            if (!mkdir($uploadDirectory) && !is_dir($uploadDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $uploadDirectory));
+            }
+        }
+
+        file_put_contents($tempFileName, $mediaFileResponse->getBody()->getContents());
+        $createdImage = $this->imageFacade->uploadImage($product, [$akeneoMediaFileName], null, false);
+
+        $this->em->clear(Image::class);
+
+        $image = $this->imageFacade->getById($createdImage->getId());
+        $image->setAkeneoCode($akeneoMediaFileName);
+        $image->setAkeneoImageType($akeneoImageType);
+        $this->em->flush();
     }
 }

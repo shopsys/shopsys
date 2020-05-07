@@ -566,3 +566,5 @@ services:
     App\Model\Product\Listing\RequestToOrderingModeIdConverter: ~
 
     Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter: '@App\Model\Product\Listing\RequestToOrderingModeIdConverter'
+
+    Shopsys\FrameworkBundle\Component\Image\ImageRepository: '@App\Component\Image\ImageRepository'

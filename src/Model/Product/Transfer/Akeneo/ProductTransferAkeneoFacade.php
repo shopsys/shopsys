@@ -9,6 +9,7 @@ use Akeneo\Pim\ApiClient\Search\SearchBuilder;
 use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
 use Akeneo\PimEnterprise\ApiClient\Api\PublishedProductApiInterface;
 use DateTime;
+use Psr\Http\Message\ResponseInterface;
 
 class ProductTransferAkeneoFacade
 {
@@ -53,5 +54,14 @@ class ProductTransferAkeneoFacade
         ]);
 
         return $publishedProducts;
+    }
+
+    /**
+     * @param string $akeneoMediaCode
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getProductMediaFileFromApi(string $akeneoMediaCode): ResponseInterface
+    {
+        return $this->akeneoClient->getProductMediaFileApi()->download($akeneoMediaCode);
     }
 }
