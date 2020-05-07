@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Payment\Payment;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -20,8 +21,9 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CARD = 'payment_card';
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
+    public const PAYMENT_GOPAY = Payment::TYPE_GOPAY;
 
-    /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade */
+    /** @var \App\Model\Payment\PaymentFacade */
     protected $paymentFacade;
 
     /**
@@ -45,7 +47,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     protected $currencyFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Payment\PaymentDataFactory $paymentDataFactory
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
@@ -71,6 +73,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public function load(ObjectManager $manager)
     {
         $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $paymentData->name[$locale] = t('Credit card', [], 'dataFixtures', $locale);
@@ -87,6 +90,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         ]);
 
         $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $paymentData->name[$locale] = t('Cash on delivery', [], 'dataFixtures', $locale);
@@ -96,6 +100,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createPayment(self::PAYMENT_CASH_ON_DELIVERY, $paymentData, [TransportDataFixture::TRANSPORT_CZECH_POST]);
 
         $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $paymentData->name[$locale] = t('Cash', [], 'dataFixtures', $locale);
@@ -105,6 +110,31 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::zero());
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
+
+        $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = Payment::TYPE_GOPAY;
+        $paymentData->name = [
+            'cs' => 'GoPay - Platba kartou',
+            'sk' => 'GoPay - Platba kartou',
+        ];
+        $paymentData->czkRounding = false;
+
+        $paymentData->goPayPaymentMethod = $this->getReference(GoPayDataFixture::PAYMENT_CARD_METHOD);
+
+        $paymentData->description = [
+            'cs' => '',
+            'sk' => '',
+        ];
+        $paymentData->instructions = [
+            'cs' => '<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>',
+            'sk' => '',
+        ];
+
+        $paymentData->hidden = false;
+        $this->createPayment(self::PAYMENT_GOPAY, $paymentData, [
+            TransportDataFixture::TRANSPORT_PERSONAL,
+            TransportDataFixture::TRANSPORT_PPL,
+        ]);
     }
 
     /**
@@ -137,6 +167,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             TransportDataFixture::class,
             VatDataFixture::class,
             CurrencyDataFixture::class,
+            GoPayDataFixture::class,
             SettingValueDataFixture::class,
         ];
     }

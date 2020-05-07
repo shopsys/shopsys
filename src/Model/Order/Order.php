@@ -6,7 +6,9 @@ namespace App\Model\Order;
 
 use App\Model\Order\Item\OrderItem;
 use App\Model\Product\Type\ProductType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
@@ -39,6 +41,18 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
 class Order extends BaseOrder
 {
     /**
+     * @var \App\Model\GoPay\GoPayTransaction[]|\Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="App\Model\GoPay\GoPayTransaction",
+     *     mappedBy="order",
+     *     cascade={"remove"},
+     * )
+     * @ORM\OrderBy({"goPayId" = "ASC"})
+     */
+    private $goPayTransactions;
+
+    /**
      * REMOVED PROPERTY!
      * This property is removed from model, because Order has more Transports.
      *
@@ -61,6 +75,8 @@ class Order extends BaseOrder
         ?CustomerUser $customerUser = null
     ) {
         parent::__construct($orderData, $orderNumber, $urlHash, $customerUser);
+
+        $this->goPayTransactions = new ArrayCollection();
     }
 
     /**
@@ -69,7 +85,55 @@ class Order extends BaseOrder
      */
     public function edit(BaseOrderData $orderData): OrderEditResult
     {
+        $this->editGoPayTransactions($orderData->goPayTransactions);
+
         return parent::edit($orderData);
+    }
+
+    /**
+     * @param \App\Model\GoPay\GoPayTransaction[] $goPayTransactions
+     */
+    private function editGoPayTransactions(array $goPayTransactions): void
+    {
+        $this->goPayTransactions->clear();
+        foreach ($goPayTransactions as $goPayTransaction) {
+            $this->goPayTransactions->add($goPayTransaction);
+        }
+    }
+
+    /**
+     * @return \App\Model\GoPay\GoPayTransaction[]
+     */
+    public function getGoPayTransactions(): array
+    {
+        return $this->goPayTransactions->toArray();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getGoPayTransactionsIndexedByGoPayId(): array
+    {
+        $returnArray = [];
+        foreach ($this->goPayTransactions as $transaction) {
+            $returnArray[$transaction->getGoPayId()] = $transaction->getGoPayStatus();
+        }
+
+        return $returnArray;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGoPayPaid(): bool
+    {
+        foreach ($this->goPayTransactions->toArray() as $item) {
+            if ($item->getGoPayStatus() === PaymentStatus::PAID) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

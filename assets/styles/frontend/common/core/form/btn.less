@@ -214,6 +214,31 @@
             font-size: 20px;
         }
     }
+
+    @btn-mini-padding-horizontal-mobile: 2px;
+    @btn-mini-padding-horizontal: 5px;
+    @btn-mini-height: @btn-height - 26;
+
+    &--mini {
+        height: @btn-mini-height;
+        line-height: @btn-mini-height;
+        min-height: @btn-mini-height;
+        padding: 0 @btn-mini-padding-horizontal-mobile;
+
+        font-size: 12px;
+
+        @media @query-lg {
+            padding: 0 @btn-mini-padding-horizontal;
+        }
+    }
+
+    &--in-text {
+        margin: 0;
+
+        @media @query-vl {
+            margin: 0 10px;
+        }
+    }
 }
 
 // Button with icon

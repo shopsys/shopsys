@@ -34,6 +34,23 @@ front_order_index:
     path: /objednavka/
     defaults: { _controller: App\Controller\Front\OrderController:indexAction }
 
+front_order_paid:
+    path: /potvrzeni-platby-objednavky/{urlHash}
+    defaults: { _controller: App\Controller\Front\OrderController:paidAction }
+
+front_order_not_paid:
+    path: /nezaplacena-objednavka/{urlHash}
+    defaults: { _controller: App\Controller\Front\OrderController:notPaidAction }
+
+front_order_gopay_status_notify:
+    path: /order/gopay-status-notify/{orderId}
+    defaults: { _controller: App\Controller\Front\GoPayController:gopayStatusNotifyAction }
+    methods: [GET]
+
+front_order_repeat_gopay_payment:
+    path: /opakovat-platbu/{urlHash}
+    defaults: { _controller: App\Controller\Front\OrderController:repeatGoPayPaymentAction }
+
 front_order_sent:
     path: /potvrzeni-objednavky/
     defaults: { _controller: App\Controller\Front\OrderController:sentAction }

@@ -43,11 +43,17 @@ msgstr "Zpět do košíku"
 msgid "Back to orders overview"
 msgstr "Zpět na přehled objednávek"
 
+msgid "Back to overview"
+msgstr "Zpět na přehled"
+
 msgid "Back to shipping and payment selection"
 msgstr "Zpět na výběr dopravy a platby"
 
 msgid "Back to store"
 msgstr "Zpět do obchodu"
+
+msgid "Basic"
+msgstr "Základní"
 
 msgid "Basic information"
 msgstr "Základní informace"
@@ -115,6 +121,9 @@ msgstr "IČ"
 msgid "Contact"
 msgstr "Kontakt"
 
+msgid "Connection to GoPay gateway failed."
+msgstr "Připojení k bráně GoPay selhalo."
+
 msgid "Contact us"
 msgstr "Napište nám"
 
@@ -165,6 +174,9 @@ msgstr "Opravdu si přejete odebrat tuto dodací adresu?"
 
 msgid "Do you want to receive the newest information about our shop? Subscribe to our email newsletter."
 msgstr "Chcete dostávat nejnovější informace z našeho obchodu? Přihlašte se do našeho e-mailového zpravodaje."
+
+msgid "Dostupné množství k odběru"
+msgstr ""
 
 msgid "Download"
 msgstr "Stáhnout"
@@ -219,6 +231,18 @@ msgstr "Přejít do košíku"
 
 msgid "Back to shop"
 msgstr "Zpět do obchodu"
+
+msgid "GoPay"
+msgstr "GoPay"
+
+msgid "GoPay Fik code"
+msgstr "Fik platby GoPay"
+
+msgid "GoPay payment method"
+msgstr "Platební metoda GoPay"
+
+msgid "GoPay payment status"
+msgstr "Status platby GoPay"
 
 msgid "I agree with <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">terms and conditions</a> and <a href=\"%privacyPolicyUrl%\" target=\"_blank\">privacy policy</a>."
 msgstr "Souhlasím s <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">obchodními podmínkami</a> a <a href=\"%privacyPolicyUrl%\" target=\"_blank\">zpracováním osobních údajů</a>."
@@ -352,8 +376,17 @@ msgstr "Objednat"
 msgid "Order completed"
 msgstr "Objednávka dokončena"
 
+msgid "Order could not be paid"
+msgstr "Objednávku se nepodařio zaplatit"
+
+msgid "Order has been created but there were problems during payment"
+msgstr "Objednávka byla dokončena a odeslána, ale nastaly potíže během placení"
+
 msgid "Order not found"
 msgstr "Objednávka nebyla nalezena"
+
+msgid "Order not found."
+msgstr "Objednávka nebyla nalezena."
 
 msgid "Order number"
 msgstr "Číslo objednávky"
@@ -586,6 +619,9 @@ msgstr "V průběhu objednávkového procesu byla změněna cena dopravy {{ tran
 msgid "These goods have different transport requirements"
 msgstr "Tohle zboží má kvůli svým rozměrům a náročnosti manipulace jiné požadavky na dopravu.<br />Proto jsme váš nákup rozdělili na více zásilek."
 
+msgid "There were problems during payment of created order with number %orderNumber%."
+msgstr "Během placení dokončené a odeslané objednávky č. %orderNumber% došlo k potížím."
+
 msgid "This account doesn't exist or password is incorrect"
 msgstr "Zadali jste špatné uživatelské jméno nebo heslo"
 
@@ -630,6 +666,9 @@ msgstr "Celková cena s DPH"
 
 msgid "Try using web search"
 msgstr "Zkuste použít vyhledávání na webu"
+
+msgid "Type"
+msgstr "Typ"
 
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
 msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_text%\"</strong>, to je jak naschvál!"
@@ -678,6 +717,9 @@ msgstr "Byli jste úspěšně zaregistrováni"
 
 msgid "You have been successfully subscribed to our newsletter."
 msgstr "Byli jste úspěšně přihlášeni k odběru našeho newsletteru."
+
+msgid "You have successfully paid order via GoPay."
+msgstr "Objednávku jste úspěšně zaplatili přes GoPay."
 
 msgid "You have to be logged in to enter this page"
 msgstr "Pro přístup na tuto stránku musíte být přihlášeni"
@@ -747,3 +789,31 @@ msgstr "Zkontrolujte prosím zadané hodnoty.<br>"
 
 msgid "readyCategorySeoMixs"
 msgstr "SEO kombinace kategorií"
+
+msgid "Klikněte zde pro zopakování úhrady objednávky"
+msgstr ""
+
+msgid "Nyní budete přesměrováni na platební bránu GoPay."
+msgstr ""
+
+msgid "Objednávka je již zaplacená."
+msgstr ""
+
+msgid "Objednávka nebyla nalezena."
+msgstr ""
+
+msgid "Opakovat platbu"
+msgstr ""
+
+msgid "Uhrazení objednávky č. %orderNumber% platební kartou."
+msgstr ""
+
+msgid "Zaplatit"
+msgstr ""
+
+msgid "Česko"
+msgstr ""
+
+msgid "Tento způsob platby je skrytý systémem GoPay."
+msgstr ""
+

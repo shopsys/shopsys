@@ -215,3 +215,9 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade: '@App\Model\Product\Parameter\ParameterFacade'
 
     Shopsys\FrontendApiBundle\Model\Token\TokenFacade: ~
+
+    Shopsys\FrameworkBundle\Model\Order\OrderRepository: '@App\Model\Order\OrderRepository'
+
+    Shopsys\FrameworkBundle\Model\Payment\PaymentFacade: '@App\Model\Payment\PaymentFacade'
+
+    Shopsys\FrameworkBundle\Model\Payment\PaymentRepository: '@App\Model\Payment\PaymentRepository'

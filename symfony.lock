@@ -246,6 +246,9 @@
     "google/crc32": {
         "version": "v0.1.0"
     },
+    "gopay/payments-sdk-php": {
+        "version": "v1.4.1"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.4.1"
     },
@@ -353,6 +356,9 @@
     },
     "league/flysystem-cached-adapter": {
         "version": "1.0.9"
+    },
+    "league/iso3166": {
+        "version": "2.1.5"
     },
     "litipk/php-bignumbers": {
         "version": "0.8.6"

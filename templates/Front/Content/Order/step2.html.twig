@@ -117,20 +117,33 @@
                         <div class="box-chooser box-chooser--smaller js-form-group">
                             {{ form_errors(form.payment, { errors_attr: {class: 'form-error--inline'} }) }}
 
-                            <div id="{{ form.payment.vars.id }}">
+                            <div id="{{ form.payment.vars.id }}" class="js-payments-wrapper">
+                                {% set bankTransferRendered = false %}
+                                {% set goPayBankSwiftForm = form.goPayBankSwift %}
+
                                 {% for child in form.payment %}
                                     {% set choice = form.payment.vars.choices[child.vars.name] %}
                                     {% set payment = choice.data %}
                                     {% set paymentPrice = splitOrderPreview.transportAndPaymentPricesPreview.getPaymentPrice(payment) %}
+
+                                    {% set goPayPaymentMethod = choice.data.getGoPayPaymentMethod() %}
+                                    {% set isGoPayBankTransfer = goPayPaymentMethod != null and goPayPaymentMethod.identifier == goPayBankTransferIdentifier %}
+                                    {% if isGoPayBankTransfer %}
+                                        {% set bankTransferRendered = true %}
+                                    {% endif %}
+
                                     <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
                                         <span class="box-chooser__item__check">
-                                            {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input js-payment-transport-checkbox', 'data-id': payment.id} }) }}
+                                            {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input js-payment-transport-checkbox' ~ (isGoPayBankTransfer ? ' js-gopay-bank-transfer-input' : ''), 'data-id': payment.id} }) }}
                                             <span class="css-checkbox__image"></span>
                                         </span>
 
                                         <span class="box-chooser__item__image">
+
                                             {% if imageExists(payment) %}
                                                 {{ image(payment) }}
+                                            {% elseif payment.goPayPaymentMethod is not empty %}
+                                                <img src="{{ payment.goPayPaymentMethod.imageNormalUrl }}" itemprop="image" />
                                             {% endif %}
                                         </span>
 
@@ -149,10 +162,46 @@
                                             {{ paymentPrice.priceWithVat|priceText }}
                                         </span>
                                     </label>
+                                    {# TODO gopay
+                                    this section is temporary disabled. It is a list goPay supported banks. List will be allowed in next US. List should be displayed when is
+                                    checked Payment with goPay type and subtype is bank transfer. For this function is copied JS file GoPyaySelection with original logic.
+                                    In next US update this JS with actual logic in PaymentTransportChooser.js.
+                                     #}
+                                    {% if isGoPayBankTransfer %}
+                                        <div class="box-chooser__sub-selection js-gopay-list-banks display-none">
+                                            {% for goPayBankSwiftFormChild in goPayBankSwiftForm %}
+                                                {% set goPayBankSwiftFormChildChoice = goPayBankSwiftForm.vars.choices[goPayBankSwiftFormChild.vars.name] %}
+                                                {% set goPayBankSwift = goPayBankSwiftFormChildChoice.data %}
+                                                <label class="box-chooser__item">
+                                                    <span class="box-chooser__item__check">
+                                                        {{ form_widget(goPayBankSwiftFormChild, { attr: { class: 'js-order-gopay-bank-swift-input css-checkbox', 'data-swift': goPayBankSwift.swift} }) }}
+                                                        <label for="{{goPayBankSwiftFormChild.vars.id}}" class="css-label-checkbox"></label>
+                                                    </span>
+
+                                                    <span class="box-chooser__item__image">
+                                                        <img src="{{ goPayBankSwift.imageLargeUrl }}">
+                                                    </span>
+
+                                                    <span class="box-chooser__item__title">
+                                                        <strong class="box-chooser__title__name">
+                                                            {{ goPayBankSwift.name }}
+                                                        </strong>
+                                                    </span>
+
+                                                    <span class="box-chooser__item__price">
+                                                        {{ paymentPrice.priceWithVat|priceText }}
+                                                    </span>
+                                                </label>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
                                 {% else %}
                                     {% do form.payment.setRendered %}
                                     {{ 'Nothing to choose from'|trans }}
                                 {% endfor %}
+                                {% if not bankTransferRendered %}
+                                    {% do goPayBankSwiftForm.setRendered %}
+                                {% endif %}
                                 <button type="button" class="box-chooser__wide-button js-payment-transport-change-button">{{ 'Změnit způsob platby' }}</button>
                             </div>
                         </div>

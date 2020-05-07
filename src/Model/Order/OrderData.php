@@ -27,6 +27,11 @@ class OrderData extends BaseOrderData
      */
     public $transportPersonalPickupStockByProductTypeId;
 
+    /**
+     * @var \App\Model\GoPay\GoPayTransaction[]
+     */
+    public $goPayTransactions;
+
     public function __construct()
     {
         parent::__construct();

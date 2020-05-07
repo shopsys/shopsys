@@ -141,6 +141,11 @@ front_order_terms_and_conditions_download:
     defaults:
         _controller: App\Controller\Front\OrderController:TermsAndConditionsDownloadAction
 
+front_order_change_payment_method:
+    path: /order/change-payment-method/{urlHash}
+    defaults: { _controller: App\Controller\Front\OrderController:changePaymentAction }
+    methods: [POST]
+
 front_promo_code_apply:
     path: /promo-code/apply/
     defaults:

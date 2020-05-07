@@ -321,6 +321,12 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setExpectedStatusCode(302);
             })
+            ->customizeByRouteName(['front_order_paid', 'front_order_not_paid'], function (RouteConfig $config) {
+                $debugNote = 'Order paid and not paid URLs needs urlHash as parameter.';
+                $config->changeDefaultRequestDataSet($debugNote)
+                    ->setParameter('urlHash', 'notExistingUrlHash')
+                    ->setExpectedStatusCode(302);
+            })
             ->customizeByRouteName('front_logout', function (RouteConfig $config) {
                 $debugNote = 'Add CSRF token for logout action (configured in config/packages/security.yml) during test execution.';
                 $config->changeDefaultRequestDataSet($debugNote)
@@ -351,7 +357,7 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Use ID 1 as default brand.')
                     ->setParameter('id', 1);
             })
-            ->customizeByRouteName('front_customer_order_detail_unregistered', function (RouteConfig $config) {
+            ->customizeByRouteName(['front_customer_order_detail_unregistered', 'front_order_repeat_gopay_payment'], function (RouteConfig $config) {
                 /** @var \App\Model\Order\Order $order */
                 $order = $this->getPersistentReference(OrderDataFixture::ORDER_PREFIX . '1');
 

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Form\Front\Order;
 
 use App\Form\Admin\Transformer\StockIdToStockTransformer;
+use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\Order\FrontOrderData;
 use Shopsys\FrameworkBundle\Form\SingleCheckboxChoiceType;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -27,9 +29,19 @@ class TransportAndPaymentFormType extends AbstractType
     private $transportFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
+     * @var \App\Model\Payment\PaymentFacade
      */
     private $paymentFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    private $currencyFacade;
+
+    /**
+     * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade
+     */
+    private $goPayBankSwiftFacade;
 
     /**
      * @var \App\Form\Admin\Transformer\StockIdToStockTransformer
@@ -38,17 +50,23 @@ class TransportAndPaymentFormType extends AbstractType
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Form\Admin\Transformer\StockIdToStockTransformer $stockIdToStockTransformer
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
      */
     public function __construct(
         TransportFacade $transportFacade,
         PaymentFacade $paymentFacade,
-        StockIdToStockTransformer $stockIdToStockTransformer
+        StockIdToStockTransformer $stockIdToStockTransformer,
+        CurrencyFacade $currencyFacade,
+        GoPayBankSwiftFacade $goPayBankSwiftFacade
     ) {
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
         $this->stockIdToStockTransformer = $stockIdToStockTransformer;
+        $this->currencyFacade = $currencyFacade;
+        $this->goPayBankSwiftFacade = $goPayBankSwiftFacade;
     }
 
     /**
@@ -59,6 +77,7 @@ class TransportAndPaymentFormType extends AbstractType
     {
         $payments = $this->paymentFacade->getVisibleByDomainId($options['domain_id']);
         $transports = $this->transportFacade->getVisibleByDomainId($options['domain_id'], $payments);
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($options['domain_id']);
 
         $builder
             ->add('transportsByProductTypeId', CollectionType::class, [
@@ -88,6 +107,11 @@ class TransportAndPaymentFormType extends AbstractType
                     new Constraints\NotNull(['message' => 'Please choose payment type']),
                 ],
                 'invalid_message' => 'Please choose payment type',
+            ])
+            ->add('goPayBankSwift', SingleCheckboxChoiceType::class, [
+                'choices' => $this->goPayBankSwiftFacade->getAllByCurrencyId($currency->getId()),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
             ])
             ->add('save', SubmitType::class);
 

@@ -109,9 +109,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain('no-reply@shopsys.com', $domainId);
+        /** @var \App\Model\Order\OrderData $orderData */
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH);
+        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE);
         $orderData->firstName = 'Jiří';
         $orderData->lastName = 'Ševčík';
@@ -125,6 +126,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+
         $this->createOrder(
             $orderData,
             [

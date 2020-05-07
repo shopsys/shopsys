@@ -23,6 +23,11 @@
                             <tr>
                                 <th>{{ 'Status'|trans }}: </th>
                                 <td>{{ order.status.name }}</td>
+                                {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
+                                    <a class="btn btn--success btn--mini btn--in-text" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
+                                        {{ 'Opakovat platbu'|trans }}
+                                    </a>
+                                {% endif %}
                             </tr>
                             <tr>
                                 <th>{{ 'Creation date'|trans }}: </th>

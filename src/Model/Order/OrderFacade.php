@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
+use App\Model\GoPay\GoPayTransaction;
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Order\Preview\SplitOrderPreview;
+use App\Model\Payment\Payment;
 use Doctrine\ORM\EntityManagerInterface;
+use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
@@ -38,6 +41,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -71,6 +75,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  * @property \App\Model\Cart\CartFacade $cartFacade
  * @property \App\Component\Domain\Domain $domain
+ * @property \App\Model\Order\OrderRepository $orderRepository
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -85,9 +90,14 @@ class OrderFacade extends BaseOrderFacade
     private $cartSplittingFacade;
 
     /**
+     * @var \App\Model\Order\OrderDataFactory
+     */
+    private $orderDataFactory;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
+     * @param \App\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
@@ -113,6 +123,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Item\OrderItemFactory $orderItemFactory
      * @param \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $cartSplittingFacade
+     * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -142,7 +153,8 @@ class OrderFacade extends BaseOrderFacade
         TransportPriceCalculation $transportPriceCalculation,
         OrderItemFactoryInterface $orderItemFactory,
         OrderItemDataFactory $orderItemDataFactory,
-        OrderPreviewSplittingFacade $cartSplittingFacade
+        OrderPreviewSplittingFacade $cartSplittingFacade,
+        OrderDataFactory $orderDataFactory
     ) {
         parent::__construct(
             $em,
@@ -174,6 +186,7 @@ class OrderFacade extends BaseOrderFacade
         );
         $this->orderItemDataFactory = $orderItemDataFactory;
         $this->cartSplittingFacade = $cartSplittingFacade;
+        $this->orderDataFactory = $orderDataFactory;
     }
 
     /**
@@ -401,31 +414,6 @@ class OrderFacade extends BaseOrderFacade
     }
 
     /**
-     * @param int $orderId
-     * @return string
-     */
-    public function getOrderSentPageContent($orderId): string
-    {
-        $order = $this->getById($orderId);
-        $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);
-        $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $order->getDomainId());
-
-        $transportsInstructions = [];
-        foreach ($order->getTransports() as $transport) {
-            $transportsInstructions[] = $transport->getInstructions();
-        }
-
-        $variables = [
-            self::VARIABLE_TRANSPORT_INSTRUCTIONS => implode('<br /> ', $transportsInstructions),
-            self::VARIABLE_PAYMENT_INSTRUCTIONS => $order->getPayment()->getInstructions(),
-            self::VARIABLE_ORDER_DETAIL_URL => $orderDetailUrl,
-            self::VARIABLE_NUMBER => $order->getNumber(),
-        ];
-
-        return strtr($orderSentPageContent, $variables);
-    }
-
-    /**
      * @param \App\Model\Order\Item\OrderItem $orderItem
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount
      * @param string $locale
@@ -454,5 +442,82 @@ class OrderFacade extends BaseOrderFacade
             $orderItem->getOrder(),
             null
         );
+    }
+
+    /**
+     * @param int $orderId
+     * @return string
+     */
+    public function getOrderSentPageContent($orderId): string
+    {
+        $order = $this->getById($orderId);
+        $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);
+        $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $order->getDomainId());
+
+        $transportsInstructions = [];
+        foreach ($order->getTransports() as $transport) {
+            $transportsInstructions[] = $transport->getInstructions();
+        }
+
+        $variables = [
+            self::VARIABLE_TRANSPORT_INSTRUCTIONS => implode('<br /> ', $transportsInstructions),
+            self::VARIABLE_PAYMENT_INSTRUCTIONS => $order->getPayment()->getInstructions(),
+            self::VARIABLE_ORDER_DETAIL_URL => $orderDetailUrl,
+            self::VARIABLE_NUMBER => $order->getNumber(),
+        ];
+
+        if ($order->isGoPayPaid()) {
+            $variables[self::VARIABLE_PAYMENT_INSTRUCTIONS] = t('You have successfully paid order via GoPay.');
+        }
+
+        return strtr($orderSentPageContent, $variables);
+    }
+
+    /**
+     * @param \DateTime $fromDate
+     * @return \App\Model\Order\Order[]
+     */
+    public function getAllUnpaidGoPayOrders(\DateTime $fromDate): array
+    {
+        return $this->orderRepository->getAllUnpaidGoPayOrders($fromDate);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @return bool
+     */
+    public function isUnpaidOrderPaymentChangeable(Order $order): bool
+    {
+        return $order->getStatus()->getType() === OrderStatus::TYPE_NEW &&
+            $order->getPayment()->isGoPay() &&
+            count(array_filter($order->getGoPayTransactions(), function (GoPayTransaction $transaction) {
+                return $transaction->getGoPayStatus() === PaymentStatus::PAID;
+            })) === 0;
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Payment\Payment $payment
+     * @param int $domainId
+     */
+    public function changeOrderPayment(Order $order, Payment $payment, int $domainId): void
+    {
+        $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $order->getCurrency(), $domainId);
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $payment->getName();
+        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
+        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
+        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+        $orderItemData->payment = $payment;
+        $orderItemData->productType = $order->getOrderPayment()->getProductType();
+        $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData($orderItemData, $order);
+
+        $orderPaymentData = $this->orderItemDataFactory->createFromOrderItem($orderPayment);
+        $orderData = $this->orderDataFactory->createFromOrder($order);
+        $orderData->orderPayment = $orderPaymentData;
+        $order->removeItem($order->getOrderPayment());
+        $this->edit($order->getId(), $orderData);
     }
 }

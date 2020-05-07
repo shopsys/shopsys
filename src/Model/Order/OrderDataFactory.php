@@ -34,8 +34,10 @@ class OrderDataFactory extends BaseOrderDataFactory
      * @param \App\Model\Order\OrderData $orderData
      * @param \App\Model\Order\Order $order
      */
-    protected function fillFromOrder(BaseOrderData $orderData, BaseOrder $order)
+    protected function fillFromOrder(BaseOrderData $orderData, BaseOrder $order): void
     {
         parent::fillFromOrder($orderData, $order);
+
+        $orderData->goPayTransactions = $order->getGoPayTransactions();
     }
 }
