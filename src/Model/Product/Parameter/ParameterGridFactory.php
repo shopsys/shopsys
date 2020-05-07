@@ -45,6 +45,12 @@ class ParameterGridFactory extends BaseParameterGridFactory
             );
         }
 
+        $grid->addColumn(
+            'parameterType',
+            'p.parameterType',
+            t('Typ')
+        );
+
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_parameter_delete', ['id' => 'p.id'])
             ->setConfirmMessage(t('Do you really want to remove this parameter? By deleting this parameter you will '

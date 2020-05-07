@@ -29,6 +29,7 @@ class ParameterDataFactory extends BaseParameterDataFactory
         parent::fillNew($parameterData);
 
         $parameterData->orderingPriority = 0;
+        $parameterData->parameterType = Parameter::PARAMETER_TYPE_COMMON;
     }
 
     /**
@@ -60,5 +61,6 @@ class ParameterDataFactory extends BaseParameterDataFactory
         $parameterData->akeneoCode = $parameter->getAkeneoCode();
         $parameterData->akeneoType = $parameter->getAkeneoType();
         $parameterData->parameterUnit = $parameter->getParameterUnit();
+        $parameterData->parameterType = $parameter->getParameterType();
     }
 }
