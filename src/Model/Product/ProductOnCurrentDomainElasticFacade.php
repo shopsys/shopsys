@@ -22,6 +22,8 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
  * @method \App\Model\Product\Search\FilterQuery createFilterQueryWithProductFilterData(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
  * @method array getProductsByCategory(\App\Model\Category\Category $category, int $limit, int $offset, string $orderingModeId)
  * @property \App\Component\Domain\Domain $domain
+ * @property \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
+>>>>>>> 9e88f0285... SD-166 refactored logic behind slider filtering parameters
  */
 class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElasticFacade
 {

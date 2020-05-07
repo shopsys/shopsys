@@ -5,10 +5,17 @@ namespace App\Model\Product\Search;
 
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer as BaseProductFilterDataToQueryTransformer;
 
+/**
+ * @method \App\Model\Product\Search\FilterQuery addBrandsToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
+ * @method \App\Model\Product\Search\FilterQuery addFlagsToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
+ * @method \App\Model\Product\Search\FilterQuery addParametersToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
+ * @method \App\Model\Product\Search\FilterQuery addStockToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
+ * @method \App\Model\Product\Search\FilterQuery addPricesToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
+ */
 class ProductFilterDataToQueryTransformer extends BaseProductFilterDataToQueryTransformer
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $parameters
+     * @param \App\Model\Product\Filter\ParameterFilterData[] $parameters
      * @return array
      */
     protected function flattenParameterFilterData(array $parameters): array

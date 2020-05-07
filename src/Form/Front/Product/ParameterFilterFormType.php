@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Form\Front\Product;
 
 use App\Form\Front\Product\ParameterFilter\SliderFilterFormType;
+use App\Model\Product\Filter\ParameterFilterData;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -142,7 +142,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
 
     /**
      * @param \App\Model\Product\Parameter\ParameterValue[][]|\stdClass[][]|string[][]|null[][]|null $value
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]|null
+     * @return \App\Model\Product\Filter\ParameterFilterData[]|null
      */
     public function reverseTransform($value)
     {
@@ -175,7 +175,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
             $parameterFilterData = new ParameterFilterData();
             $parameterFilterData->parameter = $this->parameterChoicesIndexedByParameterId[$parameterId]->getParameter();
             $parameterFilterData->values = $selectedParameterValues;
-            if ($parameter->isUseSliderInFilter() && count($selectedParameterValues) === 0 ) {
+            if ($parameter->isUseSliderInFilter() && count($selectedParameterValues) === 0) {
                 $parameterFilterData->parameterFilteredBySlider = true;
             }
             $parametersFilterData[] = $parameterFilterData;
@@ -185,7 +185,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]|null $value
+     * @param \App\Model\Product\Filter\ParameterFilterData[]|null $value
      * @return \App\Model\Product\Parameter\ParameterValue[]|null
      */
     public function transform($value)
