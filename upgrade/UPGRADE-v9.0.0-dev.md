@@ -1525,7 +1525,7 @@ There you can find links to upgrade notes for other versions too.
                 }
             ```
         - replace previous `@import` with it
-        - open all link `https://fonts.gstatic.com/...` in your browser and it will download font file and save them to `assets/public/fronten/fonts`. We are using [fontName][fontWeigh].[extension] filename syntax.
+        - open all link `https://fonts.gstatic.com/...` in your browser and it will download font file and save them to `assets/public/frontend/fonts`. We are using [fontName][fontWeigh].[extension] filename syntax.
         - change urls in `variables.less` to:
             ```css
               @font-face {
