@@ -1,5 +1,8 @@
 @form-input-spinbox-padding-vertical: 3px;
-@form-input-spinbox-buttons-width: 24px;
+@form-input-spinbox-buttons-width: 16px;
+@form-input-spinbox-input-width: 40px;
+@form-input-spinbox-input-bg: @color-light-secondary;
+@form-input-spinbox-border-color: @form-input-spinbox-input-bg;
 
 .form-input-spinbox {
     display: inline-block;
@@ -7,33 +10,62 @@
     position: relative;
     padding: @form-input-spinbox-padding-vertical @form-input-spinbox-buttons-width @form-input-spinbox-padding-vertical 3px;
 
-    border: 1px solid @color-border;
+    border: 2px solid @form-input-spinbox-border-color;
+    border-radius: @radius;
+    background-color: @form-input-spinbox-input-bg;
+    overflow: hidden;
 
     &__input {
-        width: @form-input-spinbox-buttons-width + @form-input-spinbox-padding-vertical;
+        width: @form-input-spinbox-input-width;
         padding: 0;
         height: @input-height - 2 * @form-input-spinbox-padding-vertical;
-        line-height: @input-height - 2 * @form-input-spinbox-padding-vertical;
+        line-height: @input-height - 2 * @form-input-spinbox-padding-vertical - 2;
         text-align: center;
+
+        background-color: @form-input-spinbox-input-bg;
+        font-size: 15px;
+        color: @color-primary;
     }
 
     &__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: absolute;
         top: 0;
         right: 0;
         width: @form-input-spinbox-buttons-width;
         height: 50%;
 
-        background: @color-light;
+        background: @color-f;
         color: @color-base;
+        cursor: pointer;
+
+        &--plus {
+            border-top-left-radius: @radius;
+            border-top-right-radius: @radius;
+            border-bottom: 1px solid @form-input-spinbox-border-color;
+        }
 
         &--minus {
             top: auto;
             bottom: 0;
+
+            border-top: 1px solid @form-input-spinbox-border-color;
+            border-bottom-left-radius: @radius;
+            border-bottom-right-radius: @radius;
+        }
+
+        &__icon {
+            font-size: 8px;
+
+            &--plus {
+                transform: rotate(180deg);
+            }
         }
 
         &:hover {
-            background: darken(@color-light, 5%);
+            background: @color-light;
         }
     }
 }

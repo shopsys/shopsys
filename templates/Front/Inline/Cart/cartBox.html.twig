@@ -7,6 +7,9 @@
         data-after-callback-url="{{ url('front_cart_box_detail') }}"
         data-after-replace-selector="#js-cart-box"
     {% endif %}
+    {% if cart is null %}
+        class="cart-box cart-box--empty"
+    {% endif %}
     data-reload-url="{{ url('front_cart_box') }}">
     <div class="cart">
         <a class="cart__block" href="{{ url('front_cart') }}">
@@ -41,6 +44,7 @@
                                 {{ 'Celkem zaplatíte'|trans }}
                             </div>
                             <div class="cart-detail__total__price">
+                                <span class="cart-detail__total__price__previous js-not-implemented-yet">{{ productsPrice.priceWithoutVat|price }}</span>
                                 {{ productsPrice.priceWithVat|price }}
                             </div>
                         </div>
@@ -52,6 +56,16 @@
                     </div>
                 {% endif %}
             </div>
+        {% endif %}
+        {% if cart is null %}
+            <div class="cart__detail cart__detail--empty">
+                <div class="cart__detail__figure">
+                    <strong class="cart__detail__figure__text">{{ 'Váš košík je zatím prázdný.'|trans }}</strong>
+                    <div class="cart__detail__figure__image">
+                        <img class="cart__detail__figure__img" loading="lazy" data-src="{{ asset('public/frontend/images/empty-cart-small.png') }}" alt="{{ 'Empty cart'|trans }}">
+                    </div>
+                </div>
+            <div>
         {% endif %}
     </div>
     <div class="cart-mobile header__mobile-button">
