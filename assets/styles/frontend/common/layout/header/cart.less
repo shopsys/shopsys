@@ -31,7 +31,6 @@
 
         .cart__detail {
             opacity: 1;
-            visibility: visible;
             transform: scale(1);
         }
     }
@@ -127,12 +126,10 @@
     &__detail {
         display: block;
 
-        transition: all @transition;
         opacity: 0;
-        visibility: hidden;
-        transform: scale(0.8);
+        transform: scale(0.75);
+        transition: all @transition;
         transform-origin: top right;
-
         box-shadow: 0 20px 20px 0 rgba(@color-0, .15);
 
         @media @query-lg {
@@ -146,7 +143,7 @@
                 position: absolute;
                 right: 0;
                 top: -1px;
-                width: 208px;
+                width: 196px;
                 height: 1px;
 
                 background-color: lighten(@color-border, 10%);

@@ -1,6 +1,5 @@
 @cart-detail-width: 100%;
-@cart-detail-padding: 20px;
-@cart-detail-remove-size: 13px;
+@cart-detail-remove-size: 18px;
 
 @cart-detail-item-count: 5;
 @cart-detail-item-bottom-gap: 5px;
@@ -8,14 +7,13 @@
 @cart-detail-item-image-size: 45px;
 @cart-detail-item-pieces-width: 50px;
 @cart-detail-item-remove-padding-width: 10px;
-@cart-detail-item-remove-width: @cart-detail-remove-size + 2*@cart-detail-item-remove-padding-width;
-@cart-detail-item-content-width: calc(~"100% - @{cart-detail-item-image-size} - @{cart-detail-item-pieces-width} - @{cart-detail-item-remove-width}");
+@cart-detail-item-remove-size: 28px;
+@cart-detail-item-content-width: calc(~"100% - @{cart-detail-item-image-size} - @{cart-detail-item-pieces-width} - @{cart-detail-item-remove-size}");
 
 @cart-detail-total-text-width: 30%;
 
 .cart-detail {
     .reset-ul();
-    padding-right: 5px; // scroll fix
     display: flex;
     flex-direction: column;
     max-height: @cart-detail-item-count*@cart-detail-item-height;
@@ -23,8 +21,7 @@
     overflow-y: auto;
 
     &__wrap {
-        padding: @cart-detail-padding;
-        padding-right: @cart-detail-padding - 5px; // scroll fix
+        padding: 20px 15px 10px;
         width: 100%;
 
         background-color: @color-f;
@@ -37,12 +34,16 @@
         margin-bottom: @cart-detail-item-bottom-gap;
         min-height: @cart-detail-item-height;
 
-        border-bottom: 1px solid @color-border;
+        border-bottom: 1px solid @color-border-lighter;
+
+        &:last-child {
+            border-bottom-color: transparent;
+        }
 
         &__image {
             position: relative;
             width: @cart-detail-item-image-size;
-            margin-right: 15px;
+            margin: 0 15px 0 5px;
 
             img {
                 .center-image();
@@ -58,6 +59,7 @@
             &__title {
                 flex-grow: 1;
                 padding-right: 35px;
+                width: 100%;
 
                 font-family: @font-quartenary;
                 font-size: 13px;
@@ -97,50 +99,60 @@
         }
 
         &__remove {
+            display: flex;
             align-self: center;
-            width: @cart-detail-item-remove-width;
-            padding: @cart-detail-item-remove-padding-width;
-            text-align: left;
+            justify-content: center;
+            width: @cart-detail-item-remove-size;
+            min-width: @cart-detail-item-remove-size;
+            height: @cart-detail-item-remove-size;
 
             text-decoration: none;
             cursor: pointer;
+            border-radius: 100%;
+            border: 1px solid rgba(176,190,197,0.3);
+
+            &:hover {
+                text-decoration: none;
+            }
 
             .svg {
-                margin-top: 3px;
-
+                position: relative;
+                top: 3px;
                 font-size: @cart-detail-remove-size;
-                color: @color-a;
+                color: @color-primary;
             }
 
             &:hover {
-                .svg {
-                    color: @color-base;
-                }
+                border-color: @color-border;
             }
         }
     }
 
     &__total {
         display: flex;
-        padding-top: @cart-detail-padding;
-        line-height: 28px;
+        align-items: center;
+        padding: 10px 40px 10px 15px;
 
         background-color: @color-f;
+        border: 1px solid @color-border-lighter;
+        border-radius: @radius;
+        font-family: @font-quartenary;
+        color: @color-primary;
 
         &__text {
             width: @cart-detail-total-text-width;
             text-align: left;
 
-            font-size: 16px;
+            font-size: 13px;
+            line-height: 1;
         }
 
         &__price {
             width: calc(~"100% - @{cart-detail-total-text-width}");
             text-align: right;
-            line-height: 28px;
 
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 18px;
+            line-height: 1;
         }
     }
 
@@ -148,7 +160,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: 0 @cart-detail-padding @cart-detail-padding;
+        padding: 0 15px 20px;
 
         background-color: @color-f;
 
@@ -159,7 +171,7 @@
         &__button {
             align-self: flex-end;
             width: 100%;
-            padding-top: @cart-detail-padding;
+            padding-top: 15px;
             text-align: center;
 
             @media @query-md {
