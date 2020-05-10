@@ -43,7 +43,6 @@ RUN apt-get update && \
     autoconf && \
     apt-get clean
 
-# "gd" extension needs to have specified jpeg and freetype dir for jpg/jpeg images support
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # install necessary tools for running application
