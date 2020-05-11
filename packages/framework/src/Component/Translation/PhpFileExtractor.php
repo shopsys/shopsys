@@ -99,6 +99,8 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         }
 
         $this->previousNode = $node;
+
+        return null;
     }
 
     /**
