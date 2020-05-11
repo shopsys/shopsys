@@ -56,6 +56,7 @@ webpack_encore:
 +        "jquery-ui-touch-punch": "^0.2.3",
 +        "jquery.cookie": "^1.4.1",
 +        "minilazyload": "^2.3.3",
++        "nestedSortable": "^1.3.4",
 +        "slick-carousel": "1.6.0"
 +    },
      "devDependencies": {
