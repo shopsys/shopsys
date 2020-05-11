@@ -1,7 +1,7 @@
 <nav class="menu-list-menu-wrap dont-print">
 	<ul class="menu-horizontal js-menuHorizontal" data-hovered="false">
 		{% for itemDetail in itemDetails %}
-			<li class="menu-horizontal__item js-menu-horizontal-item">
+			<li class="menu-horizontal__item js-menu-horizontal-item{% if itemDetail.categoryDetailsByColumnNumber is not empty %} menu-horizontal__item--drop{% endif %}">
 				{% if itemDetail.horizontalMenuItem.url %}
 					<a href="{{ itemDetail.horizontalMenuItem.url }}" class="menu-horizontal__item__link">
 						{{ itemDetail.horizontalMenuItem.name }}
@@ -24,29 +24,30 @@
 											{% for category in categories %}
 													<li>
 														<a href="{{ url('front_product_list', { id: category.id }) }}" class="menu-horizontal__sub__columns__column__title">
-															<div class="menu-horizontal__sub__columns__column__image">
+															<div class="menu-horizontal__sub__columns__column__icon">
 																<i class="svg-categories{% if category.svgIcon %} svg-{{ category.svgIcon }}{% endif	 %} js-menu-horizontal-icon"></i>
 															</div>
-															<div>
+															<div class="menu-horizontal__sub__columns__column__image">
 																{{ image(category) }}
 															</div>
-															<span>
+															<span class="menu-horizontal__sub__columns__column__title">
 																{{ category.name }}
 															</span>
 														</a>
 														{% if category.children|length > 0 %}
-															<ul class="margin-left-15 js-menu-horizontal-ul js-menu-horizontal-items">
+															<ul class="menu-horizontal__sub__columns__children js-menu-horizontal-ul js-menu-horizontal-items">
 																{% for childCategory in category.children|slice(0,4) %}
-																	<li>
-																		<a href="{{ url('front_product_list', { id: childCategory.id }) }}">
+																	<li class="menu-horizontal__sub__columns__children__item">
+																		<a class="menu-horizontal__sub__columns__children__item__link" href="{{ url('front_product_list', { id: childCategory.id }) }}">
 																			<span>{{ childCategory.name }}</span>
 																		</a>
 																	</li>
 																{% endfor %}
 																{% if category.children|length > 4 %}
 																	<li>
-																		<a href="{{ url('front_product_list', { id: category.id }) }}">
-																			<span>{{ 'Více &#8594;'|trans|raw }}</span>
+																		<a class="btn btn--next btn-no-style" href="{{ url('front_product_list', { id: category.id }) }}">
+																			<span class="btm__text">{{ 'Více'|trans }}</span>
+																			<i class="btn__icon svg svg-long-arrow-right"></i>
 																		</a>
 																	</li>
 																{% endif %}

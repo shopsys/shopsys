@@ -19,14 +19,14 @@ export default class HorizontalMenu {
                     _this.openItem($currentItem);
                 }
 
-                Timeout.setTimeoutAndClearPrevious('menuHorizontalItemToggle', openCurrentItem, (_this.$openItem ? 200 : 50));
+                Timeout.setTimeoutAndClearPrevious('menuHorizontalItemToggle', openCurrentItem, (_this.$openItem ? 50 : 0));
             })
             .mouseleave(function () {
                 function closeOpenItem () {
                     _this.closeOpenItem();
                 }
 
-                Timeout.setTimeoutAndClearPrevious('menuHorizontalItemToggle', closeOpenItem, 500);
+                Timeout.setTimeoutAndClearPrevious('menuHorizontalItemToggle', closeOpenItem, 100);
             });
 
     }
