@@ -11,8 +11,15 @@ export default class SideMenu {
         this.$sideMenuMobile = $('.js-side-menu-mobile');
         this.$sideMenuOverlay = $('.js-side-menu-overlay');
         this.$sideMenuCollapseButton = $('.js-side-menu-collapse-button');
+        this.$sideMenuItemLink = $(jsSideMenuItemSelector+' .side-menu__submenu__item__link');
         this.$sideMenu = $sideMenu;
         this.$items = this.$sideMenu.filterAllNodes(jsSideMenuItemSelector);
+
+        this.$sideMenu.find(jsSideMenuItemSelector+'.open ul').removeClass('hidden');
+
+        $(jsSideMenuItemSelector+' a.side-menu__submenu__item__link').click(event => {
+            event.stopPropagation();
+        });
 
         this.$items.click(event => {
             if ($(event.currentTarget).hasClass('open')) {
