@@ -64,6 +64,14 @@
             "asciifolding"
           ]
         },
+        "full_without_diacritic_html": {
+          "char_filter": "html_strip",
+          "tokenizer": "keep_special_chars",
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        },
         "edge_ngram_without_diacritic_html": {
           "char_filter": "html_strip",
           "tokenizer": "keep_special_chars",
@@ -98,11 +106,13 @@
           },
           "edge_ngram_with_diacritic": {
             "type": "text",
-            "analyzer": "edge_ngram_with_diacritic"
+            "analyzer": "edge_ngram_with_diacritic",
+            "search_analyzer": "full_with_diacritic"
           },
           "edge_ngram_without_diacritic": {
             "type": "text",
-            "analyzer": "edge_ngram_without_diacritic"
+            "analyzer": "edge_ngram_without_diacritic",
+            "search_analyzer": "full_without_diacritic"
           },
           "keyword": {
             "type": "icu_collation_keyword",
@@ -125,11 +135,13 @@
           },
           "edge_ngram_with_diacritic": {
             "type": "text",
-            "analyzer": "edge_ngram_with_diacritic"
+            "analyzer": "edge_ngram_with_diacritic",
+            "search_analyzer": "full_with_diacritic"
           },
           "edge_ngram_without_diacritic": {
             "type": "text",
-            "analyzer": "edge_ngram_without_diacritic"
+            "analyzer": "edge_ngram_without_diacritic",
+            "search_analyzer": "full_without_diacritic"
           },
           "keyword": {
             "type": "icu_collation_keyword",
@@ -152,11 +164,13 @@
           },
           "edge_ngram_with_diacritic": {
             "type": "text",
-            "analyzer": "edge_ngram_with_diacritic"
+            "analyzer": "edge_ngram_with_diacritic",
+            "search_analyzer": "full_with_diacritic"
           },
           "edge_ngram_without_diacritic": {
             "type": "text",
-            "analyzer": "edge_ngram_without_diacritic"
+            "analyzer": "edge_ngram_without_diacritic",
+            "search_analyzer": "full_without_diacritic"
           },
           "keyword": {
             "type": "icu_collation_keyword",
@@ -200,11 +214,13 @@
       },
       "short_description": {
         "type": "text",
-        "analyzer": "edge_ngram_without_diacritic"
+        "analyzer": "edge_ngram_without_diacritic",
+        "search_analyzer": "full_without_diacritic"
       },
       "description": {
         "type": "text",
-        "analyzer": "edge_ngram_without_diacritic_html"
+        "analyzer": "edge_ngram_without_diacritic_html",
+        "search_analyzer": "full_without_diacritic_html"
       },
       "flags": {
         "type": "integer"
