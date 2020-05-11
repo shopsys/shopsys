@@ -51,6 +51,7 @@ class PromoCodeFormType extends AbstractType
 
         $builder
             ->add('code', TextType::class, [
+                'label' => t('Code'),
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank([
@@ -71,7 +72,7 @@ class PromoCodeFormType extends AbstractType
                     ]),
                 ],
                 'invalid_message' => 'Please enter whole number.',
-                'label' => 'Discount (%)',
+                'label' => t('Discount (%)'),
             ]);
 
         $builder->add('save', SubmitType::class);
