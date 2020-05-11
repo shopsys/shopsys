@@ -11,8 +11,8 @@
 
         {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
             {% block fixed_bar_content %}
-                <a href="{{ url('admin_parameterunit_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
-                {{ form_save(parameterUnit|default(null), form) }}
+                <a href="{{ url('admin_parametervalue_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                {{ form_save(parameterValue|default(null), form) }}
             {% endblock %}
         {% endembed %}
 
