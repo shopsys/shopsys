@@ -25,7 +25,7 @@ class CustomerUserRefreshTokenChain
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser", inversedBy="refreshTokenChain")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $customerUser;
 
