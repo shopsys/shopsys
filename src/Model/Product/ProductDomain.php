@@ -110,6 +110,42 @@ class ProductDomain extends BaseProductDomain
     protected $saleExclusion;
 
     /**
+     * @var bool|null
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $mountingState;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $embeddedAccessories;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $packageNotIncluded;
+
+    /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $packagingUnit;
+
+    /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $countPackages;
+
+    /**
+     * @var float|null
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $totalPackageWeight;
+
+    /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      */
@@ -293,8 +329,6 @@ class ProductDomain extends BaseProductDomain
      */
     public function setFlags(array $flags): void
     {
-        $this->flags = $this->flags;
-
         $this->flags->clear();
         foreach ($flags as $flag) {
             $this->flags->add($flag);
@@ -333,5 +367,101 @@ class ProductDomain extends BaseProductDomain
         }
 
         return $exclusion;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCountPackages(): ?int
+    {
+        return $this->countPackages;
+    }
+
+    /**
+     * @param int|null $countPackages
+     */
+    public function setCountPackages(?int $countPackages): void
+    {
+        $this->countPackages = $countPackages;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMountingState(): ?bool
+    {
+        return $this->mountingState;
+    }
+
+    /**
+     * @param bool $mountingState
+     */
+    public function setMountingState(?bool $mountingState): void
+    {
+        $this->mountingState = $mountingState;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmbeddedAccessories(): ?string
+    {
+        return $this->embeddedAccessories;
+    }
+
+    /**
+     * @param string|null $embeddedAccessories
+     */
+    public function setEmbeddedAccessories(?string $embeddedAccessories): void
+    {
+        $this->embeddedAccessories = $embeddedAccessories;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPackageNotIncluded(): ?string
+    {
+        return $this->packageNotIncluded;
+    }
+
+    /**
+     * @param string|null $packageNotIncluded
+     */
+    public function setPackageNotIncluded(?string $packageNotIncluded): void
+    {
+        $this->packageNotIncluded = $packageNotIncluded;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPackagingUnit(): ?int
+    {
+        return $this->packagingUnit;
+    }
+
+    /**
+     * @param int|null $packagingUnit
+     */
+    public function setPackagingUnit(?int $packagingUnit): void
+    {
+        $this->packagingUnit = $packagingUnit;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getTotalPackageWeight(): ?float
+    {
+        return $this->totalPackageWeight;
+    }
+
+    /**
+     * @param float|null $totalPackageWeight
+     */
+    public function setTotalPackageWeight(?float $totalPackageWeight): void
+    {
+        $this->totalPackageWeight = $totalPackageWeight;
     }
 }

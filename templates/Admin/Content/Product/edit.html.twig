@@ -1,0 +1,8 @@
+{% extends '@ShopsysFramework/Admin/Content/Product/edit.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <h3 style="padding: 15px 0;font-size: 20px;">{{ 'Detailní informace o balení produktu:'|trans }} {{ product.name }}</h3>
+    {{ productPackageGridView.render() }}
+{% endblock %}

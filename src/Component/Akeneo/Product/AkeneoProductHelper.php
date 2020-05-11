@@ -9,6 +9,11 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class AkeneoProductHelper
 {
+    public const TYPE_INT = 'int';
+    public const TYPE_FLOAT = 'float';
+    public const TYPE_DOUBLE = 'double';
+    public const TYPE_BOOLEAN = 'bool';
+
     /**
      * @param array|null $arrayData
      * @return string|null
@@ -127,5 +132,51 @@ class AkeneoProductHelper
         }
 
         return $productData;
+    }
+
+    /**
+     * @param array $productData
+     * @param mixed|null $akeneoData
+     * @return array
+     */
+    public static function mapDataToAllDomains(array $productData, $akeneoData): array
+    {
+        foreach ($productData as $key => $value) {
+            $productData[$key] = null;
+        }
+
+        if ($akeneoData === null) {
+            return $productData;
+        }
+
+        foreach ($productData as $key => $value) {
+            $productData[$key] = $akeneoData;
+        }
+
+        return $productData;
+    }
+
+    /**
+     * @param string|null $data
+     * @param string $type
+     * @return mixed
+     */
+    public static function convertStingToType(?string $data, string $type)
+    {
+        if ($data === null) {
+            return $data;
+        }
+
+        switch ($type) {
+            case self::TYPE_INT:
+                return (int)$data;
+            case self::TYPE_FLOAT:
+            case self::TYPE_DOUBLE:
+                return (float)$data;
+            case self::TYPE_BOOLEAN:
+                return filter_var($data, FILTER_VALIDATE_BOOLEAN);
+            default:
+                return $data;
+        }
     }
 }

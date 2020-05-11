@@ -11,6 +11,7 @@ use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
+use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\ProductFacade;
 use App\Model\Product\Series\ProductSeriesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -126,6 +127,11 @@ class ProductController extends FrontBaseController
     private $productSeriesFacade;
 
     /**
+     * @var \App\Model\Product\Package\ProductPackageFacade
+     */
+    private $productPackageFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Component\Domain\Domain $domain
@@ -144,6 +150,7 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
      * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
+     * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -163,7 +170,8 @@ class ProductController extends FrontBaseController
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         SeoSettingFacade $seoSettingFacade,
         CategoryParameterFacade $categoryParameterFacade,
-        ProductSeriesFacade $productSeriesFacade
+        ProductSeriesFacade $productSeriesFacade,
+        ProductPackageFacade $productPackageFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -183,6 +191,7 @@ class ProductController extends FrontBaseController
         $this->seoSettingFacade = $seoSettingFacade;
         $this->categoryParameterFacade = $categoryParameterFacade;
         $this->productSeriesFacade = $productSeriesFacade;
+        $this->productPackageFacade = $productPackageFacade;
     }
 
     /**
@@ -226,6 +235,8 @@ class ProductController extends FrontBaseController
             $productSeriesProducts[$productSeries->getId()] = $this->listedProductViewFacade->getAvailableProductsByProductSeries($productSeries);
         }
 
+        $productPackages = $this->productPackageFacade->getProductPackagesByProduct($product);
+
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $product,
             'accessories' => $accessories,
@@ -239,6 +250,7 @@ class ProductController extends FrontBaseController
             'paginatedSimilarProducts' => $paginatedSimilarProducts,
             'productSeriesList' => $productSeriesList,
             'productSeriesProductsIndexedByProductSeries' => $productSeriesProducts,
+            'productPackages' => $productPackages,
         ]);
     }
 

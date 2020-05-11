@@ -9,6 +9,7 @@ use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Component\Image\Image;
 use App\Component\Image\ImageFacade;
 use App\Component\Setting\Setting;
+use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
@@ -101,6 +102,11 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     private $akeneoImportProductSeriesFacade;
 
     /**
+     * @var \App\Model\Product\Package\ProductPackageFacade
+     */
+    private $productPackageFacade;
+
+    /**
      * @var \App\Component\Image\ImageFacade
      */
     private $imageFacade;
@@ -126,6 +132,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
+     * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
@@ -142,7 +149,8 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         ProductSeriesFacade $productSeriesFacade,
         AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade,
         ImageFacade $imageFacade,
-        FileUpload $fileUpload
+        FileUpload $fileUpload,
+        ProductPackageFacade $productPackageFacade
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
@@ -160,6 +168,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->akeneoImportProductSeriesFacade = $akeneoImportProductSeriesFacade;
         $this->imageFacade = $imageFacade;
         $this->fileUpload = $fileUpload;
+        $this->productPackageFacade = $productPackageFacade;
     }
 
     /**
@@ -230,6 +239,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->setProductForImportFiles($product, $akeneoProductData);
         $this->setRelationProductSeriesWithProduct($product, $akeneoProductData);
         $this->setProductImages($product, $akeneoProductData);
+        $this->setProductPackageDetailInformationFormProduct($product, $akeneoProductData);
 
         $this->setLastUpdatedProduct($akeneoProductData['updated']);
     }
@@ -271,6 +281,34 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     {
         $productFilesData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductFilesData($akeneoProductData, $product);
         $this->productFacade->editProductFileAttributes($product, $productFilesData);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoProductData
+     */
+    private function setProductPackageDetailInformationFormProduct(Product $product, array $akeneoProductData): void
+    {
+        $dontDropProductPositions = [];
+
+        $productPackageDataList = $this->productTransferAkeneoMapper->mapAkeneoProductPackageDetailInformationToProductPackageDataList($akeneoProductData);
+        foreach ($productPackageDataList as $productPackageData) {
+            $this->productPackageFacade->createOrEdit($productPackageData, $product);
+            $dontDropProductPositions[] = $productPackageData->position;
+        }
+
+        $productPackages = $this->productPackageFacade->getProductPackagesByProduct($product);
+        $canFlush = false;
+        foreach ($productPackages as $productPackage) {
+            if (in_array($productPackage->getPosition(), $dontDropProductPositions, true) === false) {
+                $this->em->remove($productPackage);
+                $canFlush = true;
+            }
+        }
+
+        if ($canFlush) {
+            $this->em->flush();
+        }
     }
 
     /**

@@ -177,6 +177,12 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->productType[$domainId] = null;
             $productData->flags[$domainId] = [];
             $productData->saleExclusion[$domainId] = false;
+            $productData->mountingState[$domainId] = null;
+            $productData->countPackages[$domainId] = null;
+            $productData->packageNotIncluded[$domainId] = null;
+            $productData->packagingUnit[$domainId] = null;
+            $productData->totalPackageWeight[$domainId] = null;
+            $productData->embeddedAccessories[$domainId] = null;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -221,6 +227,12 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->productType[$domainId] = $product->getProductType($domainId);
             $productData->flags[$domainId] = $product->getFlagsForDomain($domainId);
             $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
+            $productData->mountingState[$domainId] = $product->isMountingState($domainId);
+            $productData->countPackages[$domainId] = $product->getCountPackages($domainId);
+            $productData->packageNotIncluded[$domainId] = $product->getPackageNotIncluded($domainId);
+            $productData->packagingUnit[$domainId] = $product->getPackagingUnit($domainId);
+            $productData->totalPackageWeight[$domainId] = $product->getTotalPackageWeight($domainId);
+            $productData->embeddedAccessories[$domainId] = $product->getEmbeddedAccessories($domainId);
 
             $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }

@@ -350,6 +350,10 @@
                     </div>
                 {% endif %}
 
+
+                {% include 'Front/Content/Product/productPackageInformation.html.twig' with {product: product, productPackages: productPackages, doamin: domain } %}
+
+
                 {% if downloadFiles|length > 0 %}
                     <div class="box-detail download_files">
                         <div class="h3" id="download_files">{{ 'Ke stažení'|trans }}</div>
