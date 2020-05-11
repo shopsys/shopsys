@@ -132,7 +132,9 @@ class VolumeDriver extends Driver
                 foreach ($this->scandirCE($this->decode($stat['hash'])) as $p) {
                     elFinder::extendTimeLimit(30);
                     $name = $this->basenameCE($p);
-                    $name != '.' && $name != '..' && $this->rmTmb($this->stat($p));
+                    if ($name !== '.' && $name !== '..') {
+                        $this->rmTmb($this->stat($p));
+                    }
                 }
             } elseif (!empty($stat['tmb']) && $stat['tmb'] != '1') {
                 $thumbnailPath = $this->createThumbnailPath(rawurldecode($stat['tmb']));

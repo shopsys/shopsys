@@ -37,7 +37,7 @@ class FrontendApiUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        new NotImplementedException('Method "loadUserByUsername" is not implement. Use method  "loadUserByToken"');
+        throw new NotImplementedException('Method "loadUserByUsername" is not implement. Use method  "loadUserByToken"');
     }
 
     /**
@@ -45,7 +45,7 @@ class FrontendApiUserProvider implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
-        new NotImplementedException('Method "refreshUser" is not implement.');
+        throw new NotImplementedException('Method "refreshUser" is not implement.');
     }
 
     /**
