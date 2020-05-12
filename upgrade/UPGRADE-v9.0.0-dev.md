@@ -1567,7 +1567,7 @@ There you can find links to upgrade notes for other versions too.
 - add support for Safari ([#1811](https://github.com/shopsys/shopsys/pull/1811))
     - see #project-base-diff to update your project
 
-- add LiveRload for Webpack ([#1807](https://github.com/shopsys/shopsys/pull/1807))
+- add LiveReload for Webpack ([#1807](https://github.com/shopsys/shopsys/pull/1807))
     - see #project-base-diff to update your project
 
 If you have custom frontend you can skip these tasks:
