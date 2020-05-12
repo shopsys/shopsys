@@ -43,8 +43,6 @@ class FriendlyUrlFactory extends BaseFriendlyUrlFactory implements FriendlyUrlFa
             return null;
         }
 
-        $slug .= '/';
-
         return $this->create($routeName, $entityId, $domainId, $slug);
     }
 }
