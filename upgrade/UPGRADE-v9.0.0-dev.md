@@ -289,6 +289,116 @@ There you can find links to upgrade notes for other versions too.
 - contact form has been moved to separate page. You can find the whole new setting in administration (`/admin/contact-form/`), where you can edit main text for contact form. ([#1522](https://github.com/shopsys/shopsys/pull/1522))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/ab412377d40d671db46607a5d5f7b13221e6ba71) to update your project
 
+- javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545), [#1645](https://github.com/shopsys/shopsys/pull/1645))
+    - please read [upgrade instruction for webpack](./upgrade-instruction-for-webpack.md)
+
+- update FpJsFormValidator bundle ([#1664](https://github.com/shopsys/shopsys/pull/1664))
+    - update your `composer.json`
+      ```diff
+            "require": {
+      -         "fp/jsformvalidator-bundle": "^1.5.1",
+      +         "fp/jsformvalidator-bundle": "^1.6.1",
+            }
+      ```
+    - update your `.eslintignore`
+      ```diff
+        /assets/js/commands/translations/mocks
+      + /assets/js/bundles
+      ```
+    - update your `.gitignore`
+      ```diff
+        /assets/js/translations.json
+      + /assets/js/bundles
+      ```
+
+- fix not working popup window on single image ([#1630](https://github.com/shopsys/shopsys/pull/1630))
+    - add missing javascript for popup single image for class `js-popup-image`, see [project-base diff](https://github.com/shopsys/project-base/commit/ad7a0a20f094d5e936e4bb503946453c5c89ed18)
+
+- css and other assets are managed by webpack ([#1725](https://github.com/shopsys/shopsys/pull/1725))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee) to update your project
+    - see also [project-base diff](https://github.com/shopsys/project-base/commit/2b195ae29754e03dca297dad6461cee5693eca79) from [#1781](https://github.com/shopsys/shopsys/pull/1781)
+    - move content from `src/resources/styles` to `assets/styles`
+    - move content from `src/resources/svg` to `assets/public/frontend/svg`
+    - move content from `web/assets/frontend/fonts` to `assets/public/frontend/fonts`
+    - move content from `web/assets/frontend/images` to `assets/public/frontend/images`
+    - move content from `web/assets/admin/fonts` to `assets/public/admin/fonts`
+    - move content from `web/assets/admin/images` to `assets/public/admin/images`
+    - move content from `web/assets/styleguide/images` to `assets/public/styleguide/images`
+    - you should remove the `grunt` target from your `build.xml` file if present
+    - add `styles_directory` into your domains config (you can get inspired in [project-base/config/domains.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml))
+    - change all `asset` function call in your templates
+      ```diff
+        - asset('assets/**/*.*')
+        + asset('public/**/*.*')
+      ```
+    - replace `<link>` with `getCssVersion()` function call from your templates by tag `{{ encore_entry_link_tags('app') }}` see diffs [base.html.twig](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee#diff-1afd3913fe3a88a180385025be96ba0d) and [styleguide.html.twig](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee#diff-6617f8f8be6642a73c0c1a6bd3005d6e)
+      - but there is no 'media="print"' parameter to set link attribute
+      - so we need to upgrade our `assets/styles/frontend/*/print/main.less` and wrap all content to media query `@media print { ... your content ... }`
+    - In case you are using google fonts, we need to download font files and avoid for using `@import` from external sources. In future we can make some magics in load time performance using FontLoader etc.
+        - Example in `variables.less`
+          ```css
+            @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext');
+          ```
+        - open link in your browser and you will see a lot of `@font-face definitions`
+        - copy these you want to use:
+            ```css
+                /* latin-ext */
+                @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 400;
+                  font-display: swap;
+                  src: local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+                /* latin-ext */
+                @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-display: swap;
+                  src: local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+            ```
+        - replace previous `@import` with it
+        - open all link `https://fonts.gstatic.com/...` in your browser and it will download font file and save them to `assets/public/frontend/fonts`. We are using [fontName][fontWeigh].[extension] filename syntax.
+        - change urls in `variables.less` to:
+            ```css
+              @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 400;
+                  font-display: swap;
+                  src: local('Montserrat Regular'), local('Montserrat-Regular'), url(@{path-font}/Montserrat400.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+                /* latin-ext */
+                @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-display: swap;
+                  src: local('Montserrat Bold'), local('Montserrat-Bold'), url(@{path-font}/Montserrat700.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+            ```
+        - now you can rebuild you less files `npm run dev` and you should see your font on frontend page
+    - use full of the webpack, enjoy!
+
+- add support for Safari ([#1811](https://github.com/shopsys/shopsys/pull/1811))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/4aea8de5cfaaed17d9efb814df9686c6402e67a6) to update your project
+
+- add LiveReload for Webpack ([#1807](https://github.com/shopsys/shopsys/pull/1807))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/404d00c26df1d9a35bf1836fc086381d1bf35ca6) to update your project
+
+- hide variant table header when product is denied for sale (you can skip this if you have custom frontend) ([#1634](https://github.com/shopsys/shopsys/pull/1634))
+    - add new condition at product detail file: `templates/Front/Content/Product/detail.html.twig`
+        ```diff
+        -   {% if product.isMainVariant %}
+        +   {% if product.isMainVariant and not product.calculatedSellingDenied %}
+        ```
+
 - vats can be created and managed per domains ([#1498](https://github.com/shopsys/shopsys/pull/1498))
     - please read [upgrade instruction for vats per domain](https://github.com/shopsys/shopsys/blob/master/upgrade/upgrade-instruction-for-vats-per-domain.md)
 
@@ -1435,23 +1545,20 @@ There you can find links to upgrade notes for other versions too.
 - css and other assets are managed by webpack ([#1725](https://github.com/shopsys/shopsys/pull/1725))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee) to update your project
     - see also [project-base diff](https://github.com/shopsys/project-base/commit/2b195ae29754e03dca297dad6461cee5693eca79) from [#1781](https://github.com/shopsys/shopsys/pull/1781)
-    - move content from `src/resources/styles/front` to `assets/styles/frontend`
-    - move content from `src/resources/styles/admin` to `assets/styles/admin`
+    - move content from `src/resources/styles` to `assets/styles`
     - move content from `src/resources/svg` to `assets/public/frontend/svg`
     - move content from `web/assets/frontend/fonts` to `assets/public/frontend/fonts`
     - move content from `web/assets/frontend/images` to `assets/public/frontend/images`
     - move content from `web/assets/admin/fonts` to `assets/public/admin/fonts`
     - move content from `web/assets/admin/images` to `assets/public/admin/images`
     - move content from `web/assets/styleguide/images` to `assets/public/styleguide/images`
-    - you should remove the `grunt` target from your `build.xml` file
-    - add `styles_directory` into your domains config (you can get inspired in [project-base/config/domains.yaml  ](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml))
+    - add `styles_directory` into your domains config (you can get inspired in [project-base/config/domains.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml))
     - change all `asset` function call in your templates
       ```diff
         - asset('assets/**/*.*')
         + asset('public/**/*.*')
       ```
-    - remove `getCssVersion()` function call from your templates
-    - print styles files are now included by tag `{{ encore_entry_link_tags('app') }}`
+    - replace `<link>` with `getCssVersion()` function call from your templates by tag `{{ encore_entry_link_tags('app') }}` see diffs [base.html.twig](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee#diff-1afd3913fe3a88a180385025be96ba0d) and [styleguide.html.twig](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee#diff-6617f8f8be6642a73c0c1a6bd3005d6e)
       - but there is no 'media="print"' parameter to set link attribute
       - so we need to upgrade our `assets/styles/frontend/*/print/main.less` and wrap all content to media query `@media print { ... your content ... }`
     - In case you are using google fonts, we need to download font files and avoid for using `@import` from external sources. In future we can make some magics in load time performance using FontLoader etc.
