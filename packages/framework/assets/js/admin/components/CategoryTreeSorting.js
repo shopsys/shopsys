@@ -1,6 +1,6 @@
-import 'jquery-ui/sortable';
 import 'jquery-ui/ui/widgets/mouse';
 import 'jquery-ui-touch-punch';
+import 'jquery-ui-nested-sortable';
 import Ajax from '../../common/utils/Ajax';
 import FormChangeInfo from './FormChangeInfo';
 import Register from '../../common/utils/Register';
@@ -14,7 +14,7 @@ export default class CategoryTreeSorting {
         this.$saveButton = $saveButton;
 
         const _this = this;
-        this.$rootTree.sortable({
+        this.$rootTree.nestedSortable({
             listType: 'ul',
             handle: '.js-category-tree-item-handle',
             items: '.js-category-tree-item',
@@ -65,7 +65,7 @@ export default class CategoryTreeSorting {
     }
 
     getCategoriesOrderingData () {
-        const data = this.$rootTree.sortable(
+        const data = this.$rootTree.nestedSortable(
             'toArray',
             {
                 excludeRoot: true,

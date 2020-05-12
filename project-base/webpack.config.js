@@ -114,6 +114,7 @@ config.resolve.alias = {
     'framework': '@shopsys/framework/js',
     'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
     'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui')),
-    'bazinga-translator': path.resolve(path.join(__dirname, 'node_modules', 'bazinga-translator'))
+    'bazinga-translator': path.resolve(path.join(__dirname, 'node_modules', 'bazinga-translator')),
+    'jquery-ui-nested-sortable': path.resolve(path.join(__dirname, 'node_modules', 'nestedSortable'))
 };
 module.exports = config;
