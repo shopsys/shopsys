@@ -84,6 +84,14 @@
             }
         }
 
+        input[name="product_form[imageGroup][images][uploadedFilenames][]"],
+        input[name="category_form[image][image][uploadedFilenames][]"],
+        input[name="transport_form[image][image][uploadedFilenames][]"],
+        input[name="payment_form[image][image][uploadedFilenames][]"]
+        {
+            display: none;
+        }
+
         img {
             position: absolute;
             top: 0;
@@ -160,6 +168,10 @@
 
             span {
                 display: inline-block;
+            }
+
+            &__show {
+            	display: block;
             }
         }
 
