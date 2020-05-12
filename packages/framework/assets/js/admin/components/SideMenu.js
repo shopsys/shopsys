@@ -61,6 +61,8 @@ export default class SideMenu {
             $('body').toggleClass('menu-collapsed');
             if (!this.$webPanel.hasClass('active-menu')) {
                 this.$webPanel.removeClass('open');
+                this.$sideMenu.find(jsSideMenuItemSelector).removeClass('open');
+                this.$sideMenu.find(jsSideMenuItemSelector + ' ul').addClass('hidden');
             } else {
                 this.$webPanel.addClass('open');
             }
