@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -217,5 +219,18 @@ class FriendlyUrlFacade
         $domainConfig = $this->domain->getDomainConfigById($friendlyUrl->getDomainId());
 
         return $domainConfig->getUrl() . '/' . $friendlyUrl->getSlug();
+    }
+
+    /**
+     * @param string $routeName
+     * @param int $entityId
+     */
+    public function removeFriendlyUrlsForAllDomains(string $routeName, int $entityId): void
+    {
+        foreach ($this->getAllByRouteNameAndEntityId($routeName, $entityId) as $friendlyUrl) {
+            $this->em->remove($friendlyUrl);
+        }
+
+        $this->em->flush();
     }
 }

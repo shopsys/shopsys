@@ -142,12 +142,12 @@ class BrandFacade
     /**
      * @param int $brandId
      */
-    public function deleteById($brandId)
+    public function deleteById(int $brandId): void
     {
         $brand = $this->brandRepository->getById($brandId);
         $this->em->remove($brand);
-
         $this->dispatchBrandEvent($brand, BrandEvent::DELETE);
+        $this->friendlyUrlFacade->removeFriendlyUrlsForAllDomains('front_brand_detail', $brandId);
 
         $this->em->flush();
     }

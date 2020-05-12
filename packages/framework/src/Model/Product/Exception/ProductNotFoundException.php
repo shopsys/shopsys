@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Exception;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 
-class ProductNotFoundException extends NotFoundHttpException implements ProductException
+class ProductNotFoundException extends GoneHttpException implements ProductException
 {
 }

@@ -50,7 +50,7 @@ class BackendApiDeleteProductTest extends OauthTestCase
     {
         $response = $this->runOauthRequest('DELETE', sprintf('/api/v1/products/%s', Uuid::uuid4()->toString()));
 
-        $this->assertSame(404, $response->getStatusCode());
+        $this->assertSame(410, $response->getStatusCode());
     }
 
     public function testCannotDeleteVariant(): void

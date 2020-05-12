@@ -178,6 +178,7 @@ class CategoryFacade
         $this->pluginCrudExtensionFacade->removeAllData('category', $category->getId());
 
         $this->em->remove($category);
+        $this->friendlyUrlFacade->removeFriendlyUrlsForAllDomains('front_product_list', $category->getId());
         $this->em->flush();
     }
 
