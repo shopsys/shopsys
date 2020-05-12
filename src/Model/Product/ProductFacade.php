@@ -59,10 +59,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @method \App\Model\Product\Product getSellableByUuid(string $uuid, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  */
 class ProductFacade extends BaseProductFacade
 {
     public const ASSETS_FILE_TYPE = '.pdf';
+    public const PRODUCT_PATH_PREFIX = 'produkt';
 
     /**
      * @var \App\Model\Stock\StockFacade
@@ -221,7 +223,7 @@ class ProductFacade extends BaseProductFacade
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullnames());
+        $this->storeUrls($product);
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
@@ -238,6 +240,26 @@ class ProductFacade extends BaseProductFacade
         }
 
         return $product;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     */
+    private function storeUrls(Product $product): void
+    {
+        foreach ($this->domain->getAll() as $domainConfig) {
+            if ($product->getName($domainConfig->getLocale()) !== null) {
+                $productUriName = $product->getFullname($domainConfig->getLocale()) . '-' . $product->getCatnum();
+
+                $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                    'front_product_detail',
+                    $product->getId(),
+                    $productUriName,
+                    $domainConfig->getId(),
+                    [self::PRODUCT_PATH_PREFIX]
+                );
+            }
+        }
     }
 
     /**
@@ -269,7 +291,7 @@ class ProductFacade extends BaseProductFacade
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
         $this->imageFacade->manageImages($product, $productData->images);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
+        $this->storeUrls($product);
 
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();

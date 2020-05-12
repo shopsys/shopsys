@@ -59,6 +59,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'packagingUnit',
         'countPackages',
         'totalPackageWeight',
+        'urls',
     ];
 
     /**
