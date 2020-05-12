@@ -965,7 +965,7 @@ There you can find links to upgrade notes for other versions too.
 
 - fix functional tests for single domain usage ([#1682](https://github.com/shopsys/shopsys/pull/1682))
     - if you do not plan use your project configured with single domain you may skip this
-    - add method following method into `tests/App/Functional/Model/Order/OrderTransportAndPaymentTest.php`, `tests/App/Functional/Model/Payment/IndependentPaymentVisibilityCalculationTest.php`, `tests/App/Functional/Model/Transport/IndependentTransportVisibilityCalculationTest.php`
+    - add following method into `tests/App/Functional/Model/Order/OrderTransportAndPaymentTest.php`, `tests/App/Functional/Model/Payment/IndependentPaymentVisibilityCalculationTest.php`, `tests/App/Functional/Model/Transport/IndependentTransportVisibilityCalculationTest.php`
 
         ```php
         /**
