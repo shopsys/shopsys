@@ -14,4 +14,4 @@ export default function loadTranslations () {
     });
 }
 
-(new Register()).registerCallback(loadTranslations);
+(new Register()).registerCallback(loadTranslations, 200);

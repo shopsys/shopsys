@@ -1431,6 +1431,9 @@ There you can find links to upgrade notes for other versions too.
             + public function deleteById(int $brandId): void
             ```
 
+- fix untranslated texts in admin ([#1841](https://github.com/shopsys/shopsys/pull/1841))
+    - see #project-base-diff to update your project
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))

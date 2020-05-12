@@ -21,7 +21,10 @@ class CustomerUserCommunicationFormType extends AbstractType
         ]);
 
         $builderSettingsGroup
-            ->add('content', CKEditorType::class, ['required' => false]);
+            ->add('content', CKEditorType::class, [
+                'label' => t('Content'),
+                'required' => false,
+            ]);
 
         $builder
             ->add($builderSettingsGroup)
