@@ -133,7 +133,7 @@ There you can find links to upgrade notes for other versions too.
     - see [project-base diff](https://github.com/shopsys/project-base/commit/e3adc0c31094b47aca03389ef4fa266977edab25) to update your project
 
 - stop using symfony/web-server-bundle ([#1817](https://github.com/shopsys/shopsys/pull/1817)
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/0a47cac6590ee49ad994c082543e65d979818ad4) to update your project
     - command `php bin/console shopsys:server:run` (class `Shopsys\FrameworkBundle\Command\ServerRunForDomainCommand`) was removed
     - command `php bin/console server:start` (class `Shopsys\FrameworkBundle\Command\ServerStartWithCustomRouterCommand`) was removed
     - command `php bin/console server:run` (class `Shopsys\FrameworkBundle\Command\ServerRunWithCustomRouterCommand`) was removed
@@ -146,7 +146,7 @@ There you can find links to upgrade notes for other versions too.
     - if you are ok with both previous warnings, update your files using [project-base diff](https://github.com/shopsys/project-base/commit/09517e6e41cf4b448b12730a6e3a3753d09c88a3)
 
 - clear cache before any other commands in composer and after docker image is built ([#1820](https://github.com/shopsys/shopsys/pull/1820))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/c1e36bc56e902186c5116119c33700feeba8e0f5) to update your project
 
 ### Application
 
@@ -1362,25 +1362,25 @@ There you can find links to upgrade notes for other versions too.
     - see [project-base diff](https://github.com/shopsys/project-base/commit/f1a4c5036a1f3eab202524d2cdc6fa29851468a8) to update your project
     
 - add compatibility for edge ([#1804](https://github.com/shopsys/shopsys/pull/1804))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/aa314e15b700a8af0c2cc097defcdca46acceeb7) to update your project
     
 - add protection before double submit forms ([#1800](https://github.com/shopsys/shopsys/pull/1800))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/702146d7779f5ce549af65895135c7f85ab39dc6) to update your project
 
 - refactored `SelectToggle` component ([#1803](https://github.com/shopsys/shopsys/pull/1803))
     - `ToggleOption` js class has been removed, update your code appropriately
 
 - remove deprecated methods from your project ([#1801](https://github.com/shopsys/shopsys/pull/1801))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/a9dd272a3831beadecfc5da9f061898a3a9e5205) to update your project
     
 - remove subscription newsletter form from error pages ([#1819](https://github.com/shopsys/shopsys/pull/1819))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/69c1b83b7a511c7725d57581915ddb2dea2e0183) to update your project
 
 - fix validation of parameters uniqueness ([#1822](https://github.com/shopsys/shopsys/pull/1822))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/8d339e65ab748d36ecbf70c9204be54ac6d24772) to update your project
 
 - split error page templates to allow to render new 410 error response ([#1829](https://github.com/shopsys/shopsys/pull/1829))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/712311632006e83f9dfe5ec2924e6a9c512636bd) to update your project
     - exception `ProductNotFoundException` has new parent. The original parent `NotFoundHttpException` was replaced by `GoneHttpException`           
           
 - remove friendly url slug after remove category or brand ([#1829](https://github.com/shopsys/shopsys/pull/1829))
@@ -1614,7 +1614,7 @@ There you can find links to upgrade notes for other versions too.
     - use full of the webpack, enjoy!
 
 - add support for Safari ([#1811](https://github.com/shopsys/shopsys/pull/1811))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/4aea8de5cfaaed17d9efb814df9686c6402e67a6) to update your project
 
 - add LiveReload for Webpack ([#1807](https://github.com/shopsys/shopsys/pull/1807))
     - see #project-base-diff to update your project
