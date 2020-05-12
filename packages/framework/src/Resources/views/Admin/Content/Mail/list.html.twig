@@ -1,0 +1,10 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Email templates settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Email templates settings'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+
+    {{ gridView.render() }}
+{% endblock %}

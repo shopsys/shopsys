@@ -1,35 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Form\Admin\Mail\AllMailTemplatesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType;
-use Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail;
-use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail;
-use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
+use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory;
+use Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration;
+use Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade;
-use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
-use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail;
-use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MailController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail
-     */
-    protected $registrationMail;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail
-     */
-    protected $resetPasswordMail;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
      */
@@ -46,216 +35,100 @@ class MailController extends AdminBaseController
     protected $mailSettingFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail
+     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
      */
-    protected $orderMail;
+    protected $breadcrumbOverrider;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
+     * @var \Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory
      */
-    protected $orderStatusFacade;
+    protected $mailTemplateGridFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail
+     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration
      */
-    protected $personalDataAccessMail;
+    protected $mailTemplateConfiguration;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail
+     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory
      */
-    protected $personalDataExportMail;
+    protected $mailTemplateDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail $resetPasswordMail
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail $orderMail
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail $registrationMail
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail $personalDataAccessMail
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail $personalDataExportMail
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory $mailTemplateGridFactory
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration $mailTemplateConfiguration
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
      */
     public function __construct(
-        ResetPasswordMail $resetPasswordMail,
-        OrderMail $orderMail,
-        RegistrationMail $registrationMail,
         AdminDomainTabsFacade $adminDomainTabsFacade,
         MailTemplateFacade $mailTemplateFacade,
         MailSettingFacade $mailSettingFacade,
-        OrderStatusFacade $orderStatusFacade,
-        PersonalDataAccessMail $personalDataAccessMail,
-        PersonalDataExportMail $personalDataExportMail
+        BreadcrumbOverrider $breadcrumbOverrider,
+        MailTemplateGridFactory $mailTemplateGridFactory,
+        MailTemplateConfiguration $mailTemplateConfiguration,
+        MailTemplateDataFactory $mailTemplateDataFactory
     ) {
-        $this->resetPasswordMail = $resetPasswordMail;
-        $this->orderMail = $orderMail;
-        $this->registrationMail = $registrationMail;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
         $this->mailTemplateFacade = $mailTemplateFacade;
         $this->mailSettingFacade = $mailSettingFacade;
-        $this->orderStatusFacade = $orderStatusFacade;
-        $this->personalDataAccessMail = $personalDataAccessMail;
-        $this->personalDataExportMail = $personalDataExportMail;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getOrderStatusVariablesLabels()
-    {
-        return [
-            OrderMail::VARIABLE_NUMBER => t('Order number'),
-            OrderMail::VARIABLE_DATE => t('Date and time of order creation'),
-            OrderMail::VARIABLE_URL => t('E-shop URL address'),
-            OrderMail::VARIABLE_TRANSPORT => t('Chosen shipping name'),
-            OrderMail::VARIABLE_PAYMENT => t('Chosen payment name'),
-            OrderMail::VARIABLE_TOTAL_PRICE => t('Total order price (including VAT)'),
-            OrderMail::VARIABLE_BILLING_ADDRESS => t(
-                'Billing address - name, last name, company, company number, tax number and billing address'
-            ),
-            OrderMail::VARIABLE_DELIVERY_ADDRESS => t('Delivery address'),
-            OrderMail::VARIABLE_NOTE => t('Note'),
-            OrderMail::VARIABLE_PRODUCTS => t(
-                'List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)'
-            ),
-            OrderMail::VARIABLE_ORDER_DETAIL_URL => t('Order detail URL address'),
-            OrderMail::VARIABLE_TRANSPORT_INSTRUCTIONS => t('Shipping instructions'),
-            OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS => t('Payment instructions'),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getRegistrationVariablesLabels()
-    {
-        return [
-            RegistrationMail::VARIABLE_FIRST_NAME => t('First name'),
-            RegistrationMail::VARIABLE_LAST_NAME => t('Last name'),
-            RegistrationMail::VARIABLE_EMAIL => t('Email'),
-            RegistrationMail::VARIABLE_URL => t('E-shop URL address'),
-            RegistrationMail::VARIABLE_LOGIN_PAGE => t('Link to the log in page'),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getResetPasswordVariablesLabels()
-    {
-        return [
-            ResetPasswordMail::VARIABLE_EMAIL => t('Email'),
-            ResetPasswordMail::VARIABLE_NEW_PASSWORD_URL => t('New password settings URL address'),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPersonalDataAccessVariablesLabels()
-    {
-        return [
-            PersonalDataAccessMail::VARIABLE_DOMAIN => t('E-shop name'),
-            PersonalDataAccessMail::VARIABLE_EMAIL => t('Email'),
-            PersonalDataAccessMail::VARIABLE_URL => t('E-shop URL address'),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPersonalExportVariablesLabels()
-    {
-        return [
-            PersonalDataExportMail::VARIABLE_DOMAIN => t('E-shop name'),
-            PersonalDataExportMail::VARIABLE_EMAIL => t('Email'),
-            PersonalDataExportMail::VARIABLE_URL => t('E-shop URL address'),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getTemplateParameters()
-    {
-        $orderStatusesTemplateVariables = $this->orderMail->getTemplateVariables();
-        $registrationTemplateVariables = $this->registrationMail->getTemplateVariables();
-        $resetPasswordTemplateVariables = array_unique(array_merge(
-            $this->resetPasswordMail->getBodyVariables(),
-            $this->resetPasswordMail->getSubjectVariables()
-        ));
-        $resetPasswordTemplateRequiredVariables = array_unique(array_merge(
-            $this->resetPasswordMail->getRequiredBodyVariables(),
-            $this->resetPasswordMail->getRequiredSubjectVariables()
-        ));
-
-        $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
-        $orderStatusMailTemplatesByOrderStatusId = $this->mailTemplateFacade->getOrderStatusMailTemplatesIndexedByOrderStatusId(
-            $selectedDomainId
-        );
-        $registrationMailTemplate = $this->mailTemplateFacade->get(
-            MailTemplate::REGISTRATION_CONFIRM_NAME,
-            $selectedDomainId
-        );
-        $resetPasswordMailTemplate = $this->mailTemplateFacade->get(
-            MailTemplate::RESET_PASSWORD_NAME,
-            $selectedDomainId
-        );
-        $personalDataAccessTemplate = $this->mailTemplateFacade->get(
-            MailTemplate::PERSONAL_DATA_ACCESS_NAME,
-            $selectedDomainId
-        );
-
-        $personalDataExportTemplate = $this->mailTemplateFacade->get(
-            MailTemplate::PERSONAL_DATA_EXPORT_NAME,
-            $selectedDomainId
-        );
-
-        return [
-            'orderStatusesIndexedById' => $this->orderStatusFacade->getAllIndexedById(),
-            'orderStatusMailTemplatesByOrderStatusId' => $orderStatusMailTemplatesByOrderStatusId,
-            'orderStatusVariables' => $orderStatusesTemplateVariables,
-            'orderStatusVariablesLabels' => $this->getOrderStatusVariablesLabels(),
-            'registrationMailTemplate' => $registrationMailTemplate,
-            'registrationVariables' => $registrationTemplateVariables,
-            'registrationVariablesLabels' => $this->getRegistrationVariablesLabels(),
-            'resetPasswordMailTemplate' => $resetPasswordMailTemplate,
-            'resetPasswordRequiredVariables' => $resetPasswordTemplateRequiredVariables,
-            'resetPasswordVariables' => $resetPasswordTemplateVariables,
-            'resetPasswordVariablesLabels' => $this->getResetPasswordVariablesLabels(),
-            'TYPE_NEW' => OrderStatus::TYPE_NEW,
-            'personalDataAccessTemplate' => $personalDataAccessTemplate,
-            'personalDataAccessVariables' => $this->personalDataAccessMail->getSubjectVariables(),
-            'personalDataAccessRequiredVariablesLabels' => $this->personalDataAccessMail->getRequiredBodyVariables(),
-            'personalDataAccessVariablesLabels' => $this->getPersonalDataAccessVariablesLabels(),
-            'personalDataExportTemplate' => $personalDataExportTemplate,
-            'personalDataExportVariables' => $this->personalDataExportMail->getSubjectVariables(),
-            'personalDataExportRequiredVariablesLabels' => $this->personalDataExportMail->getRequiredBodyVariables(),
-            'personalDataExportVariablesLabels' => $this->getPersonalExportVariablesLabels(),
-        ];
+        $this->breadcrumbOverrider = $breadcrumbOverrider;
+        $this->mailTemplateGridFactory = $mailTemplateGridFactory;
+        $this->mailTemplateConfiguration = $mailTemplateConfiguration;
+        $this->mailTemplateDataFactory = $mailTemplateDataFactory;
     }
 
     /**
      * @Route("/mail/template/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function templateAction(Request $request)
+    public function templateAction(): Response
     {
-        $allMailTemplatesData = $this->mailTemplateFacade->getAllMailTemplatesDataByDomainId(
-            $this->adminDomainTabsFacade->getSelectedDomainId()
-        );
+        $grid = $this->mailTemplateGridFactory->create();
 
-        $form = $this->createForm(AllMailTemplatesFormType::class, $allMailTemplatesData);
+        return $this->render('@ShopsysFramework/Admin/Content/Mail/list.html.twig', [
+            'gridView' => $grid->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/mail/edit/{id}", requirements={"id" = "\d+"})
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request, int $id): Response
+    {
+        $mailTemplate = $this->mailTemplateFacade->getById($id);
+        $mailTemplateData = $this->mailTemplateDataFactory->createFromMailTemplate($mailTemplate);
+
+        $mailTemplateVariables = $this->mailTemplateConfiguration->getMailTemplateVariablesBySlug($mailTemplate->getName());
+
+        $form = $this->createForm(
+            MailTemplateFormType::class,
+            $mailTemplateData,
+            [
+                'allow_disable_sending' => ($mailTemplateVariables->getType() === MailTemplateConfiguration::TYPE_ORDER_STATUS),
+                'entity' => $mailTemplate,
+                'required_subject_variables' => $mailTemplateVariables->getRequiredSubjectVariables(),
+                'required_body_variables' => $mailTemplateVariables->getRequiredBodyVariables(),
+            ]
+        );
         $form->handleRequest($request);
-        $allMailTemplatesData->getAllTemplates();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->mailTemplateFacade->saveMailTemplatesData(
-                $allMailTemplatesData->getAllTemplates(),
-                $allMailTemplatesData->domainId
-            );
+            $this->mailTemplateFacade->edit($id, $mailTemplateData);
 
-            $this->addSuccessFlash(t('Email templates settings modified'));
+            $this->addSuccessFlashTwig(
+                t('Email template <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
+                [
+                    'name' => $mailTemplateVariables->getReadableName(),
+                    'url' => $this->generateUrl('admin_mail_edit', ['id' => $mailTemplate->getId()]),
+                ]
+            );
 
             return $this->redirectToRoute('admin_mail_template');
         }
@@ -264,10 +137,18 @@ class MailController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        $templateParameters = $this->getTemplateParameters();
-        $templateParameters['form'] = $form->createView();
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing email template - %name%', ['%name%' => $mailTemplateVariables->getReadableName()]));
 
-        return $this->render('@ShopsysFramework/Admin/Content/Mail/template.html.twig', $templateParameters);
+        return $this->render('@ShopsysFramework/Admin/Content/Mail/edit.html.twig', [
+            'form' => $form->createView(),
+            'mailTemplateName' => $mailTemplateVariables->getReadableName(),
+            'bodyVariables' => $mailTemplateVariables->getBodyVariables(),
+            'subjectVariables' => $mailTemplateVariables->getSubjectVariables(),
+            'requiredBodyVariables' => $mailTemplateVariables->getRequiredBodyVariables(),
+            'requiredSubjectVariables' => $mailTemplateVariables->getRequiredSubjectVariables(),
+            'labeledVariables' => $mailTemplateVariables->getLabeledVariables(),
+            'entity' => $mailTemplate,
+        ]);
     }
 
     /**

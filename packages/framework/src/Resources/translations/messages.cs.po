@@ -178,6 +178,12 @@ msgstr "Množství"
 msgid "Applicable variables"
 msgstr "Použitelné proměnné"
 
+msgid "Applicable variables for Content"
+msgstr "Použitelné proměnné pro obsah"
+
+msgid "Applicable variables for Subject"
+msgstr "Použitelné proměnné pro předmět"
+
 msgid "Area"
 msgstr "Plocha"
 
@@ -216,9 +222,6 @@ msgstr "Články bez umístění"
 
 msgid "Assign to category"
 msgstr "Přiřazení do kategorie"
-
-msgid "Attachment"
-msgstr "Příloha"
 
 msgid "Automatic stock calculation"
 msgstr "Automatické výpočty skladových zásob"
@@ -871,6 +874,12 @@ msgstr "Editace zákazníka - %name%"
 msgid "Editing domain"
 msgstr "Editace domény"
 
+msgid "Editing email template"
+msgstr "Editace e-mailové šablony"
+
+msgid "Editing email template - %name%"
+msgstr "Editace e-mailové šablony - %name%"
+
 msgid "Editing order"
 msgstr "Editace objednávky"
 
@@ -931,14 +940,17 @@ msgstr "Nastavení e-mailů bylo upraveno."
 msgid "Email settings:"
 msgstr "Nastavení e-mailů:"
 
+msgid "Email template"
+msgstr "E-mailová šablona"
+
+msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Byla upravena e-mailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
 msgid "Email templates"
 msgstr "Šablony e-mailů"
 
 msgid "Email templates settings"
 msgstr "Nastavení šablon e-mailů"
-
-msgid "Email templates settings modified"
-msgstr "Nastavení šablony e-mailu bylo upraveno"
 
 msgid "Enable"
 msgstr "Zapnout"
@@ -1462,6 +1474,9 @@ msgstr "Nebyli nalezeni žádní zákazníci."
 msgid "No domains so far."
 msgstr "Doposud nejsou žádné domény."
 
+msgid "No email templates found. You have to create some first."
+msgstr "Nebyly nalezeny žádné e-mailové šablony. Nejprve musíte nějaké vytvořit."
+
 msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Nejprve musíte nějaké vytvořit."
 
@@ -1539,9 +1554,6 @@ msgstr "Po každém spuštění (obvykle každých 5 minut)"
 
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
-
-msgid "Only variables for order number and date and time of order creation can be used in the object."
-msgstr "V předmětu lze použít proměnné pouze pro číslo objednávky a datum a čas vytvoření objednávky"
 
 msgid "Oops! Error occurred"
 msgstr "Jejda! Nastala chyba"
@@ -1894,9 +1906,6 @@ msgstr "Uložit"
 msgid "Save changes"
 msgstr "Uložit změny"
 
-msgid "Save changes in all templates"
-msgstr "Uložit změny ve všech šablonách"
-
 msgid "Save changes in order"
 msgstr "Uložit změny v pořadí"
 
@@ -2028,9 +2037,6 @@ msgstr "Datum vložení"
 
 msgid "Send confirmation email about registration to customer"
 msgstr "Odeslat e-mail s potvrzením registrace zákazníkovi"
-
-msgid "Send confirmation of order receipt"
-msgstr "Zasílat potvrzení o přijetí objednávky"
 
 msgid "Send email about change to this status"
 msgstr "Zasílat e-mail o změně na tento stav"
@@ -2589,4 +2595,3 @@ msgstr "bez umístění"
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
-

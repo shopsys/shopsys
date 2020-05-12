@@ -230,7 +230,8 @@ class SideMenuBuilder
 
         $communicationMenu = $menu->addChild('communication', ['label' => t('Communication with customer')]);
         $communicationMenu->addChild('mail_settings', ['route' => 'admin_mail_setting', 'label' => t('Email settings')]);
-        $communicationMenu->addChild('mail_templates', ['route' => 'admin_mail_template', 'label' => t('Email templates')]);
+        $mailTemplates = $communicationMenu->addChild('mail_templates', ['route' => 'admin_mail_template', 'label' => t('Email templates')]);
+        $mailTemplates->addChild('edit_template', ['route' => 'admin_mail_edit', 'label' => t('Editing email template'), 'display' => false]);
         $communicationMenu->addChild('order_confirmation', ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
 
         $listsMenu = $menu->addChild('lists', ['label' => t('Lists and nomenclatures')]);

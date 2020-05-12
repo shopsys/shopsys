@@ -178,6 +178,12 @@ msgstr ""
 msgid "Applicable variables"
 msgstr ""
 
+msgid "Applicable variables for Content"
+msgstr ""
+
+msgid "Applicable variables for Subject"
+msgstr ""
+
 msgid "Area"
 msgstr ""
 
@@ -215,9 +221,6 @@ msgid "Articles without positioning"
 msgstr ""
 
 msgid "Assign to category"
-msgstr ""
-
-msgid "Attachment"
 msgstr ""
 
 msgid "Automatic stock calculation"
@@ -871,6 +874,12 @@ msgstr ""
 msgid "Editing domain"
 msgstr ""
 
+msgid "Editing email template"
+msgstr ""
+
+msgid "Editing email template - %name%"
+msgstr ""
+
 msgid "Editing order"
 msgstr ""
 
@@ -931,13 +940,16 @@ msgstr ""
 msgid "Email settings:"
 msgstr ""
 
+msgid "Email template"
+msgstr ""
+
+msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
 msgid "Email templates"
 msgstr ""
 
 msgid "Email templates settings"
-msgstr ""
-
-msgid "Email templates settings modified"
 msgstr ""
 
 msgid "Enable"
@@ -1462,6 +1474,9 @@ msgstr ""
 msgid "No domains so far."
 msgstr ""
 
+msgid "No email templates found. You have to create some first."
+msgstr ""
+
 msgid "No flags found. You have to create some first."
 msgstr ""
 
@@ -1538,9 +1553,6 @@ msgid "On each run (usually every 5 minutes)"
 msgstr ""
 
 msgid "Only checked products"
-msgstr ""
-
-msgid "Only variables for order number and date and time of order creation can be used in the object."
 msgstr ""
 
 msgid "Oops! Error occurred"
@@ -1894,9 +1906,6 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-msgid "Save changes in all templates"
-msgstr ""
-
 msgid "Save changes in order"
 msgstr ""
 
@@ -2027,9 +2036,6 @@ msgid "Selling start date"
 msgstr ""
 
 msgid "Send confirmation email about registration to customer"
-msgstr ""
-
-msgid "Send confirmation of order receipt"
 msgstr ""
 
 msgid "Send email about change to this status"

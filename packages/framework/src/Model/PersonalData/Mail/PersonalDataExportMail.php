@@ -6,13 +6,12 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
-use Shopsys\FrameworkBundle\Model\Mail\MailTypeInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Mail\MessageFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterface
+class PersonalDataExportMail implements MessageFactoryInterface
 {
     public const VARIABLE_EMAIL = '{email}';
     public const VARIABLE_URL = '{url}';
@@ -46,44 +45,6 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
         $this->domain = $domain;
         $this->setting = $setting;
         $this->domainRouterFactory = $domainRouterFactory;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getSubjectVariables()
-    {
-        return $this->getBodyVariables();
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getBodyVariables()
-    {
-        return [
-            self::VARIABLE_URL,
-            self::VARIABLE_EMAIL,
-            self::VARIABLE_DOMAIN,
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getRequiredSubjectVariables()
-    {
-        return [];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getRequiredBodyVariables()
-    {
-        return [
-            self::VARIABLE_URL,
-        ];
     }
 
     /**

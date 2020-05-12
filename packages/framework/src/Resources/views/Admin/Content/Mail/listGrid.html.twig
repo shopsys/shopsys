@@ -1,0 +1,15 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No email templates found. You have to create some first.'|trans }}
+{% endblock %}
+
+{% block grid_value_cell_id_name %}
+    {{ readableNames[value]|default(value) }}
+{% endblock %}
+
+{% block grid_row %}
+    {% if row['mt']['name'] in readableNames|keys %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

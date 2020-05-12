@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
 
 class MailTemplateRepository
 {
@@ -63,6 +67,32 @@ class MailTemplateRepository
     {
         $criteria = ['domainId' => $domainId];
         return $this->getMailTemplateRepository()->findBy($criteria);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function createQueryBuilder(int $domainId): QueryBuilder
+    {
+        return $this->getMailTemplateRepository()->createQueryBuilder('mt')
+            ->where('mt.domainId = :domainId')
+            ->setParameter('domainId', $domainId);
+    }
+
+    /**
+     * @param int $mailTemplateId
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+     */
+    public function getById(int $mailTemplateId): MailTemplate
+    {
+        $mailTemplate = $this->getMailTemplateRepository()->find($mailTemplateId);
+
+        if ($mailTemplate === null) {
+            throw new MailTemplateNotFoundException('Email template with ID ' . $mailTemplateId . ' not found.');
+        }
+
+        return $mailTemplate;
     }
 
     /**

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -30,20 +31,23 @@ class MailTemplateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('subject', TextType::class, [
+                'label' => t('Subject'),
+                'required' => true,
+                'constraints' => $this->getSubjectConstraints($options),
+            ])
             ->add('bccEmail', EmailType::class, [
+                'label' => t('Hidden copy'),
                 'required' => false,
                 'constraints' => [
                     new Email(),
                     new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
                 ],
             ])
-            ->add('subject', TextType::class, [
-                'required' => true,
-                'constraints' => $this->getSubjectConstraints($options),
-            ])
             ->add(
                 $builder
                     ->create('body', CKEditorType::class, [
+                        'label' => t('Content'),
                         'required' => true,
                         'config_name' => 'email',
                         'constraints' => $this->getBodyConstraints($options),
@@ -51,6 +55,7 @@ class MailTemplateFormType extends AbstractType
                     ->addModelTransformer(new EmptyWysiwygTransformer())
             )
             ->add('attachments', FileUploadType::class, [
+                'label' => t('Upload attachment'),
                 'required' => false,
                 'file_constraints' => [
                     new Constraints\File([
@@ -61,8 +66,17 @@ class MailTemplateFormType extends AbstractType
                 ],
                 'entity' => $options['entity'],
                 'file_entity_class' => MailTemplate::class,
-            ])
-            ->add('sendMail', CheckboxType::class, ['required' => false]);
+            ]);
+
+        if ($options['allow_disable_sending']) {
+            $builder->add('sendMail', CheckboxType::class, [
+                'label' => t('Send email about change to this status'),
+                'attr' => ['class' => 'js-send-mail-checkbox'],
+                'required' => false,
+            ]);
+        }
+
+        $builder->add('save', SubmitType::class);
     }
 
     /**
@@ -123,19 +137,22 @@ class MailTemplateFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['required_subject_variables', 'required_body_variables', 'entity'])
+            ->setRequired(['required_subject_variables', 'required_body_variables', 'entity', 'allow_disable_sending'])
             ->setAllowedTypes('required_subject_variables', 'array')
             ->setAllowedTypes('required_body_variables', 'array')
             ->setAllowedTypes('entity', MailTemplate::class)
+            ->setAllowedTypes('allow_disable_sending', 'boolean')
             ->setDefaults([
                 'required_subject_variables' => [],
                 'required_body_variables' => [],
+                'allow_disable_sending' => false,
                 'data_class' => MailTemplateData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
+
+                    /* @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData */
                     $mailTemplateData = $form->getData();
-                    /* @var $mailTemplateData \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData */
 
                     if ($mailTemplateData->sendMail) {
                         $validationGroups[] = static::VALIDATION_GROUP_SEND_MAIL;

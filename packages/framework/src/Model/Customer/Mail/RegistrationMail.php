@@ -75,18 +75,4 @@ class RegistrationMail implements MessageFactoryInterface
             self::VARIABLE_LOGIN_PAGE => $router->generate('front_login', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ];
     }
-
-    /**
-     * @return array
-     */
-    public function getTemplateVariables()
-    {
-        return [
-            self::VARIABLE_FIRST_NAME,
-            self::VARIABLE_LAST_NAME,
-            self::VARIABLE_EMAIL,
-            self::VARIABLE_URL,
-            self::VARIABLE_LOGIN_PAGE,
-        ];
-    }
 }
