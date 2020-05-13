@@ -1030,7 +1030,7 @@ There you can find links to upgrade notes for other versions too.
             +   CustomerDataFactoryInterface $customerDataFactory,
             +   BillingAddressFacade $billingAddressFacade
             ```
-    - `tests/App/Functional/PersonalData/PersonalDataExportXmlTest.php` has been changed, see [diff of PR](https://github.com/shopsys/shopsys/pull/1700/files) to update it
+    - `tests/App/Functional/PersonalData/PersonalDataExportXmlTest.php` has been changed, see [project-base diff](https://github.com/shopsys/project-base/commit/efd91f6dcc837445cfd772e9b6b9ff714f0b5652) to update it
 
 - update your application to refresh administrator roles after edit own profile ([#1514](https://github.com/shopsys/shopsys/pull/1514))
     - some methods has changed so you might want to update their usage in your application:
