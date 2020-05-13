@@ -26,31 +26,19 @@ Shopsys Framework is fully functional e-commerce platform with all basic functio
 * 3-step ordering process
 * Basic CMS
 * Support for several currencies, [languages, and domains](https://docs.shopsys.com/en/latest/introduction/domain-multidomain-multilanguage/)
-* Full friendly URL for main entities
+* Full friendly URL for main entities and full control over SEO aspects of online presence
 * Performance optimization through Elasticsearch, Redis, PostgreSQL
 * Full core upgradability
 * GDPR compliance
 * Preparation for scalability
-* Base for [Back-end API](https://docs.shopsys.com/en/latest/backend-api/)
+* Basic [Back-end API](https://docs.shopsys.com/en/latest/backend-api/)
 * Manifest for orchestration via [Kubernetes](https://docs.shopsys.com/en/latest/kubernetes/introduction-to-kubernetes/)
 * Support to easier [deployment to Google Cloud via Terraform](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
+* Basic GraphQL Front-end API for implementation of own front-end and PWA
 
 ### Plans for next releases
 
-* GraphQL Front-end API for PWA
-* Additional Premium Fetaures
-* Enhancements for easier project implementation based on community feedback
-
-## Sites Built on Shopsys Framework
-List of typical projects built on previous versions of Shopsys Framework:
-* [Prumex](https://www.prumex.cz/)
-* [Papírnictví Pavlík](https://www.papirnictvipavlik.cz/)
-* [Růžový slon](https://www.ruzovyslon.cz/)
-* [AB COM CZECH](https://www.ab-com.cz/)
-* [Patro](https://www.patro.cz/)
-* [B2B Portal Démos](https://www.demos24plus.com/login/)
-* [Agátin svět](https://www.agatinsvet.cz/)
-* [Bushman](https://www.bushman.cz/)
+Overview of our goals and priorities can be found in our [Shopsys Framework Roadmap](https://www.shopsys.com/product-roadmap/)
 
 ## How to Start a New Project
 The *shopsys/shopsys* package is a monolithic repository, a single development environment, for management of all parts of Shopsys Framework.
