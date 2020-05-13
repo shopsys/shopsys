@@ -3,7 +3,7 @@ HOST: https://polls.apiblueprint.org/
 
 # Frontend API
 
-## List of products [/graphql]
+## List of products [/graphql{?products}]
 
 ### POST [POST]
 
@@ -221,7 +221,7 @@ Authorization header is not required.
         }
     }
 
-## Product detail [/graphql]
+## Product detail [/graphql{?product_detail}]
 
 ### POST [POST]
 
@@ -389,7 +389,7 @@ Returns product filtered using UUID
         }
     }
 
-## Main variant with variants [/graphql]
+## Main variant with variants [/graphql{?product_main_variant}]
 
 ### POST [POST]
 
@@ -434,7 +434,7 @@ Lists variants for main variant
     }
 
 
-## Variant with main variant [/graphql]
+## Variant with main variant [/graphql{?product_variant}]
 
 ### POST [POST]
 
@@ -470,7 +470,7 @@ Adds main variant for variants
         }
     }
 
-## List of categories [/graphql]
+## List of categories [/graphql{?categories}]
 
 ### POST [POST]
 
@@ -703,7 +703,7 @@ Returns complete list of categories
         }
     }
 
-## Category detail [/graphql]
+## Category detail [/graphql{?category_detail}]
 
 ### POST [POST]
 
@@ -800,7 +800,7 @@ Returns category filtered using UUID
         }
     }
 
-## List of transport methods [/graphql]
+## List of transport methods [/graphql{?transports}]
 
 ### POST [POST]
 
@@ -956,7 +956,7 @@ Returns complete list of transport methods
         }
     }
 
-## Transport method detail [/graphql]
+## Transport method detail [/graphql{?transport_detail}]
 
 ### POST [POST]
 
@@ -1034,7 +1034,7 @@ Returns transport filtered using UUID
         }
     }
 
-## List of payment methods [/graphql]
+## List of payment methods [/graphql{?payments}]
 
 ### POST [POST]
 
@@ -1190,7 +1190,7 @@ Returns complete list of payment methods
          }
      }
 
-## Detail of payment method [/graphql]
+## Detail of payment method [/graphql{?payment_detail}]
 
 ### POST [POST]
 
@@ -1272,7 +1272,7 @@ Returns payment filtered using UUID
         }
     }
 
-## Login [/graphql]
+## Login [/graphql{?login}]
 
 ### POST [POST]
 
@@ -1301,7 +1301,7 @@ Login user and return access and refresh tokens
         }
     }
 
-## Logout [/graphql]
+## Logout [/graphql{?logout}]
 
 ### POST [POST]
 
@@ -1325,7 +1325,7 @@ Logout user
         }
     }
 
-## Refresh tokens [/graphql]
+## Refresh tokens [/graphql{?refresh_tokens}]
 
 ### POST [POST]
 
@@ -1353,7 +1353,7 @@ Refreshes access and refresh tokens
         }
     }
 
-## Create order [/graphql]
+## Create order [/graphql{?create_order}]
 
 ### POST [POST]
 
@@ -1557,7 +1557,7 @@ Creates complete order with products and addresses
         }
     }
 
-## Create order without supplying required fields
+## Create order without supplying required fields [/graphql{?create_order_with_errors}]
 
 ### POST [POST]
 
