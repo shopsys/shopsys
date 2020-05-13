@@ -1,4 +1,4 @@
-FROM pk16011990/shopsys-framework:9.0-dev3 as base
+FROM pk16011990/shopsys-framework:9.0-dev5 as base
 
 USER www-data
 

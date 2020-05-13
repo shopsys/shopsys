@@ -274,8 +274,6 @@ services:
 
     Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
         class: 'App\Controller\Admin\PromoCodeController'
-        arguments:
-            $useInlineEditation: false
 
     Shopsys\FrameworkBundle\Controller\Admin\ArticleController:
         class: 'App\Controller\Admin\ArticleController'
@@ -469,7 +467,7 @@ services:
 
     app.maintenance_cache_provider:
         class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
+        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory:create'
         arguments:
             - '@snc_redis.global'
 
@@ -534,7 +532,7 @@ services:
 
     twig_cache_extension.cache_provider:
         class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
+        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory:create'
         arguments:
             - '@snc_redis.twig'
 

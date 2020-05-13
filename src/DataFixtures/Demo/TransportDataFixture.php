@@ -42,7 +42,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \App\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(

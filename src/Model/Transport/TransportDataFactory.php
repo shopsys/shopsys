@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory as BaseTranspor
 
 class TransportDataFactory extends BaseTransportDataFactory
 {
-
     /**
      * @return \App\Model\Transport\TransportData
      */

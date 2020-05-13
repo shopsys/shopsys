@@ -628,3 +628,15 @@
 20200427065820:
     class: App\Migrations\Version20200427065820
     skip: false
+20200325132105:
+    class: Shopsys\FrameworkBundle\Migrations\Version20200325132105
+    skip: false
+20200330150340:
+    class: Shopsys\FrameworkBundle\Migrations\Version20200330150340
+    skip: false
+20200416114815:
+    class: Shopsys\FrameworkBundle\Migrations\Version20200416114815
+    skip: false
+20200511110953:
+    class: Shopsys\FrameworkBundle\Migrations\Version20200511110953
+    skip: false

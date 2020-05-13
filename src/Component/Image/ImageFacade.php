@@ -6,7 +6,6 @@ namespace App\Component\Image;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Image;
-use Shopsys\FrameworkBundle\Component\Image\Image as BaseImage;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 
 /**
@@ -152,9 +151,8 @@ class ImageFacade extends BaseImageFacade
      * @param array $temporaryFilenames
      * @param string|null $type
      * @param bool $deleteOldImage
-     * @return \App\Component\Image\Image|null
      */
-    public function uploadImage($entity, $temporaryFilenames, $type, bool $deleteOldImage = true): ?BaseImage
+    public function uploadImage($entity, $temporaryFilenames, $type, bool $deleteOldImage = true): void
     {
         $newImage = null;
 
@@ -177,9 +175,6 @@ class ImageFacade extends BaseImageFacade
 
             $this->em->flush();
         }
-
-        /** @var \App\Component\Image\Image|null $newImage */
-        return $newImage;
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Component\Domain\Domain;
 use App\Model\Product\Package\ProductPackageDataFactory;
 use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
@@ -18,7 +19,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
@@ -94,11 +94,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
     private $priceConverter;
-
-    /**
-     * @var \App\Component\Setting\Setting
-     */
-    private $setting;
 
     /**
      * @var \App\Model\Product\Parameter\ParameterGroupDataFactory|\App\Model\Product\Parameter\ParameterGroupDataFactory
@@ -205,6 +200,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     public function load(ObjectManager $manager): void
     {
+        $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
+
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
 

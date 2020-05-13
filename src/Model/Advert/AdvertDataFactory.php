@@ -10,9 +10,10 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory as BaseAdvertDataFact
 
 /**
  * @method \App\Model\Advert\AdvertData createFromAdvert(\App\Model\Advert\Advert $advert)
- * @property \App\Component\Image\ImageFacade|null $imageFacade
- * @method __construct(\App\Component\Image\ImageFacade|null $imageFacade)
  * @method setImageFacade(\App\Component\Image\ImageFacade $imageFacade)
+ * @property \App\Component\Image\ImageFacade $imageFacade
+ * @method __construct(\App\Component\Image\ImageFacade $imageFacade)
+ * @method \App\Model\Advert\AdvertData createInstance()
  */
 class AdvertDataFactory extends BaseAdvertDataFactory
 {

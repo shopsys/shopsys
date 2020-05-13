@@ -8,11 +8,9 @@ use Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController as BasePromoCod
 
 /**
  * @property \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
- * @property \App\Model\Order\PromoCode\PromoCodeDataFactory|null $promoCodeDataFactory
- * @property \App\Model\Order\PromoCode\Grid\PromoCodeGridFactory|null $promoCodeGridFactory
- * @method setPromoCodeDataFactory(\App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory)
- * @method setPromoCodeGridFactory(\App\Model\Order\PromoCode\Grid\PromoCodeGridFactory $promoCodeGridFactory)
- * @method __construct(\App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade, \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit $promoCodeInlineEdit, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \App\Model\Order\PromoCode\PromoCodeDataFactory|null $promoCodeDataFactory, \App\Model\Order\PromoCode\Grid\PromoCodeGridFactory|null $promoCodeGridFactory, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider|null $breadcrumbOverrider, bool $useInlineEditation)
+ * @property \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
+ * @property \App\Model\Order\PromoCode\Grid\PromoCodeGridFactory $promoCodeGridFactory
+ * @method __construct(\App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory, \App\Model\Order\PromoCode\Grid\PromoCodeGridFactory $promoCodeGridFactory, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider)
  */
 class PromoCodeController extends BasePromoCodeController
 {
@@ -31,7 +29,6 @@ class PromoCodeController extends BasePromoCodeController
 
         return $this->render('Admin/Content/PromoCode/list.html.twig', [
             'gridView' => $grid->createView(),
-            'useInlineEditation' => $this->useInlineEditation,
         ]);
     }
 }

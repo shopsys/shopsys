@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Model\Blog\Category;
 
+use App\Component\Image\ImageFacade;
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogCategoryFacade

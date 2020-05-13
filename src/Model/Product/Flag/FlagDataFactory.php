@@ -18,6 +18,14 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory as BaseFlagDataFa
 class FlagDataFactory extends BaseFlagDataFactory
 {
     /**
+     * @return \App\Model\Product\Flag\FlagData
+     */
+    protected function createInstance(): BaseFlagData
+    {
+        return new FlagData();
+    }
+
+    /**
      * @param \App\Model\Product\Flag\FlagData $flagData
      * @param \App\Model\Product\Flag\Flag $flag
      */

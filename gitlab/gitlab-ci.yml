@@ -85,29 +85,29 @@ review:
         - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
         - docker-compose down --rmi all -v
         - docker-compose up -d
-        - docker cp ${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yml ~/parameters.yml
-        - ~/yq write --inplace ~/parameters.yml parameters.database_name ${PHP_FPM_IMAGE_NAME}
-        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.enabled ${AKENEO_DEV_ENABLED}
-        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.base_uri ${AKENEO_DEV_BASE_URI}
-        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.client_id ${AKENEO_DEV_CLIENT_ID}
-        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.secret ${AKENEO_DEV_SECRET}
-        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.user ${AKENEO_DEV_USER}
-        - ~/yq write --inplace ~/parameters.yml parameters.akeneo_config.password ${AKENEO_DEV_PASSWORD}
-        - ~/yq write --inplace ~/parameters.yml parameters.sconto_bridge_config.enabled ${SCONTO_BRIDGE_DEV_ENABLED}
-        - ~/yq write --inplace ~/parameters.yml parameters.sconto_bridge_config.base_uri ${SCONTO_BRIDGE_DEV_BASE_URI}
-        - ~/yq write --inplace ~/parameters.yml parameters.sconto_bridge_config.user ${SCONTO_BRIDGE_DEV_USER}
-        - ~/yq write --inplace ~/parameters.yml parameters.sconto_bridge_config.password ${SCONTO_BRIDGE_DEV_PASSWORD}
-        - ~/yq write --inplace ~/parameters.yml parameters.kraken_config.enabled ${KRAKEN_DEV_ENABLED}
-        - ~/yq write --inplace ~/parameters.yml parameters.kraken_config.lossy ${KRAKEN_DEV_LOSSY}
-        - ~/yq write --inplace ~/parameters.yml parameters.kraken_config.api_key ${KRAKEN_DEV_API_KEY}
-        - ~/yq write --inplace ~/parameters.yml parameters.kraken_config.api_secret ${KRAKEN_DEV_API_SECRET}
-        - ~/yq write --inplace ~/parameters.yml parameters.targito_config.enabled ${TARGITO_DEV_ENABLED}
-        - ~/yq write --inplace ~/parameters.yml parameters.targito_config.eshop_to_targito_account_id ${TARGITO_ESHOP_TO_TARGITO_ACCOUNT_ID}
-        - ~/yq write --inplace ~/parameters.yml parameters.targito_config.eshop_to_targito_password ${TARGITO_ESHOP_TO_TARGITO_PASSWORD}
-        - docker cp ~/parameters.yml "${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yml"
-        - docker-compose exec --user root -T php-fpm chown www-data:www-data /var/www/html/config/parameters.yml
-        - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${PHP_FPM_IMAGE_NAME}.ci.scontodev.cz/g" config/domains_urls.yml
-        - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.2:8000/https:\/\/${PHP_FPM_IMAGE_NAME}.ci.scontodev.sk/g" config/domains_urls.yml
+        - docker cp ${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yaml ~/parameters.yaml
+        - ~/yq write --inplace ~/parameters.yaml parameters.database_name ${PHP_FPM_IMAGE_NAME}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.enabled ${AKENEO_DEV_ENABLED}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.base_uri ${AKENEO_DEV_BASE_URI}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.client_id ${AKENEO_DEV_CLIENT_ID}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.secret ${AKENEO_DEV_SECRET}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.user ${AKENEO_DEV_USER}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.password ${AKENEO_DEV_PASSWORD}
+        - ~/yq write --inplace ~/parameters.yaml parameters.sconto_bridge_config.enabled ${SCONTO_BRIDGE_DEV_ENABLED}
+        - ~/yq write --inplace ~/parameters.yaml parameters.sconto_bridge_config.base_uri ${SCONTO_BRIDGE_DEV_BASE_URI}
+        - ~/yq write --inplace ~/parameters.yaml parameters.sconto_bridge_config.user ${SCONTO_BRIDGE_DEV_USER}
+        - ~/yq write --inplace ~/parameters.yaml parameters.sconto_bridge_config.password ${SCONTO_BRIDGE_DEV_PASSWORD}
+        - ~/yq write --inplace ~/parameters.yaml parameters.kraken_config.enabled ${KRAKEN_DEV_ENABLED}
+        - ~/yq write --inplace ~/parameters.yaml parameters.kraken_config.lossy ${KRAKEN_DEV_LOSSY}
+        - ~/yq write --inplace ~/parameters.yaml parameters.kraken_config.api_key ${KRAKEN_DEV_API_KEY}
+        - ~/yq write --inplace ~/parameters.yaml parameters.kraken_config.api_secret ${KRAKEN_DEV_API_SECRET}
+        - ~/yq write --inplace ~/parameters.yaml parameters.targito_config.enabled ${TARGITO_DEV_ENABLED}
+        - ~/yq write --inplace ~/parameters.yaml parameters.targito_config.eshop_to_targito_account_id ${TARGITO_ESHOP_TO_TARGITO_ACCOUNT_ID}
+        - ~/yq write --inplace ~/parameters.yaml parameters.targito_config.eshop_to_targito_password ${TARGITO_ESHOP_TO_TARGITO_PASSWORD}
+        - docker cp ~/parameters.yaml "${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yaml"
+        - docker-compose exec --user root -T php-fpm chown www-data:www-data /var/www/html/config/parameters.yaml
+        - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${PHP_FPM_IMAGE_NAME}.ci.scontodev.cz/g" config/domains_urls.yaml
+        - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.2:8000/https:\/\/${PHP_FPM_IMAGE_NAME}.ci.scontodev.sk/g" config/domains_urls.yaml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y db-create build-demo
     tags:
         - review

@@ -6,7 +6,7 @@ namespace App\Model\Product\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation as BaseProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice calculatePrice(\App\Model\Product\Product $product, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice calculateMainVariantPrice(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @property \App\Model\Product\ProductRepository $productRepository
- * @method __construct(\Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation, \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting, \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository, \App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|null $currencyFacade)
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation, \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting, \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository, \App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade)
  */
 class ProductPriceCalculation extends BaseProductPriceCalculation
 {
@@ -53,8 +53,14 @@ class ProductPriceCalculation extends BaseProductPriceCalculation
             $highPriceWithVat = $highPriceWithVat->multiply($multiplier);
         }
 
-        $highPrice = new Price(Money::zero(), $highPriceWithVat);
-        $highPrice = $this->basePriceCalculation->applyCoefficients($highPrice, $product->getVatForDomain($domainId), []);
+        $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+        $highPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+            $highPriceWithVat,
+            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+            $product->getVatForDomain($domainId),
+            $defaultCurrency
+        );
 
         return new ProductPrice($highPrice, false);
     }

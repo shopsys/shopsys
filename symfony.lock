@@ -198,6 +198,12 @@
     "elasticsearch/elasticsearch": {
         "version": "v6.7.2"
     },
+    "ezimuel/guzzlestreams": {
+        "version": "3.0.1"
+    },
+    "ezimuel/ringphp": {
+        "version": "1.1.2"
+    },
     "firebase/php-jwt": {
         "version": "v5.0.0"
     },
@@ -257,12 +263,6 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.6.1"
-    },
-    "guzzlehttp/ringphp": {
-        "version": "1.1.1"
-    },
-    "guzzlehttp/streams": {
-        "version": "3.0.0"
     },
     "helios-ag/fm-elfinder-bundle": {
         "version": "7.0",

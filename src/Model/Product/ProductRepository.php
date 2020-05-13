@@ -48,6 +48,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  * @method array getProductsWithParameter(\App\Model\Product\Parameter\Parameter $parameter)
  * @property \App\Model\Product\Filter\ProductFilterRepository $productFilterRepository
+ * @method \App\Model\Product\Product getSellableByUuid(string $uuid, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  */
 class ProductRepository extends BaseProductRepository
 {

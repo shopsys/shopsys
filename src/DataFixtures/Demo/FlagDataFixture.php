@@ -6,8 +6,6 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 
 class FlagDataFixture extends AbstractReferenceFixture
@@ -26,28 +24,12 @@ class FlagDataFixture extends AbstractReferenceFixture
     private $flagFacade;
 
     /**
-     * @var \App\Model\Product\Flag\FlagDataFactory
-     */
-    private $flagDataFactory;
-
-    /**
-     * @var \App\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \App\Model\Product\Flag\FlagDataFactory $flagDataFactory
-     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
-        FlagFacade $flagFacade,
-        FlagDataFactoryInterface $flagDataFactory,
-        Domain $domain
+        FlagFacade $flagFacade
     ) {
         $this->flagFacade = $flagFacade;
-        $this->flagDataFactory = $flagDataFactory;
-        $this->domain = $domain;
     }
 
     /**

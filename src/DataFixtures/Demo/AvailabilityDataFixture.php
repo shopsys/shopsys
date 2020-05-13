@@ -74,7 +74,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    private function createAvailability(AvailabilityData $availabilityData, $referenceName = null)
+    private function createAvailability(AvailabilityData $availabilityData)
     {
         $availability = $this->availabilityFacade->create($availabilityData);
         $this->addReference(self::AVAILABILITY_IN_STOCK, $availability);
