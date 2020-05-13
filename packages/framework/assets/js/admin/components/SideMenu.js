@@ -25,8 +25,8 @@ export default class SideMenu {
 
         $(jsNoClickSelector).click(event => {
             event.preventDefault();
-            event.stopPropagation();            
-        })
+            event.stopPropagation();
+        });
 
         this.$items.click(event => {
             if ($(event.currentTarget).hasClass('open')) {
