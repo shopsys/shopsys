@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\FlashMessage;
 
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 
 class ErrorExtractor
 {
     /**
-     * @param \Symfony\Component\Form\Form $form
+     * @param \Symfony\Component\Form\FormInterface $form
      * @param array $errorFlashMessages
      * @return string[]
      */
-    public function getAllErrorsAsArray(Form $form, array $errorFlashMessages)
+    public function getAllErrorsAsArray(FormInterface $form, array $errorFlashMessages): array
     {
         $errors = $errorFlashMessages;
         foreach ($form->getErrors(true) as $error) {
