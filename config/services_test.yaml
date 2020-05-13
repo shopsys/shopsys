@@ -149,8 +149,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository: '@App\Model\Product\Availability\AvailabilityRepository'
 
-    Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataRepository: '@App\Model\ProductFeed\Heureka\FeedItem\HeurekaDeliveryDataRepository'
-
     Shopsys\FrameworkBundle\Model\Localization\Localization:
         arguments:
             $adminLocale: '%shopsys.admin_locale%'

@@ -28,9 +28,9 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*', readableName: "Export changed products to Elasticsearch" }
 
-    Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '3', minutes: '0', readableName: 'Download Heureka categories' }
+    #    Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
+    #        tags:
+    #            - { name: shopsys.cron, hours: '3', minutes: '0', readableName: 'Download Heureka categories' }
 
     Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule:
         tags:

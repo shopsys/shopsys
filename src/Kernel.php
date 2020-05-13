@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -100,5 +101,15 @@ class Kernel extends BaseKernel
         $routes->import($confDir . '/{routes}/*' . self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir . '/{routes}/' . $this->environment . '/**/*' . self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir . '/{routes}' . self::CONFIG_EXTS, '/', 'glob');
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    protected function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new RegisterProductFeedConfigsCompilerPass());
     }
 }

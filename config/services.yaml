@@ -414,20 +414,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory: '@App\Model\Product\Search\FilterQueryFactory'
 
-    Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory: '@App\Model\ProductFeed\Google\FeedItem\GoogleFeedItemFactory'
-
-    Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository: '@App\Model\ProductFeed\Google\GoogleProductRepository'
-
-    Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory: '@App\Model\ProductFeed\Heureka\FeedItem\HeurekaFeedItemFactory'
-
-    Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository: '@App\Model\ProductFeed\Heureka\HeurekaProductRepository'
-
-    Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataRepository: '@App\Model\ProductFeed\Heureka\FeedItem\HeurekaDeliveryDataRepository'
-
-    Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory: '@App\Model\ProductFeed\Zbozi\FeedItem\ZboziFeedItemFactory'
-
-    Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductRepository: '@App\Model\ProductFeed\Zbozi\ZboziProductRepository'
-
     App\Component\Form\FormBuilderHelper:
         arguments:
             $disableFields: '%disable_form_fields_from_transfer%'
@@ -593,3 +579,9 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter: '@App\Model\Product\Listing\RequestToOrderingModeIdConverter'
 
     Shopsys\FrameworkBundle\Component\Image\ImageRepository: '@App\Component\Image\ImageRepository'
+
+    App\Model\ProductFeed\Mergado\MergadoFeedInfo: ~
+
+    App\ProductFeed\MergadoFeed\MergadoFeed:
+        tags:
+            - { name: sconto.product_feed }

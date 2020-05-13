@@ -671,18 +671,6 @@
     "shopsys/postgres-search-bundle": {
         "version": "0.1"
     },
-    "shopsys/product-feed-google": {
-        "version": "dev-mg-weird-flex-but-ok"
-    },
-    "shopsys/product-feed-heureka": {
-        "version": "dev-mg-weird-flex-but-ok"
-    },
-    "shopsys/product-feed-heureka-delivery": {
-        "version": "dev-mg-weird-flex-but-ok"
-    },
-    "shopsys/product-feed-zbozi": {
-        "version": "dev-mg-weird-flex-but-ok"
-    },
     "shopsys/read-model": {
         "version": "dev-mg-weird-flex-but-ok"
     },

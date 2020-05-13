@@ -2,17 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Model\ProductFeed\Google;
+namespace App\Model\ProductFeed\Mergado;
 
 use App\Model\Product\ProductRepository;
-use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain;
-use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository as BaseGoogleProductRepository;
 
-class GoogleProductRepository extends BaseGoogleProductRepository
+class MergadoProductRepository
 {
     /**
      * @var \App\Model\Product\ProductRepository
@@ -38,15 +35,15 @@ class GoogleProductRepository extends BaseGoogleProductRepository
     {
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
-            ->leftJoin(GoogleProductDomain::class, 'gpd', Join::WITH, 'gpd.product = p AND gpd.domainId = :domainId')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
-            ->andWhere('gpd IS NULL OR gpd.show = TRUE')
+            ->andWhere('p.calculatedSellingDenied = FALSE')
             ->orderBy('p.id', 'asc')
             ->setMaxResults($maxResults);
 
         $this->productRepository->filterTemporaryExcludedProducts($queryBuilder, $domainConfig->getId());
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
         $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
+
         $queryBuilder->addSelect('v')->join('pd.vat', 'v');
 
         if ($lastSeekId !== null) {

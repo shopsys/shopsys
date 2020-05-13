@@ -70,6 +70,20 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
+     * @return int
+     */
+    public function calculateProductAvailabilityDaysForDomainId(Product $product, int $domainId): int
+    {
+        if ($this->isProductAvailableOnDomain($product, $domainId)) {
+            return 0;
+        }
+
+        return $this->getDeliveryDaysByDomainId($product, $domainId);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return bool
      */
     public function isProductAvailableOnDomain(Product $product, int $domainId): bool

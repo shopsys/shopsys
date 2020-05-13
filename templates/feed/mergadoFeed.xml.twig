@@ -1,0 +1,44 @@
+{% block begin %}
+<?xml version="1.0" encoding="utf-8"?>
+<CHANNEL xmlns="http://www.mergado.com/ns/1.7">
+    <LINK>{{ 'url todo' }}</LINK>
+    <GENERATOR>mergado.woocommerce.marketingpack.2_2_0</GENERATOR>
+{% endblock %}
+
+{% block item %}
+    <ITEM>
+        <ITEM_ID>{{ item.id }}</ITEM_ID>
+        <NAME_EXACT>{{ item.name }}</NAME_EXACT>
+        <CATEGORY>{{ item.categoryPath }}</CATEGORY>
+        <PRODUCTNO>{{ item.productNo }}</PRODUCTNO>
+        {% if item.shortDescription %}
+            <DESCRIPTION_SHORT>{{ item.shortDescription }}</DESCRIPTION_SHORT>
+        {% endif %}
+        {% if item.description %}
+            <DESCRIPTION>{{ item.description }}</DESCRIPTION>
+        {% endif %}
+        <DELIVERY_DAYS>{{ item.deliveryDays }}</DELIVERY_DAYS>
+        <CURRENCY>{{ currencyCode(getDomain().id) }}</CURRENCY>
+        {% if item.imageUrl %}
+            <IMAGE>{{ item.imageUrl }}</IMAGE>
+        {% endif %}
+        {% for galleryImageUrl in item.galleryImageUrls %}
+            <IMAGE_ALTERNATIVE>{{ galleryImageUrl }}</IMAGE_ALTERNATIVE>
+        {% endfor %}
+        {% if item.brand %}
+            <BRAND>{{ item.brand.name }}</BRAND>
+        {% endif %}
+        <URL>{{ item.url }}</URL>
+        <PRICE_VAT>{{ item.price.priceWithVat|moneyFormat(2, ',') }}</PRICE_VAT>
+        {% for parameterName, parameterValue in item.parameters %}
+            <PARAM>
+                <NAME>{{ parameterName }}</NAME>
+                <VALUE>{{ parameterValue }}</VALUE>
+            </PARAM>
+        {% endfor %}
+    </ITEM>
+{% endblock %}
+
+{% block end %}
+</CHANNEL>
+{% endblock %}
