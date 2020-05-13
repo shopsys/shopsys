@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\FlashMessage;
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\Form\FormInterface;
 
 class ErrorExtractor
 {
     /**
-     * @param \Symfony\Component\Form\Form $form
-     * @param \Symfony\Component\HttpFoundation\Session\Flash\FlashBag $flashMessageBag
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $errorFlashMessages
      * @return string[]
      */
-    public function getAllErrorsAsArray(Form $form, FlashBag $flashMessageBag)
+    public function getAllErrorsAsArray(FormInterface $form, array $errorFlashMessages): array
     {
-        $errors = $flashMessageBag->get(FlashMessage::KEY_ERROR);
+        $errors = $errorFlashMessages;
         foreach ($form->getErrors(true) as $error) {
             /* @var $error \Symfony\Component\Form\FormError */
             $errors[] = $error->getMessage();
