@@ -19,12 +19,12 @@ class CurrencyDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
-    protected $currencyFacade;
+    private $currencyFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface
      */
-    protected $currencyDataFactory;
+    private $currencyDataFactory;
 
     /**
      * @var \App\Component\Domain\Domain

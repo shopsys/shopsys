@@ -14,12 +14,12 @@ class FlagsExtension extends AbstractExtension
     /**
      * @var \Twig\Environment
      */
-    protected $twigEnvironment;
+    private $twigEnvironment;
 
     /**
      * @var \Shopsys\ReadModelBundle\Flag\FlagsProvider
      */
-    protected $flagsProvider;
+    private $flagsProvider;
 
     /**
      * @param \Shopsys\ReadModelBundle\Flag\FlagsProvider $flagsProvider

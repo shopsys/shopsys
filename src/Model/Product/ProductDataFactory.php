@@ -31,6 +31,14 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 class ProductDataFactory extends BaseProductDataFactory
 {
     /**
+     * @return \App\Model\Product\ProductData
+     */
+    protected function createInstance(): BaseProductData
+    {
+        return new ProductData();
+    }
+
+    /**
      * @var \App\Model\Stock\ProductStockFacade
      */
     private $stockProductFacade;
@@ -135,7 +143,7 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     public function create(): BaseProductData
     {
-        $productData = new ProductData();
+        $productData = $this->createInstance();
         $this->fillNew($productData);
         $this->fillStockProductByStocks($productData);
         return $productData;
@@ -147,7 +155,7 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     public function createFromProduct(BaseProduct $product): BaseProductData
     {
-        $productData = new ProductData();
+        $productData = $this->createInstance();
         $this->fillFromProduct($productData, $product);
         $this->fillStockProductByProduct($productData, $product);
         $this->fillProductFilesAttributesFromProduct($productData, $product);

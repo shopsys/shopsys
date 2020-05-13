@@ -38,67 +38,67 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @var \App\Model\Product\ProductFacade
      */
-    protected $productFacade;
+    private $productFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
      */
-    protected $productVariantFacade;
+    private $productVariantFacade;
 
     /**
      * @var \App\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      */
-    protected $pricingGroupFacade;
+    private $pricingGroupFacade;
 
     /**
      * @var \App\Model\Product\ProductDataFactory
      */
-    protected $productDataFactory;
+    private $productDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory
      */
-    protected $productParameterValueDataFactory;
+    private $productParameterValueDataFactory;
 
     /**
      * @var \App\Model\Product\Parameter\ParameterValueDataFactory
      */
-    protected $parameterValueDataFactory;
+    private $parameterValueDataFactory;
 
     /**
      * @var \App\Model\Product\Parameter\ParameterFacade
      */
-    protected $parameterFacade;
+    private $parameterFacade;
 
     /**
      * @var \App\Model\Product\Parameter\ParameterDataFactory
      */
-    protected $parameterDataFactory;
+    private $parameterDataFactory;
 
     /**
      * @var int
      */
-    protected $productNo = 1;
+    private $productNo = 1;
 
     /**
      * @var int[]
      */
-    protected $productIdsByCatnum = [];
+    private $productIdsByCatnum = [];
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
-    protected $priceConverter;
+    private $priceConverter;
 
     /**
      * @var \App\Component\Setting\Setting
      */
-    protected $setting;
+    private $setting;
 
     /**
      * @var \App\Model\Product\Parameter\ParameterGroupDataFactory|\App\Model\Product\Parameter\ParameterGroupDataFactory
@@ -5838,7 +5838,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Product
      */
-    protected function createProduct(ProductData $productData): Product
+    private function createProduct(ProductData $productData): Product
     {
         static $oddProduct = true;
         $oddProduct = !$oddProduct;
@@ -5878,7 +5878,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ];
     }
 
-    protected function createVariants(): void
+    private function createVariants(): void
     {
         $variantCatnumsByMainVariantCatnum = $this->getVariantCatnumsByMainVariantCatnum();
 
@@ -5901,7 +5901,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param string[]|null $parameterGroupNamesByLocale
      * @return \App\Model\Product\Parameter\Parameter
      */
-    protected function findParameterByNamesOrCreateNew(array $parameterNamesByLocale, ?array $parameterGroupNamesByLocale): Parameter
+    private function findParameterByNamesOrCreateNew(array $parameterNamesByLocale, ?array $parameterGroupNamesByLocale): Parameter
     {
         /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
         $parameter = $this->parameterFacade->findParameterByNames($parameterNamesByLocale);
@@ -5927,7 +5927,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param array $parametersTranslations
      */
-    protected function setParametersByTranslations(ProductData $productData, array $parametersTranslations): void
+    private function setParametersByTranslations(ProductData $productData, array $parametersTranslations): void
     {
         foreach ($parametersTranslations as $parameterTranslations) {
             $parameter = $this->findParameterByNamesOrCreateNew($parameterTranslations['names'], $parameterTranslations['group_name']);
@@ -5949,7 +5949,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param string $price
      */
-    protected function setPriceForAllPricingGroups(ProductData $productData, string $price): void
+    private function setPriceForAllPricingGroups(ProductData $productData, string $price): void
     {
         $fakePrice = 1;
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
@@ -5987,7 +5987,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param int $i
      * @param string|null $parameterGroupName
      */
-    protected function addParameterTranslations(array &$parameterTranslations, string $parameterName, string $parameterValue, string $locale, int &$i, ?string $parameterGroupName = null): void
+    private function addParameterTranslations(array &$parameterTranslations, string $parameterName, string $parameterValue, string $locale, int &$i, ?string $parameterGroupName = null): void
     {
         $parameterTranslations[$i]['names'][$locale] = $parameterName;
         $parameterTranslations[$i]['values'][$locale] = $parameterValue;
@@ -6004,7 +6004,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param string[] $categoryReferences
      */
-    protected function setCategoriesForAllDomains(ProductData $productData, array $categoryReferences): void
+    private function setCategoriesForAllDomains(ProductData $productData, array $categoryReferences): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             foreach ($categoryReferences as $categoryReference) {
@@ -6017,7 +6017,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param string[] $flagReferences
      */
-    protected function setFlags(ProductData $productData, array $flagReferences): void
+    private function setFlags(ProductData $productData, array $flagReferences): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             foreach ($flagReferences as $flagReference) {
@@ -6030,7 +6030,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param string $unitReference
      */
-    protected function setUnit(ProductData $productData, string $unitReference): void
+    private function setUnit(ProductData $productData, string $unitReference): void
     {
         $productData->unit = $this->persistentReferenceFacade->getReference($unitReference);
     }
@@ -6039,7 +6039,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param string $availabilityReference
      */
-    protected function setAvailability(ProductData $productData, string $availabilityReference): void
+    private function setAvailability(ProductData $productData, string $availabilityReference): void
     {
         $productData->availability = $this->persistentReferenceFacade->getReference($availabilityReference);
     }
@@ -6048,7 +6048,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param string|null $date
      */
-    protected function setSellingFrom(ProductData $productData, ?string $date): void
+    private function setSellingFrom(ProductData $productData, ?string $date): void
     {
         $productData->sellingFrom = $date === null ? null : new DateTime($date);
     }
@@ -6057,7 +6057,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param string|null $date
      */
-    protected function setSellingTo(ProductData $productData, ?string $date): void
+    private function setSellingTo(ProductData $productData, ?string $date): void
     {
         $productData->sellingTo = $date === null ? null : new DateTime($date);
     }
@@ -6066,7 +6066,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param string|null $brandReference
      */
-    protected function setBrand(ProductData $productData, ?string $brandReference): void
+    private function setBrand(ProductData $productData, ?string $brandReference): void
     {
         /** @var \App\Model\Product\Brand\Brand|null $brand */
         $brand = $brandReference === null ? null : $this->persistentReferenceFacade->getReference($brandReference);
@@ -6077,7 +6077,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param string|null $vatReference
      */
-    protected function setVat(ProductData $productData, ?string $vatReference): void
+    private function setVat(ProductData $productData, ?string $vatReference): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $productVatsIndexedByDomainId */
         $productVatsIndexedByDomainId = [];

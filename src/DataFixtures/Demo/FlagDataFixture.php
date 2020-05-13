@@ -23,17 +23,17 @@ class FlagDataFixture extends AbstractReferenceFixture
     /**
      * @var \App\Model\Product\Flag\FlagFacade
      */
-    protected $flagFacade;
+    private $flagFacade;
 
     /**
      * @var \App\Model\Product\Flag\FlagDataFactory
      */
-    protected $flagDataFactory;
+    private $flagDataFactory;
 
     /**
      * @var \App\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
@@ -70,7 +70,7 @@ class FlagDataFixture extends AbstractReferenceFixture
      * @param int $flagId
      * @param string|null $referenceName
      */
-    protected function createFlag(int $flagId, ?string $referenceName = null): void
+    private function createFlag(int $flagId, ?string $referenceName = null): void
     {
         $flag = $this->flagFacade->getById($flagId);
         if ($referenceName !== null) {

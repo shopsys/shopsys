@@ -8,12 +8,15 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator as BaseAdministrat
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData as BaseAdministratorData;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory as BaseAdministratorDataFactory;
 
+/**
+ * @method \App\Model\Administrator\AdministratorData create()
+ */
 class AdministratorDataFactory extends BaseAdministratorDataFactory
 {
     /**
      * @return \App\Model\Administrator\AdministratorData
      */
-    public function create(): BaseAdministratorData
+    public function createInstance(): BaseAdministratorData
     {
         return new AdministratorData();
     }

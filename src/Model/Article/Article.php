@@ -30,7 +30,7 @@ class Article extends BaseArticle
      *
      * @ORM\Column(type="datetime")
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @var bool

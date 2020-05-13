@@ -14,10 +14,10 @@ namespace: "{{PROJECT_NAME}}"
 configMapGenerator:
     -   name: domains-urls
         files:
-            - ../../../config/domains_urls.yml
+            - ../../../config/domains_urls.yaml
     -   name: parameters
         files:
-            - ../../../config/parameters.yml
+            - ../../../config/parameters.yaml
     -   name: nginx-configuration
         files:
             - ../../../docker/nginx/s3/nginx.conf

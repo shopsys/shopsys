@@ -1,0 +1,18 @@
+{% extends 'Front/Content/Error/errorCommon.html.twig' %}
+
+{% block error_content %}
+    <div class="box-error-page__text">
+        <h1>{{ 'Page not found!'|trans }}</h1>
+
+        <p class="box-error-page__text__main">
+            {{ 'Page you are looking for either no longer exists or you entered wrong address.'|trans }}
+        </p>
+
+        <h2>{{ 'Please follow the instructions'|trans }}:</h2>
+
+        <ul class="list-simple">
+            <li class="list-simple__item">{{ 'Check the address correctness'|trans }}</li>
+            <li class="list-simple__item">{{ 'Try using web search'|trans }}</li>
+        </ul>
+    </div>
+{% endblock %}

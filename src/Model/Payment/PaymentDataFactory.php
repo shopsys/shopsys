@@ -32,9 +32,17 @@ class PaymentDataFactory extends BasePaymentDataFactory
     /**
      * @return \App\Model\Payment\PaymentData
      */
+    protected function createInstance(): BasePaymentData
+    {
+        return new PaymentData();
+    }
+
+    /**
+     * @return \App\Model\Payment\PaymentData
+     */
     public function create(): BasePaymentData
     {
-        $paymentData = new PaymentData();
+        $paymentData = $this->createInstance();
         $this->fillNew($paymentData);
 
         $paymentData->hiddenByGoPay = false;
@@ -48,7 +56,7 @@ class PaymentDataFactory extends BasePaymentDataFactory
      */
     public function createFromPayment(BasePayment $payment): BasePaymentData
     {
-        $paymentData = new PaymentData();
+        $paymentData = $this->createInstance();
         $this->fillFromPayment($paymentData, $payment);
 
         $paymentData->type = $payment->getType();

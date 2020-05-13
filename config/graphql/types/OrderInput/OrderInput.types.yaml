@@ -1,0 +1,4 @@
+OrderInput:
+    type: input-object
+    inherits:
+        - 'OrderInputDecorator'

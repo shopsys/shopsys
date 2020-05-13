@@ -18,12 +18,12 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeFacade
      */
-    protected $promoCodeFacade;
+    private $promoCodeFacade;
 
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeDataFactory
      */
-    protected $promoCodeDataFactory;
+    private $promoCodeDataFactory;
 
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeProductFactory

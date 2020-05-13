@@ -5,12 +5,13 @@ module.exports = {
             {
                 targets: {
                     node: 'current',
-                },
-            },
-        ],
+                    browsers: [
+                        'safari >= 8'
+                    ]
+                }
+            }
+        ]
     ],
-    plugins: [
-        '@babel/plugin-proposal-object-rest-spread',
-    ],
+    plugins: ['@babel/plugin-proposal-object-rest-spread']
 };
 

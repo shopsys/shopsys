@@ -7,6 +7,7 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
 const StylelintPlugin = require('stylelint-webpack-plugin');
+const sources = require('./assets/js/bin/helpers/sources');
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
@@ -42,16 +43,22 @@ Encore
         beforeRun: () => {
             generateWebFont(
                 'frontend',
-                './assets/public/frontend/svg/*.svg'
+                './assets/public/frontend/svg/'
             );
             generateWebFont(
                 'admin',
-                './assets/public/admin/svg/*.svg'
+                sources.getFrameworkNodeModulesDir() + '/public/admin/svg/',
+                './web/public/admin/svg/'
             );
-        },
-        done: () => {
-            const dirWithJsFiles = './assets/js/**/*';
-            const dirWithTranslations = './translations/*.po';
+
+            const dirWithJsFiles = [
+                sources.getFrameworkNodeModulesDir() + '/js/**/*.js',
+                './assets/js/**/*.js'
+            ];
+            const dirWithTranslations = [
+                sources.getFrameworkVendorDir() + '/src/Resources/translations/*.po',
+                './translations/*.po',
+            ];
             const outputDirForExportedTranslations = Encore.isProduction() ? './web/build/' : './assets/js/';
 
             try {
@@ -63,22 +70,27 @@ Encore
     }))
     .addPlugin(new CopyPlugin([
         { from: 'web/bundles/fpjsformvalidator', to: '../../assets/js/bundles/fpjsformvalidator', force: true },
-        { from: 'assets/public', to: '../../web/public', force: true },
-        { from: 'node_modules/@shopsys/framework/public/svg/admin', to: '../../web/public/admin/svg', force: true }
+        { from: 'node_modules/@shopsys/framework/public/admin', to: '../../web/public/admin', force: true },
+        { from: 'assets/public', to: '../../web/public', ignore: ['assets/public/admin/svg/**/*'], force: true }
     ]))
 ;
 
-const domainFile = './config/domains.yml';
+const domainFile = './config/domains.yaml';
 const domains = yaml.safeLoad(fs.readFileSync(domainFile, 'utf8'));
 
-domains.domains.forEach((domain) => {
+const domainStylesDirectories = new Set(domains.domains.map(domain => {
     if (!domain.styles_directory) {
-        domain.styles_directory = 'common';
+        return 'common';
     }
+
+    return domain.styles_directory;
+}));
+
+domainStylesDirectories.forEach(stylesDirectory => {
     Encore
-        .addEntry('frontend-style-' + domain.styles_directory, './assets/styles/frontend/' + domain.styles_directory + '/main.less')
-        .addEntry('frontend-print-style-' + domain.styles_directory, './assets/styles/frontend/' + domain.styles_directory + '/print/main.less')
-        .addEntry('frontend-wysiwyg-' + domain.id, './assets/styles/frontend/' + domain.styles_directory + '/wysiwyg.less');
+        .addEntry('frontend-style-' + stylesDirectory, './assets/styles/frontend/' + stylesDirectory + '/main.less')
+        .addEntry('frontend-print-style-' + stylesDirectory, './assets/styles/frontend/' + stylesDirectory + '/print/main.less')
+        .addEntry('frontend-wysiwyg-' + stylesDirectory, './assets/styles/frontend/' + stylesDirectory + '/wysiwyg.less');
 });
 
 Encore
@@ -101,6 +113,8 @@ config.resolve.alias = {
     'jquery-ui': 'jquery-ui/ui/widgets',
     'framework': '@shopsys/framework/js',
     'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
-    'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui'))
+    'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui')),
+    'bazinga-translator': path.resolve(path.join(__dirname, 'node_modules', 'bazinga-translator')),
+    'jquery-ui-nested-sortable': path.resolve(path.join(__dirname, 'node_modules', 'nestedSortable'))
 };
 module.exports = config;

@@ -1,9 +1,9 @@
 const WebfontsGenerator = require('webfonts-generator');
 const optimizeSvg = require('./optimizeSvg');
 
-function generateWebFont (type, svgSourceFolder) {
+function generateWebFont (type, svgSourceFolder, svgDestinationFolder = null) {
 
-    optimizeSvg(svgSourceFolder).then(svgFilesPath => {
+    optimizeSvg(svgSourceFolder, svgDestinationFolder).then(svgFilesPath => {
         WebfontsGenerator({
             files: svgFilesPath,
             dest: 'assets/public/' + type + '/fonts',

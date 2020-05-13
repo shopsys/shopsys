@@ -22,5 +22,6 @@
 *.xsl text eol=lf
 *.xslt text eol=lf
 *.yml text eol=lf
+*.yaml text eol=lf
 
 composer.lock text eol=lf

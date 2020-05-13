@@ -55,11 +55,40 @@ spec:
                         -   name: source-codes
                             mountPath: /tmp/source-codes
                         -   name: domains-urls
-                            mountPath: /var/www/html/config/domains_urls.yml
-                            subPath: domains_urls.yml
+                            mountPath: /var/www/html/config/domains_urls.yaml
+                            subPath: domains_urls.yaml
                         -   name: parameters
-                            mountPath: /var/www/html/config/parameters.yml
-                            subPath: parameters.yml
+                            mountPath: /var/www/html/config/parameters.yaml
+                            subPath: parameters.yaml
+                -   name: initialize-database
+                    image: "{{TAG}}"
+                    securityContext:
+                        runAsUser: 33
+                    command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate warmup"]
+                    volumeMounts:
+                        -   name: source-codes
+                            mountPath: /var/www/html
+                        -   name: domains-urls
+                            mountPath: /var/www/html/config/domains_urls.yaml
+                            subPath: domains_urls.yaml
+                        -   name: parameters
+                            mountPath: /var/www/html/config/parameters.yaml
+                            subPath: parameters.yaml
+                    env:
+                        -   name: S3_API_HOST
+                            value: "{{S3_API_HOST}}"
+                        -   name: S3_API_USERNAME
+                            value: "{{S3_API_USERNAME}}"
+                        -   name: S3_API_PASSWORD
+                            value: "{{S3_API_PASSWORD}}"
+                        -   name: S3_API_BUCKET_NAME
+                            value: "{{S3_API_BUCKET_NAME}}"
+                        -   name: CDN_DOMAIN
+                            value: "{{CDN_DOMAIN}}"
+                        -   name: REDIS_PREFIX
+                            value: "{{REDIS_PREFIX}}"
+                        -   name: ELASTIC_SEARCH_INDEX_PREFIX
+                            value: "{{ELASTIC_SEARCH_INDEX_PREFIX}}"
             containers:
                 -   image: "{{TAG}}"
                     name: php-fpm
@@ -80,11 +109,11 @@ spec:
                         -   name: source-codes
                             mountPath: /var/www/html
                         -   name: domains-urls
-                            mountPath: /var/www/html/config/domains_urls.yml
-                            subPath: domains_urls.yml
+                            mountPath: /var/www/html/config/domains_urls.yaml
+                            subPath: domains_urls.yaml
                         -   name: parameters
-                            mountPath: /var/www/html/config/parameters.yml
-                            subPath: parameters.yml
+                            mountPath: /var/www/html/config/parameters.yaml
+                            subPath: parameters.yaml
                     env:
                         -   name: S3_API_HOST
                             value: "{{S3_API_HOST}}"
