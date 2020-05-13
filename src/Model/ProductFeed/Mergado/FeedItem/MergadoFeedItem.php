@@ -77,6 +77,7 @@ class MergadoFeedItem implements FeedItemInterface
      * @var string
      */
     private $productNo;
+
     /**
      * @var int|null
      */
@@ -96,6 +97,7 @@ class MergadoFeedItem implements FeedItemInterface
      * @param string|null $description
      * @param \App\Model\Product\Brand\Brand|null $brand
      * @param string|null $imageUrl
+     * @param int|null $mainVariantId
      */
     public function __construct(
         int $id,
@@ -242,7 +244,7 @@ class MergadoFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return string|null
+     * @return int|null
      */
     public function getMainVariantId(): ?int
     {
