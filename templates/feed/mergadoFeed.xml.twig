@@ -1,7 +1,7 @@
 {% block begin %}
 <?xml version="1.0" encoding="utf-8"?>
 <CHANNEL xmlns="http://www.mergado.com/ns/1.7">
-    <LINK>{{ 'url todo' }}</LINK>
+    <LINK>{{ url('front_homepage') }}</LINK>
     <GENERATOR>mergado.woocommerce.marketingpack.2_2_0</GENERATOR>
 {% endblock %}
 
@@ -36,6 +36,9 @@
                 <VALUE>{{ parameterValue }}</VALUE>
             </PARAM>
         {% endfor %}
+        {% if item.mainVariantId %}
+            <ITEMGROUP_ID>{{ item.mainVariantId }}</ITEMGROUP_ID>
+        {% endif %}
     </ITEM>
 {% endblock %}
 

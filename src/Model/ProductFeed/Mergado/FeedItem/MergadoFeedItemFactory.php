@@ -91,7 +91,8 @@ class MergadoFeedItemFactory
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
             $product->getDescription($domainId),
             $product->getBrand(),
-            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig)
+            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
+            $product->isVariant() ? $product->getMainVariant()->getId() : null
         );
     }
 
