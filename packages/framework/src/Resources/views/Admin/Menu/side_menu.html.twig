@@ -112,7 +112,7 @@
 {% endblock %}
 
 {% block spanElement %}
-    {%- set class = item.level == 1 ? 'side-menu__item__link' : 'side-menu__submenu__item__label' -%}
+    {%- set class = item.level == 1 ? 'side-menu__item__link' : 'side-menu__submenu__item__label js-no-click' -%}
     <span{{ self.attributes(item.labelAttributes, [class]) }}>{{ block('label') }}</span>
 {% endblock %}
 

@@ -3,6 +3,7 @@ const jsSideMenuSubmenuSelector = '.js-side-menu-submenu';
 const jsSideMenuItemSelector = '.js-side-menu-item';
 const jsSideMenuSelector = '.js-side-menu';
 const jsSideMenuCollapsedClass = 'menu-collapsed';
+const jsNoClickSelector = '.js-no-click';
 
 export default class SideMenu {
 
@@ -21,6 +22,11 @@ export default class SideMenu {
         $(jsSideMenuItemSelector + ' a.side-menu__submenu__item__link').click(event => {
             event.stopPropagation();
         });
+
+        $(jsNoClickSelector).click(event => {
+            event.preventDefault();
+            event.stopPropagation();            
+        })
 
         this.$items.click(event => {
             if ($(event.currentTarget).hasClass('open')) {
