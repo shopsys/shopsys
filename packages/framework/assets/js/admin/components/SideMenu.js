@@ -2,6 +2,7 @@ import Register from '../../common/utils/Register';
 const jsSideMenuSubmenuSelector = '.js-side-menu-submenu';
 const jsSideMenuItemSelector = '.js-side-menu-item';
 const jsSideMenuSelector = '.js-side-menu';
+const jsSideMenuCollapsedClass = 'menu-collapsed';
 
 export default class SideMenu {
 
@@ -32,6 +33,7 @@ export default class SideMenu {
                 $(event.currentTarget).filterAllNodes(jsSideMenuSubmenuSelector).removeClass('hidden');
                 $(event.currentTarget).addClass('open');
                 this.$webPanel.addClass('open');
+                $('body').removeClass(jsSideMenuCollapsedClass);
             }
         });
 
@@ -58,7 +60,7 @@ export default class SideMenu {
 
         // show/hide left menu on desktop
         this.$sideMenuCollapseButton.click(() => {
-            $('body').toggleClass('menu-collapsed');
+            $('body').toggleClass(jsSideMenuCollapsedClass);
             if (!this.$webPanel.hasClass('active-menu')) {
                 this.$webPanel.removeClass('open');
                 this.$sideMenu.find(jsSideMenuItemSelector).removeClass('open');
