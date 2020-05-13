@@ -1051,7 +1051,7 @@ There you can find links to upgrade notes for other versions too.
             -   public function editAction(Request $request, $id)
             +   public function editAction(Request $request, int $id)
             ```
-        - `SAdministratorRolesChangedSubscriber::__construct()`
+        - `AdministratorRolesChangedSubscriber::__construct()`
             ```diff
             -    public function __construct(TokenStorageInterface $tokenStorage, AdministratorFacade $administratorFacade)
             +    public function __construct(TokenStorageInterface $tokenStorage, AdministratorRolesChangedFacade $administratorRolesChangedFacade)
