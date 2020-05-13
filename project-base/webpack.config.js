@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const sources = require('./assets/js/bin/helpers/sources');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
@@ -73,6 +74,7 @@ Encore
         { from: 'node_modules/@shopsys/framework/public/admin', to: '../../web/public/admin', force: true },
         { from: 'assets/public', to: '../../web/public', ignore: ['assets/public/admin/svg/**/*'], force: true }
     ]))
+    .addPlugin(new LiveReloadPlugin())
 ;
 
 const domainFile = './config/domains.yaml';

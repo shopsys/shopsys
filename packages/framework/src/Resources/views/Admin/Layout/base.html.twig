@@ -22,5 +22,9 @@
 
         {{ js_validator_config() }}
         {{ init_js_validation() }}
+
+        {% if app.environment is same as('dev') %}
+            <script async src="//localhost:35729/livereload.js"></script>
+        {% endif %}
     </body>
 </html>
