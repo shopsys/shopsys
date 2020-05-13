@@ -26,7 +26,11 @@ body {
         }
 
         .web--with-info & {
-            padding-top: @height-fixed-bar;
+            padding-top: @height-fixed-bar-mobile;
+
+            @media @query-md {
+                padding-top: @height-fixed-bar;
+            }
         }
 
         .dump-mode & {
@@ -91,7 +95,11 @@ body {
         }
 
         .web--with-info & {
-            padding-top: @height-header + @height-fixed-bar;
+            padding-top: @height-header + @height-fixed-bar-mobile;
+
+            @media @query-md {
+                padding-top: @height-header + @height-fixed-bar;
+            }
         }
 
         &--blank {
@@ -141,7 +149,11 @@ body {
         }
 
         .web--with-info & {
-            top: @height-header + @height-fixed-bar;
+            top: @height-header + @height-fixed-bar-mobile;
+
+            @media @query-md {
+                top: @height-header + @height-fixed-bar;
+            }
         }
 
         &__in {
