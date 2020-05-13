@@ -1059,6 +1059,7 @@ There you can find links to upgrade notes for other versions too.
 
 - add cron overview ([#1407](https://github.com/shopsys/shopsys/pull/1407))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/fdac77abc9fd7f167ccd544f4691ee25b2de169d) to update your project
+    - add `readableName` attribute for your crons in `cron.yaml` file as described in diff above
 
 - update your application to do not change product availability to default when availability can not be calculated immediately ([#1659](https://github.com/shopsys/shopsys/pull/1659))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/0be925148d15222e8765efae38386afef1485ebf) to update your project
