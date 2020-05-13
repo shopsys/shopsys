@@ -52,6 +52,7 @@ class ProductParameterTransferAkeneoMapper
         $parameterData->name['sk'] = $akeneoParameterData['labels']['sk_SK'];
 
         $parameterData->group = $this->parameterGroupFacade->findParameterGroupByAkeneoCode($akeneoParameterData['group']);
+        $parameterData->useSliderInFilter = false;
 
         return $parameterData;
     }
