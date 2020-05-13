@@ -70,7 +70,9 @@
                 display: none;
 
                 .open & {
-                    display: inline-block;
+                    @media @query-md {
+                        display: inline-block;
+                    }
                 }
             }
         }
@@ -84,7 +86,11 @@
             display: block;
             position: absolute;
             top: 100%;
-            right: 0;
+            right: -10px;
+
+            @media @query-md {
+                right: 0;
+            }
         }
 
         &__item {
