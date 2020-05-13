@@ -584,4 +584,4 @@ services:
 
     App\ProductFeed\MergadoFeed\MergadoFeed:
         tags:
-            - { name: sconto.product_feed }
+            - { name: shopsys.product_feed }
