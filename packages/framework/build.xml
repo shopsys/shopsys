@@ -444,13 +444,13 @@
     </target>
 
     <target name="domains-info-load" description="Load info about domains configuration into Phing properties." hidden="true">
-        <exec executable="${path.php.executable}" outputProperty="domains-info.ids">
+        <exec executable="${path.php.executable}" passthru="true" outputProperty="domains-info.ids">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains:info"/>
             <arg value="--oneline"/>
         </exec>
 
-        <exec executable="${path.php.executable}" outputProperty="domains-info.locales">
+        <exec executable="${path.php.executable}" passthru="true" outputProperty="domains-info.locales">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains:info"/>
             <arg value="locale"/>
