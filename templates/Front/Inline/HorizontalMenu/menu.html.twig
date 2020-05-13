@@ -1,7 +1,8 @@
 <nav class="menu-list-menu-wrap dont-print">
 	<ul class="menu-horizontal js-menuHorizontal" data-hovered="false">
 		{% for itemDetail in itemDetails %}
-			<li class="menu-horizontal__item js-menu-horizontal-item{% if itemDetail.categoryDetailsByColumnNumber is not empty %} menu-horizontal__item--drop{% endif %}">
+			<li class="menu-horizontal__item js-menu-horizontal-item
+				{{ itemDetail.categoryDetailsByColumnNumber is not empty ? ' menu-horizontal__item--drop' }}">
 				{% if itemDetail.horizontalMenuItem.url %}
 					<a href="{{ itemDetail.horizontalMenuItem.url }}" class="menu-horizontal__item__link">
 						{{ itemDetail.horizontalMenuItem.name }}
