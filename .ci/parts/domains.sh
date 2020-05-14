@@ -7,9 +7,9 @@ assertVariable "CONFIGURATION_TARGET_PATH"
 assertVariable "DOMAINS"
 assertVariable "RUNNING_PRODUCTION"
 
-domains_urls_filepath="${BASE_PATH}/config/domains_urls.yml"
+domains_urls_filepath="${BASE_PATH}/config/domains_urls.yaml"
 
-cp "${BASE_PATH}/config/domains_urls.yml.dist" $domains_urls_filepath
+cp "${BASE_PATH}/config/domains_urls.yaml.dist" $domains_urls_filepath
 
 # Configure domains
 domain_iterator=0
