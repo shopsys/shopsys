@@ -183,6 +183,10 @@ We deleted managing transports and payments prices by currencies  with this upgr
 + Payment::getPrice(int $domainId): PaymentPrice
 ```
 ```diff
+- ProductPriceCalculation::__construct(BasePriceCalculation $basePriceCalculation, PricingSetting $pricingSetting, ProductManualInputPriceRepository $productManualInputPriceRepository, ProductRepository $productRepository)
++ ProductPriceCalculation::__construct(BasePriceCalculation $basePriceCalculation, PricingSetting $pricingSetting, ProductManualInputPriceRepository $productManualInputPriceRepository, ProductRepository $productRepository, ?CurrencyFacade $currencyFacade = null)
+```
+```diff
 - PaymentDomain::__construct(Payment $payment, $domainId)
 + PaymentDomain::__construct(Payment $payment, int $domainId, Vat $vat)
 ```
