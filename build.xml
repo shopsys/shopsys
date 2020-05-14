@@ -17,7 +17,7 @@
 
 
     <!-- Remove dependency `clean-redis-old` because old redis is used by live container during deployment. -->
-    <target name="build-deploy-part-2-db-dependent" depends="redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,error-pages-generate,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
+    <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,error-pages-generate,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
 
     <target name="maintenance-off" description="Turns the maintenance page off.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
