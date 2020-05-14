@@ -1343,50 +1343,13 @@ There you can find links to upgrade notes for other versions too.
   - run `php phing standards-fix` and fix possible violations that need to be fixed manually
   - see [project-base diff](https://github.com/shopsys/project-base/commit/3126182f41a680f3b6d2565ccae716491b5e8b09) to update your project
 
-- if you want to add stylelint rules to check style coding standards [#1511](https://github.com/shopsys/shopsys/pull/1511)
+- if you want to add stylelint rules to check style coding standards ([#1511](https://github.com/shopsys/shopsys/pull/1511))
     -  add new file [.stylelintignore](https://github.com/shopsys/shopsys/blob/master/project-base/.stylelintignore)
     -  add new file [.stylelintrc](https://github.com/shopsys/shopsys/blob/master/project-base/.stylelintrc)
-    - update `gruntfile.js.twig` and add new task
+    - update `package.json` and add this to `devDependencies`
         ```diff
-        +   stylelint: {
-        +      frontend: [
-        +          '{{ customResourcesDirectory|raw }}/styles/**/*.less'
-        +      ],
-        +      admin: [
-        +          '{{ frameworkResourcesDirectory|raw }}/styles/admin/**/*.less'
-        +      ]
-        +   },
-
-            watch: {
-                admin: {
+            "stylelint": "^11.1.1",
         ```
-        ```diff
-            {% else -%}
-        -       ['frontendLess{{ domain.id }}']
-        +       ['frontendLess{{ domain.id }}','stylelint']
-            {% endif -%}
-        ```
-        ```diff
-            grunt.loadNpmTasks('grunt-spritesmith');
-        +   grunt.loadNpmTasks('grunt-stylelint');
-
-        -   grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss"]);
-        +   grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "stylelint:frontend"]);
-        ```
-        ```diff
-        -   grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin', 'stylelint:admin']);
-        +   grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin']);
-      ```
-    - update `package.json`
-        ```diff
-            "grunt-spritesmith": "^6.6.2",
-        +   "grunt-stylelint": "^0.12.0",
-            "grunt-webfont": "^1.7.2",
-            "jit-grunt": "^0.10.0",
-        +   "stylelint": "^11.1.1",
-            "time-grunt": "^1.4.0"
-        ```
-    - don't forget to rebuild your grunt file by command `php phing gruntfile` and update your npm dependencies by command `npm install`
     - to fix all your less files in command line by command `php phing stylelint-fix`
 
 - make email templates editable on separate page ([#1828](https://github.com/shopsys/shopsys/pull/1828))
