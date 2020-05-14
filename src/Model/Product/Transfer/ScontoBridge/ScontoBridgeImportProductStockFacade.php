@@ -8,15 +8,12 @@ use App\Component\ScontoBridge\ScontoBridgeClient;
 use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeImportTransfer;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
-use App\Model\Customer\User\CustomerUserFacade;
 use DateTime;
-use Shopsys\FrameworkBundle\Component\String\HashGenerator;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 
 class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTransfer
 {
     private const URI_ERP_PRODUCT_STOCK = 'services/app/ErpStoreItem/GetErpStoreItems';
-    private const URI_ERP_PRODUCT_STOCK_NEXT_PAGE = 'services/app/ErpStoreItem/GetErpStoreItemsNextPage';
+    private const NEXT_PAGE_POSTFIX = 'NextPage';
     public const PAGE_SIZE_LIMIT = 20;
 
     /**
@@ -35,27 +32,19 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
     private $setting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
-     */
-    private $hashGenerator;
-
-    /**
      * @param \App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency
      * @param \App\Component\ScontoBridge\ScontoBridgeClient $scontoBridgeClient
      * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
         ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency,
         ScontoBridgeClient $scontoBridgeClient,
-        Setting $setting,
-        HashGenerator $hashGenerator
+        Setting $setting
     ) {
         parent::__construct($scontoBridgeImportTransferDependency);
 
         $this->scontoBridgeClient = $scontoBridgeClient;
         $this->setting = $setting;
-        $this->hashGenerator = $hashGenerator;
     }
 
     /**
@@ -63,7 +52,10 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
      */
     protected function doBeforeTransfer(): void
     {
-        $this->lastModificationAtFromScontoBridge = $this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME);
+        if ($this->lastModificationAtFromScontoBridge === null) {
+            $this->lastModificationAtFromScontoBridge = $this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME);
+        }
+
         $this->logger->addInfo(
             sprintf('Importing customers data from Sconto bridge from last modification : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
         );
@@ -77,58 +69,48 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
         $modifiedAfter = clone $this->lastModificationAtFromScontoBridge;
         $modifiedAfter->modify('+ 1 microseconds');
 
-        $modifiedAfter = new DateTime('2019-10-23');
-        d($modifiedAfter);
         $urlParameters = [
             'pageSize' => self::PAGE_SIZE_LIMIT,
             'modifiedAfter' => $modifiedAfter->format(ScontoBridgeClient::DATE_TIME_FORMAT),
         ];
-        $requestUrl = self::URI_ERP_PRODUCT_STOCK . '?' . http_build_query($urlParameters);
-        $data = $this->scontoBridgeClient->get($requestUrl);
-        d($data);
-        exit();
-        $nextPageToken = $this->prepareCustomersDataFromApi($data)['nextPageToken'];
 
-        foreach ($this->prepareCustomersDataFromApi($data)['customers'] as $customer) {
-            yield $customer;
-        }
+        $nextPageToken = null;
+        do {
+            $requestUrl = ($nextPageToken === null ? self::URI_ERP_PRODUCT_STOCK : (self::URI_ERP_PRODUCT_STOCK . self::NEXT_PAGE_POSTFIX));
+            $requestUrl .= '?' . http_build_query($urlParameters);
 
-        while ($nextPageToken !== null) {
+            $data = $this->scontoBridgeClient->get($requestUrl);
+            $resultCount = count($data['storeItems']['items']);
+            foreach ($data['storeItems']['items'] as $storeItem) {
+                yield $storeItem;
+            }
+
+            $nextPageToken = $data['nextPageToken'] ?? null;
             $urlParameters = [
                 'nextPageToken' => $nextPageToken,
             ];
-            $requestUrl = self::URI_ERP_PRODUCT_STOCK_NEXT_PAGE . '?' . http_build_query($urlParameters);
-            $data = $this->scontoBridgeClient->get($requestUrl);
-
-            foreach ($this->prepareCustomersDataFromApi($data)['customers'] as $customer) {
-                yield $customer;
-            }
-            $nextPageToken = $this->prepareCustomersDataFromApi($data)['nextPageToken'];
-        }
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    private function prepareCustomersDataFromApi(array $data): array
-    {
-        return [
-            'customers' => $data['users']['items'],
-            'nextPageToken' => $data['nextPageToken'],
-        ];
+        } while ($nextPageToken !== null && $resultCount === self::PAGE_SIZE_LIMIT);
     }
 
     /**
      * @inheritDoc
      */
-    protected function processItem(array $scontoBridgeCustomerData): void
+    protected function processItem(array $scontoBridgeItemData): void
     {
-        $this->logger->addInfo(sprintf('Processing customer with ERP id : %s', $scontoBridgeCustomerData['erpCustomerNumber']));
+        $this->logger->addInfo(sprintf('Processing store item with ERP id(SKU) : %s', $scontoBridgeItemData['sku']));
 
+        //TODO implement code here
+//        $scontoBridgeData['sku'];
+//        $scontoBridgeData['storeCode'];
+//        $scontoBridgeData['amount'];
+//        $scontoBridgeData['inShowroom'];
+//        $scontoBridgeData['modificationTime'];
+//        $scontoBridgeData['dateArrival']['year'];
+//        $scontoBridgeData['dateArrival']['month'];
+//        $scontoBridgeData['dateArrival']['day'];
+//        $scontoBridgeData['dateArrival']['week'];
 
-
-        $this->lastModificationAtFromScontoBridge = new DateTime($scontoBridgeCustomerData['modificationTime']) ?? $this->lastModificationAtFromScontoBridge;
+        $this->lastModificationAtFromScontoBridge = $scontoBridgeItemData['modificationTime'] !== null ? new DateTime($scontoBridgeItemData['modificationTime']) : $this->lastModificationAtFromScontoBridge;
     }
 
     /**
@@ -137,7 +119,7 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
     protected function doAfterTransfer(): void
     {
         $this->logger->addInfo('Importing iterable transfer is done.');
-        $this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT));
+        //$this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge);
     }
 
     /**
@@ -155,7 +137,7 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
      */
     public function cronWakeUp(): void
     {
-        $this->lastModificationAtFromScontoBridge = new DateTime($this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_CUSTOMERS_LAST_UPDATED_DATETIME));
+        $this->lastModificationAtFromScontoBridge = $this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME);
         $this->logger->addInfo(
             sprintf('Wake up cron for last modified : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
         );

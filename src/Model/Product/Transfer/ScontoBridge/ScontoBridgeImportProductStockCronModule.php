@@ -9,16 +9,16 @@ use Symfony\Bridge\Monolog\Logger;
 
 class ScontoBridgeImportProductStockCronModule implements IteratedCronModuleInterface
 {
-
-
     /**
      * @var \App\Model\Product\Transfer\ScontoBridge\ScontoBridgeImportProductStockFacade
      */
     private $scontoBridgeImportProductStockFacade;
 
+    /**
+     * @param \App\Model\Product\Transfer\ScontoBridge\ScontoBridgeImportProductStockFacade $scontoBridgeImportProductStockFacade
+     */
     public function __construct(ScontoBridgeImportProductStockFacade $scontoBridgeImportProductStockFacade)
     {
-
         $this->scontoBridgeImportProductStockFacade = $scontoBridgeImportProductStockFacade;
     }
 

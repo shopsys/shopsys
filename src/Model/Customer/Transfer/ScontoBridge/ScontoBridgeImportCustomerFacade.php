@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfer
 {
     private const URI_ERP_USER = 'services/app/ErpUser/GetErpUsers';
-    private const URI_ERP_USER_NEXT_PAGE = 'services/app/ErpUser/GetErpUsersNextPage';
+    private const NEXT_PAGE_POSTFIX = 'NextPage';
     public const PAGE_SIZE_LIMIT = 20;
 
     /**
@@ -105,38 +105,22 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
             'pageSize' => self::PAGE_SIZE_LIMIT,
             'modifiedAfter' => $modifiedAfter->format(ScontoBridgeClient::DATE_TIME_FORMAT),
         ];
-        $requestUrl = self::URI_ERP_USER . '?' . http_build_query($urlParameters);
-        $data = $this->scontoBridgeClient->get($requestUrl);
-        $nextPageToken = $this->prepareCustomersDataFromApi($data)['nextPageToken'];
 
-        foreach ($this->prepareCustomersDataFromApi($data)['customers'] as $customer) {
-            yield $customer;
-        }
+        $nextPageToken = null;
+        do {
+            $requestUrl = ($nextPageToken === null ? self::URI_ERP_USER : (self::URI_ERP_USER . self::NEXT_PAGE_POSTFIX));
+            $requestUrl .= '?' . http_build_query($urlParameters);
 
-        while ($nextPageToken !== null) {
+            $data = $this->scontoBridgeClient->get($requestUrl);
+            foreach ($data['users']['items'] as $customer) {
+                yield $customer;
+            }
+            $nextPageToken = $data['nextPageToken'];
+
             $urlParameters = [
                 'nextPageToken' => $nextPageToken,
             ];
-            $requestUrl = self::URI_ERP_USER_NEXT_PAGE . '?' . http_build_query($urlParameters);
-            $data = $this->scontoBridgeClient->get($requestUrl);
-
-            foreach ($this->prepareCustomersDataFromApi($data)['customers'] as $customer) {
-                yield $customer;
-            }
-            $nextPageToken = $this->prepareCustomersDataFromApi($data)['nextPageToken'];
-        }
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    private function prepareCustomersDataFromApi(array $data): array
-    {
-        return [
-            'customers' => $data['users']['items'],
-            'nextPageToken' => $data['nextPageToken'],
-        ];
+        } while ($nextPageToken !== null);
     }
 
     /**
