@@ -227,7 +227,7 @@
 {% endblock %}
 
 {% block grid_pager_totalcount %}
-    <div class="in-grid-control__item in-grid-control__item--show">
+    <div class="in-grid-control__item in-grid-control__item--show {% if pageCount > 0 %}in-grid-control__item--wide{% endif %} ">
         {{ 'Displaying'|trans }} {{ entityName|default('records'|trans)|trim }}
         {{ grid.paginationResults.fromItem }} - {{ grid.paginationResults.toItem }} {{ 'from'|trans }} {{ grid.totalCount }}
     </div>
@@ -312,7 +312,7 @@
                 </a>
             </div>
         </div>
-        <span class="in-grid-control__item__go">
+        <div class="in-grid-control__item__go in-grid-control__item__go--select">
             <span class="in-grid-control__item__go__text">
                 {{ 'Items per page:'|trans }}
             </span>
@@ -323,18 +323,18 @@
                     {% endfor %}
                 </select>
             </div>
-        </span>
+        </div>
     </div>
 {% endblock %}
 
 {% block grid_pager %}
     <div class="in-grid-control">
-        {{ gridView.renderBlock('grid_pager_totalcount') }}
-        <div class="in-grid-control__item in-grid-control__item--paging">
-            {% if grid.pageCount > 1 %}
+        {{ gridView.renderBlock('grid_pager_totalcount', { 'pageCount': grid.pageCount }) }}
+        {% if grid.pageCount > 1 %}
+            <div class="in-grid-control__item in-grid-control__item--paging">
                 {{ gridView.renderBlock('grid_pager_selectpage') }}
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
         {{ gridView.renderBlock('grid_pager_results_perpage') }}
     </div>
 {% endblock %}

@@ -45,7 +45,10 @@ class CookiesSettingFormType extends AbstractType
                 'choice_value' => 'id',
                 'placeholder' => t('-- Choose article --'),
                 'label' => t('Cookies information'),
-                'icon_title' => t('Choose article, which will provide information about how this pages uses cookies.'),
+                'attr' => [
+                    'icon' => true,
+                    'iconTitle' => t('Choose article, which will provide information about how this pages uses cookies.'),
+                ],
             ]);
 
         $builder

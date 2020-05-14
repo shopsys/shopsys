@@ -2,10 +2,13 @@
     <li class="js-toggle-menu-item navig__item">
         <div class="box-dropdown">
             <div
-                    class="box-dropdown__select"
+                    class="box-dropdown__select box-dropdown__select--menu"
                     title="{{ 'Frontend'|trans }}"
             >
-                {{ 'Go to Frontend'|trans }}
+                <i class="svg svg-forward-page"></i>
+                <span class="box-dropdown__select__text">
+                    {{ 'Go to Frontend'|trans }}
+                </span>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--up"></i>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--down"></i>
             </div>
@@ -22,11 +25,13 @@
     <li class="js-toggle-menu-item navig__item">
         <div class="box-dropdown">
             <div
-                    class="box-dropdown__select box-dropdown__select--with-icon"
+                    class="box-dropdown__select"
                     title="{{ 'Account'|trans }}"
             >
                 <i class="svg svg-person-man"></i>
-                {{ app.user.realName }}
+                <span class="box-dropdown__select__text">
+                    {{ app.user.realName }}
+                </span>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--up"></i>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--down"></i>
             </div>

@@ -45,7 +45,10 @@ class LegalConditionsSettingFormType extends AbstractType
                 'choice_value' => 'id',
                 'placeholder' => t('-- Choose article --'),
                 'label' => t('Terms and conditions'),
-                'icon_title' => t('Choose article, which will serve as terms and conditions with which the customer has to agree when creating order.'),
+                'attr' => [
+                    'icon' => true,
+                    'iconTitle' => t('Choose article, which will serve as terms and conditions with which the customer has to agree when creating order.'),
+                ],
             ])
             ->add('privacyPolicyArticle', ChoiceType::class, [
                 'required' => false,
@@ -54,7 +57,10 @@ class LegalConditionsSettingFormType extends AbstractType
                 'choice_value' => 'id',
                 'placeholder' => t('-- Choose article --'),
                 'label' => t('Privacy policy'),
-                'icon_title' => t('Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user.'),
+                'attr' => [
+                    'icon' => true,
+                    'iconTitle' => t('Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user.'),
+                ],
             ]);
 
         $builder

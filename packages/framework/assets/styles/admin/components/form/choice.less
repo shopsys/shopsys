@@ -17,4 +17,28 @@
     &__label {
         line-height: @form-choice-line-height;
     }
+
+    &__info {
+        display: inline-block;
+        padding: 7px 0;
+        position: relative;
+    }
+
+    &--inline-checkbox {
+        margin-top: 0;
+
+        label {
+            &:first-child {
+                float: left;
+                position: relative;
+                bottom: -7px;
+            }
+
+            &:nth-child(2) {
+                display: inline-block;
+                margin-top: 0;
+                padding-left: 30px;
+            }
+        }
+    }
 }

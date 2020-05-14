@@ -39,12 +39,16 @@
     }
 
     &__cell {
-        padding: @table-grid-cell-padding 6px;
+        padding: @table-grid-cell-padding;
         height: 40px;
 
         text-align: left;
         font-size: @table-grid-font-size;
         font-weight: @table-grid-font-weight;
+
+        @media @query-md {
+            padding: @table-grid-cell-padding 6px;
+        }
 
         &:first-child {
             padding-left: 17px;

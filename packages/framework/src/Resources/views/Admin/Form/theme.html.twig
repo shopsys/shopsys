@@ -83,13 +83,13 @@
         {% endif %}
     {% else %}
         {% if form.vars.display_format == 'multidomain_form_rows_no_padding' %}
-            {% if form.vars.label is not null %}
-                <div class="form-line form-line--no-bottom-gap">
-                    {{- form_label(form) -}}
-                    {{- form_errors(form) -}}
-                </div>
-            {% endif %}
-            {{- block('multidomain_form_rows_no_padding') -}}
+            <div class="form-line form-line--no-bottom-gap">
+                {% if form.vars.label is not null %}
+                        {{- form_label(form) -}}
+                        {{- form_errors(form) -}}
+                {% endif %}
+                {{- block('multidomain_form_rows_no_padding') -}}
+            </div>
         {% else %}
             <div class="form-line">
                 {{- form_label(form) -}}
@@ -103,7 +103,7 @@
 
 {% block multidomain_form_rows_no_padding %}
     {% for domainId, contentForm in form %}
-        <div class="form-line">
+        <div class="form-line {% if loop.first %}form-line--first-top-gap{% endif %}">
             <div class="form-line__box js-entity-url-list-domain-{{ domainId }}">
                 {% if isMultidomain() %}
                     <div class="form-line__box__title">
@@ -146,7 +146,7 @@
 {% block checkbox_row %}
     <div class="form-line">
         <div class="form-line__line form-line__line--no-space">
-            <div class="form-choice">
+            <div class="form-choice form-choice--inline-checkbox">
                 {{ form_widget(form, { inFormChoice: true }) }}
                 {{ form_label(form) }}
                 {{ form_errors(form) }}
@@ -157,7 +157,7 @@
 
 {% block text_row -%}
     {% if localized is defined %}
-        <div class="form-line__side">
+        <div class="form-line__side form-line__side--multilanguage">
             <div class="form-line__item">
                 <div class="input__wrap">
                     {% set inputAttr = attr|merge({'class': (attr.class|default('') ~ ' input--flag')|trim}) %}
@@ -170,7 +170,7 @@
             {{ form_errors(form) }}
         </div>
     {% elseif multidomain is defined %}
-        <div class="form-line__side">
+        <div class="form-line__side form-line__side--multidomain">
             <div class="form-line__item">
                 <div class="input__wrap">
                     {% set inputAttr = attr %}
@@ -202,12 +202,6 @@
             <div class="form-line__side">
                 <div class="form-line__item">
                     {{ form_widget(form) }}
-                    {% if form.vars.icon_title is not null %}
-                        <i class="svg svg-info in-icon in-icon--after-input cursor-help js-tooltip"
-                           data-toggle="tooltip" data-placement="right"
-                           title="{{ form.vars.icon_title }}"
-                        ></i>
-                    {% endif %}
                 </div>
                 {{ form_errors(form) }}
             </div>
@@ -224,7 +218,7 @@
 
 {% block money_row %}
     {% if multidomain is defined %}
-        <div class="form-line__side">
+        <div class="form-line__side form-line__side--multidomain">
             <div class="form-line__item">
                 <div class="input__wrap">
                     {% set inputAttr = attr %}
@@ -256,8 +250,8 @@
 
 {% block textarea_row -%}
     {% if localized is defined %}
-        <div class="form-line__side">
-            <div class="form-line__item--full-width">
+        <div class="form-line__side form-line__side--multidomain">
+            <div class="form-line__item form-line__item--full-width">
                 <div class="input__wrap">
                     {% set inputAttr = attr|merge({'class': (attr.class|default('') ~ ' input--flag')|trim}) %}
                     {{ form_widget(form, { attr: inputAttr, localized: true, locale: locale }) }}
@@ -287,7 +281,7 @@
             {{- form_errors(form) -}}
             {% if newline is not defined %}
                 <div{% if isMultidomain() %} class="form-line__side"{% endif %}>
-                    <div class="form-line__item--full-width">
+                    <div class="form-line__item form-line__item--full-width">
                         {{- form_widget(form) -}}
                     </div>
                 </div>
@@ -340,10 +334,10 @@
                                 {% set mainUrlRadioButton = form.mainFriendlyUrlsByDomainId[domainId][slug] %}
                                 {{ form_widget(mainUrlRadioButton, { attr: { class: 'js-entity-url-list-select-main form-choice-list__input' } }) }}
 
-                                <span class="js-entity-url-list-row-label">
+                                <span class="js-entity-url-list-row-label text-break-all">
                                     {% set absoluteUrl = form.vars.absoluteUrlsByDomainIdAndSlug[domainId][friendlyUrlForm.vars.value] %}
                                     {% if mainUrl == absoluteUrl %}
-                                        <strong>{{ absoluteUrl }}</strong>
+                                        <strong class="text-break-all">{{ absoluteUrl }}</strong>
                                     {% else %}
                                         {{ absoluteUrl }}
                                     {% endif %}
@@ -396,22 +390,16 @@
 {%- endblock url_list_widget -%}
 
 {% block friendly_url_widget %}
-    <div class="js-entity-url-list-new-row form-line" data-index="{{ form.vars.name }}">
-        <div class="form-line__label form-line__label--input">
+    <div class="js-entity-url-list-new-row form-line__friendly-url" data-index="{{ form.vars.name }}">
+        <div class="form-line__friendly-url__domain form-line__label--input">
             {{ form_widget(form.domain) }}
+            <div class="form-line__friendly-url__divider">/</div>
         </div>
-        <div class="form-line__side">
-            <div class="form-line__item form-line__item--text">
-                /
-            </div>
-            <div class="form-line__item">
-                {{ form_widget(form.slug) }}
-            </div>
-            <div class="form-line__item">
-                <button class="js-entity-url-list-new-row-delete-button btn-no-style" type="button">
-                    <i class="svg svg-delete-thin in-icon in-icon--delete"></i>
-                </button>
-            </div>
+        <div class="form-line__friendly-url__input">
+            {{ form_widget(form.slug) }}
+            <button class="js-entity-url-list-new-row-delete-button btn-no-style" type="button">
+                <i class="svg svg-delete-thin in-icon in-icon--delete"></i>
+            </button>
         </div>
         {{ form_errors(form.slug) }}
     </div>
@@ -488,29 +476,27 @@
 
 {% block product_widget %}
     <span class="js-product-picker-container" data-placeholder="{{ placeholder }}">
-        <span class="form-line__item">
+        <div class="form-line__item">
             <input
                 class="input js-product-picker-label"
                 value="{{ productName|default(placeholder) }}"
                 disabled="disabled"
                 readonly="readonly"
             />
-        </span>
-        <span class="form-line__item">
-            <button
-                type="button"
-                data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: allow_main_variants, allowVariants: allow_variants}) }}"
-                class="js-product-picker-create-picker-button btn btn--default"
-                title="{{ 'Click to go to product section'|trans }}"
-                type="button"
-            >
-                ...
-            </button>
-        </span>
+            <span class="form-line__item form-line__item--button form-line__item--fixed-width-left">
+                <button
+                    type="button"
+                    data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: allow_main_variants, allowVariants: allow_variants}) }}"
+                    class="js-product-picker-create-picker-button btn btn--chooser"
+                    title="{{ 'Click to go to product section'|trans }}"
+                    type="button"
+                >
+                    ...
+                </button>
+            </span>
+        </div>
         {% if enableRemove %}
-            <a href="#" class="js-product-picker-remove-button display-none">
-                {{ 'Remove'|trans }}
-            </a>
+            <a href="#" title="{{ 'Remove'|trans }}" class="in-icon in-icon--delete svg svg-trash form-line__item form-line__item--info-baseline js-product-picker-remove-button display-none"></a>
         {% endif %}
         {{- form_widget(form, {attr: {class: 'js-product-picker-input'}}) -}}
     </span>
@@ -750,12 +736,6 @@
 
     {% if isSimple|default(false) == false %}
             </div>
-            {% if form.vars.icon_title is not null %}
-                <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
-                   data-toggle="tooltip" data-placement="right"
-                   title="{{ form.vars.icon_title }}"
-                ></i>
-            {% endif %}
             {{- block('appendix_block') -}}
         </div>
     {% else %}
@@ -889,20 +869,16 @@
                 </span>
             </label>
         {% endfor %}
-    </div>
-    {% if isSimple|default(false) == false %}
+        {% if isSimple|default(false) == false %}
+                    <div class="form-choice__info">
+                        {{- block('appendix_block') -}}
+                    </div>
+                </div>
             </div>
+        {% else %}
             {{- block('appendix_block') -}}
-        </div>
-    {% else %}
-        {{- block('appendix_block') -}}
-    {% endif %}
-    {% if form.vars.icon_title is not null %}
-        <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
-           data-toggle="tooltip" data-placement="right"
-           title="{{ form.vars.icon_title }}"
-        ></i>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock yes_no_widget %}
 
 {% block domain_row %}
@@ -917,22 +893,26 @@
 
 {% block domain_widget %}
     {% set attr = attr|merge({'class': (attr.class|default('') ~ ' input')|trim}) %}
-    {% if isMultidomain() %}
-        <select {{ block('widget_attributes') }}>
-            {% for domainConfig in domainConfigs %}
-                <option value="{{ domainConfig.id }}"{{ domainConfig.id == form.vars.value ? ' selected=""' : '' }}>
-                    {% if displayUrl %}
-                        {{ domainConfig.url }}
-                    {% else %}
-                        {{ domainConfig.name }}
-                    {% endif %}
-                </option>
-            {% endfor %}
-        </select>
-    {% else %}
-        <strong class="form-line__label">{{ getDomain().url }}</strong>
-        <input type="hidden" {{ block('widget_attributes') }} value="{{ getDomain().id }}" />
-    {% endif %}
+    <div class="form-line__side">
+        <div class="form-line__item">
+            {% if isMultidomain() %}
+                    <select {{ block('widget_attributes') }}>
+                        {% for domainConfig in domainConfigs %}
+                            <option value="{{ domainConfig.id }}"{{ domainConfig.id == form.vars.value ? ' selected=""' : '' }}>
+                                {% if displayUrl %}
+                                    {{ domainConfig.url }}
+                                {% else %}
+                                    {{ domainConfig.name }}
+                                {% endif %}
+                            </option>
+                        {% endfor %}
+                    </select>
+            {% else %}
+                <strong class="form-line__label">{{ getDomain().url }}</strong>
+                <input type="hidden" {{ block('widget_attributes') }} value="{{ getDomain().id }}" />
+            {% endif %}
+        </div>
+    </div>
 {% endblock domain_widget %}
 
 {% block domains_widget %}
@@ -1018,7 +998,7 @@
     {% endif %}
     {% if attr.icon is defined %}
         <i class="svg svg-{{ attr.iconType|default('info') }} in-icon cursor-help form-line__item form-line__item--info js-tooltip"
-            data-toggle="tooltip" data-placement="{{ attr.iconPlacement|default('right') }}"
+            data-toggle="tooltip" data-placement="{{ attr.iconPlacement|default('bottom') }}"
             title="{{ attr.iconTitle|default('') }}"
          ></i>
     {% endif %}

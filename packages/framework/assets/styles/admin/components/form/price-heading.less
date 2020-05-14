@@ -1,20 +1,38 @@
 @form-price-heading-gap: @form-line-padding-horizontal + @form-line-input-size;
 
 .form-price-heading {
-    margin-top: 3px;
-    padding: 10px 15px 10px @form-price-heading-gap;
-    .clearfix();
+    display: none;
 
-    background: @bg-table;
-    font-size: 0;
-    text-align: right;
+    @media @query-xl {
+        .clearfix();
+        display: block;
+        margin-top: 3px;
+        padding: 10px 15px 10px @form-price-heading-gap;
+        text-align: right;
+
+        background-color: @bg-table;
+        font-size: 0;
+    }
+
+    &__block {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        width: 100%;
+        padding-top: 10px;
+
+        @media @query-lg {
+            width: auto;
+            padding-top: 0;
+        }
+    }
 
     &__cell {
         display: inline-block;
         float: left;
 
         font-size: 13px;
-        font-weight: bold;
+        font-weight: 700;
 
         &--price {
             width: 140px;

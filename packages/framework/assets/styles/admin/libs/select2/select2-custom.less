@@ -76,3 +76,18 @@
 .select2-results__option[aria-disabled=true] {
     display: none;
 }
+
+.select2 {
+    @media @query-mobile {
+        width: 100% !important;
+        max-width: @input-width;
+    }
+
+    @media @query-lg {
+        width: @input-width-tablet;
+    }
+
+    @media @query-xl {
+        width: @input-width;
+    }
+}

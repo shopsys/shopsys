@@ -1,16 +1,22 @@
-.table-form {
+@query-table-param: ~"only screen and (min-width: 1024px)";
+
+@table-param-row-height: 46px;
+@table-param-cell-max-width: 315px;
+@table-param-cell-arrow-width: 40px;
+
+.table-params {
     width: 100%;
     border-collapse: collapse;
     border-radius: @radius;
 
     thead {
-        background: @color-f;
+        background-color: @color-f;
         color: @color-base;
         font-weight: 700;
     }
 
     tbody {
-        background: @color-f;
+        background-color: @color-f;
     }
 
     &__wrap {
@@ -19,21 +25,31 @@
     }
 
     &__row {
-        background: @color-f;
+        display: flex;
+        flex-direction: column;
+        background-color: @color-f;
         border-bottom: 1px solid @table-grid-line-color;
 
         &--group {
-            background: @bg-info;
+            background-color: @bg-info;
         }
 
         thead & {
-            background: @bg-table;
+            background-color: @bg-table;
+        }
+
+        @media @query-table-param {
+            flex-direction: row;
         }
     }
 
     &__cell {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
         padding: 6px 17px;
-        height: 46px;
+        max-width: 315px;
 
         text-align: left;
         color: @color-base;
@@ -43,16 +59,48 @@
             display: table-row;
         }
 
-        &--label {
-            width: 229px;
+        &--header {
+            height: auto;
+        }
+
+        &__label {
+            display: block;
+            padding: 6px 10px;
 
             font-weight: 700;
+
+            @media @query-lg {
+                width: @table-param-cell-max-width + @table-param-cell-arrow-width + 8px;
+            }
+        }
+
+        &--arrow {
+            align-items: center;
+            color: @color-grey;
+            text-align: center;
+
+            .svg {
+                transform: rotate(90deg);
+            }
+
+            @media @query-table-param {
+                width: @table-param-cell-arrow-width;
+
+                .svg {
+                    transform: rotate(0);
+                }
+            }
         }
 
         &--actions {
-            width: 45px;
-
+            align-items: center;
             text-align: center;
+
+            @media @query-table-param {
+                align-items: flex-end;
+                width: 100%;
+                max-width: 100%; // overrides form__cell
+            }
 
             .svg {
                 color: @color-grey;
@@ -74,22 +122,6 @@
             }
         }
 
-        &--del {
-            width: 40px;
-            padding: 0;
-
-            text-align: center;
-            color: @color-grey;
-        }
-
-        &--del-before {
-            padding-right: 0;
-        }
-
-        &--del-after {
-            padding-left: 0;
-        }
-
         thead & {
             padding-top: 14px;
             padding-bottom: 14px;
@@ -103,7 +135,7 @@
             margin-right: 5px;
 
             text-align: center;
-            background: @color-f;
+            background-color: @color-f;
 
             img {
                 position: absolute;

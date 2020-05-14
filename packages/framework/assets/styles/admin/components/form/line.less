@@ -6,17 +6,23 @@
 @form-line-border-style: none;
 @form-line-min-height: 44px;
 @form-line-inner-padding: 13px 10px 11px 0;
+@form-line-side-multidomain-change-resolution: 983px;
+@form-line-side-multilanguage-change-resolution: 844px;
 
 .form-line {
     .clearfix();
-    padding: @form-line-padding-vertical @form-line-padding-horizontal;
     position: relative;
+    padding: @form-line-padding-vertical/2 @form-line-padding-horizontal/2;
     min-height: @form-line-min-height;
 
     border: @form-line-border-style;
     border-left-color: @color-border-darker;
     border-right-color: @color-border-darker;
     background: @color-f;
+
+    @media @query-lg {
+        padding: @form-line-padding-vertical @form-line-padding-horizontal;
+    }
 
     &--no-top-border {
         border-top: none;
@@ -60,7 +66,11 @@
 
     .form-group & {
         &:first-child {
-            padding-top: 20px;
+            padding-top: 10px;
+
+            @media @query-lg {
+                padding-top: 20px;
+            }
 
             &.form-line--no-padd {
                 padding-top: 0;
@@ -68,23 +78,40 @@
         }
 
         &:last-child {
-            padding-bottom: 20px;
+            padding-bottom: 10px;
+
+            @media @query-lg {
+                padding-bottom: 20px;
+            }
         }
     }
 
     &__label {
-        width: @form-line-label-size;
+        width: 100%;
         padding: @form-line-inner-padding;
         float: left;
 
         font-family: @font;
         font-size: 15px;
-        font-weight: bold;
+        font-weight: 700;
         color: @color-grey-middle;
+
+        @media @query-lg {
+            width: @form-line-label-size;
+        }
 
         &--input {
             padding-top: 0;
             padding-bottom: 0;
+        }
+
+        &--with-count {
+            height: @input-height;
+        }
+
+        // assign to category
+        & + .form-error + .form-line {
+            margin-top: 40px;
         }
     }
 
@@ -112,11 +139,30 @@
     }
 
     &__side {
-        margin-left: @form-line-input-size;
         .clearfix();
+
+        @media @query-xl {
+            margin-left: @form-line-input-size;
+        }
 
         & + .form-line__side {
             margin-top: 10px;
+
+            &--multilanguage {
+                @media only screen and (min-width: @form-line-side-multilanguage-change-resolution) {
+                    margin-left: @form-line-label-size;
+                }
+            }
+
+            &--multidomain {
+                @media only screen and (min-width: @form-line-side-multidomain-change-resolution) {
+                    margin-left: @form-line-label-size;
+                }
+            }
+
+            .form-line__count {
+                margin-left: 0;
+            }
         }
 
         .table-grid & {
@@ -126,17 +172,74 @@
 
     &__item {
         display: inline-block;
+        width: 100%;
         padding-right: @form-line-gap-size;
         position: relative;
         vertical-align: middle;
+        word-break: break-all;
+
+        @media @query-md {
+            width: auto;
+        }
 
         &--text {
             padding-top: 15px;
             padding-bottom: 14px;
         }
 
+        &--button {
+            padding-top: 5px;
+
+            @media @query-lg {
+                padding-top: 0;
+                margin-top: -2px;
+            }
+        }
+
         &--info {
-            padding-top: 6px;
+            position: absolute;
+            top: 14px;
+
+            @media @query-md {
+                position: relative;
+                top: 0;
+            }
+
+            .form-line__side & {
+                width: auto;
+
+                @media @query-md {
+                    position: relative;
+                    top: auto;
+                    bottom: auto;
+                    right: auto;
+                }
+            }
+
+            .form-choice__info & {
+                position: relative;
+                top: 6px;
+                right: auto;
+                bottom: auto;
+            }
+        }
+
+        &--info-baseline {
+            position: absolute;
+            left: calc(~"100% - 20px");
+            bottom: 22px;
+            width: 20px;
+            padding-right: 0;
+
+            @media only screen and (min-width: 392px) {
+                left: @input-width + 20px;
+            }
+
+            @media @query-md {
+                position: relative;
+                bottom: auto;
+                left: auto;
+            }
         }
 
         &--btn {
@@ -173,6 +276,22 @@
 
         &--fixed-width-left {
             width: 40px;
+            right: 22px;
+            position: absolute;
+            text-align: right;
+
+            @media only screen and (min-width: 372px) {
+                right: auto;
+                left: @input-width - 50px;
+            }
+
+            @media @query-lg {
+                position: relative;
+                right: auto;
+                left: auto;
+                text-align: left;
+            }
+
         }
 
         &--input-size {
@@ -182,11 +301,21 @@
 
         &__price {
             padding: @form-line-inner-padding;
-            width: 140px;
+            width: 80px;
             display: inline-block;
             vertical-align: middle;
 
             text-align: right;
+
+            @media @query-md {
+                width: 140px;
+            }
+
+            &__label-mobile {
+                @media @query-xl {
+                    display: none;
+                }
+            }
         }
 
         &__domain {
@@ -207,8 +336,18 @@
     }
 
     &__count {
-        display: table;
-        height: 32px;
+        display: inline-block;
+        margin-top: 5px;
+        width: 100%;
+
+        @media only screen and (min-width: @form-line-side-multidomain-change-resolution) {
+            margin-left: @form-line-label-size;
+            width: auto;
+        }
+
+        @media @query-xl {
+            margin-left: 0;
+        }
 
         &__val {
             display: table-cell;
@@ -272,7 +411,49 @@
         &__name {
             line-height: 26px;
 
-            font-weight: bold;
+            font-weight: 700;
+        }
+    }
+
+    &__friendly-url {
+        display: flex;
+        flex-direction: column;
+
+        @media @query-md {
+            flex-direction: row;
+        }
+
+        &__domain {
+            display: flex;
+            flex-direction: row;
+
+            .form-line__side {
+                width: 90%;
+                margin-left: 0;
+            }
+        }
+
+        &__divider {
+            line-height: @input-height;
+            height: @input-height;
+            padding-right: 5px;
+            width: 30px;
+            text-align: center;
+        }
+
+        &__input {
+            display: flex;
+            flex-direction: row;
+
+            .input {
+                width: 90%;
+                margin-top: 5px;
+                margin-right: 5px;
+
+                @media @query-md {
+                    margin-top: 0;
+                }
+            }
         }
     }
 }

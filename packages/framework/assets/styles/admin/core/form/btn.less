@@ -21,7 +21,7 @@
     color: @btn-color;
     background: @btn-bg;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 700;
     text-decoration: none;
     font-size: 13px;
     transition: @transition ~"background, color";
@@ -99,9 +99,23 @@
             background-color: @btn-neutral-bg-hover;
         }
     }
+
+    &--chooser {
+        width: 42px;
+        padding: @btn-padding-vertical;
+
+        background-color: @btn-default-bg;
+        color: @btn-default-color;
+
+        &:hover {
+            background-color: darken(@btn-default-bg, 10%);
+            color: @btn-default-color;
+        }
+    }
 }
 
 //// Modification - types
+@btn-small-min-width: 70px;
 @btn-small-height-decrease: 8px;
 @btn-small-padding-horizontal: 8px;
 @btn-small-height: @btn-height - @btn-small-height-decrease;
@@ -120,6 +134,7 @@
 
 .btn {
     &--small {
+        min-width: @btn-small-min-width;
         height: @btn-small-height;
         line-height: @btn-small-line-height;
         padding-left: @btn-small-padding-horizontal;
@@ -165,7 +180,7 @@
             text-align: center;
             line-height: 14px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
             font-style: normal;
         }
 
@@ -204,7 +219,6 @@
 
 // settings for button in link style
 .btn-link-style {
-    height: @btn-height;
     padding: 5px;
     line-height: @btn-height - 10;
     display: inline-block;

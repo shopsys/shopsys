@@ -39,12 +39,20 @@
     {%- else -%}
         {%- set classes = ['side-menu__submenu', 'side-menu__submenu--level' ~ item.level] -%}
         {%- if item.level == 1 -%}
-            {%- set classes = classes|merge(['js-side-menu-submenu display-none']) -%}
+            {%- set classes = classes|merge(['js-side-menu-submenu hidden']) -%}
         {%- endif -%}
     {%- endif -%}
+
     {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
         <ul{{ self.attributes(item.childrenAttributes, classes) }}>
             {{ block('children') }}
+            {% if item.name == 'root' %}
+                <li class="side-menu__item side-menu__item--collapse js-side-menu-collapse-button">
+                    <span title="{{ 'Collapse menu'|trans }}" class="side-menu__item__link">
+                        <i class="svg svg-arrow-left"></i><span class="side-menu__item__text">{{ 'Collapse menu'|trans }}</span>
+                    </span>
+                </li>
+            {% endif %}
         </ul>
     {% endif %}
 {% endblock %}
@@ -80,7 +88,7 @@
             {%- set classes = ['side-menu__submenu__item'] -%}
         {%- endif -%}
         {%- if matcher.isCurrent(item) or matcher.isAncestor(item, options.matchingDepth) -%}
-            {%- set classes = classes|merge([classes[0] ~ '--active']) -%}
+            {%- set classes = classes|merge([classes[0] ~ '--active open']) -%}
         {%- endif -%}
         {%- if superadmin %}
             {%- set classes = classes|merge([classes[0] ~ '--superadmin']) -%}
@@ -104,7 +112,7 @@
 {% endblock %}
 
 {% block spanElement %}
-    {%- set class = item.level == 1 ? 'side-menu__item__link' : 'side-menu__submenu__item__label' -%}
+    {%- set class = item.level == 1 ? 'side-menu__item__link' : 'side-menu__submenu__item__label js-no-click' -%}
     <span{{ self.attributes(item.labelAttributes, [class]) }}>{{ block('label') }}</span>
 {% endblock %}
 

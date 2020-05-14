@@ -1,26 +1,57 @@
 .box-advanced-search {
+    display: flex;
+    flex-direction: column;
     position: relative;
     margin: 0 -10px;
     padding: 0 10px;
 
     &__item {
-        margin: 5px -5px;
+        position: relative;
         display: flex;
+        flex-direction: column;
+        margin: 5px -5px;
         align-items: center;
 
+        @media @query-lg {
+            flex-direction: row;
+        }
+
         &__content {
-            flex: 1;
+            width: 90%;
+            margin-bottom: 5px;
             padding: 0 5px;
 
+            @media @query-lg {
+                width: 100%;
+            }
+
             &--small {
+                position: absolute;
+                right: -5px;
+                bottom: 20px;
+
                 padding: 0 5px 0 0;
                 width: 25px;
 
-                text-align: right;
+                text-align: center;
+
+                @media @query-lg {
+                    position: relative;
+                    right: auto;
+                    bottom: auto;
+                }
 
                 i {
                     position: relative;
                     top: -2px;
+                }
+            }
+
+            &--last {
+                bottom: 3px;
+
+                @media @query-lg {
+                    bottom: auto;
                 }
             }
         }
@@ -35,6 +66,14 @@
         margin: 0 -10px;
 
         text-align: right;
+
+        &--button {
+            margin-top: -10px;
+
+            @media @query-lg {
+                margin-top: 0;
+            }
+        }
 
         &--dark {
             padding: 5px 20px;

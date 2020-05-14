@@ -2,14 +2,11 @@
 
 {% block content %}
     <div class="web__container">
-        <div class="web__panel">
+        <div class="web__panel js-web-panel">
             <div class="web__panel__in">
                 {% block menu_panel %}
                     {{ knp_menu_render('admin_side_menu', {template: '@ShopsysFramework/Admin/Menu/side_menu.html.twig'}) }}
                 {% endblock %}
-            </div>
-            <div class="in-corner in-corner--menu">
-                <div class="in-corner__in"></div>
             </div>
         </div>
 
@@ -27,11 +24,15 @@
                     <h1 class="wrap-bar__heading">
                         {% block h1 %}{{ 'Administration'|trans }}{% endblock %}
                     </h1>
-                    {% block btn %}{% endblock %}
+                    <div class="wrap-bar__buttons">
+                        {% block btn %}{% endblock %}
+                    </div>
                 </div>
+                {% block visibility_info %}{% endblock %}
             {% endif %}
 
             {% block main_content %}{% endblock %}
         </div>
+        <div class="web__content__overlay js-side-menu-overlay"></div>
     </div>
 {% endblock %}
