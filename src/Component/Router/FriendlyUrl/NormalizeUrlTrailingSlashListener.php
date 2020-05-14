@@ -42,15 +42,6 @@ class NormalizeUrlTrailingSlashListener
                     $this->setRedirectResponse($routerData, $event);
                 } catch (ResourceNotFoundException $exception) {
                 }
-            } elseif (substr($pathInfo, -1) !== '/') {
-                try {
-                    $pathInfo .= '/';
-
-                    $routerData = $this->router->match($pathInfo);
-
-                    $this->setRedirectResponse($routerData, $event);
-                } catch (ResourceNotFoundException $exception) {
-                }
             }
         }
     }
