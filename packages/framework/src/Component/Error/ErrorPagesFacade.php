@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Error;
 
 use App\Kernel;
+use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -35,7 +36,7 @@ class ErrorPagesFacade
     protected $domainRouterFactory;
 
     /**
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var \League\Flysystem\FilesystemInterface
      */
     protected $filesystem;
 
@@ -48,14 +49,14 @@ class ErrorPagesFacade
      * @param string $errorPagesDir
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
      */
     public function __construct(
         $errorPagesDir,
         Domain $domain,
         DomainRouterFactory $domainRouterFactory,
-        Filesystem $filesystem,
+        FilesystemInterface $filesystem,
         ErrorIdProvider $errorIdProvider
     ) {
         $this->errorPagesDir = $errorPagesDir;
@@ -81,7 +82,7 @@ class ErrorPagesFacade
      */
     public function getErrorPageContentByDomainIdAndStatusCode($domainId, $statusCode)
     {
-        $errorPageContent = file_get_contents($this->getErrorPageFilename($domainId, $statusCode));
+        $errorPageContent = $this->filesystem->read($this->getErrorPageFilename($domainId, $statusCode));
         if ($errorPageContent === false) {
             throw new \Shopsys\FrameworkBundle\Component\Error\Exception\ErrorPageNotFoundException($domainId, $statusCode);
         }
@@ -126,10 +127,23 @@ class ErrorPagesFacade
 
         $errorPageContent = $this->getUrlContent($errorPageUrl, $statusCode);
 
-        $this->filesystem->dumpFile(
-            $this->getErrorPageFilename($domainId, $statusCode),
-            $errorPageContent
-        );
+        $filesystemConfig = [
+            'visibility' => AdapterInterface::VISIBILITY_PRIVATE,
+        ];
+
+        if ($this->filesystem->has($this->getErrorPageFilename($domainId, $statusCode))) {
+            $this->filesystem->update(
+                $this->getErrorPageFilename($domainId, $statusCode),
+                $errorPageContent,
+                $filesystemConfig
+            );
+        } else {
+            $this->filesystem->put(
+                $this->getErrorPageFilename($domainId, $statusCode),
+                $errorPageContent,
+                $filesystemConfig
+            );
+        }
     }
 
     /**

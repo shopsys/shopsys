@@ -7,7 +7,7 @@ parameters:
     shopsys.domain_images_dir: '/web%shopsys.domain_images_url_prefix%'
     shopsys.domain_images_url_prefix: '/%shopsys.content_dir_name%/admin/images/domain'
     shopsys.domain_urls_config_filepath: '%shopsys.root_dir%/config/domains_urls.yaml'
-    shopsys.error_pages_dir: '%shopsys.root_dir%/var/errorPages/'
+    shopsys.error_pages_dir: '/var/errorPages/'
     shopsys.feed_dir: '/web%shopsys.feed_url_prefix%'
     shopsys.feed_url_prefix: '/%shopsys.content_dir_name%/feeds/'
     shopsys.filemanager_upload_dir: '%shopsys.web_dir%/%shopsys.filemanager_upload_web_dir%'
