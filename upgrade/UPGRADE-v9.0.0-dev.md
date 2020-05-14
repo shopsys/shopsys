@@ -1324,11 +1324,9 @@ There you can find links to upgrade notes for other versions too.
 - fix validation of parameters uniqueness ([#1822](https://github.com/shopsys/shopsys/pull/1822))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/8d339e65ab748d36ecbf70c9204be54ac6d24772) to update your project
 
-- split error page templates to allow to render new 410 error response ([#1829](https://github.com/shopsys/shopsys/pull/1829))
+- split error page templates to allow to render new 410 error response and remove friendly url slug after remove category or brand ([#1829](https://github.com/shopsys/shopsys/pull/1829))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/712311632006e83f9dfe5ec2924e6a9c512636bd) to update your project
-    - exception `ProductNotFoundException` has new parent. The original parent `NotFoundHttpException` was replaced by `GoneHttpException`           
-          
-- remove friendly url slug after remove category or brand ([#1829](https://github.com/shopsys/shopsys/pull/1829))
+    - exception `ProductNotFoundException` has new parent. The original parent `NotFoundHttpException` was replaced by `GoneHttpException`
     - following methods has changed their interface, update your usages accordingly:
         - `BrandFacade::deleteById()`
             ```diff
