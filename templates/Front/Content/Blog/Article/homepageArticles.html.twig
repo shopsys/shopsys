@@ -15,9 +15,10 @@
                                 <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link list-articles__item__link--image" title="{{ blogArticle.name }}">
                                     {{ image(blogArticle, { size: 'list', class: 'list-articles__item__image', alt: blogArticle.name, lazy: true }) }}
                                 </a>
-                                <div class="list-articles__item__tags js-not-implemented-yet">
-                                    <a class="btn btn--tag" href="#">Zařizujeme</a>
-                                    <a class="btn btn--tag" href="#">Bydlíme</a>
+                                <div class="list-articles__item__tags">
+                                    <span class="list-tags__tag">
+                                        {{ render(controller('App\\Controller\\Front\\BlogCategoryController::allCategoriesForBlogArticleAction', { blogArticle: blogArticle })) }}
+                                    </span>
                                 </div>
                                 <h3 class="list-articles__item__name">
                                     <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link" title="{{ blogArticle.name }}">

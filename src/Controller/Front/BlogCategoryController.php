@@ -107,11 +107,11 @@ class BlogCategoryController extends FrontBaseController
      * @param \App\Model\Blog\Category\BlogCategory $currentBlogCategory
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function allCategoriesForBlogArticleAction(BlogArticle $blogArticle, BlogCategory $currentBlogCategory): Response
+    public function allCategoriesForBlogArticleAction(BlogArticle $blogArticle, ?BlogCategory $currentBlogCategory = null): Response
     {
         return $this->render('Front/Content/Blog/Category/allBlockCategoriesForBlogArticle.html.twig', [
             'blogCategories' => $this->blogCategoryFacade->findBlogArticleAllCategoryOnDomain($blogArticle, $this->domain->getId()),
-            'currentBlogCategory' => $currentBlogCategory,
+            'currentBlogCategoryId' => $currentBlogCategory !== null ? $currentBlogCategory->getId() : null,
         ]);
     }
 }
