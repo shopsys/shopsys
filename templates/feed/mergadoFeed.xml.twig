@@ -11,21 +11,21 @@
         <NAME_EXACT>{{ item.name }}</NAME_EXACT>
         <CATEGORY>{{ item.categoryPath }}</CATEGORY>
         <PRODUCTNO>{{ item.productNo }}</PRODUCTNO>
-        {% if item.shortDescription %}
+        {% if item.shortDescription != '' %}
             <DESCRIPTION_SHORT>{{ item.shortDescription }}</DESCRIPTION_SHORT>
         {% endif %}
-        {% if item.description %}
+        {% if item.description is not null %}
             <DESCRIPTION>{{ item.description }}</DESCRIPTION>
         {% endif %}
         <DELIVERY_DAYS>{{ item.deliveryDays }}</DELIVERY_DAYS>
         <CURRENCY>{{ currencyCode(getDomain().id) }}</CURRENCY>
-        {% if item.imageUrl %}
+        {% if item.imageUrl != null %}
             <IMAGE>{{ item.imageUrl }}</IMAGE>
         {% endif %}
         {% for galleryImageUrl in item.galleryImageUrls %}
             <IMAGE_ALTERNATIVE>{{ galleryImageUrl }}</IMAGE_ALTERNATIVE>
         {% endfor %}
-        {% if item.brand %}
+        {% if item.brand is not null %}
             <BRAND>{{ item.brand.name }}</BRAND>
         {% endif %}
         <URL>{{ item.url }}</URL>
@@ -36,7 +36,7 @@
                 <VALUE>{{ parameterValue }}</VALUE>
             </PARAM>
         {% endfor %}
-        {% if item.mainVariantId %}
+        {% if item.mainVariantId is not null %}
             <ITEMGROUP_ID>{{ item.mainVariantId }}</ITEMGROUP_ID>
         {% endif %}
     </ITEM>
