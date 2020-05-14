@@ -1316,7 +1316,10 @@ There you can find links to upgrade notes for other versions too.
 
 - remove deprecated methods from your project ([#1801](https://github.com/shopsys/shopsys/pull/1801))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/a9dd272a3831beadecfc5da9f061898a3a9e5205) to update your project
-    
+
+- unify config files extensions to yaml ([#1814](https://github.com/shopsys/shopsys/pull/1814)
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/0861abcb9e9445d62f4f9461380b1314c9d3ece8) to update your project
+
 - remove subscription newsletter form from error pages ([#1819](https://github.com/shopsys/shopsys/pull/1819))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/69c1b83b7a511c7725d57581915ddb2dea2e0183) to update your project
 
