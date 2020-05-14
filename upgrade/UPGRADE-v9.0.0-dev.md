@@ -1341,6 +1341,7 @@ There you can find links to upgrade notes for other versions too.
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
   - run `php phing standards-fix` and fix possible violations that need to be fixed manually
+  - see [project-base diff](https://github.com/shopsys/project-base/commit/3126182f41a680f3b6d2565ccae716491b5e8b09) to update your project
 
 - if you want to add stylelint rules to check style coding standards [#1511](https://github.com/shopsys/shopsys/pull/1511)
     -  add new file [.stylelintignore](https://github.com/shopsys/shopsys/blob/master/project-base/.stylelintignore)
