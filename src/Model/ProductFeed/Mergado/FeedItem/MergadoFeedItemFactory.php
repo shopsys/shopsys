@@ -81,7 +81,7 @@ class MergadoFeedItemFactory
         return new MergadoFeedItem(
             $product->getId(),
             $product->getCatnum(),
-            $product->getFullname(),
+            $product->getFullname($domainConfig->getLocale()),
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
             $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain($product, $domainConfig),
             $this->getProductUsp($product, $domainId),
