@@ -99,6 +99,7 @@ class MergadoFeedItem implements FeedItemInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $price
      * @param array $galleryImageUrls
      * @param array $parameters
+     * @param string $currencyCode
      * @param string|null $description
      * @param \App\Model\Product\Brand\Brand|null $brand
      * @param string|null $imageUrl

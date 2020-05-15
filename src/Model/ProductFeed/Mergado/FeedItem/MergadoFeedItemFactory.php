@@ -45,8 +45,9 @@ class MergadoFeedItemFactory
      * @var \App\Component\Image\ImageFacade
      */
     private $imageFacade;
+
     /**
-     * @var CurrencyFacade
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
     private $currencyFacade;
 
@@ -57,6 +58,7 @@ class MergadoFeedItemFactory
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $availabilityFacade
      * @param \App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         ProductUrlsBatchLoader $productUrlsBatchLoader,

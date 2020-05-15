@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51a52ce3205c1a1e085532be853046a3",
+    "content-hash": "318fbb7e561ded47719587b21cafaf2b",
     "packages": [
         {
             "name": "akeneo/api-php-client",
@@ -7620,283 +7620,6 @@
             "time": "2020-02-28T09:18:54+00:00"
         },
         {
-            "name": "shopsys/product-feed-google",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shopsys/product-feed-google.git",
-                "reference": "d64c110a32c35273e9410cde7d567abd0339661c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/product-feed-google/zipball/d64c110a32c35273e9410cde7d567abd0339661c",
-                "reference": "d64c110a32c35273e9410cde7d567abd0339661c",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/dbal": "^2.7",
-                "doctrine/doctrine-bundle": "^1.8",
-                "doctrine/persistence": "~1.2.0",
-                "ext-json": "*",
-                "ext-pdo": "*",
-                "php": "^7.2",
-                "shopsys/doctrine-orm": "^2.6.6",
-                "shopsys/form-types-bundle": "9.0.x-dev",
-                "shopsys/framework": "9.0.x-dev",
-                "shopsys/migrations": "9.0.x-dev",
-                "shopsys/plugin-interface": "9.0.x-dev",
-                "symfony/config": "^4.4",
-                "symfony/dependency-injection": "4.4",
-                "symfony/form": "^4.4",
-                "symfony/http-kernel": "^4.4",
-                "symfony/translation": "^4.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0",
-                "shopsys/coding-standards": "9.0.x-dev",
-                "twig/extensions": "^1.5.1",
-                "twig/twig": "^2.12"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "9.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Shopsys\\ProductFeed\\GoogleBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Shopsys",
-                    "homepage": "https://www.shopsys.com/"
-                }
-            ],
-            "description": "Shopsys Framework plugin interface for Google XML product feed generation",
-            "keywords": [
-                "SSFW",
-                "Shopsys Framework",
-                "XML feed",
-                "google",
-                "plugin",
-                "product feed"
-            ],
-            "time": "2020-05-05T06:47:09+00:00"
-        },
-        {
-            "name": "shopsys/product-feed-heureka",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shopsys/product-feed-heureka.git",
-                "reference": "1202b59f8edd2a8461f1079ff0296d8d5968abb4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/product-feed-heureka/zipball/1202b59f8edd2a8461f1079ff0296d8d5968abb4",
-                "reference": "1202b59f8edd2a8461f1079ff0296d8d5968abb4",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/collections": "^1.5",
-                "doctrine/dbal": "^2.7",
-                "doctrine/doctrine-bundle": "^1.8",
-                "doctrine/persistence": "~1.2.0",
-                "ext-json": "*",
-                "ext-libxml": "*",
-                "ext-pdo": "*",
-                "ext-simplexml": "*",
-                "php": "^7.2",
-                "shopsys/doctrine-orm": "^2.6.6",
-                "shopsys/form-types-bundle": "9.0.x-dev",
-                "shopsys/framework": "9.0.x-dev",
-                "shopsys/migrations": "9.0.x-dev",
-                "shopsys/plugin-interface": "9.0.x-dev",
-                "symfony/config": "^4.4",
-                "symfony/dependency-injection": "^4.4",
-                "symfony/form": "^4.4",
-                "symfony/http-kernel": "^4.4",
-                "symfony/translation": "^4.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0",
-                "shopsys/coding-standards": "9.0.x-dev",
-                "twig/extensions": "^1.5.1",
-                "twig/twig": "^2.12"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "9.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Shopsys\\ProductFeed\\HeurekaBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Shopsys",
-                    "homepage": "https://www.shopsys.com/"
-                }
-            ],
-            "description": "Shopsys Framework plugin interface for Heureka XML product feed generation",
-            "keywords": [
-                "SSFW",
-                "Shopsys Framework",
-                "XML feed",
-                "heureka",
-                "plugin",
-                "product feed"
-            ],
-            "time": "2020-05-05T06:47:09+00:00"
-        },
-        {
-            "name": "shopsys/product-feed-heureka-delivery",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shopsys/product-feed-heureka-delivery.git",
-                "reference": "e5f1d9417d39076176d02eefb7838ed3d6a2e77f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/product-feed-heureka-delivery/zipball/e5f1d9417d39076176d02eefb7838ed3d6a2e77f",
-                "reference": "e5f1d9417d39076176d02eefb7838ed3d6a2e77f",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2",
-                "shopsys/doctrine-orm": "^2.6.6",
-                "shopsys/form-types-bundle": "9.0.x-dev",
-                "shopsys/framework": "9.0.x-dev",
-                "shopsys/migrations": "9.0.x-dev",
-                "shopsys/plugin-interface": "9.0.x-dev",
-                "symfony/config": "^4.4",
-                "symfony/dependency-injection": "^4.4",
-                "symfony/framework-bundle": "^4.4",
-                "symfony/http-kernel": "^4.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0",
-                "shopsys/coding-standards": "9.0.x-dev",
-                "twig/extensions": "^1.5.1",
-                "twig/twig": "^2.12"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "9.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Shopsys\\ProductFeed\\HeurekaDeliveryBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Shopsys",
-                    "homepage": "https://www.shopsys.com/"
-                }
-            ],
-            "description": "Shopsys Framework plugin interface for Heureka delivery XML product feed generation",
-            "keywords": [
-                "SSFW",
-                "Shopsys Framework",
-                "XML feed",
-                "heureka",
-                "plugin",
-                "product delivery feed"
-            ],
-            "time": "2020-05-05T06:47:09+00:00"
-        },
-        {
-            "name": "shopsys/product-feed-zbozi",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shopsys/product-feed-zbozi.git",
-                "reference": "53dd763c8710a5dbd066b9b7282860085ef33e23"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/product-feed-zbozi/zipball/53dd763c8710a5dbd066b9b7282860085ef33e23",
-                "reference": "53dd763c8710a5dbd066b9b7282860085ef33e23",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/dbal": "^2.7",
-                "doctrine/doctrine-bundle": "^1.8",
-                "doctrine/persistence": "~1.2.0",
-                "ext-json": "*",
-                "ext-pdo": "*",
-                "php": "^7.2",
-                "shopsys/doctrine-orm": "^2.6.6",
-                "shopsys/form-types-bundle": "9.0.x-dev",
-                "shopsys/framework": "9.0.x-dev",
-                "shopsys/migrations": "9.0.x-dev",
-                "shopsys/plugin-interface": "9.0.x-dev",
-                "symfony/config": "^4.4",
-                "symfony/dependency-injection": "^4.4",
-                "symfony/form": "^4.4",
-                "symfony/http-kernel": "^4.4",
-                "symfony/translation": "^4.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0",
-                "shopsys/coding-standards": "9.0.x-dev",
-                "twig/extensions": "^1.5.1",
-                "twig/twig": "^2.12"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "9.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Shopsys\\ProductFeed\\ZboziBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Shopsys",
-                    "homepage": "https://www.shopsys.com/"
-                }
-            ],
-            "description": "Shopsys Framework plugin interface for Zboží XML product feed generation",
-            "keywords": [
-                "SSFW",
-                "Shopsys Framework",
-                "XML feed",
-                "plugin",
-                "product feed",
-                "zbozi"
-            ],
-            "time": "2020-05-05T06:47:09+00:00"
-        },
-        {
             "name": "shopsys/read-model",
             "version": "dev-master",
             "source": {
@@ -8859,16 +8582,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v4.4.0",
+            "version": "v4.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "d4439814135ed1343c93bde998b7792af8852e41"
+                "reference": "9d0c2807962f7f12264ab459f48fb541dbd386bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/d4439814135ed1343c93bde998b7792af8852e41",
-                "reference": "d4439814135ed1343c93bde998b7792af8852e41",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/9d0c2807962f7f12264ab459f48fb541dbd386bd",
+                "reference": "9d0c2807962f7f12264ab459f48fb541dbd386bd",
                 "shasum": ""
             },
             "require": {
@@ -8928,7 +8651,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2019-11-20T13:27:43+00:00"
+            "time": "2020-04-16T16:36:56+00:00"
         },
         {
             "name": "symfony/doctrine-bridge",
@@ -9550,16 +9273,16 @@
         },
         {
             "name": "symfony/framework-bundle",
-            "version": "v4.4.0",
+            "version": "v4.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/framework-bundle.git",
-                "reference": "dbb892fce45acb9c2191147db674ab8a78a3cc98"
+                "reference": "69ac426bfaca9270e549cea184eece00357f2675"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/dbb892fce45acb9c2191147db674ab8a78a3cc98",
-                "reference": "dbb892fce45acb9c2191147db674ab8a78a3cc98",
+                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/69ac426bfaca9270e549cea184eece00357f2675",
+                "reference": "69ac426bfaca9270e549cea184eece00357f2675",
                 "shasum": ""
             },
             "require": {
@@ -9567,7 +9290,8 @@
                 "php": "^7.1.3",
                 "symfony/cache": "^4.4|^5.0",
                 "symfony/config": "^4.3.4|^5.0",
-                "symfony/dependency-injection": "^4.4|^5.0",
+                "symfony/dependency-injection": "^4.4.1|^5.0.1",
+                "symfony/error-handler": "^4.4.1|^5.0.1",
                 "symfony/filesystem": "^3.4|^4.0|^5.0",
                 "symfony/finder": "^3.4|^4.0|^5.0",
                 "symfony/http-foundation": "^4.4|^5.0",
@@ -9584,7 +9308,7 @@
                 "symfony/console": "<4.3",
                 "symfony/dom-crawler": "<4.3",
                 "symfony/dotenv": "<4.3.6",
-                "symfony/form": "<4.3",
+                "symfony/form": "<4.3.5",
                 "symfony/http-client": "<4.4",
                 "symfony/lock": "<4.4",
                 "symfony/mailer": "<4.4",
@@ -9613,7 +9337,7 @@
                 "symfony/dom-crawler": "^4.3|^5.0",
                 "symfony/dotenv": "^4.3.6|^5.0",
                 "symfony/expression-language": "^3.4|^4.0|^5.0",
-                "symfony/form": "^4.3.4|^5.0",
+                "symfony/form": "^4.3.5|^5.0",
                 "symfony/http-client": "^4.4|^5.0",
                 "symfony/lock": "^4.4|^5.0",
                 "symfony/mailer": "^4.4|^5.0",
@@ -9675,7 +9399,7 @@
             ],
             "description": "Symfony FrameworkBundle",
             "homepage": "https://symfony.com",
-            "time": "2019-11-17T10:10:42+00:00"
+            "time": "2019-11-28T14:12:27+00:00"
         },
         {
             "name": "symfony/http-client",
@@ -16364,10 +16088,6 @@
         "shopsys/google-cloud-bundle": 20,
         "shopsys/migrations": 20,
         "shopsys/plugin-interface": 20,
-        "shopsys/product-feed-google": 20,
-        "shopsys/product-feed-heureka": 20,
-        "shopsys/product-feed-heureka-delivery": 20,
-        "shopsys/product-feed-zbozi": 20,
         "shopsys/read-model": 20,
         "shopsys/coding-standards": 20,
         "shopsys/http-smoke-testing": 20
