@@ -1339,6 +1339,9 @@ There you can find links to upgrade notes for other versions too.
 - fix untranslated texts in admin ([#1841](https://github.com/shopsys/shopsys/pull/1841))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/f00b2188e0d31f2ef9f2b3b83b4ceb65ee1954d2) to update your project
 
+- update selling to for product data fixture in order to fix failing tests ([#1677](https://github.com/shopsys/shopsys/pull/1677))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/fc1fc0a0ed1ce4681b8cedac1cf7e487353eb0de) to update your project
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
