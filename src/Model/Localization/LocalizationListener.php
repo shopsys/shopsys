@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * @property \App\Component\Domain\Domain $domain
- * @method __construct(\App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade|null $administrationFacade)
+ * @method __construct(\App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade)
  */
 class LocalizationListener extends BaseLocalizationListener
 {

@@ -15,12 +15,12 @@ class SettingValueShopInfoDataFixture extends AbstractReferenceFixture
     /**
      * @var \App\Component\Setting\Setting
      */
-    protected $setting;
+    private $setting;
 
     /**
      * @var \App\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @param \App\Component\Setting\Setting $setting

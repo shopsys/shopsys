@@ -5,9 +5,9 @@ echo "Start of parameters.sh"
 assertVariable "BASE_PATH"
 assertVariable "RUNNING_PRODUCTION"
 
-paremeters_filepath="${BASE_PATH}/config/parameters.yml"
+paremeters_filepath="${BASE_PATH}/config/parameters.yaml"
 
-cp "${BASE_PATH}/config/parameters.yml.dist" $paremeters_filepath
+cp "${BASE_PATH}/config/parameters.yaml.dist" $paremeters_filepath
 
 if [ ${RUNNING_PRODUCTION} -eq "1" ]; then
     declare -A ADDITIONAL_PARAMETERS=(

@@ -114,12 +114,26 @@ class ErrorController extends FrontBaseController
 
         $code = $exception->getStatusCode();
 
-        return $this->render('Front/Content/Error/error.' . $format . '.twig', [
+        return $this->render($this->getTemplatePath($code, $format), [
             'status_code' => $code,
             'status_text' => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
             'exception' => $exception,
             'logger' => $logger,
         ]);
+    }
+
+    /**
+     * @param int $code
+     * @param string $format
+     * @return string
+     */
+    private function getTemplatePath(int $code, string $format): string
+    {
+        return sprintf(
+            'Front/Content/Error/error%s.%s.twig',
+            $format === 'html' ? $code : '',
+            $format
+        );
     }
 
     /**

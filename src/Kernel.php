@@ -80,12 +80,12 @@ class Kernel extends BaseKernel
         $loader->load($confDir . '/{services}' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/{services}_' . $this->environment . self::CONFIG_EXTS, 'glob');
 
-        if (file_exists(__DIR__ . '/../../parameters_monorepo.yml')) {
-            $loader->load(__DIR__ . '/../../parameters_monorepo.yml');
+        if (file_exists(__DIR__ . '/../../parameters_monorepo.yaml')) {
+            $loader->load(__DIR__ . '/../../parameters_monorepo.yaml');
         }
 
-        if (file_exists($confDir . '/parameters_version.yml')) {
-            $loader->load($confDir . '/parameters_version.yml');
+        if (file_exists($confDir . '/parameters_version.yaml')) {
+            $loader->load($confDir . '/parameters_version.yaml');
         }
     }
 

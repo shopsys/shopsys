@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 
 class PaymentDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -24,47 +23,39 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_GOPAY = Payment::TYPE_GOPAY;
 
     /** @var \App\Model\Payment\PaymentFacade */
-    protected $paymentFacade;
+    private $paymentFacade;
 
     /**
      * @var \App\Model\Payment\PaymentDataFactory
      */
-    protected $paymentDataFactory;
+    private $paymentDataFactory;
 
     /**
      * @var \App\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
-    protected $priceConverter;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    private $priceConverter;
 
     /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Payment\PaymentDataFactory $paymentDataFactory
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         PaymentFacade $paymentFacade,
         PaymentDataFactoryInterface $paymentDataFactory,
         Domain $domain,
-        PriceConverter $priceConverter,
-        CurrencyFacade $currencyFacade
+        PriceConverter $priceConverter
     ) {
         $this->paymentFacade = $paymentFacade;
         $this->paymentDataFactory = $paymentDataFactory;
         $this->domain = $domain;
         $this->priceConverter = $priceConverter;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -142,7 +133,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Payment\PaymentData $paymentData
      * @param array $transportsReferenceNames
      */
-    protected function createPayment(
+    private function createPayment(
         $referenceName,
         PaymentData $paymentData,
         array $transportsReferenceNames
@@ -176,7 +167,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Payment\PaymentData $paymentData
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      */
-    protected function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
+    private function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());

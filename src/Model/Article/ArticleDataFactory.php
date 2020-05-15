@@ -34,6 +34,14 @@ class ArticleDataFactory extends BaseArticleDataFactory
     }
 
     /**
+     * @return \App\Model\Article\ArticleData
+     */
+    protected function createInstance(): BaseArticleData
+    {
+        return new ArticleData();
+    }
+
+    /**
      * @param \App\Model\Article\ArticleData $articleData
      * @param \App\Model\Article\Article $article
      */

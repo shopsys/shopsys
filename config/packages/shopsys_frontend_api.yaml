@@ -1,0 +1,9 @@
+overblog_graphql:
+    definitions:
+        schema:
+            query: Query
+            mutation: Mutation
+        mappings:
+            types:
+                -   type: yaml
+                    dir: "%shopsys.root_dir%/config/graphql/types"

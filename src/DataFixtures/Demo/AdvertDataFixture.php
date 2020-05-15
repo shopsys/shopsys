@@ -16,12 +16,12 @@ class AdvertDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade
      */
-    protected $advertFacade;
+    private $advertFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface
      */
-    protected $advertDataFactory;
+    private $advertDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade $advertFacade

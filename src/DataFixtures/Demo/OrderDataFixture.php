@@ -27,37 +27,37 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @var \App\Model\Customer\User\CustomerUserRepository
      */
-    protected $customerUserRepository;
+    private $customerUserRepository;
 
     /**
      * @var \Faker\Generator
      */
-    protected $faker;
+    private $faker;
 
     /**
      * @var \App\Model\Order\OrderFacade
      */
-    protected $orderFacade;
+    private $orderFacade;
 
     /**
      * @var \App\Model\Order\Preview\OrderPreviewFactory
      */
-    protected $orderPreviewFactory;
+    private $orderPreviewFactory;
 
     /**
      * @var \App\Model\Order\OrderDataFactory
      */
-    protected $orderDataFactory;
+    private $orderDataFactory;
 
     /**
      * @var \App\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
-    protected $currencyFacade;
+    private $currencyFacade;
 
     /**
      * @param \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
@@ -104,7 +104,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param int $domainId
      */
-    protected function loadDefault(int $domainId): void
+    private function loadDefault(int $domainId): void
     {
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
@@ -605,7 +605,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param int $domainId
      */
-    protected function loadDistinct(int $domainId)
+    private function loadDistinct(int $domainId)
     {
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
@@ -725,7 +725,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param array $products
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      */
-    protected function createOrder(
+    private function createOrder(
         OrderData $orderData,
         array $products,
         ?CustomerUser $customerUser = null

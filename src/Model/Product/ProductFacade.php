@@ -58,6 +58,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
+ * @method \App\Model\Product\Product getSellableByUuid(string $uuid, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  */
 class ProductFacade extends BaseProductFacade
 {

@@ -19,7 +19,7 @@ spec:
                         defaultMode: 0755
             containers:
                 -   name: redis
-                    image: redis:4.0-alpine
+                    image: redis:5.0-alpine
                     ports:
                         -   name: redis
                             containerPort: 6379

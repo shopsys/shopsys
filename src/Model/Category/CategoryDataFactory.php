@@ -78,6 +78,14 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     }
 
     /**
+     * @return \App\Model\Category\CategoryData
+     */
+    protected function createInstance(): BaseCategoryData
+    {
+        return new CategoryData();
+    }
+
+    /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
     protected function fillNew(BaseCategoryData $categoryData)

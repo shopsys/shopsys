@@ -94,7 +94,7 @@ class ImageController extends FrontBaseController
      * @param string $imageFilepath
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    protected function sendImage(string $imageFilepath): StreamedResponse
+    private function sendImage(string $imageFilepath): StreamedResponse
     {
         try {
             $fileStream = $this->filesystem->readStream($imageFilepath);

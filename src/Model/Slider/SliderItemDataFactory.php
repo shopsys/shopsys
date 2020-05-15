@@ -10,9 +10,10 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory as BaseSliderItem
 
 /**
  * @method \App\Model\Slider\SliderItemData createFromSliderItem(\App\Model\Slider\SliderItem $sliderItem)
- * @property \App\Component\Image\ImageFacade|null $imageFacade
- * @method __construct(\App\Component\Image\ImageFacade|null $imageFacade)
  * @method setImageFacade(\App\Component\Image\ImageFacade $imageFacade)
+ * @property \App\Component\Image\ImageFacade $imageFacade
+ * @method __construct(\App\Component\Image\ImageFacade $imageFacade)
+ * @method \App\Model\Slider\SliderItemData createInstance()
  */
 class SliderItemDataFactory extends BaseSliderItemDataFactory
 {

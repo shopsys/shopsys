@@ -426,7 +426,8 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         }
 
         file_put_contents($tempFileName, $mediaFileResponse->getBody()->getContents());
-        $createdImage = $this->imageFacade->uploadImage($product, [$akeneoMediaFileName], null, false);
+        $this->imageFacade->uploadImage($product, [$akeneoMediaFileName], null, false);
+        $createdImage = $this->imageFacade->getImageByEntity($product, null);
 
         $this->em->clear(Image::class);
 

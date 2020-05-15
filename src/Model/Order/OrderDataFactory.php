@@ -15,6 +15,14 @@ class OrderDataFactory extends BaseOrderDataFactory
      */
     public function create(): BaseOrderData
     {
+        return $this->createInstance();
+    }
+
+    /**
+     * @return \App\Model\Order\OrderData
+     */
+    protected function createInstance(): BaseOrderData
+    {
         return new OrderData();
     }
 

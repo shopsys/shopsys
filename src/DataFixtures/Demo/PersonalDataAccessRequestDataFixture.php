@@ -16,10 +16,10 @@ class PersonalDataAccessRequestDataFixture extends AbstractReferenceFixture
     public const REFERENCE_ACCESS_EXPORT_REQUEST = 'reference_access_export_request';
 
     /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade */
-    protected $personalDataFacade;
+    private $personalDataFacade;
 
     /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory */
-    protected $personalDataFactory;
+    private $personalDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataFacade

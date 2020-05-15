@@ -25,6 +25,14 @@ class CustomerUserDataFactory extends BaseUserDataFactory
      */
     public function create(): BaseUserData
     {
+        return $this->createInstance();
+    }
+
+    /**
+     * @return \App\Model\Customer\User\CustomerUserData
+     */
+    protected function createInstance(): BaseUserData
+    {
         return new CustomerUserData();
     }
 

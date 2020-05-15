@@ -13,9 +13,17 @@ class TransportDataFactory extends BaseTransportDataFactory
     /**
      * @return \App\Model\Transport\TransportData
      */
+    protected function createInstance(): BaseTransportData
+    {
+        return new TransportData();
+    }
+
+    /**
+     * @return \App\Model\Transport\TransportData
+     */
     public function create(): BaseTransportData
     {
-        $transportData = new TransportData();
+        $transportData = $this->createInstance();
         $this->fillNew($transportData);
 
         return $transportData;
@@ -27,7 +35,7 @@ class TransportDataFactory extends BaseTransportDataFactory
      */
     public function createFromTransport(BaseTransport $transport): BaseTransportData
     {
-        $transportData = new TransportData();
+        $transportData = $this->createInstance();
         $this->fillFromTransport($transportData, $transport);
         $transportData->productTypes = $transport->getProductTypes();
         $transportData->personalPickup = $transport->isPersonalPickup();

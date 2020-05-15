@@ -79,29 +79,6 @@ class NumberFormatHelper extends Module
     }
 
     /**
-     * @deprecated test is deprecated and will be removed in the next major.
-     *
-     * Inspired by formatCurrency() method, {@see \Shopsys\FrameworkBundle\Twig\PriceExtension}
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
-    public function getFormattedPriceWithCurrencySymbolOnFrontend(Money $price): string
-    {
-        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
-        $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
-        $currencyFormatter = $this->currencyFormatterFactory->create($firstDomainLocale);
-
-        $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
-
-        $formattedPriceWithCurrencySymbol = $currencyFormatter->format(
-            $this->rounding->roundPriceWithVat($price)->getAmount(),
-            $intlCurrency->getCurrencyCode()
-        );
-
-        return $this->normalizeSpaces($formattedPriceWithCurrencySymbol);
-    }
-
-    /**
      * Inspired by formatCurrency() method, {@see \Shopsys\FrameworkBundle\Twig\PriceExtension}
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      * @return string
@@ -116,29 +93,6 @@ class NumberFormatHelper extends Module
 
         $formattedPriceWithCurrencySymbol = $currencyFormatter->format(
             $this->rounding->roundPriceWithVatByCurrency($price, $firstDomainDefaultCurrency)->getAmount(),
-            $intlCurrency->getCurrencyCode()
-        );
-
-        return $this->normalizeSpaces($formattedPriceWithCurrencySymbol);
-    }
-
-    /**
-     * @deprecated test is deprecated and will be removed in the next major.
-     *
-     * Inspired by formatCurrency() method, {@see \Shopsys\FrameworkBundle\Twig\PriceExtension}
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
-    public function getFormattedPriceOnFrontend(Money $price): string
-    {
-        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
-        $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
-        $currencyFormatter = $this->currencyFormatterFactory->create($firstDomainLocale);
-
-        $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
-
-        $formattedPriceWithCurrencySymbol = $currencyFormatter->format(
-            $this->rounding->roundPriceWithVat($price)->getAmount(),
             $intlCurrency->getCurrencyCode()
         );
 

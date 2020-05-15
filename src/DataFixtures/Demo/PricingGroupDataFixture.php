@@ -20,22 +20,22 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      */
-    protected $pricingGroupFacade;
+    private $pricingGroupFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface
      */
-    protected $pricingGroupDataFactory;
+    private $pricingGroupDataFactory;
 
     /**
      * @var \App\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
      */
-    protected $pricingGroupSettingFacade;
+    private $pricingGroupSettingFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -74,7 +74,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
      *
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
-    protected function editDefaultPricingGroupOnDomain(DomainConfig $domainConfig): void
+    private function editDefaultPricingGroupOnDomain(DomainConfig $domainConfig): void
     {
         $defaultPricingGroupOnDomain = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());
         $pricingGroupData = $this->pricingGroupDataFactory->createFromPricingGroup($defaultPricingGroupOnDomain);

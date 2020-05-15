@@ -55,11 +55,11 @@ spec:
                         -   name: source-codes
                             mountPath: /tmp/source-codes
                         -   name: domains-urls
-                            mountPath: /var/www/html/config/domains_urls.yml
-                            subPath: domains_urls.yml
+                            mountPath: /var/www/html/config/domains_urls.yaml
+                            subPath: domains_urls.yaml
                         -   name: parameters
-                            mountPath: /var/www/html/config/parameters.yml
-                            subPath: parameters.yml
+                            mountPath: /var/www/html/config/parameters.yaml
+                            subPath: parameters.yaml
             containers:
                 -   image: "{{TAG}}"
                     name: php-fpm
@@ -80,11 +80,11 @@ spec:
                         -   name: source-codes
                             mountPath: /var/www/html
                         -   name: domains-urls
-                            mountPath: /var/www/html/config/domains_urls.yml
-                            subPath: domains_urls.yml
+                            mountPath: /var/www/html/config/domains_urls.yaml
+                            subPath: domains_urls.yaml
                         -   name: parameters
-                            mountPath: /var/www/html/config/parameters.yml
-                            subPath: parameters.yml
+                            mountPath: /var/www/html/config/parameters.yaml
+                            subPath: parameters.yaml
                     env:
                         -   name: S3_API_HOST
                             value: "{{S3_API_HOST}}"
