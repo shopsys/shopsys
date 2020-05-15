@@ -211,7 +211,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
 
     private function deleteRestNotTransferredCategories(): void
     {
-        if ($this->categoriesFromAkeneoCountBeforeTransfer === 0 && count($this->notTransferredCategoriesIds)) {
+        if ($this->categoriesFromAkeneoCountBeforeTransfer === 0 && count($this->notTransferredCategoriesIds) === 0) {
             return;
         }
         if ($this->categoriesFromAkeneoCountBeforeTransfer === count($this->notTransferredCategoriesIds)) {
