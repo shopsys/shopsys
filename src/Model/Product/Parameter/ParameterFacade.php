@@ -152,4 +152,18 @@ class ParameterFacade extends BaseParameterFacade
     {
         return $this->parameterRepository->getAllAkeneoParameterIds();
     }
+
+    /**
+     * @param int $parameterValueId
+     * @param \App\Model\Product\Parameter\ParameterValueData $parameterValueData
+     * @return \App\Model\Product\Parameter\ParameterValue
+     */
+    public function editParameterValue(int $parameterValueId, ParameterValueData $parameterValueData): ParameterValue
+    {
+        $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
+        $parameterValue->edit($parameterValueData);
+        $this->em->flush();
+
+        return $parameterValue;
+    }
 }

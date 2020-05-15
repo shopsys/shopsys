@@ -70,6 +70,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
                 'choice_name' => 'id',
                 'multiple' => true,
                 'expanded' => true,
+                'attr' => ['parameterType' => $parameter->getParameterType()],
             ]);
         }
 

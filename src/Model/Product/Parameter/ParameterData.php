@@ -33,6 +33,11 @@ class ParameterData extends BaseParameterData
      */
     public $parameterUnit;
 
+    /**
+     * @var string
+     */
+    public $parameterType;
+
     public function __construct()
     {
         $this->name = [];

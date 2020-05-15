@@ -22,12 +22,20 @@ class ParameterValue extends BaseParameterValue
     protected $unit;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $rgbHex;
+
+    /**
      * @param \App\Model\Product\Parameter\ParameterValueData $parameterData
      */
     public function __construct(ParameterValueData $parameterData)
     {
         parent::__construct($parameterData);
         $this->unit = $parameterData->unit;
+        $this->rgbHex = $parameterData->rgbHex;
     }
 
     /**
@@ -37,6 +45,7 @@ class ParameterValue extends BaseParameterValue
     {
         parent::edit($parameterData);
         $this->unit = $parameterData->unit;
+        $this->rgbHex = $parameterData->rgbHex;
     }
 
     /**
@@ -45,5 +54,13 @@ class ParameterValue extends BaseParameterValue
     public function getUnit(): ?string
     {
         return $this->unit;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRgbHex(): ?string
+    {
+        return $this->rgbHex;
     }
 }

@@ -20,6 +20,16 @@ class Parameter extends BaseParameter
 {
     public const AKENEO_ATTRIBUTES_TYPE_BOOLEAN = 'pim_catalog_boolean';
 
+    public const PARAMETER_TYPE_COMMON = 'checkbox';
+    public const PARAMETER_TYPE_SLIDER = 'slider';
+    public const PARAMETER_TYPE_COLOR = 'colorPicker';
+
+    public const PARAMETER_TYPES = [
+        self::PARAMETER_TYPE_COMMON => self::PARAMETER_TYPE_COMMON,
+        self::PARAMETER_TYPE_SLIDER => self::PARAMETER_TYPE_SLIDER,
+        self::PARAMETER_TYPE_COLOR => self::PARAMETER_TYPE_COLOR,
+    ];
+
     /**
      * @var \App\Model\Product\Parameter\ParameterGroup|null
      *
@@ -58,6 +68,13 @@ class Parameter extends BaseParameter
     protected $parameterUnit;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
+     */
+    private $parameterType;
+
+    /**
      * Parameter constructor.
      * @param \App\Model\Product\Parameter\ParameterData $parameterData
      */
@@ -71,6 +88,7 @@ class Parameter extends BaseParameter
         $this->akeneoType = $parameterData->akeneoType;
         $this->orderingPriority = $parameterData->orderingPriority;
         $this->parameterUnit = $parameterData->parameterUnit;
+        $this->parameterType = $parameterData->parameterType;
     }
 
     /**
@@ -84,6 +102,7 @@ class Parameter extends BaseParameter
         $this->akeneoType = $parameterData->akeneoType;
         $this->orderingPriority = $parameterData->orderingPriority;
         $this->parameterUnit = $parameterData->parameterUnit;
+        $this->parameterType = $parameterData->parameterType;
     }
 
     /**
@@ -133,5 +152,13 @@ class Parameter extends BaseParameter
     public function isVisible()
     {
         throw new DeprecatedParameterPropertyException('isVisible');
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterType(): string
+    {
+        return $this->parameterType;
     }
 }

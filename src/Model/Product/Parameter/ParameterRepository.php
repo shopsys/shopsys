@@ -248,4 +248,23 @@ class ParameterRepository extends BaseParameterRepository
 
         return array_map('reset', $result);
     }
+
+    /**
+     * @param string $locale
+     * @param string $type
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilderParameterValuesUsedByProductsByLocaleAndType(
+        string $locale,
+        string $type
+    ): QueryBuilder {
+        return $this->getParameterValueRepository()->createQueryBuilder('pv')
+            ->select('pv')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
+            ->join(Parameter::class, 'p', Join::WITH, 'ppv.parameter = p and p.parameterType = :type')
+            ->setParameter(':locale', $locale)
+            ->setParameter(':type', $type)
+            ->groupBy('pv')
+            ->orderBy('pv.text');
+    }
 }

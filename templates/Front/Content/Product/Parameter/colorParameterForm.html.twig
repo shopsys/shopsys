@@ -1,0 +1,37 @@
+<div class="box-filter__choice js-product-filter-parameter js-product-filter-box{% if filterCollapsedParameters[parameterId] is defined %} js-product-filter-close-parameter{% endif %}"
+     data-product-filter-box-id="{{ parameterForm.vars.id }}">
+    <span class="box-filter__choice__title active js-product-filter-box-label js-product-filter-parameter-label">
+        {{ parameterForm.vars.label }}
+        <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+    </span>
+    <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs">
+        {% for parameterValueForm in parameterForm %}
+            {% set rgbHex = parameterForm.vars.choices[parameterValueForm.vars.value].data.rgbHex %}
+            {% if rgbHex is not empty %}
+                <div class="form-choice js-form-choice box-filter__choice__input js-product-filter-parameter-value
+                    {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
+                    ">
+                    {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
+                    <label class="css-checkbox__image form-choice__label form-choice-color-picker"
+                           for="{{ parameterValueForm.vars.id }}"
+                           style="background-color: {{ rgbHex }}"
+                           title="{{ parameterValueForm.vars.label }}"
+                    >
+                        &nbsp;
+                    </label>
+                </div>
+            {% else %}
+                {% do parameterValueForm.setRendered %}
+            {% endif %}
+        {% endfor %}
+        {% if parameterForm|length > paramsVisibleCount %}
+            <a class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
+               data-text-more="{{ 'Zobrazit více'|trans }}"
+               data-text-less="{{ 'Zobrazit méně'|trans }}"
+               href="#">
+                {{ 'Zobrazit více'|trans }}
+            </a>
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+</div>
