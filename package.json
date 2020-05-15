@@ -46,6 +46,7 @@
         "stylelint-webpack-plugin": "^1.2.3",
         "svgo": "1.2.2",
         "webfonts-generator": "^0.4.0",
+        "webpack-livereload-plugin": "^2.3.0",
         "webpack-notifier": "^1.6.0"
     },
     "dependencies": {
