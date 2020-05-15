@@ -211,6 +211,9 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
 
     private function deleteRestNotTransferredCategories(): void
     {
+        if ($this->categoriesFromAkeneoCountBeforeTransfer === 0 && count($this->notTransferredCategoriesIds) === 0) {
+            return;
+        }
         if ($this->categoriesFromAkeneoCountBeforeTransfer === count($this->notTransferredCategoriesIds)) {
             $this->logger->addError(sprintf('Import categories from Akeneo probably failed, because all categories with akeneo code should be deleted. Deletion was aborted.'));
             return;
