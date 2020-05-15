@@ -19,17 +19,18 @@ services:
         resource: "../src"
         exclude: "../src/Exception"
 
-    GuzzleHttp\Client: ~
+    GuzzleHttp\ClientInterface:
+        class: GuzzleHttp\Client
+
     Symfony\Component\Console\Helper\QuestionHelper: ~
 
     Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider:
         arguments:
             - ['packages', 'project-base']
 
-    Twig_Environment:
-        class: Twig\Environment
+    Twig\Environment: ~
 
-    Twig_LoaderInterface:
+    Twig\Loader\LoaderInterface:
         class: Twig\Loader\FilesystemLoader
         arguments:
             - ['upgrade/template']
