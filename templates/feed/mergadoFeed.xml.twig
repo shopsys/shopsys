@@ -18,7 +18,7 @@
             <DESCRIPTION>{{ item.description }}</DESCRIPTION>
         {% endif %}
         <DELIVERY_DAYS>{{ item.deliveryDays }}</DELIVERY_DAYS>
-        <CURRENCY>{{ currencyCode(getDomain().id) }}</CURRENCY>
+        <CURRENCY>{{ item.currencyCode }}</CURRENCY>
         {% if item.imageUrl != null %}
             <IMAGE>{{ item.imageUrl }}</IMAGE>
         {% endif %}

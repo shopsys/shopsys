@@ -84,6 +84,11 @@ class MergadoFeedItem implements FeedItemInterface
     private $mainVariantId;
 
     /**
+     * @var string
+     */
+    private $currencyCode;
+
+    /**
      * @param int $id
      * @param string $productNo
      * @param string $name
@@ -110,6 +115,7 @@ class MergadoFeedItem implements FeedItemInterface
         ProductPrice $price,
         array $galleryImageUrls,
         array $parameters,
+        string $currencyCode,
         ?string $description,
         ?Brand $brand,
         ?string $imageUrl,
@@ -128,6 +134,7 @@ class MergadoFeedItem implements FeedItemInterface
         $this->imageUrl = $imageUrl;
         $this->galleryImageUrls = $galleryImageUrls;
         $this->parameters = $parameters;
+        $this->currencyCode = $currencyCode;
         $this->mainVariantId = $mainVariantId;
     }
 
@@ -241,6 +248,14 @@ class MergadoFeedItem implements FeedItemInterface
     public function getProductNo(): string
     {
         return $this->productNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrencyCode(): string
+    {
+        return $this->currencyCode;
     }
 
     /**

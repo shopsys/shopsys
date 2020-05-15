@@ -9,6 +9,7 @@ use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -44,6 +45,10 @@ class MergadoFeedItemFactory
      * @var \App\Component\Image\ImageFacade
      */
     private $imageFacade;
+    /**
+     * @var CurrencyFacade
+     */
+    private $currencyFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
@@ -59,7 +64,8 @@ class MergadoFeedItemFactory
         CategoryFacade $categoryFacade,
         ProductAvailabilityFacade $availabilityFacade,
         ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        ImageFacade $imageFacade
+        ImageFacade $imageFacade,
+        CurrencyFacade $currencyFacade
     ) {
         $this->productUrlsBatchLoader = $productUrlsBatchLoader;
         $this->productParametersBatchLoader = $productParametersBatchLoader;
@@ -67,6 +73,7 @@ class MergadoFeedItemFactory
         $this->availabilityFacade = $availabilityFacade;
         $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
         $this->imageFacade = $imageFacade;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -77,6 +84,7 @@ class MergadoFeedItemFactory
     public function createForProduct(Product $product, DomainConfig $domainConfig): MergadoFeedItem
     {
         $domainId = $domainConfig->getId();
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         return new MergadoFeedItem(
             $product->getId(),
@@ -89,6 +97,7 @@ class MergadoFeedItemFactory
             $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId($product, $domainId, null),
             $this->getOtherProductImages($product, $domainConfig),
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
+            $currency->getCode(),
             $product->getDescription($domainId),
             $product->getBrand(),
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
