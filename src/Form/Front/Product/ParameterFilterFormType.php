@@ -69,6 +69,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
                 $builder->add($parameter->getId(), SliderFilterFormType::class, [
                     'label' => $parameter->getName(),
                     'slider_config' => $this->createSliderConfig($parameterFilterChoice),
+                    'attr' => ['parameterType' => $parameter->getParameterType()],
                 ]);
             } else {
                 $builder->add($parameter->getId(), ChoiceType::class, [
@@ -159,7 +160,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
             $parameterChoice = $this->parameterChoicesIndexedByParameterId[$parameterId];
             /** @var \App\Model\Product\Parameter\Parameter $parameter */
             $parameter = $parameterChoice->getParameter();
-            if ($parameter->isUseSliderInFilter()) {
+            if ($parameter->getParameterType() === Parameter::PARAMETER_TYPE_SLIDER) {
                 if ($parameterValues['min'] === null && $parameterValues['max'] === null) {
                     continue;
                 }
@@ -177,7 +178,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
             $parameter = $this->parameterChoicesIndexedByParameterId[$parameterId]->getParameter();
             $parameterFilterData->parameter = $parameter;
             $parameterFilterData->values = $selectedParameterValues;
-            if ($parameter->isUseSliderInFilter() && count($selectedParameterValues) === 0) {
+            if ($parameter->getParameterType() === Parameter::PARAMETER_TYPE_SLIDER && count($selectedParameterValues) === 0) {
                 $parameterFilterData->parameterFilteredBySlider = true;
             }
             $parametersFilterData[] = $parameterFilterData;
