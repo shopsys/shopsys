@@ -87,6 +87,21 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'required' => false,
         ]);
 
+        $builder->add('identifier', TextType::class, [
+            'label' => t('Identifikátor kupónu pro IS'),
+            'required' => true,
+            'constraints' => [
+                new Constraints\NotNull([
+                    'message' => t('Identifikátor musí obsahovat dva znaky'),
+                ]),
+                new Constraints\Length([
+                    'min' => 2,
+                    'max' => 2,
+                    'exactMessage' => t('Identifikátor musí obsahovat dva znaky'),
+                ]),
+            ],
+        ]);
+
         $this->buildProductsWithSaleForm($builder);
         $this->buildCategoriesWithSaleForm($builder);
     }

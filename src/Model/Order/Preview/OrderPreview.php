@@ -70,6 +70,11 @@ class OrderPreview extends BaseOrderPreview
     private $totalPriceDiscount;
 
     /**
+     * @var string|null
+     */
+    protected $promoCodeIdentifier;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProductsByIndex
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPricesByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscountsByIndex
@@ -92,6 +97,7 @@ class OrderPreview extends BaseOrderPreview
      * @param int|null $percentageOfFreeTransport
      * @param bool|null $transportForFree
      * @param string|null $promoCodeCode;
+     * @param string|null $promoCodeIdentifier;
      */
     public function __construct(
         array $quantifiedProductsByIndex,
@@ -115,7 +121,8 @@ class OrderPreview extends BaseOrderPreview
         ?Money $restToFreeTransportPrice = null,
         ?int $percentageOfFreeTransport = null,
         ?bool $transportForFree = false,
-        $promoCodeCode = null
+        $promoCodeCode = null,
+        $promoCodeIdentifier = null
     ) {
         parent::__construct(
             $quantifiedProductsByIndex,
@@ -142,6 +149,7 @@ class OrderPreview extends BaseOrderPreview
         $this->quantifiedItemsDiscountPricesByIndex = $quantifiedItemsDiscountPricesByIndex;
         $this->productsFullPrice = $productsFullPrice;
         $this->totalPriceDiscount = $totalPriceDiscount;
+        $this->promoCodeIdentifier = $promoCodeIdentifier;
     }
 
     /**
@@ -242,6 +250,14 @@ class OrderPreview extends BaseOrderPreview
     public function getTotalPriceDiscount(): Price
     {
         return $this->totalPriceDiscount;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPromoCodeIdentifier(): ?string
+    {
+        return $this->promoCodeIdentifier;
     }
 
     /**

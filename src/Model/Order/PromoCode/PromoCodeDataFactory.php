@@ -81,8 +81,8 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
 
         $promoCodeData->categoriesWithSale = $this->promoCodeCategoryRepository->getCategoriesByPromoCodeId($promoCode->getId());
         $promoCodeData->productsWithSale = $this->promoCodeProductRepository->getProductsByPromoCodeId($promoCode->getId());
-
         $promoCodeData->remainingUses = $promoCode->getRemainingUses();
+        $promoCodeData->identifier = $promoCode->getIdentifier();
     }
 
     /**

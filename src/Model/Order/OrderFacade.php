@@ -395,7 +395,13 @@ class OrderFacade extends BaseOrderFacade
             );
 
             if ($quantifiedItemDiscount !== null) {
-                $this->addOrderItemDiscount($orderItem, $quantifiedItemDiscount, $locale, (float)$orderPreview->getPromoCodeDiscountPercent());
+                $this->addOrderItemDiscount(
+                    $orderItem,
+                    $quantifiedItemDiscount,
+                    $locale,
+                    (float)$orderPreview->getPromoCodeDiscountPercent(),
+                    $orderPreview->getPromoCodeIdentifier()
+                );
             }
         }
     }
@@ -448,8 +454,9 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount
      * @param string $locale
      * @param float $discountPercent
+     * @param string|null $promoCodeIdentifier
      */
-    protected function addOrderItemDiscount(OrderItem $orderItem, Price $quantifiedItemDiscount, string $locale, float $discountPercent): void
+    protected function addOrderItemDiscount(OrderItem $orderItem, Price $quantifiedItemDiscount, string $locale, float $discountPercent, ?string $promoCodeIdentifier = null): void
     {
         $name = sprintf(
             '%s %s - %s',
@@ -466,6 +473,7 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->vatPercent = $orderItem->getVatPercent();
         $orderItemData->quantity = 1;
         $orderItemData->productType = $orderItem->getProductType();
+        $orderItemData->promoCodeIdentifier = $promoCodeIdentifier;
 
         $this->orderItemFactory->createProductByOrderItemData(
             $orderItemData,

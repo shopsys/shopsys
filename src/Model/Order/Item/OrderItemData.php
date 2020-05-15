@@ -21,4 +21,9 @@ class OrderItemData extends BaseOrderItemData
      * @var \App\Model\Stock\Stock|null
      */
     public $personalPickupStock;
+
+    /**
+     * @var string|null
+     */
+    public $promoCodeIdentifier;
 }

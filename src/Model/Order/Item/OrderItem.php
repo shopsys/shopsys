@@ -44,6 +44,13 @@ class OrderItem extends BaseOrderItem
     private $personalPickupStock;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $promoCodeIdentifier;
+
+    /**
      * @param \App\Model\Order\Order $order
      * @param string $name
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
@@ -105,5 +112,21 @@ class OrderItem extends BaseOrderItem
     public function setPersonalPickupStock(?Stock $personalPickupStock): void
     {
         $this->personalPickupStock = $personalPickupStock;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPromoCodeIdentifier(): ?string
+    {
+        return $this->promoCodeIdentifier;
+    }
+
+    /**
+     * @param string|null $promoCodeIdentifier
+     */
+    public function setPromoCodeIdentifier(?string $promoCodeIdentifier): void
+    {
+        $this->promoCodeIdentifier = $promoCodeIdentifier;
     }
 }

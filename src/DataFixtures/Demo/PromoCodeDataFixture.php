@@ -62,6 +62,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData->code = 'test';
         $promoCodeData->percent = 10.0;
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
+        $promoCodeData->identifier = 'GG';
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
 
         /** @var \App\Model\Product\Product $product */

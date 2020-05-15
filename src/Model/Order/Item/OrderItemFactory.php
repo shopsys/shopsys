@@ -100,6 +100,7 @@ class OrderItemFactory extends BaseOrderItemFactory
             $product
         );
         $orderItem->setProductType($orderItemData->productType);
+        $orderItem->setPromoCodeIdentifier($orderItemData->promoCodeIdentifier);
 
         return $orderItem;
     }

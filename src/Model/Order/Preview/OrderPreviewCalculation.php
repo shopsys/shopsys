@@ -193,6 +193,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         $totalProductHighPrice = $this->calculateTotalProductsHighPriceByDomain($quantifiedProducts, $domainId);
         $promoCodeCode = $this->currentPromoCodeFacade->getPromoCodeCode();
         $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
+        $promoCodeIdentifier = $this->currentPromoCodeFacade->getPromoCodeIdentifier();
 
         return new OrderPreview(
             $quantifiedProducts,
@@ -216,7 +217,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $restToFreeTransportPrice,
             $percentageOfFreeTransport,
             $transportForFree,
-            $promoCodeCode
+            $promoCodeCode,
+            $promoCodeIdentifier
         );
     }
 

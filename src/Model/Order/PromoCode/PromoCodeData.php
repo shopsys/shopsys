@@ -57,4 +57,9 @@ class PromoCodeData extends BasePromoCodeData
      * @var int|null
      */
     public $remainingUses;
+
+    /**
+     * @var string|null
+     */
+    public $identifier;
 }
