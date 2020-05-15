@@ -129,7 +129,9 @@ class MergadoFeedItemFactory
     private function getOtherProductImages(Product $product, DomainConfig $domainConfig): array
     {
         $imageUrls = [];
-        foreach ($this->imageFacade->getImagesByEntityIndexedById($product, null) as $image) {
+        $images = $this->imageFacade->getImagesByEntityIndexedById($product, null);
+        array_shift($images);
+        foreach ($images as $image) {
             $imageUrls[] = $this->imageFacade->getImageUrl($domainConfig, $image, 'original');
         }
 
