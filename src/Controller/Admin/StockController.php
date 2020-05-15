@@ -145,10 +145,12 @@ class StockController extends AdminBaseController
 
             $this
                 ->addSuccessFlashTwig(
-                    t('Nastavení {{domainName}} skladů uloženo.',
+                    t(
+                        'Nastavení {{domainName}} skladů uloženo.',
                         [
                         'domainName' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
-                    ])
+                    ]
+                    )
                 );
         }
 

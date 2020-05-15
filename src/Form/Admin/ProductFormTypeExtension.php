@@ -380,7 +380,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
                     ],
-                    'label' => t('DPH {{domainName}}',['domainName' => $domainConfig->getName()]),
+                    'label' => t('DPH {{domainName}}', ['domainName' => $domainConfig->getName()]),
                 ]);
         }
 

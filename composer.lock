@@ -225,16 +225,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.137.8",
+            "version": "3.138.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0116efff39048d9bc163d3c287a85cce30b9aa20"
+                "reference": "66df78e714c7ac87a9ea2bbb77cde586649d0141"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0116efff39048d9bc163d3c287a85cce30b9aa20",
-                "reference": "0116efff39048d9bc163d3c287a85cce30b9aa20",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/66df78e714c7ac87a9ea2bbb77cde586649d0141",
+                "reference": "66df78e714c7ac87a9ea2bbb77cde586649d0141",
                 "shasum": ""
             },
             "require": {
@@ -305,7 +305,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-05-12T18:14:22+00:00"
+            "time": "2020-05-14T18:17:11+00:00"
         },
         {
             "name": "barryvdh/elfinder-flysystem-driver",
@@ -7165,12 +7165,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/framework.git",
-                "reference": "9804a844694fc00b0f52c00a2379f70585a3e6b9"
+                "reference": "58df69a6066389c0817297cce8d8d3b32507dd68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/framework/zipball/9804a844694fc00b0f52c00a2379f70585a3e6b9",
-                "reference": "9804a844694fc00b0f52c00a2379f70585a3e6b9",
+                "url": "https://api.github.com/repos/shopsys/framework/zipball/58df69a6066389c0817297cce8d8d3b32507dd68",
+                "reference": "58df69a6066389c0817297cce8d8d3b32507dd68",
                 "shasum": ""
             },
             "require": {
@@ -7283,7 +7283,7 @@
                 "proprietary"
             ],
             "description": "Core of Shopsys Framework - open source framework for building large, scalable, fast-growing e-commerce projects based on Symfony",
-            "time": "2020-05-13T08:05:53+00:00"
+            "time": "2020-05-14T09:32:34+00:00"
         },
         {
             "name": "shopsys/frontend-api",
@@ -14293,16 +14293,16 @@
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "0.12.12",
+            "version": "0.12.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "842047b2496a46dca2c826d9d6ae37ed08593677"
+                "reference": "5fab376975c2f2d99865837cfe693dc258ca9e61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/842047b2496a46dca2c826d9d6ae37ed08593677",
-                "reference": "842047b2496a46dca2c826d9d6ae37ed08593677",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/5fab376975c2f2d99865837cfe693dc258ca9e61",
+                "reference": "5fab376975c2f2d99865837cfe693dc258ca9e61",
                 "shasum": ""
             },
             "require": {
@@ -14353,7 +14353,7 @@
                 "MIT"
             ],
             "description": "Doctrine extensions for PHPStan",
-            "time": "2020-05-08T08:31:05+00:00"
+            "time": "2020-05-13T17:45:51+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -15871,16 +15871,16 @@
         },
         {
             "name": "symplify/auto-bind-parameter",
-            "version": "v7.3.15",
+            "version": "v7.3.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/auto-bind-parameter.git",
-                "reference": "a702587f4fb79c540e69a1523d86812051098910"
+                "reference": "b19c15216d98d438e053eadea8370213e291cb96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/auto-bind-parameter/zipball/a702587f4fb79c540e69a1523d86812051098910",
-                "reference": "a702587f4fb79c540e69a1523d86812051098910",
+                "url": "https://api.github.com/repos/symplify/auto-bind-parameter/zipball/b19c15216d98d438e053eadea8370213e291cb96",
+                "reference": "b19c15216d98d438e053eadea8370213e291cb96",
                 "shasum": ""
             },
             "require": {
@@ -15891,7 +15891,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5|^9.0",
-                "symplify/package-builder": "^7.3.15"
+                "symplify/package-builder": "^7.3.16"
             },
             "type": "library",
             "extra": {
@@ -15909,7 +15909,7 @@
                 "MIT"
             ],
             "description": "Auto bind parameters for your Symfony applications",
-            "time": "2020-05-13T07:29:16+00:00"
+            "time": "2020-05-13T20:53:18+00:00"
         },
         {
             "name": "symplify/autowire-array-parameter",
@@ -16122,16 +16122,16 @@
         },
         {
             "name": "symplify/set-config-resolver",
-            "version": "v7.3.15",
+            "version": "v7.3.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/set-config-resolver.git",
-                "reference": "1cfeec449d602797a0505c7854af68cde1966af9"
+                "reference": "6aa5eccb3207b3b45560ba06ea096b1ed7b73795"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/1cfeec449d602797a0505c7854af68cde1966af9",
-                "reference": "1cfeec449d602797a0505c7854af68cde1966af9",
+                "url": "https://api.github.com/repos/symplify/set-config-resolver/zipball/6aa5eccb3207b3b45560ba06ea096b1ed7b73795",
+                "reference": "6aa5eccb3207b3b45560ba06ea096b1ed7b73795",
                 "shasum": ""
             },
             "require": {
@@ -16140,7 +16140,7 @@
                 "symfony/console": "^4.4|^5.0",
                 "symfony/filesystem": "^4.4|^5.0",
                 "symfony/finder": "^4.4|^5.0",
-                "symplify/smart-file-system": "^7.3.15"
+                "symplify/smart-file-system": "^7.3.16"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5|^9.0"
@@ -16161,11 +16161,11 @@
                 "MIT"
             ],
             "description": "Resolve config and sets from configs and cli opptions for CLI applications",
-            "time": "2020-05-13T07:29:16+00:00"
+            "time": "2020-05-13T20:53:18+00:00"
         },
         {
             "name": "symplify/smart-file-system",
-            "version": "v7.3.15",
+            "version": "v7.3.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/smart-file-system.git",
