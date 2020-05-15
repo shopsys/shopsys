@@ -130,7 +130,7 @@ class HorizontalMenuItemFormType extends AbstractType
     ): FormBuilderInterface {
         return $builder
             ->create($fieldName, SortableValuesType::class, [
-                'label' => t($label),
+                'label' => $label,
                 'property_path' => sprintf('categoriesByColumnNumber[%d]', $index),
                 'labels_by_value' => $this->categoryPaths,
                 'required' => false,
