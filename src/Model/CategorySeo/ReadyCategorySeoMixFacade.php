@@ -6,12 +6,14 @@ namespace App\Model\CategorySeo;
 
 use App\Component\HttpFoundation\TransactionalMasterRequestListener;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainMainFriendlyUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ReadyCategorySeoMixFacade
@@ -198,5 +200,26 @@ class ReadyCategorySeoMixFacade
             }
             $this->em->flush();
         }
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $ordering
+     * @param int $domainId
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix
+     */
+    public function getReadyCategorySeoMixFromFilter(
+        Category $category,
+        ProductFilterData $productFilterData,
+        string $ordering,
+        int $domainId
+    ): ReadyCategorySeoMix {
+        return $this->readyCategorySeoMixRepository->getReadyCategorySeoMixFromFilter(
+            $category,
+            $productFilterData,
+            $ordering,
+            $domainId
+        );
     }
 }

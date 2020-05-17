@@ -30,7 +30,7 @@ class ReadyCategorySeoMixFriendlyUrlListener
     {
         $request = $event->getRequest();
 
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMasterRequest() || $request->isXmlHttpRequest()) {
             return;
         }
 

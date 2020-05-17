@@ -19,7 +19,7 @@
     <div class="web__line">
         <div class="web__container">
             {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productList'})) }}
-            <div class="box-list__description box-list__description--top">
+            <div class="box-list__description box-list__description--top js-ready-category-seo-mix-product-list-h1">
                 <h1 class="box-list__description__heading">{{ seoH1 }}</h1>
                 {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
                 {% if shortDescription is not null %}
@@ -125,7 +125,7 @@
     </div>
     <div class="box-list__description">
         <a id="description"></a>
-        <div class="box-list__description__text in-user-text js-category-description">
+        <div class="box-list__description__text in-user-text js-category-description js-ready-category-seo-mix-product-list-description">
             {{ description|raw }}
         </div>
         <div class="box-list__description__more">
@@ -133,5 +133,16 @@
                 {{ 'View more'|trans }}
             </span>
         </div>
+
+        <div
+                class="js-ready-category-seo-mix-values"
+                data-seo-h1="{{ seoH1 }}"
+                data-seo-description="{{ description }}"
+                data-seo-title="{{ seoTitle }}"
+                data-seo-meta-description="{{ seoMetaDescription }}"
+                data-url="{{ url }}"
+                data-category-url="{{ categoryUrl }}"
+        ></div>
+
     </div>
 {% endblock %}

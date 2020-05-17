@@ -14,26 +14,9 @@ export default class ProductList {
 
         $container.filterAllNodes('.js-product-list-ordering-mode').click(function () {
             const cookieName = $(this).data('cookie-name');
-            const forceCookieName = 'force-' + cookieName;
             const orderingName = $(this).data('ordering-mode');
-            const isReadyCategorySeoMixPage = $(this).data('is-ready-category-seo-mix-page');
 
-            if (isReadyCategorySeoMixPage) {
-                $.cookie(forceCookieName, orderingName, {
-                    path: location.pathname,
-                    expires: 1
-                });
-
-            } else {
-                $.cookie(cookieName, orderingName, { path: '/' });
-            }
-
-            let url = new URL(location.href);
-            let params = new URLSearchParams(url.search.slice(1));
-
-            params.delete('page');
-            url = getBaseUrl() + '?' + params.toString();
-            pushReloadState(url);
+            $.cookie(cookieName, orderingName, { path: '/' });
 
             _this.reloadWithAjax(_this);
 
@@ -55,9 +38,13 @@ export default class ProductList {
     }
 
     reloadWithAjax (productList) {
+        const $productFilterForm = $('form[name="product_filter_form"]');
+        const categoryUrl = $('.js-ready-category-seo-mix-values').data('category-url');
+
         Ajax.ajax({
             overlayDelay: 0,
-            url: location.href,
+            url: categoryUrl,
+            data: $productFilterForm.serialize(),
             success: function (data) {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
                 productList.showProducts($wrappedData);

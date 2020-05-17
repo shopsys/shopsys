@@ -21,6 +21,17 @@
                 {% include 'Front/Content/Product/productSortCount.html.twig' with {paginationResult: paginationResult} %}
             </div>
         </div>
+
+        <div
+                class="js-ready-category-seo-mix-values"
+                data-seo-h1="{{ seoH1 }}"
+                data-seo-description="{{ description }}"
+                data-seo-title="{{ seoTitle }}"
+                data-seo-meta-description="{{ seoMetaDescription }}"
+                data-url="{{ url }}"
+                data-category-url="{{ categoryUrl }}"
+        ></div>
+
     </div>
     {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
 </div>

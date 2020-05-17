@@ -1,0 +1,34 @@
+import Register from 'framework/common/utils/Register';
+import pushReloadState from '../components/pushReloadState';
+
+export default class ProductListReadyCategorySeoMix {
+
+    static init ($container) {
+
+        $container.filterAllNodes('.js-ready-category-seo-mix-values').each(function () {
+            let $elementWithValues = $(this);
+
+            ProductListReadyCategorySeoMix.setSeoPropertiesToProperElements(
+                $elementWithValues.attr('data-seo-h1'),
+                $elementWithValues.attr('data-seo-description'),
+                $elementWithValues.attr('data-seo-title'),
+                $elementWithValues.attr('data-seo-meta-description'),
+                $elementWithValues.data('url')
+            );
+        });
+    }
+
+    static setSeoPropertiesToProperElements (h1, description, seoTitle, seoMetaDescription, url) {
+        $('.js-ready-category-seo-mix-product-list-h1').text(h1);
+        $('.js-ready-category-seo-mix-product-list-description').html(description);
+        $(document).attr('title', seoTitle);
+        $('meta[name=description]').attr('content', seoMetaDescription);
+
+        // URL blinking is not so good effect for customer
+        setTimeout(function () {
+            pushReloadState(url);
+        }, 1500);
+    }
+}
+
+(new Register()).registerCallback(ProductListReadyCategorySeoMix.init, 'ProductListReadyCategorySeoMix.init');

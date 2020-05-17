@@ -35,11 +35,6 @@ class RequestToOrderingModeIdConverter extends BaseRequestToOrderingModeIdConver
         ProductListOrderingConfig $productListOrderingConfig,
         ?int $readyCategorySeoMixId = null
     ) {
-        $forceOrderingModeId = $this->getForceOrderingModeId($request, $productListOrderingConfig);
-        if ($forceOrderingModeId !== null) {
-            return $forceOrderingModeId;
-        }
-
         if ($readyCategorySeoMixId !== null) {
             $readyCategorySeoMixOrderingModeId = $this->getReadyCategorySeoMixOrderingModeId($readyCategorySeoMixId);
             if ($readyCategorySeoMixOrderingModeId !== null) {
@@ -48,18 +43,6 @@ class RequestToOrderingModeIdConverter extends BaseRequestToOrderingModeIdConver
         }
 
         return parent::getOrderingModeIdFromRequest($request, $productListOrderingConfig);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig $productListOrderingConfig
-     * @return string|null
-     */
-    private function getForceOrderingModeId(
-        Request $request,
-        ProductListOrderingConfig $productListOrderingConfig
-    ): ?string {
-        return $request->cookies->get('force-' . $productListOrderingConfig->getCookieName());
     }
 
     /**

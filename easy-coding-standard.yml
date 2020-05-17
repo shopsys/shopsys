@@ -42,6 +42,7 @@ parameters:
             - '*/src/Controller/Admin/CategorySeoController.php'
             - '*/src/Form/Admin/StockFormType.php'
             - '*/src/Model/Product/ProductDataFactory.php'
+            - '*/src/Controller/Front/ProductController.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'

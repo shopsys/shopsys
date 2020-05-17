@@ -8,6 +8,7 @@ use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
 use App\Model\Category\CategoryParameterFacade;
 use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
+use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
@@ -283,6 +284,19 @@ class ProductController extends FrontBaseController
         ]);
         $filterForm->handleRequest($request);
 
+        $readyCategorySeoMixId = null;
+        try {
+            $readyCategorySeoMixFromFilter = $this->readyCategorySeoMixFacade->getReadyCategorySeoMixFromFilter(
+                $category,
+                $productFilterData,
+                $orderingModeId,
+                $this->domain->getId()
+            );
+
+            $readyCategorySeoMixId = $readyCategorySeoMixFromFilter->getId();
+        } catch (UnableToFindReadyCategorySeoMixException $unableToFindReadyCategorySeoMixException) {
+        }
+
         $paginationResult = $this->listedProductViewFacade->getFilteredPaginatedInCategory(
             $id,
             $productFilterData,
@@ -313,7 +327,14 @@ class ProductController extends FrontBaseController
             'filterCollapsedParameters' => $this->categoryParameterFacade->getParametersCollapsedIndexedByIdForCategory($category),
         ];
 
-        $viewParameters = array_merge($viewParameters, $this->getAdditionalSeoViewParameters($category, $readyCategorySeoMixId));
+        $viewParameters = array_merge(
+            $viewParameters,
+            $this->getAdditionalSeoViewParameters(
+                $request,
+                $category,
+                $readyCategorySeoMixId
+            )
+        );
 
         if ($request->isXmlHttpRequest()) {
             return $this->render('Front/Content/Product/ajaxList.html.twig', $viewParameters);
@@ -420,20 +441,30 @@ class ProductController extends FrontBaseController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Model\Category\Category $category
      * @param int|null $readyCategorySeoMixId
      * @return string[]
      */
-    private function getAdditionalSeoViewParameters(Category $category, ?int $readyCategorySeoMixId = null): array
-    {
+    private function getAdditionalSeoViewParameters(
+        Request $request,
+        Category $category,
+        ?int $readyCategorySeoMixId = null
+    ): array {
         $domainId = $this->domain->getId();
 
+        $categoryUrl = $this->generateUrl('front_product_list', ['id' => $category->getId()]);
         if ($readyCategorySeoMixId === null) {
             $seoH1 = $category->getSeoH1($domainId);
             $description = $category->getDescription($domainId);
             $shortDescription = $category->getShortDescription($domainId);
             $seoTitle = $category->getSeoTitle($domainId);
             $seoMetaDescription = $category->getSeoMetaDescription($domainId);
+
+            $url = $this->generateUrl('front_product_list', array_merge(
+                $request->query->all(),
+                ['id' => $category->getId()]
+            ));
         } else {
             $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($readyCategorySeoMixId);
 
@@ -442,6 +473,8 @@ class ProductController extends FrontBaseController
             $shortDescription = $readyCategorySeoMix->getShortDescription() ?? $category->getShortDescription($domainId);
             $seoTitle = $readyCategorySeoMix->getTitle() ?? $seoH1;
             $seoMetaDescription = $readyCategorySeoMix->getMetaDescription() ?? $category->getSeoMetaDescription($domainId);
+
+            $url = $this->generateUrl('front_category_seo', ['id' => $readyCategorySeoMix->getId()]);
         }
 
         if ($seoMetaDescription === null) {
@@ -462,6 +495,8 @@ class ProductController extends FrontBaseController
             'shortDescription' => $shortDescription,
             'seoTitle' => $seoTitle,
             'seoMetaDescription' => $seoMetaDescription,
+            'url' => $url,
+            'categoryUrl' => $categoryUrl,
         ];
     }
 

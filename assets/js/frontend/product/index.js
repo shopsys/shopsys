@@ -6,3 +6,4 @@ import './productList.AjaxFilter';
 import './productList';
 import './fancybox';
 import './MaximumOrderQuantity';
+import './ProductListReadyCategorySeoMix';
