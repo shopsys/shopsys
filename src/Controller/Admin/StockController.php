@@ -283,8 +283,6 @@ class StockController extends AdminBaseController
 
         $grid = $this->gridFactory->create('stockList', $dataSource);
 
-        $grid->setDefaultOrder('position');
-
         $grid->addColumn('name', 's.name', t('Name'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');

@@ -71,6 +71,7 @@ class StockRepository
     {
         return $this->getQueryBuilder()
             ->where('s.domainId = :domainId')
+            ->orderBy('s.id')
             ->setParameter('domainId', $domainId);
     }
 
