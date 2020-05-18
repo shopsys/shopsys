@@ -391,6 +391,9 @@ msgstr ""
 msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
+msgid "Collapse menu"
+msgstr ""
+
 msgid "Color"
 msgstr ""
 
@@ -410,6 +413,9 @@ msgid "Company number"
 msgstr ""
 
 msgid "Complement to title"
+msgstr ""
+
+msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone S7” the result title for this products page will be “iPhone S7 | My shop”."
 msgstr ""
 
 msgid "Contact"
@@ -994,6 +1000,9 @@ msgstr ""
 msgid "Exchange rate"
 msgstr ""
 
+msgid "Excl. VAT"
+msgstr ""
+
 msgid "Exclude from sale"
 msgstr ""
 
@@ -1201,6 +1210,9 @@ msgstr ""
 msgid "Inactive"
 msgstr ""
 
+msgid "Incl. VAT"
+msgstr ""
+
 msgid "Including VAT"
 msgstr ""
 
@@ -1345,6 +1357,9 @@ msgstr ""
 msgid "Master email %masterMail% set"
 msgstr ""
 
+msgid "Menu"
+msgstr ""
+
 msgid "Message"
 msgstr ""
 
@@ -1379,6 +1394,9 @@ msgid "Name %locale%"
 msgstr ""
 
 msgid "Name serves only for internal use within the administration"
+msgstr ""
+
+msgid "Name serves only for internal use within the administration."
 msgstr ""
 
 msgid "New administrator"
