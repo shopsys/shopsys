@@ -65,7 +65,7 @@
                         <img class="cart__detail__figure__img" loading="lazy" data-src="{{ asset('public/frontend/images/empty-cart-small.png') }}" alt="{{ 'Empty cart'|trans }}">
                     </div>
                 </div>
-            <div>
+            </div>
         {% endif %}
     </div>
     <div class="cart-mobile header__mobile-button">
@@ -73,6 +73,8 @@
             <i class="svg svg-cart"></i>
             {% if cart is not null %}
                 <span class="cart__count">{{ cart.itemsCount }}</span>
+            {% else %}
+                <span class="cart__count">0</span>
             {% endif %}
         </a>
     </div>
