@@ -28,15 +28,15 @@
                 {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
             {% endif %}
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
-            <div class="box-series">
-                <div class="box-series__left">
-                    <h2 class="box-series__heading">{{ category.getProductSeriesListTitle(domain.id) }}</h2>
-                    <div class="box-series__desc">{{ category.getProductSeriesListDescription(domain.id) }}</div>
-                    {% if category.getProductSeriesListLink(domain.id) %}
-                        <a class="btn btn--outline dont-print" href="{{ category.getProductSeriesListLink(domain.id) }}">{{ 'Zobrazit všechny'|trans }}</a>
-                    {% endif %}
-                </div>
-                {% if categoryProductSeries is not empty %}
+            {% if categoryProductSeries is not empty %}
+                <div class="box-series">
+                    <div class="box-series__left">
+                        <h2 class="box-series__heading">{{ category.getProductSeriesListTitle(domain.id) }}</h2>
+                        <div class="box-series__desc">{{ category.getProductSeriesListDescription(domain.id) }}</div>
+                        {% if category.getProductSeriesListLink(domain.id) %}
+                            <a class="btn btn--outline dont-print" href="{{ category.getProductSeriesListLink(domain.id) }}">{{ 'Zobrazit všechny'|trans }}</a>
+                        {% endif %}
+                    </div>
                     <div class="box-series__right">
                         <div class="box-series__grid">
                             {% for productSeries in categoryProductSeries %}
@@ -56,8 +56,8 @@
                             {% endfor %}
                         </div>
                     </div>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
         </div>
     </div>
     <div class="web__line web__line--product-list web__line--bg-color">
