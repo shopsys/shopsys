@@ -391,6 +391,9 @@ msgstr "Kód"
 msgid "Code of service Heureka - Verified by Customer"
 msgstr "Kód služby Ověřeno zákazníky"
 
+msgid "Collapse menu"
+msgstr "Skrýt menu"
+
 msgid "Color"
 msgstr "Barva"
 
@@ -411,6 +414,9 @@ msgstr "IČ"
 
 msgid "Complement to title"
 msgstr "Doplněk k titulku"
+
+msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone S7” the result title for this products page will be “iPhone S7 | My shop”."
+msgstr "Doplněk k názvu bude nastaven jako přípona ke všem titulům, např. pokud je doplněk nastaven jako “ | Můj obchod“ a název produktu je “iPhone S7”, výsledným názvem pro tuto stránku produktů bude “iPhone S7 | Můj obchod”."
 
 msgid "Contact"
 msgstr "Kontakt"
@@ -994,6 +1000,9 @@ msgstr "Každý den v %hour%:%minutes%"
 msgid "Exchange rate"
 msgstr "Kurz"
 
+msgid "Excl. VAT"
+msgstr "Bez DPH"
+
 msgid "Exclude from sale"
 msgstr "Vyřadit z prodeje"
 
@@ -1201,6 +1210,9 @@ msgstr "Na záložce konkrétní domény není možné upravovat pořadí a zano
 msgid "Inactive"
 msgstr "Neaktivní"
 
+msgid "Incl. VAT"
+msgstr "Včetně DPH"
+
 msgid "Including VAT"
 msgstr "S DPH"
 
@@ -1345,6 +1357,9 @@ msgstr "Marketing"
 msgid "Master email %masterMail% set"
 msgstr "Je nastaven master e-mail %masterMail%."
 
+msgid "Menu"
+msgstr "Menu"
+
 msgid "Message"
 msgstr "Vzkaz"
 
@@ -1380,6 +1395,9 @@ msgstr "Název %locale%"
 
 msgid "Name serves only for internal use within the administration"
 msgstr "Název slouží pouze pro interní použití v rámci administrace"
+
+msgid "Name serves only for internal use within the administration."
+msgstr "Název slouží pouze pro interní použití v rámci administrace."
 
 msgid "New administrator"
 msgstr "Nový administrátor"
@@ -2595,3 +2613,4 @@ msgstr "bez umístění"
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
+
