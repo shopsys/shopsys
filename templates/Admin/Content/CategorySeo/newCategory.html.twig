@@ -14,7 +14,7 @@
                     <div class="js-category-tree-item-line form-tree__item__drag cursor-default">
                         <span class="form-tree__item__icon form-tree__item__icon--level sprite sprite-level"></span>
                         <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name(locale) }}</span>
-                        <span class="js-category-tree-item-icons form-tree__item__controls">
+                        <span class="js-category-tree-item-icons form-tree__item__controls form-tree__item__controls--indented">
                             <a href="{{ url('admin_categoryseo_newfilters', { categoryId: categoryWithPreloadedChildren.category.id }) }}">
                                 {{ 'Zvolit tuto kategorii a pokračovat' }}
                             </a>
