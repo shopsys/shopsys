@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductTypeDataFixture;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -60,6 +61,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     {
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
+        $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
         $productData->availability = $this->getReference($availabilityReference);
         $this->setProductTypes($productData);
         $this->setVats($productData);
@@ -105,6 +107,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     {
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
+        $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
         $productData->usingStock = true;
         $productData->stockQuantity = $quantity;
         $productData->outOfStockAction = $outOfStockAction;

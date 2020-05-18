@@ -349,6 +349,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation: '@App\Model\Product\Pricing\QuantifiedProductDiscountCalculation'
 
+    Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation: '@App\Model\Product\Pricing\QuantifiedProductPriceCalculation'
+
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator: '@App\Model\Product\ProductBreadcrumbGenerator'
 
     App\Model\Product\ProductFacade:

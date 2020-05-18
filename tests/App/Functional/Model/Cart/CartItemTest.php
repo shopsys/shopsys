@@ -58,6 +58,7 @@ class CartItemTest extends TransactionFunctionalTestCase
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
+        $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
 
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);

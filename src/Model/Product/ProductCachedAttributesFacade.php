@@ -32,7 +32,7 @@ class ProductCachedAttributesFacade extends BaseProductCachedAttributesFacade
             return $this->sellingPricesByProductId[$product->getId()];
         }
 
-        $productPrice = $this->productPriceCalculationForCustomerUser->calculateNonSellingPriceForCurrentUser($product);
+        $productPrice = $this->productPriceCalculationForCustomerUser->calculateNonSellingPriceForCurrentUserAndDomainId($product);
         $this->sellingPricesByProductId[$product->getId()] = $productPrice;
 
         return $productPrice;

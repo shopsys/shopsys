@@ -64,7 +64,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
+     * @param \App\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
      * @param string $discountPercent
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
@@ -75,9 +75,10 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         Currency $currency
     ): ?Price {
         $vat = $quantifiedItemPrice->getVat();
-        $multiplier = (string)(1 - ($discountPercent / 100));
+        $multiplier = (string)($discountPercent / 100);
+        $discountFromLowPrice = $quantifiedItemPrice->getTotalPrice()->getPriceWithVat()->multiply($multiplier);
         $priceWithVat = $this->rounding->roundPriceWithVatByCurrency(
-            $quantifiedItemPrice->getTotalPrice()->getPriceWithVat()->multiply($multiplier),
+            $quantifiedItemPrice->getTotalHighPrice()->getPriceWithVat()->subtract($discountFromLowPrice),
             $currency
         );
 

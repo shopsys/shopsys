@@ -27,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
  * @property \App\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price|null calculateRoundingPrice(\App\Model\Payment\Payment $payment, \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency, \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice, \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice, \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice)
  * @property \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+ * @property \App\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
  */
 class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 {
@@ -46,7 +47,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     private $productAvailabilityFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
+     * @param \App\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      * @param \App\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
      * @param \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
@@ -146,7 +147,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 
         $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
 
-        $totalPriceDiscount = $this->getTotalPriceDiscount($productsFullPrice, $productsPrice);
+        $totalPriceDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
 
         if ($transport !== null) {
             if ($transportForFree) {
@@ -262,12 +263,43 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsFullPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscounts
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    private function getTotalPriceDiscount(Price $productsFullPrice, Price $productsPrice): Price
+    private function getTotalPriceDiscount(array $quantifiedItemsDiscounts): Price
     {
-        return $productsFullPrice->subtract($productsPrice);
+        $totalDiscount = Price::zero();
+
+        foreach ($quantifiedItemsDiscounts as $quantifiedItemDiscount) {
+            if ($quantifiedItemDiscount !== null) {
+                $totalDiscount = $totalDiscount->add($quantifiedItemDiscount);
+            }
+        }
+
+        return $totalDiscount;
+    }
+
+    /**
+     * @param \App\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscounts
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    protected function getProductsPrice(array $quantifiedItemsPrices, array $quantifiedItemsDiscounts): Price
+    {
+        $finalPrice = Price::zero();
+        $totalDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
+
+        if ($totalDiscount->getPriceWithVat()->isGreaterThan(Money::zero())) {
+            foreach ($quantifiedItemsPrices as $quantifiedItemPrice) {
+                $finalPrice = $finalPrice->add($quantifiedItemPrice->getTotalHighPrice());
+            }
+            $finalPrice = $finalPrice->subtract($totalDiscount);
+        } else {
+            foreach ($quantifiedItemsPrices as $quantifiedItemPrice) {
+                $finalPrice = $finalPrice->add($quantifiedItemPrice->getTotalPrice());
+            }
+        }
+
+        return $finalPrice;
     }
 }

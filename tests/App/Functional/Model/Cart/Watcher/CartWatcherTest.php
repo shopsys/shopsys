@@ -109,6 +109,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = [];
+        $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
         $this->setProductTypes($productData);
         $this->setVats($productData);
         $product = Product::create($productData);

@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use ReflectionClass;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -60,6 +61,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData->sellingDenied = $sellingDenied;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
         $this->setProductTypes($productData);
         $this->setVats($productData);
 
@@ -125,6 +127,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productId = $product->getId();
 
         $productData = $this->productDataFactory->create();
+        $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
         $this->setProductTypes($productData);
         $this->setVats($productData);
 

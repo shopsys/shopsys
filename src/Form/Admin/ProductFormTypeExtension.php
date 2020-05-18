@@ -352,17 +352,19 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Vyšší cena s DPH'),
                 'entry_type' => MoneyType::class,
                 'entry_options' => [
+                    'required' => true,
                     'scale' => 6,
                 ],
-                'required' => false,
+                'required' => true,
             ])
             ->add('highPriceWithoutVat', MultidomainType::class, [
                 'label' => t('Vyšší cena bez DPH'),
                 'entry_type' => MoneyType::class,
                 'entry_options' => [
+                    'required' => true,
                     'scale' => 6,
                 ],
-                'required' => false,
+                'required' => true,
             ])
             ->add('sellingPriceWithVat', MultidomainType::class, [
                 'label' => t('Prodejní cena s DPH'),

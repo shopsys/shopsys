@@ -19,10 +19,13 @@ class ProductPriceCalculationForCustomerUser extends BaseProductPriceCalculation
 {
     /**
      * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function calculateNonSellingPriceForCurrentUser(Product $product): ProductPrice
+    public function calculateNonSellingPriceForCurrentUserAndDomainId(Product $product, ?int $domainId = null): ProductPrice
     {
-        return $this->productPriceCalculation->calculateProductNonSellingPrice($product, $this->domain->getId());
+        $domainId = $domainId ?? $this->domain->getId();
+
+        return $this->productPriceCalculation->calculateProductNonSellingPrice($product, $domainId);
     }
 }

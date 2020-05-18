@@ -266,29 +266,23 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertTrue($productAgain->isVisible());
     }
 
-    public function testIsNotVisibleWhenZeroOrNullPrice()
+    public function testIsNotVisibleWhenZeroPrice()
     {
         $productData = $this->getDefaultProductData();
         $this->setPriceForAllDomains($productData, Money::zero());
         $product1 = $this->productFacade->create($productData);
 
-        $this->setPriceForAllDomains($productData, null);
-        $product2 = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
 
         $product1Id = $product1->getId();
-        $product2Id = $product2->getId();
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
 
         /** @var \App\Model\Product\Product $product1Again */
         $product1Again = $this->em->getRepository(Product::class)->find($product1Id);
-        /** @var \App\Model\Product\Product $product2Again */
-        $product2Again = $this->em->getRepository(Product::class)->find($product2Id);
 
         $this->assertFalse($product1Again->isVisible());
-        $this->assertFalse($product2Again->isVisible());
     }
 
     public function testIsVisibleWithFilledName()
@@ -415,7 +409,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $productData->lowPriceWithVat[$domainConfig->getId()] = null;
-            $productData->highPriceWithVat[$domainConfig->getId()] = null;
+            $productData->highPriceWithVat[$domainConfig->getId()] = Money::zero();
         }
 
         $product = $this->productFacade->create($productData);
