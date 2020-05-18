@@ -6,7 +6,13 @@
         </div>
         <div class="cart-detail__item__content">
             <a class="cart-detail__item__content__title" href="{{ url('front_product_detail', {'id': product.id}) }}" title="{{ product.name }}">
+                {% if product.namePrefix is not empty %}
+                    <span class="cart-detail__item__content__title__prefix">{{ product.namePrefix }}</span>
+                {% endif %}
                 {{ product.name }}
+                {% if product.nameSufix is not empty %}
+                    <span class="cart-detail__item__content__title__sufix">, {{ product.nameSufix }}</span>
+                {% endif %}
             </a>
             <div class="cart-detail__item__pieces">
                 <span class="form-input-spinbox js-spinbox js-not-implemented-yet">
