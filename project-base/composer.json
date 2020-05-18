@@ -60,7 +60,7 @@
         "prezent/doctrine-translatable-bundle": "^1.0.3",
         "sensio/framework-extra-bundle": "^5.2",
         "sensiolabs/security-checker": "^6.0",
-        "shopsys/doctrine-orm": "^2.6.6",
+        "shopsys/doctrine-orm": "^2.7.2",
         "shopsys/google-cloud-bundle": "9.0.x-dev",
         "shopsys/postgres-search-bundle": "^0.2",
         "shopsys/migrations": "9.0.x-dev",

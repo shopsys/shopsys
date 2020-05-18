@@ -120,7 +120,7 @@
         "ramsey/uuid": "^3.8",
         "roave/better-reflection": "^3.5",
         "sensiolabs/security-checker": "^6.0",
-        "shopsys/doctrine-orm": "^2.6.6",
+        "shopsys/doctrine-orm": "^2.7.2",
         "shopsys/ordered-form": "^4.0",
         "shopsys/postgres-search-bundle": "^0.2",
         "snc/redis-bundle": "^3.2.1",
