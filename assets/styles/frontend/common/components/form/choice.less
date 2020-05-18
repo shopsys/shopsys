@@ -1,3 +1,5 @@
+@form-choice-color-picker-size: 25px;
+
 .form-choice {
     position: relative;
     display: inline-block;
@@ -18,5 +20,31 @@
 
     &__label {
         position: relative;
+    }
+
+    &-color-picker {
+        position: relative;
+        display: block;
+        width: @form-choice-color-picker-size;
+        height: @form-choice-color-picker-size;
+
+        border: 1px solid @color-border-light;
+        border-radius: 100%;
+        cursor: pointer;
+
+        &:after {
+            position: absolute;
+            left: 8px;
+            top: 4px;
+            width: 5px;
+            height: 10px;
+            content: '';
+
+            border: solid @color-f;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            pointer-events: none;
+            opacity: 0;
+        }
     }
 }
