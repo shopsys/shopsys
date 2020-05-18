@@ -19,7 +19,7 @@ parameters:
             message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/UploadedFile/Config/UploadedFileConfigDefinition.php
         -
-            message: '#^Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.$#'
+            message: '#^Method Doctrine\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.$#'
             path: *
         -
             message: '#^Property Doctrine\\ORM\\Mapping\\ClassMetadataInfo::\$discriminatorColumn \(array\) does not accept null\.$#'
