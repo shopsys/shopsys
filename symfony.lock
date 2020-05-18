@@ -186,6 +186,12 @@
     "elasticsearch/elasticsearch": {
         "version": "v6.7.2"
     },
+    "ezimuel/guzzlestreams": {
+        "version": "3.0.1"
+    },
+    "ezimuel/ringphp": {
+        "version": "1.1.2"
+    },
     "firebase/php-jwt": {
         "version": "v5.0.0"
     },
