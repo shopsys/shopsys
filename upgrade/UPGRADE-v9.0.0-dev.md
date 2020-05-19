@@ -12,31 +12,10 @@ There you can find links to upgrade notes for other versions too.
   All following upgrade instructions are written for upgraded application with Symfony Flex
 
 ### Infrastructure
-- update your `kubernetes/deployments/webserver-php-fpm.yml` file: ([#1368](https://github.com/shopsys/shopsys/pull/1368))
-    ```diff
-    -   command: ["sh", "-c", "cd /var/www/html && ./phing db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export grunt error-pages-generate warmup"]
-    +   command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export grunt error-pages-generate warmup"]
-    ```
 - check all the phing targets that depend on the new `production-protection` target
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/e954f194564c76a2caa97761be48f798afde1a61) to see default files that needs to be updated
+    - change namespace in `app/getEnvironment.php` from `Shopsys` to `App`
     - if you use any of the targets in your automated build scripts in production environment, you need to pass the confirmation to the phing using `-D production.confirm.action=y`
-
-- update your `docker/php-fpm/Dockerfile` ([#1605](https://github.com/shopsys/shopsys/pull/1605))
-    - move switching user to `www-data` above creating `.npm-global` folder
-        ```diff
-        +   # Switch to user
-        +   USER www-data
-
-            RUN mkdir /home/www-data/.npm-global
-            ENV NPM_CONFIG_PREFIX /home/www-data/.npm-global
-
-        -   # Switch to user
-        -   USER www-data
-        ```
-    - remove lock for NPM version
-        ```diff
-        -   # hotfix for https://github.com/npm/cli/issues/613
-        -   RUN npm install -g npm@6.13.2
-        ```
 
 - upgrade to PostgreSQL 12 ([#1601](https://github.com/shopsys/shopsys/pull/1601))
     - update `docker/php-fpm/Dockerfile`
@@ -123,48 +102,7 @@ There you can find links to upgrade notes for other versions too.
 - upgrade to Elasticsearch 7 ([#1602](https://github.com/shopsys/shopsys/pull/1602))
     - first of all we recommend to take a look at [Breaking changes](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/release-notes-7.0.0.html) section in Elasticsearch documentation to prevent failures
 
-    - update `docker/elasticsearch/Dockerfile`
-
-        ```diff
-        -   FROM docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.2
-        +   FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.6.0
-        ```
-
-    - remove `_doc` node from mapping in `src/Recources/definition` json files
-
-        ```diff
-            "mappings": {
-        -       "_doc": {
-        -           "properties": {
-        -               "name": {
-        -                   "type": "text"
-        -               }
-        -           }
-        -       }
-        +       "properties": {
-        +           "name": {
-        +               "type": "text"
-        +           }
-        +       }
-            }
-        ```
-
-    - add kibana to your `docker-compose.yml`
-
-        ```diff
-        +   kibana:
-        +       image: docker.elastic.co/kibana/kibana-oss:7.6.0
-        +       container_name: shopsys-framework-kibana
-        +       depends_on:
-        +           - elasticsearch
-        +       ports:
-        +           - "5601:5601"
-        ```
-
-        - you should add it also in all `docker-compose*.dist` files such as:
-            - `docker/conf/docker-compose.yml.dist`
-            - `docker/conf/docker-compose-mac.yml.dist`
-            - `docker/conf/docker-compose-win.yml.dist`
+    - upgrade your project files [using this diff](https://github.com/shopsys/project-base/commit/6f71d95a58e23bf7ad3368047eb420d80b014f9a)
 
     - migrate elasticsearch indexes by `php phing elasticsearch-index-migrate`
 
@@ -191,11 +129,11 @@ There you can find links to upgrade notes for other versions too.
 - upgrade PHP to version 7.4 ([#1737](https://github.com/shopsys/shopsys/pull/1737))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/32755202185ed04fcf0e50b1d96d2af0fae8d778) to update your project
 
-  update Redis client to version 5.2.1 and Redis server to 5.0 ([#1606](https://github.com/shopsys/shopsys/pull/1606))
+- upgrade Redis client to version 5.2.1 and Redis server to 5.0 ([#1606](https://github.com/shopsys/shopsys/pull/1606))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/e3adc0c31094b47aca03389ef4fa266977edab25) to update your project
 
-- stop using symfony/web-server-bundle ([#1817](https://github.com/shopsys/shopsys/pull/1817)
-    - see #project-base-diff to update your project
+- stop using symfony/web-server-bundle ([#1817](https://github.com/shopsys/shopsys/pull/1817))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/0a47cac6590ee49ad994c082543e65d979818ad4) to update your project
     - command `php bin/console shopsys:server:run` (class `Shopsys\FrameworkBundle\Command\ServerRunForDomainCommand`) was removed
     - command `php bin/console server:start` (class `Shopsys\FrameworkBundle\Command\ServerStartWithCustomRouterCommand`) was removed
     - command `php bin/console server:run` (class `Shopsys\FrameworkBundle\Command\ServerRunWithCustomRouterCommand`) was removed
@@ -205,55 +143,50 @@ There you can find links to upgrade notes for other versions too.
 - add trailing slash to all your localized paths for `front_product_search` route ([#1067](https://github.com/shopsys/shopsys/pull/1067))
     - be aware, if you already have such paths (`hledani/`, `search/`) in your application
     - the change might cause problems with your SEO as well
+    - if you are ok with both previous warnings, update your files using [project-base diff](https://github.com/shopsys/project-base/commit/09517e6e41cf4b448b12730a6e3a3753d09c88a3)
 
 - clear cache before any other commands in composer and after docker image is built ([#1820](https://github.com/shopsys/shopsys/pull/1820))
-    - see #project-base-diff to update your project
-
-### Database migrations
-- [#1757](https://github.com/shopsys/shopsys/pull/1757)
-    - orders have nullable field `origin` to distinguish origin of the order
-    - orders have mandatory field `uuid`
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/c1e36bc56e902186c5116119c33700feeba8e0f5) to update your project
 
 ### Application
 
-- update your twig files ([#1284](https://github.com/shopsys/shopsys/pull/1284/)):
-    - `templates/Front/Content/Product/list.html.twig`
-        - remove: `{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}`
-    - `templates/Front/Content/Product/listByBrand.html.twig`
-        - remove: `{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}`
-    - `templates/Front/Content/Product/productListMacro.html.twig`
-        - remove: `{% import 'Front/Inline/Product/productFlagsMacro.html.twig' as productFlags %}`
-    - `templates/Front/Content/Product/search.html.twig`
-        - remove: `{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}`
+- remove unused twig macros ([#1284](https://github.com/shopsys/shopsys/pull/1284/)):
+    - update your project using [project-base diff](https://github.com/shopsys/project-base/commit/30af41a91f75b7485e6c804aaa10a03cb5276224)
     - check your templates if you are extending or importing any of the following templates as imports of unused macros were removed from them:
         - `templates/Admin/Content/Article/detail.html.twig`
         - `templates/Admin/Content/Brand/detail.html.twig`
         - `templates/Admin/Content/Category/detail.html.twig`
         - `templates/Admin/Content/Product/detail.html.twig`
-- add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/master/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
 - add optional [Frontend API](https://github.com/shopsys/shopsys/blob/master/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489), [#1757](https://github.com/shopsys/shopsys/pull/1757), [#1731](https://github.com/shopsys/shopsys/pull/1731), [#1736](https://github.com/shopsys/shopsys/pull/1736), [#1742](https://github.com/shopsys/shopsys/pull/1742), [#1788](https://github.com/shopsys/shopsys/pull/1788)):
-    - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
-    - register necessary bundles in `config/bundles.php`
-        ```diff
-            Shopsys\FormTypesBundle\ShopsysFormTypesBundle::class => ['all' => true],
-        +   Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
-        +   Overblog\GraphQLBundle\OverblogGraphQLBundle::class => ['all' => true],
-        +   Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
-            Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
-        ```
-    - add new route file [`config/routes/frontend-api.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/frontend-api.yaml) from GitHub
-    - add new route file [`config/routes/dev/frontend-api-graphiql.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/dev/frontend-api-graphiql.yaml) from GitHub
-    - copy [type definitions from Github](https://github.com/shopsys/shopsys/tree/master/project-base/config/graphql/types) into `config/graphql/types/` folder
-    - copy necessary configuration [shopsys_frontend_api.yaml from Github](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/shopsys_frontend_api.yaml) to `config/packages/shopsys_frontend_api.yaml`
+    - run these steps only in case you have not recently updated to Symfony Flex as is described at beginning of this file
+        - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
+        - register necessary bundles in `config/bundles.php`
+            ```diff
+                Shopsys\FormTypesBundle\ShopsysFormTypesBundle::class => ['all' => true],
+            +   Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
+            +   Overblog\GraphQLBundle\OverblogGraphQLBundle::class => ['all' => true],
+            +   Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
+                Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
+            ```
+        - add new route file [`config/routes/frontend-api.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/frontend-api.yaml) from GitHub
+        - add new route file [`config/routes/dev/frontend-api-graphiql.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/routes/dev/frontend-api-graphiql.yaml) from GitHub
+        - copy [type definitions from Github](https://github.com/shopsys/shopsys/tree/master/project-base/config/graphql/types) into `config/graphql/types/` folder
+        - copy necessary configuration [shopsys_frontend_api.yaml from Github](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/shopsys_frontend_api.yaml) to `config/packages/shopsys_frontend_api.yaml`
+        - update your `security.yaml` configuration [using this diff](https://github.com/shopsys/project-base/commit/3e9a056f032b3fb49e4aaac912fa89cae13725c6#diff-e092a3a494858e808395bb5a24bb8f83)
     - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/master/project-base/tests/FrontendApiBundle) to your `tests` folder
+    - update your `easy-coding-standard.yaml` file:
+        - add these in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
+            ```diff
+                - '*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'
+                - '*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'
+                - '*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'
+                - '*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'
+            ```
+    - update your `build.xml` [using this diff](https://github.com/shopsys/project-base/commit/02ca46eb77d0c96dc6ff1903f434ebb0537248bd#diff-2cccd7bf48b7a9cc113ff564acd802a8)
     - enable Frontend API for all domains by `./phing frontend-api-enable` command (you can manage domains in `config/packages/frontend_api.yaml`)
-    - update your `easy-coding-standard.yml` file:
-        - add `'*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
-        - add `'*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
-        - add `'*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
-        - add `'*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
-- removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437))
+- unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` has been removed ([#1437](https://github.com/shopsys/shopsys/pull/1437))
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
+
 - add access denied url to `config/packages/security.yaml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
     ```diff
          administration:
@@ -291,6 +224,10 @@ There you can find links to upgrade notes for other versions too.
     -           ->setExpectedStatusCode(404);
     +           ->setExpectedStatusCode(302);
     ```
+
+- update your project to be fully functional with administrator roles stored in database ([#1504](https://github.com/shopsys/shopsys/pull/1504))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/bf4e52ce7f3bc5b9650ab0a66269743af98dafe3) to update your project
+
 - update your project to use refactored FileUpload functionality with added support for multiple files ([#1531](https://github.com/shopsys/shopsys/pull/1531/))
     - there were changes in framework classes, styles and scripts so update your project appropriately:
         - `UploadedFileEntityConfigNotFoundException::getEntityClassOrName()` has been removed
@@ -348,82 +285,126 @@ There you can find links to upgrade notes for other versions too.
             +           -   name: default
             +               multiple: true
             ```
-- contact form has been moved to separate page. You can find the whole new setting in administration (`/admin/contact-form/`),
-  where you can edit main text for contact form. ([#1522](https://github.com/shopsys/shopsys/pull/1522))
 
-  There are few steps need to be done, to make contact form work on FE
-    - in `ContactFormController` change previous `indexAction` with [the new one](https://github.com/shopsys/shopsys/blob/master/project-base/src/Controller/Front/ContactFormController.php). Please pay attention if you have some modification in previous implementation.
-    - in `ContactFormController` add `ContactFormSettingsFacade` as dependency in constructor
-    - in `ContactFormController` remove action `sendAction()`, it is not needed anymore
-    - remove `src/Resources/scripts/frontend/contactForm.js`, it is not needed anymore
-    - new localized route `front_contact` has been introduced with slug `contact`. This slug can be already in use in your project, because
-      previous SSFW versions have an article called `Contact` which is used as the contact page. Please move the article's content to the new contact page and completely remove the article.
-      To remove the article, please create [new migration](https://github.com/shopsys/shopsys/blob/master/project-base/src/Migrations/Version20191121171000.php) in you project which removes the article and its slug.
+- contact form has been moved to separate page. You can find the whole new setting in administration (`/admin/contact-form/`), where you can edit main text for contact form. ([#1522](https://github.com/shopsys/shopsys/pull/1522))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/ab412377d40d671db46607a5d5f7b13221e6ba71) to update your project
 
-      If you don't want to remove the article, you will need to change path for the new route in the next step
+- javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545), [#1645](https://github.com/shopsys/shopsys/pull/1645))
+    - please read [upgrade instruction for webpack](./upgrade-instruction-for-webpack.md)
 
-    - add new localized route in all your localized routing `yaml` files with translated `path` option
+- update FpJsFormValidator bundle ([#1664](https://github.com/shopsys/shopsys/pull/1664))
+    - update your `composer.json`
+      ```diff
+            "require": {
+      -         "fp/jsformvalidator-bundle": "^1.5.1",
+      +         "fp/jsformvalidator-bundle": "^1.6.1",
+            }
+      ```
+    - update your `.eslintignore`
+      ```diff
+        /assets/js/commands/translations/mocks
+      + /assets/js/bundles
+      ```
+    - update your `.gitignore`
+      ```diff
+        /assets/js/translations.json
+      + /assets/js/bundles
+      ```
+
+- fix not working popup window on single image ([#1630](https://github.com/shopsys/shopsys/pull/1630))
+    - add missing javascript for popup single image for class `js-popup-image`, see [project-base diff](https://github.com/shopsys/project-base/commit/ad7a0a20f094d5e936e4bb503946453c5c89ed18)
+
+- css and other assets are managed by webpack ([#1725](https://github.com/shopsys/shopsys/pull/1725))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee) to update your project
+    - see also [project-base diff](https://github.com/shopsys/project-base/commit/2b195ae29754e03dca297dad6461cee5693eca79) from [#1781](https://github.com/shopsys/shopsys/pull/1781)
+    - move content from `src/resources/styles` to `assets/styles`
+    - move content from `src/resources/svg` to `assets/public/frontend/svg`
+    - move content from `web/assets/frontend/fonts` to `assets/public/frontend/fonts`
+    - move content from `web/assets/frontend/images` to `assets/public/frontend/images`
+    - move content from `web/assets/admin/fonts` to `assets/public/admin/fonts`
+    - move content from `web/assets/admin/images` to `assets/public/admin/images`
+    - move content from `web/assets/styleguide/images` to `assets/public/styleguide/images`
+    - you should remove the `grunt` target from your `build.xml` file if present
+    - add `styles_directory` into your domains config (you can get inspired in [project-base/config/domains.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml))
+    - change all `asset` function call in your templates
+      ```diff
+        - asset('assets/**/*.*')
+        + asset('public/**/*.*')
+      ```
+    - replace `<link>` with `getCssVersion()` function call from your templates by tag `{{ encore_entry_link_tags('app') }}` see diffs [base.html.twig](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee#diff-1afd3913fe3a88a180385025be96ba0d) and [styleguide.html.twig](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee#diff-6617f8f8be6642a73c0c1a6bd3005d6e)
+      - but there is no 'media="print"' parameter to set link attribute
+      - so we need to upgrade our `assets/styles/frontend/*/print/main.less` and wrap all content to media query `@media print { ... your content ... }`
+    - In case you are using google fonts, we need to download font files and avoid for using `@import` from external sources. In future we can make some magics in load time performance using FontLoader etc.
+        - Example in `variables.less`
+          ```css
+            @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext');
+          ```
+        - open link in your browser and you will see a lot of `@font-face definitions`
+        - copy these you want to use:
+            ```css
+                /* latin-ext */
+                @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 400;
+                  font-display: swap;
+                  src: local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+                /* latin-ext */
+                @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-display: swap;
+                  src: local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+            ```
+        - replace previous `@import` with it
+        - open all link `https://fonts.gstatic.com/...` in your browser and it will download font file and save them to `assets/public/frontend/fonts`. We are using [fontName][fontWeigh].[extension] filename syntax.
+        - change urls in `variables.less` to:
+            ```css
+              @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 400;
+                  font-display: swap;
+                  src: local('Montserrat Regular'), local('Montserrat-Regular'), url(@{path-font}/Montserrat400.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+                /* latin-ext */
+                @font-face {
+                  font-family: 'Montserrat';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-display: swap;
+                  src: local('Montserrat Bold'), local('Montserrat-Bold'), url(@{path-font}/Montserrat700.woff2) format('woff2');
+                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+                }
+            ```
+        - now you can rebuild your less files `npm run dev` and you should see your font on frontend page
+    - use full of the webpack, enjoy!
+
+- add support for Safari ([#1811](https://github.com/shopsys/shopsys/pull/1811))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/4aea8de5cfaaed17d9efb814df9686c6402e67a6) to update your project
+
+- add LiveReload for Webpack ([#1807](https://github.com/shopsys/shopsys/pull/1807))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/404d00c26df1d9a35bf1836fc086381d1bf35ca6) to update your project
+
+- hide variant table header when product is denied for sale (you can skip this if you have custom frontend) ([#1634](https://github.com/shopsys/shopsys/pull/1634))
+    - add new condition at product detail file: `templates/Front/Content/Product/detail.html.twig`
         ```diff
-        +    front_contact:
-        +       path: /contact/
-        +       defaults: { _controller: App\Controller\Front\ContactFormController:indexAction }
-        ```
-    - add new template [`templates/Front/Content/ContactForm/index.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/ContactForm/index.html.twig)
-    - add link to new contact page somewhere in templates (e.g in `footer.html.twig`)
-        ```diff
-            <div class="footer__bottom__articles">
-               {{ getShopInfoPhoneNumber() }}
-               {{ getShopInfoEmail() }}
-               {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction')) }}
-        +      <a class="menu__item__link" href="{{ url('front_contact') }}">{{ 'Contact'|trans }}</a>
-            </div>
+        -   {% if product.isMainVariant %}
+        +   {% if product.isMainVariant and not product.calculatedSellingDenied %}
         ```
 
 - vats can be created and managed per domains ([#1498](https://github.com/shopsys/shopsys/pull/1498))
     - please read [upgrade instruction for vats per domain](https://github.com/shopsys/shopsys/blob/master/upgrade/upgrade-instruction-for-vats-per-domain.md)
 
 - apply these changes to add support for naming uploaded files([#1547](https://github.com/shopsys/shopsys/pull/1547))
-    - update your `composer.json`
-        ```diff
-            "ext-curl": "*",
-        +   "ext-fileinfo": "*",
-            "ext-gd": "*",
-        ```
-    - update your `docker/php-fpm/Dockerfile`
-        ```diff
-            RUN docker-php-ext-install \
-                bcmath \
-        +       fileinfo \
-                gd \
-        ```
-    - add this route to the end of your `config/routes/shopsys_front.yaml`
-        ```diff
-        +   front_download_uploaded_file:
-        +       path: /file/{uploadedFileId}/{uploadedFilename}
-        +       defaults: { _controller: App\Controller\Front\UploadedFileController:downloadAction }
-        +       methods: [GET]
-        +       requirements:
-        +           uploadedFileId: \d+
-        ```
-    - update your `src/Controller/Front/OrderController.php`
-        ```diff
-             return new DownloadFileResponse(
-                 $this->legalConditionsFacade->getTermsAndConditionsDownloadFilename(),
-        -        $response->getContent()
-        +        $response->getContent(),
-        +        'text/html'
-             );
-        ```
-    - update your `tests/App/Smoke/Http/RouteConfigCustomization.php`
-        ```diff
-                $config->addExtraRequestDataSet('Check personal data XML export with right hash')
-                    ->setParameter('hash', $personalDataAccessRequest->getHash())
-                    ->setExpectedStatusCode(200);
-        +   })->customizeByRouteName(['front_download_uploaded_file'], function (RouteConfig $config) {
-        +       $config->skipRoute('Downloading uploaded files is not tested.');
-            });
-        ```
-    - add [src/Controller/Front/UploadedFileController.php](https://github.com/shopsys/shopsys/blob/master/project-base/src/Controller/Front/UploadedFileController.php) to your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/1a2fb6dff9f111ed36c91114d00d45fe9054baaa) to update your project
+
     - `MessageData::attachmentsFilepaths` has been replaced by `MessageData::attachments` that accepts array of `UploadedFile`
     - `MailTemplateFacade::getMailTemplateAttachmentsFilepaths()` has been replaced by `MailTemplateFacade::getMailTemplateAttachmentFilepath()` that accepts single `UploadedFile`
     - following methods has changed their interface, update your usages accordingly:
@@ -467,22 +448,22 @@ There you can find links to upgrade notes for other versions too.
              - public function __construct($toEmail, $bccEmail, $body, $subject, $fromEmail, $fromName, array $variablesReplacementsForBody = [], array $variablesReplacementsForSubject = [], array $attachments = [], $replyTo = null)
              + public function __construct($toEmail, $bccEmail, $body, $subject, $fromEmail, $fromName, array $variablesReplacementsForBody = [], array $variablesReplacementsForSubject = [], array $attachmentsFilepaths = [], $replyTo = null)
             ```
-        - `UploadedFileFacade::__uploadFile()`
+        - `UploadedFileFacade::uploadFile()`
             ```diff
              - protected function uploadFile(object $entity, string $entityName, string $type, array $temporaryFilenames): void
              + protected function uploadFile(object $entity, string $entityName, string $type, string $temporaryFilename, string $uploadedFileName): void
             ```
-        - `UploadedFileFacade::__uploadFiles()`
+        - `UploadedFileFacade::uploadFiles()`
             ```diff
              - protected function uploadFiles(object $entity, string $entityName, string $type, array $temporaryFilenames, int $existingFilesCount): void
              + protected function uploadFiles(object $entity, string $entityName, string $type, array $temporaryFilenames, array $uploadedFileNames, int $existingFilesCount): void
             ```
-        - `UploadedFileFactory::__create()` and `UploadedFileFactoryInterface::__create()`
+        - `UploadedFileFactory::create()` and `UploadedFileFactoryInterface::create()`
             ```diff
              - public function create(string $entityName, int $entityId, string $type, string $temporaryFilename, int $position = 0): UploadedFile
              + public function create(string $entityName, int $entityId, string $type, string $temporaryFilename, string $uploadedFilename, int $position = 0): UploadedFile
             ```
-        - `UploadedFileFactory::__createMultiple()` and `UploadedFileFactoryInterface::__createMultiple()`
+        - `UploadedFileFactory::createMultiple()` and `UploadedFileFactoryInterface::createMultiple()`
             ```diff
              - public function createMultiple(string $entityName, int $entityId, string $type, array $temporaryFilenames, array $uploadedFilenames, int $existingFilesCount): array
              + public function createMultiple(string $entityName, int $entityId, string $type, array $temporaryFilenames, int $existingFilesCount): array
@@ -525,9 +506,9 @@ There you can find links to upgrade notes for other versions too.
             - `Shopsys\FrameworkBundle\Model\Customer\UserData` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData`
             - `Shopsys\FrameworkBundle\Model\Customer\UserDataFactory` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory`
             - `Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface`
-            - `Shopsys\FrameworkBundle\Model\Customer\UserFacade` to `Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade`
-            - `Shopsys\FrameworkBundle\Model\Customer\UserFactory` to `Shopsys\FrameworkBundle\Model\Customer\UserFactory`
-            - `Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface`
+            - `Shopsys\FrameworkBundle\Model\Customer\CustomerFacade` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserFactory` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface`
             - `Shopsys\FrameworkBundle\Model\Customer\UserRepository` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository`
             - `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser` to `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser`
             - `Tests\App\Functional\Model\Customer\CustomerFacadeTest` to `Tests\App\Functional\Model\Customer\CustomerUserFacadeTest`
@@ -538,20 +519,17 @@ There you can find links to upgrade notes for other versions too.
             - `Shopsys\FrameworkBundle\Model\Cart\CartFacade::getCartByCustomerIdentifierCreateIfNotExists()` to `Shopsys\FrameworkBundle\Model\Cart\CartFacade::getCartByCustomerUserIdentifierCreateIfNotExists()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserDataFactory::createFromUser()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory::createFromCustomerUser()`
             - `Shopsys\FrameworkBundle\Model\Order\OrderFacade::getCustomerOrderList()` to `Shopsys\FrameworkBundle\Model\Order\OrderFacade::getCustomerUserOrderList()`
+            - `Shopsys\FrameworkBundle\Model\Order\OrderRepository::getCustomerOrderList()` to `Shopsys\FrameworkBundle\Model\Order\OrderRepository::getCustomerUserOrderList()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::findUserByEmailAndDomain()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::findCustomerUserByEmailAndDomain()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserRepository::findUserByEmailAndDomain()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository::findCustomerUserByEmailAndDomain()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::getUserById()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::getCustomerUserById()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserRepository::getUserById()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository::getCustomerUserById()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::editByCustomer()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::editByCustomerUser()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::amendUserDataFromOrder()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::amendCustomerUserDataFromOrder()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserRepository::getUserRepository()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository::getCustomerUserRepository()`
         - to keep your tests working you need tu update `UserDataFixture`
-            - inject `CustomerFactoryInterface` via constructor into the class
-            - create and assign an entity of `Customer` to `BillingAddressData` and `UserData`
-                ```diff
-                +   $customerUserData = $this->customerUserDataFactory->create();
-                    $userData = $this->userDataFactory->createForDomainId($domainId);
-                -   $billingAddressData = $this->billingAddressDataFactory->create();
-                +   $userData->customer = $customerUserData->userData->customer;
-                +   $billingAddressData = $customerUserData->billingAddressData;
-                ```
+            - see [Demo\UserDataFixture diff](https://github.com/shopsys/project-base/commit/9a5b86f91204e6da20e7eeb2680cf3678483ddb5#diff-ccdf8e1de68d2285f963bdfcf1f66e5d)
+            - see [Performance\UserDataFixture diff](https://github.com/shopsys/project-base/commit/9a5b86f91204e6da20e7eeb2680cf3678483ddb5#diff-16653e45020c9193be989fd362dc8062)
         - as the `BillingAddress` is being connected with a customer, you are able to remove it from `User`
             ```diff
                 public function __construct(
@@ -567,15 +545,16 @@ There you can find links to upgrade notes for other versions too.
                 +   {% set address = user.customer.billingAddress %}
                 ```
         - method `Shopsys\FrameworkBundle\Model\Customer\UserFacade::createCustomerWithBillingAddress()` was extracted to new class `Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade`
+        - review all templates, controllers and form types and rename all occurrences of user to customerUser [see project-base diff](https://github.com/shopsys/project-base/commit/9a5b86f91204e6da20e7eeb2680cf3678483ddb5) for inspiration
 
 - add hover timeout to horizontal menu ([#1564](https://github.com/shopsys/shopsys/pull/1564))
     - you can skip this task if you have your custom design
-    - move loader to hidden submenu - so it can not interrupt hover `src/Resources/scripts/frontend/categoryPanel.js`
+    - move loader to hidden submenu - so it can not interrupt hover `src/Resources/scripts/frontend/CategoryPanel.js`
         ```diff
-          function loadCategoryItemContent ($categoryItem, url) {
-              Shopsys.ajax({
-        -          loaderElement: $categoryItem,
-        +          loaderElement: $categoryItem.find('.js-category-list-placeholder'),
+            loadCategoryItemContent ($categoryItem, url) {
+                Ajax.ajax({
+        -           loaderElement: $categoryItem,
+        +           loaderElement: $categoryItem.find('.js-category-list-placeholder'),
         ```
     - add new js plugin hoverIntent v1.10.1 `src/Resources/scripts/frontend/plugins/jquery.hoverIntent.js` (https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/scripts/frontend/plugins/jquery.hoverIntent.js)
     - add new js component `src/Resources/scripts/frontend/components/hoverIntent.js` (https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/scripts/frontend/components/hoverIntent.js)
@@ -585,7 +564,6 @@ There you can find links to upgrade notes for other versions too.
               {% set isCurrentCategory = (currentCategory is not null and currentCategory == categoryWithLazyLoadedVisibleChildren.category) %}
         -     <li class="list-menu__item js-category-item">
         +     <li class="list-menu__item js-category-item js-hover-intent" data-hover-intent-force-click="true" data-hover-intent-force-click-element=".js-category-collapse-control">
-                  <a href="{{ url('front_product_list'
         ```
 - allow getting data for FE API from Elastic ([#1557](https://github.com/shopsys/shopsys/pull/1557))
     - add and change fields in your elasticsearch definition files
@@ -921,25 +899,6 @@ There you can find links to upgrade notes for other versions too.
     +       tags:
     +           - { name: shopsys.cron, hours: '*', minutes: '*' }
     ```
-
-- update FpJsFormValidator bundle ([#1664](https://github.com/shopsys/shopsys/pull/1664))
-    - update your `composer.json`
-      ```diff
-            "require": {
-      -         "fp/jsformvalidator-bundle": "^1.5.1",
-      +         "fp/jsformvalidator-bundle": "^1.6.1",
-            }
-      ```
-    - update your `.eslintignore`
-      ```diff
-        /assets/js/commands/translations/mocks
-      + /assets/js/bundles
-      ```
-    - update your `.gitignore`
-      ```diff
-        /assets/js/translations.json
-      + /assets/js/bundles
-      ```
 - update your application to support multiple delivery addresses ([#1635](https://github.com/shopsys/shopsys/pull/1635))
     - some methods has changed so you might want to update their usage in your application:
         - `Customer::getDeliveryAddress()` and `Customer::setDeliveryAddress()` has been removed you can use `Customer::getDeliveryAddresses()` or `CustomerUser::getDefaultDeliveryAddress()` instead
@@ -1001,67 +960,11 @@ There you can find links to upgrade notes for other versions too.
               +   public function createOrderFromFront(OrderData $orderData, ?DeliveryAddress $deliveryAddress)
             ```
     - there has been changes in project files, that you should apply in your project:
-        - update your `assets/js/frontend.js` file
-            ```diff
-                // HP entry?
-                import './frontend/homepage/slickInit';
-            +   
-            +   import './frontend/deliveryAddress';
-            ```
-        - add [assets/js/frontend/deliveryAddress/deliveryAddress.js](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js) and [assets/js/frontend/deliveryAddress/index.js]((https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/index.js)) files
-        - add [assets/styles/frontend/common/components/list/addresses.less](https://github.com/shopsys/shopsys/blob/master/project-base/assets/styles/frontend/common/components/list/addresses.less)
-        - update your `assets/styles/frontend/common/main.less`
-            ```diff
-                //// list
-            +   @import "components/list/addresses.less";
-                @import "components/list/categories.less";
-            ```
-        - update your `config/packages/twig.yaml`
-            ```diff
-                - '@ShopsysFramework/Admin/Form/productCalculatedPrices.html.twig'
-            +   - '@ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig'
-            +   - '@ShopsysFramework/Admin/Form/deliveryAddressListFields.html.twig'
-            ```
-        - update your `assets/js/frontend/validation/form/orderValidator.js`
-            ```diff
-            +   const selectedDeliveryAddressValue = $orderPersonalInfoForm.find('.js-delivery-address-input:checked').val();
-                const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
-            -   if ($orderPersonalInfoForm.find('#order_personal_info_form_deliveryAddressFilled').is(':checked')) {
-            +   if ($orderPersonalInfoForm.find('#order_personal_info_form_deliveryAddressFilled').is(':checked') && (selectedDeliveryAddressValue === '' || selectedDeliveryAddressValue === undefined)) {
-                    groups.push(constant('\\App\\Form\\Front\\Customer\\DeliveryAddressFormType::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS'));
-            ```
-        - update your `config/routes/shopsys_front.yaml` - add to end of file
-            ```diff
-            +   front_customer_delivery_address_delete:
-            +       path: /customer/delete-delivery-address/{deliveryAddressId}
-            +       defaults:
-            +           _controller: App\Controller\Front\CustomerController:deleteDeliveryAddressAction
-            +           deliveryAddressId: 0
-            +       methods: [GET]
-            +       requirements:
-            +           deliveryAddressId: \d+
-            ```
-        - update these files from [pull request diff](https://github.com/shopsys/shopsys/pull/1635/files)
-            - `src/Controller/Front/CustomerController.php`
-            - `src/Controller/Front/OrderController.php`
-            - `src/Form/Front/Customer/DeliveryAddressFormType.php`
-            - `src/Form/Front/Customer/User/CustomerUserFormType.php`
-            - `src/Form/Front/Order/PersonalInfoFormType.php`
-            - `src/Model/Customer/User/CustomerUser.php`
-            - `templates/Front/Content/Customer/edit.html.twig`
-            - `templates/Front/Content/Customer/orderDetail.html.twig`
-            - `templates/Front/Content/Order/step3.html.twig`
-            - `templates/Front/Content/PersonalData/adress.xml.twig`
-            - `templates/Front/Content/PersonalData/detail.html.twig`
-            - `templates/Front/Content/PersonalData/export.xml.twig`
-            - `templates/Front/Content/PersonalData/order.html.twig`
-            - `templates/Front/Form/theme.html.twig`
-            - `tests/App/Functional/PersonalData/PersonalDataExportXmlTest.php`
-            - `tests/App/Unit/Form/Front/Order/PersonalInfoFormTypeTest.php`
+        - see [project-base diff](https://github.com/shopsys/project-base/commit/2b6e375899d0d95b79407991fffef55bd6bb0392) to update your project
 
 - fix functional tests for single domain usage ([#1682](https://github.com/shopsys/shopsys/pull/1682))
     - if you do not plan use your project configured with single domain you may skip this
-    - add method following method into `tests/App/Functional/Model/Order/OrderTransportAndPaymentTest.php`, `tests/App/Functional/Model/Payment/IndependentPaymentVisibilityCalculationTest.php`, `tests/App/Functional/Model/Transport/IndependentTransportVisibilityCalculationTest.php`
+    - add following method into `tests/App/Functional/Model/Order/OrderTransportAndPaymentTest.php`, `tests/App/Functional/Model/Payment/IndependentPaymentVisibilityCalculationTest.php`, `tests/App/Functional/Model/Transport/IndependentTransportVisibilityCalculationTest.php`
 
         ```php
         /**
@@ -1126,7 +1029,7 @@ There you can find links to upgrade notes for other versions too.
             +   CustomerDataFactoryInterface $customerDataFactory,
             +   BillingAddressFacade $billingAddressFacade
             ```
-    - `tests/App/Functional/PersonalData/PersonalDataExportXmlTest.php` has been changed, see [diff of PR](https://github.com/shopsys/shopsys/pull/1700/files) to update it
+    - `tests/App/Functional/PersonalData/PersonalDataExportXmlTest.php` has been changed, see [project-base diff](https://github.com/shopsys/project-base/commit/efd91f6dcc837445cfd772e9b6b9ff714f0b5652) to update it
 
 - update your application to refresh administrator roles after edit own profile ([#1514](https://github.com/shopsys/shopsys/pull/1514))
     - some methods has changed so you might want to update their usage in your application:
@@ -1147,7 +1050,7 @@ There you can find links to upgrade notes for other versions too.
             -   public function editAction(Request $request, $id)
             +   public function editAction(Request $request, int $id)
             ```
-        - `SAdministratorRolesChangedSubscriber::__construct()`
+        - `AdministratorRolesChangedSubscriber::__construct()`
             ```diff
             -    public function __construct(TokenStorageInterface $tokenStorage, AdministratorFacade $administratorFacade)
             +    public function __construct(TokenStorageInterface $tokenStorage, AdministratorRolesChangedFacade $administratorRolesChangedFacade)
@@ -1155,6 +1058,7 @@ There you can find links to upgrade notes for other versions too.
 
 - add cron overview ([#1407](https://github.com/shopsys/shopsys/pull/1407))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/fdac77abc9fd7f167ccd544f4691ee25b2de169d) to update your project
+    - add `readableName` attribute for your crons in `cron.yaml` file as described in diff above
 
 - update your application to do not change product availability to default when availability can not be calculated immediately ([#1659](https://github.com/shopsys/shopsys/pull/1659))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/0be925148d15222e8765efae38386afef1485ebf) to update your project
@@ -1402,28 +1306,29 @@ There you can find links to upgrade notes for other versions too.
     - see [project-base diff](https://github.com/shopsys/project-base/commit/f1a4c5036a1f3eab202524d2cdc6fa29851468a8) to update your project
     
 - add compatibility for edge ([#1804](https://github.com/shopsys/shopsys/pull/1804))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/aa314e15b700a8af0c2cc097defcdca46acceeb7) to update your project
     
 - add protection before double submit forms ([#1800](https://github.com/shopsys/shopsys/pull/1800))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/702146d7779f5ce549af65895135c7f85ab39dc6) to update your project
 
 - refactored `SelectToggle` component ([#1803](https://github.com/shopsys/shopsys/pull/1803))
     - `ToggleOption` js class has been removed, update your code appropriately
 
 - remove deprecated methods from your project ([#1801](https://github.com/shopsys/shopsys/pull/1801))
-    - see #project-base-diff to update your project
-    
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/a9dd272a3831beadecfc5da9f061898a3a9e5205) to update your project
+
+- unify config files extensions to yaml ([#1814](https://github.com/shopsys/shopsys/pull/1814)
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/0861abcb9e9445d62f4f9461380b1314c9d3ece8) to update your project
+
 - remove subscription newsletter form from error pages ([#1819](https://github.com/shopsys/shopsys/pull/1819))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/69c1b83b7a511c7725d57581915ddb2dea2e0183) to update your project
 
 - fix validation of parameters uniqueness ([#1822](https://github.com/shopsys/shopsys/pull/1822))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/8d339e65ab748d36ecbf70c9204be54ac6d24772) to update your project
 
-- split error page templates to allow to render new 410 error response ([#1829](https://github.com/shopsys/shopsys/pull/1829))
-    - see #project-base-diff to update your project
-    - exception `ProductNotFoundException` has new parent. The original parent `NotFoundHttpException` was replaced by `GoneHttpException`           
-          
-- remove friendly url slug after remove category or brand ([#1829](https://github.com/shopsys/shopsys/pull/1829))
+- split error page templates to allow to render new 410 error response and remove friendly url slug after remove category or brand ([#1829](https://github.com/shopsys/shopsys/pull/1829))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/712311632006e83f9dfe5ec2924e6a9c512636bd) to update your project
+    - exception `ProductNotFoundException` has new parent. The original parent `NotFoundHttpException` was replaced by `GoneHttpException`
     - following methods has changed their interface, update your usages accordingly:
         - `BrandFacade::deleteById()`
             ```diff
@@ -1432,57 +1337,24 @@ There you can find links to upgrade notes for other versions too.
             ```
 
 - fix untranslated texts in admin ([#1841](https://github.com/shopsys/shopsys/pull/1841))
-    - see #project-base-diff to update your project
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/f00b2188e0d31f2ef9f2b3b83b4ceb65ee1954d2) to update your project
+
+- update selling to for product data fixture in order to fix failing tests ([#1677](https://github.com/shopsys/shopsys/pull/1677))
+    - see [project-base diff](https://github.com/shopsys/project-base/commit/fc1fc0a0ed1ce4681b8cedac1cf7e487353eb0de) to update your project
 
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
   - run `php phing standards-fix` and fix possible violations that need to be fixed manually
+  - see [project-base diff](https://github.com/shopsys/project-base/commit/3126182f41a680f3b6d2565ccae716491b5e8b09) to update your project
 
-- if you want to add stylelint rules to check style coding standards [#1511](https://github.com/shopsys/shopsys/pull/1511)
+- if you want to add stylelint rules to check style coding standards ([#1511](https://github.com/shopsys/shopsys/pull/1511))
     -  add new file [.stylelintignore](https://github.com/shopsys/shopsys/blob/master/project-base/.stylelintignore)
     -  add new file [.stylelintrc](https://github.com/shopsys/shopsys/blob/master/project-base/.stylelintrc)
-    - update `gruntfile.js.twig` and add new task
+    - update `package.json` and add this to `devDependencies`
         ```diff
-        +   stylelint: {
-        +      frontend: [
-        +          '{{ customResourcesDirectory|raw }}/styles/**/*.less'
-        +      ],
-        +      admin: [
-        +          '{{ frameworkResourcesDirectory|raw }}/styles/admin/**/*.less'
-        +      ]
-        +   },
-
-            watch: {
-                admin: {
+            "stylelint": "^11.1.1",
         ```
-        ```diff
-            {% else -%}
-        -       ['frontendLess{{ domain.id }}']
-        +       ['frontendLess{{ domain.id }}','stylelint']
-            {% endif -%}
-        ```
-        ```diff
-            grunt.loadNpmTasks('grunt-spritesmith');
-        +   grunt.loadNpmTasks('grunt-stylelint');
-
-        -   grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss"]);
-        +   grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "stylelint:frontend"]);
-        ```
-        ```diff
-        -   grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin', 'stylelint:admin']);
-        +   grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin']);
-      ```
-    - update `package.json`
-        ```diff
-            "grunt-spritesmith": "^6.6.2",
-        +   "grunt-stylelint": "^0.12.0",
-            "grunt-webfont": "^1.7.2",
-            "jit-grunt": "^0.10.0",
-        +   "stylelint": "^11.1.1",
-            "time-grunt": "^1.4.0"
-        ```
-    - don't forget to rebuild your grunt file by command `php phing gruntfile` and update your npm dependencies by command `npm install`
     - to fix all your less files in command line by command `php phing stylelint-fix`
 
 - make email templates editable on separate page ([#1828](https://github.com/shopsys/shopsys/pull/1828))
@@ -1554,103 +1426,6 @@ There you can find links to upgrade notes for other versions too.
        
     - these Twig templates were removed
         - `@ShopsysFramework/Admin/Content/Mail/template.html.twig`
-
-### Frontend
-
-- javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545), [#1645](https://github.com/shopsys/shopsys/pull/1645))
-    - please read [upgrade instruction for webpack](./upgrade-instruction-for-webpack.md)
-
-- fix not working popup window on single image ([#1630](https://github.com/shopsys/shopsys/pull/1630))
-    - add missing javascript for popup single image for class `js-popup-image`, see [project-base diff](https://github.com/shopsys/project-base/commit/ad7a0a20f094d5e936e4bb503946453c5c89ed18)
-
-- css and other assets are managed by webpack ([#1725](https://github.com/shopsys/shopsys/pull/1725))
-    - see [project-base diff](https://github.com/shopsys/project-base/commit/10cc704983e77d6b72d5e444b9414723b100e9ee) to update your project
-    - see also [project-base diff](https://github.com/shopsys/project-base/commit/2b195ae29754e03dca297dad6461cee5693eca79) from [#1781](https://github.com/shopsys/shopsys/pull/1781)
-    - move content from `src/resources/styles/front` to `assets/styles/frontend`
-    - move content from `src/resources/styles/admin` to `assets/styles/admin`
-    - move content from `src/resources/svg` to `assets/public/frontend/svg`
-    - move content from `web/assets/frontend/fonts` to `assets/public/frontend/fonts`
-    - move content from `web/assets/frontend/images` to `assets/public/frontend/images`
-    - move content from `web/assets/admin/fonts` to `assets/public/admin/fonts`
-    - move content from `web/assets/admin/images` to `assets/public/admin/images`
-    - move content from `web/assets/styleguide/images` to `assets/public/styleguide/images`
-    - you should remove the `grunt` target from your `build.xml` file
-    - add `styles_directory` into your domains config (you can get inspired in [project-base/config/domains.yaml  ](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml))
-    - change all `asset` function call in your templates
-      ```diff
-        - asset('assets/**/*.*')
-        + asset('public/**/*.*')
-      ```
-    - remove `getCssVersion()` function call from your templates
-    - print styles files are now included by tag `{{ encore_entry_link_tags('app') }}`
-      - but there is no 'media="print"' parameter to set link attribute
-      - so we need to upgrade our `assets/styles/frontend/*/print/main.less` and wrap all content to media query `@media print { ... your content ... }`
-    - In case you are using google fonts, we need to download font files and avoid for using `@import` from external sources. In future we can make some magics in load time performance using FontLoader etc.
-        - Example in `variables.less`
-          ```css
-            @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext');
-          ```
-        - open link in your browser and you will see a lot of `@font-face definitions`
-        - copy these you want to use:
-            ```css
-                /* latin-ext */
-                @font-face {
-                  font-family: 'Montserrat';
-                  font-style: normal;
-                  font-weight: 400;
-                  font-display: swap;
-                  src: local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
-                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-                }
-                /* latin-ext */
-                @font-face {
-                  font-family: 'Montserrat';
-                  font-style: normal;
-                  font-weight: 700;
-                  font-display: swap;
-                  src: local('Montserrat Bold'), local('Montserrat-Bold'), url(https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_dJE3gfD_u50.woff2) format('woff2');
-                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-                }
-            ```
-        - replace previous `@import` with it
-        - open all link `https://fonts.gstatic.com/...` in your browser and it will download font file and save them to `assets/public/frontend/fonts`. We are using [fontName][fontWeigh].[extension] filename syntax.
-        - change urls in `variables.less` to:
-            ```css
-              @font-face {
-                  font-family: 'Montserrat';
-                  font-style: normal;
-                  font-weight: 400;
-                  font-display: swap;
-                  src: local('Montserrat Regular'), local('Montserrat-Regular'), url(@{path-font}/Montserrat400.woff2) format('woff2');
-                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-                }
-                /* latin-ext */
-                @font-face {
-                  font-family: 'Montserrat';
-                  font-style: normal;
-                  font-weight: 700;
-                  font-display: swap;
-                  src: local('Montserrat Bold'), local('Montserrat-Bold'), url(@{path-font}/Montserrat700.woff2) format('woff2');
-                  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-                }
-            ```
-        - now you can rebuild you less files `npm run dev` and you should see your font on frontend page
-    - use full of the webpack, enjoy!
-
-- add support for Safari ([#1811](https://github.com/shopsys/shopsys/pull/1811))
-    - see #project-base-diff to update your project
-
-- add LiveReload for Webpack ([#1807](https://github.com/shopsys/shopsys/pull/1807))
-    - see #project-base-diff to update your project
-
-If you have custom frontend you can skip these tasks:
-- hide variant table header when product is denied for sale ([#1634](https://github.com/shopsys/shopsys/pull/1634))
-    - add new condition at product detail file: `templates/Front/Content/Product/detail.html.twig`
-        ```diff
-        -   {% if product.isMainVariant %}
-        +   {% if product.isMainVariant and not product.calculatedSellingDenied %}
-                <table {% getProductSellingPrice(product) is not null %}itemprop="offers"
-        ```
 
 ### Removed deprecations
 
