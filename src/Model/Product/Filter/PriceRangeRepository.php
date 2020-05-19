@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Filter;
 
+use App\Component\Doctrine\QueryBuilderExtender;
+use App\Model\Product\ProductRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -32,14 +34,14 @@ class PriceRangeRepository extends BasePriceRangeRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Component\Domain\Domain $domain
-     * @param App\Model\Product\Filter\\App\Model\Product\ProductRepository $productRepository
-     * @param App\Model\Product\Filter\\App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
+     * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      */
     public function __construct(
         CurrencyFacade $currencyFacade,
         Domain $domain,
-        \App\Model\Product\ProductRepository $productRepository,
-        \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
+        ProductRepository $productRepository,
+        QueryBuilderExtender $queryBuilderExtender
     ) {
         parent::__construct($productRepository, $queryBuilderExtender);
         $this->currencyFacade = $currencyFacade;
