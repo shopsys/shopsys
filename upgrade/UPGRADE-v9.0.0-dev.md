@@ -132,7 +132,7 @@ There you can find links to upgrade notes for other versions too.
 - upgrade Redis client to version 5.2.1 and Redis server to 5.0 ([#1606](https://github.com/shopsys/shopsys/pull/1606))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/e3adc0c31094b47aca03389ef4fa266977edab25) to update your project
 
-- stop using symfony/web-server-bundle ([#1817](https://github.com/shopsys/shopsys/pull/1817)
+- stop using symfony/web-server-bundle ([#1817](https://github.com/shopsys/shopsys/pull/1817))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/0a47cac6590ee49ad994c082543e65d979818ad4) to update your project
     - command `php bin/console shopsys:server:run` (class `Shopsys\FrameworkBundle\Command\ServerRunForDomainCommand`) was removed
     - command `php bin/console server:start` (class `Shopsys\FrameworkBundle\Command\ServerStartWithCustomRouterCommand`) was removed
@@ -383,7 +383,7 @@ There you can find links to upgrade notes for other versions too.
                   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
                 }
             ```
-        - now you can rebuild you less files `npm run dev` and you should see your font on frontend page
+        - now you can rebuild your less files `npm run dev` and you should see your font on frontend page
     - use full of the webpack, enjoy!
 
 - add support for Safari ([#1811](https://github.com/shopsys/shopsys/pull/1811))
@@ -549,12 +549,12 @@ There you can find links to upgrade notes for other versions too.
 
 - add hover timeout to horizontal menu ([#1564](https://github.com/shopsys/shopsys/pull/1564))
     - you can skip this task if you have your custom design
-    - move loader to hidden submenu - so it can not interrupt hover `src/Resources/scripts/frontend/categoryPanel.js`
+    - move loader to hidden submenu - so it can not interrupt hover `src/Resources/scripts/frontend/CategoryPanel.js`
         ```diff
-          function loadCategoryItemContent ($categoryItem, url) {
-              Shopsys.ajax({
-        -          loaderElement: $categoryItem,
-        +          loaderElement: $categoryItem.find('.js-category-list-placeholder'),
+            loadCategoryItemContent ($categoryItem, url) {
+                Ajax.ajax({
+        -           loaderElement: $categoryItem,
+        +           loaderElement: $categoryItem.find('.js-category-list-placeholder'),
         ```
     - add new js plugin hoverIntent v1.10.1 `src/Resources/scripts/frontend/plugins/jquery.hoverIntent.js` (https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/scripts/frontend/plugins/jquery.hoverIntent.js)
     - add new js component `src/Resources/scripts/frontend/components/hoverIntent.js` (https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/scripts/frontend/components/hoverIntent.js)
