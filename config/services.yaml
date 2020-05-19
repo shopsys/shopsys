@@ -600,3 +600,7 @@ services:
     App\ProductFeed\MergadoFeed\MergadoFeed:
         tags:
             - { name: shopsys.product_feed }
+
+    App\Component\Image\Kraken\KrakenOptimizationFacade:
+        arguments:
+            $logger: '@monolog.logger.cron'

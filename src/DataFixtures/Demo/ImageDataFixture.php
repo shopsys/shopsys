@@ -247,8 +247,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
     private function saveImageIntoDb(int $entityId, string $entityName, int $imageId)
     {
         $query = $this->em->createNativeQuery(
-            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at)
-            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at)',
+            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at, processed_by_kraken)
+            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at, :processed_by_kraken)',
             new ResultSetMapping()
         );
 
@@ -260,6 +260,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             'extension' => self::IMAGE_TYPE,
             'position' => null,
             'modified_at' => '2015-04-16 11:36:06',
+            'processed_by_kraken' => true,
         ]);
     }
 

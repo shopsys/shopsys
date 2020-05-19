@@ -87,10 +87,31 @@ class ImageGenerator extends BaseImageGenerator
      */
     private function processImageInKraken(string $sourceImageFilepath, string $targetImageFilepath, ImageSizeConfig $sizeConfig): void
     {
-        $krakenImageData = $this->imageKrakenProcessor->resizeBySizeConfig($sourceImageFilepath, $sizeConfig);
+        $krakenImageData = $this->imageKrakenProcessor->resizeBySizeConfig($sourceImageFilepath, [$sizeConfig]);
+        $krakenImageDataResult = current($krakenImageData['results']);
 
-        $file = file_get_contents($krakenImageData['kraked_url']);
+        $file = file_get_contents($krakenImageDataResult['kraked_url']);
 
         $this->filesystem->put($targetImageFilepath, $file);
+    }
+
+    /**
+     * @param \App\Component\Image\Image $image
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizesConfig
+     */
+    public function processImageSizesInKraken(Image $image, array $sizesConfig): void
+    {
+        $sourceImageFilepath = $this->imageLocator->getAbsoluteImageFilepath($image, ImageConfig::ORIGINAL_SIZE_NAME);
+
+        $krakenImagesData = $this->imageKrakenProcessor->resizeBySizeConfig($sourceImageFilepath, $sizesConfig);
+
+        foreach ($krakenImagesData['results'] as $sizeName => $krakenImageData) {
+            if ($sizeName === ImageConfig::DEFAULT_SIZE_NAME) {
+                $sizeName = null;
+            }
+            $targetImageFilepath = $this->imageLocator->getAbsoluteImageFilepath($image, $sizeName);
+            $file = file_get_contents($krakenImageData['kraked_url']);
+            $this->filesystem->put($targetImageFilepath, $file);
+        }
     }
 }

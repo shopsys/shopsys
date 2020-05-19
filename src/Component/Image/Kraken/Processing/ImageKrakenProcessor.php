@@ -7,7 +7,7 @@ namespace App\Component\Image\Kraken\Processing;
 use App\Component\Image\Kraken\KrakenConfig;
 use Kraken;
 use League\Flysystem\FilesystemInterface;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
+use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class ImageKrakenProcessor
 {
@@ -62,13 +62,13 @@ class ImageKrakenProcessor
 
     /**
      * @param string $sourceImageFilepath
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizesConfig
      * @return array
      */
-    public function resizeBySizeConfig(string $sourceImageFilepath, ImageSizeConfig $sizeConfig): array
+    public function resizeBySizeConfig(string $sourceImageFilepath, array $sizesConfig): array
     {
         $tempImageFilePath = $this->getTempImageFilePath($sourceImageFilepath);
-        $krakenImageData = $this->resizeAndWaitForResult($tempImageFilePath, $sizeConfig->getWidth(), $sizeConfig->getHeight(), $sizeConfig->getCrop());
+        $krakenImageData = $this->resizeAndWaitForResult($tempImageFilePath, $sizesConfig);
         $this->removeTempImageFile($tempImageFilePath);
 
         return $krakenImageData;
@@ -100,23 +100,28 @@ class ImageKrakenProcessor
 
     /**
      * @param string $filepath
-     * @param int|null $width
-     * @param int|null $height
-     * @param bool $crop
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizesConfig
      * @return array|null
      */
-    private function resizeAndWaitForResult(string $filepath, ?int $width, ?int $height, bool $crop = false): ?array
+    private function resizeAndWaitForResult(string $filepath, array $sizesConfig): ?array
     {
+        $resizeImages = [];
+
+        foreach ($sizesConfig as $sizeConfig) {
+            $resizeImages[] = [
+                'id' => $sizeConfig->getName() ?? ImageConfig::DEFAULT_SIZE_NAME,
+                'width' => $sizeConfig->getWidth(),
+                'height' => $sizeConfig->getHeight(),
+                'strategy' => $this->getImageStrategy($sizeConfig->getWidth(), $sizeConfig->getHeight(), $sizeConfig->getCrop()),
+            ];
+        }
+
         $params = [
             'dev' => $this->krakenConfig->isSandbox(), // sandbox (random generating image from Kraken)
             'file' => $filepath,
             'wait' => true,
             'lossy' => $this->krakenConfig->isLossy(),
-            'resize' => [
-                'width' => $width,
-                'height' => $height,
-                'strategy' => $this->getImageStrategy($width, $height, $crop),
-            ],
+            'resize' => $resizeImages,
         ];
 
         return $this->kraken->upload($params);
