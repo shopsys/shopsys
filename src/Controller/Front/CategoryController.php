@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends FrontBaseController
 {
@@ -57,6 +58,22 @@ class CategoryController extends FrontBaseController
         $this->currentCategoryResolver = $currentCategoryResolver;
         $this->topCategoryFacade = $topCategoryFacade;
         $this->currentCustomerUser = $currentCustomerUser;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function mobilePanelMenuAction(): Response
+    {
+        $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(
+            $this->categoryFacade->getRootCategory(),
+            $this->domain->getCurrentDomainConfig()
+        );
+
+        return $this->render('Front/Content/Category/mobilePanelMenu.html.twig', [//Front/Content/Category/panel.html.twig
+            'categoriesWithLazyLoadedVisibleChildren' => $categoriesWithLazyLoadedVisibleChildren,
+            'isFirstLevel' => true,
+        ]);
     }
 
     /**

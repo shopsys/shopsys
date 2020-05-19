@@ -1,0 +1,77 @@
+{% if categoriesWithLazyLoadedVisibleChildren|length > 0 %}
+    {% set isCurrentFirstLevel = isFirstLevel %}
+    {% set currentCategoryId = childCategoryId ?? 1 %}
+    {% set parentCategoryId = parentCategoryId ?? 0 %}
+    {% set childCategoryName = childCategoryName ?? "" %}
+
+{% if isCurrentFirstLevel %}
+    <nav class="mobile-menu-wrap">
+    <div id="js-mobile-menu" class="display-none">
+{% endif %}
+
+    <ul class="mobile-menu
+            dont-print
+            js-mobile-menu-list
+            {% if isCurrentFirstLevel %}show-position{% endif %}
+            "
+        id="js-mobile-menu-list-{{ currentCategoryId }}"
+        data-parent-menu-id="{{ parentCategoryId }}"
+    >
+        {% if isCurrentFirstLevel == false%}
+        <li class="mobile-menu__item js-mobile-menu-item">
+            <a href="#" class="mobile-menu__item__link">
+                <span class="mobile-menu__item__back-control js-mobile-menu-collapse-control" data-parent-menu-id="#js-mobile-menu-list-{{ parentCategoryId }}">
+                    &lt {{ 'zpět'|trans }}
+                </span>
+                <span class="mobile-menu__item__back">{{ childCategoryName }}</span>
+            </a>
+        </li>
+        {% endif %}
+        {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
+            <li class="mobile-menu__item js-mobile-menu-item">
+                <a
+                    href="{{ url('front_product_list', { id: categoryWithLazyLoadedVisibleChildren.category.id }) }}"
+                    class="mobile-menu__item__link">
+                    {{ categoryWithLazyLoadedVisibleChildren.category.name }}
+                    {% if categoryWithLazyLoadedVisibleChildren.hasChildren %}
+                        <span class="mobile-menu__item__control js-mobile-menu-expand-control"
+                           data-child-menu-id="#js-mobile-menu-list-{{ categoryWithLazyLoadedVisibleChildren.category.id }}">
+                            &gt;
+                        </span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+        {% if isCurrentFirstLevel %}
+            <li class="mobile-menu__item mobile-menu__item--sale">
+                <a
+                    href="#"
+                    class="mobile-menu__item__link mobile-menu__item__link--sale mobile-menu__item__link--level-1 js-not-implemented-yet">
+                    {{ "Výprodej"|trans }}
+                </a>
+            </li>
+            <li class="mobile-menu__item mobile-menu__item--blog">
+                <a
+                    href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}"
+                    class="mobile-menu__item__link mobile-menu__item__link--blog mobile-menu__item__link--level-1">
+                    {{ "Magazín"|trans }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+
+    {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
+        {% set categoriesWithLazyLoadedVisibleChildren = categoryWithLazyLoadedVisibleChildren.children %}
+        {% set isFirstLevel = false %}
+        {% set parentCategoryId = currentCategoryId %}
+        {% set childCategoryId = categoryWithLazyLoadedVisibleChildren.category.id %}
+        {% set childCategoryName = categoryWithLazyLoadedVisibleChildren.category.name %}
+        {% include _self %}
+    {% endfor %}
+
+{% if isCurrentFirstLevel %}
+    </div>
+    </nav>
+{% endif %}
+
+{% endif %}
