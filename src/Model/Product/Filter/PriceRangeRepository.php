@@ -5,19 +5,47 @@ declare(strict_types=1);
 namespace App\Model\Product\Filter;
 
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePriceRangeRepository;
 
 /**
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
- * @method __construct(\App\Model\Product\ProductRepository $productRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange getPriceRangeInCategory(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @property \App\Model\Product\ProductRepository $productRepository
  */
 class PriceRangeRepository extends BasePriceRangeRepository
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    private $currencyFacade;
+
+    /**
+     * @var \App\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \App\Component\Domain\Domain $domain
+     * @param App\Model\Product\Filter\\App\Model\Product\ProductRepository $productRepository
+     * @param App\Model\Product\Filter\\App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
+     */
+    public function __construct(
+        CurrencyFacade $currencyFacade,
+        Domain $domain,
+        \App\Model\Product\ProductRepository $productRepository,
+        \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
+    ) {
+        parent::__construct($productRepository, $queryBuilderExtender);
+        $this->currencyFacade = $currencyFacade;
+        $this->domain = $domain;
+    }
+
     /**
      * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
@@ -36,9 +64,15 @@ class PriceRangeRepository extends BasePriceRangeRepository
         $priceRangeData = $queryBuilder->getQuery()->execute();
         $priceRangeDataRow = reset($priceRangeData);
 
+        $minimalPrice = $priceRangeDataRow['minimalPrice'] ?? 0;
+        $maximalPrice = $priceRangeDataRow['maximalPrice'] ?? 0;
+
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+        $minFractionDigits = $currency->getMinFractionDigits();
+
         return new PriceRange(
-            Money::create($priceRangeDataRow['minimalPrice'] ?? 0),
-            Money::create($priceRangeDataRow['maximalPrice'] ?? 0)
+            Money::createFromFloat(floor($minimalPrice), $minFractionDigits),
+            Money::createFromFloat(ceil($maximalPrice), $minFractionDigits)
         );
     }
 }

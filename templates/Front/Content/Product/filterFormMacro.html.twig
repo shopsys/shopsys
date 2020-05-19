@@ -62,19 +62,20 @@
                         data-minimal-value="{{ priceRange.minimalPrice|moneyFormat }}"
                         data-maximum-input-id="{{ filterForm.maximalPrice.vars.id }}"
                         data-maximal-value="{{ priceRange.maximalPrice|moneyFormat }}"
+                        data-decimals="{{ decimalsByDomainId(getDomain().id) }}"
                     ></div>
                 </div>
                 <div class="box-filter__content__item__wrap">
                     <div class="box-filter__content__item">
                         {{ form_widget(filterForm.minimalPrice, {
                             symbolAfterInput: currencySymbolByDomainId(getDomain().id),
-                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.minimalPrice|price }
+                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder: priceRange.minimalPrice|price }
                         }) }}
                     </div>
                     <div class="box-filter__content__item box-filter__content__item--right">
                         {{ form_widget(filterForm.maximalPrice, {
                             symbolAfterInput: currencySymbolByDomainId(getDomain().id),
-                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice|price}
+                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder: priceRange.maximalPrice|price}
                         }) }}
                     </div>
                 </div>
