@@ -95,6 +95,11 @@ services:
 
     App\Model\Product\Series\Grid\ProductSeriesGridFactory: ~
 
+    App\Component\Router\FriendlyUrl\NormalizeUrlTrailingSlashListener:
+        public: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlFacade
 
