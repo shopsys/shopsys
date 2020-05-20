@@ -16,7 +16,7 @@ class Image extends BaseImage
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $akeneoCode;
 
@@ -41,6 +41,14 @@ class Image extends BaseImage
     public function setAkeneoCode(?string $akeneoCode): void
     {
         $this->akeneoCode = $akeneoCode;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAkeneoImageType(): ?string
+    {
+        return $this->akeneoImageType;
     }
 
     /**
