@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Transfer\Issue;
 
+use App\Model\Transfer\Transfer;
 use App\Model\Transfer\TransferRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Model\Transfer\Transfer;
 
 class TransferIssueFacade
 {

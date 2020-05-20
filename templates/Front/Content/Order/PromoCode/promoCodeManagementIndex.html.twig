@@ -1,0 +1,23 @@
+{% extends 'Front/Layout/layout.html.twig' %}
+
+{% block meta_robots -%}
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
+{% block title %}
+    {{ 'Ověření platnosti kuponu'|trans }}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+    <div class="web__line">
+        <div class="web__container">
+            <h1>{{ 'Ověření platnosti kupónu'|trans }}</h1>
+            <input type="text" id="find-and-validate-promo-code" class="input" value="">
+            <input id="find-and-validate-submit" type="submit" value="{{ 'Ověřit slevový kupon'|trans }}">
+            <div id="find-and-validate-result"></div>
+        </div>
+    </div>
+{% endblock %}

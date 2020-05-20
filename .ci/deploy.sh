@@ -36,6 +36,9 @@ declare -A PARAMETERS=(
     ["parameters.targito_config.eshop_to_targito_account_id"]=${TARGITO_ESHOP_TO_TARGITO_ACCOUNT_ID}
     ["parameters.targito_config.eshop_to_targito_password"]=${TARGITO_ESHOP_TO_TARGITO_PASSWORD}
     ["parameters.env(CDN_DOMAIN)"]=${CDN_DOMAIN}
+    ["parameters.promo_code_manage_page_config.user"]=${PROMO_CODE_MANAGE_PAGE_USER_LOGIN}
+    ["parameters.promo_code_manage_page_config.pass"]=${PROMO_CODE_MANAGE_PAGE_USER_PASS}
+    ["parameters.promo_code_manage_page_config.allowed_ips[+]"]=${PROMO_CODE_MANAGE_PAGE_ALLOWED_IPS}
 )
 
 VARS=(

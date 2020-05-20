@@ -33,13 +33,6 @@ class TransferLoggerFactory
     /**
      * @param \Symfony\Bridge\Monolog\Logger $defaultLogger
      * @param \App\Model\Transfer\TransferFacade $transferFacade
-     * @var \App\Model\Transfer\TransferRepository
-     */
-    private $transferRepository;
-
-    /**
-     * @param \Symfony\Bridge\Monolog\Logger $defaultLogger
-     * @param \App\Model\Transfer\TransferRepository $transferRepository
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */
     public function __construct(
@@ -92,7 +85,6 @@ class TransferLoggerFactory
         return new TransferLogger(
             $logger,
             $identifier,
-            $this->transferRepository,
             $this->transferIssueFacade
         );
     }

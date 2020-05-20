@@ -240,4 +240,13 @@ class PromoCodeFacade extends BasePromoCodeFacade
             $date->format(self::DATABASE_DATE_FORMAT) . 'T' . $time
         );
     }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    public function decreaseRemainingUses(PromoCode $promoCode): void
+    {
+        $promoCode->decreaseRemainingUses();
+        $this->em->flush();
+    }
 }

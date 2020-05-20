@@ -40,9 +40,6 @@ class TransferRepository
         $transfer = $this->getRepository()->findOneBy(['identifier' => $identifier]);
         if ($transfer === null) {
             throw new UnknownServiceTransferException($identifier);
-            $transfer = new Transfer($identifier, $identifier);
-            $this->em->persist($transfer);
-            $this->em->flush();
         }
 
         return $transfer;

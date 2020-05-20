@@ -1,0 +1,7 @@
+{% if promoCode is null %}
+    <p>{{ message }}</p>
+{% else %}
+    <p>{{ 'Kód'|trans }}: <span>{{ promoCode.code }}</span></p>
+    <p>{{ 'Sleva'|trans }}: <span>{{ promoCode.percent|number_format(2, '.')}}%</span></p>
+    <input id="deactivate-promo-code" data-promocode-id="{{ promoCode.id }}" type="submit" value="{{ 'Použít slevový kupon'|trans }}">
+{% endif %}

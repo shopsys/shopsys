@@ -43,7 +43,6 @@ class DefaultController extends BaseDefaultController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */
     public function __construct(
@@ -82,7 +81,6 @@ class DefaultController extends BaseDefaultController
     {
         /* @var $administrator \App\Model\Administrator\Administrator */
         $administrator = $this->getUser();
-
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
         $registeredInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat($registeredInLastTwoWeeks);
         $registeredInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts($registeredInLastTwoWeeks);

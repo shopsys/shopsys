@@ -83,6 +83,11 @@ services:
 
     App\Model\Product\Series\ProductSeriesFacade: ~
 
+    App\Component\PromoCode\HttpBasicAuthOrByIpAccessAuthenticator:
+        arguments:
+            - '@monolog.logger.cron'
+            - "%promo_code_manage_page_config%"
+
     App\Model\Product\Series\ProductSeriesFacadeInterface: '@App\Model\Product\Series\ProductSeriesFacade'
 
     App\Model\Product\Series\ProductSeriesFactory: ~
@@ -417,10 +422,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer: '@App\Model\Product\Search\ProductFilterDataToQueryTransformer'
 
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: '@App\Model\Product\ProductVisibilityRepository'
-
-    App\Model\Product\Search\ProductElasticsearchConverter: ~
-
     Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery: '@App\Model\Product\Search\FilterQuery'
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: '@App\Model\Product\Search\ProductElasticsearchConverter'
@@ -459,10 +460,6 @@ services:
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'
 
     Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry: '@App\Model\Advert\AdvertPositionRegistry'
-
-    App\Model\Transfer\TransferLoggerFactory:
-        arguments:
-            - '@monolog.logger.cron'
 
     App\Model\Transfer\TransferLoggerFactory:
         arguments:
