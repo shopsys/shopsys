@@ -1,6 +1,9 @@
 {% extends 'Front/Layout/layout.html.twig' %}
 
 {% block content %}
+    <div class="display-none display-block-tablet">
+        {{ render(controller('App\\Controller\\Front\\CategoryController:mobileSlidingMenuAction')) }}
+    </div>
     <div class="web__main">
         <div class="web__main__content js-main-content">
             {% block breadcrumb %}
@@ -18,6 +21,6 @@
     </div>
 
     <div class="display-none display-block-tablet">
-        {{ render(controller('App\\Controller\\Front\\CategoryController:mobileMenuAction')) }}
+        {{ render(controller('App\\Controller\\Front\\CategoryController:mobilePanelMenuAction')) }}
     </div>
 {% endblock %}

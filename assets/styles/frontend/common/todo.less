@@ -171,3 +171,26 @@ input[type=checkbox].css-checkbox {
         }
     }
 }
+
+.mobile-sliding-menu {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+
+    &__container {
+        width: 2000px;
+        left: -1000px;
+        position: relative;
+
+        #sliding-menu__draggable {
+            position: relative;
+            float: left;
+            left: 1000px;
+        }
+    }
+
+    &__link {
+        display: inline-block;
+        padding: 15px;
+    }
+}

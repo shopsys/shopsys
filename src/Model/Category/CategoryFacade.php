@@ -7,6 +7,7 @@ namespace App\Model\Category;
 use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
@@ -167,5 +168,15 @@ class CategoryFacade extends BaseCategoryFacade
     public function getAllProductCategoriesByProductAndDomainId(Product $product, int $domainId): array
     {
         return $this->categoryRepository->getAllProductCategoriesOnDomain($product, $domainId);
+    }
+
+    /**
+     * @param \App\Model\Category\Category $parentCategory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Category\Category[]
+     */
+    public function getTranslatedVisibleSubcategoriesByDomain(Category $parentCategory, DomainConfig $domainConfig): array
+    {
+        return  $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain($parentCategory, $domainConfig);
     }
 }

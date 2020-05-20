@@ -63,6 +63,21 @@ class CategoryController extends FrontBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    public function mobileSlidingMenuAction(): Response
+    {
+        $topCategories = $this->categoryFacade->getTranslatedVisibleSubcategoriesByDomain(
+            $this->categoryFacade->getRootCategory(),
+            $this->domain->getCurrentDomainConfig()
+        );
+
+        return $this->render('Front/Content/Category/mobileSlidingMenu.html.twig', [
+            'topCategories' => $topCategories,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function mobilePanelMenuAction(): Response
     {
         $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(
@@ -70,7 +85,7 @@ class CategoryController extends FrontBaseController
             $this->domain->getCurrentDomainConfig()
         );
 
-        return $this->render('Front/Content/Category/mobilePanelMenu.html.twig', [//Front/Content/Category/panel.html.twig
+        return $this->render('Front/Content/Category/mobilePanelMenu.html.twig', [
             'categoriesWithLazyLoadedVisibleChildren' => $categoriesWithLazyLoadedVisibleChildren,
             'isFirstLevel' => true,
         ]);

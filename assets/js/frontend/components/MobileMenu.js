@@ -7,13 +7,13 @@ export default class MobileMenu {
         event.preventDefault();
 
         const $categoryExpandControl = $(event.target);
-        const $childCategoryList = $($categoryExpandControl.data("child-menu-id"));
+        const $childCategoryList = $($categoryExpandControl.data('child-menu-id'));
         const $categoryItem = $categoryExpandControl.closest('.js-mobile-menu-item');
         const $currentCategoryList = $categoryItem.parent('.js-mobile-menu-list').first();
 
-        $currentCategoryList.animate({left: '-100%'},'fast');
+        $currentCategoryList.animate({ left: '-100%' }, 'fast');
         $currentCategoryList.toggleClass('show-position');
-        $childCategoryList.animate({left: '0px'},'fast');
+        $childCategoryList.animate({ left: '0px' }, 'fast');
         $childCategoryList.toggleClass('show-position');
     }
 
@@ -22,13 +22,13 @@ export default class MobileMenu {
         event.preventDefault();
 
         const $categoryCollapseControl = $(event.target);
-        const $parentCategoryList = $($categoryCollapseControl.data("parent-menu-id"));
+        const $parentCategoryList = $($categoryCollapseControl.data('parent-menu-id'));
         const $categoryItem = $categoryCollapseControl.closest('.js-mobile-menu-item');
         const $currentCategoryList = $categoryItem.parent('.js-mobile-menu-list').first();
 
-        $currentCategoryList.animate({left: '100%'},'fast');
+        $currentCategoryList.animate({ left: '100%' }, 'fast');
         $currentCategoryList.toggleClass('show-position');
-        $parentCategoryList.animate({left: '0px'},'fast');
+        $parentCategoryList.animate({ left: '0px' }, 'fast');
         $parentCategoryList.toggleClass('show-position');
     }
 
