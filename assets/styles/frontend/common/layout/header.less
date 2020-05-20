@@ -78,6 +78,7 @@
     }
 
     &__cart {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -97,6 +98,14 @@
     &__links {
         display: flex;
         align-items: center;
+
+        @media @query-lg {
+            margin-right: 30px;
+        }
+
+        @media @query-xl {
+            margin-right: 0;
+        }
     }
 
     &__mobile-button {
