@@ -427,6 +427,12 @@ services:
         arguments:
             $disableFields: '%disable_form_fields_from_transfer%'
 
+    App\Model\Sitemap\SitemapListener:
+        tags:
+            - { name: 'kernel.event_subscriber', priority: 100 }
+
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapListener: '@App\Model\Sitemap\SitemapListener'
+
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository: '@App\Model\Sitemap\SitemapRepository'
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory: '@App\Model\Slider\SliderItemDataFactory'
