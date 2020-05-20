@@ -31,7 +31,7 @@ class KrakenOptimizationFacade
     private $imageFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
+     * @var \App\Component\Image\Config\ImageConfig
      */
     private $imageConfig;
 
@@ -49,7 +49,7 @@ class KrakenOptimizationFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \App\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
+     * @param \App\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\Processing\ImageGenerator $imageGenerator
      * @param \App\Component\Image\Kraken\KrakenConfig $krakenConfig
      */
