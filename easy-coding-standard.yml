@@ -82,3 +82,6 @@ parameters:
             - '*/tests/App/Test/Codeception/Helper/NumberFormatHelper.php'
             - '*/tests/App/Test/Codeception/Helper/SymfonyHelper.php'
             - '*/tests/App/Test/Codeception/Module/Db.php'
+
+        ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff:
+            - '*/src/Model/Product/ProductData.php'

@@ -70,6 +70,16 @@ class Product extends BaseProduct
     protected $vendorDeliveryDate;
 
     /**
+     * @var \App\Model\Product\Parameter\Parameter[]|\Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Model\Product\Parameter\Parameter")
+     * @ORM\JoinTable(name="product_variant_parameters",
+     *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="parameter_id", referencedColumnName="id")})
+     */
+    protected $variantParameters;
+
+    /**
      * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
      *
      * @var null
@@ -127,6 +137,8 @@ class Product extends BaseProduct
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
         $this->flags = new ArrayCollection();
+        $this->variantParameters = new ArrayCollection();
+        $this->editVariantParameters($productData);
     }
 
     /**
@@ -141,6 +153,7 @@ class Product extends BaseProduct
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
+        $this->editVariantParameters($productData);
     }
 
     /**
@@ -194,6 +207,17 @@ class Product extends BaseProduct
             $productDomain->setPackagingUnit($productData->packagingUnit[$domainId] !== null ? (int)$productData->packagingUnit[$domainId] : null);
             $productDomain->setCountPackages($productData->countPackages[$domainId] !== null ? (int)$productData->countPackages[$domainId] : null);
             $productDomain->setTotalPackageWeight($productData->totalPackageWeight[$domainId] !== null ? (float)$productData->totalPackageWeight[$domainId] : null);
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function editVariantParameters(ProductData $productData): void
+    {
+        $this->variantParameters->clear();
+        foreach ($productData->variantParameters as $variantParameter) {
+            $this->variantParameters->add($variantParameter);
         }
     }
 
@@ -564,6 +588,14 @@ class Product extends BaseProduct
     public function getVendorDeliveryDate(): ?int
     {
         return $this->vendorDeliveryDate;
+    }
+
+    /**
+     * @return \App\Model\Product\Parameter\Parameter[]
+     */
+    public function getVariantParameters()
+    {
+        return $this->variantParameters->toArray();
     }
 
     /**
