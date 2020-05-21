@@ -8,7 +8,9 @@
                 </th>
                 <th class="table-cart__cell table-cart__cell--head table-cart__cell--avail">{{ 'Dostupnost'|trans }}</th>
                 <th class="table-cart__cell table-cart__cell--head table-cart__cell--amount">{{ 'Počet kusů'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--price">{{ 'Common price'|trans }}</th>
+                {% if (orderPreview.hasAnyProductCommonPrice(getDomain().id)) %}
+                    <th class="table-cart__cell table-cart__cell--head table-cart__cell--price">{{ 'Common price'|trans }}</th>
+                {% endif %}
                 <th class="table-cart__cell table-cart__cell--head table-cart__cell--price-final">{{ 'Zaplatíte'|trans }}</th>
                 <th class="table-cart__cell table-cart__cell--head table-cart__cell--action">&nbsp;</th>
             </tr>
@@ -75,9 +77,13 @@
                     </span>
                 </td>
 
-                <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
-                    <strong class="cart-price cart-price--secondary">{{ product.getHighPriceWithVat(getDomain().id)|price }}</strong>
-                </td>
+                {% if orderPreview.hasAnyProductCommonPrice(getDomain().id) %}
+                    <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
+                        {% if product.getHighPriceWithVat(getDomain().id).isGreaterThan(cartItemPrice.unitPrice.priceWithVat) %}
+                            <strong class="cart-price cart-price--secondary">{{ product.getHighPriceWithVat(getDomain().id)|price }}</strong>
+                        {% endif %}
+                    </td>
+                {% endif %}
 
                 <td class="table-cart__cell table-cart__cell--price-final js-cart-item-total-price">
 
@@ -107,11 +113,13 @@
                 <td class="table-cart__cell table-cart__cell--footer table-cart__cell-caption">
                     <strong class="table-cart__cell__caption">{{ 'Zaplatíte'|trans }}</strong>
                 </td>
-                <td class="table-cart__cell table-cart__cell--footer table-cart__cell--price">
-                    <span class="cart-price cart-price--secondary cart-price--previous">
-                        {{ orderPreview.totalProductHighPrice.priceWithVat|price }}
-                    </span>
-                </td>
+                {% if (orderPreview.hasAnyProductCommonPrice(getDomain().id)) %}
+                    <td class="table-cart__cell table-cart__cell--footer table-cart__cell--price">
+                        <span class="cart-price cart-price--secondary cart-price--previous">
+                            {{ orderPreview.totalProductHighPrice.priceWithVat|price }}
+                        </span>
+                    </td>
+                {% endif %}
                 <td class="table-cart__cell table-cart__cell--footer table-cart__cell--price-final js-cart-total-price">
                     <span class="cart-price cart-price--primary cart-price--bigger">
                         {{ orderPreview.productsPrice.priceWithVat|price }}
