@@ -1,30 +1,28 @@
 {% if categoriesWithLazyLoadedVisibleChildren|length > 0 %}
-    {% set isCurrentFirstLevel = isFirstLevel %}
-    {% set currentCategoryId = childCategoryId ?? 1 %}
-    {% set parentCategoryId = parentCategoryId ?? 0 %}
-    {% set childCategoryName = childCategoryName ?? "" %}
+    {% set currentMenuListId = currentMenuListId ?? 0 %}
+    {% set parentMenuListId = parentMenuListId ?? 'null' %}
 
-{% if isCurrentFirstLevel %}
-    <nav class="mobile-menu-wrap">
-    <div id="js-mobile-menu" class="display-none">
-{% endif %}
+    {% if isFirstLevel %}
+        <nav class="mobile-menu-wrap">
+        <div id="js-mobile-menu" class="mobile-menu-wrap__container display-none">
+    {% endif %}
 
     <ul class="mobile-menu
             dont-print
             js-mobile-menu-list
-            {% if isCurrentFirstLevel %}show-position{% endif %}
+            {% if isFirstLevel %}show-position{% endif %}
             "
-        id="js-mobile-menu-list-{{ currentCategoryId }}"
-        data-parent-menu-id="{{ parentCategoryId }}"
+        id="js-mobile-menu-list-{{ currentMenuListId }}"
+        data-parent-menu-id="{{ parentMenuListId }}"
     >
-        {% if isCurrentFirstLevel == false%}
+        {% if isFirstLevel == false %}
         <li class="mobile-menu__item js-mobile-menu-item">
-            <a href="#" class="mobile-menu__item__link">
-                <span class="mobile-menu__item__back-control js-mobile-menu-collapse-control" data-parent-menu-id="#js-mobile-menu-list-{{ parentCategoryId }}">
+            <span>
+                <span class="mobile-menu__item__back-control js-mobile-menu-collapse-control" data-parent-menu-id="#js-mobile-menu-list-{{ parentMenuListId }}">
                     &lt {{ 'zpět'|trans }}
                 </span>
                 <span class="mobile-menu__item__back">{{ childCategoryName }}</span>
-            </a>
+            </span>
         </li>
         {% endif %}
         {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
@@ -42,12 +40,12 @@
                 </a>
             </li>
         {% endfor %}
-        {% if isCurrentFirstLevel %}
+        {% if isFirstLevel %}
             <li class="mobile-menu__item mobile-menu__item--sale">
                 <a
                     href="#"
                     class="mobile-menu__item__link mobile-menu__item__link--sale mobile-menu__item__link--level-1 js-not-implemented-yet">
-                    {{ "Výprodej"|trans }}
+                    <i class="svg svg-cart"></i> {{ "Výprodej"|trans }}
                 </a>
             </li>
             <li class="mobile-menu__item mobile-menu__item--blog">
@@ -62,16 +60,18 @@
 
     {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
         {% set categoriesWithLazyLoadedVisibleChildren = categoryWithLazyLoadedVisibleChildren.children %}
-        {% set isFirstLevel = false %}
-        {% set parentCategoryId = currentCategoryId %}
-        {% set childCategoryId = categoryWithLazyLoadedVisibleChildren.category.id %}
-        {% set childCategoryName = categoryWithLazyLoadedVisibleChildren.category.name %}
-        {% include _self %}
+
+        {% include _self with {
+            isFirstLevel: false,
+            currentMenuListId: categoryWithLazyLoadedVisibleChildren.category.id,
+            parentMenuListId: currentMenuListId,
+            childCategoryName: categoryWithLazyLoadedVisibleChildren.category.name
+        } %}
     {% endfor %}
 
-{% if isCurrentFirstLevel %}
-    </div>
-    </nav>
-{% endif %}
+    {% if isFirstLevel %}
+        </div>
+        </nav>
+    {% endif %}
 
 {% endif %}

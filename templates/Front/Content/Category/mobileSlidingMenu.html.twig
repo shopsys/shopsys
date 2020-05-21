@@ -1,9 +1,9 @@
 <nav class="mobile-sliding-menu-wrap">
-    <div id="mobile-sliding-menu" class="mobile-sliding-menu">
-        <div class="mobile-sliding-menu__container js-sliding-menu__container">
-            <div id="sliding-menu__draggable">
+    <div id="js-mobile-sliding-menu" class="mobile-sliding-menu">
+        <div class="mobile-sliding-menu__container">
+            <div id="js-mobile-sliding-menu__draggable" class="mobile-sliding-menu__draggable">
                 {% for category in topCategories %}
-                    <a href="{{ url('front_product_list', { id: category.id }) }}" class="mobile-sliding-menu__link js-sliding-menu__item">
+                    <a href="{{ url('front_product_list', { id: category.id }) }}" class="mobile-sliding-menu__link">
                         {{ category.name }}
                     </a>
                 {% endfor %}

@@ -2,7 +2,7 @@ import Register from 'framework/common/utils/Register';
 
 export default class MobileMenu {
 
-    onCategoryExpandControlClick (event) {
+    static onCategoryExpandControlClick (event) {
         event.stopPropagation();
         event.preventDefault();
 
@@ -12,12 +12,12 @@ export default class MobileMenu {
         const $currentCategoryList = $categoryItem.parent('.js-mobile-menu-list').first();
 
         $currentCategoryList.animate({ left: '-100%' }, 'fast');
-        $currentCategoryList.toggleClass('show-position');
+        $currentCategoryList.removeClass('show-position');
         $childCategoryList.animate({ left: '0px' }, 'fast');
-        $childCategoryList.toggleClass('show-position');
+        $childCategoryList.addClass('show-position');
     }
 
-    onCategoryCollapseControlClick (event) {
+    static onCategoryCollapseControlClick (event) {
         event.stopPropagation();
         event.preventDefault();
 
@@ -27,17 +27,17 @@ export default class MobileMenu {
         const $currentCategoryList = $categoryItem.parent('.js-mobile-menu-list').first();
 
         $currentCategoryList.animate({ left: '100%' }, 'fast');
-        $currentCategoryList.toggleClass('show-position');
+        $currentCategoryList.removeClass('show-position');
         $parentCategoryList.animate({ left: '0px' }, 'fast');
-        $parentCategoryList.toggleClass('show-position');
+        $parentCategoryList.addClass('show-position');
     }
 
     static init ($container) {
         $container.filterAllNodes('.js-mobile-menu-expand-control')
-            .on('click', (event) => (new MobileMenu()).onCategoryExpandControlClick(event));
+            .on('click', (event) => MobileMenu.onCategoryExpandControlClick(event));
 
         $container.filterAllNodes('.js-mobile-menu-collapse-control')
-            .on('click', (event) => (new MobileMenu()).onCategoryCollapseControlClick(event));
+            .on('click', (event) => MobileMenu.onCategoryCollapseControlClick(event));
     }
 }
 

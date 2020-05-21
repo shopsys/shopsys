@@ -97,9 +97,10 @@ input[type=checkbox].css-checkbox {
     width: 100%;
     z-index: 1000;
 
-    #js-mobile-menu {
+    &__container {
         position: relative;
         width: 100%;
+        overflow: hidden;
 
         .mobile-menu {
             position: absolute;
@@ -181,12 +182,12 @@ input[type=checkbox].css-checkbox {
         width: 2000px;
         left: -1000px;
         position: relative;
+    }
 
-        #sliding-menu__draggable {
-            position: relative;
-            float: left;
-            left: 1000px;
-        }
+    &__draggable {
+        position: relative;
+        float: left;
+        left: 1000px;
     }
 
     &__link {

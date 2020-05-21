@@ -4,8 +4,8 @@ import 'jquery-ui/draggable';
 export default class MobileSlidingMenu {
     static init ($container) {
 
-        const $draggableItem = $container.filterAllNodes('#sliding-menu__draggable');
-        const baseContainerWidth = $container.filterAllNodes('.mobile-sliding-menu').innerWidth();
+        const $draggableItem = $container.filterAllNodes('#js-mobile-sliding-menu__draggable');
+        const baseContainerWidth = $container.filterAllNodes('#js-mobile-sliding-menu').innerWidth();
 
         const draggableFinalWidth = $draggableItem.outerWidth();
         const minimalLeftPosition = 1000 + baseContainerWidth - draggableFinalWidth;
