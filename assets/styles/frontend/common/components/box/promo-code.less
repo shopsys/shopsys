@@ -1,44 +1,60 @@
 .box-promo-code {
-    display: inline-block;
+    &__wrap {
+        position: relative;
+    }
 
     &__input {
-        display: inline-block;
-        vertical-align: middle;
-        white-space: nowrap;
+        height: 54px;
+        width: 100%;
+        padding: 0 120px 0 13px;
 
-        .input {
-            width: 120px;
+        border-radius: @radius;
+        background-color: #f0f3f4;
+        border: 2px solid #f0f3f4;
+        outline: 0;
+
+        &:focus {
+            border-color: darken(#f0f3f4, 5%);
         }
     }
 
     &__btn {
-        display: inline-block;
-        vertical-align: middle;
+        position: absolute;
+        top: 8px;
+        right: 10px;
     }
 
     &__added {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-
-        border: 1px solid @color-border;
-        color: @color-green;
-
         &__remove {
             margin-left: 10px;
             position: relative;
             top: -1px;
 
             text-decoration: none;
-            color: @color-a;
-
-            &:hover {
-                color: @color-red;
-            }
 
             .svg {
-                font-size: 11px;
+                font-size: 16px;
+                color: @color-f;
             }
         }
+    }
+
+    &__title {
+        display: block;
+        margin-bottom: 6px;
+
+        font-family: @font-quartenary;
+        font-size: 16px;
+        color: @color-primary;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    &__desc {
+        margin-bottom: 0;
+
+        font-size: 11px;
+        color: @color-light-tertiary;
+        -webkit-font-smoothing: antialiased;
     }
 }

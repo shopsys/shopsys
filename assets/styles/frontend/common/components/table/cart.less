@@ -1,10 +1,8 @@
-@table-cart-image-width: 60px;
-@table-cart-image-height: 60px;
+@table-cart-image-width: 90px;
+@table-cart-image-height: 90px;
 @table-cart-image-gap: 10px;
 
 .table-cart {
-    margin-bottom: @margin-gap;
-
     &__cell {
         &--action {
             a {
@@ -21,6 +19,14 @@
             }
         }
 
+        &--footer {
+            &__price-final {
+                font-size: 17px;
+                font-family: @font-quartenary;
+                color: @color-primary;
+            }
+        }
+
         &__image {
             display: inline-block;
             position: relative;
@@ -30,6 +36,75 @@
             img {
                 .center-image();
             }
+        }
+
+        &__product-name {
+            font-family: @font-tertiary;
+            font-size: 16px;
+            line-height: 24px;
+
+            &__prefix {
+                display: block;
+
+                font-size: 14px;
+                line-height: 16px;
+            }
+        }
+
+        &__avail {
+            font-family: @font-quartenary;
+            color: #73a90c;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        &__caption {
+            font-family: @font-tertiary;
+            color: #15161e;
+        }
+
+        &__remove {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+
+            border: 1px solid @color-border-light;
+            border-radius: 100%;
+            font-size: 18px;
+            color: lighten(@color-primary, 5%);
+
+            &:hover {
+                border-color: @color-border;
+                color: @color-primary;
+            }
+        }
+    }
+
+    &__row {
+        &--footer {
+            width: 365px;
+            padding: 0 45px 0 5px;
+
+            border: 1px solid @color-border;
+            border-radius: @radius;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: -10px;
+    }
+
+    &-preview {
+        &__cell__title {
+            font-family: @font-quartenary;
+            font-size: 14px;
+            color: @color-primary;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
         }
     }
 }
@@ -49,13 +124,19 @@
 
         &__row {
             display: block;
-            margin-bottom: 5px;
-            padding: 5px;
+            padding: 12px 0;
             position: relative;
+            max-width: 100%;
 
-            border: 1px solid @color-border;
+            border-bottom: 1px solid @color-border;
 
-            tfoot & {
+            &--footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                width: 100%;
+                margin-top: 10px;
+
                 border: 0;
             }
         }
@@ -63,18 +144,15 @@
         &__cell {
             display: block;
 
-            tfoot & {
-                display: none;
-            }
-
             &--image {
                 float: left;
-                width: 40px;
+                width: 90px;
+                margin-top: 15px;
             }
 
             &--name {
                 padding-left: @table-cart-image-width + @table-cart-image-gap;
-                padding-right: 20px;
+                padding-right: 40px;
             }
 
             &--price {
@@ -82,14 +160,24 @@
             }
 
             &--amount {
-                padding-left: @table-cart-image-width + @table-cart-image-gap;
-                padding-top: 10px;
+                position: absolute;
+                right: 0;
+                bottom: 15px;
             }
 
             &--action {
                 position: absolute;
-                top: 0;
+                top: 3px;
                 right: 0;
+            }
+
+            &--avail,
+            &--price-final {
+                padding-left: @table-cart-image-width + @table-cart-image-gap;
+            }
+
+            &--price-final {
+                padding-top: 6px;
             }
 
             &--total-price {
@@ -119,37 +207,69 @@
     .table-cart {
         width: 100%;
 
-        &__cell {
-            padding: 5px;
-            text-align: left;
+        &__row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-            font-size: 12px;
-            border-bottom: 1px solid @color-border;
+            border-bottom: 1px solid lighten(@color-border, 5%);
 
-            thead & {
-                font-weight: bold;
+            &--content:last-child {
+                border-bottom: 0;
             }
 
-            tfoot & {
-                border-bottom: 0;
+            &--head,
+            &--footer {
+                border: 1px solid @color-border;
+                border-radius: @radius;
+            }
+        }
+
+        &__cell {
+            padding: 20px 8px;
+            min-width: 100px;
+            text-align: left;
+
+            font-size: 13px;
+            color: @color-light-tertiary;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+
+            &--head,
+            &--footer {
+                padding: 5px 8px;
+
+                border: 0;
             }
 
             &--image {
                 width: @table-cart-image-width + @table-cart-image-gap;
+                min-width: @table-cart-image-width + @table-cart-image-gap;
             }
 
-            &--amount {
-                width: 15%;
-                text-align: right;
+            &--name {
+                flex-grow: 1;
+                padding-left: 15px;
+                padding-right: 50px;
+            }
+
+            &--avail {
+                min-width: 130px;
             }
 
             &--price {
-                width: 14%;
+                text-align: right;
+            }
+
+            &--price-final {
+                min-width: 120px;
                 text-align: right;
             }
 
             &--action {
-                width: 20px;
+                min-width: 40px;
+                max-width: 40px;
+                padding-right: 0;
                 text-align: right;
             }
 

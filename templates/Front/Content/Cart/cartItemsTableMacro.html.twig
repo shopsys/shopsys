@@ -1,18 +1,18 @@
 {% macro table(form, orderPreview, maximumOrderQuantity) %}
     <table class="table-cart js-cart">
         <thead>
-            <tr class="table-cart__row">
-                <th class="table-cart__cell table-cart__cell--image">{{ 'Image'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--name">{{ 'Name'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--name">{{ 'Dostupnost'|trans }}</th>
+            <tr class="table-cart__row table-cart__row--head">
+                <th class="table-cart__cell table-cart__cell--head table-cart__cell--image">{{ 'Váš nákup'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--head table-cart__cell--name">
+                    <span class="visibility-hidden">{{ 'Name'|trans }}</span>
+                </th>
+                <th class="table-cart__cell table-cart__cell--head table-cart__cell--avail">{{ 'Dostupnost'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--head table-cart__cell--amount">{{ 'Počet kusů'|trans }}</th>
                 {% if (orderPreview.hasAnyProductCommonPrice(getDomain().id)) %}
-                    <th class="table-cart__cell table-cart__cell--price">{{ 'Common price'|trans }}</th>
+                    <th class="table-cart__cell table-cart__cell--head table-cart__cell--price">{{ 'Common price'|trans }}</th>
                 {% endif %}
-                <th class="table-cart__cell table-cart__cell--price">{{ 'Unit price including VAT'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--price">{{ 'VAT rate'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--amount">{{ 'Amount'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--price">{{ 'Price including VAT'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--action">&nbsp;</th>
+                <th class="table-cart__cell table-cart__cell--head table-cart__cell--price-final">{{ 'Zaplatíte'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--head table-cart__cell--action">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +25,7 @@
             {% set cartItemDiscount = cartItemDiscounts[index] %}
             {% set cartItemDiscountPrice = cartItemDiscountPrices[index] %}
             {% set product = quantifiedProduct.product %}
+            {% set product = quantifiedProduct.product %}
             {% if cartItemDiscount is not null %}
                 {% set isDiscountInOrderPreview = true %}
             {% endif %}
@@ -32,7 +33,7 @@
             {% if product.id in maximumOrderQuantity|keys %}
                 {% set dataSpinboxMax = maximumOrderQuantity[product.id] %}
             {% endif %}
-            <tr class="table-cart__row js-cart-item">
+            <tr class="table-cart__row table-cart__row--content js-cart-item">
                 <td class="table-cart__cell table-cart__cell--image">
                     <a href="{{ url('front_product_detail', {id: product.id}) }}" title="{{ product.fullname }}" class="table-cart__cell__image">
                         {{ image(product, { size: 'thumbnail' }) }}
@@ -40,8 +41,11 @@
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--name js-cart-item-name">
-                    <a href="{{ url('front_product_detail', {id: product.id}) }}">
-                        {{ product.fullname }}
+                    <a class="table-cart__cell__product-name" href="{{ url('front_product_detail', {id: product.id}) }}">
+                        {% if product.namePrefix is not empty %}
+                            <span class="table-cart__cell__product-name__prefix">{{ product.namePrefix }}</span>
+                        {% endif %}
+                        {{ product.name }}
                     </a>
                     <div class="table-cart__cell__price-mobile">
                         {{ cartItemPrice.totalPrice.priceWithVat|price }}
@@ -52,49 +56,43 @@
                             </div>
                         {% endif %}
                     </div>
-                    <div class="table-cart__cell_sku">
+                    <div class="table-cart__product-sku">
                         {{ product.catnum }}
                     </div>
                 </td>
 
-                <td class="table-cart__cell table-cart__cell--name">
-                    {{ orderPreview.productsAvailability[product.id] }}
-                </td>
-
-                {% if orderPreview.hasAnyProductCommonPrice(getDomain().id) %}
-                    <td class="table-cart__cell table-cart__cell--price">
-                        {% if product.getHighPriceWithVat(getDomain().id).isGreaterThan(cartItemPrice.unitPrice.priceWithVat) %}
-                            {{ product.getHighPriceWithVat(getDomain().id)|price }}
-                        {% endif %}
-                    </td>
-                {% endif %}
-
-                <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
-                    {{ cartItemPrice.unitPrice.priceWithVat|price }}
-                </td>
-
-                <td class="table-cart__cell table-cart__cell--price">
-                    {{ product.getVatForDomain(getDomain().id).percent|formatPercent }}
+                <td class="table-cart__cell table-cart__cell--avail">
+                    <strong class="table-cart__cell__avail">{{ orderPreview.productsAvailability[product.id] }}</strong>
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--amount">
                     <span class="form-input-spinbox js-spinbox">
                         {{ form_widget(form.quantities[index], { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1, 'data-spinbox-max': dataSpinboxMax}}) }}
-                        <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">+</button>
-                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">-</button>
+                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--plus js-spinbox-plus">
+                            <i class="form-input-spinbox__btn__icon form-input-spinbox__btn__icon--plus svg svg-arrow"></i>
+                        </button>
+                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">
+                            <i class="form-input-spinbox__btn__icon svg svg-arrow"></i>
+                        </button>
                     </span>
                 </td>
 
-                <td class="table-cart__cell table-cart__cell--price js-cart-item-total-price">
+                {% if orderPreview.hasAnyProductCommonPrice(getDomain().id) %}
+                    <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
+                        {% if product.getHighPriceWithVat(getDomain().id).isGreaterThan(cartItemPrice.unitPrice.priceWithVat) %}
+                            <strong class="cart-price cart-price--secondary">{{ product.getHighPriceWithVat(getDomain().id)|price }}</strong>
+                        {% endif %}
+                    </td>
+                {% endif %}
+
+                <td class="table-cart__cell table-cart__cell--price-final js-cart-item-total-price">
 
                     {% if cartItemDiscount is not null %}
                         <span class="line-through">{{ cartItemPrice.totalPrice.priceWithVat|price }}</span>
-                        <span class="color-purple"><strong>{{ cartItemDiscountPrice.priceWithVat|price }}</strong></span>
-                        <div>
-                            <span class="color-purple"><strong>{{ orderPreview.promoCodeCode }}</strong></span>
-                        </div>
+                        <strong class="cart-price cart-price--primary cart-price--promo">{{ cartItemDiscountPrice.priceWithVat|price }}</strong>
+                        <strong class="cart-tag cart-tag--promo">{{ orderPreview.promoCodeCode }}</strong>
                     {% else %}
-                        {{ cartItemPrice.totalPrice.priceWithVat|price }}
+                        <strong class="cart-price cart-price--primary">{{ cartItemPrice.totalPrice.priceWithVat|price }}</strong>
                     {% endif %}
                 </td>
 
@@ -103,45 +101,30 @@
                             href="{{ url('front_cart_delete', { cartItemId: index, _token: csrf_token('front_cart_delete_' ~ index) }) }}"
                             class="js-cart-item-remove-button"
                     >
-                        <i class="svg svg-remove"></i>
+                        <i class="table-cart__cell__remove svg svg-remove"></i>
                     </a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
 
-        <tfoot>
-            <tr class="table-cart__row">
-                <td class="table-cart__cell table-cart__cell--image">&nbsp;</td>
-                <td class="table-cart__cell table-cart__cell--name">&nbsp;</td>
-                <td class="table-cart__cell  table-cart__cell--price" colspan="2">
-                    {% if (orderPreview.hasAnyProductCommonPrice(getDomain().id)) %}
-                        <div>{{ 'Celková běžná cena s DPH'|trans }}:
-                            <span>
-                                {{ orderPreview.totalProductHighPrice.priceWithVat|price }}
-                            </span>
-                        </div>
-                        <div>{{ 'Celková běžná cena bez DPH'|trans }}:
-                            <span>
-                                {{ orderPreview.totalProductHighPrice.priceWithoutVat|price }}
-                            </span>
-                        </div>
-                    {% endif %}
+        <tfoot class="table-cart__footer">
+            <tr class="table-cart__row table-cart__row--footer">
+                <td class="table-cart__cell table-cart__cell--footer table-cart__cell-caption">
+                    <strong class="table-cart__cell__caption">{{ 'Zaplatíte'|trans }}</strong>
                 </td>
-                <td class="table-cart__cell table-cart__cell--total-price js-cart-total-price" colspan="3">
-                    <div>
-                        {{ 'Zaplatíte'|trans }}:
-                        {% if isDiscountInOrderPreview %}
-                        <span class="line-through">
-                            {{ orderPreview.productsFullPrice.priceWithVat|price }}
+                {% if (orderPreview.hasAnyProductCommonPrice(getDomain().id)) %}
+                    <td class="table-cart__cell table-cart__cell--footer table-cart__cell--price">
+                        <span class="cart-price cart-price--secondary cart-price--previous">
+                            {{ orderPreview.totalProductHighPrice.priceWithVat|price }}
                         </span>
-                        {% endif %}
-                        <span>
-                            {{ orderPreview.productsPrice.priceWithVat|price }}
-                        </span>
-                    </div>
+                    </td>
+                {% endif %}
+                <td class="table-cart__cell table-cart__cell--footer table-cart__cell--price-final js-cart-total-price">
+                    <span class="cart-price cart-price--primary cart-price--bigger">
+                        {{ orderPreview.productsPrice.priceWithVat|price }}
+                    </span>
                 </td>
-                <td class="table-cart__cell">&nbsp;</td>
             </tr>
         </tfoot>
 
