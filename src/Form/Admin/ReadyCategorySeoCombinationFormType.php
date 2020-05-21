@@ -43,6 +43,10 @@ class ReadyCategorySeoCombinationFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
+            ->add('shortDescription', TextareaType::class, [
+                'label' => t('Krátký popis kategorie'),
+                'required' => false,
+            ])
             ->add('description', TextareaType::class, [
                 'label' => t('Popis kategorie'),
                 'required' => false,

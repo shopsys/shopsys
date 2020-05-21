@@ -39,6 +39,11 @@ class ReadyCategorySeoMixData
     /**
      * @var string|null
      */
+    public $shortDescription;
+
+    /**
+     * @var string|null
+     */
     public $description;
 
     /**
