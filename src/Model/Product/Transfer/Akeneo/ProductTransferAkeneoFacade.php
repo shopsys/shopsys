@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use Akeneo\Pim\ApiClient\Api\ProductModelApiInterface;
 use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use Akeneo\Pim\ApiClient\Search\SearchBuilder;
 use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
@@ -35,6 +36,23 @@ class ProductTransferAkeneoFacade
     private function getPublishedProductFromApi(): PublishedProductApiInterface
     {
         return $this->akeneoClient->getPublishedProductApi();
+    }
+
+    /**
+     * @return \Akeneo\Pim\ApiClient\Api\ProductModelApiInterface
+     */
+    private function getProductModelFromApi(): ProductModelApiInterface
+    {
+        return $this->akeneoClient->getProductModelApi();
+    }
+
+    /**
+     * @param string $code
+     * @return array
+     */
+    public function getProductModelByCode(string $code): array
+    {
+        return $this->getProductModelFromApi()->get($code);
     }
 
     /**

@@ -141,6 +141,17 @@ class ProductTransferAkeneoMapper
 
     /**
      * @param array $akeneoProductData
+     * @return string|null
+     */
+    public function mapAkeneoProductDataToParentSkuList(array $akeneoProductData): ?string
+    {
+        $tmp = $akeneoProductData['values']['association_article'][0]['data'] ?? null;
+
+        return $tmp !== null ? strval($tmp) : null;
+    }
+
+    /**
+     * @param array $akeneoProductData
      * @param \App\Model\Product\Product|null $product
      * @return \App\Model\Product\ProductData
      */
@@ -267,6 +278,10 @@ class ProductTransferAkeneoMapper
      */
     private function mapProductParameters(array $akeneoProductData, ProductData $productData): void
     {
+//        if ($akeneoProductData['identifier'] == '31515615156') {
+//                d($akeneoProductData);
+//        }
+
         $akeneoProductParameters = $this->getParametersFromAkeneoData($akeneoProductData);
         $productData->parameters = [];
 

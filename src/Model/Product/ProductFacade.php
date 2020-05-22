@@ -408,4 +408,13 @@ class ProductFacade extends BaseProductFacade
             $this->em->flush($toFlush);
         }
     }
+
+    /**
+     * @param string $catnum
+     * @return \App\Model\Product\Product|null
+     */
+    public function findOneByCatnumOnlyMainVariant(string $catnum): ?Product
+    {
+        return $this->productRepository->findOneByCatnumOnlyMainVariant($catnum);
+    }
 }
