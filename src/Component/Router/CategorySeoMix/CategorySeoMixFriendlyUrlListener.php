@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Router\FriendlyUrl;
+namespace App\Component\Router\CategorySeoMix;
 
-use App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
@@ -13,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ReadyCategorySeoMixFriendlyUrlListener
+class CategorySeoMixFriendlyUrlListener
 {
     /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
