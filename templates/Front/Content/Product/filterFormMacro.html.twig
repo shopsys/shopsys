@@ -49,27 +49,29 @@
             </div>
         {% endif %}
 
-        <div class="box-filter__price js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
+        <div class="box-filter__content js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
             <span class="box-filter__choice__title active js-product-filter-box-label">
                 {{ 'Price'|trans }}
                 <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
             </span>
             <div id="product_filter_box_price" class="box-filter__slider__wrap">
-                <div
-                    class="box-filter__slider__wrap__range js-range-slider"
-                    data-minimum-input-id="{{ filterForm.minimalPrice.vars.id }}"
-                    data-minimal-value="{{ priceRange.minimalPrice|moneyFormat }}"
-                    data-maximum-input-id="{{ filterForm.maximalPrice.vars.id }}"
-                    data-maximal-value="{{ priceRange.maximalPrice|moneyFormat }}"
-                ></div>
-                <div class="box-filter__price__item__wrap">
-                    <div class="box-filter__price__item">
+                <div class="ui-slider-wrap">
+                    <div
+                        class="box-filter__slider__wrap__range js-range-slider"
+                        data-minimum-input-id="{{ filterForm.minimalPrice.vars.id }}"
+                        data-minimal-value="{{ priceRange.minimalPrice|moneyFormat }}"
+                        data-maximum-input-id="{{ filterForm.maximalPrice.vars.id }}"
+                        data-maximal-value="{{ priceRange.maximalPrice|moneyFormat }}"
+                    ></div>
+                </div>
+                <div class="box-filter__content__item__wrap">
+                    <div class="box-filter__content__item">
                         {{ form_widget(filterForm.minimalPrice, {
                             symbolAfterInput: currencySymbolByDomainId(getDomain().id),
                             attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.minimalPrice|price }
                         }) }}
                     </div>
-                    <div class="box-filter__price__item box-filter__price__item--right">
+                    <div class="box-filter__content__item box-filter__content__item--right">
                         {{ form_widget(filterForm.maximalPrice, {
                             symbolAfterInput: currencySymbolByDomainId(getDomain().id),
                             attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice|price}
@@ -159,7 +161,6 @@
                         {% if parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COLOR') %}
                             {% include 'Front/Content/Product/Parameter/colorParameterForm.html.twig' with {parameterForm: parameterForm} %}
                         {% elseif parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_SLIDER') %}
-                            {{ parameterForm.vars.attr.parameterType }}
                             {% include 'Front/Content/Product/Parameter/sliderParameterForm.html.twig' with {parameterForm: parameterForm} %}
                         {% else %}
                             {% include 'Front/Content/Product/Parameter/checkboxParameterForm.html.twig' with {parameterForm: parameterForm} %}

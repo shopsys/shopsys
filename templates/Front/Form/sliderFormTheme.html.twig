@@ -1,24 +1,20 @@
 {% block slider_filter_form_row %}
-    <div>
-        {{ form.vars.min.value }}
-    </div>
-    <div>
-        {{ form.vars.max.value }}
-    </div>
     <div class="box-filter__slider__wrap">
-        <div
-            class="box-filter__slider__wrap__range js-range-slider"
-            data-minimum-input-id="{{ form.min.vars.id }}"
-            data-minimal-value="{{ form.vars.min.value }}"
-            data-maximum-input-id="{{ form.max.vars.id }}"
-            data-maximal-value="{{ form.vars.max.value }}"
-            data-decimals="0"
-        ></div>
-        <div>
-            <div>
+        <div class="ui-slider-wrap">
+            <div
+                class="box-filter__slider__wrap__range js-range-slider"
+                data-minimum-input-id="{{ form.min.vars.id }}"
+                data-minimal-value="{{ form.vars.min.value }}"
+                data-maximum-input-id="{{ form.max.vars.id }}"
+                data-maximal-value="{{ form.vars.max.value }}"
+                data-decimals="0"
+            ></div>
+        </div>
+        <div class="box-filter__content__item__wrap">
+            <div class="box-filter__content__item">
                 {{ form_widget(form.min) }}
             </div>
-            <div>
+            <div class="box-filter__content__item box-filter__content__item--right">
                 {{ form_widget(form.max) }}
             </div>
         </div>

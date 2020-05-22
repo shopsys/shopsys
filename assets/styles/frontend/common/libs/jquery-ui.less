@@ -7,12 +7,29 @@
 .ui-slider {
     display: block;
     height: @ui-slider-height;
-    max-width: calc(100% - 35px);
+    width: 100%;
     position: relative;
-    margin: auto;
+    z-index: 1;
 
     background: @ui-slider-bg;
     border-radius: @radius;
+
+    &-wrap {
+        position: relative;
+        margin-right: 20px;
+
+        &::after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: calc(100% + 20px);
+            height: @ui-slider-height;
+            content: '';
+
+            background: @ui-slider-bg;
+            border-radius: @radius;
+        }
+    }
 }
 
 .ui-slider-range {
@@ -30,17 +47,12 @@
     display: block;
     position: absolute;
     top: -@ui-slider-handle-height / 2 + 2px;
-    margin-left: -@ui-slider-handle-height;
 
     background: @color-f;
     border: 1px solid @ui-slider-handle-border-color;
     border-radius: 100%;
     outline: 0;
     cursor: pointer;
-
-    &:last-child {
-        margin-left: 0;
-    }
 
     &:hover,
     &:focus {
