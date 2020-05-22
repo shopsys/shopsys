@@ -8,6 +8,7 @@ use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
@@ -18,6 +19,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -77,6 +79,12 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $discountOptions = $builder->get('percent')->getOptions();
         $discountOptions['label'] = t('Sleva (%)');
         $builder->add('percent', IntegerType::class, $discountOptions);
+
+        $builder->add('applyOnSecondProduct', YesNoType::class, [
+            'label' => t('Platí na druhý produkt v košíku'),
+            'required' => false,
+            'position' => ['after' => 'percent'],
+        ]);
 
         $codeOptions = $builder->get('code')->getOptions();
         $codeOptions['constraints'] = [

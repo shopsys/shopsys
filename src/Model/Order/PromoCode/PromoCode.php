@@ -75,6 +75,13 @@ class PromoCode extends BasePromoCode
     private $prefix;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $applyOnSecondProduct;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
     public function __construct(PromoCodeData $promoCodeData)
@@ -87,6 +94,7 @@ class PromoCode extends BasePromoCode
         $this->identifier = $promoCodeData->identifier;
         $this->massGenerate = $promoCodeData->massGenerate;
         $this->prefix = $promoCodeData->prefix;
+        $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
     }
 
     /**
@@ -102,6 +110,7 @@ class PromoCode extends BasePromoCode
         $this->identifier = $promoCodeData->identifier;
         $this->massGenerate = $promoCodeData->massGenerate;
         $this->prefix = $promoCodeData->prefix;
+        $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
     }
 
     /**
@@ -165,5 +174,13 @@ class PromoCode extends BasePromoCode
     public function getPrefix(): ?string
     {
         return $this->prefix;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApplyOnSecondProduct(): bool
+    {
+        return $this->applyOnSecondProduct;
     }
 }

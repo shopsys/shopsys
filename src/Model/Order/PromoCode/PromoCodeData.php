@@ -77,4 +77,9 @@ class PromoCodeData extends BasePromoCodeData
      * @var int|null
      */
     public $quantity;
+
+    /**
+     * @var bool
+     */
+    public $applyOnSecondProduct = false;
 }
