@@ -117,5 +117,7 @@ class CustomerUserPasswordFacade
         $encoder = $this->encoderFactory->getEncoder($customerUser);
         $passwordHash = $encoder->encodePassword($password, null);
         $customerUser->setPasswordHash($passwordHash);
+
+        $this->em->flush($customerUser);
     }
 }
