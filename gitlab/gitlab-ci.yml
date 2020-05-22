@@ -155,6 +155,15 @@ deploy:production:
         name: production
         url: https://prod.eshop.scontodev.cz
 
+deploy:beta:
+    <<: *deploy
+    resource_group: deploy_beta
+    only:
+        - beta
+    environment:
+        name: beta
+        url: https://beta.eshop.scontodev.cz
+
 deploy:devel:
     <<: *deploy
     resource_group: deploy_devel
@@ -191,4 +200,3 @@ security:check:
         - schedules
     script:
         - docker run -i ${TAG} composer security-check
-
