@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Router\FriendlyUrl;
 
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
@@ -38,8 +39,7 @@ class ReadyCategorySeoMixFriendlyUrlListener
             $this->addReadyCategorySeoMixValuesToQuery($request);
         }
 
-        if ($request->attributes->get('_controller')
-            === 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction'
+        if ($request->attributes->get('_controller') === RedirectController::class . '::redirectAction'
             && $request->attributes->get('_route') === 'front_category_seo'
         ) {
             $this->keepFrontCategorySeoQueryParametersForRedirectAction($request);
