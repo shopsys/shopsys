@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
-use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ReadyCategorySeoMixRepository
@@ -75,42 +74,40 @@ class ReadyCategorySeoMixRepository
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $ordering
-     * @param int $domainId
+     * @param int $categoryId
+     * @param array $parameterValueIdsByParameterId
+     * @param int[] $flagIds
+     * @param string|null $ordering
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\CategorySeo\ReadyCategorySeoMix
      */
     public function getReadyCategorySeoMixFromFilter(
-        Category $category,
-        ProductFilterData $productFilterData,
-        string $ordering,
-        int $domainId
+        int $categoryId,
+        array $parameterValueIdsByParameterId,
+        array $flagIds,
+        ?string $ordering,
+        DomainConfig $domainConfig
     ): ReadyCategorySeoMix {
-        $this->checkPossibilityToFindReadyCategorySeoMix($productFilterData);
+        $this->checkPossibilityToFindReadyCategorySeoMix($parameterValueIdsByParameterId, $flagIds, $ordering);
+        $parameterValueIdsByParameterId = array_filter($parameterValueIdsByParameterId);
+        $parameterValueIdByParameterId = array_map('array_shift', $parameterValueIdsByParameterId);
 
         $readyCategorySeoMixesQueryBuilder = $this->em->createQueryBuilder()
             ->select('rcsm')
             ->from(ReadyCategorySeoMix::class, 'rcsm')
             ->join('rcsm.readyCategorySeoMixParameterParameterValues', 'rcsmppv')
-            ->andWhere('rcsm.category = :category')->setParameter('category', $category)
-            ->andWhere('rcsm.domainId = :domainId')->setParameter('domainId', $domainId)
-            ->andWhere('rcsm.ordering = :ordering OR rcsm.ordering IS NULL')->setParameter('ordering', $ordering)
+            ->andWhere('rcsm.category = :categoryId')->setParameter('categoryId', $categoryId)
+            ->andWhere('rcsm.domainId = :domainId')->setParameter('domainId', $domainConfig->getId())
             ->groupBy('rcsm.id');
 
-        $this->addFlagsToFilterFormQueryBuilder($readyCategorySeoMixesQueryBuilder, $productFilterData);
-        $this->addParametersToFilterFormQueryBuilder($readyCategorySeoMixesQueryBuilder, $productFilterData);
+        $this->addParametersToFilterFormQueryBuilder($readyCategorySeoMixesQueryBuilder, $parameterValueIdByParameterId);
+        $this->addFlagsToFilterFormQueryBuilder($readyCategorySeoMixesQueryBuilder, $flagIds);
+        $this->addOrderingModeToFilterFormQueryBuilder($readyCategorySeoMixesQueryBuilder, $ordering);
 
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix[] $readyCategorySeoMixes */
         $readyCategorySeoMixes = $readyCategorySeoMixesQueryBuilder->getQuery()->execute();
 
-        $countOfChosenParameters = 0;
-        foreach ($productFilterData->parameters as $parameterFilterData) {
-            if (count($parameterFilterData->values) === 1) {
-                $countOfChosenParameters++;
-            }
-        }
-
+        $countOfChosenParameters = count($parameterValueIdByParameterId);
         foreach ($readyCategorySeoMixes as $index => $readyCategorySeoMix) {
             if ($readyCategorySeoMix->countReadyCategorySeoMixParameterParameterValues() > $countOfChosenParameters) {
                 unset($readyCategorySeoMixes[$index]);
@@ -123,30 +120,34 @@ class ReadyCategorySeoMixRepository
             );
         }
 
-        usort(
-            $readyCategorySeoMixes,
-            function (ReadyCategorySeoMix $readyCategorySeoMix1, ReadyCategorySeoMix $readyCategorySeoMix2) use ($ordering) {
-                return $readyCategorySeoMix1->getOrdering() === $ordering ? -1 : 1;
-            }
-        );
-
         return array_shift($readyCategorySeoMixes);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @throws \App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException
+     * @param array $parameterValueIdsByParameterId
+     * @param int[] $flagIds
+     * @param string|null $ordering
      */
-    private function checkPossibilityToFindReadyCategorySeoMix(ProductFilterData $productFilterData): void
-    {
-        foreach ($productFilterData->parameters as $parameterFilterData) {
-            if (count($parameterFilterData->values) > 1) {
+    private function checkPossibilityToFindReadyCategorySeoMix(
+        array $parameterValueIdsByParameterId,
+        array $flagIds,
+        ?string $ordering
+    ): void {
+        if ($ordering === null && count($parameterValueIdsByParameterId) === 0 && count($flagIds)) {
+            throw new UnableToFindReadyCategorySeoMixException(
+                'Unable to find ReadyCategorySeoMix: it cannot have anything for conditions'
+            );
+        }
+
+        foreach ($parameterValueIdsByParameterId as $parameterValueIds) {
+            if (count($parameterValueIds) > 1) {
                 throw new UnableToFindReadyCategorySeoMixException(
                     'Unable to find ReadyCategorySeoMix: it cannot have more than one parameter value of one parameter'
                 );
             }
         }
-        if (count($productFilterData->flags) > 1) {
+
+        if (count($flagIds) > 1) {
             throw new UnableToFindReadyCategorySeoMixException(
                 'Unable to find ReadyCategorySeoMix: it cannot have more than one flag'
             );
@@ -155,16 +156,31 @@ class ReadyCategorySeoMixRepository
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $readyCategorySeoMixesQueryBuilder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string|null $ordering
+     */
+    private function addOrderingModeToFilterFormQueryBuilder(
+        QueryBuilder $readyCategorySeoMixesQueryBuilder,
+        ?string $ordering
+    ): void {
+        if ($ordering === null) {
+            $readyCategorySeoMixesQueryBuilder->andWhere('rcsm.ordering IS NULL');
+        } else {
+            $readyCategorySeoMixesQueryBuilder->andWhere('rcsm.ordering = :ordering')->setParameter('ordering', $ordering);
+        }
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $readyCategorySeoMixesQueryBuilder
+     * @param int[] $flagIds
      */
     private function addFlagsToFilterFormQueryBuilder(
         QueryBuilder $readyCategorySeoMixesQueryBuilder,
-        ProductFilterData $productFilterData
+        array $flagIds
     ): void {
-        if (count($productFilterData->flags) === 1) {
-            $flag = array_shift($productFilterData->flags);
+        if (count($flagIds) === 1) {
+            $flagId = array_shift($flagIds);
             $readyCategorySeoMixesQueryBuilder
-                ->andWhere('rcsm.flag = :flag')->setParameter('flag', $flag);
+                ->andWhere('rcsm.flag = :flagId')->setParameter('flagId', $flagId);
         } else {
             $readyCategorySeoMixesQueryBuilder->andWhere('rcsm.flag IS NULL');
         }
@@ -172,52 +188,35 @@ class ReadyCategorySeoMixRepository
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $readyCategorySeoMixesQueryBuilder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param array $parameterValueIdByParameterId
      */
     private function addParametersToFilterFormQueryBuilder(
         QueryBuilder $readyCategorySeoMixesQueryBuilder,
-        ProductFilterData $productFilterData
+        array $parameterValueIdByParameterId
     ): void {
-        $builderParameterParameters = [];
-        $builderParameterParameterValues = [];
+        foreach ($parameterValueIdByParameterId as $parameterId => $parameterValueId) {
+            $parameterId = (int)$parameterId;
+            $parameterValueId = (int)$parameterValueId;
 
-        foreach ($productFilterData->parameters as $parameterFilterData) {
-            if (count($parameterFilterData->values) < 1) {
-                continue;
-            }
+            $builderParameterName = 'parameter_' . $parameterId;
+            $builderParameterValueName = 'parameterValue_' . $parameterId;
+            $readyCategorySeoMixesQueryBuilder->setParameter($builderParameterName, $parameterId);
+            $readyCategorySeoMixesQueryBuilder->setParameter($builderParameterValueName, $parameterValueId);
 
-            $parameter = $parameterFilterData->parameter;
-            $builderParameterParameterName = 'parameter_' . $parameter->getId();
-
-            foreach ($parameterFilterData->values as $parameterValue) {
-                $builderParameterParameters[$builderParameterParameterName] = $parameter;
-
-                $builderParameterParameterValueName = 'parameterValue_' . $parameter->getId();
-                $builderParameterParameterValues[$builderParameterParameterValueName] = $parameterValue;
-
-                $alias = sprintf('rcsmppv_%s_%s', $parameter->getId(), $parameterValue->getId());
-                $readyCategorySeoMixesQueryBuilder->innerJoin(
-                    ReadyCategorySeoMixParameterParameterValue::class,
+            $alias = sprintf('rcsmppv_%s_%s', $parameterId, $parameterValueId);
+            $readyCategorySeoMixesQueryBuilder->innerJoin(
+                ReadyCategorySeoMixParameterParameterValue::class,
+                $alias,
+                Join::WITH,
+                sprintf(
+                    'rcsm = %s.readyCategorySeoMix AND %s.parameter = :%s AND %s.parameterValue = :%s',
                     $alias,
-                    Join::WITH,
-                    sprintf(
-                        'rcsm = %s.readyCategorySeoMix AND %s.parameter = :%s AND %s.parameterValue = :%s',
-                        $alias,
-                        $alias,
-                        $builderParameterParameterName,
-                        $alias,
-                        $builderParameterParameterValueName
-                    )
-                );
-            }
-        }
-
-        foreach ($builderParameterParameters as $builderParameterName => $parameter) {
-            $readyCategorySeoMixesQueryBuilder->setParameter($builderParameterName, $parameter);
-        }
-
-        foreach ($builderParameterParameterValues as $builderParameterValueName => $parameterValue) {
-            $readyCategorySeoMixesQueryBuilder->setParameter($builderParameterValueName, $parameterValue);
+                    $alias,
+                    $builderParameterName,
+                    $alias,
+                    $builderParameterValueName
+                )
+            );
         }
     }
 }

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Component\Router\FriendlyUrl;
 
+use App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator;
+use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ReadyCategorySeoMixFriendlyUrlListener
 {
@@ -17,11 +21,20 @@ class ReadyCategorySeoMixFriendlyUrlListener
     private $readyCategorySeoMixFacade;
 
     /**
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @var \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator
      */
-    public function __construct(ReadyCategorySeoMixFacade $readyCategorySeoMixFacade)
-    {
+    private $categorySeoMixUrlGenerator;
+
+    /**
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
+     */
+    public function __construct(
+        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
+    ) {
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
+        $this->categorySeoMixUrlGenerator = $categorySeoMixUrlGenerator;
     }
 
     /**
@@ -44,6 +57,8 @@ class ReadyCategorySeoMixFriendlyUrlListener
         ) {
             $this->keepFrontCategorySeoQueryParametersForRedirectAction($request);
         }
+
+        $this->checkAndRedirectProductListToCategorySeoMixUrl($event);
     }
 
     /**
@@ -88,5 +103,29 @@ class ReadyCategorySeoMixFriendlyUrlListener
         );
 
         $request->attributes->replace($attributeArray);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+     */
+    private function checkAndRedirectProductListToCategorySeoMixUrl(RequestEvent $event): void
+    {
+        $request = $event->getRequest();
+
+        if ($request->attributes->get('_route') === 'front_product_list'
+            && $request->attributes->has('readyCategorySeoMixId') === false
+            && $request->isXmlHttpRequest() === false
+        ) {
+            try {
+                $url = $this->categorySeoMixUrlGenerator->tryGenerateCategorySeoMixUrl(
+                    $request->attributes->get('id'),
+                    $request->query->all(),
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                );
+                $event->setResponse(new RedirectResponse($url, 301));
+            } catch (UnableToFindReadyCategorySeoMixException $exception) {
+                // It is okay, current url is common product_list without CategorySeoMix
+            }
+        }
     }
 }

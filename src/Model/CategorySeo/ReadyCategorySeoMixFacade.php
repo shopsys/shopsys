@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
+use App\Component\Domain\Domain;
 use App\Component\HttpFoundation\TransactionalMasterRequestListener;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainMainFriendlyUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ReadyCategorySeoMixFacade
 {
+    public const FILTER_FORM_KEY = 'product_filter_form';
+
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -34,18 +37,42 @@ class ReadyCategorySeoMixFacade
     private $friendlyUrlFacade;
 
     /**
+     * @var \App\Model\Product\Listing\ProductListOrderingModeForListFacade
+     */
+    private $productListOrderingModeForListFacade;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\RequestStack
+     */
+    private $requestStack;
+
+    /**
+     * @var \App\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         EntityManagerInterface $em,
         ReadyCategorySeoMixRepository $readyCategorySeoMixRepository,
-        FriendlyUrlFacade $friendlyUrlFacade
+        FriendlyUrlFacade $friendlyUrlFacade,
+        ProductListOrderingModeForListFacade $productListOrderingModeForListFacade,
+        RequestStack $requestStack,
+        Domain $domain
     ) {
         $this->em = $em;
         $this->readyCategorySeoMixRepository = $readyCategorySeoMixRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
+        $this->productListOrderingModeForListFacade = $productListOrderingModeForListFacade;
+        $this->requestStack = $requestStack;
+        $this->domain = $domain;
     }
 
     /**
@@ -203,23 +230,61 @@ class ReadyCategorySeoMixFacade
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $ordering
-     * @param int $domainId
+     * @param int $categoryId
+     * @param array $parameters
      * @return \App\Model\CategorySeo\ReadyCategorySeoMix
      */
-    public function getReadyCategorySeoMixFromFilter(
-        Category $category,
-        ProductFilterData $productFilterData,
-        string $ordering,
-        int $domainId
-    ): ReadyCategorySeoMix {
+    public function getCategorySeoMixByRawQueryData(int $categoryId, array $parameters): ReadyCategorySeoMix
+    {
+        $filterFormData = [];
+        if (array_key_exists(self::FILTER_FORM_KEY, $parameters) === true) {
+            $filterFormData = $parameters[self::FILTER_FORM_KEY];
+        }
+
+        return $this->getCategorySeoMixByRawFilterData($categoryId, $filterFormData);
+    }
+
+    /**
+     * @param int $categoryId
+     * @param array $filterFormData
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix
+     */
+    private function getCategorySeoMixByRawFilterData(int $categoryId, array $filterFormData): ReadyCategorySeoMix
+    {
+        $parameterValueIdsByParameterId = [];
+        if (array_key_exists('parameters', $filterFormData) === true) {
+            $parameterValueIdsByParameterId = $filterFormData['parameters'];
+        }
+
+        $flagIds = [];
+        if (array_key_exists('flags', $filterFormData) === true) {
+            $flagIds = $filterFormData['flags'];
+        }
+
         return $this->readyCategorySeoMixRepository->getReadyCategorySeoMixFromFilter(
-            $category,
-            $productFilterData,
-            $ordering,
-            $domainId
+            $categoryId,
+            $parameterValueIdsByParameterId,
+            $flagIds,
+            $this->getCurrentOrderingModeId(),
+            $this->domain->getCurrentDomainConfig()
         );
+    }
+
+    /**
+     * @return string|null
+     */
+    private function getCurrentOrderingModeId(): ?string
+    {
+        $orderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
+        $request = $this->requestStack->getMasterRequest();
+        if ($request === null) {
+            throw new \RuntimeException('Master request is mandatory for generating CategorySeoMix url');
+        }
+        $orderingModeId = $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest($request);
+        if ($orderingModeId === $orderingConfig->getDefaultOrderingModeId()) {
+            return null;
+        }
+
+        return $orderingModeId;
     }
 }

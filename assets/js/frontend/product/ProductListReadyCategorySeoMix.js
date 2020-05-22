@@ -6,7 +6,7 @@ export default class ProductListReadyCategorySeoMix {
     static init ($container) {
 
         $container.filterAllNodes('.js-ready-category-seo-mix-values').each(function () {
-            let $elementWithValues = $(this);
+            const $elementWithValues = $(this);
 
             ProductListReadyCategorySeoMix.setSeoPropertiesToProperElements(
                 $elementWithValues.attr('data-seo-h1'),

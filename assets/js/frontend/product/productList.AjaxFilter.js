@@ -1,6 +1,5 @@
 import Register from 'framework/common/utils/Register';
 import Ajax from 'framework/common/utils/Ajax';
-import getBaseUrl from '../utils/getBaseUrl';
 import pushReloadState from '../components/pushReloadState';
 
 export default class ProductListAjaxFilter {
@@ -97,7 +96,7 @@ export default class ProductListAjaxFilter {
     submitFormWithAjax (productListAjaxFilter) {
         Ajax.ajax({
             overlayDelay: 0,
-            url: getBaseUrl(),
+            url: productListAjaxFilter.$productFilterForm.attr('action'),
             data: productListAjaxFilter.$productFilterForm.serialize(),
             success: function (data) {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));

@@ -70,7 +70,7 @@ class ReadyCategorySeoMix
     /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue[]|\Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue", mappedBy="readyCategorySeoMix", cascade={"persist" ,"remove"})
+     * @ORM\OneToMany(targetEntity="App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue", mappedBy="readyCategorySeoMix", cascade={"persist" ,"remove"}, fetch="EXTRA_LAZY")
      */
     private $readyCategorySeoMixParameterParameterValues;
 
@@ -196,7 +196,7 @@ class ReadyCategorySeoMix
     /**
      * @return \App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue[]
      */
-    public function getReadyCategorySeoMixParameterParameterValues()
+    public function getReadyCategorySeoMixParameterParameterValues(): array
     {
         return $this->readyCategorySeoMixParameterParameterValues->toArray();
     }
