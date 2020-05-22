@@ -94,10 +94,13 @@ export default class ProductListAjaxFilter {
     }
 
     submitFormWithAjax (productListAjaxFilter) {
+        let data = productListAjaxFilter.$productFilterForm.serialize()
+            .replace(/(&|^)product_filter_form%5BminimalPrice%5D=(&|$)/g, '$2')
+            .replace(/(&|^)product_filter_form%5BmaximalPrice%5D=(&|$)/g, '$2');
         Ajax.ajax({
             overlayDelay: 0,
             url: productListAjaxFilter.$productFilterForm.attr('action'),
-            data: productListAjaxFilter.$productFilterForm.serialize(),
+            data: data,
             success: function (data) {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
 

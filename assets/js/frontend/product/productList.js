@@ -40,11 +40,14 @@ export default class ProductList {
     reloadWithAjax (productList) {
         const $productFilterForm = $('form[name="product_filter_form"]');
         const categoryUrl = $('.js-ready-category-seo-mix-values').data('category-url');
+        let data = $productFilterForm.serialize()
+            .replace(/(&|^)product_filter_form%5BminimalPrice%5D=(&|$)/g, '$2')
+            .replace(/(&|^)product_filter_form%5BmaximalPrice%5D=(&|$)/g, '$2');
 
         Ajax.ajax({
             overlayDelay: 0,
             url: categoryUrl,
-            data: $productFilterForm.serialize(),
+            data: data,
             success: function (data) {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
                 productList.showProducts($wrappedData);
