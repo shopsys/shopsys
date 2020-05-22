@@ -23,11 +23,7 @@ export default class ProductListReadyCategorySeoMix {
         $('.js-ready-category-seo-mix-product-list-description').html(description);
         $(document).attr('title', seoTitle);
         $('meta[name=description]').attr('content', seoMetaDescription);
-
-        // URL blinking is not so good effect for customer
-        setTimeout(function () {
-            pushReloadState(url);
-        }, 1500);
+        pushReloadState(url);
     }
 }
 

@@ -17,7 +17,6 @@ export default class ProductListAjaxFilter {
         this.$productFilterForm.on('change', () => {
             clearTimeout(_this.requestTimer);
             _this.requestTimer = setTimeout(() => _this.submitFormWithAjax(_this), _this.requestDelay);
-            pushReloadState(getBaseUrl() + '?' + _this.$productFilterForm.serialize());
         });
 
         this.$showResultsButton.on('click', () => {
