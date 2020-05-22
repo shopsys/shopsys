@@ -137,8 +137,7 @@ class Product extends BaseProduct
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
         $this->flags = new ArrayCollection();
-        $this->variantParameters = new ArrayCollection();
-        $this->editVariantParameters($productData);
+        $this->variantParameters = new ArrayCollection($productData->variantParameters);
     }
 
     /**

@@ -7,11 +7,9 @@ namespace App\Model\Product\Transfer\Akeneo;
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Component\Setting\Setting;
-use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
 use App\Model\Product\ProductFacade;
-use App\Model\Product\Series\ProductSeriesFacade;
 use App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade;
 use DateTime;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -64,16 +62,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     private $akeneoImportProductGroupParameterFacade;
 
     /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
-     * @var \App\Model\Product\Series\ProductSeriesFacade
-     */
-    private $productSeriesFacade;
-
-    /**
      * @var \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade
      */
     private $akeneoImportProductSeriesFacade;
@@ -98,8 +86,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade
-     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      * @param \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade
      * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductMainVariantFacade $akeneoImportProductMainVariantFacade
      * @param \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor $transferredProductProcessor
@@ -117,8 +103,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         Setting $setting,
         AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
         AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
-        ParameterFacade $parameterFacade,
-        ProductSeriesFacade $productSeriesFacade,
         AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade,
         AkeneoImportProductMainVariantFacade $akeneoImportProductMainVariantFacade,
         TransferredProductProcessor $transferredProductProcessor
@@ -133,8 +117,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->setting = $setting;
         $this->akeneoImportProductParameterFacade = $akeneoImportProductParameterFacade;
         $this->akeneoImportProductGroupParameterFacade = $akeneoImportProductGroupParameterFacade;
-        $this->parameterFacade = $parameterFacade;
-        $this->productSeriesFacade = $productSeriesFacade;
         $this->akeneoImportProductSeriesFacade = $akeneoImportProductSeriesFacade;
         $this->akeneoImportProductMainVariantFacade = $akeneoImportProductMainVariantFacade;
         $this->transferredProductProcessor = $transferredProductProcessor;
@@ -167,7 +149,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $mainVariantSkuList = [];
         foreach ($akeneoProductsData as $akeneoProductData) {
             if ($isAllParametersImported === true) {
-                $isAllParametersImported = $this->checkIsAllParametersExistFromAkeneoData($akeneoProductData);
+                $isAllParametersImported = $this->transferredProductProcessor->checkIsAllParametersExistFromAkeneoData($akeneoProductData);
             }
 
             $allProductSeriesCodes = array_merge(
@@ -187,7 +169,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
             $this->akeneoImportProductParameterFacade->runTransfer();
         }
 
-        if ($this->checkIsAllProductSeriesImported($allProductSeriesCodes) === false) {
+        if ($this->transferredProductProcessor->checkIsAllProductSeriesImported($allProductSeriesCodes) === false) {
             $this->logger->addInfo('Transfer missing Product Series from Akeneo');
             $this->akeneoImportProductSeriesFacade->runTransfer();
         }
@@ -241,39 +223,5 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     public function getTransferName(): string
     {
         return t('Přenos produktů');
-    }
-
-    /**
-     * @param array $akeneoProductData
-     * @return bool
-     */
-    public function checkIsAllParametersExistFromAkeneoData(array $akeneoProductData): bool
-    {
-        $akeneoProductParameters = $this->productTransferAkeneoMapper->getParametersFromAkeneoData($akeneoProductData);
-
-        foreach ($akeneoProductParameters as $akeneoParameterCode => $parameterValue) {
-            $parameter = $this->parameterFacade->findParameterByAkeneoCode($akeneoParameterCode);
-            if ($parameter === null) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param string[] $allProductSeriesCodes
-     * @return bool
-     */
-    private function checkIsAllProductSeriesImported(array $allProductSeriesCodes): bool
-    {
-        $storedAkeneoCodes = $this->productSeriesFacade->findProductSeriesCodesWithAkeneoCode();
-        $difference = array_diff($allProductSeriesCodes, $storedAkeneoCodes);
-
-        if (count($difference) > 0) {
-            return false;
-        }
-
-        return true;
     }
 }

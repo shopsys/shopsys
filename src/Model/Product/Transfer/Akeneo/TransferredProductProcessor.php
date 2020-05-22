@@ -7,8 +7,11 @@ namespace App\Model\Product\Transfer\Akeneo;
 use App\Component\Image\Image;
 use App\Component\Image\ImageFacade;
 use App\Model\Product\Package\ProductPackageFacade;
+use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
+use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
+use App\Model\Product\Series\ProductSeriesFacade;
 use App\Model\Product\Series\ProductSeriesProductFacade;
 use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -78,6 +81,16 @@ class TransferredProductProcessor
     private $fileUpload;
 
     /**
+     * @var \App\Model\Product\Parameter\ParameterFacade
+     */
+    private $parameterFacade;
+
+    /**
+     * @var \App\Model\Product\Series\ProductSeriesFacade
+     */
+    private $productSeriesFacade;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
@@ -88,6 +101,8 @@ class TransferredProductProcessor
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
      * @param \App\Model\Product\Transfer\Akeneo\AssetTransferAkeneoFacade $assetTransferAkeneoFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -99,7 +114,9 @@ class TransferredProductProcessor
         ImageFacade $imageFacade,
         ProductTransferAkeneoFacade $productTransferAkeneoFacade,
         AssetTransferAkeneoFacade $assetTransferAkeneoFacade,
-        FileUpload $fileUpload
+        FileUpload $fileUpload,
+        ParameterFacade $parameterFacade,
+        ProductSeriesFacade $productSeriesFacade
     ) {
         $this->productFacade = $productFacade;
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
@@ -111,6 +128,8 @@ class TransferredProductProcessor
         $this->productTransferAkeneoFacade = $productTransferAkeneoFacade;
         $this->assetTransferAkeneoFacade = $assetTransferAkeneoFacade;
         $this->fileUpload = $fileUpload;
+        $this->parameterFacade = $parameterFacade;
+        $this->productSeriesFacade = $productSeriesFacade;
     }
 
     /**
@@ -120,14 +139,13 @@ class TransferredProductProcessor
      */
     public function processProduct(array $akeneoProductData, TransferLoggerInterface $logger, bool $isMainVariant = false)
     {
-        $this->productTransferAkeneoValidator->validate($akeneoProductData);
+        $this->productTransferAkeneoValidator->validate($akeneoProductData, $isMainVariant);
 
         $product = $this->findProductByIdentifier((string)$akeneoProductData['identifier'], $isMainVariant);
         $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product);
 
         if ($product === null) {
-            $logger->addInfo(sprintf('Creating product catnum: %s', $productData->catnum));
-            $product = $this->productFacade->create($productData);
+            $product = $this->createProduct($productData, $isMainVariant, $logger);
         } else {
             $logger->addInfo(sprintf('Updating product catnum: %s', $product->getCatnum()));
             $product = $this->productFacade->edit($product->getId(), $productData);
@@ -137,6 +155,30 @@ class TransferredProductProcessor
         $this->setRelationProductSeriesWithProduct($product, $akeneoProductData);
         $this->setProductImages($product, $akeneoProductData);
         $this->setProductPackageDetailInformationFormProduct($product, $akeneoProductData);
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param bool $isMainVariant
+     * @param \App\Model\Transfer\TransferLoggerInterface $logger
+     * @return \App\Model\Product\Product
+     */
+    private function createProduct(ProductData $productData, bool $isMainVariant, TransferLoggerInterface $logger): Product
+    {
+        $product = $this->productFacade->create($productData);
+        if ($isMainVariant) {
+            $productMainVariant = Product::createMainVariant($productData, [$product]);
+            $this->em->persist($productMainVariant);
+            $this->em->flush();
+            $this->productFacade->setAdditionalDataAfterCreate($productMainVariant, $productData);
+            $this->em->remove($product);
+            $logger->addInfo(sprintf('Creating product main variant catnum: %s', $productData->catnum));
+            return $productMainVariant;
+        } else {
+            $logger->addInfo(sprintf('Creating product catnum: %s', $productData->catnum));
+        }
+
+        return $product;
     }
 
     /**
@@ -301,5 +343,39 @@ class TransferredProductProcessor
         foreach ($imageCodes as $imageCode) {
             yield $this->assetTransferAkeneoFacade->getImageData(self::ASSET_FAMILY, $imageCode);
         }
+    }
+
+    /**
+     * @param array $akeneoProductData
+     * @return bool
+     */
+    public function checkIsAllParametersExistFromAkeneoData(array $akeneoProductData): bool
+    {
+        $akeneoProductParameters = $this->productTransferAkeneoMapper->getParametersFromAkeneoData($akeneoProductData);
+
+        foreach ($akeneoProductParameters as $akeneoParameterCode => $parameterValue) {
+            $parameter = $this->parameterFacade->findParameterByAkeneoCode($akeneoParameterCode);
+            if ($parameter === null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string[] $allProductSeriesCodes
+     * @return bool
+     */
+    public function checkIsAllProductSeriesImported(array $allProductSeriesCodes): bool
+    {
+        $storedAkeneoCodes = $this->productSeriesFacade->findProductSeriesCodesWithAkeneoCode();
+        $difference = array_diff($allProductSeriesCodes, $storedAkeneoCodes);
+
+        if (count($difference) > 0) {
+            return false;
+        }
+
+        return true;
     }
 }
