@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSear
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Twig\RequestExtension;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -343,7 +344,16 @@ class ProductController extends FrontBaseController
 
             return $this->render('Front/Content/Product/ajaxList.html.twig', $viewParameters);
         } else {
-            return $this->render('Front/Content/Product/list.html.twig', $viewParameters);
+            $response = $this->render('Front/Content/Product/list.html.twig', $viewParameters);
+
+            // Direct access on SeoMixUrl with ordering lost ordering after change in filter - This prevent it
+            if ($readyCategorySeoMix !== null && $readyCategorySeoMix->getOrdering() !== null) {
+                $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
+                $cookie = Cookie::create($productListOrderingConfig->getCookieName(), $readyCategorySeoMix->getOrdering());
+                $response->headers->setCookie($cookie);
+            }
+
+            return $response;
         }
     }
 
