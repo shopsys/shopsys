@@ -95,7 +95,6 @@ class ReadyCategorySeoMixRepository
         $readyCategorySeoMixesQueryBuilder = $this->em->createQueryBuilder()
             ->select('rcsm')
             ->from(ReadyCategorySeoMix::class, 'rcsm')
-            ->join('rcsm.readyCategorySeoMixParameterParameterValues', 'rcsmppv')
             ->andWhere('rcsm.category = :categoryId')->setParameter('categoryId', $categoryId)
             ->andWhere('rcsm.domainId = :domainId')->setParameter('domainId', $domainConfig->getId())
             ->groupBy('rcsm.id');
