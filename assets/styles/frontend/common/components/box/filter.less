@@ -10,6 +10,8 @@
 @box-filter-arrow-size: 12px;
 @box-filter-title-font-size: 16px;
 @box-filter-price-currency-color: @color-0;
+@box-filter-input-font-size: 14px;
+@box-filter-input-color: @color-primary-light;
 
 .box-filter {
     display: none;
@@ -159,7 +161,9 @@
                 width: @box-filter-input-width;
                 text-align: right;
 
-                font-size: 14px;
+                font-size: @box-filter-input-font-size;
+                font-weight: 400;
+                color: @box-filter-input-color;
                 border-radius: @radius;
                 background-color: @box-filter-input-bg-color;
                 border-color: @box-filter-input-border-color;
@@ -167,33 +171,37 @@
                 &::-webkit-input-placeholder { /* Firefox 18- */
                     opacity: 1;
 
-                    color: @color-0;
+                    font-size: @box-filter-input-font-size;
+                    color: @box-filter-input-color;
                     font-style: normal;
-                    font-weight: 500;
+                    font-weight: 400;
                 }
 
                 &::-moz-placeholder { /* Firefox 18- */
                     opacity: 1;
 
-                    color: @color-0;
+                    font-size: @box-filter-input-font-size;
+                    color: @box-filter-input-color;
                     font-style: normal;
-                    font-weight: 500;
+                    font-weight: 400;
                 }
 
                 &:-ms-input-placeholder { /* Firefox 18- */
                     opacity: 1;
 
-                    color: @color-0;
+                    font-size: @box-filter-input-font-size;
+                    color: @box-filter-input-color;
                     font-style: normal;
-                    font-weight: 500;
+                    font-weight: 400;
                 }
 
                 &:-moz-placeholder { /* Firefox 18- */
                     opacity: 1;
 
-                    color: @color-0;
+                    font-size: @box-filter-input-font-size;
+                    color: @box-filter-input-color;
                     font-style: normal;
-                    font-weight: 500;
+                    font-weight: 400;
                 }
             }
 
