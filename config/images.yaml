@@ -76,12 +76,13 @@
     multiple: true
     sizes:
         -   name: preview
-            width: 410
+            width: 445
             height: ~
             crop: false
             occurrence: 'Front-end: Main image in product series detail and list'
             additionalSizes:
                 - {width: 710, height: ~, media: "(min-width: 480px) and (max-width: 768px)"}
+                - {width: 890, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 2)"}
         -   name: galleryThumbnail
             width: 120
             height: 80
