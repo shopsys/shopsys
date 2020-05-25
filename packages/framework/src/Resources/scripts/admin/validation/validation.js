@@ -3,12 +3,6 @@
     Shopsys = window.Shopsys || {};
     Shopsys.validation = Shopsys.validation || {};
 
-    $(document).ready(function () {
-        $('.js-no-validate-button').click(function () {
-            $(this).closest('form').addClass('js-no-validate');
-        });
-    });
-
     Shopsys.validation.forceValidateElement = function ($element) {
         $element.jsFormValidator('validate');
 

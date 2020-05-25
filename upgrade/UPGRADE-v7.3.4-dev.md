@@ -15,3 +15,6 @@ There you can find links to upgrade notes for other versions too.
     -   "fp/jsformvalidator-bundle": "^1.5.1",
     +   "fp/jsformvalidator-bundle": "~1.5.1",
     ```
+
+- add protection before double submit forms ([#1864](https://github.com/shopsys/shopsys/pull/1864))
+     - remove `src/Shopsys/ShopBundle/Resources/scripts/frontend/form.js` from you project

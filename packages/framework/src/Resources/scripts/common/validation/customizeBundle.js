@@ -2,6 +2,7 @@
 
     Shopsys = window.Shopsys || {};
     Shopsys.validation = Shopsys.validation || {};
+    Shopsys.doubleFormSubmitProtection = Shopsys.doubleFormSubmitProtection || {};
 
     Shopsys.validation.addNewItemToCollection = function (collectionSelector, itemIndex) {
         $($(collectionSelector)).jsFormValidator('addPrototype', itemIndex);
@@ -139,6 +140,17 @@
         return prototype;
     };
 
+    FpJsFormValidator.ajax._checkQueue = FpJsFormValidator.ajax.checkQueue;
+    FpJsFormValidator.ajax.checkQueue = function () {
+        if (FpJsFormValidator.ajax.queue === 0) {
+            for (var i in this.callbacks) {
+                if (typeof this.callbacks[i] === 'function') {
+                    this.callbacks[i]();
+                }
+            }
+        }
+    };
+
     Shopsys.validation.removeDelayedValidationWithParents = function (jsFormValidator) {
         do {
             delete delayedValidators[jsFormValidator.id];
@@ -156,39 +168,48 @@
     //   there can be loaded callbacks from last form submit which can cause duplicated form error windows
     // (the rest is copy&pasted from original method; eg. ajax validation)
     FpJsFormValidator.customizeMethods.submitForm = function (event) {
+        if ($(':focus').hasClass('js-no-validate-button')) {
+            return;
+        }
+
         $('.js-window-validation-errors').addClass('display-none');
         var $form = $(this);
-        if (!$form.hasClass('js-no-validate')) {
-            FpJsFormValidator.each(this, function (item) {
-                var element = item.jsFormValidator;
-                element.validateRecursively();
-                element.onValidate.apply(element.domNode, [FpJsFormValidator.getAllErrors(element, {}), event]);
-            });
 
-            if (!FpJsFormValidator.ajax.queue) {
-                if (!Shopsys.validation.isFormValid(this)) {
-                    event.preventDefault();
-                    Shopsys.validation.showFormErrorsWindow(this);
-                } else if (Shopsys.validation.isFormValid($form) === true && $form.data('on-submit') !== undefined) {
-                    $(this).trigger($(this).data('on-submit'));
-                    event.preventDefault();
-                }
-            } else {
+        if ($form.hasClass('js-no-validate')) {
+            return;
+        }
+
+        Shopsys.doubleFormSubmitProtection(event);
+
+        FpJsFormValidator.each(this, function (item) {
+            var element = item.jsFormValidator;
+            element.validateRecursively();
+            element.onValidate.apply(element.domNode, [FpJsFormValidator.getAllErrors(element, {}), event]);
+        });
+
+        if (!FpJsFormValidator.ajax.queue) {
+            if (!Shopsys.validation.isFormValid(this)) {
                 event.preventDefault();
-
-                FpJsFormValidator.ajax.callbacks.push(function () {
-                    FpJsFormValidator.ajax.callbacks = [];
-
-                    if (!Shopsys.validation.isFormValid($form)) {
-                        Shopsys.validation.showFormErrorsWindow($form[0]);
-                    } else if ($form.data('on-submit') !== undefined) {
-                        $form.trigger($form.data('on-submit'));
-                    } else {
-                        $form.addClass('js-no-validate');
-                        $form.unbind('submit').submit();
-                    }
-                });
+                Shopsys.validation.showFormErrorsWindow(this);
+            } else if (Shopsys.validation.isFormValid($form) === true && $form.data('on-submit') !== undefined) {
+                $(this).trigger($(this).data('on-submit'));
+                event.preventDefault();
             }
+        } else {
+            event.preventDefault();
+
+            FpJsFormValidator.ajax.callbacks.push(function () {
+                FpJsFormValidator.ajax.callbacks = [];
+
+                if (!Shopsys.validation.isFormValid($form)) {
+                    Shopsys.validation.showFormErrorsWindow($form[0]);
+                } else if ($form.data('on-submit') !== undefined) {
+                    $form.trigger($form.data('on-submit'));
+                } else {
+                    $form.addClass('js-no-validate');
+                    $form.unbind('submit').submit();
+                }
+            });
         }
     };
 
