@@ -155,6 +155,7 @@ class TransferredProductProcessor
         $this->setRelationProductSeriesWithProduct($product, $akeneoProductData);
         $this->setProductImages($product, $akeneoProductData);
         $this->setProductPackageDetailInformationFormProduct($product, $akeneoProductData);
+        $this->setProductAsVariant($product, $akeneoProductData, $isMainVariant);
     }
 
     /**
@@ -182,7 +183,7 @@ class TransferredProductProcessor
     }
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      * @param bool $isMainVariant
      * @return \App\Model\Product\Product|null
      */
@@ -193,6 +194,35 @@ class TransferredProductProcessor
         } else {
             return $this->productFacade->findOneByCatnumExcludeMainVariants($identifier);
         }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoProductData
+     * @param bool $isMainVariant
+     */
+    private function setProductAsVariant(Product $product, array $akeneoProductData, bool $isMainVariant): void
+    {
+        if ($isMainVariant) {
+            return;
+        }
+
+        if ($product->isVariant() || $product->isMainVariant()) {
+            return;
+        }
+
+        $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentSkuList($akeneoProductData);
+        if ($mainVariantSku === null) {
+            return;
+        }
+
+        $mainVariantProduct = $this->findProductByIdentifier($mainVariantSku, true);
+        if ($mainVariantProduct === null) {
+            return;
+        }
+
+        $mainVariantProduct->addVariant($product);
+        $this->em->flush();
     }
 
     /**

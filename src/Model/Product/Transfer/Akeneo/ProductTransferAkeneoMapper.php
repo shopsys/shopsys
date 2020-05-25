@@ -184,7 +184,7 @@ class ProductTransferAkeneoMapper
         $productData->lowPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->lowPriceWithVat, $akeneoProductData['values']['low_price_vat'] ?? null);
         $productData->highPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->highPriceWithVat, $akeneoProductData['values']['high_price_vat'] ?? null);
 
-        if (($akeneoProductData['values']['high_price_vat'] ?? null) === null) {// && array_key_exists('code', $akeneoProductData)
+        if (($akeneoProductData['values']['high_price_vat'] ?? null) === null) {
             foreach ($productData->productType as $domainId => $productType) {
                 $productData->lowPriceWithVat[$domainId] = Money::zero();
                 $productData->highPriceWithVat[$domainId] = Money::zero();

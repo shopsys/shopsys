@@ -89,9 +89,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade
      * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductMainVariantFacade $akeneoImportProductMainVariantFacade
      * @param \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor $transferredProductProcessor
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
-     * @param \App\Model\Product\Transfer\Akeneo\AssetTransferAkeneoFacade $assetTransferAkeneoFacade
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,

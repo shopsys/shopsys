@@ -128,7 +128,6 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
      */
     protected function processItem($akeneoProductData): void
     {
-        //d($akeneoProductData);
         $akeneoProductData['identifier'] = $akeneoProductData['code'] ?? null;
         $this->transferredProductProcessor->processProduct($akeneoProductData, $this->logger, true);
     }
