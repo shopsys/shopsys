@@ -31,7 +31,7 @@ class Version20200522064838 extends AbstractMigration
             ALTER TABLE
                 product_variant_parameters
             ADD
-                CONSTRAINT FK_6C431177C56DBD6 FOREIGN KEY (parameter_id) REFERENCES parameters (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_6C431177C56DBD6 FOREIGN KEY (parameter_id) REFERENCES parameters (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     /**

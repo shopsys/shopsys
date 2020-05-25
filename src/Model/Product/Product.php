@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
+use App\Model\Product\Exception\ProductCannotBeTransformedException;
 use App\Model\Product\Type\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -75,7 +76,7 @@ class Product extends BaseProduct
      * @ORM\ManyToMany(targetEntity="App\Model\Product\Parameter\Parameter")
      * @ORM\JoinTable(name="product_variant_parameters",
      *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="parameter_id", referencedColumnName="id")})
+     *      inverseJoinColumns={@ORM\JoinColumn(name="parameter_id", referencedColumnName="id", onDelete="CASCADE")})
      */
     protected $variantParameters;
 
@@ -700,5 +701,14 @@ class Product extends BaseProduct
             }
         }
         return false;
+    }
+
+    public function setAsMainVariant(): void
+    {
+        if ($this->isMainVariant() || $this->isVariant()) {
+            throw new ProductCannotBeTransformedException($this);
+        }
+
+        $this->variantType = self::VARIANT_TYPE_MAIN;
     }
 }

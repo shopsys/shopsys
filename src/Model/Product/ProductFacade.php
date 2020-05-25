@@ -413,8 +413,21 @@ class ProductFacade extends BaseProductFacade
      * @param string $catnum
      * @return \App\Model\Product\Product|null
      */
-    public function findOneByCatnumOnlyMainVariant(string $catnum): ?Product
+    public function findMainVariantByCatnum(string $catnum): ?Product
     {
-        return $this->productRepository->findOneByCatnumOnlyMainVariant($catnum);
+        return $this->productRepository->findMainVariantByCatnum($catnum);
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @return \App\Model\Product\Product
+     */
+    public function createProductAsMainVariant(ProductData $productData): Product
+    {
+        $product = $this->create($productData);
+        $product->setAsMainVariant();
+        $this->em->flush();
+
+        return $product;
     }
 }

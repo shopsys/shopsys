@@ -161,7 +161,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         }
 
         if ($isAllParametersImported === false) {
-            $this->logger->addInfo('Transfer lost parameters from Akeneo');
+            $this->logger->addInfo('Transfer missing parameters from Akeneo');
             $this->akeneoImportProductGroupParameterFacade->runTransfer();
             $this->akeneoImportProductParameterFacade->runTransfer();
         }
@@ -189,7 +189,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 
     protected function doAfterTransfer(): void
     {
-        //$this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
+        $this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
         $this->logger->addInfo('Transfer is done.');
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
     }

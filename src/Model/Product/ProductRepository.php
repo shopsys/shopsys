@@ -157,7 +157,7 @@ class ProductRepository extends BaseProductRepository
      * @param string $catnum
      * @return \App\Model\Product\Product|null
      */
-    public function findOneByCatnumOnlyMainVariant(string $catnum): ?Product
+    public function findMainVariantByCatnum(string $catnum): ?Product
     {
         $queryBuilder = $this->getProductRepository()
             ->createQueryBuilder('p')

@@ -157,13 +157,12 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\Product\Product $product
-     * @return \Symfony\Component\Form\FormBuilderInterface
+     * @param \App\Model\Product\Product|null $product
      */
-    private function setVariantGroup(FormBuilderInterface $builder, Product $product): FormBuilderInterface
+    private function setVariantGroup(FormBuilderInterface $builder, ?Product $product)
     {
-        $variantGroup = $builder->get('variantGroup');
         if ($this->isProductMainVariant($product)) {
+            $variantGroup = $builder->get('variantGroup');
             $variantGroup->add('variantParameters', CollectionType::class, [
                 'required' => false,
                 'disabled' => true,
@@ -194,8 +193,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 }
             ));
         }
-
-        return $variantGroup;
     }
 
     /**

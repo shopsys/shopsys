@@ -132,7 +132,7 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
         }
 
         if ($isAllParametersImported === false) {
-            $this->logger->addInfo('Transfer lost parameters from Akeneo');
+            $this->logger->addInfo('Transfer missing parameters from Akeneo');
             $this->akeneoImportProductGroupParameterFacade->runTransfer();
             $this->akeneoImportProductParameterFacade->runTransfer();
         }
@@ -149,7 +149,11 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
     protected function getData(): \Generator
     {
         foreach ($this->mainVariantSkuList as $code) {
-            yield $this->productTransferAkeneoFacade->getProductModelByCode($code);
+            try {
+                yield $this->productTransferAkeneoFacade->getProductModelByCode($code);
+            } catch (\RuntimeException $exception) {
+                $this->logger->addError($exception->getMessage());
+            }
         }
     }
 

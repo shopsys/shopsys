@@ -169,17 +169,12 @@ class TransferredProductProcessor
      */
     private function createProduct(ProductData $productData, bool $isMainVariant, TransferLoggerInterface $logger): Product
     {
-        $product = $this->productFacade->create($productData);
         if ($isMainVariant) {
-            $productMainVariant = Product::createMainVariant($productData, [$product]);
-            $this->em->persist($productMainVariant);
-            $this->em->flush();
-            $this->productFacade->setAdditionalDataAfterCreate($productMainVariant, $productData);
-            $this->em->remove($product);
             $logger->addInfo(sprintf('Creating product main variant catnum: %s', $productData->catnum));
-            return $productMainVariant;
+            $product = $this->productFacade->createProductAsMainVariant($productData);
         } else {
             $logger->addInfo(sprintf('Creating product catnum: %s', $productData->catnum));
+            $product = $this->productFacade->create($productData);
         }
 
         return $product;
@@ -193,7 +188,7 @@ class TransferredProductProcessor
     private function findProductByIdentifier(string $identifier, bool $isMainVariant): ?Product
     {
         if ($isMainVariant) {
-            return $this->productFacade->findOneByCatnumOnlyMainVariant($identifier);
+            return $this->productFacade->findMainVariantByCatnum($identifier);
         } else {
             return $this->productFacade->findOneByCatnumExcludeMainVariants($identifier);
         }
