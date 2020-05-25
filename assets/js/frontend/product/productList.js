@@ -1,11 +1,17 @@
 import 'jquery.cookie';
 import 'framework/common/components';
+import Ajax from 'framework/common/utils/Ajax';
 import AjaxMoreLoader from '../components/AjaxMoreLoader';
 import Register from 'framework/common/utils/Register';
 import Translator from 'bazinga-translator';
+import getBaseUrl from '../utils/getBaseUrl';
+import pushReloadState from '../components/pushReloadState';
 
 export default class ProductList {
-    static init ($container) {
+    constructor ($container) {
+        const _this = this;
+        this.$productsWithControls = $container.filterAllNodes('.js-product-list-ajax-filter-products-with-controls');
+
         $container.filterAllNodes('.js-product-list-ordering-mode').click(function () {
             const cookieName = $(this).data('cookie-name');
             const forceCookieName = 'force-' + cookieName;
@@ -22,7 +28,14 @@ export default class ProductList {
                 $.cookie(cookieName, orderingName, { path: '/' });
             }
 
-            location.reload(true);
+            let url = new URL(location.href);
+            let params = new URLSearchParams(url.search.slice(1));
+
+            params.delete('page');
+            url = getBaseUrl() + '?' + params.toString();
+            pushReloadState(url);
+
+            _this.reloadWithAjax(_this);
 
             return false;
         });
@@ -39,6 +52,30 @@ export default class ProductList {
                 }
             });
         });
+    }
+
+    reloadWithAjax (productList) {
+        Ajax.ajax({
+            overlayDelay: 0,
+            url: location.href,
+            success: function (data) {
+                const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
+                productList.showProducts($wrappedData);
+            }
+        });
+    }
+
+    showProducts ($wrappedData) {
+        const $productsHtml = $wrappedData.find('.js-product-list-ajax-filter-products-with-controls');
+        this.$productsWithControls.html($productsHtml.html());
+        this.$productsWithControls.show();
+
+        (new Register()).registerNewContent(this.$productsWithControls);
+    }
+
+    static init ($container) {
+        // eslint-disable-next-line no-new
+        new ProductList($container);
     }
 }
 

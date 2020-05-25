@@ -1,1 +1,11 @@
-{% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: false } %}
+<div class="js-product-list-ajax-filter-products-with-controls">
+    <div class="box-list__top js-product-sort">
+        <div class="box-list__top__wrap">
+            {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListByBrandAction')) }}
+            <div class="box-list__top__info">
+                {% include 'Front/Content/Product/productSortCount.html.twig' with {paginationResult: paginationResult} %}
+            </div>
+        </div>
+    </div>
+    {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: false } %}
+</div>
