@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -141,6 +142,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'position' => ['after' => 'name'],
         ]);
 
+        $this->setVariantGroup($builder, $product);
         $this->setBasicInformationGroup($builder);
         $this->setSeoGroup($builder);
         $this->setShortDescriptionsUspGroup($builder, $options);
@@ -151,6 +153,49 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setPackagesGroup($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Product\Product $product
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function setVariantGroup(FormBuilderInterface $builder, Product $product): FormBuilderInterface
+    {
+        $variantGroup = $builder->get('variantGroup');
+        if ($this->isProductMainVariant($product)) {
+            $variantGroup->add('variantParameters', CollectionType::class, [
+                'required' => false,
+                'disabled' => true,
+                'label' => t('Parametry variant'),
+                'label_attr' => ['style' => 'display: none;'],
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'disabled' => true,
+                ],
+            ]);
+
+            $variantGroup->get('variantParameters')->addModelTransformer(new CallbackTransformer(
+                /**
+                 * @param \App\Model\Product\Parameter\Parameter[] $variantParameters
+                 * @return string[]
+                 */
+                function (array $variantParameters) {
+                    $counter = 1;
+                    $parameterNames = [];
+                    foreach ($variantParameters as $variantParameter) {
+                        $key = t('Parametr_%counter%', ['%counter%' => $counter++]);
+                        $parameterNames[$key] = $variantParameter->getName();
+                    }
+                    return $parameterNames;
+                },
+                function ($parameterNames) {
+                    return $parameterNames;
+                }
+            ));
+        }
+
+        return $variantGroup;
     }
 
     /**
