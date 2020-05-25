@@ -10,8 +10,8 @@ use Nette\Utils\Strings;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\ChangelogFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\MonorepoBuilder\Release\Message;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysReleaseWorker

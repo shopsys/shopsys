@@ -7,9 +7,9 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 use Nette\Utils\Strings;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symfony\Component\Finder\Finder;
-use Symplify\MonorepoBuilder\Release\Message;
 
 final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
 {

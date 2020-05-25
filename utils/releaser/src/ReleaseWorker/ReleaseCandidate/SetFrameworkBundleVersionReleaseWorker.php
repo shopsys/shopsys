@@ -8,8 +8,8 @@ use Nette\Utils\FileSystem;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\MonorepoBuilder\Release\Message;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleaseWorker
