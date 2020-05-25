@@ -136,8 +136,9 @@ class TransferredProductProcessor
      * @param array $akeneoProductData
      * @param \App\Model\Transfer\TransferLoggerInterface $logger
      * @param bool $isMainVariant
+     * @return \App\Model\Product\Product
      */
-    public function processProduct(array $akeneoProductData, TransferLoggerInterface $logger, bool $isMainVariant = false)
+    public function processProduct(array $akeneoProductData, TransferLoggerInterface $logger, bool $isMainVariant = false): Product
     {
         $this->productTransferAkeneoValidator->validate($akeneoProductData, $isMainVariant);
 
@@ -156,6 +157,8 @@ class TransferredProductProcessor
         $this->setProductImages($product, $akeneoProductData);
         $this->setProductPackageDetailInformationFormProduct($product, $akeneoProductData);
         $this->setProductAsVariant($product, $akeneoProductData, $isMainVariant);
+
+        return $product;
     }
 
     /**

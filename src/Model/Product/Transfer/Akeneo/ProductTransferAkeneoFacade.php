@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use Akeneo\Pim\ApiClient\Api\FamilyVariantApiInterface;
 use Akeneo\Pim\ApiClient\Api\ProductModelApiInterface;
 use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use Akeneo\Pim\ApiClient\Search\SearchBuilder;
@@ -41,9 +42,17 @@ class ProductTransferAkeneoFacade
     /**
      * @return \Akeneo\Pim\ApiClient\Api\ProductModelApiInterface
      */
-    private function getProductModelFromApi(): ProductModelApiInterface
+    private function getProductModelApi(): ProductModelApiInterface
     {
         return $this->akeneoClient->getProductModelApi();
+    }
+
+    /**
+     * @return \Akeneo\Pim\ApiClient\Api\FamilyVariantApiInterface
+     */
+    private function getFamilyVariantApi(): FamilyVariantApiInterface
+    {
+        return $this->akeneoClient->getFamilyVariantApi();
     }
 
     /**
@@ -52,7 +61,17 @@ class ProductTransferAkeneoFacade
      */
     public function getProductModelByCode(string $code): array
     {
-        return $this->getProductModelFromApi()->get($code);
+        return $this->getProductModelApi()->get($code);
+    }
+
+    /**
+     * @param string $familyCode
+     * @param string $familyVariantCode
+     * @return array
+     */
+    public function getFamilyVariant(string $familyCode, string $familyVariantCode): array
+    {
+        return $this->getFamilyVariantApi()->get($familyCode, $familyVariantCode);
     }
 
     /**

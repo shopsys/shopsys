@@ -54,6 +54,15 @@ class ProductTransferAkeneoValidator
                 new Assert\NotBlank(),
                 new Assert\Type(['type' => 'bool']),
             ];
+        } else {
+            $fieldsValidationSetup['family'] = [
+                new Assert\NotBlank(),
+                new Assert\Type(['type' => 'string']),
+            ];
+            $fieldsValidationSetup['family_variant'] = [
+                new Assert\NotBlank(),
+                new Assert\Type(['type' => 'string']),
+            ];
         }
 
         $violations = $this->validator->validate($akeneoProductData, new Assert\Collection([

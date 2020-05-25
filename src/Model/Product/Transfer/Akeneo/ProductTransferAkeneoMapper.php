@@ -286,10 +286,6 @@ class ProductTransferAkeneoMapper
      */
     private function mapProductParameters(array $akeneoProductData, ProductData $productData): void
     {
-//        if ($akeneoProductData['identifier'] == '31515615156') {
-//                d($akeneoProductData);
-//        }
-
         $akeneoProductParameters = $this->getParametersFromAkeneoData($akeneoProductData);
         $productData->parameters = [];
 
