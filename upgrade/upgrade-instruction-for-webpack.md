@@ -51,7 +51,7 @@ webpack_encore:
 +        "tests:unit": "jest"
 +    },
 +    "dependencies": {
-+        "@shopsys/framework": "9.0.0-dev.1",
++        "@shopsys/framework": "9.0.0",
 +        "codemirror": "^5.49.2",
 +        "glob": "^7.1.6",
 +        "jquery-ui": "^1.12.1",

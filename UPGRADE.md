@@ -40,11 +40,13 @@ Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monore
 * even we care a lot about these instructions, it is possible we miss something. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
 ## Upgrade guides
-* ### [From v8.1.0-dev to v9.0.0-dev](/upgrade/UPGRADE-v9.0.0-dev.md)
-* ### [From v8.0.1-dev to v8.1.0-dev](/upgrade/UPGRADE-v8.1.0-dev.md)
-* ### [From v8.0.0 to v8.0.1-dev](upgrade/UPGRADE-v8.0.1-dev.md)
-* ### [From v7.3.2 to v8.0.0](upgrade/UPGRADE-v8.0.0.md)
-* ### [From v7.3.2 to v7.3.3-dev](upgrade/UPGRADE-v7.3.3-dev.md)
+* ### [From v9.0.0 to v9.1.0-dev](/upgrade/UPGRADE-v9.1.0-dev.md)
+* ### [From v8.1.1 to v9.0.0](/upgrade/UPGRADE-v9.0.0.md)
+* ### [From v8.1.0 to v8.1.1](/upgrade/UPGRADE-v8.1.1.md)
+* ### [From v8.0.0 to v8.1.0](/upgrade/UPGRADE-v8.1.0.md)
+* ### [From v7.3.3 to v8.0.0](upgrade/UPGRADE-v8.0.0.md)
+* ### [From v7.3.3 to v7.3.4-dev](upgrade/UPGRADE-v7.3.4-dev.md)
+* ### [From v7.3.2 to v7.3.3](upgrade/UPGRADE-v7.3.3.md)
 * ### [From v7.3.1 to v7.3.2](upgrade/UPGRADE-v7.3.2.md)
 * ### [From v7.3.0 to v7.3.1](upgrade/UPGRADE-v7.3.1.md)
 * ### [From v7.2.2 to v7.3.0](upgrade/UPGRADE-v7.3.0.md)

@@ -23,10 +23,9 @@ Once created, a git tag marking a release will never be removed or edited.
     Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, eg. `7.0.0-beta5`.
 
 ### Current Release Plan
-Currently, `7.3` and `8.1` versions are supported, i.e. we are releasing patch versions for them on a regular basis.
+Currently, `7.3` and `9.0` versions are supported, i.e. we are releasing patch versions for them on a regular basis.
 
-To be able to develop and improve Shopsys Framework we plan to release `MAJOR` versions almost quarterly, aiming to release a new `MAJOR` every 3-4 months.
-We expect this period to increase in the future to yearly releases.
+To be able to develop and improve Shopsys Framework we plan to release `MAJOR` version approximately once a year, for more details please see our [Roadmap](https://www.shopsys.com/product-roadmap/). 
 
 ## The BC Promise in Detail
 Shopsys Framework is built on the shoulders of giants so we've based our BC promise on the [**Symfony Backward Compatibility Promise**](https://symfony.com/doc/3.4/contributing/code/bc.html).
