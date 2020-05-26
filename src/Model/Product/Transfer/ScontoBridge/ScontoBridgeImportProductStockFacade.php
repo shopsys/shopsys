@@ -8,6 +8,7 @@ use App\Component\ScontoBridge\ScontoBridgeClient;
 use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeImportTransfer;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
+use App\Model\Stock\ProductStockFacade;
 use DateTime;
 
 class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTransfer
@@ -32,19 +33,35 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
     private $setting;
 
     /**
+     * @var \App\Model\Product\Transfer\ScontoBridge\ProductStockTransferScontoBridgeValidator
+     */
+    private $productStockTransferScontoBridgeValidator;
+
+    /**
+     * @var \App\Model\Stock\ProductStockFacade
+     */
+    private $productStockFacade;
+
+    /**
      * @param \App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency
      * @param \App\Component\ScontoBridge\ScontoBridgeClient $scontoBridgeClient
      * @param \App\Component\Setting\Setting $setting
+     * @param \App\Model\Product\Transfer\ScontoBridge\ProductStockTransferScontoBridgeValidator $productStockTransferScontoBridgeValidator
+     * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      */
     public function __construct(
         ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency,
         ScontoBridgeClient $scontoBridgeClient,
-        Setting $setting
+        Setting $setting,
+        ProductStockTransferScontoBridgeValidator $productStockTransferScontoBridgeValidator,
+        ProductStockFacade $productStockFacade
     ) {
         parent::__construct($scontoBridgeImportTransferDependency);
 
         $this->scontoBridgeClient = $scontoBridgeClient;
         $this->setting = $setting;
+        $this->productStockTransferScontoBridgeValidator = $productStockTransferScontoBridgeValidator;
+        $this->productStockFacade = $productStockFacade;
     }
 
     /**
@@ -57,7 +74,7 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
         }
 
         $this->logger->addInfo(
-            sprintf('Importing customers data from Sconto bridge from last modification : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
+            sprintf('Importing productStock data from Sconto bridge from last modification : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
         );
     }
 
@@ -99,16 +116,28 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
     {
         $this->logger->addInfo(sprintf('Processing store item with ERP id(SKU) : %s', $scontoBridgeItemData['sku']));
 
-        //TODO implement code here
-//        $scontoBridgeData['sku'];
-//        $scontoBridgeData['storeCode'];
-//        $scontoBridgeData['amount'];
-//        $scontoBridgeData['inShowroom'];
-//        $scontoBridgeData['modificationTime'];
-//        $scontoBridgeData['dateArrival']['year'];
-//        $scontoBridgeData['dateArrival']['month'];
-//        $scontoBridgeData['dateArrival']['day'];
-//        $scontoBridgeData['dateArrival']['week'];
+        $this->productStockTransferScontoBridgeValidator->validate($scontoBridgeItemData);
+
+        $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId(
+            $scontoBridgeItemData['sku'],
+            (int)$scontoBridgeItemData['storeCode']
+        );
+
+        if ($productStock === null) {
+            $this->logger->addWarning(sprintf(
+                'ProductStock with product catnum %s and stock ID %s not found',
+                $scontoBridgeItemData['sku'],
+                $scontoBridgeItemData['storeCode']
+            ));
+        } else {
+            $productStock->setProductQuantity($scontoBridgeItemData['amount']);
+            $this->em->flush();
+            $this->logger->addInfo(sprintf(
+                'ProductStock with product catnum %s and stock ID %s edited',
+                $scontoBridgeItemData['sku'],
+                $scontoBridgeItemData['storeCode']
+            ));
+        }
 
         $this->lastModificationAtFromScontoBridge = $scontoBridgeItemData['modificationTime'] !== null ? new DateTime($scontoBridgeItemData['modificationTime']) : $this->lastModificationAtFromScontoBridge;
     }
@@ -119,7 +148,7 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
     protected function doAfterTransfer(): void
     {
         $this->logger->addInfo('Importing iterable transfer is done.');
-        //$this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge);
+        $this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge);
     }
 
     /**

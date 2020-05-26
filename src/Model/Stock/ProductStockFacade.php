@@ -89,4 +89,15 @@ class ProductStockFacade
 
         $this->em->flush();
     }
+
+    /**
+     * @param string $productCatnum
+     * @param int $stockExternalId
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return \App\Model\Stock\ProductStock|null
+     */
+    public function findProductStockByProductCatnumAndStockExternalId(string $productCatnum, int $stockExternalId): ?ProductStock
+    {
+        return $this->productStockRepository->findProductStockByStockExternalIdAndProductCatnum($stockExternalId, $productCatnum);
+    }
 }

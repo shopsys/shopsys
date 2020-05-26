@@ -69,6 +69,25 @@ class ProductStockRepository
     }
 
     /**
+     * @param int $stockExternalId
+     * @param string $productCatnum
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return \App\Model\Stock\ProductStock|null
+     */
+    public function findProductStockByStockExternalIdAndProductCatnum(int $stockExternalId, string $productCatnum): ?ProductStock
+    {
+        return $this->getQueryBuilder()
+            ->join(Product::class, 'p', JOIN::WITH, 'sp.product = p')
+            ->join(Stock::class, 's', JOIN::WITH, 'sp.stock = s')
+            ->andWhere('s.externalId = :stockExternalId')
+            ->andWhere('p.catnum = :productCatnum')
+            ->setParameter('stockExternalId', $stockExternalId)
+            ->setParameter('productCatnum', $productCatnum)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Stock\ProductStock[]
      */

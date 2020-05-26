@@ -96,7 +96,7 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
                 $this->logger->addDebug(
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
-                        $item['erpCustomerNumber'],
+                        json_encode($item),
                         $invalidDataSilentException->getMessage()
                     )
                 );
@@ -105,7 +105,7 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
                 $this->logger->addWarning(
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
-                        $item['erpCustomerNumber'],
+                        json_encode($item),
                         $invalidDataSilentException->getMessage()
                     )
                 );
@@ -133,7 +133,7 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
                     sprintf(
                         'Transfer of item with code key `%s` was aborted. '
                         . 'This error will be reported to Shopsys. Reason of this error: %s',
-                        $item['erpCustomerNumber'],
+                        json_encode($item),
                         $exception->getMessage()
                     )
                 );
