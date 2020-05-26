@@ -349,7 +349,16 @@ class ProductController extends FrontBaseController
             // Direct access on SeoMixUrl with ordering lost ordering after change in filter - This prevent it
             if ($readyCategorySeoMix !== null && $readyCategorySeoMix->getOrdering() !== null) {
                 $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
-                $cookie = Cookie::create($productListOrderingConfig->getCookieName(), $readyCategorySeoMix->getOrdering());
+                // The cookie must have httpOnly=false, because It is edited by JS
+                $cookie = Cookie::create(
+                    $productListOrderingConfig->getCookieName(),
+                    $readyCategorySeoMix->getOrdering(),
+                    0,
+                    '/',
+                    null,
+                    null,
+                    false
+                );
                 $response->headers->setCookie($cookie);
             }
 
