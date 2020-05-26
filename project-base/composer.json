@@ -56,7 +56,7 @@
         "heureka/overeno-zakazniky": "^2.0.6",
         "incenteev/composer-parameter-handler": "^2.1.3",
         "intervention/image": "^2.3.14",
-        "jms/translation-bundle": "^1.4.1",
+        "jms/translation-bundle": "1.4.4",
         "joschi127/doctrine-entity-override-bundle": "^0.5.0",
         "league/flysystem": "^1.0",
         "phing/phing": "^2.16.1",
