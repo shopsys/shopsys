@@ -104,6 +104,11 @@
         "sspooky13/yaml-standards": "^5.0.0",
         "symfony/var-dumper": "^4.4"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "9.0.x-dev"
+        }
+    },
     "suggest": {
         "ext-pgsql": "Required for dumping the Postgres database in shopsys:database:dump command"
     }
