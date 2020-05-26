@@ -31,5 +31,10 @@
     },
     "require-dev": {
         "shopsys/coding-standards": "9.0.x-dev"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "9.1.x-dev"
+        }
     }
 }

@@ -43,5 +43,10 @@
         "shopsys/coding-standards": "9.0.x-dev",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.12"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "9.1.x-dev"
+        }
     }
 }
