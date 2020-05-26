@@ -7,7 +7,24 @@
     <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs">
         {% for parameterValueForm in parameterForm %}
             {% set rgbHex = parameterForm.vars.choices[parameterValueForm.vars.value].data.rgbHex %}
-            {% if rgbHex is not empty %}
+            {% if parameterForm.vars.choices[parameterValueForm.vars.value].data.id in allParameterValuesImagesIndexedById|keys %}
+                {% set colourIcon = allParameterValuesImagesIndexedById[parameterForm.vars.choices[parameterValueForm.vars.value].data.id] %}
+            {% else %}
+                {% set colourIcon = null %}
+            {% endif %}
+            {% if colourIcon is not null %}
+                <div class="form-choice js-form-choice box-filter__choice__input js-product-filter-parameter-value
+                    {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
+                    ">
+                    {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
+                    <label class="css-checkbox__image form-choice__label form-choice-color-picker"
+                           for="{{ parameterValueForm.vars.id }}"
+                           style="background-image: url({{ colourIcon }})"#}
+                           title="{{ parameterValueForm.vars.label }}"
+                    >   &nbsp;
+                    </label>
+                </div>
+            {% elseif rgbHex is not empty %}
                 <div class="form-choice js-form-choice box-filter__choice__input js-product-filter-parameter-value
                     {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
                     ">
@@ -16,8 +33,7 @@
                            for="{{ parameterValueForm.vars.id }}"
                            style="background-color: {{ rgbHex }}"
                            title="{{ parameterValueForm.vars.label }}"
-                    >
-                        &nbsp;
+                    >   &nbsp;
                     </label>
                 </div>
             {% else %}

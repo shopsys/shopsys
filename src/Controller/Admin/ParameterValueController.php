@@ -88,7 +88,7 @@ class ParameterValueController extends AdminBaseController
         $grid = $this->gridFactory->create('parameterValues', $dataSource);
 
         $grid->addColumn('text', 'pv.text', t('Hodnota parameteru'));
-        $grid->addColumn('rgbHex', 'pv.rgbHex', t('PRG Hex'));
+        $grid->addColumn('rgbHex', 'pv.rgbHex', t('RGB Hex'));
         $grid->addEditActionColumn('admin_parametervalue_edit', ['id' => 'pv.id']);
         $grid->setTheme('Admin/Content/ParameterValue/listGrid.html.twig');
 
@@ -111,7 +111,7 @@ class ParameterValueController extends AdminBaseController
         $parameterValue = $this->parameterFacade->getParameterValueById($id);
         $parameterValueData = $this->parameterValueDataFactory->createFromParameterValue($parameterValue);
 
-        $form = $this->createForm(ParameterValueFormType::class, $parameterValueData);
+        $form = $this->createForm(ParameterValueFormType::class, $parameterValueData, ['entity' => $parameterValue]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

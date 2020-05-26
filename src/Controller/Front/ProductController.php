@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator;
+use App\Component\UploadedFile\UploadedFileFacade;
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
@@ -40,6 +41,7 @@ class ProductController extends FrontBaseController
     public const SEARCH_TEXT_PARAMETER = 'q';
     public const PAGE_QUERY_PARAMETER = 'page';
     public const PRODUCTS_PER_PAGE = 12;
+    private const PARAMETER_VALUE_ENTITY_NAME = 'parameterValue';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
@@ -142,6 +144,11 @@ class ProductController extends FrontBaseController
     private $categorySeoMixUrlGenerator;
 
     /**
+     * @var \App\Component\UploadedFile\UploadedFileFacade
+     */
+    private $uploadedFileFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Component\Domain\Domain $domain
@@ -162,6 +169,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      * @param \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
+     * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -183,7 +191,8 @@ class ProductController extends FrontBaseController
         CategoryParameterFacade $categoryParameterFacade,
         ProductSeriesFacade $productSeriesFacade,
         ProductPackageFacade $productPackageFacade,
-        CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
+        CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator,
+        UploadedFileFacade $uploadedFileFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -205,6 +214,7 @@ class ProductController extends FrontBaseController
         $this->productSeriesFacade = $productSeriesFacade;
         $this->productPackageFacade = $productPackageFacade;
         $this->categorySeoMixUrlGenerator = $categorySeoMixUrlGenerator;
+        $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
     /**
@@ -290,7 +300,6 @@ class ProductController extends FrontBaseController
         );
 
         $productFilterData = new ProductFilterData();
-
         $productFilterConfig = $this->createProductFilterConfigForCategory($category);
         $filterForm = $this->createForm(ProductFilterFormType::class, $productFilterData, [
             'product_filter_config' => $productFilterConfig,
@@ -314,6 +323,7 @@ class ProductController extends FrontBaseController
             );
         }
 
+        $allParameterValuesImageFilePathsIndexedById = $this->uploadedFileFacade->getAllUploadedFilesFilePathByEntityName(self::PARAMETER_VALUE_ENTITY_NAME);
         $viewParameters = [
             'paginationResult' => $paginationResult,
             'productFilterCountData' => $productFilterCountData,
@@ -325,6 +335,7 @@ class ProductController extends FrontBaseController
             'categoryProductSeries' => $this->categoryProductSeriesFacade->getVisibleProductSeriesByCategoryAndDomainId($category, $this->domain->getId()),
             'readyCategorySeoMixId' => $readyCategorySeoMix === null ? null : $readyCategorySeoMix->getId(),
             'filterCollapsedParameters' => $this->categoryParameterFacade->getParametersCollapsedIndexedByIdForCategory($category),
+            'allParameterValuesImagesIndexedById' => $allParameterValuesImageFilePathsIndexedById,
         ];
 
         $viewParameters = array_merge(

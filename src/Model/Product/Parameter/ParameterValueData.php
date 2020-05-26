@@ -17,4 +17,9 @@ class ParameterValueData extends BaseParameterValueData
      * @var string|null
      */
     public $rgbHex;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+     */
+    public $colourIcon;
 }

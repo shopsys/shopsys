@@ -1,4 +1,4 @@
-{% macro filterForm(filterForm, actionUrl, resetUrl, searchText, page, productFilterCountData, priceRange, filterCollapsedParameters) %}
+{% macro filterForm(filterForm, actionUrl, resetUrl, searchText, page, productFilterCountData, priceRange, filterCollapsedParameters, allParameterValuesImagesIndexedById) %}
     {{ form_start(filterForm, { action: actionUrl }) }}
         {% form_theme filterForm 'Front/Content/Product/filterFormTheme.html.twig' %}
 
@@ -160,7 +160,7 @@
                 <div id="{{ filterForm.parameters.vars.id }}">
                     {% for parameterId, parameterForm in filterForm.parameters %}
                         {% if parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COLOR') %}
-                            {% include 'Front/Content/Product/Parameter/colorParameterForm.html.twig' with {parameterForm: parameterForm} %}
+                            {% include 'Front/Content/Product/Parameter/colorParameterForm.html.twig' with {parameterForm: parameterForm, allParameterValuesImagesIndexedById: allParameterValuesImagesIndexedById} %}
                         {% elseif parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_SLIDER') %}
                             {% include 'Front/Content/Product/Parameter/sliderParameterForm.html.twig' with {parameterForm: parameterForm} %}
                         {% else %}

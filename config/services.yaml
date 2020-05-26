@@ -104,6 +104,10 @@ services:
         arguments:
             - '%shopsys.image_config_filepath%'
 
+    Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade: '@App\Component\UploadedFile\UploadedFileFacade'
+
+    Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository: '@App\Component\UploadedFile\UploadedFileRepository'
+
     App\Component\Router\FriendlyUrl\NormalizeUrlTrailingSlashListener:
         public: true
         tags:

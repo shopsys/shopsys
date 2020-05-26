@@ -29,6 +29,11 @@ class ParameterValue extends BaseParameterValue
     private $rgbHex;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+     */
+    private $colourIcon;
+
+    /**
      * @param \App\Model\Product\Parameter\ParameterValueData $parameterData
      */
     public function __construct(ParameterValueData $parameterData)
@@ -36,6 +41,7 @@ class ParameterValue extends BaseParameterValue
         parent::__construct($parameterData);
         $this->unit = $parameterData->unit;
         $this->rgbHex = $parameterData->rgbHex;
+        $this->colourIcon = $parameterData->colourIcon;
     }
 
     /**
@@ -62,5 +68,13 @@ class ParameterValue extends BaseParameterValue
     public function getRgbHex(): ?string
     {
         return $this->rgbHex;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+     */
+    public function getColourIcon(): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+    {
+        return $this->colourIcon;
     }
 }

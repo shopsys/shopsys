@@ -7,6 +7,7 @@ namespace App\Model\Product\Parameter;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -41,6 +42,11 @@ class ParameterFacade extends BaseParameterFacade
     private $parameterValueDataFactory;
 
     /**
+     * @var \App\Component\UploadedFile\UploadedFileFacade
+     */
+    protected $uploadedFileFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
@@ -48,6 +54,7 @@ class ParameterFacade extends BaseParameterFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -56,7 +63,8 @@ class ParameterFacade extends BaseParameterFacade
         EventDispatcherInterface $eventDispatcher,
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         Domain $domain,
-        ParameterValueDataFactory $parameterValueDataFactory
+        ParameterValueDataFactory $parameterValueDataFactory,
+        UploadedFileFacade $uploadedFileFacade
     ) {
         parent::__construct(
             $em,
@@ -67,6 +75,7 @@ class ParameterFacade extends BaseParameterFacade
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
         $this->domain = $domain;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
+        $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
     /**
@@ -162,6 +171,15 @@ class ParameterFacade extends BaseParameterFacade
     {
         $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
         $parameterValue->edit($parameterValueData);
+
+        if ($parameterValueData->colourIcon->uploadedFilenames) {
+            $this->uploadedFileFacade->manageSingleFile($parameterValue, $parameterValueData->colourIcon);
+        }
+
+        if (empty($parameterValueData->colourIcon->uploadedFilenames) && $parameterValueData->colourIcon->filesToDelete) {
+            $this->uploadedFileFacade->deleteAllUploadedFilesByEntity($parameterValue);
+        }
+
         $this->em->flush();
 
         return $parameterValue;

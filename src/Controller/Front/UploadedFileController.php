@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 class UploadedFileController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
+     * @var \App\Component\UploadedFile\UploadedFileFacade
      */
     private $uploadedFileFacade;
 
@@ -21,7 +21,7 @@ class UploadedFileController
     private $filesystem;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \League\Flysystem\FilesystemInterface $filesystem
      */
     public function __construct(

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Product\Parameter\Value;
 
+use App\Model\Product\Parameter\ParameterValue;
 use App\Model\Product\Parameter\ParameterValueData;
-
+use Shopsys\FrameworkBundle\Form\FileUploadType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,6 +31,18 @@ class ParameterValueFormType extends AbstractType
                     'message' => t('Chybný formát RGB HEX : #336699 nebo #ABC'),
                 ]),
             ],
+        ])->add('colourIcon', FileUploadType::class, [
+            'label' => t('Upload attachment'),
+            'required' => false,
+            'file_constraints' => [
+                new Constraints\File([
+                    'maxSize' => '2M',
+                    'maxSizeMessage' => 'Uploaded file is to large ({{ size }} {{ suffix }}). '
+                        . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
+                ]),
+            ],
+            'entity' => $options['entity'],
+            'file_entity_class' => ParameterValue::class,
         ]);
 
         $builder->add('save', SubmitType::class);
@@ -40,7 +53,8 @@ class ParameterValueFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver
+        $resolver->setRequired(['entity'])
+            ->setAllowedTypes('entity', ParameterValue::class)
             ->setDefaults([
                 'data_class' => ParameterValueData::class,
                 'attr' => ['novalidate' => 'novalidate'],
