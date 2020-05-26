@@ -18,4 +18,10 @@ There you can find links to upgrade notes for other versions too.
         RUN npm install -g grunt-cli
     ```
 
+- add protection before double submit forms ([#1864](https://github.com/shopsys/shopsys/pull/1864))
+     - remove `src/Shopsys/ShopBundle/Resources/scripts/frontend/form.js` from you project
+
+- update `snc/redis-bundle` to version 3.2.2 in order to fix problems with redis ([#1865](https://github.com/shopsys/shopsys/pull/1865))
+     - change version of `snc/redis-bundle` in your `composer.json` to `^3.2.2`
+
 [shopsys/framework]: https://github.com/shopsys/framework
