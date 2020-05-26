@@ -394,6 +394,9 @@ msgstr "Tato částka musí být {{ limit }} nebo méně."
 msgid "The amount of money should be {{ limit }} or more."
 msgstr "Tato částka musí být {{ limit }} nebo více."
 
+msgid "The email is already registered on given domain."
+msgstr "Tento e-mail je již na zadané doméně zaregistrován"
+
 msgid "This field must be empty"
 msgstr "Toto pole musí zůstat prázdné"
 
