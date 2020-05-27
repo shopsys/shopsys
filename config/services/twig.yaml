@@ -11,4 +11,7 @@ services:
         arguments:
             - '%shopsys.web_dir%'
 
+    App\Twig\PriceExtension: ~
+
     Shopsys\FrameworkBundle\Twig\LocalizationExtension: '@App\Twig\LocalizationExtension'
+    Shopsys\FrameworkBundle\Twig\PriceExtension: '@App\Twig\PriceExtension'
