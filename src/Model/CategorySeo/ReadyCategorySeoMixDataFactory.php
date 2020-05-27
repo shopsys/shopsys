@@ -153,6 +153,7 @@ class ReadyCategorySeoMixDataFactory
     public function fillValuesFromReadyCategorySeoMixDataForForm(ReadyCategorySeoMixData $readyCategorySeoMixData, ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm): void
     {
         $readyCategorySeoMixData->h1 = $readyCategorySeoMixDataForForm->h1;
+        $readyCategorySeoMixData->shortDescription = $readyCategorySeoMixDataForForm->shortDescription;
         $readyCategorySeoMixData->description = $readyCategorySeoMixDataForForm->description;
         $readyCategorySeoMixData->title = $readyCategorySeoMixDataForForm->title;
         $readyCategorySeoMixData->metaDescription = $readyCategorySeoMixDataForForm->metaDescription;
@@ -165,6 +166,7 @@ class ReadyCategorySeoMixDataFactory
     public function fillValuesFromReadyCategorySeoMix(ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm, ReadyCategorySeoMix $readyCategorySeoMix): void
     {
         $readyCategorySeoMixDataForForm->h1 = $readyCategorySeoMix->getH1();
+        $readyCategorySeoMixDataForForm->shortDescription = $readyCategorySeoMix->getShortDescription();
         $readyCategorySeoMixDataForForm->description = $readyCategorySeoMix->getDescription();
         $readyCategorySeoMixDataForForm->title = $readyCategorySeoMix->getTitle();
         $readyCategorySeoMixDataForForm->metaDescription = $readyCategorySeoMix->getMetaDescription();

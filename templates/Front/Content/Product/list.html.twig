@@ -17,9 +17,9 @@
         <div class="web__container">
             {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productList'})) }}
             <h1>{{ seoH1 }}</h1>
-            {% if category.getShortDescription(domain.id) %}
-                {{ category.getShortDescription(domain.id)|raw }}
-                {% if category.getDescription(domain.id) %}
+            {% if shortDescription is not null %}
+                {{ shortDescription|raw }}
+                {% if description is not null %}
                     <a href="#description">{{ 'Číst dál →'|trans }}</a>
                 {% endif %}
             {% endif %}

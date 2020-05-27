@@ -431,6 +431,7 @@ class ProductController extends FrontBaseController
         if ($readyCategorySeoMixId === null) {
             $seoH1 = $category->getSeoH1($domainId);
             $description = $category->getDescription($domainId);
+            $shortDescription = $category->getShortDescription($domainId);
             $seoTitle = $category->getSeoTitle($domainId);
             $seoMetaDescription = $category->getSeoMetaDescription($domainId);
         } else {
@@ -438,6 +439,7 @@ class ProductController extends FrontBaseController
 
             $seoH1 = $readyCategorySeoMix->getH1();
             $description = $readyCategorySeoMix->getDescription() ?? $category->getDescription($domainId);
+            $shortDescription = $readyCategorySeoMix->getShortDescription() ?? $category->getShortDescription($domainId);
             $seoTitle = $readyCategorySeoMix->getTitle() ?? $seoH1;
             $seoMetaDescription = $readyCategorySeoMix->getMetaDescription() ?? $category->getSeoMetaDescription($domainId);
         }
@@ -457,6 +459,7 @@ class ProductController extends FrontBaseController
         return [
             'seoH1' => $seoH1,
             'description' => $description,
+            'shortDescription' => $shortDescription,
             'seoTitle' => $seoTitle,
             'seoMetaDescription' => $seoMetaDescription,
         ];

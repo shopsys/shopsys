@@ -85,6 +85,13 @@ class ReadyCategorySeoMix
      *
      * @ORM\Column(type="text", nullable=true)
      */
+    private $shortDescription;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $description;
 
     /**
@@ -115,6 +122,7 @@ class ReadyCategorySeoMix
         $this->choseCategorySeoMixCombinationJson = $readyCategorySeoMixData->choseCategorySeoMixCombinationJson;
 
         $this->h1 = $readyCategorySeoMixData->h1;
+        $this->shortDescription = $readyCategorySeoMixData->shortDescription;
         $this->description = $readyCategorySeoMixData->description;
         $this->title = $readyCategorySeoMixData->title;
         $this->metaDescription = $readyCategorySeoMixData->metaDescription;
@@ -130,6 +138,7 @@ class ReadyCategorySeoMix
         $this->ordering = $readyCategorySeoMixData->ordering;
 
         $this->h1 = $readyCategorySeoMixData->h1;
+        $this->shortDescription = $readyCategorySeoMixData->shortDescription;
         $this->description = $readyCategorySeoMixData->description;
         $this->title = $readyCategorySeoMixData->title;
         $this->metaDescription = $readyCategorySeoMixData->metaDescription;
@@ -205,6 +214,14 @@ class ReadyCategorySeoMix
     public function getH1(): string
     {
         return $this->h1;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
     }
 
     /**
