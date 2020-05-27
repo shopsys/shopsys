@@ -8,11 +8,15 @@ stages:
     - test
     - review
     - deploy
+    - service
 
 .only-default: &only-default
     only:
         - branches
         - master
+    except:
+        - schedules
+
 
 .deploy: &deploy
     image:
@@ -28,10 +32,12 @@ stages:
         - mkdir -p /root/.kube/
         - cp $KUBE_CONFIG /root/.kube/config
         - ./.ci/deploy.sh
+    except:
+        - schedules
 
 
 variables:
-    TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    TAG: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
 
@@ -125,6 +131,7 @@ review:stop:
         - review
     needs:
         - build
+    <<: *only-default
     script:
         - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y product-search-delete-structure
@@ -156,3 +163,32 @@ deploy:devel:
     environment:
         name: devel
         url: https://devel.eshop.scontodev.cz
+
+repository:clean:
+    stage: service
+    image: dwdraju/alpine-curl-jq
+    when: always
+    tags:
+        - docker
+    only:
+        refs:
+            - schedules
+    before_script:
+        - chmod +x ./gitlab/scripts/repository-clean.sh
+    script:
+        - ./gitlab/scripts/repository-clean.sh
+
+security:check:
+    stage: service
+    tags:
+        - docker
+    needs:
+        - build
+    only:
+        refs:
+            - master
+    except:
+        - schedules
+    script:
+        - docker run -i ${TAG} composer security-check
+

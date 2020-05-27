@@ -144,9 +144,9 @@
         "auto-scripts": {
             "php phing clean": "script",
             "shopsys:domains-urls:configure": "symfony-cmd",
-            "ckeditor:install --clear=skip --release=full --tag=4.5.11": "symfony-cmd",
-            "security-checker security:check": "script"
-        }
+            "ckeditor:install --clear=skip --release=full --tag=4.5.11": "symfony-cmd"
+        },
+        "security-check": "security-checker security:check"
     },
     "config": {
         "preferred-install": "dist",
