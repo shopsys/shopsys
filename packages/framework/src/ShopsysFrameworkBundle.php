@@ -14,12 +14,12 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectFramewor
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ShopsysFrameworkBundle extends Bundle
+    class ShopsysFrameworkBundle extends Bundle
 {
     /**
      * @var string
      */
-    public const VERSION = '9.0.0';
+    public const VERSION = '9.0.1-dev';
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
