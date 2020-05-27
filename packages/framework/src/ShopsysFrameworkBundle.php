@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectFramewor
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-    class ShopsysFrameworkBundle extends Bundle
+class ShopsysFrameworkBundle extends Bundle
 {
     /**
      * @var string
