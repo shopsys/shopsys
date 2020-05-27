@@ -5,11 +5,11 @@ metadata:
     labels:
         app: webserver-php-fpm
 spec:
-    progressDeadlineSeconds: 1500
-    replicas: 1
+    progressDeadlineSeconds: 3000
+    replicas: 2
     strategy:
         rollingUpdate:
-            maxSurge: 1
+            maxSurge: 2
             maxUnavailable: 0
         type: RollingUpdate
     selector:
@@ -68,9 +68,6 @@ spec:
                     imagePullPolicy: Always
                     workingDir: /var/www/html
                     lifecycle:
-                        postStart:
-                            exec:
-                                command: ["/var/www/html/phing", "-S", "maintenance-off", "clean-redis-old"]
                         preStop:
                             exec:
                                 command:

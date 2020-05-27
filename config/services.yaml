@@ -487,6 +487,10 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    App\Command\DeployPart2LockingCommand:
+        arguments:
+            - '@app.maintenance_cache_provider'
+
     App\Command\MaintenanceModeCommand:
         arguments:
             - '@app.maintenance_cache_provider'

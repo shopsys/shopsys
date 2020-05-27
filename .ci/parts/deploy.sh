@@ -26,8 +26,34 @@ if [ ${RUNNING_PRODUCTION} -eq "0" ]; then
     kubectl create secret generic http-auth --from-file=auth=${CONFIGURATION_TARGET_PATH}/basicHttpAuth -n ${PROJECT_NAME} || echo "Secret for http auth already exists"
 fi
 
+OLD_APP_VERSION=$(kubectl get service --namespace=${PROJECT_NAME} webserver-php-fpm -o=jsonpath='{.spec.selector.version}') || echo "No running service with old deployment version"
+NEW_APP_VERSION="$(cat /proc/sys/kernel/random/uuid)"
+NEW_APP_NAME="webserver-php-fpm-${NEW_APP_VERSION}"
+
+# It is probably first deploy (or namespace is empty)
+if [ -z $OLD_APP_VERSION ]; then
+    OLD_APP_VERSION=$NEW_APP_VERSION
+fi
+OLD_APP_NAME="webserver-php-fpm-${OLD_APP_VERSION}"
+
+yq write --inplace "${CONFIGURATION_TARGET_PATH}/services/webserver-php-fpm.yaml" "spec.selector.version" $OLD_APP_VERSION
+yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/webserver-php-fpm.yaml" "spec.selector.matchLabels.version" $NEW_APP_VERSION
+yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/webserver-php-fpm.yaml" "spec.template.metadata.labels.version" $NEW_APP_VERSION
+yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/webserver-php-fpm.yaml" "metadata.name" $NEW_APP_NAME
+yq write --inplace "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-deploy/kustomization.yaml" "patchesJson6902[0].target.name" $NEW_APP_NAME
+yq write --inplace "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/first-deploy/kustomization.yaml" "patchesJson6902[0].target.name" $NEW_APP_NAME
+
 echo "Apply kubernetes configuration"
 if [ $FIRST_DEPLOY -eq "0" ]; then
+    # try to release deploy part 2 lock before deployment
+    RUNNING_WEBSERVER_PHP_FPM_PODS_STRING=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l version=${OLD_APP_VERSION} -o=jsonpath='{.items[*].metadata.name}')
+    read -r -a RUNNING_WEBSERVER_PHP_FPM_PODS <<< $RUNNING_WEBSERVER_PHP_FPM_PODS_STRING
+    if [ ${#RUNNING_WEBSERVER_PHP_FPM_PODS[@]} -eq 0 ]; then
+        echo "Any running php-fpm container to prevent deploy part 2 locking. The lock may be released manually."
+    else
+        kubectl exec ${RUNNING_WEBSERVER_PHP_FPM_PODS[0]} --namespace=${PROJECT_NAME} ./phing deploy-part-2-lock-release || echo "Deploy part 2 lock could not be released. The lock may be released manually if exists."
+    fi
+
     if [ $DISPLAY_FINAL_CONFIGURATION ]; then
         kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-deploy"
     fi
@@ -43,23 +69,38 @@ fi
 EXIT_CODE=0
 
 # wait for new pod to be initialized and if it fails send result to /dev/null and save output code to a varaible.
-kubectl rollout status --namespace=${PROJECT_NAME} deployment/webserver-php-fpm --watch || EXIT_CODE=$?
+kubectl rollout status --namespace=${PROJECT_NAME} deployment/${NEW_APP_NAME} --watch || EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq "0" ]; then
     echo "Deploy succesful"
-    DEPLOYED_WEBSERVER_PHP_FPM_POD=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l app=webserver-php-fpm -o=jsonpath='{.items[0].metadata.name}')
+    if [[ $OLD_APP_VERSION != $NEW_APP_VERSION ]]; then
+        kubectl patch service --namespace=${PROJECT_NAME} webserver-php-fpm -p "{\"spec\":{\"selector\":{\"version\":\"${NEW_APP_VERSION}\"}}}"
+        kubectl delete deployment $OLD_APP_NAME --namespace=${PROJECT_NAME}
+    fi
+    DEPLOYED_WEBSERVER_PHP_FPM_PODS_STRING=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l version=${NEW_APP_VERSION} -o=jsonpath='{.items[*].metadata.name}')
 else
     echo "Deploy failed"
-    DEPLOYED_WEBSERVER_PHP_FPM_POD=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase!=Running -l app=webserver-php-fpm -o=jsonpath='{.items[0].metadata.name}')
+    DEPLOYED_WEBSERVER_PHP_FPM_PODS_STRING=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=!Running -l version=${NEW_APP_VERSION} -o=jsonpath='{.items[*].metadata.name}')
+    kubectl delete deployment $NEW_APP_NAME --namespace=${PROJECT_NAME}
 fi
 
-if [ $FIRST_DEPLOY -eq "1" ]; then
-    echo "Echoing logs of init-application container"
-    kubectl logs ${DEPLOYED_WEBSERVER_PHP_FPM_POD} --namespace=${PROJECT_NAME} -c init-application
-else
-    echo "Echoing logs of upgrade-application container"
-    kubectl logs ${DEPLOYED_WEBSERVER_PHP_FPM_POD} --namespace=${PROJECT_NAME} -c upgrade-application
-fi
+read -r -a DEPLOYED_WEBSERVER_PHP_FPM_PODS <<< $DEPLOYED_WEBSERVER_PHP_FPM_PODS_STRING
+
+for POD_INDEX in "${!DEPLOYED_WEBSERVER_PHP_FPM_PODS[@]}"
+do
+    POD=${DEPLOYED_WEBSERVER_PHP_FPM_PODS[$POD_INDEX]}
+    if [ $POD_INDEX -eq 0 ] && [ $EXIT_CODE -eq "0" ]; then
+      kubectl exec ${POD} --namespace=${PROJECT_NAME} ./phing maintenance-off deploy-part-2-lock-release clean-redis-old
+    fi
+
+    if [ $FIRST_DEPLOY -eq "1" ]; then
+        echo -e "\n\n>>>>>>>>> Echoing logs of init-application container - ${POD}"
+        kubectl logs ${POD} --namespace=${PROJECT_NAME} -c init-application
+    else
+        echo -e "\n\n>>>>>>>>> Echoing logs of upgrade-application container - ${POD}"
+        kubectl logs ${POD} --namespace=${PROJECT_NAME} -c upgrade-application
+    fi
+done
 
 echo "End of deploy.sh"
 exit $EXIT_CODE
