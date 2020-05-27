@@ -1311,7 +1311,7 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 - [#345 - monorepo-tools: allow incremental build of monorepo](https://github.com/shopsys/shopsys/pull/345) [@lukaso]
 - [#311 - monorepo split allows adding new package when monorepo is already tagged](https://github.com/shopsys/shopsys/pull/311)
 #### Fixed
-- [#281 - monorepo-tools: Fix scripts to work on OS X](https://github.com/shopsys/shopsys/pull/282) [@lukaso]
+- [#282 - monorepo-tools: Fix scripts to work on OS X](https://github.com/shopsys/shopsys/pull/282) [@lukaso]
 
 ### [shopsys/coding-standards]
 #### Added
@@ -1484,7 +1484,7 @@ It was only important with [the original open-box architecture](https://blog.sho
 - [#229 - php-fpm/Dockerfile: switch to another mirror of alpine linux repository](https://github.com/shopsys/shopsys/pull/229):
     - fix uninstallable postgres 9.5 by using repository https://dl-cdn.alpinelinux.org/alpine/ instead of https://dl-3.alpinelinux.org/alpine/
 - [#242 - php-fpm/Dockerfile: drop usage of https when accessing dl-cdn.alpinelinux.org](https://github.com/shopsys/shopsys/pull/242)
-- [#277 - Tests fail when only one domain is set](https://github.com/shopsys/shopsys/issues/277)
+- [#280 - Tests fail when only one domain is set](https://github.com/shopsys/shopsys/pulls/280)
 
 #### Security
 - [#178 - JsFormValidatorBundle security issue with Ajax validation](https://github.com/shopsys/shopsys/pull/178)
