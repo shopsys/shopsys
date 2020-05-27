@@ -31,7 +31,7 @@ class ErrorController extends FrontBaseController
     private $exceptionListener;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade
+     * @var \App\Component\Error\ErrorPagesFacade
      */
     private $errorPagesFacade;
 
@@ -48,7 +48,7 @@ class ErrorController extends FrontBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionController $exceptionController
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
-     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
+     * @param \App\Component\Error\ErrorPagesFacade $errorPagesFacade
      * @param \App\Component\Domain\Domain $domain
      * @param string $environment
      */

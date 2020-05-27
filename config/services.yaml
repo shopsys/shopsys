@@ -604,3 +604,9 @@ services:
     App\Component\Image\Kraken\KrakenOptimizationFacade:
         arguments:
             $logger: '@monolog.logger.cron'
+
+    App\Component\Error\ErrorPagesFacade:
+        arguments:
+            - '/var/errorPages/'
+
+    Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade: '@App\Component\Error\ErrorPagesFacade'
