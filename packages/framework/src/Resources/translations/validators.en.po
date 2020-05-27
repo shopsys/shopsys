@@ -391,6 +391,9 @@ msgstr ""
 msgid "The amount of money should be {{ limit }} or more."
 msgstr ""
 
+msgid "The email is already registered on given domain."
+msgstr ""
+
 msgid "This field must be empty"
 msgstr ""
 
