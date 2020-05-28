@@ -64,12 +64,14 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class="box-detail__info">
-                    <h2>
-                        {{ "Produkty programu"|trans }}
-                    </h2>
-                    {{ productList.list(products, null, 'h2') }}
-                </div>
+                {% if products|length > 0 %}
+                    <div class="box-detail__info">
+                        <h2>
+                            {{ "Produkty programu"|trans }}
+                        </h2>
+                        {{ productList.list(products, null, 'h2') }}
+                    </div>
+                {% endif %}
             </div>
 
         </div>
