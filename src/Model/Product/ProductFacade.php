@@ -41,7 +41,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] getAllProductSellingPricesByDomainId(\App\Model\Product\Product $product, int $domainId)
  * @method refreshProductManualInputPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Money\Money[]|null[] $manualInputPrices)
  * @method createProductVisibilities(\App\Model\Product\Product $product)
- * @method refreshProductAccessories(\App\Model\Product\Product $product, \App\Model\Product\Product[] $accessories)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
  * @method markProductsForExport(\App\Model\Product\Product[] $products)
@@ -429,5 +428,14 @@ class ProductFacade extends BaseProductFacade
         $this->em->flush();
 
         return $product;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Product\Product[] $accessories
+     */
+    public function refreshProductAccessories(Product $product, array $accessories): void
+    {
+        parent::refreshProductAccessories($product, $accessories);
     }
 }
