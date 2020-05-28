@@ -27,45 +27,60 @@ class ProductTransferAkeneoValidator
 
     /**
      * @param array $akeneoProductData
+     * @param bool $isMainVariant
      */
-    public function validate(array $akeneoProductData): void
+    public function validate(array $akeneoProductData, bool $isMainVariant): void
     {
+        $fieldsValidationSetup = [
+            'identifier' => [
+                new Assert\NotBlank(),
+                new Assert\Type(['type' => 'string']),
+                new Assert\Length(['max' => 100]),
+            ],
+            'categories' => new Assert\Optional([
+                new Assert\All([
+                    new Assert\Type(['type' => 'string']),
+                    new Assert\Length(['max' => 255]),
+                ]),
+            ]),
+            // key `values` is mandatory, because some inner fields cannot be empty (eg. `product_type`)
+            'values' => [
+                new Assert\NotBlank(),
+                new Assert\Type(['type' => 'array']),
+            ],
+        ];
+        if ($isMainVariant === false) {
+            $fieldsValidationSetup['enabled'] = [
+                new Assert\NotBlank(),
+                new Assert\Type(['type' => 'bool']),
+            ];
+        } else {
+            $fieldsValidationSetup['family'] = [
+                new Assert\NotBlank(),
+                new Assert\Type(['type' => 'string']),
+            ];
+            $fieldsValidationSetup['family_variant'] = [
+                new Assert\NotBlank(),
+                new Assert\Type(['type' => 'string']),
+            ];
+        }
+
         $violations = $this->validator->validate($akeneoProductData, new Assert\Collection([
             'allowExtraFields' => true,
-            'fields' => [
-                'identifier' => [
-                    new Assert\NotBlank(),
-                    new Assert\Type(['type' => 'string']),
-                    new Assert\Length(['max' => 100]),
-                ],
-                'categories' => new Assert\Optional([
-                    new Assert\All([
-                        new Assert\Type(['type' => 'string']),
-                        new Assert\Length(['max' => 255]),
-                    ]),
-                ]),
-                'enabled' => [
-                    new Assert\NotBlank(),
-                    new Assert\Type(['type' => 'bool']),
-                ],
-                // key `values` is mandatory, because some inner fields cannot be empty (eg. `product_type`)
-                'values' => [
-                    new Assert\NotBlank(),
-                    new Assert\Type(['type' => 'array']),
-                ],
-            ],
+            'fields' => $fieldsValidationSetup,
         ]));
 
-        $this->validatePriceValue($violations, $akeneoProductData['values'], 'low_price_vat', [
+        $priceValidationSetup = [
             new Assert\Type('string'),
             new Assert\Length(['max' => 20]),
-        ]);
+        ];
+        $this->validatePriceValue($violations, $akeneoProductData['values'], 'low_price_vat', $priceValidationSetup);
 
-        $this->validatePriceValue($violations, $akeneoProductData['values'], 'high_price_vat', [
-            new Assert\NotBlank(),
-            new Assert\Type('string'),
-            new Assert\Length(['max' => 20]),
-        ]);
+        $highPriceValidationSetup = $priceValidationSetup;
+        if ($isMainVariant === false) {
+            $highPriceValidationSetup[] = new Assert\NotBlank();
+        }
+        $this->validatePriceValue($violations, $akeneoProductData['values'], 'high_price_vat', $highPriceValidationSetup);
 
         $this->validateValueData($violations, $akeneoProductData['values'] ?? null, 'ean', [
             new Assert\Type(['type' => 'numeric']),

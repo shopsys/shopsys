@@ -165,6 +165,11 @@ class ProductData extends BaseProductData
      */
     public $totalPackageWeight;
 
+    /**
+     * @var \App\Model\Product\Parameter\Parameter[]
+     */
+    public $variantParameters;
+
     public function __construct()
     {
         parent::__construct();
@@ -192,5 +197,6 @@ class ProductData extends BaseProductData
         $this->packagingUnit = [];
         $this->countPackages = [];
         $this->totalPackageWeight = [];
+        $this->variantParameters = [];
     }
 }

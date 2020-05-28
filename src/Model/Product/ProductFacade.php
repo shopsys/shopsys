@@ -408,4 +408,26 @@ class ProductFacade extends BaseProductFacade
             $this->em->flush($toFlush);
         }
     }
+
+    /**
+     * @param string $catnum
+     * @return \App\Model\Product\Product|null
+     */
+    public function findMainVariantByCatnum(string $catnum): ?Product
+    {
+        return $this->productRepository->findMainVariantByCatnum($catnum);
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @return \App\Model\Product\Product
+     */
+    public function createProductAsMainVariant(ProductData $productData): Product
+    {
+        $product = $this->create($productData);
+        $product->setAsMainVariant();
+        $this->em->flush();
+
+        return $product;
+    }
 }

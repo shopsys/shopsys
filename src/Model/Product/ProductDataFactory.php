@@ -290,6 +290,7 @@ class ProductDataFactory extends BaseProductDataFactory
 
         $productData->preorder = $product->hasPreorder();
         $productData->vendorDeliveryDate = $product->getVendorDeliveryDate();
+        $productData->variantParameters = $product->getVariantParameters();
     }
 
     /**

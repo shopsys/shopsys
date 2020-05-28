@@ -307,7 +307,7 @@ services:
 
     App\Component\Akeneo\AkeneoClientFactory: ~
 
-    App\Model\Product\Transfer\Akeneo\AkeneoImportProductFacade:
+    App\Model\Product\Transfer\Akeneo\TransferredProductProcessor: ~
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade:
         arguments:

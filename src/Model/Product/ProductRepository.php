@@ -152,4 +152,20 @@ class ProductRepository extends BaseProductRepository
     {
         throw new \Exception('Product Availability is deprecated');
     }
+
+    /**
+     * @param string $catnum
+     * @return \App\Model\Product\Product|null
+     */
+    public function findMainVariantByCatnum(string $catnum): ?Product
+    {
+        $queryBuilder = $this->getProductRepository()
+            ->createQueryBuilder('p')
+            ->andWhere('p.catnum = :catnum')
+            ->andWhere('p.variantType = :variantTypeMain')
+            ->setParameter('catnum', $catnum)
+            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN);
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
 }

@@ -21,6 +21,7 @@ use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
 use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
@@ -141,6 +142,17 @@ class ProductTransferAkeneoMapper
 
     /**
      * @param array $akeneoProductData
+     * @return string|null
+     */
+    public function mapAkeneoProductDataToParentSkuList(array $akeneoProductData): ?string
+    {
+        $tmp = $akeneoProductData['values']['association_article'][0]['data'] ?? null;
+
+        return $tmp !== null ? strval($tmp) : null;
+    }
+
+    /**
+     * @param array $akeneoProductData
      * @param \App\Model\Product\Product|null $product
      * @return \App\Model\Product\ProductData
      */
@@ -153,7 +165,7 @@ class ProductTransferAkeneoMapper
             $productData = $this->productDataFactory->createFromProduct($product);
         }
 
-        $productData->hidden = $akeneoProductData['enabled'] ? false : true;
+        $productData->hidden = ($akeneoProductData['enabled'] ?? true) ? false : true;
 
         $productData->ean = AkeneoProductHelper::mapDataString($akeneoProductData['values']['ean'] ?? null);
         $productData->productType = $this->getProductType($productData->productType, $akeneoProductData);
@@ -171,6 +183,13 @@ class ProductTransferAkeneoMapper
 
         $productData->lowPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->lowPriceWithVat, $akeneoProductData['values']['low_price_vat'] ?? null);
         $productData->highPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->highPriceWithVat, $akeneoProductData['values']['high_price_vat'] ?? null);
+
+        if (($akeneoProductData['values']['high_price_vat'] ?? null) === null) {
+            foreach ($productData->productType as $domainId => $productType) {
+                $productData->lowPriceWithVat[$domainId] = Money::zero();
+                $productData->highPriceWithVat[$domainId] = Money::zero();
+            }
+        }
 
         $productCategories = $this->getProductCategories($akeneoProductData['categories']);
         $productData->categoriesByDomainId = [
