@@ -33,21 +33,23 @@
 {% endblock %}
 
 {% block _product_form_basicInformationGroup_productType_row %}
-    <div class="form-line">
+    <div class="form-line p-b-0">
         {{ form_label(form) }}
         {{ form_errors(form) }}
     </div>
-    <div class="form-line">
+    <div class="form-line p-t-0">
         {% for domainId, selectboxForm in form %}
-            <div class="input__wrap">
-                {% set attr = attr|merge({'class': ' input--domain'|trim}) %}
-                {{ form_widget(selectboxForm, { attr: attr }) }}
-                <span class="input__domain input__domain--long">
-                    {{ domainIcon(domainId) }}
-                    <span class="input__domain__label">{{ getDomainName(domainId) }}</span>
-                </span>
+            <div class="form-line__line">
+                <div class="input__wrap input__wrap--product-type">
+                    {% set attr = attr|merge({'class': ' input--domain'|trim}) %}
+                    {{ form_widget(selectboxForm, { attr: attr }) }}
+                    <span class="input__domain input__domain--long">
+                        {{ domainIcon(domainId) }}
+                        <span class="input__domain__label">{{ getDomainName(domainId) }}</span>
+                    </span>
+                </div>
+                {{ form_errors(selectboxForm) }}
             </div>
-            {{ form_errors(selectboxForm) }}
         {% endfor %}
     </div>
 {% endblock %}

@@ -17,12 +17,38 @@
 
 .input__domain {
     &--long {
-        width: 180px;
+        display: flex;
+        align-items: center;
+        left: 0;
+        top: 10px;
     }
 
     &__label {
         position: relative;
         float: left;
+    }
+}
+
+.input__wrap--product-type {
+    @media screen and (max-width: 872px) {
+        display: flex;
+        flex-direction: column;
+        .input__domain {
+            position: static;
+        }
+        .form-line__side {
+            order: 1;
+            margin-top: 10px;
+        }
+    }
+}
+
+.form-line__side {
+    @media screen and (min-width: 873px) {
+        margin-left: 160px;
+    }
+    @media screen and (min-width: 972px) {
+        margin-left: 230px;
     }
 }
 
@@ -44,4 +70,12 @@
     &--indented {
         right: -200px;
     }
+}
+
+.p-t-0 {
+    padding-top: 0;
+}
+
+.p-b-0 {
+    padding-bottom: 0;
 }
