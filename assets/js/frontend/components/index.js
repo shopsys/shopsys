@@ -24,3 +24,5 @@ import './SearchAutocomplete';
 import './ResetCustomerpassword';
 import './spinbox';
 import './popup';
+import './MobileMenu';
+import './MobileSlidingMenu';
