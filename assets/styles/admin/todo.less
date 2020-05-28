@@ -17,38 +17,12 @@
 
 .input__domain {
     &--long {
-        display: flex;
-        align-items: center;
-        left: 0;
-        top: 10px;
+        width: 180px;
     }
 
     &__label {
         position: relative;
         float: left;
-    }
-}
-
-.input__wrap--product-type {
-    @media screen and (max-width: 872px) {
-        display: flex;
-        flex-direction: column;
-        .input__domain {
-            position: static;
-        }
-        .form-line__side {
-            order: 1;
-            margin-top: 10px;
-        }
-    }
-}
-
-.form-line__side {
-    @media screen and (min-width: 873px) {
-        margin-left: 160px;
-    }
-    @media screen and (min-width: 972px) {
-        margin-left: 230px;
     }
 }
 
@@ -69,23 +43,5 @@
 .form-tree__item__controls {
     &--indented {
         right: -200px;
-    }
-}
-
-.p-t-0 {
-    padding-top: 0;
-}
-
-.p-b-0 {
-    padding-bottom: 0;
-}
-
-// /admin/currency/list/
-// Temporary FIX - don`t have access to vendor
-.table-grid__cell--actions {
-    width: 120px;
-
-    .tooltip.top {
-        max-width: 150px;
     }
 }

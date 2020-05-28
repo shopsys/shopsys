@@ -33,11 +33,11 @@
 {% endblock %}
 
 {% block _product_form_basicInformationGroup_productType_row %}
-    <div class="form-line p-b-0">
+    <div class="form-line">
         {{ form_label(form) }}
         {{ form_errors(form) }}
     </div>
-    <div class="form-line p-t-0">
+    <div class="form-line">
         {% for domainId, selectboxForm in form %}
             <div class="form-line__line">
                 <div class="input__wrap input__wrap--product-type">
