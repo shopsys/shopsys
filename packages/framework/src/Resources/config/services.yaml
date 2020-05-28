@@ -977,3 +977,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactory
+
+    Shopsys\FrameworkBundle\Component\Router\NormalizeUrlTrailingSlashListener:
+        public: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
