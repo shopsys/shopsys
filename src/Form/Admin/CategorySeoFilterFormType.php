@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategorySeoFilterFormType extends AbstractType
 {
@@ -54,16 +53,12 @@ class CategorySeoFilterFormType extends AbstractType
                 'data' => false,
             ])
             ->add('parameters', ChoiceType::class, [
-                'required' => true,
                 'label' => t('Parametry produktů vybrané kategorie'),
                 'choices' => $this->categorySeoFacade->getParametersUsedByProductsInCategory($category, $domainId),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'multiple' => true,
                 'expanded' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
             ])
             ->add('save', SubmitType::class, [
                 'label' => t('Zobrazit kombinace'),
