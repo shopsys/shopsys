@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Transfer\Akeneo;
 
 use Akeneo\Pim\ApiClient\Api\FamilyVariantApiInterface;
+use Akeneo\Pim\ApiClient\Api\ProductApiInterface;
 use Akeneo\Pim\ApiClient\Api\ProductModelApiInterface;
 use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use Akeneo\Pim\ApiClient\Search\SearchBuilder;
@@ -34,7 +35,7 @@ class ProductTransferAkeneoFacade
     /**
      * @return \Akeneo\PimEnterprise\ApiClient\Api\PublishedProductApiInterface
      */
-    private function getPublishedProductFromApi(): PublishedProductApiInterface
+    private function getPublishedProductApi(): PublishedProductApiInterface
     {
         return $this->akeneoClient->getPublishedProductApi();
     }
@@ -56,12 +57,29 @@ class ProductTransferAkeneoFacade
     }
 
     /**
+     * @return \Akeneo\Pim\ApiClient\Api\ProductApiInterface
+     */
+    private function getProductApi(): ProductApiInterface
+    {
+        return $this->akeneoClient->getProductApi();
+    }
+
+    /**
      * @param string $code
      * @return array
      */
     public function getProductModelByCode(string $code): array
     {
         return $this->getProductModelApi()->get($code);
+    }
+
+    /**
+     * @param string $identifier
+     * @return array
+     */
+    public function getProductByIdentifier(string $identifier): array
+    {
+        return $this->getProductApi()->get($identifier);
     }
 
     /**
@@ -86,7 +104,7 @@ class ProductTransferAkeneoFacade
         $searchBuilder->addFilter('updated', '>', $lastUpdatedProducts->format(self::API_AKENEO_DATETIME_FORMAT));
         $searchFilters = $searchBuilder->getFilters();
 
-        $publishedProducts = $this->getPublishedProductFromApi()->all(self::PAGE_SIZE_LIMIT, [
+        $publishedProducts = $this->getPublishedProductApi()->all(self::PAGE_SIZE_LIMIT, [
             'search' => $searchFilters,
         ]);
 
