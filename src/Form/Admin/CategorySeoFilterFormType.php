@@ -90,8 +90,8 @@ class CategorySeoFilterFormType extends AbstractType
     }
 
     /**
-     * @param CategorySeoFiltersData $categorySeoFiltersData
-     * @param ExecutionContextInterface $context
+     * @param \App\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validate(CategorySeoFiltersData $categorySeoFiltersData, ExecutionContextInterface $context): void
     {
