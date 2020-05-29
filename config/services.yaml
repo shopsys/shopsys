@@ -435,6 +435,13 @@ services:
 
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository: '@App\Model\Sitemap\SitemapRepository'
 
+    App\Model\Sitemap\SitemapFacade:
+        arguments:
+            - '%shopsys.sitemaps_dir%'
+            - '%shopsys.sitemaps_url_prefix%'
+
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade: '@App\Model\Sitemap\SitemapFacade'
+
     Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory: '@App\Model\Slider\SliderItemDataFactory'
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository: '@App\Model\Slider\SliderItemRepository'

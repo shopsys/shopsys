@@ -74,7 +74,7 @@ class ProductSeriesRepository
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getVisibleQueryBuilderByDomainId(int $domainId): QueryBuilder
+    public function getVisibleQueryBuilderByDomainId(int $domainId): QueryBuilder
     {
         return $this->getQueryBuilderByDomainId($domainId)
             ->andWhere('psd.hidden = FALSE');

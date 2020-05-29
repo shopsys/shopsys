@@ -88,7 +88,7 @@ class ProductSeriesCategoryRepository
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getQueryBuilderByDomainId(int $domainId): QueryBuilder
+    public function getQueryBuilderByDomainId(int $domainId): QueryBuilder
     {
         return $this->getQueryBuilder()
             ->join(ProductSeriesCategoryDomain::class, 'pscd', Join::WITH, 'pscd.productSeriesCategory = psc')
