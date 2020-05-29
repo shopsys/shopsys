@@ -1,7 +1,9 @@
 
 {% set promoCodeCode = '' %}
+{% set previewNumber = 0 %}
 {% for orderPreview in splitOrderPreview.orderPreviews %}
     {% set promoCodeCode = orderPreview.promoCodeCode %}
+    {% set previewNumber = previewNumber + 1 %}
     {% set cartItemDiscounts = orderPreview.quantifiedItemsDiscounts %}
     {% set isDiscountInOrderPreview = false %}
     {% for index, quantifiedProduct in orderPreview.quantifiedProducts %}
@@ -36,7 +38,7 @@
                     {% if splitOrderPreview.morePreviews %}
                         <tr class="table-cart-preview__row">
                             <td colspan="1" class="table-cart-preview__cell table-cart-preview__cell__title">
-                                <strong class="table-cart-preview__cell__title">{{ 'Zásilka č. '|trans }} {{ orderPreview.productType.id }} {{ orderPreview.productType.name|trans }}</strong>
+                                <strong class="table-cart-preview__cell__title">{{ 'Zásilka č. %number%'|trans({ '%number%': previewNumber }) }} {{ orderPreview.productType.name|trans }}</strong>
                                 {% if loop.first %}
                                     <img class="table-cart-preview__cell__title__img" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.png') }}" alt="{{ 'Doprava zdarma'|trans }}">
                                 {% else %}
