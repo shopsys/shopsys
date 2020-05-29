@@ -16,6 +16,7 @@
             <div class="box-order">
                 <div class="box-order__info">
                     <div class="in-tab js-responsive-tabs">
+                        {% if(isWithoutRegistration == false) %}
                         <div class="in-tab__head dont-print">
                             <a href="#" class="in-tab__head__item js-tabs-button  {{ commonTabActiveClass }}"
                                data-tab-id="common-customer">
@@ -26,6 +27,7 @@
                                 {{ "Firma"|trans }}
                             </a>
                         </div>
+                        {% endif %}
                         <div class="in-tab__content personal-info-order-form">
                             {% if prefilledCustomerEmail is not null %}
                                 {{ form_row(form.email, { label: 'Email'|trans, value: prefilledCustomerEmail }) }}

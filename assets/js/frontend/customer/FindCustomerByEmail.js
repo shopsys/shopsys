@@ -1,9 +1,10 @@
 import 'framework/common/components';
 import Ajax from 'framework/common/utils/Ajax';
+import { KeyCodes } from 'framework/common/utils/KeyCodes';
 import Register from 'framework/common/utils/Register';
 
 export default class FindCustomerByEmail {
-    static ajaxSubmit () {
+    ajaxSubmit () {
         const email = $('#check-existing-email').val();
         Ajax.ajax({
             url: '/customer/find-customer-by-email/',
@@ -24,7 +25,14 @@ export default class FindCustomerByEmail {
     }
 
     static init ($container) {
-        $container.filterAllNodes('#check-existing-email-submit').on('click', FindCustomerByEmail.ajaxSubmit);
+        const findCustomerByEmail = new FindCustomerByEmail();
+        $container.filterAllNodes('#check-existing-email-submit').click((event) => findCustomerByEmail.ajaxSubmit());
+        $container.filterAllNodes('#check-existing-email').keypress(function (event) {
+            if (event.keyCode === KeyCodes.ENTER) {
+                findCustomerByEmail.ajaxSubmit();
+                return false;
+            }
+        });
     }
 }
 
