@@ -81,8 +81,15 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
                     'label' => t('Tax number with vat'),
                     'required' => true,
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Vyplňte prosím DIČ']),
-                        new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.']),
+                        new Constraints\NotBlank([
+                            'message' => 'Vyplňte prosím DIČ',
+                            'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                        new Constraints\Length([
+                            'max' => 50,
+                            'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.',
+                            'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
                     ],
                 ]
             );
