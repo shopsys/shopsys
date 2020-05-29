@@ -322,7 +322,7 @@ class ProductController extends FrontBaseController
             'filterFormSubmitted' => $filterForm->isSubmitted(),
             'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId()),
             'priceRange' => $productFilterConfig->getPriceRange(),
-            'categoryProductSeries' => $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category),
+            'categoryProductSeries' => $this->categoryProductSeriesFacade->getVisibleProductSeriesByCategoryAndDomainId($category, $this->domain->getId()),
             'readyCategorySeoMixId' => $readyCategorySeoMix === null ? null : $readyCategorySeoMix->getId(),
             'filterCollapsedParameters' => $this->categoryParameterFacade->getParametersCollapsedIndexedByIdForCategory($category),
         ];

@@ -64,4 +64,14 @@ class CategoryProductSeriesFacade
     {
         return $this->categoryProductSeriesRepository->getAllAssignedProductSeriesByCategory($category);
     }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param int $domainId
+     * @return \App\Model\Product\Series\ProductSeries[]
+     */
+    public function getVisibleProductSeriesByCategoryAndDomainId(Category $category, int $domainId): array
+    {
+        return $this->categoryProductSeriesRepository->getVisibleProductSeriesByCategoryAndDomainId($category, $domainId);
+    }
 }

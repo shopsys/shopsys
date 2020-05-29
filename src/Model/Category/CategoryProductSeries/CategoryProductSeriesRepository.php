@@ -6,6 +6,7 @@ namespace App\Model\Category\CategoryProductSeries;
 
 use App\Model\Category\Category;
 use App\Model\Product\Series\ProductSeries;
+use App\Model\Product\Series\ProductSeriesDomain;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -42,6 +43,30 @@ class CategoryProductSeriesRepository
         $queryBuilder = $this->getAllAssignedProductSeriesByCategoryQueryBuilder($category);
 
         return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param int $domainId
+     * @return \App\Model\Product\Series\ProductSeries[]
+     */
+    public function getVisibleProductSeriesByCategoryAndDomainId(Category $category, int $domainId): array
+    {
+        $queryBuilder = $this->getAllAssignedProductSeriesByCategoryQueryBuilder($category);
+        $this->filterOnlyVisibleProductSeriesByDomainId($queryBuilder, $domainId);
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param int $domainId
+     */
+    private function filterOnlyVisibleProductSeriesByDomainId(QueryBuilder $queryBuilder, int $domainId): void
+    {
+        $queryBuilder->join(ProductSeriesDomain::class, 'psd', Join::WITH, 'psd.productSeries = ps AND psd.domainId = :domainId');
+        $queryBuilder->andWhere('psd.hidden = false');
+        $queryBuilder->setParameter('domainId', $domainId);
     }
 
     /**
