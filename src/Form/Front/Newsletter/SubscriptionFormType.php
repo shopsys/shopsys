@@ -42,6 +42,7 @@ class SubscriptionFormType extends AbstractType
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],
             TimedFormTypeExtension::OPTION_ENABLED => true,
+            'csrf_protection' => false,
         ]);
     }
 }
