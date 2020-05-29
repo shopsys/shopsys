@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CategorySeoFilterFormType extends AbstractType
 {
@@ -81,6 +83,22 @@ class CategorySeoFilterFormType extends AbstractType
             ->setDefaults([
                 'data_class' => CategorySeoFiltersData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => [
+                    new Callback([$this, 'validate']),
+                ],
             ]);
+    }
+
+    /**
+     * @param CategorySeoFiltersData $categorySeoFiltersData
+     * @param ExecutionContextInterface $context
+     */
+    public function validate(CategorySeoFiltersData $categorySeoFiltersData, ExecutionContextInterface $context): void
+    {
+        if ($categorySeoFiltersData->useFlags === false && $categorySeoFiltersData->useOrdering === false) {
+            $context->buildViolation(t('Prosím vyberte alespoň jedno z příznaků nebo řazení.'))
+                ->atPath('useFlags')
+                ->addViolation();
+        }
     }
 }
