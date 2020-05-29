@@ -105,7 +105,7 @@
                                     {{ render(controller('App\\Controller\\Front\\CartController:addProductFormAction', {product: product, type: 'large'})) }}
                                 {% else %}
                                     <div>
-                                        {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productMainCategory })}) }}
+                                        {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productMainCategory.id })}) }}
                                     </div>
                                 {% endif %}
                             </div>
