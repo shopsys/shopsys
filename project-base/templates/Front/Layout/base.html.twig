@@ -14,8 +14,6 @@
         {{ encore_entry_link_tags( entryDirectoryPrint ) }}
 
         {{ render(controller('App\\Controller\\Front\\HeurekaController:embedWidgetAction')) }}
-        {{ encore_entry_script_tags('frontend') }}
-        {% block javascripts %}{% endblock %}
 
         <title>{% block title %}Shopsys Framework{% endblock %} {{ getSeoTitleAddOn() }}</title>
     </head>
@@ -27,7 +25,8 @@
 
         {% block html_body %}{% endblock %}
 
-        {% block javascripts_bottom %}{% endblock %}
+        {{ encore_entry_script_tags('frontend') }}
+        {% block javascripts %}{% endblock %}
         {{ getAllPagesAfterContentScripts()|raw }}
 
         {{ js_validator_config() }}
