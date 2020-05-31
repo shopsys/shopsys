@@ -1,4 +1,4 @@
-@box-list-description-line-height: 1.8;
+@box-list-description-line-height: 1.7;
 @box-list-description-lines: 2;
 
 @box-list-producer-image-space-around: 10px;
@@ -137,7 +137,7 @@
 
     &__description {
         &__text {
-            max-width: 930px;
+            max-width: 940px;
             margin: 3rem auto;
             padding: 0 1.5rem;
             line-height: @box-list-description-line-height;
@@ -146,6 +146,15 @@
                 overflow: hidden;
                 height: @box-list-description-line-height * @box-list-description-lines;
             }
+
+            &--top {
+                display: none;
+
+                @media @query-md {
+                    display: block;
+                    margin-top: 1.25rem;
+                }
+            }
         }
 
         &__more {
@@ -153,6 +162,46 @@
 
             &__btn {
                 display: none;
+            }
+        }
+
+        &__heading {
+            margin-bottom: 0;
+            text-align: center;
+
+            font-size: 30px;
+        }
+
+        &--top {
+            padding-top: 1.5rem;
+
+            @media @query-md {
+                padding-top: 2.5rem;
+            }
+
+            .box-breadcrumb {
+                padding: 0;
+                margin: 0.25rem 0 2rem;
+
+                @media @query-md {
+                    margin-bottom: 0;
+                }
+            }
+
+            .web__container--fullwidth {
+                width: auto;
+            }
+
+            .btn--next {
+                position: relative;
+                margin-left: 6px;
+                padding-right: 35px;
+
+                .btn__icon {
+                    position: absolute;
+                    right: 0;
+                    top: -10px;
+                }
             }
         }
     }
