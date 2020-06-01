@@ -3,11 +3,11 @@ import Register from 'framework/common/utils/Register';
 
 export default class FormField {
 
-    changeFormFieldFocus() {
+    changeFormFieldFocus () {
         const $formField = $('.js-form-field').find('.input');
         const focusClass = 'is-focused';
 
-        $formField.each(function() {
+        $formField.each(function () {
             const $currField = $(this);
             const $parent = $currField.parents('.js-form-field');
 
@@ -16,16 +16,16 @@ export default class FormField {
             }
 
             $currField.on({
-                focus: function() {
+                focus: function () {
                     $parent.addClass(focusClass);
                 },
 
-                blur: function() {
+                blur: function () {
                     if ($currField.val() == '') {
                         $parent.removeClass(focusClass);
                     }
                 }
-            })
+            });
         });
     }
 
