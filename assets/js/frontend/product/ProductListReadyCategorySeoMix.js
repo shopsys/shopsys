@@ -11,6 +11,7 @@ export default class ProductListReadyCategorySeoMix {
             ProductListReadyCategorySeoMix.setSeoPropertiesToProperElements(
                 $elementWithValues.attr('data-seo-h1'),
                 $elementWithValues.attr('data-seo-description'),
+                $elementWithValues.attr('data-seo-short-description'),
                 $elementWithValues.attr('data-seo-title'),
                 $elementWithValues.attr('data-seo-meta-description'),
                 $elementWithValues.data('url')
@@ -18,9 +19,10 @@ export default class ProductListReadyCategorySeoMix {
         });
     }
 
-    static setSeoPropertiesToProperElements (h1, description, seoTitle, seoMetaDescription, url) {
+    static setSeoPropertiesToProperElements (h1, description, shortDescription, seoTitle, seoMetaDescription, url) {
         $('.js-ready-category-seo-mix-product-list-h1').text(h1);
         $('.js-ready-category-seo-mix-product-list-description').html(description);
+        $('.js-ready-category-seo-mix-product-list-short-description').html(shortDescription);
         $(document).attr('title', seoTitle);
         $('meta[name=description]').attr('content', seoMetaDescription);
         pushReloadState(url);
