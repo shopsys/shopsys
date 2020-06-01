@@ -3,36 +3,49 @@
     {{ form_errors(form) }}
 
     <div class="box-login">
-        <div class="box-login__item">
-            {{ form_row(form.email, { label: 'Email'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
-        </div>
-
-        <div class="box-login__item">
-            {{ form_row(form.password, { label: 'Password'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
-        </div>
-
-        <div class="box-login__item box-login__item--checkbox">
-            <div class="form-choice">
-                {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
-                <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
-                    {{ 'Remember my login'|trans }}
-                    <i class="svg svg-info in-icon in-icon--info js-tooltip"
-                        data-toggle="tooltip" data-placement="right"
-                        title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
-                     ></i>
-                </label>
+        <div class="box-login__col box-login__col--left">
+            <div class="box-login__item">
+                {{ form_row(form.email, { label: 'E-mail'|trans, rowClass: 'form-line-block js-form-field', errors_attr: { class: 'form-error--line-block' } }) }}
+            </div>
+            <div class="box-login__item">
+                {{ form_row(form.password, { label: 'Heslo'|trans, rowClass: 'form-line-block js-form-field', errors_attr: { class: 'form-error--line-block' } }) }}
+            </div>
+            <div class="box-login__item box-login__item--checkbox">
+                <div class="form-choice">
+                    {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
+                    <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
+                        {{ 'Remember my login'|trans }}
+                        <i class="svg svg-info in-icon in-icon--info js-tooltip"
+                            data-toggle="tooltip" data-placement="right"
+                            title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
+                        ></i>
+                    </label>
+                </div>
+            </div>
+            <div class="box-login__buttons">
+                <div class="box-login__item box-login__item--submit">
+                    {{ form_widget(form.login, { label: 'Přihlásit'|trans, attr: { 'class': 'btn--outline btn--login' }}) }}
+                </div>
+                <div class="box-login__alert">
+                    <img class="box-login__alert__icon" src="{{ asset('public/frontend/images/warning.svg') }}" alt="{{ 'Forgot your password?'|trans }}">
+                    <span class="box-login__alert__text">{{ 'Forgot your password?'|trans }}</span>
+                    <a class="box-login__alert__link box-login__alert__link--secondary" href="{{ url('front_registration_reset_password') }}">{{ 'Zapoměli jste heslo?'|trans }}</a>
+                    <a class="box-login__alert__link box-login__alert__link--primary" href="{{ url('front_registration_reset_password') }}">{{ 'Obnovte si ho'|trans }}</a>
+                </div>
             </div>
         </div>
-
-        <div class="box-login__item box-login__item--submit">
-            {{ form_widget(form.login, {label: 'Log in'|trans}) }}
-        </div>
-
-        <div class="box-login__item box-login__item--info">
-            <a href="{{ url('front_registration_reset_password') }}">{{ 'Forgot your password?'|trans }}</a>
-        </div>
-        <div class="box-login__item box-login__item--info">
-            <a href="{{ url('front_registration_register') }}" class="js-registration-link-desktop">{{ 'Registration'|trans }}</a>
+        <div class="box-login__col box-login__col--right">
+            <div class="box-login__profile">
+                <strong class="box-login__profile__text">{{ 'Ještě nemáte<br>Váš Sconto profil?'|transHtml }}</strong>
+                <div class="box-login__profile__icon">
+                    <picture>
+                        <source srcset="{{ asset('public/frontend/images/qmark2x.png') }} 2x" />
+                        <img class="box-login__profile__icon__img" loading="lazy" src="" data-src="{{ asset('public/frontend/images/qmark.png') }}" alt="{{ 'Sconto profil'|trans }}">
+                    </picture>
+                </div>
+            </div>
+            <p class="box-login__message">{{ 'Tuny slev lorem ipsum dolor sit amet, consestur adpising elit.'|trans }}</p>
+            <a href="{{ url('front_registration_register') }}" class="btn btn--secondary btn--full-width btn--registration js-registration-link-desktop">{{ 'Registrujte se'|trans }}</a>
         </div>
     </div>
 

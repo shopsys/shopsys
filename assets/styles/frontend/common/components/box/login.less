@@ -1,19 +1,55 @@
 .box-login {
+    position: relative;
+
+    @media @query-md {
+        display: flex;
+        align-items: flex-end;
+
+        &::before {
+            position: absolute;
+            left: calc(50% - 1px);
+            height: 100%;
+            width: 1px;
+            content: '';
+
+            background-color: @color-border-light;
+        }
+    }
+
+    &__col {
+        @media @query-md {
+            width: 50%;
+
+            &--left {
+                padding-right: 1.25rem;
+            }
+
+            &--right {
+                padding-left: 1.25rem;
+            }
+        }
+    }
+
     &__title {
         margin-bottom: @margin-gap;
     }
 
     &__item {
         margin-bottom: 5px;
-        margin-right: @margin-gap;
 
         &--checkbox {
-            margin-top: 10px;
+            display: none;
         }
 
         &--submit {
-            margin-top: @margin-gap;
-            margin-bottom: @margin-gap;
+            order: 1;
+            margin: 0;
+            text-align: right;
+
+            @media @query-md {
+                margin-top: @margin-gap;
+                margin-bottom: @margin-gap * 1.5;
+            }
         }
 
         &--info {
@@ -22,6 +58,148 @@
 
         .input {
             width: 100%;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 1.25rem;
+        margin-bottom: 2.5rem;
+
+        border-bottom: 1px solid @color-border-light;
+
+        @media @query-md {
+            display: block;
+            padding-bottom: 0;
+            margin-bottom: 0;
+
+            border: 0;
+        }
+    }
+
+    &__alert {
+        display: flex;
+        align-items: center;
+        padding: 0.35rem 0.5rem;
+        min-height: 43px;
+
+        border: 2px solid @color-border-light;
+        border-radius: @radius;
+        font-size: 14px;
+        color: @color-primary;
+
+        @media @query-md {
+            padding: 0.5rem 0.75rem;
+        }
+
+        &__icon {
+            display: none;
+
+            @media screen and (min-width: 360px) {
+                display: block;
+                width: 24px;
+                height: 24px;
+                margin: 0 5px 0 -7px;
+            }
+
+            @media screen and (min-width: 370px) {
+                width: 28px;
+                height: 28px;
+                margin: 0 8px 0 -5px;
+            }
+        }
+
+        &__text {
+            display: none;
+
+            @media @query-md {
+                display: block;
+                flex-grow: 1;
+            }
+        }
+
+        &__link {
+            text-decoration: underline;
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            &--primary {
+                display: none;
+
+                @media @query-md {
+                    display: block;
+
+                    font-family: @font-quartenary;
+                    color: @color-primary;
+                }
+            }
+
+            &--secondary {
+                display: block;
+
+                font-size: 13px;
+
+                @media @query-md {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    &__profile {
+        position: relative;
+        padding: 1rem;
+        margin: 1.5rem -15px 1.5rem 0;
+
+        background-color: @color-light-secondary;
+        border-top-left-radius: @radius;
+        border-bottom-left-radius: @radius;
+
+        @media @query-md {
+            margin: 0 -@window-popup-inner-padding 0 0;
+        }
+
+        &__icon {
+            position: absolute;
+            right: 40px;
+            top: -20px;
+            height: 102px;
+            overflow: hidden;
+
+            @media @query-md {
+                height: 108px;
+            }
+
+            &__img {
+                max-width: none;
+            }
+        }
+
+        &__text {
+            display: block;
+
+            font-family: @font-quartenary;
+            font-size: 18px;
+            font-weight: 400;
+            color: @color-primary;
+            line-height: 1.4;
+
+            @media @query-md {
+                font-size: 20px;
+            }
+        }
+    }
+
+    &__message {
+        display: none;
+
+        @media @query-md {
+            display: block;
+            margin-bottom: @margin-gap * 1.5;
         }
     }
 }

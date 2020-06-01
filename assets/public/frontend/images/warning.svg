@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>Icon/Warning</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icon/Warning" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+        <path d="M11.1575664,3.47451743 C11.5276528,2.84182752 12.462608,2.84182752 12.8424336,3.47451743 L12.8424336,3.47451743 L21.8705947,18.5835301 C22.2406812,19.21622 21.7732036,20 21.0232916,20 L21.0232916,20 L2.97670843,20 C2.22679645,20 1.75931885,19.21622 2.12940528,18.5835301 L2.12940528,18.5835301 Z M13,15 L11,15 L11,17 L13,17 L13,15 Z M12,9 C11.45,9 11,9.45 11,10 L11,10 L11,12 C11,12.55 11.45,13 12,13 C12.55,13 13,12.55 13,12 L13,12 L13,10 C13,9.45 12.55,9 12,9 Z" id="Combined-Shape" fill="#E30513"></path>
+    </g>
+</svg>

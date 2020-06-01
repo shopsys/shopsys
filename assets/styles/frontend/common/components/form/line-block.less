@@ -3,8 +3,12 @@
 
 .form-line-block {
     position: relative;
-    margin: 0 0 @form-line-block-margin-bottom;
+    margin: 0 0 @form-line-block-margin-bottom + 5;
     padding: 0;
+
+    @media @query-md {
+        margin-bottom: @form-line-block-margin-bottom;
+    }
 
     dt {
         margin: 0 0 @form-line-block-label-field-gap;
@@ -21,5 +25,28 @@
 
     .input {
         width: 100%;
+        transition: padding .2s ease-in-out;
+        will-change: padding;
+    }
+
+    label {
+        position: absolute;
+        left: 10px;
+        top: 15px;
+        z-index: 1;
+
+        transition: transform .2s ease-in-out;
+        transform-origin: top left;
+        will-change: transform;
+    }
+
+    &.is-focused {
+        label {
+            transform: scale(0.8) translateY(-12px);
+        }
+
+        .input {
+            padding-top: 18px;
+        }
     }
 }
