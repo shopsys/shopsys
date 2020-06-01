@@ -90,7 +90,7 @@ for POD_INDEX in "${!DEPLOYED_WEBSERVER_PHP_FPM_PODS[@]}"
 do
     POD=${DEPLOYED_WEBSERVER_PHP_FPM_PODS[$POD_INDEX]}
     if [ $POD_INDEX -eq 0 ] && [ $EXIT_CODE -eq "0" ]; then
-      kubectl exec ${POD} --namespace=${PROJECT_NAME} ./phing maintenance-off deploy-part-2-lock-release clean-redis-old
+      kubectl exec ${POD} --namespace=${PROJECT_NAME} ./phing maintenance-off clean-redis-old
     fi
 
     if [ $FIRST_DEPLOY -eq "1" ]; then
