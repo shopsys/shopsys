@@ -1,6 +1,7 @@
 import 'jquery-ui/slider';
 
-import { parseNumber, formatDecimalNumber } from 'framework/common/utils/number';
+import { formatDecimalNumber } from 'framework/common/utils/number';
+import parseNumberFixed from '../utils/numbers';
 import Register from 'framework/common/utils/Register';
 
 export default class RangeSlider {
@@ -9,20 +10,58 @@ export default class RangeSlider {
         this.$sliderElement = $sliderElement;
         this.$minimumInput = $('#' + this.$sliderElement.data('minimumInputId'));
         this.$maximumInput = $('#' + this.$sliderElement.data('maximumInputId'));
-        this.minimalValue = parseNumber(this.$sliderElement.data('minimalValue'));
-        this.maximalValue = parseNumber(this.$sliderElement.data('maximalValue'));
+        this.minimalValue = parseNumberFixed(this.$sliderElement.data('minimalValue'));
+        this.maximalValue = parseNumberFixed(this.$sliderElement.data('maximalValue'));
         this.decimals = typeof this.$sliderElement.data('decimals') !== 'undefined' ? this.$sliderElement.data('decimals') : 2;
         this.steps = 100;
     }
 
     static updateSliderMinimum (rangeSlider) {
-        const value = parseNumber(rangeSlider.$minimumInput.val()) || rangeSlider.minimalValue;
+        let value = parseNumberFixed(rangeSlider.$minimumInput.val());
+        const currentMaxValue = parseNumberFixed(rangeSlider.$maximumInput.val());
+
+        if (value == null) {
+            value = rangeSlider.minimalValue;
+        }
+
+        if (value > rangeSlider.maximalValue) {
+            value = rangeSlider.maximalValue;
+            rangeSlider.$minimumInput.val(value);
+        }
+        if (value < rangeSlider.minimalValue) {
+            value = rangeSlider.minimalValue;
+            rangeSlider.$minimumInput.val(value);
+        }
+        if (currentMaxValue != null && value > currentMaxValue) {
+            value = currentMaxValue;
+            rangeSlider.$minimumInput.val(value);
+        }
+
         const step = rangeSlider.getStepFromValue(value);
         rangeSlider.$sliderElement.slider('values', 0, step);
     }
 
     static updateSliderMaximum (rangeSlider) {
-        const value = parseNumber(rangeSlider.$maximumInput.val()) || rangeSlider.maximalValue;
+        let value = parseNumberFixed(rangeSlider.$maximumInput.val());
+        const currentMinValue = parseNumberFixed(rangeSlider.$minimumInput.val());
+
+        if (value == null) {
+            value = rangeSlider.maximalValue;
+        }
+
+        if (value > rangeSlider.maximalValue) {
+            value = rangeSlider.maximalValue;
+            rangeSlider.$maximumInput.val(value);
+        }
+        if (value < rangeSlider.minimalValue) {
+            value = rangeSlider.minimalValue;
+            rangeSlider.$maximumInput.val(value);
+        }
+        if (currentMinValue != null && value < currentMinValue) {
+            value = currentMinValue;
+            rangeSlider.$maximumInput.val(value);
+        }
+
         const step = rangeSlider.getStepFromValue(value);
         rangeSlider.$sliderElement.slider('values', 1, step);
     }
