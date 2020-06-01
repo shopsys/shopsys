@@ -3,7 +3,7 @@
     value:
         name: upgrade-application
         image: "{{TAG}}"
-        command: ["sh", "-c", "cd /var/www/html && ./phing db-migrations-count-with-maintenance build-deploy-part-2-db-dependent"]
+        command: ["sh", "-c", "cd /var/www/html && ./phing build-deploy-part-2-only-on-first-pod"]
         securityContext:
             runAsUser: 33
         volumeMounts:
