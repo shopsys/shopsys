@@ -61,6 +61,7 @@ class CategorySeoFilterFormType extends AbstractType
                 'choice_value' => 'id',
                 'multiple' => true,
                 'expanded' => true,
+                'required' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => t('Zobrazit kombinace'),
