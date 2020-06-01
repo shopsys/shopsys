@@ -17,7 +17,6 @@ class SubscriptionFormTypeTest extends TypeTestCase
         $data = [
             'email' => 'no-reply@shopsys.com',
             'email2' => null,
-            'privacyPolicyAgreement' => true,
         ];
 
         $form = $this->factory->create(SubscriptionFormType::class);
@@ -66,12 +65,6 @@ class SubscriptionFormTypeTest extends TypeTestCase
                 'data' => [
                     'email' => 'no-reply@shopsys.com',
                     'email2' => 'honeypot-filled',
-                ],
-            ],
-            [
-                'data' => [
-                    'email' => 'no-reply@shopsys.com',
-                    'privacyPolicyAgreement' => false,
                 ],
             ],
         ];
