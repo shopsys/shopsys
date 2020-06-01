@@ -38,19 +38,35 @@ export default class ProductList {
     }
 
     reloadWithAjax (productList) {
+        let url = null;
+        let queryData = '';
+
         const $productFilterForm = $('form[name="product_filter_form"]');
-        const categoryUrl = $('.js-ready-category-seo-mix-values').data('category-url');
-        let data = $productFilterForm.serialize()
-            .replace(/(&|^)product_filter_form%5BminimalPrice%5D=(&|$)/g, '$2')
-            .replace(/(&|^)product_filter_form%5BmaximalPrice%5D=(&|$)/g, '$2');
+        if ($productFilterForm.length > 0) {
+            url = $('.js-ready-category-seo-mix-values').data('category-url');
+            queryData = $productFilterForm.serialize()
+                .replace(/(&|^)product_filter_form%5BminimalPrice%5D=(&|$)/g, '$2')
+                .replace(/(&|^)product_filter_form%5BmaximalPrice%5D=(&|$)/g, '$2');
+        } else {
+            let urlObject = new URL(location.href);
+            let params = new URLSearchParams(urlObject.search.slice(1));
+
+            params.delete('page');
+            queryData = params.toString();
+        }
+
+        url = url || getBaseUrl();
 
         Ajax.ajax({
             overlayDelay: 0,
-            url: categoryUrl,
-            data: data,
+            url: url,
+            data: queryData,
             success: function (data) {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
                 productList.showProducts($wrappedData);
+                if ($wrappedData.filterAllNodes('.js-ready-category-seo-mix-values').length === 0) {
+                    pushReloadState(url + (queryData ? '?' : '') + queryData);
+                }
             }
         });
     }
