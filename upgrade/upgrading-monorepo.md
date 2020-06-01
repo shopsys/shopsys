@@ -17,7 +17,9 @@ Typical upgrade sequence should be:
 
 ## [From v8.0.0 to v8.1.0]
 
-## [From v7.3.3 to v7.3.4-dev]
+## [From v7.3.4 to v7.3.5-dev]
+
+## [From v7.3.3 to v7.3.4]
 
 ## [From v7.3.2 to v7.3.3]
 
@@ -165,7 +167,8 @@ Typical upgrade sequence should be:
 [From v8.0.0 to v8.1.0]: https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0
 [From v7.3.2 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.2...v8.0.0
 [From v7.3.1 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.1...v8.0.0
-[From v7.3.3 to v7.3.4-dev]: https://github.com/shopsys/shopsys/compare/v7.3.3...7.3
+[From v7.3.4 to v7.3.5-dev]: https://github.com/shopsys/shopsys/compare/v7.3.4...7.3
+[From v7.3.3 to v7.3.4]: https://github.com/shopsys/shopsys/compare/v7.3.3...v7.3.4
 [From v7.3.2 to v7.3.3]: https://github.com/shopsys/shopsys/compare/v7.3.2...v7.3.3
 [From v7.3.1 to v7.3.2]: https://github.com/shopsys/shopsys/compare/v7.3.1...v7.3.2
 [From v7.3.0 to v7.3.1]: https://github.com/shopsys/shopsys/compare/v7.3.0...v7.3.1

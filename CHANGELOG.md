@@ -29,8 +29,31 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
-## [v8.1.1](https://github.com/shopsys/shopsys/compare/v8.1.0...v8.1.1) - 2020-01-17
+## [v7.3.4](https://github.com/shopsys/shopsys/compare/v7.3.3...v7.3.4) - 2020-05-29
 
+### [shopsys/framework]
+
+#### Fixed
+
+- [#1868] fixed unique email validation in administration
+- [#1865] updated snc/redis-bundle version
+- [#1790] fp/jsformvalidator-bundle is pinned to minor 1.5
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1864] added double submit protection
+
+#### Fixed
+
+- [#1391] fix issues with QueryBuilderExtender's method AddOrExtendJoin, Thanks to [@pk16011990]
+
+### [shopsys/product-feed-heureka]
+
+- [#1670] Preserve relation between categories and Heureka categories, Thanks to [@pk16011990]
+
+## [v8.1.1](https://github.com/shopsys/shopsys/compare/v8.1.0...v8.1.1) - 2020-01-17
 
 ### [shopsys/project-base]
 
@@ -3072,3 +3095,9 @@ That's why is this section formatted differently.
 [#1285]: https://github.com/shopsys/shopsys/pull/1285
 [#1276]: https://github.com/shopsys/shopsys/pull/1276
 [@mariusbuescher]: https://github.com/mariusbuescher
+[#1868]: https://github.com/shopsys/shopsys/pull/1868
+[#1865]: https://github.com/shopsys/shopsys/pull/1865
+[#1864]: https://github.com/shopsys/shopsys/pull/1864
+[#1790]: https://github.com/shopsys/shopsys/pull/1790
+[#1670]: https://github.com/shopsys/shopsys/pull/1670
+[#1391]: https://github.com/shopsys/shopsys/pull/1391
