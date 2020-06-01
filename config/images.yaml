@@ -98,6 +98,7 @@
             crop: true
             occurrence: 'Front-end: Main page slider'
             additionalSizes:
+                - {width: 400, height: 165, media: "(max-width: 480px)"}
                 - {width: 730, height: 230, media: "(max-width: 1024px)"}
 
 -   name: transport
