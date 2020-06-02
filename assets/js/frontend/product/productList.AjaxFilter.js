@@ -1,6 +1,5 @@
 import Register from 'framework/common/utils/Register';
 import Ajax from 'framework/common/utils/Ajax';
-import getBaseUrl from '../utils/getBaseUrl';
 import pushReloadState from '../components/pushReloadState';
 
 export default class ProductListAjaxFilter {
@@ -17,7 +16,6 @@ export default class ProductListAjaxFilter {
         this.$productFilterForm.on('change', () => {
             clearTimeout(_this.requestTimer);
             _this.requestTimer = setTimeout(() => _this.submitFormWithAjax(_this), _this.requestDelay);
-            pushReloadState(getBaseUrl() + '?' + _this.$productFilterForm.serialize());
         });
 
         this.$showResultsButton.on('click', () => {
@@ -96,10 +94,13 @@ export default class ProductListAjaxFilter {
     }
 
     submitFormWithAjax (productListAjaxFilter) {
+        let data = productListAjaxFilter.$productFilterForm.serialize()
+            .replace(/(&|^)product_filter_form%5BminimalPrice%5D=(&|$)/g, '$2')
+            .replace(/(&|^)product_filter_form%5BmaximalPrice%5D=(&|$)/g, '$2');
         Ajax.ajax({
             overlayDelay: 0,
-            url: getBaseUrl(),
-            data: productListAjaxFilter.$productFilterForm.serialize(),
+            url: productListAjaxFilter.$productFilterForm.attr('action'),
+            data: data,
             success: function (data) {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
 

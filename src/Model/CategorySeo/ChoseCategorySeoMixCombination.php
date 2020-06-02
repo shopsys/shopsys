@@ -159,7 +159,7 @@ class ChoseCategorySeoMixCombination
      * @param int $categoryId
      * @param int|null $flagId
      * @param string|null $ordering
-     * @param array $parameterValueIdsByParameterIds
+     * @param int[] $parameterValueIdsByParameterIds
      * @return array
      */
     public static function getChoseCategorySeoMixCombinationArray(
@@ -169,6 +169,7 @@ class ChoseCategorySeoMixCombination
         ?string $ordering,
         array $parameterValueIdsByParameterIds
     ): array {
+        ksort($parameterValueIdsByParameterIds);
         return [
             'domainId' => $domainId,
             'categoryId' => $categoryId,

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator;
 use App\Form\Front\Product\ProductFilterFormType;
+use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Category\CategoryParameterFacade;
 use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
+use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
+use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
@@ -15,7 +19,6 @@ use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\ProductFacade;
 use App\Model\Product\Series\ProductSeriesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
@@ -28,7 +31,9 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSear
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Twig\RequestExtension;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ProductController extends FrontBaseController
 {
@@ -132,6 +137,11 @@ class ProductController extends FrontBaseController
     private $productPackageFacade;
 
     /**
+     * @var \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator
+     */
+    private $categorySeoMixUrlGenerator;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Component\Domain\Domain $domain
@@ -151,6 +161,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
      * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
+     * @param \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -171,7 +182,8 @@ class ProductController extends FrontBaseController
         SeoSettingFacade $seoSettingFacade,
         CategoryParameterFacade $categoryParameterFacade,
         ProductSeriesFacade $productSeriesFacade,
-        ProductPackageFacade $productPackageFacade
+        ProductPackageFacade $productPackageFacade,
+        CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -192,6 +204,7 @@ class ProductController extends FrontBaseController
         $this->categoryParameterFacade = $categoryParameterFacade;
         $this->productSeriesFacade = $productSeriesFacade;
         $this->productPackageFacade = $productPackageFacade;
+        $this->categorySeoMixUrlGenerator = $categorySeoMixUrlGenerator;
     }
 
     /**
@@ -263,6 +276,7 @@ class ProductController extends FrontBaseController
     public function listByCategoryAction(Request $request, int $id, ?int $readyCategorySeoMixId = null)
     {
         $category = $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $id);
+        $readyCategorySeoMix = $this->findReadyCategorySeoMix($readyCategorySeoMixId, $request, $category);
 
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
         if (!$this->isRequestPageValid($requestPage)) {
@@ -272,7 +286,7 @@ class ProductController extends FrontBaseController
 
         $orderingModeId = $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest(
             $request,
-            $readyCategorySeoMixId
+            $readyCategorySeoMix
         );
 
         $productFilterData = new ProductFilterData();
@@ -309,16 +323,46 @@ class ProductController extends FrontBaseController
             'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId()),
             'priceRange' => $productFilterConfig->getPriceRange(),
             'categoryProductSeries' => $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category),
-            'readyCategorySeoMixId' => $readyCategorySeoMixId,
+            'readyCategorySeoMixId' => $readyCategorySeoMix === null ? null : $readyCategorySeoMix->getId(),
             'filterCollapsedParameters' => $this->categoryParameterFacade->getParametersCollapsedIndexedByIdForCategory($category),
         ];
 
-        $viewParameters = array_merge($viewParameters, $this->getAdditionalSeoViewParameters($category, $readyCategorySeoMixId));
+        $viewParameters = array_merge(
+            $viewParameters,
+            $this->getAdditionalSeoViewParameters(
+                $category,
+                $readyCategorySeoMix
+            )
+        );
 
         if ($request->isXmlHttpRequest()) {
+            $viewParameters['url'] = $this->categorySeoMixUrlGenerator->generateUrlWithFallbackToProductList(
+                $category->getId(),
+                $request->query->all(),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            );
+
             return $this->render('Front/Content/Product/ajaxList.html.twig', $viewParameters);
         } else {
-            return $this->render('Front/Content/Product/list.html.twig', $viewParameters);
+            $response = $this->render('Front/Content/Product/list.html.twig', $viewParameters);
+
+            // Direct access on SeoMixUrl with ordering lost ordering after change in filter - This prevent it
+            if ($readyCategorySeoMix !== null && $readyCategorySeoMix->getOrdering() !== null) {
+                $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
+                // The cookie must have httpOnly=false, because It is edited by JS
+                $cookie = Cookie::create(
+                    $productListOrderingConfig->getCookieName(),
+                    $readyCategorySeoMix->getOrdering(),
+                    0,
+                    '/',
+                    null,
+                    null,
+                    false
+                );
+                $response->headers->setCookie($cookie);
+            }
+
+            return $response;
         }
     }
 
@@ -421,22 +465,23 @@ class ProductController extends FrontBaseController
 
     /**
      * @param \App\Model\Category\Category $category
-     * @param int|null $readyCategorySeoMixId
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return string[]
      */
-    private function getAdditionalSeoViewParameters(Category $category, ?int $readyCategorySeoMixId = null): array
-    {
+    private function getAdditionalSeoViewParameters(
+        Category $category,
+        ?ReadyCategorySeoMix $readyCategorySeoMix
+    ): array {
         $domainId = $this->domain->getId();
 
-        if ($readyCategorySeoMixId === null) {
+        $categoryUrl = $this->generateUrl('front_product_list', ['id' => $category->getId()]);
+        if ($readyCategorySeoMix === null) {
             $seoH1 = $category->getSeoH1($domainId);
             $description = $category->getDescription($domainId);
             $shortDescription = $category->getShortDescription($domainId);
             $seoTitle = $category->getSeoTitle($domainId);
             $seoMetaDescription = $category->getSeoMetaDescription($domainId);
         } else {
-            $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($readyCategorySeoMixId);
-
             $seoH1 = $readyCategorySeoMix->getH1();
             $description = $readyCategorySeoMix->getDescription() ?? $category->getDescription($domainId);
             $shortDescription = $readyCategorySeoMix->getShortDescription() ?? $category->getShortDescription($domainId);
@@ -462,6 +507,7 @@ class ProductController extends FrontBaseController
             'shortDescription' => $shortDescription,
             'seoTitle' => $seoTitle,
             'seoMetaDescription' => $seoMetaDescription,
+            'categoryUrl' => $categoryUrl,
         ];
     }
 
@@ -515,10 +561,14 @@ class ProductController extends FrontBaseController
     public function selectOrderingModeForListAction(Request $request, ?int $readyCategorySeoMixId = null)
     {
         $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
+        $readyCategorySeoMix = null;
+        if ($readyCategorySeoMixId !== null) {
+            $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($readyCategorySeoMixId);
+        }
 
         $orderingModeId = $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest(
             $request,
-            $readyCategorySeoMixId
+            $readyCategorySeoMix
         );
 
         return $this->render('Front/Content/Product/orderingSetting.html.twig', [
@@ -584,5 +634,31 @@ class ProductController extends FrontBaseController
         $parameters = $this->requestExtension->getAllRequestParams();
         unset($parameters[self::PAGE_QUERY_PARAMETER]);
         return $parameters;
+    }
+
+    /**
+     * @param int|null $readyCategorySeoMixId
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Model\Category\Category $category
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix|null
+     */
+    private function findReadyCategorySeoMix(?int $readyCategorySeoMixId, Request $request, Category $category): ?ReadyCategorySeoMix
+    {
+        $readyCategorySeoMix = null;
+
+        if ($readyCategorySeoMixId !== null) {
+            $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($readyCategorySeoMixId);
+        } elseif ($request->isXmlHttpRequest()) {
+            try {
+                $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getCategorySeoMixByRawQueryData(
+                    $category->getId(),
+                    $request->query->all()
+                );
+            } catch (UnableToFindReadyCategorySeoMixException $exception) {
+                // It is okay, current url is common product_list without CategorySeoMix
+            }
+        }
+
+        return $readyCategorySeoMix;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Listing;
 
+use App\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade as BaseProductListOrderingModeForListFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,15 +34,15 @@ class ProductListOrderingModeForListFacade extends BaseProductListOrderingModeFo
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int|null $readyCategorySeoMixId
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return string
      */
-    public function getOrderingModeIdFromRequest(Request $request, ?int $readyCategorySeoMixId = null)
+    public function getOrderingModeIdFromRequest(Request $request, ?ReadyCategorySeoMix $readyCategorySeoMix = null)
     {
         return $this->requestToOrderingModeIdConverter->getOrderingModeIdFromRequest(
             $request,
             $this->getProductListOrderingConfig(),
-            $readyCategorySeoMixId
+            $readyCategorySeoMix
         );
     }
 }

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use function GuzzleHttp\json_decode as guzzle_json_decode;
 
 /**
  * @ORM\Table(
@@ -69,7 +70,7 @@ class ReadyCategorySeoMix
     /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue[]|\Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue", mappedBy="readyCategorySeoMix", cascade={"persist" ,"remove"})
+     * @ORM\OneToMany(targetEntity="App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue", mappedBy="readyCategorySeoMix", cascade={"persist" ,"remove"}, fetch="EXTRA_LAZY")
      */
     private $readyCategorySeoMixParameterParameterValues;
 
@@ -195,9 +196,17 @@ class ReadyCategorySeoMix
     /**
      * @return \App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue[]
      */
-    public function getReadyCategorySeoMixParameterParameterValues()
+    public function getReadyCategorySeoMixParameterParameterValues(): array
     {
         return $this->readyCategorySeoMixParameterParameterValues->toArray();
+    }
+
+    /**
+     * @return int
+     */
+    public function countReadyCategorySeoMixParameterParameterValues()
+    {
+        return $this->readyCategorySeoMixParameterParameterValues->count();
     }
 
     /**
@@ -206,6 +215,14 @@ class ReadyCategorySeoMix
     public function getChoseCategorySeoMixCombinationJson(): string
     {
         return $this->choseCategorySeoMixCombinationJson;
+    }
+
+    /**
+     * @return array
+     */
+    public function getChoseCategorySeoMixCombination(): array
+    {
+        return guzzle_json_decode($this->choseCategorySeoMixCombinationJson, true);
     }
 
     /**

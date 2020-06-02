@@ -14,26 +14,9 @@ export default class ProductList {
 
         $container.filterAllNodes('.js-product-list-ordering-mode').click(function () {
             const cookieName = $(this).data('cookie-name');
-            const forceCookieName = 'force-' + cookieName;
             const orderingName = $(this).data('ordering-mode');
-            const isReadyCategorySeoMixPage = $(this).data('is-ready-category-seo-mix-page');
 
-            if (isReadyCategorySeoMixPage) {
-                $.cookie(forceCookieName, orderingName, {
-                    path: location.pathname,
-                    expires: 1
-                });
-
-            } else {
-                $.cookie(cookieName, orderingName, { path: '/' });
-            }
-
-            let url = new URL(location.href);
-            let params = new URLSearchParams(url.search.slice(1));
-
-            params.delete('page');
-            url = getBaseUrl() + '?' + params.toString();
-            pushReloadState(url);
+            $.cookie(cookieName, orderingName, { path: '/' });
 
             _this.reloadWithAjax(_this);
 
@@ -55,12 +38,35 @@ export default class ProductList {
     }
 
     reloadWithAjax (productList) {
+        let url = null;
+        let queryData = '';
+
+        const $productFilterForm = $('form[name="product_filter_form"]');
+        if ($productFilterForm.length > 0) {
+            url = $('.js-ready-category-seo-mix-values').data('category-url');
+            queryData = $productFilterForm.serialize()
+                .replace(/(&|^)product_filter_form%5BminimalPrice%5D=(&|$)/g, '$2')
+                .replace(/(&|^)product_filter_form%5BmaximalPrice%5D=(&|$)/g, '$2');
+        } else {
+            let urlObject = new URL(location.href);
+            let params = new URLSearchParams(urlObject.search.slice(1));
+
+            params.delete('page');
+            queryData = params.toString();
+        }
+
+        url = url || getBaseUrl();
+
         Ajax.ajax({
             overlayDelay: 0,
-            url: location.href,
+            url: url,
+            data: queryData,
             success: function (data) {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
                 productList.showProducts($wrappedData);
+                if ($wrappedData.filterAllNodes('.js-ready-category-seo-mix-values').length === 0) {
+                    pushReloadState(url + (queryData ? '?' : '') + queryData);
+                }
             }
         });
     }
