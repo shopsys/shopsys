@@ -13,7 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CategorySeoFilterFormType extends AbstractType
 {
@@ -54,16 +55,13 @@ class CategorySeoFilterFormType extends AbstractType
                 'data' => false,
             ])
             ->add('parameters', ChoiceType::class, [
-                'required' => true,
                 'label' => t('Parametry produktů vybrané kategorie'),
                 'choices' => $this->categorySeoFacade->getParametersUsedByProductsInCategory($category, $domainId),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'multiple' => true,
                 'expanded' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'required' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => t('Zobrazit kombinace'),
@@ -86,6 +84,22 @@ class CategorySeoFilterFormType extends AbstractType
             ->setDefaults([
                 'data_class' => CategorySeoFiltersData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => [
+                    new Callback([$this, 'validate']),
+                ],
             ]);
+    }
+
+    /**
+     * @param \App\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validate(CategorySeoFiltersData $categorySeoFiltersData, ExecutionContextInterface $context): void
+    {
+        if ($categorySeoFiltersData->useFlags === false && $categorySeoFiltersData->useOrdering === false) {
+            $context->buildViolation(t('Prosím vyberte alespoň jedno z příznaků nebo řazení.'))
+                ->atPath('useFlags')
+                ->addViolation();
+        }
     }
 }
