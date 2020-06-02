@@ -66,21 +66,7 @@
                                             -
                                             {{ orderPreview.productType.name }}
                                         </h2>
-                                        {% if loop.first %}
-                                            {{ cartFreeTransportMacro.progressBar(orderPreview) }}
-                                        {% endif %}
-                                        {% if loop.last %}
-                                            <div class="box-free-transport box-free-transport--free-delivery js-not-implemented-yet">
-                                                <div class="box-free-transport__icon">
-                                                    <img class="box-free-transport__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.png') }}" alt="{{ 'Doprava zdarma'|trans }}">
-                                                </div>
-                                                <div class="box-free-transport__content">
-                                                    <div class="box-free-transport__desc">
-                                                        {{ 'Doručení na adresu <strong class="box-free-transport__desc__strong">Zdarma</strong><br>Osobní odběr na prodejnách SCONTO <strong class="box-free-transport__desc__strong">Zdarma</strong>'|trans|raw }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
+                                            {{ cartFreeTransportMacro.progressBar(orderPreview, loop) }}
                                     </div>
                                     {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
                                 </div>
