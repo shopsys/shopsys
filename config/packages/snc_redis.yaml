@@ -46,6 +46,13 @@ snc_redis:
             dsn: 'redis://%redis_host%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:twig:'
+        image:
+            type: 'phpredis'
+            alias: 'image'
+            dsn: 'redis://%redis_host%'
+            options:
+                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:image:'
+
     session:
         client: 'session'
         prefix: '%env(REDIS_PREFIX)%session:'

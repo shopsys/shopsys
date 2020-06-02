@@ -569,6 +569,15 @@ services:
         tags:
             - { name: twig.extension }
 
+    shopsys.shop.component.image.cache_provider:
+        class: Doctrine\Common\Cache\RedisCache
+        calls:
+            - { method: setRedis, arguments: ['@snc_redis.image'] }
+
+    App\Component\Image\ImageCacheFacade:
+        arguments:
+            - '@shopsys.shop.component.image.cache_provider'
+
     App\Component\Image\Kraken\KrakenConfig:
         arguments:
             $krakenConfig: "%kraken_config%"

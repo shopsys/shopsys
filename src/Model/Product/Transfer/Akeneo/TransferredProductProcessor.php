@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use App\Component\Image\Config\ImageConfig;
 use App\Component\Image\Image;
+use App\Component\Image\ImageCacheFacade;
 use App\Component\Image\ImageFacade;
 use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
@@ -91,6 +93,16 @@ class TransferredProductProcessor
     private $productSeriesFacade;
 
     /**
+     * @var \App\Component\Image\ImageCacheFacade
+     */
+    private $imageCacheFacade;
+
+    /**
+     * @var \App\Component\Image\Config\ImageConfig
+     */
+    private $imageConfig;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
@@ -103,6 +115,8 @@ class TransferredProductProcessor
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
+     * @param \App\Component\Image\Config\ImageConfig $imageConfig
+     * @param \App\Component\Image\ImageCacheFacade $imageCacheFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -116,7 +130,9 @@ class TransferredProductProcessor
         AssetTransferAkeneoFacade $assetTransferAkeneoFacade,
         FileUpload $fileUpload,
         ParameterFacade $parameterFacade,
-        ProductSeriesFacade $productSeriesFacade
+        ProductSeriesFacade $productSeriesFacade,
+        ImageConfig $imageConfig,
+        ImageCacheFacade $imageCacheFacade
     ) {
         $this->productFacade = $productFacade;
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
@@ -130,6 +146,8 @@ class TransferredProductProcessor
         $this->fileUpload = $fileUpload;
         $this->parameterFacade = $parameterFacade;
         $this->productSeriesFacade = $productSeriesFacade;
+        $this->imageCacheFacade = $imageCacheFacade;
+        $this->imageConfig = $imageConfig;
     }
 
     /**
@@ -143,6 +161,11 @@ class TransferredProductProcessor
         $this->productTransferAkeneoValidator->validate($akeneoProductData, $isMainVariant);
 
         $product = $this->findProductByIdentifier((string)$akeneoProductData['identifier'], $isMainVariant);
+        if ($product !== null) {
+            $entityName = $this->imageConfig->getEntityName($product);
+            $entityId = $product->getId();
+            $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
+        }
         $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product);
 
         if ($product === null) {
