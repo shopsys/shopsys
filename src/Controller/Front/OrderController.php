@@ -218,7 +218,6 @@ class OrderController extends FrontBaseController
             $isCompanyCustomer = $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer();
             $isWithoutRegistration = true;
         }
-
         $domainId = $this->domain->getId();
         $frontOrderFormData->domainId = $domainId;
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -252,6 +251,7 @@ class OrderController extends FrontBaseController
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
         $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
+        $prefilledCustomerEmail = $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null);
 
         $this->checkTransportAndPaymentChanges($frontOrderFormData, $splitOrderPreview);
         if ($isValid) {
@@ -301,7 +301,7 @@ class OrderController extends FrontBaseController
                     'displayFormType' => 'login',
                     'customerEmailExists' => $customerEmailExists,
                     'loginFormInOrder' => true,
-                    'prefilledCustomerEmail' => $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null),
+                    'prefilledCustomerEmail' => $prefilledCustomerEmail,
                 ]);
             }
         }
@@ -321,7 +321,7 @@ class OrderController extends FrontBaseController
             'isWithoutRegistration' => $isWithoutRegistration,
             'isCompanyCustomer' => $isCompanyCustomer,
             'displayFormType' => 'order_flow',
-            'prefilledCustomerEmail' => $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null),
+            'prefilledCustomerEmail' => ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) ? $prefilledCustomerEmail : null,
         ]);
     }
 
