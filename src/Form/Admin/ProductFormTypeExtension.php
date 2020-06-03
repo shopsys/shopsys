@@ -48,6 +48,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'productTypePlanFileUrl',
         'assemblyInstructionFileUrl',
         'productType',
+        'accessories',
         'parameters',
         'preorder',
         'saleExclusion',

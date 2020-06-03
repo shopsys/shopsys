@@ -77,6 +77,16 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     private $transferredProductProcessor;
 
     /**
+     * @var string[]
+     */
+    private $processedProductIdentifierList;
+
+    /**
+     * @var \App\Model\Product\Transfer\Akeneo\AkeneoImportProductDetailFacade
+     */
+    private $akeneoImportProductDetailFacade;
+
+    /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
@@ -89,6 +99,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade
      * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductMainVariantFacade $akeneoImportProductMainVariantFacade
      * @param \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor $transferredProductProcessor
+     * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductDetailFacade $akeneoImportProductDetailFacade
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
@@ -102,7 +113,8 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
         AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade,
         AkeneoImportProductMainVariantFacade $akeneoImportProductMainVariantFacade,
-        TransferredProductProcessor $transferredProductProcessor
+        TransferredProductProcessor $transferredProductProcessor,
+        AkeneoImportProductDetailFacade $akeneoImportProductDetailFacade
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
@@ -117,6 +129,8 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->akeneoImportProductSeriesFacade = $akeneoImportProductSeriesFacade;
         $this->akeneoImportProductMainVariantFacade = $akeneoImportProductMainVariantFacade;
         $this->transferredProductProcessor = $transferredProductProcessor;
+        $this->processedProductIdentifierList = [];
+        $this->akeneoImportProductDetailFacade = $akeneoImportProductDetailFacade;
     }
 
     /**
@@ -182,16 +196,23 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     protected function processItem($akeneoProductData): void
     {
-        $this->transferredProductProcessor->processProduct($akeneoProductData, $this->logger);
-
+        $product = $this->transferredProductProcessor->processProduct($akeneoProductData, $this->logger);
+        $this->processedProductIdentifierList[] = $product->getCatnum();
         $this->setLastUpdatedProduct($akeneoProductData['updated']);
     }
 
     protected function doAfterTransfer(): void
     {
+        $this->downloadProductDetails();
         $this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
         $this->logger->addInfo('Transfer is done.');
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
+    }
+
+    private function downloadProductDetails(): void
+    {
+        $identifierList = array_unique($this->processedProductIdentifierList);
+        $this->akeneoImportProductDetailFacade->downloadProductDetailsByIdentifierList($identifierList);
     }
 
     /**

@@ -162,6 +162,21 @@ class TransferredProductProcessor
     }
 
     /**
+     * @param array $akeneoProductDetailData
+     * @param \App\Model\Transfer\TransferLoggerInterface $logger
+     * @param bool $isMainVariant
+     */
+    public function processProductDetail(array $akeneoProductDetailData, TransferLoggerInterface $logger, bool $isMainVariant = false): void
+    {
+        $this->productTransferAkeneoValidator->validateIdentifier($akeneoProductDetailData);
+
+        $product = $this->findProductByIdentifier((string)$akeneoProductDetailData['identifier'], $isMainVariant);
+        if ($product !== null) {
+            $this->setProductAccessoriesByAkeneoProductDetailData($product, $akeneoProductDetailData, $logger);
+        }
+    }
+
+    /**
      * @param \App\Model\Product\ProductData $productData
      * @param bool $isMainVariant
      * @param \App\Model\Transfer\TransferLoggerInterface $logger
@@ -221,6 +236,37 @@ class TransferredProductProcessor
 
         $mainVariantProduct->addVariant($product);
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoProductDetailData
+     * @param \App\Model\Transfer\TransferLoggerInterface $logger
+     */
+    private function setProductAccessoriesByAkeneoProductDetailData(Product $product, array $akeneoProductDetailData, TransferLoggerInterface $logger): void
+    {
+        $accessoryCatnums = $this->productTransferAkeneoMapper->getProductAccessoryCatnumListFromAkeneoProductData($akeneoProductDetailData);
+        $accessories = $this->getAccessoriesByCatnums($accessoryCatnums);
+        $this->productFacade->refreshProductAccessories($product, $accessories);
+        $accessoriesCount = count($accessories);
+        $logger->addInfo(sprintf('Refresh %s accessories for product catnum: %s', $accessoriesCount, $product->getCatnum()));
+    }
+
+    /**
+     * @param string[] $catnums
+     * @return \App\Model\Product\Product[]
+     */
+    private function getAccessoriesByCatnums(array $catnums): array
+    {
+        $accessories = [];
+        foreach ($catnums as $catnum) {
+            $product = $this->productFacade->findOneByCatnumExcludeMainVariants($catnum);
+            if ($product !== null) {
+                $accessories[] = $product;
+            }
+        }
+
+        return $accessories;
     }
 
     /**

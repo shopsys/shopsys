@@ -164,6 +164,7 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
     {
         $akeneoProductModelData['identifier'] = $akeneoProductModelData['code'] ?? null;
         $product = $this->transferredProductProcessor->processProduct($akeneoProductModelData, $this->logger, self::IS_PRODUCT_MAIN_VARIANT);
+        $this->transferredProductProcessor->processProductDetail($akeneoProductModelData, $this->logger, self::IS_PRODUCT_MAIN_VARIANT);
 
         $this->setParametersForProductMainVariant($product, $akeneoProductModelData);
     }

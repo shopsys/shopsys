@@ -144,6 +144,29 @@ class ProductTransferAkeneoValidator
     }
 
     /**
+     * @param array $akeneoProductData
+     */
+    public function validateIdentifier(array $akeneoProductData): void
+    {
+        $fieldsValidationSetup = [
+            'identifier' => [
+                new Assert\NotBlank(),
+                new Assert\Type(['type' => 'string']),
+                new Assert\Length(['max' => 100]),
+            ],
+        ];
+
+        $violations = $this->validator->validate($akeneoProductData, new Assert\Collection([
+            'allowExtraFields' => true,
+            'fields' => $fieldsValidationSetup,
+        ]));
+
+        if (count($violations) > 0) {
+            throw new TransferInvalidDataAdministratorCriticalException($violations);
+        }
+    }
+
+    /**
      * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
      * @param array|null $data
      * @param string $validateKeyName
