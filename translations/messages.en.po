@@ -346,6 +346,9 @@ msgstr ""
 msgid "Number of items"
 msgstr ""
 
+msgid "Of course, you can unsubscribe at any time. By submitting the data, you agree to the processing of personal data."
+msgstr ""
+
 msgid "Ok"
 msgstr ""
 

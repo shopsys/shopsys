@@ -349,6 +349,9 @@ msgstr "Není z čeho vybírat."
 msgid "Number of items"
 msgstr "Počet položek"
 
+msgid "Of course, you can unsubscribe at any time. By submitting the data, you agree to the processing of personal data."
+msgstr "Samozřejmě se můžete kdykoliv odhlásit. Odesláním údajů souhlasíte se zpracováním osobních údajů."
+
 msgid "Ok"
 msgstr ""
 
@@ -819,4 +822,3 @@ msgstr ""
 
 msgid "Tento způsob platby je skrytý systémem GoPay."
 msgstr ""
-
