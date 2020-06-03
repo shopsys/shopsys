@@ -65,13 +65,25 @@
     &--primary {
         color: @btn-primary-color;
         background-color: @btn-primary-bg;
-        background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
+        background: linear-gradient(to bottom, @btn-primary-bg, #ffb900 60%);
         -webkit-font-smoothing: antialiased;
+        transition: box-shadow @transition;
 
         &:hover {
             color: @btn-primary-color-hover;
             background: @btn-primary-bg-hover;
-            background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
+            background: linear-gradient(to bottom, @btn-primary-bg, #ffb900 60%);
+            box-shadow: 0 0 10px 0 rgba(#ffb900, .8);
+        }
+
+        &--v2 {
+            padding-left: 2rem;
+            padding-right: 2rem;
+
+            text-transform: none;
+            font-size: 15px;
+            font-family: @font-quartenary;
+            letter-spacing: 0;
         }
     }
 

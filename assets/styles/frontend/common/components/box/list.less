@@ -119,20 +119,23 @@
         @media @query-xl {
             width: @web-panel-width-xl;
         }
+
+        & + .box-list__content {
+            @media @query-lg {
+                padding-left: @web-panel-gap * 1.5;
+                width: calc(100% - @web-panel-width-lg);
+            }
+
+            @media @query-xl {
+                width: calc(100% - @web-panel-width-xl);
+            }
+        }
     }
 
     &__content {
         display: flex;
         flex-direction: column;
-
-        @media @query-lg {
-            padding-left: @web-panel-gap * 1.5;
-            width: calc(100% - @web-panel-width-lg);
-        }
-
-        @media @query-xl {
-            width: calc(100% - @web-panel-width-xl);
-        }
+        width: 100%;
     }
 
     &__description {
