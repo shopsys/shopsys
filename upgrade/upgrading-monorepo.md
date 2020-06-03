@@ -15,7 +15,7 @@ Typical upgrade sequence should be:
 
 ## [From v9.0.0 to v9.1.0-dev]
 
-## [From v8.1.1 to v9.0.0]
+## [From v8.1.2 to v9.0.0]
 
 - upgrade postgres server running in Docker
     - dump current database by running `docker-compose exec postgres pg_dumpall -l <database_name> -f /var/lib/postgresql/data/<database_name>.backup` (in case you are using more databases repeat this step for each database)
@@ -27,21 +27,23 @@ Typical upgrade sequence should be:
                 postgres:
         -           image: postgres:10.5-alpine
         +           image: postgres:12.1-alpine
-        ``` 
+        ```
 
     - rebuild and create containers with `docker-compose up -d --build`
     - import dumped data into new database server by running `docker-compose exec postgres psql -f /var/lib/postgresql/data/<database_name>.backup <database_name>` (this needs to be done for each database dumped from first step)
     - if everything works well you may remove backuped data `rm -r var/postgres-data/pgdata.old`
 
+## [From v8.1.1 to v8.1.2]
+
 ## [From v8.1.0 to v8.1.1]
 
 ## [From v8.0.0 to v8.1.0]
 
-# [From v8.0.0 to v8.0.1-dev]
+## [From v7.3.4 to v8.0.0]
 
-## [From v7.3.3 to v8.0.0]
+## [From v7.3.4 to v7.3.5-dev]
 
-## [From v7.3.3 to v7.3.4-dev]
+## [From v7.3.3 to v7.3.4]
 
 ## [From v7.3.2 to v7.3.3]
 - add mkdocs container to your `docker-compose.yml` to be able to see rendered documentation ([#1432](https://github.com/shopsys/shopsys/pull/1432))
@@ -171,7 +173,7 @@ Typical upgrade sequence should be:
         - run `docker-sync clean` so your volumes will be removed
         - remove excluding of `docs` folder from `docker-sync.yml`
         - run `docker-sync start` to create volumes
-    - run `docker-compose up -d --build --force-recreate` to start application  
+    - run `docker-compose up -d --build --force-recreate` to start application
 - *(low priority)* [#551 - github token erase](https://github.com/shopsys/shopsys/pull/551)
     - you can stop providing the `github_oauth_token` in your `docker-compose.yml`
 
@@ -182,13 +184,16 @@ Typical upgrade sequence should be:
     - execute `docker-compose up -d --build`, microservices should be up and running
 
 [From v9.0.0 to v9.1.0-dev]: https://github.com/shopsys/shopsys/compare/v9.0.0...master
-[From v8.1.1 to v9.0.0]: https://github.com/shopsys/shopsys/compare/v8.1.1...v9.0.0
+[From v8.1.2 to v9.0.0]: https://github.com/shopsys/shopsys/compare/v8.1.2...v9.0.0
+[From v8.1.1 to v8.1.2]: https://github.com/shopsys/shopsys/compare/v8.1.1...v8.1.2
 [From v8.1.0 to v8.1.1]: https://github.com/shopsys/shopsys/compare/v8.1.0...v8.1.1
 [From v8.0.0 to v8.0.1-dev]: https://github.com/shopsys/shopsys/compare/v8.0.0...8.0
 [From v8.0.1-dev to v8.1.0]: https://github.com/shopsys/shopsys/compare/8.0...v8.1.0
 [From v8.0.0 to v8.1.0]: https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0
 [From v7.3.2 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.2...v8.0.0
-[From v7.3.3 to v7.3.4-dev]: https://github.com/shopsys/shopsys/compare/v7.3.3...7.3
+[From v7.3.4 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.4...v8.0.0
+[From v7.3.4 to v7.3.5-dev]: https://github.com/shopsys/shopsys/compare/v7.3.4...7.3
+[From v7.3.3 to v7.3.4]: https://github.com/shopsys/shopsys/compare/v7.3.3...v7.3.4
 [From v7.3.2 to v7.3.3]: https://github.com/shopsys/shopsys/compare/v7.3.2...v7.3.3
 [From v7.3.1 to v7.3.2]: https://github.com/shopsys/shopsys/compare/v7.3.1...v7.3.2
 [From v7.3.0 to v7.3.1]: https://github.com/shopsys/shopsys/compare/v7.3.0...v7.3.1

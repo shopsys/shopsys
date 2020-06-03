@@ -30,6 +30,54 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
+## [v8.1.2](https://github.com/shopsys/shopsys/compare/v8.1.1...v8.1.2) - 2020-06-02
+
+### [shopsys/framework]
+
+#### Fixed
+
+- [#1868] fixed unique email validation in administration
+- [#1865] updated snc/redis-bundle version
+- [#1790] fp/jsformvalidator-bundle is pinned to minor 1.5
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1864] added double submit protection
+
+#### Fixed
+
+- [#1391] fix issues with QueryBuilderExtender's method AddOrExtendJoin, Thanks to [@pk16011990]
+
+### [shopsys/product-feed-heureka]
+
+- [#1670] Preserve relation between categories and Heureka categories, Thanks to [@pk16011990]
+
+## [v7.3.4](https://github.com/shopsys/shopsys/compare/v7.3.3...v7.3.4) - 2020-05-29
+
+### [shopsys/framework]
+
+#### Fixed
+
+- [#1868] fixed unique email validation in administration
+- [#1865] updated snc/redis-bundle version
+- [#1790] fp/jsformvalidator-bundle is pinned to minor 1.5
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1864] added double submit protection
+
+#### Fixed
+
+- [#1391] fix issues with QueryBuilderExtender's method AddOrExtendJoin, Thanks to [@pk16011990]
+
+### [shopsys/product-feed-heureka]
+
+- [#1670] Preserve relation between categories and Heureka categories, Thanks to [@pk16011990]
+
 ## [v9.0.0](https://github.com/shopsys/shopsys/compare/v7.3.3...v9.0.0) - 2020-05-25
 
 ### shopsys/backend-api
