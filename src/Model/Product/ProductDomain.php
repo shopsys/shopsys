@@ -285,9 +285,9 @@ class ProductDomain extends BaseProductDomain
 
     public function calcSellingPriceWithVat(): void
     {
-        if ($this->lowPriceWithVat && $this->lowPriceWithVat->getAmount() > 0) {
+        if ($this->lowPriceWithVat !== null && $this->lowPriceWithVat->getAmount() > 0) {
             $this->sellingPriceWithVat = $this->lowPriceWithVat;
-        } elseif ($this->highPriceWithVat->getAmount() > 0) {
+        } elseif ($this->highPriceWithVat !== null && $this->highPriceWithVat->getAmount() > 0) {
             $this->sellingPriceWithVat = $this->highPriceWithVat;
         } else {
             $this->sellingPriceWithVat = Money::zero();

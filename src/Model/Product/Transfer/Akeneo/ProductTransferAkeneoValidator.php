@@ -240,8 +240,8 @@ class ProductTransferAkeneoValidator
                             new Assert\Collection([
                                 'allowExtraFields' => true,
                                 'fields' => [
-                                    'data' => new Assert\All(
-                                        new Assert\Collection([
+                                    'data' => new Assert\Collection([
+                                        '0' => new Assert\Collection([
                                             'allowExtraFields' => true,
                                             'fields' => [
                                                 'currency' => new Assert\Required([
@@ -249,8 +249,17 @@ class ProductTransferAkeneoValidator
                                                 ]),
                                                 'amount' => new Assert\Required($asserts),
                                             ],
-                                        ])
-                                    ),
+                                        ]),
+                                        '1' => new Assert\Collection([
+                                            'allowExtraFields' => true,
+                                            'fields' => [
+                                                'currency' => new Assert\Required([
+                                                    new Assert\NotNull(),
+                                                ]),
+                                                'amount' => new Assert\Required($asserts),
+                                            ],
+                                        ]),
+                                    ]),
                                 ],
                             ]),
                         ]),
