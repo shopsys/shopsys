@@ -5,13 +5,13 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Customer\User;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
-use Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CustomerUserFormType extends AbstractType
 {
@@ -38,15 +39,28 @@ class CustomerUserFormType extends AbstractType
     private $dateTimeFormatterExtension;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
+     */
+    private $customerUserFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
+     */
+    private $customerUser;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
         PricingGroupFacade $pricingGroupFacade,
-        DateTimeFormatterExtension $dateTimeFormatterExtension
+        DateTimeFormatterExtension $dateTimeFormatterExtension,
+        CustomerUserFacade $customerUserFacade
     ) {
         $this->pricingGroupFacade = $pricingGroupFacade;
         $this->dateTimeFormatterExtension = $dateTimeFormatterExtension;
+        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**
@@ -55,23 +69,22 @@ class CustomerUserFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /* @var $customerUser \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser */
-        $customerUser = $options['customerUser'];
+        $this->customerUser = $options['customerUser'];
 
         $builderSystemDataGroup = $builder->create('systemData', GroupType::class, [
             'label' => t('System data'),
         ]);
 
-        if ($customerUser instanceof CustomerUser) {
+        if ($this->customerUser instanceof CustomerUser) {
             $builderSystemDataGroup->add('formId', DisplayOnlyType::class, [
                 'label' => t('ID'),
-                'data' => $customerUser->getId(),
+                'data' => $this->customerUser->getId(),
             ]);
             $builderSystemDataGroup->add('domainIcon', DisplayOnlyDomainIconType::class, [
                 'label' => t('Domain'),
-                'data' => $customerUser->getDomainId(),
+                'data' => $this->customerUser->getDomainId(),
             ]);
-            $pricingGroups = $this->pricingGroupFacade->getByDomainId($customerUser->getDomainId());
+            $pricingGroups = $this->pricingGroupFacade->getByDomainId($this->customerUser->getDomainId());
             $groupPricingGroupsBy = null;
         } else {
             $builderSystemDataGroup
@@ -136,10 +149,7 @@ class CustomerUserFormType extends AbstractType
                         'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
                     ]),
                     new Email(['message' => 'Please enter valid email']),
-                    new UniqueEmail([
-                        'ignoredEmail' => $customerUser !== null ? $customerUser->getEmail() : null,
-                        'domainId' => $options['domain_id'],
-                    ]),
+                    new Constraints\Callback([$this, 'validateUniqueEmail']),
                 ],
                 'label' => t('Email'),
             ])
@@ -175,15 +185,15 @@ class CustomerUserFormType extends AbstractType
                 'invalid_message' => 'Passwords do not match',
             ]);
 
-        if ($customerUser instanceof CustomerUser) {
+        if ($this->customerUser instanceof CustomerUser) {
             $builderSystemDataGroup->add('createdAt', DisplayOnlyType::class, [
                 'label' => t('Date of registration and privacy policy agreement'),
-                'data' => $this->dateTimeFormatterExtension->formatDateTime($customerUser->getCreatedAt()),
+                'data' => $this->dateTimeFormatterExtension->formatDateTime($this->customerUser->getCreatedAt()),
             ]);
 
             $builderRegisteredCustomerGroup->add('lastLogin', DisplayOnlyType::class, [
                 'label' => t('Last login'),
-                'data' => $customerUser->getLastLogin() !== null ? $this->dateTimeFormatterExtension->formatDateTime($customerUser->getLastLogin()) : t('never'),
+                'data' => $this->customerUser->getLastLogin() !== null ? $this->dateTimeFormatterExtension->formatDateTime($this->customerUser->getLastLogin()) : t('never'),
             ]);
         }
 
@@ -191,6 +201,23 @@ class CustomerUserFormType extends AbstractType
             ->add($builderSystemDataGroup)
             ->add($builderPersonalDataGroup)
             ->add($builderRegisteredCustomerGroup);
+    }
+
+    /**
+     * @param string $email
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateUniqueEmail(string $email, ExecutionContextInterface $context): void
+    {
+        /** @var \Symfony\Component\Form\Form $form */
+        $form = $context->getRoot();
+        /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData */
+        $customerUserData = $form->getData()->userData;
+
+        $domainId = $customerUserData->domainId;
+        if ($this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $domainId) !== $this->customerUser) {
+            $context->addViolation('The email is already registered on given domain.');
+        }
     }
 
     /**
