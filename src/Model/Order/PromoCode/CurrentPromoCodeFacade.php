@@ -219,17 +219,17 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
-     * @return string[]
+     * @return \App\Model\Order\PromoCode\PromoCode[]
      */
     private function fillPromoCodeDiscountsForAllProducts(array $quantifiedProducts, PromoCode $validEnteredPromoCode): array
     {
-        $promoCodeDiscountPercentPerProduct = [];
+        $promoCodePercentPerProduct = [];
         foreach ($quantifiedProducts as $quantifiedProduct) {
             $productId = $quantifiedProduct->getProduct()->getId();
-            $promoCodeDiscountPercentPerProduct[(string)$productId] = $validEnteredPromoCode->getPercent();
+            $promoCodePercentPerProduct[(string)$productId] = $validEnteredPromoCode;
         }
 
-        return $promoCodeDiscountPercentPerProduct;
+        return $promoCodePercentPerProduct;
     }
 
     /**

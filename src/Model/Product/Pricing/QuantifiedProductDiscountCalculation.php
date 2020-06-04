@@ -79,6 +79,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         Currency $currency,
         QuantifiedProduct $quantifiedProduct
     ): ?Price {
+        /** @var \App\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice */
         $vat = $quantifiedItemPrice->getVat();
         $discountMultiplier = (string)($promoCode->getPercent() / 100);
         if ($promoCode->isApplyOnSecondProduct()) {

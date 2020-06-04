@@ -6,7 +6,6 @@ namespace App\Model\Order\Preview;
 
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Pricing\ProductPriceCalculation;
-use App\Model\Product\Pricing\QuantifiedProductDiscountPromo;
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -265,7 +264,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     }
 
     /**
-     * @param \App\Model\Product\Pricing\QuantifiedProductDiscountPromo[] $quantifiedItemsDiscounts
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscounts
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     private function getTotalPriceDiscount(array $quantifiedItemsDiscounts): Price
@@ -280,28 +279,4 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 
         return $totalDiscount;
     }
-
-//    /**
-//     * @param \App\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
-//     * @param QuantifiedProductDiscountPromo[] $quantifiedItemsDiscounts
-//     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-//     */
-//    protected function getProductsPrice(array $quantifiedItemsPrices, array $quantifiedItemsDiscounts): Price
-//    {
-//        $finalPrice = Price::zero();
-//        $totalDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
-//
-//        if ($totalDiscount->getPriceWithVat()->isGreaterThan(Money::zero())) {
-//            foreach ($quantifiedItemsPrices as $quantifiedItemPrice) {
-//                $finalPrice = $finalPrice->add($quantifiedItemPrice->getTotalHighPrice());
-//            }
-//            $finalPrice = $finalPrice->subtract($totalDiscount);
-//        } else {
-//            foreach ($quantifiedItemsPrices as $quantifiedItemPrice) {
-//                $finalPrice = $finalPrice->add($quantifiedItemPrice->getTotalPrice());
-//            }
-//        }
-//
-//        return $finalPrice;
-//    }
 }
