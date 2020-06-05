@@ -11,8 +11,8 @@ Create a class extending `AdminBaseController` in `src/Controller/Admin` directo
 ```php
 namespace App\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AdminBaseController
 {
