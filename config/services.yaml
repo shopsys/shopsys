@@ -634,3 +634,5 @@ services:
             - '/var/errorPages/'
 
     Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade: '@App\Component\Error\ErrorPagesFacade'
+
+    FOS\CKEditorBundle\Config\CKEditorConfigurationInterface: '@fos_ck_editor.configuration'
