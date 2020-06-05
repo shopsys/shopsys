@@ -155,4 +155,12 @@ class Category extends BaseCategory
 
         $this->setDomains($categoryData);
     }
+
+    /**
+     * @return \App\Model\Category\CategoryDomain[]|\Doctrine\Common\Collections\Collection
+     */
+    public function getCategoryDomains()
+    {
+        return $this->domains;
+    }
 }

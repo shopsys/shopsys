@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\HorizontalMenu;
 
+use App\Component\Cache\TwigCachedMenuFacade;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 
@@ -30,21 +31,29 @@ class HorizontalMenuItemFacade
     private $horizontalMenuItemDetailFactory;
 
     /**
+     * @var \App\Component\Cache\TwigCachedMenuFacade
+     */
+    private $twigCachedMenuFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      * @param \App\Model\HorizontalMenu\HorizontalMenuItemRepository $horizontalMenuItemRepository
      * @param \App\Model\HorizontalMenu\HorizontalMenuItemCategoryFacade $horizontalMenuItemCategoryFacade
      * @param \App\Model\HorizontalMenu\HorizontalMenuItemDetailFactory $horizontalMenuItemDetailFactory
+     * @param \App\Component\Cache\TwigCachedMenuFacade $twigCachedMenuFacade
      */
     public function __construct(
         EntityManagerDecorator $entityManager,
         HorizontalMenuItemRepository $horizontalMenuItemRepository,
         HorizontalMenuItemCategoryFacade $horizontalMenuItemCategoryFacade,
-        HorizontalMenuItemDetailFactory $horizontalMenuItemDetailFactory
+        HorizontalMenuItemDetailFactory $horizontalMenuItemDetailFactory,
+        TwigCachedMenuFacade $twigCachedMenuFacade
     ) {
         $this->em = $entityManager;
         $this->horizontalMenuItemRepository = $horizontalMenuItemRepository;
         $this->horizontalMenuItemCategoryFacade = $horizontalMenuItemCategoryFacade;
         $this->horizontalMenuItemDetailFactory = $horizontalMenuItemDetailFactory;
+        $this->twigCachedMenuFacade = $twigCachedMenuFacade;
     }
 
     /**
@@ -99,6 +108,8 @@ class HorizontalMenuItemFacade
         $this->horizontalMenuItemCategoryFacade
             ->refreshCategoriesForHorizontalMenuItem($horizontalMenuItem, $horizontalMenuItemData);
 
+        $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($horizontalMenuItem->getDomainId());
+
         return $horizontalMenuItem;
     }
 
@@ -118,6 +129,8 @@ class HorizontalMenuItemFacade
         $this->horizontalMenuItemCategoryFacade
             ->refreshCategoriesForHorizontalMenuItem($horizontalMenuItem, $horizontalMenuItemData);
 
+        $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($horizontalMenuItem->getDomainId());
+
         return $horizontalMenuItem;
     }
 
@@ -126,6 +139,7 @@ class HorizontalMenuItemFacade
      */
     public function delete(HorizontalMenuItem $horizontalMenuItem): void
     {
+        $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($horizontalMenuItem->getDomainId());
         $this->em->remove($horizontalMenuItem);
         $this->em->flush($horizontalMenuItem);
     }

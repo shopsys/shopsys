@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
+use App\Component\Cache\TwigCachedMenuFacade;
 use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,6 +57,11 @@ class CategoryFacade extends BaseCategoryFacade
     private $categoryProductSeriesFacade;
 
     /**
+     * @var \App\Component\Cache\TwigCachedMenuFacade
+     */
+    private $twigCachedMenuFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \App\Component\Domain\Domain $domain
@@ -68,6 +74,7 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
      * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
+     * @param \App\Component\Cache\TwigCachedMenuFacade $twigCachedMenuFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -81,7 +88,8 @@ class CategoryFacade extends BaseCategoryFacade
         CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
         CategoryFactoryInterface $categoryFactory,
         CategoryParameterFacade $categoryParameterFacade,
-        CategoryProductSeriesFacade $categoryProductSeriesFacade
+        CategoryProductSeriesFacade $categoryProductSeriesFacade,
+        TwigCachedMenuFacade $twigCachedMenuFacade
     ) {
         parent::__construct(
             $em,
@@ -97,6 +105,7 @@ class CategoryFacade extends BaseCategoryFacade
         );
         $this->categoryParameterFacade = $categoryParameterFacade;
         $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
+        $this->twigCachedMenuFacade = $twigCachedMenuFacade;
     }
 
     /**
@@ -109,6 +118,7 @@ class CategoryFacade extends BaseCategoryFacade
         $category = parent::create($categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters, $categoryData->parametersCollapsed);
         $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
+        $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($category);
 
         return $category;
     }
@@ -124,8 +134,18 @@ class CategoryFacade extends BaseCategoryFacade
         $category = parent::edit($categoryId, $categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parameters, $categoryData->parametersCollapsed);
         $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
+        $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($category);
 
         return $category;
+    }
+
+    /**
+     * @param int[]|null[] $parentIdByCategoryId
+     */
+    public function editOrdering($parentIdByCategoryId)
+    {
+        parent::editOrdering($parentIdByCategoryId);
+        $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($this->getRootCategory());
     }
 
     /**

@@ -582,6 +582,11 @@ services:
         arguments:
             - '@shopsys.shop.component.image.cache_provider'
 
+    App\Twig\Cache\TwigCacheFacade:
+        arguments:
+            - '@twig_cache_extension.cache_provider'
+            - '@twig_cache_extension.cache_strategy'
+
     App\Component\Image\Kraken\KrakenConfig:
         arguments:
             $krakenConfig: "%kraken_config%"

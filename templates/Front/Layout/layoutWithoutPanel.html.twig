@@ -2,7 +2,9 @@
 
 {% block content %}
     <div class="display-none display-block-tablet">
-        {{ render(controller('App\\Controller\\Front\\CategoryController:mobileSlidingMenuAction')) }}
+        {% cache constant('App\\Component\\Cache\\TwigCachedMenuFacade::MOBILE_SLIDING_MENU') {lifetime:60*60*24, domainId:getDomain().id} %}
+            {{ render(controller('App\\Controller\\Front\\CategoryController:mobileSlidingMenuAction')) }}
+        {% endcache %}
     </div>
     <div class="web__main">
         <div class="web__main__content js-main-content">
@@ -21,6 +23,8 @@
     </div>
 
     <div class="display-none display-block-tablet">
-        {{ render(controller('App\\Controller\\Front\\CategoryController:mobilePanelMenuAction')) }}
+        {% cache constant('App\\Component\\Cache\\TwigCachedMenuFacade::MOBILE_PANEL_MENU') {lifetime:60*60*24, domainId:getDomain().id} %}
+            {{ render(controller('App\\Controller\\Front\\CategoryController:mobilePanelMenuAction')) }}
+        {% endcache %}
     </div>
 {% endblock %}
