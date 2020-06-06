@@ -31,6 +31,7 @@
     {% endblock %}
 
     {% if cart is not null %}
+
         {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
         <div class="web__line web__line--bg-color web__line--cart">
             <div class="web__container">
@@ -103,6 +104,12 @@
             </div>
         </div>
     {% else %}
+
+        <div class="web__line">
+            <div class="web__container web__container--full-width web__container--no-padding">
+                {{ render(controller('App\\Controller\\Front\\HorizontalMenuController:menuAction')) }}
+            </div>
+        </div>
         <div class="web__line">
             <div class="web__container">
                 <div class="box-cart-empty">
@@ -123,4 +130,9 @@
 {% endblock %}
 
 {% block footer %}
+    {% if cart is not null %}
+        {% include 'Front/Layout/copyright.html.twig' with { 'cssClass' : 'footer__bottom--cart' } %}
+    {% else %}
+        {% embed 'Front/Layout/footer.html.twig' %}{% endembed %}
+    {% endif %}
 {% endblock %}
