@@ -29,6 +29,33 @@ export default class ProductFilterBox {
             event.preventDefault();
             _this.initFilterParamsToogle($(event.target));
         });
+
+        $container.filterAllNodes('.js-form-choice-color').each(function () {
+            _this.checkFilterParamColorBrightness($(this));
+        });
+    }
+
+    checkFilterParamColorBrightness ($param) {
+        let bgColor = $param.css('background-color');
+        let r = 0;
+        let g = 0;
+        let b = 0;
+        let hsp = 0;
+
+        bgColor = bgColor.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+        r = bgColor[1];
+        g = bgColor[2];
+        b = bgColor[3];
+
+        hsp = Math.sqrt(
+            0.299 * (r * r) +
+            0.587 * (g * g) +
+            0.114 * (b * b)
+        );
+
+        (hsp > 200)
+            ? $param.addClass('is-light-bg')
+            : $param.addClass('is-dark-bg');
     }
 
     initFilterParamsToogle ($toggleButton) {

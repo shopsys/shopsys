@@ -40,11 +40,26 @@
             height: 10px;
             content: '';
 
-            border: solid @color-f;
+            border: solid transparent;
             border-width: 0 2px 2px 0;
             transform: rotate(45deg);
             pointer-events: none;
             opacity: 0;
+        }
+
+        &.is-light-bg::after {
+            border-color: @color-primary;
+        }
+
+        &.is-dark-bg::after {
+            border-color: @color-f;
+        }
+
+        &--image {
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            border: 0;
         }
     }
 }

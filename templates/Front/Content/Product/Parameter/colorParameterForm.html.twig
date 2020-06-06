@@ -4,7 +4,7 @@
         {{ parameterForm.vars.label }}
         <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
     </span>
-    <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs">
+    <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs box-filter__choice__inputs--color">
         {% for parameterValueForm in parameterForm %}
             {% set rgbHex = parameterForm.vars.choices[parameterValueForm.vars.value].data.rgbHex %}
             {% if parameterForm.vars.choices[parameterValueForm.vars.value].data.id in allParameterValuesImagesIndexedById|keys %}
@@ -13,41 +13,29 @@
                 {% set colourIcon = null %}
             {% endif %}
             {% if colourIcon is not null %}
-                <div class="form-choice js-form-choice box-filter__choice__input box-filter__choice__input--color js-product-filter-parameter-value
-                    {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
-                    ">
+                <div class="form-choice form-choice--color js-form-choice box-filter__choice__input box-filter__choice__input--color js-product-filter-parameter-value">
                     {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
-                    <label class="css-checkbox__image form-choice__label form-choice-color-picker"
+                    <label class="form-choice-color-picker form-choice-color-picker--image"
                            for="{{ parameterValueForm.vars.id }}"
                            style="background-image: url({{ colourIcon }})"#}
                            title="{{ parameterValueForm.vars.label }}"
-                    >   &nbsp;
+                    >
                     </label>
                 </div>
             {% elseif rgbHex is not empty %}
-                <div class="form-choice js-form-choice box-filter__choice__input box-filter__choice__input--color js-product-filter-parameter-value
-                    {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
-                    ">
+                <div class="form-choice form-choice--color js-form-choice box-filter__choice__input box-filter__choice__input--color js-product-filter-parameter-value">
                     {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
-                    <label class="css-checkbox__image form-choice__label form-choice-color-picker"
+                    <label class="form-choice-color-picker js-form-choice-color"
                            for="{{ parameterValueForm.vars.id }}"
                            style="background-color: {{ rgbHex }}"
                            title="{{ parameterValueForm.vars.label }}"
-                    >   &nbsp;
+                    >
                     </label>
                 </div>
             {% else %}
                 {% do parameterValueForm.setRendered %}
             {% endif %}
         {% endfor %}
-        {% if parameterForm|length > paramsVisibleCount %}
-            <a class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
-               data-text-more="{{ 'Zobrazit více'|trans }}"
-               data-text-less="{{ 'Zobrazit méně'|trans }}"
-               href="#">
-                {{ 'Zobrazit více'|trans }}
-            </a>
-        {% endif %}
         <div class="clear"></div>
     </div>
 </div>
