@@ -1,0 +1,23 @@
+<div class="web__line">
+    <footer class="web__container footer__bottom {{ cssClass }}">
+        <div class="footer__bottom__copyright dont-print">
+            &copy; {{ 'now' | date('Y') }} {{ 'Copyright Sconto Nábytek, s.r.o.'|trans }}
+        </div>
+        <div class="footer__bottom__articles js-not-implemented-yet">
+            <ul class="menu dont-print">
+                <li class="menu__item">
+                    <a class="menu__item__link" href="#">{{ 'Copyright'|trans }}</a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__item__link" href="#">{{ 'Ochrana osobních údajů'|trans }}</a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__item__link" href="#">
+                    {{ 'Cookies'|trans }}
+                    <img class="menu__item__link__icon" loading="lazy" src="" data-src="{{ asset('public/frontend/images/cookie.png') }}" alt="{{ 'Cookies'|trans }}">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+</div>
