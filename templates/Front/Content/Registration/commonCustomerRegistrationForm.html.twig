@@ -1,5 +1,5 @@
 {{ form_start(form) }}
-{{ form_row(form.gender, { label: 'Oslovení'|trans }) }}
+{{ form_row(form.gender, { label: 'Oslovení'|trans, attr: {'class' : 'form-line-block' } }) }}
 {{ form_row(form.firstName, { label: 'First name'|trans }) }}
 {{ form_row(form.lastName, { label: 'Last name'|trans }) }}
 {{ form_row(form.email, { label: 'Email'|trans , attr: {'data-request-url' : url('front_registration_exists_email') } }) }}

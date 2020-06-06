@@ -7,35 +7,41 @@
 {%  set commonTabActiveClass = firstTabActiveSetting ? "active" : "" %}
 {%  set companyTabActiveClass = firstTabActiveSetting ? "" : "active" %}
 
+{% block breadcrumb %}
+{% endblock %}
+
 {% block main_content %}
-    <div class="web__line">
+    <div class="web__line web__line--bg-color web__line--spacing--big">
         <div class="web__container">
-            <h1>{{ 'Registration'|trans }}</h1>
+            <h1 class="heading heading--primary heading--primary-subpage">{{ 'Registration'|trans }}</h1>
+            {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             {{ form_errors(form) }}
             {{ form_errors(companyForm) }}
-            <div class="in-tab js-responsive-tabs">
-                <div class="in-tab__head dont-print">
-                    <a href="#" class="in-tab__head__item js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
-                        {{ "Koncový zákazník"|trans }}
-                    </a>
-                    <a href="#" class="in-tab__head__item js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                        {{ "Firma"|trans }}
-                    </a>
-                </div>
-                <div class="in-tab__content">
-                    <a href="#" class="in-tab__content__title js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
-                        {{ "Koncový zákazník"|trans }}
-                        <i class="svg svg-arrow"></i>
-                    </a>
-                    <div class="in-tab__content__item js-tabs-content  {{ commonTabActiveClass }}" data-tab-id="common-customer">
-                        {% include 'Front/Content/Registration/commonCustomerRegistrationForm.html.twig' %}
+            <div class="box-form box-form--registration">
+                <div class="in-tab js-responsive-tabs">
+                    <div class="in-tab__head dont-print">
+                        <a href="#" class="in-tab__head__item js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
+                            {{ "Koncový zákazník"|trans }}
+                        </a>
+                        <a href="#" class="in-tab__head__item js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
+                            {{ "Firma"|trans }}
+                        </a>
                     </div>
-                    <a href="#" class="in-tab__content__title js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                        {{ "Firma"|trans }}
-                        <i class="svg svg-arrow"></i>
-                    </a>
-                    <div class="in-tab__content__item js-tabs-content  {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                        {% include 'Front/Content/Registration/companyCustomerRegistrationForm.html.twig' %}
+                    <div class="in-tab__content">
+                        <a href="#" class="in-tab__content__title js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
+                            {{ "Koncový zákazník"|trans }}
+                            <i class="svg svg-arrow"></i>
+                        </a>
+                        <div class="in-tab__content__item js-tabs-content  {{ commonTabActiveClass }}" data-tab-id="common-customer">
+                            {% include 'Front/Content/Registration/commonCustomerRegistrationForm.html.twig' %}
+                        </div>
+                        <a href="#" class="in-tab__content__title js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
+                            {{ "Firma"|trans }}
+                            <i class="svg svg-arrow"></i>
+                        </a>
+                        <div class="in-tab__content__item js-tabs-content  {{ companyTabActiveClass }}" data-tab-id="company-customer">
+                            {% include 'Front/Content/Registration/companyCustomerRegistrationForm.html.twig' %}
+                        </div>
                     </div>
                 </div>
             </div>
