@@ -13,7 +13,7 @@
                 {% set colourIcon = null %}
             {% endif %}
             {% if colourIcon is not null %}
-                <div class="form-choice js-form-choice box-filter__choice__input js-product-filter-parameter-value
+                <div class="form-choice js-form-choice box-filter__choice__input box-filter__choice__input--color js-product-filter-parameter-value
                     {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
                     ">
                     {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
@@ -25,7 +25,7 @@
                     </label>
                 </div>
             {% elseif rgbHex is not empty %}
-                <div class="form-choice js-form-choice box-filter__choice__input js-product-filter-parameter-value
+                <div class="form-choice js-form-choice box-filter__choice__input box-filter__choice__input--color js-product-filter-parameter-value
                     {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
                     ">
                     {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
