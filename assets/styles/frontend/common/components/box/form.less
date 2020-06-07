@@ -1,17 +1,28 @@
 @box-form-bg-color: @color-f;
 @box-form-width: 960px;
-@box-form-padding: 3rem 12.5rem;
 @box-form-radius: @radius;
 
 .box-form {
     position: relative;
     width: @box-form-width;
     max-width: 100%;
-    padding: @box-form-padding;
+    padding: 0.6rem 0.6rem 2rem 0.6rem;
     margin: 0 auto 7rem;
 
     background-color: @box-form-bg-color;
     border-radius: @box-form-radius;
+
+    @media @query-md {
+        padding: 3rem 1.5rem;
+    }
+
+    @media @query-lg {
+        padding: 3rem 6rem;
+    }
+
+    @media @query-vl {
+        padding: 3rem 12.5rem;
+    }
 
     &--registration {
         margin-top: 2rem;

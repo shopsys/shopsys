@@ -1,45 +1,47 @@
 .in-tab {
     &__head {
-        display: none;
+        display: flex;
+        width: 100%;
+        position: relative;
+        z-index: 2;
 
-        @media @query-lg {
-            display: flex;
-            width: 100%;
+        border-bottom: 1px solid #b0bec5;
+
+        &__item {
             position: relative;
-            z-index: 2;
+            flex-grow: 1;
+            width: 50%;
+            padding: 13px 0;
+            text-align: center;
 
-            border-bottom: 1px solid #b0bec5;
+            text-transform: uppercase;
+            color: rgba(32,35,48,0.7);
+            font-family: @font-tertiary;
+            font-size: 13px;
+            letter-spacing: 1px;
+            white-space: nowrap;
 
-            &__item {
-                position: relative;
-                flex-grow: 1;
-                width: 50%;
+            @media @query-md {
                 padding: 13px 15px;
-                text-align: center;
+            }
 
-                text-transform: uppercase;
-                color: rgba(32,35,48,0.7);
-                font-family: @font-tertiary;
-                font-size: 13px;
-                letter-spacing: 1px;
+            &::after {
+                position: absolute;
+                left: 0;
+                bottom: -1px;
+                width: 100%;
+                height: 3px;
+                content: '';
+
+                background-color: transparent;
+            }
+
+            &.active {
+                color: @color-primary;
+                text-decoration: none;
 
                 &::after {
-                    position: absolute;
-                    left: 0;
-                    bottom: -1px;
-                    width: 100%;
-                    height: 3px;
-                    content: '';
-
-                    background-color: transparent;
-                }
-
-                &.active {
-                    color: @color-primary;
-
-                    &::after {
-                        background-color: @color-add-secondary;
-                    }
+                    background-color: @color-add-secondary;
                 }
             }
         }
@@ -47,18 +49,7 @@
 
     &__content {
         &__title {
-            display: block;
-            padding: 10px 40px 10px 10px;
-            margin-bottom: 10px;
-            position: relative;
-
-            text-decoration: none;
-            color: @color-base;
-            font-weight: bold;
-
-            @media @query-lg {
-                display: none;
-            }
+            display: none;
 
             .svg {
                 position: absolute;

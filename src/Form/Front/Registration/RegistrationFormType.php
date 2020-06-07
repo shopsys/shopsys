@@ -102,20 +102,23 @@ class RegistrationFormType extends AbstractType
     protected function buildBillingAddressFormPart(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('street', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Prosím zadejte vaší ulici']),
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('city', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Prosím zadejte vaše město']),
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'City cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('postcode', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Prosím zadejte vaše poštovní směrovací číslo']),
                     new Constraints\Length(['max' => 30, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
                 ],
             ]);

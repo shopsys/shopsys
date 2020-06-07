@@ -3,12 +3,8 @@
 
 .form-line-block {
     position: relative;
-    margin: 0 0 @form-line-block-margin-bottom + 5;
+    margin: 0 0 @form-line-block-margin-bottom;
     padding: 0;
-
-    @media @query-md {
-        margin-bottom: @form-line-block-margin-bottom;
-    }
 
     dt {
         padding: 0;
@@ -85,15 +81,17 @@
         }
 
         &__grid {
-            display: flex;
-            margin-bottom: @form-line-block-margin-bottom;
+            @media @query-md {
+                display: flex;
+                margin-bottom: @form-line-block-margin-bottom;
 
-            .form-line-block {
-                margin: 0;
-            }
+                .form-line-block {
+                    margin: 0;
+                }
 
-            .form-line-block--first {
-                margin-right: @form-line-block-margin-bottom;
+                .form-line-block--first {
+                    margin-right: @form-line-block-margin-bottom;
+                }
             }
         }
     }
