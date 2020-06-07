@@ -30,7 +30,6 @@ class CommonCustomerRegistrationFormType extends AbstractType
         $builder
             ->add('gender', ChoiceType::class, [
                 'choices' => array_flip(CustomerUser::getAllGenders()),
-                'placeholder' => t('-- Vyber oslovení --'),
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Prosím vyberte si oslovení']),
                 ],

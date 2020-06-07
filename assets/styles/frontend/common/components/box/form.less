@@ -1,18 +1,27 @@
 @box-form-bg-color: @color-f;
 @box-form-width: 960px;
-@box-form-padding: 3rem 10rem;
+@box-form-padding: 3rem 12.5rem;
 @box-form-radius: @radius;
 
 .box-form {
+    position: relative;
     width: @box-form-width;
     max-width: 100%;
     padding: @box-form-padding;
-    margin: 0 auto 3rem;
+    margin: 0 auto 7rem;
 
     background-color: @box-form-bg-color;
     border-radius: @box-form-radius;
 
     &--registration {
-        margin-top: 2.5rem;
+        margin-top: 2rem;
+    }
+
+    .btn--registration {
+        position: absolute;
+        left: 50%;
+        bottom: -105px;
+        width: 170px;
+        margin-left: -85px;
     }
 }

@@ -3,29 +3,43 @@
         display: none;
 
         @media @query-lg {
-            display: block;
-            margin-bottom: -1px;
+            display: flex;
+            width: 100%;
             position: relative;
             z-index: 2;
-            .clearfix();
+
+            border-bottom: 1px solid #b0bec5;
 
             &__item {
-                float: left;
-                padding: 8px 15px;
+                position: relative;
+                flex-grow: 1;
+                width: 50%;
+                padding: 13px 15px;
+                text-align: center;
 
-                border: 1px solid transparent;
-                border-bottom: 0;
+                text-transform: uppercase;
+                color: rgba(32,35,48,0.7);
+                font-family: @font-tertiary;
+                font-size: 13px;
+                letter-spacing: 1px;
 
-                @media @query-xl {
-                    padding: 10px 20px;
+                &::after {
+                    position: absolute;
+                    left: 0;
+                    bottom: -1px;
+                    width: 100%;
+                    height: 3px;
+                    content: '';
+
+                    background-color: transparent;
                 }
 
                 &.active {
-                    background: @color-f;
-                    border-color: @color-border;
-                    color: @color-base;
-                    text-decoration: none;
-                    font-weight: bold;
+                    color: @color-primary;
+
+                    &::after {
+                        background-color: @color-add-secondary;
+                    }
                 }
             }
         }
@@ -39,7 +53,6 @@
             position: relative;
 
             text-decoration: none;
-            border: 1px solid @color-border;
             color: @color-base;
             font-weight: bold;
 
@@ -66,16 +79,7 @@
 
         &__item {
             display: none;
-
-            @media @query-lg {
-                padding: 15px;
-
-                border: 1px solid @color-border;
-            }
-
-            @media @query-xl {
-                padding: 20px;
-            }
+            padding-top: 30px;
 
             &.active {
                 display: block;

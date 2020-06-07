@@ -11,14 +11,13 @@
     }
 
     dt {
-        margin: 0 0 @form-line-block-label-field-gap;
         padding: 0;
         display: block;
     }
 
     dd {
-        margin: 0 0 @form-line-block-label-field-gap;
         padding: 0;
+        margin: 0;
         display: block;
         position: relative;
     }
@@ -47,6 +46,55 @@
 
         .input {
             padding-top: 18px;
+        }
+    }
+
+    &--three-quarters {
+        max-width: 75%;
+    }
+
+    &--small-width {
+        width: 150px;
+    }
+
+    &--full-width {
+        width: 100%;
+    }
+
+    &--check {
+        .css-checkbox__image {
+            top: 5px;
+            left: 0;
+        }
+    }
+
+    &-section {
+        margin-top: 2rem;
+
+        &--no-spacing {
+            margin: 0;
+        }
+
+        &__heading {
+            margin-bottom: 1rem;
+
+            font-size: 18px;
+            font-family: @font-quartenary;
+            font-weight: 400;
+            text-transform: none;
+        }
+
+        &__grid {
+            display: flex;
+            margin-bottom: @form-line-block-margin-bottom;
+
+            .form-line-block {
+                margin: 0;
+            }
+
+            .form-line-block--first {
+                margin-right: @form-line-block-margin-bottom;
+            }
         }
     }
 }
