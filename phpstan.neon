@@ -23,6 +23,10 @@ parameters:
             # Ignore order tests
             message: '#^Unreachable statement - code above always terminates.$#'
             path: %currentWorkingDirectory%/tests/App/Functional/Model/Order/*
+
+        -
+            message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
+            path: %currentWorkingDirectory%/src/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

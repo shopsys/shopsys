@@ -20,11 +20,11 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate product availabilities' }
 
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
+    App\Model\Product\Elasticsearch\ProductExportCronModule:
         tags:
             - { name: shopsys.cron, hours: '0', minutes: '0', readableName: "Export products to Elasticsearch" }
 
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportChangedCronModule:
+    App\Model\Product\Elasticsearch\ProductExportChangedCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*', readableName: "Export changed products to Elasticsearch" }
 
