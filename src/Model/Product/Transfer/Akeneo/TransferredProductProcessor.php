@@ -180,6 +180,7 @@ class TransferredProductProcessor
         $this->setProductImages($product, $akeneoProductData);
         $this->setProductPackageDetailInformationFormProduct($product, $akeneoProductData);
         $this->setProductAsVariant($product, $akeneoProductData, $isMainVariant);
+        $this->setProductAsDefaultVariant($product, $akeneoProductData, $isMainVariant);
 
         return $product;
     }
@@ -247,7 +248,7 @@ class TransferredProductProcessor
             return;
         }
 
-        $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentSkuList($akeneoProductData);
+        $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentSku($akeneoProductData);
         if ($mainVariantSku === null) {
             return;
         }
@@ -258,6 +259,43 @@ class TransferredProductProcessor
         }
 
         $mainVariantProduct->addVariant($product);
+        $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoProductData
+     * @param bool $isMainVariant
+     */
+    private function setProductAsDefaultVariant(Product $product, array $akeneoProductData, bool $isMainVariant): void
+    {
+        if ($isMainVariant) {
+            return;
+        }
+
+        if ($product->isMainVariant()) {
+            return;
+        }
+
+        if (!$product->isVariant()) {
+            return;
+        }
+
+        $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentSku($akeneoProductData);
+        if ($mainVariantSku === null) {
+            return;
+        }
+
+        $mainVariantProduct = $this->findProductByIdentifier($mainVariantSku, true);
+        if ($mainVariantProduct === null) {
+            return;
+        }
+
+        $defaultVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToDefaultVariantSku($akeneoProductData);
+        if ($defaultVariantSku !== null && $defaultVariantSku === $product->getCatnum()) {
+            $mainVariantProduct->setDefaultVariant($product);
+        }
+
         $this->em->flush();
     }
 

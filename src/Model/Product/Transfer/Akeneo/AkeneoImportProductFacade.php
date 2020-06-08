@@ -168,7 +168,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
                 $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductSeriesCodeList($akeneoProductData)
             );
 
-            $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentSkuList($akeneoProductData);
+            $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentSku($akeneoProductData);
             if ($mainVariantSku !== null) {
                 $mainVariantSkuList[] = $mainVariantSku;
             }

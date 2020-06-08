@@ -27,7 +27,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Product\Brand\Brand|null getBrand()
  * @method \App\Model\Product\Product getMainVariant()
  * @method \App\Model\Product\Product[] getVariants()
- * @method addVariant(\App\Model\Product\Product $variant)
  * @method addVariants(\App\Model\Product\Product[] $variants)
  * @method setMainVariant(\App\Model\Product\Product $mainVariant)
  * @method refreshVariants(\App\Model\Product\Product[] $currentVariants)
@@ -38,6 +37,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
+ * @method addVariant(\App\Model\Product\Product $variant)
  */
 class Product extends BaseProduct
 {
@@ -79,6 +79,14 @@ class Product extends BaseProduct
      *      inverseJoinColumns={@ORM\JoinColumn(name="parameter_id", referencedColumnName="id", onDelete="CASCADE")})
      */
     protected $variantParameters;
+
+    /**
+     * @var \App\Model\Product\Product|null
+     *
+     * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
+     * @ORM\JoinColumn(name="default_variant_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $defaultVariant;
 
     /**
      * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
@@ -252,6 +260,24 @@ class Product extends BaseProduct
         }
 
         $this->setDomains($productData);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $variant
+     */
+    public function setDefaultVariant(self $variant): void
+    {
+        if (!$this->isMainVariant()) {
+            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException(
+                $this->getId(),
+                $variant->getId()
+            );
+        }
+        if ($variant->isMainVariant()) {
+            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException($variant->getId());
+        }
+
+        $this->defaultVariant = $variant;
     }
 
     /**
