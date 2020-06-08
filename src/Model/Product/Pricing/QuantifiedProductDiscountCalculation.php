@@ -26,7 +26,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
             $productId = $quantifiedProduct->getProduct()->getId();
             if (array_key_exists($productId, $discountPercentPerProduct)) {
-                $quantifiedItemsDiscounts[$quantifiedItemIndex] = $this->calculateDiscountRoundedByCurrency(
+                $quantifiedItemsDiscounts[$quantifiedItemIndex] = $this->calculateDiscountByPromoRoundedByCurrency(
                     $quantifiedItemsPrices[$quantifiedItemIndex],
                     $discountPercentPerProduct[$productId],
                     $currency,
@@ -73,7 +73,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
-    protected function calculateDiscountRoundedByCurrency(
+    protected function calculateDiscountByPromoRoundedByCurrency(
         QuantifiedItemPrice $quantifiedItemPrice,
         PromoCode $promoCode,
         Currency $currency,
@@ -93,21 +93,18 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
                 $totalDiscountFromHighUnitPrice,
                 $currency
             );
-        } else {
-            $discountWithVat = $this->rounding->roundPriceWithVatByCurrency(
-                $quantifiedItemPrice->getTotalPrice()->getPriceWithVat()->multiply($discountMultiplier),
-                $currency
-            );
+
+            if ($discountWithVat->isZero()) {
+                return null;
+            }
+
+            $discountVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($discountWithVat, $vat);
+            $discountWithoutVat = $discountWithVat->subtract($discountVatAmount);
+
+            return new Price($discountWithoutVat, $discountWithVat);
         }
 
-        if ($discountWithVat->isZero()) {
-            return null;
-        }
-
-        $discountVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($discountWithVat, $vat);
-        $discountWithoutVat = $discountWithVat->subtract($discountVatAmount);
-
-        return new Price($discountWithoutVat, $discountWithVat);
+        return $this->calculateDiscountRoundedByCurrency($quantifiedItemPrice, $promoCode->getPercent(), $currency);
     }
 
     /**

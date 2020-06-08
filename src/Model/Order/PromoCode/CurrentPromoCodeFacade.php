@@ -179,7 +179,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($validEnteredPromoCode->getId());
         $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($validEnteredPromoCode->getId(), $domainId);
 
-        //todo
         if (count(array_unique(array_merge($allowedProductIds, $allowedProductIdsFromCategories))) === 0) {
             return $this->fillPromoCodeDiscountsForAllProducts($quantifiedProducts, $validEnteredPromoCode);
         }
