@@ -158,6 +158,14 @@
                 </div>
 
                 {% if product.isMainVariant and not product.calculatedSellingDenied %}
+
+
+                    {% if product.variantParameters|length > 0 %}
+                        {% include 'Front/Content/Product/variantParameters.html.twig' with {product: product} %}
+                    {% endif %}
+
+
+
                     <table {% if getProductSellingPrice(product) is not null %}itemprop="offers"
                         itemscope
                         itemtype="http://schema.org/AggregateOffer" {% endif %}

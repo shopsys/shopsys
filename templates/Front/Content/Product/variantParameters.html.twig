@@ -1,0 +1,33 @@
+<div class="box-detail variant-parameters-wrap js-variant-parameters" data-product-parent-id="{{ product.id }}">
+
+    {% for parameter in product.variantParameters %}
+        <div class="variant-parameter">
+            <h4 class="variant-parameter__name">{{ parameter.name }}:</h4>
+            <div class="variant-parameter__wrap">
+
+                <a href="#" class="variant-parameter__select js-variant-parameter-select">
+                    <span class="variant-parameter__selected js-variant-parameter-selected">
+                        asdad
+                    </span>
+                </a>
+
+                <ul class="variant-parameter__values js-variant-parameter" data-parameter-id="{{ parameter.id }}">
+                    {%  for parameterValueId in [1,2] %}
+                        <li class="variant-parameter__item" >
+                            <a href="#" class="variant-parameter__value js-variant-parameter-value" data-parameter-value-id="{{ parameterValueId }}">
+                                <div class="variant-parameter__description">
+                                    <span>{{ parameterValueId }} modrý</span>
+                                    <span>obrázek/ikonka</span>
+                                    <span>+ castka</span>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+    {% endfor %}
+
+</div>
