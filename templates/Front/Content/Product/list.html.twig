@@ -5,7 +5,7 @@
 {% set domain = getDomain() %}
 
 {% block meta_robots %}
-    {{ paginator.metaRobots(paginationResult) }}
+    {{ paginator.metaRobots(paginationResult, disableIndexingBySeznamBot) }}
 {% endblock %}
 
 {% block meta_description %}{{ seoMetaDescription }}{% endblock %}

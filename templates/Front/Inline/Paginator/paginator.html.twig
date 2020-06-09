@@ -162,9 +162,11 @@
     </div>
 {% endmacro %}
 
-{% macro metaRobots(paginationResult) %}
-    {% if paginationResult.page != 1 %}
+{% macro metaRobots(paginationResult, disableIndexingBySeznamBot) %}
+    {% if paginationResult.page != 1 and disableIndexingBySeznamBot %}
         <meta name="robots" content="noindex, follow">
+    {% elseif paginationResult.page != 1 %}
+        <meta name="robots" content="index, follow">
     {% endif %}
 {% endmacro %}
 

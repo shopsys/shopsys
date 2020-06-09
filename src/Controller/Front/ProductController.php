@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator;
+use App\Component\SeoHelper\SeoHelper;
 use App\Component\UploadedFile\UploadedFileFacade;
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\Category;
@@ -149,6 +150,11 @@ class ProductController extends FrontBaseController
     private $uploadedFileFacade;
 
     /**
+     * @var \App\Component\SeoHelper\SeoHelper
+     */
+    private $seoHelper;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Component\Domain\Domain $domain
@@ -170,6 +176,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      * @param \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \App\Component\SeoHelper\SeoHelper $seoHelper
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -192,7 +199,8 @@ class ProductController extends FrontBaseController
         ProductSeriesFacade $productSeriesFacade,
         ProductPackageFacade $productPackageFacade,
         CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator,
-        UploadedFileFacade $uploadedFileFacade
+        UploadedFileFacade $uploadedFileFacade,
+        SeoHelper $seoHelper
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -215,6 +223,7 @@ class ProductController extends FrontBaseController
         $this->productPackageFacade = $productPackageFacade;
         $this->categorySeoMixUrlGenerator = $categorySeoMixUrlGenerator;
         $this->uploadedFileFacade = $uploadedFileFacade;
+        $this->seoHelper = $seoHelper;
     }
 
     /**
@@ -292,7 +301,10 @@ class ProductController extends FrontBaseController
         if (!$this->isRequestPageValid($requestPage)) {
             return $this->redirectToRoute('front_product_list', $this->getRequestParametersWithoutPage());
         }
+
         $page = $requestPage === null ? 1 : (int)$requestPage;
+
+        $disableIndexingBySeznamBot = $this->seoHelper->disableIndexingBySeznamBot($request, $page);
 
         $orderingModeId = $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest(
             $request,
@@ -336,6 +348,7 @@ class ProductController extends FrontBaseController
             'readyCategorySeoMixId' => $readyCategorySeoMix === null ? null : $readyCategorySeoMix->getId(),
             'filterCollapsedParameters' => $this->categoryParameterFacade->getParametersCollapsedIndexedByIdForCategory($category),
             'allParameterValuesImagesIndexedById' => $allParameterValuesImageFilePathsIndexedById,
+            'disableIndexingBySeznamBot' => $disableIndexingBySeznamBot,
         ];
 
         $viewParameters = array_merge(
@@ -389,6 +402,8 @@ class ProductController extends FrontBaseController
         }
         $page = $requestPage === null ? 1 : (int)$requestPage;
 
+        $disableIndexingBySeznamBot = $this->seoHelper->disableIndexingBySeznamBot($request, $page);
+
         $orderingModeId = $this->productListOrderingModeForBrandFacade->getOrderingModeIdFromRequest(
             $request
         );
@@ -405,6 +420,7 @@ class ProductController extends FrontBaseController
         $viewParameters = [
             'paginationResult' => $paginationResult,
             'brand' => $brand,
+            'disableIndexingBySeznamBot' => $disableIndexingBySeznamBot,
         ];
 
         if ($request->isXmlHttpRequest()) {
