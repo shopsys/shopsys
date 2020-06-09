@@ -18,6 +18,8 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
  */
 class PromoCode extends BasePromoCode
 {
+    public const MASS_GENERATED_CODE_LENGTH = 6;
+
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -59,6 +61,20 @@ class PromoCode extends BasePromoCode
     protected $identifier;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $massGenerate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $prefix;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
     public function __construct(PromoCodeData $promoCodeData)
@@ -69,6 +85,8 @@ class PromoCode extends BasePromoCode
         $this->datetimeValidTo = $promoCodeData->datetimeValidTo;
         $this->remainingUses = $promoCodeData->remainingUses;
         $this->identifier = $promoCodeData->identifier;
+        $this->massGenerate = $promoCodeData->massGenerate;
+        $this->prefix = $promoCodeData->prefix;
     }
 
     /**
@@ -82,6 +100,8 @@ class PromoCode extends BasePromoCode
         $this->datetimeValidTo = $promoCodeData->datetimeValidTo;
         $this->remainingUses = $promoCodeData->remainingUses;
         $this->identifier = $promoCodeData->identifier;
+        $this->massGenerate = $promoCodeData->massGenerate;
+        $this->prefix = $promoCodeData->prefix;
     }
 
     /**
@@ -129,5 +149,21 @@ class PromoCode extends BasePromoCode
     public function getIdentifier(): string
     {
         return $this->identifier;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMassGenerate(): bool
+    {
+        return $this->massGenerate;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPrefix(): ?string
+    {
+        return $this->prefix;
     }
 }

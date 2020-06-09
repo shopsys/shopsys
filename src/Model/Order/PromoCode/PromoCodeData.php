@@ -62,4 +62,19 @@ class PromoCodeData extends BasePromoCodeData
      * @var string|null
      */
     public $identifier;
+
+    /**
+     * @var bool|null
+     */
+    public $massGenerate;
+
+    /**
+     * @var string|null
+     */
+    public $prefix;
+
+    /**
+     * @var int|null
+     */
+    public $quantity;
 }

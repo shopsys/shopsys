@@ -49,7 +49,10 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
      */
     public function create(): BasePromoCodeData
     {
-        return new PromoCodeData();
+        $promoCodeData = new PromoCodeData();
+        $promoCodeData->massGenerate = false;
+
+        return $promoCodeData;
     }
 
     /**
@@ -83,6 +86,8 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->productsWithSale = $this->promoCodeProductRepository->getProductsByPromoCodeId($promoCode->getId());
         $promoCodeData->remainingUses = $promoCode->getRemainingUses();
         $promoCodeData->identifier = $promoCode->getIdentifier();
+        $promoCodeData->massGenerate = $promoCode->isMassGenerate();
+        $promoCodeData->prefix = $promoCode->getPrefix();
     }
 
     /**

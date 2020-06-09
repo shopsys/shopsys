@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\PromoCode;
 
 use App\Component\DateTimeHelper\DateTimeHelper;
+use App\Component\String\HashGenerator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -23,6 +24,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
     public const PROMOCODE_DEFAULT_TIME_FROM = '00:00:00';
     public const PROMOCODE_DEFAULT_TIME_TO = '23:59:59';
     public const DATABASE_DATE_FORMAT = 'Y-m-d';
+    private const MASS_CREATE_BATCH_SIZE = 200;
 
     /**
      * @var \App\Component\Domain\Domain
@@ -55,6 +57,11 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private $promoCodeCategoryFactory;
 
     /**
+     * @var \App\Component\String\HashGenerator
+     */
+    private $hashGenerator;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
@@ -64,6 +71,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryFactory $promoCodeCategoryFactory
+     * @param \App\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -74,7 +82,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
         PromoCodeProductRepository $promoCodeProductRepository,
         PromoCodeCategoryRepository $promoCodeCategoryRepository,
         PromoCodeProductFactory $promoCodeProductFactory,
-        PromoCodeCategoryFactory $promoCodeCategoryFactory
+        PromoCodeCategoryFactory $promoCodeCategoryFactory,
+        HashGenerator $hashGenerator
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
         $this->domain = $domain;
@@ -83,6 +92,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->promoCodeProductFactory = $promoCodeProductFactory;
         $this->promoCodeCategoryFactory = $promoCodeCategoryFactory;
+        $this->hashGenerator = $hashGenerator;
     }
 
     /**
@@ -135,6 +145,39 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
 
         return $promoCode;
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
+     */
+    public function massCreate(PromoCodeData $promoCodeData): void
+    {
+        $existingPromoCodeCodes = $this->promoCodeRepository->getAllPromoCodeCodes();
+        $generatedPromoCodeCount = 0;
+
+        while ($generatedPromoCodeCount < $promoCodeData->quantity) {
+            $promoCodeDataForCreate = clone $promoCodeData;
+            $code = $promoCodeDataForCreate->prefix . strtoupper($this->hashGenerator->generateHashWithoutConfusingCharacters(PromoCode::MASS_GENERATED_CODE_LENGTH));
+
+            if (!in_array($code, $existingPromoCodeCodes, true)) {
+                $promoCodeDataForCreate->code = $code;
+
+                $promoCode = $this->create($promoCodeDataForCreate);
+                $this->em->persist($promoCode);
+
+                $existingPromoCodeCodes[] = $code;
+                $generatedPromoCodeCount++;
+
+                if ($generatedPromoCodeCount % self::MASS_CREATE_BATCH_SIZE === 0) {
+                    $this->em->flush();
+                    $this->em->clear(PromoCodeCategory::class);
+                    $this->em->clear(PromoCode::class);
+                }
+            }
+        }
+
+        $this->em->flush();
+        $this->em->clear();
     }
 
     /**

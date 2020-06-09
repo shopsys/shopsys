@@ -23,6 +23,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PromoCodeFormTypeExtension extends AbstractTypeExtension
@@ -61,6 +63,10 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     {
         $this->promoCode = $options['promo_code'];
 
+        if ($options['mass_generate'] === true) {
+            $builder->add($this->addMassGenerationGroup($builder));
+        }
+
         if ($this->promoCode === null) {
             $builder->add('domainId', DomainType::class, [
                 'required' => true,
@@ -79,6 +85,10 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $codeOptions['position'] = 'first';
         $codeOptions['label'] = t('Promo kód');
         $builder->add('code', TextType::class, $codeOptions);
+
+        if ($options['mass_generate'] === true) {
+            $builder->remove('code');
+        }
 
         $this->buildTimeValidationForm($builder);
 
@@ -173,8 +183,11 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
+            ->setRequired(['promo_code', 'mass_generate'])
             ->setAllowedTypes('promo_code', [PromoCode::class, 'null'])
+            ->setAllowedTypes('mass_generate', 'bool')
             ->setDefaults([
+                'mass_generate' => false,
                 'constraints' => [
                     new Constraints\Callback([$this, 'validateUniquePromoCodeByDomain']),
                     new Constraints\Callback([$this, 'validateDateTimeFrom']),
@@ -249,5 +262,38 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
                 $context->buildViolation('Promo kód s tímto kódem již existuje')->atPath('code')->addViolation();
             }
         }
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function addMassGenerationGroup(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $builderMassPromoCodeGroup = $builder->create('massPromoCodeGroup', GroupType::class, [
+            'label' => t('Hromadné generování kupónu'),
+            'position' => 'first',
+        ]);
+
+        $builderMassPromoCodeGroup
+            ->add('prefix', TextType::class, [
+                'label' => t('Prefix (např. "JARO_")'),
+                'required' => false,
+            ])
+            ->add('quantity', IntegerType::class, [
+                'label' => t('Počet generovaných kupónů'),
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                                     'message' => t('Vyplňte prosím množství.'),
+                    ]),
+                    new Positive([
+                                     'message' => t('Vyplňte prosím kladnou hodnotu.'),
+                    ]),
+                ],
+                'invalid_message' => t('Zadejte prosím celé číslo.'),
+            ]);
+
+        return $builderMassPromoCodeGroup;
     }
 }

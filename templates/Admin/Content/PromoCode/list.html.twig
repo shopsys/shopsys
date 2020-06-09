@@ -4,3 +4,16 @@
     {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
     {{ parent() }}
 {% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar">
+        <a href="{{ url('admin_promocode_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Create promo code'|trans }}
+        </a>
+        <a href="{{ url('admin_promocode_newmassgenerate') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Vytvořit hromadné slevové kupóny'|trans }}
+        </a>
+    </div>
+{% endblock %}

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository as BasePromoCodeRepository;
 
 /**
@@ -22,5 +23,25 @@ class PromoCodeRepository extends BasePromoCodeRepository
     public function findByCodeAndDomainId(string $code, int $domainId): ?PromoCode
     {
         return $this->getPromoCodeRepository()->findOneBy(['code' => $code, 'domainId' => $domainId]);
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllQueryBuilder(): QueryBuilder
+    {
+        return $this->getPromoCodeRepository()
+            ->createQueryBuilder('pc');
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllPromoCodeCodes(): array
+    {
+        $queryBuilder = $this->getAllQueryBuilder()
+            ->select('pc.code');
+
+        return array_column($queryBuilder->getQuery()->execute(), 'code');
     }
 }
