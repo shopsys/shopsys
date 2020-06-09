@@ -6,7 +6,6 @@ namespace App\Twig\Cache;
 
 use Asm89\Twig\CacheExtension\CacheStrategyInterface;
 use Doctrine\Common\Cache\CacheProvider;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 /**
  * @see \Asm89\Twig\CacheExtension\CacheStrategy\LifetimeCacheStrategy
@@ -19,18 +18,11 @@ class CurrentDomainLifetimeCacheStrategy implements CacheStrategyInterface
     private $cacheProvider;
 
     /**
-     * @var \App\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \Doctrine\Common\Cache\CacheProvider $cacheProvider
-     * @param \App\Component\Domain\Domain $domain
      */
-    public function __construct(CacheProvider $cacheProvider, Domain $domain)
+    public function __construct(CacheProvider $cacheProvider)
     {
         $this->cacheProvider = $cacheProvider;
-        $this->domain = $domain;
     }
 
     /**
@@ -46,13 +38,21 @@ class CurrentDomainLifetimeCacheStrategy implements CacheStrategyInterface
      */
     public function generateKey($annotation, $value)
     {
-        if (!is_numeric($value)) {
+        $key = $annotation;
+        if (is_array($value)) {
+            $lifetime = $value['lifetime'] ?? 0; /* 0 = infinite lifetime */
+            if (array_key_exists('domainId', $value)) {
+                $key .= sprintf('__onDomain%d', $value['domainId']);
+            }
+        } elseif (is_numeric($value)) {
+            $lifetime = $value;
+        } else {
             throw new \App\Twig\Cache\Exception\InvalidCacheLifetimeException($value);
         }
 
         return [
-            'lifetime' => $value,
-            'key' => sprintf('%s__onDomain%d', $annotation, $this->domain->getId()),
+            'lifetime' => $lifetime,
+            'key' => $key,
         ];
     }
 
