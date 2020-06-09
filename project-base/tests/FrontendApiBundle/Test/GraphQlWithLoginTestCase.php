@@ -4,57 +4,26 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Test;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\App\Test\FunctionalTestCase;
 
-abstract class GraphQlTestCase extends FunctionalTestCase
+abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\Client
-     */
-    protected $client;
+    public const DEFAULT_USER_EMAIL = 'no-reply@shopsys.com';
+    public const DEFAULT_USER_PASSWORD = 'user123';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
+     * @var string
      */
-    protected $em;
+    protected $accessToken;
 
     protected function setUp(): void
     {
-        $this->client = $this->findClient(true);
-
-        /*
-         * Newly created client has its own container
-         * To be able to isolate requests made with this new client,
-         * it's necessary to start transaction on entityManager from the client's container.
-         */
-
-        $this->domain = $this->client->getContainer()->get(Domain::class);
-        $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
-
         $this->runCheckTestEnabledOnCurrentDomain();
 
-        $this->em->beginTransaction();
+        $this->client = $this->findClient(true);
+        $this->accessToken = $this->getAccessToken(static::DEFAULT_USER_EMAIL, static::DEFAULT_USER_PASSWORD);
 
         parent::setUp();
-    }
-
-    protected function runCheckTestEnabledOnCurrentDomain(): void
-    {
-        $enabledOnCurrentDomainChecker = $this->getContainer()->get(EnabledOnDomainChecker::class);
-
-        if (!$enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
-            $this->markTestSkipped('Frontend API disabled on domain');
-        }
-    }
-
-    protected function tearDown(): void
-    {
-        $this->em->rollback();
     }
 
     /**
@@ -104,7 +73,10 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     private function getResponseForQuery(string $query, array $variables, array $customServer = []): Response
     {
         $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
-        $server = array_merge(['CONTENT_TYPE' => 'application/graphql'], $customServer);
+        $server = array_merge(
+            ['CONTENT_TYPE' => 'application/graphql', 'HTTP_Authorization' => sprintf('Bearer %s', $this->accessToken)],
+            $customServer
+        );
 
         $this->client->request(
             'GET',
@@ -118,10 +90,37 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     }
 
     /**
+     * @param string|null $customerUserEmail
+     * @param string|null $customerUserPassword
      * @return string
      */
-    protected function getLocaleForFirstDomain(): string
+    private function getAccessToken(?string $customerUserEmail = null, ?string $customerUserPassword = null): string
     {
-        return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+        $responseData = parent::getResponseContentForQuery($this->getLoginQuery($customerUserEmail, $customerUserPassword));
+
+        return $responseData['data']['Login']['accessToken'];
+    }
+
+    /**
+     * @param string|null $customerUserEmail
+     * @param string|null $customerUserPassword
+     * @return string
+     */
+    private static function getLoginQuery(?string $customerUserEmail = null, ?string $customerUserPassword = null): string
+    {
+        $customerUserEmail = $customerUserEmail === null ? self::DEFAULT_USER_EMAIL : $customerUserEmail;
+        $customerUserPassword = $customerUserPassword === null ? self::DEFAULT_USER_PASSWORD : $customerUserPassword;
+
+        return '
+            mutation {
+                Login(input: {
+                    email: "' . $customerUserEmail . '"
+                    password: "' . $customerUserPassword . '"
+                }) {
+                    accessToken
+                    refreshToken
+                }
+            }
+        ';
     }
 }
