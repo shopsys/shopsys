@@ -76,6 +76,8 @@
                         </div>
 
                         {% if not product.isMainVariant %}
+                            {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
+
                             <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
                                 {% if not product.calculatedSellingDenied %}
                                     <div itemprop="offers"
@@ -158,13 +160,6 @@
                 </div>
 
                 {% if product.isMainVariant and not product.calculatedSellingDenied %}
-
-
-                    {% if product.variantParameters|length > 0 %}
-                        {% include 'Front/Content/Product/variantParameters.html.twig' with {product: product} %}
-                    {% endif %}
-
-
 
                     <table {% if getProductSellingPrice(product) is not null %}itemprop="offers"
                         itemscope

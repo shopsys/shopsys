@@ -1,33 +1,51 @@
-<div class="box-detail variant-parameters-wrap js-variant-parameters" data-product-parent-id="{{ product.id }}">
+{% if mainProduct.variantParameters|length > 0 and variantParameterValuesIndexedByParameterId|length > 0 and parameterValuesIndexedByParameterId|length > 0 %}
+    <div class="box-detail variant-parameters-wrap js-variant-parameters" data-product-parent-id="{{ mainProduct.id }}">
 
-    {% for parameter in product.variantParameters %}
-        <div class="variant-parameter">
-            <h4 class="variant-parameter__name">{{ parameter.name }}:</h4>
-            <div class="variant-parameter__wrap">
+        {% for parameter in mainProduct.variantParameters %}
+            <div class="variant-parameter">
+                <div class="variant-parameter__name">{{ parameter.name }}:</div>
+                <div class="variant-parameter__wrap">
 
-                <a href="#" class="variant-parameter__select js-variant-parameter-select">
-                    <span class="variant-parameter__selected js-variant-parameter-selected">
-                        asdad
-                    </span>
-                </a>
+                    <a href="#" class="variant-parameter__select js-variant-parameter-select">
+                        <span
+                            class="variant-parameter__selected js-variant-parameter-selected"
+                            data-parameter-id="{{ parameter.id }}"
+                            data-parameter-value-id="{{ variantParameterValuesIndexedByParameterId[parameter.id].id }}"
+                        >
+                            <div class="variant-parameter__description">
+                                <span>{{ variantParameterValuesIndexedByParameterId[parameter.id].text }}</span>
+                                <span>obrázek/ikonka</span>
+                                <span>+ castka</span>
+                            </div>
+                        </span>
+                    </a>
 
-                <ul class="variant-parameter__values js-variant-parameter" data-parameter-id="{{ parameter.id }}">
-                    {%  for parameterValueId in [1,2] %}
-                        <li class="variant-parameter__item" >
-                            <a href="#" class="variant-parameter__value js-variant-parameter-value" data-parameter-value-id="{{ parameterValueId }}">
-                                <div class="variant-parameter__description">
-                                    <span>{{ parameterValueId }} modrý</span>
-                                    <span>obrázek/ikonka</span>
-                                    <span>+ castka</span>
-                                </div>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                    <ul class="variant-parameter__values js-variant-parameter">
+                        {%  for parameterValue in parameterValuesIndexedByParameterId[parameter.id] %}
+                            {% set variantId = variantSetupKeyMap[getVariantKeyByParameterValues(currentVariantSetup, parameter.id, parameterValue.id)] ?? null %}
+                            {% if variantId != null %}
+                                <li class="variant-parameter__item" >
+                                    <a href="{{ url('front_product_detail', {'id': variantId}) }}"
+                                       class="variant-parameter__value js-variant-parameter-value"
+                                       data-parameter-value-id="{{ parameterValue.id }}"
+                                    >
+                                        <div class="variant-parameter__description">
+                                            <span>{{ parameterValue.text }}</span>
+                                            <span>obrázek/ikonka</span>
+                                            <span>
+                                                {{ variantId }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
 
+                </div>
+                <div class="clear"></div>
             </div>
-            <div class="clear"></div>
-        </div>
-    {% endfor %}
+        {% endfor %}
 
-</div>
+    </div>
+{% endif %}

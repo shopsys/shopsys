@@ -3,33 +3,41 @@ import Register from 'framework/common/utils/Register';
 export default class VariantParameters {
 
     constructor ($container) {
-        const _this = this;
+        this.$container = $container;
         this.$variantParameterValuesCollection = $container.filterAllNodes('.js-variant-parameter');
+        this.$variantParameterSelectedElementCollection = $container.filterAllNodes('.js-variant-parameter-selected');
 
         $container.filterAllNodes('.js-variant-parameter-select').click((event) => {
-            _this.disableAllParameterValuesLists(_this.$variantParameterValuesCollection);
+            this.disableAllParameterValuesLists();
             $(event.currentTarget).next('.js-variant-parameter').show();
             return false;
         });
 
         $container.filterAllNodes('.js-variant-parameter-value').click((event) => {
-            _this.handleVariantParameterValue($(event.currentTarget));
-            _this.disableAllParameterValuesLists(_this.$variantParameterValuesCollection);
-            return false;
+            this.handleVariantParameterValue($(event.currentTarget));
         });
     }
 
     handleVariantParameterValue ($currentParameterValue) {
         const parameterValueHtmlContent = $currentParameterValue.html();
-        $currentParameterValue
+        const $variantParameterSelectedElement = $currentParameterValue
             .closest('.js-variant-parameter')
             .prev('.js-variant-parameter-select')
-            .children('.js-variant-parameter-selected')
-            .html(parameterValueHtmlContent);
+            .children('.js-variant-parameter-selected');
+
+        $variantParameterSelectedElement
+            .html(parameterValueHtmlContent)
+            .data('parameter-value-id', $currentParameterValue.data('parameter-value-id'));
+
+        this.disableAllParameterValuesLists();
     }
 
-    disableAllParameterValuesLists ($variantParameterValuesList) {
-        $variantParameterValuesList.hide();
+    redirectToVariantByParameterValues () {
+        console.log(this.$variantParameterSelectedElementCollection);
+    }
+
+    disableAllParameterValuesLists () {
+        this.$variantParameterValuesCollection.hide();
     }
 
     static init ($container) {

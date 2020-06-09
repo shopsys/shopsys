@@ -50,6 +50,11 @@ class ProductExtension extends AbstractExtension
             [$this, 'getOrderingNameByOrderingId']
         );
 
+        $functions[] = new TwigFunction(
+            'getVariantKeyByParameterValues',
+            [$this, 'getVariantKeyByParameterValues']
+        );
+
         return $functions;
     }
 
@@ -77,5 +82,22 @@ class ProductExtension extends AbstractExtension
             ->getSupportedOrderingModesNamesIndexedById();
 
         return $supportedOrderingModesNamesIndexedById[$orderingId] ?? t('Neplatné řazení') . ' ' . $orderingId;
+    }
+
+    /**
+     * @param array $parameterValueIdsIndexedByParameterId
+     * @param string $parameterId
+     * @param string $parameterValueId
+     * @return string
+     */
+    public function getVariantKeyByParameterValues(array $parameterValueIdsIndexedByParameterId, string $parameterId, string $parameterValueId): string
+    {
+        $parameterValueIdsIndexedByParameterId[$parameterId] = $parameterValueId;
+        $tmp = [];
+        foreach ($parameterValueIdsIndexedByParameterId as $parameterId => $parameterValueId) {
+            $tmp[] = $parameterId . '_' . $parameterValueId;
+        }
+
+        return implode('~', $tmp);
     }
 }

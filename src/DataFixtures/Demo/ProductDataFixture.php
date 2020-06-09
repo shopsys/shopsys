@@ -29,7 +29,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInt
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -39,11 +38,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @var \App\Model\Product\ProductFacade
      */
     private $productFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
-     */
-    private $productVariantFacade;
 
     /**
      * @var \App\Component\Domain\Domain
@@ -137,7 +131,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
@@ -157,7 +150,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     public function __construct(
         ProductFacade $productFacade,
-        ProductVariantFacade $productVariantFacade,
         Domain $domain,
         PricingGroupFacade $pricingGroupFacade,
         ProductDataFactoryInterface $productDataFactory,
@@ -176,7 +168,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ProductPackageFacade $productPackageFacade
     ) {
         $this->productFacade = $productFacade;
-        $this->productVariantFacade = $productVariantFacade;
         $this->domain = $domain;
         $this->pricingGroupFacade = $pricingGroupFacade;
         $this->productDataFactory = $productDataFactory;
@@ -2964,6 +2955,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = '32PFL4308';
         $productData->ean = '8845781243205';
 
+        $parameterTranslations = [];
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Philips 32PFL4308', [], 'dataFixtures', $locale);
@@ -5900,14 +5892,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
             /** @var \App\Model\Product\Product $mainProduct */
             $mainProduct = $this->getProductFromCacheByCatnum($mainVariantCatnum);
+            $mainProduct->setAsMainVariant();
+            $this->em->flush();
 
-            $variants = [];
             foreach ($variantsCatnums as $variantCatnum) {
-                $variants[] = $this->getProductFromCacheByCatnum($variantCatnum);
+                $variant = $this->getProductFromCacheByCatnum($variantCatnum);
+                $mainProduct->addVariant($variant);
             }
-
-            $mainVariant = $this->productVariantFacade->createVariant($mainProduct, $variants);
-            $this->addProductReference($mainVariant);
         }
     }
 

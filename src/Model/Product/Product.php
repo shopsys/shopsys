@@ -37,7 +37,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
- * @method addVariant(\App\Model\Product\Product $variant)
  */
 class Product extends BaseProduct
 {
@@ -265,6 +264,34 @@ class Product extends BaseProduct
     /**
      * @param \App\Model\Product\Product $variant
      */
+    public function addVariant(BaseProduct $variant)
+    {
+        if (!$this->isMainVariant()) {
+            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException(
+                $this->getId(),
+                $variant->getId()
+            );
+        }
+        if ($variant->isMainVariant()) {
+            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException($variant->getId());
+        }
+        if ($variant->isVariant()) {
+            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException($variant->getId());
+        }
+
+        if (!$this->variants->contains($variant)) {
+            $this->variants->add($variant);
+            $variant->setMainVariant($this);
+            $variant->copyProductCategoryDomains($this->productCategoryDomains->toArray());
+            if ($this->getDefaultVariant() === null) {
+                $this->setDefaultVariant($variant);
+            }
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $variant
+     */
     public function setDefaultVariant(self $variant): void
     {
         if (!$this->isMainVariant()) {
@@ -278,6 +305,14 @@ class Product extends BaseProduct
         }
 
         $this->defaultVariant = $variant;
+    }
+
+    /**
+     * @return \App\Model\Product\Product|null
+     */
+    public function getDefaultVariant(): ?self
+    {
+        return $this->defaultVariant;
     }
 
     /**

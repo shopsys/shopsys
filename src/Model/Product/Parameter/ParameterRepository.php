@@ -267,4 +267,54 @@ class ParameterRepository extends BaseParameterRepository
             ->groupBy('pv')
             ->orderBy('pv.text');
     }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesForVariantsByMainProductAndParameter(Product $product, Parameter $parameter, string $locale): array
+    {
+        return $this->getParameterValueRepository()
+            ->createQueryBuilder('pv')
+            ->select('pv')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
+            ->join(Product::class, 'p', Join::WITH, 'p = ppv.product')
+            ->where('p.mainVariant = :product')
+            ->andWhere('ppv.parameter = :parameter')
+            ->groupBy('pv')
+            ->orderBy('pv.text')
+
+            ->setParameters([
+                'locale' => $locale,
+                'product' => $product,
+                'parameter' => $parameter,
+                ])
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\ParameterValue
+     */
+    public function getParameterValueForVariantByProductVariantAndParameter(Product $product, Parameter $parameter, string $locale): ParameterValue
+    {
+        return $this->getParameterValueRepository()
+            ->createQueryBuilder('pv')
+            ->select('pv')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
+            ->where('ppv.product = :product')
+            ->andWhere('ppv.parameter = :parameter')
+            ->setParameters([
+                'locale' => $locale,
+                'product' => $product,
+                'parameter' => $parameter,
+            ])
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

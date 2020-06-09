@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter;
 
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
@@ -183,5 +185,44 @@ class ParameterFacade extends BaseParameterFacade
         $this->em->flush();
 
         return $parameterValue;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\ParameterValue[][]
+     */
+    public function getParameterValuesIndexedByParameterIdForMainProduct(Product $product, string $locale): array
+    {
+        $parameterValuesIndexedByParameterId = [];
+        foreach ($product->getVariantParameters() as $parameter) {
+            $parameterValuesIndexedByParameterId[$parameter->getId()] =
+                $this->parameterRepository->getParameterValuesForVariantsByMainProductAndParameter($product, $parameter, $locale);
+        }
+
+        return $parameterValuesIndexedByParameterId;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $productVariant
+     * @param \App\Model\Product\Parameter\Parameter[] $variantParameters
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesIndexedByParameterIdForProductVariant(
+        Product $productVariant,
+        array $variantParameters,
+        string $locale
+    ): array {
+        $parameterValuesIndexedByParameterId = [];
+        foreach ($variantParameters as $parameter) {
+            try {
+                $parameterValuesIndexedByParameterId[$parameter->getId()] =
+                    $this->parameterRepository->getParameterValueForVariantByProductVariantAndParameter($productVariant, $parameter, $locale);
+            } catch (NoResultException $exception) {
+            }
+        }
+
+        return $parameterValuesIndexedByParameterId;
     }
 }
