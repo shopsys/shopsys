@@ -50,3 +50,7 @@ QueryDecorator:
                     uuid:
                         type: "Uuid!"
                 description: "Returns complete list of transport methods"
+            currentCustomerUser:
+                type: 'CurrentCustomerUser!'
+                resolve: "@=resolver('currentCustomerUser')"
+                description: "Returns currently logged in customer user"

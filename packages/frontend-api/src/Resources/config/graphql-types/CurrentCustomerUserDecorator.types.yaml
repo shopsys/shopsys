@@ -1,0 +1,21 @@
+CurrentCustomerUserDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents an currently logged customer user"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            firstName:
+                type: "String!"
+                description: "First name"
+            lastName:
+                type: "String!"
+                description: "Last name"
+            email:
+                type: "String!"
+                description: "Email address"
+            telephone:
+                type: "String"
+                description: "Phone number"
