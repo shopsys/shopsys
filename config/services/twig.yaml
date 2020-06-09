@@ -1,3 +1,6 @@
+parameters:
+    fp_js_form_validator.twig_extension.class: 'App\Twig\JsFormValidatorTwigExtension'
+
 services:
     _defaults:
         autowire: true
@@ -6,6 +9,7 @@ services:
 
     App\Twig\:
         resource: '../../src/Twig/'
+        exclude: '../../src/Twig/{JsFormValidatorTwigExtension.php}'
 
     App\Twig\LocalizationExtension:
         arguments:
