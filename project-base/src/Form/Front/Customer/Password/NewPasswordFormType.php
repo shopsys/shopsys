@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Customer\Password;
 
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -29,7 +30,7 @@ class NewPasswordFormType extends AbstractType
                 'first_options' => [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter password']),
-                        new Constraints\Length(['min' => 6, 'minMessage' => 'Password must be at least {{ limit }} characters long']),
+                        new Constraints\Length(['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']),
                     ],
                 ],
                 'invalid_message' => 'Passwords do not match',

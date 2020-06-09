@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -101,7 +102,7 @@ class AdministratorFormType extends AbstractType
     private function getFirstPasswordConstraints($scenario)
     {
         $constraints = [
-            new Constraints\Length(['min' => 6, 'minMessage' => 'Password must be at least {{ limit }} characters long']),
+            new Constraints\Length(['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']),
         ];
 
         if ($scenario === self::SCENARIO_CREATE) {

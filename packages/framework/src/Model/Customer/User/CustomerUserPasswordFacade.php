@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 class CustomerUserPasswordFacade
 {
     public const RESET_PASSWORD_HASH_LENGTH = 50;
+    public const MINIMUM_PASSWORD_LENGTH = 6;
 
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
