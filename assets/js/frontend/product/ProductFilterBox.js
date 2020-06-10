@@ -48,9 +48,9 @@ export default class ProductFilterBox {
         b = bgColor[3];
 
         hsp = Math.sqrt(
-            0.299 * (r * r) +
-            0.587 * (g * g) +
-            0.114 * (b * b)
+            0.299 * (r * r)
+            + 0.587 * (g * g)
+            + 0.114 * (b * b)
         );
 
         (hsp > 200)
