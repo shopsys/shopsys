@@ -44,7 +44,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \App\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscounts
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]|null[]
      */
     public function calculateDiscountPricesPerProductRoundedByCurrency(array $quantifiedItemsPrices, array $quantifiedItemsDiscounts, Currency $currency): array
     {
