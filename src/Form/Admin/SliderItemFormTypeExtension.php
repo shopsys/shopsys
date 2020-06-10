@@ -5,12 +5,17 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Component\DateTimeHelper\DateTimeHelper;
+use App\Model\Slider\SliderItemFacade;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
+use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints;
 
 class SliderItemFormTypeExtension extends AbstractTypeExtension
 {
@@ -21,6 +26,63 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
     {
         $this->buildExtendedTextAndLinkForm($builder);
         $this->buildVisibilityIntervalForm($builder);
+        $this->buildImagesGroup($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildImagesGroup(FormBuilderInterface $builder, array $options): void
+    {
+        $builderImageGroup = $builder->get('image');
+
+        $imageConstraints = [];
+        if ($options['scenario'] === SliderItemFormType::SCENARIO_CREATE) {
+            $imageConstraints[] = new Constraints\NotBlank(['message' => 'Please choose image']);
+        }
+
+        $builderImageGroup
+            ->add('image', ImageUploadType::class, [
+                'required' => $options['scenario'] === SliderItemFormType::SCENARIO_CREATE,
+                'constraints' => $imageConstraints,
+                'image_entity_class' => SliderItem::class,
+                'image_type' => SliderItemFacade::IMAGE_TYPE_WEB,
+                'file_constraints' => [
+                    new Constraints\Image([
+                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
+                        'mimeTypesMessage' => 'Image can be only in JPG or PNG format',
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ]),
+                ],
+                'label' => t('Upload image'),
+                'entity' => $options['slider_item'],
+                'info_text' => t('You can upload following formats: PNG, JPG'),
+                'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
+            ]);
+
+        $builderImageGroup
+            ->add('mobileImage', ImageUploadType::class, [
+                'required' => $options['scenario'] === SliderItemFormType::SCENARIO_CREATE,
+                'constraints' => $imageConstraints,
+                'image_entity_class' => SliderItem::class,
+                'image_type' => SliderItemFacade::IMAGE_TYPE_MOBILE,
+                'file_constraints' => [
+                    new Constraints\Image([
+                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
+                        'mimeTypesMessage' => 'Image can be only in JPG or PNG format',
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ]),
+                ],
+                'label' => t('Upload image'),
+                'entity' => $options['slider_item'],
+                'info_text' => t('You can upload following formats: PNG, JPG'),
+                'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
+            ]);
     }
 
     /**
