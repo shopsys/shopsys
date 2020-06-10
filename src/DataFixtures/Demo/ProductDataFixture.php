@@ -5898,6 +5898,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             foreach ($variantsCatnums as $variantCatnum) {
                 $variant = $this->getProductFromCacheByCatnum($variantCatnum);
                 $mainProduct->addVariant($variant);
+                $this->em->flush();
             }
         }
     }
