@@ -225,4 +225,32 @@ class ParameterFacade extends BaseParameterFacade
 
         return $parameterValuesIndexedByParameterId;
     }
+
+    /**
+     * @param array $variantParameterValuesIndexedByParameterId
+     * @return array
+     */
+    public function getVariantSetup(array $variantParameterValuesIndexedByParameterId): array
+    {
+        $variantSetup = [];
+        foreach ($variantParameterValuesIndexedByParameterId as $parameterId => $parameterValue) {
+            $variantSetup[$parameterId] = $parameterValue->getId();
+        }
+
+        return $variantSetup;
+    }
+
+    /**
+     * @param array $variantParameterValuesIndexedByParameterId
+     * @return string
+     */
+    public function getVariantSetupKey(array $variantParameterValuesIndexedByParameterId): string
+    {
+        $variantSetupParts = [];
+        foreach ($variantParameterValuesIndexedByParameterId as $parameterId => $parameterValue) {
+            $variantSetupParts[] = $parameterId . '_' . $parameterValue->getId();
+        }
+
+        return implode('~', $variantSetupParts);
+    }
 }

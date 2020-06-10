@@ -146,9 +146,9 @@ class ProductTransferAkeneoMapper
      */
     public function mapAkeneoProductDataToParentSku(array $akeneoProductData): ?string
     {
-        $tmp = $akeneoProductData['values']['association_article'][0]['data'] ?? null;
+        $associationArticleSku = $akeneoProductData['values']['association_article'][0]['data'] ?? null;
 
-        return $tmp !== null ? strval($tmp) : null;
+        return $associationArticleSku !== null ? strval($associationArticleSku) : null;
     }
 
     /**
@@ -157,9 +157,9 @@ class ProductTransferAkeneoMapper
      */
     public function mapAkeneoProductDataToDefaultVariantSku(array $akeneoProductData): ?string
     {
-        $tmp = $akeneoProductData['values']['main_variant_sku'][0]['data'] ?? null;
+        $mainVariantSku = $akeneoProductData['values']['main_variant_sku'][0]['data'] ?? null;
 
-        return $tmp !== null ? strval($tmp) : null;
+        return $mainVariantSku !== null ? strval($mainVariantSku) : null;
     }
 
     /**

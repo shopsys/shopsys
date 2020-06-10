@@ -93,11 +93,11 @@ class ProductExtension extends AbstractExtension
     public function getVariantKeyByParameterValues(array $parameterValueIdsIndexedByParameterId, string $parameterId, string $parameterValueId): string
     {
         $parameterValueIdsIndexedByParameterId[$parameterId] = $parameterValueId;
-        $tmp = [];
+        $variantSetupParts = [];
         foreach ($parameterValueIdsIndexedByParameterId as $parameterId => $parameterValueId) {
-            $tmp[] = $parameterId . '_' . $parameterValueId;
+            $variantSetupParts[] = $parameterId . '_' . $parameterValueId;
         }
 
-        return implode('~', $tmp);
+        return implode('~', $variantSetupParts);
     }
 }

@@ -321,22 +321,16 @@ class ProductController extends FrontBaseController
 
         $variantSetupKeyMap = [];
         $currentVariantSetupKey = '';
-        $currentVariantSetup = [];
+
         $currentVariantParameterValuesIndexedByParameterId = [];
         foreach ($mainProduct->getVariants() as $variant) {
             $variantParameterValuesIndexedByParameterId = $this->parameterFacade
                 ->getParameterValuesIndexedByParameterIdForProductVariant($variant, $mainProduct->getVariantParameters(), $this->domain->getLocale());
-            $variantSetup = [];
-            $tmp = [];
-            foreach ($variantParameterValuesIndexedByParameterId as $parameterId => $parameterValue) {
-                $variantSetup[$parameterId] = $parameterValue->getId();
-                $tmp[] = $parameterId . '_' . $parameterValue->getId();
-            }
-            $variantSetupKey = implode('~', $tmp);
+
+            $variantSetupKey = $this->parameterFacade->getVariantSetupKey($variantParameterValuesIndexedByParameterId);
             $variantSetupKeyMap[$variantSetupKey] = $variant->getId();
             if ($variant->getId() === $product->getId()) {
                 $currentVariantSetupKey = $variantSetupKey;
-                $currentVariantSetup = $variantSetup;
                 $currentVariantParameterValuesIndexedByParameterId = $variantParameterValuesIndexedByParameterId;
             }
         }
@@ -348,7 +342,7 @@ class ProductController extends FrontBaseController
             'mainProduct' => $mainProduct,
             'parameterValuesIndexedByParameterId' => $parameterValuesIndexedByParameterId,
             'variantParameterValuesIndexedByParameterId' => $currentVariantParameterValuesIndexedByParameterId,
-            'currentVariantSetup' => $currentVariantSetup,
+            'currentVariantSetup' => $this->parameterFacade->getVariantSetup($currentVariantParameterValuesIndexedByParameterId),
             'currentVariantSetupKey' => $currentVariantSetupKey,
             'variantSetupKeyMap' => $variantSetupKeyMap,
         ]);

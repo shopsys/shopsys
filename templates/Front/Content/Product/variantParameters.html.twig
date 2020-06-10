@@ -1,23 +1,19 @@
 {% if mainProduct.variantParameters|length > 0 and variantParameterValuesIndexedByParameterId|length > 0 and parameterValuesIndexedByParameterId|length > 0 %}
-    <div class="box-detail variant-parameters-wrap js-variant-parameters" data-product-parent-id="{{ mainProduct.id }}">
+    <div class="box-detail variant-parameters-wrap">
 
         {% for parameter in mainProduct.variantParameters %}
             <div class="variant-parameter">
                 <div class="variant-parameter__name">{{ parameter.name }}:</div>
                 <div class="variant-parameter__wrap">
-
-                    <a href="#" class="variant-parameter__select js-variant-parameter-select">
-                        <span
-                            class="variant-parameter__selected js-variant-parameter-selected"
-                            data-parameter-id="{{ parameter.id }}"
-                            data-parameter-value-id="{{ variantParameterValuesIndexedByParameterId[parameter.id].id }}"
-                        >
+                    {% set hasMoreValues = parameterValuesIndexedByParameterId[parameter.id]|length > 1 %}
+                    <a href="#" class="variant-parameter__select {% if hasMoreValues %}js-variant-parameter-select{% else %}js-stop-propagation{% endif %}">
+                        <div class="variant-parameter__selected js-variant-parameter-selected">
                             <div class="variant-parameter__description">
                                 <span>{{ variantParameterValuesIndexedByParameterId[parameter.id].text }}</span>
                                 <span>obrázek/ikonka</span>
                                 <span>+ castka</span>
                             </div>
-                        </span>
+                        </div>
                     </a>
 
                     <ul class="variant-parameter__values js-variant-parameter">
@@ -27,7 +23,6 @@
                                 <li class="variant-parameter__item" >
                                     <a href="{{ url('front_product_detail', {'id': variantId}) }}"
                                        class="variant-parameter__value js-variant-parameter-value"
-                                       data-parameter-value-id="{{ parameterValue.id }}"
                                     >
                                         <div class="variant-parameter__description">
                                             <span>{{ parameterValue.text }}</span>

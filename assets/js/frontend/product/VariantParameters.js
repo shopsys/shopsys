@@ -7,6 +7,10 @@ export default class VariantParameters {
         this.$variantParameterValuesCollection = $container.filterAllNodes('.js-variant-parameter');
         this.$variantParameterSelectedElementCollection = $container.filterAllNodes('.js-variant-parameter-selected');
 
+        $container.filterAllNodes('.js-stop-propagation').click((event) => {
+            return false;
+        });
+
         $container.filterAllNodes('.js-variant-parameter-select').click((event) => {
             this.disableAllParameterValuesLists();
             $(event.currentTarget).next('.js-variant-parameter').show();
@@ -26,8 +30,7 @@ export default class VariantParameters {
             .children('.js-variant-parameter-selected');
 
         $variantParameterSelectedElement
-            .html(parameterValueHtmlContent)
-            .data('parameter-value-id', $currentParameterValue.data('parameter-value-id'));
+            .html(parameterValueHtmlContent);
 
         this.disableAllParameterValuesLists();
     }
