@@ -33,7 +33,7 @@
                         {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
                     </div>
                     <div class="box-blog__panel">
-                        {{ render(controller('App\\Controller\\Front\\BlogCategoryController:listAction', { currentBlogCategory: blogCategory })) }}
+                        {{ render(controller('App\\Controller\\Front\\BlogCategoryController:allCategoriesForBlogArticleAction', { blogArticle: blogArticle })) }}
                         <a class="btn btn--next btn-no-style" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">
                             {{ "Všechny články"|trans }}
                             <i class="btn__icon svg svg-long-arrow-right"></i>
