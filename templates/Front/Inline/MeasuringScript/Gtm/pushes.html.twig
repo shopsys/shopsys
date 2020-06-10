@@ -1,0 +1,7 @@
+{% if isGtmEnabled %}
+    <script>
+        {% for dataLayerPush in gtmDataLayerPushes %}
+            dataLayer.push({{ dataLayerPush|json_encode|raw }});
+        {% endfor %}
+    </script>
+{% endif %}

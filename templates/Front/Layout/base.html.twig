@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}" class="no-js">
     <head>
+        {{ render(controller('App\\Controller\\Front\\GtmController:headAction')) }}
+
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="{% block meta_description %}{% endblock %}">
@@ -59,6 +61,7 @@
     </head>
 
     <body class="web">
+        {{ render(controller('App\\Controller\\Front\\GtmController:bodyAction')) }}
 
         {{ render(controller('App\\Controller\\Front\\ScriptController:embedAllPagesScriptsAction')) }}
         {{ render(controller('App\\Controller\\Front\\ScriptController:embedAllPagesGoogleAnalyticsScriptAction')) }}

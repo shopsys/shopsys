@@ -15,6 +15,7 @@ use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use App\Model\Gtm\GtmFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\ProductFilterFacade;
@@ -171,6 +172,11 @@ class ProductController extends FrontBaseController
     private $productFilterFacade;
 
     /**
+     * @var \App\Model\Gtm\GtmFacade
+     */
+    private $gtmFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Component\Domain\Domain $domain
@@ -195,6 +201,7 @@ class ProductController extends FrontBaseController
      * @param \App\Component\SeoHelper\SeoHelper $seoHelper
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Filter\ProductFilterFacade $productFilterFacade
+     * @param \App\Model\Gtm\GtmFacade $gtmFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -220,7 +227,8 @@ class ProductController extends FrontBaseController
         UploadedFileFacade $uploadedFileFacade,
         SeoHelper $seoHelper,
         ParameterFacade $parameterFacade,
-        ProductFilterFacade $productFilterFacade
+        ProductFilterFacade $productFilterFacade,
+        GtmFacade $gtmFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -246,6 +254,7 @@ class ProductController extends FrontBaseController
         $this->seoHelper = $seoHelper;
         $this->parameterFacade = $parameterFacade;
         $this->productFilterFacade = $productFilterFacade;
+        $this->gtmFacade = $gtmFacade;
     }
 
     /**
@@ -262,6 +271,10 @@ class ProductController extends FrontBaseController
 
         /** @var \App\Model\Product\Product $productVariant */
         $productVariant = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
+
+        /** @var \App\Model\Product\Product $product */
+        $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
+        $this->gtmFacade->onProductDetailPage($product);
 
         if ($productVariant->isMainVariant()) {
             return $this->redirectToRoute('front_product_detail', ['id' => $productVariant->getDefaultVariant()->getId()], 301);
@@ -363,6 +376,7 @@ class ProductController extends FrontBaseController
         $category = $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $id);
         $readyCategorySeoMix = $this->findReadyCategorySeoMix($readyCategorySeoMixId, $request, $category);
         $request->attributes->set('isCategorySeoMix', $readyCategorySeoMix === null ? false : true);
+
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
         if (!$this->isRequestPageValid($requestPage)) {
             return $this->redirectToRoute('front_product_list', $this->getRequestParametersWithoutPage());
@@ -403,6 +417,8 @@ class ProductController extends FrontBaseController
 
         $productFilterFormRequestData = ($request->query->has('product_filter_form')) ? $request->query->get('product_filter_form') : [];
         $productFilterSetup = $this->productFilterFacade->getProductFilterSetupByProductFilterFormRequestData($productFilterFormRequestData);
+
+        $this->gtmFacade->onProductListByCategoryPage($category, $paginationResult->getResults());
 
         $allParameterValuesImageFilePathsIndexedById = $this->uploadedFileFacade->getAllUploadedFilesFilePathByEntityName(self::PARAMETER_VALUE_ENTITY_NAME);
         $viewParameters = [

@@ -1,4 +1,9 @@
 <script type="text/javascript" src="{{ goPayData['embedJs'] }}"></script>
 <script type="text/javascript">
-    _gopay.checkout({gatewayUrl: '{{ goPayData['gatewayUrl']|escape('js') }}', inline: true});
+    (function() {
+        // wait for GTM to be sent
+//        setTimeout(function() {
+            _gopay.checkout({gatewayUrl: '{{ goPayData['gatewayUrl']|escape('js') }}', inline: true});
+//        }, 1000);
+    })();
 </script>

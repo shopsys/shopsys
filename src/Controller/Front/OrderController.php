@@ -14,6 +14,7 @@ use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use App\Model\GoPay\GoPayOnCurrentDomainFacade;
 use App\Model\GoPay\GoPayTransactionFacade;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
+use App\Model\Gtm\GtmFacade;
 use App\Model\Order\FrontOrderData;
 use App\Model\Order\Order;
 use App\Model\Order\OrderDataFactory;
@@ -139,6 +140,11 @@ class OrderController extends FrontBaseController
     private $goPayTransactionFacade;
 
     /**
+     * @var \App\Model\Gtm\GtmFacade
+     */
+    private $gtmFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
@@ -157,6 +163,7 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Model\Gtm\GtmFacade $gtmFacade
      */
     public function __construct(
         OrderFacade $orderFacade,
@@ -176,7 +183,8 @@ class OrderController extends FrontBaseController
         GoPayTransactionFacade $goPayTransactionFacade,
         OrderPreviewSplittingFacade $orderPreviewSplittingFacade,
         OrderDataFactory $orderDataFactory,
-        StockFacade $stockFacade
+        StockFacade $stockFacade,
+        GtmFacade $gtmFacade
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
@@ -196,6 +204,7 @@ class OrderController extends FrontBaseController
         $this->orderDataFactory = $orderDataFactory;
         $this->stockFacade = $stockFacade;
         $this->goPayTransactionFacade = $goPayTransactionFacade;
+        $this->gtmFacade = $gtmFacade;
     }
 
     /**
@@ -290,6 +299,8 @@ class OrderController extends FrontBaseController
         if ($form->isSubmitted() && !$form->isValid() && $form->getErrors()->count() === 0) {
             $form->addError(new FormError(t('Please check the correctness of all data filled.')));
         }
+
+        $this->gtmFacade->onOrderPages($splitOrderPreview, $orderFlow->getCurrentStepNumber());
 
         if ($isValid && $orderFlow->getCurrentStepNumber() == 3 && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) {
             $customerEmailExists = $this->session->get(self::SESSION_CUSTOMER_EMAIL_EXISTS, null);
@@ -439,6 +450,8 @@ class OrderController extends FrontBaseController
         $order = $this->orderFacade->getById($orderId);
         $goPayData = null;
 
+        $this->gtmFacade->onOrderSentPage($order);
+
         if ($order->getPayment()->isGoPay()) {
             $goPayBankSwift = $this->session->get(self::SESSION_GOPAY_CHOOSEN_SWIFT, null);
 
@@ -503,6 +516,8 @@ class OrderController extends FrontBaseController
         if (!$order->getPayment()->isGoPay()) {
             return $this->redirectToRoute('front_cart');
         }
+
+        $this->gtmFacade->onOrderNotPaidPage($order);
 
         if ($this->orderFacade->isUnpaidOrderPaymentChangeable($order)) {
             $payments = $this->paymentFacade->getVisibleOnCurrentDomainByTransport($order->getTransport());

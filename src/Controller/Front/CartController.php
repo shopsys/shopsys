@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Cart\AddProductFormType;
 use App\Form\Front\Cart\CartFormType;
+use App\Model\Gtm\GtmFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
@@ -76,6 +77,11 @@ class CartController extends FrontBaseController
     private $productFacade;
 
     /**
+     * @var \App\Model\Gtm\GtmFacade
+     */
+    private $gtmFacade;
+
+    /**
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
@@ -85,6 +91,7 @@ class CartController extends FrontBaseController
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $cartSplittingFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Gtm\GtmFacade $gtmFacade
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -95,7 +102,8 @@ class CartController extends FrontBaseController
         RequestStack $requestStack,
         OrderPreviewSplittingFacade $cartSplittingFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        ProductFacade $productFacade
+        ProductFacade $productFacade,
+        GtmFacade $gtmFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -106,6 +114,7 @@ class CartController extends FrontBaseController
         $this->orderPreviewSplittingFacade = $cartSplittingFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->productFacade = $productFacade;
+        $this->gtmFacade = $gtmFacade;
     }
 
     /**
@@ -157,6 +166,8 @@ class CartController extends FrontBaseController
         }
 
         $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer(null);
+
+        $this->gtmFacade->onOrderPages($splitOrderPreview, 1);
 
         return $this->render('Front/Content/Cart/index.html.twig', [
             'splitOrderPreview' => $splitOrderPreview,
@@ -330,6 +341,8 @@ class CartController extends FrontBaseController
                     self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
                 );
 
+                $this->gtmFacade->onAddProductToCart($product, (int)$formData['quantity']);
+
                 return $this->render('Front/Inline/Cart/afterAddWindow.html.twig', [
                     'product' => $product,
                     'maxStockAmountAlreadyReached' => $maxStockAmountAlreadyReached,
@@ -402,7 +415,11 @@ class CartController extends FrontBaseController
             try {
                 $productName = $this->cartFacade->getProductByCartItemId($cartItemId)->getName();
 
+                $product = $this->cartFacade->getProductByCartItemId($cartItemId);
+
                 $this->cartFacade->deleteCartItem($cartItemId);
+
+                $this->gtmFacade->onDeleteProductFromCart($product);
 
                 $this->addSuccessFlashTwig(
                     t('Product {{ name }} removed from cart'),

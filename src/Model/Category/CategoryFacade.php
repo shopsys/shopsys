@@ -199,4 +199,32 @@ class CategoryFacade extends BaseCategoryFacade
     {
         return  $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain($parentCategory, $domainConfig);
     }
+
+    /**
+     * @param \App\Model\Category\Category $destinationCategory
+     * @return array
+     */
+    public function getCategoriesInPath(Category $destinationCategory): array
+    {
+        $categoriesInPathWithoutRoot = array_slice($this->categoryRepository->getPath($destinationCategory), 1);
+        return $categoriesInPathWithoutRoot;
+    }
+
+    /**
+     * @param \App\Model\Category\Category $destinationCategory
+     * @param string $locale
+     * @param string $delimiter
+     * @return string
+     */
+    public function getCategoriesNamesInPathAsString(Category $destinationCategory, string $locale, string $delimiter = '/'): string
+    {
+        $categoriesInPath = $this->getCategoriesInPath($destinationCategory);
+
+        $categoriesNamesInPath = [];
+        foreach ($categoriesInPath as $category) {
+            $categoriesNamesInPath[] = $category->getName($locale);
+        }
+
+        return implode($delimiter, $categoriesNamesInPath);
+    }
 }

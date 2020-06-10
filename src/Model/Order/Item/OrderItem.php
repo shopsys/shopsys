@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Item;
 
+use App\Model\Order\Item\Exception\OrderItemRelatedException;
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,6 +50,13 @@ class OrderItem extends BaseOrderItem
      * @ORM\Column(type="text", nullable=true)
      */
     private $promoCodeIdentifier;
+
+    /**
+     * @var \App\Model\Order\Item\OrderItem|null
+     * @ORM\OneToOne(targetEntity="App\Model\Order\Item\OrderItem")
+     * @ORM\JoinColumn(name="related_order_item_id", referencedColumnName="id", nullable=true)
+     */
+    private $relatedOrderItem;
 
     /**
      * @param \App\Model\Order\Order $order
@@ -128,5 +136,49 @@ class OrderItem extends BaseOrderItem
     public function setPromoCodeIdentifier(?string $promoCodeIdentifier): void
     {
         $this->promoCodeIdentifier = $promoCodeIdentifier;
+    }
+
+    /**
+     * @param \App\Model\Order\Item\OrderItem|null $relatedOrderItem
+     */
+    public function setRelatedOrderItem(?self $relatedOrderItem): void
+    {
+        if ($this->type !== self::TYPE_PRODUCT) {
+            throw new OrderItemRelatedException('This kind of relation is not supported.', 500);
+        }
+
+        $this->relatedOrderItem = $relatedOrderItem;
+    }
+
+    /**
+     * @return \App\Model\Order\Item\OrderItem|null
+     */
+    public function getRelatedCoupon(): ?self
+    {
+        if ($this->type !== self::TYPE_PRODUCT || $this->promoCodeIdentifier !== null) {
+            throw new OrderItemRelatedException('This kind of relation is not supported.', 500);
+        }
+
+        return $this->relatedOrderItem;
+    }
+
+    /**
+     * @return \App\Model\Order\Item\OrderItem|null
+     */
+    public function getRelatedProduct(): ?self
+    {
+        if ($this->type !== self::TYPE_PRODUCT || $this->promoCodeIdentifier === null) {
+            throw new OrderItemRelatedException('This kind of relation is not supported.', 500);
+        }
+
+        return $this->relatedOrderItem;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDiscountText(): string
+    {
+        return str_replace(' - ' . $this->getRelatedProduct()->getName(), '', $this->name);
     }
 }

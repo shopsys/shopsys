@@ -110,6 +110,10 @@ review:
         - ~/yq write --inplace ~/parameters.yaml parameters.targito_config.enabled ${TARGITO_DEV_ENABLED}
         - ~/yq write --inplace ~/parameters.yaml parameters.targito_config.eshop_to_targito_account_id ${TARGITO_ESHOP_TO_TARGITO_ACCOUNT_ID}
         - ~/yq write --inplace ~/parameters.yaml parameters.targito_config.eshop_to_targito_password ${TARGITO_ESHOP_TO_TARGITO_PASSWORD}
+        - ~/yq write --inplace ~/parameters.yaml parameters.gtm_config.cs.enabled ${GTM_DEV_ENABLED}
+        - ~/yq write --inplace ~/parameters.yaml parameters.gtm_config.cs.container_id ${GTM_CZ_ID}
+        - ~/yq write --inplace ~/parameters.yaml parameters.gtm_config.sk.enabled ${GTM_DEV_ENABLED}
+        - ~/yq write --inplace ~/parameters.yaml parameters.gtm_config.sk.container_id ${GTM_SK_ID}
         - docker cp ~/parameters.yaml "${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yaml"
         - docker-compose exec --user root -T php-fpm chown www-data:www-data /var/www/html/config/parameters.yaml
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${PHP_FPM_IMAGE_NAME}.ci.scontodev.cz/g" config/domains_urls.yaml

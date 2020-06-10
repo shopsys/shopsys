@@ -87,3 +87,15 @@ parameters:
         user: 'sconto'
         pass: 'sconto'
         allowed_ips: ['172.18.0.1']
+
+    gtm_config:
+        cs:
+            enabled: false
+            container_id: GTM-MN4G78M
+            container_environment: null
+            data_layer_locale: cs
+        sk:
+            enabled: false
+            container_id: GTM-TK8MMWT
+            container_environment: null
+            data_layer_locale: sk

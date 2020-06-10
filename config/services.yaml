@@ -651,3 +651,11 @@ services:
     App\Component\SeoHelper\SeoHelper: ~
 
     App\Command\ElFinderPostInstallCommand: ~
+
+    App\Model\Gtm\GtmContainer:
+        arguments:
+            $containersConfigs: '%gtm_config%'
+
+    App\Model\Gtm\GtmListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller }

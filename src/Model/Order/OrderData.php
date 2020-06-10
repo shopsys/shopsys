@@ -52,6 +52,11 @@ class OrderData extends BaseOrderData
      */
     public $companyNumberWithVat;
 
+    /**
+     * @var string|null
+     */
+    public $gtmCoupon;
+
     public function __construct()
     {
         parent::__construct();

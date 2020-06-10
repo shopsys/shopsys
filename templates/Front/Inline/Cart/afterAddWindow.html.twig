@@ -1,4 +1,6 @@
 {% if not maxStockAmountAlreadyReached %}
+    {{ render(controller('App\\Controller\\Front\\GtmController:pushesAction')) }}
+
     {% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
     <div>
         <h2 class="window-popup__heading window-popup__heading--cart">

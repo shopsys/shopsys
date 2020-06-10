@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use App\Model\Gtm\GtmFacade;
 use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
@@ -46,24 +47,32 @@ class ErrorController extends FrontBaseController
     private $environment;
 
     /**
+     * @var \App\Model\Gtm\GtmFacade
+     */
+    private $gtmFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionController $exceptionController
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
      * @param \App\Component\Error\ErrorPagesFacade $errorPagesFacade
      * @param \App\Component\Domain\Domain $domain
      * @param string $environment
+     * @param \App\Model\Gtm\GtmFacade $gtmFacade
      */
     public function __construct(
         ExceptionController $exceptionController,
         ExceptionListener $exceptionListener,
         ErrorPagesFacade $errorPagesFacade,
         Domain $domain,
-        string $environment
+        string $environment,
+        GtmFacade $gtmFacade
     ) {
         $this->exceptionController = $exceptionController;
         $this->exceptionListener = $exceptionListener;
         $this->errorPagesFacade = $errorPagesFacade;
         $this->domain = $domain;
         $this->environment = $environment;
+        $this->gtmFacade = $gtmFacade;
     }
 
     /**
@@ -87,6 +96,8 @@ class ErrorController extends FrontBaseController
         FlattenException $exception,
         ?DebugLoggerInterface $logger = null
     ) {
+        $this->gtmFacade->onErrorPage($exception->getStatusCode());
+
         if ($this->isUnableToResolveDomainInNotDebug($exception)) {
             return $this->createUnableToResolveDomainResponse($request);
         } elseif ($this->exceptionController->isShownErrorPagePrototype()) {

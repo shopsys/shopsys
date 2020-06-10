@@ -9,6 +9,7 @@ use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\RegistrationDataFactory;
 use App\Model\Customer\User\RegistrationFacade;
 use App\Model\GoPay\GoPayTransaction;
+use App\Model\Gtm\GtmHelper;
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
@@ -79,6 +80,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Cart\CartFacade $cartFacade
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Model\Order\OrderRepository $orderRepository
+ * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -113,6 +115,11 @@ class OrderFacade extends BaseOrderFacade
     private $countryFacade;
 
     /**
+     * @var \App\Model\Gtm\GtmHelper
+     */
+    private $gtmHelper;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
      * @param \App\Model\Order\OrderRepository $orderRepository
@@ -145,6 +152,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
      * @param \App\Model\Customer\User\RegistrationFacade $registrationFacade
      * @param \App\Model\Country\CountryFacade $countryFacade
+     * @param \App\Model\Gtm\GtmHelper $gtmHelper
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -178,7 +186,8 @@ class OrderFacade extends BaseOrderFacade
         OrderDataFactory $orderDataFactory,
         RegistrationDataFactory $registrationDataFactory,
         RegistrationFacade $registrationFacade,
-        CountryFacade $countryFacade
+        CountryFacade $countryFacade,
+        GtmHelper $gtmHelper
     ) {
         parent::__construct(
             $em,
@@ -214,6 +223,7 @@ class OrderFacade extends BaseOrderFacade
         $this->registrationDataFactory = $registrationDataFactory;
         $this->registrationFacade = $registrationFacade;
         $this->countryFacade = $countryFacade;
+        $this->gtmHelper = $gtmHelper;
     }
 
     /**
@@ -237,6 +247,9 @@ class OrderFacade extends BaseOrderFacade
         }
 
         $this->updateOrderDataWithDeliveryAddress($orderData, $deliveryAddress);
+
+        $promoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
+        $this->gtmHelper->amendGtmCouponToOrderData($orderData, $promoCode);
 
         $order = $this->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, $customerUser);
         $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
@@ -400,13 +413,14 @@ class OrderFacade extends BaseOrderFacade
             );
 
             if ($quantifiedItemDiscount !== null) {
-                $this->addOrderItemDiscount(
+                $coupon = $this->addOrderItemDiscountAndReturnIt(
                     $orderItem,
                     $quantifiedItemDiscount,
                     $locale,
                     (float)$orderPreview->getPromoCodeDiscountPercent(),
                     $orderPreview->getPromoCodeIdentifier()
                 );
+                $orderItem->setRelatedOrderItem($coupon);
             }
         }
     }
@@ -460,9 +474,15 @@ class OrderFacade extends BaseOrderFacade
      * @param string $locale
      * @param float $discountPercent
      * @param string|null $promoCodeIdentifier
+     * @return \App\Model\Order\Item\OrderItem
      */
-    protected function addOrderItemDiscount(OrderItem $orderItem, Price $quantifiedItemDiscount, string $locale, float $discountPercent, ?string $promoCodeIdentifier = null): void
-    {
+    private function addOrderItemDiscountAndReturnIt(
+        OrderItem $orderItem,
+        Price $quantifiedItemDiscount,
+        string $locale,
+        float $discountPercent,
+        ?string $promoCodeIdentifier = null
+    ): \App\Model\Order\Item\OrderItem {
         $name = sprintf(
             '%s %s - %s',
             t('Promo code', [], 'messages', $locale),
@@ -479,8 +499,9 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->quantity = 1;
         $orderItemData->productType = $orderItem->getProductType();
         $orderItemData->promoCodeIdentifier = $promoCodeIdentifier;
+        $orderItemData->relatedOrderItem = $orderItem;
 
-        $this->orderItemFactory->createProductByOrderItemData(
+        return $this->orderItemFactory->createProductByOrderItemData(
             $orderItemData,
             $orderItem->getOrder(),
             null

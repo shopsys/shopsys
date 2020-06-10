@@ -92,6 +92,13 @@ class Order extends BaseOrder
     protected $deliveryLastName;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    protected $gtmCoupon;
+
+    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -106,6 +113,7 @@ class Order extends BaseOrder
         parent::__construct($orderData, $orderNumber, $urlHash, $customerUser);
 
         $this->goPayTransactions = new ArrayCollection();
+        $this->gtmCoupon = $orderData->gtmCoupon;
     }
 
     /**
@@ -117,6 +125,16 @@ class Order extends BaseOrder
         $this->editGoPayTransactions($orderData->goPayTransactions);
 
         return parent::edit($orderData);
+    }
+
+    /**
+     * @param \App\Model\Order\OrderData $orderData
+     */
+    protected function editData(BaseOrderData $orderData): void
+    {
+        parent::editData($orderData);
+
+        $this->gtmCoupon = $orderData->gtmCoupon;
     }
 
     /**
@@ -254,5 +272,13 @@ class Order extends BaseOrder
         /** @var \App\Model\Order\Item\OrderItem[] $transportAndPaymentItems */
         $transportAndPaymentItems = parent::getTransportAndPaymentItems();
         return $transportAndPaymentItems;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getGtmCoupon(): ?string
+    {
+        return $this->gtmCoupon;
     }
 }
