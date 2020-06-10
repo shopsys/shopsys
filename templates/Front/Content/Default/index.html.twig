@@ -84,18 +84,22 @@
 
     {% include 'Front/Content/Category/categoryListGrid.html.twig' %}
 
+    {{ render(controller('App\\Controller\\Front\\BlogArticleController:homepageArticlesAction')) }}
+
     {% if topProducts is not empty %}
         <div class="web__line">
             <div class="web__container">
-                <div id="top-products">
-                    <h2>{{ 'Special offers'|trans }}</h2>
-                    {{ productList.list(topProducts, null, 'h3') }}
+                <div class="box-products-carousel box-products-carousel--bg" id="top-products">
+                    <div class="box-products-carousel__in box-products-carousel__in--bg">
+                        <h2>{{ 'Výprodej'|trans }}</h2>
+                        <div class="list-products-grid js-products-slick-carousel">
+                            {{ productList.list(topProducts, null, 'h3') }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     {% endif %}
-
-    {{ render(controller('App\\Controller\\Front\\BlogArticleController:homepageArticlesAction')) }}
 
     <div class="web__line">
         <div class="web__container">

@@ -34,6 +34,15 @@ export default function slickInit () {
         $hpSliderThumbnails.find('.slick-slide').removeClass('slick-active-current');
         $hpSliderThumbnails.find('.slick-slide').eq(currentSlide).addClass('slick-active-current');
     });
+
+    $('.js-products-slick-carousel').find('.js-product-list').slick({
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        dots: false,
+        infinite: false,
+        swipeToSlide: true,
+        variableWidth: true
+    });
 }
 
 (new Register()).registerCallback(slickInit, 'slickInit');
