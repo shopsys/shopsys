@@ -127,7 +127,6 @@
 
     &__slider {
         &__wrap {
-            font-size: 0;
             margin-top: 15px;
 
             &__range {
@@ -141,12 +140,11 @@
     &__content {
         width: 100%;
         padding: @box-filter-padding;
-
-        font-size: 0;
         border-top: 1px solid @box-filter-delimiter-color;
 
         &__item {
-            width: @box-filter-input-width;
+            background-color: @box-filter-input-bg-color;
+            padding-right: 10px;
             display: inline-block;
             line-height: @form-item-height;
             margin-top: 15px;

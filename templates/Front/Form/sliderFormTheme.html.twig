@@ -11,11 +11,17 @@
             ></div>
         </div>
         <div class="box-filter__content__item__wrap">
-            <div class="box-filter__content__item">
+            <div class="box-filter__content__item" data-unit="{{ form.vars.min.unit }}">
                 {{ form_widget(form.min) }}
+                {% if form.vars.min.unit is defined %}
+                    {{ form.vars.min.unit }}
+                {% endif %}
             </div>
             <div class="box-filter__content__item box-filter__content__item--right">
                 {{ form_widget(form.max) }}
+                {% if form.vars.max.unit is defined %}
+                    {{ form.vars.max.unit }}
+                {% endif %}
             </div>
         </div>
     </div>
