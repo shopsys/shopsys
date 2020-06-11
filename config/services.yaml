@@ -456,6 +456,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'
 
+    Shopsys\FrameworkBundle\Model\Advert\AdvertFacade: '@App\Model\Advert\AdvertFacade'
+
     Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry: '@App\Model\Advert\AdvertPositionRegistry'
 
     App\Model\Transfer\TransferLoggerFactory:

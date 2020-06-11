@@ -121,41 +121,51 @@
 
 -   name: noticer
     class: Shopsys\FrameworkBundle\Model\Advert\Advert
-    sizes:
-        -   name: header
-            width: 1160
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Advertising under heading'
-            additionalSizes:
-                - {width: 440, height: ~, media: "(max-width: 479px)"}
-                - {width: 730, height: ~, media: "(max-width: 768px)"}
-                - {width: 990, height: ~, media: "(max-width: 1023px)"}
-        -   name: footer
-            width: 1160
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Advertising above footer'
-            additionalSizes:
-                - {width: 440, height: ~, media: "(max-width: 479px)"}
-                - {width: 730, height: ~, media: "(max-width: 768px)"}
-                - {width: 990, height: ~, media: "(max-width: 1023px)"}
-        -   name: productList
-            width: 900
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Advertising in category (above the category name)'
-            additionalSizes:
-                - {width: 440, height: ~, media: "(max-width: 479px)"}
-                - {width: 730, height: ~, media: "(max-width: 1023px)"}
-        -   name: cartPreview
-            width: 500
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Advertising in cart (above the cart preview)'
-            additionalSizes:
-                - {width: 440, height: ~, media: "(max-width: 479px)"}
-                - {width: 730, height: ~, media: "(max-width: 1023px)"}
+    types:
+        -   name: web
+            sizes:
+                -   name: header
+                    width: 1160
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising under heading'
+                -   name: footer
+                    width: 1160
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising above footer'
+                -   name: productList
+                    width: 900
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising in category (above the category name)'
+                -   name: cartPreview
+                    width: 500
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising in cart (above the cart preview)'
+        -   name: mobile
+            sizes:
+                -   name: header
+                    width: 425
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising under heading'
+                -   name: footer
+                    width: 425
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising above footer'
+                -   name: productList
+                    width: 425
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising in category (above the category name)'
+                -   name: cartPreview
+                    width: 425
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising in cart (above the cart preview)'
 
 -   name: brand
     class: Shopsys\FrameworkBundle\Model\Product\Brand\Brand

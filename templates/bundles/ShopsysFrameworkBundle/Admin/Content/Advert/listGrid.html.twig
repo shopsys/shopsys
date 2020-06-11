@@ -1,0 +1,9 @@
+{% extends '@!ShopsysFramework/Admin/Content/Advert/listGrid.html.twig' %}
+
+{% block grid_value_cell_id_preview %}
+    {% if row.advert.type == TYPE_IMAGE %}
+        {{ image(row.advert, {type: 'web', size: 'original', height: 30, lazy: false}) }}
+    {% else %}
+        {{ '- html -' }}
+    {% endif %}
+{% endblock %}
