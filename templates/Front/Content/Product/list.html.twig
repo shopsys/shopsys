@@ -8,6 +8,15 @@
     {{ paginator.metaRobots(paginationResult, disableIndexingBySeznamBot) }}
 {% endblock %}
 
+{% block prev_next_links %}
+    {% if paginationResult.previousPage is not null%}
+        <link href="{{ url('front_product_list', { id: category.id }) }}?page={{ paginationResult.previousPage }}" rel="prev">
+    {% endif %}
+    {% if paginationResult.nextPage is not null%}
+        <link href="{{ url('front_product_list', { id: category.id }) }}?page={{ paginationResult.nextPage }}" rel="next">
+    {% endif %}
+{% endblock %}
+
 {% block meta_description %}{{ seoMetaDescription }}{% endblock %}
 
 {% block title %}{{ seoTitle }}{% endblock %}
@@ -22,7 +31,7 @@
             <div class="box-list__description box-list__description--top">
                 <h1 class="box-list__description__heading js-ready-category-seo-mix-product-list-h1">{{ seoH1 }}</h1>
                 {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
-                {% if shortDescription is not null %}
+                {% if paginationResult.page == 1 and shortDescription is not null %}
                     <div class="box-list__description__text box-list__description__text--top">
                         <div class="js-ready-category-seo-mix-product-list-short-description">{{ shortDescription|raw }}</div>
                         {% if description is not null %}
@@ -127,7 +136,9 @@
     <div class="box-list__description">
         <a id="description"></a>
         <div class="box-list__description__text in-user-text js-category-description js-ready-category-seo-mix-product-list-description">
-            {{ description|raw }}
+            {% if paginationResult.page == 1 %}
+                {{ description|raw }}
+            {% endif %}
         </div>
         <div class="box-list__description__more">
             <span class="link-style box-list__description__more__btn js-category-description-load-more">

@@ -2,18 +2,27 @@
 {% import 'Front/Inline/Paginator/paginator.html.twig' as paginator %}
 {% import 'Front/Content/Product/filterFormMacro.html.twig' as productFilterForm %}
 
-{% block title %}
-    {{ 'Search results for "%searchText%"'|trans({ '%searchText%': searchText }) }}
-{% endblock %}
-
 {% block meta_robots %}
     <meta name="robots" content="noindex, follow">
+{% endblock %}
+
+{% block prev_next_links %}
+    {% if paginationResult.previousPage is not null%}
+        <link href="{{ url('front_product_search', { (SEARCH_TEXT_PARAMETER) : searchText }) }}?page={{ paginationResult.previousPage }}" rel="prev">
+    {% endif %}
+    {% if paginationResult.nextPage is not null%}
+        <link href="{{ url('front_product_search', { (SEARCH_TEXT_PARAMETER) : searchText }) }}?page={{ paginationResult.nextPage }}" rel="next">
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {{ seoTitle }}
 {% endblock %}
 
 {% block main_content %}
     <div class="web__line">
         <div class="web__container">
-            <h1>{{ 'Search results for "%searchText%"'|trans({ '%searchText%': searchText }) }}</h1>
+            <h1>{{ seoH1 }}</h1>
             {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: foundCategories})) }}
         </div>
     </div>

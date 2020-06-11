@@ -87,7 +87,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 $domainId
             );
             $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_MAIN_PAGE, t('Shopsys Framework - Title page', [], 'dataFixtures', $locale), $domainId);
-            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, t('| Demo eshop', [], 'dataFixtures', $locale), $domainId);
+            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, t('| Sconto', [], 'dataFixtures', $locale), $domainId);
 
             $this->setDomainDefaultCurrency($domainId);
         }

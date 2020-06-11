@@ -11,6 +11,7 @@
         Prepared value for robots in production environment
         {% block meta_robots %}{% endblock %}
         -->
+        {% block prev_next_links %}{% endblock %}
 
         {% set entryDirectory = 'frontend-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
         {{ encore_entry_link_tags( entryDirectory ) }}

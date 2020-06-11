@@ -7,8 +7,17 @@
     {{ paginator.metaRobots(paginationResult, disableIndexingBySeznamBot) }}
 {% endblock %}
 
+{% block prev_next_links %}
+    {% if paginationResult.previousPage is not null%}
+        <link href="{{ url('front_brand_detail', { id: brand.id }) }}?page={{ paginationResult.previousPage }}" rel="prev">
+    {% endif %}
+    {% if paginationResult.nextPage is not null%}
+        <link href="{{ url('front_brand_detail', { id: brand.id }) }}?page={{ paginationResult.nextPage }}" rel="next">
+    {% endif %}
+{% endblock %}
+
 {% block title %}
-    {{ brand.getSeoTitle(domain.id)|default(brand.name) }}
+    {{ seoTitle }}
 {% endblock %}
 
 {% block meta_description %}
@@ -18,7 +27,7 @@
 {% block main_content %}
     <div class="web__line">
         <div class="web__container">
-            <h1>{{ brand.getSeoH1(domain.id)|default(brand.name) }}</h1>
+            <h1>{{ seoH1 }}</h1>
             <div class="box-list__producer">
                 {% if imageExists(brand) %}
                     <div class="box-list__producer__image">
@@ -26,7 +35,7 @@
                     </div>
                 {% endif %}
                 <div class="box-list__producer__text">
-                    {% if brand.description is not null %}
+                    {% if paginationResult.page == 1 and brand.description is not null %}
                         {{ brand.description|raw }}
                     {% endif %}
                 </div>

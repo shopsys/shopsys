@@ -16,11 +16,13 @@ use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Brand\Brand;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\ProductFacade;
 use App\Model\Product\Series\ProductSeriesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
@@ -355,6 +357,7 @@ class ProductController extends FrontBaseController
             $viewParameters,
             $this->getAdditionalSeoViewParameters(
                 $category,
+                $paginationResult,
                 $readyCategorySeoMix
             )
         );
@@ -414,7 +417,7 @@ class ProductController extends FrontBaseController
             $page,
             self::PRODUCTS_PER_PAGE
         );
-
+        /** @var \App\Model\Product\Brand\Brand $brand */
         $brand = $this->brandFacade->getById($id);
 
         $viewParameters = [
@@ -422,6 +425,14 @@ class ProductController extends FrontBaseController
             'brand' => $brand,
             'disableIndexingBySeznamBot' => $disableIndexingBySeznamBot,
         ];
+
+        $viewParameters = array_merge(
+            $viewParameters,
+            $this->getAdditionalBrandSeoViewParameters(
+                $brand,
+                $paginationResult
+            )
+        );
 
         if ($request->isXmlHttpRequest()) {
             return $this->render('Front/Content/Product/ajaxListByBrand.html.twig', $viewParameters);
@@ -482,6 +493,14 @@ class ProductController extends FrontBaseController
             'priceRange' => $productFilterConfig->getPriceRange(),
         ];
 
+        $viewParameters = array_merge(
+            $viewParameters,
+            $this->getAdditionalSearchSeoViewParameters(
+                $searchText,
+                $paginationResult
+            )
+        );
+
         if ($request->isXmlHttpRequest()) {
             return $this->render('Front/Content/Product/ajaxSearch.html.twig', $viewParameters);
         } else {
@@ -492,11 +511,13 @@ class ProductController extends FrontBaseController
 
     /**
      * @param \App\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult $paginationResult
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return string[]
      */
     private function getAdditionalSeoViewParameters(
         Category $category,
+        PaginationResult $paginationResult,
         ?ReadyCategorySeoMix $readyCategorySeoMix
     ): array {
         $domainId = $this->domain->getId();
@@ -529,12 +550,47 @@ class ProductController extends FrontBaseController
         }
 
         return [
-            'seoH1' => $seoH1,
+            'seoH1' => $this->seoHelper->addH1SeoPagination($seoH1, $paginationResult),
             'description' => $description,
             'shortDescription' => $shortDescription,
-            'seoTitle' => $seoTitle,
+            'seoTitle' => $this->seoHelper->addTitleSeoPagination($seoTitle, $paginationResult),
             'seoMetaDescription' => $seoMetaDescription,
             'categoryUrl' => $categoryUrl,
+        ];
+    }
+
+    /**
+     * @param \App\Model\Product\Brand\Brand $brand
+     * @param \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult $paginationResult
+     * @return string[]
+     */
+    private function getAdditionalBrandSeoViewParameters(
+        Brand $brand,
+        PaginationResult $paginationResult
+    ): array {
+        $domainId = $this->domain->getId();
+
+        return [
+            'seoTitle' => $this->seoHelper->addTitleSeoPagination($brand->getSeoTitle($domainId) ?? $brand->getName(), $paginationResult),
+            'seoH1' => $this->seoHelper->addH1SeoPagination($brand->getSeoH1($domainId) ?? $brand->getName(), $paginationResult),
+        ];
+    }
+
+    /**
+     * @param string $searchText
+     * @param \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult $paginationResult
+     * @return string[]
+     */
+    private function getAdditionalSearchSeoViewParameters(
+        string $searchText,
+        PaginationResult $paginationResult
+    ): array {
+        $seoTitle = t('Search results for "%searchText%"', ['%searchText%' => $searchText]);
+        $seoH1 = t('Search results for "%searchText%"', ['%searchText%' => $searchText]);
+
+        return [
+            'seoTitle' => $this->seoHelper->addTitleSeoPagination($seoTitle, $paginationResult),
+            'seoH1' => $this->seoHelper->addH1SeoPagination($seoH1, $paginationResult),
         ];
     }
 
