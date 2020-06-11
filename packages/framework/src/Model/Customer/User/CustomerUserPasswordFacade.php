@@ -40,24 +40,32 @@ class CustomerUserPasswordFacade
     protected $hashGenerator;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade
+     */
+    protected $customerUserRefreshTokenChainFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         CustomerUserRepository $customerUserRepository,
         EncoderFactoryInterface $encoderFactory,
         ResetPasswordMailFacade $resetPasswordMailFacade,
-        HashGenerator $hashGenerator
+        HashGenerator $hashGenerator,
+        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
     ) {
         $this->em = $em;
         $this->customerUserRepository = $customerUserRepository;
         $this->encoderFactory = $encoderFactory;
         $this->resetPasswordMailFacade = $resetPasswordMailFacade;
         $this->hashGenerator = $hashGenerator;
+        $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
     }
 
     /**
@@ -118,5 +126,9 @@ class CustomerUserPasswordFacade
         $encoder = $this->encoderFactory->getEncoder($customerUser);
         $passwordHash = $encoder->encodePassword($password, null);
         $customerUser->setPasswordHash($passwordHash);
+
+        $this->em->flush();
+
+        $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
     }
 }
