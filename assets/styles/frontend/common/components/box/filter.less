@@ -272,6 +272,43 @@
 
         &__inputs {
             margin-top: 15px;
+
+            &--color {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0 -17px;
+
+                .form-choice--color {
+                    position: relative;
+                    margin: 14px 0 1px 14px;
+
+                    &:hover::after {
+                        opacity: 1;
+                    }
+
+                    &::after {
+                        position: absolute;
+                        top: -4px;
+                        left: -4px;
+                        width: 31px;
+                        height: 31px;
+                        content: '';
+
+                        border-radius: 100%;
+                        border: 1px solid @color-border-light;
+                        pointer-events: none;
+                        opacity: 0;
+                    }
+                }
+
+                .css-checkbox {
+                    &:checked {
+                        & + .form-choice-color-picker::after {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
         }
 
         &__input {
@@ -279,8 +316,7 @@
             margin: 0 0 8px;
 
             &--color {
-                display: inline-block;
-                vertical-align: middle;
+                margin: 15px 0 0 12px;
             }
         }
     }
