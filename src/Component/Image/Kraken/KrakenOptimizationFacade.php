@@ -87,21 +87,22 @@ class KrakenOptimizationFacade
             return false;
         }
 
-        $processed = 1;
+        $processed = 0;
         foreach ($images as $image) {
             $entityConfig = $this->imageConfig->getEntityConfigByEntityName($image->getEntityName());
             $sizeConfigs = $entityConfig->getSizeConfigs();
 
             unset($sizeConfigs[ImageConfig::ORIGINAL_SIZE_NAME]);
 
-            $this->optimizationImageForSizes($image, $sizeConfigs);
-            $image->setProcessedByKraken(true);
-            $this->em->persist($image);
+            if ($this->optimizationImageForSizes($image, $sizeConfigs)) {
+                $image->setProcessedByKraken(true);
+                $this->em->persist($image);
+                $processed++;
+            }
 
             if ($processed === self::BATCH_SIZE) {
                 return true;
             }
-            $processed++;
         }
 
         if (count($images) > 0) {
@@ -114,10 +115,11 @@ class KrakenOptimizationFacade
     /**
      * @param \App\Component\Image\Image $image
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
+     * @return bool
      */
-    private function optimizationImageForSizes(Image $image, array $sizeConfigs): void
+    private function optimizationImageForSizes(Image $image, array $sizeConfigs): bool
     {
         $this->logger->addInfo(sprintf('Optimize image for entity %s with id: %s', $image->getEntityName(), $image->getId()));
-        $this->imageGenerator->processImageSizesInKraken($image, $sizeConfigs);
+        return $this->imageGenerator->processImageSizesInKraken($image, $sizeConfigs);
     }
 }

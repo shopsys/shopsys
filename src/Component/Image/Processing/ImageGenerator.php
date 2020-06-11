@@ -98,12 +98,17 @@ class ImageGenerator extends BaseImageGenerator
     /**
      * @param \App\Component\Image\Image $image
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizesConfig
+     * @return bool
      */
-    public function processImageSizesInKraken(Image $image, array $sizesConfig): void
+    public function processImageSizesInKraken(Image $image, array $sizesConfig): bool
     {
         $sourceImageFilepath = $this->imageLocator->getAbsoluteImageFilepath($image, ImageConfig::ORIGINAL_SIZE_NAME);
 
         $krakenImagesData = $this->imageKrakenProcessor->resizeBySizeConfig($sourceImageFilepath, $sizesConfig);
+
+        if (!array_key_exists('results', $krakenImagesData)) {
+            return false;
+        }
 
         foreach ($krakenImagesData['results'] as $sizeName => $krakenImageData) {
             if ($sizeName === ImageConfig::DEFAULT_SIZE_NAME) {
@@ -113,5 +118,7 @@ class ImageGenerator extends BaseImageGenerator
             $file = file_get_contents($krakenImageData['kraked_url']);
             $this->filesystem->put($targetImageFilepath, $file);
         }
+
+        return true;
     }
 }
