@@ -45,7 +45,7 @@ class PlaceholderConverter
     public function convert(?string $text, ?array $allowedPlaceholders = null, ?string $locale = null): string
     {
         if (empty($text)) {
-            return $text;
+            return '';
         }
 
         foreach ($this->placeholdersByPlaceholderName as $placeholder) {
