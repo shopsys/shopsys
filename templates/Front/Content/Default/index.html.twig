@@ -27,7 +27,13 @@
                         <div id="js-slider-homepage" class="box-slider__in">
                             {% for item in sliderItems|slice(0, 4) %}
                                 <div class="box-slider__item">
-                                    <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
+                                    <a href="{{ item.link }}">
+                                        <picture>
+                                            <source media="(max-width: 425px)" srcset="{{ imageUrl(item, null, 'mobile') }}" />
+                                            <source media="(min-width: 425px)" srcset="{{ imageUrl(item, null, 'web') }}" />
+                                            <img data-src="{{ imageUrl(item, null, 'web') }}" itemprop="image" class="image-sliderItem-web" />
+                                        </picture>
+                                    </a>
                                     {% if item.sliderExtendedTextLink and item.sliderExtendedText %}
                                     <a href="{{ item.sliderExtendedTextLink }}" class="box-slider__item__link text-center" target="_blank">
                                         <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>

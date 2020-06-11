@@ -78,7 +78,7 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'label' => t('Upload image'),
+                'label' => t('Nahrát obrázek pro mobilní zařízení'),
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
                 'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
