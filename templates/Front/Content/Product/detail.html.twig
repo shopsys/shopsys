@@ -30,7 +30,7 @@
                         <div class="box-detail__image__main">
                             {% if imageExists(product) %}
                                 <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(product, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' }}">
-                                    {{ image(product, { itemprop: 'image' }) }}
+                                    {{ image(product, { itemprop: 'image', alt: product.fullname }) }}
                                 </a>
                             {% else %}
                                 {{ noimage({ alt: product.fullname }) }}
@@ -45,7 +45,7 @@
                                         {% if loop.index != 1 %}
                                             <div class="box-gallery__item js-gallery-item {% if loop.index > showGalleryMaxCount %}display-none{% endif %}">
                                                 <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link">
-                                                    {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false}) }}
+                                                    {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
                                                 </a>
                                             </div>
                                         {% endif %}
