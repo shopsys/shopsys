@@ -228,7 +228,7 @@ class ParameterFacade extends BaseParameterFacade
 
     /**
      * @param array $variantParameterValuesIndexedByParameterId
-     * @return array
+     * @return int[]
      */
     public function getVariantSetup(array $variantParameterValuesIndexedByParameterId): array
     {
