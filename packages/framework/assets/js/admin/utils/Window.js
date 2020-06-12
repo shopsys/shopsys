@@ -30,11 +30,7 @@ export default class Window {
     constructor (inputOptions) {
         this.$activeWindow = null;
 
-        this.options = $.extend(
-            { textContinue: Translator.trans('Yes'), textCancel: Translator.trans('No') },
-            defaults,
-            inputOptions
-        );
+        this.options = { textContinue: Translator.trans('Yes'), textCancel: Translator.trans('No'), ...defaults, ...inputOptions };
 
         if (this.$activeWindow !== null) {
             this.$activeWindow.trigger('windowFastClose');
