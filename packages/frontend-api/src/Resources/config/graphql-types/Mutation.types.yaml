@@ -37,3 +37,11 @@ MutationDecorator:
                         type: ChangePasswordInput!
                         validation: cascade
                 resolve: "@=mutation('customer_user_change_password', [args, validator])"
+            ChangePersonalData:
+                type: 'CurrentCustomerUser!'
+                description: "Changes customer user personal data"
+                args:
+                    input:
+                        type: ChangePersonalDataInput!
+                        validation: cascade
+                resolve: "@=mutation('customer_user_change_personal_data', [args, validator])"

@@ -1,0 +1,35 @@
+ChangePersonalDataInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            firstName:
+                type: "String!"
+                description: "Customer user first name"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter first name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "First name cannot be longer than {{ limit }} characters"
+            lastName:
+                type: "String!"
+                description: "Customer user last name"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter last name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Last name cannot be longer than {{ limit }} characters"
+            telephone:
+                type: "String!"
+                description: "Date and time when the order was created"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter telephone number"
+                    -   Length:
+                            max: 30
+                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
