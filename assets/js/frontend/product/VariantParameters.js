@@ -5,20 +5,33 @@ export default class VariantParameters {
     constructor ($container) {
         this.$container = $container;
         this.$variantParameterValuesCollection = $container.filterAllNodes('.js-variant-parameter');
-        this.$variantParameterSelectedElementCollection = $container.filterAllNodes('.js-variant-parameter-selected');
 
         $container.filterAllNodes('.js-stop-propagation').click((event) => {
             return false;
         });
 
         $container.filterAllNodes('.js-variant-parameter-select').click((event) => {
-            this.disableAllParameterValuesLists();
-            $(event.currentTarget).next('.js-variant-parameter').show();
-            return false;
+            if ($(event.currentTarget).next('.js-variant-parameter').is(':hidden')) {
+                this.disableAllParameterValuesLists();
+                $(event.currentTarget).next('.js-variant-parameter').slideDown('fast');
+                $(event.currentTarget).addClass('opened');
+                return false;
+            } else {
+                $(event.currentTarget).next('.js-variant-parameter').slideUp('fast');
+                $(event.currentTarget).addClass('opened');
+                this.opened = false;
+                return false;
+            }
         });
 
         $container.filterAllNodes('.js-variant-parameter-value').click((event) => {
             this.handleVariantParameterValue($(event.currentTarget));
+        });
+
+        $(document).click((event) => {
+            if (!$(event.target).closest(this.$variantParameterValuesCollection).length) {
+                this.disableAllParameterValuesLists();
+            }
         });
     }
 
@@ -35,12 +48,8 @@ export default class VariantParameters {
         this.disableAllParameterValuesLists();
     }
 
-    redirectToVariantByParameterValues () {
-        console.log(this.$variantParameterSelectedElementCollection);
-    }
-
     disableAllParameterValuesLists () {
-        this.$variantParameterValuesCollection.hide();
+        this.$variantParameterValuesCollection.slideUp('fast');
     }
 
     static init ($container) {

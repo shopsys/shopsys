@@ -19,9 +19,7 @@ class Version20200608065837 extends AbstractMigration
             ALTER TABLE
                 products
             ADD
-                CONSTRAINT FK_B3BA5A5A734AFDCC FOREIGN KEY (default_variant_id) REFERENCES products (id) ON DELETE
-            SET
-                NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_B3BA5A5A734AFDCC FOREIGN KEY (default_variant_id) REFERENCES products (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE UNIQUE INDEX UNIQ_B3BA5A5A734AFDCC ON products (default_variant_id)');
 
         $this->solveDefaultVariants();

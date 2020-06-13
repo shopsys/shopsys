@@ -280,12 +280,10 @@ class ParameterRepository extends BaseParameterRepository
             ->createQueryBuilder('pv')
             ->select('pv')
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
-            ->join(Product::class, 'p', Join::WITH, 'p = ppv.product')
-            ->where('p.mainVariant = :product')
-            ->andWhere('ppv.parameter = :parameter')
+            ->join('ppv.product', 'p', Join::WITH, 'p.mainVariant = :product')
+            ->where('ppv.parameter = :parameter')
             ->groupBy('pv')
             ->orderBy('pv.text')
-
             ->setParameters([
                 'locale' => $locale,
                 'product' => $product,
@@ -316,5 +314,26 @@ class ParameterRepository extends BaseParameterRepository
             ])
             ->getQuery()
             ->getSingleResult();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $locale
+     * @return array
+     */
+    public function getVariantProductParameterValuesData(Product $product, string $locale): array
+    {
+        return $this->getProductParameterValueRepository()
+            ->createQueryBuilder('ppv')
+            ->join('ppv.product', 'p', Join::WITH, 'p.mainVariant = :product')
+            ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
+            ->where('ppv.parameter IN (:variantParameters)')
+            ->setParameters([
+                'product' => $product,
+                'variantParameters' => $product->getVariantParameters(),
+                'locale' => $locale,
+            ])
+            ->getQuery()
+            ->getScalarResult();
     }
 }

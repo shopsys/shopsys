@@ -230,7 +230,7 @@ class ParameterFacade extends BaseParameterFacade
      * @param array $variantParameterValuesIndexedByParameterId
      * @return int[]
      */
-    public function getVariantSetup(array $variantParameterValuesIndexedByParameterId): array
+    public function getParameterValueIdIndexedByParameterId(array $variantParameterValuesIndexedByParameterId): array
     {
         $variantSetup = [];
         foreach ($variantParameterValuesIndexedByParameterId as $parameterId => $parameterValue) {
@@ -252,5 +252,28 @@ class ParameterFacade extends BaseParameterFacade
         }
 
         return implode('~', $variantSetupParts);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $locale
+     * @return int[]
+     */
+    public function getVariantSetupKeyMapByMainProduct(Product $product, string $locale): array
+    {
+        $data = $this->parameterRepository->getVariantProductParameterValuesData($product, $locale);
+
+        $variantSetupPartsIndexedByProductVariantId = [];
+        foreach ($data as $variantParameterValue) {
+            $variantSetupPartsIndexedByProductVariantId[$variantParameterValue['ppv_product_id']][] = $variantParameterValue['ppv_parameter_id'] . '_' . $variantParameterValue['ppv_value_id'];
+        }
+
+        $variantSetupKeyMap = [];
+        foreach ($variantSetupPartsIndexedByProductVariantId as $productVariantId => $variantSetupParts) {
+            $variantSetupKey = implode('~', $variantSetupParts);
+            $variantSetupKeyMap[$variantSetupKey] = $productVariantId;
+        }
+
+        return $variantSetupKeyMap;
     }
 }

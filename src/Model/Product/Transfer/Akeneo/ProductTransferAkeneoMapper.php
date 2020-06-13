@@ -144,22 +144,22 @@ class ProductTransferAkeneoMapper
      * @param array $akeneoProductData
      * @return string|null
      */
-    public function mapAkeneoProductDataToParentSku(array $akeneoProductData): ?string
+    public function mapAkeneoProductDataToParentCatnum(array $akeneoProductData): ?string
     {
-        $associationArticleSku = $akeneoProductData['values']['association_article'][0]['data'] ?? null;
+        $associationArticleCatnum = $akeneoProductData['values']['association_article'][0]['data'] ?? null;
 
-        return $associationArticleSku !== null ? strval($associationArticleSku) : null;
+        return $associationArticleCatnum !== null ? strval($associationArticleCatnum) : null;
     }
 
     /**
      * @param array $akeneoProductData
      * @return string|null
      */
-    public function mapAkeneoProductDataToDefaultVariantSku(array $akeneoProductData): ?string
+    public function mapAkeneoProductDataToDefaultVariantCatnum(array $akeneoProductData): ?string
     {
-        $mainVariantSku = $akeneoProductData['values']['main_variant_sku'][0]['data'] ?? null;
+        $mainVariantCatnum = $akeneoProductData['values']['main_variant_sku'][0]['data'] ?? null;
 
-        return $mainVariantSku !== null ? strval($mainVariantSku) : null;
+        return $mainVariantCatnum !== null ? strval($mainVariantCatnum) : null;
     }
 
     /**

@@ -7,13 +7,23 @@
                 <div class="variant-parameter__wrap">
                     {% set hasMoreValues = parameterValuesIndexedByParameterId[parameter.id]|length > 1 %}
                     <a href="#" class="variant-parameter__select {% if hasMoreValues %}js-variant-parameter-select{% else %}js-stop-propagation{% endif %}">
-                        <div class="variant-parameter__selected js-variant-parameter-selected">
+                        <div class="variant-parameter__selected js-variant-parameter-selected ">
                             <div class="variant-parameter__description">
                                 <span>{{ variantParameterValuesIndexedByParameterId[parameter.id].text }}</span>
-                                <span>obrázek/ikonka</span>
-                                <span>+ castka</span>
+                                <span class="variant-parameter__description--image">
+                                    {% if imageExists(variant) %}
+                                        {{ image(variant, {size: 'thumbnail', itemprop: 'image' }) }}
+                                    {% else %}
+                                        {{ noimage({ alt: variant.fullname }) }}
+                                    {% endif %}
+                                </span>
                             </div>
                         </div>
+                        {% if hasMoreValues %}
+                            <span class="svg svg-arrow-right"></span>
+                        {% else %}
+                            <span class="variant-parameter__select--without-arrow"></span>
+                        {% endif %}
                     </a>
 
                     <ul class="variant-parameter__values js-variant-parameter">
@@ -26,9 +36,10 @@
                                     >
                                         <div class="variant-parameter__description">
                                             <span>{{ parameterValue.text }}</span>
-                                            <span>obrázek/ikonka</span>
-                                            <span>
-                                                {{ variantId }}
+                                            <span class="variant-parameter__description--image">
+                                                <picture>
+                                                    <img src="{{ productImageUrl(variantId,'thumbnail') }}" alt="{{ mainProduct.name }} - {{ parameter.name }}: {{ parameterValue.text }}" itemprop="image" />
+                                                </picture>
                                             </span>
                                         </div>
                                     </a>

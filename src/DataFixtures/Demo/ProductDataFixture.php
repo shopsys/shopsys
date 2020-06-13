@@ -15,8 +15,8 @@ use App\Model\Stock\ProductStockDataFactory;
 use App\Model\Stock\StockRepository;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -187,7 +187,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
@@ -2374,13 +2374,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('54" Philips 32PFL4308', [], 'dataFixtures', $locale);
-            $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
-            $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+            $productData->name[$locale] = t('54" Philips CRT 32PFL4308', [], 'dataFixtures', $locale);
+            $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+            $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('54"', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('CRT', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
@@ -2964,7 +2964,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('36"', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('CRT', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
@@ -3195,7 +3195,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('54"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('27"', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
@@ -5796,6 +5796,270 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
+        $productData = $this->productDataFactory->create();
+
+        $productData->catnum = '9176522';
+        $productData->partno = '32PFL4308J';
+        $productData->ean = '8845781243205';
+
+        $parameterTranslations = [];
+
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $locale = $domain->getLocale();
+            $productData->name[$locale] = t('24" Philips 32PFL4308', [], 'dataFixtures', $locale);
+            $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+            $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+
+            $i = 0;
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('24"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
+        }
+
+        $this->setParametersByTranslations($productData, $parameterTranslations);
+
+        $this->setPriceForAllPricingGroups($productData, '30173.5');
+
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
+        $this->setSellingFrom($productData, '15.1.2000');
+        $this->setSellingTo($productData, null);
+        $productData->usingStock = true;
+        $productData->stockQuantity = 200;
+        $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
+        $this->setStocksQuantity($productData, 10);
+
+        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+
+        $productData->sellingDenied = false;
+        $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
+
+        $this->createProduct($productData);
+
+        $productData = $this->productDataFactory->create();
+
+        $productData->catnum = '917652236';
+        $productData->partno = '32PFL4308J';
+        $productData->ean = '8845781243205';
+
+        $parameterTranslations = [];
+
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $locale = $domain->getLocale();
+            $productData->name[$locale] = t('36" Philips CRT 32PFL4308', [], 'dataFixtures', $locale);
+            $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+            $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+
+            $i = 0;
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('36"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('CRT', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
+        }
+
+        $this->setParametersByTranslations($productData, $parameterTranslations);
+
+        $this->setPriceForAllPricingGroups($productData, '30173.5');
+
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
+        $this->setSellingFrom($productData, '15.1.2000');
+        $this->setSellingTo($productData, null);
+        $productData->usingStock = true;
+        $productData->stockQuantity = 200;
+        $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
+        $this->setStocksQuantity($productData, 10);
+
+        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+
+        $productData->sellingDenied = false;
+        $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
+
+        $this->createProduct($productData);
+
+        $productData = $this->productDataFactory->create();
+
+        $productData->catnum = '917652254';
+        $productData->partno = '32PFL4308J';
+        $productData->ean = '8845781243205';
+
+        $parameterTranslations = [];
+
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $locale = $domain->getLocale();
+            $productData->name[$locale] = t('54" Philips 32PFL4308', [], 'dataFixtures', $locale);
+            $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+            $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+
+            $i = 0;
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('54"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
+        }
+
+        $this->setParametersByTranslations($productData, $parameterTranslations);
+
+        $this->setPriceForAllPricingGroups($productData, '40173.5');
+
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
+        $this->setSellingFrom($productData, '15.1.2000');
+        $this->setSellingTo($productData, null);
+        $productData->usingStock = true;
+        $productData->stockQuantity = 200;
+        $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
+        $this->setStocksQuantity($productData, 10);
+
+        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+
+        $productData->sellingDenied = false;
+        $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
+
+        $this->createProduct($productData);
+
+        $productData = $this->productDataFactory->create();
+
+        $productData->catnum = '91765223';
+        $productData->partno = '32PFL4308J';
+        $productData->ean = '8845781243205';
+
+        $parameterTranslations = [];
+
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $locale = $domain->getLocale();
+            $productData->name[$locale] = t('24" Philips CRT 32PFL4308', [], 'dataFixtures', $locale);
+            $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+            $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+
+            $i = 0;
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('24"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('CRT', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
+        }
+
+        $this->setParametersByTranslations($productData, $parameterTranslations);
+
+        $this->setPriceForAllPricingGroups($productData, '30173.5');
+
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
+        $this->setSellingFrom($productData, '15.1.2000');
+        $this->setSellingTo($productData, null);
+        $productData->usingStock = true;
+        $productData->stockQuantity = 200;
+        $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
+        $this->setStocksQuantity($productData, 10);
+
+        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+
+        $productData->sellingDenied = false;
+        $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
+
+        $this->createProduct($productData);
+
+        $productData = $this->productDataFactory->create();
+
+        $productData->catnum = '91765542';
+        $productData->partno = '32PFL4360';
+        $productData->ean = '8845781243205';
+
+        $parameterTranslations = [];
+
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $locale = $domain->getLocale();
+            $productData->name[$locale] = t('36" Hyundai PLASMA 32PFL4308', [], 'dataFixtures', $locale);
+            $productData->descriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+            $productData->shortDescriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+
+            $i = 0;
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('36"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('PLASMA', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+        }
+
+        $this->setParametersByTranslations($productData, $parameterTranslations);
+
+        $this->setPriceForAllPricingGroups($productData, '19173.5');
+
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
+        $this->setSellingFrom($productData, '15.1.2000');
+        $this->setSellingTo($productData, null);
+        $productData->usingStock = true;
+        $productData->stockQuantity = 200;
+        $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
+        $this->setStocksQuantity($productData, 10);
+
+        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+
+        $productData->sellingDenied = false;
+        $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
+
+        $this->createProduct($productData);
+
+        $productData = $this->productDataFactory->create();
+
+        $productData->catnum = '91765782';
+        $productData->partno = 'T27D590EY';
+        $productData->ean = '8845781243205';
+
+        $parameterTranslations = [];
+
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $locale = $domain->getLocale();
+            $productData->name[$locale] = t('27” Hyundai PLASMA T27D590EY', [], 'dataFixtures', $locale);
+            $productData->descriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+            $productData->shortDescriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
+
+            $i = 0;
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('27"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('PLASMA', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
+        }
+
+        $this->setParametersByTranslations($productData, $parameterTranslations);
+
+        $this->setPriceForAllPricingGroups($productData, '50173.5');
+
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
+        $this->setSellingFrom($productData, '15.1.2000');
+        $this->setSellingTo($productData, null);
+        $productData->usingStock = true;
+        $productData->stockQuantity = 200;
+        $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
+        $this->setStocksQuantity($productData, 10);
+
+        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
+        $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
+
+        $productData->sellingDenied = false;
+        $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
+
+        $this->createProduct($productData);
+
         $this->createVariants();
     }
 
@@ -5871,12 +6135,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         return [
             '9176544M' => [
-                '9176544',
-                '9176588',
+                '9176544', //36 / led
+                '9176588', //54 / crt
+                '9176522', //24 / led
+                '917652236', //36 / crt
+                '917652254', //54 / led
+                '91765223', //24 / crt
             ],
             '32PFL4400' => [
-                '9176554',
-                '9176578',
+                '9176554', // 36 / led
+                '9176578', // 27 / led
+                '91765542', // 36 / plasma
+                '91765782', // 27 / plasma
             ],
             '7700769XCX' => [
                 '7700777',
@@ -5958,9 +6228,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setVariantParametersByTranslations(ProductData $productData, array $parametersTranslations): void
     {
+        $count = 0;
         foreach ($parametersTranslations as $parameterTranslations) {
+            $count++;
             $parameter = $this->findParameterByNamesOrCreateNew($parameterTranslations['names'], $parameterTranslations['group_name']);
             $productData->variantParameters[$parameter->getId()] = $parameter;
+            if ($count === 2) {
+                break;
+            }
         }
     }
 

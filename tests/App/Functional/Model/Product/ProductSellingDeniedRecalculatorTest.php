@@ -60,6 +60,14 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
         /** @var \App\Model\Product\Product $variant2 */
         $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
+        /** @var \App\Model\Product\Product $variant3 */
+        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
+        /** @var \App\Model\Product\Product $variant4 */
+        $variant4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '149');
+        /** @var \App\Model\Product\Product $variant5 */
+        $variant5 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '150');
+        /** @var \App\Model\Product\Product $variant6 */
+        $variant6 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '151');
         /** @var \App\Model\Product\Product $mainVariant */
         $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
 
@@ -69,15 +77,35 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant2productData = $this->productDataFactory->createFromProduct($variant2);
         $variant2productData->sellingDenied = true;
         $this->productFacade->edit($variant2->getId(), $variant2productData);
+        $variant3productData = $this->productDataFactory->createFromProduct($variant3);
+        $variant3productData->sellingDenied = true;
+        $this->productFacade->edit($variant3->getId(), $variant3productData);
+        $variant4productData = $this->productDataFactory->createFromProduct($variant4);
+        $variant4productData->sellingDenied = true;
+        $this->productFacade->edit($variant4->getId(), $variant4productData);
+        $variant5productData = $this->productDataFactory->createFromProduct($variant5);
+        $variant5productData->sellingDenied = true;
+        $this->productFacade->edit($variant5->getId(), $variant5productData);
+        $variant6productData = $this->productDataFactory->createFromProduct($variant6);
+        $variant6productData->sellingDenied = true;
+        $this->productFacade->edit($variant6->getId(), $variant6productData);
 
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
 
         $this->em->refresh($variant1);
         $this->em->refresh($variant2);
+        $this->em->refresh($variant3);
+        $this->em->refresh($variant4);
+        $this->em->refresh($variant5);
+        $this->em->refresh($variant6);
         $this->em->refresh($mainVariant);
 
         $this->assertTrue($variant1->getCalculatedSellingDenied());
         $this->assertTrue($variant2->getCalculatedSellingDenied());
+        $this->assertTrue($variant3->getCalculatedSellingDenied());
+        $this->assertTrue($variant4->getCalculatedSellingDenied());
+        $this->assertTrue($variant5->getCalculatedSellingDenied());
+        $this->assertTrue($variant6->getCalculatedSellingDenied());
         $this->assertTrue($mainVariant->getCalculatedSellingDenied());
     }
 

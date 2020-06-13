@@ -221,6 +221,7 @@ input[type=checkbox].css-checkbox {
 .variant-parameters-wrap {
     .variant-parameter {
         display: block;
+        margin: 5px 0;
 
         &__name {
             display: block;
@@ -232,36 +233,64 @@ input[type=checkbox].css-checkbox {
             display: block;
             float: left;
             position: relative;
+            border-radius: 5px;
         }
 
         &__select {
             display: inline-block;
+            border: 1px solid silver;
+            border-radius: 5px;
+            padding-right: 5px;
+            text-decoration: none;
+
+            &--without-arrow {
+                display: inline-block;
+                width: 15px;
+            }
         }
 
         &__selected {
             display: inline-block;
             width: 300px;
             padding: 5px;
-            border: 1px solid silver;
         }
 
         &__values {
             position: absolute;
             display: none;
-            top: 0;
+            top: 37px;
             left: 0;
             list-style: none;
             padding: 0;
             margin: 0;
             z-index: 100;
+            border-radius: 0 0 5px 5px;
+            border: 1px solid silver;
+        }
+
+        &__description {
+            &--image {
+                display: inline-block;
+                vertical-align: middle;
+                height: 30px;
+
+                img {
+                    height: 100%;
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .opened {
+            margin: 0;
         }
 
         &__value {
             display: inline-block;
             border: 1px solid silver;
-            background-color: pink;
+            background-color: white;
             padding: 5px;
-            width: 300px;
+            width: 325px;
         }
     }
 }

@@ -251,47 +251,44 @@ class ProductController extends FrontBaseController
         }
         $page = $requestPage === null ? 1 : (int)$requestPage;
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
+        /** @var \App\Model\Product\Product $productVariant */
+        $productVariant = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
 
-        if ($product->isMainVariant()) {
-            return $this->redirectToRoute('front_product_detail', ['id' => $product->getDefaultVariant()->getId()], 301);
-        }
-        //parts build from variant
-
-        if ($product->isVariant()) {
-            $mainProduct = $product->getMainVariant();
-        } else {//product without variants type none
-            $mainProduct = $product;
+        if ($productVariant->isMainVariant()) {
+            return $this->redirectToRoute('front_product_detail', ['id' => $productVariant->getDefaultVariant()->getId()], 301);
+        } elseif ($productVariant->isVariant()) {
+            $product = $productVariant->getMainVariant();
+        } else {
+            $product = $productVariant;
         }
 
         //parts build from main product
-        $accessories = $this->listedProductViewFacade->getAllAccessories($mainProduct->getId());
-        $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($mainProduct);
-        $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($mainProduct, $this->domain->getId());
-        $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($mainProduct, $this->domain->getId());
-        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($mainProduct, $this->domain->getId());
-        $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainId($mainProduct, $this->domain->getId());
-        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($mainProduct, $this->domain);
+        $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
+        $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
+        $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
+        $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
+        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId());
+        $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainId($product, $this->domain->getId());
+        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($product, $this->domain);
 
         $paginatedSimilarProducts = $this->listedProductViewFacade->getSimilarPaginatedProductsFormProductInCategory(
-            $mainProduct,
+            $product,
             $this->domain->getId(),
             ProductListOrderingConfig::ORDER_BY_PRIORITY,
             $page,
             self::PRODUCTS_PER_PAGE
         );
 
-        $productSeriesList = $this->productSeriesFacade->getAllVisibleByProductAndDomainId($mainProduct, $this->domain);
+        $productSeriesList = $this->productSeriesFacade->getAllVisibleByProductAndDomainId($product, $this->domain);
         $productSeriesProducts = [];
         foreach ($productSeriesList as $productSeries) {
             $productSeriesProducts[$productSeries->getId()] = $this->listedProductViewFacade->getAvailableProductsByProductSeries($productSeries);
         }
 
-        $productPackages = $this->productPackageFacade->getProductPackagesByProduct($mainProduct);
+        $productPackages = $this->productPackageFacade->getProductPackagesByProduct($product);
 
         return $this->render('Front/Content/Product/detail.html.twig', [
-            'product' => $product,
+            'product' => $productVariant,
             'accessories' => $accessories,
             'variants' => $variants,
             'productMainCategory' => $productMainCategory,
@@ -319,30 +316,22 @@ class ProductController extends FrontBaseController
             return new Response();
         }
 
-        $variantSetupKeyMap = [];
-        $currentVariantSetupKey = '';
+        $currentVariantParameterValuesIndexedByParameterId = $this->parameterFacade
+            ->getParameterValuesIndexedByParameterIdForProductVariant($product, $mainProduct->getVariantParameters(), $this->domain->getLocale());
+        $currentVariantSetup = $this->parameterFacade->getParameterValueIdIndexedByParameterId($currentVariantParameterValuesIndexedByParameterId);
+        $currentVariantSetupKey = $this->parameterFacade->getVariantSetupKey($currentVariantParameterValuesIndexedByParameterId);
 
-        $currentVariantParameterValuesIndexedByParameterId = [];
-        foreach ($mainProduct->getVariants() as $variant) {
-            $variantParameterValuesIndexedByParameterId = $this->parameterFacade
-                ->getParameterValuesIndexedByParameterIdForProductVariant($variant, $mainProduct->getVariantParameters(), $this->domain->getLocale());
-
-            $variantSetupKey = $this->parameterFacade->getVariantSetupKey($variantParameterValuesIndexedByParameterId);
-            $variantSetupKeyMap[$variantSetupKey] = $variant->getId();
-            if ($variant->getId() === $product->getId()) {
-                $currentVariantSetupKey = $variantSetupKey;
-                $currentVariantParameterValuesIndexedByParameterId = $variantParameterValuesIndexedByParameterId;
-            }
-        }
+        $variantSetupKeyMap = $this->parameterFacade->getVariantSetupKeyMapByMainProduct($mainProduct, $this->domain->getLocale());
 
         $parameterValuesIndexedByParameterId = $this->parameterFacade
             ->getParameterValuesIndexedByParameterIdForMainProduct($mainProduct, $this->domain->getLocale());
 
         return $this->render('Front/Content/Product/variantParameters.html.twig', [
             'mainProduct' => $mainProduct,
+            'variant' => $product,
             'parameterValuesIndexedByParameterId' => $parameterValuesIndexedByParameterId,
             'variantParameterValuesIndexedByParameterId' => $currentVariantParameterValuesIndexedByParameterId,
-            'currentVariantSetup' => $this->parameterFacade->getVariantSetup($currentVariantParameterValuesIndexedByParameterId),
+            'currentVariantSetup' => $currentVariantSetup,
             'currentVariantSetupKey' => $currentVariantSetupKey,
             'variantSetupKeyMap' => $variantSetupKeyMap,
         ]);

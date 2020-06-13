@@ -83,7 +83,7 @@ class Product extends BaseProduct
      * @var \App\Model\Product\Product|null
      *
      * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
-     * @ORM\JoinColumn(name="default_variant_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @ORM\JoinColumn(name="default_variant_id", referencedColumnName="id", nullable=true)
      */
     protected $defaultVariant;
 
@@ -264,7 +264,7 @@ class Product extends BaseProduct
     /**
      * @param \App\Model\Product\Product $variant
      */
-    public function addVariant(BaseProduct $variant)
+    public function addVariant(BaseProduct $variant): void
     {
         if (!$this->isMainVariant()) {
             throw new \Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException(
