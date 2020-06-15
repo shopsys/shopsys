@@ -13,30 +13,30 @@ class QuantifiedItemPrice extends BaseQuantifiedItemPrice
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    protected $totalHighPrice;
+    private $unitHighPrice;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalHighPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitHighPrice
      */
     public function __construct(
         Price $unitPrice,
         Price $totalPrice,
         Vat $vat,
-        Price $totalHighPrice
+        Price $unitHighPrice
     ) {
         parent::__construct($unitPrice, $totalPrice, $vat);
 
-        $this->totalHighPrice = $totalHighPrice;
+        $this->unitHighPrice = $unitHighPrice;
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getTotalHighPrice(): Price
+    public function getUnitHighPrice(): Price
     {
-        return $this->totalHighPrice;
+        return $this->unitHighPrice;
     }
 }

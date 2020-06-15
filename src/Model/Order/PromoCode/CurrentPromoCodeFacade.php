@@ -167,9 +167,9 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
-     * @return string[]
+     * @return \App\Model\Order\PromoCode\PromoCode[]
      */
-    public function getPromoCodeDiscountPercentPerProductByDomainId(array $quantifiedProducts, int $domainId): array
+    public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId): array
     {
         $validEnteredPromoCode = $this->getValidEnteredPromoCodeOrNull();
         if ($validEnteredPromoCode === null) {
@@ -183,8 +183,8 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             return $this->fillPromoCodeDiscountsForAllProducts($quantifiedProducts, $validEnteredPromoCode);
         }
 
-        $promoCodeDiscountPercentPerProduct = $this->fillPromoCodeDiscounts($quantifiedProducts, $allowedProductIds, $validEnteredPromoCode);
-        $promoCodeDiscountPercentPerProductFromCategories = $this->fillPromoCodeDiscounts($quantifiedProducts, $allowedProductIdsFromCategories, $validEnteredPromoCode);
+        $promoCodeDiscountPercentPerProduct = $this->fillPromoCodes($quantifiedProducts, $allowedProductIds, $validEnteredPromoCode);
+        $promoCodeDiscountPercentPerProductFromCategories = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsFromCategories, $validEnteredPromoCode);
 
         return array_replace($promoCodeDiscountPercentPerProduct, $promoCodeDiscountPercentPerProductFromCategories);
     }
@@ -218,32 +218,35 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
-     * @return string[]
+     * @return \App\Model\Order\PromoCode\PromoCode[]
      */
     private function fillPromoCodeDiscountsForAllProducts(array $quantifiedProducts, PromoCode $validEnteredPromoCode): array
     {
-        $promoCodeDiscountPercentPerProduct = [];
+        $promoCodePercentPerProduct = [];
         foreach ($quantifiedProducts as $quantifiedProduct) {
             $productId = $quantifiedProduct->getProduct()->getId();
-            $promoCodeDiscountPercentPerProduct[(string)$productId] = $validEnteredPromoCode->getPercent();
+            $promoCodePercentPerProduct[(string)$productId] = $validEnteredPromoCode;
         }
 
-        return $promoCodeDiscountPercentPerProduct;
+        return $promoCodePercentPerProduct;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int[] $allowedProductIds
      * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
-     * @return string[]
+     * @return \App\Model\Order\PromoCode\PromoCode[]
      */
-    private function fillPromoCodeDiscounts(array $quantifiedProducts, array $allowedProductIds, PromoCode $validEnteredPromoCode): array
+    private function fillPromoCodes(array $quantifiedProducts, array $allowedProductIds, PromoCode $validEnteredPromoCode): array
     {
         $promoCodeDiscountPercentPerProduct = [];
         foreach ($quantifiedProducts as $quantifiedProduct) {
+            if ($validEnteredPromoCode->isApplyOnSecondProduct() && $quantifiedProduct->getQuantity() < 2) {
+                continue;
+            }
             $productId = $quantifiedProduct->getProduct()->getId();
             if (in_array($productId, $allowedProductIds, true)) {
-                $promoCodeDiscountPercentPerProduct[(string)$productId] = $validEnteredPromoCode->getPercent();
+                $promoCodeDiscountPercentPerProduct[(string)$productId] = $validEnteredPromoCode;
             }
         }
 

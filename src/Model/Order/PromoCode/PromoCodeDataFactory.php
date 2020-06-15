@@ -88,6 +88,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->identifier = $promoCode->getIdentifier();
         $promoCodeData->massGenerate = $promoCode->isMassGenerate();
         $promoCodeData->prefix = $promoCode->getPrefix();
+        $promoCodeData->applyOnSecondProduct = $promoCode->isApplyOnSecondProduct();
     }
 
     /**

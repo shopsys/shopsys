@@ -101,25 +101,24 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         ?ProductType $productType = null,
         ?Stock $personalPickupStock = null
     ): BaseOrderPreview {
+        $promoCodePerProduct = $this->currentPromoCodeFacade->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId);
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
             $domainId,
-            $customerUser
+            $customerUser,
+            $promoCodePerProduct
         );
-
-        $promoCodeDiscountPercentPerProduct = $this->currentPromoCodeFacade->getPromoCodeDiscountPercentPerProductByDomainId($quantifiedProducts, $domainId);
 
         $quantifiedItemsDiscounts = $this->quantifiedProductDiscountCalculation->calculateDiscountsPerProductRoundedByCurrency(
             $quantifiedProducts,
             $quantifiedItemsPrices,
-            $promoCodeDiscountPercentPerProduct,
+            $promoCodePerProduct,
             $currency
         );
 
         $quantifiedItemsDiscountPrices = $this->quantifiedProductDiscountCalculation->calculateDiscountPricesPerProductRoundedByCurrency(
-            $quantifiedProducts,
             $quantifiedItemsPrices,
-            $promoCodeDiscountPercentPerProduct,
+            $quantifiedItemsDiscounts,
             $currency
         );
 
@@ -279,29 +278,5 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         }
 
         return $totalDiscount;
-    }
-
-    /**
-     * @param \App\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscounts
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected function getProductsPrice(array $quantifiedItemsPrices, array $quantifiedItemsDiscounts): Price
-    {
-        $finalPrice = Price::zero();
-        $totalDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
-
-        if ($totalDiscount->getPriceWithVat()->isGreaterThan(Money::zero())) {
-            foreach ($quantifiedItemsPrices as $quantifiedItemPrice) {
-                $finalPrice = $finalPrice->add($quantifiedItemPrice->getTotalHighPrice());
-            }
-            $finalPrice = $finalPrice->subtract($totalDiscount);
-        } else {
-            foreach ($quantifiedItemsPrices as $quantifiedItemPrice) {
-                $finalPrice = $finalPrice->add($quantifiedItemPrice->getTotalPrice());
-            }
-        }
-
-        return $finalPrice;
     }
 }

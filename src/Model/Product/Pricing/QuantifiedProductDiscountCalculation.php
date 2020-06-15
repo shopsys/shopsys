@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Pricing;
 
+use App\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation as BaseQuantifiedProductDiscountCalculation;
@@ -24,10 +26,11 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
             $productId = $quantifiedProduct->getProduct()->getId();
             if (array_key_exists($productId, $discountPercentPerProduct)) {
-                $quantifiedItemsDiscounts[$quantifiedItemIndex] = $this->calculateDiscountRoundedByCurrency(
+                $quantifiedItemsDiscounts[$quantifiedItemIndex] = $this->calculateRoundedDiscountByPromoCode(
                     $quantifiedItemsPrices[$quantifiedItemIndex],
                     $discountPercentPerProduct[$productId],
-                    $currency
+                    $currency,
+                    $quantifiedProduct
                 );
             } else {
                 $quantifiedItemsDiscounts[$quantifiedItemIndex] = null;
@@ -38,21 +41,21 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
-     * @param string[] $discountPercentPerProduct
+     * @param \App\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscounts
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]|null[]
      */
-    public function calculateDiscountPricesPerProductRoundedByCurrency(array $quantifiedProducts, array $quantifiedItemsPrices, array $discountPercentPerProduct, Currency $currency): array
+    public function calculateDiscountPricesPerProductRoundedByCurrency(array $quantifiedItemsPrices, array $quantifiedItemsDiscounts, Currency $currency): array
     {
         $quantifiedItemsDiscountPrices = [];
-        foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
-            $productId = $quantifiedProduct->getProduct()->getId();
-            if (array_key_exists($productId, $discountPercentPerProduct)) {
+        foreach ($quantifiedItemsPrices as $quantifiedItemIndex => $quantifiedItemPrice) {
+            $discount = $quantifiedItemsDiscounts[$quantifiedItemIndex] ?? null;
+
+            if ($discount !== null) {
                 $quantifiedItemsDiscountPrices[$quantifiedItemIndex] = $this->calculateDiscountPriceRoundedByCurrency(
-                    $quantifiedItemsPrices[$quantifiedItemIndex],
-                    $discountPercentPerProduct[$productId],
+                    $quantifiedItemPrice,
+                    $discount,
                     $currency
                 );
             } else {
@@ -65,20 +68,59 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
 
     /**
      * @param \App\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
-     * @param string $discountPercent
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private function calculateRoundedDiscountByPromoCode(
+        QuantifiedItemPrice $quantifiedItemPrice,
+        PromoCode $promoCode,
+        Currency $currency,
+        QuantifiedProduct $quantifiedProduct
+    ): ?Price {
+        $vat = $quantifiedItemPrice->getVat();
+        $discountMultiplier = (string)($promoCode->getPercent() / 100);
+        if ($promoCode->isApplyOnSecondProduct()) {
+            $quantity = $quantifiedProduct->getQuantity();
+            $unitHighPriceWithVat = $quantifiedItemPrice->getUnitHighPrice()->getPriceWithVat();
+
+            $discountedProductQuantity = intdiv($quantity, 2);
+            $singleDiscountFromHighUnitPrice = $unitHighPriceWithVat->multiply($discountMultiplier);
+
+            $singleDiscountWithVat = $this->rounding->roundPriceWithVatByCurrency(
+                $singleDiscountFromHighUnitPrice,
+                $currency
+            );
+            $discountWithVat = $singleDiscountWithVat->multiply($discountedProductQuantity);
+
+            if ($discountWithVat->isZero()) {
+                return null;
+            }
+
+            $discountVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($discountWithVat, $vat);
+            $discountWithoutVat = $discountWithVat->subtract($discountVatAmount);
+
+            return new Price($discountWithoutVat, $discountWithVat);
+        }
+
+        return $this->calculateDiscountRoundedByCurrency($quantifiedItemPrice, $promoCode->getPercent(), $currency);
+    }
+
+    /**
+     * @param \App\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $discount
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     private function calculateDiscountPriceRoundedByCurrency(
         QuantifiedItemPrice $quantifiedItemPrice,
-        string $discountPercent,
+        Price $discount,
         Currency $currency
     ): ?Price {
         $vat = $quantifiedItemPrice->getVat();
-        $multiplier = (string)($discountPercent / 100);
-        $discountFromLowPrice = $quantifiedItemPrice->getTotalPrice()->getPriceWithVat()->multiply($multiplier);
         $priceWithVat = $this->rounding->roundPriceWithVatByCurrency(
-            $quantifiedItemPrice->getTotalHighPrice()->getPriceWithVat()->subtract($discountFromLowPrice),
+            $quantifiedItemPrice->getTotalPrice()->getPriceWithVat()->subtract($discount->getPriceWithVat()),
             $currency
         );
 
