@@ -13,10 +13,18 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory as BaseSliderItem
  * @method setImageFacade(\App\Component\Image\ImageFacade $imageFacade)
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @method __construct(\App\Component\Image\ImageFacade $imageFacade)
- * @method \App\Model\Slider\SliderItemData createInstance()
+ * @method \App\Model\Slider\SliderItemData create()
  */
 class SliderItemDataFactory extends BaseSliderItemDataFactory
 {
+    /**
+     * @return \App\Model\Slider\SliderItemData
+     */
+    protected function createInstance(): BaseSliderItemData
+    {
+        return new SliderItemData();
+    }
+
     /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      * @param \App\Model\Slider\SliderItem $sliderItem
@@ -25,17 +33,11 @@ class SliderItemDataFactory extends BaseSliderItemDataFactory
     {
         parent::fillFromSliderItem($sliderItemData, $sliderItem);
 
+        $sliderItemData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($sliderItem, SliderItemFacade::IMAGE_TYPE_WEB);
         $sliderItemData->datetimeVisibleFrom = $sliderItem->getDatetimeVisibleFrom();
         $sliderItemData->datetimeVisibleTo = $sliderItem->getDatetimeVisibleTo();
         $sliderItemData->sliderExtendedText = $sliderItem->getSliderExtendedText();
         $sliderItemData->sliderExtendedTextLink = $sliderItem->getSliderExtendedTextLink();
-    }
-
-    /**
-     * @return \App\Model\Slider\SliderItemData
-     */
-    public function create(): BaseSliderItemData
-    {
-        return new SliderItemData();
+        $sliderItemData->mobileImage->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($sliderItem, SliderItemFacade::IMAGE_TYPE_MOBILE);
     }
 }

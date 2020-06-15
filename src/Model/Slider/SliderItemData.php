@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Slider;
 
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemData as BaseSliderItemData;
 
 class SliderItemData extends BaseSliderItemData
@@ -27,4 +28,15 @@ class SliderItemData extends BaseSliderItemData
      * @var string|null
      */
     public $sliderExtendedTextLink;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
+     */
+    public $mobileImage;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->mobileImage = new ImageUploadData();
+    }
 }

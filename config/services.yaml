@@ -450,6 +450,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository: '@App\Model\Slider\SliderItemRepository'
 
+    Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade: '@App\Model\Slider\SliderItemFacade'
+
     Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory: '@App\Model\Advert\AdvertDataFactory'
 
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'

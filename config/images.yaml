@@ -91,15 +91,24 @@
 
 -   name: sliderItem
     class: Shopsys\FrameworkBundle\Model\Slider\SliderItem
-    sizes:
-        -   name: ~
-            width: 1045
-            height: 290
-            crop: true
-            occurrence: 'Front-end: Main page slider'
-            additionalSizes:
-                - {width: 400, height: 165, media: "(max-width: 480px)"}
-                - {width: 730, height: 230, media: "(max-width: 1024px)"}
+    types:
+        -   name: web
+            sizes:
+                -   name: ~
+                    width: 1045
+                    height: 290
+                    crop: true
+                    occurrence: 'Front-end: Main page slider'
+                    additionalSizes:
+                        - {width: 400, height: 165, media: "(max-width: 480px)"}
+                        - {width: 730, height: 230, media: "(max-width: 1024px)"}
+        -   name: mobile
+            sizes:
+                -   name: ~
+                    width: 425
+                    height: ~
+                    crop: true
+                    occurrence: 'Front-end: Mobile main page slider'
 
 -   name: transport
     class: Shopsys\FrameworkBundle\Model\Transport\Transport
