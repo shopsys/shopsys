@@ -93,12 +93,12 @@ review:
         - docker-compose up -d
         - docker cp ${PHP_FPM_CONTAINER_NAME}:/var/www/html/config/parameters.yaml ~/parameters.yaml
         - ~/yq write --inplace ~/parameters.yaml parameters.database_name ${PHP_FPM_IMAGE_NAME}
-        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.enabled ${AKENEO_DEV_ENABLED}
-        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.base_uri ${AKENEO_DEV_BASE_URI}
-        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.client_id ${AKENEO_DEV_CLIENT_ID}
-        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.secret ${AKENEO_DEV_SECRET}
-        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.user ${AKENEO_DEV_USER}
-        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.password ${AKENEO_DEV_PASSWORD}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.enabled ${AKENEO_ENABLED}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.base_uri ${AKENEO_BASE_URI}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.client_id ${AKENEO_CLIENT_ID}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.secret ${AKENEO_SECRET}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.user ${AKENEO_USER}
+        - ~/yq write --inplace ~/parameters.yaml parameters.akeneo_config.password ${AKENEO_PASSWORD}
         - ~/yq write --inplace ~/parameters.yaml parameters.sconto_bridge_config.enabled ${SCONTO_BRIDGE_DEV_ENABLED}
         - ~/yq write --inplace ~/parameters.yaml parameters.sconto_bridge_config.base_uri ${SCONTO_BRIDGE_DEV_BASE_URI}
         - ~/yq write --inplace ~/parameters.yaml parameters.sconto_bridge_config.user ${SCONTO_BRIDGE_DEV_USER}
