@@ -66,7 +66,7 @@ echo "export DOCKER_HOST=tcp://127.0.0.1:2375" >> ~/.bashrc && source ~/.bashrc
 
 Install docker-compose tool that will help us to launch containers via `docker-compose.yml` configuration file.
 ```sh
-sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
@@ -76,24 +76,35 @@ sudo apt install -y --no-install-recommends ruby ruby-dev
 sudo gem install docker-sync
 ```
 
-Download, compile and install unison driver.
+Download, compile and install OCaml.
 ```sh
-sudo apt install -y --no-install-recommends build-essential make
-wget -qO- http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06.0.tar.gz | tar xvz
-cd ocaml-4.06.0
+sudo apt install -y --no-install-recommends build-essential make wget git
+wget http://caml.inria.fr/pub/distrib/ocaml-4.08/ocaml-4.08.1.tar.gz
+tar xvf ocaml-4.08.1.tar.gz
+cd ocaml-4.08.1
 ./configure
 make world opt
 umask 022
 sudo make install clean
-wget -qO- https://github.com/bcpierce00/unison/archive/v2.51.2.tar.gz | tar xvz
+```
+
+Download, compile and install Unison.
+```sh
+wget https://github.com/bcpierce00/unison/archive/v2.51.2.tar.gz
+tar xvf v2.51.2.tar.gz
 cd unison-2.51.2
+# The implementation src/system.ml does not match the interface system.cmi:curl and needs to be patched
+curl https://github.com/bcpierce00/unison/commit/23fa1292.diff?full_index=1 -o patch.diff
+git apply patch.diff
 make UISTYLE=text
 sudo cp src/unison /usr/local/bin/unison
 sudo cp src/unison-fsmonitor /usr/local/bin/unison-fsmonitor
+```
 
-# remove sources of sync tools
+Remove sources of sync tools
+```sh
 cd ../..
-rm -rf ocaml-4.06.0 *.tar.gz
+rm -rf ocaml-4.08.1 *.tar.gz
 ```
 
 Set timezone of the system as docker-sync requirement.
@@ -112,10 +123,13 @@ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gp
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
 
 sudo apt update
-sudo apt install -y --no-install-recommends composer git
+sudo apt install -y --no-install-recommends composer
 ```
 
 Close console window and open it again so the new configuration is loaded.
+
+!!! note
+    Sometimes something may not work correctly, so we highly recommend you do restart system and continue by guide
 
 ## Shopsys Framework Installation
 ### 1. Create new project from Shopsys Framework sources
