@@ -57,14 +57,6 @@ class ProductDetailGallery {
                 ]
             }
         });
-
-        // show more button
-        var $gallery = $('.js-gallery');
-        $gallery.filterAllNodes('.js-gallery-item-more').click(function (e) {
-            e.preventDefault();
-            $(this).addClass('display-none');
-            $container.filterAllNodes('.js-gallery-item').removeClass('display-none');
-        });
     }
 }
 

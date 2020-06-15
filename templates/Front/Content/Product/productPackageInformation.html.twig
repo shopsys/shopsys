@@ -5,111 +5,92 @@
     or product.countPackages(domain.id) != null
     or product.totalPackageWeight(domain.id) != null
 %}
-    <div class="h3" id="package-basic-information">{{ 'Informace o balení'|trans }}</div>
-    <div class="box-detail package-basic-information">
-        <table class="table-grid margin-top-20">
-            <tbody>
-            {% if product.mountingState(domain.id) != null %}
-            <tr>
-                <th>
-                    {{ 'Stav montáže'|trans }}
-                </th>
-                <td>
-                    {{ product.mountingState(domain.id) ? 'smontováno'|trans : 'demontováno'|trans }}
-                </td>
-            </tr>
-            {% endif %}
+    <div class="box-accordion js-accordion">
+        <a class="box-accordion__header js-accordion-header" href="#">
+            <strong class="box-accordion__heading" id="package-basic-information">{{ 'Informace o balení'|trans }}</strong>
+            <span class="box-accordion__header__toggle">
+                <span class="box-accordion__header__toggle__text">{{ 'Zobrazit víc'|trans }}</span>
+                <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
+            </span>
+        </a>
+        <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
+            <ul class="box-detail-list box-detail-list--package">
+                <li class="box-detail-list__item box-detail-list__item--heading">
+                    <h2>{{ 'Detailní informace o balení'|trans }}</h2>
+                </li>
+                {% if product.mountingState(domain.id) != null %}
+                    <li class="box-detail-list__item">
+                        {{ 'Stav montáže'|trans }}:
+                        {{ product.mountingState(domain.id) ? 'smontováno'|trans : 'demontováno'|trans }}
+                    </li>
+                {% endif %}
 
-            {% if product.embeddedAccessories(domain.id) != null %}
-            <tr>
-                <th>
-                    {{ 'Dodávané příslušenství'|trans }}
-                </th>
-                <td>
-                    {{ product.embeddedAccessories(domain.id) }}
-                </td>
-            </tr>
-            {% endif %}
+                {% if product.embeddedAccessories(domain.id) != null %}
+                    <li class="box-detail-list__item">
+                        {{ 'Dodávané příslušenství'|trans }}:
+                        {{ product.embeddedAccessories(domain.id) }}
+                    </li>
+                {% endif %}
 
-            {% if product.packageNotIncluded(domain.id) != null %}
-            <tr>
-                <th>
-                    {{ 'Neobsaženo v balení'|trans }}
-                </th>
-                <td>
-                    {{ product.packageNotIncluded(domain.id) }}
-                </td>
-            </tr>
-            {% endif %}
+                {% if product.packageNotIncluded(domain.id) != null %}
+                    <li class="box-detail-list__item">
+                        {{ 'Neobsaženo v balení'|trans }}:
+                        {{ product.packageNotIncluded(domain.id) }}
+                    </li>
+                {% endif %}
 
-            {% if product.packagingUnit(domain.id) != null %}
-            <tr>
-                <th>
-                    {{ 'Počet produktů v balení'|trans }}
-                </th>
-                <td>
-                    {{ product.packagingUnit(domain.id) }}
-                </td>
-            </tr>
-            {% endif %}
+                {% if product.packagingUnit(domain.id) != null %}
+                    <li class="box-detail-list__item">
+                        {{ 'Počet produktů v balení'|trans }}:
+                        {{ product.packagingUnit(domain.id) }}
+                    </li>
+                {% endif %}
 
-            {% if product.countPackages(domain.id) != null %}
-            <tr>
-                <th>
-                    {{ 'Počet balíků'|trans }}
-                </th>
-                <td>
-                    {{ product.countPackages(domain.id) }}
-                </td>
-            </tr>
-            {% endif %}
+                {% if product.countPackages(domain.id) != null %}
+                    <li class="box-detail-list__item">
+                        {{ 'Počet balíků'|trans }}:
+                        {{ product.countPackages(domain.id) }}
+                    </li>
+                {% endif %}
 
-            {% if product.totalPackageWeight(domain.id) != null %}
-            <tr>
-                <th>
-                    {{ 'Celková váha produktu'|trans }}
-                </th>
-                <td>
-                    {{ product.totalPackageWeight(domain.id) }} {{ 'Kg'|trans }}
-                </td>
-            </tr>
-            {% endif %}
+                {% if product.totalPackageWeight(domain.id) != null %}
+                    <li class="box-detail-list__item">
+                        {{ 'Celková váha produktu'|trans }}:
+                        {{ product.totalPackageWeight(domain.id) }} {{ 'Kg'|trans }}
+                    </li>
+                {% endif %}
+            </ul>
 
-            </tbody>
-        </table>
-    </div>
-{% endif %}
+            {% if productPackages|length > 0 %}
+                {% for productPackage in productPackages %}
+                    {% if productPackage.width != null
+                        or productPackage.length != null
+                        or productPackage.height != null
+                        or productPackage.weight != null
+                    %}
+                    <ul class="box-detail-list box-detail-list--package">
+                        <li class="box-detail-list__item box-detail-list__item--heading">
+                            <h2>{{ 'Balík č.'|trans }} {{ productPackage.position }}</h2>
+                        </li>
+                        {% if productPackage.width != null %}
+                            <li class="box-detail-list__item">{{ 'Šířka'|trans }} {{ productPackage.width }} {{ 'cm'|trans }}</li>
+                        {% endif %}
 
-{% if productPackages|length > 0 %}
-    <div class="h3" id="package-detail-information">{{ 'Detailní informace o balení'|trans }}</div>
-    <div class="box-detail package-detail-information">
-        {% for productPackage in productPackages %}
-            {% if productPackage.width != null
-                or productPackage.length != null
-                or productPackage.height != null
-                or productPackage.weight != null
-            %}
-            <div class="box-package">
-                <div class="h4">{{ 'Balík č.'|trans }} {{ productPackage.position }}</div>
-                <ul>
-                    {% if productPackage.width != null %}
-                        <li>{{ 'Šířka'|trans }} {{ productPackage.width }} {{ 'cm'|trans }}</li>
+                        {% if productPackage.length != null %}
+                            <li class="box-detail-list__item">{{ 'Délka'|trans }} {{ productPackage.length }} {{ 'cm'|trans }}</li>
+                        {% endif %}
+
+                        {% if productPackage.height != null %}
+                            <li class="box-detail-list__item">{{ 'Výška'|trans }} {{ productPackage.height }} {{ 'cm'|trans }}</li>
+                        {% endif %}
+
+                        {% if productPackage.weight != null %}
+                            <li class="box-detail-list__item">{{ 'Hmotnost balíku'|trans }} {{ productPackage.weight }} {{ 'Kg'|trans }}</li>
+                        {% endif %}
+                    </ul>
                     {% endif %}
-
-                    {% if productPackage.length != null %}
-                        <li>{{ 'Délka'|trans }} {{ productPackage.length }} {{ 'cm'|trans }}</li>
-                    {% endif %}
-
-                    {% if productPackage.height != null %}
-                        <li>{{ 'Výška'|trans }} {{ productPackage.height }} {{ 'cm'|trans }}</li>
-                    {% endif %}
-
-                    {% if productPackage.weight != null %}
-                        <li>{{ 'Hmotnost balíku'|trans }} {{ productPackage.weight }} {{ 'Kg'|trans }}</li>
-                    {% endif %}
-                </ul>
-            </div>
+                {% endfor %}
             {% endif %}
-        {% endfor %}
+        </div>
     </div>
 {% endif %}

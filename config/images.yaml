@@ -49,14 +49,14 @@
     multiple: true
     sizes:
         -   name: ~
-            width: 410
+            width: 605
             height: ~
             crop: false
             occurrence: 'Front-end: Main image in product detail'
             additionalSizes:
                 - {width: 710, height: ~, media: "(min-width: 480px) and (max-width: 768px)"}
         -   name: galleryThumbnail
-            width: 100
+            width: 250
             height: ~
             crop: false
             occurrence: 'Front-end: Thumbnail of images under the main image in product detail'

@@ -1,18 +1,22 @@
 {{ form_start(form, {attr: {class: 'js-add-product dont-print', 'data-ajax-url': url('front_cart_add_product_ajax'), 'multipleForm': true}}) }}
-    <span class="form-input-spinbox js-spinbox {% if productAvailable == false %}disabled{% endif %}">
+    <span class="form-input-spinbox form-input-spinbox--light form-input-spinbox--big js-spinbox {% if productAvailable == false %}disabled{% endif %}">
         {{ form_widget(form.quantity, { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1, 'data-spinbox-max': availableAddQuantity}}) }}
-        <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">+</button>
-        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">-</button>
+        <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">
+            <i class="form-input-spinbox__btn__icon form-input-spinbox__btn__icon--plus svg svg-arrow"></i>
+        </button>
+        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">
+            <i class="form-input-spinbox__btn__icon svg svg-arrow"></i>
+        </button>
     </span>
     {% if type == 'large' %}
         {% if productAvailable == true %}
-            {{ form_widget(form.add, {label: 'Add to cart'|trans, attr: {class: 'btn--success btn--large'}}) }}
+            {{ form_widget(form.add, {label: 'Přidat do košíku'|trans, attr: {class: 'btn--success btn--very-large'}}) }}
         {% else %}
             {{ form_widget(form.add, {label: 'Temporarily sold out'|trans, attr: {class: 'btn--disabled btn--large'}, disabled: 'disabled'}) }}
         {% endif %}
     {% else %}
         {% if productAvailable == true %}
-            {{ form_widget(form.add, {label: 'Add to cart'|trans, attr: {class: 'btn--success'}}) }}
+            {{ form_widget(form.add, {label: 'Přidat do košíku'|trans, attr: {class: 'btn--success'}}) }}
         {% else %}
             {{ form_widget(form.add, {label: 'Temporarily sold out'|trans, attr: {class: 'btn--disabled'}, disabled: 'disabled'}) }}
         {% endif %}

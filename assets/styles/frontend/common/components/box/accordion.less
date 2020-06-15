@@ -1,0 +1,125 @@
+@box-accordion-bg-color: @color-f;
+@box-accordion-padding-vertical: 25px;
+@box-accordion-padding-horisontal: 30px;
+
+.box-accordion {
+    margin-bottom: 2rem;
+    overflow: hidden;
+
+    border-radius: @radius;
+    background-color: @box-accordion-bg-color;
+
+    &.is-opened {
+        .box-accordion__body {
+            display: block;
+        }
+
+        .box-accordion__body--cols {
+            display: flex;
+        }
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: @box-accordion-padding-vertical @box-accordion-padding-horisontal;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &__toggle {
+            &__text {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    &__body {
+        display: none;
+        padding: @box-accordion-padding-vertical @box-accordion-padding-horisontal;
+
+        border-top: 1px solid @color-border-lighter;
+
+        h2, h3, h4 {
+            margin: 0 0 0.5rem;
+
+            text-transform: none;
+            font-size: 18px;
+            font-family: @font-quartenary;
+        }
+
+        p {
+            margin-top: 0;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        &--cols {
+            .box-accordion__body__content--desc {
+                max-width: 33%;
+                min-width: 33%;
+                margin-right: 3rem;
+            }
+
+            .box-accordion__body__content--params {
+                display: flex;
+                flex-wrap: wrap;
+                align-content: flex-start;
+                max-width: 67%;
+                min-width: 67%;
+            }
+        }
+
+        &--no-spacing {
+            padding: 0;
+        }
+    }
+
+    &__heading {
+        margin: 0;
+
+        text-transform: none;
+        font-family: @font-quartenary;
+        font-size: 20px;
+        font-weight: 400;
+        text-decoration: none;
+    }
+
+    &__grid-table {
+        display: block;
+        width: 100%;
+
+        &__body {
+            display: block;
+            width: 100%;
+        }
+
+        &__row {
+            display: flex;
+            width: 100%;
+            padding: 15px @box-accordion-padding-horisontal;
+
+            border-bottom: 1px solid @color-border-lighter;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        &__col {
+            flex: 1 1 0;
+        }
+
+        &__title {
+            font-size: 16px;
+            font-family: @font-quartenary;
+            font-weight: 400;
+            color: @color-primary-light;
+        }
+    }
+}
