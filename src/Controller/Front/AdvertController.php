@@ -9,12 +9,12 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 class AdvertController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade
+     * @var \App\Model\Advert\AdvertFacade
      */
     private $advertFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade $advertFacade
+     * @param \App\Model\Advert\AdvertFacade $advertFacade
      */
     public function __construct(AdvertFacade $advertFacade)
     {
