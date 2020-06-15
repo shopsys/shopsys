@@ -100,6 +100,7 @@
         "phpunit/phpunit": "^8.0",
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
+        "psr/event-dispatcher": "^1.0.0",
         "shopsys/coding-standards": "9.1.x-dev",
         "sspooky13/yaml-standards": "^5.0.0",
         "symfony/var-dumper": "^4.4"

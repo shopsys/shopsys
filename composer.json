@@ -169,6 +169,7 @@
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpunit/phpunit": "^8.0",
+        "psr/event-dispatcher": "^1.0.0",
         "slevomat/coding-standard": "^6.3.5",
         "sspooky13/yaml-standards": "^5.0.0",
         "symfony/var-dumper": "^4.4.0",
