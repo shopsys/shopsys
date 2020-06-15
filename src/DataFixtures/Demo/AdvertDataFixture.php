@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 class AdvertDataFixture extends AbstractReferenceFixture
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade
+     * @var \App\Model\Advert\AdvertFacade
      */
     private $advertFacade;
 
@@ -24,7 +24,7 @@ class AdvertDataFixture extends AbstractReferenceFixture
     private $advertDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade $advertFacade
+     * @param \App\Model\Advert\AdvertFacade $advertFacade
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface $advertDataFactory
      */
     public function __construct(AdvertFacade $advertFacade, AdvertDataFactoryInterface $advertDataFactory)
@@ -34,7 +34,7 @@ class AdvertDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

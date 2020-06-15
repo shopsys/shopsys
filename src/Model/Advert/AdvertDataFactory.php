@@ -9,11 +9,10 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertData as BaseAdvertData;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory as BaseAdvertDataFactory;
 
 /**
- * @method \App\Model\Advert\AdvertData createFromAdvert(\App\Model\Advert\Advert $advert)
- * @method setImageFacade(\App\Component\Image\ImageFacade $imageFacade)
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @method __construct(\App\Component\Image\ImageFacade $imageFacade)
- * @method \App\Model\Advert\AdvertData createInstance()
+ * @method \App\Model\Advert\AdvertData create()
+ * @method \App\Model\Advert\AdvertData createFromAdvert(\App\Model\Advert\Advert $advert)
  */
 class AdvertDataFactory extends BaseAdvertDataFactory
 {
@@ -24,15 +23,17 @@ class AdvertDataFactory extends BaseAdvertDataFactory
     protected function fillFromAdvert(BaseAdvertData $advertData, BaseAdvert $advert): void
     {
         parent::fillFromAdvert($advertData, $advert);
+        $advertData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($advert, AdvertFacade::IMAGE_TYPE_WEB);
 
         $advertData->datetimeVisibleFrom = $advert->getDatetimeVisibleFrom();
         $advertData->datetimeVisibleTo = $advert->getDatetimeVisibleTo();
+        $advertData->mobileImage->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($advert, AdvertFacade::IMAGE_TYPE_MOBILE);
     }
 
     /**
      * @return \App\Model\Advert\AdvertData
      */
-    public function create(): BaseAdvertData
+    public function createInstance(): BaseAdvertData
     {
         return new AdvertData();
     }
