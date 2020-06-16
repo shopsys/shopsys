@@ -41,14 +41,14 @@ class LogoutMutation implements MutationInterface, AliasedInterface
         $token = $this->tokenStorage->getToken();
 
         if ($token === null) {
-            throw new UserError('Unlogged user');
+            throw new UserError('Token is not valid.');
         }
 
         /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $user */
         $user = $token->getUser();
 
         if (!($user instanceof FrontendApiUser)) {
-            throw new UserError('Unlogged user');
+            throw new UserError('Token is not valid.');
         }
 
         $this->customerUserRefreshTokenChainFacade->removeCustomerUserRefreshTokenChainsByDeviceId($user->getDeviceId());
