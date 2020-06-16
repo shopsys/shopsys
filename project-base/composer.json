@@ -112,6 +112,7 @@
     "phpstan/phpstan-doctrine": "^0.12",
     "phpstan/phpstan-phpunit": "^0.12",
     "phpunit/phpunit": "^8.0",
+    "psr/event-dispatcher": "^1.0.0",
     "shopsys/coding-standards": "9.0.x-dev",
     "shopsys/http-smoke-testing": "9.0.x-dev",
     "sspooky13/yaml-standards": "^5.0.0",
