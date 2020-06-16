@@ -500,9 +500,9 @@ class ProductTransferAkeneoMapper
         if ($parameter->getAkeneoType() === Parameter::AKENEO_ATTRIBUTES_TYPE_BOOLEAN) {
             switch ($parameterValueText) {
                 case '':
-                    return t('No', [], null, $locale);
+                    return t('No', [], 'messages', $locale);
                 case '1':
-                    return t('Yes', [], null, $locale);
+                    return t('Yes', [], 'messages', $locale);
                 default:
                     return $parameterValueText;
             }

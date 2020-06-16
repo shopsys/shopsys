@@ -28,7 +28,7 @@ class ParameterValueFormType extends AbstractType
             'constraints' => [
                 new Constraints\Regex([
                     'pattern' => '/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
-                    'message' => t('Chybný formát RGB HEX : #336699 nebo #ABC'),
+                    'message' => 'Chybný formát RGB HEX : #336699 nebo #ABC',
                 ]),
             ],
         ])->add('colourIcon', FileUploadType::class, [

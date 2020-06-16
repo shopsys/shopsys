@@ -140,9 +140,9 @@ class ParameterFacade extends BaseParameterFacade
                 $parameterValueData = $this->parameterValueDataFactory->create();
 
                 if ($translationKey === 'Yes') {
-                    $parameterValueData->text = t('Yes', [], null, $locale);
+                    $parameterValueData->text = t('Yes', [], 'messages', $locale);
                 } else {
-                    $parameterValueData->text = t('No', [], null, $locale);
+                    $parameterValueData->text = t('No', [], 'messages', $locale);
                 }
 
                 $parameterValueData->locale = $locale;

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Form\Admin\Customer;
 
 use App\Component\Form\FormBuilderHelper;
-use App\Component\Locale\LocaleHelper;
 use App\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType;
@@ -29,18 +28,11 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
     private $formBuilderHelper;
 
     /**
-     * @var \App\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
-     * @param \App\Component\Domain\Domain $domain
      */
-    public function __construct(FormBuilderHelper $formBuilderHelper, Domain $domain)
+    public function __construct(FormBuilderHelper $formBuilderHelper)
     {
         $this->formBuilderHelper = $formBuilderHelper;
-        $this->domain = $domain;
     }
 
     /**
@@ -52,11 +44,9 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
         /* @var $customerUser \App\Model\Customer\User\CustomerUser */
         $customerUser = $options['customerUser'];
 
-        $userLocale = LocaleHelper::LOCALE_CS;
         $domainId = Domain::SECOND_DOMAIN_ID;
         if ($customerUser !== null) {
             $domainId = $customerUser->getDomainId();
-            $userLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
         }
 
         $builderCompanyDataGroup = $builder->get('companyData')->get('companyFields');
@@ -70,7 +60,7 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
                     'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
                 ]),
             ],
-            'label' => t('Tax number', [], null, $userLocale),
+            'label' => 'Tax number',
         ]);
 
         if ($domainId === Domain::SECOND_DOMAIN_ID) {
