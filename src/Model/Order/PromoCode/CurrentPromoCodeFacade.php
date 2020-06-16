@@ -7,6 +7,8 @@ namespace App\Model\Order\PromoCode;
 use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
+use App\Model\Product\Flag\Flag;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
@@ -20,6 +22,11 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 {
+    private const BIT_ON_SALE = 1;
+    private const BIT_IN_ACTION = 2;
+    private const BIT_SCONTO_PRICE = 4;
+    private const BIT_WITHOUT_LOW_PRICE = 8;
+
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeProductRepository
      */
@@ -86,6 +93,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         $this->validatePromoCodeDatetime($promoCode);
         $this->validateRemainigUses($promoCode);
         $this->validatePromoCodeByProductsInCart($promoCode);
+        $this->validatePromoCodeByFlags($promoCode);
 
         $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
     }
@@ -165,6 +173,31 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     }
 
     /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    private function validatePromoCodeByFlags(PromoCode $promoCode)
+    {
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
+        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
+        $cartItems = $cart === null ? [] : $cart->getItems();
+
+        $isValidPromoCode = false;
+        foreach ($cartItems as $cartItem) {
+            /** @var \App\Model\Product\Product $productFromCart */
+            $productFromCart = $cartItem->getProduct();
+            $product = $this->filterProductByPromoCodeFlags($productFromCart, $promoCode);
+            if ($product !== null) {
+                $isValidPromoCode = true;
+                break;
+            }
+        }
+
+        if ($isValidPromoCode === false) {
+            throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
+        }
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
      * @return \App\Model\Order\PromoCode\PromoCode[]
@@ -224,7 +257,13 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     {
         $promoCodePercentPerProduct = [];
         foreach ($quantifiedProducts as $quantifiedProduct) {
-            $productId = $quantifiedProduct->getProduct()->getId();
+            /** @var \App\Model\Product\Product $product */
+            $product = $quantifiedProduct->getProduct();
+            $allowedProduct = $this->filterProductByPromoCodeFlags($product, $validEnteredPromoCode);
+            if ($allowedProduct === null) {
+                continue;
+            }
+            $productId = $allowedProduct->getId();
             $promoCodePercentPerProduct[(string)$productId] = $validEnteredPromoCode;
         }
 
@@ -244,12 +283,60 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             if ($validEnteredPromoCode->isApplyOnSecondProduct() && $quantifiedProduct->getQuantity() < 2) {
                 continue;
             }
-            $productId = $quantifiedProduct->getProduct()->getId();
+            /** @var \App\Model\Product\Product $product */
+            $product = $quantifiedProduct->getProduct();
+            $allowedProduct = $this->filterProductByPromoCodeFlags($product, $validEnteredPromoCode);
+            if ($allowedProduct === null) {
+                continue;
+            }
+            $productId = $allowedProduct->getId();
             if (in_array($productId, $allowedProductIds, true)) {
                 $promoCodeDiscountPercentPerProduct[(string)$productId] = $validEnteredPromoCode;
             }
         }
 
         return $promoCodeDiscountPercentPerProduct;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
+     * @return \App\Model\Product\Product|null
+     */
+    private function filterProductByPromoCodeFlags(Product $product, PromoCode $validEnteredPromoCode): ?Product
+    {
+        $filterMask = 0;
+        $filterMask += $validEnteredPromoCode->isOnSale() ? self::BIT_ON_SALE : 0;
+        $filterMask += $validEnteredPromoCode->isInAction() ? self::BIT_IN_ACTION : 0;
+        $filterMask += $validEnteredPromoCode->isScontoPrice() ? self::BIT_SCONTO_PRICE : 0;
+        $filterMask += $validEnteredPromoCode->isWithoutLowPrice() ? self::BIT_WITHOUT_LOW_PRICE : 0;
+
+        $productSetup = 0;
+        $productSetup += $this->hasProductFlagByAkeneoCode($product, Flag::AKENEO_CODE_SALE) ? self::BIT_ON_SALE : 0;
+        $productSetup += $this->hasProductFlagByAkeneoCode($product, Flag::AKENEO_CODE_ACTION) ? self::BIT_IN_ACTION : 0;
+        $productSetup += $this->hasProductFlagByAkeneoCode($product, Flag::AKENEO_CODE_SCONTO) ? self::BIT_SCONTO_PRICE : 0;
+        $productSetup += $product->getLowPriceWithVat($this->domain->getId())->isZero() ? self::BIT_WITHOUT_LOW_PRICE : 0;
+
+        if (($filterMask & $productSetup ^ $filterMask) === 0) {
+            return $product;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $akeneoCode
+     * @return bool
+     */
+    private function hasProductFlagByAkeneoCode(Product $product, string $akeneoCode): bool
+    {
+        foreach ($product->getFlagsForDomain($this->domain->getId()) as $flag) {
+            if ($flag->getAkeneoCode() === $akeneoCode) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
