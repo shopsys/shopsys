@@ -2,40 +2,958 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
+"Language: sk\n"
+
+msgid "%quantity%x - %productName%"
+msgstr ""
 
 msgid "(If I buy on the company behalf)"
 msgstr "(Pokud nakupuji na firmu)"
 
+msgid "(Products will be delivered to this address)"
+msgstr ""
+
+msgid "(This address will be on the tax invoice)"
+msgstr ""
+
+msgid "(včetně dopravy a platby)"
+msgstr ""
+
+msgid "-- Choose article position --"
+msgstr ""
+
+msgid "-- Vyber oslovení --"
+msgstr ""
+
+msgid "-- Vyberte název přenosu --"
+msgstr ""
+
+msgid "<span class=\"cart__count\">%itemsCount%</span> <span class=\"cart__state cart__state--active\">%priceWithVat%</span>|[2,Inf] <span class=\"cart__count\">%itemsCount%</span> <span class=\"cart__state cart__state--active\">%priceWithVat%</span>"
+msgstr ""
+
+msgid "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
+msgstr ""
+
+msgid "ANO"
+msgstr ""
+
+msgid "Accessories"
+msgstr ""
+
+msgid "Add another parameter"
+msgstr ""
+
+msgid "Add some parameters"
+msgstr ""
+
+msgid "Add to cart"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Akce"
+msgstr ""
+
+msgid "Akeneo kód"
+msgstr ""
+
+msgid "Aktuální leták"
+msgstr ""
+
+msgid "Ale na jiných adresách toho pro Vás máme spousty..."
+msgstr ""
+
+msgid "All domains"
+msgstr ""
+
+msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Ancestor category"
+msgstr ""
+
+msgid "Apply"
+msgstr ""
+
+msgid "Articles in footer"
+msgstr ""
+
+msgid "Articles in upper menu"
+msgstr ""
+
+msgid "Articles without positioning"
+msgstr ""
+
+msgid "Assign to category"
+msgstr ""
+
+msgid "Attention! You are administrator logged in as the customer."
+msgstr ""
+
+msgid "Availability"
+msgstr ""
+
+msgid "Back to cart"
+msgstr ""
+
+msgid "Back to orders overview"
+msgstr ""
+
+msgid "Back to overview"
+msgstr ""
+
+msgid "Back to shipping and payment selection"
+msgstr ""
+
+msgid "Back to shop"
+msgstr ""
+
+msgid "Back to store"
+msgstr ""
+
+msgid "Balík č."
+msgstr ""
+
+msgid "Basic"
+msgstr ""
+
+msgid "Basic information"
+msgstr ""
+
+msgid "Bestsellers"
+msgstr ""
+
+msgid "Billing address"
+msgstr ""
+
+msgid "Billing data"
+msgstr ""
+
+msgid "Blog"
+msgstr ""
+
+msgid "Bohužel zadaný e-mail %email% neexistuje."
+msgstr ""
+
+msgid "Brand"
+msgstr ""
+
+msgid "Brand overview"
+msgstr ""
+
+msgid "Byla upravena položka horizontálního menu <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgstr ""
+
+msgid "Byla vytvořena položka horizontálního menu <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgstr ""
+
+msgid "Bylo vytvořeno <strong>{{ quantity }}</strong> slevových kupónů"
+msgstr ""
+
+msgid "Během placení objednávky došlo k potížím"
+msgstr ""
+
+msgid "Běžná cena"
+msgstr ""
+
+msgid "Cart"
+msgstr ""
+
+msgid "Catalog number"
+msgstr ""
+
+msgid "Catalogue number"
+msgstr ""
+
+msgid "Celkem zaplatíte"
+msgstr ""
+
+msgid "Celková váha balení"
+msgstr ""
+
+msgid "Celková váha produktu"
+msgstr ""
+
+msgid "Centrální sklad"
+msgstr ""
+
+msgid "Changing password"
+msgstr ""
+
+msgid "Check the address correctness"
+msgstr ""
+
+msgid "Choose variant"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Clicking on the link below you can download in XML format your personal information, which we have in evidence in our online store %domain%."
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Close (Esc)"
+msgstr ""
+
+msgid "Code"
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "Common price"
+msgstr ""
+
+msgid "Company"
+msgstr ""
+
+msgid "Company data"
+msgstr ""
+
+msgid "Company name"
+msgstr ""
+
 msgid "Company number"
 msgstr "IČ"
 
-msgid "Tax number"
-msgstr "IČ DPH"
+msgid "Connection to GoPay gateway failed."
+msgstr ""
 
-msgid "Tax number with vat"
-msgstr "DIČ"
+msgid "Contact"
+msgstr ""
 
-msgid "Televize"
-msgstr "Televize"
+msgid "Contact us"
+msgstr ""
 
-msgid "plazmová"
-msgstr "plazmová"
+msgid "Content"
+msgstr ""
 
-msgid "Yes"
-msgstr "Ano"
+msgid "Continue in order"
+msgstr ""
 
-msgid "No"
-msgstr "Nie"
+msgid "Cookies"
+msgstr ""
 
-msgid "Skvělá volba! Vaše zboží jsme přidali do košíku"
+msgid "Copyright"
+msgstr ""
+
+msgid "Copyright Sconto Nábytek, s.r.o."
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Create promo code"
+msgstr ""
+
+msgid "Creation date"
+msgstr ""
+
+msgid "Current status"
+msgstr ""
+
+msgid "Customer with email address <strong>{{ email }}</strong> doesn't exist. <a href=\"{{ registrationLink }}\"> Register</a>"
+msgstr ""
+
+msgid "DPH {{domainName}}"
+msgstr ""
+
+msgid "Další"
+msgstr ""
+
+msgid "Další doplňkový sortiment, zákaznické centrum nebo osobní<br>vyzvednutí zboží z e-shopu zdarma na 8 místech v ČR."
+msgstr ""
+
+msgid "Další kategorie"
+msgstr ""
+
+msgid "Další krok"
+msgstr ""
+
+msgid "Date of subscription"
+msgstr ""
+
+msgid "Datum a čas"
+msgstr ""
+
+msgid "Datum platnosti DO"
+msgstr ""
+
+msgid "Datum platnosti OD"
+msgstr ""
+
+msgid "Datum publikace"
+msgstr ""
+
+msgid "Datum vytvoření"
+msgstr ""
+
+msgid "Datum zobrazení DO"
+msgstr ""
+
+msgid "Datum zobrazení OD"
+msgstr ""
+
+msgid "Defaultně zavřené parametry ve filtru:"
+msgstr ""
+
+msgid "Delivery address"
+msgstr ""
+
+msgid "Delivery address could not be removed."
+msgstr ""
+
+msgid "Delivery address has been removed."
+msgstr ""
+
+msgid "Delivery addresses"
+msgstr ""
+
+msgid "Delivery data"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Detail"
+msgstr ""
+
+msgid "Detail kategorie"
+msgstr ""
+
+msgid "Detail produktového programu"
+msgstr ""
+
+msgid "Detail skladu"
+msgstr ""
+
+msgid "Detail typu produktu"
+msgstr ""
+
+msgid "Detailní informace o balení"
+msgstr ""
+
+msgid "Detailní informace o balení produktu:"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Display"
+msgstr ""
+
+msgid "Display on"
+msgstr ""
+
+msgid "Dle příznaků"
+msgstr ""
+
+msgid "Dle řazení"
+msgstr ""
+
+msgid "Dny pro přesun mezi sklady"
+msgstr ""
+
+msgid "Dní do naskladnění"
+msgstr ""
+
+msgid "Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Název proměnné je {products=XXXXXX,XXXXXX} kde XXXXXX je katalogové číslo produktu. Zobrazeny jsou produkty, které nejsou skryté a současně nejsou vyřazené z prodeje."
+msgstr ""
+
+msgid "Do you really want to remove this delivery address?"
+msgstr ""
+
+msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
+msgstr ""
+
+msgid "Do you really want to remove this promo code?"
+msgstr ""
+
+msgid "Dodací lhůta dodavatele"
+msgstr ""
+
+msgid "Dodávané příslušenství"
+msgstr ""
+
+msgid "Domain"
+msgstr ""
+
+msgid "Doména"
+msgstr ""
+
+msgid "Domů"
+msgstr ""
+
+msgid "Doprava pro celý nákup"
+msgstr ""
+
+msgid "Doprava zdarma"
+msgstr ""
+
+msgid "Dostupnost"
+msgstr ""
+
+msgid "Dostupnost na pobočkách"
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Download the personal information"
+msgstr ""
+
+msgid "Došlo ke změně v košíku, která vyžaduje, aby jste překontrolovali dopravu objednávky."
+msgstr ""
+
+msgid "Délka"
+msgstr ""
+
+msgid "Dětský pokoj"
+msgstr ""
+
+msgid "E-shop"
+msgstr ""
+
+msgid "EAN"
+msgstr ""
+
+msgid "Editace hodnoty parameteru typu barva"
+msgstr ""
+
+msgid "Editace hodnoty parameteru typu barva:"
+msgstr ""
+
+msgid "Editace hodnoty parametru typu barva"
+msgstr ""
+
+msgid "Editace měrné jednotky"
+msgstr ""
+
+msgid "Editace měrné jednotky:"
+msgstr ""
+
+msgid "Editace položky"
+msgstr ""
+
+msgid "Editace položky menu"
+msgstr ""
+
+msgid "Editace rubriky blogu"
+msgstr ""
+
+msgid "Editace rubriky blogu - %name%"
+msgstr ""
+
+msgid "Editace skladu"
+msgstr ""
+
+msgid "Editace skladu - %name%"
+msgstr ""
+
+msgid "Editace slevového kupónu"
+msgstr ""
+
+msgid "Editace článku blogu"
+msgstr ""
+
+msgid "Editace článku blogu - %name%"
+msgstr ""
+
+msgid "Editing product - %name%"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Email with a link to the export of your personal data was sent to your email address."
+msgstr ""
+
+msgid "Email with a link to the page with your personal data was sent to your email address."
+msgstr ""
+
+msgid "Empty cart"
+msgstr ""
+
+msgid "Enter email"
+msgstr ""
+
+msgid "Error occurred"
+msgstr ""
+
+msgid "Error occurred when sending email."
+msgstr ""
+
+msgid "Externí ID můstku"
+msgstr ""
+
+msgid "Facebook"
+msgstr ""
+
+msgid "Filtr"
+msgstr ""
+
+msgid "Firma"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Flags"
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
+msgid "Forgotten password"
+msgstr ""
+
+msgid "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
+msgstr ""
+
+msgid "Full name"
+msgstr ""
+
+msgid "Go to cart"
+msgstr ""
+
+msgid "GoPay"
+msgstr ""
+
+msgid "GoPay Fik code"
+msgstr ""
+
+msgid "GoPay payment method"
+msgstr ""
+
+msgid "GoPay payment status"
+msgstr ""
+
+msgid "Heading (H1)"
+msgstr ""
+
+msgid "Heslo"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Hlavní URL"
+msgstr ""
+
+msgid "Hledejte nábytek a doplňky"
+msgstr ""
+
+msgid "Hledání v přenosech"
+msgstr ""
+
+msgid "Hmotnost balíku"
+msgstr ""
+
+msgid "Hodnota parameteru"
+msgstr ""
+
+msgid "Hodnota parameteru typu barva"
+msgstr ""
+
+msgid "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> je úspěšně upravena."
+msgstr ""
+
+msgid "Hodnota parametru typu barva"
+msgstr ""
+
+msgid "Hodnoty parameterů typu barva"
+msgstr ""
+
+msgid "Horizontální menu"
+msgstr ""
+
+msgid "Hromadné generování kupónu"
+msgstr ""
+
+msgid "Hromadné vytvoření slevových kupónů"
+msgstr ""
+
+msgid "Hvězdičky pro nižší cenu"
+msgstr ""
+
+msgid "Hvězdičky pro vyšší cenu"
+msgstr ""
+
+msgid "I agree with <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">terms and conditions</a> and <a href=\"%privacyPolicyUrl%\" target=\"_blank\">privacy policy</a>."
+msgstr ""
+
+msgid "I agree with <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">terms and conditions</a> and privacy policy."
+msgstr ""
+
+msgid "I agree with <a href=\"%url%\" target=\"_blank\">privacy policy</a>."
+msgstr ""
+
+msgid "I agree with privacy policy."
+msgstr ""
+
+msgid "I agree with terms and conditions and <a href=\"%privacyPolicyUrl%\" target=\"_blank\">privacy policy</a>."
+msgstr ""
+
+msgid "I agree with terms and conditions and privacy policy."
+msgstr ""
+
+msgid "I do not agree with sending a Customer Verified satisfaction questionnaire that helps improve your service"
+msgstr ""
+
+msgid "I understand"
+msgstr ""
+
+msgid "I want to deliver products to different address than the billing one"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Identifikátor kupónu pro IS"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
+msgstr ""
+
+msgid "Informace o balení"
+msgstr ""
+
+msgid "Instagram"
+msgstr ""
+
+msgid "Instalační manuál"
+msgstr ""
+
+msgid "Items"
+msgstr ""
+
+msgid "Je vystaven"
+msgstr ""
+
+msgid "Ještě nebylo implementováno."
+msgstr ""
+
+msgid "Jídelna"
+msgstr ""
+
+msgid "Kategorie"
+msgstr ""
+
+msgid "Kategorie produktového programu"
+msgstr ""
+
+msgid "Kategorie produktového programu <strong><a href=\"{{ url }}\">{{ productSeriesCategory.name }}</a></strong> je úspěšně upravena"
+msgstr ""
+
+msgid "Kategorie produktového programu <strong><a href=\"{{ url }}\">{{ productSeriesCategoryName }}</a></strong> byla úspěšně vytvořena"
+msgstr ""
+
+msgid "Kategorie produktového programu <strong>{{ name }}</strong> je smazána"
+msgstr ""
+
+msgid "Kategorie produktového programu editace:"
+msgstr ""
+
+msgid "Kategorie produktových programů"
+msgstr ""
+
+msgid "Ke stažení"
+msgstr ""
+
+msgid "Kg"
 msgstr ""
 
 msgid "Klikněte zde pro zopakování úhrady objednávky"
 msgstr "Kliknite tu pre zopakovanie úhrady objednávky"
 
+msgid "Kombinace parametrů a jejich hodnot parametrů"
+msgstr ""
+
+msgid "Koncový zákazník"
+msgstr ""
+
+msgid "Koupelny"
+msgstr ""
+
+msgid "Krátký popis"
+msgstr ""
+
+msgid "Krátký popis 1"
+msgstr ""
+
+msgid "Krátký popis 2"
+msgstr ""
+
+msgid "Krátký popis 3"
+msgstr ""
+
+msgid "Krátký popis 4"
+msgstr ""
+
+msgid "Krátký popis 5"
+msgstr ""
+
+msgid "Krátký popis USP"
+msgstr ""
+
+msgid "Krátký popis kategorie"
+msgstr ""
+
+msgid "Kuchyně"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Legenda:"
+msgstr ""
+
+msgid "Link to password reset sent to email <strong>{{ email }}</strong>."
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "Log out"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Ložnice"
+msgstr ""
+
+msgid "Magazín"
+msgstr ""
+
+msgid "Mastercard"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Meta description"
+msgstr ""
+
+msgid "Minimální částka pro dopravu zdarma s DPH"
+msgstr ""
+
+msgid "Množství zboží <strong>{{ name }}</strong> ve Vašem košíku bylo upraveno z důvodu změny dostupnosti. Prosím zkontrolujte si svojí objednávku."
+msgstr ""
+
+msgid "More bestsellers"
+msgstr ""
+
+msgid "More information"
+msgstr ""
+
+msgid "Možnosti platby"
+msgstr ""
+
+msgid "My orders"
+msgstr ""
+
+msgid "Máme pro vás volné místo"
+msgstr ""
+
+msgid "Měrná jednotka"
+msgstr ""
+
+msgid "Měrná jednotka <strong><a href=\"{{ url }}\">{{ parameterUnit.name }}</a></strong> je úspěšně upravena."
+msgstr ""
+
+msgid "Měrné jednotky"
+msgstr ""
+
+msgid "Město"
+msgstr ""
+
+msgid "Můj účet"
+msgstr ""
+
+msgid "NE"
+msgstr ""
+
+msgid "Na celou obrazovku"
+msgstr ""
+
+msgid "Na jejím naplnění intenzivně pracujeme. Do té doby si můžete prohlédnout jiné kategorie plné doplňků a nábytku."
+msgstr ""
+
+msgid "Na konkrétní záložce domény není možné upravovat pořadí a zanoření rubrik blogu. Prosím přejděte na detail kategorie nebo na přehled kategorií na všech doménách"
+msgstr ""
+
+msgid "Na téhle url adrese žádný nábytek ani doplňky nemáme."
+msgstr ""
+
+msgid "Nadpis H1"
+msgstr ""
+
+msgid "Nahrát nový obrázek pro mobilní zařízení"
+msgstr ""
+
+msgid "Nahrát obrázek pro mobilní zařízení"
+msgstr ""
+
+msgid "Nakupte ještě za <strong class=\"box-free-transport__desc__strong\">%price%</strong> a získáte doručení <strong class=\"box-free-transport__desc__strong\">Zdarma</strong>"
+msgstr ""
+
+msgid "Nakupujte podle kategorií"
+msgstr ""
+
+msgid "Nakupujte podle místností"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Name %locale%"
+msgstr ""
+
+msgid "Nastavení SVG ikony"
+msgstr ""
+
+msgid "Nastavení URL"
+msgstr ""
+
+msgid "Nastavení skladů"
+msgstr ""
+
+msgid "Nastavení {{domainName}} skladů uloženo."
+msgstr ""
+
+msgid "Nebyly nalezeny žádné kombinace pro SEO kategorií."
+msgstr ""
+
+msgid "Nebyly nalezeny žádné články blogu."
+msgstr ""
+
+msgid "Neobsaženo v balení"
+msgstr ""
+
+msgid "Neplatné řazení"
+msgstr ""
+
+msgid "New delivery address"
+msgstr ""
+
+msgid "Nižší cena bez DPH"
+msgstr ""
+
+msgid "Nižší cena s DPH"
+msgstr ""
+
+msgid "No"
+msgstr "Nie"
+
+msgid "No articles found on this domain. You have to create some first."
+msgstr ""
+
+msgid "No order so far."
+msgstr ""
+
+msgid "No personal data for this email address"
+msgstr ""
+
+msgid "No products found for this brand"
+msgstr ""
+
+msgid "No results matching filter"
+msgstr ""
+
+msgid "Nothing to choose from"
+msgstr ""
+
+msgid "Nothing to choose from."
+msgstr ""
+
+msgid "Nová kategorie"
+msgstr ""
+
+msgid "Nová kategorie produktového programu"
+msgstr ""
+
+msgid "Nová položka"
+msgstr ""
+
+msgid "Nová položka menu"
+msgstr ""
+
+msgid "Nová rubrika blogu"
+msgstr ""
+
+msgid "Nový produktový program"
+msgstr ""
+
+msgid "Nový sklad"
+msgstr ""
+
+msgid "Nový slevový kupóny"
+msgstr ""
+
+msgid "Nový typ produktu"
+msgstr ""
+
+msgid "Nový typ produktů"
+msgstr ""
+
+msgid "Nový článek blogu"
+msgstr ""
+
+msgid "Number of items"
+msgstr ""
+
 msgid "Nyní budete přesměrováni na platební bránu GoPay."
 msgstr "Teraz budete presmerovaný na platobnú bránu GoPay."
+
+msgid "Nábytek"
+msgstr ""
+
+msgid "Nábytkové programy"
+msgstr ""
+
+msgid "Náhledy"
+msgstr ""
+
+msgid "Název"
+msgstr ""
+
+msgid "Název kategorie"
+msgstr ""
+
+msgid "Název prefix"
+msgstr ""
+
+msgid "Název společnosti"
+msgstr ""
+
+msgid "Název suffix"
+msgstr ""
+
+msgid "O Scontu"
+msgstr ""
+
+msgid "O nákupu"
+msgstr ""
 
 msgid "Objednávka je již zaplacená."
 msgstr "Objednávka je už zaplatená."
@@ -43,14 +961,1362 @@ msgstr "Objednávka je už zaplatená."
 msgid "Objednávka nebyla nalezena."
 msgstr "Objednávka nebola nájdená."
 
+msgid "Obnova hesla"
+msgstr ""
+
+msgid "Obsah není možné načíst. <br/> Zkuste to prosím později."
+msgstr ""
+
+msgid "Obývací pokoj"
+msgstr ""
+
+msgid "Ochrana osobních údajů"
+msgstr ""
+
+msgid "Odeslat"
+msgstr ""
+
+msgid "Odkaz"
+msgstr ""
+
+msgid "Odkaz na přehled produktových programů"
+msgstr ""
+
+msgid "Odkaz na výpis produktových programů"
+msgstr ""
+
+msgid "Odkaz pro vyresetování hesla byl zaslán na e-mail %email%."
+msgstr ""
+
+msgid "Odkaz textu pod bannerem"
+msgstr ""
+
+msgid "Of course, you can unsubscribe at any time. By submitting the data, you agree to the processing of personal data."
+msgstr ""
+
+msgid "Ok"
+msgstr ""
+
+msgid "Online shop"
+msgstr ""
+
+msgid "Oops! Error occurred."
+msgstr ""
+
 msgid "Opakovat platbu"
 msgstr "Opakovať platbu"
+
+msgid "Operation failed"
+msgstr ""
+
+msgid "Opravdu chcete odebrat tento produktový program? Pokud je někde použitý, bude deaktivován."
+msgstr ""
+
+msgid "Opravdu chcete odebrat tuto kategorii produktového programu?"
+msgstr ""
+
+msgid "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u zboží a případné landing stránky rozšířeného SEO kategorií, kde je parametr přiřazen. Tento krok je nevratný!"
+msgstr ""
+
+msgid "Opravdu chcete smazat tento článek blogu?"
+msgstr ""
+
+msgid "Opravdu chcete smazat tuto rubriku blogu?"
+msgstr ""
+
+msgid "Opravdu chcete tento problém označit jako vyřešený?"
+msgstr ""
+
+msgid "Opravdu si přejete odstranit tento typ produktu?"
+msgstr ""
+
+msgid "Order - personal data"
+msgstr ""
+
+msgid "Order Nr."
+msgstr ""
+
+msgid "Order [noun]"
+msgstr ""
+
+msgid "Order completed"
+msgstr ""
+
+msgid "Order could not be paid"
+msgstr ""
+
+msgid "Order has been created but there were problems during payment"
+msgstr ""
+
+msgid "Order items"
+msgstr ""
+
+msgid "Order not found"
+msgstr ""
+
+msgid "Order not found."
+msgstr ""
+
+msgid "Order number"
+msgstr ""
+
+msgid "Order sent"
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Oslovení"
+msgstr ""
+
+msgid "Osobní odběr SCONTO"
+msgstr ""
+
+msgid "Otevírací doba"
+msgstr ""
+
+msgid "Otevírat v novém okně"
+msgstr ""
+
+msgid "Otevřeno"
+msgstr ""
+
+msgid "Our customers who bought this bought also"
+msgstr ""
+
+msgid "Označení výprodeje"
+msgstr ""
+
+msgid "PSČ"
+msgstr ""
+
+msgid "Page not found!"
+msgstr ""
+
+msgid "Page title"
+msgstr ""
+
+msgid "Page you are looking for either no longer exists or you entered wrong address."
+msgstr ""
+
+msgid "Parameter"
+msgstr ""
+
+msgid "Parametr_%counter%"
+msgstr ""
+
+msgid "Parametry filtru"
+msgstr ""
+
+msgid "Parametry produktů vybrané kategorie"
+msgstr ""
+
+msgid "Parametry variant"
+msgstr ""
+
+msgid "Parametry:"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Password again"
+msgstr ""
+
+msgid "Password must be at least six characters and can't be the same as entered email or its part before at sign."
+msgstr ""
+
+msgid "Password successfully changed"
+msgstr ""
+
+msgid "Payment"
+msgstr ""
+
+msgid "Payment method"
+msgstr ""
+
+msgid "Payment selection"
+msgstr ""
+
+msgid "Perex"
+msgstr ""
+
+msgid "Personal data"
+msgstr ""
+
+msgid "Personal data of registered customer"
+msgstr ""
+
+msgid "Personal information export"
+msgstr ""
+
+msgid "Personal information overview"
+msgstr ""
+
+msgid "Platí na druhý produkt v košíku"
+msgstr ""
+
+msgid "Please check the correctness of all data filled."
+msgstr ""
+
+msgid "Please check the entered values.<br>"
+msgstr ""
+
+msgid "Please enter promo code."
+msgstr ""
+
+msgid "Please enter valid quantity you want to add to cart."
+msgstr ""
+
+msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
+msgstr ""
+
+msgid "Please follow the instructions"
+msgstr ""
+
+msgid "Please make sure that you entered right quantity of all items in cart."
+msgstr ""
+
+msgid "Podobné produkty"
+msgstr ""
+
+msgid "Pokračovat"
+msgstr ""
+
+msgid "Pokud je vyplněn čas DO, vyplňte i datum DO."
+msgstr ""
+
+msgid "Pokud je vyplněn čas OD, vyplňte i datum OD."
+msgstr ""
+
+msgid "Položka menu <strong>{{ name }}</strong> byla smazána"
+msgstr ""
+
+msgid "Popis"
+msgstr ""
+
+msgid "Popis kategorie"
+msgstr ""
+
+msgid "Popisek výpisu produktových programů"
+msgstr ""
+
+msgid "Postcode"
+msgstr ""
+
+msgid "Potřebujete poradit?"
+msgstr ""
+
+msgid "Povolit dopravu zdarma"
+msgstr ""
+
+msgid "Povolit předobjednávky"
+msgstr ""
+
+msgid "Pozastavit prezentaci\""
+msgstr ""
+
+msgid "Počet balíků"
+msgstr ""
+
+msgid "Počet generovaných kupónů"
+msgstr ""
+
+msgid "Počet kusů"
+msgstr ""
+
+msgid "Počet produktů v balení"
+msgstr ""
+
+msgid "Pořadí"
+msgstr ""
+
+msgid "Pracovna"
+msgstr ""
+
+msgid "Pravidla akce"
+msgstr ""
+
+msgid "Prefix (např. \"JARO_\")"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Price including VAT"
+msgstr ""
+
+msgid "Print"
+msgstr ""
+
+msgid "Pro vaše přesné vyhledávání momentálně nemáme žádné výsledky.<br> Zkuste být více specifičtí, nebo se podívejte, jestli jste nevyfiltrovali neexistující údaje."
+msgstr ""
+
+msgid "Pro úspěšné dokončení objednávky č. <strong>%orderNumber%</strong> zkuste zopakovat platbu, nebo si zvolte jiný způsob platby"
+msgstr ""
+
+msgid "Problém v přenosu byl označen jako vyřešený"
+msgstr ""
+
+msgid "Prodejny"
+msgstr ""
+
+msgid "Prodejny Sconto"
+msgstr ""
+
+msgid "Prodejní cena s DPH"
+msgstr ""
+
+msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
+msgstr ""
+
+msgid "Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart"
+msgstr ""
+
+msgid "Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})"
+msgstr ""
+
+msgid "Product information"
+msgstr ""
+
+msgid "Product no longer on sale"
+msgstr ""
+
+msgid "Product {{ name }} removed from cart"
+msgstr ""
+
+msgid "Products in stock only"
+msgstr ""
+
+msgid "Produktové programy"
+msgstr ""
+
+msgid "Produktový program"
+msgstr ""
+
+msgid "Produktový program <strong><a href=\"{{ url }}\">{{ productSeries.name }}</a></strong> je úspěšně upraven"
+msgstr ""
+
+msgid "Produktový program <strong><a href=\"{{ url }}\">{{ productSeries.name }}</a></strong> je úspěšně vytvořen"
+msgstr ""
+
+msgid "Produktový program <strong>{{ name }}</strong> je smazán"
+msgstr ""
+
+msgid "Produktový program editace"
+msgstr ""
+
+msgid "Produktový program editace:"
+msgstr ""
+
+msgid "Produkty k článku blogu"
+msgstr ""
+
+msgid "Produkty programu"
+msgstr ""
+
+msgid "Produkty v programu"
+msgstr ""
+
+msgid "Programy produktů"
+msgstr ""
+
+msgid "Programy produktů kategorie"
+msgstr ""
+
+msgid "Prohlédnout nabídky"
+msgstr ""
+
+msgid "Promo code"
+msgstr ""
+
+msgid "Promo code added to order"
+msgstr ""
+
+msgid "Promo code invalid. Check it, please."
+msgstr ""
+
+msgid "Promo code removed from order"
+msgstr ""
+
+msgid "Promo kód"
+msgstr ""
+
+msgid "Promo kód ještě není platný. Zkontrolujte ho, prosím."
+msgstr ""
+
+msgid "Promo kód nelze uplatnit na žádný produkt v košíku. Zkontrolujte ho, prosím."
+msgstr ""
+
+msgid "Promo kód už není platný. Zkontrolujte ho, prosím."
+msgstr ""
+
+msgid "Prosím vyberte alespoň jedno z příznaků nebo řazení."
+msgstr ""
+
+msgid "Prosím vyplňte správný formát času hh:mm"
+msgstr ""
+
+msgid "Prosím zkontrolujte si správnost vyplnění všech údajů"
+msgstr ""
+
+msgid "Prosím zkontrolujte si, zda jsou všechna data správně vyplněna."
+msgstr ""
+
+msgid "Prosím zkontrolujte zda jsou všechna políčka správně vyplněná."
+msgstr ""
+
+msgid "Předchozí"
+msgstr ""
+
+msgid "Předsíň"
+msgstr ""
+
+msgid "Přehled chyb v přenosech"
+msgstr ""
+
+msgid "Přehled problémů v přenosech"
+msgstr ""
+
+msgid "Přehled skladů"
+msgstr ""
+
+msgid "Přejít do e-shopu"
+msgstr ""
+
+msgid "Přenesené soubory"
+msgstr ""
+
+msgid "Přenos"
+msgstr ""
+
+msgid "Přenos hlavních variant produktů"
+msgstr ""
+
+msgid "Přenos kategorií"
+msgstr ""
+
+msgid "Přenos parametrů produkt"
+msgstr ""
+
+msgid "Přenos produktových zásob"
+msgstr ""
+
+msgid "Přenos produktů"
+msgstr ""
+
+msgid "Přenos příslušenství produktu"
+msgstr ""
+
+msgid "Přenos příznaků produktů"
+msgstr ""
+
+msgid "Přenos skupin parametrů produkt"
+msgstr ""
+
+msgid "Přenos zákazníků"
+msgstr ""
+
+msgid "Přenosy"
+msgstr ""
+
+msgid "Při resetování hesla došlo k chybě, zkuste to prosím znovu."
+msgstr ""
+
+msgid "Příznak"
+msgstr ""
+
+msgid "RGB Hex"
+msgstr ""
+
+msgid "Register"
+msgstr ""
+
+msgid "Registration"
+msgstr ""
+
+msgid "Remember my login"
+msgstr ""
+
+msgid "Remove item"
+msgstr ""
+
+msgid "Reset password"
+msgstr ""
+
+msgid "Rounding"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie %categoryName% - filtry"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie %categoryName% - kombinace"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - filtry"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - kombinace"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - nastavení kombinace se SEO hodnotami"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - volba kategorie"
+msgstr ""
+
+msgid "Rozšířené SEO kategorií"
+msgstr ""
+
+msgid "Rozšířené SEO kategorií - volba kategorie"
+msgstr ""
+
+msgid "Rubrika blogu"
+msgstr ""
+
+msgid "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
+msgstr ""
+
+msgid "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
+msgstr ""
+
+msgid "Rubrika blogu <strong>{{ name }}</strong> byla smazána"
+msgstr ""
+
+msgid "Rubriky blogu"
+msgstr ""
+
+msgid "SCONTO"
+msgstr ""
+
+msgid "SCONTO Nábytek s.r.o. je součástí německého koncernu Höffner, který patří k největším prodejcům nábytku v Evropě již od roku 1990."
+msgstr ""
+
+msgid "SCONTO Nábytek s.r.o. je součástí německého<br>koncernu Höffner, který patří k největším<br>producentům nábytku v Evropě již od roku 1990."
+msgstr ""
+
+msgid "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
+msgstr ""
+
+msgid "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána, protože nebyla nalezena"
+msgstr ""
+
+msgid "Save changes"
+msgstr ""
+
+msgid "Save changes in order"
+msgstr ""
+
+msgid "Sdílet"
+msgstr ""
+
+msgid "Search didn't find any products."
+msgstr ""
+
+msgid "Search results for \"%searchText%\""
+msgstr ""
+
+msgid "Selected product no longer available or doesn't exist."
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "Seo"
+msgstr ""
+
+msgid "Serial number"
+msgstr ""
+
+msgid "Set new password"
+msgstr ""
+
+msgid "Set prices manually"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Seřadit"
+msgstr ""
+
+msgid "Shipping"
+msgstr ""
+
+msgid "Shipping and payment"
+msgstr ""
+
+msgid "Shipping method"
+msgstr ""
+
+msgid "Shipping selection"
+msgstr ""
+
+msgid "Sklad"
+msgstr ""
+
+msgid "Skladem"
+msgstr ""
+
+msgid "Skladovost"
+msgstr ""
+
+msgid "Skladové zásoby"
+msgstr ""
+
+msgid "Sklady"
+msgstr ""
+
+msgid "Skrýt"
+msgstr ""
+
+msgid "Skupiny"
+msgstr ""
+
+msgid "Skvělá volba! Vaše zboží jsme přidali do košíku"
+msgstr ""
+
+msgid "Sledujte nás"
+msgstr ""
+
+msgid "Sleva (%)"
+msgstr ""
+
+msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle pravidel"
+msgstr ""
+
+msgid "Slevněné kategorie"
+msgstr ""
+
+msgid "Slevněné produkty"
+msgstr ""
+
+msgid "Slevové kupóny"
+msgstr ""
+
+msgid "Slevový kód"
+msgstr ""
+
+msgid "Slovensko"
+msgstr ""
+
+msgid "Smontováno"
+msgstr ""
+
+msgid "Souhlasím se zasíláním newsletteru"
+msgstr ""
+
+msgid "Souhrn vaší objednávky"
+msgstr ""
+
+msgid "Special offers"
+msgstr ""
+
+msgid "Spustit prezentaci"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Stav montáže"
+msgstr ""
+
+msgid "Stav platby GoPay"
+msgstr ""
+
+msgid "Stock"
+msgstr ""
+
+msgid "Stock <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Stock <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Stock <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Stocks"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Stránka"
+msgstr ""
+
+msgid "Stáhnout"
+msgstr ""
+
+msgid "Subscription to email newsletter"
+msgstr ""
+
+msgid "Subscription was failed"
+msgstr ""
+
+msgid "TOP"
+msgstr ""
+
+msgid "Tato rubrika neobsahuje žádné články."
+msgstr ""
+
+msgid "Tax number"
+msgstr "IČ DPH"
+
+msgid "Tax number with vat"
+msgstr "DIČ"
+
+msgid "Technical parameters"
+msgstr ""
+
+msgid "Telefon"
+msgstr ""
+
+msgid "Telephone"
+msgstr ""
+
+msgid "Televize"
+msgstr "Televize"
+
+msgid "Temporarily sold out"
+msgstr ""
+
+msgid "Tento způsob platby je skrytý systémem GoPay."
+msgstr "Tento spôsob platby je skrytý systémom GoPay."
+
+msgid "Terms and conditions"
+msgstr ""
+
+msgid "Text zobrazený pod bannerem"
+msgstr ""
+
+msgid "Text zprávy"
+msgstr ""
+
+msgid "Thank you, your message has been sent."
+msgstr ""
+
+msgid "The link to change your password expired."
+msgstr ""
+
+msgid "There were problems during payment of created order with number %orderNumber%."
+msgstr ""
+
+msgid "This account doesn't exist or password is incorrect"
+msgstr ""
+
+msgid "This category contains no products."
+msgstr ""
+
+msgid "This product is no longer available for purchase. Have a look at similar products <a href=\"%url%\">here</a>."
+msgstr ""
+
+msgid "This site uses cookies. By staying on the site you agree with that."
+msgstr ""
+
+msgid "Titulek stránky"
+msgstr ""
+
+msgid "Titulek výpisu produktových programů"
+msgstr ""
+
+msgid "To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us."
+msgstr ""
+
+msgid "Tohle zboží má kvůli svým rozměrům a náročnosti manipulace jiné požadavky na dopravu. Proto jsme váš nákup rozdělili na víc zásilek."
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Total excluding VAT"
+msgstr ""
+
+msgid "Total including VAT"
+msgstr ""
+
+msgid "Total price excluding VAT"
+msgstr ""
+
+msgid "Total price including VAT"
+msgstr ""
+
+msgid "Try using web search"
+msgstr ""
+
+msgid "Tuny slev, lorem ipsum dolor sit amet,<br> consectur adispic elit."
+msgstr ""
+
+msgid "Typ"
+msgstr ""
+
+msgid "Typ platby"
+msgstr ""
+
+msgid "Typ produktu <strong><a href=\"{{ url }}\">{{ productType.name }}</a></strong> je úspěšně upraven"
+msgstr ""
+
+msgid "Typ produktu <strong><a href=\"{{ url }}\">{{ productType.name }}</a></strong> je úspěšně vytvořen"
+msgstr ""
+
+msgid "Typ produktu <strong>{{ name }}</strong> byl smazán"
+msgstr ""
+
+msgid "Typ produktu editace"
+msgstr ""
+
+msgid "Typ produktu editace:"
+msgstr ""
+
+msgid "Typ přenosu"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Typový plán"
+msgstr ""
+
+msgid "Typy produktů"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "URL addresses"
+msgstr ""
+
+msgid "URL odkazu"
+msgstr ""
+
+msgid "URL settings"
+msgstr ""
+
+msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
+msgstr ""
 
 msgid "Uhrazení objednávky č. %orderNumber% platební kartou."
 msgstr "Uhradenie objednávky č.%orderNumber% platobnou kartou."
 
+msgid "Ulice"
+msgstr ""
+
+msgid "Uložit"
+msgstr ""
+
+msgid "Uložit nastavení skladu"
+msgstr ""
+
+msgid "Unable to add product to cart"
+msgstr ""
+
+msgid "Unable to add product to cart:<br/><ul><li>{{ errors|raw }}</li></ul>"
+msgstr ""
+
+msgid "Unable to remove item from cart. The item is probably already removed."
+msgstr ""
+
+msgid "Unable to remove item from cart. The link for removing it probably expired, try it again."
+msgstr ""
+
+msgid "Unable to send some emails, please contact us for order verification."
+msgstr ""
+
+msgid "Unit"
+msgstr ""
+
+msgid "Unit price excluding VAT"
+msgstr ""
+
+msgid "Unit price including VAT"
+msgstr ""
+
+msgid "Upload attachment"
+msgstr ""
+
+msgid "Upload image"
+msgstr ""
+
+msgid "Upload new image"
+msgstr ""
+
+msgid "Upravit"
+msgstr ""
+
+msgid "Určeno pro typy produktů"
+msgstr ""
+
+msgid "Use stocks"
+msgstr ""
+
+msgid "User not found."
+msgstr ""
+
+msgid "V košíku máte maximální dostupné množství, nelze přidat další (celkem již {{ quantity|formatNumber }} {{ unitName }})"
+msgstr ""
+
+msgid "V košíku máte nadrozměrnou položku"
+msgstr ""
+
+msgid "V průběhu objednávkového procesu byla změněna cena dopravy. Prosím, překontrolujte si objednávku."
+msgstr ""
+
+msgid "V průběhu objednávkového procesu byla změněna cena platby. Prosím, překontrolujte si objednávku."
+msgstr ""
+
+msgid "VAT rate"
+msgstr ""
+
+msgid "VAT rate (%)"
+msgstr ""
+
+msgid "VISA"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Vaše původní cena"
+msgstr ""
+
+msgid "Vaše sleva s kódem byla uplatněna"
+msgstr ""
+
+msgid "Viditelnost"
+msgstr ""
+
+msgid "Viditelný na homepage"
+msgstr ""
+
+msgid "View all results"
+msgstr ""
+
+msgid "View more"
+msgstr ""
+
+msgid "View results"
+msgstr ""
+
+msgid "Vyberte Program"
+msgstr ""
+
+msgid "Vyberte prodejnu kde si vyzvednete zásilku"
+msgstr ""
+
+msgid "Vybraná kategorie produktového programu již neexistuje."
+msgstr ""
+
+msgid "Vybraná rubrika blogu neexistuje."
+msgstr ""
+
+msgid "Vybraný problém v přenosu nebyl nalezen"
+msgstr ""
+
+msgid "Vybraný produktový program neexistuje."
+msgstr ""
+
+msgid "Vybraný sklad neexistuje."
+msgstr ""
+
+msgid "Vybraný článek blogu neexistuje."
+msgstr ""
+
+msgid "Vybrat"
+msgstr ""
+
+msgid "Vyhledat"
+msgstr ""
+
+msgid "Vyplňte pouze URL pro zvolenou doménu"
+msgstr ""
+
+msgid "Vyplňte také URL pro zvolenou doménu"
+msgstr ""
+
+msgid "Vyprodáno"
+msgstr ""
+
+msgid "Vystaveno"
+msgstr ""
+
+msgid "Vytvořit"
+msgstr ""
+
+msgid "Vytvořit hromadné slevové kupóny"
+msgstr ""
+
+msgid "Vytvořit novou kategorii produtového programu"
+msgstr ""
+
+msgid "Vytvořit novou položku"
+msgstr ""
+
+msgid "Vytvořit novou rubriku blogu"
+msgstr ""
+
+msgid "Vytvořit nový produktový program"
+msgstr ""
+
+msgid "Vytvořit nový sklad"
+msgstr ""
+
+msgid "Vytvořit nový typ produktu"
+msgstr ""
+
+msgid "Vytvořit nový článek blogu"
+msgstr ""
+
+msgid "Vytvořit typ"
+msgstr ""
+
+msgid "Využijte slevový kód"
+msgstr ""
+
+msgid "Vyřazení z prodeje"
+msgstr ""
+
+msgid "Vyšší cena bez DPH"
+msgstr ""
+
+msgid "Vyšší cena s DPH"
+msgstr ""
+
+msgid "Váha"
+msgstr ""
+
+msgid "Váš košík"
+msgstr ""
+
+msgid "Váš košík je zatím prázdný."
+msgstr ""
+
+msgid "Váš nákup"
+msgstr ""
+
+msgid "Váš nákupní košík je prázdný."
+msgstr ""
+
+msgid "Více"
+msgstr ""
+
+msgid "Vítejte zpět ve Scontu, pro dokončení nákupu se prosím přihlašte"
+msgstr ""
+
+msgid "Výprodej"
+msgstr ""
+
+msgid "Výška"
+msgstr ""
+
+msgid "Všechny akce"
+msgstr ""
+
+msgid "Všechny články"
+msgstr ""
+
+msgid "We will remember your login on this computer for 30 days."
+msgstr ""
+
+msgid "Yes"
+msgstr "Ano"
+
+msgid "You can upload following formats: PNG, JPG"
+msgstr ""
+
+msgid "You can upload following formats: PNG, JPG, GIF"
+msgstr ""
+
+msgid "You have been successfully registered."
+msgstr ""
+
+msgid "You have been successfully subscribed to our newsletter."
+msgstr ""
+
+msgid "You have successfully paid order via GoPay."
+msgstr ""
+
+msgid "You have to be logged in to enter this page"
+msgstr ""
+
+msgid "Your data had been successfully updated"
+msgstr ""
+
+msgid "Z Vašeho košíku bylo z důvodu nedostupnosti odstraněno zbožéí: <strong>{{ name }}</strong>. Prosím zkontrolujte si svojí objednávku."
+msgstr ""
+
+msgid "Zadali jste špatné uživatelské jméno nebo heslo."
+msgstr ""
+
+msgid "Zadaný Akeneo kód \"%akeneoCode%\" již používá jiný typ produktu."
+msgstr ""
+
 msgid "Zaplatit"
 msgstr "Zaplatiť"
 
-msgid "Tento způsob platby je skrytý systémem GoPay."
-msgstr "Tento spôsob platby je skrytý systémom GoPay."
+msgid "Zaplatíte"
+msgstr ""
+
+msgid "Zaregistrujte se k odběru newsletteru a&nbsp;získejte slevu 30 % na Váš první nákup!"
+msgstr ""
+
+msgid "Zavřít"
+msgstr ""
+
+msgid "Začněte zadáním emailu"
+msgstr ""
+
+msgid "Zbývající počet použití"
+msgstr ""
+
+msgid "Zde najdete přehled všech nábytkových programů."
+msgstr ""
+
+msgid "Změna způsobu platby objednávky"
+msgstr ""
+
+msgid "Zobrazit kombinace"
+msgstr ""
+
+msgid "Zobrazit méně"
+msgstr ""
+
+msgid "Zobrazit více"
+msgstr ""
+
+msgid "Zobrazit všechny"
+msgstr ""
+
+msgid "Zpět"
+msgstr ""
+
+msgid "Zpět do e-shopu"
+msgstr ""
+
+msgid "Zpět do obchodu"
+msgstr ""
+
+msgid "Zpět na nástěnku"
+msgstr ""
+
+msgid "Zpět na přehled"
+msgstr ""
+
+msgid "Zpět na přehled možných kombinací"
+msgstr ""
+
+msgid "Zpět na volbu kategorie"
+msgstr ""
+
+msgid "Zpět na volbu parametrů"
+msgstr ""
+
+msgid "Zpět výpis"
+msgstr ""
+
+msgid "Způsob platby byl úspěšně změněn"
+msgstr ""
+
+msgid "Zrušit filtry"
+msgstr ""
+
+msgid "Zvolená položka menu neexistuje."
+msgstr ""
+
+msgid "Zvolený typ je využíván a proto jej nelze nyní odstranit."
+msgstr ""
+
+msgid "Zvolený typ již neexistuje."
+msgstr ""
+
+msgid "Zvětšit"
+msgstr ""
+
+msgid "Zákaznický servis"
+msgstr ""
+
+msgid "Zásilka"
+msgstr ""
+
+msgid "Zásilka č. %number%"
+msgstr ""
+
+msgid "Získali jste doručení <strong>Zdarma</strong>"
+msgstr ""
+
+msgid "bez DPH"
+msgstr ""
+
+msgid "blogArticles"
+msgstr ""
+
+msgid "cm"
+msgstr ""
+
+msgid "demontováno"
+msgstr ""
+
+msgid "excluding VAT"
+msgstr ""
+
+msgid "from %price%"
+msgstr ""
+
+msgid "from most expensive"
+msgstr ""
+
+msgid "from the cheapest"
+msgstr ""
+
+msgid "in upper menu"
+msgstr ""
+
+msgid "margin-top-20 margin-bottom-20"
+msgstr ""
+
+msgid "nad souhrnem objednávky v košíku"
+msgstr ""
+
+msgid "pan"
+msgstr ""
+
+msgid "paní/slečna"
+msgstr ""
+
+msgid "parameterUnit"
+msgstr ""
+
+msgid "parameterValue"
+msgstr ""
+
+msgid "plazmová"
+msgstr "plazmová"
+
+msgid "productSeries"
+msgstr ""
+
+msgid "productSeriesCategory"
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid "přenos seznamu produktových programů"
+msgstr ""
+
+msgid "přenos souborů \"Instalační manuál\""
+msgstr ""
+
+msgid "přenos souborů \"Typový plán\""
+msgstr ""
+
+msgid "readyCategorySeoMixs"
+msgstr ""
+
+msgid "relevance"
+msgstr ""
+
+msgid "smontováno"
+msgstr ""
+
+msgid "strana %currentPage% z %pageCount%"
+msgstr ""
+
+msgid "typů"
+msgstr ""
+
+msgid "všechny články"
+msgstr ""
+
+msgid "without positioning"
+msgstr ""
+
+msgid "zpět"
+msgstr ""
+
+msgid "{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů"
+msgstr ""
+
+msgid "{0} Máme pro vás <strong class=\"box-list__top__info__count\">0</strong> produktů |{1} Máme pro vás <strong class=\"box-list__top__info__count\">1</strong> produkt |{2, 3, 4} Máme pro vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produkty |]4,Inf[ Máme pro vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produktů"
+msgstr ""
+
+msgid "{0} Můžete mít ihned | {1} K dispozici do 1 týdne | [2,Inf] K dispozici do %daysAvailability% týdnů"
+msgstr ""
+
+msgid "{0} No product found | {1} 1 product found | [2,Inf] %totalProductCount% product found"
+msgstr ""
+
+msgid "{1}Load next %loadNextCount% item|[2,Inf]Load next %loadNextCount% items"
+msgstr ""
+
+msgid "{1}Load next %loadNextCount% product|[2,Inf]Load next %loadNextCount% products"
+msgstr ""
+
+msgid "{1}Načíst další %loadNextCount% článek|[2,4]Načíst další %loadNextCount% články|[5,Inf]Načíst dalších %loadNextCount% článků"
+msgstr ""
+
+msgid "Úprava hodnoty parametru typu barva - %name%"
+msgstr ""
+
+msgid "Úprava kategorie produktového programu - %name%"
+msgstr ""
+
+msgid "Úprava měrné jednotky - %name%"
+msgstr ""
+
+msgid "Úprava produktového programu - %name%"
+msgstr ""
+
+msgid "Úprava typu produktu - %name%"
+msgstr ""
+
+msgid "Čas platnosti DO"
+msgstr ""
+
+msgid "Čas platnosti OD"
+msgstr ""
+
+msgid "Česká republika"
+msgstr ""
+
+msgid "Článek blogu"
+msgstr ""
+
+msgid "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
+msgstr ""
+
+msgid "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl změněn"
+msgstr ""
+
+msgid "Článek blogu <strong>{{ name }}</strong> byl smazán"
+msgstr ""
+
+msgid "Články blogu"
+msgstr ""
+
+msgid "Číst dál"
+msgstr ""
+
+msgid "Řazení"
+msgstr ""
+
+msgid "Šířka"
+msgstr ""
+
+msgid "Žádná hodnota parameteru typu barva není vytvořena."
+msgstr ""
+
+msgid "Žádná kategorie produktového programu neexistuje. Musíte nějakou nejprve vytvořit."
+msgstr ""
+
+msgid "Žádná měrná jednotka není vytvořena."
+msgstr ""
+
+msgid "Žádný produktový program neexistuje. Musíte nějaký nejprve vytvořit."
+msgstr ""
+
+msgid "Žádný sklad na této doméně není vytvořen. Nejprve musíte nějaký vytvořit."
+msgstr ""
+
+msgid "Žádný typ produktů zatím neexistuje, prosím vytvořte nějaký."
+msgstr ""
+
