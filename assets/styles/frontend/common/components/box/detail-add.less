@@ -1,15 +1,38 @@
 .box-detail-add {
-    padding: 1rem;
-    margin-bottom: @margin-gap;
+    padding: 0.75rem 0.5rem;
+    margin-bottom: @margin-gap + 5px;
 
     background-color: @color-light-secondary;
     border-radius: @radius;
 
+    @media @query-lg {
+        padding: 1rem;
+    }
+
     &__info {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 8px;
+        @media @query-lg {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        &__actions {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 12px;
+
+            @media @query-lg {
+                display: block;
+                margin-top: 0;
+                width: auto;
+            }
+
+            .form-input-spinbox {
+                margin-right: 10px;
+            }
+        }
     }
 
     &__prices {
@@ -21,16 +44,24 @@
             line-height: 1;
 
             &--main {
-                font-size: 30px;
+                font-size: 24px;
                 font-family: @font-quartenary;
                 color: @color-price-main;
+
+                @media @query-lg {
+                    font-size: 30px;
+                }
             }
 
             &--high-price {
                 margin-bottom: 6px;
 
                 text-decoration: line-through;
-                font-size: 18px;
+                font-size: 16px;
+
+                @media @query-lg {
+                    font-size: 18px;
+                }
             }
         }
     }
@@ -39,14 +70,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
         margin-right: 15px;
 
         border-radius: 100%;
         background-color: @color-add-secondary;
         color: @color-f;
         font-family: @font-secondary;
-        font-size: 21px;
+        font-size: 18px;
+
+        @media @query-lg {
+            width: 70px;
+            height: 70px;
+
+            font-size: 21px;
+        }
     }
 }

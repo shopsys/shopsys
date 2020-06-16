@@ -1,0 +1,71 @@
+// Slick Carousel
+// Custom styles
+
+.slick-slider {
+
+    .slick-arrow {
+        position: absolute;
+        top: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 50px;
+        min-width: 40px;
+        margin-top: -25px;
+        text-indent: -9999px;
+        z-index: 10;
+        overflow: hidden;
+
+        background-color: @color-primary;
+        color: @color-primary;
+        border-radius: @radius;
+        transition: background-color .3s ease-in-out;
+        cursor: pointer;
+        outline: 0;
+
+        &:hover {
+            background-color: lighten(@color-primary, 10%);
+        }
+
+        &::before {
+            position: absolute;
+            left: 11px;
+            top: 17px;
+            width: 15px;
+            height: 3px;
+            content: '';
+            transform: rotate(45deg);
+
+            background-color: @color-f;
+        }
+
+        &::after {
+            position: absolute;
+            left: 11px;
+            bottom: 17px;
+            width: 15px;
+            height: 3px;
+            content: '';
+            transform: rotate(-45deg);
+
+            background-color: @color-f;
+        }
+
+        &.slick-prev {
+            left: 0;
+
+            &::before {
+                transform: rotate(-45deg);
+            }
+
+            &::after {
+                transform: rotate(45deg);
+            }
+        }
+
+        &.slick-next {
+            right: 0;
+        }
+    }
+}

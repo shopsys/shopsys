@@ -1,11 +1,18 @@
 @box-gallery-item-gap: 15px;
-@box-gallery-arrow-size: 20px;
 
 .box-gallery {
+    display: none;
     position: relative;
+    left: 45px;
     margin-bottom: @margin-gap;
 
+    @media @query-vl {
+        display: block;
+    }
+
     .slick-list {
+        position: relative;
+        left: 4px;
         overflow: hidden;
     }
 
@@ -41,6 +48,38 @@
             overflow: hidden;
 
             border-radius: @radius;
+
+            &:hover img {
+                transform: scale(1.15);
+            }
+
+            &--number {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &::before {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 1;
+                    content: '';
+
+                    background-color: rgba(@color-0, .3);
+                    pointer-events: none;
+                }
+            }
+
+            &__number {
+                position: relative;
+                z-index: 2;
+
+                font-family: @font-tertiary;
+                font-size: 24px;
+                color: @color-f;
+            }
         }
 
         img {
@@ -49,40 +88,25 @@
             height: 100%;
             object-fit: cover;
 
-            transition: transform .3s ease-in-out;
-        }
-    }
-
-    &__arrow {
-        float: left;
-        line-height: @box-gallery-arrow-size;
-        width: @box-gallery-arrow-size;
-        height: @box-gallery-arrow-size;
-
-        cursor: pointer;
-        color: @color-border;
-
-        &--prev {
-            position: relative;
-            top: 3px;
-            transform: rotate(90deg);
-        }
-
-        &--next {
-            position: relative;
-            top: -3px;
-            transform: rotate(-90deg);
-        }
-
-        &.slick-disabled {
-            color: lighten(@color-border, 10%);
-            cursor: default;
+            transition: transform .2s ease-in-out;
+            will-change: transform;
         }
     }
 
     &__in {
         display: flex;
         align-items: center;
-        width: calc(100% - 100px);
+        overflow: hidden;
+        width: calc(100% - 120px);
+
+        .slick-arrow {
+            &.slick-prev {
+                left: -45px;
+            }
+
+            &.slick-next {
+                right: 75px;
+            }
+        }
     }
 }

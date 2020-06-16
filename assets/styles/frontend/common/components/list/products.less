@@ -202,6 +202,111 @@
                     }
                 }
             }
+
+            &__detail,
+            &__action {
+                display: none;
+            }
+        }
+    }
+}
+
+.box-products-accessories {
+    position: relative;
+
+    .slick-list {
+        position: relative;
+        overflow: hidden;
+        max-width: calc(100% - 140px);
+        margin: auto;
+    }
+
+    .slick-track {
+        display: flex;
+    }
+
+    .list-products__item {
+        @media @query-mobile {
+            width: 100%;
+        }
+
+        &__in {
+            @media @query-lg {
+                align-items: flex-start;
+                flex-direction: row;
+                position: relative;
+                min-height: 195px;
+                padding-top: 20px;
+                padding-left: 30%;
+            }
+        }
+
+        &__title {
+            display: block;
+
+            @media @query-lg {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 80%;
+            }
+        }
+
+        &__image {
+            @media @query-lg {
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 30%;
+                transform: translateY(-50%);
+
+                img {
+                    max-height: 100%;
+                }
+            }
+        }
+
+        &__info {
+            &__detail {
+                display: block;
+                margin-top: 6px;
+
+                font-family: @font-quartenary;
+                font-weight: 400;
+                font-size: 15px;
+                color: @color-primary;
+            }
+
+            &__price {
+                margin-top: 25px;
+            }
+
+            &__price__item--main {
+                font-size: 16px;
+            }
+
+            &__action {
+                display: block;
+
+                @media @query-lg {
+                    position: absolute;
+                    bottom: 15px;
+                    right: 15px;
+                }
+            }
+
+            .btn--success {
+                padding: 12px 25px;
+
+                font-size: 15px;
+                font-family: @font-quartenary;
+                font-weight: 400;
+            }
+        }
+
+        .in-flag,
+        .form-input-spinbox {
+            display: none;
         }
     }
 }

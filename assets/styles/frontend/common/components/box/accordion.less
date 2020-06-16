@@ -1,13 +1,19 @@
 @box-accordion-bg-color: @color-f;
-@box-accordion-padding-vertical: 25px;
-@box-accordion-padding-horisontal: 30px;
+@box-accordion-padding-vertical: 15px;
+@box-accordion-padding-vertical-lg: 25px;
+@box-accordion-padding-horisontal: 20px;
+@box-accordion-padding-horisontal-lg: 30px;
 
 .box-accordion {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     overflow: hidden;
 
     border-radius: @radius;
     background-color: @box-accordion-bg-color;
+
+    @media @query-lg {
+        margin-bottom: 2rem;
+    }
 
     &.is-opened {
         .box-accordion__body {
@@ -15,7 +21,11 @@
         }
 
         .box-accordion__body--cols {
-            display: flex;
+            display: block;
+
+            @media @query-lg {
+                display: flex;
+            }
         }
     }
 
@@ -26,13 +36,22 @@
         width: 100%;
         padding: @box-accordion-padding-vertical @box-accordion-padding-horisontal;
 
+        @media @query-lg {
+            padding: @box-accordion-padding-vertical-lg @box-accordion-padding-horisontal-lg;
+        }
+
         &:hover {
             text-decoration: none;
         }
 
         &__toggle {
             &__text {
-                margin-right: 10px;
+                display: none;
+
+                @media @query-lg {
+                    display: inline;
+                    margin-right: 10px;
+                }
             }
         }
     }
@@ -42,6 +61,10 @@
         padding: @box-accordion-padding-vertical @box-accordion-padding-horisontal;
 
         border-top: 1px solid @color-border-lighter;
+
+        @media @query-lg {
+            padding: @box-accordion-padding-vertical-lg @box-accordion-padding-horisontal-lg;
+        }
 
         h2, h3, h4 {
             margin: 0 0 0.5rem;
@@ -61,17 +84,23 @@
 
         &--cols {
             .box-accordion__body__content--desc {
-                max-width: 33%;
-                min-width: 33%;
-                margin-right: 3rem;
+                margin-bottom: 1rem;
+
+                @media @query-lg {
+                    max-width: 33%;
+                    min-width: 33%;
+                    margin: 0 3rem 0 0;
+                }
             }
 
             .box-accordion__body__content--params {
-                display: flex;
-                flex-wrap: wrap;
-                align-content: flex-start;
-                max-width: 67%;
-                min-width: 67%;
+                @media @query-lg {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-content: flex-start;
+                    max-width: 67%;
+                    min-width: 67%;
+                }
             }
         }
 
@@ -113,6 +142,33 @@
 
         &__col {
             flex: 1 1 0;
+
+            color: @color-light-tertiary;
+
+            &--expose {
+                position: relative;
+                left: 60px;
+            }
+
+            &--showrooms {
+                text-align: right;
+            }
+
+            .is-in-stock {
+                color: #73a90d;
+            }
+
+            strong {
+                font-family: @font-tertiary;
+                font-weight: 400;
+            }
+
+            &__icon {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 6px;
+                width: 25px;
+            }
         }
 
         &__title {

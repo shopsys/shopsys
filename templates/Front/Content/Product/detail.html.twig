@@ -23,162 +23,214 @@
         <div class="web__line">
             <div class="web__container">
                 <div class="box-detail box-detail--primary">
-                    <div class="box-detail__image">
-                        {% set galleryImages = getImages(product) %}
-                        {% set showGallery = galleryImages|length > 1 %}
-                        <div class="box-detail__image__main">
-                            {% if imageExists(product) %}
-                                <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(product, 'original') }}" class="box-detail__image__main__link {{ showGallery ? 'js-gallery-main-image' }}">
-                                    {{ image(product, { itemprop: 'image', alt: product.fullname }) }}
-                                </a>
-                            {% else %}
-                                {{ noimage({ alt: product.fullname }) }}
+                    <h1 class="box-detail__heading" itemprop="name">
+                        <span class="box-detail__heading__prefix">{{ product.nameFirstLine }}</span>
+                        {{ product.nameSecondLine }}
+                    </h1>
+                    <div class="box-detail__wrap">
+                        <div class="box-detail__image">
+                            {% set galleryImages = getImages(product) %}
+                            {% set showGallery = galleryImages|length > 1 %}
+                            <div class="box-detail__image__main">
+                                {% if imageExists(product) %}
+                                    <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(product, 'original') }}" class="box-detail__image__main__link {{ showGallery ? 'js-gallery-main-image' }}">
+                                        {{ image(product, { itemprop: 'image', alt: product.fullname }) }}
+                                    </a>
+                                {% else %}
+                                    {{ noimage({ alt: product.fullname }) }}
+                                {% endif %}
+                            </div>
+                            {{ productFlags.list(product.getFlagsForDomain(domain.id)) }}
+
+                            {% if showGallery %}
+                                <div class="box-gallery dont-print js-gallery js-gallery-slick-carousel">
+                                    <div class="box-gallery__in js-gallery-wrap">
+                                        {% set galleryImagesCount = galleryImages|length %}
+                                        {% set galleryImagesLimiter = 5 %}
+                                        {% for galleryImage in galleryImages %}
+                                            {% if loop.index != 1 %}
+                                                <div class="box-gallery__item js-gallery-item">
+                                                    <a
+                                                        data-fancybox="products-gallery"
+                                                        data-caption="{{ product.name }}"
+                                                        href="{{ imageUrl(galleryImage, 'original') }}"
+                                                        class="box-gallery__item__link{{ galleryImagesCount > galleryImagesLimiter and loop.index == galleryImagesLimiter ? ' box-gallery__item__link--number' }}">
+                                                        {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
+                                                        {% if loop.index == galleryImagesLimiter and galleryImagesCount > galleryImagesLimiter %}
+                                                            {% set galleryImagesLeft = galleryImagesCount - galleryImagesLimiter %}
+                                                            <span class="box-gallery__item__link__number">+{{ galleryImagesLeft }}</span>
+                                                        {% endif %}
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
                             {% endif %}
                         </div>
-                        {{ productFlags.list(product.getFlagsForDomain(domain.id)) }}
-
-                        {% if showGallery %}
-                            <div class="box-gallery dont-print js-gallery">
-                                <div class="box-gallery__in">
-                                    {% for galleryImage in galleryImages %}
-                                        {% if loop.index != 1 %}
-                                            <div class="box-gallery__item js-gallery-item">
-                                                <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link">
-                                                    {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
-                                                </a>
-                                            </div>
+                        <div class="box-detail__info">
+                            {% apply spaceless %}
+                                <dl class="box-detail__info__params">
+                                    {% if not product.isMainVariant %}
+                                        {% if product.catnum %}
+                                            <dt>
+                                                {{ 'Číslo produktu'|trans }}
+                                            </dt>
+                                            <dd>
+                                                {{ product.catnum }}
+                                            </dd>
                                         {% endif %}
-                                    {% endfor %}
+
+                                        {% if product.partno %}
+                                            <dt>
+                                                {{ 'Serial number'|trans }}
+                                            </dt>
+                                            <dd>
+                                                {{ product.partno }}
+                                            </dd>
+                                        {% endif %}
+
+                                        {% if product.ean %}
+                                            <dt>
+                                                {{ 'EAN'|trans }}
+                                            </dt>
+                                            <dd>
+                                                {{ product.ean }}
+                                            </dd>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if product.brand %}
+                                        <dt>
+                                            {{ 'Brand'|trans }}
+                                        </dt>
+                                        <dd>
+                                            <a href="{{ url('front_brand_detail', { id: product.brand.id }) }}">
+                                                <span itemprop="brand">{{ product.brand.name }}</span>
+                                            </a>
+                                        </dd>
+                                    {% endif %}
+                                </dl>
+                            {% endapply %}
+
+                            <div class="box-detail__info__desc js-not-implemented-yet">
+                                <ul class="box-detail-list box-detail-list--columns">
+                                    <li class="box-detail-list__item">Rozkládání do lůžka</li>
+                                    <li class="box-detail-list__item">Levé nebo pravé provedení</li>
+                                    <li class="box-detail-list__item">Odolný materiál</li>
+                                    <li class="box-detail-list__item">Polohovatelné opěrky hlavy</li>
+                                    <li class="box-detail-list__item">Potažená záda</li>
+                                    <li class="box-detail-list__item box-detail-list__item--anchor">
+                                        <a class="box-detail__info__anchor" href="#product-desc">
+                                            <span class="box-detail__info__anchor__underline">{{ 'Celý popis'|trans }}</span>
+                                            <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--down box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="box-detail__info__availability">
+                                <div class="box-detail__info__availability__value js-not-implemented-yet">
+                                    <span class="box-detail__avail box-detail__avail--in-stock">{{ productAvailabilityInformation }}</span>
+                                    <span class="box-detail__avail__text">{{ 'Můžete mít ihned na <span class="box-detail__avail__text__strong">8</span> prodejnách'|transHtml }}</span>
+                                    <span class="box-detail__avail__text">{{ 'Můžete si prohlédnout na <span class="box-detail__avail__text__strong">3</span> prodejnách'|transHtml }}</span>
+                                    <span class="box-detail__avail__icon box-detail__avail__icon--in-stock">
+                                        <img class="box-detail__avail__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-stock.svg') }}" alt="{{ 'Skladem'|trans }}">
+                                    </span>
+                                </div>
+                                <div class="box-detail__info__availability__anchor">
+                                    <a class="box-detail__info__anchor" href="#stocks-availabilities">
+                                        {{ 'Dostupnost'|trans }}
+                                        <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
+                                    </a>
                                 </div>
                             </div>
-                        {% endif %}
-                    </div>
-                    <div class="box-detail__info">
-                        <h1 class="box-detail__heading" itemprop="name">
-                            <span class="box-detail__heading__prefix">{{ product.nameFirstLine }}</span>
-                            {{ product.nameSecondLine }}
-                        </h1>
 
-                        {% apply spaceless %}
-                            <dl class="box-detail__info__params">
-                                {% if not product.isMainVariant %}
-                                    {% if product.catnum %}
-                                        <dt>
-                                            {{ 'Číslo produktu'|trans }}
-                                        </dt>
-                                        <dd>
-                                            {{ product.catnum }}
-                                        </dd>
-                                    {% endif %}
-
-                                    {% if product.partno %}
-                                        <dt>
-                                            {{ 'Serial number'|trans }}
-                                        </dt>
-                                        <dd>
-                                            {{ product.partno }}
-                                        </dd>
-                                    {% endif %}
-
-                                    {% if product.ean %}
-                                        <dt>
-                                            {{ 'EAN'|trans }}
-                                        </dt>
-                                        <dd>
-                                            {{ product.ean }}
-                                        </dd>
-                                    {% endif %}
-                                {% endif %}
-                                {% if product.brand %}
-                                    <dt>
-                                        {{ 'Brand'|trans }}
-                                    </dt>
-                                    <dd>
-                                        <a href="{{ url('front_brand_detail', { id: product.brand.id }) }}">
-                                            <span itemprop="brand">{{ product.brand.name }}</span>
-                                        </a>
-                                    </dd>
-                                {% endif %}
-                            </dl>
-                        {% endapply %}
-
-                        <div class="box-detail__info__desc js-not-implemented-yet">
-                            <ul class="box-detail-list box-detail-list--columns">
-                                <li class="box-detail-list__item">Rozkládání do lůžka</li>
-                                <li class="box-detail-list__item">Levé nebo pravé provedení</li>
-                                <li class="box-detail-list__item">Odolný materiál</li>
-                                <li class="box-detail-list__item">Polohovatelné opěrky hlavy</li>
-                                <li class="box-detail-list__item">Potažená záda</li>
-                                <li class="box-detail-list__item box-detail-list__item--anchor">
-                                    <a class="box-detail__info__anchor" href="#product-desc">{{ 'Celý popis'|trans }}</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="box-detail__info__availability">
-                            <div class="box-detail__info__availability__value js-not-implemented-yet">
-                                <span class="box-detail__avail box-detail__avail--in-stock">{{ productAvailabilityInformation }}</span>
-                                <span class="box-detail__avail__text">{{ 'Můžete mít ihned na <span class="box-detail__avail__text__strong">8</span> prodejnách'|transHtml }}</span>
-                                <span class="box-detail__avail__text">{{ 'Můžete si prohlédnout na <span class="box-detail__avail__text__strong">3</span> prodejnách'|transHtml }}</span>
-                                <span class="box-detail__avail__icon box-detail__avail__icon--in-stock">
-                                    <img class="box-detail__avail__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-stock.svg') }}" alt="{{ 'Skladem'|trans }}">
-                                </span>
-                            </div>
-                            <div class="box-detail__info__availability__anchor">
-                                <a class="box-detail__info__anchor" href="#stocks-availabilities">{{ 'Dostupnost'|trans }}</a>
-                            </div>
-                        </div>
-
-                        {% if not product.isMainVariant %}
-                            <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
-                                {% if not product.calculatedSellingDenied %}
-                                    <div class="box-detail-add__info">
-                                        <div itemprop="offers"
-                                            itemscope
-                                            itemtype="http://schema.org/Offer"
-                                            class="box-detail-add__prices">
-                                            {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
-                                                {% set productDiscount = (sellingPriceWithVat|moneyFormat / nonSellingPriceWithVat|moneyFormat) * 100 %}
-                                                <span class="box-detail-add__discount">
-                                                    -{{ productDiscount|round }}
-                                                    <span class="box-detail-add__discount__perc">%</span>
-                                                </span>
-                                                <div class="box-detail-add__prices__wrap">
-                                                    <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
-                                                        {{ nonSellingPriceWithVat|price }}
-                                                        {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}**
+                            {% if not product.isMainVariant %}
+                                <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
+                                    {% if not product.calculatedSellingDenied %}
+                                        <div class="box-detail-add__info">
+                                            <div itemprop="offers"
+                                                itemscope
+                                                itemtype="http://schema.org/Offer"
+                                                class="box-detail-add__prices">
+                                                {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
+                                                    {% set productDiscount = (sellingPriceWithVat|moneyFormat / nonSellingPriceWithVat|moneyFormat) * 100 %}
+                                                    <span class="box-detail-add__discount">
+                                                        -{{ productDiscount|round }}
+                                                        <span class="box-detail-add__discount__perc">%</span>
+                                                    </span>
+                                                    <div class="box-detail-add__prices__wrap">
+                                                        <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
+                                                            {{ nonSellingPriceWithVat|price }}
+                                                            {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}**
+                                                        </div>
+                                                        <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
+                                                            {{ sellingPriceWithVat|price }}
+                                                            {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
+                                                        </div>
                                                     </div>
+                                                {% else %}
                                                     <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
                                                         {{ sellingPriceWithVat|price }}
                                                         {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
                                                     </div>
-                                                </div>
-                                            {% else %}
-                                                <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
-                                                    {{ sellingPriceWithVat|price }}
-                                                    {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
-                                                </div>
-                                            {% endif %}
-                                            <meta itemprop="priceCurrency"
-                                                content="{{ currencyCode(domain.id) }}"
-                                            >
-                                            <meta itemprop="price"
-                                                content="{{ getProductSellingPrice(product).priceWithVat|moneyFormat }}"
-                                            >
-                                            <link itemprop="availability"
-                                                href="{{ product.calculatedSellingDenied ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
-                                            >
+                                                {% endif %}
+                                                <meta itemprop="priceCurrency"
+                                                    content="{{ currencyCode(domain.id) }}"
+                                                >
+                                                <meta itemprop="price"
+                                                    content="{{ getProductSellingPrice(product).priceWithVat|moneyFormat }}"
+                                                >
+                                                <link itemprop="availability"
+                                                    href="{{ product.calculatedSellingDenied ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
+                                                >
+                                            </div>
+                                            {{ render(controller('App\\Controller\\Front\\CartController:addProductFormAction', {product: product, type: 'large'})) }}
                                         </div>
-                                        {{ render(controller('App\\Controller\\Front\\CartController:addProductFormAction', {product: product, type: 'large'})) }}
-                                    </div>
-                                {% else %}
-                                    <div>
-                                        {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productMainCategory.id })}) }}
-                                    </div>
-                                {% endif %}
+                                    {% else %}
+                                        <div>
+                                            {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productMainCategory.id })}) }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            <div class="box-series box-series--standalone box-series--standalone--mini">
+                                <div class="box-series__in">
+                                    <span class="box-series__img">
+                                        <img src="http://127.0.0.1:8000/content/images/product/galleryThumbnail/119.jpg">
+                                    </span>
+                                    <span class="box-series__content">
+                                        <p class="box-series__content__text">{{ 'Prohlédněte si další zboží ze série Lima a sladte svůj domov.' }}</p>
+                                        <a class="box-series__content__link box-detail__info__anchor" href="#productSeriesList">
+                                            Program Lima
+                                            <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--down box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
+                                        </a>
+                                    </span>
+                                </div>
                             </div>
-                        {% endif %}
+                        </div>
                     </div>
+
+                    {#{% if productSeriesList|length > 0 %}
+                        {% for productSeries in productSeriesList %}
+                            <div class="box-series box-series--standalone box-series--standalone--mini">
+                                <a class="box-series__link-wrap" href="#">
+                                    <span class="box-series__img">
+                                    {% if imageExists(productSeries) %}
+                                        {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
+                                    {% else %}
+                                        {{ noimage({ alt: productSeries.name }) }}
+                                    {% endif %}
+                                    </span>
+                                    <span class="box-series__content">
+                                        {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+                                    </span>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% endif %}#}
+
                 </div>
             </div>
         </div>
@@ -302,7 +354,45 @@
                             <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                         </span>
                     </a>
-                    <div class="box-accordion__body js-accordion-body">
+                    <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
+                        <div class="box-accordion__body__content box-accordion__body__content--params">
+                            <table class="table table--params">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">{{ 'Rozměry'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ 'Šířka'|trans }}</td>
+                                        <td>318 cm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ 'Hloubka maximální'|trans }}</td>
+                                        <td>215 cm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ 'Výška sedáku'|trans }}</td>
+                                        <td>45 cm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ 'Výška bočního opěradla'|trans }}</td>
+                                        <td>60 cm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ 'Výška opěradla'|trans }}</td>
+                                        <td>110 cm</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ 'Hloubka sedáku'|trans }}</td>
+                                        <td>52 cm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-accordion__body__content box-accordion__body__content--params">
+                            <img loading="lazy" data-src="{{ asset('public/frontend/images/rooms/obyvaci_pokoj.jpg') }}" alt="{{ 'Obývací pokoj'|trans }}">
+                        </div>
                     </div>
                 </div>
 
@@ -321,9 +411,36 @@
                     </div>
                 {% endif %}
 
-                {% if productSeriesList|length > 0 %}
-                    <div class="h3">{{ 'Nábytkové programy'|trans }}</div>
+                <div class="box-accordion js-accordion js-not-implemented-yet">
+                    <a class="box-accordion__header js-accordion-header" href="#">
+                        <strong class="box-accordion__heading">{{ 'Ke stažení'|trans }}</strong>
+                        <span class="box-accordion__header__toggle">
+                            <span class="box-accordion__header__toggle__text">{{ 'Zobrazit víc'|trans }}</span>
+                            <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
+                        </span>
+                    </a>
+                    <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
+                        <div class="box-detail-files">
+                            <a class="box-detail-files__item" href="#">
+                                <span class="box-detail-files__item__name">Montážní návod</span>
+                                <span class="box-detail-files__item__download">
+                                    Stáhnout
+                                    <i class="svg svg-arrow"></i>
+                                </span>
+                            </a>
+                            <a class="box-detail-files__item" href="#">
+                                <span class="box-detail-files__item__name">Typový plán</span>
+                                <span class="box-detail-files__item__download">
+                                    Stáhnout
+                                    <i class="svg svg-arrow"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
+                {% if productSeriesList|length > 0 %}
+                    <h2>{{ 'Nábytkové programy'|trans }}</h2>
                     <div id="productSeriesList">
                         {% for productSeries in productSeriesList %}
                             <div class="box">
@@ -373,14 +490,20 @@
                                         <th class="box-accordion__grid-table__col">
                                             <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.stockName }}</strong>
                                         </th>
-                                        <td class="box-accordion__grid-table__col">
+                                        <td class="box-accordion__grid-table__col js-not-implemented-yet">
+                                            <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-stock.svg') }}" alt="{{ 'Skladem'|trans }}">
                                             {{ productStockAvailabilityInformation.availabilityInformation|raw }}
                                         </td>
-                                        <td class="box-accordion__grid-table__col">
-                                            {{ productStockAvailabilityInformation.exposedProduct ? "ANO"|trans : "NE"|trans }}
+                                        <td class="box-accordion__grid-table__col box-accordion__grid-table__col--expose">
+                                            {{ productStockAvailabilityInformation.exposedProduct
+                                                ? '<strong class="box-accordion__grid-table__col__expose">Vystaveno</strong> na prodejně'|transHtml
+                                                : '<strong class="box-accordion__grid-table__col__expose">Není vystaveno</strong> na prodejně'|transHtml }}
                                         </td>
-                                        <td class="box-accordion__grid-table__col js-not-implemented-yet">
-                                            <a class="box-detail__info__anchor" href="#product-desc">{{ 'Detail prodejny'|trans }}</a>
+                                        <td class="box-accordion__grid-table__col box-accordion__grid-table__col--showrooms js-not-implemented-yet">
+                                            <a class="box-detail__info__anchor" href="#product-desc">
+                                                {{ 'Detail prodejny'|trans }}
+                                                <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -391,9 +514,9 @@
                 {% endif %}
 
                 {% if accessories|length > 0 %}
-                    <div class="box-detail">
-                        <div class="h3">{{ 'Accessories'|trans }}</div>
-                        <div>
+                    <div class="box-detail box-detail--accessories">
+                        <h2 class="box-detail__title">{{ 'Accessories'|trans }}</h2>
+                        <div class="box-products-accessories js-products-slick-carousel">
                             {{ productList.list(accessories) }}
                         </div>
                     </div>

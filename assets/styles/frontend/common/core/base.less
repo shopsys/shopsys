@@ -62,6 +62,39 @@ table {
     border-collapse: collapse;
 }
 
+// Tables
+.table {
+    &--params {
+        width: 100%;
+        margin-bottom: 1rem;
+
+        @media @query-lg {
+            width: auto;
+            min-width: 370px;
+            margin-bottom: 0;
+        }
+
+        tr {
+            border-bottom: 1px solid @color-border-lighter;
+        }
+
+        thead {
+            tr {
+                border-bottom-width: 2px;
+            }
+        }
+
+        td,
+        th {
+            padding: 10px 0 8px 0;
+        }
+
+        td:last-child {
+            text-align: right;
+        }
+    }
+}
+
 p {
     word-wrap: break-word;
 }

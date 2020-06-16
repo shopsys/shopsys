@@ -140,4 +140,92 @@
             }
         }
     }
+
+    &--standalone {
+        margin: 0;
+        padding: 0;
+
+        &::before {
+            display: none;
+        }
+
+        .box-series__in {
+            @media @query-lg {
+                display: flex;
+                align-items: center;
+                width: 100%;
+            }
+        }
+
+        &--mini {
+            margin-top: 45px;
+            padding: 0.5rem 0.5rem 1rem;
+
+            background-color: @color-light-secondary;
+            border-radius: @radius;
+
+            @media @query-lg {
+                margin-top: 0;
+                padding: 0;
+
+                background-color: transparent;
+                border-radius: 0;
+            }
+
+            .box-series__img {
+                display: block;
+                position: relative;
+                width: 184px;
+                height: 90px;
+                min-width: 184px;
+                overflow: hidden;
+                margin: -25px 0 15px;
+
+                border-radius: @radius;
+
+                @media @query-lg {
+                    margin: 0;
+                }
+
+                img {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+
+                    object-fit: cover;
+                }
+            }
+
+            .box-series__content {
+                @media @query-lg {
+                    padding: 10px 20px;
+                    flex-grow: 1;
+
+                    background-color: @color-light-secondary;
+                    border-top-right-radius: @radius;
+                    border-bottom-right-radius: @radius;
+                }
+
+                &__text {
+                    margin-bottom: 10px;
+
+                    font-size: 15px;
+
+                    @media @query-lg {
+                        margin-bottom: 0;
+                    }
+                }
+
+                &__link {
+                    display: block;
+
+                    color: @color-primary;
+                    font-family: @font-quartenary;
+                    font-size: 15px;
+                }
+            }
+        }
+    }
 }

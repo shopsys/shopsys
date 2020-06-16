@@ -167,13 +167,18 @@
         padding-bottom: @btn-larger-padding-verfical;
     }
 
-    @btn-very-large-padding: 18px 30px;
+    @btn-very-large-padding: 18px 20px;
+    @btn-very-large-padding-lg: 18px 30px;
 
     &--very-large {
         padding: @btn-very-large-padding;
 
         font-family: @font-quartenary;
         font-size: 18px;
+
+        @media @query-lg {
+            padding: @btn-very-large-padding-lg;
+        }
     }
 
     @btn-small-padding-vertical: 5px;
