@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
 {
     public const ROOT_CATEGORY_CODE = 'eshop__ecommere';
+    public const ROOT_CATEGORY_CODE_PROD = 'eshop__ecommerce';
     public const PREFIX_CATEGORY_CODE = 'eshop__';
 
     /**
@@ -120,7 +121,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
      */
     protected function processItem($akeneoCategoryData): void
     {
-        if ($akeneoCategoryData['code'] === self::ROOT_CATEGORY_CODE) {
+        if ($akeneoCategoryData['code'] === self::ROOT_CATEGORY_CODE || $akeneoCategoryData['code'] === self::ROOT_CATEGORY_CODE_PROD) {
             return;
         }
 
