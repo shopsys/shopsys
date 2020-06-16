@@ -82,6 +82,34 @@ class PromoCode extends BasePromoCode
     protected $applyOnSecondProduct;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $onSale;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $inAction;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $scontoPrice;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $withoutLowPrice;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
     public function __construct(PromoCodeData $promoCodeData)
@@ -95,6 +123,10 @@ class PromoCode extends BasePromoCode
         $this->massGenerate = $promoCodeData->massGenerate;
         $this->prefix = $promoCodeData->prefix;
         $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
+        $this->onSale = $promoCodeData->onSale;
+        $this->inAction = $promoCodeData->inAction;
+        $this->scontoPrice = $promoCodeData->scontoPrice;
+        $this->withoutLowPrice = $promoCodeData->withoutLowPrice;
     }
 
     /**
@@ -111,6 +143,10 @@ class PromoCode extends BasePromoCode
         $this->massGenerate = $promoCodeData->massGenerate;
         $this->prefix = $promoCodeData->prefix;
         $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
+        $this->onSale = $promoCodeData->onSale;
+        $this->inAction = $promoCodeData->inAction;
+        $this->scontoPrice = $promoCodeData->scontoPrice;
+        $this->withoutLowPrice = $promoCodeData->withoutLowPrice;
     }
 
     /**
@@ -182,5 +218,37 @@ class PromoCode extends BasePromoCode
     public function isApplyOnSecondProduct(): bool
     {
         return $this->applyOnSecondProduct;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnSale(): bool
+    {
+        return $this->onSale;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInAction(): bool
+    {
+        return $this->inAction;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isScontoPrice(): bool
+    {
+        return $this->scontoPrice;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWithoutLowPrice(): bool
+    {
+        return $this->withoutLowPrice;
     }
 }
