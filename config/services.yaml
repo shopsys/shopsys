@@ -160,6 +160,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface: '@App\Model\Article\ArticleDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Article\ArticleFacade: '@App\Model\Article\ArticleFacade'
+
     App\Model\Category\CurrentCategoryResolver: ~
 
     League\Flysystem\FilesystemInterface: '@main_filesystem'

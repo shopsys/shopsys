@@ -24,7 +24,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     private const REFERENCE_NAME_KEY = 'referenceName';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
+     * @var \App\Model\Article\ArticleFacade
      */
     private $articleFacade;
 
@@ -39,7 +39,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     private $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
+     * @param \App\Model\Article\ArticleFacade $articleFacade
      * @param \App\Model\Article\ArticleDataFactory $articleDataFactory
      * @param \App\Component\Domain\Domain $domain
      */
