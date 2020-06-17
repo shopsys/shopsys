@@ -8,5 +8,6 @@ import './order/orderDisablingForm';
 import './payment/payment';
 
 import './validation';
+import './advert/advert';
 
 registerAdmin();

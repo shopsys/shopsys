@@ -6,8 +6,11 @@ namespace App\Form\Admin;
 
 use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Model\Advert\AdvertFacade;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Advert\AdvertFormType;
+use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -17,12 +20,26 @@ use Symfony\Component\Validator\Constraints;
 class AdvertFormTypeExtension extends AbstractTypeExtension
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    private $adminDomainTabsFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     */
+    public function __construct(AdminDomainTabsFacade $adminDomainTabsFacade)
+    {
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->buildVisibilityIntervalForm($builder);
         $this->buildImageGroup($builder, $options);
+        $this->buildSettingsGroup($builder);
     }
 
     /**
@@ -79,6 +96,27 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildSettingsGroup(FormBuilderInterface $builder): void
+    {
+        $builderSettingsGroup = $builder->get('settings');
+        $builderSettingsGroup->remove('domainId');
+
+        $builderSettingsGroup->add('domain', DisplayOnlyType::class, [
+            'data' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
+            'label' => t('Domain'),
+            'position' => 'first',
+        ]);
+
+        $builderSettingsGroup->add('categories', CategoriesType::class, [
+            'required' => false,
+            'label' => t('Assign to category'),
+            'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+        ]);
     }
 
     /**

@@ -24,9 +24,15 @@ class AdvertData extends BaseAdvertData
      */
     public $mobileImage;
 
+    /**
+     * @var \App\Model\Category\Category[]
+     */
+    public $categories;
+
     public function __construct()
     {
         parent::__construct();
         $this->mobileImage = new ImageUploadData();
+        $this->categories = [];
     }
 }

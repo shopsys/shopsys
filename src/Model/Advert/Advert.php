@@ -28,23 +28,32 @@ class Advert extends BaseAdvert
     protected $datetimeVisibleTo;
 
     /**
-     * @param \App\Model\Advert\AdvertData $advert
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Category\Category[]
+     *
+     * @ORM\ManyToMany(targetEntity="App\Model\Category\Category", fetch="EXTRA_LAZY")
      */
-    public function __construct($advert)
+    private $categories;
+
+    /**
+     * @param \App\Model\Advert\AdvertData $advertData
+     */
+    public function __construct($advertData)
     {
-        parent::__construct($advert);
-        $this->datetimeVisibleFrom = $advert->datetimeVisibleFrom;
-        $this->datetimeVisibleTo = $advert->datetimeVisibleTo;
+        parent::__construct($advertData);
+        $this->datetimeVisibleFrom = $advertData->datetimeVisibleFrom;
+        $this->datetimeVisibleTo = $advertData->datetimeVisibleTo;
+        $this->categories = $advertData->categories;
     }
 
     /**
-     * @param \App\Model\Advert\AdvertData $advert
+     * @param \App\Model\Advert\AdvertData $advertData
      */
-    public function edit($advert)
+    public function edit($advertData)
     {
-        parent::edit($advert);
-        $this->datetimeVisibleFrom = $advert->datetimeVisibleFrom;
-        $this->datetimeVisibleTo = $advert->datetimeVisibleTo;
+        parent::edit($advertData);
+        $this->datetimeVisibleFrom = $advertData->datetimeVisibleFrom;
+        $this->datetimeVisibleTo = $advertData->datetimeVisibleTo;
+        $this->categories = $advertData->categories;
     }
 
     /**
@@ -77,5 +86,13 @@ class Advert extends BaseAdvert
     public function setDatetimeVisibleTo(?\DateTime $datetimeVisibleTo): void
     {
         $this->datetimeVisibleTo = $datetimeVisibleTo;
+    }
+
+    /**
+     * @return \App\Model\Category\Category[]|\Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getCategories()
+    {
+        return $this->categories->toArray();
     }
 }
