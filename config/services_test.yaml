@@ -63,9 +63,6 @@ services:
         arguments:
             - '%shopsys.image_config_filepath%'
 
-    Shopsys\FrameworkBundle\Component\Image\ImageFacade:
-        arguments: ['%shopsys.image_url_prefix%']
-
     Shopsys\FrameworkBundle\Component\Image\ImageLocator:
         arguments: ['%shopsys.image_dir%']
 
@@ -224,3 +221,10 @@ services:
     Shopsys\FrameworkBundle\Model\Payment\PaymentFacade: '@App\Model\Payment\PaymentFacade'
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentRepository: '@App\Model\Payment\PaymentRepository'
+
+    Shopsys\FrameworkBundle\Component\Image\ImageFacade: '@App\Component\Image\ImageFacade'
+
+    App\Component\Image\ImageFacade:
+        arguments: ['%shopsys.image_url_prefix%']
+        calls:
+            - { method: setCdnDomain, arguments: ['%env(CDN_DOMAIN)%'] }

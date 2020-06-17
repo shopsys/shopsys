@@ -434,10 +434,8 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
         /** @var \App\Model\Product\Product $variant2 */
         $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
-        /** @var \App\Model\Product\Product $variant3 */
-        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
         /** @var \App\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
 
         $variant1productData = $this->productDataFactory->createFromProduct($variant1);
         $variant1productData->hidden = true;
@@ -447,12 +445,10 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $this->em->refresh($variant1);
         $this->em->refresh($variant2);
-        $this->em->refresh($variant3);
         $this->em->refresh($mainVariant);
 
         $this->assertFalse($variant1->isVisible());
         $this->assertTrue($variant2->isVisible());
-        $this->assertTrue($variant3->isVisible());
         $this->assertTrue($mainVariant->isVisible());
     }
 
@@ -463,9 +459,15 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\Product $variant2 */
         $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
         /** @var \App\Model\Product\Product $variant3 */
-        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
+        /** @var \App\Model\Product\Product $variant4 */
+        $variant4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '149');
+        /** @var \App\Model\Product\Product $variant5 */
+        $variant5 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '150');
+        /** @var \App\Model\Product\Product $variant6 */
+        $variant6 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '151');
         /** @var \App\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
 
         $variant1productData = $this->productDataFactory->createFromProduct($variant1);
         $variant1productData->hidden = true;
@@ -479,16 +481,34 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $variant3productData->hidden = true;
         $this->productFacade->edit($variant3->getId(), $variant3productData);
 
+        $variant4productData = $this->productDataFactory->createFromProduct($variant4);
+        $variant4productData->hidden = true;
+        $this->productFacade->edit($variant4->getId(), $variant4productData);
+
+        $variant5productData = $this->productDataFactory->createFromProduct($variant5);
+        $variant5productData->hidden = true;
+        $this->productFacade->edit($variant5->getId(), $variant5productData);
+
+        $variant6productData = $this->productDataFactory->createFromProduct($variant6);
+        $variant6productData->hidden = true;
+        $this->productFacade->edit($variant6->getId(), $variant6productData);
+
         $this->productVisibilityRepository->refreshProductsVisibility(true);
 
         $this->em->refresh($variant1);
         $this->em->refresh($variant2);
         $this->em->refresh($variant3);
+        $this->em->refresh($variant4);
+        $this->em->refresh($variant5);
+        $this->em->refresh($variant6);
         $this->em->refresh($mainVariant);
 
         $this->assertFalse($variant1->isVisible());
         $this->assertFalse($variant2->isVisible());
         $this->assertFalse($variant3->isVisible());
+        $this->assertFalse($variant4->isVisible());
+        $this->assertFalse($variant5->isVisible());
+        $this->assertFalse($variant6->isVisible());
         $this->assertFalse($mainVariant->isVisible());
     }
 
@@ -498,10 +518,8 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
         /** @var \App\Model\Product\Product $variant2 */
         $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
-        /** @var \App\Model\Product\Product $variant3 */
-        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
         /** @var \App\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
 
         $mainVariantproductData = $this->productDataFactory->createFromProduct($mainVariant);
         $mainVariantproductData->hidden = true;
@@ -511,12 +529,10 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $this->em->refresh($variant1);
         $this->em->refresh($variant2);
-        $this->em->refresh($variant3);
         $this->em->refresh($mainVariant);
 
         $this->assertFalse($variant1->isVisible());
         $this->assertFalse($variant2->isVisible());
-        $this->assertFalse($variant3->isVisible());
         $this->assertFalse($mainVariant->isVisible());
     }
 }

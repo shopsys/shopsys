@@ -180,6 +180,7 @@ class TransferredProductProcessor
         $this->setProductImages($product, $akeneoProductData);
         $this->setProductPackageDetailInformationFormProduct($product, $akeneoProductData);
         $this->setProductAsVariant($product, $akeneoProductData, $isMainVariant);
+        $this->setProductAsDefaultVariant($product, $akeneoProductData);
 
         return $product;
     }
@@ -247,18 +248,48 @@ class TransferredProductProcessor
             return;
         }
 
-        $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentSkuList($akeneoProductData);
-        if ($mainVariantSku === null) {
+        $mainVariantCatnum = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentCatnum($akeneoProductData);
+        if ($mainVariantCatnum === null) {
             return;
         }
 
-        $mainVariantProduct = $this->findProductByIdentifier($mainVariantSku, true);
+        $mainVariantProduct = $this->findProductByIdentifier($mainVariantCatnum, true);
         if ($mainVariantProduct === null) {
             return;
         }
 
         $mainVariantProduct->addVariant($product);
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param array $akeneoProductData
+     */
+    private function setProductAsDefaultVariant(Product $product, array $akeneoProductData): void
+    {
+        if ($product->isMainVariant()) {
+            return;
+        }
+
+        if (!$product->isVariant()) {
+            return;
+        }
+
+        $mainVariantCatnum = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentCatnum($akeneoProductData);
+        if ($mainVariantCatnum === null) {
+            return;
+        }
+
+        $mainVariantProduct = $this->findProductByIdentifier($mainVariantCatnum, true);
+        if ($mainVariantProduct === null) {
+            return;
+        }
+
+        $defaultVariantCatnum = $this->productTransferAkeneoMapper->mapAkeneoProductDataToDefaultVariantCatnum($akeneoProductData);
+        if ($defaultVariantCatnum !== null && $defaultVariantCatnum === $product->getCatnum()) {
+            $this->productFacade->setDefaultVariant($mainVariantProduct, $product);
+        }
     }
 
     /**

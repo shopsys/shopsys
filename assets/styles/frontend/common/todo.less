@@ -75,3 +75,222 @@
     border: 1px solid red;
     background: #f6fbe2;
 }
+
+.form-choice-color-picker {
+    border: 1px solid silver;
+    padding: 15px;
+    margin: 5px;
+    float: left;
+    width: 20px;
+    height: 20px;
+
+    &:before {
+        background: none;
+    }
+}
+
+input[type=checkbox].css-checkbox {
+    &:checked {
+        & + .form-choice-color-picker {
+            -webkit-box-shadow: 0 0 2px 3px rgba(0,0,0,0.5);
+            -moz-box-shadow: 0 0 2px 3px rgba(0,0,0,0.5);
+            box-shadow: 0 0 2px 3px rgba(0,0,0,0.5);
+        }
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.personal-info-order-form {
+    .in-tab__content__item {
+        padding: 0;
+        border: none;
+    }
+}
+
+
+.mobile-menu-wrap {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 80px;
+    width: 100%;
+    z-index: 1000;
+
+    &__container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+
+        .mobile-menu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            background-color: silver;
+            border: 1px solid black;
+
+            &__item {
+                list-style: none;
+                border: 1px solid black;
+                padding: 5px;
+
+                &__control {
+                    display: block;
+                    width: 20px;
+                    float: right;
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                &__back-control {
+                    display: inline-block;
+                    float: left;
+                    text-align: center;
+                    font-weight: bold;
+                    width: 50px;
+                }
+
+                &__back {
+                    display: block;
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                &__link {
+                    display: inline-block;
+                    width: 100%;
+
+                    &:hover {
+                        background-color: white;
+                    }
+
+                    &--sale {
+                        width: 100%;
+                    }
+
+                    &--blog {
+                        width: 100%;
+                    }
+                }
+
+                &--sale {
+                    width: 100%;
+                }
+
+                &--blog {
+                    width: 100%;
+                }
+            }
+        }
+
+        .show-position {
+            position: relative;
+            left: 0;
+        }
+    }
+}
+
+.mobile-sliding-menu {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+
+    &__container {
+        width: 2000px;
+        left: -1000px;
+        position: relative;
+    }
+
+    &__draggable {
+        position: relative;
+        float: left;
+        left: 1000px;
+    }
+
+    &__link {
+        display: inline-block;
+        padding: 15px;
+    }
+}
+
+.variant-parameters-wrap {
+    .variant-parameter {
+        display: block;
+        margin: 5px 0;
+
+        &__name {
+            display: block;
+            float: left;
+            width: 300px;
+        }
+
+        &__wrap {
+            display: block;
+            float: left;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        &__select {
+            display: inline-block;
+            border: 1px solid silver;
+            border-radius: 5px;
+            padding-right: 5px;
+            text-decoration: none;
+
+            &--without-arrow {
+                display: inline-block;
+                width: 15px;
+            }
+        }
+
+        &__selected {
+            display: inline-block;
+            width: 300px;
+            padding: 5px;
+        }
+
+        &__values {
+            position: absolute;
+            display: none;
+            top: 37px;
+            left: 0;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            z-index: 100;
+            border-radius: 0 0 5px 5px;
+            border: 1px solid silver;
+        }
+
+        &__description {
+            &--image {
+                display: inline-block;
+                vertical-align: middle;
+                height: 30px;
+
+                img {
+                    height: 100%;
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .opened {
+            margin: 0;
+        }
+
+        &__value {
+            display: inline-block;
+            border: 1px solid silver;
+            background-color: white;
+            padding: 5px;
+            width: 325px;
+        }
+    }
+}

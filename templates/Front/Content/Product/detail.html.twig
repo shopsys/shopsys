@@ -76,6 +76,8 @@
                         </div>
 
                         {% if not product.isMainVariant %}
+                            {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
+
                             <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
                                 {% if not product.calculatedSellingDenied %}
                                     <div itemprop="offers"
@@ -158,6 +160,7 @@
                 </div>
 
                 {% if product.isMainVariant and not product.calculatedSellingDenied %}
+
                     <table {% if getProductSellingPrice(product) is not null %}itemprop="offers"
                         itemscope
                         itemtype="http://schema.org/AggregateOffer" {% endif %}

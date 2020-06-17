@@ -19,6 +19,8 @@ use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use App\Model\Product\Package\ProductPackageFacade;
+use App\Model\Product\Parameter\ParameterFacade;
+use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use App\Model\Product\Series\ProductSeriesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -37,6 +39,7 @@ use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Twig\RequestExtension;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ProductController extends FrontBaseController
@@ -157,6 +160,11 @@ class ProductController extends FrontBaseController
     private $seoHelper;
 
     /**
+     * @var \App\Model\Product\Parameter\ParameterFacade
+     */
+    private $parameterFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Component\Domain\Domain $domain
@@ -179,6 +187,7 @@ class ProductController extends FrontBaseController
      * @param \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \App\Component\SeoHelper\SeoHelper $seoHelper
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -202,7 +211,8 @@ class ProductController extends FrontBaseController
         ProductPackageFacade $productPackageFacade,
         CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator,
         UploadedFileFacade $uploadedFileFacade,
-        SeoHelper $seoHelper
+        SeoHelper $seoHelper,
+        ParameterFacade $parameterFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -226,6 +236,7 @@ class ProductController extends FrontBaseController
         $this->categorySeoMixUrlGenerator = $categorySeoMixUrlGenerator;
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->seoHelper = $seoHelper;
+        $this->parameterFacade = $parameterFacade;
     }
 
     /**
@@ -240,13 +251,18 @@ class ProductController extends FrontBaseController
         }
         $page = $requestPage === null ? 1 : (int)$requestPage;
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
+        /** @var \App\Model\Product\Product $productVariant */
+        $productVariant = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
 
-        if ($product->isVariant()) {
-            return $this->redirectToRoute('front_product_detail', ['id' => $product->getMainVariant()->getId()]);
+        if ($productVariant->isMainVariant()) {
+            return $this->redirectToRoute('front_product_detail', ['id' => $productVariant->getDefaultVariant()->getId()], 301);
+        } elseif ($productVariant->isVariant()) {
+            $product = $productVariant->getMainVariant();
+        } else {
+            $product = $productVariant;
         }
 
+        //parts build from main product
         $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
@@ -272,7 +288,7 @@ class ProductController extends FrontBaseController
         $productPackages = $this->productPackageFacade->getProductPackagesByProduct($product);
 
         return $this->render('Front/Content/Product/detail.html.twig', [
-            'product' => $product,
+            'product' => $productVariant,
             'accessories' => $accessories,
             'variants' => $variants,
             'productMainCategory' => $productMainCategory,
@@ -285,6 +301,39 @@ class ProductController extends FrontBaseController
             'productSeriesList' => $productSeriesList,
             'productSeriesProductsIndexedByProductSeries' => $productSeriesProducts,
             'productPackages' => $productPackages,
+        ]);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function variantParametersAction(Product $product): Response
+    {
+        if ($product->isVariant()) {
+            $mainProduct = $product->getMainVariant();
+        } else {
+            return new Response();
+        }
+
+        $currentVariantParameterValuesIndexedByParameterId = $this->parameterFacade
+            ->getParameterValuesIndexedByParameterIdForProductVariant($product, $mainProduct->getVariantParameters(), $this->domain->getLocale());
+        $currentVariantSetup = $this->parameterFacade->getParameterValueIdIndexedByParameterId($currentVariantParameterValuesIndexedByParameterId);
+        $currentVariantSetupKey = $this->parameterFacade->getVariantSetupKey($currentVariantParameterValuesIndexedByParameterId);
+
+        $variantSetupKeyMap = $this->parameterFacade->getVariantSetupKeyMapByMainProduct($mainProduct, $this->domain->getLocale());
+
+        $parameterValuesIndexedByParameterId = $this->parameterFacade
+            ->getParameterValuesIndexedByParameterIdForMainProduct($mainProduct, $this->domain->getLocale());
+
+        return $this->render('Front/Content/Product/variantParameters.html.twig', [
+            'mainProduct' => $mainProduct,
+            'variant' => $product,
+            'parameterValuesIndexedByParameterId' => $parameterValuesIndexedByParameterId,
+            'variantParameterValuesIndexedByParameterId' => $currentVariantParameterValuesIndexedByParameterId,
+            'currentVariantSetup' => $currentVariantSetup,
+            'currentVariantSetupKey' => $currentVariantSetupKey,
+            'variantSetupKeyMap' => $variantSetupKeyMap,
         ]);
     }
 

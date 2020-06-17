@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter;
 
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
@@ -183,5 +185,95 @@ class ParameterFacade extends BaseParameterFacade
         $this->em->flush();
 
         return $parameterValue;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\ParameterValue[][]
+     */
+    public function getParameterValuesIndexedByParameterIdForMainProduct(Product $product, string $locale): array
+    {
+        $parameterValuesIndexedByParameterId = [];
+        foreach ($product->getVariantParameters() as $parameter) {
+            $parameterValuesIndexedByParameterId[$parameter->getId()] =
+                $this->parameterRepository->getParameterValuesForVariantsByMainProductAndParameter($product, $parameter, $locale);
+        }
+
+        return $parameterValuesIndexedByParameterId;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $productVariant
+     * @param \App\Model\Product\Parameter\Parameter[] $variantParameters
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesIndexedByParameterIdForProductVariant(
+        Product $productVariant,
+        array $variantParameters,
+        string $locale
+    ): array {
+        $parameterValuesIndexedByParameterId = [];
+        foreach ($variantParameters as $parameter) {
+            try {
+                $parameterValuesIndexedByParameterId[$parameter->getId()] =
+                    $this->parameterRepository->getParameterValueForVariantByProductVariantAndParameter($productVariant, $parameter, $locale);
+            } catch (NoResultException $exception) {
+            }
+        }
+
+        return $parameterValuesIndexedByParameterId;
+    }
+
+    /**
+     * @param array $variantParameterValuesIndexedByParameterId
+     * @return int[]
+     */
+    public function getParameterValueIdIndexedByParameterId(array $variantParameterValuesIndexedByParameterId): array
+    {
+        $variantSetup = [];
+        foreach ($variantParameterValuesIndexedByParameterId as $parameterId => $parameterValue) {
+            $variantSetup[$parameterId] = $parameterValue->getId();
+        }
+
+        return $variantSetup;
+    }
+
+    /**
+     * @param array $variantParameterValuesIndexedByParameterId
+     * @return string
+     */
+    public function getVariantSetupKey(array $variantParameterValuesIndexedByParameterId): string
+    {
+        $variantSetupParts = [];
+        foreach ($variantParameterValuesIndexedByParameterId as $parameterId => $parameterValue) {
+            $variantSetupParts[] = $parameterId . '_' . $parameterValue->getId();
+        }
+
+        return implode('~', $variantSetupParts);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $locale
+     * @return int[]
+     */
+    public function getVariantSetupKeyMapByMainProduct(Product $product, string $locale): array
+    {
+        $data = $this->parameterRepository->getVariantProductParameterValuesData($product, $locale);
+
+        $variantSetupPartsIndexedByProductVariantId = [];
+        foreach ($data as $variantParameterValue) {
+            $variantSetupPartsIndexedByProductVariantId[$variantParameterValue['ppv_product_id']][] = $variantParameterValue['ppv_parameter_id'] . '_' . $variantParameterValue['ppv_value_id'];
+        }
+
+        $variantSetupKeyMap = [];
+        foreach ($variantSetupPartsIndexedByProductVariantId as $productVariantId => $variantSetupParts) {
+            $variantSetupKey = implode('~', $variantSetupParts);
+            $variantSetupKeyMap[$variantSetupKey] = $productVariantId;
+        }
+
+        return $variantSetupKeyMap;
     }
 }

@@ -19,3 +19,10 @@ services:
 
     Shopsys\FrameworkBundle\Twig\LocalizationExtension: '@App\Twig\LocalizationExtension'
     Shopsys\FrameworkBundle\Twig\PriceExtension: '@App\Twig\PriceExtension'
+
+    App\Twig\ImageExtension:
+        arguments:
+            $frontDesignImageUrlPrefix: '%shopsys.front_design_image_url_prefix%'
+            $isLazyLoadEnabled: '%shopsys.image.enable_lazy_load%'
+
+    Shopsys\ReadModelBundle\Twig\ImageExtension: '@App\Twig\ImageExtension'
