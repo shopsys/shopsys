@@ -519,7 +519,7 @@
                 {% if accessories|length > 0 %}
                     <div class="box-detail box-detail--accessories">
                         <h2 class="box-detail__title">{{ 'Accessories'|trans }}</h2>
-                        <div class="box-products-accessories js-products-slick-carousel">
+                        <div class="box-products-accessories js-products-slick-carousel-cols">
                             {{ productList.list(accessories) }}
                         </div>
                     </div>
@@ -551,7 +551,7 @@
                         </div>
                         <div class="box-products-carousel box-products-carousel--detail">
                             <div class="box-products-carousel__in box-products-carousel__in--detail">
-                                <div class="list-products-grid js-products-slick-carousel-2">
+                                <div class="list-products-grid js-products-slick-carousel">
                                     {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id]) }}
                                 </div>
                             </div>
@@ -566,7 +566,7 @@
                             <h2 class="box-detail__title">{{ 'Podobné produkty'|trans }}</h2>
                             <div class="box-products-carousel box-products-carousel--detail">
                                 <div class="box-products-carousel__in box-products-carousel__in--detail">
-                                    <div class="list-products-grid js-products-slick-carousel-2">
+                                    <div class="list-products-grid js-products-slick-carousel">
                                         {% include 'Front/Content/Product/similarProducts.html.twig' with {paginationResult: paginatedSimilarProducts} %}
                                     </div>
                                 </div>

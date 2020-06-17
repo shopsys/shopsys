@@ -49,6 +49,289 @@
                     </a>
                 </div>
             </div>
+
+                        <div class="list-products__item js-list-products-item">
+                <div class="list-products__item__in">
+                    <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
+                        <div class="list-products__item__image dont-print">
+                            {{ image(productView.image, { size: 'list', alt: productView.name }) }}
+                            {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
+                        </div>
+                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
+                            <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                            {{ productView.name }}
+                            <span class="list-products__item__title__suffix">{{ productView.nameSufix }}</span>
+                        </{{ productHeadingTagName|default('h2') }}>
+                        <div class="list-products__item__info dont-print">
+                            <div class="list-products__item__info__availability">
+                                <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
+                                {# TODO: There is no translation, because the text will be dynamic - after programming will be done #}
+                                <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary js-not-implemented-yet">Můžete mít ihned na <strong>5</strong> prodejnách</span>
+                                <strong class="list-products__item__info__detail">
+                                    {{ 'Detail produktu'|trans }}
+                                    <i class="list-products__item__info__detail__icon svg svg-chevron"></i>
+                                </strong>
+                            </div>
+                            {% if productView.sellingPrice is not null %}
+                                <div class="list-products__item__info__price">
+                                    <div class="list-products__item__info__price__item list-products__item__info__price__item--main">
+                                        {% if productView.sellingPrice.priceFrom %}
+                                            {{ 'from %price%'|trans({'%price%': productView.sellingPrice.priceWithVat|price}) }}
+                                        {% else %}
+                                            {{ productView.sellingPrice.priceWithVat|price }}
+                                        {% endif %}
+                                        {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
+                                    </div>
+                                    {% if productView.nonSellingPrice.priceWithVat.isGreaterThan(productView.sellingPrice.priceWithVat) %}
+                                        <div class="list-products__item__info__price__item list-products__item__info__price__item--high-price">
+                                            {{ productView.nonSellingPrice.priceWithVat|price }}
+                                            {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <div class="list-products__item__info__action">
+                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+                        <div class="list-products__item js-list-products-item">
+                <div class="list-products__item__in">
+                    <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
+                        <div class="list-products__item__image dont-print">
+                            {{ image(productView.image, { size: 'list', alt: productView.name }) }}
+                            {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
+                        </div>
+                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
+                            <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                            {{ productView.name }}
+                            <span class="list-products__item__title__suffix">{{ productView.nameSufix }}</span>
+                        </{{ productHeadingTagName|default('h2') }}>
+                        <div class="list-products__item__info dont-print">
+                            <div class="list-products__item__info__availability">
+                                <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
+                                {# TODO: There is no translation, because the text will be dynamic - after programming will be done #}
+                                <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary js-not-implemented-yet">Můžete mít ihned na <strong>5</strong> prodejnách</span>
+                                <strong class="list-products__item__info__detail">
+                                    {{ 'Detail produktu'|trans }}
+                                    <i class="list-products__item__info__detail__icon svg svg-chevron"></i>
+                                </strong>
+                            </div>
+                            {% if productView.sellingPrice is not null %}
+                                <div class="list-products__item__info__price">
+                                    <div class="list-products__item__info__price__item list-products__item__info__price__item--main">
+                                        {% if productView.sellingPrice.priceFrom %}
+                                            {{ 'from %price%'|trans({'%price%': productView.sellingPrice.priceWithVat|price}) }}
+                                        {% else %}
+                                            {{ productView.sellingPrice.priceWithVat|price }}
+                                        {% endif %}
+                                        {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
+                                    </div>
+                                    {% if productView.nonSellingPrice.priceWithVat.isGreaterThan(productView.sellingPrice.priceWithVat) %}
+                                        <div class="list-products__item__info__price__item list-products__item__info__price__item--high-price">
+                                            {{ productView.nonSellingPrice.priceWithVat|price }}
+                                            {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <div class="list-products__item__info__action">
+                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+                        <div class="list-products__item js-list-products-item">
+                <div class="list-products__item__in">
+                    <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
+                        <div class="list-products__item__image dont-print">
+                            {{ image(productView.image, { size: 'list', alt: productView.name }) }}
+                            {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
+                        </div>
+                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
+                            <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                            {{ productView.name }}
+                            <span class="list-products__item__title__suffix">{{ productView.nameSufix }}</span>
+                        </{{ productHeadingTagName|default('h2') }}>
+                        <div class="list-products__item__info dont-print">
+                            <div class="list-products__item__info__availability">
+                                <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
+                                {# TODO: There is no translation, because the text will be dynamic - after programming will be done #}
+                                <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary js-not-implemented-yet">Můžete mít ihned na <strong>5</strong> prodejnách</span>
+                                <strong class="list-products__item__info__detail">
+                                    {{ 'Detail produktu'|trans }}
+                                    <i class="list-products__item__info__detail__icon svg svg-chevron"></i>
+                                </strong>
+                            </div>
+                            {% if productView.sellingPrice is not null %}
+                                <div class="list-products__item__info__price">
+                                    <div class="list-products__item__info__price__item list-products__item__info__price__item--main">
+                                        {% if productView.sellingPrice.priceFrom %}
+                                            {{ 'from %price%'|trans({'%price%': productView.sellingPrice.priceWithVat|price}) }}
+                                        {% else %}
+                                            {{ productView.sellingPrice.priceWithVat|price }}
+                                        {% endif %}
+                                        {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
+                                    </div>
+                                    {% if productView.nonSellingPrice.priceWithVat.isGreaterThan(productView.sellingPrice.priceWithVat) %}
+                                        <div class="list-products__item__info__price__item list-products__item__info__price__item--high-price">
+                                            {{ productView.nonSellingPrice.priceWithVat|price }}
+                                            {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <div class="list-products__item__info__action">
+                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+                        <div class="list-products__item js-list-products-item">
+                <div class="list-products__item__in">
+                    <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
+                        <div class="list-products__item__image dont-print">
+                            {{ image(productView.image, { size: 'list', alt: productView.name }) }}
+                            {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
+                        </div>
+                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
+                            <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                            {{ productView.name }}
+                            <span class="list-products__item__title__suffix">{{ productView.nameSufix }}</span>
+                        </{{ productHeadingTagName|default('h2') }}>
+                        <div class="list-products__item__info dont-print">
+                            <div class="list-products__item__info__availability">
+                                <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
+                                {# TODO: There is no translation, because the text will be dynamic - after programming will be done #}
+                                <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary js-not-implemented-yet">Můžete mít ihned na <strong>5</strong> prodejnách</span>
+                                <strong class="list-products__item__info__detail">
+                                    {{ 'Detail produktu'|trans }}
+                                    <i class="list-products__item__info__detail__icon svg svg-chevron"></i>
+                                </strong>
+                            </div>
+                            {% if productView.sellingPrice is not null %}
+                                <div class="list-products__item__info__price">
+                                    <div class="list-products__item__info__price__item list-products__item__info__price__item--main">
+                                        {% if productView.sellingPrice.priceFrom %}
+                                            {{ 'from %price%'|trans({'%price%': productView.sellingPrice.priceWithVat|price}) }}
+                                        {% else %}
+                                            {{ productView.sellingPrice.priceWithVat|price }}
+                                        {% endif %}
+                                        {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
+                                    </div>
+                                    {% if productView.nonSellingPrice.priceWithVat.isGreaterThan(productView.sellingPrice.priceWithVat) %}
+                                        <div class="list-products__item__info__price__item list-products__item__info__price__item--high-price">
+                                            {{ productView.nonSellingPrice.priceWithVat|price }}
+                                            {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <div class="list-products__item__info__action">
+                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+                        <div class="list-products__item js-list-products-item">
+                <div class="list-products__item__in">
+                    <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
+                        <div class="list-products__item__image dont-print">
+                            {{ image(productView.image, { size: 'list', alt: productView.name }) }}
+                            {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
+                        </div>
+                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
+                            <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                            {{ productView.name }}
+                            <span class="list-products__item__title__suffix">{{ productView.nameSufix }}</span>
+                        </{{ productHeadingTagName|default('h2') }}>
+                        <div class="list-products__item__info dont-print">
+                            <div class="list-products__item__info__availability">
+                                <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
+                                {# TODO: There is no translation, because the text will be dynamic - after programming will be done #}
+                                <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary js-not-implemented-yet">Můžete mít ihned na <strong>5</strong> prodejnách</span>
+                                <strong class="list-products__item__info__detail">
+                                    {{ 'Detail produktu'|trans }}
+                                    <i class="list-products__item__info__detail__icon svg svg-chevron"></i>
+                                </strong>
+                            </div>
+                            {% if productView.sellingPrice is not null %}
+                                <div class="list-products__item__info__price">
+                                    <div class="list-products__item__info__price__item list-products__item__info__price__item--main">
+                                        {% if productView.sellingPrice.priceFrom %}
+                                            {{ 'from %price%'|trans({'%price%': productView.sellingPrice.priceWithVat|price}) }}
+                                        {% else %}
+                                            {{ productView.sellingPrice.priceWithVat|price }}
+                                        {% endif %}
+                                        {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
+                                    </div>
+                                    {% if productView.nonSellingPrice.priceWithVat.isGreaterThan(productView.sellingPrice.priceWithVat) %}
+                                        <div class="list-products__item__info__price__item list-products__item__info__price__item--high-price">
+                                            {{ productView.nonSellingPrice.priceWithVat|price }}
+                                            {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <div class="list-products__item__info__action">
+                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+                        <div class="list-products__item js-list-products-item">
+                <div class="list-products__item__in">
+                    <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
+                        <div class="list-products__item__image dont-print">
+                            {{ image(productView.image, { size: 'list', alt: productView.name }) }}
+                            {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
+                        </div>
+                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
+                            <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                            {{ productView.name }}
+                            <span class="list-products__item__title__suffix">{{ productView.nameSufix }}</span>
+                        </{{ productHeadingTagName|default('h2') }}>
+                        <div class="list-products__item__info dont-print">
+                            <div class="list-products__item__info__availability">
+                                <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
+                                {# TODO: There is no translation, because the text will be dynamic - after programming will be done #}
+                                <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary js-not-implemented-yet">Můžete mít ihned na <strong>5</strong> prodejnách</span>
+                                <strong class="list-products__item__info__detail">
+                                    {{ 'Detail produktu'|trans }}
+                                    <i class="list-products__item__info__detail__icon svg svg-chevron"></i>
+                                </strong>
+                            </div>
+                            {% if productView.sellingPrice is not null %}
+                                <div class="list-products__item__info__price">
+                                    <div class="list-products__item__info__price__item list-products__item__info__price__item--main">
+                                        {% if productView.sellingPrice.priceFrom %}
+                                            {{ 'from %price%'|trans({'%price%': productView.sellingPrice.priceWithVat|price}) }}
+                                        {% else %}
+                                            {{ productView.sellingPrice.priceWithVat|price }}
+                                        {% endif %}
+                                        {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
+                                    </div>
+                                    {% if productView.nonSellingPrice.priceWithVat.isGreaterThan(productView.sellingPrice.priceWithVat) %}
+                                        <div class="list-products__item__info__price__item list-products__item__info__price__item--high-price">
+                                            {{ productView.nonSellingPrice.priceWithVat|price }}
+                                            {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <div class="list-products__item__info__action">
+                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         {% endfor %}
     </div>
 {% endmacro %}
