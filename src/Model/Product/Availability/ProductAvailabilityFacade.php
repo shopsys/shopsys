@@ -153,11 +153,11 @@ class ProductAvailabilityFacade
         $stocksList = [];
         foreach ($productStocks as $productStock) {
             $availabilityInformation = t('Můžete mít <strong class="is-in-stock">ihned</strong>');
-            $availabilityStatus = "in-stock";
+            $availabilityStatus = 'in-stock';
 
             if ($productStock->getProductQuantity() <= 0) {
                 $availabilityInformation = $outOfStockAvailabilityInformation;
-                $availabilityStatus = "out-of-stock";
+                $availabilityStatus = 'out-of-stock';
             }
 
             $stocksList[] = new ProductStockAvailabilityInformation(

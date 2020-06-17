@@ -30,6 +30,7 @@ class ProductStockAvailabilityInformation
      * @param string $stockName
      * @param string $availabilityInformation
      * @param bool $exposedProduct
+     * @param string $availabilityStatus
      */
     public function __construct(string $stockName, string $availabilityInformation, bool $exposedProduct, string $availabilityStatus)
     {
