@@ -150,6 +150,7 @@
     "codeception/phpunit-wrapper": "^7.0",
     "nette/utils": "^2.5",
     "phpstan/phpstan": "^0.11",
+    "psr/event-dispatcher": "0.6.0",
     "symplify/easy-coding-standard-tester": "^5.2.17",
     "symplify/monorepo-builder": "^5.2.17",
     "shopsys/changelog-linker": "^5.5.0",
