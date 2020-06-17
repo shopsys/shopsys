@@ -14,7 +14,13 @@ export default class Accordion {
 
         this.$accordion.find('.js-accordion-header').on('click', function(e) {
             e.preventDefault();
-            $(this).parents($accordion).toggleClass('is-opened');
+            const $accordionToggle = $(this).find('.js-accordion-toggle-text');
+            const accordionToggleText = $(this).parent('.js-accordion').hasClass('is-opened')
+                ? $accordionToggle.data('text-more')
+                : $accordionToggle.data('text-less');
+
+            $(this).parents('.js-accordion').toggleClass('is-opened');
+            $accordionToggle.text(accordionToggleText);
         })
     }
 

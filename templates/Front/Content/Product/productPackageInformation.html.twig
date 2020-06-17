@@ -9,7 +9,13 @@
         <a class="box-accordion__header js-accordion-header" href="#">
             <strong class="box-accordion__heading" id="package-basic-information">{{ 'Informace o balení'|trans }}</strong>
             <span class="box-accordion__header__toggle">
-                <span class="box-accordion__header__toggle__text">{{ 'Zobrazit víc'|trans }}</span>
+                <span
+                    class="box-accordion__header__toggle__text js-accordion-toggle-text"
+                    data-text-more="{{ 'Zobrazit víc'|trans }}"
+                    data-text-less="{{ 'Skrýt'|trans }}"
+                >
+                    {{ 'Zobrazit víc'|trans }}
+                </span>
                 <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
             </span>
         </a>

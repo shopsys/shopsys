@@ -31,10 +31,12 @@
         }
 
         @media @query-lg {
-            width: 100%/3;
+            min-width: 90px;
+            width: 90px;
+            height: 90px;
         }
 
-        @media @query-vl {
+        @media screen and (min-width: 1500px) {
             min-width: 122px;
             width: 122px;
             height: 122px;
@@ -105,7 +107,11 @@
             }
 
             &.slick-next {
-                right: 75px;
+                right: 65px;
+
+                @media screen and (min-width: 1500px) {
+                    right: 75px;
+                }
             }
         }
     }

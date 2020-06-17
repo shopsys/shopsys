@@ -1,0 +1,58 @@
+.box-products-carousel {
+    position: relative;
+
+    @media screen and (min-width: 1600px) {
+        display: flex;
+        justify-content: flex-end;
+        width: 100vw;
+        left: calc(-50vw + 50%);
+    }
+
+    &--detail {
+        margin-bottom: 2rem;
+    }
+
+    &__in {
+        position: relative;
+        width: 100%;
+
+        @media @query-vl {
+            padding-left: 55px;
+        }
+
+        @media screen and (min-width: 1600px) {
+            width: calc(@web-width + ((100vw - @web-width) * 0.5) - @web-padding);
+        }
+
+        &--bg {
+            margin: 3rem 0 1rem;
+            padding: 3rem 0 3rem 3rem;
+
+            border-top-left-radius: @radius;
+            border-bottom-left-radius: @radius;
+            background-color: @color-light-secondary;
+        }
+    }
+
+    .slick-list {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .slick-track {
+        display: flex;
+    }
+
+    .slick-arrow.slick-next {
+        @media @query-mobile {
+            right: 20px;
+        }
+
+        @media screen and (min-width: 1600px) {
+            right: auto;
+            left: calc(@web-width - 70px);
+        }
+    }
+}
+

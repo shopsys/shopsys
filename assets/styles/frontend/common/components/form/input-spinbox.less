@@ -78,8 +78,12 @@
     }
 
     &--big {
-        width: 100px;
+        width: 90px;
         height: 60px;
+
+        @media @query-md {
+            width: 100px;
+        }
 
         .form-input-spinbox__input {
             width: 100%;

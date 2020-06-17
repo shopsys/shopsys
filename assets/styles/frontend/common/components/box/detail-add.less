@@ -11,10 +11,13 @@
 
     &__info {
         @media @query-lg {
+            margin-bottom: 8px;
+        }
+
+        @media screen and (min-width: 1350px) {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 8px;
         }
 
         &__actions {
@@ -25,8 +28,11 @@
 
             @media @query-lg {
                 display: block;
-                margin-top: 0;
                 width: auto;
+            }
+
+            @media screen and (min-width: 1350px) {
+                margin-top: 0;
             }
 
             .form-input-spinbox {

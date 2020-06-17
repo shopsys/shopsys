@@ -10,13 +10,13 @@
     </span>
     {% if type == 'large' %}
         {% if productAvailable == true %}
-            {{ form_widget(form.add, {label: 'Přidat do košíku'|trans, attr: {class: 'btn--success btn--very-large'}}) }}
+            {{ form_widget(form.add, {label: 'Přidat do košíku'|trans, attr: {class: 'btn--success btn--success--cart btn--very-large'}}) }}
         {% else %}
             {{ form_widget(form.add, {label: 'Temporarily sold out'|trans, attr: {class: 'btn--disabled btn--large'}, disabled: 'disabled'}) }}
         {% endif %}
     {% else %}
         {% if productAvailable == true %}
-            {{ form_widget(form.add, {label: 'Přidat do košíku'|trans, attr: {class: 'btn--success'}}) }}
+            {{ form_widget(form.add, {label: 'Přidat do košíku'|trans, attr: {class: 'btn--success btn--success--cart'}}) }}
         {% else %}
             {{ form_widget(form.add, {label: 'Temporarily sold out'|trans, attr: {class: 'btn--disabled'}, disabled: 'disabled'}) }}
         {% endif %}

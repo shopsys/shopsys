@@ -55,6 +55,25 @@
             color: @btn-success-color-hover;
             background: @btn-success-bg-hover;
         }
+
+        &.btn--success--cart {
+            position: relative;
+            padding-right: 55px;
+
+            &::after {
+                position: absolute;
+                right: 15px;
+                top: 10px;
+                width: 32px;
+                height: 32px;
+                content: '';
+
+                background-image: url('@{path-design}/cart-button.svg');
+                background-position: center center;
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
+        }
     }
 
     // primary button
@@ -174,7 +193,11 @@
         padding: @btn-very-large-padding;
 
         font-family: @font-quartenary;
-        font-size: 18px;
+        font-size: 16px;
+
+        @media @query-md {
+            font-size: 18px;
+        }
 
         @media @query-lg {
             padding: @btn-very-large-padding-lg;

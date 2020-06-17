@@ -19,6 +19,7 @@
 
         background-color: @color-primary;
         color: @color-primary;
+        border: 0;
         border-radius: @radius;
         transition: background-color .3s ease-in-out;
         cursor: pointer;
@@ -31,7 +32,7 @@
         &::before {
             position: absolute;
             left: 11px;
-            top: 17px;
+            top: 19px;
             width: 15px;
             height: 3px;
             content: '';
@@ -43,7 +44,7 @@
         &::after {
             position: absolute;
             left: 11px;
-            bottom: 17px;
+            bottom: 19px;
             width: 15px;
             height: 3px;
             content: '';
@@ -66,6 +67,11 @@
 
         &.slick-next {
             right: 0;
+        }
+
+        &.slick-disabled {
+            opacity: 0.25;
+            cursor: default;
         }
     }
 }

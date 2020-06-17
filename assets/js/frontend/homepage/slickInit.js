@@ -42,7 +42,29 @@ export default function slickInit () {
         infinite: false,
         swipeToSlide: true,
         variableWidth: true,
-        speed: 300
+        speed: 300,
+        responsive: [
+          {
+            breakpoint: 1500,
+            settings: {
+              variableWidth: false
+            }
+          },
+          {
+            breakpoint: 1300,
+            settings: {
+              slidesToShow: 3,
+              variableWidth: false
+            }
+          },
+          {
+            breakpoint: 1100,
+            settings: {
+              slidesToShow: 2,
+              variableWidth: false
+            }
+          }
+        ]
     });
 
     $('.js-products-slick-carousel').find('.js-product-list').slick({
@@ -51,13 +73,61 @@ export default function slickInit () {
         dots: false,
         infinite: false,
         swipeToSlide: true,
+        variableWidth: true,
         responsive: [
             {
-              breakpoint: 1024,
+              breakpoint: 1300,
+              settings: {
+                slidesToShow: 2,
+              }
+            },
+            {
+              breakpoint: 1150,
+              settings: {
+                slidesToShow: 1
+              }
+            },
+            {
+              breakpoint: 300,
               settings: {
                 slidesToShow: 1
               }
             }
+          ]
+    });
+
+    $('.js-products-slick-carousel-2').find('.js-product-list').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        dots: false,
+        infinite: false,
+        swipeToSlide: true,
+        variableWidth: true,
+        responsive: [
+            {
+              breakpoint: 1500,
+              settings: {
+                slidesToShow: 5
+              }
+            },
+            {
+              breakpoint: 1300,
+              settings: {
+                slidesToShow: 4
+              }
+            },
+            {
+                breakpoint: 1100,
+                settings: {
+                  slidesToShow: 3
+                }
+              },
+              {
+                breakpoint: 767,
+                settings: {
+                  slidesToShow: 1
+                }
+              }
           ]
     });
 }

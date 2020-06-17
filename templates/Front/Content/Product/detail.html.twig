@@ -18,7 +18,13 @@
     {{ product.getSeoTitle(domain.id)|default(product.fullname) }}
 {% endblock %}
 
+{% block breadcrumb %}
+{% endblock %}
+
 {% block main_content %}
+    <div class="box-detail-breadcrumb">
+        {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+    </div>
     <div itemscope itemtype="http://schema.org/Product">
         <div class="web__line">
             <div class="web__container">
@@ -147,6 +153,28 @@
 
                             {% if not product.isMainVariant %}
                                 <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
+                                    <div class="box-detail-variants js-not-implemented-yet">
+                                        <div class="box-detail-variant">
+                                            <a class="box-detail-variant__link" href="#">
+                                                <span class="box-detail-variant__name">Barva</span>
+                                                <span class="box-detail-variant__value">
+                                                    <i class="box-detail-variant__value__icon" style="background-color: #EE6A6A;"></i>
+                                                    <strong class="box-detail-variant__value__text">Sunset Red</strong>
+                                                </span>
+                                                <span class="box-detail-variant__price">+ 2000 Kč</span>
+                                                <i class="box-detail-variant__toggle svg svg-arrow"></i>
+                                            </a>
+                                        </div>
+                                        <div class="box-detail-variant">
+                                            <a class="box-detail-variant__link" href="#">
+                                                <span class="box-detail-variant__name">Provedení</span>
+                                                <span class="box-detail-variant__value">
+                                                    <strong class="box-detail-variant__value__text">Doprava</strong>
+                                                </span>
+                                                <i class="box-detail-variant__toggle svg svg-arrow"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                     {% if not product.calculatedSellingDenied %}
                                         <div class="box-detail-add__info">
                                             <div itemprop="offers"
@@ -195,42 +223,32 @@
                                 </div>
                             {% endif %}
 
-                            <div class="box-series box-series--standalone box-series--standalone--mini">
-                                <div class="box-series__in">
-                                    <span class="box-series__img">
-                                        <img src="http://127.0.0.1:8000/content/images/product/galleryThumbnail/119.jpg">
-                                    </span>
-                                    <span class="box-series__content">
-                                        <p class="box-series__content__text">{{ 'Prohlédněte si další zboží ze série Lima a sladte svůj domov.' }}</p>
-                                        <a class="box-series__content__link box-detail__info__anchor" href="#productSeriesList">
-                                            Program Lima
-                                            <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--down box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
-                                        </a>
-                                    </span>
-                                </div>
-                            </div>
+                            {% if productSeriesList|length > 0 %}
+                                {% for productSeries in productSeriesList %}
+                                    <div class="box-series box-series--standalone box-series--standalone--mini">
+                                        <div class="box-series__in">
+                                            {% if imageExists(productSeries) %}
+                                                <span class="box-series__img">
+                                                    {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
+                                                </span>
+                                            {% else %}
+                                                <span class="box-series__img">
+                                                    {{ noimage({ alt: productSeries.name }) }}
+                                                </span>
+                                            {% endif %}
+                                            <span class="box-series__content">
+                                                <p class="box-series__content__text js-not-implemented-yet">{{ 'Prohlédněte si další zboží ze série Lima a sladte svůj domov.'|trans }}</p>
+                                                <a class="box-series__content__link box-detail__info__anchor" href="#productSeriesList">
+                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+                                                    <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
-
-                    {#{% if productSeriesList|length > 0 %}
-                        {% for productSeries in productSeriesList %}
-                            <div class="box-series box-series--standalone box-series--standalone--mini">
-                                <a class="box-series__link-wrap" href="#">
-                                    <span class="box-series__img">
-                                    {% if imageExists(productSeries) %}
-                                        {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
-                                    {% else %}
-                                        {{ noimage({ alt: productSeries.name }) }}
-                                    {% endif %}
-                                    </span>
-                                    <span class="box-series__content">
-                                        {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
-                                    </span>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    {% endif %}#}
-
                 </div>
             </div>
         </div>
@@ -303,7 +321,13 @@
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading">{{ 'Popis a parametry'|trans }}</strong>
                             <span class="box-accordion__header__toggle">
-                                <span class="box-accordion__header__toggle__text">{{ 'Zobrazit víc'|trans }}</span>
+                                <span
+                                    class="box-accordion__header__toggle__text js-accordion-toggle-text"
+                                    data-text-more="{{ 'Zobrazit víc'|trans }}"
+                                    data-text-less="{{ 'Skrýt'|trans }}"
+                                >
+                                    {{ 'Skrýt'|trans }}
+                                </span>
                                 <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                             </span>
                         </a>
@@ -350,12 +374,18 @@
                     <a class="box-accordion__header js-accordion-header" href="#">
                         <strong class="box-accordion__heading">{{ 'Rozměry'|trans }}</strong>
                         <span class="box-accordion__header__toggle">
-                            <span class="box-accordion__header__toggle__text">{{ 'Zobrazit víc'|trans }}</span>
+                            <span
+                                class="box-accordion__header__toggle__text js-accordion-toggle-text"
+                                data-text-more="{{ 'Zobrazit víc'|trans }}"
+                                data-text-less="{{ 'Skrýt'|trans }}"
+                            >
+                                {{ 'Zobrazit víc'|trans }}
+                            </span>
                             <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                         </span>
                     </a>
                     <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
-                        <div class="box-accordion__body__content box-accordion__body__content--params">
+                        <div class="box-accordion__body__content box-accordion__body__content--measures">
                             <table class="table table--params">
                                 <thead>
                                     <tr>
@@ -390,8 +420,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="box-accordion__body__content box-accordion__body__content--params">
-                            <img loading="lazy" data-src="{{ asset('public/frontend/images/rooms/obyvaci_pokoj.jpg') }}" alt="{{ 'Obývací pokoj'|trans }}">
+                        <div class="box-accordion__body__content box-accordion__body__content--img">
+                            <img loading="lazy" data-src="{{ asset('public/frontend/images/rozmery.jpg') }}" alt="{{ 'Rozměry'|trans }}">
                         </div>
                     </div>
                 </div>
@@ -399,90 +429,55 @@
                 {% include 'Front/Content/Product/productPackageInformation.html.twig' with {product: product, productPackages: productPackages, doamin: domain } %}
 
                 {% if downloadFiles|length > 0 %}
-                    <div class="box-detail download_files">
-                        <div class="h3" id="download_files">{{ 'Ke stažení'|trans }}</div>
-                        <ul>
-                            {% for downloadFile in downloadFiles %}
-                                <li>
-                                    <a href="{{ downloadFile['url'] }}" download>{{ downloadFile['anchor_text']|trans }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
-
-                <div class="box-accordion js-accordion js-not-implemented-yet">
-                    <a class="box-accordion__header js-accordion-header" href="#">
-                        <strong class="box-accordion__heading">{{ 'Ke stažení'|trans }}</strong>
-                        <span class="box-accordion__header__toggle">
-                            <span class="box-accordion__header__toggle__text">{{ 'Zobrazit víc'|trans }}</span>
-                            <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
-                        </span>
-                    </a>
-                    <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
-                        <div class="box-detail-files">
-                            <a class="box-detail-files__item" href="#">
-                                <span class="box-detail-files__item__name">Montážní návod</span>
-                                <span class="box-detail-files__item__download">
-                                    Stáhnout
-                                    <i class="svg svg-arrow"></i>
+                    <div class="box-accordion js-accordion js-not-implemented-yet">
+                        <a class="box-accordion__header js-accordion-header" href="#">
+                            <strong class="box-accordion__heading">{{ 'Ke stažení'|trans }}</strong>
+                            <span class="box-accordion__header__toggle">
+                                <span
+                                    class="box-accordion__header__toggle__text js-accordion-toggle-text"
+                                    data-text-more="{{ 'Zobrazit víc'|trans }}"
+                                    data-text-less="{{ 'Skrýt'|trans }}"
+                                >
+                                    {{ 'Zobrazit víc'|trans }}
                                 </span>
-                            </a>
-                            <a class="box-detail-files__item" href="#">
-                                <span class="box-detail-files__item__name">Typový plán</span>
-                                <span class="box-detail-files__item__download">
-                                    Stáhnout
-                                    <i class="svg svg-arrow"></i>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                {% if productSeriesList|length > 0 %}
-                    <h2>{{ 'Nábytkové programy'|trans }}</h2>
-                    <div id="productSeriesList">
-                        {% for productSeries in productSeriesList %}
-                            <div class="box">
-                                <div class="series">
-                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
-
-                                    <div class="box-detail__image__main">
-                                        {% if imageExists(productSeries) %}
-                                            <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(productSeries, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' }}">
-                                                {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
-                                            </a>
-                                        {% else %}
-                                            {{ noimage({ alt: productSeries.name }) }}
-                                        {% endif %}
-                                    </div>
-
-                                    {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id]) }}
-                                </div>
+                                <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
+                            </span>
+                        </a>
+                        <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
+                            <div class="box-detail-files">
+                                {% for downloadFile in downloadFiles %}
+                                    <a class="box-detail-files__item" href="{{ downloadFile['url'] }}" download>
+                                        <span class="box-detail-files__item__name">{{ downloadFile['anchor_text']|trans }}</span>
+                                        <span class="box-detail-files__item__download">
+                                            {{ 'Stáhnout'|trans }}
+                                            <i class="box-detail-files__item__download__icon svg svg-download"></i>
+                                        </span>
+                                    </a>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
                 {% endif %}
-
-                {% cache 'products_similar_id_'~product.getId() {lifetime:60*60, domainId:getDomain().id} %}
-                    {% if paginatedSimilarProducts.results|length > 0 %}
-                        <div class="box-detail similar-products">
-                            <div class="h3" id="similar-products">{{ 'Podobné produkty'|trans }}</div>
-                            {% include 'Front/Content/Product/similarProducts.html.twig' with {paginationResult: paginatedSimilarProducts} %}
-                        </div>
-                    {% endif %}
-                {% endcache %}
 
                 {% if productStocksAvailabilitiesInformation|length > 0 %}
-                    <div class="box-accordion js-accordion">
+                    <div class="box-accordion box-accordion--opened-on-mobile js-accordion">
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading" id="stocks-availabilities">{{ 'Dostupnost'|trans }}</strong>
                             <span class="box-accordion__header__toggle">
-                                <span class="box-accordion__header__toggle__text">{{ 'Zobrazit víc'|trans }}</span>
+                                <span
+                                    class="box-accordion__header__toggle__text js-accordion-toggle-text"
+                                    data-text-more="{{ 'Zobrazit víc'|trans }}"
+                                    data-text-less="{{ 'Skrýt'|trans }}"
+                                >
+                                    {{ 'Zobrazit víc'|trans }}
+                                </span>
                                 <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                             </span>
                         </a>
                         <div class="box-accordion__body box-accordion__body--no-spacing js-accordion-body">
+                            <select class="box-accordion__body__input input js-not-implemented-yet">
+                                <option disabled selected>Vyberte prodejnu</option>
+                            </select>
                             <table class="box-accordion__grid-table">
                                 <tbody class="box-accordion__grid-table__body">
                                 {% for productStockAvailabilityInformation in productStocksAvailabilitiesInformation %}
@@ -490,14 +485,22 @@
                                         <th class="box-accordion__grid-table__col">
                                             <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.stockName }}</strong>
                                         </th>
-                                        <td class="box-accordion__grid-table__col js-not-implemented-yet">
-                                            <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-stock.svg') }}" alt="{{ 'Skladem'|trans }}">
+                                        <td class="box-accordion__grid-table__col">
+                                            {% if productStockAvailabilityInformation.availabilityStatus == "in-stock" %}
+                                                <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-stock.svg') }}" alt="{{ 'Skladem'|trans }}">
+                                            {% else %}
+                                                <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-out-of-stock.svg') }}" alt="{{ 'Není skladem'|trans }}">
+                                            {% endif %}
                                             {{ productStockAvailabilityInformation.availabilityInformation|raw }}
                                         </td>
                                         <td class="box-accordion__grid-table__col box-accordion__grid-table__col--expose">
-                                            {{ productStockAvailabilityInformation.exposedProduct
-                                                ? '<strong class="box-accordion__grid-table__col__expose">Vystaveno</strong> na prodejně'|transHtml
-                                                : '<strong class="box-accordion__grid-table__col__expose">Není vystaveno</strong> na prodejně'|transHtml }}
+                                            {% if productStockAvailabilityInformation.exposedProduct %}
+                                                <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/vystaveno.png') }}" alt="{{ 'Vystaveno'|trans }}">
+                                                {{ '<strong class="box-accordion__grid-table__col__expose">Vystaveno</strong> na prodejně'|transHtml }}
+                                            {% else %}
+                                                <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/nevystaveno.png') }}" alt="{{ 'Není vystaveno'|trans }}">
+                                                {{ '<strong class="box-accordion__grid-table__col__expose">Není vystaveno</strong> na prodejně'|transHtml }}
+                                            {% endif %}
                                         </td>
                                         <td class="box-accordion__grid-table__col box-accordion__grid-table__col--showrooms js-not-implemented-yet">
                                             <a class="box-detail__info__anchor" href="#product-desc">
@@ -521,19 +524,72 @@
                         </div>
                     </div>
                 {% endif %}
+
+                {% if productSeriesList|length > 0 %}
+                    <div class="box-detail-series">
+                        {% for productSeries in productSeriesList %}
+                        <div class="box-series box-series--standalone box-series--standalone--large">
+                            <div class="box-series__in">
+                                {% if imageExists(productSeries) %}
+                                    <span class="box-series__img">
+                                        {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
+                                    </span>
+                                {% else %}
+                                    <span class="box-series__img">
+                                        {{ noimage({ alt: productSeries.name }) }}
+                                    </span>
+                                {% endif %}
+                                <span class="box-series__content">
+                                    <h2 class="box-series__heading">{{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}</h2>
+                                    <p class="box-series__content__text js-not-implemented-yet">Jedna obecná věta ke programům – su skvele a zladia ti celu domacnost do stejneho looku. Něco o programu – Lime je retro vintage, cool, dekor bile moreneho dreva pro landhaus vzhled. Program Lima zahrňuje nábytek do ložnice, obýváku, koupelny i zimní zahrady.</p>
+                                    <a class="box-series__content__link box-detail__info__anchor js-not-implemented-yet" href="#">
+                                        {{ 'Zobrazit celý program'|trans }}
+                                        <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="box-products-carousel box-products-carousel--detail">
+                            <div class="box-products-carousel__in box-products-carousel__in--detail">
+                                <div class="list-products-grid js-products-slick-carousel-2">
+                                    {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id]) }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% cache 'products_similar_id_'~product.getId() {lifetime:60*60, domainId:getDomain().id} %}
+                    {% if paginatedSimilarProducts.results|length > 0 %}
+                        <div class="box-detail box-detail--similar">
+                            <h2 class="box-detail__title">{{ 'Podobné produkty'|trans }}</h2>
+                            <div class="box-products-carousel box-products-carousel--detail">
+                                <div class="box-products-carousel__in box-products-carousel__in--detail">
+                                    <div class="list-products-grid js-products-slick-carousel-2">
+                                        {% include 'Front/Content/Product/similarProducts.html.twig' with {paginationResult: paginatedSimilarProducts} %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endcache %}
             </div>
         </div>
 
         {% if categoryList %}
             <div class="web__line web__line--spacing--big">
                 <div class="web__container">
-                    <h2 class="h3">{{ 'Podobné kategorie'|trans }}</h2>
                     <div class="box-detail-cats">
-                        {% for category in categoryList %}
-                            <a class="box-detail-cats__item" href="{{ url('front_product_list', { id: category.id }) }}">
-                                {{ category.name }}
-                            </a>
-                        {% endfor %}
+                        <h2 class="box-detail-cats__heading">{{ 'Podobné kategorie'|trans }}</h2>
+                        <div class="box-detail-cats__wrap">
+                            {% for category in categoryList %}
+                                <a class="box-detail-cats__item" href="{{ url('front_product_list', { id: category.id }) }}">
+                                    <img class="box-detail-cats__item__icon" loading="lazy" data-src="{{ asset('public/frontend/images/category_icon.png') }}" alt="{{ category.name }}">
+                                    {{ category.name }}
+                                </a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>

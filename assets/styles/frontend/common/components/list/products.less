@@ -41,6 +41,8 @@
         padding-left: @list-products-item-gap;
         width: 100% / @list-products-line-count;
 
+        transition: opacity @transition;
+
         @media @query-md {
             width: 100% / @list-products-line-count-md;
             margin-bottom: @list-products-item-gap-md;
@@ -217,20 +219,63 @@
     .slick-list {
         position: relative;
         overflow: hidden;
-        max-width: calc(100% - 140px);
-        margin: auto;
+        width: 100%;
+
+        @media @query-md {
+            max-width: calc(100% - 140px);
+            margin: auto;
+        }
     }
 
     .slick-track {
         display: flex;
     }
 
+    .slick-arrow.slick-next {
+        @media @query-mobile {
+            right: 20px;
+        }
+    }
+
+    .list-products {
+        @media @query-mobile {
+            padding-left: 50px;
+            margin-left: 0;
+        }
+
+        @media @query-md {
+            margin-bottom: 50px;
+        }
+    }
+
     .list-products__item {
         @media @query-mobile {
-            width: 100%;
+            width: 210px;
+            min-width: 210px;
+            max-width: 210px;
+            padding-left: 20px;
+
+            opacity: 0.5;
+
+            &.slick-current {
+                opacity: 1;
+            }
+        }
+
+        @media @query-md {
+            width: calc(50vw - 83px);
+            margin-bottom: 0;
+        }
+
+        @media screen and (min-width: 1440px) {
+            width: 639px;
         }
 
         &__in {
+            @media @query-mobile {
+                padding: 5px;
+            }
+
             @media @query-lg {
                 align-items: flex-start;
                 flex-direction: row;
@@ -262,6 +307,7 @@
 
                 img {
                     max-height: 100%;
+                    max-width: 80%;
                 }
             }
         }
@@ -275,10 +321,20 @@
                 font-weight: 400;
                 font-size: 15px;
                 color: @color-primary;
+
+                &__icon {
+                    color: @color-add-secondary;
+
+                    @media @query-md {
+                        display: none;
+                    }
+                }
             }
 
             &__price {
-                margin-top: 25px;
+                @media @query-md {
+                    margin-top: 25px;
+                }
             }
 
             &__price__item--main {
@@ -288,7 +344,7 @@
             &__action {
                 display: block;
 
-                @media @query-lg {
+                @media screen and (min-width: 1100px) {
                     position: absolute;
                     bottom: 15px;
                     right: 15px;
@@ -297,10 +353,17 @@
 
             .btn--success {
                 padding: 12px 25px;
+                margin-top: 10px;
 
-                font-size: 15px;
+                font-size: 14px;
                 font-family: @font-quartenary;
                 font-weight: 400;
+
+                @media @query-md {
+                    margin-top: 0;
+
+                    font-size: 15px;
+                }
             }
         }
 
