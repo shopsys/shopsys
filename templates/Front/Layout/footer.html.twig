@@ -6,7 +6,9 @@
     {% if getRoute() != 'front_cart' and getRoute() != 'front_order_index'  %}
         <div class="web__line clearfix dont-print">
             <div class="web__container">
-                {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction')) }}
+                {% cache "newsletter_form" {lifetime:60*60*24, domainId:getDomain().id} %}
+                    {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction')) }}
+                {% endcache %}
             </div>
         </div>
         <div class="web__line">
