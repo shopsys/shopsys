@@ -7,8 +7,9 @@
 
         &::before {
             position: absolute;
+            top: -55px;
             left: calc(50% - 1px);
-            height: 100%;
+            height: calc(100% + 55px);
             width: 1px;
             content: '';
 
@@ -117,6 +118,8 @@
             @media @query-md {
                 display: block;
                 flex-grow: 1;
+
+                font-size: 15px;
             }
         }
 
@@ -171,7 +174,8 @@
             overflow: hidden;
 
             @media @query-md {
-                height: 108px;
+                top: -23px;
+                height: 111px;
             }
 
             &__img {

@@ -14,7 +14,7 @@ export default class Login {
             success: function (data) {
                 const $window = new Window({
                     content: data,
-                    textHeading: Translator.trans('Login'),
+                    textHeading: Translator.trans('Přihlášení'),
                     cssClassHeading: 'window-popup__heading',
                     cssClass: 'window-popup--login'
                 });
