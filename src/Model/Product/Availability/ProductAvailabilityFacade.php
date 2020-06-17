@@ -86,6 +86,58 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
+     * @return string
+     */
+    public function getProductAvailableStocksCountInformationByDomainId(Product $product, int $domainId): string
+    {
+        $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
+
+        $count = 0;
+        foreach ($productStocks as $productStock) {
+            if ($productStock->getStock()->getDomainId() === $domainId
+                && $productStock->getStock()->isCentralStock() === false
+                && $productStock->getProductQuantity() > 0
+            ) {
+                $count++;
+            }
+        }
+
+        return tc(
+            '{0}|{1}Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
+            $count,
+            ['%count%' => $count]
+        );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return string
+     */
+    public function getProductCountExposedInStocksInformationByDomainId(Product $product, int $domainId): string
+    {
+        $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
+
+        $count = 0;
+        foreach ($productStocks as $productStock) {
+            if ($productStock->getStock()->getDomainId() === $domainId
+                && $productStock->getStock()->isCentralStock() === false
+                && $productStock->isProductExposed()
+            ) {
+                $count++;
+            }
+        }
+
+        return tc(
+            '{0}|{1}Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
+            $count,
+            ['%count%' => $count]
+        );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return int
      */
     public function calculateProductAvailabilityDaysForDomainId(Product $product, int $domainId): int

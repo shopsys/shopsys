@@ -27,17 +27,29 @@ class ListedProductView extends BaseListedProductView
     private $nonSellingPrice;
 
     /**
+     * @var string|null
+     */
+    private $productAvailableStocksCountInformation;
+
+    /**
+     * @var string|null
+     */
+    private $productCountExposedInStores;
+
+    /**
      * @param int $id
      * @param string $name
      * @param string|null $shortDescription
      * @param string $availability
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $sellingPrice
-     * @param int[] $flagIds
+     * @param array $flagIds
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $action
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
      * @param string|null $namePrefix
      * @param string|null $nameSufix
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null $nonSellingPrice
+     * @param string $productAvailableStocksCountInformation
+     * @param string $productCountExposedInStores
      */
     public function __construct(
         int $id,
@@ -50,13 +62,17 @@ class ListedProductView extends BaseListedProductView
         ?ImageView $image,
         ?string $namePrefix,
         ?string $nameSufix,
-        ?ProductPrice $nonSellingPrice
+        ?ProductPrice $nonSellingPrice,
+        string $productAvailableStocksCountInformation,
+        string $productCountExposedInStores
     ) {
         parent::__construct($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
 
         $this->namePrefix = $namePrefix;
         $this->nameSufix = $nameSufix;
         $this->nonSellingPrice = $nonSellingPrice;
+        $this->productAvailableStocksCountInformation = $productAvailableStocksCountInformation;
+        $this->productCountExposedInStores = $productCountExposedInStores;
     }
 
     /**
@@ -81,5 +97,21 @@ class ListedProductView extends BaseListedProductView
     public function getNonSellingPrice(): ?ProductPrice
     {
         return $this->nonSellingPrice;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductAvailableStocksCountInformation(): ?string
+    {
+        return $this->productAvailableStocksCountInformation;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductCountExposedInStores(): ?string
+    {
+        return $this->productCountExposedInStores;
     }
 }

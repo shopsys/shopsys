@@ -17,8 +17,12 @@
                         <div class="list-products__item__info dont-print">
                             <div class="list-products__item__info__availability">
                                 <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
-                                {# TODO: There is no translation, because the text will be dynamic - after programming will be done #}
-                                <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary js-not-implemented-yet">Můžete mít ihned na <strong>5</strong> prodejnách</span>
+                                {% if productView.productAvailableStocksCountInformation is not empty %}
+                                    <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary">{{ productView.productAvailableStocksCountInformation|raw }}</span>
+                                {% endif %}
+                                {% if productView.productCountExposedInStores is not empty %}
+                                    <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary">{{ productView.productCountExposedInStores|raw }}</span>
+                                {% endif %}
                                 <strong class="list-products__item__info__detail">
                                     {{ 'Detail produktu'|trans }}
                                     <i class="list-products__item__info__detail__icon svg svg-chevron"></i>

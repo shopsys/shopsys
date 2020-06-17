@@ -109,11 +109,15 @@
                             </div>
 
                             <div class="box-detail__info__availability">
-                                <div class="box-detail__info__availability__value js-not-implemented-yet">
+                                <div class="box-detail__info__availability__value">
                                     <span class="box-detail__avail box-detail__avail--{{ productAvailabilityStatus }}">{{ productAvailabilityInformation }}</span>
                                     {% if productAvailabilityStatus == "in-stock" %}
-                                        <span class="box-detail__avail__text">{{ 'Můžete mít ihned na <span class="box-detail__avail__text__strong">8</span> prodejnách'|transHtml }}</span>
-                                        <span class="box-detail__avail__text">{{ 'Můžete si prohlédnout na <span class="box-detail__avail__text__strong">3</span> prodejnách'|transHtml }}</span>
+                                        {% if productAvailableStocksCountInformation is not empty %}
+                                            <span class="box-detail__avail__text">{{ productAvailableStocksCountInformation|raw }}</span>
+                                        {% endif %}
+                                        {% if productCountExposedInStores is not empty %}
+                                            <span class="box-detail__avail__text">{{ productCountExposedInStores|raw }}</span>
+                                        {% endif %}
                                     {% endif %}
                                     <span class="box-detail__avail__icon box-detail__avail__icon--{{ productAvailabilityStatus }}">
                                         {% if productAvailabilityStatus == "in-stock" %}

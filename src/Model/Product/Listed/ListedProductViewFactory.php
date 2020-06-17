@@ -57,7 +57,9 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $imageView,
             $product->getNamePrefix(),
             $product->getNameSufix(),
-            $this->getProductPriceWithVatByMoney($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero())
+            $this->getProductPriceWithVatByMoney($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero()),
+            $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId()),
+            $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId())
         );
     }
 
@@ -81,7 +83,9 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $imageView,
             $productArray['name_prefix'],
             $productArray['name_sufix'],
-            $this->getProductPriceWithVatByMoney($productArray['non_selling_price'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price']))
+            $this->getProductPriceWithVatByMoney($productArray['non_selling_price'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price'])),
+            $productArray['product_available_stocks_count_information'],
+            $productArray['product_count_exposed_in_stores']
         );
     }
 
