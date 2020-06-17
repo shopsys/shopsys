@@ -44,28 +44,26 @@ export default function slickInit () {
         swipeToSlide: true,
         variableWidth: true,
         speed: 300,
-        responsive: [
-          {
+        responsive: [{
             breakpoint: 1500,
             settings: {
-              variableWidth: false
+                variableWidth: false
             }
-          },
-          {
+        },
+        {
             breakpoint: 1300,
             settings: {
-              slidesToShow: 3,
-              variableWidth: false
+                slidesToShow: 3,
+                variableWidth: false
             }
-          },
-          {
+        },
+        {
             breakpoint: 1100,
             settings: {
-              slidesToShow: 2,
-              variableWidth: false
+                slidesToShow: 2,
+                variableWidth: false
             }
-          }
-        ]
+        }]
     });
 
     // Common product grid carousel with cols on desktop
@@ -76,26 +74,24 @@ export default function slickInit () {
         infinite: false,
         swipeToSlide: true,
         variableWidth: true,
-        responsive: [
-          {
+        responsive: [{
             breakpoint: 1300,
             settings: {
-              slidesToShow: 2,
+                slidesToShow: 2
             }
-          },
-          {
+        },
+        {
             breakpoint: 1150,
             settings: {
-              slidesToShow: 1
+                slidesToShow: 1
             }
-          },
-          {
+        },
+        {
             breakpoint: 300,
             settings: {
-              slidesToShow: 1
+                slidesToShow: 1
             }
-          }
-        ]
+        }]
     });
 
     // Common product grid carousel
@@ -106,32 +102,30 @@ export default function slickInit () {
         infinite: false,
         swipeToSlide: true,
         variableWidth: true,
-        responsive: [
-          {
+        responsive: [{
             breakpoint: 1500,
             settings: {
-              slidesToShow: 5
+                slidesToShow: 5
             }
-          },
-          {
+        },
+        {
             breakpoint: 1300,
             settings: {
-              slidesToShow: 4
+                slidesToShow: 4
             }
-          },
-          {
-              breakpoint: 1100,
-              settings: {
+        },
+        {
+            breakpoint: 1100,
+            settings: {
                 slidesToShow: 3
-              }
-            },
-            {
-              breakpoint: 767,
-              settings: {
-                slidesToShow: 1
-              }
             }
-        ]
+        },
+        {
+            breakpoint: 767,
+            settings: {
+                slidesToShow: 1
+            }
+        }]
     });
 }
 
