@@ -13,7 +13,7 @@ export default class SlickCarousel {
         $('.js-gallery-slick-carousel').find('.js-gallery-wrap').slick({
             slidesToShow: 4,
             slidesToScroll: 1,
-            dots: true,
+            dots: false,
             infinite: false,
             swipeToSlide: true,
             variableWidth: true,
@@ -36,7 +36,7 @@ export default class SlickCarousel {
         $('.js-products-slick-carousel-cols').find('.js-product-list').slick({
             slidesToShow: 2,
             slidesToScroll: 1,
-            dots: true,
+            dots: false,
             infinite: false,
             swipeToSlide: true,
             variableWidth: true,
@@ -65,7 +65,7 @@ export default class SlickCarousel {
         $('.js-products-slick-carousel').find('.js-product-list').slick({
             slidesToShow: 5,
             slidesToScroll: 1,
-            dots: true,
+            dots: false,
             infinite: false,
             swipeToSlide: true,
             variableWidth: true,
