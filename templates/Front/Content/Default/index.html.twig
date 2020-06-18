@@ -29,8 +29,8 @@
                                 <div class="box-slider__item">
                                     <a href="{{ item.link }}">
                                         <picture>
-                                            <source media="(max-width: 425px)" srcset="{{ imageUrl(item, null, 'mobile') }}" />
-                                            <source media="(min-width: 425px)" srcset="{{ imageUrl(item, null, 'web') }}" />
+                                            <source media="(max-width: 480px)" srcset="{{ imageUrl(item, null, 'mobile') }}" />
+                                            <source media="(min-width: 481px)" srcset="{{ imageUrl(item, null, 'web') }}" />
                                             <img data-src="{{ imageUrl(item, null, 'web') }}" itemprop="image" class="image-sliderItem-web" />
                                         </picture>
                                     </a>
@@ -52,7 +52,7 @@
                                     </button>
                                 {% endfor %}
                             </div>
-                            <a href="#" class="btn btn--outline btn--block js-not-implemented-yet">{{ 'Všechny akce'|trans }}</a>
+                            <a href="#" class="btn btn--outline btn--outline--slider btn--block js-not-implemented-yet">{{ 'Všechny akce'|trans }}</a>
                         </div>
                     </div>
                 </div>

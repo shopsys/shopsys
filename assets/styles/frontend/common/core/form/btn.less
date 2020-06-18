@@ -107,6 +107,17 @@
         &:hover {
             background-color: @btn-outline-bg-hover;
         }
+
+        &--slider {
+            text-transform: none;
+
+            @media @query-mobile {
+                padding-top: 16px;
+                padding-bottom: 16px;
+
+                font-size: 15px;
+            }
+        }
     }
 
     &--cookies {
@@ -287,6 +298,10 @@
             background-color: lighten(#222631, 10%);
             color: #fff;
         }
+    }
+
+    &--block {
+        display: block;
     }
 
     &--newsletter {

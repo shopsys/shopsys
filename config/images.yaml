@@ -105,9 +105,9 @@
         -   name: mobile
             sizes:
                 -   name: ~
-                    width: 425
+                    width: 480
                     height: ~
-                    crop: true
+                    crop: false
                     occurrence: 'Front-end: Mobile main page slider'
 
 -   name: transport
