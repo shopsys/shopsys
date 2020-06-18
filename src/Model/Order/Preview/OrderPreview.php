@@ -30,7 +30,7 @@ class OrderPreview extends BaseOrderPreview
     private $personalPickupStock;
 
     /**
-     * @array
+     * @var string[]
      */
     private $productsAvailability;
 
@@ -189,7 +189,7 @@ class OrderPreview extends BaseOrderPreview
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getProductsAvailability()
     {

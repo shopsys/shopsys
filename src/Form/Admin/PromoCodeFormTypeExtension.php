@@ -109,12 +109,12 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'required' => true,
             'constraints' => [
                 new Constraints\NotNull([
-                    'message' => t('Identifikátor musí obsahovat dva znaky'),
+                    'message' => 'Identifikátor musí obsahovat dva znaky',
                 ]),
                 new Constraints\Length([
                     'min' => 2,
                     'max' => 2,
-                    'exactMessage' => t('Identifikátor musí obsahovat dva znaky'),
+                    'exactMessage' => 'Identifikátor musí obsahovat dva znaky',
                 ]),
             ],
         ]);
@@ -292,13 +292,13 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                                     'message' => t('Vyplňte prosím množství.'),
+                        'message' => 'Vyplňte prosím množství.',
                     ]),
                     new Positive([
-                                     'message' => t('Vyplňte prosím kladnou hodnotu.'),
+                        'message' => 'Vyplňte prosím kladnou hodnotu.',
                     ]),
                 ],
-                'invalid_message' => t('Zadejte prosím celé číslo.'),
+                'invalid_message' => 'Zadejte prosím celé číslo.',
             ]);
 
         return $builderMassPromoCodeGroup;
