@@ -65,7 +65,7 @@ class ProductStockAvailabilityInformation
     }
 
     /**
-     * @return bool
+     * @return string
      */
     public function getAvailabilityStatus(): string
     {
