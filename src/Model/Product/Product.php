@@ -214,6 +214,7 @@ class Product extends BaseProduct
             $productDomain->setPackagingUnit($productData->packagingUnit[$domainId] !== null ? (int)$productData->packagingUnit[$domainId] : null);
             $productDomain->setCountPackages($productData->countPackages[$domainId] !== null ? (int)$productData->countPackages[$domainId] : null);
             $productDomain->setTotalPackageWeight($productData->totalPackageWeight[$domainId] !== null ? (float)$productData->totalPackageWeight[$domainId] : null);
+            $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
         }
     }
 
@@ -615,6 +616,15 @@ class Product extends BaseProduct
     public function getTotalPackageWeight(int $domainId): ?float
     {
         return $this->getProductDomain($domainId)->getTotalPackageWeight();
+    }
+
+    /**
+     * @param int $domainId
+     * @return bool|null
+     */
+    public function isDomainHidden(int $domainId): ?bool
+    {
+        return $this->getProductDomain($domainId)->isDomainHidden();
     }
 
     /**

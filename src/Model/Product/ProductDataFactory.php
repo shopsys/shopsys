@@ -200,6 +200,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->packagingUnit[$domainId] = null;
             $productData->totalPackageWeight[$domainId] = null;
             $productData->embeddedAccessories[$domainId] = null;
+            $productData->domainHidden[$domainId] = false;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -250,6 +251,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->packagingUnit[$domainId] = $product->getPackagingUnit($domainId);
             $productData->totalPackageWeight[$domainId] = $product->getTotalPackageWeight($domainId);
             $productData->embeddedAccessories[$domainId] = $product->getEmbeddedAccessories($domainId);
+            $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
 
             $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }

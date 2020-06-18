@@ -170,6 +170,11 @@ class ProductData extends BaseProductData
      */
     public $variantParameters;
 
+    /**
+     * @var bool[]|null[]
+     */
+    public $domainHidden;
+
     public function __construct()
     {
         parent::__construct();
@@ -198,5 +203,6 @@ class ProductData extends BaseProductData
         $this->countPackages = [];
         $this->totalPackageWeight = [];
         $this->variantParameters = [];
+        $this->domainHidden = [];
     }
 }

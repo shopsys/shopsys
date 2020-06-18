@@ -61,6 +61,8 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                                 AND pcd.domain_id = pv.domain_id
                                 AND cd.visible = TRUE
                         )
+                        AND 
+                        (pd.domain_hidden = FALSE)
                     )
                     THEN TRUE
                     ELSE FALSE

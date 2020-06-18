@@ -168,6 +168,37 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($productVisibility1->isVisible());
     }
 
+    public function testIsVisibleOnFirstDomainWhenHidden()
+    {
+        $productData = $this->getDefaultProductData();
+        $productData->hidden = false;
+        $productData->domainHidden[Domain::FIRST_DOMAIN_ID] = true;
+        $product = $this->productFacade->create($productData);
+        $this->productPriceRecalculator->runImmediateRecalculations();
+
+        $this->em->flush();
+        $id = $product->getId();
+        $this->em->clear();
+
+        $this->productVisibilityRepository->refreshProductsVisibility();
+
+        /** @var \App\Model\Product\Product $productAgain */
+        $productAgain = $this->em->getRepository(Product::class)->find($id);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility1 */
+        $productVisibility1 = $this->em->getRepository(ProductVisibility::class)->findOneBy([
+            'product' => $productAgain,
+            'pricingGroup' => $pricingGroup->getId(),
+            'domainId' => Domain::FIRST_DOMAIN_ID,
+        ]);
+
+        $this->assertFalse($productAgain->isVisible());
+        $this->assertFalse($productVisibility1->isVisible());
+    }
+
     public function testIsVisibleOnAnyDomainWhenNotHidden()
     {
         $productData = $this->getDefaultProductData();
