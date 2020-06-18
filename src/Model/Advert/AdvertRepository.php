@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Advert;
 
+use App\Model\Category\Category;
 use DateTime;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertRepository as BaseAdvertRepository;
@@ -47,5 +49,32 @@ class AdvertRepository extends BaseAdvertRepository
         return $this->em->createQueryBuilder()
             ->select('a')
             ->from(Advert::class, 'a');
+    }
+
+    /**
+     * @param string $positionName
+     * @param \App\Model\Category\Category $category
+     * @param int $domainId
+     * @return \App\Model\Advert\Advert|null
+     */
+    public function findRandomAdvertByPositionAndCategory(string $positionName, Category $category, int $domainId): ?Advert
+    {
+        $count = $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
+            ->select('COUNT(a)')
+            ->join('a.categories', 'ac', Join::WITH, 'ac = :category')
+            ->setParameter('category', $category)
+            ->getQuery()->getSingleScalarResult();
+
+        // COUNT() returns BIGINT which is hydrated into string on 32-bit architecture
+        if ((int)$count === 0) {
+            return null;
+        }
+
+        return $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
+            ->join('a.categories', 'ac', Join::WITH, 'ac = :category')
+            ->setParameter('category', $category)
+            ->setFirstResult(rand(0, $count - 1))
+            ->setMaxResults(1)
+            ->getQuery()->getSingleResult();
     }
 }

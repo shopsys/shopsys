@@ -144,6 +144,11 @@
                     height: ~
                     crop: false
                     occurrence: 'Front-end: Advertising in cart (above the cart preview)'
+                -   name: productListMiddle
+                    width: 900
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising in middle category (above the product list)'
         -   name: mobile
             sizes:
                 -   name: header
@@ -166,6 +171,11 @@
                     height: ~
                     crop: false
                     occurrence: 'Front-end: Advertising in cart (above the cart preview)'
+                -   name: productListMiddle
+                    width: 425
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising in middle category (above the product list)'
 
 -   name: brand
     class: Shopsys\FrameworkBundle\Model\Product\Brand\Brand
