@@ -153,28 +153,7 @@
 
                             {% if not product.isMainVariant %}
                                 <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
-                                    <div class="box-detail-variants js-not-implemented-yet">
-                                        <div class="box-detail-variant">
-                                            <a class="box-detail-variant__link" href="#">
-                                                <span class="box-detail-variant__name">Barva</span>
-                                                <span class="box-detail-variant__value">
-                                                    <i class="box-detail-variant__value__icon" style="background-color: #EE6A6A;"></i>
-                                                    <strong class="box-detail-variant__value__text">Sunset Red</strong>
-                                                </span>
-                                                <span class="box-detail-variant__price">+ 2000 Kč</span>
-                                                <i class="box-detail-variant__toggle svg svg-arrow"></i>
-                                            </a>
-                                        </div>
-                                        <div class="box-detail-variant">
-                                            <a class="box-detail-variant__link" href="#">
-                                                <span class="box-detail-variant__name">Provedení</span>
-                                                <span class="box-detail-variant__value">
-                                                    <strong class="box-detail-variant__value__text">Doprava</strong>
-                                                </span>
-                                                <i class="box-detail-variant__toggle svg svg-arrow"></i>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
                                     {% if not product.calculatedSellingDenied %}
                                         <div class="box-detail-add__info">
                                             <div itemprop="offers"

@@ -15,6 +15,7 @@ import './Login';
 import './LoginInOrder';
 import './NewsletterSubscriptionForm';
 import './notImplementedYetTooltip';
+import './ProductsCarousel';
 import './PromoCode';
 import './PersonalPickup';
 import './RangeSlider';

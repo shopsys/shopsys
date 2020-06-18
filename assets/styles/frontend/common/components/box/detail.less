@@ -457,6 +457,7 @@
     }
 
     &-variant {
+        position: relative;
         margin-bottom: 0.75rem;
 
         &__link {
@@ -479,6 +480,10 @@
                 text-decoration: none;
                 box-shadow: 0 0 10px 0 rgba(@color-0, .05);
             }
+
+            &--drop {
+                background-color: @color-light-secondary;
+            }
         }
 
         &__name {
@@ -492,6 +497,8 @@
         }
 
         &__value {
+            display: flex;
+            align-items: center;
             flex-grow: 1;
 
             &__text {
@@ -509,6 +516,16 @@
 
                 border-radius: 100%;
             }
+
+            &__img {
+                width: 50px;
+                max-width: 50px;
+                margin-right: 15px;
+
+                img {
+                    display: block;
+                }
+            }
         }
 
         &__price {
@@ -522,6 +539,30 @@
 
         &__toggle {
             font-size: 11px;
+        }
+
+        &__drop {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 70px;
+            width: 100%;
+            margin: 0;
+            padding: 1rem;
+            z-index: 10;
+
+            list-style: none;
+            background-color: @color-f;
+            border-radius: @radius;
+            box-shadow: 0 10px 10px 2px rgba(@color-0, 0.1);
+
+            &__item {
+                margin-bottom: 0.75rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
         }
     }
 }
