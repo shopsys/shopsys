@@ -11,7 +11,7 @@
                     {{ form_widget(form.email, { attr: {placeholder: 'Enter email'|trans, class: 'footer__newsletter__form__input'} }) }}
                     {{ form_errors(form.email) }}
                 </div>
-                {{ form_widget(form.send, { label: 'Odeslat'|trans, attr: { class: "btn btn--primary footer__newsletter__form__btn" }}) }}
+                {{ form_widget(form.send, { label: 'Odeslat'|trans, attr: { class: "btn btn--primary btn--newsletter footer__newsletter__form__btn" }}) }}
             </div>
             {{ form_errors(form, { errors_attr: { class : 'in-message--alert' } }) }}
             <div class="form-description">

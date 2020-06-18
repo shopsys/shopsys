@@ -288,6 +288,32 @@
             color: #fff;
         }
     }
+
+    &--newsletter {
+        position: relative;
+
+        @media @query-mobile {
+            &::before,
+            &::after {
+                position: absolute;
+                left: 19px;
+                top: 14px;
+                width: 12px;
+                height: 3px;
+                text-indent: 0;
+                content: '';
+                transform: rotate(45deg);
+
+                background-color: @color-f;
+            }
+
+            &::after {
+                top: auto;
+                bottom: 14px;
+                transform: rotate(-45deg);
+            }
+        }
+    }
 }
 
 // Button with icon
