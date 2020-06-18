@@ -322,11 +322,12 @@ class ImageFacade extends BaseImageFacade
 
         foreach ($images as $image) {
             $imageToRemove = $this->imageRepository->findById($image->getId());
-            $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
+            $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $image->getType());
             if ($imageToRemove !== null) {
                 $this->em->remove($imageToRemove);
             }
         }
+        $this->em->flush();
     }
 
     /**
