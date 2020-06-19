@@ -73,12 +73,4 @@ class Image extends BaseImage
     {
         $this->processedByKraken = $processedByKraken;
     }
-
-    /**
-     * @return bool
-     */
-    public function isProcessedByKraken(): bool
-    {
-        return $this->processedByKraken;
-    }
 }
