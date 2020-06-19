@@ -86,34 +86,6 @@
                                                 {{ product.catnum }}
                                             </dd>
                                         {% endif %}
-
-                                        {% if product.partno %}
-                                            <dt>
-                                                {{ 'Serial number'|trans }}
-                                            </dt>
-                                            <dd>
-                                                {{ product.partno }}
-                                            </dd>
-                                        {% endif %}
-
-                                        {% if product.ean %}
-                                            <dt>
-                                                {{ 'EAN'|trans }}
-                                            </dt>
-                                            <dd>
-                                                {{ product.ean }}
-                                            </dd>
-                                        {% endif %}
-                                    {% endif %}
-                                    {% if product.brand %}
-                                        <dt>
-                                            {{ 'Brand'|trans }}
-                                        </dt>
-                                        <dd>
-                                            <a href="{{ url('front_brand_detail', { id: product.brand.id }) }}">
-                                                <span itemprop="brand">{{ product.brand.name }}</span>
-                                            </a>
-                                        </dd>
                                     {% endif %}
                                 </dl>
                             {% endapply %}
