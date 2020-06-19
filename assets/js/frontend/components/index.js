@@ -25,6 +25,7 @@ import './ResponsiveToggle';
 import './responsiveTooltip';
 import './safariDetection';
 import './SearchAutocomplete';
+import './SmoothScroll';
 import './ResetCustomerpassword';
 import './spinbox';
 import './popup';

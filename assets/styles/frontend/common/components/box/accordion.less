@@ -11,6 +11,7 @@
     border-radius: @radius;
     background-color: @box-accordion-bg-color;
     transition: box-shadow @transition;
+    outline: 0;
 
     @media @query-lg {
         margin-bottom: 2rem;
@@ -130,12 +131,23 @@
                 }
             }
 
+            .box-accordion__body__content--measures {
+                flex-grow: 1;
+            }
+
             .box-accordion__body__content--img {
                 @media @query-lg {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     padding-left: 30px;
-                    margin-bottom: 40px;
                     flex-grow: 1;
+                    min-height: 645px;
+                    max-width: 645px;
                     text-align: right;
+
+                    border: 1px solid @color-border-lighter;
+                    border-radius: @radius;
                 }
             }
         }

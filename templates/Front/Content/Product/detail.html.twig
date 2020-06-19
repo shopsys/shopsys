@@ -98,7 +98,7 @@
                                     <li class="box-detail-list__item">Polohovatelné opěrky hlavy</li>
                                     <li class="box-detail-list__item">Potažená záda</li>
                                     <li class="box-detail-list__item box-detail-list__item--anchor">
-                                        <a class="box-detail__info__anchor" href="#product-desc">
+                                        <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#product-desc">
                                             <span class="box-detail__info__anchor__underline">{{ 'Celý popis'|trans }}</span>
                                             <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--down box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
                                         </a>
@@ -116,7 +116,7 @@
                                     </span>
                                 </div>
                                 <div class="box-detail__info__availability__anchor">
-                                    <a class="box-detail__info__anchor" href="#stocks-availabilities">
+                                    <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#stocks-availabilities">
                                         {{ 'Dostupnost'|trans }}
                                         <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
                                     </a>
@@ -188,8 +188,14 @@
                                                 </span>
                                             {% endif %}
                                             <span class="box-series__content">
-                                                <p class="box-series__content__text js-not-implemented-yet">{{ 'Prohlédněte si další zboží ze série Lima a sladte svůj domov.'|trans }}</p>
-                                                <a class="box-series__content__link box-detail__info__anchor" href="#productSeriesList">
+                                                <p class="box-series__content__text">
+                                                    {{ 'Prohlédněte si další zboží ze série'|trans }}
+                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+                                                    {{ ' a slaďte svůj domov'|trans }}
+                                                </p>
+                                                <a
+                                                    class="box-series__content__link box-detail__info__anchor js-smooth-scroll-anchor"
+                                                    href="#series-{{ productSeries.name }}">
                                                     {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
                                                     <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
                                                 </a>
@@ -268,7 +274,7 @@
                 {% set productParameterValues = getProductParameterValues(product) %}
 
                 {% if product.getDescription(domain.id)%}
-                    <div class="box-accordion js-accordion is-opened">
+                    <div class="box-accordion js-accordion is-opened" id="product-desc">
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading">{{ 'Popis a parametry'|trans }}</strong>
                             <span class="box-accordion__header__toggle">
@@ -411,7 +417,7 @@
                 {% endif %}
 
                 {% if productStocksAvailabilitiesInformation|length > 0 %}
-                    <div class="box-accordion box-accordion--opened-on-mobile js-accordion">
+                    <div class="box-accordion box-accordion--opened-on-mobile is-opened js-accordion" id="stocks-availabilities">
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading" id="stocks-availabilities">{{ 'Dostupnost'|trans }}</strong>
                             <span class="box-accordion__header__toggle">
@@ -420,7 +426,7 @@
                                     data-text-more="{{ 'Zobrazit víc'|trans }}"
                                     data-text-less="{{ 'Skrýt'|trans }}"
                                 >
-                                    {{ 'Zobrazit víc'|trans }}
+                                    {{ 'Skrýt'|trans }}
                                 </span>
                                 <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                             </span>
@@ -479,34 +485,34 @@
                 {% if productSeriesList|length > 0 %}
                     <div class="box-detail-series">
                         {% for productSeries in productSeriesList %}
-                        <div class="box-series box-series--standalone box-series--standalone--large">
-                            <div class="box-series__in">
-                                {% if imageExists(productSeries) %}
-                                    <span class="box-series__img">
-                                        {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
+                            <div class="box-series box-series--standalone box-series--standalone--large" id="series-{{ productSeries.name }}">
+                                <div class="box-series__in">
+                                    {% if imageExists(productSeries) %}
+                                        <span class="box-series__img">
+                                            {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
+                                        </span>
+                                    {% else %}
+                                        <span class="box-series__img">
+                                            {{ noimage({ alt: productSeries.name }) }}
+                                        </span>
+                                    {% endif %}
+                                    <span class="box-series__content">
+                                        <h2 class="box-series__heading">{{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}</h2>
+                                        <p class="box-series__content__text">{{ productSeries.getDescription }}</p>
+                                        <a class="box-series__content__link box-detail__info__anchor" href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
+                                            {{ 'Zobrazit celý program'|trans }}
+                                            <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
+                                        </a>
                                     </span>
-                                {% else %}
-                                    <span class="box-series__img">
-                                        {{ noimage({ alt: productSeries.name }) }}
-                                    </span>
-                                {% endif %}
-                                <span class="box-series__content">
-                                    <h2 class="box-series__heading">{{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}</h2>
-                                    <p class="box-series__content__text js-not-implemented-yet">Jedna obecná věta ke programům – su skvele a zladia ti celu domacnost do stejneho looku. Něco o programu – Lime je retro vintage, cool, dekor bile moreneho dreva pro landhaus vzhled. Program Lima zahrňuje nábytek do ložnice, obýváku, koupelny i zimní zahrady.</p>
-                                    <a class="box-series__content__link box-detail__info__anchor js-not-implemented-yet" href="#">
-                                        {{ 'Zobrazit celý program'|trans }}
-                                        <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
-                                    </a>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="box-products-carousel box-products-carousel--detail">
-                            <div class="box-products-carousel__in box-products-carousel__in--detail">
-                                <div class="list-products-grid js-products-slick-carousel">
-                                    {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id]) }}
                                 </div>
                             </div>
-                        </div>
+                            <div class="box-products-carousel box-products-carousel--detail">
+                                <div class="box-products-carousel__in box-products-carousel__in--detail">
+                                    <div class="list-products-grid js-products-slick-carousel">
+                                        {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id]) }}
+                                    </div>
+                                </div>
+                            </div>
                         {% endfor %}
                     </div>
                 {% endif %}
