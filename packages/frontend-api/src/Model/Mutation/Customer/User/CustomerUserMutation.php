@@ -15,12 +15,12 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
-use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
+use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
-class CustomerUserMutation implements MutationInterface, AliasedInterface
+class CustomerUserMutation extends BaseTokenMutation implements MutationInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
@@ -41,11 +41,6 @@ class CustomerUserMutation implements MutationInterface, AliasedInterface
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade
      */
     protected $customerUserRefreshTokenChainFacade;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    protected $tokenStorage;
 
     /**
      * @var \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory
@@ -75,11 +70,12 @@ class CustomerUserMutation implements MutationInterface, AliasedInterface
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         CustomerUserFacade $customerUserFacade
     ) {
+        parent::__construct($tokenStorage);
+
         $this->frontendCustomerUserProvider = $frontendCustomerUserProvider;
         $this->userPasswordEncoder = $userPasswordEncoder;
         $this->customerUserPasswordFacade = $customerUserPasswordFacade;
         $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
-        $this->tokenStorage = $tokenStorage;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerUserFacade = $customerUserFacade;
     }
@@ -91,6 +87,8 @@ class CustomerUserMutation implements MutationInterface, AliasedInterface
      */
     public function changePassword(Argument $argument, InputValidator $validator): CustomerUser
     {
+        $this->runCheckUserIsLogged();
+
         $validator->validate();
         $input = $argument['input'];
 
@@ -116,19 +114,9 @@ class CustomerUserMutation implements MutationInterface, AliasedInterface
      */
     public function changePersonalData(Argument $argument, InputValidator $validator): CustomerUser
     {
+        $user = $this->runCheckUserIsLogged();
+
         $validator->validate();
-        $token = $this->tokenStorage->getToken();
-
-        if ($token === null) {
-            throw new UserError('Token is not valid.');
-        }
-
-        /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $user */
-        $user = $token->getUser();
-
-        if (!($user instanceof FrontendApiUser)) {
-            throw new UserError('Token is not valid.');
-        }
 
         $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUserWithArgument($customerUser, $argument);
