@@ -41,7 +41,7 @@ class ProductSeriesProductFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param array $productSeriesCodeList
+     * @param string[] $productSeriesCodeList
      */
     public function editProductSeriesProductRelation(Product $product, array $productSeriesCodeList): void
     {
