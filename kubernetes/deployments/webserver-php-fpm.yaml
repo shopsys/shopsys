@@ -6,7 +6,7 @@ metadata:
         app: webserver-php-fpm
 spec:
     progressDeadlineSeconds: 3000
-    replicas: 2
+    replicas: 1
     strategy:
         rollingUpdate:
             maxSurge: 2
