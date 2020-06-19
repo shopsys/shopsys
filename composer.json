@@ -53,7 +53,7 @@
         "fzaninotto/faker": "^1.7.1",
         "gopay/payments-sdk-php": "^1.4",
         "guzzlehttp/guzzle": "~6.0",
-        "helios-ag/fm-elfinder-bundle": "^9.2",
+        "helios-ag/fm-elfinder-bundle": "10.0.4 as 9.3.2",
         "heureka/overeno-zakazniky": "^2.0.6",
         "http-interop/http-factory-guzzle": "^1.0",
         "incenteev/composer-parameter-handler": "^2.1.3",

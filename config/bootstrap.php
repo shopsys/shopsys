@@ -64,3 +64,5 @@ $_SERVER['APP_DEBUG'] = $_ENV['APP_DEBUG'] = (int) $_SERVER['APP_DEBUG'] || filt
 if($_SERVER['APP_ENV'] === 'test'){
     ini_set('memory_limit', '768MB');
 }
+
+define('ELFINDER_IMAGEMAGICK_PS', false);

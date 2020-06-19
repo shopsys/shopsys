@@ -649,3 +649,5 @@ services:
     FOS\CKEditorBundle\Config\CKEditorConfigurationInterface: '@fos_ck_editor.configuration'
 
     App\Component\SeoHelper\SeoHelper: ~
+
+    App\Command\ElFinderPostInstallCommand: ~

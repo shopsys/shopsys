@@ -78,4 +78,25 @@
         </if>
     </target>
 
+    <target name="assets" description="Installs web assets from external bundles into a public web directory.">
+        <delete failonerror="false" includeemptydirs="true">
+            <fileset dir="${path.root}/web/bundles/">
+                <exclude name="/"/>
+            </fileset>
+        </delete>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="assets:install"/>
+            <arg value="${path.root}/web/"/>
+        </exec>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="elfinder:install"/>
+        </exec>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:elfinder:postinstall"/>
+        </exec>
+    </target>
+
 </project>
