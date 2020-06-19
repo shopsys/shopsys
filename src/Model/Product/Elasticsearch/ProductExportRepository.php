@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Elasticsearch;
 
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -37,6 +38,11 @@ class ProductExportRepository extends BaseProductExportRepository
     private $productAvailabilityFacade;
 
     /**
+     * @var \App\Model\Product\Parameter\ParameterFacade
+     */
+    private $parameterFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -45,6 +51,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -54,7 +61,8 @@ class ProductExportRepository extends BaseProductExportRepository
         Domain $domain,
         ProductVisibilityRepository $productVisibilityRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade
+        ProductAvailabilityFacade $productAvailabilityFacade,
+        ParameterFacade $parameterFacade
     ) {
         parent::__construct(
             $em,
@@ -66,6 +74,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $friendlyUrlFacade
         );
         $this->productAvailabilityFacade = $productAvailabilityFacade;
+        $this->parameterFacade = $parameterFacade;
     }
 
     /**
@@ -84,6 +93,8 @@ class ProductExportRepository extends BaseProductExportRepository
         $detailUrl = $this->extractDetailUrl($domainId, $product);
         $variantIds = $this->extractVariantIds($product);
         $highPriceWithVat = $product->getHighPriceWithVat($domainId);
+        $variantsParametersSetup = $product->isMainVariant() ? $this->parameterFacade->getVariantsSetupForElasticByMainProduct($product, $locale) : null;
+        $parameters = $this->appendVariantParametersToMainVariantParameters($parameters, $variantsParametersSetup);
 
         return [
             'id' => $product->getId(),
@@ -119,7 +130,44 @@ class ProductExportRepository extends BaseProductExportRepository
             'is_sale_exclusion' => $product->getSaleExclusion($domainId),
             'product_available_stocks_count_information' => $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
             'product_count_exposed_in_stores' => $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),
+            'variants_parameters_setup' => $variantsParametersSetup,
         ];
+    }
+
+    /**
+     * @param array $parameters
+     * @param array|null $variantsParametersSetup
+     * @return array
+     */
+    private function appendVariantParametersToMainVariantParameters(array $parameters, ?array $variantsParametersSetup): array
+    {
+        if ($variantsParametersSetup === null) {
+            return $parameters;
+        }
+
+        $parameterValuesIndexedByParameterId = [];
+        foreach ($parameters as $parameterValuePair) {
+            $parameterValuesIndexedByParameterId[$parameterValuePair['parameter_id']][] = $parameterValuePair['parameter_value_id'];
+        }
+
+        foreach ($variantsParametersSetup as $variantParameterSetup) {
+            foreach ($variantParameterSetup['parameter_values_setup'] as $parameterValuesSetup) {
+                $parameterValuesIndexedByParameterId[$parameterValuesSetup['parameter_id']][] = $parameterValuesSetup['parameter_value_id'];
+            }
+        }
+
+        $parameters = [];
+        foreach ($parameterValuesIndexedByParameterId as $parameterId => $parameterValueIds) {
+            $parameterValueIds = array_unique($parameterValueIds);
+            foreach ($parameterValueIds as $parameterValueId) {
+                $parameters[] = [
+                    'parameter_id' => $parameterId,
+                    'parameter_value_id' => $parameterValueId,
+                ];
+            }
+        }
+
+        return $parameters;
     }
 
     /**

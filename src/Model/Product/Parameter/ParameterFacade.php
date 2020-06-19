@@ -276,4 +276,31 @@ class ParameterFacade extends BaseParameterFacade
 
         return $variantSetupKeyMap;
     }
+
+    /**
+     * @param \App\Model\Product\Product $mainProduct
+     * @param string $locale
+     * @return array
+     */
+    public function getVariantsSetupForElasticByMainProduct(Product $mainProduct, string $locale): array
+    {
+        $data = $this->parameterRepository->getVariantProductParameterValuesData($mainProduct, $locale);
+
+        $variantSetup = [];
+        foreach ($data as $variantParameterValue) {
+            $variantSetup[$variantParameterValue['ppv_product_id']][] = [
+                'parameter_id' => $variantParameterValue['ppv_parameter_id'],
+                'parameter_value_id' => $variantParameterValue['ppv_value_id'],
+            ];
+        }
+        $variantsSetupForElastic = [];
+        foreach ($variantSetup as $variantId => $paramterValuesList) {
+            $variantsSetupForElastic[] = [
+                'variant_id' => $variantId,
+                'parameter_values_setup' => $paramterValuesList,
+            ];
+        }
+
+        return $variantsSetupForElastic;
+    }
 }

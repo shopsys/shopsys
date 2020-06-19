@@ -320,6 +320,25 @@
       },
       "product_count_exposed_in_stores": {
         "type": "text"
+      },
+      "variants_parameters_setup": {
+        "type": "nested",
+        "properties": {
+          "variant_id": {
+            "type": "integer"
+          },
+          "parameter_values_setup": {
+            "type": "nested",
+            "properties": {
+              "parameter_id": {
+                "type": "integer"
+              },
+              "parameter_value_id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
       }
     }
   }

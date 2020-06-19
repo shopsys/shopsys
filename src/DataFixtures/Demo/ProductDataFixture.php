@@ -3318,12 +3318,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245937';
 
+        $parameterTranslations = [];
+
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('51,5” Hyundai 22HD44D', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], 'dataFixtures', $domain->getLocale());
+
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('51,5"', [], 'dataFixtures', $locale), $locale, $i);
         }
+
+        $this->setParametersByTranslations($productData, $parameterTranslations);
 
         $this->setPriceForAllPricingGroups($productData, '4899');
 
@@ -3353,12 +3359,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245938';
 
+        $parameterTranslations = [];
+
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('60” Hyundai 22HD44D', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A ', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], 'dataFixtures', $domain->getLocale());
+
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('60"', [], 'dataFixtures', $locale), $locale, $i);
         }
+
+        $this->setParametersByTranslations($productData, $parameterTranslations);
 
         $this->setPriceForAllPricingGroups($productData, '5999');
 
@@ -3474,6 +3486,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = '32PFL4400';
         $productData->ean = '8845781243205';
 
+        $parameterTranslations = [];
+
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('32” Hyundai 32PFL4400', [], 'dataFixtures', $locale);
@@ -3515,12 +3529,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245938';
 
+        $parameterTranslations = [];
+
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Hyundai 22HD44D', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A ', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A ', [], 'dataFixtures', $domain->getLocale());
+
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('22"', [], 'dataFixtures', $locale), $locale, $i);
         }
+
+        $this->setVariantParametersByTranslations($productData, $parameterTranslations, 1);
 
         $this->setPriceForAllPricingGroups($productData, '5999');
 
@@ -6225,15 +6245,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param \App\Model\Product\ProductData $productData
      * @param array $parametersTranslations
+     * @param int $countVariantParams
      */
-    private function setVariantParametersByTranslations(ProductData $productData, array $parametersTranslations): void
+    private function setVariantParametersByTranslations(ProductData $productData, array $parametersTranslations, int $countVariantParams = 2): void
     {
         $count = 0;
         foreach ($parametersTranslations as $parameterTranslations) {
             $count++;
             $parameter = $this->findParameterByNamesOrCreateNew($parameterTranslations['names'], $parameterTranslations['group_name']);
             $productData->variantParameters[$parameter->getId()] = $parameter;
-            if ($count === 2) {
+            if ($count === $countVariantParams) {
                 break;
             }
         }

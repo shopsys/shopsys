@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Filter;
 
 use App\Model\Category\CategoryParameter;
+use App\Model\Product\Product;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -32,7 +33,9 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
      */
     public function getParameterFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
     {
-        $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
+
+        //sellable means product type none and variant
+        $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
             $category
