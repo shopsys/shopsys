@@ -91,10 +91,14 @@
             <div class="web__container">
                 <div class="box-products-carousel box-products-carousel--bg" id="top-products">
                     <div class="box-products-carousel__in box-products-carousel__in--bg">
-                        <h2>{{ 'Výprodej'|trans }}</h2>
+                        <h2 class="box-products-carousel__heading">
+                            <img class="box-products-carousel__heading__icon" loading="lazy" src="" data-src="{{ asset('public/frontend/images/sale-big.png') }}" alt="{{ 'Výprodej'|trans }}">
+                            {{ 'Výprodej'|trans }}
+                        </h2>
                         <div class="list-products-grid js-products-slick-carousel">
                             {{ productList.list(topProducts, null, 'h3') }}
                         </div>
+                        <a class="box-products-carousel__in__btn btn btn--secondary js-not-implemented-yet" href="#">{{ 'Všechny produkty'|trans }}</a>
                     </div>
                 </div>
             </div>
