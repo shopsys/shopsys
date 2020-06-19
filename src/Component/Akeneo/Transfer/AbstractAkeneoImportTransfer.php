@@ -169,4 +169,9 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
     {
         return 'Akeneo';
     }
+
+    /**
+     * @return string
+     */
+    abstract public function getTransferIdentifier(): string;
 }

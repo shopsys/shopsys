@@ -217,3 +217,20 @@ front_login_in_order_ajax:
     defaults:
         _controller: App\Controller\Front\LoginController:loginInOrderAction
     methods: [POST]
+
+front_promo_code_management:
+    path: /slevove-kupony/
+    defaults:
+        _controller: App\Controller\Front\PromoCodeController:indexManagementAction
+
+front_promo_code_management_find_and_validate:
+    path: /promo-code/find-and-validate/
+    defaults:
+        _controller: App\Controller\Front\PromoCodeController:findAndValidateAction
+    methods: [POST]
+
+front_promo_code_management_use_code:
+    path: /promo-code/use-code/
+    defaults:
+        _controller: App\Controller\Front\PromoCodeController:usePromoCodeAction
+    methods: [POST]

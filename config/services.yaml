@@ -83,6 +83,11 @@ services:
 
     App\Model\Product\Series\ProductSeriesFacade: ~
 
+    App\Component\PromoCode\HttpBasicAuthOrByIpAccessAuthenticator:
+        arguments:
+            - '@monolog.logger.cron'
+            - "%promo_code_manage_page_config%"
+
     App\Model\Product\Series\ProductSeriesFacadeInterface: '@App\Model\Product\Series\ProductSeriesFacade'
 
     App\Model\Product\Series\ProductSeriesFactory: ~

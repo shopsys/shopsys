@@ -2,6 +2,7 @@ import './AjaxMoreLoader';
 import './CategoryPanel';
 import './cookieInit';
 import './filterAllNodes';
+import './ManagePromoCodeFrontend';
 import './pushReloadState';
 import './HoverIntent';
 import './honeyPot';

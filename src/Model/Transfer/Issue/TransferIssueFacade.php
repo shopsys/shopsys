@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Transfer\Issue;
 
+use App\Model\Transfer\Transfer;
 use App\Model\Transfer\TransferRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -88,5 +89,19 @@ class TransferIssueFacade
 
         $transferIssue->setDeletedAt(new DateTime());
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Transfer\Issue\TransferIssueData $transferIssueData
+     * @param \App\Model\Transfer\Transfer $transfer
+     * @return \App\Model\Transfer\Issue\TransferIssue
+     */
+    public function create(TransferIssueData $transferIssueData, Transfer $transfer): TransferIssue
+    {
+        $transferIssue = new TransferIssue($transfer, $transferIssueData);
+        $this->em->persist($transferIssue);
+        $this->em->flush();
+
+        return $transferIssue;
     }
 }
