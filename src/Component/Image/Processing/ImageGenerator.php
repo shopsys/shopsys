@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Component\Image\Processing;
 
 use App\Component\Image\Kraken\Processing\ImageKrakenProcessor;
-use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
@@ -27,29 +26,21 @@ class ImageGenerator extends BaseImageGenerator
     private $imageKrakenProcessor;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \App\Component\Image\Config\ImageConfig $imageConfig
      * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \App\Component\Image\Kraken\Processing\ImageKrakenProcessor $imageKrakenProcessor
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         ImageProcessor $imageProcessor,
         ImageLocator $imageLocator,
         ImageConfig $imageConfig,
         FilesystemInterface $filesystem,
-        ImageKrakenProcessor $imageKrakenProcessor,
-        EntityManagerInterface $em
+        ImageKrakenProcessor $imageKrakenProcessor
     ) {
         parent::__construct($imageProcessor, $imageLocator, $imageConfig, $filesystem);
         $this->imageKrakenProcessor = $imageKrakenProcessor;
-        $this->em = $em;
     }
 
     /**
@@ -66,12 +57,7 @@ class ImageGenerator extends BaseImageGenerator
         $sizeConfig = $this->imageConfig->getImageSizeConfigByImage($image, $sizeName);
 
         if ($this->imageKrakenProcessor->isEnabled()) {
-            if ($image->isProcessedByKraken() === false) {
-                $this->processImageInKraken($sourceImageFilepath, $targetImageFilepath, $sizeConfig);
-                $image->setProcessedByKraken(true);
-                $this->em->persist($image);
-                $this->em->flush();
-            }
+            $this->processImageInKraken($sourceImageFilepath, $targetImageFilepath, $sizeConfig);
         } else {
             $this->processImageInFramework($sourceImageFilepath, $targetImageFilepath, $sizeConfig);
         }
