@@ -42,6 +42,8 @@ yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/webserver-php-fpm.y
 yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/webserver-php-fpm.yaml" "metadata.name" $NEW_APP_NAME
 yq write --inplace "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-deploy/kustomization.yaml" "patchesJson6902[0].target.name" $NEW_APP_NAME
 yq write --inplace "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/first-deploy/kustomization.yaml" "patchesJson6902[0].target.name" $NEW_APP_NAME
+yq write --inplace "${CONFIGURATION_TARGET_PATH}/horizontalPodAutoscaler/webserver-php-fpm.yaml" "metadata.name" $NEW_APP_NAME
+yq write --inplace "${CONFIGURATION_TARGET_PATH}/horizontalPodAutoscaler/webserver-php-fpm.yaml" "spec.scaleTargetRef.name" $NEW_APP_NAME
 
 echo "Apply kubernetes configuration"
 if [ $FIRST_DEPLOY -eq "0" ]; then
@@ -76,12 +78,14 @@ if [ $EXIT_CODE -eq "0" ]; then
     if [[ $OLD_APP_VERSION != $NEW_APP_VERSION ]]; then
         kubectl patch service --namespace=${PROJECT_NAME} webserver-php-fpm -p "{\"spec\":{\"selector\":{\"version\":\"${NEW_APP_VERSION}\"}}}"
         kubectl delete deployment $OLD_APP_NAME --namespace=${PROJECT_NAME}
+        kubectl delete hpa $OLD_APP_NAME --namespace=${PROJECT_NAME}
     fi
     DEPLOYED_WEBSERVER_PHP_FPM_PODS_STRING=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l version=${NEW_APP_VERSION} -o=jsonpath='{.items[*].metadata.name}')
 else
     echo "Deploy failed"
     DEPLOYED_WEBSERVER_PHP_FPM_PODS_STRING=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=!Running -l version=${NEW_APP_VERSION} -o=jsonpath='{.items[*].metadata.name}')
     kubectl delete deployment $NEW_APP_NAME --namespace=${PROJECT_NAME}
+    kubectl delete hpa $NEW_APP_NAME --namespace=${PROJECT_NAME}
 fi
 
 read -r -a DEPLOYED_WEBSERVER_PHP_FPM_PODS <<< $DEPLOYED_WEBSERVER_PHP_FPM_PODS_STRING

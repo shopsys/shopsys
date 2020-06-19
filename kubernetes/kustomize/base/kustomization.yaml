@@ -10,6 +10,7 @@ resources:
     - ../../namespace.yaml
     - ../../configmap/nginx.yaml
     - ../../configmap/redis-health.yaml
+    - ../../horizontalPodAutoscaler/webserver-php-fpm.yaml
 namespace: "{{PROJECT_NAME}}"
 configMapGenerator:
     -   name: domains-urls

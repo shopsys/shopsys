@@ -6,11 +6,7 @@ metadata:
         app: webserver-php-fpm
 spec:
     progressDeadlineSeconds: 3000
-    replicas: 1
     strategy:
-        rollingUpdate:
-            maxSurge: 2
-            maxUnavailable: 0
         type: RollingUpdate
     selector:
         matchLabels:
@@ -63,6 +59,11 @@ spec:
             containers:
                 -   image: "{{TAG}}"
                     name: php-fpm
+                    resources:
+                        limits:
+                            cpu: "{{K8S_DEPLOY_PHPFPM_CPU_LIMIT}}"
+                        requests:
+                            cpu: "{{K8S_DEPLOY_PHPFPM_CPU_REQUEST}}"
                     securityContext:
                         runAsUser: 33
                     imagePullPolicy: Always
@@ -99,6 +100,11 @@ spec:
                             value: "{{ELASTIC_SEARCH_INDEX_PREFIX}}"
                 -   image: nginx:1.13.10-alpine
                     name: webserver
+                    resources:
+                        limits:
+                            cpu: "{{K8S_DEPLOY_WEBSERVER_CPU_LIMIT}}"
+                        requests:
+                            cpu: "{{K8S_DEPLOY_WEBSERVER_CPU_REQUEST}}"
                     ports:
                         -   containerPort: 8080
                             name: http
