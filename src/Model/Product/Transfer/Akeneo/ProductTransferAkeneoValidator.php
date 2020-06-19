@@ -51,7 +51,6 @@ class ProductTransferAkeneoValidator
         ];
         if ($isMainVariant === false) {
             $fieldsValidationSetup['enabled'] = [
-                new Assert\NotBlank(),
                 new Assert\Type(['type' => 'bool']),
             ];
         } else {
