@@ -1,6 +1,3 @@
-/**
- * Accordion Component
- */
 import Register from 'framework/common/utils/Register';
 
 export default class Accordion {
