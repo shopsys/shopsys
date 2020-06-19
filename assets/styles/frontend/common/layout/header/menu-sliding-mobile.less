@@ -1,0 +1,44 @@
+.mobile-sliding-menu {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+
+    border-bottom: 1px solid #e7ebed;
+
+    &::after {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 20px;
+        height: 100%;
+        content: '';
+        z-index: 1;
+
+        background-color: rgba(@color-f, .6);
+    }
+
+    &__container {
+        width: 2000px;
+        left: -1000px;
+        position: relative;
+    }
+
+    &__draggable {
+        position: relative;
+        float: left;
+        left: 1000px;
+    }
+
+    &__link {
+        display: inline-block;
+        padding: 10px;
+
+        font-family: @font-quartenary;
+        font-size: 15px;
+
+        &:first-child {
+            padding-left: 15px;
+        }
+    }
+}

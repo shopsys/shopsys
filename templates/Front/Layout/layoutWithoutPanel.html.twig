@@ -1,11 +1,13 @@
 {% extends 'Front/Layout/layout.html.twig' %}
 
 {% block content %}
-    <div class="display-none display-block-tablet">
-        {% cache constant('App\\Component\\Cache\\TwigCachedMenuFacade::MOBILE_SLIDING_MENU') {lifetime:60*60*24, domainId:getDomain().id} %}
-            {{ render(controller('App\\Controller\\Front\\CategoryController:mobileSlidingMenuAction')) }}
-        {% endcache %}
-    </div>
+    {% block mobileMenu %}
+        <div class="display-none display-block-tablet">
+            {% cache constant('App\\Component\\Cache\\TwigCachedMenuFacade::MOBILE_SLIDING_MENU') {lifetime:60*60*24, domainId:getDomain().id} %}
+                {{ render(controller('App\\Controller\\Front\\CategoryController:mobileSlidingMenuAction')) }}
+            {% endcache %}
+        </div>
+    {% endblock %}
     <div class="web__main">
         <div class="web__main__content js-main-content">
             {% block breadcrumb %}
