@@ -82,7 +82,7 @@ export default class Window {
 
         this.$window.append($windowContent);
         if (this.options.buttonClose) {
-            const $windowButtonClose = $('<a href="#" class="window-button-close window-popup__close js-window-button-close" title="' + Translator.trans('Close (Esc)') + '"><i class="svg svg-remove-thin"></i></a>');
+            const $windowButtonClose = $('<a href="#" class="window-button-close window-popup__close js-window-button-close" title="' + Translator.trans('Close (Esc)') + '"><i class="svg svg-remove"></i></a>');
             $windowButtonClose
                 .bind('click.window', this.options.eventClose)
                 .bind('click.windowClose', function () {

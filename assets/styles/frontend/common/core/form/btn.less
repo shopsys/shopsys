@@ -118,6 +118,14 @@
                 font-size: 15px;
             }
         }
+
+        &.btn--disabled {
+            border-color: @color-border-light;
+
+            &:hover {
+                background-color: transparent;
+            }
+        }
     }
 
     &--cookies {
@@ -300,34 +308,25 @@
         }
     }
 
-    &--block {
-        display: block;
+    &--login {
+        min-width: 135px;
+
+        letter-spacing: 0;
+        text-transform: none;
+        color: @color-primary-light;
+        font-family: @font-quartenary;
+
+        @media @query-md {
+            font-size: 15px;
+        }
     }
 
-    &--newsletter {
-        position: relative;
+    &--registration {
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
 
-        @media @query-mobile {
-            &::before,
-            &::after {
-                position: absolute;
-                left: 19px;
-                top: 14px;
-                width: 12px;
-                height: 3px;
-                text-indent: 0;
-                content: '';
-                transform: rotate(45deg);
-
-                background-color: @color-f;
-            }
-
-            &::after {
-                top: auto;
-                bottom: 14px;
-                transform: rotate(-45deg);
-            }
-        }
+        font-family: @font-quartenary;
+        font-weight: 400;
     }
 }
 
