@@ -132,6 +132,7 @@ class ProductSeriesDataFixture extends AbstractReferenceFixture
         $productSeriesData->seoMetaDescription[$domainId] = $data[self::ATTRIBUTE_SEO_META_DESCRIPTION_KEY];
         $productSeriesData->name[$locale] = $data[self::ATTRIBUTE_NAME_KEY];
         $productSeriesData->description[$locale] = $data[self::ATTRIBUTE_DESCRIPTION_KEY];
+        $productSeriesData->akeneoCode = 'demo_' . strtolower($data[self::ATTRIBUTE_NAME_KEY]);
     }
 
     /**

@@ -106,6 +106,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->processTransportsImages();
         $this->processProductsImages();
         $this->processSliderItemsImages();
+        $this->processProductSeriesImages();
         $this->restartImagesIdsDbSequence();
     }
 
@@ -251,6 +252,20 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
+    private function processProductSeriesImages(): void
+    {
+        $productSeriesData = [
+            106 => ProductSeriesDataFixture::PRODUCT_SERIES_YENNEFER,
+        ];
+
+        foreach ($productSeriesData as $imageId => $productSeriesName) {
+            /** @var \App\Model\Product\Series\ProductSeries $productSeries */
+            $productSeries = $this->getReference($productSeriesName);
+
+            $this->saveImageIntoDb($productSeries->getId(), 'productSeries', $imageId);
+        }
+    }
+
     /**
      * @param int $entityId
      * @param string $entityName
@@ -306,7 +321,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     private function restartImagesIdsDbSequence()
     {
-        $this->em->createNativeQuery('ALTER SEQUENCE images_id_seq RESTART WITH 103', new ResultSetMapping())->execute();
+        $this->em->createNativeQuery('ALTER SEQUENCE images_id_seq RESTART WITH 107', new ResultSetMapping())->execute();
     }
 
     /**
@@ -321,6 +336,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             TransportDataFixture::class,
             ProductDataFixture::class,
             SliderItemDataFixture::class,
+            ProductSeriesDataFixture::class,
         ];
     }
 }
