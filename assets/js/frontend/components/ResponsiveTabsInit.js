@@ -58,10 +58,14 @@ export default class ResponsiveTabsInit {
         const responsive = new Responsive();
         const _this = this;
 
-        hybridTabs.init(this.getHybridTabsModeForCurrentResponsiveMode());
-        responsive.registerOnLayoutChange(() => {
-            hybridTabs.setTabsMode(_this.getHybridTabsModeForCurrentResponsiveMode());
-        });
+        if ($tab.hasClass('js-tabs-only')) {
+            hybridTabs.init(HybridTabs.TABS_MODE_SINGLE);
+        } else {
+            hybridTabs.init(this.getHybridTabsModeForCurrentResponsiveMode());
+            responsive.registerOnLayoutChange(() => {
+                hybridTabs.setTabsMode(_this.getHybridTabsModeForCurrentResponsiveMode());
+            });
+        }
     }
 
     getHybridTabsModeForCurrentResponsiveMode () {

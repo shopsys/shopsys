@@ -92,7 +92,7 @@
                 {% else %}
                     {{ label }}
                 {% endif %}
-                {% if not withoutColon|default(false) %}:{% endif %}
+                {% if not withoutColon|default(true) %}:{% endif %}
                 {% if required %}<span class="form-input-required">*</span>{% endif %}
             </label>
         {% endif %}

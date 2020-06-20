@@ -1,22 +1,30 @@
 {{ form_start(form) }}
-{{ form_row(form.gender, { label: 'Oslovení'|trans }) }}
-{{ form_row(form.firstName, { label: 'First name'|trans }) }}
-{{ form_row(form.lastName, { label: 'Last name'|trans }) }}
-{{ form_row(form.email, { label: 'Email'|trans , attr: {'data-request-url' : url('front_registration_exists_email') } }) }}
-{{ form_row(form.telephone, { label: 'Telefon'|trans }) }}
-{{ form_row(form.street, { label: 'Ulice'|trans }) }}
-{{ form_row(form.city, { label: 'Město'|trans }) }}
-{{ form_row(form.postcode, { label: 'PSČ'|trans }) }}
-{{ form_row(form.password.first, {
-    label: 'Password'|trans,
-    icon: {
-        class: 'in-icon in-icon--info js-tooltip',
-        title: 'Password must be at least six characters and can\'t be the same as entered email or its part before at sign.'|trans
-    }
-}) }}
-{{ form_row(form.password.second, { label: 'Password again'|trans }) }}
-<dl class="form-line">
-    <dt></dt>
+<div class="form-line-block-section form-line-block-section--no-spacing">
+    {{ form_row(form.email, { label: 'Váš e-mail'|trans , rowClass: 'form-line-block js-form-field', attr: {'data-request-url' : url('front_registration_exists_email') } }) }}
+    {{ form_row(form.telephone, { label: 'Telefon'|trans, rowClass: 'form-line-block js-form-field' }) }}
+</div>
+<div class="form-line-block-section">
+    {{ form_row(form.gender, { label: 'Oslovení'|trans, rowClass: 'form-line-block form-line-block--three-quarters js-form-field' }) }}
+    {{ form_row(form.firstName, { label: 'First name'|trans, rowClass: 'form-line-block js-form-field' }) }}
+    {{ form_row(form.lastName, { label: 'Last name'|trans, rowClass: 'form-line-block js-form-field' }) }}
+</div>
+<div class="form-line-block-section">
+    <h2 class="form-line-block-section__heading">{{ 'Password'|trans }}</h2>
+    {{ form_row(form.password.first, {
+        label: 'Password'|trans,
+        rowClass: 'form-line-block js-form-field'
+    }) }}
+    {{ form_row(form.password.second, { label: 'Password again'|trans, rowClass: 'form-line-block js-form-field' }) }}
+</div>
+<div class="form-line-block-section">
+    <h2 class="form-line-block-section__heading">{{ 'Fakturační adresa'|trans }}</h2>
+    {{ form_row(form.street, { label: 'Ulice'|trans, rowClass: 'form-line-block js-form-field' }) }}
+    <div class="form-line-block-section__grid">
+        {{ form_row(form.city, { label: 'Město'|trans, rowClass: 'form-line-block form-line-block--full-width form-line-block--first js-form-field' }) }}
+        {{ form_row(form.postcode, { label: 'PSČ'|trans, rowClass: 'form-line-block form-line-block--small-width js-form-field' }) }}
+    </div>
+</div>
+<dl class="form-line-block form-line-block--check">
     <dd>
         <div class="form-choice">
             {{ form_widget(form.privacyPolicy, { attr: { class: "css-checkbox" } }) }}
@@ -38,5 +46,5 @@
         </div>
     </dd>
 </dl>
-{{ form_widget(form.save, { label: 'Register'|trans }) }}
+{{ form_widget(form.save, { label: 'Register'|trans, attr: {'class' : 'btn--submit-next btn--registration'} }) }}
 {{ form_end(form) }}

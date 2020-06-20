@@ -7,35 +7,53 @@
 {%  set commonTabActiveClass = firstTabActiveSetting ? "active" : "" %}
 {%  set companyTabActiveClass = firstTabActiveSetting ? "" : "active" %}
 
+{% block breadcrumb %}
+{% endblock %}
+
 {% block main_content %}
-    <div class="web__line">
+    <div class="web__line web__line--bg-color web__line--spacing--big">
         <div class="web__container">
-            <h1>{{ 'Registration'|trans }}</h1>
+            <h1 class="heading heading--primary heading--primary-subpage">{{ 'Registration'|trans }}</h1>
+            {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             {{ form_errors(form) }}
             {{ form_errors(companyForm) }}
-            <div class="in-tab js-responsive-tabs">
-                <div class="in-tab__head dont-print">
-                    <a href="#" class="in-tab__head__item js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
-                        {{ "Koncový zákazník"|trans }}
-                    </a>
-                    <a href="#" class="in-tab__head__item js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                        {{ "Firma"|trans }}
-                    </a>
-                </div>
-                <div class="in-tab__content">
-                    <a href="#" class="in-tab__content__title js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
-                        {{ "Koncový zákazník"|trans }}
-                        <i class="svg svg-arrow"></i>
-                    </a>
-                    <div class="in-tab__content__item js-tabs-content  {{ commonTabActiveClass }}" data-tab-id="common-customer">
-                        {% include 'Front/Content/Registration/commonCustomerRegistrationForm.html.twig' %}
+            <div class="box-form box-form--registration">
+                <div class="box-login box-login--registration">
+                    <div class="box-login__profile box-login__profile--standalone">
+                        <strong class="box-login__profile__text-strong">{{ 'Ještě nemáte Váš Sconto účet?'|trans }}</strong>
+                        <span class="box-login__profile__text-small">{{ 'Budete u nás nakupovat jako:'|trans }}</span>
+                        <div class="box-login__profile__icon">
+                            <picture>
+                                <source srcset="{{ asset('public/frontend/images/qmark2x.png') }} 2x" />
+                                <img class="box-login__profile__icon__img" loading="lazy" src="" data-src="{{ asset('public/frontend/images/qmark.png') }}" alt="{{ 'Sconto profil'|trans }}">
+                            </picture>
+                        </div>
                     </div>
-                    <a href="#" class="in-tab__content__title js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                        {{ "Firma"|trans }}
-                        <i class="svg svg-arrow"></i>
-                    </a>
-                    <div class="in-tab__content__item js-tabs-content  {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                        {% include 'Front/Content/Registration/companyCustomerRegistrationForm.html.twig' %}
+                </div>
+                <div class="in-tab js-responsive-tabs js-tabs-only">
+                    <div class="in-tab__head dont-print">
+                        <a href="#" class="in-tab__head__item js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
+                            {{ "Koncový zákazník"|trans }}
+                        </a>
+                        <a href="#" class="in-tab__head__item js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
+                            {{ "Firma"|trans }}
+                        </a>
+                    </div>
+                    <div class="in-tab__content">
+                        <a href="#" class="in-tab__content__title js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
+                            {{ "Koncový zákazník"|trans }}
+                            <i class="svg svg-arrow"></i>
+                        </a>
+                        <div class="in-tab__content__item js-tabs-content  {{ commonTabActiveClass }}" data-tab-id="common-customer">
+                            {% include 'Front/Content/Registration/commonCustomerRegistrationForm.html.twig' %}
+                        </div>
+                        <a href="#" class="in-tab__content__title js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
+                            {{ "Firma"|trans }}
+                            <i class="svg svg-arrow"></i>
+                        </a>
+                        <div class="in-tab__content__item js-tabs-content  {{ companyTabActiveClass }}" data-tab-id="company-customer">
+                            {% include 'Front/Content/Registration/companyCustomerRegistrationForm.html.twig' %}
+                        </div>
                     </div>
                 </div>
             </div>
