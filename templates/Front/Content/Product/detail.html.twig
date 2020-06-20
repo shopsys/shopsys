@@ -97,12 +97,14 @@
                                     <li class="box-detail-list__item">Odolný materiál</li>
                                     <li class="box-detail-list__item">Polohovatelné opěrky hlavy</li>
                                     <li class="box-detail-list__item">Potažená záda</li>
-                                    <li class="box-detail-list__item box-detail-list__item--anchor">
-                                        <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#product-desc">
-                                            <span class="box-detail__info__anchor__underline">{{ 'Celý popis'|trans }}</span>
-                                            <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--down box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
-                                        </a>
-                                    </li>
+                                    {% if product.getDescription(domain.id)%}
+                                        <li class="box-detail-list__item box-detail-list__item--anchor">
+                                            <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#product-desc">
+                                                <span class="box-detail__info__anchor__underline">{{ 'Celý popis'|trans }}</span>
+                                                <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--down box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                 </ul>
                             </div>
 
