@@ -1,8 +1,8 @@
 {% macro list(productViews, listCssClass, productHeadingTagName) %}
 
-    <ul class="list-products js-list js-product-list {{ listCssClass|default('') }}">
+    <div class="list-products js-list js-product-list {{ listCssClass|default('') }}">
         {% for productView in productViews %}
-            <li class="list-products__item js-list-products-item">
+            <div class="list-products__item js-list-products-item">
                 <div class="list-products__item__in">
                     <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
                         <div class="list-products__item__image dont-print">
@@ -19,6 +19,10 @@
                                 <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
                                 {# TODO: There is no translation, because the text will be dynamic - after programming will be done #}
                                 <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary js-not-implemented-yet">Můžete mít ihned na <strong>5</strong> prodejnách</span>
+                                <strong class="list-products__item__info__detail">
+                                    {{ 'Detail produktu'|trans }}
+                                    <i class="list-products__item__info__detail__icon svg svg-chevron"></i>
+                                </strong>
                             </div>
                             {% if productView.sellingPrice is not null %}
                                 <div class="list-products__item__info__price">
@@ -38,10 +42,13 @@
                                     {% endif %}
                                 </div>
                             {% endif %}
+                            <div class="list-products__item__info__action">
+                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
+                            </div>
                         </div>
                     </a>
                 </div>
-            </li>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endmacro %}

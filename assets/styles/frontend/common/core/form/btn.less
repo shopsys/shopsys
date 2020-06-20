@@ -43,16 +43,36 @@
     // call to action button
     @btn-success-color: @color-f;
     @btn-success-color-hover: @color-f;
-    @btn-success-bg: @color-green;
-    @btn-success-bg-hover: darken(@btn-success-bg, 5%);
+    @btn-success-bg: #222631;
+    @btn-success-bg-hover: lighten(@btn-success-bg, 10%);
 
     &--success {
+        text-transform: none;
         color: @btn-success-color;
         background: @btn-success-bg;
 
         &:hover {
             color: @btn-success-color-hover;
             background: @btn-success-bg-hover;
+        }
+
+        &.btn--success--cart {
+            position: relative;
+            padding-right: 55px;
+
+            &::after {
+                position: absolute;
+                right: 15px;
+                top: 10px;
+                width: 32px;
+                height: 32px;
+                content: '';
+
+                background-image: url('@{path-design}/cart-button.svg');
+                background-position: center center;
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
         }
     }
 
@@ -164,6 +184,24 @@
     &--larger {
         padding-top: @btn-larger-padding-verfical;
         padding-bottom: @btn-larger-padding-verfical;
+    }
+
+    @btn-very-large-padding: 18px 20px;
+    @btn-very-large-padding-lg: 18px 30px;
+
+    &--very-large {
+        padding: @btn-very-large-padding;
+
+        font-family: @font-quartenary;
+        font-size: 16px;
+
+        @media @query-md {
+            font-size: 18px;
+        }
+
+        @media @query-lg {
+            padding: @btn-very-large-padding-lg;
+        }
     }
 
     @btn-small-padding-vertical: 5px;

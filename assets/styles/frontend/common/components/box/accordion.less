@@ -1,0 +1,256 @@
+@box-accordion-bg-color: @color-f;
+@box-accordion-padding-vertical: 15px;
+@box-accordion-padding-vertical-lg: 25px;
+@box-accordion-padding-horisontal: 20px;
+@box-accordion-padding-horisontal-lg: 30px;
+
+.box-accordion {
+    margin-bottom: 1rem;
+    overflow: hidden;
+
+    border-radius: @radius;
+    background-color: @box-accordion-bg-color;
+    transition: box-shadow @transition;
+    outline: 0;
+
+    @media @query-lg {
+        margin-bottom: 2rem;
+    }
+
+    &:hover {
+        box-shadow: 0 0 10px 0 rgba(@color-0, .05);
+    }
+
+    &--opened-on-mobile {
+        @media @query-tablet {
+            .box-accordion__body {
+                display: block;
+
+                border: 0;
+            }
+
+            .box-accordion__header {
+                padding-bottom: 0;
+            }
+
+            .box-accordion__header__toggle {
+                display: none;
+            }
+        }
+    }
+
+    &.is-opened {
+        .box-accordion__body {
+            display: block;
+        }
+
+        .box-accordion__body--cols {
+            display: block;
+
+            @media @query-lg {
+                display: flex;
+            }
+        }
+
+        .box-accordion__header__toggle__icon {
+            transform: rotate(-180deg);
+        }
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: @box-accordion-padding-vertical @box-accordion-padding-horisontal;
+
+        @media @query-lg {
+            padding: @box-accordion-padding-vertical-lg @box-accordion-padding-horisontal-lg;
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &__toggle {
+            &__text {
+                display: none;
+
+                @media @query-lg {
+                    display: inline;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    &__body {
+        display: none;
+        padding: @box-accordion-padding-vertical @box-accordion-padding-horisontal;
+
+        border-top: 1px solid @color-border-lighter;
+
+        @media @query-lg {
+            padding: @box-accordion-padding-vertical-lg @box-accordion-padding-horisontal-lg;
+        }
+
+        h2, h3, h4 {
+            margin: 0 0 0.5rem;
+
+            text-transform: none;
+            font-size: 18px;
+            font-family: @font-quartenary;
+        }
+
+        p {
+            margin-top: 0;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        &--cols {
+            .box-accordion__body__content--desc {
+                margin-bottom: 1rem;
+
+                @media @query-lg {
+                    max-width: 33%;
+                    min-width: 33%;
+                    margin: 0 3rem 0 0;
+                }
+            }
+
+            .box-accordion__body__content--params {
+                @media @query-lg {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-content: flex-start;
+                    max-width: 67%;
+                    min-width: 67%;
+                }
+            }
+
+            .box-accordion__body__content--measures {
+                flex-grow: 1;
+            }
+
+            .box-accordion__body__content--img {
+                @media @query-lg {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding-left: 30px;
+                    flex-grow: 1;
+                    min-height: 645px;
+                    max-width: 645px;
+                    text-align: right;
+
+                    border: 1px solid @color-border-lighter;
+                    border-radius: @radius;
+                }
+            }
+        }
+
+        &--no-spacing {
+            @media @query-lg {
+                padding: 0;
+            }
+        }
+
+        &__input {
+            display: block;
+            width: 100%;
+            height: 55px;
+            padding: 0 10px;
+
+            border-radius: @radius;
+            background-color: @color-light-secondary;
+            border: 0;
+
+            @media @query-lg {
+                display: none;
+            }
+        }
+    }
+
+    &__heading {
+        margin: 0;
+
+        text-transform: none;
+        font-family: @font-quartenary;
+        font-size: 20px;
+        font-weight: 400;
+        text-decoration: none;
+    }
+
+    &__grid-table {
+        display: none;
+
+        @media @query-lg {
+            display: block;
+            width: 100%;
+        }
+
+        &__body {
+            display: block;
+            width: 100%;
+        }
+
+        &__row {
+            display: flex;
+            width: 100%;
+            padding: 15px @box-accordion-padding-horisontal;
+
+            border-bottom: 1px solid @color-border-lighter;
+
+            @media @query-lg {
+                padding-left: @box-accordion-padding-horisontal-lg;
+                padding-right: @box-accordion-padding-horisontal-lg;
+            }
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        &__col {
+            flex: 1 1 0;
+
+            color: @color-light-tertiary;
+
+            &--expose {
+                position: relative;
+                left: 60px;
+            }
+
+            &--showrooms {
+                text-align: right;
+            }
+
+            .is-in-stock {
+                color: #73a90d;
+            }
+
+            strong {
+                font-family: @font-tertiary;
+                font-weight: 400;
+                color: #5b5b61;
+            }
+
+            &__icon {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 6px;
+                width: 25px;
+            }
+        }
+
+        &__title {
+            font-size: 16px;
+            font-family: @font-quartenary;
+            font-weight: 400;
+            color: @color-primary-light;
+        }
+    }
+}
