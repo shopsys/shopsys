@@ -201,6 +201,57 @@
             @media @query-md {
                 font-size: 20px;
             }
+
+            &-strong {
+                display: block;
+
+                font-size: 20px;
+                line-height: 1.2;
+                font-family: @font-tertiary;
+                color: @color-primary;
+
+                @media @query-md {
+                    line-height: 1.3;
+                }
+            }
+
+            &-small {
+                font-family: @font-quartenary;
+                font-size: 18px;
+                line-height: 1.4;
+                color: @color-primary;
+
+                @media @query-md {
+                    line-height: 1;
+                }
+            }
+        }
+
+        &--standalone {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            padding: 20px 110px 20px 20px;
+            margin: 0 0 1.25rem;
+
+            border-radius: @radius;
+
+            @media @query-md {
+                height: 88px;
+                padding: 0 1.25rem;
+            }
+
+            .box-login__profile__icon {
+                right: 30px;
+
+                @media @query-mobile {
+                    top: auto;
+                    right: 10px;
+                    bottom: 0;
+                    height: 110px;
+                }
+            }
         }
     }
 
