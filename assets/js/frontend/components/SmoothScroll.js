@@ -13,17 +13,8 @@ export default class SmoothScroll {
 
             if (target.length) {
                 $('html, body').animate({
-                    scrollTop: target.offset().top
-                }, 500, function () {
-                    let $target = $(target);
-                    $target.focus();
-                    if ($target.is(':focus')) {
-                        return false;
-                    } else {
-                        $target.attr('tabindex', '-1');
-                        $target.focus();
-                    }
-                });
+                    scrollTop: target.offset().top - 50
+                }, 500);
             }
         });
     }
