@@ -268,6 +268,7 @@ class ProductController extends FrontBaseController
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
         $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId());
+        $productAvailabilityStatus = $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $this->domain->getId());
         $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainId($product, $this->domain->getId());
         $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($product, $this->domain);
 
@@ -295,6 +296,7 @@ class ProductController extends FrontBaseController
             'categoryList' => $categoryList,
             'domain' => $this->domain,
             'productAvailabilityInformation' => $productAvailabilityInformation,
+            'productAvailabilityStatus' => $productAvailabilityStatus,
             'productStocksAvailabilitiesInformation' => $productStocksAvailabilitiesInformation,
             'downloadFiles' => $downloadFiles,
             'paginatedSimilarProducts' => $paginatedSimilarProducts,

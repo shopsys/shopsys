@@ -70,6 +70,22 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
+     * @return string
+     */
+    public function getProductAvailabilityStatusByDomainId(Product $product, int $domainId): string
+    {
+        $availabilityStatus = "out-of-stock";
+
+        if ($this->isProductAvailableOnDomain($product, $domainId)) {
+            $availabilityStatus = "in-stock";
+        }
+
+        return $availabilityStatus;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return int
      */
     public function calculateProductAvailabilityDaysForDomainId(Product $product, int $domainId): int
