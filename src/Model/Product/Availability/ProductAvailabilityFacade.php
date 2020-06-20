@@ -74,10 +74,10 @@ class ProductAvailabilityFacade
      */
     public function getProductAvailabilityStatusByDomainId(Product $product, int $domainId): string
     {
-        $availabilityStatus = "out-of-stock";
+        $availabilityStatus = 'out-of-stock';
 
         if ($this->isProductAvailableOnDomain($product, $domainId)) {
-            $availabilityStatus = "in-stock";
+            $availabilityStatus = 'in-stock';
         }
 
         return $availabilityStatus;
