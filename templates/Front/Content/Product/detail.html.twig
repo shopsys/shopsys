@@ -133,11 +133,13 @@
                                                 itemtype="http://schema.org/Offer"
                                                 class="box-detail-add__prices">
                                                 {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
-                                                    {% set productDiscount = (sellingPriceWithVat|moneyFormat / nonSellingPriceWithVat|moneyFormat) * 100 %}
-                                                    <span class="box-detail-add__discount">
-                                                        -{{ productDiscount|round }}
-                                                        <span class="box-detail-add__discount__perc">%</span>
-                                                    </span>
+                                                    {% set productDiscount = (nonSellingPriceWithVat|moneyFormat - sellingPriceWithVat|moneyFormat) / (nonSellingPriceWithVat|moneyFormat / 100) %}
+                                                    {% if productDiscount >= 1 %}
+                                                        <span class="box-detail-add__discount">
+                                                            -{{ productDiscount|round }}
+                                                            <span class="box-detail-add__discount__perc">%</span>
+                                                        </span>
+                                                    {% endif %}
                                                     <div class="box-detail-add__prices__wrap">
                                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
                                                             {{ nonSellingPriceWithVat|price }}
