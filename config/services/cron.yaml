@@ -78,7 +78,7 @@ services:
 
     App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesCronModule:
         tags:
-            - { name: shopsys.cron, hours: '23', minutes: '10', readableName: 'Import nábytkových produktů z Akeneo' }
+            - { name: shopsys.cron, hours: '23', minutes: '10', readableName: 'Import nábytkových programů z Akeneo' }
 
     App\Model\Newsletter\Synchronization\TargitoSynchronizationCronModule:
         tags:
