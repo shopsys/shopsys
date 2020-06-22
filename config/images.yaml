@@ -97,7 +97,7 @@
                 -   name: ~
                     width: 1045
                     height: 290
-                    crop: true
+                    crop: false
                     occurrence: 'Front-end: Main page slider'
                     additionalSizes:
                         - {width: 400, height: 165, media: "(max-width: 480px)"}
