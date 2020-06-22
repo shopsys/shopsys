@@ -8,6 +8,7 @@ declare -A REPOSITORY_NAME_MAP_TO_EVIRONMENT=(
   ["master"]="production"
   ["devel"]="devel"
   ["beta"]="beta"
+  ["clear-stabil"]="clear-stabil"
 )
 
 containsElement () {
@@ -32,7 +33,7 @@ REGISTRY_REPOSITORIES="$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}"
 for REGISTRY_REPOSITORY in $(echo "${REGISTRY_REPOSITORIES}" | jq -rc '.[]'); do
   REPOSITORY_ID=$(echo "${REGISTRY_REPOSITORY}" | jq -r '.id')
   REPOSITORY_NAME=$(echo "${REGISTRY_REPOSITORY}" | jq -r '.name')
-  if ! containsElement "${REPOSITORY_NAME}" ${PROJECT_BRANCHES}; then
+  if  ! containsElement "${REPOSITORY_NAME}" ${PROJECT_BRANCHES} && [ -z "${REPOSITORY_NAME_MAP_TO_EVIRONMENT[${REPOSITORY_NAME}]}" ]; then
 
     CURL_OUTPUT=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" \
     -X DELETE "${API_URL}/registry/repositories/${REPOSITORY_ID}")
