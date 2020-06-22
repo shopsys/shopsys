@@ -165,7 +165,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
             $category = $this->categoryFacade->getByAkeneoCode($akeneoCategoryData['code']);
             $categoryId = $category->getId();
 
-            if ($akeneoCategoryData['parent'] === self::ROOT_CATEGORY_CODE) {
+            if ($akeneoCategoryData['parent'] === self::ROOT_CATEGORY_CODE || $akeneoCategoryData['parent'] === self::ROOT_CATEGORY_CODE_PROD) {
                 $parentCategoryId = null;
             } else {
                 $parentCategory = $this->categoryFacade->findByAkeneoCode($akeneoCategoryData['parent']);

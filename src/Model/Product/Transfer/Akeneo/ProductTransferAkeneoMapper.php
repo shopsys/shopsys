@@ -317,13 +317,22 @@ class ProductTransferAkeneoMapper
 
             if (count($akeneoProductParameterData) === 1) {
                 $currentAkeneoProductParameterData = current($akeneoProductParameterData);
-                if (is_array($currentAkeneoProductParameterData['data'])) {
-                    $parameterValueText = (string)$currentAkeneoProductParameterData['data']['amount'];
-                    $parameterValueUnit = $currentAkeneoProductParameterData['data']['unit'];
+                $currentAkeneoProductParameterDataValue = $currentAkeneoProductParameterData['data'];
+                if (is_array($currentAkeneoProductParameterDataValue)) {
+                    if (array_key_exists('amount', $currentAkeneoProductParameterDataValue)
+                        && array_key_exists('unit', $currentAkeneoProductParameterDataValue)
+                    ) {
+                        $parameterValueText = (string)$currentAkeneoProductParameterDataValue['amount'];
+                        $parameterValueUnit = $currentAkeneoProductParameterDataValue['unit'];
 
-                    $this->checkExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
+                        $this->checkExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
+                    } else {
+                        //todo: pro vicehodnotove parametry upravit
+                        $parameterValueText = implode(', ', $currentAkeneoProductParameterDataValue);
+                        $parameterValueUnit = null;
+                    }
                 } else {
-                    $parameterValueText = (string)$currentAkeneoProductParameterData['data'];
+                    $parameterValueText = (string)$currentAkeneoProductParameterDataValue;
                     $parameterValueUnit = null;
                 }
 
@@ -361,8 +370,9 @@ class ProductTransferAkeneoMapper
         $productData->packageNotIncluded = AkeneoProductHelper::mapDomainDataString($productData->packageNotIncluded, $akeneoProductData['values']['not_included'] ?? null);
 
         $productData->mountingState = AkeneoProductHelper::mapDataToAllDomains($productData->mountingState, $akeneoProductData['values']['mounting_state'][0]['data'] ?? 'false');
-        $productData->packagingUnit = AkeneoProductHelper::mapDataToAllDomains($productData->packagingUnit, $akeneoProductData['values']['packaging_unit'][0]['data'] ?? null);
-        $productData->countPackages = AkeneoProductHelper::mapDataToAllDomains($productData->countPackages, $akeneoProductData['values']['number_package'][0]['data'] ?? null);
+        //todo: ['amount'] + ['unit'] => momentalne opraveno jenom kvuli importu - ale bude asi potreba vsude (entity atd.) predelat
+        $productData->packagingUnit = AkeneoProductHelper::mapDataToAllDomains($productData->packagingUnit, $akeneoProductData['values']['packaging_unit'][0]['data']['amount'] ?? null);
+        $productData->countPackages = AkeneoProductHelper::mapDataToAllDomains($productData->countPackages, $akeneoProductData['values']['number_package'][0]['data']['amount'] ?? null);
         $productData->totalPackageWeight = AkeneoProductHelper::mapDataToAllDomains($productData->totalPackageWeight, $akeneoProductData['values']['package_weight'][0]['data']['amount'] ?? null);
 
         foreach ($productData->mountingState as $domainId => $state) {
