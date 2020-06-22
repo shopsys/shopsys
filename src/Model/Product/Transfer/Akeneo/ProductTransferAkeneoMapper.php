@@ -306,13 +306,22 @@ class ProductTransferAkeneoMapper
 
             if (count($akeneoProductParameterData) === 1) {
                 $currentAkeneoProductParameterData = current($akeneoProductParameterData);
-                if (is_array($currentAkeneoProductParameterData['data'])) {
-                    $parameterValueText = (string)$currentAkeneoProductParameterData['data']['amount'];
-                    $parameterValueUnit = $currentAkeneoProductParameterData['data']['unit'];
+                $currentAkeneoProductParameterDataValue = $currentAkeneoProductParameterData['data'];
+                if (is_array($currentAkeneoProductParameterDataValue)) {
+                    if (array_key_exists('amount', $currentAkeneoProductParameterDataValue)
+                        && array_key_exists('unit', $currentAkeneoProductParameterDataValue)
+                    ) {
+                        $parameterValueText = (string)$currentAkeneoProductParameterDataValue['amount'];
+                        $parameterValueUnit = $currentAkeneoProductParameterDataValue['unit'];
 
-                    $this->checkExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
+                        $this->checkExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
+                    } else {
+                        //todo: pro vicehodnotove parametry upravit
+                        $parameterValueText = implode(', ', $currentAkeneoProductParameterDataValue);
+                        $parameterValueUnit = null;
+                    }
                 } else {
-                    $parameterValueText = (string)$currentAkeneoProductParameterData['data'];
+                    $parameterValueText = (string)$currentAkeneoProductParameterDataValue;
                     $parameterValueUnit = null;
                 }
 
@@ -356,8 +365,9 @@ class ProductTransferAkeneoMapper
 
         foreach ($productData->mountingState as $domainId => $state) {
             $productData->mountingState[$domainId] = AkeneoProductHelper::convertStingToType(str_replace('mounting_state__', '', $state), AkeneoProductHelper::TYPE_BOOLEAN);
-            $productData->packagingUnit[$domainId] = AkeneoProductHelper::convertStingToType($productData->packagingUnit[$domainId], AkeneoProductHelper::TYPE_INT);
-            $productData->countPackages[$domainId] = AkeneoProductHelper::convertStingToType($productData->countPackages[$domainId], AkeneoProductHelper::TYPE_INT);
+            //todo: ['amount'] + ['unit'] => momentalne opraveno jenom kvuli importu - ale bude asi potreba vsude (entity atd.) predelat
+            $productData->packagingUnit[$domainId] = AkeneoProductHelper::convertStingToType($productData->packagingUnit[$domainId]['amount'], AkeneoProductHelper::TYPE_INT);
+            $productData->countPackages[$domainId] = AkeneoProductHelper::convertStingToType($productData->countPackages[$domainId]['amount'], AkeneoProductHelper::TYPE_INT);
             $productData->totalPackageWeight[$domainId] = AkeneoProductHelper::convertStingToType($productData->totalPackageWeight[$domainId], AkeneoProductHelper::TYPE_FLOAT);
         }
     }
