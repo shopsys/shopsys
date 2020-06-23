@@ -400,9 +400,9 @@ class ProductTransferAkeneoMapper
             if ($position !== null) {
                 $productPackageData = $this->productPackageDataFactory->create();
                 $productPackageData->position = $position;
-                $productPackageData->length = $length;
-                $productPackageData->height = $height;
-                $productPackageData->width = $width;
+                $productPackageData->length = AkeneoProductHelper::convertStringToType($length, AkeneoProductHelper::TYPE_INT);
+                $productPackageData->height = AkeneoProductHelper::convertStringToType($height, AkeneoProductHelper::TYPE_INT);
+                $productPackageData->width = AkeneoProductHelper::convertStringToType($width, AkeneoProductHelper::TYPE_INT);
                 $productPackageData->weight = AkeneoProductHelper::convertStringToType($weight, AkeneoProductHelper::TYPE_FLOAT);
                 $productPackageDataList[$position] = $productPackageData;
             }
