@@ -403,7 +403,7 @@ class ProductTransferAkeneoMapper
                 $productPackageData->length = $length;
                 $productPackageData->height = $height;
                 $productPackageData->width = $width;
-                $productPackageData->weight = AkeneoProductHelper::convertStringToType($weight, AkeneoProductHelper::TYPE_FLOAT);;
+                $productPackageData->weight = AkeneoProductHelper::convertStringToType($weight, AkeneoProductHelper::TYPE_FLOAT);
                 $productPackageDataList[$position] = $productPackageData;
             }
         }
