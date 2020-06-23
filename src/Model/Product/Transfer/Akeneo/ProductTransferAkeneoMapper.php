@@ -328,7 +328,7 @@ class ProductTransferAkeneoMapper
                         $this->checkExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
                     } else {
                         //todo: pro vicehodnotove parametry upravit
-                        $parameterValueText = implode(', ', $currentAkeneoProductParameterDataValue);
+                        $parameterValueText = current($currentAkeneoProductParameterDataValue);
                         $parameterValueUnit = null;
                     }
                 } else {
@@ -376,10 +376,10 @@ class ProductTransferAkeneoMapper
         $productData->totalPackageWeight = AkeneoProductHelper::mapDataToAllDomains($productData->totalPackageWeight, $akeneoProductData['values']['package_weight'][0]['data']['amount'] ?? null);
 
         foreach ($productData->mountingState as $domainId => $state) {
-            $productData->mountingState[$domainId] = AkeneoProductHelper::convertStingToType(str_replace('mounting_state__', '', $state), AkeneoProductHelper::TYPE_BOOLEAN);
-            $productData->packagingUnit[$domainId] = AkeneoProductHelper::convertStingToType($productData->packagingUnit[$domainId], AkeneoProductHelper::TYPE_INT);
-            $productData->countPackages[$domainId] = AkeneoProductHelper::convertStingToType($productData->countPackages[$domainId], AkeneoProductHelper::TYPE_INT);
-            $productData->totalPackageWeight[$domainId] = AkeneoProductHelper::convertStingToType($productData->totalPackageWeight[$domainId], AkeneoProductHelper::TYPE_FLOAT);
+            $productData->mountingState[$domainId] = AkeneoProductHelper::convertStringToType(str_replace('mounting_state__', '', $state), AkeneoProductHelper::TYPE_BOOLEAN);
+            $productData->packagingUnit[$domainId] = AkeneoProductHelper::convertStringToType($productData->packagingUnit[$domainId], AkeneoProductHelper::TYPE_INT);
+            $productData->countPackages[$domainId] = AkeneoProductHelper::convertStringToType($productData->countPackages[$domainId], AkeneoProductHelper::TYPE_INT);
+            $productData->totalPackageWeight[$domainId] = AkeneoProductHelper::convertStringToType($productData->totalPackageWeight[$domainId], AkeneoProductHelper::TYPE_FLOAT);
         }
     }
 
@@ -399,11 +399,11 @@ class ProductTransferAkeneoMapper
 
             if ($position !== null) {
                 $productPackageData = $this->productPackageDataFactory->create();
-                $productPackageData->position = AkeneoProductHelper::convertStingToType($position, AkeneoProductHelper::TYPE_INT);
-                $productPackageData->length = AkeneoProductHelper::convertStingToType($length, AkeneoProductHelper::TYPE_INT);
-                $productPackageData->height = AkeneoProductHelper::convertStingToType($height, AkeneoProductHelper::TYPE_INT);
-                $productPackageData->width = AkeneoProductHelper::convertStingToType($width, AkeneoProductHelper::TYPE_INT);
-                $productPackageData->weight = AkeneoProductHelper::convertStingToType($weight, AkeneoProductHelper::TYPE_FLOAT);
+                $productPackageData->position = $position;
+                $productPackageData->length = $length;
+                $productPackageData->height = $height;
+                $productPackageData->width = $width;
+                $productPackageData->weight = AkeneoProductHelper::convertStringToType($weight, AkeneoProductHelper::TYPE_FLOAT);;
                 $productPackageDataList[$position] = $productPackageData;
             }
         }
