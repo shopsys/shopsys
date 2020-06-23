@@ -56,15 +56,6 @@
     "commerceguys/intl": {
         "version": "v1.0.5"
     },
-    "components/elfinder": {
-        "version": "3.1.3"
-    },
-    "components/jquery": {
-        "version": "3.4.1"
-    },
-    "components/jqueryui": {
-        "version": "1.12.1"
-    },
     "composer/ca-bundle": {
         "version": "1.2.4"
     },
@@ -339,9 +330,6 @@
     "knplabs/knp-menu-bundle": {
         "version": "v2.3.0"
     },
-    "kriswallsmith/assetic": {
-        "version": "v1.4.0"
-    },
     "lcobucci/jwt": {
         "version": "3.3.1"
     },
@@ -392,6 +380,9 @@
     },
     "object-calisthenics/phpcs-calisthenics-rules": {
         "version": "v3.4.0"
+    },
+    "ocramius/package-versions": {
+        "version": "1.4.2"
     },
     "ocramius/proxy-manager": {
         "version": "2.2.3"
@@ -550,9 +541,6 @@
     },
     "roave/signature": {
         "version": "1.0.0"
-    },
-    "robloach/component-installer": {
-        "version": "0.2.3"
     },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
@@ -845,6 +833,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.12.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
     },
     "symfony/process": {
         "version": "v3.4.32"
