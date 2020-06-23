@@ -46,6 +46,20 @@ class ProductStock
     protected $productExposed;
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $futureProductQuantity;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateOfStorage;
+
+    /**
      * @param \App\Model\Stock\Stock $stock
      * @param \App\Model\Product\Product $product
      */
@@ -64,6 +78,8 @@ class ProductStock
     {
         $this->productQuantity = $productStockData->productQuantity;
         $this->productExposed = $productStockData->productExposed;
+        $this->futureProductQuantity = $productStockData->futureProductQuantity;
+        $this->dateOfStorage = $productStockData->dateOfStorage;
     }
 
     /**
@@ -112,5 +128,21 @@ class ProductStock
     public function isProductExposed(): bool
     {
         return $this->productExposed;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getFutureProductQuantity(): ?int
+    {
+        return $this->futureProductQuantity;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDateOfStorage(): ?\DateTime
+    {
+        return $this->dateOfStorage;
     }
 }

@@ -38,7 +38,25 @@ class ProductStockDataFactory
         $productStockData->stockId = $productStock->getStock()->getId();
         $productStockData->productQuantity = $productStock->getProductQuantity();
         $productStockData->productExposed = $productStock->isProductExposed();
+        $productStockData->futureProductQuantity = $productStock->getFutureProductQuantity();
+        $productStockData->dateOfStorage = $productStock->getDateOfStorage();
+        $productStockData->daysOfStorage = $this->calculateDaysOfStorage($productStock->getDateOfStorage());
 
         return $productStockData;
+    }
+
+    /**
+     * @param \DateTime|null $dateOfStorage
+     * @return int|null
+     */
+    private function calculateDaysOfStorage(?\DateTime $dateOfStorage): ?int
+    {
+        if($dateOfStorage === null){
+            return null;
+        }
+
+        $difference = $dateOfStorage->diff(new \DateTime());
+
+        return $difference->days;
     }
 }

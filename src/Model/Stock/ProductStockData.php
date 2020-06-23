@@ -26,6 +26,21 @@ class ProductStockData
      */
     public $name;
 
+    /**
+     * @var int|null
+     */
+    public $futureProductQuantity;
+
+    /**
+     * @var \DateTime|null
+     */
+    public $dateOfStorage;
+
+    /**
+     * @var int|null
+     */
+    public $daysOfStorage;
+
     public function __construct()
     {
         $this->productQuantity = 0;
