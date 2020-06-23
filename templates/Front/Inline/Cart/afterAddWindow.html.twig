@@ -1,33 +1,43 @@
 {% if not maxStockAmountAlreadyReached %}
     {% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
     <div>
-        <div>{{ 'Skvělá volba! Vaše zboží jsme přidali do košíku'|trans }}</div>
-        <div>
-            <div>
+        <h2 class="window-popup__heading window-popup__heading--cart">
+            <svg class="window-popup__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="window-popup__checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="window-popup__checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            {{ 'Skvělá volba! Vaše zboží jsme přidali do košíku'|trans }}
+        </h2>
+        <div class="window-popup__cart">
+            <div class="window-popup__cart__img">
                 {% if imageExists(product) %}
                     {{ image(product, {size: 'galleryThumbnail', lazy: false}) }}
                 {% else %}
                     {{ noimage({size: 'galleryThumbnail', alt: product.fullname}) }}
                 {% endif %}
             </div>
-            <div>
-                {{ '%quantity%x - %productName%'|trans({'%quantity%': addedQuantity, '%productName%': product.fullname}) }}
-                <span>{{ product.catnum }}</span>
-            </div>
-
-            {% set sellingPriceWithVat = getProductSellingPrice(product).priceWithVat %}
-            {% set nonSellingPriceWithVat = getProductNonSellingPrice(product).priceWithVat %}
-            <div>
-                <div>
-                    {{ sellingPriceWithVat.multiply(addedQuantity)|price }}
-                    {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
+            <div class="window-popup__cart__content">
+                <div class="window-popup__cart__content__info">
+                    <strong class="window-popup__cart__content__name">
+                        <span class="window-popup__cart__content__name__prefix">{{ '%quantity%x - %productNamePrefix%'|trans({'%quantity%': addedQuantity, '%productNamePrefix%': product.nameFirstLine}) }}</span>
+                        {{ product.nameSecondLine }}
+                    </strong>
+                    <span class="window-popup__cart__content__catnum">{{ product.catnum }}</span>
                 </div>
-                {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
-                    <div>
-                        {{ nonSellingPriceWithVat.multiply(addedQuantity)|price }}
-                        {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
-                    </div>
-                {% endif %}
+                {% set sellingPriceWithVat = getProductSellingPrice(product).priceWithVat %}
+                {% set nonSellingPriceWithVat = getProductNonSellingPrice(product).priceWithVat %}
+                <div class="window-popup__cart__content__prices">
+                    <span class="window-popup__cart__content__price window-popup__cart__content__price--legacy">
+                        {{ sellingPriceWithVat.multiply(addedQuantity)|price }}
+                        {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
+                    </span>
+                    {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
+                        <strong class="window-popup__cart__content__price window-popup__cart__content__price--main">
+                            {{ nonSellingPriceWithVat.multiply(addedQuantity)|price }}
+                            {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
+                        </strong>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
