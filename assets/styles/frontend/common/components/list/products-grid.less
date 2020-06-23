@@ -20,6 +20,7 @@
             padding-left: 20px;
 
             opacity: 0.5;
+            transition: all .5s ease-in-out;
 
             @media @query-md {
                 width: 240px;
@@ -27,9 +28,18 @@
                 max-width: 240px;
             }
 
+            .list-products__item__block {
+                pointer-events: none;
+                outline: 0;
+            }
+
             &.slick-active {
                 @media @query-md {
                     opacity: 1;
+                }
+
+                .list-products__item__block {
+                    pointer-events: auto;
                 }
             }
 
