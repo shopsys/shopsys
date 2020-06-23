@@ -1699,3 +1699,112 @@ Returns validation error
             }
         ]
     }
+
+## Current customer user personal data [/graphql{?current_customer_user_personal_data}]
+
+### POST [POST]
+
+Get current customer user personal data
+
+- Request (application/json)
+    - Headers
+        Authorization: Bearer --ACCESS-TOKEN--
+
+    - Body
+        {
+            query: currentCustomerUser {
+                firstName,
+                lastName,
+                email
+                telephone
+            }
+        }
+
+- Response 200 (application/json; charset=utf-8)
+
+    {
+        "data": {
+            "query": {
+                "firstName": "Jaromír",
+                "lastName": "Jágr",
+                "email": "no-reply@shopsys.com",
+                "telephone": "605000123"
+            }
+        }
+    }
+
+## Change password [/graphql{?change_customer_user_password}]
+
+### POST [POST]
+
+Change password using email address, old password and new password
+
+- Request (application/json)
+
+    - Headers
+        Authorization: Bearer --ACCESS-TOKEN--
+
+    - Body
+        mutation {
+            ChangePassword(input: {
+                email: "no-reply@shopsys.com"
+                oldPassword: "user123"
+                newPassword: "user124"
+            }) {
+                firstName
+                lastName
+                email
+                telephone
+            }
+        }
+
+- Response 200 (application/json; charset=utf-8)
+
+    {
+        "data": {
+            "query": {
+                "firstName": "Jaromír",
+                "lastName": "Jágr",
+                "email": "no-reply@shopsys.com",
+                "telephone": "605000123"
+            }
+        }
+    }
+
+## Change customer user personal data [/graphql{?change_customer_user_personal_data}]
+
+### POST [POST]
+
+Returns customer user new personal data
+
+- Request (application/json)
+
+    - Headers
+        Authorization: Bearer --ACCESS-TOKEN--
+
+    - Body
+        mutation {
+            ChangePersonalData(input: {
+                telephone: "123456321"
+                firstName: "John"
+                lastName: "Doe"
+            }) {
+                firstName
+                lastName,
+                telephone,
+                email
+            }
+        }
+
+- Response 200 (application/json; charset=utf-8)
+
+    {
+        "data": {
+            "ChangePersonalData": {
+                "firstName": "John",
+                "lastName": "Doe",
+                "telephone": "123456321",
+                "email": "no-reply@shopsys.com"
+            }
+        }
+    }

@@ -8,3 +8,6 @@ There you can find links to upgrade notes for other versions too.
 ## Application
 - add `psr/event-dispatcher` to your composer dependencies in order to prevent PHPStan errors in Event classes ([#1894](https://github.com/shopsys/shopsys/pull/1894))
     - add `"psr/event-dispatcher": "^1.0.0",` to `require-dev` section in your `composer.json` file
+
+- add support for changing personal data and password to your Frontend API ([#1891](https://github.com/shopsys/shopsys/pull/1891))
+    - see #project-base-diff to update your project

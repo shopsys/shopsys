@@ -92,4 +92,12 @@ class CustomerUserRefreshTokenChainFacade
     {
         $this->customerUserRefreshTokenChainRepository->removeCustomerUserRefreshTokenChainsByDeviceId($deviceId);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     */
+    public function removeAllCustomerUserRefreshTokenChains(CustomerUser $customerUser): void
+    {
+        $this->customerUserRefreshTokenChainRepository->removeAllCustomerUserRefreshTokenChains($customerUser);
+    }
 }
