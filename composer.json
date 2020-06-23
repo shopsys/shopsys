@@ -95,7 +95,7 @@
         "gedmo/doctrine-extensions": "^2.4.34",
         "google/cloud-storage": "^1.10",
         "guzzlehttp/guzzle": "^6.3",
-        "helios-ag/fm-elfinder-bundle": "^9.2",
+        "helios-ag/fm-elfinder-bundle": "^10.0.4",
         "heureka/overeno-zakazniky": "^2.0.6",
         "incenteev/composer-parameter-handler": "^2.1.3",
         "intervention/image": "^2.3.14",
