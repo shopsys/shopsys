@@ -166,7 +166,7 @@ class AdministratorFacade
     public function changePassword($administratorUsername, $newPassword)
     {
         $administrator = $this->administratorRepository->getByUserName($administratorUsername);
-        $administrator->setPasswordHash($newPassword);
+        $this->setPassword($administrator, $newPassword);
         $this->em->flush($administrator);
     }
 
