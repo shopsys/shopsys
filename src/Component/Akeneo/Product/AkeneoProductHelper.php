@@ -161,7 +161,7 @@ class AkeneoProductHelper
      * @param string $type
      * @return mixed
      */
-    public static function convertStingToType(?string $data, string $type)
+    public static function convertStringToType(?string $data, string $type)
     {
         if ($data === null) {
             return $data;
