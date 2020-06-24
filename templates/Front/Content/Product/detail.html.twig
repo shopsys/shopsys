@@ -287,7 +287,7 @@
                     </table>
                 {% endif %}
 
-                {% set productParameterValues = getProductParameterValues(product) %}
+                {% set productParameterValues = getProductNonDimensionParameterValues(product) %}
 
                 {% if product.getDescription(domain.id)%}
                     <div class="box-accordion js-accordion is-opened" id="product-desc">
@@ -343,61 +343,50 @@
                     </div>
                 {% endif %}
 
-                <div class="box-accordion js-accordion js-not-implemented-yet">
-                    <a class="box-accordion__header js-accordion-header" href="#">
-                        <strong class="box-accordion__heading">{{ 'Rozměry'|trans }}</strong>
-                        <span class="box-accordion__header__toggle">
-                            <span
-                                class="box-accordion__header__toggle__text js-accordion-toggle-text"
-                                data-text-more="{{ 'Zobrazit víc'|trans }}"
-                                data-text-less="{{ 'Skrýt'|trans }}"
-                            >
-                                {{ 'Zobrazit víc'|trans }}
+                {% set productDimensionParameterValues = getProductDimensionParameterValues(product) %}
+                {% if existProductImageByAkeneoType(product, 'image_dimensions') and productDimensionParameterValues|length > 0 %}
+                    <div class="box-accordion js-accordion">
+                        <a class="box-accordion__header js-accordion-header" href="#">
+                            <strong class="box-accordion__heading">{{ 'Rozměry'|trans }}</strong>
+                            <span class="box-accordion__header__toggle">
+                                <span
+                                    class="box-accordion__header__toggle__text js-accordion-toggle-text"
+                                    data-text-more="{{ 'Zobrazit víc'|trans }}"
+                                    data-text-less="{{ 'Skrýt'|trans }}"
+                                >
+                                    {{ 'Zobrazit víc'|trans }}
+                                </span>
+                                <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                             </span>
-                            <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
-                        </span>
-                    </a>
-                    <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
-                        <div class="box-accordion__body__content box-accordion__body__content--measures">
-                            <table class="table table--params">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">{{ 'Rozměry'|trans }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>{{ 'Šířka'|trans }}</td>
-                                        <td>318 cm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ 'Hloubka maximální'|trans }}</td>
-                                        <td>215 cm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ 'Výška sedáku'|trans }}</td>
-                                        <td>45 cm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ 'Výška bočního opěradla'|trans }}</td>
-                                        <td>60 cm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ 'Výška opěradla'|trans }}</td>
-                                        <td>110 cm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ 'Hloubka sedáku'|trans }}</td>
-                                        <td>52 cm</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="box-accordion__body__content box-accordion__body__content--img">
-                            <img loading="lazy" data-src="{{ asset('public/frontend/images/rozmery.jpg') }}" alt="{{ 'Rozměry'|trans }}">
+                        </a>
+                        <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
+                            <div class="box-accordion__body__content box-accordion__body__content--measures">
+                                <table class="table table--params">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">{{ 'Rozměry'|trans }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for productDimensionParameterValue in productDimensionParameterValues %}
+                                            <tr>
+                                                <td>{{ productDimensionParameterValue.parameter.name }}</td>
+                                                <td>{{ productDimensionParameterValue.value.text }}
+                                                    {% if productDimensionParameterValue.parameter.getParameterUnit() is not empty %}
+                                                        {{ productDimensionParameterValue.parameter.getParameterUnit().name }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box-accordion__body__content box-accordion__body__content--img">
+                                {{ productImageByAkeneoType(product, 'image_dimensions', { itemprop: 'image', alt: 'Rozměry'|trans }) }}
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
 
                 {% include 'Front/Content/Product/productPackageInformation.html.twig' with {product: product, productPackages: productPackages, doamin: domain } %}
 

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
@@ -360,6 +361,32 @@ class ImageFacade extends BaseImageFacade
         );
 
         $this->imageCacheFacade->setImageEntityIntoCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type, $image);
+
+        return $image;
+    }
+
+    /**
+     * @param object $entity
+     * @param string $akeneoImageType
+     * @return \App\Component\Image\Image
+     */
+    public function getImageByObjectAndAkeneoType(object $entity, string $akeneoImageType): Image
+    {
+        $entityName = $this->imageConfig->getEntityName($entity);
+        $entityId = $this->getEntityId($entity);
+
+        $image = $this->imageCacheFacade->findCachedImageEntityByEntityNameAndEntityIdAndType($entityName, $entityId, $akeneoImageType);
+
+        if ($image !== null) {
+            return $image;
+        }
+
+        $image = $this->imageRepository->findImageByEntityForAkeneoImageType($entityName, $entityId, $akeneoImageType);
+        if ($image === null) {
+            throw new ImageNotFoundException();
+        }
+
+        $this->imageCacheFacade->setImageEntityIntoCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $akeneoImageType, $image);
 
         return $image;
     }
