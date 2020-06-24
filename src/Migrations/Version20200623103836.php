@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20200623103836 extends AbstractMigration
 {
+    use MultidomainMigrationTrait;
+
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -20,6 +23,14 @@ class Version20200623103836 extends AbstractMigration
         $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES
             (\'scontoBridgeTransferFutureProductStockLastUpdatedDatetime\', 0, \'1970-01-01T00:00:00+0000\', \'datetime\')
         ');
+
+        foreach ($this->getAllDomainIds() as $domainId) {
+            $this->sql(
+                'INSERT INTO "setting_values" ("name", "domain_id", "value", "type") VALUES 
+                    (\'futureStorageReservation\', :domainId, \'1\', \'integer\')',
+                ['domainId' => $domainId]
+            );
+        }
     }
 
     /**

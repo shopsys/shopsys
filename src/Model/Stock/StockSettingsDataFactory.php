@@ -30,6 +30,7 @@ class StockSettingsDataFactory
         $settings = new StockSettingsData();
         $settings->delivery = $this->setting->getForDomain(Setting::DELIVERY_DAYS_ON_STOCK, $domainId);
         $settings->transfer = $this->setting->getForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, $domainId);
+        $settings->futureStorageReservation = $this->setting->getForDomain(Setting::FUTURE_STORAGE_RESERVATION, $domainId);
 
         return $settings;
     }
