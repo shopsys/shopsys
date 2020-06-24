@@ -32,7 +32,7 @@ class ProductStockData
     public $futureProductQuantity;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      */
     public $dateOfStorage;
 

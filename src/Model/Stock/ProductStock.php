@@ -78,8 +78,6 @@ class ProductStock
     {
         $this->productQuantity = $productStockData->productQuantity;
         $this->productExposed = $productStockData->productExposed;
-        $this->futureProductQuantity = $productStockData->futureProductQuantity;
-        $this->dateOfStorage = $productStockData->dateOfStorage;
     }
 
     /**
@@ -136,6 +134,22 @@ class ProductStock
     public function getFutureProductQuantity(): ?int
     {
         return $this->futureProductQuantity;
+    }
+
+    /**
+     * @param int|null $futureProductQuantity
+     */
+    public function setFutureProductQuantity(?int $futureProductQuantity): void
+    {
+        $this->futureProductQuantity = $futureProductQuantity;
+    }
+
+    /**
+     * @param \DateTime|null $dateOfStorage
+     */
+    public function setDateOfStorage(?\DateTime $dateOfStorage): void
+    {
+        $this->dateOfStorage = $dateOfStorage;
     }
 
     /**

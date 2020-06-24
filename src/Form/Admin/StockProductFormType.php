@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Model\Stock\ProductStock;
 use App\Model\Stock\ProductStockData;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,8 +38,7 @@ class StockProductFormType extends AbstractType
             ])
             ->add('daysOfStorage', DisplayOnlyType::class, [
                 'mapped' => true,
-            ])
-        ;
+            ]);
     }
 
     /**
@@ -52,7 +49,6 @@ class StockProductFormType extends AbstractType
         $resolver
             ->setDefaults([
                 'data_class' => ProductStockData::class,
-            ])
-        ;
+            ]);
     }
 }

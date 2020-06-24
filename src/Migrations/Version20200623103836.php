@@ -16,6 +16,10 @@ class Version20200623103836 extends AbstractMigration
     {
         $this->sql('ALTER TABLE product_stocks ADD future_product_quantity INT DEFAULT NULL');
         $this->sql('ALTER TABLE product_stocks ADD date_of_storage TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
+
+        $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES
+            (\'scontoBridgeTransferFutureProductStockLastUpdatedDatetime\', 0, \'1970-01-01T00:00:00+0000\', \'datetime\')
+        ');
     }
 
     /**
