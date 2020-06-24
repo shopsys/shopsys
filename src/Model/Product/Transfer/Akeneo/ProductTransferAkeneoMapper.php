@@ -203,6 +203,16 @@ class ProductTransferAkeneoMapper
             }
         }
 
+        //fix mandatory prices
+        foreach ($productData->productType as $domainId => $productType) {
+            if ($productData->lowPriceWithVat[$domainId] === null) {
+                $productData->lowPriceWithVat[$domainId] = Money::zero();
+            }
+            if ($productData->highPriceWithVat[$domainId] === null) {
+                $productData->highPriceWithVat[$domainId] = Money::zero();
+            }
+        }
+
         $productCategories = $this->getProductCategories($akeneoProductData['categories']);
         $productData->categoriesByDomainId = [
             Domain::FIRST_DOMAIN_ID => $productCategories,
