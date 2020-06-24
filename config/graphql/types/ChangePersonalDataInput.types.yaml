@@ -1,0 +1,4 @@
+ChangePersonalDataInput:
+    type: input-object
+    inherits:
+        - 'ChangePersonalDataInputDecorator'

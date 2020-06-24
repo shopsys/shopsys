@@ -49,7 +49,7 @@ class ProductImagesTest extends GraphQlTestCase
         "product": {
             "images": [
                 {
-                    "url": "http://webserver:8080/content-test/images/product/default/1.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/default/1.jpg') . '",
                     "type": null,
                     "size": "default",
                     "width": 410,
@@ -57,7 +57,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/galleryThumbnail/1.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/1.jpg') . '",
                     "type": null,
                     "size": "galleryThumbnail",
                     "width": null,
@@ -65,7 +65,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/list/1.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/list/1.jpg') . '",
                     "type": null,
                     "size": "list",
                     "width": 150,
@@ -73,7 +73,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/thumbnail/1.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnail/1.jpg') . '",
                     "type": null,
                     "size": "thumbnail",
                     "width": 50,
@@ -81,7 +81,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/original/1.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/original/1.jpg') . '",
                     "type": null,
                     "size": "original",
                     "width": null,
@@ -89,7 +89,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/default/64.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/default/64.jpg') . '",
                     "type": null,
                     "size": "default",
                     "width": 410,
@@ -97,7 +97,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/galleryThumbnail/64.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/64.jpg') . '",
                     "type": null,
                     "size": "galleryThumbnail",
                     "width": null,
@@ -105,7 +105,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/list/64.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/list/64.jpg') . '",
                     "type": null,
                     "size": "list",
                     "width": 150,
@@ -113,7 +113,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/thumbnail/64.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnail/64.jpg') . '",
                     "type": null,
                     "size": "thumbnail",
                     "width": 50,
@@ -121,7 +121,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/original/64.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/original/64.jpg') . '",
                     "type": null,
                     "size": "original",
                     "width": null,
@@ -159,7 +159,7 @@ class ProductImagesTest extends GraphQlTestCase
         "product": {
             "images": [
                 {
-                    "url": "http://webserver:8080/content-test/images/product/list/1.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/list/1.jpg') . '",
                     "type": null,
                     "size": "list",
                     "width": 150,
@@ -167,7 +167,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "http://webserver:8080/content-test/images/product/list/64.jpg",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/list/64.jpg') . '",
                     "type": null,
                     "size": "list",
                     "width": 150,
