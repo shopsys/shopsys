@@ -73,7 +73,7 @@ class ProductTransferAkeneoValidator
             new Assert\Type('string'),
             new Assert\Length(['max' => 20]),
         ];
-        $this->validatePriceValue($violations, $akeneoProductData['values'], 'low_price_vat', $priceValidationSetup);//413657501
+        $this->validatePriceValue($violations, $akeneoProductData['values'], 'low_price_vat', $priceValidationSetup);
 
         $highPriceValidationSetup = $priceValidationSetup;
         if ($isMainVariant === false) {
@@ -260,7 +260,7 @@ class ProductTransferAkeneoValidator
                                                 ],
                                             ]),
                                         ],
-                                        'allowMissingFields' => true
+                                        'allowMissingFields' => true,
                                     ]),
                                 ],
                             ]),

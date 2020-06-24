@@ -203,15 +203,7 @@ class ProductTransferAkeneoMapper
             }
         }
 
-        //fix mandatory prices
-        foreach ($productData->productType as $domainId => $productType) {
-            if ($productData->lowPriceWithVat[$domainId] === null) {
-                $productData->lowPriceWithVat[$domainId] = Money::zero();
-            }
-            if ($productData->highPriceWithVat[$domainId] === null) {
-                $productData->highPriceWithVat[$domainId] = Money::zero();
-            }
-        }
+        $this->fixMandatoryPrices($productData);
 
         $productCategories = $this->getProductCategories($akeneoProductData['categories']);
         $productData->categoriesByDomainId = [
@@ -530,5 +522,20 @@ class ProductTransferAkeneoMapper
         }
 
         return $parameterValueText;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function fixMandatoryPrices(ProductData $productData): void
+    {
+        foreach ($productData->productType as $domainId => $productType) {
+            if ($productData->lowPriceWithVat[$domainId] === null) {
+                $productData->lowPriceWithVat[$domainId] = Money::zero();
+            }
+            if ($productData->highPriceWithVat[$domainId] === null) {
+                $productData->highPriceWithVat[$domainId] = Money::zero();
+            }
+        }
     }
 }
