@@ -101,6 +101,8 @@ class KrakenOptimizationFacade
             }
 
             if ($processed === self::BATCH_SIZE) {
+                $this->em->flush();
+
                 return true;
             }
         }
