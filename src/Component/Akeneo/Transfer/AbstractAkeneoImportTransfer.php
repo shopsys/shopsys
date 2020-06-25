@@ -88,7 +88,9 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
     {
         try {
             $this->em->beginTransaction();
-            $this->processItem($item);
+            if (array_key_exists('identifier', $item) && $item['identifier'] == '413615400') {
+                $this->processItem($item);
+            }
             $this->em->commit();
         } catch (TransferInvalidDataAdministratorNonCriticalException $invalidDataSilentException) {
             $this->logger->addDebug(
