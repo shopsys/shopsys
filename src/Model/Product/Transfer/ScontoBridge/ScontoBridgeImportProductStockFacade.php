@@ -70,7 +70,7 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
     protected function doBeforeTransfer(): void
     {
         if ($this->lastModificationAtFromScontoBridge === null) {
-            $this->lastModificationAtFromScontoBridge = $this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME);
+            $this->lastModificationAtFromScontoBridge = new DateTime($this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME));
         }
 
         $this->logger->addInfo(
@@ -120,7 +120,7 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
 
         $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId(
             $scontoBridgeItemData['sku'],
-            (int)$scontoBridgeItemData['storeCode']
+            $scontoBridgeItemData['storeCode']
         );
 
         if ($productStock === null) {
@@ -148,7 +148,7 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
     protected function doAfterTransfer(): void
     {
         $this->logger->addInfo('Importing iterable transfer is done.');
-        $this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge);
+        $this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT));
     }
 
     /**
@@ -166,7 +166,7 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
      */
     public function cronWakeUp(): void
     {
-        $this->lastModificationAtFromScontoBridge = $this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME);
+        $this->lastModificationAtFromScontoBridge = new DateTime($this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME));
         $this->logger->addInfo(
             sprintf('Wake up cron for last modified : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
         );

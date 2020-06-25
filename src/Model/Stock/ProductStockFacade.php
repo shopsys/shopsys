@@ -92,12 +92,22 @@ class ProductStockFacade
 
     /**
      * @param string $productCatnum
-     * @param int $stockExternalId
+     * @param string $stockExternalId
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return \App\Model\Stock\ProductStock|null
      */
-    public function findProductStockByProductCatnumAndStockExternalId(string $productCatnum, int $stockExternalId): ?ProductStock
+    public function findProductStockByProductCatnumAndStockExternalId(string $productCatnum, string $stockExternalId): ?ProductStock
     {
         return $this->productStockRepository->findProductStockByStockExternalIdAndProductCatnum($stockExternalId, $productCatnum);
+    }
+
+    public function resetFutureProductStockAfterNowDate(): void
+    {
+        $futureProductStockAfterNowDate = $this->productStockRepository->findFutureProductStockAfterNowDate();
+        foreach ($futureProductStockAfterNowDate as $productStock) {
+            $productStock->setDateOfStorage(null);
+            $productStock->setFutureProductQuantity(null);
+        }
+        $this->em->flush();
     }
 }

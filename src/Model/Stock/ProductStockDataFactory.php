@@ -56,7 +56,7 @@ class ProductStockDataFactory
         }
 
         $nowDate = new \DateTime();
-        $difference = $dateOfStorage->diff($nowDate)->days;
+        $difference = $dateOfStorage->modify('+1 day')->diff($nowDate)->days;
 
         if ($dateOfStorage < $nowDate) {
             $difference *= -1;

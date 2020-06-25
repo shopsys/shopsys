@@ -69,12 +69,14 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
      */
     protected function doBeforeTransfer(): void
     {
+        $this->productStockFacade->resetFutureProductStockAfterNowDate();
+
         if ($this->lastModificationAtFromScontoBridge === null) {
-            $this->lastModificationAtFromScontoBridge = $this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_FUTURE_PRODUCT_STOCK_LAST_UPDATED_DATETIME);
+            $this->lastModificationAtFromScontoBridge = new DateTime($this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_FUTURE_PRODUCT_STOCK_LAST_UPDATED_DATETIME));
         }
 
         $this->logger->addInfo(
-            sprintf('Importing future productStock data from Sconto bridge from last modification : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
+            sprintf('Importing future productStock data from Sconto bridge from last modification : %s', $this->lastModificationAtFromScontoBridge->modify('+ 1 microseconds')->format(ScontoBridgeClient::DATE_TIME_FORMAT))
         );
     }
 
@@ -115,13 +117,12 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
     protected function processItem(array $scontoBridgeItemData): void
     {
         $this->logger->addInfo(sprintf('Processing store item with ERP id(SKU) : %s', $scontoBridgeItemData['sku']));
-//        d($scontoBridgeItemData);
 
         $this->futureProductStockTransferScontoBridgeValidator->validate($scontoBridgeItemData);
 
         $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId(
             $scontoBridgeItemData['sku'],
-            (int)$scontoBridgeItemData['storeCode']
+            $scontoBridgeItemData['storeCode']
         );
 
         if ($productStock === null) {
@@ -131,13 +132,23 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
                 $scontoBridgeItemData['storeCode']
             ));
         } else {
-            $futureDateOfStorage = $this->buildDate($scontoBridgeItemData['dateConfirmedArrival']);
-            if ($futureDateOfStorage === null) {
-                $futureDateOfStorage = $this->buildDate($scontoBridgeItemData['dateExpectedArrival']);
-            }
+            if ($this->buildDate($scontoBridgeItemData['dateArrival']) !== null) {
+                $productStock->setFutureProductQuantity(null);
+                $productStock->setDateOfStorage(null);
+            } else {
+                $futureDateOfStorage = $this->buildDate($scontoBridgeItemData['dateConfirmedArrival']);
+                if ($futureDateOfStorage === null) {
+                    $futureDateOfStorage = $this->buildDate($scontoBridgeItemData['dateExpectedArrival']);
+                }
 
-            $productStock->setFutureProductQuantity($scontoBridgeItemData['amount']);
-            $productStock->setDateOfStorage($futureDateOfStorage);
+                if ($futureDateOfStorage < (new DateTime())) {
+                    $productStock->setFutureProductQuantity(null);
+                    $productStock->setDateOfStorage(null);
+                } else {
+                    $productStock->setFutureProductQuantity($scontoBridgeItemData['amount']);
+                    $productStock->setDateOfStorage($futureDateOfStorage);
+                }
+            }
 
             $this->em->flush();
             $this->logger->addInfo(sprintf(
@@ -176,7 +187,7 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
     protected function doAfterTransfer(): void
     {
         $this->logger->addInfo('Importing iterable transfer is done.');
-        //$this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge);
+        $this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_FUTURE_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT));
     }
 
     /**
@@ -194,7 +205,7 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
      */
     public function cronWakeUp(): void
     {
-        $this->lastModificationAtFromScontoBridge = $this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME);
+        $this->lastModificationAtFromScontoBridge = new DateTime($this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_FUTURE_PRODUCT_STOCK_LAST_UPDATED_DATETIME));
         $this->logger->addInfo(
             sprintf('Wake up cron for last modified : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
         );
