@@ -76,6 +76,9 @@
                         {% do form.billingAddressData.companyName.setRendered() %}
                         {% do form.billingAddressData.companyNumber.setRendered() %}
                         {% do form.billingAddressData.companyTaxNumber.setRendered() %}
+                        {% if domain.id == 2 %}
+                            {% do form.billingAddressData.companyNumberWithVat.setRendered() %}
+                        {% endif %}
                     {% endif %}
 
                     <div class="wrap-box">
