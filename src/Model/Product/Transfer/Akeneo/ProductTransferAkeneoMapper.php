@@ -177,6 +177,7 @@ class ProductTransferAkeneoMapper
         }
 
         $productData->hidden = ($akeneoProductData['enabled'] ?? true) ? false : true;
+        $productData->domainHidden = AkeneoProductHelper::mapDomainDataString($productData->domainHidden, $akeneoProductData['values']['domain_hidden'] ?? null);
 
         $productData->ean = AkeneoProductHelper::mapDataString($akeneoProductData['values']['ean'] ?? null);
         $productData->productType = $this->getProductType($productData->productType, $akeneoProductData);

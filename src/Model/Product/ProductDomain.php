@@ -153,6 +153,12 @@ class ProductDomain extends BaseProductDomain
     private $totalPackageWeight;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $domainHidden;
+
+    /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      */
@@ -489,5 +495,21 @@ class ProductDomain extends BaseProductDomain
     public function setTotalPackageWeight(?float $totalPackageWeight): void
     {
         $this->totalPackageWeight = $totalPackageWeight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDomainHidden(): bool
+    {
+        return $this->domainHidden;
+    }
+
+    /**
+     * @param bool $domainHidden
+     */
+    public function setDomainHidden(bool $domainHidden): void
+    {
+        $this->domainHidden = $domainHidden;
     }
 }

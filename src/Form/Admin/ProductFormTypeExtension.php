@@ -331,6 +331,12 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'disabled' => true,
                 'label' => t('Use stocks'),
+            ])
+            ->add('domainHidden', MultidomainType::class, [
+                'label' => t('Skrýt na doméně'),
+                'required' => false,
+                'entry_type' => YesNoType::class,
+                'position' => ['after' => 'hidden'],
             ]);
     }
 
