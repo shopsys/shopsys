@@ -8,9 +8,9 @@ import constant from '../utils/constant';
 
     const initAdvertForm = function () {
         if (getCheckedPositionName() === constant('\\App\\Model\\Advert\\AdvertPositionRegistry::CATEGORIES_ABOVE_PRODUCT_LIST')) {
-            $('.js-category-tree-form').closest('.form-line').show();
+            $('#advert_form_settings').find('.js-category-tree-form').closest('.form-line').show();
         } else {
-            $('.js-category-tree-form').closest('.form-line').hide();
+            $('#advert_form_settings').find('.js-category-tree-form').closest('.form-line').hide();
         }
     };
 
