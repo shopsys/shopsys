@@ -8,6 +8,8 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry as BaseAdvertPos
 
 class AdvertPositionRegistry extends BaseAdvertPositionRegistry
 {
+    public const CATEGORIES_ABOVE_PRODUCT_LIST = 'productListMiddle';
+
     /**
      * @return string[]
      */
@@ -15,6 +17,7 @@ class AdvertPositionRegistry extends BaseAdvertPositionRegistry
     {
         $allLabelsIndexedByNames = parent::getAllLabelsIndexedByNames();
         $allLabelsIndexedByNames['cartPreview'] = t('nad souhrnem objednávky v košíku');
+        $allLabelsIndexedByNames[self::CATEGORIES_ABOVE_PRODUCT_LIST] = t('v kategorii (nad výpisem produktů)');
 
         return $allLabelsIndexedByNames;
     }

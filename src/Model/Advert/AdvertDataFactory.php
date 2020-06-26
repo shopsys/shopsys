@@ -28,6 +28,7 @@ class AdvertDataFactory extends BaseAdvertDataFactory
         $advertData->datetimeVisibleFrom = $advert->getDatetimeVisibleFrom();
         $advertData->datetimeVisibleTo = $advert->getDatetimeVisibleTo();
         $advertData->mobileImage->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($advert, AdvertFacade::IMAGE_TYPE_MOBILE);
+        $advertData->categories = $advert->getCategories();
     }
 
     /**
