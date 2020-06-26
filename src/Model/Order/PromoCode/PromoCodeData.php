@@ -82,4 +82,24 @@ class PromoCodeData extends BasePromoCodeData
      * @var bool
      */
     public $applyOnSecondProduct = false;
+
+    /**
+     * @var bool
+     */
+    public $onSale = true;
+
+    /**
+     * @var bool
+     */
+    public $inAction = true;
+
+    /**
+     * @var bool
+     */
+    public $scontoPrice = true;
+
+    /**
+     * @var bool
+     */
+    public $withoutLowPrice = true;
 }

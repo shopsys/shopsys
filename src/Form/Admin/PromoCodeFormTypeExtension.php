@@ -75,9 +75,36 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             ]);
         }
 
+        $this->buildBaseFormGroup($builder, $options);
+        $this->buildPromoCodeFlagsForm($builder);
+        $this->buildProductsWithSaleForm($builder);
+        $this->buildCategoriesWithSaleForm($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildBaseFormGroup(FormBuilderInterface $builder, array $options): void
+    {
         $discountOptions = $builder->get('percent')->getOptions();
         $discountOptions['label'] = t('Sleva (%)');
         $builder->add('percent', IntegerType::class, $discountOptions);
+
+        $builder->add('identifier', TextType::class, [
+            'label' => t('Identifikátor kupónu pro IS'),
+            'required' => true,
+            'constraints' => [
+                new Constraints\NotNull([
+                    'message' => t('Identifikátor musí obsahovat dva znaky'),
+                ]),
+                new Constraints\Length([
+                    'min' => 2,
+                    'max' => 2,
+                    'exactMessage' => t('Identifikátor musí obsahovat dva znaky'),
+                ]),
+            ],
+        ]);
 
         $builder->add('applyOnSecondProduct', YesNoType::class, [
             'label' => t('Platí na druhý produkt v košíku'),
@@ -103,24 +130,33 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'label' => t('Zbývající počet použití'),
             'required' => false,
         ]);
+    }
 
-        $builder->add('identifier', TextType::class, [
-            'label' => t('Identifikátor kupónu pro IS'),
-            'required' => true,
-            'constraints' => [
-                new Constraints\NotNull([
-                    'message' => 'Identifikátor musí obsahovat dva znaky',
-                ]),
-                new Constraints\Length([
-                    'min' => 2,
-                    'max' => 2,
-                    'exactMessage' => 'Identifikátor musí obsahovat dva znaky',
-                ]),
-            ],
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildPromoCodeFlagsForm(FormBuilderInterface $builder): void
+    {
+        $flagsGroup = $builder->create('flagsGroup', GroupType::class, [
+            'label' => t('Aplikovat podle příznaků'),
         ]);
-
-        $this->buildProductsWithSaleForm($builder);
-        $this->buildCategoriesWithSaleForm($builder);
+        $builder->add($flagsGroup);
+        $flagsGroup->add('onSale', YesNoType::class, [
+            'required' => false,
+            'label' => t('Produkt ve výprodeji'),
+        ])
+        ->add('inAction', YesNoType::class, [
+            'required' => false,
+            'label' => t('Produkt v akci'),
+        ])
+        ->add('scontoPrice', YesNoType::class, [
+            'required' => false,
+            'label' => t('Produkt se sconto cenou'),
+        ])
+        ->add('withoutLowPrice', YesNoType::class, [
+            'required' => false,
+            'label' => t('Produkt bez nižší ceny'),
+        ]);
     }
 
     /**
