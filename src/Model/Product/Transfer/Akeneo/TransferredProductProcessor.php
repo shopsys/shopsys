@@ -23,14 +23,17 @@ class TransferredProductProcessor
 {
     private const AKENEO_IMAGES_KEYS_WITH_SORTING_PRIORITY = [
         'image_main',
-        'image_gallery',
-        'image_dimensions',
         'image_inspiration',
+        'image_function',
+        'image_internal_equipment',
+        'image_galery',
+        'image_upholstery_fabric',
+        'image_dimensions',
     ];
 
-    private const ASSET_FAMILY = 'product_images';
+    private const ASSET_FAMILY = 'Galerie';
 
-    private const AKENEO_IMAGE_TYPE_GALLERY = 'image_gallery';
+    private const AKENEO_IMAGE_TYPE_GALLERY = 'image_galery';
 
     /**
      * @var \App\Model\Product\ProductFacade
@@ -466,7 +469,7 @@ class TransferredProductProcessor
      */
     private function getGalleryImagesForProduct(array $akeneoProductData): \Generator
     {
-        $imageCodes = $akeneoProductData['values']['images'][0]['data'] ?? [];
+        $imageCodes = $akeneoProductData['values']['image_galery'][0]['data'] ?? [];
 
         foreach ($imageCodes as $imageCode) {
             yield $this->assetTransferAkeneoFacade->getImageData(self::ASSET_FAMILY, $imageCode);
