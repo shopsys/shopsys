@@ -19,7 +19,12 @@
             <div class="window-popup__cart__content">
                 <div class="window-popup__cart__content__info">
                     <strong class="window-popup__cart__content__name">
-                        <span class="window-popup__cart__content__name__prefix">{{ '%quantity%x - %productNamePrefix%'|trans({'%quantity%': addedQuantity, '%productNamePrefix%': product.nameFirstLine}) }}</span>
+                        <span class="window-popup__cart__content__name__prefix">
+                            {{
+                                '%quantity%x - %productNamePrefix%'|trans({'%quantity%': addedQuantity,
+                                '%productNamePrefix%': product.nameFirstLine})
+                            }}
+                        </span>
                         {{ product.nameSecondLine }}
                     </strong>
                     <span class="window-popup__cart__content__catnum">{{ product.catnum }}</span>
