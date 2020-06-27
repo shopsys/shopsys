@@ -20,6 +20,9 @@
     {% block mainMenu %}
     {% endblock %}
 
+    {% block mobileMenu %}
+    {% endblock %}
+
     {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: flow.getCurrentStepNumber()} only %}
         {% if displayFormType == 'login'%}
             {% include 'Front/Content/Login/loginSimpleForm.html.twig' %}

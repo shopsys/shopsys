@@ -1,18 +1,15 @@
-@search-form-height: 52px;
+@search-form-height: 40px;
+@search-form-height-md: 52px;
 @search-form-width: 270px;
 @search-form-width-lg: 100%;
 @search-form-width-vl: 100%;
 @search-form-bg-color: @color-f;
-@search-form-border-color: @color-border-secondary;
+@search-form-border-color: #d7dee2;
+@search-form-border-color-md: @color-border-secondary;
 @search-form-border-radius: @radius;
 
 .search {
-    display: none;
     position: relative;
-
-    @media @query-md {
-        display: block;
-    }
 
     &__form {
         display: flex;
@@ -22,6 +19,10 @@
             width: @search-form-width;
             height: @search-form-height;
 
+            @media @query-md {
+                height: @search-form-height-md;
+            }
+
             @media @query-lg {
                 width: @search-form-width-lg;
             }
@@ -29,7 +30,7 @@
 
         &__icon {
             position: absolute;
-            top: 10px;
+            top: 4px;
             right: 10px;
             width: 33px;
             height: 33px;
@@ -39,6 +40,10 @@
             background-position: center center;
             transition: @transition color;
             color: #8e9a9f;
+
+            @media @query-md {
+                top: 10px;
+            }
 
             .search__input:focus + & {
                 color: @color-primary;
@@ -55,6 +60,15 @@
         border-radius: @search-form-border-radius;
         background-color: @search-form-bg-color;
         border-color: @search-form-border-color;
+
+        @media @query-mobile {
+            border-width: 1px;
+            border-color: #d7dee2;
+        }
+
+        @media @query-md {
+            border-color: @search-form-border-color-md;
+        }
 
         &::-webkit-input-placeholder { /* Firefox 18- */
             color: @color-primary;

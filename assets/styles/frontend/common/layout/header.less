@@ -1,5 +1,5 @@
 @header-mobile-button-size: 50px;
-@header-mobile-button-border: 2px solid #f4f6f6;
+@header-mobile-button-border: 1px solid #e7ebed;
 @header-mobile-button-border-radius: 5px;
 @header-mobile-button-font-size: 33px;
 @header-mobile-button-search-bg: #f0f3f4;
@@ -22,12 +22,16 @@
     justify-content: space-between;
     padding: @header-padding;
 
-    @media @query-lg {
-        padding: @header-padding-lg;
+    @media screen and (max-width: 992px) {
+        padding-bottom: 75px;
     }
 
-    @media screen and (min-width: 769px) and (max-width: 992px) {
-        padding-bottom: 75px;
+    @media @query-mobile {
+        padding-bottom: 50px;
+    }
+
+    @media @query-lg {
+        padding: @header-padding-lg;
     }
 
     &__logo {
@@ -47,15 +51,12 @@
     }
 
     &__middle {
-        display: none;
-
         @media @query-lg {
-            display: block;
             width: @header-middle-width-lg;
             margin-right: 1rem;
         }
 
-        @media screen and (min-width: 769px) and (max-width: 992px) {
+        @media screen and (max-width: 992px) {
             position: absolute;
             left: 0;
             bottom: 15px;
@@ -64,6 +65,10 @@
             .search__form__input {
                 width: 100%;
             }
+        }
+
+        @media @query-mobile {
+            bottom: 0;
         }
 
         @media @query-vl {
@@ -123,11 +128,6 @@
                 order: 2;
             }
 
-            &--search {
-                font-size: 30px;
-                background-color: @header-mobile-button-search-bg;
-            }
-
             &--login {
                 font-size: 24px;
             }
@@ -150,6 +150,8 @@
 
             .svg {
                 display: flex;
+
+                color: @color-primary;
             }
 
             &__menu {
@@ -176,6 +178,10 @@
     }
 
     &--cart {
+        @media @query-mobile {
+            padding-bottom: 0;
+        }
+
         .header__logo {
             max-width: none;
         }
