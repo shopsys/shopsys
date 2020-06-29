@@ -5,17 +5,23 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Model\Product\Product;
-use Shopsys\FrameworkBundle\Twig\ImageExtension as BaseImageExtension;
+use Shopsys\ReadModelBundle\Twig\ImageExtension as BaseImageExtension;
 use Twig\TwigFunction;
 
 /**
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
- * @method __construct(string $frontDesignImageUrlPrefix, \App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator, \App\Component\Image\ImageFacade $imageFacade, \Twig\Environment $twigEnvironment, bool $isLazyLoadEnabled)
  * @method \App\Component\Image\Image[] getImages(object $entity, string|null $type)
+ * @method __construct(string $frontDesignImageUrlPrefix, \App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator, \App\Component\Image\ImageFacade $imageFacade, \Twig\Environment $twigEnvironment, bool $isLazyLoadEnabled)
+ * @method bool imageExists(\App\Component\Image\Image|object $imageOrEntity, string|null $type)
+ * @method string getImageUrl(\App\Component\Image\Image|object $imageOrEntity, string|null $sizeName, string|null $type)
+ * @method string getImageHtml(\App\Component\Image\Image|object $imageOrEntity, array $attributes)
  */
 class ImageExtension extends BaseImageExtension
 {
+    public const NOIMAGE_FILENAME = parent::NOIMAGE_FILENAME;
+    public const OPTIMIZED_NOIMAGE_FILENAME = 'optimized-' . parent::NOIMAGE_FILENAME;
+
     /**
      * @return \Twig\TwigFunction[]
      */
@@ -83,5 +89,13 @@ class ImageExtension extends BaseImageExtension
         } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
             return false;
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEmptyImageUrl(): string
+    {
+        return $this->imageFacade->getEmptyImageUrl(parent::getEmptyImageUrl());
     }
 }

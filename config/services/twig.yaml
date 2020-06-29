@@ -26,3 +26,5 @@ services:
             $isLazyLoadEnabled: '%shopsys.image.enable_lazy_load%'
 
     Shopsys\ReadModelBundle\Twig\ImageExtension: '@App\Twig\ImageExtension'
+
+    Shopsys\FrameworkBundle\Twig\ImageExtension: '@App\Twig\ImageExtension'

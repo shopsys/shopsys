@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Component\Image;
 
+use App\Component\Domain\Domain;
+use App\Twig\ImageExtension;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
@@ -44,6 +46,11 @@ class ImageFacade extends BaseImageFacade
     private $imageCacheFacade;
 
     /**
+     * @var \App\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
      * @param mixed $imageUrlPrefix
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Component\Image\Config\ImageConfig $imageConfig
@@ -54,6 +61,7 @@ class ImageFacade extends BaseImageFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \App\Component\Image\ImageCacheFacade $imageCacheFacade
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         $imageUrlPrefix,
@@ -65,7 +73,8 @@ class ImageFacade extends BaseImageFacade
         ImageLocator $imageLocator,
         ImageFactoryInterface $imageFactory,
         MountManager $mountManager,
-        ImageCacheFacade $imageCacheFacade
+        ImageCacheFacade $imageCacheFacade,
+        Domain $domain
     ) {
         parent::__construct(
             $imageUrlPrefix,
@@ -79,6 +88,7 @@ class ImageFacade extends BaseImageFacade
             $mountManager
         );
         $this->imageCacheFacade = $imageCacheFacade;
+        $this->domain = $domain;
     }
 
     /**
@@ -429,5 +439,16 @@ class ImageFacade extends BaseImageFacade
         $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
 
         parent::manageImages($entity, $imageUploadData, $type);
+    }
+
+    /**
+     * @param string $emptyImageUrl
+     * @return string
+     */
+    public function getEmptyImageUrl(string $emptyImageUrl): string
+    {
+        $targetImageUrl = str_replace(ImageExtension::NOIMAGE_FILENAME, ImageExtension::OPTIMIZED_NOIMAGE_FILENAME, $emptyImageUrl);
+
+        return $this->replaceDomainUrlByCdnDomain($targetImageUrl, $this->domain->getCurrentDomainConfig());
     }
 }
