@@ -30,8 +30,9 @@ class ParameterTransferCachedAkeneoFacade
 
     /**
      * @param string $akeneoAttributeCode
+     * @return array[]
      */
-    public function getAllParameterOptionLocalizedLabels(string $akeneoAttributeCode)
+    public function getAllParameterOptionLocalizedLabels(string $akeneoAttributeCode): array
     {
         if (array_key_exists($akeneoAttributeCode, $this->cache)) {
             return $this->cache[$akeneoAttributeCode];
