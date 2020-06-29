@@ -6,6 +6,11 @@
     </span>
     <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs box-filter__choice__inputs--color">
         {% for parameterValueForm in parameterForm %}
+
+            {% set parameterValueChecked = parameterValueForm.vars.checked %}
+            {% set parameterId = parameterValueForm.parent.vars.name %}
+            {% set parameterValueId = parameterValueForm.vars.value %}
+
             {% set rgbHex = parameterForm.vars.choices[parameterValueForm.vars.value].data.rgbHex %}
             {% if parameterForm.vars.choices[parameterValueForm.vars.value].data.id in allParameterValuesImagesIndexedById|keys %}
                 {% set colourIcon = allParameterValuesImagesIndexedById[parameterForm.vars.choices[parameterValueForm.vars.value].data.id] %}
@@ -15,22 +20,32 @@
             {% if colourIcon is not null %}
                 <div class="form-choice form-choice--color js-form-choice box-filter__choice__input box-filter__choice__input--color js-product-filter-parameter-value">
                     {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
-                    <label class="form-choice-color-picker form-choice-color-picker--image"
-                           for="{{ parameterValueForm.vars.id }}"
-                           style="background-image: url({{ colourIcon }})"#}
-                           title="{{ parameterValueForm.vars.label }}"
+                    <a href="{{ getUrlByParameterValue(productFilterSetup, parameterId, parameterValueId, parameterValueChecked) }}"
+                       class="js-product-filter-links"
+                       data-link-id="parameter-{{ parameterId }}-{{ parameterValueId }}"
                     >
-                    </label>
+                        <label class="form-choice-color-picker form-choice-color-picker--image"
+                               for="{{ parameterValueForm.vars.id }}"
+                               style="background-image: url({{ colourIcon }})"#}
+                               title="{{ parameterValueForm.vars.label }}"
+                        >
+                        </label>
+                    </a>
                 </div>
             {% elseif rgbHex is not empty %}
                 <div class="form-choice form-choice--color js-form-choice box-filter__choice__input box-filter__choice__input--color js-product-filter-parameter-value">
                     {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
-                    <label class="form-choice-color-picker js-form-choice-color"
-                           for="{{ parameterValueForm.vars.id }}"
-                           style="background-color: {{ rgbHex }}"
-                           title="{{ parameterValueForm.vars.label }}"
-                    >
-                    </label>
+                        <label class="form-choice-color-picker js-form-choice-color"
+                               for="{{ parameterValueForm.vars.id }}"
+                               style="background-color: {{ rgbHex }}"
+                               title="{{ parameterValueForm.vars.label }}"
+                        >
+                            <a href="{{ getUrlByParameterValue(productFilterSetup, parameterId, parameterValueId, parameterValueChecked) }}"
+                               class="js-product-filter-links"
+                               data-link-id="parameter-{{ parameterId }}-{{ parameterValueId }}"
+                            >&nbsp;
+                            </a>
+                        </label>
                 </div>
             {% else %}
                 {% do parameterValueForm.setRendered %}

@@ -1,4 +1,4 @@
-{% macro filterForm(filterForm, actionUrl, resetUrl, searchText, page, productFilterCountData, priceRange, filterCollapsedParameters, allParameterValuesImagesIndexedById) %}
+{% macro filterForm(filterForm, actionUrl, resetUrl, searchText, page, productFilterCountData, priceRange, filterCollapsedParameters, allParameterValuesImagesIndexedById, productFilterSetup) %}
     {{ form_start(filterForm, { action: actionUrl }) }}
         {% form_theme filterForm 'Front/Content/Product/filterFormTheme.html.twig' %}
 
@@ -28,9 +28,17 @@
                 </span>
                 <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs">
                     {% for flagForm in filterForm.flags %}
+
+                        {% set flagChecked = flagForm.vars.checked %}
+                        {% set flagId = flagForm.vars.value %}
+
                         <div class="form-choice box-filter__choice__input">
                             {{ form_widget(flagForm, { attr: { class: "css-checkbox" } }) }}
                             <label class="css-checkbox__image form-choice__label" for="{{ flagForm.vars.id }}">
+                                <a href="{{ getUrlByFlagValue(productFilterSetup, flagId, flagChecked) }}"
+                                   class="js-product-filter-links"
+                                   data-link-id="flag-{{ flagId }}"
+                                >
                                 {{ flagForm.vars.label }}
                                 {% if productFilterCountData is not null %}
                                     <span
@@ -42,6 +50,7 @@
                                         {% endif %}
                                     </span>
                                 {% endif %}
+                                </a>
                             </label>
                         </div>
                     {% endfor %}
@@ -90,7 +99,15 @@
                 <div id="product_filter_box_availability" class="box-filter__choice__inputs">
                     <div class="form-choice box-filter__choice__input">
                         {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox" } }) }}
+
+                        {% set inStockChecked = filterForm.inStock.vars.checked %}
+                        {% set stockId = filterForm.inStock.vars.value %}
+
                         <label class="css-checkbox__image form-choice__label" for="{{ filterForm.inStock.vars.id }}">
+                            <a href="{{ getUrlByAvailabilityValue(productFilterSetup, inStockChecked) }}"
+                               class="js-product-filter-links"
+                               data-link-id="inStock-{{ stockId }}"
+                            >
                                 {{ 'Products in stock only'|trans }}
 
                                     <span
@@ -99,7 +116,7 @@
                                     >
                                         ({{ productFilterCountData.countInStock }})
                                     </span>
-
+                            </a>
                         </label>
                     </div>
                 </div>
@@ -117,12 +134,21 @@
                     <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
                 </span>
                 <div id="{{ filterForm.brands.vars.id }}" class="box-filter__choice__inputs">
+
                     {% for brandForm in filterForm.brands %}
+
+                        {% set brandChecked = brandForm.vars.checked %}
+                        {% set brandId = brandForm.vars.value %}
+
                         <div class="form-choice js-form-choice box-filter__choice__input
                             {{ loop.index > paramsVisibleCount and not brandForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
                         ">
                             {{ form_widget(brandForm, { attr: { class: 'css-checkbox'} }) }}
                             <label class="css-checkbox__image form-choice__label" for="{{ brandForm.vars.id }}">
+                                <a href="{{ getUrlByBrandValue(productFilterSetup, brandId, brandChecked) }}"
+                                   class="js-product-filter-links"
+                                   data-link-id="brand-{{ brandId }}"
+                                >
                                 {{ brandForm.vars.label }}
                                 {% if productFilterCountData is not null %}
                                     <span
@@ -135,6 +161,7 @@
                                         {% endif %}
                                     </span>
                                 {% endif %}
+                                </a>
                             </label>
                         </div>
                     {% endfor %}
@@ -158,11 +185,11 @@
                 <div id="{{ filterForm.parameters.vars.id }}">
                     {% for parameterId, parameterForm in filterForm.parameters %}
                         {% if parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COLOR') %}
-                            {% include 'Front/Content/Product/Parameter/colorParameterForm.html.twig' with {parameterForm: parameterForm, allParameterValuesImagesIndexedById: allParameterValuesImagesIndexedById} %}
+                            {% include 'Front/Content/Product/Parameter/colorParameterForm.html.twig' with {parameterForm: parameterForm, allParameterValuesImagesIndexedById: allParameterValuesImagesIndexedById, productFilterSetup: productFilterSetup} %}
                         {% elseif parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_SLIDER') %}
                             {% include 'Front/Content/Product/Parameter/sliderParameterForm.html.twig' with {parameterForm: parameterForm} %}
                         {% else %}
-                            {% include 'Front/Content/Product/Parameter/checkboxParameterForm.html.twig' with {parameterForm: parameterForm} %}
+                            {% include 'Front/Content/Product/Parameter/checkboxParameterForm.html.twig' with {parameterForm: parameterForm, productFilterSetup: productFilterSetup} %}
                         {% endif %}
                     {% endfor %}
                 </div>

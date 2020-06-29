@@ -14,7 +14,11 @@ export default class ProductList {
 
         $container.filterAllNodes('.js-product-list-ordering-mode').click(function () {
             const cookieName = $(this).data('cookie-name');
-            const orderingName = $(this).data('ordering-mode');
+            var orderingName = $(this).data('ordering-mode');
+
+            if (orderingName == 'priority') {
+                orderingName = null;
+            }
 
             $.cookie(cookieName, orderingName, { path: '/' });
 
@@ -64,10 +68,24 @@ export default class ProductList {
             success: function (data) {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
                 productList.showProducts($wrappedData);
+                productList.updateFilterLinks($wrappedData);
                 if ($wrappedData.filterAllNodes('.js-ready-category-seo-mix-values').length === 0) {
                     pushReloadState(url + (queryData ? '?' : '') + queryData);
                 }
             }
+        });
+    }
+
+    updateFilterLinks ($wrappedData) {
+        const $existingLinksElements = $('.js-product-filter-links');
+        const $newLinksElements = $wrappedData.find('.js-product-filter-links');
+
+        $newLinksElements.each((index, element) => {
+            const $newLinkElement = $(element);
+            const $existingLinkElement = $existingLinksElements
+                .filter('[data-link-id="' + $newLinkElement.data('link-id') + '"]');
+
+            $existingLinkElement.attr('href', $newLinkElement.attr('href'));
         });
     }
 
