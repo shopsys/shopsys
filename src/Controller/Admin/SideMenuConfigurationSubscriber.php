@@ -49,6 +49,10 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $marketingMenu = $event->getMenu();
 
+        $horizontalMenuMenu = $marketingMenu->addChild('horizontal_menu', ['route' => 'admin_horizontalmenu_list', 'label' => t('Horizontální menu')]);
+        $horizontalMenuMenu->addChild('horizontal_menu_edit', ['route' => 'admin_horizontalmenu_edit', 'display' => false, 'label' => t('Editace položky')]);
+        $horizontalMenuMenu->addChild('horizontal_menu_new', ['route' => 'admin_horizontalmenu_new', 'display' => false, 'label' => t('Nová položka')]);
+
         $blogMenu = $marketingMenu->addChild('blog', ['label' => t('Blog')]);
 
         $blogCategories = $blogMenu->addChild('blogCategories', ['route' => 'admin_blogcategory_list', 'label' => t('Rubriky blogu')]);
@@ -85,10 +89,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $stockMenu = $menu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Skladovost')]);
         $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
         $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
-
-        $horizontalMenuMenu = $menu->addChild('horizontal_menu', ['route' => 'admin_horizontalmenu_list', 'label' => t('Horizontální menu')]);
-        $horizontalMenuMenu->addChild('horizontal_menu_edit', ['route' => 'admin_horizontalmenu_edit', 'display' => false, 'label' => t('Editace položky')]);
-        $horizontalMenuMenu->addChild('horizontal_menu_new', ['route' => 'admin_horizontalmenu_new', 'display' => false, 'label' => t('Nová položka')]);
     }
 
     /**
