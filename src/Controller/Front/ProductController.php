@@ -362,7 +362,7 @@ class ProductController extends FrontBaseController
     {
         $category = $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $id);
         $readyCategorySeoMix = $this->findReadyCategorySeoMix($readyCategorySeoMixId, $request, $category);
-
+        $request->attributes->set('isCategorySeoMix', $readyCategorySeoMix === null ? false : true);
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
         if (!$this->isRequestPageValid($requestPage)) {
             return $this->redirectToRoute('front_product_list', $this->getRequestParametersWithoutPage());
