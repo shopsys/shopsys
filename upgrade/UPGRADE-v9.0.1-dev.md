@@ -24,3 +24,6 @@ There you can find links to upgrade notes for other versions too.
 - enable automatic deleting of sessions older than 7 days in Redis ([#1842](https://github.com/shopsys/shopsys/pull/1842))
     - see #project-base-diff to update your project
     - you should consider what to do with current sessions, if you want to keep them, set them TTL or delete them
+
+- fix 500 error during logout when the user is already logged out ([#1909](https://github.com/shopsys/shopsys/pull/1909))
+    - you might want to update your translations, because new translation message has been added for Czech and English language only
