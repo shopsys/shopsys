@@ -7,7 +7,7 @@ namespace App\DataFixtures\Demo;
 use App\Model\Stock\StockData;
 use App\Model\Stock\StockDataFactory;
 use App\Model\Stock\StockFacade;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
@@ -47,7 +47,7 @@ class StocksDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

@@ -6,7 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 
 class CategoryProductSeriesDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -25,7 +25,7 @@ class CategoryProductSeriesDataFixture extends AbstractReferenceFixture implemen
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

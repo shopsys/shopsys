@@ -7,7 +7,7 @@ namespace App\DataFixtures\Demo;
 use App\Model\GoPay\GoPayTransaction;
 use App\Model\GoPay\GoPayTransactionData;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 

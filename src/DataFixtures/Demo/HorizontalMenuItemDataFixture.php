@@ -9,7 +9,7 @@ use App\Model\HorizontalMenu\HorizontalMenuItemData;
 use App\Model\HorizontalMenu\HorizontalMenuItemDataFactory;
 use App\Model\HorizontalMenu\HorizontalMenuItemFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 
 /**
@@ -40,7 +40,7 @@ class HorizontalMenuItemDataFixture extends AbstractReferenceFixture implements 
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function load(ObjectManager $manager)

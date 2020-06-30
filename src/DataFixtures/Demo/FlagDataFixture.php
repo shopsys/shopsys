@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 
@@ -35,7 +35,7 @@ class FlagDataFixture extends AbstractReferenceFixture
     /**
      * Flags are created in database migration.
      * @see \Shopsys\FrameworkBundle\Migrations\Version20200221155940
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {

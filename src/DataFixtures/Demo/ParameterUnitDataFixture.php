@@ -6,7 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Product\Parameter\Unit\ParameterUnitDataFactory;
 use App\Model\Product\Parameter\Unit\ParameterUnitFacade;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 
 class ParameterUnitDataFixture extends AbstractReferenceFixture
@@ -36,7 +36,7 @@ class ParameterUnitDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

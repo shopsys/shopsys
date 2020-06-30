@@ -10,7 +10,7 @@ use App\Model\Product\Series\Category\ProductSeriesCategoryFacade;
 use App\Model\Product\Series\ProductSeriesData;
 use App\Model\Product\Series\ProductSeriesDataFactoryInterface;
 use App\Model\Product\Series\ProductSeriesFacadeInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -86,7 +86,7 @@ class ProductSeriesDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

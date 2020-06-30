@@ -9,7 +9,7 @@ use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodData;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 
 class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -39,7 +39,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

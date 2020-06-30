@@ -7,7 +7,7 @@ namespace App\DataFixtures\Demo;
 use App\Model\Order\PromoCode\PromoCodeCategoryFactory;
 use App\Model\Order\PromoCode\PromoCodeProductFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
@@ -54,7 +54,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
