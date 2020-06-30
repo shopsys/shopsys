@@ -66,6 +66,24 @@ class BlogArticleRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
+    public function getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory(int $domainId, string $locale): QueryBuilder
+    {
+        $queryBuilder = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale);
+        $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
+            ->select('1')
+            ->from(BlogCategory::class, 'bc')
+            ->join('ba.blogArticleBlogCategoryDomains', 'babcd', Join::WITH, 'bc = babcd.blogCategory AND babcd.domainId = :domainId');
+        $queryBuilder->andWhere('EXISTS(' . $subquery->getDQL() . ')')
+            ->setParameter('domainId', $domainId);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $locale
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function getBlogArticlesByDomainIdAndLocaleQueryBuilder(int $domainId, string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()

@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace App\Model\Blog\Article;
 
+use App\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class BlogArticleGridFactory
 {
@@ -17,28 +17,28 @@ class BlogArticleGridFactory
     private $gridFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private $localization;
-
-    /**
      * @var \App\Model\Blog\Article\BlogArticleRepository
      */
     private $blogArticleRepository;
 
     /**
+     * @var \App\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         BlogArticleRepository $blogArticleRepository,
         GridFactory $gridFactory,
-        Localization $localization
+        Domain $domain
     ) {
         $this->gridFactory = $gridFactory;
-        $this->localization = $localization;
         $this->blogArticleRepository = $blogArticleRepository;
+        $this->domain = $domain;
     }
 
     /**
@@ -49,13 +49,15 @@ class BlogArticleGridFactory
     public function create(int $domainId): Grid
     {
         if ($domainId === 0) {
+            $locale = $this->domain->getLocale();
             $queryBuilder = $this->blogArticleRepository->getAllBlogArticlesByLocaleQueryBuilder(
-                $this->localization->getAdminLocale()
+                $locale
             );
         } else {
-            $queryBuilder = $this->blogArticleRepository->getBlogArticlesByDomainIdAndLocaleQueryBuilder(
+            $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+            $queryBuilder = $this->blogArticleRepository->getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory(//getBlogArticlesByDomainIdAndLocaleQueryBuilder(
                 $domainId,
-                $this->localization->getAdminLocale()
+                $locale
             );
         }
 
