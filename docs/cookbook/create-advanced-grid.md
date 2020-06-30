@@ -318,9 +318,9 @@ namespace App\Controller\Admin;
 -use App\Grid\Salesman\SalesmanGridFactory;
 +use App\Grid\Salesman\SalesmanGridInlineEdit;
 use App\Model\Salesman\SalesmanFacade;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SalesmanController extends AdminBaseController
 {
