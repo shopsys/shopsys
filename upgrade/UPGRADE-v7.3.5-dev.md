@@ -13,3 +13,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
     - you should consider what to do with current sessions, if you want to keep them, set them TTL or delete them
 
+- add missing elasticsearch host to production docker-compose.yml file ([#1861](https://github.com/shopsys/shopsys/pull/1861))
+    - see #project-base-diff to update your project
