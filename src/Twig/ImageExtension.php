@@ -72,7 +72,7 @@ class ImageExtension extends BaseImageExtension
 
             return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
         } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
-            return $this->getNoimageHtml($attributes);
+            return '';
         }
     }
 

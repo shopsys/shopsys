@@ -346,7 +346,7 @@
                 {% endif %}
 
                 {% set productDimensionParameterValues = getProductDimensionParameterValues(product) %}
-                {% if existProductImageByAkeneoType(product, 'image_dimensions') and productDimensionParameterValues|length > 0 %}
+                {% if existProductImageByAkeneoType(product, 'image_dimensions') or productDimensionParameterValues|length > 0 %}
                     <div class="box-accordion js-accordion">
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading">{{ 'Rozměry'|trans }}</strong>
