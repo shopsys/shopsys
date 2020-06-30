@@ -12,5 +12,7 @@ There you can find links to upgrade notes for other versions too.
 - fix not working upload of files in wysiwyg editor ([#1899](https://github.com/shopsys/shopsys/pull/1899))
     - see #project-base-diff to update your project
 
+- add missing elasticsearch host to production docker-compose.yml file ([#1861](https://github.com/shopsys/shopsys/pull/1861))
+
 - fix login form validation is initialized too early ([#1906](https://github.com/shopsys/shopsys/pull/1906))
     - see #project-base-diff to update your project
