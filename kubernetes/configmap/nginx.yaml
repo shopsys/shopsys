@@ -33,4 +33,5 @@ data:
             keepalive_timeout  65;
 
             include /etc/nginx/conf.d/*.conf;
+            client_max_body_size 32M;
         }
