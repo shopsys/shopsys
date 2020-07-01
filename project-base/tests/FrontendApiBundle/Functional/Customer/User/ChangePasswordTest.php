@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
-use Tests\FrontendApiBundle\Test\GraphQlTestCase;
+use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
-class ChangePasswordTest extends GraphQlTestCase
+class ChangePasswordTest extends GraphQlWithLoginTestCase
 {
     public function testChangePassword(): void
     {
