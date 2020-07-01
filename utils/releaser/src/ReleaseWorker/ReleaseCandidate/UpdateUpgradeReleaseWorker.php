@@ -10,8 +10,8 @@ use Shopsys\Releaser\FileManipulator\GeneralUpgradeFileManipulator;
 use Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator;
 use Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\MonorepoBuilder\Release\Message;
 use Symplify\SmartFileSystem\SmartFileInfo;
 use Twig\Environment;
 

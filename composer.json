@@ -174,10 +174,10 @@
     "sspooky13/yaml-standards": "^5.0.0",
     "symfony/var-dumper": "^4.4.0",
     "symplify/changelog-linker": "7.2.2",
-    "symplify/easy-coding-standard": "7.2.2",
-    "symplify/easy-coding-standard-tester": "7.2.2",
-    "symplify/monorepo-builder": "7.2.2",
-    "symplify/package-builder": "7.2.2",
+    "symplify/easy-coding-standard": "^7.3.18",
+    "symplify/easy-coding-standard-tester": "^7.3.18",
+    "symplify/monorepo-builder": "^7.3.18",
+    "symplify/package-builder": "^7.3.18",
     "zalas/phpunit-injector": "^1.4"
   },
   "conflict": {

@@ -67,6 +67,10 @@ class ProductAvailabilityCalculation
         if ($this->em->contains($product) === false) {
             $product->markForAvailabilityRecalculation();
 
+            if ($product->isUsingStock()) {
+                return $this->calculateAvailabilityForUsingStockProduct($product);
+            }
+
             return $product->getCalculatedAvailability();
         }
 
@@ -74,15 +78,24 @@ class ProductAvailabilityCalculation
             return $this->calculateMainVariantAvailability($product);
         }
         if ($product->isUsingStock()) {
-            if ($product->getStockQuantity() <= 0
-                && $product->getOutOfStockAction() === Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY
-            ) {
-                return $product->getOutOfStockAvailability();
-            } else {
-                return $this->availabilityFacade->getDefaultInStockAvailability();
-            }
+            return $this->calculateAvailabilityForUsingStockProduct($product);
         } else {
             return $product->getAvailability();
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+     */
+    protected function calculateAvailabilityForUsingStockProduct(Product $product): Availability
+    {
+        if ($product->getStockQuantity() <= 0
+            && $product->getOutOfStockAction() === Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY
+        ) {
+            return $product->getOutOfStockAvailability();
+        } else {
+            return $this->availabilityFacade->getDefaultInStockAvailability();
         }
     }
 

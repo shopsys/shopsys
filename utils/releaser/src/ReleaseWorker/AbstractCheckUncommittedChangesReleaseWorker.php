@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker;
 
 use PharIo\Version\Version;
-use Symplify\MonorepoBuilder\Release\Message;
 
 abstract class AbstractCheckUncommittedChangesReleaseWorker extends AbstractShopsysReleaseWorker
 {
