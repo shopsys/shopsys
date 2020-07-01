@@ -18,6 +18,8 @@ fos_ck_editor:
                 - ['Format']
                 - ['FontSize']
                 - ['TextColor']
+                - ['AddLayout']
+            extraPlugins: 'layoutmanager'
 
         email:
             entities_greek: false
@@ -36,3 +38,8 @@ fos_ck_editor:
                 - ['Format']
                 - ['FontSize']
                 - ['TextColor']
+
+    plugins:
+        layoutmanager:
+            path: 'ckeditor/plugins/layoutmanager/'
+            filename: 'plugin.js'
