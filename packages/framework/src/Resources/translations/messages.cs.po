@@ -2056,6 +2056,9 @@ msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. St
 msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
 msgstr "Byla změněna cena zboží <strong>{{ name }}</strong>, které máte v košíku. Prosím, překontrolujte si objednávku."
 
+msgid "There was an error during logout attempt. If you really want to sign out, please try it again."
+msgstr "Během odhlašování došlo k chybě. Pokud se chcete opravdu odhlásit, zkuste to prosím znovu."
+
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
 

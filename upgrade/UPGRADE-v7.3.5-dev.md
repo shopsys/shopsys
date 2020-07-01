@@ -76,3 +76,6 @@ There you can find links to upgrade notes for other versions too.
     -   public function __construct(CategoryFacade $categoryFacade, Domain $domain = null)
     +   public function __construct(CategoryFacade $categoryFacade, ?Domain $domain = null, ?LocalizationAlias $localization = null)
     ```
+
+- fix 500 error during logout when the user is already logged out ([#1909](https://github.com/shopsys/shopsys/pull/1909))
+    - you might want to update your translations, because new translation message has been added for Czech and English language only
