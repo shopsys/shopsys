@@ -218,7 +218,7 @@ msgid "Street name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Tax number cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "IČ DPH nesmí být delší než {{ limit }} znaků"
 
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr ""
@@ -245,7 +245,10 @@ msgid "Vyberte prosím platbu"
 msgstr ""
 
 msgid "Vyplňte prosím DIČ"
-msgstr ""
+msgstr "Vyplňte prosím IČ DPH"
+
+msgid "Vyplňte prosím DIČ-2"
+msgstr "Vyplňte prosím DIČ"
 
 msgid "Vyplňte prosím DIČ kratší než {{ limit }} znaků."
 msgstr ""

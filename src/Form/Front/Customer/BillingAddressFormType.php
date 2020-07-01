@@ -119,7 +119,7 @@ class BillingAddressFormType extends AbstractType
                     'required' => true,
                     'constraints' => [
                         new Constraints\NotBlank([
-                            'message' => 'Vyplňte prosím DIČ',
+                            'message' => 'Vyplňte prosím DIČ-2',
                             'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                         ]),
                         new Constraints\Length([

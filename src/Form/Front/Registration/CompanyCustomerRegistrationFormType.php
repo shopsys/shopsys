@@ -64,7 +64,7 @@ class CompanyCustomerRegistrationFormType extends AbstractType
                 [
                     'required' => true,
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Vyplňte prosím DIČ']),
+                        new Constraints\NotBlank(['message' => 'Vyplňte prosím DIČ-2']),
                         new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím DIČ/Ič DPH kratší než {{ limit }} znaků.']),
                     ],
                 ]
