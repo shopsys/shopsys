@@ -260,6 +260,20 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setParameter('id', $vat->getId())
                     ->setParameter('newId', $newVat->getId());
+            })
+            ->customizeByRouteName('admin_currency_list', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Currency setting is available only to superadmin.')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_currency_deleteconfirm', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Currency setting is available only to superadmin.')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(200);
             });
     }
 
