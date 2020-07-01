@@ -77,6 +77,11 @@ class ProductTransferAkeneoMapper
     private $productPackageDataFactory;
 
     /**
+     * @var \App\Model\Product\Transfer\Akeneo\ParameterTransferCachedAkeneoFacade
+     */
+    private $parameterTransferCachedAkeneoFacade;
+
+    /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
@@ -86,6 +91,7 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Model\Product\Flag\FlagRepository $flagRepository
      * @param \App\Model\Product\Package\ProductPackageDataFactory $productPackageDataFactory
+     * @param \App\Model\Product\Transfer\Akeneo\ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade
      */
     public function __construct(
         ProductDataFactory $productDataFactory,
@@ -96,7 +102,8 @@ class ProductTransferAkeneoMapper
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         ParameterValueDataFactoryInterface $parameterValueDataFactory,
         FlagRepository $flagRepository,
-        ProductPackageDataFactory $productPackageDataFactory
+        ProductPackageDataFactory $productPackageDataFactory,
+        ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade
     ) {
         $this->productDataFactory = $productDataFactory;
         $this->categoryFacade = $categoryFacade;
@@ -107,6 +114,7 @@ class ProductTransferAkeneoMapper
         $this->parameterValueDataFactory = $parameterValueDataFactory;
         $this->flagRepository = $flagRepository;
         $this->productPackageDataFactory = $productPackageDataFactory;
+        $this->parameterTransferCachedAkeneoFacade = $parameterTransferCachedAkeneoFacade;
     }
 
     /**
@@ -519,6 +527,13 @@ class ProductTransferAkeneoMapper
                 default:
                     return $parameterValueText;
             }
+        }
+
+        //todo: pro vicehodnotove parametry se musi multi select udelat po hodnotach
+        if (in_array($parameter->getAkeneoType(), [Parameter::AKENEO_ATTRIBUTES_TYPE_SIMPLE_SELECT, Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT], true)) {
+            $labels = $this->parameterTransferCachedAkeneoFacade->getParameterOptionLocalizedLabels($parameter->getAkeneoCode(), $parameterValueText);
+
+            $parameterValueText = $labels[$locale];
         }
 
         return $parameterValueText;

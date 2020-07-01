@@ -19,11 +19,13 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParamet
 class Parameter extends BaseParameter
 {
     public const AKENEO_ATTRIBUTES_TYPE_BOOLEAN = 'pim_catalog_boolean';
+    public const AKENEO_ATTRIBUTES_TYPE_SIMPLE_SELECT = 'pim_catalog_simpleselect';
+    public const AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT = 'pim_catalog_multiselect';
 
     public const PARAMETER_TYPE_COMMON = 'checkbox';
+
     public const PARAMETER_TYPE_SLIDER = 'slider';
     public const PARAMETER_TYPE_COLOR = 'colorPicker';
-
     public const PARAMETER_TYPES = [
         self::PARAMETER_TYPE_COMMON => self::PARAMETER_TYPE_COMMON,
         self::PARAMETER_TYPE_SLIDER => self::PARAMETER_TYPE_SLIDER,

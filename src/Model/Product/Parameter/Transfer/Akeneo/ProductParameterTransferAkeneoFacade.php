@@ -32,4 +32,15 @@ class ProductParameterTransferAkeneoFacade
             yield $itemAkeneoGroup;
         }
     }
+
+    /**
+     * @param string $code
+     * @return \Generator|null
+     */
+    public function getAttributeOptions(string $code): ?\Generator
+    {
+        foreach ($this->akeneoClient->getAttributeOptionApi()->all($code, self::PAGE_SIZE_LIMIT) as $option) {
+            yield $option;
+        }
+    }
 }
