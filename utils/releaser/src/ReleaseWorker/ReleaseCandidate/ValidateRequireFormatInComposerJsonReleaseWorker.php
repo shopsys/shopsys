@@ -8,11 +8,11 @@ use Nette\Utils\Strings;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symfony\Component\Finder\SplFileInfo;
-use Symplify\MonorepoBuilder\FileSystem\JsonFileManager;
+use Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager;
 use Symplify\MonorepoBuilder\Package\PackageNamesProvider;
-use Symplify\MonorepoBuilder\Release\Message;
 
 final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -22,7 +22,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
     private $composerJsonFilesProvider;
 
     /**
-     * @var \Symplify\MonorepoBuilder\FileSystem\JsonFileManager
+     * @var \Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager
      */
     private $jsonFileManager;
 
@@ -38,7 +38,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
 
     /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Symplify\MonorepoBuilder\FileSystem\JsonFileManager $jsonFileManager
+     * @param \Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager $jsonFileManager
      * @param \Symplify\MonorepoBuilder\Package\PackageNamesProvider $packageNamesProvider
      */
     public function __construct(

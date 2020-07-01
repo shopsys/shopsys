@@ -8,9 +8,9 @@ use PharIo\Version\Version;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
 use Shopsys\Releaser\IntervalEvaluator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\MonorepoBuilder\FileSystem\JsonFileManager;
-use Symplify\MonorepoBuilder\Release\Message;
+use Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager;
 
 final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -20,7 +20,7 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
     private $composerJsonFilesProvider;
 
     /**
-     * @var \Symplify\MonorepoBuilder\FileSystem\JsonFileManager
+     * @var \Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager
      */
     private $jsonFileManager;
 
@@ -36,7 +36,7 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
 
     /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Symplify\MonorepoBuilder\FileSystem\JsonFileManager $jsonFileManager
+     * @param \Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager $jsonFileManager
      * @param \Shopsys\Releaser\IntervalEvaluator $intervalEvaluator
      */
     public function __construct(

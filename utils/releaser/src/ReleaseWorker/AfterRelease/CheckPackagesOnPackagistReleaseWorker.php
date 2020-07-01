@@ -7,8 +7,8 @@ namespace Shopsys\Releaser\ReleaseWorker\AfterRelease;
 use PharIo\Version\Version;
 use Shopsys\Releaser\Packagist\PackageProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\MonorepoBuilder\Release\Message;
 
 final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysReleaseWorker
 {
