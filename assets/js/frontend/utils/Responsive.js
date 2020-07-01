@@ -18,6 +18,11 @@ export default class Responsive {
         return windowWidth >= Responsive.LG;
     }
 
+    static isMobileVersion () {
+        const windowWidth = window.innerWidth || $(window).width();
+        return windowWidth <= Responsive.MD;
+    }
+
     registerOnLayoutChange (callback) {
         this.onLayoutChangeListeners.push(callback);
     }

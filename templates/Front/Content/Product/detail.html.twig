@@ -292,7 +292,7 @@
                 {% set productParameterValues = getProductNonDimensionParameterValues(product) %}
 
                 {% if product.getDescription(domain.id)%}
-                    <div class="box-accordion js-accordion is-opened" id="product-desc">
+                    <div class="box-accordion js-accordion js-accordion-closed-on-mobile is-opened" id="product-desc">
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading">{{ 'Popis a parametry'|trans }}</strong>
                             <span class="box-accordion__header__toggle">

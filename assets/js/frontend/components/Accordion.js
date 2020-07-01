@@ -1,3 +1,4 @@
+import Responsive from '../utils/Responsive';
 import Register from 'framework/common/utils/Register';
 
 export default class Accordion {
@@ -11,6 +12,10 @@ export default class Accordion {
             e.preventDefault();
             _this.toggleAccordionContent($(this));
         });
+
+        if (this.$accordion.hasClass('js-accordion-closed-on-mobile') && Responsive.isMobileVersion()) {
+            this.$accordion.removeClass('is-opened');
+        }
     }
 
     toggleAccordionContent ($accordion) {
