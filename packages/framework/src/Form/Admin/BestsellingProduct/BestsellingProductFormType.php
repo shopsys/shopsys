@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\BestsellingProduct;
 
 use Shopsys\FrameworkBundle\Form\Constraints;
 use Shopsys\FrameworkBundle\Form\ProductType;
+use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -31,7 +32,7 @@ class BestsellingProductFormType extends AbstractType
             ])
             ->add('save', SubmitType::class);
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < BestsellingProductFacade::MAX_RESULTS_ADMIN; $i++) {
             $builder->get('products')
                 ->add($i, ProductType::class, [
                     'required' => false,
