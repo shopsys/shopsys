@@ -19,6 +19,7 @@ class SliderItemFacade extends BaseSliderItemFacade
 {
     public const IMAGE_TYPE_MOBILE = 'mobile';
     public const IMAGE_TYPE_WEB = 'web';
+    public const IMAGE_TYPE_WEBRETINA = 'webRetina';
 
     /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
@@ -32,6 +33,7 @@ class SliderItemFacade extends BaseSliderItemFacade
         $this->em->persist($sliderItem);
         $this->em->flush();
         $this->imageFacade->manageImages($sliderItem, $sliderItemData->image, self::IMAGE_TYPE_WEB);
+        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image, self::IMAGE_TYPE_WEBRETINA);
         $this->imageFacade->manageImages($sliderItem, $sliderItemData->mobileImage, self::IMAGE_TYPE_MOBILE);
 
         return $sliderItem;
@@ -50,6 +52,7 @@ class SliderItemFacade extends BaseSliderItemFacade
 
         $this->em->flush();
         $this->imageFacade->manageImages($sliderItem, $sliderItemData->image, self::IMAGE_TYPE_WEB);
+        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image, self::IMAGE_TYPE_WEBRETINA);
         $this->imageFacade->manageImages($sliderItem, $sliderItemData->mobileImage, self::IMAGE_TYPE_MOBILE);
 
         return $sliderItem;

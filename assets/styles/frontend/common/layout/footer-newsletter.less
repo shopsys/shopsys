@@ -6,8 +6,8 @@
 // newsletter
 @footer-newsletter-form-width: 600px;
 
-@footer-newsletter-image-width: 340px;
-@footer-newsletter-image-height: 280px;
+@footer-newsletter-image-width: 360px;
+@footer-newsletter-image-height: 265px;
 
 .footer__newsletter {
     position: relative;
@@ -25,22 +25,15 @@
         padding: @footer-newsletter-gap-lg;
     }
 
-    &::before {
+    &__img {
         position: absolute;
         right: 0;
         top: -18px;
         width: @footer-newsletter-image-width;
         height: @footer-newsletter-image-height;
-        content: '';
-
-        background: url('@{path-design}/sconto_newsletter.jpg') no-repeat;
-        background-position: right top;
-        background-size: 75%;
 
         @media @query-vl {
             top: -24px;
-
-            background-size: auto;
         }
     }
 

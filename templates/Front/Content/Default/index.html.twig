@@ -61,13 +61,29 @@
                 <div class="box-block__wrap">
                     <div class="box-block__item box-block__item--half box-block__item--left">
                         <h2 class="box-block__item__heading">{{ 'Aktuální leták'|trans }}</h2>
-                        <img class="box-block__item__img box-block__item__img--left" src="{{ asset('public/frontend/images/letak.png') }}" alt="{{ 'Aktuální leták'|trans }}">
+                        <picture>
+                            <source srcset="{{ asset('public/frontend/images/letak2x.png') }} 2x, {{ asset('public/frontend/images/letak.png') }} 1x" />
+                            <img
+                                class="box-block__item__img box-block__item__img--left"
+                                loading="lazy"
+                                src=""
+                                data-src="{{ asset('public/frontend/images/letak.png') }}"
+                                alt="{{ 'Aktuální leták'|trans }}">
+                        </picture>
                         <p class="box-block__item__desc">{{ 'Tuny slev, lorem ipsum dolor sit amet,<br> consectur adispic elit.'|trans|raw }}</p>
                         <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></a>
                     </div>
                     <div class="box-block__item box-block__item--half box-block__item--right">
                         <h2 class="box-block__item__heading">{{ 'Prodejny Sconto'|trans }}</h2>
-                        <img class="box-block__item__img box-block__item__img--right" src="{{ asset('public/frontend/images/prodejny.png') }}" alt="{{ 'Prodejny Sconto'|trans }}">
+                        <picture>
+                            <source srcset="{{ asset('public/frontend/images/prodejny2x.png') }} 2x, {{ asset('public/frontend/images/prodejny.png') }} 1x" />
+                            <img
+                                class="box-block__item__img box-block__item__img--right"
+                                loading="lazy"
+                                src=""
+                                data-src="{{ asset('public/frontend/images/prodejny.png') }}"
+                                alt="{{ 'Prodejny Sconto'|trans }}">
+                        </picture>
                         <p class="box-block__item__desc">{{ 'Další doplňkový sortiment, zákaznické centrum nebo osobní<br>vyzvednutí zboží z e-shopu zdarma na 8 místech v ČR.'|trans|raw }}</p>
                         <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></a>
                     </div>
@@ -109,7 +125,15 @@
         <div class="web__container">
             <div class="box-media">
                 <div class="box-media__wrap">
-                    <img class="box-media__img" loading="lazy" src="" data-src="{{ asset('public/frontend/images/kreslo_sconto.png') }}" alt="{{ 'Máme pro vás volné místo'|trans }}">
+                    <picture>
+                        <source srcset="{{ asset('public/frontend/images/kreslo_sconto2x.png') }} 2x, {{ asset('public/frontend/images/kreslo_sconto.png') }} 1x" />
+                        <img
+                            class="box-media__img"
+                            loading="lazy"
+                            src=""
+                            data-src="{{ asset('public/frontend/images/kreslo_sconto.png') }}"
+                            alt="{{ 'Máme pro vás volné místo'|trans }}">
+                    </picture>
                     <div class="box-media__text">
                         <h2 class="box-media__heading">{{ 'Máme pro vás volné místo'|trans }}</h2>
                         <p class="box-media__desc">{{ 'SCONTO Nábytek s.r.o. je součástí německého koncernu Höffner, který patří k největším prodejcům nábytku v Evropě již od roku 1990.'|trans }}</p>
