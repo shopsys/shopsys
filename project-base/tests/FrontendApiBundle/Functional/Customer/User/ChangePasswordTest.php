@@ -58,11 +58,14 @@ mutation {
             0 => 'New password must be at least 6 characters long',
         ];
 
-        $responseData = $this->getResponseContentForQuery($query)['errors'][0]['extensions']['validation'];
+        $response = $this->getResponseContentForQuery($query);
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $responseData = $this->getErrorsExtensionValidationFromResponse($response);
 
         $i = 0;
         foreach ($responseData as $responseRow) {
             foreach ($responseRow as $validationError) {
+                $this->assertArrayHasKey('message', $validationError);
                 $this->assertEquals($expectedViolationMessages[$i], $validationError['message']);
                 $i++;
             }
