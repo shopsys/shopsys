@@ -28,12 +28,6 @@
             padding: @mobile-menu-padding;
             margin: 0;
 
-            &--level-0 {
-                .mobile-menu__item__link {
-                    font-family: @font-quartenary;
-                }
-            }
-
             &__item {
                 display: block;
 
@@ -48,12 +42,13 @@
 
                 &:last-child {
                     border-bottom: 1px solid @color-border-lighter;
+                    border-bottom-left-radius: @mobile-menu-item-border-radius;
+                    border-bottom-right-radius: @mobile-menu-item-border-radius;
                 }
 
                 &--head {
                     display: flex;
                     justify-content: space-between;
-                    align-items: center;
                     width: 100%;
                     margin: 10px 0 15px;
 
@@ -64,6 +59,18 @@
                     border-bottom: 1px solid @color-border-lighter;
                     border-bottom-left-radius: @mobile-menu-item-border-radius;
                     border-bottom-right-radius: @mobile-menu-item-border-radius;
+                }
+
+                &--current {
+                    margin-bottom: 15px;
+
+                    border: 1px solid @color-border-lighter;
+                    border-radius: @mobile-menu-item-border-radius;
+
+                    & + .mobile-menu__item {
+                        border-top-left-radius: @mobile-menu-item-border-radius;
+                        border-top-right-radius: @mobile-menu-item-border-radius;
+                    }
                 }
 
                 &--stores {
@@ -94,6 +101,8 @@
                 &__back-control {
                     position: relative;
                     top: 2px;
+                    min-width: 100px;
+
                     font-size: 15px;
                     color: @color-primary;
                     font-family: @font-quartenary;
@@ -108,8 +117,11 @@
                 }
 
                 &__category {
+                    text-align: right;
+
                     font-size: 18px;
                     font-family: @font-quartenary;
+                    line-height: 1.4;
                     color: @color-primary;
                 }
 
@@ -121,9 +133,10 @@
                     padding: 10px @mobile-menu-item-control-width 8px 15px;
 
                     font-size: 15px;
+                    font-family: @font-quartenary;
 
-                    &--has-children {
-                        font-family: @font-quartenary;
+                    &:hover {
+                        text-decoration: none;
                     }
 
                     &--sale {

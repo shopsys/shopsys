@@ -21,19 +21,30 @@
                 <span class="mobile-menu__item__back-control js-mobile-menu-collapse-control" data-parent-menu-id="#js-mobile-menu-list-{{ parentMenuListId }}">
                     <i class="mobile-menu__item__back-control__icon svg svg-chevron"></i>{{ 'Zpět'|trans }}
                 </span>
-                <span class="mobile-menu__item__category">{{ childCategoryName }}</span>
+                <span class="mobile-menu__item__category">
+                    {{ childCategoryName|slice(0,40) }}{% if childCategoryName|length > 40 %}&hellip;{% endif %}
+                </span>
+            </li>
+            <li class="mobile-menu__item mobile-menu__item--current">
+                <a
+                    href="{{ url('front_product_list', { id: currentMenuListId }) }}"
+                    class="mobile-menu__item__link">
+                    <span class="mobile-menu__item__link__text">{{ 'Zobrazit všechno'|trans }}</span>
+                </a>
             </li>
         {% endif %}
         {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
             <li class="mobile-menu__item js-mobile-menu-item">
                 <a
                     href="{{ url('front_product_list', { id: categoryWithLazyLoadedVisibleChildren.category.id }) }}"
-                    class="mobile-menu__item__link{{ categoryWithLazyLoadedVisibleChildren.hasChildren ? ' mobile-menu__item__link--has-children' }}">
+                    class="mobile-menu__item__link{{ categoryWithLazyLoadedVisibleChildren.hasChildren ? ' mobile-menu__item__link--has-children js-mobile-menu-item-link js-mobile-menu-expand-control' }}"
+                    {% if categoryWithLazyLoadedVisibleChildren.hasChildren %}
+                        data-child-menu-id="#js-mobile-menu-list-{{ categoryWithLazyLoadedVisibleChildren.category.id }}"
+                    {% endif %}
+                    >
                     <span class="mobile-menu__item__link__text">{{ categoryWithLazyLoadedVisibleChildren.category.name }}</span>
                     {% if categoryWithLazyLoadedVisibleChildren.hasChildren %}
-                        <i class="mobile-menu__item__control svg svg-chevron js-mobile-menu-expand-control"
-                           data-child-menu-id="#js-mobile-menu-list-{{ categoryWithLazyLoadedVisibleChildren.category.id }}">
-                        </i>
+                        <i class="mobile-menu__item__control svg svg-chevron"></i>
                     {% endif %}
                 </a>
             </li>
