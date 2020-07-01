@@ -8,3 +8,8 @@ There you can find links to upgrade notes for other versions too.
 ## Application
 - add `psr/event-dispatcher` to your composer dependencies in order to prevent PHPStan errors in Event classes ([#1894](https://github.com/shopsys/shopsys/pull/1894))
     - add `"psr/event-dispatcher": "0.6.0",` to `require-dev` section in your `composer.json` file
+
+- enable automatic deleting of sessions older than 7 days in Redis ([#1842](https://github.com/shopsys/shopsys/pull/1842))
+    - see #project-base-diff to update your project
+    - you should consider what to do with current sessions, if you want to keep them, set them TTL or delete them
+
