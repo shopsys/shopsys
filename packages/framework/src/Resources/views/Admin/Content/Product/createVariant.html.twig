@@ -5,14 +5,13 @@
 
 {% block main_content %}
     {{ form_start(form) }}
-        <div class="wrap-divider">
-            {{ form_row(form.mainVariant, { label: 'Main variant'|trans }) }}
-        </div>
-        <div class="wrap-divider">
-            {{ form_row(form.variants, { label: 'Variants'|trans }) }}
-        </div>
-        <div class="wrap-divider text-right">
-            {{ form_row(form.save, { label: 'Create'|trans, attr: { 'class': 'btn--primary' }}) }}
-        </div>
+
+        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+            {% block fixed_bar_content %}
+                <a href="{{ url('admin_product_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                {{ form_widget(form.save) }}
+            {% endblock %}
+        {% endembed %}
+
     {{ form_end(form) }}
 {% endblock %}
