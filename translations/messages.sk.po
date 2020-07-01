@@ -1210,7 +1210,7 @@ msgstr ""
 msgid "Povolit dopravu zdarma"
 msgstr ""
 
-msgid "Povolit předobjednávky"
+msgid "Povolit nákup do mínusu"
 msgstr ""
 
 msgid "Pozastavit prezentaci\""

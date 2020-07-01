@@ -315,7 +315,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             ->add('preorder', YesNoType::class, [
                 'required' => false,
                 'disabled' => $this->isProductMainVariant($product),
-                'label' => 'Povolit předobjednávky',
+                'label' => 'Povolit nákup do mínusu',
             ])
             ->add('saleExclusion', MultidomainType::class, [
                 'label' => t('Vyřazení z prodeje'),
