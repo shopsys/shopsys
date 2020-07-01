@@ -240,24 +240,27 @@ class ProductTransferAkeneoValidator
                                 'allowExtraFields' => true,
                                 'fields' => [
                                     'data' => new Assert\Collection([
-                                        '0' => new Assert\Collection([
-                                            'allowExtraFields' => true,
-                                            'fields' => [
-                                                'currency' => new Assert\Required([
-                                                    new Assert\NotNull(),
-                                                ]),
-                                                'amount' => new Assert\Required($asserts),
-                                            ],
-                                        ]),
-                                        '1' => new Assert\Collection([
-                                            'allowExtraFields' => true,
-                                            'fields' => [
-                                                'currency' => new Assert\Required([
-                                                    new Assert\NotNull(),
-                                                ]),
-                                                'amount' => new Assert\Required($asserts),
-                                            ],
-                                        ]),
+                                        'fields' => [
+                                            '0' => new Assert\Collection([
+                                                'allowExtraFields' => true,
+                                                'fields' => [
+                                                    'currency' => new Assert\Required([
+                                                        new Assert\NotNull(),
+                                                    ]),
+                                                    'amount' => new Assert\Required($asserts),
+                                                ],
+                                            ]),
+                                            '1' => new Assert\Collection([
+                                                'allowExtraFields' => true,
+                                                'fields' => [
+                                                    'currency' => new Assert\Required([
+                                                        new Assert\NotNull(),
+                                                    ]),
+                                                    'amount' => new Assert\Required($asserts),
+                                                ],
+                                            ]),
+                                        ],
+                                        'allowMissingFields' => true,
                                     ]),
                                 ],
                             ]),

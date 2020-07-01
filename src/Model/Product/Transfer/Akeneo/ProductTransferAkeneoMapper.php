@@ -203,6 +203,8 @@ class ProductTransferAkeneoMapper
             }
         }
 
+        $this->fixMandatoryPrices($productData);
+
         $productCategories = $this->getProductCategories($akeneoProductData['categories']);
         $productData->categoriesByDomainId = [
             Domain::FIRST_DOMAIN_ID => $productCategories,
@@ -520,5 +522,20 @@ class ProductTransferAkeneoMapper
         }
 
         return $parameterValueText;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function fixMandatoryPrices(ProductData $productData): void
+    {
+        foreach ($productData->productType as $domainId => $productType) {
+            if ($productData->lowPriceWithVat[$domainId] === null) {
+                $productData->lowPriceWithVat[$domainId] = Money::zero();
+            }
+            if ($productData->highPriceWithVat[$domainId] === null) {
+                $productData->highPriceWithVat[$domainId] = Money::zero();
+            }
+        }
     }
 }
