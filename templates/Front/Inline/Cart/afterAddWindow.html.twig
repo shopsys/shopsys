@@ -32,16 +32,16 @@
                 {% set sellingPriceWithVat = getProductSellingPrice(product).priceWithVat %}
                 {% set nonSellingPriceWithVat = getProductNonSellingPrice(product).priceWithVat %}
                 <div class="window-popup__cart__content__prices">
-                    <span class="window-popup__cart__content__price window-popup__cart__content__price--legacy">
-                        {{ sellingPriceWithVat.multiply(addedQuantity)|price }}
-                        {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
-                    </span>
                     {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
-                        <strong class="window-popup__cart__content__price window-popup__cart__content__price--main">
+                        <span class="window-popup__cart__content__price window-popup__cart__content__price--legacy">
                             {{ nonSellingPriceWithVat.multiply(addedQuantity)|price }}
                             {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
-                        </strong>
+                        </span>
                     {% endif %}
+                    <strong class="window-popup__cart__content__price window-popup__cart__content__price--main">
+                        {{ sellingPriceWithVat.multiply(addedQuantity)|price }}
+                        {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
+                    </strong>
                 </div>
             </div>
         </div>
