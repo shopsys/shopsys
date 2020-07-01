@@ -90,13 +90,15 @@
                                 </dl>
                             {% endapply %}
 
-                            <div class="box-detail__info__desc js-not-implemented-yet">
+                            <div class="box-detail__info__desc">
                                 <ul class="box-detail-list box-detail-list--columns">
-                                    <li class="box-detail-list__item">Rozkládání do lůžka</li>
-                                    <li class="box-detail-list__item">Levé nebo pravé provedení</li>
-                                    <li class="box-detail-list__item">Odolný materiál</li>
-                                    <li class="box-detail-list__item">Polohovatelné opěrky hlavy</li>
-                                    <li class="box-detail-list__item">Potažená záda</li>
+                                    {% for usp in 1..5 %}
+                                        {% set uspMethod = 'shortDescriptionUsp'~usp %}
+                                        {% set uspValue = attribute(product, uspMethod, [domain.id]) %}
+                                        {% if uspValue is not empty %}
+                                            <li class="box-detail-list__item">{{ uspValue }}</li>
+                                        {% endif %}
+                                    {% endfor %}
                                     {% if product.getDescription(domain.id)%}
                                         <li class="box-detail-list__item box-detail-list__item--anchor">
                                             <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#product-desc">
