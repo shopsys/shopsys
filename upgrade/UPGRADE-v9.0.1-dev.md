@@ -33,3 +33,26 @@ There you can find links to upgrade notes for other versions too.
 
 - fix wrong translations in CartCest ([#1582](https://github.com/shopsys/shopsys/pull/1582))
     - see #project-base-diff to update your project
+
+- set default availability for ProductData ([#1723](https://github.com/shopsys/shopsys/pull/1723))
+    - following constructor changed its interface:
+        - `ProductDataFactory::__construct()`
+        
+            ```diff
+                public function __construct(
+                    VatFacade $vatFacade,
+                    ProductInputPriceFacade $productInputPriceFacade,
+                    UnitFacade $unitFacade,
+                    Domain $domain,
+                    ProductRepository $productRepository,
+                    ParameterRepository $parameterRepository,
+                    FriendlyUrlFacade $friendlyUrlFacade,
+                    ProductAccessoryRepository $productAccessoryRepository,
+                    ImageFacade $imageFacade,
+                    PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
+                    ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
+            -       PricingGroupFacade $pricingGroupFacade
+            +       PricingGroupFacade $pricingGroupFacade,
+            +       ?AvailabilityFacade $availabilityFacade = null
+                ) {
+            ```
