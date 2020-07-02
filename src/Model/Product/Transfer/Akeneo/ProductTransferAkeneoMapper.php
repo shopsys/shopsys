@@ -533,7 +533,7 @@ class ProductTransferAkeneoMapper
         if (in_array($parameter->getAkeneoType(), [Parameter::AKENEO_ATTRIBUTES_TYPE_SIMPLE_SELECT, Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT], true)) {
             $labels = $this->parameterTransferCachedAkeneoFacade->getParameterOptionLocalizedLabels($parameter->getAkeneoCode(), $parameterValueText);
 
-            $label = $labels[$locale];
+            $label = $labels[$locale] ?? null;
             if ($label === null) {
                 throw TransferInvalidDataException::createWithViolation(
                     sprintf('Parameter value %s for parameter code %s does not have localized label', $parameterValueText, $parameter->getAkeneoCode()),
