@@ -37,6 +37,11 @@ export default class ProductListAjaxFilter {
             return false;
         });
 
+        $filter.filterAllNodes('.js-product-filter-links').on('click', (event) => {
+            event.preventDefault();
+            $(event.currentTarget).closest('label').trigger('click');
+        });
+
         this.updateFiltersDisabled();
         this.updateFiltersVisibleParams();
     }
@@ -60,6 +65,19 @@ export default class ProductListAjaxFilter {
                 .filter('[data-form-id="' + $newCountElement.data('form-id') + '"]');
 
             $existingCountElement.html($newCountElement.html());
+        });
+    }
+
+    updateFilterLinks ($wrappedData) {
+        const $existingLinksElements = $('.js-product-filter-links');
+        const $newLinksElements = $wrappedData.find('.js-product-filter-links');
+
+        $newLinksElements.each((index, element) => {
+            const $newLinkElement = $(element);
+            const $existingLinkElement = $existingLinksElements
+                .filter('[data-link-id="' + $newLinkElement.data('link-id') + '"]');
+
+            $existingLinkElement.attr('href', $newLinkElement.attr('href'));
         });
     }
 
@@ -106,6 +124,7 @@ export default class ProductListAjaxFilter {
 
                 productListAjaxFilter.showProducts($wrappedData);
                 productListAjaxFilter.updateFiltersCounts($wrappedData);
+                productListAjaxFilter.updateFilterLinks($wrappedData);
                 productListAjaxFilter.updateFiltersDisabled();
             }
         });

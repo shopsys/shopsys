@@ -17,6 +17,7 @@ use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
@@ -165,6 +166,11 @@ class ProductController extends FrontBaseController
     private $parameterFacade;
 
     /**
+     * @var \App\Model\Product\Filter\ProductFilterFacade
+     */
+    private $productFilterFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Component\Domain\Domain $domain
@@ -188,6 +194,7 @@ class ProductController extends FrontBaseController
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \App\Component\SeoHelper\SeoHelper $seoHelper
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \App\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -212,7 +219,8 @@ class ProductController extends FrontBaseController
         CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator,
         UploadedFileFacade $uploadedFileFacade,
         SeoHelper $seoHelper,
-        ParameterFacade $parameterFacade
+        ParameterFacade $parameterFacade,
+        ProductFilterFacade $productFilterFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -237,6 +245,7 @@ class ProductController extends FrontBaseController
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->seoHelper = $seoHelper;
         $this->parameterFacade = $parameterFacade;
+        $this->productFilterFacade = $productFilterFacade;
     }
 
     /**
@@ -392,6 +401,9 @@ class ProductController extends FrontBaseController
             );
         }
 
+        $productFilterFormRequestData = ($request->query->has('product_filter_form')) ? $request->query->get('product_filter_form') : [];
+        $productFilterSetup = $this->productFilterFacade->getProductFilterSetupByProductFilterFormRequestData($productFilterFormRequestData);
+
         $allParameterValuesImageFilePathsIndexedById = $this->uploadedFileFacade->getAllUploadedFilesFilePathByEntityName(self::PARAMETER_VALUE_ENTITY_NAME);
         $viewParameters = [
             'paginationResult' => $paginationResult,
@@ -406,6 +418,7 @@ class ProductController extends FrontBaseController
             'filterCollapsedParameters' => $this->categoryParameterFacade->getParametersCollapsedIndexedByIdForCategory($category),
             'allParameterValuesImagesIndexedById' => $allParameterValuesImageFilePathsIndexedById,
             'disableIndexingBySeznamBot' => $disableIndexingBySeznamBot,
+            'productFilterSetup' => $productFilterSetup,
         ];
 
         $viewParameters = array_merge(
@@ -538,6 +551,11 @@ class ProductController extends FrontBaseController
             );
         }
 
+        $productFilterFormRequestData = ($request->query->has('product_filter_form')) ? $request->query->get('product_filter_form') : [];
+        $productFilterSetup = $this->productFilterFacade->getProductFilterSetupByProductFilterFormRequestData($productFilterFormRequestData);
+
+        $allParameterValuesImageFilePathsIndexedById = $this->uploadedFileFacade->getAllUploadedFilesFilePathByEntityName(self::PARAMETER_VALUE_ENTITY_NAME);
+
         $viewParameters = [
             'paginationResult' => $paginationResult,
             'productFilterCountData' => $productFilterCountData,
@@ -546,6 +564,9 @@ class ProductController extends FrontBaseController
             'searchText' => $searchText,
             'SEARCH_TEXT_PARAMETER' => self::SEARCH_TEXT_PARAMETER,
             'priceRange' => $productFilterConfig->getPriceRange(),
+            'filterCollapsedParameters' => [],
+            'allParameterValuesImagesIndexedById' => $allParameterValuesImageFilePathsIndexedById,
+            'productFilterSetup' => $productFilterSetup,
         ];
 
         $viewParameters = array_merge(
