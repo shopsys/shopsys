@@ -112,7 +112,7 @@ class SliderController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sliderItem = $this->sliderItemFacade->create($form->getData());
+            $sliderItem = $this->sliderItemFacade->create($sliderItemData);
 
             $this->addSuccessFlashTwig(
                 t('Slider page <strong><a href="{{ url }}">{{ name }}</a></strong> created'),

@@ -59,12 +59,11 @@ class ScriptController extends AdminBaseController
      */
     public function newAction(Request $request)
     {
-        $form = $this->createForm(ScriptFormType::class, $this->scriptDataFactory->create());
+        $scriptData = $this->scriptDataFactory->create();
+        $form = $this->createForm(ScriptFormType::class, $scriptData);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $scriptData = $form->getData();
-
             $script = $this->scriptFacade->create($scriptData);
 
             $this
@@ -99,8 +98,6 @@ class ScriptController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $scriptData = $form->getData();
-
             $script = $this->scriptFacade->edit($scriptId, $scriptData);
 
             $this

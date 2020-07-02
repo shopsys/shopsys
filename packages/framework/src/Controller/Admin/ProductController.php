@@ -163,7 +163,7 @@ class ProductController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->productFacade->edit($id, $form->getData());
+            $this->productFacade->edit($id, $productData);
 
             $this
                 ->addSuccessFlashTwig(
@@ -209,7 +209,7 @@ class ProductController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $product = $this->productFacade->create($form->getData());
+            $product = $this->productFacade->create($productData);
 
             $this
                 ->addSuccessFlashTwig(
