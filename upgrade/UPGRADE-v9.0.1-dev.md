@@ -30,3 +30,6 @@ There you can find links to upgrade notes for other versions too.
 
 - restrict access to Admin > Pricing > Currencies only to superadmin ([#1338](https://github.com/shopsys/shopsys/pull/1338))
     - see #project-base-diff to upgrade your project 
+
+- fix wrong translations in CartCest ([#1582](https://github.com/shopsys/shopsys/pull/1582))
+    - see #project-base-diff to update your project
