@@ -23,9 +23,19 @@
             </a>
         </div>
         <div class="header__mobile-button header__mobile-button--login">
-            <span class="header__mobile-button__in js-responsive-toggle" data-element="js-user-menu" data-hide-on-click-out="true">
-                <i class="svg svg-user"></i>
-            </span>
+            {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
+                <span class="header__mobile-button__in js-responsive-toggle" data-element="js-user-menu" data-hide-on-click-out="true">
+                    <i class="svg svg-user"></i>
+                </span>
+            {% else %}
+                <a
+                    href="{{ url('front_login') }}"
+                    data-url="{{ url('front_login_window_form') }}"
+                    class="js-login-button menu-iconic__item__link"
+                >
+                    <i class="svg svg-user"></i>
+                </a>
+            {% endif %}
             <div class="header__mobile-button__menu" id="js-user-menu">
                 {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
                     <a href="{{ url('front_customer_edit') }}">
@@ -37,19 +47,16 @@
                     <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}">
                         {{ 'Log out'|trans }}
                     </a>
-                {% else %}
-                    <a class="js-login-button" href="{{ url('front_login') }}" data-url="{{ url('front_login_window_form') }}">
-                        {{ 'Log in'|trans }}
-                    </a>
-                    <a href="{{ url('front_registration_register') }}">
-                        {{ 'Registration'|trans }}
-                    </a>
                 {% endif %}
             </div>
         </div>
         <div class="header__mobile-button header__mobile-button--menu">
             <span class="header__mobile-button__in js-responsive-toggle" data-element="js-mobile-menu" data-hide-on-click-out="true">
                 <i class="svg svg-burger-menu"></i>
+            </span>
+            <span class="header__mobile-button__placeholder">
+                <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
+                <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
             </span>
         </div>
         <div class="header__links dont-print">

@@ -62,12 +62,18 @@
         border-color: @search-form-border-color;
 
         @media @query-mobile {
+            padding-top: 0;
+
             border-width: 1px;
             border-color: #d7dee2;
         }
 
         @media @query-md {
             border-color: @search-form-border-color-md;
+        }
+
+        @media @query-vl {
+            padding-top: 4px;
         }
 
         &::-webkit-input-placeholder { /* Firefox 18- */

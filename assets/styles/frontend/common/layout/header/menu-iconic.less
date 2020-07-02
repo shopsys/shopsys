@@ -6,6 +6,12 @@
 .menu-iconic {
     display: none;
 
+    &__item__link {
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
     @media @query-lg {
         display: flex;
         align-items: center;
@@ -25,8 +31,6 @@
                 text-decoration: none;
 
                 &:hover {
-                    text-decoration: none;
-
                     .svg {
                         transform: scale(1.2);
                     }

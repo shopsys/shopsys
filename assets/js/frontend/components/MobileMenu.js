@@ -6,7 +6,7 @@ export default class MobileMenu {
         event.stopPropagation();
         event.preventDefault();
 
-        const $categoryExpandControl = $(event.target);
+        const $categoryExpandControl = $(event.target).closest('.js-mobile-menu-item-link');
         const $childCategoryList = $($categoryExpandControl.data('child-menu-id'));
         const $categoryItem = $categoryExpandControl.closest('.js-mobile-menu-item');
         const $currentCategoryList = $categoryItem.parent('.js-mobile-menu-list').first();

@@ -8,6 +8,7 @@
     {% endif %}
 
     <ul class="mobile-menu
+            mobile-menu--level-{{ currentMenuListId }}
             dont-print
             js-mobile-menu-list
             {% if isFirstLevel %}show-position{% endif %}
@@ -16,26 +17,34 @@
         data-parent-menu-id="{{ parentMenuListId }}"
     >
         {% if isFirstLevel == false %}
-        <li class="mobile-menu__item js-mobile-menu-item">
-            <span>
+            <li class="mobile-menu__item mobile-menu__item--head js-mobile-menu-item">
                 <span class="mobile-menu__item__back-control js-mobile-menu-collapse-control" data-parent-menu-id="#js-mobile-menu-list-{{ parentMenuListId }}">
-                    &lt {{ 'zpět'|trans }}
+                    <i class="mobile-menu__item__back-control__icon svg svg-chevron"></i>{{ 'Zpět'|trans }}
                 </span>
-                <span class="mobile-menu__item__back">{{ childCategoryName }}</span>
-            </span>
-        </li>
+                <span class="mobile-menu__item__category">
+                    {{ childCategoryName|slice(0,40) }}{% if childCategoryName|length > 40 %}&hellip;{% endif %}
+                </span>
+            </li>
+            <li class="mobile-menu__item mobile-menu__item--current">
+                <a
+                    href="{{ url('front_product_list', { id: currentMenuListId }) }}"
+                    class="mobile-menu__item__link">
+                    <span class="mobile-menu__item__link__text">{{ 'Zobrazit všechno'|trans }}</span>
+                </a>
+            </li>
         {% endif %}
         {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
             <li class="mobile-menu__item js-mobile-menu-item">
                 <a
                     href="{{ url('front_product_list', { id: categoryWithLazyLoadedVisibleChildren.category.id }) }}"
-                    class="mobile-menu__item__link">
-                    {{ categoryWithLazyLoadedVisibleChildren.category.name }}
+                    class="mobile-menu__item__link{{ categoryWithLazyLoadedVisibleChildren.hasChildren ? ' mobile-menu__item__link--has-children js-mobile-menu-item-link js-mobile-menu-expand-control' }}"
                     {% if categoryWithLazyLoadedVisibleChildren.hasChildren %}
-                        <span class="mobile-menu__item__control js-mobile-menu-expand-control"
-                           data-child-menu-id="#js-mobile-menu-list-{{ categoryWithLazyLoadedVisibleChildren.category.id }}">
-                            &gt;
-                        </span>
+                        data-child-menu-id="#js-mobile-menu-list-{{ categoryWithLazyLoadedVisibleChildren.category.id }}"
+                    {% endif %}
+                    >
+                    <span class="mobile-menu__item__link__text">{{ categoryWithLazyLoadedVisibleChildren.category.name }}</span>
+                    {% if categoryWithLazyLoadedVisibleChildren.hasChildren %}
+                        <i class="mobile-menu__item__control svg svg-chevron"></i>
                     {% endif %}
                 </a>
             </li>
@@ -44,8 +53,8 @@
             <li class="mobile-menu__item mobile-menu__item--sale">
                 <a
                     href="#"
-                    class="mobile-menu__item__link mobile-menu__item__link--sale mobile-menu__item__link--level-1 js-not-implemented-yet">
-                    <i class="svg svg-cart"></i> {{ "Výprodej"|trans }}
+                    class="mobile-menu__item__link mobile-menu__item__link--sale mobile-menu__item__link--level-1 menu-horizontal__item__link--sale js-not-implemented-yet">
+                    {{ "Výprodej"|trans }}
                 </a>
             </li>
             <li class="mobile-menu__item mobile-menu__item--blog">
@@ -53,6 +62,14 @@
                     href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}"
                     class="mobile-menu__item__link mobile-menu__item__link--blog mobile-menu__item__link--level-1">
                     {{ "Magazín"|trans }}
+                </a>
+            </li>
+            <li class="mobile-menu__item mobile-menu__item--stores">
+                <a
+                    href="#"
+                    class="mobile-menu__item__link mobile-menu__item__link--stores mobile-menu__item__link--level-1 js-not-implemented-yet">
+                    <i class="svg svg-marker"></i>
+                    {{ "Prodejny"|trans }}
                 </a>
             </li>
         {% endif %}

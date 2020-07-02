@@ -6,7 +6,7 @@
 @header-mobile-button-dropdown-position: @web-header-mobile-dropdown-position;
 
 @header-padding: 15px 0;
-@header-padding-lg: 5px 0;
+@header-padding-vl: 5px 0;
 
 @query-header-vl-custom: ~"(min-width: 1300px)";
 
@@ -30,8 +30,8 @@
         padding-bottom: 50px;
     }
 
-    @media @query-lg {
-        padding: @header-padding-lg;
+    @media @query-vl {
+        padding: @header-padding-vl;
     }
 
     &__logo {
@@ -125,6 +125,7 @@
             }
 
             &--menu {
+                position: relative;
                 order: 2;
             }
 
@@ -145,6 +146,20 @@
                 &.active {
                     color: @color-primary;
                     text-decoration: none;
+
+                    & + .header__mobile-button__placeholder {
+                        transform: scale(1);
+                        opacity: 1;
+                        visibility: visible;
+
+                        .header__mobile-button__placeholder__line--left {
+                            transform: rotate(-45deg);
+                        }
+
+                        .header__mobile-button__placeholder__line--right {
+                            transform: rotate(45deg);
+                        }
+                    }
                 }
             }
 
@@ -172,6 +187,58 @@
 
                     border-bottom: 1px solid @color-border;
                     text-decoration: none;
+                }
+            }
+        }
+
+        &__placeholder {
+            display: none;
+
+            @media @query-mobile {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 101;
+
+                opacity: 0;
+                visibility: hidden;
+                transform: scale(0.5);
+                background-color: @color-primary;
+                border-radius: @radius;
+                transition: all @transition;
+
+                &::after {
+                    position: absolute;
+                    left: 50%;
+                    top: 100%;
+                    width: 0;
+                    height: 0;
+                    content: '';
+                    transform: translateX(-50%);
+
+                    border-style: solid;
+                    border-width: 8px 6px 0 6px;
+                    border-color: @color-primary transparent transparent transparent;
+                }
+            }
+
+            &__line {
+                @media @query-mobile {
+                    display: block;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    width: 24px;
+                    height: 2px;
+                    margin-left: -12px;
+
+                    background-color: @color-f;
+                    transition: all @transition;
                 }
             }
         }
