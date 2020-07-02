@@ -21,7 +21,7 @@ export default class AddProduct {
     static onSuccess (data) {
         const buttonContinueUrl = $($.parseHTML(data)).filterAllNodes('.js-add-product-url-cart').data('url');
         const isWide = $($.parseHTML(data)).filterAllNodes('.js-add-product-wide-window').data('wide');
-        const cssClass = isWide ? 'window-popup--wide' : 'window-popup--standard';
+        const cssClass = isWide ? 'window-popup--wide' : 'window-popup--cart';
         const input = $('input.js-spinbox-input');
         const diffOfSpinMaxAndAddedQuantity = input.data('spinbox-max') - input.val();
 
@@ -31,7 +31,7 @@ export default class AddProduct {
                 content: data,
                 cssClass: cssClass,
                 buttonContinue: true,
-                textContinue: Translator.trans('Go to cart'),
+                textContinue: Translator.trans('Do košíku'),
                 urlContinue: buttonContinueUrl,
                 buttonCancel: true,
                 textCancel: Translator.trans('Back to shop'),
