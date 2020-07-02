@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
@@ -95,7 +96,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade|null $availabilityFacade
      */
     public function __construct(
         VatFacade $vatFacade,
@@ -110,7 +111,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         PricingGroupFacade $pricingGroupFacade,
-        AvailabilityFacade $availabilityFacade
+        ?AvailabilityFacade $availabilityFacade = null
     ) {
         $this->vatFacade = $vatFacade;
         $this->productInputPriceFacade = $productInputPriceFacade;
@@ -125,6 +126,21 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $this->productParameterValueDataFactory = $productParameterValueDataFactory;
         $this->pricingGroupFacade = $pricingGroupFacade;
         $this->availabilityFacade = $availabilityFacade;
+    }
+
+    /**
+     * @required
+     * @internal This function will be replaced by constructor injection in next major
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     */
+    public function setAvailabilityFacade(AvailabilityFacade $availabilityFacade) {
+        if ($this->availabilityFacade !== null && $this->availabilityFacade !== $availabilityFacade) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->availabilityFacade === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->availabilityFacade = $availabilityFacade;
+        }
     }
 
     /**
