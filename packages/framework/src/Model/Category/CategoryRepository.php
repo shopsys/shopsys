@@ -479,7 +479,7 @@ class CategoryRepository extends NestedTreeRepository
     {
         $productMainCategory = $this->findProductMainCategoryOnDomain($product, $domainId);
         if ($productMainCategory === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException();
+            throw new \Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException(sprintf('Main category for product id `%d` and domain id `%d` was not found', $product->getId(), $domainId));
         }
 
         return $productMainCategory;
