@@ -16,7 +16,7 @@ class ProductActionViewFactoryTest extends TestCase
         $productMock = $this->createMock(Product::class);
 
         $productMock->method('getId')->willReturn(1);
-        $productMock->method('isSellingDenied')->willReturn(false);
+        $productMock->method('getCalculatedSellingDenied')->willReturn(false);
         $productMock->method('isMainVariant')->willReturn(false);
 
         $productActionViewFactory = new ProductActionViewFactory();
