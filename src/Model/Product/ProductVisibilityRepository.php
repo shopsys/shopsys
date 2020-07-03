@@ -63,6 +63,22 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                         )
                         AND 
                         (pd.domain_hidden = FALSE)
+                        AND EXISTS (
+                            SELECT 1
+                            FROM images AS i
+                            WHERE i.entity_name = \'product\'
+                                AND i.akeneo_image_type = \'image_main\'
+                                AND i.entity_id = p.id
+                        )
+                        AND EXISTS (
+                            SELECT 1
+                            FROM product_domains AS pdom
+                            WHERE pdom.domain_id = :domainId
+                                AND pdom.product_id = p.id
+                                AND pdom.sale_exclusion = FALSE
+                                AND pdom.description IS NOT NULL 
+                                AND pdom.description <> \'\'
+                        )
                     )
                     THEN TRUE
                     ELSE FALSE
