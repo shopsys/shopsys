@@ -68,9 +68,9 @@ class ProductDomain extends BaseProductDomain
     protected $lowPriceWithVat;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      *
-     * @ORM\Column(type="money", precision=20, scale=6)
+     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     protected $highPriceWithVat;
 

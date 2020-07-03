@@ -416,7 +416,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_SALE]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_APPLE);
@@ -1141,7 +1141,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_SALE]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HTC);
@@ -1590,7 +1590,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_SALE]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, null);
@@ -2357,7 +2357,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE]);
+        $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
@@ -2401,7 +2401,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
@@ -3040,6 +3040,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Aquila Aquagym non-carbonated spring water', [], 'dataFixtures', $locale);
+            $productData->descriptions[$domain->getId()] = t('Aquila Aquagym non-carbonated spring water, description.', [], 'dataFixtures', $domain->getLocale());
         }
 
         $this->setPriceForAllPricingGroups($productData, '12.5');
@@ -3088,7 +3089,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE]);
+        $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, null);
@@ -3516,7 +3517,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
@@ -5853,7 +5854,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
@@ -5897,7 +5898,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
@@ -5941,7 +5942,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
@@ -5985,7 +5986,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
