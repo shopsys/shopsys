@@ -54,7 +54,7 @@ class ProductActionViewFacadeTest extends TestCase
         $productMock = $this->createMock(Product::class);
 
         $productMock->method('getId')->willReturn($id);
-        $productMock->method('isSellingDenied')->willReturn(false);
+        $productMock->method('getCalculatedSellingDenied')->willReturn(false);
         $productMock->method('isMainVariant')->willReturn(false);
 
         return $productMock;

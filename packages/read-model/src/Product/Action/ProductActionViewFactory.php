@@ -20,7 +20,7 @@ class ProductActionViewFactory
     {
         return new ProductActionView(
             $product->getId(),
-            $product->isSellingDenied(),
+            $product->getCalculatedSellingDenied(),
             $product->isMainVariant(),
             $absoluteUrl
         );
