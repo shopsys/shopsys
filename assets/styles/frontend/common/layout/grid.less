@@ -1,33 +1,41 @@
-// Set  only variables, it generate helpers for you
+@grid-gutter: 2rem;
 
-@col-minimum: 20;
-@col-stepper: 5;
-@col-maximum: 80;
-@col-special: 48, 49, 51, 52, 100;
-@col-special-lenght: length(@col-special);
-
-.row {
-    .clearfix();
-}
-
-.col {
-    float: left;
-
-    .column-generator(@col-minimum, @col-stepper, @col-maximum);
-    .column-special-generator(@col-special-lenght);
-
-    @media @query-tablet {
-        .column-generator(@col-minimum, @col-stepper, @col-maximum, extract(@postfixes, 1));
-        .column-special-generator(@col-special-lenght, extract(@postfixes, 1));
+.grid {
+    @media @query-md {
+        display: flex;
+        width: 100%;
+        margin: 0 -@grid-gutter @grid-gutter;
     }
 
-    @media @query-mobile {
-        .column-generator(@col-minimum, @col-stepper, @col-maximum, extract(@postfixes, 2));
-        .column-special-generator(@col-special-lenght, extract(@postfixes, 2));
-    }
+    &__item {
+        margin-bottom: @grid-gutter;
 
-    @media @query-mobile-xs {
-        .column-generator(@col-minimum, @col-stepper, @col-maximum, extract(@postfixes, 3));
-        .column-special-generator(@col-special-lenght, extract(@postfixes, 3));
+        @media @query-md {
+            flex-basis: 100%;
+            padding-left: @grid-gutter;
+            margin-bottom: 0;
+
+            &--1 {
+                flex-basis: 100%;
+            }
+
+            &--1-2 {
+                flex-basis: 50%;
+            }
+
+            &--1-3 {
+                flex-basis: calc(100% / 3);
+            }
+
+            &--2-3 {
+                flex-basis: 66.666%;
+            }
+        }
+
+        p, ul, ol {
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 }
