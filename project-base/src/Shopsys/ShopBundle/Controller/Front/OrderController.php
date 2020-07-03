@@ -213,7 +213,7 @@ class OrderController extends FrontBaseController
         if ($isValid) {
             if ($orderFlow->nextStep()) {
                 $form = $orderFlow->createForm();
-            } elseif ($flashMessageBag->isEmpty()) {
+            } elseif (count($flashMessageBag->getErrorMessages()) === 0 && count($flashMessageBag->getInfoMessages()) === 0) {
                 $order = $this->orderFacade->createOrderFromFront($orderData);
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
 

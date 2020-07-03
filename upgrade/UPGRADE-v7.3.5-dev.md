@@ -18,3 +18,6 @@ There you can find links to upgrade notes for other versions too.
 
 - fix login form validation is initialized too early ([#1906](https://github.com/shopsys/shopsys/pull/1906))
     - see #project-base-diff to update your project
+
+- order can now be completed when successful flash message exists ([#1644](https://github.com/shopsys/shopsys/pull/1644))
+    - see #project-base-diff to update your project
