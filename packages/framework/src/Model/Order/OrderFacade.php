@@ -348,6 +348,7 @@ class OrderFacade
         $this->calculateOrderItemDataPrices($orderData->orderTransport, $order->getDomainId());
         $this->calculateOrderItemDataPrices($orderData->orderPayment, $order->getDomainId());
         $this->refreshOrderItemsWithoutTransportAndPayment($order, $orderData);
+        $this->updateTransportAndPaymentNamesInOrderData($orderData, $order);
 
         $orderEditResult = $order->edit($orderData);
 
@@ -720,6 +721,25 @@ class OrderFacade
             $orderData->deliveryCity = $deliveryAddress->getCity();
             $orderData->deliveryCountry = $deliveryAddress->getCountry();
             $orderData->deliveryTelephone = $deliveryAddress->getTelephone();
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     */
+    protected function updateTransportAndPaymentNamesInOrderData(OrderData $orderData, Order $order)
+    {
+        $orderLocale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
+
+        $orderTransportData = $orderData->orderTransport;
+        if ($orderTransportData->transport !== $order->getTransport()) {
+            $orderTransportData->name = $orderTransportData->transport->getName($orderLocale);
+        }
+
+        $orderPaymentData = $orderData->orderPayment;
+        if ($orderPaymentData->payment !== $order->getPayment()) {
+            $orderPaymentData->name = $orderPaymentData->payment->getName($orderLocale);
         }
     }
 }

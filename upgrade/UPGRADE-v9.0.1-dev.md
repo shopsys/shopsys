@@ -31,5 +31,31 @@ There you can find links to upgrade notes for other versions too.
 - restrict access to Admin > Pricing > Currencies only to superadmin ([#1338](https://github.com/shopsys/shopsys/pull/1338))
     - see #project-base-diff to upgrade your project 
 
+- fix wrong translations in CartCest ([#1582](https://github.com/shopsys/shopsys/pull/1582))
+    - see #project-base-diff to update your project
+
+- set default availability for ProductData ([#1723](https://github.com/shopsys/shopsys/pull/1723))
+    - following constructor changed its interface:
+        - `ProductDataFactory::__construct()`
+        
+            ```diff
+                public function __construct(
+                    VatFacade $vatFacade,
+                    ProductInputPriceFacade $productInputPriceFacade,
+                    UnitFacade $unitFacade,
+                    Domain $domain,
+                    ProductRepository $productRepository,
+                    ParameterRepository $parameterRepository,
+                    FriendlyUrlFacade $friendlyUrlFacade,
+                    ProductAccessoryRepository $productAccessoryRepository,
+                    ImageFacade $imageFacade,
+                    PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
+                    ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
+            -       PricingGroupFacade $pricingGroupFacade
+            +       PricingGroupFacade $pricingGroupFacade,
+            +       ?AvailabilityFacade $availabilityFacade = null
+                ) {
+            ```
+
 - order can now be completed when successful flash message exists ([#1644](https://github.com/shopsys/shopsys/pull/1644))
     - see #project-base-diff to update your project

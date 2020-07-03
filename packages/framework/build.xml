@@ -810,7 +810,7 @@
                 <if>
                     <not><equals arg1="${production.confirm.action}" arg2="y"/></not>
                     <then>
-                        <fail message="Terminated by user" status="0"/>
+                        <fail message="Terminated by user"/>
                     </then>
                 </if>
             </then>

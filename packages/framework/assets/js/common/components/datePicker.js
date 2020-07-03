@@ -27,7 +27,7 @@ $.datepicker.setDefaults($.datepicker.regional['cs']);
 export default function datePicker ($container) {
     $container.filterAllNodes('.js-date-picker').each(function () {
         // Loads regional settings for current locale
-        const options = $.datepicker.regional[global.locale] || $.datepicker.regional[''];
+        const options = Object.assign({}, $.datepicker.regional[global.locale] || $.datepicker.regional['']);
 
         // Date format is fixed so that it is understood by back-end
         options.dateFormat = constant('\\Shopsys\\FrameworkBundle\\Form\\DatePickerType::FORMAT_JS');

@@ -239,7 +239,6 @@ class CustomerController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $customerUserUpdateData = $form->getData();
             $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
 
             $this->addSuccessFlashTwig(

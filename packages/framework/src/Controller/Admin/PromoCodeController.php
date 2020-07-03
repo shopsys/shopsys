@@ -118,7 +118,7 @@ class PromoCodeController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $promoCode = $this->promoCodeFacade->create($form->getData());
+            $promoCode = $this->promoCodeFacade->create($promoCodeData);
 
             $this->addSuccessFlashTwig(
                 t('Promo code <strong><a href="{{ url }}">{{ code }}</a></strong> created'),
