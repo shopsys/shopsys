@@ -1,0 +1,10 @@
+.editor-popup-layout {
+    float: left;
+    padding: 0px 20px;
+    border: 1px solid white;
+}
+
+.editor-popup-layout:hover {
+    background-color: lightblue;
+    border: 1px solid lightsteelblue;
+}
