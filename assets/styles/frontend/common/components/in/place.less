@@ -1,11 +1,93 @@
-@in-place-margin: @margin-gap;
+@in-place-margin: 2rem 0 3rem 0;
+@in-place-margin-lg: 5rem 0 3rem 0;
+@in-place-middle-img-width-lg: 450px;
+@in-place-middle-img-width-vl: 500px;
+@in-place-middle-img-width-xl: 620px;
+@in-place-middle-wrap-padding: 1rem;
 
 .in-place {
-    margin-bottom: @in-place-margin;
+    margin: @in-place-margin;
     text-align: center;
+
+    @media @query-lg {
+        margin: @in-place-margin-lg;
+    }
 
     &--footer {
         padding: 10px 0;
         margin-bottom: 0;
+    }
+
+    &--productListMiddle {
+        .in-place__wrap {
+            background-color: @color-light-secondary;
+            border-radius: @radius;
+
+            @media @query-lg {
+                display: flex;
+                align-items: center;
+                min-height: 140px;
+                padding: @in-place-middle-wrap-padding;
+            }
+        }
+
+        .in-place__content {
+            padding: 20px 15px 0;
+            text-align: left;
+
+            @media @query-lg {
+                padding: 0 0 0 30px;
+                order: 1;
+            }
+
+            @media @query-vl {
+                padding-left: 40px;
+            }
+
+            @media @query-xl {
+                padding-left: 90px;
+            }
+        }
+
+        .in-place__picture {
+            margin-top: 35px;
+
+            @media @query-lg {
+                align-self: flex-end;
+                margin: -70px 0 -@in-place-middle-wrap-padding -@in-place-middle-wrap-padding;
+                width: @in-place-middle-img-width-lg;
+                min-width: @in-place-middle-img-width-lg;
+            }
+
+            @media @query-vl {
+                width: @in-place-middle-img-width-vl;
+                min-width: @in-place-middle-img-width-vl;
+            }
+
+            @media @query-xl {
+                width: @in-place-middle-img-width-xl;
+                min-width: @in-place-middle-img-width-xl;
+            }
+        }
+
+        .in-place__img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .in-place__btn {
+            padding: 0.75rem 2rem 0.65rem 2rem;
+
+            text-transform: none;
+            letter-spacing: 0;
+            font-family: @font-quartenary;
+            font-size: 15px;
+        }
+
+        .in-place__heading {
+            @media @query-mobile {
+                font-size: 30px;
+            }
+        }
     }
 }

@@ -193,10 +193,15 @@
                     crop: false
                     occurrence: 'Front-end: Advertising in cart (above the cart preview)'
                 -   name: productListMiddle
-                    width: 900
+                    width: 620
                     height: ~
                     crop: false
                     occurrence: 'Front-end: Advertising in middle category (above the product list)'
+                -   name: productListMiddleRetina
+                    width: 1240
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising in middle category (above the product list) on Retina displays'
         -   name: mobile
             sizes:
                 -   name: header
