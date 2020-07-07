@@ -16,7 +16,7 @@ export default class SlickCarousel {
             dots: false,
             infinite: false,
             swipeToSlide: true,
-            variableWidth: true,
+            variableWidth: false,
             speed: 300,
             responsive: [{
                 breakpoint: 1300,
@@ -26,6 +26,12 @@ export default class SlickCarousel {
             },
             {
                 breakpoint: 1100,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 600,
                 settings: {
                     slidesToShow: 2
                 }
