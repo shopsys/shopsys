@@ -40,7 +40,6 @@ class ParameterValueDataFactory extends BaseParameterValueDataFactory
      */
     protected function fillNew(BaseParameterValueData $parameterValueData): void
     {
-        $parameterValueData->unit = null;
         $parameterValueData->rgbHex = null;
         $parameterValueData->colourIcon = $this->uploadedFileDataFactory->create();
     }
@@ -66,7 +65,6 @@ class ParameterValueDataFactory extends BaseParameterValueDataFactory
     {
         parent::fillFromParameterValue($parameterValueData, $parameterValue);
 
-        $parameterValueData->unit = $parameterValue->getUnit();
         $parameterValueData->rgbHex = $parameterValue->getRgbHex();
         $parameterValueData->colourIcon = $this->uploadedFileDataFactory->create();
     }

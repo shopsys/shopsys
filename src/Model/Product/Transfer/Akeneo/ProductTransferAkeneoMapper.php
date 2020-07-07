@@ -333,25 +333,24 @@ class ProductTransferAkeneoMapper
                         && array_key_exists('unit', $currentAkeneoProductParameterDataValue)
                     ) {
                         $akeneoParameterValueCode = (string)$currentAkeneoProductParameterDataValue['amount'];
-                        $parameterValueUnit = $currentAkeneoProductParameterDataValue['unit'];
-
-                        $this->checkExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
+                        $this->checkExpectedParameterUnit(
+                            $parameter,
+                            $currentAkeneoProductParameterDataValue['unit'],
+                            $productData->catnum
+                        );
                     } else {
                         //todo: pro vicehodnotove parametry upravit
                         $akeneoParameterValueCode = current($currentAkeneoProductParameterDataValue);
-                        $parameterValueUnit = null;
                     }
                 } else {
                     $akeneoParameterValueCode = (string)$currentAkeneoProductParameterDataValue;
-                    $parameterValueUnit = null;
                 }
 
                 foreach (AkeneoHelper::ESHOP_LOCALES_BY_AKENEO_LOCALES as $locale) {
                     $productData->parameters[] = $this->createProductParameterValueData(
                         $parameter,
                         $locale,
-                        $akeneoParameterValueCode,
-                        $parameterValueUnit
+                        $akeneoParameterValueCode
                     );
                 }
             } else {
@@ -376,8 +375,7 @@ class ProductTransferAkeneoMapper
                 $productData->parameters[] = $this->createProductParameterValueData(
                     $parameter,
                     $locale,
-                    (string)$currentAkeneoProductParameterData['data'],
-                    null
+                    (string)$currentAkeneoProductParameterData['data']
                 );
             }
         }
@@ -504,20 +502,17 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param string $locale
      * @param string $akeneoParameterValueCode
-     * @param string|null $parameterValueUnit
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData
      */
     private function createProductParameterValueData(
         Parameter $parameter,
         string $locale,
-        string $akeneoParameterValueCode,
-        ?string $parameterValueUnit
+        string $akeneoParameterValueCode
     ): ProductParameterValueData {
         $productParameterValueData = $this->productParameterValueDataFactory->create();
         $parameterValueData = $this->parameterValueDataFactory->create();
 
         $parameterValueData->text = $this->getParameterValueTextByAkeneoValueCode($parameter, $locale, $akeneoParameterValueCode);
-        $parameterValueData->unit = $parameterValueUnit;
         $parameterValueData->locale = $locale;
 
         $productParameterValueData->parameterValueData = $parameterValueData;
