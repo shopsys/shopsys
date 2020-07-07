@@ -325,7 +325,6 @@ class ProductTransferAkeneoMapper
             if ($parameter === null) {
                 continue;
             }
-
             if (count($akeneoProductParameterData) === 1) {
                 $currentAkeneoProductParameterData = current($akeneoProductParameterData);
                 $currentAkeneoProductParameterDataValue = $currentAkeneoProductParameterData['data'];
@@ -333,17 +332,17 @@ class ProductTransferAkeneoMapper
                     if (array_key_exists('amount', $currentAkeneoProductParameterDataValue)
                         && array_key_exists('unit', $currentAkeneoProductParameterDataValue)
                     ) {
-                        $parameterValueText = (string)$currentAkeneoProductParameterDataValue['amount'];
+                        $akeneoParameterValueCode = (string)$currentAkeneoProductParameterDataValue['amount'];
                         $parameterValueUnit = $currentAkeneoProductParameterDataValue['unit'];
 
                         $this->checkExpectedParameterUnit($parameter, $parameterValueUnit, $productData->catnum);
                     } else {
                         //todo: pro vicehodnotove parametry upravit
-                        $parameterValueText = current($currentAkeneoProductParameterDataValue);
+                        $akeneoParameterValueCode = current($currentAkeneoProductParameterDataValue);
                         $parameterValueUnit = null;
                     }
                 } else {
-                    $parameterValueText = (string)$currentAkeneoProductParameterDataValue;
+                    $akeneoParameterValueCode = (string)$currentAkeneoProductParameterDataValue;
                     $parameterValueUnit = null;
                 }
 
@@ -351,7 +350,7 @@ class ProductTransferAkeneoMapper
                     $productData->parameters[] = $this->createProductParameterValueData(
                         $parameter,
                         $locale,
-                        $parameterValueText,
+                        $akeneoParameterValueCode,
                         $parameterValueUnit
                     );
                 }
@@ -504,16 +503,20 @@ class ProductTransferAkeneoMapper
     /**
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param string $locale
-     * @param string $parameterValueText
+     * @param string $akeneoParameterValueCode
      * @param string|null $parameterValueUnit
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData
      */
-    private function createProductParameterValueData(Parameter $parameter, string $locale, string $parameterValueText, ?string $parameterValueUnit): ProductParameterValueData
-    {
+    private function createProductParameterValueData(
+        Parameter $parameter,
+        string $locale,
+        string $akeneoParameterValueCode,
+        ?string $parameterValueUnit
+    ): ProductParameterValueData {
         $productParameterValueData = $this->productParameterValueDataFactory->create();
         $parameterValueData = $this->parameterValueDataFactory->create();
 
-        $parameterValueData->text = $this->prepareParameterValueTextToHumanSpeech($parameter, $locale, $parameterValueText);
+        $parameterValueData->text = $this->getParameterValueTextByAkeneoValueCode($parameter, $locale, $akeneoParameterValueCode);
         $parameterValueData->unit = $parameterValueUnit;
         $parameterValueData->locale = $locale;
 
@@ -526,37 +529,38 @@ class ProductTransferAkeneoMapper
     /**
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param string $locale
-     * @param string $parameterValueText
+     * @param string $akeneoParameterValueCode
      * @return string
      */
-    private function prepareParameterValueTextToHumanSpeech(Parameter $parameter, string $locale, string $parameterValueText): string
+    private function getParameterValueTextByAkeneoValueCode(Parameter $parameter, string $locale, string $akeneoParameterValueCode): string
     {
         if ($parameter->getAkeneoType() === Parameter::AKENEO_ATTRIBUTES_TYPE_BOOLEAN) {
-            switch ($parameterValueText) {
+            switch ($akeneoParameterValueCode) {
                 case '':
                     return t('No', [], 'messages', $locale);
                 case '1':
                     return t('Yes', [], 'messages', $locale);
                 default:
-                    return $parameterValueText;
+                    return $akeneoParameterValueCode;
             }
         }
 
-        //todo: pro vicehodnotove parametry se musi multi select udelat po hodnotach
         if (in_array($parameter->getAkeneoType(), [Parameter::AKENEO_ATTRIBUTES_TYPE_SIMPLE_SELECT, Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT], true)) {
-            $labels = $this->parameterTransferCachedAkeneoFacade->getParameterOptionLocalizedLabels($parameter->getAkeneoCode(), $parameterValueText);
-
-            $label = $labels[$locale] ?? null;
-            if ($label === null) {
+            $valueTextsByLocale = $this->parameterTransferCachedAkeneoFacade->getParameterValueTextsIndexedByLocaleForParameterAndAkeneoValue(
+                $parameter->getAkeneoCode(),
+                $akeneoParameterValueCode
+            );
+            if (array_key_exists($locale, $valueTextsByLocale) === false) {
                 throw TransferInvalidDataException::createWithViolation(
-                    sprintf('Parameter value %s for parameter code %s does not have localized label', $parameterValueText, $parameter->getAkeneoCode()),
+                    sprintf('Parameter value %s for parameter code %s does not have localized label', $akeneoParameterValueCode, $parameter->getAkeneoCode()),
                     ''
                 );
             }
-            $parameterValueText = $label;
+
+            return $valueTextsByLocale[$locale];
         }
 
-        return $parameterValueText;
+        return $akeneoParameterValueCode;
     }
 
     /**
