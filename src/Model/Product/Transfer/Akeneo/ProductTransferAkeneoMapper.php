@@ -346,7 +346,7 @@ class ProductTransferAkeneoMapper
                     $parameterValueUnit = null;
                 }
 
-                foreach (AkeneoHelper::AKENEO_LOCALES_MAP_ESHOP_LOCALES as $locale) {
+                foreach (AkeneoHelper::ESHOP_LOCALES_BY_AKENEO_LOCALES as $locale) {
                     $productData->parameters[] = $this->createProductParameterValueData(
                         $parameter,
                         $locale,
@@ -448,7 +448,7 @@ class ProductTransferAkeneoMapper
                         if ($flagData['locale'] !== null) {
                             $selectedFlags[$flagData['locale']][] = $flag;
                         } else {
-                            foreach (array_keys(AkeneoHelper::AKENEO_LOCALES_MAP_ESHOP_LOCALES) as $locale) {
+                            foreach (array_keys(AkeneoHelper::ESHOP_LOCALES_BY_AKENEO_LOCALES) as $locale) {
                                 $selectedFlags[$locale][] = $flag;
                             }
                         }
