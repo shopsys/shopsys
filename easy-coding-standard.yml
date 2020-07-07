@@ -52,6 +52,7 @@ parameters:
             - '*/src/Model/Product/Product.php'
             - '*/src/Controller/Front/OrderController.php'
             - '*/src/Controller/Front/ProductController.php'
+            - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoMapper.php'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
