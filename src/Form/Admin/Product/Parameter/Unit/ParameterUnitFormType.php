@@ -26,7 +26,7 @@ class ParameterUnitFormType extends AbstractType
 
         $builder->add('name', LocalizedType::class, [
             'required' => false,
-            'label' => $parameterUnit->unit,
+            'label' => $parameterUnit->akeneoCode,
         ]);
 
         $builder->add('save', SubmitType::class);

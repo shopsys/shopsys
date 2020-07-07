@@ -84,7 +84,7 @@ class ParameterUnitController extends AdminBaseController
 
         $grid = $this->gridFactory->create('parameterUnitList', $dataSource);
 
-        $grid->addColumn('unit', 'pu.unit', t('Měrná jednotka'), true);
+        $grid->addColumn('unit', 'pu.akeneoCode', t('Měrná jednotka (Akeneo Kód)'), true);
         $grid->addEditActionColumn('admin_parameterunit_edit', ['id' => 'pu.id']);
         $grid->setTheme('Admin/Content/ParameterUnit/listGrid.html.twig');
 

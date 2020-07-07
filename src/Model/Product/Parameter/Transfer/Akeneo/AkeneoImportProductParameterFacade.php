@@ -148,22 +148,22 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @param string|null $akeneoParameterDefaultMetricUnit
+     * @param string|null $akeneoParameterDefaultMetricUnitCode
      * @return \App\Model\Product\Parameter\Unit\ParameterUnit|null
      */
-    private function saveParameterUnit(?string $akeneoParameterDefaultMetricUnit): ?ParameterUnit
+    private function saveParameterUnit(?string $akeneoParameterDefaultMetricUnitCode): ?ParameterUnit
     {
-        if ($akeneoParameterDefaultMetricUnit === null) {
+        if ($akeneoParameterDefaultMetricUnitCode === null) {
             return null;
         }
 
-        $parameterUnit = $this->parameterUnitFacade->findByUnit($akeneoParameterDefaultMetricUnit);
+        $parameterUnit = $this->parameterUnitFacade->findByAkeneoCode($akeneoParameterDefaultMetricUnitCode);
 
         if ($parameterUnit === null) {
-            $this->logger->addInfo(sprintf('Creating parameter unit : %s', $akeneoParameterDefaultMetricUnit));
+            $this->logger->addInfo(sprintf('Creating parameter unit : %s', $akeneoParameterDefaultMetricUnitCode));
 
             $parameterUnitData = $this->parameterUnitDataFactory->create();
-            $parameterUnitData->unit = $akeneoParameterDefaultMetricUnit;
+            $parameterUnitData->akeneoCode = $akeneoParameterDefaultMetricUnitCode;
             $parameterUnit = $this->parameterUnitFacade->create($parameterUnitData);
         }
 

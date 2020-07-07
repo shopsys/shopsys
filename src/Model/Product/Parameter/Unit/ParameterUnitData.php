@@ -9,7 +9,7 @@ class ParameterUnitData
     /**
      * @var string|null
      */
-    public $unit;
+    public $akeneoCode;
 
     /**
      * @var string[]|null[]
