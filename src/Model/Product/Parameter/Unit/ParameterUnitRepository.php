@@ -50,7 +50,8 @@ class ParameterUnitRepository
     {
         $unit = $this->getRepository()->find($id);
         if ($unit === null) {
-            throw new UnitNotFoundException();
+            $message = sprintf('Parameter unit with ID = `%s` was not found.', $id);
+            throw new UnitNotFoundException($message);
         }
 
         return $unit;
