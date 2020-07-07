@@ -40,7 +40,6 @@ class SitemapRepository extends BaseSitemapRepository
     private $productSeriesCategoryRepository;
 
     /**
-     * SitemapRepository constructor.
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository

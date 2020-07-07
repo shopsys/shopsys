@@ -44,7 +44,6 @@ class ProductTypeController extends AdminBaseController
     private $breadcrumbOverrider;
 
     /**
-     * ProductTypeController constructor.
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade

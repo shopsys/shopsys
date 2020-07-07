@@ -77,7 +77,6 @@ class Parameter extends BaseParameter
     private $parameterType;
 
     /**
-     * Parameter constructor.
      * @param \App\Model\Product\Parameter\ParameterData $parameterData
      */
     public function __construct(BaseParameterData $parameterData)
