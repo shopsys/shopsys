@@ -31,6 +31,45 @@ services:
                 local: '@local_filesystem'
                 main: '@main_filesystem'
 
+    App\Component\FileUpload\FileUpload:
+        arguments: ['var/cache/%kernel.environment%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
+
+    Shopsys\FrameworkBundle\Component\FileUpload\FileUpload: '@App\Component\FileUpload\FileUpload'
+
+    Symfony\Component\Validator\Constraints\FileValidator:
+
+    app.component.validator.file_validator:
+        class: 'App\Component\Validator\FlysystemFileValidatorDecorator'
+        public: true
+        arguments:
+            $fileValidator: '@Symfony\Component\Validator\Constraints\FileValidator'
+            $localTemporaryDir: '%kernel.cache_dir%'
+
+    Symfony\Component\Validator\Constraints\ImageValidator:
+
+    app.component.validator.image_validator:
+        class: 'App\Component\Validator\FlysystemFileValidatorDecorator'
+        public: true
+        arguments:
+            $fileValidator: '@Symfony\Component\Validator\Constraints\ImageValidator'
+            $localTemporaryDir: '%kernel.cache_dir%'
+
+    validator.validator_factory:
+        class: 'App\Component\Validator\ContainerConstraintValidatorFactory'
+        arguments:
+            - ~
+            - '@service_container'
+            - {
+                'Symfony\Component\Validator\Constraints\ImageValidator': 'app.component.validator.image_validator',
+                'Symfony\Component\Validator\Constraints\FileValidator': 'app.component.validator.file_validator'
+            }
+
+    App\Component\Image\Processing\ImageProcessor:
+        arguments:
+            $localTemporaryDir: '%kernel.cache_dir%'
+
+    Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor: '@App\Component\Image\Processing\ImageProcessor'
+
     App\Component\Doctrine\QueryBuilderExtender: ~
 
     App\Component\Doctrine\RemoveMappingsSubscriber:

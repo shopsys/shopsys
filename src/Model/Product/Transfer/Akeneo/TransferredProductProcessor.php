@@ -17,6 +17,7 @@ use App\Model\Product\Series\ProductSeriesFacade;
 use App\Model\Product\Series\ProductSeriesProductFacade;
 use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 
 class TransferredProductProcessor
@@ -81,7 +82,7 @@ class TransferredProductProcessor
     private $assetTransferAkeneoFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
+     * @var \App\Component\FileUpload\FileUpload
      */
     private $fileUpload;
 
@@ -106,6 +107,11 @@ class TransferredProductProcessor
     private $imageConfig;
 
     /**
+     * @var \League\Flysystem\FilesystemInterface
+     */
+    private $filesystem;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
@@ -115,11 +121,12 @@ class TransferredProductProcessor
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
      * @param \App\Model\Product\Transfer\Akeneo\AssetTransferAkeneoFacade $assetTransferAkeneoFacade
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
+     * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      * @param \App\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\ImageCacheFacade $imageCacheFacade
+     * @param \League\Flysystem\FilesystemInterface $filesystem
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -135,7 +142,8 @@ class TransferredProductProcessor
         ParameterFacade $parameterFacade,
         ProductSeriesFacade $productSeriesFacade,
         ImageConfig $imageConfig,
-        ImageCacheFacade $imageCacheFacade
+        ImageCacheFacade $imageCacheFacade,
+        FilesystemInterface $filesystem
     ) {
         $this->productFacade = $productFacade;
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
@@ -151,6 +159,7 @@ class TransferredProductProcessor
         $this->productSeriesFacade = $productSeriesFacade;
         $this->imageCacheFacade = $imageCacheFacade;
         $this->imageConfig = $imageConfig;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -444,14 +453,8 @@ class TransferredProductProcessor
         $akeneoMediaFileName = $akeneoMediaFileData['data'];
 
         $tempFileName = $this->fileUpload->getTemporaryFilepath($akeneoMediaFileName);
-        $uploadDirectory = $this->fileUpload->getTemporaryDirectory();
-        if (!is_dir($uploadDirectory)) {
-            if (!mkdir($uploadDirectory) && !is_dir($uploadDirectory)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $uploadDirectory));
-            }
-        }
 
-        file_put_contents($tempFileName, $mediaFileResponse->getBody()->getContents());
+        $this->filesystem->put($tempFileName, $mediaFileResponse->getBody()->getContents());
         $createdImage = $this->imageFacade->uploadAndReturnImage($product, [$akeneoMediaFileName], null, false);
 
         $this->em->clear(Image::class);

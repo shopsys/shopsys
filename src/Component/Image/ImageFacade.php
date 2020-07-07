@@ -32,6 +32,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
  * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
  * @property \App\Component\Image\Config\ImageConfig $imageConfig
  * @method \App\Component\Image\Image[] getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, string|null $type)
+ * @property \App\Component\FileUpload\FileUpload $fileUpload
  */
 class ImageFacade extends BaseImageFacade
 {
@@ -56,7 +57,7 @@ class ImageFacade extends BaseImageFacade
      * @param \App\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\ImageRepository $imageRepository
      * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
+     * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
      * @param \League\Flysystem\MountManager $mountManager

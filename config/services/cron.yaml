@@ -98,6 +98,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Optimalizace obrázků Kraken.io' }
 
+    App\Component\FileUpload\DeleteOldUploadedFilesCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '2', minutes: '50', readableName: 'Promazání pozůstalých uploadovaných souborů' }
+
     # This module should run as last because it creates multiple kernels and fake requests.
     Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule:
         tags:
