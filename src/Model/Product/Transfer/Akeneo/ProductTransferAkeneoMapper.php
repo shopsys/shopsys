@@ -356,17 +356,30 @@ class ProductTransferAkeneoMapper
                     );
                 }
             } else {
-                foreach ($akeneoProductParameterData as $currentAkeneoProductParameterData) {
-                    $locale = AkeneoHelper::findEshopLocaleByAkeneoLocale($currentAkeneoProductParameterData['locale']);
-                    if ($locale) {
-                        $productData->parameters[] = $this->createProductParameterValueData(
-                            $parameter,
-                            $locale,
-                            (string)$currentAkeneoProductParameterData['data'],
-                            null
-                        );
-                    }
-                }
+                $this->addLocalizedParameterValues($akeneoProductParameterData, $parameter, $productData);
+            }
+        }
+    }
+
+    /**
+     * @param array $akeneoProductParameterData
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function addLocalizedParameterValues(
+        array $akeneoProductParameterData,
+        Parameter $parameter,
+        ProductData $productData
+    ): void {
+        foreach ($akeneoProductParameterData as $currentAkeneoProductParameterData) {
+            $locale = AkeneoHelper::findEshopLocaleByAkeneoLocale($currentAkeneoProductParameterData['locale']);
+            if ($locale) {
+                $productData->parameters[] = $this->createProductParameterValueData(
+                    $parameter,
+                    $locale,
+                    (string)$currentAkeneoProductParameterData['data'],
+                    null
+                );
             }
         }
     }
