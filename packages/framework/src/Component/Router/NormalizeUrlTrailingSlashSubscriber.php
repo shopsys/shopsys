@@ -55,15 +55,19 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param string $pathInfo
+     * @param string $newPath
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    protected function redirectIfPathExists(string $pathInfo, ExceptionEvent $event): void
+    protected function redirectIfPathExists(string $newPath, ExceptionEvent $event): void
     {
         try {
-            $this->router->match($pathInfo);
+            $this->router->match($newPath);
 
-            $event->setResponse(new RedirectResponse($pathInfo, 301));
+            $pathInfo = $event->getRequest()->getPathInfo();
+            $fullPath = $event->getRequest()->getRequestUri();
+            $pathToRedirect = str_replace($pathInfo, $newPath, $fullPath);
+
+            $event->setResponse(new RedirectResponse($pathToRedirect, 301));
         } catch (ResourceNotFoundException $exception) {
         }
     }
