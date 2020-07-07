@@ -59,7 +59,8 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $product->getNameSufix(),
             $this->getProductPriceWithVatByMoney($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero()),
             $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId()),
-            $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId())
+            $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId()),
+            []
         );
     }
 
@@ -85,8 +86,28 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productArray['name_sufix'],
             $this->getProductPriceWithVatByMoney($productArray['non_selling_price'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price'])),
             $productArray['product_available_stocks_count_information'],
-            $productArray['product_count_exposed_in_stores']
+            $productArray['product_count_exposed_in_stores'],
+            $this->prepareVariantsParametersSetup($productArray['variants_parameters_setup'] ?? [])
         );
+    }
+
+    /**
+     * @param array $originalVariantsParametersSetup
+     * @return array
+     */
+    private function prepareVariantsParametersSetup(array $originalVariantsParametersSetup): array
+    {
+        $variantsParametersSetup = [];
+        foreach ($originalVariantsParametersSetup as $originalVariantParametersSetup) {
+            $variantId = $originalVariantParametersSetup['variant_id'];
+            $variantsParametersSetup[$variantId] = $originalVariantParametersSetup;
+            unset($variantsParametersSetup[$variantId]['parameter_values_setup']);
+            foreach ($originalVariantParametersSetup['parameter_values_setup'] as $parameterValueSetup) {
+                $variantsParametersSetup[$variantId]['parameter_values_setup'][$parameterValueSetup['parameter_id']][$parameterValueSetup['parameter_value_id']] = $parameterValueSetup['parameter_value_id'];
+            }
+        }
+
+        return $variantsParametersSetup;
     }
 
     /**

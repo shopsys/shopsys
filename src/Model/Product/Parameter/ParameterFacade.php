@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Component\Image\Image;
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
@@ -49,6 +53,21 @@ class ParameterFacade extends BaseParameterFacade
     protected $uploadedFileFacade;
 
     /**
+     * @var \App\Component\Image\ImageFacade
+     */
+    private $imageFacade;
+
+    /**
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlRepository
+     */
+    private $friendlyUrlRepository;
+
+    /**
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     */
+    private $friendlyUrlFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
@@ -57,6 +76,9 @@ class ParameterFacade extends BaseParameterFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -66,7 +88,10 @@ class ParameterFacade extends BaseParameterFacade
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         Domain $domain,
         ParameterValueDataFactory $parameterValueDataFactory,
-        UploadedFileFacade $uploadedFileFacade
+        UploadedFileFacade $uploadedFileFacade,
+        ImageFacade $imageFacade,
+        FriendlyUrlRepository $friendlyUrlRepository,
+        FriendlyUrlFacade $friendlyUrlFacade
     ) {
         parent::__construct(
             $em,
@@ -78,6 +103,9 @@ class ParameterFacade extends BaseParameterFacade
         $this->domain = $domain;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
         $this->uploadedFileFacade = $uploadedFileFacade;
+        $this->imageFacade = $imageFacade;
+        $this->friendlyUrlRepository = $friendlyUrlRepository;
+        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -280,9 +308,10 @@ class ParameterFacade extends BaseParameterFacade
     /**
      * @param \App\Model\Product\Product $mainProduct
      * @param string $locale
+     * @param int $domainId
      * @return array
      */
-    public function getVariantsSetupForElasticByMainProduct(Product $mainProduct, string $locale): array
+    public function getVariantsSetupForElasticByMainProduct(Product $mainProduct, string $locale, int $domainId): array
     {
         $data = $this->parameterRepository->getVariantProductParameterValuesData($mainProduct, $locale);
 
@@ -293,14 +322,58 @@ class ParameterFacade extends BaseParameterFacade
                 'parameter_value_id' => $variantParameterValue['ppv_value_id'],
             ];
         }
+
+        /** @var \App\Component\Image\Image[] $imagesIndexedByEntityIds */
+        $imagesIndexedByEntityIds = $this->imageFacade->getImagesByEntitiesIndexedByEntityId(array_keys($variantSetup), Product::class);
+
+        $defaultVariantId = null;
+        if (count($variantSetup) > 0 && $mainProduct->getDefaultVariant() !== null) {
+            $defaultVariantId = $mainProduct->getDefaultVariant()->getId();
+        }
+
         $variantsSetupForElastic = [];
-        foreach ($variantSetup as $variantId => $paramterValuesList) {
-            $variantsSetupForElastic[] = [
+        foreach ($variantSetup as $variantId => $parameterValuesList) {
+            $variantParametersSetup = [
                 'variant_id' => $variantId,
-                'parameter_values_setup' => $paramterValuesList,
+                'parameter_values_setup' => $parameterValuesList,
+                'variant_url' => $this->getVariantUrl($variantId, $domainId),
             ];
+
+            if (array_key_exists($variantId, $imagesIndexedByEntityIds)) {
+                $variantParametersSetup['image_url'] = $this->getVariantImageUrl($imagesIndexedByEntityIds[$variantId], $domainId);
+            }
+
+            if ($variantId === $defaultVariantId) {
+                $variantParametersSetup['is_default_variant'] = true;
+            }
+
+            $variantsSetupForElastic[] = $variantParametersSetup;
         }
 
         return $variantsSetupForElastic;
+    }
+
+    /**
+     * @param \App\Component\Image\Image $image
+     * @param int $domainId
+     * @return string
+     */
+    private function getVariantImageUrl(Image $image, int $domainId): string
+    {
+        $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+        return $this->imageFacade->getImageUrl($domainConfig, $image, 'list');
+    }
+
+    /**
+     * @param int $variantId
+     * @param int $domainId
+     * @return string
+     */
+    private function getVariantUrl(int $variantId, int $domainId): string
+    {
+        $friendlyUrl = $this->friendlyUrlRepository->getMainFriendlyUrl($domainId, 'front_product_detail', $variantId);
+
+        return $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl);
     }
 }

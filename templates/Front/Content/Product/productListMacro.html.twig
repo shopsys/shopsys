@@ -4,9 +4,29 @@
         {% for productView in productViews %}
             <div class="list-products__item js-list-products-item">
                 <div class="list-products__item__in">
-                    <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
+                    <a href="
+                        {% if productView.variantUrl is null %}
+                            {{ productView.action.detailUrl }}
+                        {% else %}
+                            {{ productView.variantUrl }}
+                        {% endif %}
+                    " class="list-products__item__block">
                         <div class="list-products__item__image dont-print">
-                            {{ image(productView.image, { size: 'list', alt: productView.name }) }}
+                            {% if productView.variantImageUrl is null %}
+                                {{ image(productView.image, { size: 'list', alt: productView.name }) }}
+                            {% else %}
+                                <picture>
+                                    <img
+                                            src="{{ productView.variantImageUrl }}"
+                                            data-src="{{ productView.variantImageUrl }}"
+                                            alt="{{ productView.name }}"
+                                            title="{{ productView.name }}"
+                                            class="image-product-list loaded"
+                                            itemprop="image"
+                                            loading="lazy"
+                                    />
+                                </picture>
+                            {% endif %}
                             {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
                         </div>
                         <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">

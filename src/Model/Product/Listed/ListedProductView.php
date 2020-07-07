@@ -37,6 +37,21 @@ class ListedProductView extends BaseListedProductView
     private $productCountExposedInStores;
 
     /**
+     * @var array|null
+     */
+    private $variantsParametersSetup;
+
+    /**
+     * @var string|null
+     */
+    private $variantUrl;
+
+    /**
+     * @var string|null
+     */
+    private $variantImageUrl;
+
+    /**
      * @param int $id
      * @param string $name
      * @param string|null $shortDescription
@@ -50,6 +65,7 @@ class ListedProductView extends BaseListedProductView
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null $nonSellingPrice
      * @param string $productAvailableStocksCountInformation
      * @param string $productCountExposedInStores
+     * @param array|null $variantsParametersSetup
      */
     public function __construct(
         int $id,
@@ -64,7 +80,8 @@ class ListedProductView extends BaseListedProductView
         ?string $nameSufix,
         ?ProductPrice $nonSellingPrice,
         string $productAvailableStocksCountInformation,
-        string $productCountExposedInStores
+        string $productCountExposedInStores,
+        ?array $variantsParametersSetup
     ) {
         parent::__construct($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
 
@@ -73,6 +90,7 @@ class ListedProductView extends BaseListedProductView
         $this->nonSellingPrice = $nonSellingPrice;
         $this->productAvailableStocksCountInformation = $productAvailableStocksCountInformation;
         $this->productCountExposedInStores = $productCountExposedInStores;
+        $this->variantsParametersSetup = $variantsParametersSetup;
     }
 
     /**
@@ -113,5 +131,53 @@ class ListedProductView extends BaseListedProductView
     public function getProductCountExposedInStores(): ?string
     {
         return $this->productCountExposedInStores;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getVariantsParametersSetup(): ?array
+    {
+        return $this->variantsParametersSetup;
+    }
+
+    /**
+     * @param int $variantId
+     */
+    public function deleteVariantParametersSetupByVariantId(int $variantId): void
+    {
+        unset($this->variantsParametersSetup[$variantId]);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVariantUrl(): ?string
+    {
+        return $this->variantUrl;
+    }
+
+    /**
+     * @param string|null $variantUrl
+     */
+    public function setVariantUrl(?string $variantUrl): void
+    {
+        $this->variantUrl = $variantUrl;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVariantImageUrl(): ?string
+    {
+        return $this->variantImageUrl;
+    }
+
+    /**
+     * @param string|null $variantImageUrl
+     */
+    public function setVariantImageUrl(?string $variantImageUrl): void
+    {
+        $this->variantImageUrl = $variantImageUrl;
     }
 }

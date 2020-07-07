@@ -93,7 +93,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $detailUrl = $this->extractDetailUrl($domainId, $product);
         $variantIds = $this->extractVariantIds($product);
         $highPriceWithVat = $product->getHighPriceWithVat($domainId);
-        $variantsParametersSetup = $product->isMainVariant() ? $this->parameterFacade->getVariantsSetupForElasticByMainProduct($product, $locale) : null;
+        $variantsParametersSetup = $product->isMainVariant() ? $this->parameterFacade->getVariantsSetupForElasticByMainProduct($product, $locale, $domainId) : null;
         $parameters = $this->appendVariantParametersToMainVariantParameters($parameters, $variantsParametersSetup);
 
         return [

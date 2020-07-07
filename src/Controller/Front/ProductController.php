@@ -19,6 +19,7 @@ use App\Model\Gtm\GtmFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\ProductFilterFacade;
+use App\Model\Product\Filter\ProductVariantFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
@@ -177,6 +178,11 @@ class ProductController extends FrontBaseController
     private $gtmFacade;
 
     /**
+     * @var \App\Model\Product\Filter\ProductVariantFilterFacade
+     */
+    private $productVariantFilterFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Component\Domain\Domain $domain
@@ -202,6 +208,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
+     * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -228,7 +235,8 @@ class ProductController extends FrontBaseController
         SeoHelper $seoHelper,
         ParameterFacade $parameterFacade,
         ProductFilterFacade $productFilterFacade,
-        GtmFacade $gtmFacade
+        GtmFacade $gtmFacade,
+        ProductVariantFilterFacade $productVariantFilterFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -255,6 +263,7 @@ class ProductController extends FrontBaseController
         $this->parameterFacade = $parameterFacade;
         $this->productFilterFacade = $productFilterFacade;
         $this->gtmFacade = $gtmFacade;
+        $this->productVariantFilterFacade = $productVariantFilterFacade;
     }
 
     /**
@@ -405,6 +414,8 @@ class ProductController extends FrontBaseController
             $page,
             self::PRODUCTS_PER_PAGE
         );
+
+        $this->productVariantFilterFacade->setupMostValuableVariantsInPaginationResultByProductFilterData($paginationResult, $productFilterData);
 
         $productFilterCountData = null;
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
