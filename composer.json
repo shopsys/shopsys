@@ -19,7 +19,7 @@
         }
     },
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "ext-bcmath": "*",
         "ext-calendar": "*",
         "ext-ctype": "*",
@@ -158,7 +158,7 @@
         "component-dir": "web/components",
         "sort-packages": true,
         "platform": {
-            "php": "7.3"
+            "php": "7.4"
         }
     },
     "extra": {
