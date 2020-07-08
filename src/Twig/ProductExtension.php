@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
+use App\Model\Product\Parameter\ParameterGroup;
 use App\Model\Product\Parameter\ParameterValuesViewData;
 use App\Model\Product\Product;
 use App\Model\Product\ProductCachedAttributesFacade;
@@ -128,7 +129,7 @@ class ProductExtension extends BaseProductExtension
         return array_filter(
             $parameterValuesViewsData,
             static function (ParameterValuesViewData $parameterValuesViewData): bool {
-                return $parameterValuesViewData->getParameterGroupAkeneoCode() === 'param__dimensions';
+                return $parameterValuesViewData->getParameterGroupAkeneoCode() === ParameterGroup::AKENEO_CODE_DIMENSIONS;
             }
         );
     }
@@ -144,7 +145,7 @@ class ProductExtension extends BaseProductExtension
         return array_filter(
             $parameterValuesViewsData,
             static function (ParameterValuesViewData $parameterValuesViewData): bool {
-                return $parameterValuesViewData->getParameterGroupAkeneoCode() !== 'param__dimensions';
+                return $parameterValuesViewData->getParameterGroupAkeneoCode() !== ParameterGroup::AKENEO_CODE_DIMENSIONS;
             }
         );
     }
