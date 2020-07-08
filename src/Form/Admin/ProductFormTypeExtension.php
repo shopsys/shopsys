@@ -49,7 +49,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'assemblyInstructionFileUrl',
         'productType',
         'accessories',
-        'parameters',
         'preorder',
         'saleExclusion',
         'vendorDeliveryDate',
@@ -153,6 +152,8 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setPricesGroup($builder, $product);
         $this->setTransferredFilesGroup($builder, $product);
         $this->setPackagesGroup($builder);
+
+        $builder->remove('parametersGroup');
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
