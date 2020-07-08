@@ -51,19 +51,19 @@ class ParameterUnitDataFixture extends AbstractReferenceFixture
             'METER' => 'm',
         ];
 
-        foreach ($units as $unit => $name) {
-            $this->saveParameterUnit($unit, $name);
+        foreach ($units as $akeneoCode => $name) {
+            $this->createParameterUnit($akeneoCode, $name);
         }
     }
 
     /**
-     * @param string $unit
+     * @param string $akeneoCode
      * @param string $name
      */
-    private function saveParameterUnit(string $unit, string $name): void
+    private function createParameterUnit(string $akeneoCode, string $name): void
     {
         $parameterUnitData = $this->parameterUnitDataFactory->create();
-        $parameterUnitData->unit = $unit;
+        $parameterUnitData->akeneoCode = $akeneoCode;
         foreach (self::LOCALES as $locale) {
             $parameterUnitData->name[$locale] = $name;
         }

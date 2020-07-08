@@ -101,7 +101,7 @@ class ProductSeriesTransferAkeneoValidator
      */
     private function getSubExpectedAndRealLocales(array $data): array
     {
-        $expectedLocales = AkeneoHelper::AKENEO_LOCALES_MAP_ESHOP_LOCALES;
+        $expectedLocales = AkeneoHelper::ESHOP_LOCALES_BY_AKENEO_LOCALES;
         foreach ($data as $localeRow) {
             if (array_key_exists($localeRow['locale'], $expectedLocales)) {
                 unset($expectedLocales[$localeRow['locale']]);

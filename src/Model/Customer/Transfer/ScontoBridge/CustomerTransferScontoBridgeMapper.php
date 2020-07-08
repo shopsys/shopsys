@@ -38,7 +38,6 @@ class CustomerTransferScontoBridgeMapper
     private $customerUserDataFactory;
 
     /**
-     * CustomerTransferScontoBridgeMapper constructor.
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Country\CountryFacade $countryFacade
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory

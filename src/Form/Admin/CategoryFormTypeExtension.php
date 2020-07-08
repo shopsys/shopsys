@@ -122,7 +122,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Parametry filtru')]);
         $parametersFilterBuilder->add('parameters', ChoiceType::class, [
             'required' => false,
-            'label' => t('Parametry:'),
+            'label' => t('Parametry'),
             'choices' => $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID),
             'expanded' => true,
             'choice_label' => 'name',
@@ -132,7 +132,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
 
         $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [
             'required' => false,
-            'label' => t('Defaultně zavřené parametry ve filtru:'),
+            'label' => t('Defaultně zavřené parametry ve filtru'),
             'choices' => $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID),
             'expanded' => true,
             'choice_label' => 'name',

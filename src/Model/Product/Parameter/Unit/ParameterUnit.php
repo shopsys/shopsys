@@ -31,7 +31,7 @@ class ParameterUnit extends AbstractTranslatableEntity
      *
      * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
-    protected $unit;
+    protected $akeneoCode;
 
     /**
      * @var \App\Model\Product\Parameter\Unit\ParameterUnitTranslation[]|\Doctrine\Common\Collections\Collection
@@ -45,7 +45,7 @@ class ParameterUnit extends AbstractTranslatableEntity
      */
     public function __construct(ParameterUnitData $parameterUnitData)
     {
-        $this->unit = $parameterUnitData->unit;
+        $this->akeneoCode = $parameterUnitData->akeneoCode;
         $this->translations = new ArrayCollection();
         $this->setTranslations($parameterUnitData);
     }
@@ -82,15 +82,15 @@ class ParameterUnit extends AbstractTranslatableEntity
      */
     public function getName($locale = null): string
     {
-        return $this->translation($locale)->getName() ?? $this->getUnit();
+        return $this->translation($locale)->getName() ?? $this->getAkeneoCode();
     }
 
     /**
      * @return string
      */
-    public function getUnit(): string
+    public function getAkeneoCode(): string
     {
-        return $this->unit;
+        return $this->akeneoCode;
     }
 
     /**

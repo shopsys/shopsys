@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class AkeneoHelper
 {
-    public const AKENEO_LOCALES_MAP_ESHOP_LOCALES = [
+    public const ESHOP_LOCALES_BY_AKENEO_LOCALES = [
         'cs_CZ' => 'cs',
         'sk_SK' => 'sk',
     ];
@@ -19,8 +19,8 @@ class AkeneoHelper
      */
     public static function findEshopLocaleByAkeneoLocale(string $akeneoLocale): ?string
     {
-        if (array_key_exists($akeneoLocale, self::AKENEO_LOCALES_MAP_ESHOP_LOCALES)) {
-            return self::AKENEO_LOCALES_MAP_ESHOP_LOCALES[$akeneoLocale];
+        if (array_key_exists($akeneoLocale, self::ESHOP_LOCALES_BY_AKENEO_LOCALES)) {
+            return self::ESHOP_LOCALES_BY_AKENEO_LOCALES[$akeneoLocale];
         }
 
         return null;

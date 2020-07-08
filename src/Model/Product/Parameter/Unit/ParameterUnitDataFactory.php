@@ -21,7 +21,7 @@ class ParameterUnitDataFactory
     public function createFromParameterUnit(ParameterUnit $parameterUnit): ParameterUnitData
     {
         $parameterUnitData = $this->create();
-        $parameterUnitData->unit = $parameterUnit->getUnit();
+        $parameterUnitData->akeneoCode = $parameterUnit->getAkeneoCode();
 
         /** @var \App\Model\Product\Parameter\Unit\ParameterUnitTranslation[] $translations */
         $translations = $parameterUnit->getTranslations();

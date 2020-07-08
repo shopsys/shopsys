@@ -30,9 +30,9 @@ class ParameterTransferCachedAkeneoFacade
 
     /**
      * @param string $akeneoAttributeCode
-     * @return array[]
+     * @return string[][]
      */
-    public function getAllParameterOptionLocalizedLabels(string $akeneoAttributeCode): array
+    private function getAllParameterOptionLocalizedLabels(string $akeneoAttributeCode): array
     {
         if (array_key_exists($akeneoAttributeCode, $this->cache)) {
             return $this->cache[$akeneoAttributeCode];
@@ -46,25 +46,25 @@ class ParameterTransferCachedAkeneoFacade
     }
 
     /**
-     * @param string $akeneoAttributeCode
-     * @param mixed $parameterValue
-     * @return array
+     * @param string $parameterAkeneoCode
+     * @param string $akeneoParameterValueCode
+     * @return string[]
      */
-    public function getParameterOptionLocalizedLabels(string $akeneoAttributeCode, $parameterValue): array
+    public function getParameterValueTextsIndexedByLocaleForParameterAndAkeneoValue(string $parameterAkeneoCode, string $akeneoParameterValueCode): array
     {
-        $options = $this->getAllParameterOptionLocalizedLabels($akeneoAttributeCode);
+        $parameterValueTextsByAkeneoCodeAndLocale = $this->getAllParameterOptionLocalizedLabels($parameterAkeneoCode);
 
-        if (array_key_exists($parameterValue, $options) === false) {
+        if (array_key_exists($akeneoParameterValueCode, $parameterValueTextsByAkeneoCodeAndLocale) === false) {
             throw TransferInvalidDataAdministratorNonCriticalException::createWithViolation(
                 sprintf(
                     'Parameter value %s for attribute code %s does not exist',
-                    $parameterValue,
-                    $akeneoAttributeCode
+                    $akeneoParameterValueCode,
+                    $parameterAkeneoCode
                 ),
                 ''
             );
         }
 
-        return $options[$parameterValue];
+        return $parameterValueTextsByAkeneoCodeAndLocale[$akeneoParameterValueCode];
     }
 }

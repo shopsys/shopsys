@@ -50,19 +50,20 @@ class ParameterUnitRepository
     {
         $unit = $this->getRepository()->find($id);
         if ($unit === null) {
-            throw new UnitNotFoundException();
+            $message = sprintf('Parameter unit with ID = `%s` was not found.', $id);
+            throw new UnitNotFoundException($message);
         }
 
         return $unit;
     }
 
     /**
-     * @param string $unit
+     * @param string $akeneoCode
      * @return \App\Model\Product\Parameter\Unit\ParameterUnit|null
      */
-    public function findByUnit(string $unit): ?ParameterUnit
+    public function findByAkeneoCode(string $akeneoCode): ?ParameterUnit
     {
-        return $this->getRepository()->findOneBy(['unit' => $unit]);
+        return $this->getRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
     }
 
     /**

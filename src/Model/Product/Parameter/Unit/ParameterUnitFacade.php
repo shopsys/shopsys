@@ -66,11 +66,11 @@ class ParameterUnitFacade
     }
 
     /**
-     * @param string $unit
+     * @param string $akeneoCode
      * @return \App\Model\Product\Parameter\Unit\ParameterUnit|null
      */
-    public function findByUnit(string $unit): ?ParameterUnit
+    public function findByAkeneoCode(string $akeneoCode): ?ParameterUnit
     {
-        return $this->parameterUnitRepository->findByUnit($unit);
+        return $this->parameterUnitRepository->findByAkeneoCode($akeneoCode);
     }
 }

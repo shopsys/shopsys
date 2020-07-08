@@ -219,7 +219,6 @@ class ParameterRepository extends BaseParameterRepository
         $parameterValue = $this->getParameterValueRepository()->findOneBy([
             'text' => $parameterValueData->text,
             'locale' => $parameterValueData->locale,
-            'unit' => $parameterValueData->unit,
         ]);
 
         if ($parameterValue === null) {
