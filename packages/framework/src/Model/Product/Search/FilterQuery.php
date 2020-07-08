@@ -643,15 +643,14 @@ class FilterQuery
                 ],
                 'query' => [
                     'bool' => [
-                        'must' => $this->match,
                         'filter' => $this->filters,
-                        'must_not' => [
+                        'must' => [
                             [
                                 'nested' => [
                                     'path' => 'parameters',
                                     'query' => [
                                         'bool' => [
-                                            'must' => [
+                                            'must_not' => [
                                                 'terms' => [
                                                     'parameters.parameter_value_id' => $selectedValuesIds,
                                                 ],
