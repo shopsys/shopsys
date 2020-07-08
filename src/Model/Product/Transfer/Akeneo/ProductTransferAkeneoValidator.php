@@ -74,12 +74,7 @@ class ProductTransferAkeneoValidator
             new Assert\Length(['max' => 20]),
         ];
         $this->validatePriceValue($violations, $akeneoProductData['values'], 'low_price_vat', $priceValidationSetup);
-
-        $highPriceValidationSetup = $priceValidationSetup;
-        if ($isMainVariant === false) {
-            $highPriceValidationSetup[] = new Assert\NotBlank();
-        }
-        $this->validatePriceValue($violations, $akeneoProductData['values'], 'high_price_vat', $highPriceValidationSetup);
+        $this->validatePriceValue($violations, $akeneoProductData['values'], 'high_price_vat', $priceValidationSetup);
 
         $this->validateValueData($violations, $akeneoProductData['values'] ?? null, 'ean', [
             new Assert\Type(['type' => 'numeric']),
@@ -87,7 +82,6 @@ class ProductTransferAkeneoValidator
         ]);
 
         $this->validateLocalizedData($violations, $akeneoProductData['values'] ?? null, 'product_type', [
-            new Assert\NotBlank(),
             new Assert\Type(['type' => 'string']),
             new Assert\Length(['max' => 20]),
         ]);

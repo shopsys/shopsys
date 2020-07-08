@@ -204,13 +204,6 @@ class ProductTransferAkeneoMapper
         $productData->lowPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->lowPriceWithVat, $akeneoProductData['values']['low_price_vat'] ?? null);
         $productData->highPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->highPriceWithVat, $akeneoProductData['values']['high_price_vat'] ?? null);
 
-        if (($akeneoProductData['values']['high_price_vat'] ?? null) === null) {
-            foreach ($productData->productType as $domainId => $productType) {
-                $productData->lowPriceWithVat[$domainId] = Money::zero();
-                $productData->highPriceWithVat[$domainId] = Money::zero();
-            }
-        }
-
         $this->fixMandatoryPrices($productData);
 
         $productCategories = $this->getProductCategories($akeneoProductData['categories']);
@@ -287,22 +280,19 @@ class ProductTransferAkeneoMapper
 
         $akeneoCodesByDomainId = AkeneoProductHelper::mapDomainDataString(
             $productTypeAkeneoCodesByDomainId,
-            $akeneoProductData['values']['product_type']
+            $akeneoProductData['values']['product_type'] ?? null
         );
         foreach ($akeneoCodesByDomainId as $domainId => $akeneoCode) {
             if ($akeneoCode === null) {
-                throw TransferInvalidDataException::createWithViolation(
-                    sprintf('ProductType for domain `%s` is required', $domainId),
-                    'product_type'
-                );
-            }
-
-            $productType = $this->productTypeFacade->findByAkeneoCode($akeneoCode);
-            if ($productType === null) {
-                throw TransferInvalidDataException::createWithViolation(
-                    sprintf('ProductType with Akeneo code `%s` wasn\'t found.', $akeneoCode),
-                    'product_type'
-                );
+                $productType = current($this->productTypeFacade->getAll());
+            } else {
+                $productType = $this->productTypeFacade->findByAkeneoCode($akeneoCode);
+                if ($productType === null) {
+                    throw TransferInvalidDataException::createWithViolation(
+                        sprintf('ProductType with Akeneo code `%s` wasn\'t found.', $akeneoCode),
+                        'product_type'
+                    );
+                }
             }
 
             $productTypesByDomainId[$domainId] = $productType;
