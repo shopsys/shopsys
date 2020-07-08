@@ -62,3 +62,6 @@ There you can find links to upgrade notes for other versions too.
 
 - add variant visibility on product detail ([#771](https://github.com/shopsys/shopsys/pull/771))
     - see #project-base-diff to update your project
+
+- optimization of ProductDataFixture ([#1810](https://github.com/shopsys/shopsys/pull/1810))
+    - see #project-base-diff to update your project
