@@ -73,4 +73,18 @@ class Image extends BaseImage
     {
         $this->processedByKraken = $processedByKraken;
     }
+
+    /**
+     * @param string|null $friendlyUrlSlug
+     * @return string
+     */
+    public function getSeoFilename(?string $friendlyUrlSlug): string
+    {
+        $slug = '';
+        if ($friendlyUrlSlug !== null) {
+            $slug = $friendlyUrlSlug . '_';
+        }
+
+        return  $slug . $this->id . '.' . $this->extension;
+    }
 }

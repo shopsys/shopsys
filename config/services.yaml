@@ -642,6 +642,11 @@ services:
         class: Kraken
         factory: ['@App\Component\Image\Kraken\KrakenFactory', createApi]
 
+    App\Component\Image\ImageLocator:
+        arguments: ['%shopsys.image_dir%']
+
+    Shopsys\FrameworkBundle\Component\Image\ImageLocator: '@App\Component\Image\ImageLocator'
+
     Shopsys\FrameworkBundle\Component\Image\ImageFacade: '@App\Component\Image\ImageFacade'
 
     App\Component\Image\ImageFacade:

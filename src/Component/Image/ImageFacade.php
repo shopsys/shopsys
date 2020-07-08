@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace App\Component\Image;
 
 use App\Component\Domain\Domain;
+use App\Model\Category\Category;
+use App\Model\Product\Brand\Brand;
+use App\Model\Product\Product;
+use App\Model\Product\Series\ProductSeries;
 use App\Twig\ImageExtension;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
@@ -19,6 +23,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
  * @property \App\Component\Image\ImageRepository $imageRepository
@@ -33,6 +38,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
  * @property \App\Component\Image\Config\ImageConfig $imageConfig
  * @method \App\Component\Image\Image[] getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, string|null $type)
  * @property \App\Component\FileUpload\FileUpload $fileUpload
+ * @property \App\Component\Image\ImageLocator $imageLocator
  */
 class ImageFacade extends BaseImageFacade
 {
@@ -58,7 +64,7 @@ class ImageFacade extends BaseImageFacade
      * @param \App\Component\Image\ImageRepository $imageRepository
      * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \App\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
+     * @param \App\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \App\Component\Image\ImageCacheFacade $imageCacheFacade
@@ -105,16 +111,74 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \App\Component\Image\Image|Object $imageOrEntity
-     * @param string|null $sizeName
-     * @param string|null $type
+     * @param Object|\App\Component\Image\Image $imageOrEntity
+     * @param null $sizeName
+     * @param null $type
      * @return string
      */
     public function getImageUrl(DomainConfig $domainConfig, $imageOrEntity, $sizeName = null, $type = null)
     {
-        $imageUrl = parent::getImageUrl($domainConfig, $imageOrEntity, $sizeName, $type);
+        $image = $this->getImageByObject($imageOrEntity, $type);
 
-        return $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
+        $imageUrl = $this->imageCacheFacade->findImageUrlInCache($image->getId(), $type, $sizeName);
+        if ($imageUrl !== null) {
+            return $imageUrl;
+        }
+
+        $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
+        $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
+
+        if ($this->imageLocator->imageExists($image)) {
+            $imageUrl = $domainConfig->getUrl()
+                . $this->imageUrlPrefix
+                . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);
+        } else {
+            throw new ImageNotFoundException();
+        }
+
+        $imageUrl = $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
+
+        $this->imageCacheFacade->setImageUrlIntoCache($imageUrl, $image->getId(), $type, $sizeName);
+
+        return $imageUrl;
+    }
+
+    /**
+     * @param string|null $seoEntityName
+     * @return string|null
+     */
+    private function getFriendlyUrlSlug(?string $seoEntityName): ?string
+    {
+        if ($seoEntityName === null) {
+            return null;
+        }
+
+        return TransformString::stringToFriendlyUrlSlug($seoEntityName);
+    }
+
+    /**
+     * @param \App\Component\Image\Image $image
+     * @param string $locale
+     * @return string|null
+     */
+    private function getSeoNameByImageAndLocale(Image $image, string $locale): ?string
+    {
+        switch ($image->getEntityName()) {
+            case 'category':
+                $category = $this->em->getRepository(Category::class)->find($image->getEntityId());
+                return $category === null ? null : $category->getName($locale);
+            case 'product':
+                $product = $this->em->getRepository(Product::class)->find($image->getEntityId());
+                return $product === null ? null : $product->getName($locale);
+            case 'productSeries':
+                $productSeries = $this->em->getRepository(ProductSeries::class)->find($image->getEntityId());
+                return $productSeries === null ? null : $productSeries->getName($locale);
+            case 'brand':
+                $brand = $this->em->getRepository(Brand::class)->find($image->getEntityId());
+                return $brand === null ? null : $brand->getName();
+            default:
+                return null;
+        }
     }
 
     /**
@@ -126,11 +190,15 @@ class ImageFacade extends BaseImageFacade
      */
     public function getProductImageUrlByProductId(int $productId, DomainConfig $domainConfig, ?string $sizeName = null, ?string $type = null): string
     {
-        $image = $this->imageRepository->getImageByEntity(
-            'product',
-            $productId,
-            $type
-        );
+        $image = $this->imageCacheFacade->findCachedImageEntityByEntityNameAndEntityIdAndType(Product::class, $productId, $type);
+        if ($image === null) {
+            $image = $this->imageRepository->getImageByEntity(
+                'product',
+                $productId,
+                $type
+            );
+            $this->imageCacheFacade->setImageEntityIntoCacheByEntityNameAndEntityIdAndType(Product::class, $productId, $type, $image);
+        }
 
         return $this->getImageUrl($domainConfig, $image, $sizeName, $type);
     }
@@ -152,9 +220,9 @@ class ImageFacade extends BaseImageFacade
         ?string $type,
         ?string $sizeName = null
     ): string {
-        $imageUrl = parent::getImageUrlFromAttributes($domainConfig, $id, $extension, $entityName, $type, $sizeName);
+        $image = $this->imageRepository->getById($id);
 
-        return $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
+        return $this->getImageUrl($domainConfig, $image, $sizeName, $type);
     }
 
     /**
@@ -188,9 +256,38 @@ class ImageFacade extends BaseImageFacade
      */
     protected function getAdditionalImageUrl(DomainConfig $domainConfig, int $additionalSizeIndex, Image $image, ?string $sizeName)
     {
-        $imageUrl = parent::getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
+        if (!$this->imageLocator->imageExists($image)) {
+            throw new ImageNotFoundException();
+        }
 
-        return $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
+        $imageUrl = $this->imageCacheFacade->findImageUrlInCache(
+            $image->getId(),
+            $image->getType(),
+            $sizeName,
+            $additionalSizeIndex
+        );
+        if ($imageUrl !== null) {
+            return $imageUrl;
+        }
+
+        $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
+        $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
+
+        $imageUrl = $domainConfig->getUrl()
+            . $this->imageUrlPrefix
+            . $this->imageLocator->getRelativeAdditionalImageFilepathWithSlug($image, $additionalSizeIndex, $sizeName, $friendlyUrlSeoEntityName);
+
+        $imageUrl = $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
+
+        $this->imageCacheFacade->setImageUrlIntoCache(
+            $imageUrl,
+            $image->getId(),
+            $image->getType(),
+            $sizeName,
+            $additionalSizeIndex
+        );
+
+        return $imageUrl;
     }
 
     /**

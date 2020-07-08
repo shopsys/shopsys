@@ -59,8 +59,8 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml($imageView);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/additional_0_1.jpg"/>', $this->getCurrentUrl());
-        $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" data-src="%s/content-test/images/product/default/1.jpg" title="" src="" loading="lazy"/>', $this->getCurrentUrl());
+        $expected .= sprintf('    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/0-1.jpg"/>', $this->getCurrentUrl());
+        $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" data-src="%s/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1.jpg" title="" src="" loading="lazy"/>', $this->getCurrentUrl());
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -80,8 +80,8 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml($imageView, ['lazy' => false]);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/additional_0_1.jpg"/>', $this->getCurrentUrl());
-        $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" src="%s/content-test/images/product/default/1.jpg" title=""/>', $this->getCurrentUrl());
+        $expected .= sprintf('    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/0-1.jpg"/>', $this->getCurrentUrl());
+        $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" src="%s/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1.jpg" title=""/>', $this->getCurrentUrl());
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);

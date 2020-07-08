@@ -63,7 +63,9 @@ services:
         arguments:
             - '%shopsys.image_config_filepath%'
 
-    Shopsys\FrameworkBundle\Component\Image\ImageLocator:
+    Shopsys\FrameworkBundle\Component\Image\ImageLocator: '@App\Component\Image\ImageLocator'
+
+    App\Component\Image\ImageLocator:
         arguments: ['%shopsys.image_dir%']
 
     League\Flysystem\FilesystemInterface: '@main_filesystem'

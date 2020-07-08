@@ -57,6 +57,23 @@ class ImageCacheFacade
     }
 
     /**
+     * @param int $imageId
+     * @param string|null $type
+     * @param string|null $sizeName
+     * @param int|null $additionalIndex
+     * @return string|null
+     */
+    public function findImageUrlInCache(int $imageId, ?string $type, ?string $sizeName, ?int $additionalIndex = null): ?string
+    {
+        $cacheId = $this->getCacheIdForImageUrl($imageId, $type, $sizeName, $additionalIndex);
+        if ($this->cacheProvider->contains($cacheId)) {
+            return (string)$this->cacheProvider->fetch($cacheId);
+        }
+
+        return null;
+    }
+
+    /**
      * @param string $entityName
      * @param int $entityId
      * @param string|null $type
@@ -81,6 +98,19 @@ class ImageCacheFacade
     }
 
     /**
+     * @param string $url
+     * @param int $imageId
+     * @param string|null $type
+     * @param string|null $sizeName
+     * @param int|null $additionalIndex
+     */
+    public function setImageUrlIntoCache(string $url, int $imageId, ?string $type, ?string $sizeName, ?int $additionalIndex = null): void
+    {
+        $cacheId = $this->getCacheIdForImageUrl($imageId, $type, $sizeName, $additionalIndex);
+        $this->cacheProvider->save($cacheId, $url, self::IMAGE_CACHE_LIFETIME);
+    }
+
+    /**
      * @param string $entityName
      * @param int $entityId
      * @param string|null $type
@@ -102,10 +132,10 @@ class ImageCacheFacade
     private function getCacheIdForSingleEntity(string $entityName, int $entityId, ?string $type): string
     {
         if ($type === null) {
-            return sprintf('cache_image_entity_%s_%d', $entityName, $entityId);
+            return sprintf('cache_image:entity_%s_%d', $entityName, $entityId);
         }
 
-        return sprintf('cache_image_entity_%s_%d_%s', $entityName, $entityId, $type);
+        return sprintf('cache_image:entity_%s_%d_%s', $entityName, $entityId, $type);
     }
 
     /**
@@ -117,9 +147,21 @@ class ImageCacheFacade
     private function getCacheIdForMultipleEntities(string $entityName, int $entityId, ?string $type): string
     {
         if ($type === null) {
-            return sprintf('cache_images_entities_%s_%d', $entityName, $entityId);
+            return sprintf('cache_images:entities_%s_%d', $entityName, $entityId);
         }
 
-        return sprintf('cache_images_entities_%s_%d_%s', $entityName, $entityId, $type);
+        return sprintf('cache_images:entities_%s_%d_%s', $entityName, $entityId, $type);
+    }
+
+    /**
+     * @param int $imageId
+     * @param string|null $type
+     * @param string|null $sizeName
+     * @param int|null $additionalIndex
+     * @return string
+     */
+    private function getCacheIdForImageUrl(int $imageId, ?string $type, ?string $sizeName, ?int $additionalIndex): string
+    {
+        return sprintf('ImageUrl:imageId-%d_type-%s_size-%s_additionalIndex-%d', $imageId, $type, $sizeName, $additionalIndex);
     }
 }
