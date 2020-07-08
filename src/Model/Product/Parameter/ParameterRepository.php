@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter;
 
 use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
+use App\Model\Product\Product;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -13,15 +14,14 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
 /**
- * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductQueryBuilder(\App\Model\Product\Product $product)
- * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(\App\Model\Product\Product $product)
- * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByName(\App\Model\Product\Product $product, string $locale)
+ * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductQueryBuilder(Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByName(Product $product, string $locale)
  * @property \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory, \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory)
  * @method \App\Model\Product\Parameter\Parameter|null findById(int $parameterId)
@@ -102,7 +102,7 @@ class ParameterRepository extends BaseParameterRepository
     private function applyCategorySeoConditions(QueryBuilder $queryBuilder, Category $category, int $domainId): void
     {
         $queryBuilder
-            ->join(Product::class, 'product', Join::WITH, 'ppv.product = product')
+            ->join(BaseProduct::class, 'product', Join::WITH, 'ppv.product = product')
             ->join(ProductCategoryDomain::class, 'pcd', Join::WITH, 'product = pcd.product')
             ->andWhere('pcd.category = :category')
             ->andWhere('pcd.domainId = :domainId')
@@ -274,7 +274,7 @@ class ParameterRepository extends BaseParameterRepository
      * @param string $locale
      * @return \App\Model\Product\Parameter\ParameterValue[]
      */
-    public function getParameterValuesForVariantsByMainProductAndParameter(Product $product, Parameter $parameter, string $locale): array
+    public function getParameterValuesForVariantsByMainProductAndParameter(BaseProduct $product, Parameter $parameter, string $locale): array
     {
         return $this->getParameterValueRepository()
             ->createQueryBuilder('pv')
@@ -299,7 +299,7 @@ class ParameterRepository extends BaseParameterRepository
      * @param string $locale
      * @return \App\Model\Product\Parameter\ParameterValue
      */
-    public function getParameterValueForVariantByProductVariantAndParameter(Product $product, Parameter $parameter, string $locale): ParameterValue
+    public function getParameterValueForVariantByProductVariantAndParameter(BaseProduct $product, Parameter $parameter, string $locale): ParameterValue
     {
         return $this->getParameterValueRepository()
             ->createQueryBuilder('pv')
