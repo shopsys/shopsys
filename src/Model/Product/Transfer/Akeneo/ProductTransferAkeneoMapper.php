@@ -318,8 +318,8 @@ class ProductTransferAkeneoMapper
                 continue;
             }
             if (count($akeneoProductParameterData) === 1) {
-                $akeneoParameterValueCode = $this->getParameterValueAkeneoCode($akeneoProductParameterData, $parameter, $productData->catnum);
-                $this->addParameterValuesByAkeneoValueCode($parameter, $akeneoParameterValueCode, $productData);
+                $akeneoParameterValueCodes = $this->getParameterValueAkeneoCodes($akeneoProductParameterData, $parameter, $productData->catnum);
+                $this->addParameterValuesByAkeneoValueCodes($parameter, $akeneoParameterValueCodes, $productData);
             } else {
                 $this->addLocalizedParameterValues($akeneoProductParameterData, $parameter, $productData);
             }
@@ -328,17 +328,19 @@ class ProductTransferAkeneoMapper
 
     /**
      * @param \App\Model\Product\Parameter\Parameter $parameter
-     * @param string $akeneoParameterValueCode
+     * @param string[] $akeneoParameterValueCodes
      * @param \App\Model\Product\ProductData $productData
      */
-    private function addParameterValuesByAkeneoValueCode(Parameter $parameter, string $akeneoParameterValueCode, ProductData $productData): void
+    private function addParameterValuesByAkeneoValueCodes(Parameter $parameter, array $akeneoParameterValueCodes, ProductData $productData): void
     {
-        foreach (AkeneoHelper::ESHOP_LOCALES_BY_AKENEO_LOCALES as $locale) {
-            $productData->parameters[] = $this->createProductParameterValueData(
-                $parameter,
-                $locale,
-                $akeneoParameterValueCode
-            );
+        foreach ($akeneoParameterValueCodes as $akeneoParameterValueCode) {
+            foreach (AkeneoHelper::ESHOP_LOCALES_BY_AKENEO_LOCALES as $locale) {
+                $productData->parameters[] = $this->createProductParameterValueData(
+                    $parameter,
+                    $locale,
+                    $akeneoParameterValueCode
+                );
+            }
         }
     }
 
@@ -346,15 +348,15 @@ class ProductTransferAkeneoMapper
      * @param array $akeneoProductParameterData
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param string|null $productCatnum
-     * @return string
+     * @return string[]
      */
-    private function getParameterValueAkeneoCode(array $akeneoProductParameterData, Parameter $parameter, ?string $productCatnum): string
+    private function getParameterValueAkeneoCodes(array $akeneoProductParameterData, Parameter $parameter, ?string $productCatnum): array
     {
         $currentAkeneoProductParameterData = current($akeneoProductParameterData);
         $currentAkeneoProductParameterDataValue = $currentAkeneoProductParameterData['data'];
 
         if (is_array($currentAkeneoProductParameterDataValue) === false) {
-            return (string)$currentAkeneoProductParameterDataValue;
+            return [(string)$currentAkeneoProductParameterDataValue];
         }
 
         if (array_key_exists('amount', $currentAkeneoProductParameterDataValue)
@@ -365,11 +367,10 @@ class ProductTransferAkeneoMapper
                 $currentAkeneoProductParameterDataValue['unit'],
                 $productCatnum
             );
-            return (string)$currentAkeneoProductParameterDataValue['amount'];
+            return [(string)$currentAkeneoProductParameterDataValue['amount']];
         }
 
-        //todo: pro vicehodnotove parametry upravit
-        return (string)current($currentAkeneoProductParameterDataValue);
+        return array_filter($currentAkeneoProductParameterDataValue, 'is_string');
     }
 
     /**
