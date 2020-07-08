@@ -6,24 +6,27 @@ namespace App\Model\Product\Parameter;
 
 use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use App\Model\Product\Product;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
 /**
- * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductQueryBuilder(Product $product)
- * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(Product $product)
- * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByName(Product $product, string $locale)
+ * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductQueryBuilder(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByName(\App\Model\Product\Product $product, string $locale)
  * @property \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory, \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory)
  * @method \App\Model\Product\Parameter\Parameter|null findById(int $parameterId)
  * @method \App\Model\Product\Parameter\Parameter getById(int $parameterId)
  * @method \App\Model\Product\Parameter\Parameter[] getAll()
@@ -35,6 +38,27 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  */
 class ParameterRepository extends BaseParameterRepository
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     */
+    private Localization $localization;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory
+     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     */
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ParameterValueFactoryInterface $parameterValueFactory,
+        ParameterValueDataFactoryInterface $parameterValueDataFactory,
+        Localization $localization
+    ) {
+        parent::__construct($entityManager, $parameterValueFactory, $parameterValueDataFactory);
+        $this->localization = $localization;
+    }
+
     /**
      * @param \App\Model\Category\Category $category
      * @param int $domainId
@@ -338,5 +362,41 @@ class ParameterRepository extends BaseParameterRepository
             ])
             ->getQuery()
             ->getScalarResult();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\ParameterValuesViewData[]
+     */
+    public function getParameterValuesViewDataByProduct(Product $product, string $locale): array
+    {
+        $collation = $this->localization->getCollationByLocale($locale);
+        $parameterValueRows = $this->getProductParameterValuesByProductSortedByNameQueryBuilder($product, $locale)
+            ->select('pt.id AS parameterId, pt.name AS parameterName, pv.text AS valueText, 
+                pg.akeneoCode AS parameterGroupCode, pgt.name AS parameterGroupName, put.name AS unitName')
+            ->leftJoin('pg.translations', 'pgt', Join::WITH, 'pgt.locale = :locale')
+            ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
+            ->leftJoin('p.parameterUnit', 'pu')
+            ->leftJoin('pu.translations', 'put', Join::WITH, 'put.locale = :locale')
+            ->addOrderBy("COLLATE(pv.text, '" . $collation . "')", 'ASC')
+            ->getQuery()
+            ->getScalarResult();
+
+        $parameterValuesViewDataByParameterId = [];
+        foreach ($parameterValueRows as $parameterValueRow) {
+            $parameterId = $parameterValueRow['parameterId'];
+            if (array_key_exists($parameterId, $parameterValuesViewDataByParameterId) === false) {
+                $parameterValuesViewDataByParameterId[$parameterId] = new ParameterValuesViewData(
+                    $parameterValueRow['parameterName'],
+                    $parameterValueRow['parameterGroupName'],
+                    $parameterValueRow['parameterGroupCode'],
+                    $parameterValueRow['unitName'],
+                );
+            }
+            $parameterValuesViewDataByParameterId[$parameterId]->addParameterValueText($parameterValueRow['valueText']);
+        }
+
+        return $parameterValuesViewDataByParameterId;
     }
 }

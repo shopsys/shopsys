@@ -284,7 +284,7 @@
                     </table>
                 {% endif %}
 
-                {% set productParameterValues = getProductNonDimensionParameterValues(product) %}
+                {% set parameterValuesViewsData = getProductNonDimensionParameterValuesViewsData(product) %}
 
                 {% if product.getDescription(domain.id)%}
                     <div class="box-accordion js-accordion js-accordion-closed-on-mobile is-opened" id="product-desc">
@@ -301,16 +301,16 @@
                                 <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                             </span>
                         </a>
-                        <div class="box-accordion__body{% if productParameterValues > 0 %} box-accordion__body--cols{% endif %} js-accordion-body">
+                        <div class="box-accordion__body{% if parameterValuesViewsData > 0 %} box-accordion__body--cols{% endif %} js-accordion-body">
                             <div class="box-accordion__body__content box-accordion__body__content--desc">
                                 {{ product.getDescription(domain.id)|raw }}
                             </div>
-                            {% if productParameterValues > 0 %}
+                            {% if parameterValuesViewsData > 0 %}
                                 <div class="box-accordion__body__content box-accordion__body__content--params">
-                                    {% set lastProductParameterGroup = null %}
-                                    {% for productParameterValue in productParameterValues %}
-                                        {% set productParameterGroup = productParameterValue.parameter.group %}
-                                        {% if productParameterGroup != lastProductParameterGroup and productParameterGroup.name|default('') is not empty %}
+                                    {% set lastParameterGroupName = null %}
+                                    {% for parameterValuesViewData in parameterValuesViewsData %}
+                                        {% set parameterGroupName = parameterValuesViewData.parameterGroupName %}
+                                        {% if parameterGroupName != lastParameterGroupName and parameterGroupName is not empty %}
                                             {% if not loop.first %}
                                                 </ul>
                                                 <ul class="box-detail-list box-detail-list--params">
@@ -318,18 +318,17 @@
                                                 <ul class="box-detail-list box-detail-list--params">
                                             {% endif %}
                                             <li class="box-detail-list__item box-detail-list__item--heading">
-                                                <h2>{{ productParameterGroup.name|default('') }}</h2>
+                                                <h2>{{ parameterGroupName }}</h2>
                                             </li>
                                         {% endif %}
-                                        {% if loop.first and productParameterGroup == lastProductParameterGroup %}
+                                        {% if loop.first and parameterGroupName == lastParameterGroupName %}
                                             <ul class="box-detail-list box-detail-list--params">
                                         {% endif %}
                                             <li class="box-detail-list__item">
-                                                {{ productParameterValue.parameter.name }}:
-                                                {{ productParameterValue.value.text }}
-                                                {{ productParameterValue.parameter.parameterUnit != null ? productParameterValue.parameter.parameterUnit.name : '' }}
+                                                {{ parameterValuesViewData.parameterName }}:
+                                                {{ parameterValuesViewData.valueTextsWithUnit|join(', ') }}
                                             </li>
-                                        {% set lastProductParameterGroup = productParameterValue.parameter.group %}
+                                        {% set lastParameterGroupName = parameterGroupName %}
                                         {% if loop.last %}
                                             </ul>
                                         {% endif %}
@@ -340,8 +339,8 @@
                     </div>
                 {% endif %}
 
-                {% set productDimensionParameterValues = getProductDimensionParameterValues(product) %}
-                {% if existProductImageByAkeneoType(product, 'image_dimensions') or productDimensionParameterValues|length > 0 %}
+                {% set dimensionParameterValuesViewsData = getProductDimensionParameterValuesViewsData(product) %}
+                {% if existProductImageByAkeneoType(product, 'image_dimensions') or dimensionParameterValuesViewsData|length > 0 %}
                     <div class="box-accordion js-accordion">
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading">{{ 'Rozměry'|trans }}</strong>
@@ -365,14 +364,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for productDimensionParameterValue in productDimensionParameterValues %}
+                                        {% for parameterValuesViewData in dimensionParameterValuesViewsData %}
                                             <tr>
-                                                <td>{{ productDimensionParameterValue.parameter.name }}</td>
-                                                <td>{{ productDimensionParameterValue.value.text }}
-                                                    {% if productDimensionParameterValue.parameter.getParameterUnit() is not empty %}
-                                                        {{ productDimensionParameterValue.parameter.getParameterUnit().name }}
-                                                    {% endif %}
-                                                </td>
+                                                <td>{{ parameterValuesViewData.parameterName }}</td>
+                                                <td>{{ parameterValuesViewData.valueTextsWithUnit|join(', ') }}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
