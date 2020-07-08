@@ -5815,7 +5815,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->addReference(self::PRODUCT_PREFIX . $this->productNo, $product);
         $this->productNo++;
 
-        if (in_array($product->getCatnum(), $this->arrayFlat(self::getVariantCatnumsByMainVariantCatnum()), true)) {
+        if (in_array($product->getCatnum(), $this->getAllVariantCatnumsFromAssociativeArray(self::getVariantCatnumsByMainVariantCatnum()), true)) {
             $this->saveProductToCache($product);
         }
 
@@ -5859,18 +5859,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param array $array
+     * @param array $productCatnumsByMainVariantCatnum
+     *
      * @return string[]
      */
-    private function arrayFlat(array $array): array
+    private function getAllVariantCatnumsFromAssociativeArray(array $productCatnumsByMainVariantCatnum): array
     {
-        $result = [];
+        $catnums = [];
 
-        foreach ($array as $key => $values) {
-            $result[] = $key;
-            $result = array_merge($result, $values);
+        foreach ($productCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantCatnums) {
+            $catnums[] = $mainVariantCatnum;
+            $catnums = array_merge($catnums, $variantCatnums);
         }
 
-        return array_unique($result);
+        return array_unique($catnums);
     }
 }
