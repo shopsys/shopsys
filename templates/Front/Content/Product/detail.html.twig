@@ -403,7 +403,7 @@
                         <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
                             <div class="box-detail-files">
                                 {% for downloadFile in downloadFiles %}
-                                    <a class="box-detail-files__item" href="{{ downloadFile['url'] }}" download>
+                                    <a target="_blank" class="box-detail-files__item" href="{{ downloadFile['url'] }}">
                                         <span class="box-detail-files__item__name">{{ downloadFile['anchor_text']|trans }}</span>
                                         <span class="box-detail-files__item__download">
                                             {{ 'Stáhnout'|trans }}
