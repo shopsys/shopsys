@@ -1,14 +1,10 @@
-@box-gallery-item-gap: 15px;
+@box-gallery-item-gap: 4px;
+@box-gallery-item-gap-lg: 7px;
 
 .box-gallery {
-    display: none;
     position: relative;
     left: 45px;
     margin-bottom: @margin-gap;
-
-    @media @query-vl {
-        display: block;
-    }
 
     .slick-list {
         position: relative;
@@ -18,26 +14,20 @@
 
     &__item {
         float: left;
-        width: 100%/2;
-        padding: 0 @box-gallery-item-gap/2;
-        box-sizing: content-box;
-
-        @media @query-xs {
-            width: 100%/3;
-        }
+        padding: 0 @box-gallery-item-gap;
+        width: 70px;
+        height: 80px;
 
         @media @query-md {
-            width: 100%/4;
+            width: 90px;
+            height: 100px;
         }
 
         @media @query-lg {
-            min-width: 90px;
-            width: 90px;
-            height: 90px;
+            padding: 0 @box-gallery-item-gap-lg;
         }
 
         @media screen and (min-width: 1500px) {
-            min-width: 122px;
             width: 122px;
             height: 122px;
         }
@@ -54,34 +44,6 @@
 
             &:hover img {
                 transform: scale(1.15);
-            }
-
-            &--number {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                &::before {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                    height: 100%;
-                    z-index: 1;
-                    content: '';
-
-                    background-color: rgba(@color-0, .3);
-                    pointer-events: none;
-                }
-            }
-
-            &__number {
-                position: relative;
-                z-index: 2;
-
-                font-family: @font-tertiary;
-                font-size: 24px;
-                color: @color-f;
             }
         }
 
@@ -100,7 +62,11 @@
         display: flex;
         align-items: center;
         overflow: hidden;
-        width: calc(100% - 120px);
+        width: calc(100% - 95px);
+
+        @media @query-lg {
+            width: calc(100% - 127px);
+        }
 
         .slick-arrow {
             &.slick-prev {
@@ -108,7 +74,11 @@
             }
 
             &.slick-next {
-                right: 65px;
+                right: 45px;
+
+                @media @query-lg {
+                    right: 65px;
+                }
 
                 @media screen and (min-width: 1500px) {
                     right: 75px;

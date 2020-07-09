@@ -52,7 +52,6 @@
                                 <div class="box-gallery dont-print js-gallery js-gallery-slick-carousel">
                                     <div class="box-gallery__in js-gallery-wrap">
                                         {% set galleryImagesCount = galleryImages|length %}
-                                        {% set galleryImagesLimiter = 5 %}
                                         {% for galleryImage in galleryImages %}
                                             {% if loop.index != 1 %}
                                                 <div class="box-gallery__item js-gallery-item">
@@ -60,12 +59,8 @@
                                                         data-fancybox="products-gallery"
                                                         data-caption="{{ product.name }}"
                                                         href="{{ imageUrl(galleryImage, 'original') }}"
-                                                        class="box-gallery__item__link{{ galleryImagesCount > galleryImagesLimiter and loop.index == galleryImagesLimiter ? ' box-gallery__item__link--number' }}">
+                                                        class="box-gallery__item__link">
                                                         {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
-                                                        {% if loop.index == galleryImagesLimiter and galleryImagesCount > galleryImagesLimiter %}
-                                                            {% set galleryImagesLeft = galleryImagesCount - galleryImagesLimiter %}
-                                                            <span class="box-gallery__item__link__number">+{{ galleryImagesLeft }}</span>
-                                                        {% endif %}
                                                     </a>
                                                 </div>
                                             {% endif %}
