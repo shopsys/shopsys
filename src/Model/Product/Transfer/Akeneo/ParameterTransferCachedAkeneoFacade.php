@@ -48,7 +48,7 @@ class ParameterTransferCachedAkeneoFacade
     /**
      * @param string $parameterAkeneoCode
      * @param string $akeneoParameterValueCode
-     * @return string[]
+     * @return string[]|null[]
      */
     public function getParameterValueTextsIndexedByLocaleForParameterAndAkeneoValue(string $parameterAkeneoCode, string $akeneoParameterValueCode): array
     {
