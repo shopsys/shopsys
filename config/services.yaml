@@ -466,6 +466,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository: '@App\Model\Product\Search\ProductElasticsearchRepository'
 
+    Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository: '@App\Model\Product\Search\ProductFilterCountDataElasticsearchRepository'
+
     App\Model\Product\Search\FilterQueryFactory: ~
 
     Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory: '@App\Model\Product\Search\FilterQueryFactory'
