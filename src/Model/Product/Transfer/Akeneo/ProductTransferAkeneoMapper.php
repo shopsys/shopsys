@@ -555,7 +555,7 @@ class ProductTransferAkeneoMapper
                 $parameter->getAkeneoCode(),
                 $akeneoParameterValueCode
             );
-            if (array_key_exists($locale, $valueTextsByLocale) === false) {
+            if (array_key_exists($locale, $valueTextsByLocale) === false || $valueTextsByLocale[$locale] === null) {
                 throw TransferInvalidDataException::createWithViolation(
                     sprintf('Parameter value %s for parameter code %s does not have localized label', $akeneoParameterValueCode, $parameter->getAkeneoCode()),
                     ''
