@@ -123,7 +123,10 @@
                         </a>
                     </div>
                     <div class="box-cart-empty__figure">
-                        <img class="box-cart-empty__image" loading="lazy" data-src="{{ asset('public/frontend/images/empty-cart.png') }}" alt="{{ 'Empty cart'|trans }}">
+                        <picture>
+                            <source srcset="{{ asset('public/frontend/images/empty-cart2x.png') }} 2x, {{ asset('public/frontend/images/empty-cart.png') }} 1x" />
+                            <img class="box-cart-empty__image" loading="lazy" data-src="{{ asset('public/frontend/images/empty-cart.png') }}" alt="{{ 'Empty cart'|trans }}">
+                        </picture>
                     </div>
                 </div>
                 {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : 'box-info--in-cart' } %}

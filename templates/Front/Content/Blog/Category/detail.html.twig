@@ -46,7 +46,7 @@
                                     {% for blogArticle in blogArticlePaginationResult.results %}
                                         <li class="list-articles__item list-articles__item--grid">
                                             <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link list-articles__item__link--image" title="{{ blogArticle.name }}">
-                                                {{ image(blogArticle, { size: 'list', alt: blogArticle.name, class: "list-articles__item__image", lazy: true }) }}
+                                                {{ image(blogArticle, { size: 'listGrid', alt: blogArticle.name, class: "list-articles__item__image", lazy: true }) }}
                                             </a>
                                             <div class="list-articles__item__content">
                                                 <div class="list-tags">

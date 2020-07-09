@@ -30,7 +30,7 @@
                                     <a href="{{ item.link }}">
                                         <picture>
                                             <source media="(max-width: 480px)" srcset="{{ imageUrl(item, null, 'mobile') }}" />
-                                            <source media="(min-width: 481px)" srcset="{{ imageUrl(item, null, 'web') }}" />
+                                            <source media="(min-width: 481px)" srcset="{{ imageUrl(item, 'retinaSlider', 'web') }} 2x, {{ imageUrl(item, null, 'web') }} 1x" />
                                             <img data-src="{{ imageUrl(item, null, 'web') }}" itemprop="image" class="image-sliderItem-web" />
                                         </picture>
                                     </a>
@@ -62,7 +62,13 @@
                     <div class="box-block__item box-block__item--half box-block__item--left">
                         <h2 class="box-block__item__heading">{{ 'Aktuální leták'|trans }}</h2>
                         <picture>
-                            <source srcset="{{ asset('public/frontend/images/letak2x.png') }} 2x, {{ asset('public/frontend/images/letak.png') }} 1x" />
+                            <source
+                                srcset="
+                                {{ asset('public/frontend/images/letak2x.png') }} 4x,
+                                {{ asset('public/frontend/images/letak2x.png') }} 3x,
+                                {{ asset('public/frontend/images/letak2x.png') }} 2x,
+                                {{ asset('public/frontend/images/letak.png') }} 1x"
+                            />
                             <img
                                 class="box-block__item__img box-block__item__img--left"
                                 loading="lazy"
@@ -76,7 +82,13 @@
                     <div class="box-block__item box-block__item--half box-block__item--right">
                         <h2 class="box-block__item__heading">{{ 'Prodejny Sconto'|trans }}</h2>
                         <picture>
-                            <source srcset="{{ asset('public/frontend/images/prodejny2x.png') }} 2x, {{ asset('public/frontend/images/prodejny.png') }} 1x" />
+                            <source
+                                srcset="
+                                {{ asset('public/frontend/images/prodejny2x.png') }} 4x,
+                                {{ asset('public/frontend/images/prodejny2x.png') }} 3x,
+                                {{ asset('public/frontend/images/prodejny2x.png') }} 2x,
+                                {{ asset('public/frontend/images/prodejny.png') }} 1x"
+                            />
                             <img
                                 class="box-block__item__img box-block__item__img--right"
                                 loading="lazy"
@@ -107,10 +119,7 @@
             <div class="web__container">
                 <div class="box-products-carousel box-products-carousel--bg" id="top-products">
                     <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--sales">
-                        <h2 class="box-products-carousel__heading">
-                            <img class="box-products-carousel__heading__icon" loading="lazy" src="" data-src="{{ asset('public/frontend/images/sale-big.png') }}" alt="{{ 'Výprodej'|trans }}">
-                            {{ 'Výprodej'|trans }}
-                        </h2>
+                        <h2 class="box-products-carousel__heading">{{ 'Výprodej'|trans }}</h2>
                         <div class="list-products-grid list-products-grid--sales js-products-slick-carousel">
                             {{ productList.list(topProducts, null, 'h3') }}
                         </div>

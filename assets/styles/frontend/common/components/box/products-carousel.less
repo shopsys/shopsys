@@ -78,11 +78,23 @@
         align-items: center;
         margin-bottom: 1.6rem;
 
-        &__icon {
-            margin-right: 1rem;
+        &::before {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+            padding-top: 3px;
+            content: '%';
+            box-sizing: border-box;
 
-            image-rendering: -webkit-optimize-contrast;
+            font-family: @font-quartenary;
+            font-size: 30px;
+            font-weight: 600;
+            color: @color-f;
+            border-radius: 100%;
+            background-color: @color-price-sale;
 
             @media @query-md {
                 margin-right: 2rem;
