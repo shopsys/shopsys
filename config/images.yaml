@@ -65,6 +65,13 @@
             occurrence: 'Front-end: Thumbnail of images under the main image in product detail'
             additionalSizes:
                 - {width: 400, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: modal
+            width: 96
+            height: ~
+            crop: false
+            occurrence: 'Front-end: Product in modal'
+            additionalSizes:
+                - {width: 192, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: list
             width: 280
             height: ~
@@ -77,6 +84,8 @@
             height: 90
             crop: false
             occurrence: 'Front-end: Preview in autocomplete for search, preview in cart during ordering process'
+            additionalSizes:
+                - {width: 180, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: productSeries
     class: App\Model\Product\Series\ProductSeries
@@ -97,6 +106,13 @@
             occurrence: 'Front-end: Main image in product series detail and list'
             additionalSizes:
                 - {width: 900, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: previewDetailSmall
+            width: 184
+            height: ~
+            crop: false
+            occurrence: 'Front-end: Main image in product series detail and list'
+            additionalSizes:
+                - {width: 368, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: galleryThumbnail
             width: 120
             height: 80
