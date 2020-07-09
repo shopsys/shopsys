@@ -53,9 +53,10 @@ class LocalizationExtension extends AbstractExtension
      */
     public function getLocaleFlagHtml($locale, $showTitle = true)
     {
-        $src = $this->assetPackages->getUrl('public/admin/images/flags/' . $locale . '.png');
+        $filepath = 'public/admin/images/flags/' . $locale . '.png';
+        $src = $this->assetPackages->getUrl($filepath);
 
-        if (file_exists($this->webDir . $src) === false) {
+        if (file_exists($this->webDir . '/' . $filepath) === false) {
             return strtoupper($locale);
         }
 
