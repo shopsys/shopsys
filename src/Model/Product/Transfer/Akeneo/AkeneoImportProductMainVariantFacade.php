@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use Akeneo\Pim\ApiClient\Exception\NotFoundHttpException;
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Model\Product\Parameter\ParameterFacade;
@@ -19,7 +20,7 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
     private const IS_PRODUCT_MAIN_VARIANT = true;
 
     /**
-     * @var string[]
+     * @var string[][]
      */
     private $mainVariantSkuList;
 
@@ -105,7 +106,7 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @param string[] $mainVariantSkuList
+     * @param string[][] $mainVariantSkuList
      */
     public function downloadMainVariantsBySkuList(array $mainVariantSkuList): void
     {
@@ -148,9 +149,17 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
      */
     protected function getData(): \Generator
     {
-        foreach ($this->mainVariantSkuList as $code) {
+        foreach ($this->mainVariantSkuList as $code => $identifiers) {
             try {
-                yield $this->productTransferAkeneoFacade->getProductModelByCode($code);
+                yield $this->productTransferAkeneoFacade->getProductModelByCode((string)$code);
+            } catch (NotFoundHttpException $exception) {
+                $this->logger->addError(
+                    sprintf(
+                        'Product model %d not found for variants %s.',
+                        $code,
+                        implode(', ', $identifiers)
+                    )
+                );
             } catch (\RuntimeException $exception) {
                 $this->logger->addError($exception->getMessage());
             }

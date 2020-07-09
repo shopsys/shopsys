@@ -265,7 +265,7 @@ class TransferredProductProcessor
             return;
         }
 
-        $mainVariantProduct = $this->findProductByIdentifier($mainVariantCatnum, true);
+        $mainVariantProduct = $this->findProductByIdentifier((string)$mainVariantCatnum, true);
         if ($mainVariantProduct === null) {
             return;
         }
@@ -293,7 +293,7 @@ class TransferredProductProcessor
             return;
         }
 
-        $mainVariantProduct = $this->findProductByIdentifier($mainVariantCatnum, true);
+        $mainVariantProduct = $this->findProductByIdentifier((string)$mainVariantCatnum, true);
         if ($mainVariantProduct === null) {
             return;
         }

@@ -150,13 +150,13 @@ class ProductTransferAkeneoMapper
 
     /**
      * @param array $akeneoProductData
-     * @return string|null
+     * @return int|null
      */
-    public function mapAkeneoProductDataToParentCatnum(array $akeneoProductData): ?string
+    public function mapAkeneoProductDataToParentCatnum(array $akeneoProductData): ?int
     {
         $associationArticleCatnum = $akeneoProductData['values']['association_article'][0]['data'] ?? null;
 
-        return $associationArticleCatnum !== null ? strval($associationArticleCatnum) : null;
+        return $associationArticleCatnum !== null && $associationArticleCatnum !== 0 ? $associationArticleCatnum : null;
     }
 
     /**

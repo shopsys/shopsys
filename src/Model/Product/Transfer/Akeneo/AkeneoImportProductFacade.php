@@ -170,7 +170,10 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 
             $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentCatnum($akeneoProductData);
             if ($mainVariantSku !== null) {
-                $mainVariantSkuList[] = $mainVariantSku;
+                if (array_key_exists($mainVariantSku, $mainVariantSkuList) === false) {
+                    $mainVariantSkuList[$mainVariantSku] = [];
+                }
+                $mainVariantSkuList[$mainVariantSku][$akeneoProductData['identifier']] = $akeneoProductData['identifier'];
             }
         }
 
@@ -185,7 +188,13 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
             $this->akeneoImportProductSeriesFacade->runTransfer();
         }
 
-        $mainVariantSkuList = array_unique($mainVariantSkuList);
+        // products, that are flagged as variants and have only one product, don't have the master product (model) defined in akeneo => don't import it
+        $mainVariantSkuList = array_filter($mainVariantSkuList, static function ($item) {
+            return count($item) > 1;
+        $mainVariantSkuList = array_filter($mainVariantSkuList, static function ($variants) {
+                        $mainVariantHasMoreThanOneSubVariant = count($variants) > 1;
+            return $mainVariantHasMoreThanOneSubVariant;
+        });
         if (count($mainVariantSkuList) > 0) {
             $this->akeneoImportProductMainVariantFacade->downloadMainVariantsBySkuList($mainVariantSkuList);
         }
