@@ -21,10 +21,10 @@
             <div class="box-cart-sent">
                 <div class="box-cart-sent__text">
                     <h1 class="box-cart-sent__heading">{{ 'Děkujeme za vaši objednávku'|trans }}</h1>
-                    <p class="box-cart-sent__info">{{ 'Rekapitulaci jsme zaslali také na váš e-mail' }} <strong>{{ order.email }}</strong></p>
+                    <p class="box-cart-sent__info">{{ 'Rekapitulaci jsme zaslali také na váš e-mail'|trans }} <strong>{{ order.email }}</strong></p>
                     <div class="box-cart-sent__buttons">
                         {{ pageContent|raw }}
-                        <a class="box-cart-sent__btn btn btn--outline" href="{{ url('front_homepage') }}">Přejít do e-shopu</a>
+                        <a class="box-cart-sent__btn btn btn--outline" href="{{ url('front_homepage') }}">{{ 'Přejít do e-shopu'|trans }}</a>
                     </div>
                 </div>
                 <div class="box-cart-sent__figure">
