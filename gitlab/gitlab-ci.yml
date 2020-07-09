@@ -134,7 +134,7 @@ review:stop:
     <<: *only-default
     script:
         - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
-        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y product-search-delete-structure
+        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete
         - docker-compose down --rmi all -v
         - /home/ci/clean.sh ${CI_COMMIT_REF_SLUG}
     when: manual
