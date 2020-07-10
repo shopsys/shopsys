@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
 /**
- * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductQueryBuilder(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByName(\App\Model\Product\Product $product, string $locale)
  * @property \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
@@ -398,5 +397,25 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $parameterValuesViewDataByParameterId;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getProductParameterValuesByProductQueryBuilder(BaseProduct $product)
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('ppv')
+            ->from(ProductParameterValue::class, 'ppv')
+            ->join('ppv.parameter', 'p')
+            ->join('ppv.value', 'pv')
+            ->where('ppv.product = :product_id')
+            ->orderBy('IDENTITY(p.group)')
+            ->addOrderBy('p.id')
+            ->addOrderBy('pv.locale')
+            ->setParameter('product_id', $product->getId());
+
+        return $queryBuilder;
     }
 }
