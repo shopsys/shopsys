@@ -136,6 +136,7 @@ class ProductController extends BaseProductController
             'product' => $product,
             'domains' => $this->domain->getAll(),
             'productPackageGridView' => $productPackageGridView,
+            'productParameterValuesData' => $productData->parameters,
         ];
 
         return $this->render('/Admin/Content/Product/edit.html.twig', $viewParameters);
