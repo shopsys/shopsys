@@ -188,13 +188,10 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
             $this->akeneoImportProductSeriesFacade->runTransfer();
         }
 
-        // products, that are flagged as variants and have only one product, don't have the master product (model) defined in akeneo => don't import it
-        $mainVariantSkuList = array_filter($mainVariantSkuList, static function ($item) {
-            return count($item) > 1;
-        $mainVariantSkuList = array_filter($mainVariantSkuList, static function ($variants) {
-                        $mainVariantHasMoreThanOneSubVariant = count($variants) > 1;
-            return $mainVariantHasMoreThanOneSubVariant;
-        });
+        $removeSingleVariantProducts = static function ($variants) {
+            return count($variants) > 1;
+        };
+        $mainVariantSkuList = array_filter($mainVariantSkuList, $removeSingleVariantProducts);
         if (count($mainVariantSkuList) > 0) {
             $this->akeneoImportProductMainVariantFacade->downloadMainVariantsBySkuList($mainVariantSkuList);
         }
