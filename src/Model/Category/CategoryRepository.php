@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
-use App\Model\Stock\ProductStock;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -132,30 +131,24 @@ class CategoryRepository extends BaseCategoryRepository
             $listableProductCountsIndexedByCategoryId[$category->getId()] = 0;
         }
 
-        $queryBuilder = $this->productRepository->getAllListableQueryBuilder($domainId, $pricingGroup)
-            ->join(
-                ProductCategoryDomain::class,
-                'pcd',
-                Join::WITH,
-                'pcd.product = p
+        $queryBuilder = $this->productRepository->getAllListableQueryBuilder($domainId, $pricingGroup);
+        $queryBuilder->join(
+            ProductCategoryDomain::class,
+            'pcd',
+            Join::WITH,
+            'pcd.product = p
                  AND pcd.category IN (:categories)
                  AND pcd.domainId = :domainId'
-            )
+        )
             ->select('IDENTITY(pcd.category) AS categoryId, COUNT(p) AS productCount')
             ->setParameter('categories', $categories)
             ->setParameter('domainId', $domainId)
             ->groupBy('pcd.category')
             ->resetDQLPart('orderBy');
 
-        $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
-            ->select('1')
-            ->from(ProductStock::class, 'ps')
-            ->join('ps.stock', 's', Join::WITH, 's.domainId = :domainId')
-            ->where('ps.product = p')
-            ->having('SUM(ps.productQuantity) > 0');
-        $queryBuilder->andWhere('p.preorder = true OR EXISTS(' . $subquery->getDQL() . ')');
+        $results = $queryBuilder->getQuery()->getArrayResult();
 
-        foreach ($queryBuilder->getQuery()->getArrayResult() as $result) {
+        foreach ($results as $result) {
             $listableProductCountsIndexedByCategoryId[$result['categoryId']] = $result['productCount'];
         }
 
