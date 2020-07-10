@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
@@ -105,7 +105,7 @@ class ParameterRepository extends BaseParameterRepository
      * @param int $parameterValueId
      * @return \App\Model\Product\Parameter\ParameterValue
      */
-    public function getParameterValueById(int $parameterValueId): ParameterValue
+    public function getParameterValueById(int $parameterValueId): BaseParameterValue
     {
         $parameterValue = $this->getParameterValueRepository()->find($parameterValueId);
 
@@ -243,6 +243,7 @@ class ParameterRepository extends BaseParameterRepository
         $parameterValue = $this->getParameterValueRepository()->findOneBy([
             'text' => $parameterValueData->text,
             'locale' => $parameterValueData->locale,
+            'rgbHex' => $parameterValueData->rgbHex,
         ]);
 
         if ($parameterValue === null) {
