@@ -121,7 +121,7 @@ class VolumeDriver extends Driver
      */
     protected function rmTmb($stat)
     {
-        $path = $stat['realpath'];
+        $path = $this->tmbPath . DIRECTORY_SEPARATOR . $this->tmbname($stat);
         if ($this->tmbURL) {
             $thumbnailName = $this->gettmb($path, $stat);
             $stat['tmb'] = $thumbnailName ? $thumbnailName : 1;
