@@ -29,8 +29,18 @@
                                 <div class="box-slider__item">
                                     <a href="{{ item.link }}">
                                         <picture>
-                                            <source media="(max-width: 480px)" srcset="{{ imageUrl(item, null, 'mobile') }}" />
-                                            <source media="(min-width: 481px)" srcset="{{ imageUrl(item, 'retinaSlider', 'web') }} 2x, {{ imageUrl(item, null, 'web') }} 1x" />
+                                            <source
+                                                media="(max-width: 360px)"
+                                                srcset="{{ imageUrl(item, 'retinaSliderSmall', 'mobile') }} 2x, {{ imageUrl(item, 'sliderSmall', 'mobile') }} 1x"
+                                            >
+                                            <source
+                                                media="(min-width: 361px) and (max-width: 480px)"
+                                                srcset="{{ imageUrl(item, 'retinaSlider', 'mobile') }} 2x, {{ imageUrl(item, null, 'mobile') }} 1x"
+                                            >
+                                            <source
+                                                media="(min-width: 481px)"
+                                                srcset="{{ imageUrl(item, 'retinaSlider', 'web') }} 2x, {{ imageUrl(item, null, 'web') }} 1x"
+                                            >
                                             <img data-src="{{ imageUrl(item, null, 'web') }}" itemprop="image" class="image-sliderItem-web" />
                                         </picture>
                                     </a>

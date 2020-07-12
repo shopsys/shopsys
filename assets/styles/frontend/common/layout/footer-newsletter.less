@@ -1,4 +1,4 @@
-@footer-newsletter-gap: 12rem 1rem 1.5rem;
+@footer-newsletter-gap: 10.5rem 1rem 1.5rem;
 @footer-newsletter-gap-md: 6rem 1.5rem 2rem;
 @footer-newsletter-gap-lg: 2rem 3rem;
 @footer-newsletter-button-width: 150px;
@@ -6,8 +6,9 @@
 // newsletter
 @footer-newsletter-form-width: 600px;
 
-@footer-newsletter-image-width: 360px;
-@footer-newsletter-image-height: 265px;
+@footer-newsletter-image-width: 240px;
+@footer-newsletter-image-width-md: 360px;
+@footer-newsletter-image-height-md: 265px;
 
 .footer__newsletter {
     position: relative;
@@ -30,7 +31,13 @@
         right: 0;
         top: -18px;
         width: @footer-newsletter-image-width;
-        height: @footer-newsletter-image-height;
+
+        image-rendering: -webkit-optimize-contrast;
+
+        @media @query-md {
+            width: @footer-newsletter-image-width-md;
+            height: @footer-newsletter-image-height-md;
+        }
 
         @media @query-vl {
             top: -24px;

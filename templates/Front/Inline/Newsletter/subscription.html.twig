@@ -19,7 +19,9 @@
             </div>
         </div>
         <picture>
-            <source srcset="
+            <source
+                media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                srcset="
                 {{ asset('public/frontend/images/sconto_newsletter2x.png') }} 2x,
                 {{ asset('public/frontend/images/sconto_newsletter.png') }} 1x"
             />

@@ -1,4 +1,3 @@
-    {% set gridImageViewportMobile = "600px" %}
     <div class="web__line">
         <div class="web__container">
             <h2>{{ 'Nakupujte podle místností'|trans }}</h2>
@@ -11,8 +10,14 @@
                         </span>
                         <a class="list-grid__item__link" href="#" title="{{ 'Předsíň'|trans }}">
                             <picture class="list-grid__item__picture">
-                                <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('public/frontend/images/rooms/predsin_m.jpg') }}">
                                 <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/predsin_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/predsin_m.jpg') }} 1x"
+                                >
+                                <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
                                     srcset="
                                     {{ asset('public/frontend/images/rooms/predsin4x.jpg') }} 4x,
                                     {{ asset('public/frontend/images/rooms/predsin3x.jpg') }} 3x,
@@ -30,8 +35,14 @@
                         </span>
                         <a class="list-grid__item__link" href="#" title="{{ 'Obývací pokoj'|trans }}">
                             <picture class="list-grid__item__picture">
-                                <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('public/frontend/images/rooms/obyvaci_pokoj_m.jpg') }}">
                                 <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/obyvaci_pokoj_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/obyvaci_pokoj_m.jpg') }} 1x"
+                                >
+                                <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
                                     srcset="
                                     {{ asset('public/frontend/images/rooms/obyvaci_pokoj4x.jpg') }} 4x,
                                     {{ asset('public/frontend/images/rooms/obyvaci_pokoj3x.jpg') }} 3x,
@@ -50,8 +61,14 @@
                             </span>
                             <a class="list-grid__item__link" href="#" title="{{ 'Kuchyně'|trans }}">
                                 <picture class="list-grid__item__picture">
-                                    <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('public/frontend/images/rooms/kuchyne_m.jpg') }}">
                                     <source
+                                        media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                        srcset="
+                                        {{ asset('public/frontend/images/rooms/kuchyne_m2x.jpg') }} 2x,
+                                        {{ asset('public/frontend/images/rooms/kuchyne_m.jpg') }} 1x"
+                                    >
+                                    <source
+                                        media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
                                         srcset="
                                         {{ asset('public/frontend/images/rooms/kuchyne4x.jpg') }} 4x,
                                         {{ asset('public/frontend/images/rooms/kuchyne3x.jpg') }} 3x,
@@ -69,8 +86,14 @@
                             </span>
                             <a class="list-grid__item__link" href="#" title="{{ 'Jídelna'|trans }}">
                                 <picture class="list-grid__item__picture">
-                                    <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('public/frontend/images/rooms/jidelna_m.jpg') }}">
                                     <source
+                                        media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                        srcset="
+                                        {{ asset('public/frontend/images/rooms/jidelna_m2x.jpg') }} 2x,
+                                        {{ asset('public/frontend/images/rooms/jidelna_m.jpg') }} 1x"
+                                    >
+                                    <source
+                                        media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
                                         srcset="
                                         {{ asset('public/frontend/images/rooms/jidelna4x.jpg') }} 4x,
                                         {{ asset('public/frontend/images/rooms/jidelna3x.jpg') }} 3x,
@@ -89,8 +112,14 @@
                         </span>
                         <a class="list-grid__item__link" href="#" title="{{ 'Pracovna'|trans }}">
                             <picture class="list-grid__item__picture">
-                                <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('public/frontend/images/rooms/pracovna_m.jpg') }}">
                                 <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/pracovna_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/pracovna_m.jpg') }} 1x"
+                                >
+                                <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
                                     srcset="
                                     {{ asset('public/frontend/images/rooms/pracovna4x.jpg') }} 4x,
                                     {{ asset('public/frontend/images/rooms/pracovna3x.jpg') }} 3x,
@@ -110,8 +139,14 @@
                         </span>
                         <a class="list-grid__item__link" href="#" title="{{ 'Ložnice'|trans }}">
                             <picture class="list-grid__item__picture">
-                                <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('public/frontend/images/rooms/loznice_m.jpg') }}">
                                 <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/loznice_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/loznice_m.jpg') }} 1x"
+                                >
+                                <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
                                     srcset="
                                     {{ asset('public/frontend/images/rooms/loznice4x.jpg') }} 4x,
                                     {{ asset('public/frontend/images/rooms/loznice3x.jpg') }} 3x,
@@ -129,8 +164,14 @@
                         </span>
                         <a class="list-grid__item__link" href="#" title="{{ 'Dětský pokoj'|trans }}">
                             <picture class="list-grid__item__picture">
-                                <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('public/frontend/images/rooms/detsky_pokoj_m.jpg') }}">
                                 <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/detsky_pokoj_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/detsky_pokoj_m.jpg') }} 1x"
+                                >
+                                <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
                                     srcset="
                                     {{ asset('public/frontend/images/rooms/detsky_pokoj4x.jpg') }} 4x,
                                     {{ asset('public/frontend/images/rooms/detsky_pokoj3x.jpg') }} 3x,
@@ -148,8 +189,14 @@
                         </span>
                         <a class="list-grid__item__link" href="#" title="{{ 'Koupelny'|trans }}">
                             <picture class="list-grid__item__picture">
-                                <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('public/frontend/images/rooms/koupelny_m.jpg') }}">
                                 <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/koupelny_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/koupelny_m.jpg') }} 1x"
+                                >
+                                <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
                                     srcset="
                                     {{ asset('public/frontend/images/rooms/koupelny4x.jpg') }} 4x,
                                     {{ asset('public/frontend/images/rooms/koupelny3x.jpg') }} 3x,

@@ -44,7 +44,8 @@
             crop: false
             occurrence: 'Front-end: Product list by category'
             additionalSizes:
-                - {width: 380, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 240, height: ~, media: "only screen and (max-width: 599px) and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 380, height: ~, media: "only screen and (min-width: 600px) and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: product
     class: Shopsys\FrameworkBundle\Model\Product\Product
@@ -56,8 +57,9 @@
             crop: false
             occurrence: 'Front-end: Main image in product detail'
             additionalSizes:
+                - {width: 1210, height: ~, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
                 - {width: 710, height: ~, media: "(min-width: 480px) and (max-width: 768px)"}
-                - {width: 1210, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 1210, height: ~, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: galleryThumbnail
             width: 200
             height: ~
@@ -137,10 +139,25 @@
         -   name: mobile
             sizes:
                 -   name: ~
-                    width: 480
+                    width: 345
                     height: ~
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider'
+                -   name: sliderSmall
+                    width: 330
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Mobile main page slider'
+                -   name: retinaSlider
+                    width: 690
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Mobile main page slider - retina display small'
+                -   name: retinaSliderSmall
+                    width: 660
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Mobile main page slider - retina display'
 
 -   name: transport
     class: Shopsys\FrameworkBundle\Model\Transport\Transport

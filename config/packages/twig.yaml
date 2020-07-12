@@ -31,3 +31,5 @@ twig:
     globals:
         globalMultipleFormSetting: '@Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting'
         parameterDisableFormFieldsFromTransfer: '%disable_form_fields_from_transfer%'
+        imgSrcsetMobileBreakpoint: '600px'
+        imgSrcsetDesktopBreakpoint: '601px'
