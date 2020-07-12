@@ -37,6 +37,8 @@ import 'framework/common/validation';
 
 import Register from 'framework/common/utils/Register';
 
+import './gtm';
+
 tooltip($);
 
 CustomizeBundle.showFormErrorsWindow = showFormErrorsWindowOnFrontend;

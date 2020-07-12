@@ -10,6 +10,7 @@ use App\Model\Category\CategoryFacade;
 use App\Model\Customer\User\CustomerUser as BaseCustomer;
 use App\Model\Gtm\Data\DataLayerPage;
 use App\Model\Gtm\Data\DataLayerProduct;
+use App\Model\Gtm\Data\DataLayerSliderItem;
 use App\Model\Gtm\Data\DataLayerUser;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
@@ -18,6 +19,7 @@ use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductView;
 use App\Model\Product\Product;
 use App\Model\Product\ProductCachedAttributesFacade;
+use App\Model\Slider\SliderItem;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
@@ -240,17 +242,31 @@ class DataLayerMapper
 
     /**
      * @param \App\Model\Product\Listed\ListedProductView[] $listedProductViews
-     * @param \App\Model\Category\Category $category
-     * @param string $locale
+     * @param int|null $position
+     * @param string|null $list
      * @return \App\Model\Gtm\Data\DataLayerProduct[]
      */
-    public function createDataLayerProductsFromListedProductViews(array $listedProductViews, Category $category, string $locale): array
-    {
+    public function createDataLayerProductsFromListedProductViews(
+        array $listedProductViews,
+        ?int $position = null,
+        ?string $list = null
+    ): array {
         $dataLayerProducts = [];
         $i = 1;
         foreach ($listedProductViews as $listedProductView) {
+            $category = '';
+            if ($list === null) {
+                $categories = preg_split('/\//', $listedProductView->getMainCategoryPath());
+                $category = end($categories);
+            }
+
             $dataLayerProduct = new DataLayerProduct();
-            $this->mapListedProductViewToDataLayerProduct($listedProductView, $dataLayerProduct, $category, $i++, $locale);
+            $this->mapListedProductViewToDataLayerProduct($listedProductView, $dataLayerProduct, $i++, $list ?? $category);
+
+            if (!is_null($position)) {
+                $dataLayerProduct->setPosition($position);
+            }
+
             $dataLayerProducts[] = $dataLayerProduct;
         }
 
@@ -260,16 +276,14 @@ class DataLayerMapper
     /**
      * @param \App\Model\Product\Listed\ListedProductView $listedProductView
      * @param \App\Model\Gtm\Data\DataLayerProduct $dataLayerProduct
-     * @param \App\Model\Category\Category $category
      * @param int $position
-     * @param string $locale
+     * @param string|null $list
      */
     public function mapListedProductViewToDataLayerProduct(
         ListedProductView $listedProductView,
         DataLayerProduct $dataLayerProduct,
-        Category $category,
         int $position,
-        string $locale
+        ?string $list
     ): void {
         $dataLayerProduct->setName((string)$listedProductView->getName());
         $dataLayerProduct->setId((string)$listedProductView->getId());
@@ -282,10 +296,10 @@ class DataLayerMapper
             $dataLayerProduct->setPriceWithTax($sellingPrice->getPriceWithVat()->getAmount());
         }
 
-        $dataLayerProduct->setCategory($this->categoryFacade->getCategoriesNamesInPathAsString($category, $locale));
+        $dataLayerProduct->setCategory($listedProductView->getMainCategoryPath());
         $dataLayerProduct->setAvailability($listedProductView->getAvailability());
         $dataLayerProduct->setPosition($position);
-//        $dataLayerProduct->setList($category->get);
+        $dataLayerProduct->setList($list ?? '');
     }
 
     /**
@@ -433,6 +447,37 @@ class DataLayerMapper
         }
 
         return $dataLayerProducts;
+    }
+
+    /**
+     * @param array $sliderItems
+     * @param string $positionText
+     * @return \App\Model\Gtm\Data\DataLayerSliderItem[]
+     */
+    public function createDataLayerSliderItemsFromSliderItems(array $sliderItems, string $positionText): array
+    {
+        $dataLayerSliderItems = [];
+        $i = 0;
+        foreach ($sliderItems as $sliderItem) {
+            $dataLayerSliderItem = new DataLayerSliderItem();
+            $this->mapSliderItemToDataLayerSliderItem($sliderItem, $dataLayerSliderItem);
+            $dataLayerSliderItem->setPosition($positionText . '-' . ++$i);
+            $dataLayerSliderItems[] = $dataLayerSliderItem;
+        }
+
+        return $dataLayerSliderItems;
+    }
+
+    /**
+     * @param \App\Model\Slider\SliderItem $sliderItem
+     * @param \App\Model\Gtm\Data\DataLayerSliderItem $dataLayerSliderItem
+     */
+    private function mapSliderItemToDataLayerSliderItem(SliderItem $sliderItem, DataLayerSliderItem $dataLayerSliderItem): void
+    {
+        $dataLayerSliderItem->setName($sliderItem->getName());
+        $dataLayerSliderItem->setId($sliderItem->getGtmId());
+        $dataLayerSliderItem->setLink($sliderItem->getLink());
+        $dataLayerSliderItem->setCreative($sliderItem->getGtmCreative());
     }
 
     /**

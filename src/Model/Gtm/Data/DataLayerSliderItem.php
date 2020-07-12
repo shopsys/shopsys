@@ -9,7 +9,7 @@ use JsonSerializable;
 class DataLayerSliderItem implements JsonSerializable
 {
     /**
-     * @var int|null
+     * @var string|null
      */
     protected $id;
 
@@ -24,14 +24,19 @@ class DataLayerSliderItem implements JsonSerializable
     protected $link;
 
     /**
-     * @var int|null
+     * @var string|null
+     */
+    protected $creative;
+
+    /**
+     * @var string|null
      */
     protected $position;
 
     /**
-     * @param int $id
+     * @param string $id
      */
-    public function setId(int $id): void
+    public function setId(string $id): void
     {
         $this->id = $id;
     }
@@ -53,9 +58,17 @@ class DataLayerSliderItem implements JsonSerializable
     }
 
     /**
-     * @param int $position
+     * @param string|null $creative
      */
-    public function setPosition(int $position): void
+    public function setCreative(?string $creative): void
+    {
+        $this->creative = $creative;
+    }
+
+    /**
+     * @param string $position
+     */
+    public function setPosition(string $position): void
     {
         $this->position = $position;
     }

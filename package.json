@@ -53,12 +53,14 @@
         "@fancyapps/fancybox": "^3.5.7",
         "@shopsys/framework": "9.0.0",
         "codemirror": "^5.49.2",
+        "intersection-observer": "^0.11.0",
         "jquery-ui": "^1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",
         "jquery.cookie": "^1.4.1",
         "magnific-popup": "^1.1.0",
         "minilazyload": "^2.3.3",
         "nestedSortable": "^1.3.4",
+        "scrollama": "^2.2.1",
         "slick-carousel": "1.6.0"
     }
 }

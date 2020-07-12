@@ -39,5 +39,7 @@ class SliderItemDataFactory extends BaseSliderItemDataFactory
         $sliderItemData->sliderExtendedText = $sliderItem->getSliderExtendedText();
         $sliderItemData->sliderExtendedTextLink = $sliderItem->getSliderExtendedTextLink();
         $sliderItemData->mobileImage->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($sliderItem, SliderItemFacade::IMAGE_TYPE_MOBILE);
+        $sliderItemData->gtmId = $sliderItem->getGtmId();
+        $sliderItemData->gtmCreative = $sliderItem->getGtmCreative();
     }
 }

@@ -44,6 +44,8 @@ parameters:
             - '*/src/Model/Product/ProductDataFactory.php'
             - '*/src/Controller/Front/ProductController.php'
             - '*/src/Form/Admin/NotificationBarFormType.php'
+            - '*/tests/App/Functional/Model/Product/Elasticsearch/ProductExportRepositoryTest.php'
+            - '*/src/Model/Product/Elasticsearch/ProductExportRepository.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'

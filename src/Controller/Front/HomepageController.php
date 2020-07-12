@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Model\Blog\Article\BlogArticleFacade;
 use App\Model\Blog\Category\BlogCategoryFacade;
+use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Product\Filter\ProductVariantFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -58,6 +59,11 @@ class HomepageController extends FrontBaseController
     private $blogArticleFacade;
 
     /**
+     * @var \App\Model\Gtm\GtmJsPushFacade
+     */
+    private $gtmJsPushFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
@@ -66,6 +72,7 @@ class HomepageController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
+     * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
      */
     public function __construct(
         SeoSettingFacade $seoSettingFacade,
@@ -75,7 +82,8 @@ class HomepageController extends FrontBaseController
         ListedProductViewFacadeInterface $listedProductViewFacade,
         TopCategoryFacade $topCategoryFacade,
         BlogArticleFacade $blogArticleFacade,
-        ProductVariantFilterFacade $productVariantFilterFacade
+        ProductVariantFilterFacade $productVariantFilterFacade,
+        GtmJsPushFacade $gtmJsPushFacade
     ) {
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
@@ -85,6 +93,7 @@ class HomepageController extends FrontBaseController
         $this->blogArticleFacade = $blogArticleFacade;
         $this->productVariantFilterFacade = $productVariantFilterFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
+        $this->gtmJsPushFacade = $gtmJsPushFacade;
     }
 
     public function indexAction()
@@ -120,6 +129,14 @@ class HomepageController extends FrontBaseController
                 BlogArticleController::HOMEPAGE_BLOG_ARTICLES
             ),
             'rootCategory' => $mainCategory,
+            'gtmTopProductsScrollEvent' => $this->gtmJsPushFacade->getTopProductsScrollData(
+                $topProducts,
+                \App\Model\Gtm\DataLayer::LIST_NAME_HOME_TOP_PRODUCTS
+            ),
+            'gtmSliderScrollEvent' => $this->gtmJsPushFacade->getSliderScrollData(
+                $sliderItems,
+                \App\Model\Gtm\DataLayer::HOMEPAGE_SLIDER_LABEL
+            ),
         ]);
     }
 }

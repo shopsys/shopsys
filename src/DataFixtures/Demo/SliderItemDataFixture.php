@@ -39,12 +39,14 @@ class SliderItemDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager)
     {
+        /** @var \App\Model\Slider\SliderItemData $sliderItemData */
         $sliderItemData = $this->sliderItemDataFactory->create();
         $sliderItemData->domainId = Domain::FIRST_DOMAIN_ID;
 
         $sliderItemData->name = 'Shopsys';
         $sliderItemData->link = 'http://www.shopsys.cz/';
         $sliderItemData->hidden = false;
+        $sliderItemData->gtmId = 'sliderItemTest';
 
         $this->sliderItemFacade->create($sliderItemData);
 

@@ -9,8 +9,18 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class DataLayer
 {
     private const SESSION_DATA_KEY = 'gtm_data';
-
     private const SESSION_PUSHES_KEY = 'gtm_pushes';
+
+    public const EVENT_NAME_PRODUCT_IMPRESSIONS = 'ec.productImpressions';
+    public const EVENT_NAME_PRODUCT_CLICK = 'ec.productClick';
+    public const EVENT_NAME_PRODUCT_ADD_TO_CART = 'ec.addToCart';
+    public const EVENT_NAME_PRODUCT_REMOVE_FROM_CART = 'ec.removeFromCart';
+    public const EVENT_NAME_PROMO_VIEW = 'ec.promoView';
+    public const EVENT_NAME_PROMO_CLICK = 'ec.promoClick';
+
+    public const LIST_NAME_HOME_TOP_PRODUCTS = 'home - akční zboží';
+
+    public const HOMEPAGE_SLIDER_LABEL = 'homepage-top-center';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
@@ -100,37 +110,29 @@ class DataLayer
     }
 
     /**
-     * @param string $eventName
      * @param array $eventData
      */
-    public function addEvent(string $eventName, array $eventData = []): void
+    public function addEvent(array $eventData): void
     {
         $data = $this->session->get(self::SESSION_DATA_KEY);
 
-        $event = array_merge(
-            ['event' => $eventName],
-            $eventData
-        );
-
-        if (array_key_exists('event', $data)) {
-            $this->push($event);
-            return;
-        }
-
-        $data = array_merge(
-            $data,
-            $event
-        );
+        $data[] = $eventData;
 
         $this->session->set(self::SESSION_DATA_KEY, $data);
     }
 
     /**
-     * @param array $data
+     * @param string $eventName
+     * @param array $pushData
      */
-    public function push(array $data): void
+    public function push(string $eventName, array $pushData): void
     {
         $pushes = $this->session->get(self::SESSION_PUSHES_KEY);
+
+        $data = array_merge(
+            ['event' => $eventName],
+            $pushData
+        );
 
         $pushes[] = $data;
 

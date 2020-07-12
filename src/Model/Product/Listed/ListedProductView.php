@@ -52,6 +52,11 @@ class ListedProductView extends BaseListedProductView
     private $variantImageUrl;
 
     /**
+     * @var string
+     */
+    private $mainCategoryPath;
+
+    /**
      * @param int $id
      * @param string $name
      * @param string|null $shortDescription
@@ -66,6 +71,7 @@ class ListedProductView extends BaseListedProductView
      * @param string $productAvailableStocksCountInformation
      * @param string $productCountExposedInStores
      * @param array|null $variantsParametersSetup
+     * @param string $mainCategoryPath
      */
     public function __construct(
         int $id,
@@ -81,7 +87,8 @@ class ListedProductView extends BaseListedProductView
         ?ProductPrice $nonSellingPrice,
         string $productAvailableStocksCountInformation,
         string $productCountExposedInStores,
-        ?array $variantsParametersSetup
+        ?array $variantsParametersSetup,
+        string $mainCategoryPath
     ) {
         parent::__construct($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
 
@@ -91,6 +98,7 @@ class ListedProductView extends BaseListedProductView
         $this->productAvailableStocksCountInformation = $productAvailableStocksCountInformation;
         $this->productCountExposedInStores = $productCountExposedInStores;
         $this->variantsParametersSetup = $variantsParametersSetup;
+        $this->mainCategoryPath = $mainCategoryPath;
     }
 
     /**
@@ -187,5 +195,13 @@ class ListedProductView extends BaseListedProductView
     public function getFullName(): string
     {
         return trim(sprintf('%s %s %s', $this->namePrefix, $this->name, $this->nameSufix));
+    }
+
+    /**
+     * @return string
+     */
+    public function getMainCategoryPath(): string
+    {
+        return $this->mainCategoryPath;
     }
 }

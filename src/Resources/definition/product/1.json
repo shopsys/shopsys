@@ -318,6 +318,9 @@
             }
           }
         }
+      },
+      "main_category_path": {
+        "type": "text"
       }
     }
   }

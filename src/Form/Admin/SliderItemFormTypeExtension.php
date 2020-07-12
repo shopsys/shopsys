@@ -27,6 +27,7 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
         $this->buildExtendedTextAndLinkForm($builder);
         $this->buildVisibilityIntervalForm($builder);
         $this->buildImagesGroup($builder, $options);
+        $this->buildGtmForm($builder);
     }
 
     /**
@@ -113,6 +114,22 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
             'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             'required' => false,
             'label' => t('Datum zobrazení DO'),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildGtmForm(FormBuilderInterface $builder): void
+    {
+        $builder->add('gtmId', TextType::class, [
+            'required' => true,
+            'label' => t('GTM ID'),
+            'attr' => ['placeholder' => t('např. Akce-zidle-20-2020-04')],
+        ])->add('gtmCreative', TextType::class, [
+            'required' => false,
+            'label' => t('GTM creative'),
+            'attr' => ['placeholder' => t('např. cervena-1035x340-jpg-carousel')],
         ]);
     }
 

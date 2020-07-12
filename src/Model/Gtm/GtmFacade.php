@@ -105,15 +105,11 @@ class GtmFacade
         $gtmEventData = [
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
-                'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews(
-                    $listedProductViews,
-                    $category,
-                    $this->dataLayer->getLocale()
-                ),
+                'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews($listedProductViews),
             ],
         ];
 
-        $this->dataLayer->addEvent('ec.productList', $gtmEventData);
+        $this->dataLayer->addEvent($gtmEventData);
     }
 
     /**
@@ -137,7 +133,7 @@ class GtmFacade
             ],
         ];
 
-        $this->dataLayer->addEvent('ec.productDetail', $gtmEventData);
+        $this->dataLayer->addEvent($gtmEventData);
     }
 
     /**
@@ -174,7 +170,7 @@ class GtmFacade
             ],
         ];
 
-        $this->dataLayer->push($gtmEventData);
+        $this->dataLayer->addEvent($gtmEventData);
     }
 
     /**
@@ -195,7 +191,7 @@ class GtmFacade
             ],
         ];
 
-        $this->dataLayer->push($gtmPurchaseEventData);
+        $this->dataLayer->addEvent($gtmPurchaseEventData);
     }
 
     /**
@@ -249,13 +245,13 @@ class GtmFacade
             ],
         ];
 
-        $this->dataLayer->addEvent('ec.addToCart', $gtmEventData);
+        $this->dataLayer->push(DataLayer::EVENT_NAME_PRODUCT_ADD_TO_CART, $gtmEventData);
     }
 
     /**
      * @param \App\Model\Product\Product $product
      */
-    public function onDeleteProductFromCart(Product $product): void
+    public function onRemoveProductFromCart(Product $product): void
     {
         if (!$this->gtmContainer->isEnabled()) {
             return;
@@ -273,7 +269,7 @@ class GtmFacade
             ],
         ];
 
-        $this->dataLayer->addEvent('ec.deleteFromCart', $gtmEventData);
+        $this->dataLayer->push(DataLayer::EVENT_NAME_PRODUCT_REMOVE_FROM_CART, $gtmEventData);
     }
 
     /**

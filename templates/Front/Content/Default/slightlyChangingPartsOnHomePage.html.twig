@@ -4,10 +4,10 @@
         {% if sliderItems is not empty %}
             <div class="box-slider">
                 <div class="box-slider__wrap">
-                    <div id="js-slider-homepage" class="box-slider__in">
+                    <div id="js-slider-homepage" class="box-slider__in gtm-scroll" data-gtm-event="{{ gtmSliderScrollEvent|json_encode() }}">
                         {% for item in sliderItems|slice(0, 4) %}
                             <div class="box-slider__item">
-                                <a href="{{ item.link }}">
+                                <a href="{{ item.link }}" {{ gtm(item, loop.index) }}>
                                     <picture>
                                         <source
                                                 media="(max-width: 360px)"
@@ -369,7 +369,7 @@
 {% if topProducts is not empty %}
     <div class="web__line">
         <div class="web__container">
-            <div class="box-products-carousel box-products-carousel--bg" id="top-products">
+            <div class="box-products-carousel box-products-carousel--bg gtm-scroll" id="top-products" data-gtm-event="{{ gtmTopProductsScrollEvent|json_encode() }}">
                 <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--top-products">
                     <h2 class="box-products-carousel__heading">{{ 'Top produkty'|trans }}</h2>
                     <div class="list-products-grid list-products-grid--sales js-products-slick-carousel">

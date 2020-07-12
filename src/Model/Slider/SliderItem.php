@@ -44,6 +44,20 @@ class SliderItem extends BaseSliderItem
     protected $sliderExtendedTextLink;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text",nullable=false)
+     */
+    protected $gtmId;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text",nullable=true)
+     */
+    protected $gtmCreative;
+
+    /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
     public function __construct($sliderItemData)
@@ -53,6 +67,8 @@ class SliderItem extends BaseSliderItem
         $this->datetimeVisibleTo = $sliderItemData->datetimeVisibleTo;
         $this->sliderExtendedText = $sliderItemData->sliderExtendedText;
         $this->sliderExtendedTextLink = $sliderItemData->sliderExtendedTextLink;
+        $this->gtmId = $sliderItemData->gtmId;
+        $this->gtmCreative = $sliderItemData->gtmCreative;
     }
 
     /**
@@ -65,6 +81,8 @@ class SliderItem extends BaseSliderItem
         $this->datetimeVisibleTo = $sliderItemData->datetimeVisibleTo;
         $this->sliderExtendedText = $sliderItemData->sliderExtendedText;
         $this->sliderExtendedTextLink = $sliderItemData->sliderExtendedTextLink;
+        $this->gtmId = $sliderItemData->gtmId;
+        $this->gtmCreative = $sliderItemData->gtmCreative;
     }
 
     /**
@@ -113,5 +131,37 @@ class SliderItem extends BaseSliderItem
     public function getSliderExtendedTextLink(): ?string
     {
         return $this->sliderExtendedTextLink;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGtmId(): string
+    {
+        return $this->gtmId;
+    }
+
+    /**
+     * @param string|null $gtmId
+     */
+    public function setGtmId($gtmId): void
+    {
+        $this->gtmId = $gtmId;
+    }
+
+    /**
+     * @return  string|null
+     */
+    public function getGtmCreative(): ?string
+    {
+        return $this->gtmCreative;
+    }
+
+    /**
+     * @param string|null $gtmCreative
+     */
+    public function setGtmCreative($gtmCreative): void
+    {
+        $this->gtmCreative = $gtmCreative;
     }
 }

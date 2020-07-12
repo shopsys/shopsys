@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Listed;
 
+use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -31,20 +32,28 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
     private ParameterFacade $parameterFacade;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private $categoryFacade;
+
+    /**
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         Domain $domain,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        ParameterFacade $parameterFacade
+        ParameterFacade $parameterFacade,
+        CategoryFacade $categoryFacade
     ) {
         parent::__construct($domain, $productCachedAttributesFacade);
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->parameterFacade = $parameterFacade;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -78,7 +87,11 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $this->getProductPriceWithVatByMoney($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero()),
             $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId()),
             $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId()),
-            $this->prepareVariantsParametersSetup($variantsParametersSetup)
+            $this->prepareVariantsParametersSetup($variantsParametersSetup),
+            $this->categoryFacade->getCategoriesNamesInPathAsString(
+                $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId()),
+                $this->domain->getLocale()
+            )
         );
     }
 
@@ -105,7 +118,8 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $this->getProductPriceWithVatByMoney($productArray['non_selling_price'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price'])),
             $productArray['product_available_stocks_count_information'],
             $productArray['product_count_exposed_in_stores'],
-            $this->prepareVariantsParametersSetup($productArray['variants_parameters_setup'] ?? [])
+            $this->prepareVariantsParametersSetup($productArray['variants_parameters_setup'] ?? []),
+            $productArray['main_category_path']
         );
     }
 

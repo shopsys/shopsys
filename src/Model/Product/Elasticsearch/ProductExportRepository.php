@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Elasticsearch;
 
+use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
@@ -56,6 +57,11 @@ class ProductExportRepository extends BaseProductExportRepository
     private $pricingGroupSettingFacade;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private $categoryFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -67,6 +73,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -79,7 +86,8 @@ class ProductExportRepository extends BaseProductExportRepository
         ProductAvailabilityFacade $productAvailabilityFacade,
         ParameterFacade $parameterFacade,
         ProductRepository $productRepository,
-        PricingGroupSettingFacade $pricingGroupSettingFacade
+        PricingGroupSettingFacade $pricingGroupSettingFacade,
+        CategoryFacade $categoryFacade
     ) {
         parent::__construct(
             $em,
@@ -94,6 +102,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $this->parameterFacade = $parameterFacade;
         $this->productRepository = $productRepository;
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -106,6 +115,7 @@ class ProductExportRepository extends BaseProductExportRepository
     {
         $flagIds = $this->extractFlagsForDomain($domainId, $product);
         $categoryIds = $this->extractCategories($domainId, $product);
+        $mainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
         $parameters = $this->extractParametersIncludedVariants($product, $locale, $domainId);
         $prices = $this->extractPrices($domainId, $product);
         $visibility = $this->extractVisibility($domainId, $product);
@@ -131,6 +141,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'brand' => $product->getBrand() ? $product->getBrand()->getId() : '',
             'flags' => $flagIds,
             'categories' => $categoryIds,
+            'main_category_path' => $this->categoryFacade->getCategoriesNamesInPathAsString($mainCategory, $locale),
             'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             'prices' => $prices,
             'parameters' => $parameters,

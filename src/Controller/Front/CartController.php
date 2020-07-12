@@ -419,7 +419,7 @@ class CartController extends FrontBaseController
 
                 $this->cartFacade->deleteCartItem($cartItemId);
 
-                $this->gtmFacade->onDeleteProductFromCart($product);
+                $this->gtmFacade->onRemoveProductFromCart($product);
 
                 $this->addSuccessFlashTwig(
                     t('Product {{ name }} removed from cart'),

@@ -34,6 +34,16 @@ class SliderItemData extends BaseSliderItemData
      */
     public $mobileImage;
 
+    /**
+     * @var string
+     */
+    public $gtmId;
+
+    /**
+     * @var string|null
+     */
+    public $gtmCreative;
+
     public function __construct()
     {
         parent::__construct();

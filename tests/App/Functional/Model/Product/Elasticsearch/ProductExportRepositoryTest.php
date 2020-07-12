@@ -50,6 +50,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'availability',
             'brand',
             'flags',
+            'main_category_path',
             'categories',
             'detail_url',
             'in_stock',
