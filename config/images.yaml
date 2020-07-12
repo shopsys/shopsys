@@ -57,7 +57,6 @@
             crop: false
             occurrence: 'Front-end: Main image in product detail'
             additionalSizes:
-                - {width: 1210, height: ~, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
                 - {width: 710, height: ~, media: "(min-width: 480px) and (max-width: 768px)"}
                 - {width: 1210, height: ~, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: galleryThumbnail
