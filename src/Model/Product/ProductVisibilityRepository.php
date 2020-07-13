@@ -74,14 +74,23 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                                 AND i.entity_id = p.id
                             )
                         )
+                        AND (
+                            p.variant_type = :variantTypeVariant
+                            OR
+                            EXISTS (
+                                SELECT 1
+                                FROM product_domains AS pdom1
+                                WHERE pdom1.domain_id = :domainId
+                                    AND pdom1.description IS NOT NULL 
+                                    AND pdom1.description <> \'\'
+                            )
+                        )
                         AND EXISTS (
                             SELECT 1
-                            FROM product_domains AS pdom
-                            WHERE pdom.domain_id = :domainId
-                                AND pdom.product_id = p.id
-                                AND pdom.sale_exclusion = FALSE
-                                AND pdom.description IS NOT NULL 
-                                AND pdom.description <> \'\'
+                            FROM product_domains AS pdom2
+                            WHERE pdom2.domain_id = :domainId
+                                AND pdom2.product_id = p.id
+                                AND pdom2.sale_exclusion = FALSE
                         )
                     )
                     THEN TRUE
@@ -102,6 +111,7 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                 'locale' => $domain->getLocale(),
                 'domainId' => $domain->getId(),
                 'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+                'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
             ]);
         }
     }

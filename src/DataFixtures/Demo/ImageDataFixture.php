@@ -222,7 +222,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         $maxImageId = 109;
-        for ($productId = 53; $productId <= 150; $productId++) {
+        for ($productId = 53; $productId <= 153; $productId++) {
             if (in_array($productId, [70, 71], true)) {
                 continue;
             }
@@ -335,7 +335,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     private function restartImagesIdsDbSequence()
     {
-        $this->em->createNativeQuery('ALTER SEQUENCE images_id_seq RESTART WITH 205', new ResultSetMapping())->execute();
+        $this->em->createNativeQuery('ALTER SEQUENCE images_id_seq RESTART WITH 208', new ResultSetMapping())->execute();
     }
 
     /**

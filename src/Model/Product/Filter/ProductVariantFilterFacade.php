@@ -30,6 +30,10 @@ class ProductVariantFilterFacade
         $highestRank = 0;
         $mostValuableVariantId = null;
         foreach ($listedProductView->getVariantsParametersSetup() ?? [] as $variantId => $variantParameterSetup) {
+            if ($mostValuableVariantId === null) {
+                $mostValuableVariantId = $variantId;
+            }
+
             $isDefaultVariant = $variantParameterSetup['is_default_variant'] ?? false;
             if ($highestRank === 0 && $isDefaultVariant) {
                 $mostValuableVariantId = $variantId;
