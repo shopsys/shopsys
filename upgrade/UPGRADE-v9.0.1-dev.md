@@ -68,3 +68,6 @@ There you can find links to upgrade notes for other versions too.
 
 - optimization of ProductDataFixture ([#1810](https://github.com/shopsys/shopsys/pull/1810))
     - see #project-base-diff to update your project
+
+- fix wrong url of freshly uploaded files in wysiwyg ([#1926](https://github.com/shopsys/shopsys/pull/1926))
+    - see #project-base-diff to update your project
