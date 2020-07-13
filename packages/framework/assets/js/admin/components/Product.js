@@ -24,6 +24,7 @@ export default class Product {
         const $productDetailNavigation = $('.js-product-detail-navigation');
         const $webContent = $('.web__content');
 
+        $productDetailNavigation.empty();
         $('.form-group__title, .form-full__title').each(function () {
             const $title = $(this);
             const $titleClone = $title.clone();
