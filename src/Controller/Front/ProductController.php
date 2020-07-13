@@ -358,7 +358,7 @@ class ProductController extends FrontBaseController
         $currentVariantSetup = $this->parameterFacade->getParameterValueIdIndexedByParameterId($currentVariantParameterValuesIndexedByParameterId);
         $currentVariantSetupKey = $this->parameterFacade->getVariantSetupKey($currentVariantParameterValuesIndexedByParameterId);
 
-        $variantSetupKeyMap = $this->parameterFacade->getVariantSetupKeyMapByMainProduct($mainProduct, $this->domain->getLocale());
+        $variantSetupKeyMap = $this->parameterFacade->getVariantSetupKeyMapByMainProduct($mainProduct, $this->domain->getLocale(), $this->domain->getId());
 
         $parameterValuesIndexedByParameterId = $this->parameterFacade
             ->getParameterValuesIndexedByParameterIdForMainProduct($mainProduct, $this->domain->getLocale());
