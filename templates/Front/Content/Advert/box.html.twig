@@ -12,41 +12,24 @@
                     />
                 </picture>
             {% else %}
-                {% if advert.positionName == "productListMiddle" %}
-                    <div class="in-place__wrap">
-                        <div class="in-place__content">
-                            <h2 class="in-place__heading">{{ advert.name }}</h2>
-                            <a class="in-place__btn btn btn--outline" href="{{ advert.link }}">{{ 'Víc informací'|trans }}</a>
-                        </div>
-                        <div class="in-place__picture">
-                            <picture>
-                                <source media="(max-width: 425px)" srcset="{{ imageUrl(advert, advert.positionName, 'mobile') }}" />
-                                <source
-                                    media="(min-width: 425px)"
-                                    srcset="{{ imageUrl(advert, 'productListMiddleRetina', 'web') }} 2x, {{ imageUrl(advert, advert.positionName, 'web') }} 1x"
-                                />
-                                <img
-                                    data-src="{{ imageUrl(advert, advert.positionName, 'web') }}"
-                                    itemprop="image"
-                                    class="in-place__img image-noticer-{{advert.positionName}}"
-                                    loading="lazy"
-                                />
-                            </picture>
-                        </div>
-                    </div>
-                {% else %}
-                    <a href="{{ advert.link }}">
-                        <picture>
-                            <source media="(max-width: 425px)" srcset="{{ imageUrl(advert, advert.positionName, 'mobile') }}" />
-                            <source media="(min-width: 425px)" srcset="{{ imageUrl(advert, advert.positionName, 'web') }}" />
-                            <img
-                                data-src="{{ imageUrl(advert, advert.positionName, 'web') }}"
-                                itemprop="image" class="in-place__img image-noticer-{{advert.positionName}}"
-                                loading="lazy"
-                            />
-                        </picture>
-                    </a>
-                {% endif %}
+                <a href="{{ advert.link }}">
+                    <picture>
+                        <source
+                            media="(max-width: 599px)"
+                            srcset="{{ imageUrl(advert, 'productListMiddleRetina', 'mobile') }} 2xx, {{ imageUrl(advert, advert.positionName, 'mobile') }} 1x"
+                        >
+                        <source
+                            media="(min-width: 600px)"
+                            srcset="{{ imageUrl(advert, 'productListMiddleRetina', 'web') }} 2x, {{ imageUrl(advert, advert.positionName, 'web') }} 1x"
+                        >
+                        <img
+                            data-src="{{ imageUrl(advert, advert.positionName, 'web') }}"
+                            itemprop="image"
+                            class="in-place__img image-noticer-{{advert.positionName}}"
+                            loading="lazy"
+                        />
+                    </picture>
+                </a>
             {% endif %}
         {% elseif advert.type == 'code' %}
             {{ advert.code | raw }}
