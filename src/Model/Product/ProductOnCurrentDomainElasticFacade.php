@@ -4,10 +4,22 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Component\Domain\Domain;
+use App\Model\CategorySeo\ReadyCategorySeoMix;
+use App\Model\Product\Filter\ProductFilterCacheFacade;
+use App\Model\Product\Search\FilterQueryFactory;
+use App\Model\Product\Search\ProductElasticsearchRepository;
+use App\Model\Product\Search\ProductFilterDataToQueryTransformer;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade as BaseProductOnCurrentDomainElasticFacade;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
+use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository;
 
 /**
  * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
@@ -16,18 +28,64 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
  * @method \App\Model\Product\Product getVisibleProductById(int $productId)
  * @method \App\Model\Product\Product[] getAccessoriesForProduct(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product[] getVariantsForProduct(\App\Model\Product\Product $product)
- * @method __construct(\App\Model\Product\ProductRepository $productRepository, \App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository, \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository, \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader)
- * @method \App\Model\Product\Search\FilterQuery createListableProductsInCategoryFilterQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
- * @method \App\Model\Product\Search\FilterQuery createListableProductsForBrandFilterQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $brandId)
- * @method \App\Model\Product\Search\FilterQuery createFilterQueryWithProductFilterData(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
+ * @method \App\Model\Product\Search\FilterQuery createListableProductsInCategoryFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
+ * @method \App\Model\Product\Search\FilterQuery createListableProductsForBrandFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $brandId)
+ * @method \App\Model\Product\Search\FilterQuery createFilterQueryWithProductFilterData(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
  * @method array getProductsByCategory(\App\Model\Category\Category $category, int $limit, int $offset, string $orderingModeId)
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
+ * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginatedProductsInCategory(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
+ * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginatedProductsForSearch(string $searchText, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataInCategory(int $categoryId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \App\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForSearch(string|null $searchText, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  */
 class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElasticFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @var \App\Model\Product\Filter\ProductFilterCacheFacade
+     */
+    private $productFilterCacheFacade;
+
+    /**
+     * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
+     * @param \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository
+     * @param \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
+     * @param \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
+     * @param \App\Model\Product\Filter\ProductFilterCacheFacade $productFilterCacheFacade
+     */
+    public function __construct(
+        ProductRepository $productRepository,
+        Domain $domain,
+        CurrentCustomerUser $currentCustomerUser,
+        ProductAccessoryRepository $productAccessoryRepository,
+        ProductElasticsearchRepository $productElasticsearchRepository,
+        ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
+        ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
+        FilterQueryFactory $filterQueryFactory,
+        IndexDefinitionLoader $indexDefinitionLoader,
+        ProductFilterCacheFacade $productFilterCacheFacade
+    ) {
+        parent::__construct(
+            $productRepository,
+            $domain,
+            $currentCustomerUser,
+            $productAccessoryRepository,
+            $productElasticsearchRepository,
+            $productFilterCountDataElasticsearchRepository,
+            $productFilterDataToQueryTransformer,
+            $filterQueryFactory,
+            $indexDefinitionLoader
+        );
+        $this->productFilterCacheFacade = $productFilterCacheFacade;
+    }
+
+    /**
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
@@ -53,7 +111,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @return array
      */
     public function getInSaleProductsHits(ProductFilterData $productFilterData): array
@@ -71,7 +129,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
@@ -90,5 +148,45 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         return $this->createFilterQueryWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
             ->search($searchText)
             ->filterNotExcludeOrInStock();
+    }
+
+    /**
+     * @param int $categoryId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
+     */
+    public function getCachedProductFilterCountDataInCategory(
+        int $categoryId,
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterData $productFilterData,
+        ?ReadyCategorySeoMix $readyCategorySeoMix
+    ): ?ProductFilterCountData {
+        if ($productFilterData->isFilterActive($readyCategorySeoMix) === false) {
+            $productFilterCountData = $this->productFilterCacheFacade->findProductFilterCountDataInCache(
+                $categoryId,
+                $this->domain->getId(),
+                $readyCategorySeoMix
+            );
+            if ($productFilterCountData !== null) {
+                return $productFilterCountData;
+            }
+        }
+
+        $productFilterCountData = $this->getProductFilterCountDataInCategory(
+            $categoryId,
+            $productFilterConfig,
+            $productFilterData
+        );
+
+        $this->productFilterCacheFacade->setProductFilterCountDataIntoCache(
+            $productFilterCountData,
+            $categoryId,
+            $this->domain->getId(),
+            $readyCategorySeoMix
+        );
+
+        return $productFilterCountData;
     }
 }

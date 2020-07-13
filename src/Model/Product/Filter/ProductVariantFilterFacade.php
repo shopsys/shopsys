@@ -12,7 +12,7 @@ class ProductVariantFilterFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult $paginationResult
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      */
     public function setupMostValuableVariantsInPaginationResultByProductFilterData(PaginationResult $paginationResult, ProductFilterData $productFilterData): void
     {
@@ -23,7 +23,7 @@ class ProductVariantFilterFacade
 
     /**
      * @param \App\Model\Product\Listed\ListedProductView $listedProductView
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      */
     private function filterMostValuableVariantInListedProductView(ListedProductView $listedProductView, ProductFilterData $productFilterData): void
     {
@@ -57,7 +57,7 @@ class ProductVariantFilterFacade
 
     /**
      * @param array $parameterValuesSetup
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @return int
      */
     private function evaluateParameterValuesSetup(array $parameterValuesSetup, ProductFilterData $productFilterData): int

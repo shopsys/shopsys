@@ -18,6 +18,7 @@ use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Gtm\GtmFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Filter\ProductVariantFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
@@ -32,7 +33,6 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
@@ -419,10 +419,11 @@ class ProductController extends FrontBaseController
 
         $productFilterCountData = null;
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
-            $productFilterCountData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory(
+            $productFilterCountData = $this->productOnCurrentDomainFacade->getCachedProductFilterCountDataInCategory(
                 $id,
                 $productFilterConfig,
-                $productFilterData
+                $productFilterData,
+                $readyCategorySeoMix
             );
         }
 

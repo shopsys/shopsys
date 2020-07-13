@@ -703,3 +703,12 @@ services:
     App\Model\Gtm\GtmListener:
         tags:
             - { name: kernel.event_listener, event: kernel.controller }
+
+    shopsys.shop.model.product_filter.cache_provider:
+        class: Doctrine\Common\Cache\RedisCache
+        calls:
+            - { method: setRedis, arguments: ['@snc_redis.product_filter'] }
+
+    App\Model\Product\Filter\ProductFilterCacheFacade:
+        arguments:
+            - '@shopsys.shop.model.product_filter.cache_provider'

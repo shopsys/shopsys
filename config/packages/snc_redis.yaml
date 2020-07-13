@@ -52,6 +52,12 @@ snc_redis:
             dsn: 'redis://%redis_host%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:image:'
+        product_filter:
+            type: 'phpredis'
+            alias: 'product_filter'
+            dsn: 'redis://%redis_host%'
+            options:
+                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:product_filter:'
 
     session:
         client: 'session'

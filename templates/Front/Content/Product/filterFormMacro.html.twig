@@ -114,7 +114,7 @@
                                         class="js-product-filter-count"
                                         data-form-id="{{ filterForm.inStock.vars.id }}"
                                     >
-                                        ({{ productFilterCountData.countInStock }})
+                                        ({{ productFilterCountData.countInStock|default() }})
                                     </span>
                             </a>
                         </label>
