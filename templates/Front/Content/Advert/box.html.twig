@@ -12,7 +12,9 @@
                     />
                 </picture>
             {% else %}
+                {% if advert.link is not empty %}
                 <a href="{{ advert.link }}">
+                {% endif %}
                     <picture>
                         <source
                             media="(max-width: 599px)"
@@ -29,7 +31,9 @@
                             loading="lazy"
                         />
                     </picture>
+                {% if advert.link is not empty %}
                 </a>
+                {% endif %}
             {% endif %}
         {% elseif advert.type == 'code' %}
             {{ advert.code | raw }}
