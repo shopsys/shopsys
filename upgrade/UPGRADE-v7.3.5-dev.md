@@ -46,3 +46,6 @@ There you can find links to upgrade notes for other versions too.
 
 - update docker-php-entrypoint to show all lines from first command output ([#1827](https://github.com/shopsys/shopsys/pull/1827))
     - see #project-base-diff to update your project
+
+- fix wrong url of freshly uploaded files in wysiwyg ([#1926](https://github.com/shopsys/shopsys/pull/1926))
+    - see #project-base-diff to update your project
