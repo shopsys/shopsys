@@ -175,6 +175,11 @@ class ProductData extends BaseProductData
      */
     public $domainHidden;
 
+    /**
+     * @var int[]|null[]
+     */
+    public $domainOrderingPriority;
+
     public function __construct()
     {
         parent::__construct();
@@ -204,5 +209,6 @@ class ProductData extends BaseProductData
         $this->totalPackageWeight = [];
         $this->variantParameters = [];
         $this->domainHidden = [];
+        $this->domainOrderingPriority = [];
     }
 }

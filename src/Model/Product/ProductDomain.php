@@ -159,6 +159,13 @@ class ProductDomain extends BaseProductDomain
     private $domainHidden;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $domainOrderingPriority;
+
+    /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      */
@@ -511,5 +518,21 @@ class ProductDomain extends BaseProductDomain
     public function setDomainHidden(bool $domainHidden): void
     {
         $this->domainHidden = $domainHidden;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainOrderingPriority(): int
+    {
+        return $this->domainOrderingPriority;
+    }
+
+    /**
+     * @param int $domainOrderingPriority
+     */
+    public function setDomainOrderingPriority(int $domainOrderingPriority): void
+    {
+        $this->domainOrderingPriority = $domainOrderingPriority;
     }
 }

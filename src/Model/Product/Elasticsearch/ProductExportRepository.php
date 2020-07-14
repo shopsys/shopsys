@@ -110,7 +110,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomain($product, $domainId),
             'prices' => $prices,
             'parameters' => $parameters,
-            'ordering_priority' => $product->getOrderingPriority(),
+            'ordering_priority' => $product->getDomainOrderingPriority($domainId),
             'calculated_selling_denied' => $product->getCalculatedSellingDenied(),
             'selling_denied' => $product->isSellingDenied(),
             'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),

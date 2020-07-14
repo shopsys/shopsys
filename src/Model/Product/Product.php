@@ -215,6 +215,7 @@ class Product extends BaseProduct
             $productDomain->setCountPackages($productData->countPackages[$domainId] !== null ? (int)$productData->countPackages[$domainId] : null);
             $productDomain->setTotalPackageWeight($productData->totalPackageWeight[$domainId] !== null ? (float)$productData->totalPackageWeight[$domainId] : null);
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
+            $productDomain->setDomainOrderingPriority((int)$productData->domainOrderingPriority[$domainId]);
         }
     }
 
@@ -667,6 +668,15 @@ class Product extends BaseProduct
     public function getVariantParameters()
     {
         return $this->variantParameters->toArray();
+    }
+
+    /**
+     * @param int $domainId
+     * @return  int
+     */
+    public function getDomainOrderingPriority(int $domainId): int
+    {
+        return $this->getProductDomain($domainId)->getDomainOrderingPriority();
     }
 
     /**

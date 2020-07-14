@@ -305,6 +305,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     {
         $groupBuilder = $builder->get('displayAvailabilityGroup');
         $groupBuilder->remove('availability');
+        $groupBuilder->remove('orderingPriority');
 
         $groupBuilder->get('stockGroup')
             ->remove('stockQuantity')
@@ -337,6 +338,13 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'entry_type' => YesNoType::class,
                 'position' => ['after' => 'hidden'],
+            ])
+            ->add('domainOrderingPriority', MultidomainType::class, [
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'required' => true,
+                ],
+                'label' => t('Sorting priority'),
             ]);
     }
 

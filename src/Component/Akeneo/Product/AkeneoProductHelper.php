@@ -83,6 +83,27 @@ class AkeneoProductHelper
     }
 
     /**
+     * @param int[]|null[] $productData
+     * @param array $akeneoData
+     * @return int[]|null[]
+     */
+    public static function mapDomainDataInt(array $productData, array $akeneoData): array
+    {
+        foreach ($productData as $key => $value) {
+            $productData[$key] = null;
+        }
+
+        foreach ($akeneoData as $data) {
+            $domainId = AkeneoHelper::findEshopDomainIdByAkeneoLocale($data['locale']);
+            if ($domainId) {
+                $productData[$domainId] = (int)$data['data'];
+            }
+        }
+
+        return $productData;
+    }
+
+    /**
      * @param array $productData
      * @param array|null $akeneoData
      * @return \Shopsys\FrameworkBundle\Component\Money\Money[]

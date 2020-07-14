@@ -201,6 +201,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->totalPackageWeight[$domainId] = null;
             $productData->embeddedAccessories[$domainId] = null;
             $productData->domainHidden[$domainId] = false;
+            $productData->domainOrderingPriority[$domainId] = 0;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -252,6 +253,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->totalPackageWeight[$domainId] = $product->getTotalPackageWeight($domainId);
             $productData->embeddedAccessories[$domainId] = $product->getEmbeddedAccessories($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
+            $productData->domainOrderingPriority[$domainId] = $product->getDomainOrderingPriority($domainId);
 
             $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }
