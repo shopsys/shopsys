@@ -67,13 +67,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $this->setting->setForDomain(Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $personalDataExportSiteContent, $domainId);
 
             $orderSentText = t('
-                <p>
-                    Order number {number} has been sent, thank you for your purchase.
-                    We will contact you about next order status. <br /><br />
-                    <a href="{order_detail_url}">Track</a> the status of your order. <br />
-                    {transport_instructions} <br />
-                    {payment_instructions} <br />
-                </p>
+                <a class="box-cart-sent__btn btn btn--outline btn--outline--reverse" href="{order_detail_url}">Zobrazit moje objednávky</a>
             ', [], 'dataFixtures', $locale);
             $this->setting->setForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $orderSentText, $domainId);
 
