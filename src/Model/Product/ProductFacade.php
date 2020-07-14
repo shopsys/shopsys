@@ -303,6 +303,9 @@ class ProductFacade extends BaseProductFacade
         $this->createProductVisibilities($product);
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
+        if ($product->isVariant()) {
+            $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product->getMainVariant());
+        }
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
         $this->imageFacade->manageImages($product, $productData->images);
