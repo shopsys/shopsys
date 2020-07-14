@@ -562,6 +562,9 @@ msgstr "Cron se serviceId `%serviceId%` byl naplánován"
 msgid "Cropping"
 msgstr "Ořezávání"
 
+msgid "Currencies"
+msgstr "Měny"
+
 msgid "Currencies and rounding"
 msgstr "Měny a zaokrouhlování"
 

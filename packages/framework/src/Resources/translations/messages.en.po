@@ -562,6 +562,9 @@ msgstr ""
 msgid "Cropping"
 msgstr ""
 
+msgid "Currencies"
+msgstr ""
+
 msgid "Currencies and rounding"
 msgstr ""
 
