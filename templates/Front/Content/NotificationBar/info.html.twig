@@ -1,0 +1,10 @@
+{% for notificationBar in notificationBars %}
+    <div class="window-bar dont-print" style="background-color: {{ notificationBar.rgbColor }}">
+        <div class="window-bar__item">
+            {% if imageExists(notificationBar) %}
+                {{ image(notificationBar) }}
+            {% endif %}
+            {{ notificationBar.text|placeholders|raw }}
+        </div>
+    </div>
+{% endfor %}

@@ -1,0 +1,25 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No page found.'|trans }}
+{% endblock %}
+
+{% block grid_value_cell_id_text %}
+    {{ value|raw }}
+{% endblock %}
+
+{% block grid_value_cell_id_validityFrom %}
+    {% if value is not null %}
+        {{ value|formatDate }}
+    {% else %}
+        {{ 'Neomezeně'|trans }}
+    {% endif %}
+{% endblock %}
+
+{% block grid_value_cell_id_validityTo %}
+    {% if value is not null %}
+        {{ value|formatDate }}
+    {% else %}
+        {{ 'Neomezeně'|trans }}
+    {% endif %}
+{% endblock %}

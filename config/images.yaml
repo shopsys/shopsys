@@ -220,3 +220,12 @@
             height: 390
             crop: true
             occurrence: 'Front-end: Blog article list with big images'
+
+-   name: notificationBar
+    class: App\Model\NotificationBar\NotificationBar
+    sizes:
+        -   name: ~
+            width: ~
+            height: 28
+            crop: false
+            occurrence: 'Front-end: Notification bar'

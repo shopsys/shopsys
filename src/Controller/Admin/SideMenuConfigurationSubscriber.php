@@ -77,6 +77,10 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $productSeriesCategoryMenu = $productSeriesMenu->addChild('product_series_category', ['route' => 'admin_productseriescategory_list', 'label' => t('Kategorie')]);
         $productSeriesCategoryMenu->addChild('new_product_series_category', ['route' => 'admin_productseriescategory_new', 'display' => false, 'label' => t('Nová kategorie')]);
         $productSeriesCategoryMenu->addChild('edit_product_series_category', ['route' => 'admin_productseriescategory_edit', 'display' => false, 'label' => t('Detail kategorie')]);
+
+        $notificationBar = $marketingMenu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notifikační lišta')]);
+        $notificationBar->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('Nová notifikační lišta'), 'display' => false]);
+        $notificationBar->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editace notifikační lišty'), 'display' => false]);
     }
 
     /**

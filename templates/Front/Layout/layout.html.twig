@@ -18,6 +18,9 @@
             {% endif %}
         </div>
     {% endif %}
+    {% if getRoute() != 'front_cart' and getRoute() != 'front_order_index' %}
+        {{ render(controller('App\\Controller\\Front\\NotificationBarController:infoAction')) }}
+    {% endif %}
     <div class="web__in">
         <div class="web__header">
             <div class="web__line">
