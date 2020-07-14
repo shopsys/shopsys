@@ -113,6 +113,9 @@ export default class Window {
                 .attr('href', this.options.urlContinue)
                 .bind('click.window', this.options.eventContinue)
                 .bind('click.windowContinue', function () {
+                    if ($(this).hasClass('window-popup__actions__btn--continue--disabled')) {
+                        return false;
+                    }
                     _this.$window.trigger('windowClose');
                     if ($(this).attr('href') === '#') {
                         return false;
