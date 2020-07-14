@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
@@ -105,7 +104,7 @@ class ParameterRepository extends BaseParameterRepository
      * @param int $parameterValueId
      * @return \App\Model\Product\Parameter\ParameterValue
      */
-    public function getParameterValueById(int $parameterValueId): BaseParameterValue
+    public function getParameterValueById(int $parameterValueId): ParameterValue
     {
         $parameterValue = $this->getParameterValueRepository()->find($parameterValueId);
 
@@ -125,7 +124,7 @@ class ParameterRepository extends BaseParameterRepository
     private function applyCategorySeoConditions(QueryBuilder $queryBuilder, Category $category, int $domainId): void
     {
         $queryBuilder
-            ->join(BaseProduct::class, 'product', Join::WITH, 'ppv.product = product')
+            ->join(Product::class, 'product', Join::WITH, 'ppv.product = product')
             ->join(ProductCategoryDomain::class, 'pcd', Join::WITH, 'product = pcd.product')
             ->andWhere('pcd.category = :category')
             ->andWhere('pcd.domainId = :domainId')
@@ -298,7 +297,7 @@ class ParameterRepository extends BaseParameterRepository
      * @param string $locale
      * @return \App\Model\Product\Parameter\ParameterValue[]
      */
-    public function getParameterValuesForVariantsByMainProductAndParameter(BaseProduct $product, Parameter $parameter, string $locale): array
+    public function getParameterValuesForVariantsByMainProductAndParameter(Product $product, Parameter $parameter, string $locale): array
     {
         return $this->getParameterValueRepository()
             ->createQueryBuilder('pv')
@@ -323,7 +322,7 @@ class ParameterRepository extends BaseParameterRepository
      * @param string $locale
      * @return \App\Model\Product\Parameter\ParameterValue
      */
-    public function getParameterValueForVariantByProductVariantAndParameter(BaseProduct $product, Parameter $parameter, string $locale): ParameterValue
+    public function getParameterValueForVariantByProductVariantAndParameter(Product $product, Parameter $parameter, string $locale): ParameterValue
     {
         return $this->getParameterValueRepository()
             ->createQueryBuilder('pv')
