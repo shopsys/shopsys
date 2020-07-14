@@ -18,7 +18,7 @@ class CartPage extends AbstractPage
     public function assertProductQuantity($productName, $quantity)
     {
         $quantityField = $this->getQuantityFieldByProductName($productName);
-        $this->tester->seeInFieldByElement($quantity, $quantityField);
+        $this->tester->seeInFieldByElement((string)$quantity, $quantityField);
     }
 
     /**
@@ -51,7 +51,7 @@ class CartPage extends AbstractPage
     public function changeProductQuantity($productName, $quantity)
     {
         $quantityField = $this->getQuantityFieldByProductName($productName);
-        $this->tester->fillFieldByElement($quantityField, $quantity);
+        $this->tester->fillFieldByElement($quantityField, (string)$quantity);
         $this->tester->pressKeysByElement($quantityField, WebDriverKeys::ENTER);
         $this->tester->waitForAjax();
     }

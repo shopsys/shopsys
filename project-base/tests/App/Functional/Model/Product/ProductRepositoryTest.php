@@ -162,7 +162,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
     public function testOrderingByProductPriorityInCategory()
     {
-        /** @var \App\DataFixtures\Demo\CategoryDataFixture $category */
+        /** @var \App\Model\Category\Category $category */
         $category = $this->getReference(CategoryDataFixture::CATEGORY_FOOD);
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 70);
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 71);

@@ -66,6 +66,7 @@ class SitemapListener implements EventSubscriberInterface
         $section = $event->getSection();
         $domainId = (int)$section;
 
+        /** @var \Presta\SitemapBundle\Service\AbstractGenerator $generator */
         $generator = $event->getUrlContainer();
         $domainConfig = $this->domain->getDomainConfigById($domainId);
 

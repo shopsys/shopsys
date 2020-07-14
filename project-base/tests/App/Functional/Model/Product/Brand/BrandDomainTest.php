@@ -39,6 +39,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
         $brandData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
         $brandData->seoH1s[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
 
+        /** @var \App\Model\Product\Brand\Brand $brand */
         $brand = $this->brandFactory->create($brandData);
 
         $refreshedBrand = $this->getRefreshedBrandFromDatabase($brand);
@@ -59,6 +60,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
         $brandData->seoTitles[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_TITLE;
         $brandData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
 
+        /** @var \App\Model\Product\Brand\Brand $brand */
         $brand = $this->brandFactory->create($brandData);
 
         $refreshedBrand = $this->getRefreshedBrandFromDatabase($brand);

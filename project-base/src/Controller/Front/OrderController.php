@@ -206,7 +206,9 @@ class OrderController extends FrontBaseController
         // FormData are filled during isValid() call
         $orderData = $this->orderDataMapper->getOrderDataFromFrontOrderData($frontOrderFormData);
 
+        /** @var \App\Model\Payment\Payment[] $payments */
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        /** @var \App\Model\Transport\Transport[] $transports */
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
         $this->checkTransportAndPaymentChanges($orderData, $orderPreview, $transports, $payments);
 
@@ -215,6 +217,7 @@ class OrderController extends FrontBaseController
                 $form = $orderFlow->createForm();
             } elseif (count($this->getErrorMessages()) === 0 && count($this->getInfoMessages()) === 0) {
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
+                /** @var \App\Model\Order\Order $order */
                 $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
 

@@ -50,7 +50,7 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
                 try {
                     $images[] = $this->imageFacade->getById($imageId);
                 } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Image not found', null, $e);
+                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Image not found', 0, $e);
                 }
             }
         }

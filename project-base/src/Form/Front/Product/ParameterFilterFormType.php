@@ -35,7 +35,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
 
             $this->parameterChoicesIndexedByParameterId[$parameter->getId()] = $parameterChoice;
 
-            $builder->add($parameter->getId(), ChoiceType::class, [
+            $builder->add((string)$parameter->getId(), ChoiceType::class, [
                 'label' => $parameter->getName(),
                 'choices' => $parameterValues,
                 'choice_label' => 'text',

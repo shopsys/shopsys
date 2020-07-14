@@ -103,7 +103,7 @@ class DomainExtension extends AbstractExtension
                         class="in-image__in"
                     >
                         <img src="' . htmlspecialchars($src, ENT_QUOTES)
-                        . '" alt="' . htmlspecialchars($domainId, ENT_QUOTES) . '"'
+                        . '" alt="' . htmlspecialchars((string)$domainId, ENT_QUOTES) . '"'
                         . ' title="' . htmlspecialchars($domainName, ENT_QUOTES) . '"/>
                     </span>
                 </span>';

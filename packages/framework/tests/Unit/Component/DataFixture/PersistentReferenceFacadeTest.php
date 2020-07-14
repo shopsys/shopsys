@@ -72,7 +72,7 @@ class PersistentReferenceFacadeTest extends TestCase
 
     public function testGetReference()
     {
-        $persistentReference = new PersistentReference('referenceName', 'entityName', 'entityId');
+        $persistentReference = new PersistentReference('referenceName', 'entityName', 1);
         $expectedObject = new stdClass();
 
         $emMock = $this->getMockBuilder(EntityManager::class)
@@ -101,7 +101,7 @@ class PersistentReferenceFacadeTest extends TestCase
 
     public function testGetReferenceNotFound()
     {
-        $persistentReference = new PersistentReference('referenceName', 'entityName', 'entityId');
+        $persistentReference = new PersistentReference('referenceName', 'entityName', 2);
 
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->setMethods(['__construct', 'find'])

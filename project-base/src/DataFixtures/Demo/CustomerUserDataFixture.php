@@ -123,10 +123,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 $customerUserUpdateData = $this->getCustomerUserUpdateData($domainId, $customerDataProvider);
                 $customerUserUpdateData->customerUserData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
 
-                $customer = $this->customerUserFacade->create($customerUserUpdateData);
-                if ($customer->getId() === 1) {
-                    $this->resetPassword($customer);
-                    $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customer);
+                /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+                $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
+                if ($customerUser->getId() === 1) {
+                    $this->resetPassword($customerUser);
+                    $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customerUser);
                 }
             }
         }

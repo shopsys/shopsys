@@ -15,6 +15,7 @@ class GridOrderingFacadeTest extends TransactionFunctionalTestCase
         $gridOrderingFacade = new GridOrderingFacade($this->em);
         $entity = new stdClass();
         $this->expectException(\Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException::class);
+        /** @phpstan-ignore-next-line */
         $gridOrderingFacade->saveOrdering($entity, []);
     }
 }

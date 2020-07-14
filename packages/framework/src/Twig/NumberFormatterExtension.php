@@ -118,7 +118,7 @@ class NumberFormatterExtension extends AbstractExtension
             'maximum_fraction_digits' => static::MAXIMUM_FRACTION_DIGITS,
         ]);
 
-        return $numberFormatter->format($number / 100);
+        return $numberFormatter->format((string)($number / 100));
     }
 
     /**

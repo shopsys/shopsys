@@ -164,13 +164,15 @@ class OrderItemTest extends TestCase
             $this->createOrderMock(),
             '',
             new Price(Money::create(10), Money::create(12)),
-            0.2,
+            '0.2',
             1,
             OrderItem::TYPE_PAYMENT,
             null,
             null
         );
-        $orderPayment->setPayment($this->createPaymentMock());
+
+        $paymentMock = $this->createPaymentMock();
+        $orderPayment->setPayment($paymentMock);
         return $orderPayment;
     }
 
@@ -183,7 +185,7 @@ class OrderItemTest extends TestCase
             $this->createOrderMock(),
             '',
             new Price(Money::create(10), Money::create(12)),
-            0.2,
+            '0.2',
             1,
             OrderItem::TYPE_TRANSPORT,
             null,
@@ -203,7 +205,7 @@ class OrderItemTest extends TestCase
             $this->createOrderMock(),
             '',
             new Price(Money::create(10), Money::create(12)),
-            0.2,
+            '0.2',
             1,
             OrderItem::TYPE_PRODUCT,
             null,
@@ -214,7 +216,7 @@ class OrderItemTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
      */
     private function createOrderMock(): MockObject
     {
@@ -222,7 +224,7 @@ class OrderItemTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Transport\Transport
      */
     private function createTransportMock(): MockObject
     {
@@ -230,7 +232,7 @@ class OrderItemTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Payment\Payment
      */
     private function createPaymentMock(): MockObject
     {
@@ -238,7 +240,7 @@ class OrderItemTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Product
      */
     private function createProductMock(): MockObject
     {

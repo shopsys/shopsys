@@ -164,7 +164,7 @@ class ArticleFacade
     }
 
     /**
-     * @param string[][] $rowIdsByGridId
+     * @param int[][] $rowIdsByGridId
      */
     public function saveOrdering(array $rowIdsByGridId)
     {

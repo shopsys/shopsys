@@ -45,7 +45,7 @@ class ProductIdToProductTransformer implements DataTransformerInterface
         try {
             $product = $this->productRepository->getById($productId);
         } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $e) {
-            throw new \Symfony\Component\Form\Exception\TransformationFailedException('Product not found', null, $e);
+            throw new \Symfony\Component\Form\Exception\TransformationFailedException('Product not found', 0, $e);
         }
         return $product;
     }

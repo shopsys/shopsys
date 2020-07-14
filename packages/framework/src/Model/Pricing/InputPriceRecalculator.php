@@ -72,7 +72,7 @@ class InputPriceRecalculator
     }
 
     /**
-     * @param string $newInputPriceType
+     * @param int $newInputPriceType
      */
     protected function recalculateInputPriceForNewType($newInputPriceType)
     {
@@ -81,7 +81,7 @@ class InputPriceRecalculator
     }
 
     /**
-     * @param string $toInputPriceType
+     * @param int $toInputPriceType
      */
     protected function recalculatePaymentsInputPriceForNewType($toInputPriceType)
     {
@@ -110,7 +110,7 @@ class InputPriceRecalculator
     }
 
     /**
-     * @param string $toInputPriceType
+     * @param int $toInputPriceType
      */
     protected function recalculateTransportsInputPriceForNewType($toInputPriceType)
     {

@@ -19,6 +19,7 @@ class AdvancedSearchQueryBuilderExtenderTest extends TestCase
         $ruleData->operator = 'testOperator';
         $ruleData->value = 'testValue';
 
+        /** @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $advancedSearchData */
         $advancedSearchData = [
             RuleFormViewDataFactory::TEMPLATE_RULE_FORM_KEY => null,
             0 => $ruleData,

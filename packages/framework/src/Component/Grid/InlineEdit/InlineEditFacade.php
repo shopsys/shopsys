@@ -29,6 +29,7 @@ class InlineEditFacade
     public function getRenderedFormRow($serviceName, $rowId)
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
+        /** @var \Symfony\Component\Form\Form $form */
         $form = $gridInlineEdit->getForm($rowId);
 
         return $this->renderFormAsRow($gridInlineEdit, $rowId, $form);

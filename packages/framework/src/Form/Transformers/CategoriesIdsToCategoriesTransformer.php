@@ -50,7 +50,7 @@ class CategoriesIdsToCategoriesTransformer implements DataTransformerInterface
                 try {
                     $categories[] = $this->categoryRepository->getById($categoryId);
                 } catch (\Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Category not found', null, $e);
+                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Category not found', 0, $e);
                 }
             }
         }

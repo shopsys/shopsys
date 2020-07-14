@@ -140,7 +140,7 @@ class OrderFacadeHeurekaTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
      */
     private function createOrderMock(): MockObject
     {

@@ -17,7 +17,7 @@ trait MultidomainMigrationTrait
     {
         return $this
             ->sql('SELECT domain_id FROM setting_values WHERE name = :baseUrl', ['baseUrl' => 'baseUrl'])
-            ->fetchAll(PDO::FETCH_COLUMN, 'domain_id');
+            ->fetchAll(PDO::FETCH_COLUMN);
     }
 
     /**

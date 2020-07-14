@@ -33,6 +33,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
 
         $transportData->enabled[self::FIRST_DOMAIN_ID] = true;
 
+        /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportFactory->create($transportData);
 
         $refreshedTransport = $this->getRefreshedTransportFromDatabase($transport);
@@ -46,6 +47,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
 
         $transportData->enabled[self::FIRST_DOMAIN_ID] = false;
 
+        /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportFactory->create($transportData);
 
         $refreshedTransport = $this->getRefreshedTransportFromDatabase($transport);
@@ -64,6 +66,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
         $transportData->enabled[self::FIRST_DOMAIN_ID] = true;
         $transportData->enabled[self::SECOND_DOMAIN_ID] = false;
 
+        /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportFactory->create($transportData);
 
         $refreshedTransport = $this->getRefreshedTransportFromDatabase($transport);

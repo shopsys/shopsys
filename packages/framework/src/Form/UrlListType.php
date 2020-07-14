@@ -71,7 +71,7 @@ class UrlListType extends AbstractType
             ],
         ]);
 
-        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain($options['route_name'], $options['entity_id']);
+        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain($options['route_name'], (int)$options['entity_id']);
 
         foreach ($friendlyUrlsByDomain as $domainId => $friendlyUrls) {
             $builder->get('toDelete')->add($domainId, ChoiceType::class, [
@@ -103,7 +103,7 @@ class UrlListType extends AbstractType
     {
         $absoluteUrlsByDomainIdAndSlug = $this->getAbsoluteUrlsIndexedByDomainIdAndSlug(
             $options['route_name'],
-            $options['entity_id']
+            (int)$options['entity_id']
         );
         $mainUrlsSlugsOnDomains = $this->getMainFriendlyUrlSlugsIndexedByDomainId(
             $options['route_name'],
@@ -132,7 +132,7 @@ class UrlListType extends AbstractType
 
     /**
      * @param string $routeName
-     * @param string $entityId
+     * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[][]
      */
     private function getFriendlyUrlsIndexedByDomain($routeName, $entityId)
@@ -150,7 +150,7 @@ class UrlListType extends AbstractType
 
     /**
      * @param string $routeName
-     * @param string $entityId
+     * @param int $entityId
      * @return string[][]
      */
     private function getAbsoluteUrlsIndexedByDomainIdAndSlug($routeName, $entityId)

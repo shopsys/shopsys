@@ -261,7 +261,7 @@ class OrderFacade
      */
     public function createOrder(OrderData $orderData, OrderPreview $orderPreview, ?CustomerUser $customerUser = null)
     {
-        $orderNumber = $this->orderNumberSequenceRepository->getNextNumber();
+        $orderNumber = (string)$this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
         $toFlush = [];
 
@@ -590,7 +590,12 @@ class OrderFacade
             );
 
             if ($quantifiedItemDiscount !== null) {
-                $this->addOrderItemDiscount($orderItem, $quantifiedItemDiscount, $locale, $orderPreview->getPromoCodeDiscountPercent());
+                $this->addOrderItemDiscount(
+                    $orderItem,
+                    $quantifiedItemDiscount,
+                    $locale,
+                    (float)$orderPreview->getPromoCodeDiscountPercent()
+                );
             }
         }
     }
@@ -657,7 +662,7 @@ class OrderFacade
                 $order,
                 t('Rounding', [], 'messages', $locale),
                 $orderPreview->getRoundingPrice(),
-                0,
+                '0',
                 1,
                 null,
                 null,

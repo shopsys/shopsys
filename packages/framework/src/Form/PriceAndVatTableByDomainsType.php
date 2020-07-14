@@ -80,7 +80,7 @@ class PriceAndVatTableByDomainsType extends AbstractType
         ]);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $vatsIndexedByDomainId->add($domainId, ChoiceType::class, [
+            $vatsIndexedByDomainId->add((string)$domainId, ChoiceType::class, [
                 'required' => true,
                 'choices' => $this->vatFacade->getAllForDomain($domainId),
                 'choice_label' => 'name',
@@ -91,7 +91,7 @@ class PriceAndVatTableByDomainsType extends AbstractType
                 'label' => t('VAT'),
             ]);
 
-            $entityPricesByDomainId->add($domainId, MoneyType::class, [
+            $entityPricesByDomainId->add((string)$domainId, MoneyType::class, [
                 'scale' => 6,
                 'required' => true,
                 'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',

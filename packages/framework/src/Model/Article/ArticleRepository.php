@@ -28,7 +28,7 @@ class ArticleRepository
     }
 
     /**
-     * @param string $articleId
+     * @param int $articleId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
     public function findById($articleId)

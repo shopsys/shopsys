@@ -28,7 +28,7 @@ class UploadedFileFactoryTest extends TestCase
             ->willReturn($temporaryFilepath);
 
         $uploadedFileFactory = new UploadedFileFactory($fileUploadMock, new EntityNameResolver([]));
-        $uploadedFile = $uploadedFileFactory->create($entityName, $entityId, $type, $temporaryFilename, 0);
+        $uploadedFile = $uploadedFileFactory->create($entityName, $entityId, $type, $temporaryFilename, '0');
         $filesForUpload = $uploadedFile->getTemporaryFilesForUpload();
         /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
         $fileForUpload = array_pop($filesForUpload);

@@ -29,7 +29,7 @@ class DomainsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         foreach ($this->domain->getAll() as $domainConfig) {
-            $builder->add($domainConfig->getId(), CheckboxType::class, [
+            $builder->add((string)$domainConfig->getId(), CheckboxType::class, [
                 'required' => false,
                 'label' => $domainConfig->getName(),
             ]);

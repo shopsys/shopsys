@@ -8,8 +8,8 @@ use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
-use App\Model\Product\ProductData;
 use ReflectionClass;
+use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -163,9 +163,9 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \App\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      */
-    private function setVats(ProductData $productData): void
+    private function setVats(BaseProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];
         foreach ($this->domain->getAllIds() as $domainId) {

@@ -38,8 +38,8 @@ class ImageSizeConfig
 
     /**
      * @param string|null $name
-     * @param int $width
-     * @param int $height
+     * @param int|null $width
+     * @param int|null $height
      * @param bool $crop
      * @param string|null $occurrence
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig[] $additionalSizes

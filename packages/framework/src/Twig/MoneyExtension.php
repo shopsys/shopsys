@@ -36,7 +36,7 @@ class MoneyExtension extends AbstractExtension
             $decimal = $this->getNumberOfDecimalPlaces($moneyString);
         }
 
-        return number_format($moneyString, $decimal, $decimalPoint, $thousandsSeparator);
+        return number_format((float)$moneyString, $decimal, $decimalPoint, $thousandsSeparator);
     }
 
     /**

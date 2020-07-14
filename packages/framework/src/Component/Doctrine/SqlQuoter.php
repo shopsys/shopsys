@@ -44,7 +44,7 @@ class SqlQuoter
 
     /**
      * @param mixed $input
-     * @param string|null $type
+     * @param int|null $type
      * @return string
      */
     public function quote($input, $type = null)
