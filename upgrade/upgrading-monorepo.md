@@ -13,7 +13,11 @@ Typical upgrade sequence should be:
 
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
+## [From v9.0.1 to v9.0.2-dev]
+
 ## [From v9.0.0 to v9.1.0-dev]
+
+## [From v9.0.0 to v9.0.1]
 
 ## [From v8.1.2 to v9.0.0]
 
@@ -40,8 +44,6 @@ Typical upgrade sequence should be:
 ## [From v8.0.0 to v8.1.0]
 
 ## [From v7.3.4 to v8.0.0]
-
-## [From v7.3.4 to v7.3.5-dev]
 
 ## [From v7.3.3 to v7.3.4]
 
@@ -183,16 +185,16 @@ Typical upgrade sequence should be:
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
 
+[From v9.0.1 to v9.0.2-dev]: https://github.com/shopsys/shopsys/compare/v9.0.1...9.0
 [From v9.0.0 to v9.1.0-dev]: https://github.com/shopsys/shopsys/compare/v9.0.0...master
+[From v9.0.0 to v9.0.1]: https://github.com/shopsys/shopsys/compare/v9.0.0...v9.0.1
 [From v8.1.2 to v9.0.0]: https://github.com/shopsys/shopsys/compare/v8.1.2...v9.0.0
 [From v8.1.1 to v8.1.2]: https://github.com/shopsys/shopsys/compare/v8.1.1...v8.1.2
 [From v8.1.0 to v8.1.1]: https://github.com/shopsys/shopsys/compare/v8.1.0...v8.1.1
-[From v8.0.0 to v8.0.1-dev]: https://github.com/shopsys/shopsys/compare/v8.0.0...8.0
 [From v8.0.1-dev to v8.1.0]: https://github.com/shopsys/shopsys/compare/8.0...v8.1.0
 [From v8.0.0 to v8.1.0]: https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0
 [From v7.3.2 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.2...v8.0.0
 [From v7.3.4 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.4...v8.0.0
-[From v7.3.4 to v7.3.5-dev]: https://github.com/shopsys/shopsys/compare/v7.3.4...7.3
 [From v7.3.3 to v7.3.4]: https://github.com/shopsys/shopsys/compare/v7.3.3...v7.3.4
 [From v7.3.2 to v7.3.3]: https://github.com/shopsys/shopsys/compare/v7.3.2...v7.3.3
 [From v7.3.1 to v7.3.2]: https://github.com/shopsys/shopsys/compare/v7.3.1...v7.3.2
