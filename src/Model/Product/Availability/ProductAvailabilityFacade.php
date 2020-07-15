@@ -8,6 +8,7 @@ use App\Component\Setting\Setting;
 use App\Model\Product\Product;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\ProductStockRepository;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 
 class ProductAvailabilityFacade
 {
@@ -58,6 +59,16 @@ class ProductAvailabilityFacade
             return t('Vyprodáno');
         }
 
+        return $this->getAvailableForWeeksMessageByProductAndDomainId($product, $domainId);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return string
+     */
+    private function getAvailableForWeeksMessageByProductAndDomainId(Product $product, int $domainId): string
+    {
         $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
 
         return tc(
@@ -65,6 +76,27 @@ class ProductAvailabilityFacade
             $weeks,
             ['%weeks%' => $weeks]
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
+     * @param int $domainId
+     * @return string
+     */
+    public function getProductAvailabilityInformationByQuantifiedProductAndDomainId(QuantifiedProduct $quantifiedProduct, int $domainId): string
+    {
+        /** @var \App\Model\Product\Product $product */
+        $product = $quantifiedProduct->getProduct();
+
+        if ($this->getGroupedStockQuantity($product, $domainId) >= $quantifiedProduct->getQuantity()) {
+            return t('Skladem');
+        }
+
+        if ($product->hasPreorder() === false) {
+            return t('Vyprodáno');
+        }
+
+        return $this->getAvailableForWeeksMessageByProductAndDomainId($product, $domainId);
     }
 
     /**

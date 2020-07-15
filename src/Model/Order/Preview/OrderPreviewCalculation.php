@@ -254,8 +254,8 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();
             $availability[$product->getId()] =
-                $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId(
-                    $product,
+                $this->productAvailabilityFacade->getProductAvailabilityInformationByQuantifiedProductAndDomainId(
+                    $quantifiedProduct,
                     $domainId
                 );
         }
