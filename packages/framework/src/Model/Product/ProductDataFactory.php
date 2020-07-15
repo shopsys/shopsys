@@ -133,7 +133,8 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @internal This function will be replaced by constructor injection in next major
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
-    public function setAvailabilityFacade(AvailabilityFacade $availabilityFacade) {
+    public function setAvailabilityFacade(AvailabilityFacade $availabilityFacade)
+    {
         if ($this->availabilityFacade !== null && $this->availabilityFacade !== $availabilityFacade) {
             throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
         }
