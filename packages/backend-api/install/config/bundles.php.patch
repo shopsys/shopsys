@@ -1,7 +1,7 @@
-@@ -44,4 +44,7 @@
-     Symplify\ConsoleColorDiff\ConsoleColorDiffBundle::class => ['dev' => true, 'test' => true],
-     Symplify\ParameterNameGuard\ParameterNameGuardBundle::class => ['dev' => true, 'test' => true],
-     Symplify\ComposerJsonManipulator\ComposerJsonManipulatorBundle::class => ['dev' => true, 'test' => true],
+@@ -41,4 +41,7 @@
+     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],
+     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
+     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 +    Shopsys\BackendApiBundle\ShopsysBackendApiBundle::class => ['all' => true],
 +    Trikoder\Bundle\OAuth2Bundle\TrikoderOAuth2Bundle::class => ['all' => true],
 +    FOS\RestBundle\FOSRestBundle::class => ['all' => true],
