@@ -34,6 +34,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\FormError;
@@ -145,6 +146,11 @@ class OrderController extends FrontBaseController
     private $gtmFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Security\Authenticator
+     */
+    private $authenticator;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
@@ -164,6 +170,7 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
+     * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      */
     public function __construct(
         OrderFacade $orderFacade,
@@ -184,7 +191,8 @@ class OrderController extends FrontBaseController
         OrderPreviewSplittingFacade $orderPreviewSplittingFacade,
         OrderDataFactory $orderDataFactory,
         StockFacade $stockFacade,
-        GtmFacade $gtmFacade
+        GtmFacade $gtmFacade,
+        Authenticator $authenticator
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
@@ -205,6 +213,7 @@ class OrderController extends FrontBaseController
         $this->stockFacade = $stockFacade;
         $this->goPayTransactionFacade = $goPayTransactionFacade;
         $this->gtmFacade = $gtmFacade;
+        $this->authenticator = $authenticator;
     }
 
     /**
@@ -275,6 +284,10 @@ class OrderController extends FrontBaseController
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
                 $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
+
+                if ($isWithoutRegistration === false && $order->getCustomerUser() instanceof CustomerUser) {
+                    $this->authenticator->loginUser($order->getCustomerUser(), $orderFlow->getRequest());
+                }
 
                 $this->setGoPayBankSwiftSession($frontOrderFormData->payment, $frontOrderFormData->goPayBankSwift);
 
