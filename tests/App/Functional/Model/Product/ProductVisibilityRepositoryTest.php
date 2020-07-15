@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
+use App\Component\Image\Image;
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
@@ -82,8 +83,21 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->setPriceForAllDomains($productData, Money::create(100));
         $this->setVatsForAllDomains($productData);
         $this->setProductTypeForAllDomains($productData);
+        $this->setDescriptionForAllDomain($productData);
 
         return $productData;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function setDescriptionForAllDomain(ProductData $productData): void
+    {
+        foreach ($this->domain->getAllIds() as $domainId) {
+            if (($productData->descriptions[$domainId] ?? false) === false || $productData->descriptions[$domainId] === null || $productData->descriptions[$domainId] === '') {
+                $productData->descriptions[$domainId] = 'description';
+            }
+        }
     }
 
     /**
@@ -147,6 +161,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $this->em->flush();
         $id = $product->getId();
+        $this->createImage('product', $id);
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -178,6 +193,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $this->em->flush();
         $id = $product->getId();
+        $this->createImage('product', $id);
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -207,6 +223,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $this->em->flush();
         $id = $product->getId();
+        $this->createImage('product', $id);
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -240,6 +257,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $this->em->flush();
         $id = $product->getId();
+        $this->createImage('product', $id);
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -262,6 +280,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $this->em->flush();
         $id = $product->getId();
+        $this->createImage('product', $id);
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -270,6 +289,19 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productAgain = $this->em->getRepository(Product::class)->find($id);
 
         $this->assertFalse($productAgain->isVisible());
+    }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     */
+    private function createImage(string $entityName, int $entityId): void
+    {
+        $image = new Image($entityName, $entityId, null, null);
+        $image->setAkeneoImageType('image_main');
+        $image->setFileAsUploaded('image', '/web/public/frontend/images/noimage.png');
+        $this->em->persist($image);
+        $this->em->flush();
     }
 
     public function testIsVisibleOnAnyDomainWhenSellingNow()
@@ -287,6 +319,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $this->em->flush();
         $id = $product->getId();
+        $this->createImage('product', $id);
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -306,6 +339,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->productPriceRecalculator->runImmediateRecalculations();
 
         $product1Id = $product1->getId();
+        $this->createImage('product', $product1Id);
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -321,7 +355,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData = $this->getDefaultProductData();
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
-
+        $this->createImage('product', $product->getId());
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -345,7 +379,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->name = ['cs' => null, 'en' => null];
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
-
+        $this->createImage('product', $product->getId());
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -372,7 +406,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->categoriesByDomainId = [Domain::FIRST_DOMAIN_ID => [$category]];
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
-
+        $this->createImage('product', $product->getId());
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -396,7 +430,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->categoriesByDomainId = [];
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
-
+        $this->createImage('product', $product->getId());
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -420,7 +454,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
-
+        $this->createImage('product', $product->getId());
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();
@@ -445,7 +479,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
-
+        $this->createImage('product', $product->getId());
         $this->em->clear();
 
         $this->productVisibilityRepository->refreshProductsVisibility();

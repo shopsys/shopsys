@@ -63,6 +63,35 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                         )
                         AND 
                         (pd.domain_hidden = FALSE)
+                        AND (
+                            p.variant_type = :variantTypeMain
+                            OR
+                            EXISTS (
+                            SELECT 1
+                            FROM images AS i
+                            WHERE i.entity_name = \'product\'
+                                AND i.akeneo_image_type = \'image_main\'
+                                AND i.entity_id = p.id
+                            )
+                        )
+                        AND (
+                            p.variant_type = :variantTypeVariant
+                            OR
+                            EXISTS (
+                                SELECT 1
+                                FROM product_domains AS pdom1
+                                WHERE pdom1.domain_id = :domainId
+                                    AND pdom1.description IS NOT NULL 
+                                    AND pdom1.description <> \'\'
+                            )
+                        )
+                        AND EXISTS (
+                            SELECT 1
+                            FROM product_domains AS pdom2
+                            WHERE pdom2.domain_id = :domainId
+                                AND pdom2.product_id = p.id
+                                AND pdom2.sale_exclusion = FALSE
+                        )
                     )
                     THEN TRUE
                     ELSE FALSE
@@ -82,6 +111,7 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                 'locale' => $domain->getLocale(),
                 'domainId' => $domain->getId(),
                 'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+                'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
             ]);
         }
     }

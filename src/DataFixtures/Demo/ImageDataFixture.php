@@ -217,14 +217,26 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $specificProductsIdsIndexedByImagesIds = [
             64 => 1,
             67 => 5,
+            107 => 70,
+            108 => 71,
         ];
 
-        foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
-            $this->saveImageIntoDb($productId, 'product', $productId);
+        $maxImageId = 109;
+        for ($productId = 53; $productId <= 153; $productId++) {
+            if (in_array($productId, [70, 71], true)) {
+                continue;
+            }
+
+            $specificProductsIdsIndexedByImagesIds[$maxImageId] = $productId;
+            $maxImageId++;
         }
 
-        foreach ($specificProductsIdsIndexedByImagesIds as $imageId => $productId) {
-            $this->saveImageIntoDb($productId, 'product', $imageId);
+        foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
+            $this->saveImageIntoDb($productId, 'product', $productId, null, 'image_main');
+        }
+
+        foreach ($specificProductsIdsIndexedByImagesIds as $maxImageId => $productId) {
+            $this->saveImageIntoDb($productId, 'product', $maxImageId, null, 'image_main');
         }
     }
 
@@ -271,12 +283,13 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param string $entityName
      * @param int $imageId
      * @param string|null $type
+     * @param string|null $akeneoImageType
      */
-    private function saveImageIntoDb(int $entityId, string $entityName, int $imageId, ?string $type = null)
+    private function saveImageIntoDb(int $entityId, string $entityName, int $imageId, ?string $type = null, ?string $akeneoImageType = null)
     {
         $query = $this->em->createNativeQuery(
-            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at, processed_by_kraken)
-            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at, :processed_by_kraken)',
+            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at, processed_by_kraken, akeneo_image_type)
+            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at, :processed_by_kraken, :akeneo_image_type)',
             new ResultSetMapping()
         );
 
@@ -289,6 +302,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             'position' => null,
             'modified_at' => '2015-04-16 11:36:06',
             'processed_by_kraken' => true,
+            'akeneo_image_type' => $akeneoImageType,
         ]);
     }
 
@@ -321,7 +335,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     private function restartImagesIdsDbSequence()
     {
-        $this->em->createNativeQuery('ALTER SEQUENCE images_id_seq RESTART WITH 107', new ResultSetMapping())->execute();
+        $this->em->createNativeQuery('ALTER SEQUENCE images_id_seq RESTART WITH 208', new ResultSetMapping())->execute();
     }
 
     /**

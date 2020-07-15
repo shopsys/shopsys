@@ -285,11 +285,12 @@ class ParameterFacade extends BaseParameterFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param string $locale
-     * @return int[]
+     * @param int $domainId
+     * @return array
      */
-    public function getVariantSetupKeyMapByMainProduct(Product $product, string $locale): array
+    public function getVariantSetupKeyMapByMainProduct(Product $product, string $locale, int $domainId): array
     {
-        $data = $this->parameterRepository->getVariantProductParameterValuesData($product, $locale);
+        $data = $this->parameterRepository->getVariantProductParameterValuesData($product, $locale, $domainId);
 
         $variantSetupPartsIndexedByProductVariantId = [];
         foreach ($data as $variantParameterValue) {
@@ -313,7 +314,7 @@ class ParameterFacade extends BaseParameterFacade
      */
     public function getVariantsSetupForElasticByMainProduct(Product $mainProduct, string $locale, int $domainId): array
     {
-        $data = $this->parameterRepository->getVariantProductParameterValuesData($mainProduct, $locale);
+        $data = $this->parameterRepository->getVariantProductParameterValuesData($mainProduct, $locale, $domainId);
 
         $variantSetup = [];
         foreach ($data as $variantParameterValue) {

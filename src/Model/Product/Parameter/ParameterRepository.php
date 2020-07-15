@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
 /**
  * @method \Doctrine\ORM\QueryBuilder getProductParameterValuesByProductQueryBuilder(\App\Model\Product\Product $product)
@@ -318,19 +319,22 @@ class ParameterRepository extends BaseParameterRepository
     /**
      * @param \App\Model\Product\Product $product
      * @param string $locale
+     * @param int $domainId
      * @return array
      */
-    public function getVariantProductParameterValuesData(Product $product, string $locale): array
+    public function getVariantProductParameterValuesData(Product $product, string $locale, int $domainId): array
     {
         return $this->getProductParameterValueRepository()
             ->createQueryBuilder('ppv')
             ->join('ppv.product', 'p', Join::WITH, 'p.mainVariant = :product AND p.calculatedSellingDenied = FALSE')
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
+            ->join(ProductVisibility::class, 'pvis', Join::WITH, 'p = pvis.product AND pvis.visible = TRUE AND pvis.domainId = :domainId')
             ->where('ppv.parameter IN (:variantParameters)')
             ->setParameters([
                 'product' => $product,
                 'variantParameters' => $product->getVariantParameters(),
                 'locale' => $locale,
+                'domainId' => $domainId,
             ])
             ->getQuery()
             ->getScalarResult();
