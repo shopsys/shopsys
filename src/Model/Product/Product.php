@@ -161,6 +161,7 @@ class Product extends BaseProduct
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
         $this->editVariantParameters($productData);
+        $this->markForExport();
     }
 
     /**
