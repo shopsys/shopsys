@@ -576,6 +576,7 @@ class Grid
 
     protected function loadFromRequest()
     {
+        /** @var array $queryData */
         $queryData = $this->requestStack->getMasterRequest()->query->get(self::GET_PARAMETER, []);
         if (array_key_exists($this->id, $queryData)) {
             $gridQueryData = $queryData[$this->id];
