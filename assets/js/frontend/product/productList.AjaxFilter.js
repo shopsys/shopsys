@@ -81,6 +81,16 @@ export default class ProductListAjaxFilter {
         });
     }
 
+    updateBoxFilterOpener ($wrappedData) {
+        const $existingFilterButton = $('.js-product-filter-open-button-placeolder');
+        const $filterResultsSpan = $wrappedData.find('.js-product-filter-results');
+        if ($filterResultsSpan.data('submited')) {
+            $existingFilterButton.text('(' + $filterResultsSpan.data('results') + ')');
+        } else {
+            $existingFilterButton.text('');
+        }
+    }
+
     updateFiltersDisabled () {
         $('.js-product-filter-count').each(function (index, element) {
             const $countElement = $(element);
@@ -125,6 +135,7 @@ export default class ProductListAjaxFilter {
                 productListAjaxFilter.showProducts($wrappedData);
                 productListAjaxFilter.updateFiltersCounts($wrappedData);
                 productListAjaxFilter.updateFilterLinks($wrappedData);
+                productListAjaxFilter.updateBoxFilterOpener($wrappedData);
                 productListAjaxFilter.updateFiltersDisabled();
             }
         });

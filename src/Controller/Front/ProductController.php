@@ -433,6 +433,11 @@ class ProductController extends FrontBaseController
         $this->gtmFacade->onProductListByCategoryPage($category, $paginationResult->getResults());
 
         $allParameterValuesImageFilePathsIndexedById = $this->uploadedFileFacade->getAllUploadedFilesFilePathByEntityName(self::PARAMETER_VALUE_ENTITY_NAME);
+
+        $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
+        $orderingModeId = $orderingModeId ?? $productListOrderingConfig->getDefaultOrderingModeId();
+        $orderModeName = $productListOrderingConfig->getSupportedOrderingModesNamesIndexedById()[$orderingModeId];
+
         $viewParameters = [
             'paginationResult' => $paginationResult,
             'productFilterCountData' => $productFilterCountData,
@@ -447,6 +452,7 @@ class ProductController extends FrontBaseController
             'allParameterValuesImagesIndexedById' => $allParameterValuesImageFilePathsIndexedById,
             'disableIndexingBySeznamBot' => $disableIndexingBySeznamBot,
             'productFilterSetup' => $productFilterSetup,
+            'orderModeName' => $orderModeName,
         ];
 
         $viewParameters = array_merge(
@@ -471,7 +477,6 @@ class ProductController extends FrontBaseController
 
             // Direct access on SeoMixUrl with ordering lost ordering after change in filter - This prevent it
             if ($readyCategorySeoMix !== null && $readyCategorySeoMix->getOrdering() !== null) {
-                $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
                 // The cookie must have httpOnly=false, because It is edited by JS
                 $cookie = Cookie::create(
                     $productListOrderingConfig->getCookieName(),
@@ -584,6 +589,10 @@ class ProductController extends FrontBaseController
 
         $allParameterValuesImageFilePathsIndexedById = $this->uploadedFileFacade->getAllUploadedFilesFilePathByEntityName(self::PARAMETER_VALUE_ENTITY_NAME);
 
+        $productListOrderingConfig = $this->productListOrderingModeForSearchFacade->getProductListOrderingConfig();
+        $orderingModeId = $orderingModeId ?? $productListOrderingConfig->getDefaultOrderingModeId();
+        $orderModeName = $productListOrderingConfig->getSupportedOrderingModesNamesIndexedById()[$orderingModeId];
+
         $viewParameters = [
             'paginationResult' => $paginationResult,
             'productFilterCountData' => $productFilterCountData,
@@ -595,6 +604,7 @@ class ProductController extends FrontBaseController
             'filterCollapsedParameters' => [],
             'allParameterValuesImagesIndexedById' => $allParameterValuesImageFilePathsIndexedById,
             'productFilterSetup' => $productFilterSetup,
+            'orderModeName' => $orderModeName,
         ];
 
         $viewParameters = array_merge(

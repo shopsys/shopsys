@@ -14,11 +14,7 @@ export default class ProductList {
 
         $container.filterAllNodes('.js-product-list-ordering-mode').click(function () {
             const cookieName = $(this).data('cookie-name');
-            var orderingName = $(this).data('ordering-mode');
-
-            if (orderingName == 'priority') {
-                orderingName = null;
-            }
+            const orderingName = $(this).data('ordering-mode');
 
             $.cookie(cookieName, orderingName, { path: '/' });
 
@@ -69,11 +65,18 @@ export default class ProductList {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
                 productList.showProducts($wrappedData);
                 productList.updateFilterLinks($wrappedData);
+                productList.updateBoxFilterOpener($wrappedData);
                 if ($wrappedData.filterAllNodes('.js-ready-category-seo-mix-values').length === 0) {
                     pushReloadState(url + (queryData ? '?' : '') + queryData);
                 }
             }
         });
+    }
+
+    updateBoxFilterOpener ($wrappedData) {
+        const $filterResultsSpan = $wrappedData.find('.js-product-filter-results');
+        const $existingSortingButton = $('.js-product-sort-open-button-placeholder');
+        $existingSortingButton.text($filterResultsSpan.data('order-mode-name'));
     }
 
     updateFilterLinks ($wrappedData) {

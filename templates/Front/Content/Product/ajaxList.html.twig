@@ -38,3 +38,9 @@
     </div>
     {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
 </div>
+
+<span class="js-product-filter-results"
+      data-results="{{ paginationResult.results|length }}"
+      data-submited="{{ filterFormSubmitted }}"
+      data-order-mode-name="{{ orderModeName }}"
+></span>
