@@ -166,8 +166,10 @@ class ProductTransferAkeneoMapper
     public function mapAkeneoProductDataToDefaultVariantCatnum(array $akeneoProductData): ?string
     {
         $mainVariantCatnum = $akeneoProductData['values']['main_variant_sku'][0]['data'] ?? null;
-
-        return $mainVariantCatnum !== null ? strval($mainVariantCatnum) : null;
+        if (is_numeric($mainVariantCatnum)) {
+            $mainVariantCatnum = (int)$mainVariantCatnum;
+        }
+        return $mainVariantCatnum !== null ? (string)$mainVariantCatnum : null;
     }
 
     /**

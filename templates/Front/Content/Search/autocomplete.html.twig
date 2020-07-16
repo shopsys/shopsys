@@ -10,13 +10,31 @@
         </li>
     {% endfor %}
 
-    {% for product in productsPaginationResult.results %}
+    {% for productView in productsPaginationResult.results %}
         <li class="search__hint__item">
-            <a href="{{ url('front_product_detail', { id: product.id }) }}" class="search__hint__item__link">
+            <a href="
+                {% if productView.variantUrl is null %}
+                    {{ productView.action.detailUrl }}
+                {% else %}
+                    {{ productView.variantUrl }}
+                {% endif %}
+                "
+                class="search__hint__item__link">
                 <span class="search__hint__image">
-                    <img src="{{ imageUrl(product, 'thumbnail') }}" title="{{ product.fullname }}" width="30" />
+                     {% if productView.variantImageUrl is null %}
+                         {{ image(productView.image, { size: 'thumbnail', alt: productView.name }) }}
+                     {% else %}
+                         <picture>
+                            <img
+                                src="{{ productView.variantImageUrl }}"
+                                alt="{{ productView.name }}"
+                                title="{{ productView.name }}"
+                                width="30"
+                            />
+                         </picture>
+                     {% endif %}
                 </span>
-                <span class="search__hint__name js-search-autocomplete-item-label">{{ product.fullname }}</span>
+                <span class="search__hint__name js-search-autocomplete-item-label">{{ productView.name }}</span>
             </a>
         </li>
     {% endfor %}

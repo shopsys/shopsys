@@ -12,6 +12,7 @@ use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
@@ -166,6 +167,16 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     {
         if ($this->isProductMainVariant($product)) {
             $variantGroup = $builder->get('variantGroup');
+
+            $variantGroup->add('defaultVariantUrl', DisplayOnlyUrlType::class, [
+                'label' => t('Defaultní variant varianta produktu'),
+                'route' => 'admin_product_edit',
+                'route_params' => [
+                    'id' => $product->getDefaultVariant()->getId(),
+                ],
+                'route_label' => sprintf('%s (catcum: %s)', $product->getDefaultVariant()->getName(), $product->getDefaultVariant()->getCatnum()),
+            ]);
+
             $variantGroup->add('variantParameters', CollectionType::class, [
                 'required' => false,
                 'disabled' => true,

@@ -3,6 +3,9 @@
 {% block main_content %}
     {{ parent() }}
 
+    <h3 style="padding: 15px 0;font-size: 20px;">{{ 'Detailní informace o balení produktu:'|trans }} {{ product.name }}</h3>
+    {{ productPackageGridView.render() }}
+
     <div class="wrap-divider">
         <div class="form-group">
             <div class="form-group__title">
@@ -40,6 +43,4 @@
         </div>
     </div>
 
-    <h3 style="padding: 15px 0;font-size: 20px;">{{ 'Detailní informace o balení produktu:'|trans }} {{ product.name }}</h3>
-    {{ productPackageGridView.render() }}
 {% endblock %}

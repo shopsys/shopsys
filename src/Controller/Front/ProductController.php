@@ -575,6 +575,8 @@ class ProductController extends FrontBaseController
             self::PRODUCTS_PER_PAGE
         );
 
+        $this->productVariantFilterFacade->setupMostValuableVariantsInPaginationResultByProductFilterData($paginationResult, $productFilterData);
+
         $productFilterCountData = null;
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             $productFilterCountData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch(
