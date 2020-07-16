@@ -562,6 +562,9 @@ msgstr ""
 msgid "Cropping"
 msgstr ""
 
+msgid "Currencies"
+msgstr ""
+
 msgid "Currencies and rounding"
 msgstr ""
 
@@ -2207,6 +2210,9 @@ msgid "The higher the priority, the higher the country will be shown in the list
 msgstr ""
 
 msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
+msgstr ""
+
+msgid "There was an error during logout attempt. If you really want to sign out, please try it again."
 msgstr ""
 
 msgid "There was an error while saving. The order isn't saved."

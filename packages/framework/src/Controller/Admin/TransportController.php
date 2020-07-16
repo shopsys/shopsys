@@ -74,7 +74,7 @@ class TransportController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $transport = $this->transportFacade->create($form->getData());
+            $transport = $this->transportFacade->create($transportData);
 
             $this->addSuccessFlashTwig(
                 t('Shipping <strong><a href="{{ url }}">{{ name }}</a></strong> created'),

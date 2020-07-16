@@ -8,10 +8,13 @@
             {% for locale, formName in form.children %}
                 <div class="form-full__field">
                     <div class="input__wrap">
-                        {{ form_widget(formName, { attr: { class: 'input--flag form-full__field__input'} }) }}
-                        <span class="input__flag">
-                            {{ localeFlag(locale) }}
-                        </span>
+                        {{ form_widget(formName, { localized: true, locale: locale, attr: { class: 'input--flag form-full__field__input'} }) }}
+
+                        {% if formName.vars.block_prefixes | slice(-2,1) | first is not same as('ckeditor') %}
+                            <span class="input__flag">
+                                {{ localeFlag(locale) }}
+                            </span>
+                        {% endif %}
                     </div>
                     {{ form_errors(formName) }}
                 </div>

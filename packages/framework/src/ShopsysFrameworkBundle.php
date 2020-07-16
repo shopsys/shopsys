@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExten
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectFrameworkClassExtensionsCompilerPass;
+use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -40,6 +41,8 @@ class ShopsysFrameworkBundle extends Bundle
         $environment = $container->getParameter('kernel.environment');
         if ($environment === EnvironmentType::DEVELOPMENT) {
             $container->addCompilerPass(new RegisterProjectFrameworkClassExtensionsCompilerPass());
+            $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Component'));
+            $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Model'));
         }
     }
 }

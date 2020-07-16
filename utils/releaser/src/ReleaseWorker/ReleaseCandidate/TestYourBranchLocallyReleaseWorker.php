@@ -6,8 +6,8 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\MonorepoBuilder\Release\Message;
 
 final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWorker
 {

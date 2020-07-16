@@ -7,8 +7,6 @@ const defaults = {
     buttonClose: true,
     buttonCancel: false,
     buttonContinue: false,
-    textContinue: Translator.trans('Yes'),
-    textCancel: Translator.trans('No'),
     urlContinue: '#',
     wide: false,
     cssClass: '',
@@ -32,7 +30,7 @@ export default class Window {
     constructor (inputOptions) {
         this.$activeWindow = null;
 
-        this.options = $.extend(defaults, inputOptions);
+        this.options = { textContinue: Translator.trans('Yes'), textCancel: Translator.trans('No'), ...defaults, ...inputOptions };
 
         if (this.$activeWindow !== null) {
             this.$activeWindow.trigger('windowFastClose');

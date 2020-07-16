@@ -2,7 +2,7 @@ import constant from '../utils/constant';
 import Register from '../../common/utils/Register';
 
 export default class Product {
-    static init () {
+    static init ($container) {
         const usingStockSelection = $('#product_form_displayAvailabilityGroup_usingStock input[type="radio"]');
         const $outOfStockActionSelection = $('select[name="product_form[displayAvailabilityGroup][stockGroup][outOfStockAction]"]');
 
@@ -17,11 +17,11 @@ export default class Product {
         Product.toggleIsUsingStock(usingStockSelection.filter(':checked').val() === '1');
         Product.toggleIsUsingAlternateAvailability($outOfStockActionSelection.val() === constant('\\Shopsys\\FrameworkBundle\\Model\\Product\\Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY'));
 
-        Product.initializeSideNavigation();
+        Product.initializeSideNavigation($container);
     }
 
-    static initializeSideNavigation () {
-        const $productDetailNavigation = $('.js-product-detail-navigation');
+    static initializeSideNavigation ($container) {
+        const $productDetailNavigation = $container.find('.js-product-detail-navigation');
         const $webContent = $('.web__content');
 
         $('.form-group__title, .form-full__title').each(function () {

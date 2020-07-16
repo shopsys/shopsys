@@ -36,4 +36,5 @@ snc_redis:
             dsn: 'redis://%redis_host%'
     session:
         client: 'session'
+        ttl: 604800
         prefix: '%env(REDIS_PREFIX)%session:'

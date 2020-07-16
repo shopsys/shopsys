@@ -7,10 +7,10 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symplify\MonorepoBuilder\DependencyUpdater;
 use Symplify\MonorepoBuilder\Package\PackageNamesProvider;
-use Symplify\MonorepoBuilder\Release\Message;
 
 final class SetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
