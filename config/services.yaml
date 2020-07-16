@@ -214,6 +214,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface: '@App\Model\Administrator\AdministratorDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade: '@App\Model\Administrator\Security\AdministratorFrontSecurityFacade'
+
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface: '@App\Model\Category\CategoryDataFactory'
 
     Shopsys\FrameworkBundle\Model\Category\CategoryFacade: '@App\Model\Category\CategoryFacade'

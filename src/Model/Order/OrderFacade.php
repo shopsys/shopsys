@@ -81,6 +81,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Model\Order\OrderRepository $orderRepository
  * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
+ * @property \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -129,7 +130,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+     * @param \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
