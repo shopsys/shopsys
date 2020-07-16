@@ -30,6 +30,89 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
+## [v9.0.1](https://github.com/shopsys/shopsys/compare/v9.0.0...v9.0.1) - 2020-07-14
+
+### [shopsys/http-smoke-testing]
+
+#### Added
+
+- [#1578] added Symfony 5 support, Thanks to [@MattCzerner]
+
+### [shopsys/framework]
+
+#### Changed
+
+- [#1660] unified using form data if it is object, Thanks to [@pk16011990]
+- [#1674] unified product variant form, Thanks to [@pk16011990]
+- [#1692] build-demo phing target: create elasticsearch index and export data before generating error pages
+- [#1708] CKEditor is now rendered right in full width
+- [#1874] redirect URLs with a trailing slash (code 301), Thanks to [@RostislavKreisinger]
+
+#### Fixed
+
+- [#1619] production protection phing target now returns 1 on error
+- [#1672] edit transport and payment names in order items after order is changed, Thanks to [@pk16011990]
+- [#1719] ProductExportRepository: prevent Undefined offset notice
+- [#1723] default product data now have availability set
+- [#1794] fix condition for plus numbers of parameters in the product filter, Thanks to [@RostislavKreisinger]
+- [#1825] Locale flags now use asset packages to retrieve its URL, Thanks to [@pk16011990]
+- [#1857] added missing exception message about category was not found for product and domain, Thanks to [@sspooky13]
+- [#1885] fixed calculate availability for new product
+- [#1897] updated Currency::setRoundingType() for easier extension in project-base
+- [#1902] fixed undefined property userData, Thanks to [@RostislavKreisinger]
+- [#1904] select2 is no longer hidden under bottom bar in administration
+- [#1908] BestsellingProductFormType now uses constant for rendering product list
+- [#1909] fixed error 500 during logout when the user is already logged out
+- [#1915] datepicker.js assigns options per instance, Thanks to [@milanStano]
+- [#1916] fixed throwing OrderItemNotFoundException
+- [#1919] fixed saving thumbnails in elfinder
+- [#1920] fixed renaming files in elfinder
+- [#1923] prevent duplicating of admin side menu
+- [#1927] fixed validation of form after browser autofill
+
+### [shopsys/project-base]
+
+#### Added
+
+- [#771] added variant availabilities to product detail
+- [#1861] added extra_host for elasticsearch in production docker-compose.yml file, Thanks to [@ondrejbohac]
+
+#### Changed
+
+- [#1644] order can now be completed when successful flash message exists, Thanks to [@pk16011990]
+- [#1810] optimization of ProductDataFixture.php, Thanks to [@RostislavKreisinger]
+- [#1842] automatically delete sessions after 7 days of user inactivity, Thanks to [@stanoMilan]
+
+#### Fixed
+
+- [#1582] CartCest now uses correct translations
+- [#1827] container log now catches all lines from first command output, Thanks to [@pk16011990]
+- [#1906] windowForm: fix initialization of JS validation
+- [#1926] fixed wrong url of freshly uploaded files in wysiwyg
+
+### [shopsys/read-model]
+
+#### Changed
+
+- [#1730] ProductActionView creation: use calculatedSellingDenied
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1858] added new release worker with release new node module package
+
+#### Changed
+
+- [#1338] restrict access to currency settings to superadmin, Thanks to [@PetrHeinz]
+- [#1862] upgrade dependency on symplify/easy-coding-standard, Thanks to [@spagr]
+
+#### Fixed
+
+- [#1880] fixed JavaScript translations generation
+- [#1892] fixed Window.js - default options are not overridden by jQuery.extend function anymore
+- [#1905] new entity extensions are now registered immediately
+
 ## [v8.1.2](https://github.com/shopsys/shopsys/compare/v8.1.1...v8.1.2) - 2020-06-02
 
 ### [shopsys/framework]
@@ -78,15 +161,15 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 - [#1670] Preserve relation between categories and Heureka categories, Thanks to [@pk16011990]
 
-## [v9.0.0](https://github.com/shopsys/shopsys/compare/v7.3.3...v9.0.0) - 2020-05-25
+## [v9.0.0](https://github.com/shopsys/shopsys/compare/v8.1.1...v9.0.0) - 2020-05-25
 
-### shopsys/backend-api
+### [shopsys/backend-api]
 
 #### Fixed
 
 - [#1671] prevent forgotten file after install and uninstall backend api in monorepo + fix patch, Thanks to [@pk16011990]
 
-### shopsys/framework
+### [shopsys/framework]
 
 #### Added
 
@@ -144,13 +227,13 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 - [#1799] subscription form removed from error pages
 - [#1685] removed unused dependencies
 
-### shopsys/product-feed-heureka
+### [shopsys/product-feed-heureka]
 
 #### Changed
 
 - [#1740] rename method "convertToShopEntities" to "convertToHeurekaCategoriesData"
 
-### shopsys/project-base
+### [shopsys/project-base]
 
 #### Added
 
@@ -179,7 +262,7 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 - [#1638] removed empty twig template from ShopBundle
 
-### shopsys/shopsys
+### [shopsys/shopsys]
 
 #### Added
 
@@ -3219,6 +3302,7 @@ That's why is this section formatted differently.
 [#906]: https://github.com/shopsys/shopsys/pull/906
 [#875]: https://github.com/shopsys/shopsys/pull/875
 [#539]: https://github.com/shopsys/shopsys/pull/539
+
 [#1679]: https://github.com/shopsys/shopsys/pull/1679
 [#1668]: https://github.com/shopsys/shopsys/pull/1668
 [#1609]: https://github.com/shopsys/shopsys/pull/1609
@@ -3281,6 +3365,7 @@ That's why is this section formatted differently.
 [#1285]: https://github.com/shopsys/shopsys/pull/1285
 [#1276]: https://github.com/shopsys/shopsys/pull/1276
 [@mariusbuescher]: https://github.com/mariusbuescher
+
 [#1854]: https://github.com/shopsys/shopsys/pull/1854
 [#1853]: https://github.com/shopsys/shopsys/pull/1853
 [#1850]: https://github.com/shopsys/shopsys/pull/1850
@@ -3397,6 +3482,7 @@ That's why is this section formatted differently.
 [#1649]: https://github.com/shopsys/shopsys/pull/1649
 [#1647]: https://github.com/shopsys/shopsys/pull/1647
 [#1645]: https://github.com/shopsys/shopsys/pull/1645
+
 [#1641]: https://github.com/shopsys/shopsys/pull/1641
 [#1640]: https://github.com/shopsys/shopsys/pull/1640
 [#1638]: https://github.com/shopsys/shopsys/pull/1638
@@ -3429,61 +3515,69 @@ That's why is this section formatted differently.
 [#1542]: https://github.com/shopsys/shopsys/pull/1542
 [#1514]: https://github.com/shopsys/shopsys/pull/1514
 [#1478]: https://github.com/shopsys/shopsys/pull/1478
-[#143]: https://github.com/shopsys/shopsys/pull/143
-[#12]: https://github.com/shopsys/shopsys/pull/12
-[#11]: https://github.com/shopsys/shopsys/pull/11
-[v8.1.1]: https://github.com/shopsys/shopsys/compare/v8.1.0...v8.1.1
-[v8.1.0]: https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0
-[v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.3...v8.0.0
-[v7.3.3]: https://github.com/shopsys/shopsys/compare/v7.3.2...v7.3.3
-[v7.3.2]: https://github.com/shopsys/shopsys/compare/v7.3.1...v7.3.2
-[v7.3.1]: https://github.com/shopsys/shopsys/compare/v7.3.0...v7.3.1
-[v7.3.0]: https://github.com/shopsys/shopsys/compare/v7.2.2...v7.3.0
-[v7.2.2]: https://github.com/shopsys/shopsys/compare/v7.2.1...v7.2.2
-[v7.2.1]: https://github.com/shopsys/shopsys/compare/v7.2.0...v7.2.1
-[v7.2.0]: https://github.com/shopsys/shopsys/compare/v7.1.1...v7.2.0
-[v7.1.1]: https://github.com/shopsys/shopsys/compare/v7.1.0...v7.1.1
-[v7.1.0]: https://github.com/shopsys/shopsys/compare/v7.0.1...v7.1.0
-[v7.0.1]: https://github.com/shopsys/shopsys/compare/v7.0.0...v7.0.1
-[v7.0.0-beta6]: https://github.com/shopsys/shopsys/compare/v7.0.0-beta5...v7.0.0-beta6
-[v7.0.0-beta5]: https://github.com/shopsys/shopsys/compare/v7.0.0-beta4...v7.0.0-beta5
-[v7.0.0-alpha1]: https://github.com/shopsys/shopsys/compare/1.1.0...v7.0.0-alpha1
-[v7.0.0]: https://github.com/shopsys/shopsys/compare/v7.0.0-beta6...v7.0.0
-[@shopsys]: https://github.com/shopsys
-[@return]: https://github.com/return
-[@param]: https://github.com/param
 [@mposchl]: https://github.com/mposchl
-[@ShopsysFW]: https://github.com/ShopsysFW
+
+[#1928]: https://github.com/shopsys/shopsys/pull/1928
+[#1927]: https://github.com/shopsys/shopsys/pull/1927
+[#1926]: https://github.com/shopsys/shopsys/pull/1926
+[#1923]: https://github.com/shopsys/shopsys/pull/1923
+[#1920]: https://github.com/shopsys/shopsys/pull/1920
+[#1919]: https://github.com/shopsys/shopsys/pull/1919
+[#1916]: https://github.com/shopsys/shopsys/pull/1916
+[#1915]: https://github.com/shopsys/shopsys/pull/1915
+[#1909]: https://github.com/shopsys/shopsys/pull/1909
+[#1908]: https://github.com/shopsys/shopsys/pull/1908
+[#1906]: https://github.com/shopsys/shopsys/pull/1906
+[#1905]: https://github.com/shopsys/shopsys/pull/1905
+[#1904]: https://github.com/shopsys/shopsys/pull/1904
+[#1902]: https://github.com/shopsys/shopsys/pull/1902
+[#1897]: https://github.com/shopsys/shopsys/pull/1897
+[#1896]: https://github.com/shopsys/shopsys/pull/1896
+[#1892]: https://github.com/shopsys/shopsys/pull/1892
+[#1888]: https://github.com/shopsys/shopsys/pull/1888
+[#1885]: https://github.com/shopsys/shopsys/pull/1885
+[#1880]: https://github.com/shopsys/shopsys/pull/1880
+[#1874]: https://github.com/shopsys/shopsys/pull/1874
+[#1868]: https://github.com/shopsys/shopsys/pull/1868
+[#1865]: https://github.com/shopsys/shopsys/pull/1865
+[#1864]: https://github.com/shopsys/shopsys/pull/1864
+[#1862]: https://github.com/shopsys/shopsys/pull/1862
+[#1861]: https://github.com/shopsys/shopsys/pull/1861
+[#1858]: https://github.com/shopsys/shopsys/pull/1858
+[#1857]: https://github.com/shopsys/shopsys/pull/1857
+[#1842]: https://github.com/shopsys/shopsys/pull/1842
+[#1836]: https://github.com/shopsys/shopsys/pull/1836
+[#1827]: https://github.com/shopsys/shopsys/pull/1827
+[#1825]: https://github.com/shopsys/shopsys/pull/1825
+[#1810]: https://github.com/shopsys/shopsys/pull/1810
+[#1794]: https://github.com/shopsys/shopsys/pull/1794
+[#1790]: https://github.com/shopsys/shopsys/pull/1790
+[#1730]: https://github.com/shopsys/shopsys/pull/1730
+[#1723]: https://github.com/shopsys/shopsys/pull/1723
+[#1719]: https://github.com/shopsys/shopsys/pull/1719
+[#1708]: https://github.com/shopsys/shopsys/pull/1708
+[#1692]: https://github.com/shopsys/shopsys/pull/1692
+[#1674]: https://github.com/shopsys/shopsys/pull/1674
+[#1672]: https://github.com/shopsys/shopsys/pull/1672
+[#1670]: https://github.com/shopsys/shopsys/pull/1670
+[#1660]: https://github.com/shopsys/shopsys/pull/1660
+[#1644]: https://github.com/shopsys/shopsys/pull/1644
+[#1619]: https://github.com/shopsys/shopsys/pull/1619
+[#1599]: https://github.com/shopsys/shopsys/pull/1599
+[#1590]: https://github.com/shopsys/shopsys/pull/1590
+[#1588]: https://github.com/shopsys/shopsys/pull/1588
+[#1585]: https://github.com/shopsys/shopsys/pull/1585
+[#1584]: https://github.com/shopsys/shopsys/pull/1584
+[#1582]: https://github.com/shopsys/shopsys/pull/1582
+[#1578]: https://github.com/shopsys/shopsys/pull/1578
+[#1575]: https://github.com/shopsys/shopsys/pull/1575
+[#1574]: https://github.com/shopsys/shopsys/pull/1574
+[#1391]: https://github.com/shopsys/shopsys/pull/1391
+[#1338]: https://github.com/shopsys/shopsys/pull/1338
+[#771]: https://github.com/shopsys/shopsys/pull/771
+[@spagr]: https://github.com/spagr
+[@ondrejbohac]: https://github.com/ondrejbohac
+[@milanStano]: https://github.com/milanStano
+[@PetrHeinz]: https://github.com/PetrHeinz
+[@MattCzerner]: https://github.com/MattCzerner
 [@RostislavKreisinger]: https://github.com/RostislavKreisinger
-[@LukasHeinz]: https://github.com/LukasHeinz
-[6.0.0-beta21]: https://github.com/shopsys/shopsys/compare/6.0.0-beta20...6.0.0-beta21
-[6.0.0-beta20]: https://github.com/shopsys/shopsys/compare/6.0.0-beta19.2...6.0.0-beta20
-[6.0.0-beta19.2]: https://github.com/shopsys/shopsys/compare/6.0.0-beta19.1...6.0.0-beta19.2
-[6.0.0-beta19.1]: https://github.com/shopsys/shopsys/compare/6.0.0-beta19...6.0.0-beta19.1
-[6.0.0-beta19]: https://github.com/shopsys/shopsys/compare/6.0.0-beta18...6.0.0-beta19
-[6.0.0-beta18]: https://github.com/shopsys/shopsys/compare/6.0.0-beta17...6.0.0-beta18
-[6.0.0-beta17]: https://github.com/shopsys/shopsys/compare/6.0.0-beta16...6.0.0-beta17
-[6.0.0-beta16]: https://github.com/shopsys/shopsys/compare/6.0.0-beta15...6.0.0-beta16
-[6.0.0-beta15]: https://github.com/shopsys/shopsys/compare/6.0.0-alpha...6.0.0-beta15
-[6.0.0-alpha]: https://github.com/shopsys/shopsys/compare/4.0...6.0.0-alpha
-[4.0]: https://github.com/shopsys/shopsys/compare/3.1.1...4.0
-[3.1.1]: https://github.com/shopsys/shopsys/compare/3.1.0...3.1.1
-[3.1.0]: https://github.com/shopsys/shopsys/compare/0.2.0...3.1.0
-[2.3.0]: https://github.com/shopsys/shopsys/compare/0.5.0...2.3.0
-[1.1.0]: https://github.com/shopsys/shopsys/compare/1.0.1...1.1.0
-[1.0.1]: https://github.com/shopsys/shopsys/compare/1.0.0...1.0.1
-[1.0.0]: https://github.com/shopsys/shopsys/compare/0.2.1...1.0.0
-[0.6.1]: https://github.com/shopsys/shopsys/compare/0.6.0...0.6.1
-[0.6.0]: https://github.com/shopsys/shopsys/compare/0.5.1...0.6.0
-[0.5.1]: https://github.com/shopsys/shopsys/compare/0.5.0...0.5.1
-[0.5.0]: https://github.com/shopsys/shopsys/compare/0.4.0...0.5.0
-[0.4.2]: https://github.com/shopsys/shopsys/compare/0.4.1...0.4.2
-[0.4.1]: https://github.com/shopsys/shopsys/compare/0.4.0...0.4.1
-[0.4.0]: https://github.com/shopsys/shopsys/compare/0.3.0...0.4.0
-[0.3.0]: https://github.com/shopsys/shopsys/compare/0.2.0...0.3.0
-[0.2.2]: https://github.com/shopsys/shopsys/compare/0.2.1...0.2.2
-[0.2.1]: https://github.com/shopsys/shopsys/compare/0.2.0...0.2.1
-[0.2.0]: https://github.com/shopsys/shopsys/compare/0.1.0...0.2.0
-[0.1.2]: https://github.com/shopsys/shopsys/compare/0.1.1...0.1.2
-[0.1.1]: https://github.com/shopsys/shopsys/compare/0.1.0...0.1.1
-[0.1.0]: https://github.com/shopsys/shopsys/compare/6.0.0-beta21...0.1.0
