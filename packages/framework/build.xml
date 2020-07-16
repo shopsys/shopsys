@@ -118,7 +118,7 @@
 
     <target name="build" depends="build-deploy-part-1-db-independent,build-deploy-part-2-db-dependent" description="Builds application for production preserving your DB."/>
 
-    <target name="build-demo" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-demo,error-pages-generate,warmup,elasticsearch-index-recreate,elasticsearch-export,clean-redis-old" description="Builds application for production with clean demo DB."/>
+    <target name="build-demo" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-demo,warmup,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,clean-redis-old" description="Builds application for production with clean demo DB."/>
 
     <target name="build-demo-ci" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
 
@@ -134,7 +134,7 @@
 
     <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
 
-    <target name="build-new" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-rebuild,error-pages-generate,warmup,elasticsearch-index-recreate,clean-redis-old" description="Builds application for production with clean DB (with base data only)."/>
+    <target name="build-new" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-rebuild,warmup,elasticsearch-index-recreate,error-pages-generate,clean-redis-old" description="Builds application for production with clean DB (with base data only)."/>
 
     <target name="build-version-generate" description="Generates parameters_version.yaml config file with a new build version number.">
         <exec executable="${path.php.executable}" checkreturn="true" outputProperty="version">
@@ -1026,7 +1026,7 @@
         </exec>
     </target>
 
-    <target name="tests" depends="npm-install-dependencies,error-pages-generate,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
+    <target name="tests" depends="npm-install-dependencies,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,error-pages-generate,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
 
     <target name="tests-acceptance" depends="production-protection,clean,clean-redis,test-db-dump" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
         <available file="${path.env.test}" type="file" property="path.env.test.existed"/>
