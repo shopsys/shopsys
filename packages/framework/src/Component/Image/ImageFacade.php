@@ -118,7 +118,7 @@ class ImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
      */
-    protected function saveImageOrdering($orderedImages): void
+    protected function saveImageOrdering(array $orderedImages): void
     {
         $this->setImagePositionsByOrder($orderedImages);
         $this->em->flush();
@@ -152,7 +152,7 @@ class ImageFacade
      * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
      */
-    protected function deleteImages($entity, array $images): void
+    protected function deleteImages(object $entity, array $images): void
     {
         $entityName = $this->imageConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
@@ -172,7 +172,7 @@ class ImageFacade
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
-    public function getImageByEntity($entity, $type)
+    public function getImageByEntity(object $entity, ?string $type): Image
     {
         return $this->imageRepository->getImageByEntity(
             $this->imageConfig->getEntityName($entity),
@@ -186,7 +186,7 @@ class ImageFacade
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getImagesByEntityIndexedById($entity, $type)
+    public function getImagesByEntityIndexedById(object $entity, ?string $type): array
     {
         return $this->imageRepository->getImagesByEntityIndexedById(
             $this->imageConfig->getEntityName($entity),
@@ -201,7 +201,7 @@ class ImageFacade
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, $type)
+    public function getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, ?string $type): array
     {
         return $this->imageRepository->getImagesByEntityIndexedById(
             $entityName,
@@ -214,7 +214,7 @@ class ImageFacade
      * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getAllImagesByEntity($entity)
+    public function getAllImagesByEntity(object $entity): array
     {
         return $this->imageRepository->getAllImagesByEntity(
             $this->imageConfig->getEntityName($entity),
@@ -225,7 +225,7 @@ class ImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      */
-    public function deleteImageFiles(Image $image)
+    public function deleteImageFiles(Image $image): void
     {
         $entityName = $image->getEntityName();
         $imageConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
@@ -245,7 +245,7 @@ class ImageFacade
      * @param object $entity
      * @return int
      */
-    protected function getEntityId($entity)
+    protected function getEntityId(object $entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
         $identifier = $entityMetadata->getIdentifierValues($entity);
@@ -260,19 +260,19 @@ class ImageFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
-    public function getAllImageEntityConfigsByClass()
+    public function getAllImageEntityConfigsByClass(): array
     {
         return $this->imageConfig->getAllImageEntityConfigsByClass();
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
+     * @param object $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl(DomainConfig $domainConfig, $imageOrEntity, $sizeName = null, $type = null)
+    public function getImageUrl(DomainConfig $domainConfig, object $imageOrEntity, ?string $sizeName = null, ?string $type = null): string
     {
         $image = $this->getImageByObject($imageOrEntity, $type);
 
@@ -315,12 +315,12 @@ class ImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $imageOrEntity
+     * @param object $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[]
      */
-    public function getAdditionalImagesData(DomainConfig $domainConfig, $imageOrEntity, ?string $sizeName, ?string $type)
+    public function getAdditionalImagesData(DomainConfig $domainConfig, object $imageOrEntity, ?string $sizeName, ?string $type): array
     {
         $image = $this->getImageByObject($imageOrEntity, $type);
 
@@ -382,7 +382,7 @@ class ImageFacade
      * @param string|null $sizeName
      * @return string
      */
-    protected function getAdditionalImageUrl(DomainConfig $domainConfig, int $additionalSizeIndex, Image $image, ?string $sizeName)
+    protected function getAdditionalImageUrl(DomainConfig $domainConfig, int $additionalSizeIndex, Image $image, ?string $sizeName): string
     {
         if (!$this->imageLocator->imageExists($image)) {
             throw new ImageNotFoundException();
@@ -394,11 +394,11 @@ class ImageFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
+     * @param object $imageOrEntity
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
-    public function getImageByObject($imageOrEntity, $type = null)
+    public function getImageByObject(object $imageOrEntity, ?string $type = null): Image
     {
         if ($imageOrEntity instanceof Image) {
             return $imageOrEntity;
@@ -410,7 +410,7 @@ class ImageFacade
      * @param int $imageId
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
-    public function getById($imageId)
+    public function getById(int $imageId): Image
     {
         return $this->imageRepository->getById($imageId);
     }
@@ -419,7 +419,7 @@ class ImageFacade
      * @param object $sourceEntity
      * @param object $targetEntity
      */
-    public function copyImages($sourceEntity, $targetEntity)
+    public function copyImages(object $sourceEntity, object $targetEntity): void
     {
         $sourceImages = $this->getAllImagesByEntity($sourceEntity);
         foreach ($sourceImages as $sourceImage) {
@@ -454,7 +454,7 @@ class ImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
      */
-    protected function setImagePositionsByOrder($orderedImages)
+    protected function setImagePositionsByOrder(array $orderedImages): void
     {
         $position = 0;
         foreach ($orderedImages as $image) {
