@@ -61,7 +61,7 @@ class PriceRangeRepository extends BasePriceRangeRepository
             ->addOrExtendJoin($queryBuilder, 'p.domains', 'pd', 'pd.product = p AND pd.domainId = prv.domainId')
             ->resetDQLPart('groupBy')
             ->resetDQLPart('orderBy')
-            ->select('MIN(pd.lowPriceWithVat) AS minimalPrice, MAX(pd.lowPriceWithVat) AS maximalPrice');
+            ->select('MIN(pd.sellingPriceWithVat) AS minimalPrice, MAX(pd.sellingPriceWithVat) AS maximalPrice');
 
         $priceRangeData = $queryBuilder->getQuery()->execute();
         $priceRangeDataRow = reset($priceRangeData);
