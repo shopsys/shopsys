@@ -26,10 +26,8 @@ class QueryBuilder extends BaseQueryBuilder
     /**
      * {@inheritdoc}
      */
-    public function add($dqlPartName, $dqlPart, $append = false)
+    public function getDQL()
     {
-        $resolvedDqlPart = $this->entityNameResolver->resolveIn($dqlPart);
-
-        return parent::add($dqlPartName, $resolvedDqlPart, $append);
+        return $this->entityNameResolver->resolveIn(parent::getDQL());
     }
 }
