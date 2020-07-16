@@ -221,8 +221,8 @@ class CustomerController extends FrontBaseController
             $this->deliveryAddressFacade->delete($deliveryAddressId);
 
             return Response::create('OK');
-        } else {
-            throw $this->createAccessDeniedException('');
         }
+
+        throw $this->createAccessDeniedException('');
     }
 }
