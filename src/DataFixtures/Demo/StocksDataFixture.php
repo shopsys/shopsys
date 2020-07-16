@@ -89,39 +89,39 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Sklad Praha',
                     self::ATTR_CENTRAL => true,
-                    self::ATTR_EXTERNAL => 'ppp',
+                    self::ATTR_EXTERNAL => '702',
                 ],
                 [
                     self::ATTR_NAME => 'Sklad Brno',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => 'ddd',
+                    self::ATTR_EXTERNAL => '704',
                 ],
                 [
                     self::ATTR_NAME => 'Sklad Ostrava',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => 'fff',
+                    self::ATTR_EXTERNAL => '706',
                 ],
                 [
                     self::ATTR_NAME => 'Sklad Pardubice',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => 'ggg',
+                    self::ATTR_EXTERNAL => '708',
                 ],
             ];
         $data[2] = [
             [
                 self::ATTR_NAME => 'Sklad Bratislava',
                 self::ATTR_CENTRAL => true,
-                self::ATTR_EXTERNAL => 'hhh',
+                self::ATTR_EXTERNAL => '602',
             ],
             [
                 self::ATTR_NAME => 'Sklad Košice',
                 self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => 'jjj',
+                self::ATTR_EXTERNAL => '604',
             ],
             [
                 self::ATTR_NAME => 'Sklad Zilina',
                 self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => 'zzz',
+                self::ATTR_EXTERNAL => '606',
             ],
         ];
 

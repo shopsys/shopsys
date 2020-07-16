@@ -8,6 +8,9 @@
                     <th class="table-form__cell table-form__cell--label">{{ 'Sklad'|trans }}</th>
                     <th class="table-form__cell">{{ 'Skladem'|trans }}</th>
                     <th class="table-form__cell">{{ 'Vystaveno'|trans }}</th>
+                    <th class="table-form__cell">{{ 'Budoucí skladová zásoba'|trans }}</th>
+                    <th class="table-form__cell">{{ 'Datum naskladnění'|trans }}</th>
+                    <th class="table-form__cell">{{ 'Dnů do naskladnění'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody data-index="{{ form|length }}">
@@ -22,6 +25,15 @@
                         </td>
                         <td class="table-form__cell">
                             {{ form_widget(quantityForm.productExposed) }}
+                        </td>
+                        <td class="table-form__cell">
+                            {{ form_row(quantityForm.futureProductQuantity) }}
+                        </td>
+                        <td class="table-form__cell">
+                            {{ form_row(quantityForm.dateOfStorage) }}
+                        </td>
+                        <td class="table-form__cell">
+                            {{ form_row(quantityForm.daysOfStorage) }}
                         </td>
                     </tr>
                 {% endfor %}

@@ -380,5 +380,7 @@ class ProductDataFactory extends BaseProductDataFactory
         foreach ($this->stockProductFacade->getProductStocksByProduct($product) as $stockProduct) {
             $productData->stockProductData[$stockProduct->getStock()->getId()] = $this->stockProductDataFactory->createFromProductStock($stockProduct);
         }
+
+        ksort($productData->stockProductData);
     }
 }

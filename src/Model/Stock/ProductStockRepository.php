@@ -69,12 +69,12 @@ class ProductStockRepository
     }
 
     /**
-     * @param int $stockExternalId
+     * @param string $stockExternalId
      * @param string $productCatnum
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return \App\Model\Stock\ProductStock|null
      */
-    public function findProductStockByStockExternalIdAndProductCatnum(int $stockExternalId, string $productCatnum): ?ProductStock
+    public function findProductStockByStockExternalIdAndProductCatnum(string $stockExternalId, string $productCatnum): ?ProductStock
     {
         return $this->getQueryBuilder()
             ->join(Product::class, 'p', JOIN::WITH, 'sp.product = p')
@@ -110,6 +110,19 @@ class ProductStockRepository
             ->andWhere('s.centralStock = false')
             ->andWhere('s.domainId = :domainId')
             ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @return \App\Model\Stock\ProductStock[]
+     */
+    public function findFutureProductStockAfterNowDate(): array
+    {
+        return $this->getQueryBuilder()
+            ->where('sp.dateOfStorage IS NOT NULL')
+            ->andWhere('sp.dateOfStorage < :nowDate')
+            ->setParameter('nowDate', new \DateTime())
             ->getQuery()
             ->execute();
     }
