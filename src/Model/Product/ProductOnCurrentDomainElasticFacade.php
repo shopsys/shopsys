@@ -163,7 +163,8 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         ProductFilterData $productFilterData,
         ?ReadyCategorySeoMix $readyCategorySeoMix
     ): ?ProductFilterCountData {
-        if ($productFilterData->isFilterActive($readyCategorySeoMix) === false) {
+        $isFilterActive = $productFilterData->isFilterActive($readyCategorySeoMix);
+        if ($isFilterActive === false) {
             $productFilterCountData = $this->productFilterCacheFacade->findProductFilterCountDataInCache(
                 $categoryId,
                 $this->domain->getId(),
@@ -180,12 +181,14 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             $productFilterData
         );
 
-        $this->productFilterCacheFacade->setProductFilterCountDataIntoCache(
-            $productFilterCountData,
-            $categoryId,
-            $this->domain->getId(),
-            $readyCategorySeoMix
-        );
+        if ($isFilterActive === false) {
+            $this->productFilterCacheFacade->setProductFilterCountDataIntoCache(
+                $productFilterCountData,
+                $categoryId,
+                $this->domain->getId(),
+                $readyCategorySeoMix
+            );
+        }
 
         return $productFilterCountData;
     }
