@@ -193,10 +193,15 @@
                     crop: false
                     occurrence: 'Front-end: Advertising in cart (above the cart preview)'
                 -   name: productListMiddle
-                    width: 900
+                    width: 1390
                     height: ~
                     crop: false
                     occurrence: 'Front-end: Advertising in middle category (above the product list)'
+                -   name: productListMiddleRetina
+                    width: 2780
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising in middle category (above the product list) on Retina displays'
         -   name: mobile
             sizes:
                 -   name: header
@@ -220,10 +225,15 @@
                     crop: false
                     occurrence: 'Front-end: Advertising in cart (above the cart preview)'
                 -   name: productListMiddle
-                    width: 425
+                    width: 328
                     height: ~
                     crop: false
                     occurrence: 'Front-end: Advertising in middle category (above the product list)'
+                -   name: productListMiddleRetina
+                    width: 656
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Advertising in middle category (above the product list) - retina display'
 
 -   name: brand
     class: Shopsys\FrameworkBundle\Model\Product\Brand\Brand

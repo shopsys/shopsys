@@ -5,16 +5,35 @@
                 <picture>
                     <source media="(max-width: 425px)" srcset="{{ imageUrl(advert, advert.positionName, 'mobile') }}" />
                     <source media="(min-width: 425px)" srcset="{{ imageUrl(advert, advert.positionName, 'web') }}" />
-                    <img data-src="{{ imageUrl(advert, advert.positionName, 'web') }}" itemprop="image" class="image-noticer-{{advert.positionName}}" loading="lazy" />
+                    <img
+                        data-src="{{ imageUrl(advert, advert.positionName, 'web') }}"
+                        itemprop="image" class="in-place__img image-noticer-{{advert.positionName}}"
+                        loading="lazy"
+                    />
                 </picture>
             {% else %}
+                {% if advert.link is not empty %}
                 <a href="{{ advert.link }}">
+                {% endif %}
                     <picture>
-                        <source media="(max-width: 425px)" srcset="{{ imageUrl(advert, advert.positionName, 'mobile') }}" />
-                        <source media="(min-width: 425px)" srcset="{{ imageUrl(advert, advert.positionName, 'web') }}" />
-                        <img data-src="{{ imageUrl(advert, advert.positionName, 'web') }}" itemprop="image" class="image-noticer-{{advert.positionName}}" loading="lazy" />
+                        <source
+                            media="(max-width: 599px)"
+                            srcset="{{ imageUrl(advert, 'productListMiddleRetina', 'mobile') }} 2xx, {{ imageUrl(advert, advert.positionName, 'mobile') }} 1x"
+                        >
+                        <source
+                            media="(min-width: 600px)"
+                            srcset="{{ imageUrl(advert, 'productListMiddleRetina', 'web') }} 2x, {{ imageUrl(advert, advert.positionName, 'web') }} 1x"
+                        >
+                        <img
+                            data-src="{{ imageUrl(advert, advert.positionName, 'web') }}"
+                            itemprop="image"
+                            class="in-place__img image-noticer-{{advert.positionName}}"
+                            loading="lazy"
+                        />
                     </picture>
+                {% if advert.link is not empty %}
                 </a>
+                {% endif %}
             {% endif %}
         {% elseif advert.type == 'code' %}
             {{ advert.code | raw }}
