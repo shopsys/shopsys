@@ -6,13 +6,16 @@ namespace App\Model\Product\Elasticsearch;
 
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Parameter\ParameterFacade;
+use App\Model\Product\Product;
+use App\Model\Product\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
@@ -22,13 +25,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @method string extractDetailUrl(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractFlags(\App\Model\Product\Product $product)
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
- * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
  * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @property \App\Component\Domain\Domain $domain
+ * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -43,6 +46,16 @@ class ProductExportRepository extends BaseProductExportRepository
     private $parameterFacade;
 
     /**
+     * @var \App\Model\Product\ProductRepository
+     */
+    private $productRepository;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
+     */
+    private $pricingGroupSettingFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -52,6 +65,8 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -62,7 +77,9 @@ class ProductExportRepository extends BaseProductExportRepository
         ProductVisibilityRepository $productVisibilityRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        ParameterFacade $parameterFacade
+        ParameterFacade $parameterFacade,
+        ProductRepository $productRepository,
+        PricingGroupSettingFacade $pricingGroupSettingFacade
     ) {
         parent::__construct(
             $em,
@@ -75,6 +92,8 @@ class ProductExportRepository extends BaseProductExportRepository
         );
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->parameterFacade = $parameterFacade;
+        $this->productRepository = $productRepository;
+        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
     /**
@@ -83,18 +102,17 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param string $locale
      * @return array
      */
-    protected function extractResult(Product $product, int $domainId, string $locale): array
+    protected function extractResult(BaseProduct $product, int $domainId, string $locale): array
     {
         $flagIds = $this->extractFlagsForDomain($domainId, $product);
         $categoryIds = $this->extractCategories($domainId, $product);
-        $parameters = $this->extractParameters($locale, $product);
+        $parameters = $this->extractParametersIncludedVariants($product, $locale, $domainId);
         $prices = $this->extractPrices($domainId, $product);
         $visibility = $this->extractVisibility($domainId, $product);
         $detailUrl = $this->extractDetailUrl($domainId, $product);
         $variantIds = $this->extractVariantIds($product);
         $highPriceWithVat = $product->getHighPriceWithVat($domainId);
         $variantsParametersSetup = $product->isMainVariant() ? $this->parameterFacade->getVariantsSetupForElasticByMainProduct($product, $locale, $domainId) : null;
-        $parameters = $this->appendVariantParametersToMainVariantParameters($parameters, $variantsParametersSetup);
 
         return [
             'id' => $product->getId(),
@@ -135,42 +153,6 @@ class ProductExportRepository extends BaseProductExportRepository
     }
 
     /**
-     * @param array $parameters
-     * @param array|null $variantsParametersSetup
-     * @return array
-     */
-    private function appendVariantParametersToMainVariantParameters(array $parameters, ?array $variantsParametersSetup): array
-    {
-        if ($variantsParametersSetup === null) {
-            return $parameters;
-        }
-
-        $parameterValuesIndexedByParameterId = [];
-        foreach ($parameters as $parameterValuePair) {
-            $parameterValuesIndexedByParameterId[$parameterValuePair['parameter_id']][] = $parameterValuePair['parameter_value_id'];
-        }
-
-        foreach ($variantsParametersSetup as $variantParameterSetup) {
-            foreach ($variantParameterSetup['parameter_values_setup'] as $parameterValuesSetup) {
-                $parameterValuesIndexedByParameterId[$parameterValuesSetup['parameter_id']][] = $parameterValuesSetup['parameter_value_id'];
-            }
-        }
-
-        $parameters = [];
-        foreach ($parameterValuesIndexedByParameterId as $parameterId => $parameterValueIds) {
-            $parameterValueIds = array_unique($parameterValueIds);
-            foreach ($parameterValueIds as $parameterValueId) {
-                $parameters[] = [
-                    'parameter_id' => $parameterId,
-                    'parameter_value_id' => $parameterValueId,
-                ];
-            }
-        }
-
-        return $parameters;
-    }
-
-    /**
      * @param int $domainId
      * @param \App\Model\Product\Product $product
      * @return int[]
@@ -183,5 +165,26 @@ class ProductExportRepository extends BaseProductExportRepository
         }
 
         return $flagIds;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $locale
+     * @param int $domainId
+     * @return array
+     */
+    private function extractParametersIncludedVariants(Product $product, string $locale, int $domainId): array
+    {
+        $products = [];
+        if ($product->isMainVariant() === true) {
+            $products = $this->productRepository->getAllSellableVariantsByMainVariant(
+                $product,
+                $domainId,
+                $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId)
+            );
+        }
+        $products[] = $product;
+
+        return $this->parameterRepository->getProductParameterValuesDataByProducts($products, $locale);
     }
 }

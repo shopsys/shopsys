@@ -422,4 +422,31 @@ class ParameterRepository extends BaseParameterRepository
 
         return $queryBuilder;
     }
+
+    /**
+     * @param \App\Model\Product\Product[] $products
+     * @param string $locale
+     * @return array
+     */
+    public function getProductParameterValuesDataByProducts(array $products, string $locale): array
+    {
+        if (count($products) === 0) {
+            return [];
+        }
+
+        return $this->em->createQueryBuilder()
+            ->select('p.id as parameter_id, pv.id as parameter_value_id')
+            ->distinct()
+            ->from(ProductParameterValue::class, 'ppv')
+            ->join('ppv.parameter', 'p')
+            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale AND pt.name IS NOT NULL')
+            ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
+            ->where('ppv.product IN (:products)')
+            ->setParameters([
+                'products' => $products,
+                'locale' => $locale,
+            ])
+            ->getQuery()
+            ->execute();
+    }
 }
