@@ -63,6 +63,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'totalPackageWeight',
         'urls',
         'sellingPriceWithVat',
+        'stockProductData',
     ];
 
     /**
