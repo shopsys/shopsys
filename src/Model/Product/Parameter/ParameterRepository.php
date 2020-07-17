@@ -349,6 +349,7 @@ class ParameterRepository extends BaseParameterRepository
     {
         return $this->getProductParameterValueRepository()
             ->createQueryBuilder('ppv')
+            ->distinct()
             ->join('ppv.product', 'p', Join::WITH, 'p.mainVariant = :product AND p.calculatedSellingDenied = FALSE')
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->join(ProductVisibility::class, 'pvis', Join::WITH, 'p = pvis.product AND pvis.visible = TRUE AND pvis.domainId = :domainId')
