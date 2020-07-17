@@ -217,6 +217,9 @@ class ProductFacade extends BaseProductFacade
         if ($product->isMainVariant()) {
             $product->refreshVariants($productData->variants);
         }
+        if ($product->isVariant() === true) {
+            $product->getMainVariant()->markForExport();
+        }
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->em->flush();
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
