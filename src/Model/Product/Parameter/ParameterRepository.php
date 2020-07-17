@@ -330,6 +330,7 @@ class ParameterRepository extends BaseParameterRepository
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
             ->where('ppv.product = :product')
             ->andWhere('ppv.parameter = :parameter')
+            ->addOrderBy('pv.id', 'ASC')
             ->setParameters([
                 'locale' => $locale,
                 'product' => $product,
@@ -354,6 +355,8 @@ class ParameterRepository extends BaseParameterRepository
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->join(ProductVisibility::class, 'pvis', Join::WITH, 'p = pvis.product AND pvis.visible = TRUE AND pvis.domainId = :domainId')
             ->where('ppv.parameter IN (:variantParameters)')
+            ->addOrderBy('IDENTITY(ppv.parameter)', 'ASC')
+            ->addOrderBy('IDENTITY(ppv.value)', 'ASC')
             ->setParameters([
                 'product' => $product,
                 'variantParameters' => $product->getVariantParameters(),
