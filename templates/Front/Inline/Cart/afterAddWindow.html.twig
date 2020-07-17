@@ -13,7 +13,7 @@
         <div class="window-popup__cart">
             <div class="window-popup__cart__img">
                 {% if imageExists(product) %}
-                    {{ image(product, {size: 'galleryThumbnail', lazy: false}) }}
+                    {{ image(product, {size: 'modal', lazy: false}) }}
                 {% else %}
                     {{ noimage({size: 'galleryThumbnail', alt: product.fullname}) }}
                 {% endif %}

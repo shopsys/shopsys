@@ -62,7 +62,10 @@
                 <div class="cart__detail__figure">
                     <strong class="cart__detail__figure__text">{{ 'Váš košík je zatím prázdný.'|trans }}</strong>
                     <div class="cart__detail__figure__image">
-                        <img class="cart__detail__figure__img" loading="lazy" data-src="{{ asset('public/frontend/images/empty-cart-small.png') }}" alt="{{ 'Empty cart'|trans }}">
+                        <picture>
+                            <source srcset="{{ asset('public/frontend/images/empty-cart-small2x.png') }} 2x, {{ asset('public/frontend/images/empty-cart-small.png') }} 1x" />
+                            <img class="cart__detail__figure__img" loading="lazy" data-src="{{ asset('public/frontend/images/empty-cart-small.png') }}" alt="{{ 'Empty cart'|trans }}">
+                        </picture>
                     </div>
                 </div>
             </div>

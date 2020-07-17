@@ -43,6 +43,9 @@
             height: 130
             crop: false
             occurrence: 'Front-end: Product list by category'
+            additionalSizes:
+                - {width: 240, height: ~, media: "only screen and (max-width: 599px) and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 380, height: ~, media: "only screen and (min-width: 600px) and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: product
     class: Shopsys\FrameworkBundle\Model\Product\Product
@@ -55,21 +58,35 @@
             occurrence: 'Front-end: Main image in product detail'
             additionalSizes:
                 - {width: 710, height: ~, media: "(min-width: 480px) and (max-width: 768px)"}
+                - {width: 1210, height: ~, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: galleryThumbnail
-            width: 250
+            width: 200
             height: ~
             crop: false
             occurrence: 'Front-end: Thumbnail of images under the main image in product detail'
+            additionalSizes:
+                - {width: 400, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: modal
+            width: 96
+            height: ~
+            crop: false
+            occurrence: 'Front-end: Product in modal'
+            additionalSizes:
+                - {width: 192, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: list
             width: 280
             height: ~
             crop: false
             occurrence: 'Front-end: Listing of products in section, listing of products on special offer'
+            additionalSizes:
+                - {width: 560, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnail
             width: 90
             height: 90
             crop: false
             occurrence: 'Front-end: Preview in autocomplete for search, preview in cart during ordering process'
+            additionalSizes:
+                - {width: 180, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: productSeries
     class: App\Model\Product\Series\ProductSeries
@@ -82,7 +99,21 @@
             occurrence: 'Front-end: Main image in product series detail and list'
             additionalSizes:
                 - {width: 710, height: ~, media: "(min-width: 480px) and (max-width: 768px)"}
-                - {width: 890, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 2)"}
+                - {width: 890, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: previewDetail
+            width: 450
+            height: ~
+            crop: false
+            occurrence: 'Front-end: Main image in product series detail and list'
+            additionalSizes:
+                - {width: 900, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: previewDetailSmall
+            width: 184
+            height: ~
+            crop: false
+            occurrence: 'Front-end: Main image in product series detail and list'
+            additionalSizes:
+                - {width: 368, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: galleryThumbnail
             width: 120
             height: 80
@@ -99,16 +130,33 @@
                     height: 290
                     crop: false
                     occurrence: 'Front-end: Main page slider'
-                    additionalSizes:
-                        - {width: 400, height: 165, media: "(max-width: 480px)"}
-                        - {width: 730, height: 230, media: "(max-width: 1024px)"}
+                -   name: retinaSlider
+                    width: 2090
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Main page slider - retina display'
         -   name: mobile
             sizes:
                 -   name: ~
-                    width: 480
+                    width: 345
                     height: ~
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider'
+                -   name: sliderSmall
+                    width: 330
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Mobile main page slider'
+                -   name: retinaSlider
+                    width: 690
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Mobile main page slider - retina display small'
+                -   name: retinaSliderSmall
+                    width: 660
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Mobile main page slider - retina display'
 
 -   name: transport
     class: Shopsys\FrameworkBundle\Model\Transport\Transport
@@ -199,17 +247,27 @@
     class: App\Model\Blog\Article\BlogArticle
     sizes:
         -   name: ~
-            width: 750
-            height:
+            width: 960
+            height: ~
             crop: false
             occurrence: 'Front-end: Blog article detail'
+            additionalSizes:
+                - {width: 1920, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: list
-            width: 540
-            height: 364
+            width: 440
+            height: 220
             crop: true
             occurrence: 'Front-end: Blog article list'
             additionalSizes:
                 - {width: 269, height: 209, media: "(max-width: 768px)"}
+                - {width: 880, height: 440, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: listGrid
+            width: 450
+            height: 220
+            crop: true
+            occurrence: 'Front-end: Blog article list'
+            additionalSizes:
+                - {width: 900, height: 440, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: searchThumbnail
             width: 116
             height: 78

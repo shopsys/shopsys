@@ -2,7 +2,7 @@
 @box-media-margin-md: 3rem;
 @box-media-wrap-max-width: 900px;
 @box-media-img-max-width: 200px;
-@box-media-img-max-width-md: 300px;
+@box-media-img-max-width-md: 315px;
 @box-media-bg-height: 81px;
 @box-media-bg-height-md: 160px;
 @box-media-bg-width: 80%;
@@ -15,12 +15,12 @@
 
     @media @query-md {
         margin: @box-media-margin-md 0;
-    }    
+    }
 
     &::before {
         position: absolute;
         left: 0;
-        top: 81px;
+        top: 75px;
         height: @box-media-bg-height;
         width: @box-media-bg-width;
         content: '';
@@ -54,12 +54,13 @@
     }
 
     &__img {
+        display: block;
         position: relative;
         left: 2rem;
         max-width: @box-media-img-max-width;
         margin-bottom: 1.75rem;
 
-        @media @query-md {            
+        @media @query-md {
             left: -2rem;
             max-width: @box-media-img-max-width-md;
             margin-bottom: 0;
@@ -78,7 +79,7 @@
         }
     }
 
-    &__desc {        
+    &__desc {
 
         @media @query-mobile {
             margin-bottom: 1.5rem;

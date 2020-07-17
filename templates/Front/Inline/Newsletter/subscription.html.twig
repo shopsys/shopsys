@@ -18,6 +18,20 @@
                 {{ 'Of course, you can unsubscribe at any time. By submitting the data, you agree to the processing of personal data.'|trans }}
             </div>
         </div>
+        <picture>
+            <source
+                media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                srcset="
+                {{ asset('public/frontend/images/sconto_newsletter2x.png') }} 2x,
+                {{ asset('public/frontend/images/sconto_newsletter.png') }} 1x"
+            />
+            <img
+                class="footer__newsletter__img"
+                loading="lazy"
+                src=""
+                data-src="{{ asset('public/frontend/images/sconto_newsletter.png') }}"
+                alt="{{ 'Newsletter'|trans }}">
+        </picture>
     </div>
 {{ form_end(form) }}
 {{ init_js_validation(form, true) }}
