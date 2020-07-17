@@ -125,11 +125,10 @@ class ProductStockRepository
      * @param int $domainId
      * @return \App\Model\Stock\ProductStock[]
      */
-    public function getProductStocksExcludeCentralStockByProductAndDomainId(Product $product, int $domainId): array
+    public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
     {
         return $this->getProductStockQueryBuilderByProduct($product)
-            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock')
-            ->andWhere('s.centralStock = false')
+            ->join(Stock::class, 's', Join::WITH, 's.id = sp.stock')
             ->andWhere('s.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->getQuery()

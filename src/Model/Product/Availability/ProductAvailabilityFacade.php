@@ -9,6 +9,7 @@ use App\Model\Product\Product;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\ProductStockRepository;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use DateTime;
 
 class ProductAvailabilityFacade
 {
@@ -237,35 +238,55 @@ class ProductAvailabilityFacade
      */
     public function getProductStocksAvailabilitiesInformationByDomainId(Product $product, int $domainId): array
     {
-        $productStocks = $this->productStockRepository->getProductStocksExcludeCentralStockByProductAndDomainId($product, $domainId);
+        $productStocks = $this->productStockRepository->getProductStocksByProductAndDomainId($product, $domainId);
 
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             $weeks = $this->getTransferWeeksByDomainId($domainId);
+            $isOutOfStock = false;
         } else {
             $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
+            $isOutOfStock = true;
         }
 
-        $outOfStockAvailabilityInformation = tc(
-            '{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
-            $weeks,
-            ['%weeks%' => $weeks]
-        );
+        $outOfStockAvailabilityInformation = $this->getWeeksAvailabilityMessage($weeks);
 
         if ($product->hasPreorder() === false) {
             $outOfStockAvailabilityInformation = t('Vyprodáno');
         }
 
+        $closestFutureStockAvailabilityDays = $this->getClosestFutureAvailabilityDaysByDomainId($productStocks, $domainId);
+        if ($closestFutureStockAvailabilityDays !== PHP_INT_MAX) {
+            $closestFutureStockAvailabilityWeeksForOtherStocks = $this->getClosestStockAvailabilityWeeksForOtherStocksByDomainId($closestFutureStockAvailabilityDays, $domainId);
+            $closestFutureStockAvailabilityInformationForOtherStocks = $this->getWeeksAvailabilityMessage($closestFutureStockAvailabilityWeeksForOtherStocks);
+        } else {
+            $closestFutureStockAvailabilityInformationForOtherStocks = $outOfStockAvailabilityInformation;
+        }
+
         $stocksList = [];
         foreach ($productStocks as $productStock) {
+            if ($productStock->getStock()->isCentralStock()) {
+                continue;
+            }
+
             $availabilityInformation = t('Můžete mít <strong class="is-in-stock">ihned</strong>');
             $availabilityStatus = 'in-stock';
 
-            if ($productStock->getProductQuantity() <= 0) {
-                $availabilityInformation = $outOfStockAvailabilityInformation;
+            if ($isOutOfStock) {
+                if ($productStock->getDateOfStorage() !== null) {
+                    $futureStockAvailabilityWeeks = $this->getFutureStockAvailabilityWeeksByDomainId($productStock->getDateOfStorage(), $domainId);
+                    $availabilityInformation = $this->getWeeksAvailabilityMessage($futureStockAvailabilityWeeks);
+                } else {
+                    $availabilityInformation = $closestFutureStockAvailabilityInformationForOtherStocks;
+                }
                 $availabilityStatus = 'out-of-stock';
+            } else {
+                if ($productStock->getProductQuantity() <= 0) {
+                    $availabilityInformation = $outOfStockAvailabilityInformation;
+                    $availabilityStatus = 'out-of-stock';
+                }
             }
 
-            $stocksList[] = new ProductStockAvailabilityInformation(
+            $stocksList[$productStock->getStock()->getId()] = new ProductStockAvailabilityInformation(
                 $productStock->getStock()->getName(),
                 $availabilityInformation,
                 $productStock->isProductExposed(),
@@ -274,6 +295,81 @@ class ProductAvailabilityFacade
         }
 
         return $stocksList;
+    }
+
+    /**
+     * @param \App\Model\Stock\ProductStock[] $productStocks
+     * @param int $domainId
+     * @return int
+     */
+    private function getClosestFutureAvailabilityDaysByDomainId(array $productStocks, int $domainId): int
+    {
+        $closesFutureAvailabilityDays = PHP_INT_MAX;
+        foreach ($productStocks as $productStock) {
+            if ($productStock->getDateOfStorage() !== null) {
+                $futureStockAvailabilityDays = $this->getFutureStockAvailabilityDaysByDomainId($productStock->getDateOfStorage(), $domainId);
+                if ($futureStockAvailabilityDays < $closesFutureAvailabilityDays) {
+                    $closesFutureAvailabilityDays = $futureStockAvailabilityDays;
+                }
+            }
+        }
+
+        return $closesFutureAvailabilityDays;
+    }
+
+    /**
+     * @param \DateTime $dateOfStorage
+     * @param int $domainId
+     * @return int
+     */
+    private function getFutureStockAvailabilityWeeksByDomainId(DateTime $dateOfStorage, int $domainId): int
+    {
+        return self::calculateDaysToWeeks($this->getFutureStockAvailabilityDaysByDomainId($dateOfStorage, $domainId));
+    }
+
+    /**
+     * @param \DateTime $dateOfStorage
+     * @param int $domainId
+     * @return int
+     */
+    private function getFutureStockAvailabilityDaysByDomainId(DateTime $dateOfStorage, int $domainId): int
+    {
+        $daysToOfStorage = $this->getDaysToOfStorage($dateOfStorage);
+        $futureStorageReservationDays = $this->getFutureStorageReservationByDomainId($domainId);
+
+        return $daysToOfStorage + $futureStorageReservationDays;
+    }
+
+    /**
+     * @param int $closestFutureAvailabilityDays
+     * @param int $domainId
+     * @return int
+     */
+    private function getClosestStockAvailabilityWeeksForOtherStocksByDomainId(int $closestFutureAvailabilityDays, int $domainId): int
+    {
+        return self::calculateDaysToWeeks($closestFutureAvailabilityDays + $this->getTransferDaysByDomainId($domainId));
+    }
+
+    /**
+     * @param \DateTime $dateOfStorage
+     * @return int
+     */
+    private function getDaysToOfStorage(DateTime $dateOfStorage): int
+    {
+        return $dateOfStorage->modify('+1 day')->diff(new DateTime(), true)->days;
+    }
+
+    /**
+     * @param int $weeks
+     * @return string
+     */
+    private function getWeeksAvailabilityMessage(int $weeks): string
+    {
+        return tc(
+            '{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
+            $weeks,
+            ['%weeks%' => $weeks]
+        );
     }
 
     /**
@@ -325,6 +421,15 @@ class ProductAvailabilityFacade
     private function getTransferDaysByDomainId(int $domainId): int
     {
         return $this->setting->getForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, $domainId);
+    }
+
+    /**
+     * @param int $domainId
+     * @return int
+     */
+    private function getFutureStorageReservationByDomainId(int $domainId): int
+    {
+        return $this->setting->getForDomain(Setting::FUTURE_STORAGE_RESERVATION, $domainId);
     }
 
     /**
