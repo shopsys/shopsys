@@ -233,7 +233,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
 
         $this->em->refresh($product);
 
-        $this->assertSame($expected, $this->productAvailabilityFacade->getGroupedStockQuantity($product, self::FIRST_DOMAIN_ID));
+        $this->assertSame($expected, $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, self::FIRST_DOMAIN_ID));
     }
 
     /**

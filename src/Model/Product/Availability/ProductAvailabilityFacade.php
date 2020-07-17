@@ -68,15 +68,14 @@ class ProductAvailabilityFacade
         $productStocks = $this->productStockRepository->getProductStocksByProductAndDomainId($product, $domainId);
         $closestFutureStockAvailabilityDays = $this->getClosestFutureAvailabilityDaysByDomainId($productStocks, $domainId);
         if ($closestFutureStockAvailabilityDays !== PHP_INT_MAX) {
-            $closestFutureStockAvailabilityWeeksForOtherStocks = $this->getClosestStockAvailabilityWeeksForOtherStocksByDomainId($closestFutureStockAvailabilityDays, $domainId);
-            return $this->getWeeksAvailabilityMessage($closestFutureStockAvailabilityWeeksForOtherStocks);
+            return $this->getWeeksAvailabilityMessageByWeeks(self::calculateDaysToWeeks($closestFutureStockAvailabilityDays));
         }
 
         if ($product->hasPreorder() === false) {
             return t('Vyprodáno');
         }
 
-        return $this->getAvailableForWeeksMessageByProductAndDomainId($product, $domainId);
+        return $this->getDeliveryWeeksAvailabilityMessageByProductAndDomainId($product, $domainId);
     }
 
     /**
@@ -84,11 +83,11 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return string
      */
-    private function getAvailableForWeeksMessageByProductAndDomainId(Product $product, int $domainId): string
+    private function getDeliveryWeeksAvailabilityMessageByProductAndDomainId(Product $product, int $domainId): string
     {
         $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
 
-        return $this->getWeeksAvailabilityMessage($weeks);
+        return $this->getWeeksAvailabilityMessageByWeeks($weeks);
     }
 
     /**
@@ -101,15 +100,39 @@ class ProductAvailabilityFacade
         /** @var \App\Model\Product\Product $product */
         $product = $quantifiedProduct->getProduct();
 
-        if ($this->getGroupedStockQuantity($product, $domainId) >= $quantifiedProduct->getQuantity()) {
+        $groupedStockQuantity = $this->getGroupedStockQuantityByProductAndDomainId($product, $domainId);
+        if ($groupedStockQuantity >= $quantifiedProduct->getQuantity()) {
             return t('Skladem');
+        }
+        $requiredFutureProductQuantity = $quantifiedProduct->getQuantity() - $groupedStockQuantity;
+
+        $productStocks = $this->productStockRepository->getProductStocksByProductAndDomainId($product, $domainId);
+        $closestFutureStockAvailabilityDays = $this->getClosestFutureAvailabilityDaysByDomainId($productStocks, $domainId, $requiredFutureProductQuantity);
+        if ($closestFutureStockAvailabilityDays !== PHP_INT_MAX) {
+            return $this->getWeeksAvailabilityMessageByWeeks(self::calculateDaysToWeeks($closestFutureStockAvailabilityDays));
         }
 
         if ($product->hasPreorder() === false) {
             return t('Vyprodáno');
         }
 
-        return $this->getAvailableForWeeksMessageByProductAndDomainId($product, $domainId);
+        return $this->getDeliveryWeeksAvailabilityMessageByProductAndDomainId($product, $domainId);
+    }
+
+    /**
+     * @param \App\Model\Stock\ProductStock[] $productStocks
+     * @return int
+     */
+    private function getGroupedFutureStockQuantityByProductStocks(array $productStocks): int
+    {
+        $groupedFutureStockQuantity = 0;
+        foreach ($productStocks as $productStock) {
+            if ($productStock->getDateOfStorage() !== null) {
+                $groupedFutureStockQuantity += $productStock->getFutureProductQuantity();
+            }
+        }
+
+        return $groupedFutureStockQuantity;
     }
 
     /**
@@ -254,7 +277,7 @@ class ProductAvailabilityFacade
             $isOutOfStock = true;
         }
 
-        $outOfStockAvailabilityInformation = $this->getWeeksAvailabilityMessage($weeks);
+        $outOfStockAvailabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($weeks);
 
         if ($product->hasPreorder() === false) {
             $outOfStockAvailabilityInformation = t('Vyprodáno');
@@ -263,7 +286,7 @@ class ProductAvailabilityFacade
         $closestFutureStockAvailabilityDays = $this->getClosestFutureAvailabilityDaysByDomainId($productStocks, $domainId);
         if ($closestFutureStockAvailabilityDays !== PHP_INT_MAX) {
             $closestFutureStockAvailabilityWeeksForOtherStocks = $this->getClosestStockAvailabilityWeeksForOtherStocksByDomainId($closestFutureStockAvailabilityDays, $domainId);
-            $closestFutureStockAvailabilityInformationForOtherStocks = $this->getWeeksAvailabilityMessage($closestFutureStockAvailabilityWeeksForOtherStocks);
+            $closestFutureStockAvailabilityInformationForOtherStocks = $this->getWeeksAvailabilityMessageByWeeks($closestFutureStockAvailabilityWeeksForOtherStocks);
         } else {
             $closestFutureStockAvailabilityInformationForOtherStocks = $outOfStockAvailabilityInformation;
         }
@@ -280,7 +303,7 @@ class ProductAvailabilityFacade
             if ($isOutOfStock) {
                 if ($productStock->getDateOfStorage() !== null) {
                     $futureStockAvailabilityWeeks = $this->getFutureStockAvailabilityWeeksByDomainId($productStock->getDateOfStorage(), $domainId);
-                    $availabilityInformation = $this->getWeeksAvailabilityMessage($futureStockAvailabilityWeeks);
+                    $availabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($futureStockAvailabilityWeeks);
                 } else {
                     $availabilityInformation = $closestFutureStockAvailabilityInformationForOtherStocks;
                 }
@@ -306,21 +329,43 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Model\Stock\ProductStock[] $productStocks
      * @param int $domainId
+     * @param int $minimalProductQuantity
      * @return int
      */
-    private function getClosestFutureAvailabilityDaysByDomainId(array $productStocks, int $domainId): int
+    private function getClosestFutureAvailabilityDaysByDomainId(array $productStocks, int $domainId, int $minimalProductQuantity = 0): int
     {
-        $closesFutureAvailabilityDays = PHP_INT_MAX;
-        foreach ($productStocks as $productStock) {
-            if ($productStock->getDateOfStorage() !== null) {
-                $futureStockAvailabilityDays = $this->getFutureStockAvailabilityDaysByDomainId($productStock->getDateOfStorage(), $domainId);
-                if ($futureStockAvailabilityDays < $closesFutureAvailabilityDays) {
-                    $closesFutureAvailabilityDays = $futureStockAvailabilityDays;
-                }
+        $productFutureQuantityIndexedByDaysToOfStorage = [];
+        foreach($productStocks as $productStock){
+            if($productStock->getDateOfStorage() !== null){
+                $daysToOfStorage = $this->getDaysToOfStorage($productStock->getDateOfStorage());
+                $productFutureQuantityIndexedByDaysToOfStorage[$daysToOfStorage] = $productStock->getFutureProductQuantity();
+            }
+        }
+        ksort($productFutureQuantityIndexedByDaysToOfStorage);
+
+        $sumProductFutureQuantity = 0;
+        $futureStorageReservationDays = $this->getFutureStorageReservationByDomainId($domainId);
+        foreach ($productFutureQuantityIndexedByDaysToOfStorage as $daysToOfStorage => $productFutureQuantity){
+            $sumProductFutureQuantity += $productFutureQuantity;
+
+            if($sumProductFutureQuantity >= $minimalProductQuantity){
+                return $daysToOfStorage + $futureStorageReservationDays;
             }
         }
 
-        return $closesFutureAvailabilityDays;
+        return PHP_INT_MAX;
+
+//        $closesFutureAvailabilityDays = PHP_INT_MAX;
+//        foreach ($productStocks as $productStock) {
+//            if ($productStock->getDateOfStorage() !== null) {
+//                $futureStockAvailabilityDays = $this->getFutureStockAvailabilityDaysByDomainId($productStock->getDateOfStorage(), $domainId);
+//                if ($futureStockAvailabilityDays < $closesFutureAvailabilityDays) {
+//                    $closesFutureAvailabilityDays = $futureStockAvailabilityDays;
+//                }
+//            }
+//        }
+//
+//        return $closesFutureAvailabilityDays;
     }
 
     /**
@@ -369,7 +414,7 @@ class ProductAvailabilityFacade
      * @param int $weeks
      * @return string
      */
-    private function getWeeksAvailabilityMessage(int $weeks): string
+    private function getWeeksAvailabilityMessageByWeeks(int $weeks): string
     {
         return tc(
             '{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
@@ -457,7 +502,7 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return int
      */
-    public function getGroupedStockQuantity(Product $product, int $domainId): int
+    public function getGroupedStockQuantityByProductAndDomainId(Product $product, int $domainId): int
     {
         $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
         $groupedStockQuantity = 0;
@@ -478,6 +523,6 @@ class ProductAvailabilityFacade
      */
     public function getMaximumOrderQuantity(Product $product, int $domainId): int
     {
-        return ($product->hasPreorder()) ? PHP_INT_MAX : $this->getGroupedStockQuantity($product, $domainId);
+        return ($product->hasPreorder()) ? PHP_INT_MAX : $this->getGroupedStockQuantityByProductAndDomainId($product, $domainId);
     }
 }
