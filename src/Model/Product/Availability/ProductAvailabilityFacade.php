@@ -15,6 +15,9 @@ class ProductAvailabilityFacade
 {
     private const DAYS_IN_WEEK = 7;
 
+    private const AVAILABILITY_STATUS_IN_STOCK = 'int-stock';
+    private const AVAILABILITY_STATUS_OUT_OF_STOCK = 'out-of-stock';
+
     /**
      * @var \App\Model\Stock\ProductStockFacade
      */
@@ -62,6 +65,13 @@ class ProductAvailabilityFacade
             return t('Skladem');
         }
 
+        $productStocks = $this->productStockRepository->getProductStocksByProductAndDomainId($product, $domainId);
+        $closestFutureStockAvailabilityDays = $this->getClosestFutureAvailabilityDaysByDomainId($productStocks, $domainId);
+        if ($closestFutureStockAvailabilityDays !== PHP_INT_MAX) {
+            $closestFutureStockAvailabilityWeeksForOtherStocks = $this->getClosestStockAvailabilityWeeksForOtherStocksByDomainId($closestFutureStockAvailabilityDays, $domainId);
+            return $this->getWeeksAvailabilityMessage($closestFutureStockAvailabilityWeeksForOtherStocks);
+        }
+
         if ($product->hasPreorder() === false) {
             return t('Vyprodáno');
         }
@@ -78,11 +88,7 @@ class ProductAvailabilityFacade
     {
         $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
 
-        return tc(
-            '{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
-            $weeks,
-            ['%weeks%' => $weeks]
-        );
+        return $this->getWeeksAvailabilityMessage($weeks);
     }
 
     /**
@@ -113,7 +119,7 @@ class ProductAvailabilityFacade
      */
     public function getProductAvailabilityStatusByDomainId(Product $product, int $domainId): string
     {
-        $availabilityStatus = 'out-of-stock';
+        $availabilityStatus = self::AVAILABILITY_STATUS_OUT_OF_STOCK;
 
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             $availabilityStatus = 'in-stock';
@@ -269,7 +275,7 @@ class ProductAvailabilityFacade
             }
 
             $availabilityInformation = t('Můžete mít <strong class="is-in-stock">ihned</strong>');
-            $availabilityStatus = 'in-stock';
+            $availabilityStatus = self::AVAILABILITY_STATUS_IN_STOCK;
 
             if ($isOutOfStock) {
                 if ($productStock->getDateOfStorage() !== null) {
@@ -278,11 +284,11 @@ class ProductAvailabilityFacade
                 } else {
                     $availabilityInformation = $closestFutureStockAvailabilityInformationForOtherStocks;
                 }
-                $availabilityStatus = 'out-of-stock';
+                $availabilityStatus = self::AVAILABILITY_STATUS_OUT_OF_STOCK;
             } else {
                 if ($productStock->getProductQuantity() <= 0) {
                     $availabilityInformation = $outOfStockAvailabilityInformation;
-                    $availabilityStatus = 'out-of-stock';
+                    $availabilityStatus = self::AVAILABILITY_STATUS_OUT_OF_STOCK;
                 }
             }
 

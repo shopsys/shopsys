@@ -281,10 +281,6 @@ class ProductController extends FrontBaseController
         /** @var \App\Model\Product\Product $productVariant */
         $productVariant = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
-        $this->gtmFacade->onProductDetailPage($product);
-
         if ($productVariant->isMainVariant()) {
             return $this->redirectToRoute('front_product_detail', ['id' => $productVariant->getDefaultVariant()->getId()], 301);
         } elseif ($productVariant->isVariant()) {
@@ -292,6 +288,8 @@ class ProductController extends FrontBaseController
         } else {
             $product = $productVariant;
         }
+
+        $this->gtmFacade->onProductDetailPage($product);
 
         //parts build from main product
         $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
