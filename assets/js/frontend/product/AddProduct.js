@@ -12,7 +12,8 @@ export default class AddProduct {
             data: $(event.target).serialize(),
             dataType: 'html',
             success: AddProduct.onSuccess,
-            error: AddProduct.onError
+            error: AddProduct.onError,
+            context: this
         });
 
         event.preventDefault();
@@ -22,7 +23,7 @@ export default class AddProduct {
         const buttonContinueUrl = $($.parseHTML(data)).filterAllNodes('.js-add-product-url-cart').data('url');
         const isWide = $($.parseHTML(data)).filterAllNodes('.js-add-product-wide-window').data('wide');
         const cssClass = isWide ? 'window-popup--wide' : 'window-popup--cart';
-        const input = $('input.js-spinbox-input');
+        const input = $(this).find('input.js-spinbox-input');
         const diffOfSpinMaxAndAddedQuantity = input.data('spinbox-max') - input.val();
 
         if (buttonContinueUrl !== undefined) {
