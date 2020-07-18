@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Stock;
 
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
+
 class StockData
 {
     /**
@@ -41,8 +43,50 @@ class StockData
      */
     public $openingHours;
 
+    /**
+     * @var string|null
+     */
+    public $extraordinaryOpeningHours;
+
+    /**
+     * @var string|null
+     */
+    public $contactText1;
+
+    /**
+     * @var string|null
+     */
+    public $contactText2;
+
+    /**
+     * @var string|null
+     */
+    public $contactInfo;
+
+    /**
+     * @var string|null
+     */
+    public $locationLat;
+
+    /**
+     * @var string|null
+     */
+    public $locationLng;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
+     */
+    public $image;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
+     */
+    public $imageGallery;
+
     public function __construct()
     {
         $this->centralStock = false;
+        $this->image = new ImageUploadData();
+        $this->imageGallery = new ImageUploadData();
     }
 }

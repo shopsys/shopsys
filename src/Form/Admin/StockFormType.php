@@ -7,9 +7,11 @@ namespace App\Form\Admin;
 use App\Model\Stock\Stock;
 use App\Model\Stock\StockData;
 use App\Model\Stock\StockFacade;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class StockFormType extends AbstractType
@@ -110,6 +113,95 @@ class StockFormType extends AbstractType
             [
                 'required' => false,
                 'label' => t('Otevírací doba'),
+            ]
+        )->add(
+            'extraordinaryOpeningHours',
+            TextareaType::class,
+            [
+                'required' => false,
+                'label' => t('Mimořádná otevírací doba'),
+            ]
+        )->add(
+            'contactText1',
+            TextType::class,
+            [
+                'required' => false,
+                'label' => t('Kontakt na obchodní dům 1'),
+            ]
+        )->add(
+            'contactText2',
+            TextType::class,
+            [
+                'required' => false,
+                'label' => t('Kontakt na obchodní dům 2'),
+            ]
+        )->add(
+            'contactInfo',
+            TextType::class,
+            [
+                'required' => false,
+                'label' => t('Mimořádná otevírací doba'),
+            ]
+        )->add(
+            'contactInfo',
+            CKEditorType::class,
+            [
+                'required' => false,
+                'label' => t('Informace o obchodním domě'),
+            ]
+        )->add(
+            'locationLat',
+            TextType::class,
+            [
+                'required' => false,
+                'label' => t('souřadnice Zeměpisná šířka'),
+            ]
+        )->add(
+            'locationLng',
+            TextType::class,
+            [
+                'required' => false,
+                'label' => t('souřadnice Zeměpisná délka'),
+            ]
+        )->add(
+            'image',
+            ImageUploadType::class,
+            [
+               'required' => false,
+               'image_entity_class' => Stock::class,
+               'image_type' => 'main',
+               'file_constraints' => [
+                   new Image([
+                       'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                       'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
+                       'maxSize' => '2M',
+                       'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                         . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                   ]),
+               ],
+               'entity' => $options['stock'],
+               'label' => t('Upload new image'),
+               'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+            ]
+        )->add(
+            'imageGallery',
+            ImageUploadType::class,
+            [
+               'required' => false,
+               'image_entity_class' => Stock::class,
+               'image_type' => 'gallery',
+               'file_constraints' => [
+                   new Image([
+                       'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                       'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
+                       'maxSize' => '2M',
+                       'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                         . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                   ]),
+               ],
+               'entity' => $options['stock'],
+               'label' => t('Nahrát nový obrázek galerie'),
+               'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]
         );
 

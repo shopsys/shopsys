@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Stock;
 
+use App\Component\Image\ImageFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
@@ -20,15 +21,23 @@ class StockFacade
     private $em;
 
     /**
+     * @var \App\Component\Image\ImageFacade
+     */
+    private $imageFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Stock\StockRepository $stockRepository
+     * @param \App\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
         EntityManagerInterface $em,
-        StockRepository $stockRepository
+        StockRepository $stockRepository,
+        ImageFacade $imageFacade
     ) {
         $this->stockRepository = $stockRepository;
         $this->em = $em;
+        $this->imageFacade = $imageFacade;
     }
 
     /**
@@ -40,6 +49,9 @@ class StockFacade
         $stock = new Stock($stockData);
         $this->em->persist($stock);
         $this->em->flush();
+
+        $this->imageFacade->manageImages($stock, $stockData->image, 'main');
+        $this->imageFacade->manageImages($stock, $stockData->imageGallery, 'gallery');
 
         return $stock;
     }
@@ -54,6 +66,9 @@ class StockFacade
         $stock = $this->getById($stockId);
         $stock->edit($stockData);
         $this->em->flush();
+
+        $this->imageFacade->manageImages($stock, $stockData->image, 'main');
+        $this->imageFacade->manageImages($stock, $stockData->imageGallery, 'gallery');
 
         return $stock;
     }
