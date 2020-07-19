@@ -110,6 +110,10 @@
     &--disabled {
         opacity: 0.5;
         cursor: no-drop;
+
+        @media @query-md {
+            opacity: 0.2;
+        }
     }
 
     // Outline button
@@ -357,6 +361,14 @@
         &:hover {
             background-color: lighten(#222631, 10%);
             color: #fff;
+        }
+    }
+
+    &--checkout-step {
+        @media @query-mobile {
+            width: 100%;
+            height: 60px;
+            justify-content: center;
         }
     }
 

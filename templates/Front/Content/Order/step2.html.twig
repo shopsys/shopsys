@@ -1,19 +1,23 @@
-{% extends 'Front/Content/Order/step.html.twig' %}
-
-{% block h1 %}
-    {{ 'Order [noun]'|trans }}
-{% endblock %}
+{% import 'Front/Content/Cart/cartFreeTransportMacro.html.twig' as cartFreeTransportMacro %}
 
 {% block content %}
-    <div class="web__line web__line--bg-color web__line--spacing">
+    <div class="web__line web__line--bg-color web__line--cart">
         <div class="web__container">
-            <div class="box-order">
-
-                <div id="{{ form.vars.id }}" class="box-order__info js-no-validate">
+            <div class="box-cart box-cart--order">
+                <div id="{{ form.vars.id }}" class="box-cart__col box-cart__col--info js-no-validate">
 
                     {{ form_errors(form.transportsByProductTypeId) }}
 
-                    <div id="{{ form.transportsByProductTypeId.vars.id }}">
+                    <div class="box-cart__buttons box-cart__buttons--mobile">
+                        <button
+                            type="submit"
+                            name="transport_and_payment_form[save]"
+                            class="btn btn--dark btn--checkout-step js-no-validate-button js-transport_and_payment_form_save">
+                            {{ 'Další krok'|trans }}
+                        </button>
+                    </div>
+
+                    <div id="{{ form.transportsByProductTypeId.vars.id }}" class="box-cart-card-wrap">
                         {% set previewNumber = 0 %}
                         {% for orderPreview in splitOrderPreview.orderPreviews %}
                             {% set previewNumber = previewNumber + 1 %}
@@ -24,19 +28,26 @@
                             {% set transportPersonalPickupFormId = transportPersonalPickupForm.vars.id|default(form.transportPersonalPickupStockByProductTypeId.vars.id ~ '_' ~ orderPreview.productType.id) %}
                             {% set transportPersonalPickupStockId = form.transportPersonalPickupStockByProductTypeId.vars.value[orderPreview.productType.id] ?? null %}
 
-                            <div class="box-order__info__item js-payment-transport-group" data-product-type-id="{{ orderPreview.productType.id }}">
-
-                                <h2 id="js-label-{{ transportFormId }}">
-                                    {% if splitOrderPreview.morePreviews %}
-                                        {{ 'Shipping selection'|trans }}
-                                        -
-                                        {{ 'Zásilka č. %number%'|trans({ '%number%': previewNumber }) }}
-                                        -
-                                        {{ orderPreview.productType.name }}
-                                    {% else %}
-                                        {{ 'Doprava pro celý nákup'|trans }}
+                            <div class="box-cart-card box-cart-card--transport js-payment-transport-group" data-product-type-id="{{ orderPreview.productType.id }}">
+                                <div class="box-cart-card__top box-cart-card__top--bordered">
+                                    <h2 class="box-cart-card__title box-cart-card__title--no-margin" id="js-label-{{ transportFormId }}">
+                                        {% if splitOrderPreview.morePreviews %}
+                                            {{ 'Shipping selection'|trans }}
+                                            -
+                                            {{ 'Zásilka č. %number%'|trans({ '%number%': previewNumber }) }}
+                                            -
+                                            {{ orderPreview.productType.name }}
+                                        {% else %}
+                                            {{ 'Doprava pro celý nákup'|trans }}
+                                        {% endif %}
+                                    </h2>
+                                    {% if loop.first and not splitOrderPreview.morePreviews %}
+                                        {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                                     {% endif %}
-                                </h2>
+                                    {% if splitOrderPreview.morePreviews %}
+                                        {{ cartFreeTransportMacro.progressBar(orderPreview, loop) }}
+                                    {% endif %}
+                                </div>
 
                                 <input type="hidden"
                                     id="{{ transportPersonalPickupFormId }}"
@@ -81,14 +92,15 @@
                                                         {{ transport.name }}
                                                     </strong>
                                                     {% if transport.description %}
-                                                        -
                                                         <span class="box-chooser__item__title__description" data-origin="{{ transport.description }}">
                                                             {% if transportPersonalPickupStockId == null %}
                                                                 {{ transport.description }}
                                                             {% else %}
-                                                                {{ stocksById[transportPersonalPickupStockId].name }}
-                                                                {{ stocksById[transportPersonalPickupStockId].street }}
-                                                                {{ stocksById[transportPersonalPickupStockId].city }}
+                                                                <span class="box-chooser__item__title__description__name">{{ stocksById[transportPersonalPickupStockId].name }}</span>
+                                                                <span class="box-chooser__item__title__description__address">
+                                                                    <span class="box-chooser__item__title__description__street">{{ stocksById[transportPersonalPickupStockId].street }}</span>
+                                                                    <span class="box-chooser__item__title__description__city">{{ stocksById[transportPersonalPickupStockId].city }}</span>
+                                                                </span>
                                                             {% endif %}
                                                         </span>
                                                     {% endif %}
@@ -99,7 +111,12 @@
                                                 </span>
                                             </label>
                                         {% endfor %}
-                                        <button type="button" class="box-chooser__wide-button js-payment-transport-change-button">{{ 'Změnit způsob dopravy' }}</button>
+                                        <div class="box-chooser__toggle">
+                                            <button type="button" class="btn box-chooser__toggle__btn js-payment-transport-change-button">
+                                                {{ 'Změnit dopravu' }}
+                                                <i class="box-chooser__toggle__btn__icon svg svg-arrow"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -110,9 +127,10 @@
                         {% do form.transportPersonalPickupStockByProductTypeId.setRendered %} {# When session contains transport for productType without products with them, it must be skipped #}
                     </div>
 
-                    <div class="box-order__info__item js-payment-transport-group">
-
-                        <h2 id="js-label-{{ form.payment.vars.id }}">{{ 'Payment selection'|trans }}</h2>
+                    <div class="box-cart-card box-cart-card--payments js-payment-transport-group">
+                        <div class="box-cart-card__top box-cart-card__top--bordered">
+                            <h2 class="box-cart-card__title box-cart-card__title--no-margin" id="js-label-{{ form.payment.vars.id }}">{{ 'Payment selection'|trans }}</h2>
+                        </div>
 
                         <div class="box-chooser box-chooser--smaller js-form-group">
                             {{ form_errors(form.payment, { errors_attr: {class: 'form-error--inline'} }) }}
@@ -132,7 +150,7 @@
                                         {% set bankTransferRendered = true %}
                                     {% endif %}
 
-                                    <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
+                                    <label class="box-chooser__item box-chooser__item--payment js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
                                         <span class="box-chooser__item__check">
                                             {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input js-payment-transport-checkbox' ~ (isGoPayBankTransfer ? ' js-gopay-bank-transfer-input' : ''), 'data-id': payment.id} }) }}
                                             <span class="css-checkbox__image"></span>
@@ -148,7 +166,7 @@
                                         </span>
 
                                         <span class="box-chooser__item__title">
-                                            <strong class="box-chooser__title__name">
+                                            <strong class="box-chooser__item__title__name">
                                                 {{ payment.name }}
                                             </strong>
                                             {% if payment.description %}
@@ -202,29 +220,37 @@
                                 {% if not bankTransferRendered %}
                                     {% do goPayBankSwiftForm.setRendered %}
                                 {% endif %}
-                                <button type="button" class="box-chooser__wide-button js-payment-transport-change-button">{{ 'Změnit způsob platby' }}</button>
+                                <div class="box-chooser__toggle">
+                                    <button type="button" class="btn box-chooser__toggle__btn js-payment-transport-change-button">
+                                        {{ 'Změnit platbu' }}
+                                        <i class="box-chooser__toggle__btn__icon svg svg-arrow"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="box-order__cart">
-                    <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
-                        {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                            transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
-                            paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
-                            showAdvert: false
-                        })) }}
-                    </div>
-                    <div class="in-action">
-                        <div class="in-action__right">
-                            {{ form_widget(form.save, { label: 'Continue in order'|trans, attr: { class: 'btn btn--success in-action__btn in-action__btn--big js-no-validate-button' } }) }}
-                        </div>
-
-                        <div class="in-action__left">
-                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn in-action__btn js-no-validate-button">
+                    <div class="box-cart__buttons">
+                        <div class="box-cart__buttons__back">
+                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                                <i class="btn__icon svg svg-chevron"></i>
                                 {{ 'Back to cart'|trans }}
                             </button>
                         </div>
+                        <div class="box-cart__buttons__next">
+                            {{ form_widget(form.save, { label: 'Další krok'|trans, attr: { class: 'btn btn--dark btn--checkout-step js-no-validate-button js-transport_and_payment_form_save' } }) }}
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="box-cart__col box-cart__col--preview box-cart__col--preview-step-2">
+                    <div id="js-order-preview" class="box-cart-card box-cart-card--preview" data-url="{{ url('front_order_preview') }}">
+                        {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                            transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
+                            paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
+                            showAdvert: false,
+                            showPromo: false
+                        })) }}
                     </div>
                 </div>
             </div>

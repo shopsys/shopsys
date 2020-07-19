@@ -31,9 +31,11 @@
     sizes:
         -   name: ~
             width: ~
-            height: 20
+            height: 32
             crop: false
             occurrence: 'Front-end: Ordering process'
+            additionalSizes:
+                - {width: ~, height: 64, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: category
     class: Shopsys\FrameworkBundle\Model\Category\Category
@@ -163,9 +165,11 @@
     sizes:
         -   name: ~
             width: ~
-            height: 20
+            height: 32
             crop: false
             occurrence: 'Front-end: Ordering process'
+            additionalSizes:
+                - {width: ~, height: 64, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: noticer
     class: Shopsys\FrameworkBundle\Model\Advert\Advert

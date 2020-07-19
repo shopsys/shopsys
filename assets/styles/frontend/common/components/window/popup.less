@@ -16,6 +16,8 @@
 @window-popup-cart-heading-color: @list-products-availability-primary-color;
 @window-popup-cart-checkmark-bg-color: #8cc61c;
 
+@window-popup-personal-pickup-width: 894px;
+
 .window-popup {
     display: flex;
     flex-direction: column;
@@ -25,14 +27,14 @@
     left: @window-popup-space-around;
     padding: @window-popup-inner-padding 0;
     z-index: 10001;
-    transform: scale(0.5);
+    transform: scale(0.75);
     opacity: 0;
     width: calc( ~"100% - 2*@{window-popup-space-around}" );
     will-change: transform;
 
     background: @color-f;
     box-shadow: 0 30px 50px rgba(0,0,0, 0.2);
-    transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+    transition: opacity .2s ease-in-out, transform .2s ease-in-out;
     border-radius: @radius;
 
     @media @query-mobile {
@@ -94,6 +96,38 @@
             width: @window-popup-wide-width;
             left: 50%;
             margin-left: -@window-popup-wide-width/2;
+        }
+    }
+
+    &--personal-pickup {
+        @media @query-lg {
+            width: @window-popup-personal-pickup-width;
+            margin-left: -@window-popup-personal-pickup-width / 2;
+        }
+
+        .window-popup__actions--multiple-buttons {
+            padding-top: 20px;
+            justify-content: flex-end;
+        }
+
+        .window-popup__actions__btn--continue {
+            padding: 10px 20px;
+
+            background-color: @color-f;
+            border: 2px solid @color-add;
+            border-radius: @radius;
+
+            .svg {
+                display: none;
+            }
+        }
+
+        .window-popup__actions__btn--cancel {
+            margin-right: 30px;
+
+            .svg {
+                display: none;
+            }
         }
     }
 
@@ -245,22 +279,11 @@
                 }
 
                 &--disabled {
-                    color: #8a8a8a;
-                    background: #cfd1cf;
+                    opacity: 0.3;
                     cursor: default;
 
                     &:hover {
-                        color: #8a8a8a;
-                        background: #cfd1cf;
                         cursor: default;
-
-                        .svg {
-                            color: silver;
-                        }
-                    }
-
-                    .svg {
-                        color: silver;
                     }
                 }
             }

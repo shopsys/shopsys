@@ -1,39 +1,48 @@
 <div id="js-order-transport-stocks" class="display-none">
-    <div>
-        <h3>{{ 'Vyberte prodejnu kde si vyzvednete zásilku'|trans }}</h3>
-        <table>
-            <tbody>
-            {% for stock in stocks %}
-                <tr>
-                    <td>
-                        <label>
-                            <input type="radio"
-                                name="personalPickupStock"
-                                value="{{ stock.id }}"
-                                class="personal-pickup-stock"
-                                data-stock-name="{{ stock.name }}"
-                                data-stock-street="{{ stock.street }}"
-                                data-stock-city="{{ stock.city }}"
-                            />
-                            {{ stock.name }}
-                            <i>(
-                            {% transchoice stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks with {'%daysAvailability%': stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks} %}
-                                {0} Můžete mít ihned | {1} K dispozici do 1 týdne | [2,Inf] K dispozici do %daysAvailability% týdnů
-                            {% endtranschoice %}
-                            )</i>
-                        </label>
-                    </td>
-                    <td>{{ stock.street }}<br>{{ stock.city }}</td>
-                    <td>
-                        {% if stock.openingHours is not empty %}
-                            <strong>{{ 'Otevřeno'|trans }}</strong><br/>
-                            {{ stock.openingHours|nl2br }}
-                        {% endif %}
-                    </td>
-                    <td></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <h2 class="window-popup__heading window-popup__heading--personal-pickup">{{ 'Vyberte prodejnu kde si vyzvednete zásilku'|trans }}</h2>
+    <div class="box-chooser box-chooser--personal-pickup box-chooser--in-popup">
+        {% for stock in stocks %}
+            <label class="box-chooser__item">
+                <span class="box-chooser__item__check">
+                    <input type="radio"
+                        name="personalPickupStock"
+                        value="{{ stock.id }}"
+                        class="css-checkbox personal-pickup-stock"
+                        data-stock-name="{{ stock.name }}"
+                        data-stock-street="{{ stock.street }}"
+                        data-stock-city="{{ stock.city }}"
+                    />
+                    <span class="css-checkbox__image"></span>
+                </span>
+                <span class="box-chooser__item__title">
+                    <strong class="box-chooser__item__title__name">{{ stock.name }}</strong>
+                </span>
+                {#<span class="box-chooser__item__address">
+                    <span class="box-chooser__item__address__street">{{ stock.street }}</span>
+                    <span class="box-chooser__item__address__city">{{ stock.city }}</span>
+                </span>#}
+                <span class="box-chooser__item__address">
+                    <span class="box-chooser__item__address__street">Jeremiášova 947</span>
+                    <span class="box-chooser__item__address__city">503 02 Hradec Králové</span>
+                </span>
+                {#<span class="box-chooser__item__opening">
+                    {% if stock.openingHours is not empty %}
+                        <span class="box-chooser__item__opening__label">{{ 'Otevřeno'|trans }}</span>
+                        {{ stock.openingHours|nl2br }}
+                    {% endif %}
+                </span>#}
+                <span class="box-chooser__item__opening">
+                        <span class="box-chooser__item__opening__title">{{ 'Otevřeno'|trans }}</span>
+                        Po-Ne 8:00-19:00
+                </span>
+                <span class="box-chooser__item__avail">
+                    {% transchoice stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks with {'%daysAvailability%': stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks} %}
+                        {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít <span class="box-chooser__item__avail__time box-chooser__item__avail__time--now">ihned</span></span>
+                        | {1} <span class="box-chooser__item__avail__text">K dispozici do <span class="box-chooser__item__avail__time">1 týdne</span></span>
+                        | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do <span class="box-chooser__item__avail__time">%daysAvailability% týdnů</span></span>
+                    {% endtranschoice %}
+                </span>
+            </label>
+        {% endfor %}
     </div>
 </div>
