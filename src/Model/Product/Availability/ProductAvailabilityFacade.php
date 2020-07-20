@@ -87,8 +87,9 @@ class ProductAvailabilityFacade
     {
         $futureStockAvailabilityDays = $this->getFutureStockAvailabilityDaysByDomainId($closestFutureProductStock, $domainId);
         if ($closestFutureProductStock->getStock()->isCentralStock()) {
-            $futureStockAvailabilityDays += $this->getFutureStorageReservationByDomainId($domainId);
+            $futureStockAvailabilityDays += $this->getTransferDaysByDomainId($domainId);
         }
+
         return $this->getWeeksAvailabilityMessageByDays($futureStockAvailabilityDays);
     }
 
@@ -324,22 +325,22 @@ class ProductAvailabilityFacade
     }
 
     /**
-     * @param array $productStocks
+     * @param \App\Model\Stock\ProductStock[] $productStocks
      * @param int $minimalProductQuantity
      * @return \App\Model\Stock\ProductStock|null
      */
     private function getClosestFutureProductStockByDomainId(array $productStocks, int $minimalProductQuantity = 0): ?ProductStock
     {
-        $productStocksIndexedByDaysToOfStorage = [];
+        $productStocksIndexedByDaysUntilStorage = [];
         foreach ($productStocks as $productStock) {
             if ($productStock->getDateOfStorage() !== null) {
-                $productStocksIndexedByDaysToOfStorage[$productStock->getDaysToOfStorage()] = $productStock;
+                $productStocksIndexedByDaysUntilStorage[$productStock->getDaysUntilStorage()] = $productStock;
             }
         }
-        ksort($productStocksIndexedByDaysToOfStorage);
+        ksort($productStocksIndexedByDaysUntilStorage);
 
         $sumProductFutureQuantity = 0;
-        foreach ($productStocksIndexedByDaysToOfStorage as $daysToOfStorage => $productStock) {
+        foreach ($productStocksIndexedByDaysUntilStorage as $productStock) {
             $sumProductFutureQuantity += $productStock->getFutureProductQuantity();
 
             if ($sumProductFutureQuantity >= $minimalProductQuantity) {
@@ -367,7 +368,7 @@ class ProductAvailabilityFacade
      */
     private function getFutureStockAvailabilityDaysByDomainId(ProductStock $productStock, int $domainId): int
     {
-        return $productStock->getDaysToOfStorage() + $this->getFutureStorageReservationByDomainId($domainId);
+        return $productStock->getDaysUntilStorage() + $this->getFutureStorageReservationByDomainId($domainId);
     }
 
     /**
@@ -608,7 +609,7 @@ class ProductAvailabilityFacade
             return 0;
         }
 
-        //the product is in future on stock in some stock
+        //the product will be on the stock($productStock) in future
         $requiredProductQuantity = $quantifiedProduct->getQuantity() - $quantityOnAllStocks;
         $closestFutureAvailabilityDays = $this->getClosestFutureAvailabilityDaysByProductStocksAndRequiredProductQuantity(
             $productStocks,

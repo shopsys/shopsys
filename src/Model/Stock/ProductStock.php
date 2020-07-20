@@ -164,7 +164,7 @@ class ProductStock
     /**
      * @return int|null
      */
-    public function getDaysToOfStorage(): ?int
+    public function getDaysUntilStorage(): ?int
     {
         if ($this->dateOfStorage === null) {
             return null;

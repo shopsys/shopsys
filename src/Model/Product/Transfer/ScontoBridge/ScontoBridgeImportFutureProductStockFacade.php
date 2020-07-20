@@ -10,6 +10,11 @@ use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
 use App\Model\Stock\ProductStockFacade;
 use DateTime;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 
 class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImportTransfer
 {
@@ -43,18 +48,53 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
     private $productStockFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler
+     */
+    private $productExportScheduler;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade
+     */
+    private $indexFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
+     */
+    private $indexDefinitionLoader;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex
+     */
+    private $index;
+
+    /**
+     * @var \App\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
      * @param \App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency
      * @param \App\Component\ScontoBridge\ScontoBridgeClient $scontoBridgeClient
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Product\Transfer\ScontoBridge\FutureProductStockTransferScontoBridgeValidator $futureProductStockTransferScontoBridgeValidator
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency,
         ScontoBridgeClient $scontoBridgeClient,
         Setting $setting,
         FutureProductStockTransferScontoBridgeValidator $futureProductStockTransferScontoBridgeValidator,
-        ProductStockFacade $productStockFacade
+        ProductStockFacade $productStockFacade,
+        ProductExportScheduler $productExportScheduler,
+        IndexFacade $indexFacade,
+        IndexDefinitionLoader $indexDefinitionLoader,
+        ProductIndex $index,
+        Domain $domain
     ) {
         parent::__construct($scontoBridgeImportTransferDependency);
 
@@ -62,6 +102,11 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
         $this->setting = $setting;
         $this->futureProductStockTransferScontoBridgeValidator = $futureProductStockTransferScontoBridgeValidator;
         $this->productStockFacade = $productStockFacade;
+        $this->productExportScheduler = $productExportScheduler;
+        $this->indexFacade = $indexFacade;
+        $this->indexDefinitionLoader = $indexDefinitionLoader;
+        $this->index = $index;
+        $this->domain = $domain;
     }
 
     /**
@@ -120,8 +165,6 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
 
         $this->futureProductStockTransferScontoBridgeValidator->validate($scontoBridgeItemData);
 
-        $scontoBridgeItemData['dateExpectedArrival']['year'] = 2020;
-
         $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId(
             $scontoBridgeItemData['sku'],
             $scontoBridgeItemData['storeCode']
@@ -153,6 +196,7 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
             }
 
             $this->em->flush();
+            $this->productExportScheduler->scheduleRowIdForImmediateExport($productStock->getProduct()->getId());
             $this->logger->addInfo(sprintf(
                 'ProductStock with product catnum %s and stock ID %s edited',
                 $scontoBridgeItemData['sku'],
@@ -190,6 +234,12 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
     {
         $this->logger->addInfo('Importing iterable transfer is done.');
         $this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_FUTURE_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT));
+
+        $productIds = $this->productExportScheduler->getRowIdsForImmediateExport();
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index::getName(), $domainId);
+            $this->indexFacade->exportIds($this->index, $indexDefinition, $productIds);
+        }
     }
 
     /**

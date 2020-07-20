@@ -128,7 +128,7 @@ class ProductStockRepository
     public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
     {
         return $this->getProductStockQueryBuilderByProduct($product)
-            ->join(Stock::class, 's', Join::WITH, 's.id = sp.stock')
+            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock')
             ->andWhere('s.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->getQuery()
