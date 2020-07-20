@@ -3,6 +3,43 @@
 {% block main_content %}
     {{ parent() }}
 
+    <div class="wrap-divider">
+        <div class="form-group">
+            <div class="form-group__title">
+                {{ 'Parametry'|trans }}
+            </div>
+            <div class="table-touch js-table-touch">
+                <table class="table-grid">
+                    <thead>
+                    <tr class="table-form__row">
+                        <th class="table-form__cell">{{ 'Skupina'|trans }}</th>
+                        <th class="table-form__cell">{{ 'Název parametru'|trans }}</th>
+                        <th class="table-form__cell">{{ 'Hodnota'|trans }}</th>
+                        <th class="table-form__cell">{{ 'RGB Barva'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for productParameterValueData in productParameterValuesData %}
+                        <tr class="table-form__row">
+                            <td class="table-form__cell">{{ productParameterValueData.parameter.group.name|default('~') }}</td>
+                            <td class="table-form__cell">{{ productParameterValueData.parameter.name }}</td>
+                            <td class="table-form__cell">
+                                {{ localeFlag(productParameterValueData.parameterValueData.locale) }}
+                                {{ productParameterValueData.parameterValueData.text }}
+                            </td>
+                            <td class="table-form__cell">
+                                {% if productParameterValueData.parameterValueData.rgbHex is not empty %}
+                                    <span style="background-color: {{ productParameterValueData.parameterValueData.rgbHex }}; display: inline-block; width: 25px; height: 25px; border: 1px solid #f7f7f8;">&nbsp;</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <h3 style="padding: 15px 0;font-size: 20px;">{{ 'Detailní informace o balení produktu:'|trans }} {{ product.name }}</h3>
     {{ productPackageGridView.render() }}
 {% endblock %}

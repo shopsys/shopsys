@@ -11,11 +11,6 @@ class ParameterValueData extends BaseParameterValueData
     /**
      * @var string|null
      */
-    public $unit;
-
-    /**
-     * @var string|null
-     */
     public $rgbHex;
 
     /**

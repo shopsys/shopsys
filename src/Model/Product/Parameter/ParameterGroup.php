@@ -17,6 +17,8 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  */
 class ParameterGroup extends AbstractTranslatableEntity
 {
+    public const AKENEO_CODE_DIMENSIONS = 'param__dimensions';
+
     /**
      * @var int
      *

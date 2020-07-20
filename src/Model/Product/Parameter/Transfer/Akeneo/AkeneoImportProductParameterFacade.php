@@ -178,11 +178,11 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @param int $paramterId
+     * @param int $parameterId
      */
-    private function dropParameterFromNotTransferredParameterIds(int $paramterId): void
+    private function dropParameterFromNotTransferredParameterIds(int $parameterId): void
     {
-        unset($this->notTransferredParameterIds[$paramterId]);
+        unset($this->notTransferredParameterIds[$parameterId]);
     }
 
     private function deleteNonTransferredParameters(): void

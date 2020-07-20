@@ -76,6 +76,7 @@ class Product extends BaseProduct
      * @ORM\JoinTable(name="product_variant_parameters",
      *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="parameter_id", referencedColumnName="id", onDelete="CASCADE")})
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $variantParameters;
 
@@ -161,6 +162,7 @@ class Product extends BaseProduct
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
         $this->editVariantParameters($productData);
+        $this->markForExport();
     }
 
     /**

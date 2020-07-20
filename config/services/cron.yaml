@@ -20,14 +20,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate product availabilities' }
 
-    App\Model\Product\Elasticsearch\ProductExportCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: "Export products to Elasticsearch" }
-
-    App\Model\Product\Elasticsearch\ProductExportChangedCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: "Export changed products to Elasticsearch" }
-
     Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule:
         tags:
             - { name: shopsys.cron, hours: '0', minutes: '0', readableName: 'Delete old customer carts' }
@@ -75,6 +67,14 @@ services:
     App\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
         tags:
             - { name: shopsys.cron, hours: '23', minutes: '10', readableName: 'Mazání starých problémů v přenosech' }
+
+    App\Model\Product\Elasticsearch\ProductExportCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: "Export products to Elasticsearch" }
+
+    App\Model\Product\Elasticsearch\ProductExportChangedCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: "Export changed products to Elasticsearch" }
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesCronModule:
         tags:

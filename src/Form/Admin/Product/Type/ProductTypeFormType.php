@@ -59,10 +59,10 @@ class ProductTypeFormType extends AbstractType
             ])
             ->add('akeneoCode', TextType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Prosím vyplňte Akaneo kód']),
+                    new Constraints\NotBlank(['message' => 'Prosím vyplňte Akeneo kód']),
                     new Constraints\Length([
                         'max' => 20,
-                        'maxMessage' => 'Akaneo kód nesmí být delší než {{ limit }} znaků.',
+                        'maxMessage' => 'Akeneo kód nesmí být delší než {{ limit }} znaků.',
                     ]),
                     new Constraints\Callback(function (string $akeneoCode, ExecutionContextInterface $context) {
                         $existingProductType = $this->productTypeFacade->findByAkeneoCode($akeneoCode);

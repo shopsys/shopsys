@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
+use App\Model\Product\Parameter\ParameterGroup;
+use App\Model\Product\Parameter\ParameterValuesViewData;
 use App\Model\Product\Product;
 use App\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -61,13 +63,13 @@ class ProductExtension extends BaseProductExtension
         );
 
         $functions[] = new TwigFunction(
-            'getProductDimensionParameterValues',
-            [$this, 'getProductDimensionParameterValues']
+            'getProductDimensionParameterValuesViewsData',
+            [$this, 'getProductDimensionParameterValuesViewsData']
         );
 
         $functions[] = new TwigFunction(
-            'getProductNonDimensionParameterValues',
-            [$this, 'getProductNonDimensionParameterValues']
+            'getProductNonDimensionParameterValuesViewsData',
+            [$this, 'getProductNonDimensionParameterValuesViewsData']
         );
 
         return $functions;
@@ -118,44 +120,33 @@ class ProductExtension extends BaseProductExtension
 
     /**
      * @param \App\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
+     * @return \App\Model\Product\Parameter\ParameterValuesViewData[]
      */
-    public function getProductDimensionParameterValues(Product $product): array
+    public function getProductDimensionParameterValuesViewsData(Product $product): array
     {
-        $productParameterValues = $this->getProductParameterValues($product);
-        $productDimensionParameterValues = [];
+        $parameterValuesViewsData = $this->productCachedAttributesFacade->getParameterValuesViewsData($product);
 
-        foreach ($productParameterValues as $parameterValue) {
-
-            /** @var \App\Model\Product\Parameter\Parameter $parameter */
-            $parameter = $parameterValue->getParameter();
-            if ($parameter->getGroup() !== null && $parameter->getGroup()->getAkeneoCode() === 'param__dimensions') {
-                $productDimensionParameterValues[$parameter->getAkeneoCode()] = $parameterValue;
+        return array_filter(
+            $parameterValuesViewsData,
+            static function (ParameterValuesViewData $parameterValuesViewData): bool {
+                return $parameterValuesViewData->getParameterGroupAkeneoCode() === ParameterGroup::AKENEO_CODE_DIMENSIONS;
             }
-        }
-
-        return $productDimensionParameterValues;
+        );
     }
 
     /**
      * @param \App\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
+     * @return \App\Model\Product\Parameter\ParameterValuesViewData[]
      */
-    public function getProductNonDimensionParameterValues(Product $product): array
+    public function getProductNonDimensionParameterValuesViewsData(Product $product): array
     {
-        $productParameterValues = $this->getProductParameterValues($product);
-        $productNonDimensionParameterValues = [];
+        $parameterValuesViewsData = $this->productCachedAttributesFacade->getParameterValuesViewsData($product);
 
-        foreach ($productParameterValues as $parameterValue) {
-
-            /** @var \App\Model\Product\Parameter\Parameter $parameter */
-            $parameter = $parameterValue->getParameter();
-            if ($parameter->getGroup() !== null && $parameter->getGroup()->getAkeneoCode() === 'param__dimensions') {
-                continue;
+        return array_filter(
+            $parameterValuesViewsData,
+            static function (ParameterValuesViewData $parameterValuesViewData): bool {
+                return $parameterValuesViewData->getParameterGroupAkeneoCode() !== ParameterGroup::AKENEO_CODE_DIMENSIONS;
             }
-            $productNonDimensionParameterValues[$parameter->getAkeneoCode()] = $parameterValue;
-        }
-
-        return $productNonDimensionParameterValues;
+        );
     }
 }

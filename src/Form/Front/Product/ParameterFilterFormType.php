@@ -69,7 +69,10 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
                 $builder->add($parameter->getId(), SliderFilterFormType::class, [
                     'label' => $parameter->getName(),
                     'slider_config' => $this->createSliderConfig($parameterFilterChoice),
-                    'attr' => ['parameterType' => $parameter->getParameterType()],
+                    'attr' => [
+                        'parameterType' => $parameter->getParameterType(),
+                        'canShowPlus' => false,
+                    ],
                 ]);
             } else {
                 $builder->add($parameter->getId(), ChoiceType::class, [
@@ -80,7 +83,10 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
                     'choice_name' => 'id',
                     'multiple' => true,
                     'expanded' => true,
-                    'attr' => ['parameterType' => $parameter->getParameterType()],
+                    'attr' => [
+                        'parameterType' => $parameter->getParameterType(),
+                        'canShowPlus' => $parameter->getAkeneoType() !== Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
+                    ],
                 ]);
             }
         }
