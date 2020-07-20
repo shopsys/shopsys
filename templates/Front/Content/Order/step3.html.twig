@@ -2,7 +2,7 @@
 
 {% set commonTabActiveClass = isCompanyCustomer ? "" : "active" %}
 {% set companyTabActiveClass = isCompanyCustomer ? "active" : "" %}
-{% set finishOrderSubmitText = isWithoutRegistration ? 'Odeslat objednávku' : 'Registrovat a odeslat objednávku' %}
+{% set finishOrderSubmitText = isWithoutRegistration ? 'Odeslat objednávku'|trans : 'Registrovat a odeslat objednávku'|trans %}
 {% do form.note.setRendered %}
 
 {% block content %}
@@ -239,7 +239,7 @@
                                     {{ 'I agree with terms and conditions and privacy policy.'|trans }}
                                 {% endif %}
                             </span>
-                            {{ form_widget(form.save, { label: finishOrderSubmitText|trans, attr: { class: 'btn btn--checkout-send' } }) }}
+                            {{ form_widget(form.save, { label: finishOrderSubmitText, attr: { class: 'btn btn--checkout-send' } }) }}
                         </div>
                     </div>
                 </div>
