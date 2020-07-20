@@ -76,7 +76,6 @@ class ProductStockFacade
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Stock\Stock $stock
      * @param \App\Model\Stock\ProductStockData $productStockData
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function editProductStockRelation(Product $product, Stock $stock, ProductStockData $productStockData): void
     {
@@ -93,7 +92,6 @@ class ProductStockFacade
     /**
      * @param string $productCatnum
      * @param string $stockExternalId
-     * @throws \Doctrine\ORM\NonUniqueResultException
      * @return \App\Model\Stock\ProductStock|null
      */
     public function findProductStockByProductCatnumAndStockExternalId(string $productCatnum, string $stockExternalId): ?ProductStock

@@ -12,6 +12,7 @@ use App\Model\Product\Parameter\ParameterGroupFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Stock\ProductStockDataFactory;
+use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockRepository;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -130,6 +131,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $productPackageFacade;
 
     /**
+     * @var \App\Model\Stock\ProductStockFacade
+     */
+    private $productStockFacade;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -147,6 +153,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Package\ProductPackageDataFactory $productPackageDataFactory
      * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
+     * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -165,7 +172,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ProductStockDataFactory $productStockDataFactory,
         EntityManagerInterface $em,
         ProductPackageDataFactory $productPackageDataFactory,
-        ProductPackageFacade $productPackageFacade
+        ProductPackageFacade $productPackageFacade,
+        ProductStockFacade $productStockFacade
     ) {
         $this->productFacade = $productFacade;
         $this->domain = $domain;
@@ -184,6 +192,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->em = $em;
         $this->productPackageDataFactory = $productPackageDataFactory;
         $this->productPackageFacade = $productPackageFacade;
+        $this->productStockFacade = $productStockFacade;
     }
 
     /**
@@ -2027,7 +2036,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->usingStock = true;
         $productData->stockQuantity = 550;
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
-        $this->setStocksQuantity($productData, 10);
+        $this->setStocksQuantity($productData, 0);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
@@ -2035,9 +2044,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
+        $productData->preorder = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
-        $this->createProduct($productData);
+        $product = $this->createProduct($productData);
+        $this->setFutureProductStock($product, '702', 2, (new DateTime())->modify('+5 weeks'));
+        $this->setFutureProductStock($product, '704', 1, (new DateTime())->modify('+4 weeks'));
+        $this->setFutureProductStock($product, '706', 1, (new DateTime())->modify('+2 weeks'));
 
         $productData = $this->productDataFactory->create();
 
@@ -2442,7 +2455,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->usingStock = true;
         $productData->stockQuantity = 80;
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
-        $this->setStocksQuantity($productData, 10);
+        $this->setStocksQuantity($productData, 0);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
@@ -2450,9 +2463,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
+        $productData->preorder = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
-        $this->createProduct($productData);
+        $product = $this->createProduct($productData);
+        $this->setFutureProductStock($product, '702', 2, (new DateTime())->modify('+3 weeks'));
+        $this->setFutureProductStock($product, '704', 1, (new DateTime())->modify('+2 weeks'));
+        $this->setFutureProductStock($product, '706', 1, (new DateTime())->modify('+1 weeks'));
 
         $productData = $this->productDataFactory->create();
 
@@ -6486,6 +6503,27 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productStockData->productQuantity = $quantity;
             $productData->stockProductData[$stock->getId()] = $productStockData;
         }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $stockExternalId
+     * @param int $futureProductQuantity
+     * @param \DateTime $dateOfStorage
+     * @param int $productQuantity
+     */
+    public function setFutureProductStock(Product $product, string $stockExternalId, int $futureProductQuantity, DateTime $dateOfStorage, int $productQuantity = 0): void
+    {
+        $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId($product->getCatnum(), $stockExternalId);
+        if ($productStock === null) {
+            return;
+        }
+
+        $productStock->setFutureProductQuantity($futureProductQuantity);
+        $productStock->setProductQuantity($productQuantity ?? 0);
+        $productStock->setDateOfStorage($dateOfStorage);
+
+        $this->em->flush();
     }
 
     /**

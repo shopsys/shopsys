@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Stock;
 
 use App\Model\Product\Product;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -158,5 +159,18 @@ class ProductStock
     public function getDateOfStorage(): ?\DateTime
     {
         return $this->dateOfStorage;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDaysToOfStorage(): ?int
+    {
+        if ($this->dateOfStorage === null) {
+            return null;
+        }
+        $dateTime = clone $this->dateOfStorage;
+
+        return $dateTime->modify('+1 day')->diff(new DateTime(), true)->days;
     }
 }

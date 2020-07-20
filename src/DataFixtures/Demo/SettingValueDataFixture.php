@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Component\Setting\Setting;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
@@ -82,6 +82,10 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             );
             $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_MAIN_PAGE, t('Shopsys Framework - Title page', [], 'dataFixtures', $locale), $domainId);
             $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, t('| Sconto', [], 'dataFixtures', $locale), $domainId);
+
+            $this->setting->setForDomain(Setting::DELIVERY_DAYS_ON_STOCK, 70, $domainId);
+            $this->setting->setForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, 7, $domainId);
+            $this->setting->setForDomain(Setting::FUTURE_STORAGE_RESERVATION, 14, $domainId);
 
             $this->setDomainDefaultCurrency($domainId);
         }

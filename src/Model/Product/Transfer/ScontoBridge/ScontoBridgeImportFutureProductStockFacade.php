@@ -120,6 +120,8 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
 
         $this->futureProductStockTransferScontoBridgeValidator->validate($scontoBridgeItemData);
 
+        $scontoBridgeItemData['dateExpectedArrival']['year'] = 2020;
+
         $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId(
             $scontoBridgeItemData['sku'],
             $scontoBridgeItemData['storeCode']

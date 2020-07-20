@@ -24,7 +24,8 @@ export default class PersonalPickup {
 
         $transportPersonalPickupCheckboxes.change((event) => {
             if ($(event.target).is(':checked')) {
-                if ($(transportPersonalPickupHiddenId).val() == 0) {
+                const currentCheckBoxHiddenId = '#' + $(event.target).data('hidden-id');
+                if ($(currentCheckBoxHiddenId).val() == 0) {
                     $(event.target).prop('checked', false);
                     this.openPersonalPickupWindow($(event.target));
                 }
