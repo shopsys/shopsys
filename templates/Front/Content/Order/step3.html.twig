@@ -111,7 +111,10 @@
                                                 rowClass: 'form-line-block js-form-field'
                                             }) }}
                                             {% if getDomain().id == 2 %}
-                                                {{ form_row(form.companyNumberWithVat, { label: 'Tax number with vat'|trans }) }}
+                                                {{ form_row(form.companyNumberWithVat, {
+                                                    label: 'Tax number with vat'|trans,
+                                                    rowClass: 'form-line-block js-form-field'
+                                                }) }}
                                             {% endif %}
                                         </div>
                                     </div>
