@@ -119,10 +119,6 @@
                                     {% if isWithoutRegistration == false %}
                                         <div class="form-line-block-section">
                                             <h2 class="form-line-block-section__heading">{{ 'Password'|trans }}</h2>
-                                            {#icon: {
-                                                    class: 'in-icon in-icon--info js-tooltip',
-                                                    title: 'Password must be at least six characters and can\'t be the same as entered email or its part before at sign.'|trans
-                                                }#}
                                             {{ form_row(form.password.first, {
                                                 label: 'Password'|trans,
                                                 rowClass: 'form-line-block js-form-field'
