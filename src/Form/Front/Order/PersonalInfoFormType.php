@@ -316,10 +316,6 @@ class PersonalInfoFormType extends AbstractType
                 ],
             ])
             ->add('note', TextareaType::class, ['required' => false])
-            ->add('legalConditionsAgreement', CheckboxType::class, [
-                'required' => false,
-                'mapped' => false,
-            ])
             ->add('save', SubmitType::class);
 
         if ($this->currentCustomerUser->findCurrentCustomerUser() === null) {

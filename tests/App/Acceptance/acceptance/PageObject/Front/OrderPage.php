@@ -125,15 +125,6 @@ class OrderPage extends AbstractPage
         $this->tester->fillFieldByName('order_personal_info_form[note]', $note);
     }
 
-    public function acceptLegalConditions()
-    {
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#order_personal_info_form_legalConditionsAgreement'
-        );
-        $frontCheckboxClicker->check();
-    }
-
     protected function scrollToPaymentForm()
     {
         $this->tester->scrollTo(['css' => '#transport_and_payment_form_payment']);
