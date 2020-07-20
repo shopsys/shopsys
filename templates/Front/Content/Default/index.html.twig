@@ -1,5 +1,4 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
-{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
 {% block breadcrumb %}
 {% endblock %}
@@ -19,122 +18,9 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="web__line web__line--grey web__line--spacing web__line--margin-bottom">
-        <div class="web__container">
-            {% if sliderItems is not empty %}
-                <div class="box-slider">
-                    <div class="box-slider__wrap">
-                        <div id="js-slider-homepage" class="box-slider__in">
-                            {% for item in sliderItems|slice(0, 4) %}
-                                <div class="box-slider__item">
-                                    <a href="{{ item.link }}">
-                                        <picture>
-                                            <source
-                                                media="(max-width: 360px)"
-                                                srcset="{{ imageUrl(item, 'retinaSliderSmall', 'mobile') }} 2x, {{ imageUrl(item, 'sliderSmall', 'mobile') }} 1x"
-                                            >
-                                            <source
-                                                media="(min-width: 361px) and (max-width: 480px)"
-                                                srcset="{{ imageUrl(item, 'retinaSlider', 'mobile') }} 2x, {{ imageUrl(item, null, 'mobile') }} 1x"
-                                            >
-                                            <source
-                                                media="(min-width: 481px)"
-                                                srcset="{{ imageUrl(item, 'retinaSlider', 'web') }} 2x, {{ imageUrl(item, null, 'web') }} 1x"
-                                            >
-                                            <img data-src="{{ imageUrl(item, null, 'web') }}" itemprop="image" class="image-sliderItem-web" />
-                                        </picture>
-                                    </a>
-                                    {% if item.sliderExtendedTextLink and item.sliderExtendedText %}
-                                    <a href="{{ item.sliderExtendedTextLink }}" class="box-slider__item__link text-center" target="_blank">
-                                        <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
-                                    </a>
-                                    {% elseif item.sliderExtendedText %}
-                                    <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="box-slider__thumbnails">
-                            <div class="box-slider__thumbnails__block" id="js-slider-homepage-thumbnails">
-                                {% for item in sliderItems|slice(0, 4) %}
-                                    <button class="box-slider__thumbnails__item">
-                                        <span class="box-slider__thumbnails__item__text">{{ item.name }}</span>
-                                    </button>
-                                {% endfor %}
-                            </div>
-                            <a href="#" class="btn btn--outline btn--outline--slider btn--block js-not-implemented-yet">{{ 'Všechny akce'|trans }}</a>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            <div class="box-block">
-                <div class="box-block__wrap">
-                    <div class="box-block__item box-block__item--half box-block__item--left">
-                        <h2 class="box-block__item__heading">{{ 'Aktuální leták'|trans }}</h2>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/letak2x.png') }} 2x,
-                                {{ asset('public/frontend/images/letak.png') }} 1x"
-                            />
-                            <img
-                                class="box-block__item__img box-block__item__img--left"
-                                loading="lazy"
-                                src=""
-                                data-src="{{ asset('public/frontend/images/letak.png') }}"
-                                alt="{{ 'Aktuální leták'|trans }}">
-                        </picture>
-                        <p class="box-block__item__desc">{{ 'Tuny slev, lorem ipsum dolor sit amet,<br> consectur adispic elit.'|trans|raw }}</p>
-                        <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></a>
-                    </div>
-                    <div class="box-block__item box-block__item--half box-block__item--right">
-                        <h2 class="box-block__item__heading">{{ 'Prodejny Sconto'|trans }}</h2>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/prodejny2x.png') }} 2x,
-                                {{ asset('public/frontend/images/prodejny.png') }} 1x"
-                            />
-                            <img
-                                class="box-block__item__img box-block__item__img--right"
-                                loading="lazy"
-                                src=""
-                                data-src="{{ asset('public/frontend/images/prodejny.png') }}"
-                                alt="{{ 'Prodejny Sconto'|trans }}">
-                        </picture>
-                        <p class="box-block__item__desc">{{ 'Další doplňkový sortiment, zákaznické centrum nebo osobní<br>vyzvednutí zboží z e-shopu zdarma na 8 místech v ČR.'|trans|raw }}</p>
-                        <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            {% if inSaleProducts|length > 0 %}
-                <h2>{{ 'Výprodej'|trans }}</h2>
-                {{ productList.list(inSaleProducts) }}
-            {% endif %}
-        </div>
-    </div>
-
-    {{ render(controller('App\\Controller\\Front\\CategoryController:topAction')) }}
-
-    {% include 'Front/Content/Category/categoryListGrid.html.twig' %}
-
-    {{ render(controller('App\\Controller\\Front\\BlogArticleController:homepageArticlesAction')) }}
-
-    {% if topProducts is not empty %}
-        <div class="web__line">
-            <div class="web__container">
-                <div class="box-products-carousel box-products-carousel--bg" id="top-products">
-                    <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--sales">
-                        <h2 class="box-products-carousel__heading">{{ 'Výprodej'|trans }}</h2>
-                        <div class="list-products-grid list-products-grid--sales js-products-slick-carousel">
-                            {{ productList.list(topProducts, null, 'h3') }}
-                        </div>
-                        <a class="box-products-carousel__in__btn btn btn--secondary js-not-implemented-yet" href="#">{{ 'Všechny produkty'|trans }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    {% cache constant('App\\Twig\\Cache\\TwigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE') {lifetime:60*60*4, domainId:getDomain().id} %}
+        {{ render(controller('App\\Controller\\Front\\HomepageController:slightlyChangingPartsOnHomepageAction')) }}
+    {% endcache %}
 
     <div class="web__line">
         <div class="web__container">

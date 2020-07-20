@@ -8,6 +8,8 @@ use Doctrine\Common\Cache\CacheProvider;
 
 class TwigCacheFacade
 {
+    public const SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE = 'SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE';
+
     /**
      * @var \Doctrine\Common\Cache\CacheProvider
      */

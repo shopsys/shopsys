@@ -144,7 +144,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'name_prefix' => $product->getNamePrefix($locale),
             'name_sufix' => $product->getNameSufix($locale),
             'non_selling_price' => $highPriceWithVat === null ? null : $highPriceWithVat->getAmount(),
-            'is_in_sale' => $product->isProductInSale(),
+            'is_in_sale' => $product->isProductInSale($domainId),
             'is_sale_exclusion' => $product->getSaleExclusion($domainId),
             'product_available_stocks_count_information' => $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
             'product_count_exposed_in_stores' => $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),

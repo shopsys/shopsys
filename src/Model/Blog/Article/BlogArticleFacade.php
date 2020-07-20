@@ -7,8 +7,10 @@ namespace App\Model\Blog\Article;
 use App\Component\Image\ImageFacade;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use App\Model\Blog\Category\BlogCategory;
+use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -51,6 +53,16 @@ class BlogArticleFacade
     private $blogVisibilityRecalculationScheduler;
 
     /**
+     * @var \App\Twig\Cache\TwigCacheFacade
+     */
+    private $twigCacheFacade;
+
+    /**
+     * @var \App\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -58,6 +70,8 @@ class BlogArticleFacade
      * @param \App\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
+     * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -66,7 +80,9 @@ class BlogArticleFacade
         BlogArticleFactory $blogArticleFactory,
         BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
         ImageFacade $imageFacade,
-        BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
+        BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
+        TwigCacheFacade $twigCacheFacade,
+        Domain $domain
     ) {
         $this->em = $em;
         $this->blogArticleRepository = $blogArticleRepository;
@@ -75,6 +91,8 @@ class BlogArticleFacade
         $this->blogArticleBlogCategoryDomainFactory = $blogArticleBlogCategoryDomainFactory;
         $this->imageFacade = $imageFacade;
         $this->blogVisibilityRecalculationScheduler = $blogVisibilityRecalculationScheduler;
+        $this->twigCacheFacade = $twigCacheFacade;
+        $this->domain = $domain;
     }
 
     /**
@@ -116,6 +134,7 @@ class BlogArticleFacade
 
     /**
      * @param \App\Model\Blog\Article\BlogArticleData $blogArticleData
+     * @throws \App\Twig\Cache\Exception\InvalidCacheLifetimeException
      * @return \App\Model\Blog\Article\BlogArticle
      */
     public function create(BlogArticleData $blogArticleData): BlogArticle
@@ -134,12 +153,17 @@ class BlogArticleFacade
 
         $this->em->flush();
 
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
+        }
+
         return $blogArticle;
     }
 
     /**
      * @param int $blogArticleId
      * @param \App\Model\Blog\Article\BlogArticleData $blogArticleData
+     * @throws \App\Twig\Cache\Exception\InvalidCacheLifetimeException
      * @return \App\Model\Blog\Article\BlogArticle
      */
     public function edit(int $blogArticleId, BlogArticleData $blogArticleData): BlogArticle
@@ -157,11 +181,16 @@ class BlogArticleFacade
 
         $this->em->flush();
 
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
+        }
+
         return $blogArticle;
     }
 
     /**
      * @param int $blogArticleId
+     * @throws \App\Twig\Cache\Exception\InvalidCacheLifetimeException
      */
     public function delete(int $blogArticleId): void
     {
@@ -170,6 +199,10 @@ class BlogArticleFacade
         $this->em->remove($blogArticle);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
         $this->em->flush();
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
+        }
     }
 
     /**

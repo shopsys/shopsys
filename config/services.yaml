@@ -296,6 +296,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@App\Model\Product\Brand\BrandDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade: '@App\Model\Product\TopProduct\TopProductFacade'
+
     Shopsys\FrameworkBundle\Model\Country\CountryFacade:
         class: 'App\Model\Country\CountryFacade'
 
@@ -707,6 +709,8 @@ services:
     App\Model\Gtm\GtmListener:
         tags:
             - { name: kernel.event_listener, event: kernel.controller }
+
+    Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade: '@App\Component\Grid\Ordering\GridOrderingFacade'
 
     shopsys.shop.model.product_filter.cache_provider:
         class: Doctrine\Common\Cache\RedisCache

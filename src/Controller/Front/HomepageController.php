@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use App\Model\Blog\Article\BlogArticleFacade;
+use App\Model\Blog\Category\BlogCategoryFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomepageController extends FrontBaseController
 {
@@ -18,14 +22,19 @@ class HomepageController extends FrontBaseController
     private $seoSettingFacade;
 
     /**
+     * @var \App\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
      * @var \App\Model\Slider\SliderItemFacade
      */
     private $sliderItemFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \App\Model\Product\Listed\ListedProductViewElasticFacade
      */
-    private $domain;
+    private $listedProductViewElasticFacade;
 
     /**
      * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
@@ -33,43 +42,72 @@ class HomepageController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
-     * @var \App\Model\Product\Listed\ListedProductViewElasticFacade
+     * @var \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade
      */
-    protected $listedProductViewElasticFacade;
+    private $topCategoryFacade;
 
     /**
-     * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
+     * @var \App\Model\Blog\Article\BlogArticleFacade
+     */
+    private $blogArticleFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \App\Component\Domain\Domain $domain
-     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
      * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewElasticFacade
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
+     * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      */
     public function __construct(
-        SliderItemFacade $sliderItemFacade,
         SeoSettingFacade $seoSettingFacade,
         Domain $domain,
+        SliderItemFacade $sliderItemFacade,
+        ListedProductViewElasticFacade $listedProductViewElasticFacade,
         ListedProductViewFacadeInterface $listedProductViewFacade,
-        ListedProductViewElasticFacade $listedProductViewElasticFacade
+        TopCategoryFacade $topCategoryFacade,
+        BlogArticleFacade $blogArticleFacade
     ) {
-        $this->sliderItemFacade = $sliderItemFacade;
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
-        $this->listedProductViewFacade = $listedProductViewFacade;
+        $this->sliderItemFacade = $sliderItemFacade;
         $this->listedProductViewElasticFacade = $listedProductViewElasticFacade;
+        $this->listedProductViewFacade = $listedProductViewFacade;
+        $this->topCategoryFacade = $topCategoryFacade;
+        $this->blogArticleFacade = $blogArticleFacade;
     }
 
     public function indexAction()
     {
-        $sliderItems = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
-        $topProducts = $this->listedProductViewFacade->getAllTop();
-        $inSaleListedProducts = $this->listedProductViewElasticFacade->getListedSaleProducts();
-
         return $this->render('Front/Content/Default/index.html.twig', [
-            'sliderItems' => $sliderItems,
-            'topProducts' => $topProducts,
             'title' => $this->seoSettingFacade->getTitleMainPage($this->domain->getId()),
             'metaDescription' => $this->seoSettingFacade->getDescriptionMainPage($this->domain->getId()),
+        ]);
+    }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function slightlyChangingPartsOnHomepageAction(BlogCategoryFacade $blogCategoryFacade): Response
+    {
+        $sliderItems = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
+        $inSaleListedProducts = $this->listedProductViewElasticFacade->getListedSaleProducts();
+        $topProducts = $this->listedProductViewFacade->getAllTop();
+        $mainCategory = $blogCategoryFacade->getVisibleOnDomainById($this->domain->getId(), BlogArticleController::MAIN_BLOG_CATEGORY_ID);
+
+        return $this->render('Front/Content/Default/slightlyChangingPartsOnHomePage.html.twig', [
+            'sliderItems' => $sliderItems,
             'inSaleProducts' => $inSaleListedProducts,
+            'categories' => $this->topCategoryFacade->getVisibleCategoriesByDomainId($this->domain->getId()),
+            'topProducts' => $topProducts,
+            'homepageArticles' => $this->blogArticleFacade->getHomepageBlogArticlesByDomainId(
+                $this->domain->getId(),
+                $this->domain->getLocale(),
+                BlogArticleController::HOMEPAGE_BLOG_ARTICLES
+            ),
+            'rootCategory' => $mainCategory,
         ]);
     }
 }

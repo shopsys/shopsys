@@ -7,7 +7,6 @@ namespace App\Controller\Front;
 use App\Model\Category\CurrentCategoryResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
-use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,11 +29,6 @@ class CategoryController extends FrontBaseController
     private $currentCategoryResolver;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade
-     */
-    private $topCategoryFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
     private $currentCustomerUser;
@@ -43,20 +37,17 @@ class CategoryController extends FrontBaseController
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CurrentCategoryResolver $currentCategoryResolver
-     * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         Domain $domain,
         CategoryFacade $categoryFacade,
         CurrentCategoryResolver $currentCategoryResolver,
-        TopCategoryFacade $topCategoryFacade,
         CurrentCustomerUser $currentCustomerUser
     ) {
         $this->domain = $domain;
         $this->categoryFacade = $categoryFacade;
         $this->currentCategoryResolver = $currentCategoryResolver;
-        $this->topCategoryFacade = $topCategoryFacade;
         $this->currentCustomerUser = $currentCustomerUser;
     }
 
@@ -136,13 +127,6 @@ class CategoryController extends FrontBaseController
             'isFirstLevel' => false,
             'openCategories' => [],
             'currentCategory' => null,
-        ]);
-    }
-
-    public function topAction()
-    {
-        return $this->render('Front/Content/Category/top.html.twig', [
-            'categories' => $this->topCategoryFacade->getVisibleCategoriesByDomainId($this->domain->getId()),
         ]);
     }
 

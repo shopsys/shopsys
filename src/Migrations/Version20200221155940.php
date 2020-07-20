@@ -17,7 +17,7 @@ final class Version20200221155940 extends AbstractMigration
         $this->sql('TRUNCATE TABLE flags CASCADE');
         $this->sql('ALTER TABLE flags ADD akeneo_code VARCHAR(255) NOT NULL');
 
-        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (1, \'#ffffff\', true, \'flag__product_sale\')');
+        $this->sql('INSERT INTO flags (id, rgb_color, visible, sale, akeneo_code) VALUES (1, \'#ffffff\', true, true, \'flag__product_sale\')');
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (1, 1, \'Výprodej\', \'cs\')');
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (2, 1, \'Výpredaj\', \'sk\')');
 

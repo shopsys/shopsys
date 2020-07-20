@@ -1,0 +1,370 @@
+{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
+<div class="web__line web__line--grey web__line--spacing web__line--margin-bottom">
+    <div class="web__container">
+        {% if sliderItems is not empty %}
+            <div class="box-slider">
+                <div class="box-slider__wrap">
+                    <div id="js-slider-homepage" class="box-slider__in">
+                        {% for item in sliderItems|slice(0, 4) %}
+                            <div class="box-slider__item">
+                                <a href="{{ item.link }}">
+                                    <picture>
+                                        <source
+                                                media="(max-width: 360px)"
+                                                srcset="{{ imageUrl(item, 'retinaSliderSmall', 'mobile') }} 2x, {{ imageUrl(item, 'sliderSmall', 'mobile') }} 1x"
+                                        >
+                                        <source
+                                                media="(min-width: 361px) and (max-width: 480px)"
+                                                srcset="{{ imageUrl(item, 'retinaSlider', 'mobile') }} 2x, {{ imageUrl(item, null, 'mobile') }} 1x"
+                                        >
+                                        <source
+                                                media="(min-width: 481px)"
+                                                srcset="{{ imageUrl(item, 'retinaSlider', 'web') }} 2x, {{ imageUrl(item, null, 'web') }} 1x"
+                                        >
+                                        <img data-src="{{ imageUrl(item, null, 'web') }}" itemprop="image" class="image-sliderItem-web" />
+                                    </picture>
+                                </a>
+                                {% if item.sliderExtendedTextLink and item.sliderExtendedText %}
+                                    <a href="{{ item.sliderExtendedTextLink }}" class="box-slider__item__link text-center" target="_blank">
+                                        <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
+                                    </a>
+                                {% elseif item.sliderExtendedText %}
+                                    <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="box-slider__thumbnails">
+                        <div class="box-slider__thumbnails__block" id="js-slider-homepage-thumbnails">
+                            {% for item in sliderItems|slice(0, 4) %}
+                                <button class="box-slider__thumbnails__item">
+                                    <span class="box-slider__thumbnails__item__text">{{ item.name }}</span>
+                                </button>
+                            {% endfor %}
+                        </div>
+                        <a href="#" class="btn btn--outline btn--outline--slider btn--block js-not-implemented-yet">{{ 'Všechny akce'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="box-block">
+            <div class="box-block__wrap">
+                <div class="box-block__item box-block__item--half box-block__item--left">
+                    <h2 class="box-block__item__heading">{{ 'Aktuální leták'|trans }}</h2>
+                    <picture>
+                        <source
+                                srcset="
+                                {{ asset('public/frontend/images/letak2x.png') }} 2x,
+                                {{ asset('public/frontend/images/letak.png') }} 1x"
+                        />
+                        <img
+                                class="box-block__item__img box-block__item__img--left"
+                                loading="lazy"
+                                src=""
+                                data-src="{{ asset('public/frontend/images/letak.png') }}"
+                                alt="{{ 'Aktuální leták'|trans }}">
+                    </picture>
+                    <p class="box-block__item__desc">{{ 'Tuny slev, lorem ipsum dolor sit amet,<br> consectur adispic elit.'|trans|raw }}</p>
+                    <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></a>
+                </div>
+                <div class="box-block__item box-block__item--half box-block__item--right">
+                    <h2 class="box-block__item__heading">{{ 'Prodejny Sconto'|trans }}</h2>
+                    <picture>
+                        <source
+                                srcset="
+                                {{ asset('public/frontend/images/prodejny2x.png') }} 2x,
+                                {{ asset('public/frontend/images/prodejny.png') }} 1x"
+                        />
+                        <img
+                                class="box-block__item__img box-block__item__img--right"
+                                loading="lazy"
+                                src=""
+                                data-src="{{ asset('public/frontend/images/prodejny.png') }}"
+                                alt="{{ 'Prodejny Sconto'|trans }}">
+                    </picture>
+                    <p class="box-block__item__desc">{{ 'Další doplňkový sortiment, zákaznické centrum nebo osobní<br>vyzvednutí zboží z e-shopu zdarma na 8 místech v ČR.'|trans|raw }}</p>
+                    <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {% if inSaleProducts|length > 0 %}
+            <h2>{{ 'Výprodej'|trans }}</h2>
+            {{ productList.list(inSaleProducts) }}
+        {% endif %}
+    </div>
+</div>
+<div class="web__line">
+    <div class="web__container">
+        <h2>{{ 'Nakupujte podle kategorií'|trans }}</h2>
+        {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories, showProductsCountByCategory: false})) }}
+    </div>
+</div>
+<div class="web__line">
+    <div class="web__container">
+        <h2>{{ 'Nakupujte podle místností'|trans }}</h2>
+        <div class="list-grid js-not-implemented-yet">
+            <div class="list-grid__row">
+                <div class="list-grid__item list-grid__item--long list-grid__item--sixth">
+                        <span class="list-grid__item__name btn btn--next btn-no-style">
+                            <span class="list-grid__item__name__text">{{ 'Předsíň'|trans }}</span>
+                            <i class="btn__icon svg svg-long-arrow-right"></i>
+                        </span>
+                    <a class="list-grid__item__link" href="#" title="{{ 'Předsíň'|trans }}">
+                        <picture class="list-grid__item__picture">
+                            <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/predsin_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/predsin_m.jpg') }} 1x"
+                            >
+                            <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/predsin4x.jpg') }} 4x,
+                                    {{ asset('public/frontend/images/rooms/predsin3x.jpg') }} 3x,
+                                    {{ asset('public/frontend/images/rooms/predsin2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/predsin.jpg') }} 1x"
+                            />
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/predsin.jpg') }}" alt="{{ 'Předsíň'|trans }}">
+                        </picture>
+                    </a>
+                </div>
+                <div class="list-grid__item list-grid__item--long list-grid__item--third">
+                        <span class="list-grid__item__name btn btn--next btn-no-style">
+                            <span class="list-grid__item__name__text">{{ 'Obývací pokoj'|trans }}</span>
+                            <i class="btn__icon svg svg-long-arrow-right"></i>
+                        </span>
+                    <a class="list-grid__item__link" href="#" title="{{ 'Obývací pokoj'|trans }}">
+                        <picture class="list-grid__item__picture">
+                            <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/obyvaci_pokoj_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/obyvaci_pokoj_m.jpg') }} 1x"
+                            >
+                            <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/obyvaci_pokoj4x.jpg') }} 4x,
+                                    {{ asset('public/frontend/images/rooms/obyvaci_pokoj3x.jpg') }} 3x,
+                                    {{ asset('public/frontend/images/rooms/obyvaci_pokoj2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/obyvaci_pokoj.jpg') }} 1x"
+                            />
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/obyvaci_pokoj.jpg') }}" alt="{{ 'Obývací pokoj'|trans }}">
+                        </picture>
+                    </a>
+                </div>
+                <div class="list-grid__item__in list-grid__item--third">
+                    <div class="list-grid__item list-grid__item--half-long">
+                            <span class="list-grid__item__name btn btn--next btn-no-style">
+                                <span class="list-grid__item__name__text">{{ 'Kuchyně'|trans }}</span>
+                                <i class="btn__icon svg svg-long-arrow-right"></i>
+                            </span>
+                        <a class="list-grid__item__link" href="#" title="{{ 'Kuchyně'|trans }}">
+                            <picture class="list-grid__item__picture">
+                                <source
+                                        media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                        srcset="
+                                        {{ asset('public/frontend/images/rooms/kuchyne_m2x.jpg') }} 2x,
+                                        {{ asset('public/frontend/images/rooms/kuchyne_m.jpg') }} 1x"
+                                >
+                                <source
+                                        media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                                        srcset="
+                                        {{ asset('public/frontend/images/rooms/kuchyne4x.jpg') }} 4x,
+                                        {{ asset('public/frontend/images/rooms/kuchyne3x.jpg') }} 3x,
+                                        {{ asset('public/frontend/images/rooms/kuchyne2x.jpg') }} 2x,
+                                        {{ asset('public/frontend/images/rooms/kuchyne.jpg') }} 1x"
+                                />
+                                <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/kuchyne.jpg') }}" alt="{{ 'Kuchyně'|trans }}">
+                            </picture>
+                        </a>
+                    </div>
+                    <div class="list-grid__item list-grid__item--half-long">
+                            <span class="list-grid__item__name btn btn--next btn-no-style">
+                                <span class="list-grid__item__name__text">{{ 'Jídelna'|trans }}</span>
+                                <i class="btn__icon svg svg-long-arrow-right"></i>
+                            </span>
+                        <a class="list-grid__item__link" href="#" title="{{ 'Jídelna'|trans }}">
+                            <picture class="list-grid__item__picture">
+                                <source
+                                        media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                        srcset="
+                                        {{ asset('public/frontend/images/rooms/jidelna_m2x.jpg') }} 2x,
+                                        {{ asset('public/frontend/images/rooms/jidelna_m.jpg') }} 1x"
+                                >
+                                <source
+                                        media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                                        srcset="
+                                        {{ asset('public/frontend/images/rooms/jidelna4x.jpg') }} 4x,
+                                        {{ asset('public/frontend/images/rooms/jidelna3x.jpg') }} 3x,
+                                        {{ asset('public/frontend/images/rooms/jidelna2x.jpg') }} 2x,
+                                        {{ asset('public/frontend/images/rooms/jidelna.jpg') }} 1x"
+                                />
+                                <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/jidelna.jpg') }}" alt="{{ 'Jídelna'|trans }}">
+                            </picture>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-grid__item list-grid__item--long list-grid__item--sixth">
+                        <span class="list-grid__item__name btn btn--next btn-no-style">
+                            <span class="list-grid__item__name__text">{{ 'Pracovna'|trans }}</span>
+                            <i class="btn__icon svg svg-long-arrow-right"></i>
+                        </span>
+                    <a class="list-grid__item__link" href="#" title="{{ 'Pracovna'|trans }}">
+                        <picture class="list-grid__item__picture">
+                            <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/pracovna_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/pracovna_m.jpg') }} 1x"
+                            >
+                            <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/pracovna4x.jpg') }} 4x,
+                                    {{ asset('public/frontend/images/rooms/pracovna3x.jpg') }} 3x,
+                                    {{ asset('public/frontend/images/rooms/pracovna2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/pracovna.jpg') }} 1x"
+                            />
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/pracovna.jpg') }}" alt="{{ 'Pracovna'|trans }}">
+                        </picture>
+                    </a>
+                </div>
+            </div>
+            <div class="list-grid__row">
+                <div class="list-grid__item list-grid__item--third">
+                        <span class="list-grid__item__name btn btn--next btn-no-style">
+                            <span class="list-grid__item__name__text">{{ 'Ložnice'|trans }}</span>
+                            <i class="btn__icon svg svg-long-arrow-right"></i>
+                        </span>
+                    <a class="list-grid__item__link" href="#" title="{{ 'Ložnice'|trans }}">
+                        <picture class="list-grid__item__picture">
+                            <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/loznice_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/loznice_m.jpg') }} 1x"
+                            >
+                            <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/loznice4x.jpg') }} 4x,
+                                    {{ asset('public/frontend/images/rooms/loznice3x.jpg') }} 3x,
+                                    {{ asset('public/frontend/images/rooms/loznice2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/loznice.jpg') }} 1x"
+                            />
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/loznice.jpg') }}" alt="{{ 'Ložnice'|trans }}">
+                        </picture>
+                    </a>
+                </div>
+                <div class="list-grid__item list-grid__item--third">
+                        <span class="list-grid__item__name btn btn--next btn-no-style">
+                            <span class="list-grid__item__name__text">{{ 'Dětský pokoj'|trans }}</span>
+                            <i class="btn__icon svg svg-long-arrow-right"></i>
+                        </span>
+                    <a class="list-grid__item__link" href="#" title="{{ 'Dětský pokoj'|trans }}">
+                        <picture class="list-grid__item__picture">
+                            <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/detsky_pokoj_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/detsky_pokoj_m.jpg') }} 1x"
+                            >
+                            <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/detsky_pokoj4x.jpg') }} 4x,
+                                    {{ asset('public/frontend/images/rooms/detsky_pokoj3x.jpg') }} 3x,
+                                    {{ asset('public/frontend/images/rooms/detsky_pokoj2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/detsky_pokoj.jpg') }} 1x"
+                            />
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/detsky_pokoj.jpg') }}" alt="{{ 'Dětský pokoj'|trans }}">
+                        </picture>
+                    </a>
+                </div>
+                <div class="list-grid__item list-grid__item--third">
+                        <span class="list-grid__item__name btn btn--next btn-no-style">
+                            <span class="list-grid__item__name__text">{{ 'Koupelny'|trans }}</span>
+                            <i class="btn__icon svg svg-long-arrow-right"></i>
+                        </span>
+                    <a class="list-grid__item__link" href="#" title="{{ 'Koupelny'|trans }}">
+                        <picture class="list-grid__item__picture">
+                            <source
+                                    media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/koupelny_m2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/koupelny_m.jpg') }} 1x"
+                            >
+                            <source
+                                    media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
+                                    srcset="
+                                    {{ asset('public/frontend/images/rooms/koupelny4x.jpg') }} 4x,
+                                    {{ asset('public/frontend/images/rooms/koupelny3x.jpg') }} 3x,
+                                    {{ asset('public/frontend/images/rooms/koupelny2x.jpg') }} 2x,
+                                    {{ asset('public/frontend/images/rooms/koupelny.jpg') }} 1x"
+                            />
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/koupelny.jpg') }}" alt="{{ 'Koupelny'|trans }}">
+                        </picture>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if homepageArticles is not null %}
+    {% set domain = getDomain() %}
+    <div class="web__line">
+        <div class="web__container web__container--max-width">
+            <div class="box-articles">
+                <div class="box-articles__wrap">
+                    <div class="box-articles__text">
+                        <h2 class="box-articles__heading">{{ rootCategory.getName(domain.locale)|upper }}</h2>
+                        <div class="box-articles__desc">{{ rootCategory.getDescription(domain.locale) }}</div>
+                        <a class="btn btn--outline dont-print" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "všechny články"|trans }}</a>
+                    </div>
+                    <div class="list-articles list-articles--hp">
+                        {% for blogArticle in homepageArticles %}
+                            <div class="list-articles__item">
+                                <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link list-articles__item__link--image" title="{{ blogArticle.name }}">
+                                    {{ image(blogArticle, { size: 'list', class: 'list-articles__item__image', alt: blogArticle.name, lazy: true }) }}
+                                </a>
+                                <div class="list-articles__item__tags">
+                                    <span class="list-tags__tag">
+                                        {{ render(controller('App\\Controller\\Front\\BlogCategoryController::allCategoriesForBlogArticleAction', { blogArticle: blogArticle })) }}
+                                    </span>
+                                </div>
+                                <h3 class="list-articles__item__name">
+                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link" title="{{ blogArticle.name }}">
+                                        {{ blogArticle.name}}
+                                    </a>
+                                </h3>
+                                <div class="list-articles__item__desc">
+                                    {{ blogArticle.perex|slice(0,165) }}{% if blogArticle.perex|length > 165 %}&hellip;{% endif %}
+                                </div>
+                                <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="btn btn--next btn-no-style dont-print" title="{{ blogArticle.name }}">
+                                    {{ "Číst dál"|trans }} <i class="btn__icon svg svg-long-arrow-right"></i>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if topProducts is not empty %}
+    <div class="web__line">
+        <div class="web__container">
+            <div class="box-products-carousel box-products-carousel--bg" id="top-products">
+                <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--sales">
+                    <h2 class="box-products-carousel__heading">{{ 'Výprodej'|trans }}</h2>
+                    <div class="list-products-grid list-products-grid--sales js-products-slick-carousel">
+                        {{ productList.list(topProducts, null, 'h3') }}
+                    </div>
+                    <a class="box-products-carousel__in__btn btn btn--secondary js-not-implemented-yet" href="#">{{ 'Všechny produkty'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
