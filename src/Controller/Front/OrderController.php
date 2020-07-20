@@ -408,7 +408,7 @@ class OrderController extends FrontBaseController
             'showProducts' => $showProducts,
             'splitOrderPreview' => $splitOrderPreview,
             'showAdvert' => $showAdvert,
-            'showPromo' => $showPromo
+            'showPromo' => $showPromo,
         ]);
     }
 
