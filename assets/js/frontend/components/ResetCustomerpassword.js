@@ -52,7 +52,7 @@ export default class ResetCustomerpassword {
     }
 
     static init ($container) {
-        $container.filterAllNodes('#reset-customer-password').on('click', (event) => (new ResetCustomerpassword()).resetPassword(event));
+        $container.filterAllNodes('.js-reset-customer-password').on('click', (event) => (new ResetCustomerpassword()).resetPassword(event));
     }
 }
 
