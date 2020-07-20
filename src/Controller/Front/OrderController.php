@@ -325,6 +325,7 @@ class OrderController extends FrontBaseController
                     'displayFormType' => 'login',
                     'customerEmailExists' => $customerEmailExists,
                     'loginFormInOrder' => true,
+                    'splitOrderPreview' => $splitOrderPreview,
                     'prefilledCustomerEmail' => $prefilledCustomerEmail,
                 ]);
             }

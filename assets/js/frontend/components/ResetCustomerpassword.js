@@ -23,20 +23,24 @@ export default class ResetCustomerpassword {
         let message = '';
         if (data.success === true) {
             message = Translator.trans(
-                'Odkaz pro vyresetování hesla byl zaslán na e-mail %email%.', { 'email': data.email });
+                '<p class="window-popup__in__desc">Odkaz pro vyresetování hesla vám byl odeslán. Instrukce naleznete na své e-mailové adrese <strong>%email%</strong>. Vaše Sconto.</p>', { 'email': data.email });
         } else {
             message = Translator.trans(
-                'Bohužel zadaný e-mail %email% neexistuje.', { 'email': data.email });
+                'Bohužel zadaný e-mail <strong>%email%</strong> neexistuje.', { 'email': data.email });
         }
         const $html = '<div>'
-            + '<h3>'
+            + '<h2 class="window-popup__heading">'
             + Translator.trans('Obnova hesla')
-            + '</h3>'
+            + '</h2>'
             + message
             + '</div>';
         // eslint-disable-next-line no-new
         new Window({
-            content: $html
+            content: $html,
+            buttonContinue: true,
+            cssClass: 'window-popup--wide window-popup--reset-password',
+            cssClassContinue: 'window-popup__actions__btn--continue window-popup__actions__btn--continue--outline',
+            textContinue: Translator.trans('Potvrdit'),
         });
     }
 

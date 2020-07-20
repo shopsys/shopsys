@@ -26,9 +26,15 @@ export default class LoginInOrder {
 
     static onLoginResponse (loginSuccess) {
         if (loginSuccess === false) {
+            const $html = '<div>'
+            + '<h2 class="window-popup__heading">'
+            + Translator.trans('Špatné přihlašovací údaje')
+            + '</h2>'
+            + Translator.trans('Zadali jste špatné uživatelské jméno nebo heslo.')
+            + '</div>';
             // eslint-disable-next-line no-new
             new Window({
-                content: Translator.trans('Zadali jste špatné uživatelské jméno nebo heslo.')
+                content: $html
             });
         } else {
             window.location = window.location.href;

@@ -33,7 +33,7 @@ class CustomerUserFormType extends AbstractType
             $builder
                 ->add('gender', ChoiceType::class, [
                     'choices' => array_flip(CustomerUser::getAllGenders()),
-                    'placeholder' => t('-- Vyber oslovení --'),
+                    'placeholder' => t(''),
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please choose your gender']),
                     ],

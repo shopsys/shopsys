@@ -110,6 +110,7 @@
     &--disabled {
         opacity: 0.5;
         cursor: no-drop;
+        pointer-events: none;
 
         @media @query-md {
             opacity: 0.2;
@@ -361,6 +362,48 @@
         &:hover {
             background-color: lighten(#222631, 10%);
             color: #fff;
+        }
+    }
+
+    &--checkout-send {
+        display: flex;
+        align-items: center;
+        padding: 16px 25px 15px;
+
+        font-family: @font-quartenary;
+        font-size: 15px;
+        letter-spacing: 0;
+        text-transform: none;
+        background: linear-gradient(to bottom, #88c21a, #75ab0d);
+        color: #fff;
+        -webkit-font-smoothing: antialiased;
+        transition: box-shadow @transition;
+
+        &:hover {
+            background: linear-gradient(to bottom, #88c21a, #75ab0d);
+            box-shadow: 0 0 30px 0 rgba(#88c21a, .9);
+            color: #fff;
+        }
+
+        &::before {
+            order: 1;
+            margin-left: 15px;
+            width: 20px;
+            height: 20px;
+            content: '';
+
+            background-image: url('@{path-design}/check-button.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        @media @query-mobile {
+            width: 100%;
+        }
+
+        @media @query-lg {
+            padding-left: 25px;
+            padding-right: 25px;
         }
     }
 
