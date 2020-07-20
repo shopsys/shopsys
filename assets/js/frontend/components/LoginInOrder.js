@@ -26,7 +26,7 @@ export default class LoginInOrder {
 
     static onLoginResponse (loginSuccess) {
         if (loginSuccess === false) {
-            const $html = '<div>'
+            const html = '<div>'
             + '<h2 class="window-popup__heading">'
             + Translator.trans('Špatné přihlašovací údaje')
             + '</h2>'
@@ -34,7 +34,7 @@ export default class LoginInOrder {
             + '</div>';
             // eslint-disable-next-line no-new
             new Window({
-                content: $html
+                content: html
             });
         } else {
             window.location = window.location.href;
