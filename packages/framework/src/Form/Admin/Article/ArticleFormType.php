@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
+use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -34,15 +35,23 @@ class ArticleFormType extends AbstractType
     private $domain;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
+     */
+    private $articleFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      */
     public function __construct(
         SeoSettingFacade $seoSettingFacade,
-        Domain $domain
+        Domain $domain,
+        ArticleFacade $articleFacade
     ) {
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
+        $this->articleFacade = $articleFacade;
     }
 
     /**
@@ -66,11 +75,7 @@ class ArticleFormType extends AbstractType
                 ])
                 ->add('placement', ChoiceType::class, [
                     'required' => true,
-                    'choices' => [
-                        t('in upper menu') => Article::PLACEMENT_TOP_MENU,
-                        t('in footer') => Article::PLACEMENT_FOOTER,
-                        t('without positioning') => Article::PLACEMENT_NONE,
-                    ],
+                    'choices' => $this->articleFacade->getAvailablePlacementChoices(),
                     'placeholder' => t('-- Choose article position --'),
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please choose article placement']),
