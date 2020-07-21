@@ -16,3 +16,6 @@ There you can find links to upgrade notes for other versions too.
 
 - use __DIR__ instead of dirname(__FILE__) ([#1939](https://github.com/shopsys/shopsys/pull/1939))
     - see #project-base-diff to update your project
+
+- call static method as static ([#1937](https://github.com/shopsys/shopsys/pull/1937))
+    - see #project-base-diff to update your project

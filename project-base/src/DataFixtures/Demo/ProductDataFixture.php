@@ -5636,7 +5636,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     private function createVariants(): void
     {
-        $variantCatnumsByMainVariantCatnum = $this->getVariantCatnumsByMainVariantCatnum();
+        $variantCatnumsByMainVariantCatnum = self::getVariantCatnumsByMainVariantCatnum();
 
         foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
             /** @var \App\Model\Product\Product $mainProduct */
