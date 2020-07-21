@@ -94,7 +94,7 @@
             flex-grow: 1;
             height: 55px;
             width: 50%;
-            padding: 0 15px;
+            padding: 0 5px;
 
             background-color: transparent;
             text-transform: none;
@@ -120,6 +120,10 @@
                     white-space: nowrap;
 
                     font-size: 13px;
+
+                    @media screen and (max-width: 360px) {
+                        font-size: 12px;
+                    }
                 }
             }
         }
