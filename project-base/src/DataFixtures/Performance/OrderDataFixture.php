@@ -320,15 +320,15 @@ class OrderDataFixture
     {
         $shouldBeRegisteredUser = $this->faker->boolean(self::PERCENTAGE_OF_ORDERS_BY_REGISTERED_USERS);
 
-        if ($shouldBeRegisteredUser) {
-            $customerUserId = $this->faker->randomElement($this->performanceUserIds);
-            /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-            $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);
-
-            return $customerUser;
-        } else {
+        if (!$shouldBeRegisteredUser) {
             return null;
         }
+
+        $customerUserId = $this->faker->randomElement($this->performanceUserIds);
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);
+
+        return $customerUser;
     }
 
     /**

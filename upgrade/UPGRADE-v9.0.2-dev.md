@@ -10,3 +10,6 @@ There you can find links to upgrade notes for other versions too.
 
 - remove unused route /contactForm/ ([#1940](https://github.com/shopsys/shopsys/pull/1940))
     - see #project-base-diff] to update your project
+
+- remove unnecessary else conditions ([#1938](https://github.com/shopsys/shopsys/pull/1938))
+    - see #project-base-diff to update your project
