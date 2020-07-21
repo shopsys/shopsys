@@ -42,13 +42,6 @@ front_category_branch:
         _controller: App\Controller\Front\CategoryController:branchAction
     condition: "request.isXmlHttpRequest()"
 
-front_contact_form_send:
-    path: /contactForm/
-    defaults:
-        _controller: App\Controller\Front\ContactFormController:sendAction
-    methods: [POST]
-    condition: "request.isXmlHttpRequest()"
-
 front_customer_login_as_remembered_user:
     # same path must be in security.yaml
     path: /login-as-remembered-user/
