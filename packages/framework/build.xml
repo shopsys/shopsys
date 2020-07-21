@@ -1010,7 +1010,7 @@
 
     <target name="test-elasticsearch-index-recreate" depends="production-protection,test-elasticsearch-index-delete,test-elasticsearch-index-create" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)"/>
 
-    <target name="test-error-pages-generate" depends="redis-check" description="Generates error pages displayed in production environment.">
+    <target name="test-error-pages-generate" depends="redis-check" description="Generates error pages for testing environment.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:error-page:generate-all"/>
