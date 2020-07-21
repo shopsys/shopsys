@@ -13,3 +13,6 @@ There you can find links to upgrade notes for other versions too.
 
 - remove unnecessary else conditions ([#1938](https://github.com/shopsys/shopsys/pull/1938))
     - see #project-base-diff to update your project
+
+- use __DIR__ instead of dirname(__FILE__) ([#1939](https://github.com/shopsys/shopsys/pull/1939))
+    - see #project-base-diff to update your project
