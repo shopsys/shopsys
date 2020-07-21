@@ -87,8 +87,11 @@
 
                     {% if orderPreview.transport is not null %}
                         <tr class="table-cart-preview__row">
-                            <td class="table-cart-preview__cell">
+                            <td class="table-cart-preview__cell table-cart-preview__cell--transport">
                                 {{ orderPreview.transport.name }}
+                                {% if imageExists(orderPreview.transport) %}
+                                    {{ image(orderPreview.transport) }}
+                                {% endif %}
                             </td>
                             <td class="table-cart-preview__cell table-cart-preview__cell--price">
                                 {{ splitOrderPreview.transportAndPaymentPricesPreview.transportPrice(orderPreview.transport, orderPreview.productType).priceWithVat|priceText }}
@@ -116,6 +119,9 @@
                         <tr class="table-cart-preview__row">
                             <td class="table-cart-preview__cell table-cart-preview__cell--payment">
                                 <span class="table-cart-preview__cell__title">{{ splitOrderPreview.payment.name }}</span>
+                                {% if imageExists(splitOrderPreview.payment) %}
+                                    {{ image(splitOrderPreview.payment) }}
+                                {% endif %}
                             </td>
                             <td class="table-cart-preview__cell table-cart-preview__cell--price">
                                 {{ splitOrderPreview.transportAndPaymentPricesPreview.paymentPrice(splitOrderPreview.payment).priceWithVat|priceText }}
