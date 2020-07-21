@@ -292,7 +292,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     private function restartImagesIdsDbSequence()
     {
-        $this->em->createNativeQuery('ALTER SEQUENCE images_id_seq RESTART WITH 103', new ResultSetMapping())->execute();
+        $this->em->createNativeQuery('SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)', new ResultSetMapping())->execute();
     }
 
     /**
