@@ -67,11 +67,11 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                             p.variant_type = :variantTypeMain
                             OR
                             EXISTS (
-                            SELECT 1
-                            FROM images AS i
-                            WHERE i.entity_name = \'product\'
-                                AND i.akeneo_image_type = \'image_main\'
-                                AND i.entity_id = p.id
+                                SELECT 1
+                                FROM images AS i
+                                WHERE i.entity_name = \'product\'
+                                    AND i.akeneo_image_type = \'image_main\'
+                                    AND i.entity_id = p.id
                             )
                         )
                         AND (

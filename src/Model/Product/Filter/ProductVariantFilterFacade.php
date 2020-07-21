@@ -12,6 +12,25 @@ class ProductVariantFilterFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult $paginationResult
+     */
+    public function setupDefaultVariantsInPaginationResult(PaginationResult $paginationResult): void
+    {
+        $this->setupMostValuableVariantsInPaginationResultByProductFilterData($paginationResult, new ProductFilterData());
+    }
+
+    /**
+     * @param \App\Model\Product\Listed\ListedProductView[] $listedProductViews
+     */
+    public function setupDefaultVariantsInListedProductViews(array $listedProductViews): void
+    {
+        $productFilterData = new ProductFilterData();
+        foreach ($listedProductViews as &$listedProductView) {
+            $this->filterMostValuableVariantInListedProductView($listedProductView, $productFilterData);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult $paginationResult
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      */
     public function setupMostValuableVariantsInPaginationResultByProductFilterData(PaginationResult $paginationResult, ProductFilterData $productFilterData): void
