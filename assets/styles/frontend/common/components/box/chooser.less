@@ -75,7 +75,7 @@
     }
 
     &--in-popup {
-        @box-chooser-popup-item-spacing: 40px;
+        @box-chooser-popup-item-spacing: 30px;
         @box-chooser-popup-item-line-height: 1.3;
 
         .box-chooser__item {
@@ -86,6 +86,10 @@
 
             @media @query-mobile {
                 padding-left: 50px;
+            }
+
+            &:first-child {
+                border-top: 1px solid @color-border-lighter;
             }
 
             &::after {
@@ -109,6 +113,7 @@
 
             &__address {
                 line-height: @box-chooser-popup-item-line-height;
+                color: #5b5b61;
 
                 @media @query-mobile {
                     width: 100%;
@@ -116,6 +121,8 @@
                 }
 
                 @media @query-md {
+                    flex-grow: 1;
+                    flex-basis: 0;
                     padding-left: @box-chooser-popup-item-spacing;
                 }
 
@@ -126,6 +133,7 @@
 
             &__opening {
                 line-height: @box-chooser-popup-item-line-height;
+                color: #8a8b8f;
 
                 @media @query-mobile {
                     width: 100%;
@@ -133,7 +141,10 @@
                 }
 
                 @media @query-md {
+                    flex-grow: 1;
+                    flex-basis: 0;
                     padding-left: @box-chooser-popup-item-spacing;
+                    max-width: 175px;
                 }
 
                 &__title {
@@ -146,8 +157,11 @@
 
             &__avail {
                 flex-grow: 1;
+                color: #8a8b8f;
 
                 @media @query-md {
+                    flex-grow: 1;
+                    flex-basis: 0;
                     padding-left: @box-chooser-popup-item-spacing;
                 }
 
@@ -169,7 +183,7 @@
                         height: 24px;
                         content: '';
 
-                        background-image: url('@{path-design}/package-icon.svg');
+                        background-image: url('@{path-design}/package-icon-out-of-stock.svg');
                         background-repeat: no-repeat;
                         background-size: contain;
                     }
