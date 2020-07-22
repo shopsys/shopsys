@@ -76,12 +76,12 @@
             additionalSizes:
                 - {width: 192, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: list
-            width: 280
+            width: 300
             height: ~
             crop: false
             occurrence: 'Front-end: Listing of products in section, listing of products on special offer'
             additionalSizes:
-                - {width: 560, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 600, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnail
             width: 90
             height: 90

@@ -1,6 +1,6 @@
 @in-flag-position-top: 30px;
 @in-flag-position-left: 0;
-@in-flag-in-list-position-top: 0;
+@in-flag-in-list-position-top: @list-products-item-padding / 2;
 @in-flag-in-list-position-left: 0;
 
 .in-flag {
@@ -19,8 +19,9 @@
         clear: left;
         padding: 3px 12px 3px 6px;
         margin-bottom: 9px;
+        margin-left: -@list-products-item-padding / 2;
 
-        font-size: 15px;
+        font-size: 13px;
         border: 1px solid @color-border-lighter;
         border-top-right-radius: 2em;
         border-bottom-right-radius: 2em;
