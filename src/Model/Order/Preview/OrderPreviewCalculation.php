@@ -147,8 +147,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             }
         }
 
-        $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
-
         $totalPriceDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
 
         if ($transport !== null) {
