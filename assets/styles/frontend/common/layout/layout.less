@@ -76,10 +76,27 @@ img {
         }
 
         &--cart {
-            padding: 1.5rem 0 4rem;
+            padding: 25px 0 4rem;
+
+            @media @query-mobile {
+                position: relative;
+                padding-bottom: 230px;
+            }
 
             @media @query-lg {
                 padding: 3rem 0 8rem;
+            }
+
+            &-buttons-up-mobile {
+                @media @query-mobile {
+                    padding-bottom: 4rem;
+                }
+            }
+
+            &-final-step {
+                @media @query-mobile {
+                    padding-bottom: 330px;
+                }
             }
         }
     }

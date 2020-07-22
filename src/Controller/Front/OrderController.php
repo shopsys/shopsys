@@ -325,6 +325,7 @@ class OrderController extends FrontBaseController
                     'displayFormType' => 'login',
                     'customerEmailExists' => $customerEmailExists,
                     'loginFormInOrder' => true,
+                    'splitOrderPreview' => $splitOrderPreview,
                     'prefilledCustomerEmail' => $prefilledCustomerEmail,
                 ]);
             }
@@ -378,6 +379,7 @@ class OrderController extends FrontBaseController
         $paymentId = $request->get('paymentId');
         $showProducts = $request->get('showProducts', true);
         $showAdvert = $request->get('showAdvert', true);
+        $showPromo = $request->get('showPromo', true);
 
         $orderData = $this->orderDataFactory->create();
 
@@ -406,6 +408,7 @@ class OrderController extends FrontBaseController
             'showProducts' => $showProducts,
             'splitOrderPreview' => $splitOrderPreview,
             'showAdvert' => $showAdvert,
+            'showPromo' => $showPromo,
         ]);
     }
 

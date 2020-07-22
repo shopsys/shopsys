@@ -1,83 +1,129 @@
-{% extends 'Front/Content/Order/step.html.twig' %}
-
-{% block h1 %}
-    {{ 'Order - personal data'|trans }}
-{% endblock %}
-
 {% block content %}
 
-<div class="web__line">
+<div class="web__line web__line--bg-color web__line--cart web__line--cart-buttons-up-mobile">
     <div class="web__container">
 
-        <div class="box-order">
-            <div class="box-order__info">
+        <div class="box-cart box-cart--personals">
+            <div class="box-cart__col box-cart__col--info">
                 {% if customerEmailExists is null or customerEmailExists == false %}
-                    {% do form.email.setRendered() %}
-                    {% do form.password.setRendered() %}
-                    {% do form.rememberMe.setRendered() %}
-                    {% do form.login.setRendered() %}
-                    <h2>{{ 'Začněte zadáním emailu'|trans }}</h2>
-                    <input type="text" id="check-existing-email" class="input" value="">
-                    <input id="check-existing-email-submit" type="submit" value="{{ 'Pokračovat'|trans }}">
-                {% else %}
-                <h2>{{ 'Vítejte zpět ve Scontu, pro dokončení nákupu se prosím přihlašte'|trans }}</h2>
-            {{ form_start(form, {attr: {'multipleForm': true, 'data-login-url': url('front_login_in_order_ajax'), class: loginFormInOrder ? 'js-login-in-order':''}}) }}
-            {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
-                <dl class="form-line">
-                    <dt>
-                        {{ form_label(form.email, 'Email'|trans) }}
-                    </dt>
-                    <dd>
-                        {% if prefilledCustomerEmail is not null %}
-                            {{ form_widget(form.email, { value: prefilledCustomerEmail }) }}
-                        {% else %}
-                            {{ form_widget(form.email) }}
-                        {% endif %}
-                    </dd>
-                </dl>
-
-                <dl class="form-line">
-                    <dt>
-                        {{ form_label(form.password, 'Heslo'|trans) }}
-                    </dt>
-                    <dd>
-                        {{ form_widget(form.password) }}
-                    </dd>
-                </dl>
-
-                <dl class="form-line">
-                    <dt></dt>
-                    <dd>
-                        <div class="form-choice">
-                            {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
-                            <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
-                                {{ 'Remember my login'|trans }}
-                                <i class="svg svg-info in-icon in-icon--info js-tooltip"
-                                   data-toggle="tooltip"
-                                   data-placement="right"
-                                   title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
-                                ></i>
-                            </label>
+                    <div class="box-cart-card box-cart-card--form">
+                        <div class="box-cart-card__form">
+                            {% do form.email.setRendered() %}
+                            {% do form.password.setRendered() %}
+                            {% do form.rememberMe.setRendered() %}
+                            {% do form.login.setRendered() %}
+                            <h2 class="box-cart-card__form__title">{{ 'Začněte zadáním e-mailu'|trans }}</h2>
+                            <dl class="form-line-block js-form-field">
+                                <dt>
+                                    <label for="check-existing-email">{{ 'Váš e-mail'|trans }}</label>
+                                </dt>
+                                <dd>
+                                    <input
+                                        type="text"
+                                        id="check-existing-email"
+                                        class="input"
+                                        value="">
+                                </dd>
+                            </dl>
                         </div>
-                    </dd>
-                </dl>
+                    </div>
+                    <div class="box-cart__buttons box-cart__buttons--personal-info">
+                        <div class="box-cart__buttons__back">
+                            <a name="{{ flow.getFormTransitionKey() }}" href="{{ url('front_order_index') }}" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                                <i class="btn__icon svg svg-chevron"></i>
+                                {{ 'Zpět na Dopravu a platbu'|trans }}
+                            </a>
+                        </div>
+                        <div class="box-cart__buttons__next">
+                            <button id="check-existing-email-submit" class="btn btn--dark btn--checkout-step" type="submit">{{ 'Pokračovat'|trans }}</button>
+                        </div>
+                    </div>
+                {% else %}
+                    {{ form_start(form, {attr: {'multipleForm': true, 'data-login-url': url('front_login_in_order_ajax'), class: loginFormInOrder ? 'js-login-in-order':''}}) }}
+                        {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
+                        <div class="box-cart-card box-cart-card--form">
+                            <div class="box-cart-card__form">
+                                <h2 class="box-cart-card__form__title">
+                                    {{ 'Vítejte zpět ve Scontu, pro dokončení nákupu se prosím přihlašte'|trans }}
+                                </h2>
+                                <dl class="form-line-block js-form-field">
+                                    <dt>
+                                        {{ form_label(form.email, 'Email'|trans) }}
+                                    </dt>
+                                    <dd>
+                                        {% if prefilledCustomerEmail is not null %}
+                                            {{ form_widget(form.email, { value: prefilledCustomerEmail }) }}
+                                        {% else %}
+                                            {{ form_widget(form.email) }}
+                                        {% endif %}
+                                    </dd>
+                                </dl>
 
-                <dl class="form-line">
-                    <dt></dt>
-                    <dd>
-                        {{ form_widget(form.login, {label: 'Log in'|trans}) }}
-                    </dd>
-                </dl>
-                <dl class="form-line">
-                    <dt></dt>
-                    <dd>
-                        <a id="reset-customer-password" href="{{ url('front_registration_reset_password') }}">{{ 'Forgot your password?'|trans }}</a>
-                    </dd>
-                </dl>
+                                <dl class="form-line-block js-form-field">
+                                    <dt>
+                                        {{ form_label(form.password, 'Heslo'|trans) }}
+                                    </dt>
+                                    <dd class="js-trigger-focus">
+                                        {{ form_widget(form.password) }}
+                                    </dd>
+                                </dl>
 
-            {{ form_end(form) }}
+                                <dl class="form-line-block form-line-block--check display-none">
+                                    <dd>
+                                        <div class="form-choice">
+                                            {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
+                                            <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
+                                                {{ 'Remember my login'|trans }}
+                                                <i class="svg svg-info in-icon in-icon--info js-tooltip"
+                                                data-toggle="tooltip"
+                                                data-placement="right"
+                                                title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
+                                                ></i>
+                                            </label>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <div class="box-login__alert box-login__alert--standalone">
+                                    <picture>
+                                        <source srcset="{{ asset('public/frontend/images/warning2x.png') }} 2x, {{ asset('public/frontend/images/warning.png') }} 1x" />
+                                        <img
+                                            class="box-login__alert__icon"
+                                            loading="lazy"
+                                            src=""
+                                            data-src="{{ asset('public/frontend/images/warning.png') }}"
+                                            alt="{{ 'Forgot your password?'|trans }}"
+                                        >
+                                    </picture>
+                                    <span class="box-login__alert__text">{{ 'Forgot your password?'|trans }}</span>
+                                    <a class="box-login__alert__link box-login__alert__link--secondary js-reset-customer-password" href="{{ url('front_registration_reset_password') }}">{{ 'Zapomněli jste heslo?'|trans }}</a>
+                                    <a class="box-login__alert__link box-login__alert__link--primary js-reset-customer-password" href="{{ url('front_registration_reset_password') }}">{{ 'Obnovte si ho'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-cart__buttons box-cart__buttons--personal-info">
+                            <div class="box-cart__buttons__back">
+                                <a name="{{ flow.getFormTransitionKey() }}" href="{{ url('front_order_index') }}" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                                    <i class="btn__icon svg svg-chevron"></i>
+                                    {{ 'Zpět na dopravu a platbu'|trans }}
+                                </button>
+                            </div>
+                            <div class="box-cart__buttons__next">
+                                {{ form_widget(form.login, { label: 'Log in'|trans, attr: { class: 'btn btn--dark btn--checkout-step'} }) }}
+                            </div>
+                        </div>
+                    {{ form_end(form) }}
+                {% endif %}
             </div>
-            {% endif %}
+            <div class="box-cart__col box-cart__col--preview box-cart__col--preview-step-3">
+                <div id="js-order-preview" class="box-cart-card box-cart-card--preview" data-url="{{ url('front_order_preview') }}">
+                    {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                        transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
+                        paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
+                        showAdvert: false,
+                        showPromo: false
+                    })) }}
+                </div>
+            </div>
         </div>
     </div>
 </div>

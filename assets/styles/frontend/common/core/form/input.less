@@ -57,6 +57,71 @@
     &.form-input-disabled {
         background: @input-disabled-background;
     }
+
+    &-drop {
+        position: relative;
+        width: 60px;
+        min-width: 60px;
+
+        &__btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            margin-right: -2px;
+
+            background: @input-background;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border: 0;
+            border-right: 1px solid darken(@input-background, 4%);
+            outline: 0;
+            cursor: pointer;
+
+            &:focus + .input-drop__list {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        &__arrow {
+            position: relative;
+            left: 7px;
+            top: 1px;
+
+            font-size: 8px;
+        }
+
+        &__list {
+            position: absolute;
+            left: 50%;
+            width: 100%;
+            padding: 0;
+            margin: 0 0 0 -30px;
+            z-index: 1;
+
+            list-style: none;
+            opacity: 0;
+            transform: scale(0);
+            transition: all @transition;
+            transform-origin: center top;
+
+            &__item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 12px;
+                margin: 0;
+
+                background: @input-background;
+                border-bottom-left-radius: @radius;
+                border-bottom-right-radius: @radius;
+                box-shadow: 0 5px 5px 0 rgba(@color-0, .1);
+                cursor: pointer;
+            }
+        }
+    }
 }
 
 .input-no-style {
@@ -99,4 +164,16 @@ input::-webkit-inner-spin-button {
 
 textarea {
     resize: vertical;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    box-shadow: 0 0 0 1000px @input-background inset;
 }

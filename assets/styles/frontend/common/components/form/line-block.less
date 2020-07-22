@@ -30,14 +30,15 @@
         top: 15px;
         z-index: 1;
 
-        transition: transform .2s ease-in-out;
+        transition: all .2s ease-in-out;
         transform-origin: top left;
         will-change: transform;
     }
 
     &.is-focused {
         label {
-            transform: scale(0.8) translateY(-12px);
+            transform: translateY(-10px);
+            font-size: 12px;
         }
 
         .input {
@@ -93,6 +94,16 @@
                     margin-right: @form-line-block-margin-bottom;
                 }
             }
+        }
+    }
+
+    &-wrap {
+        display: flex;
+        margin-bottom: @form-line-block-margin-bottom;
+
+        .form-line-block {
+            flex-grow: 1;
+            margin-bottom: 0;
         }
     }
 }

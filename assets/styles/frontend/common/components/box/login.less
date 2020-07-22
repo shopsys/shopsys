@@ -112,8 +112,8 @@
             }
 
             @media screen and (min-width: 370px) {
-                width: 28px;
-                height: 28px;
+                width: 31px;
+                height: 27px;
                 margin: 0 8px 0 -5px;
             }
         }
@@ -154,6 +154,18 @@
 
                 @media @query-md {
                     display: none;
+                }
+            }
+        }
+
+        &--standalone {
+            @media @query-md {
+                padding: 0.75rem 1.5rem;
+
+                font-size: 15px;
+
+                .box-login__alert__icon {
+                    margin-right: 12px;
                 }
             }
         }

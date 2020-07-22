@@ -39,38 +39,22 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      */
     private $currentCustomerUser;
 
-    /**
-     * @return array
-     */
-    public function getTermsAndConditionsAgreementIsMandatoryData()
+    public function testTermsAndConditionsAgreementIsNotMandatory(): void
     {
-        return [
-            [$this->getPersonalInfoFormData(true), true],
-            [$this->getPersonalInfoFormData(false), false],
-        ];
-    }
-
-    /**
-     * @param array $personalInfoFormData
-     * @param bool $isExpectedValid
-     * @dataProvider getTermsAndConditionsAgreementIsMandatoryData
-     */
-    public function testTermsAndConditionsAgreementIsMandatory(array $personalInfoFormData, $isExpectedValid)
-    {
+        $personalInfoFormData = $this->getPersonalInfoFormData();
         $this->disableHeurekaShopCertification();
 
         $personalInfoForm = $this->createPersonalInfoForm();
 
         $personalInfoForm->submit($personalInfoFormData);
 
-        $this->assertSame($isExpectedValid, $personalInfoForm->isValid());
+        $this->assertTrue($personalInfoForm->isValid());
     }
 
     /**
-     * @param bool $legalConditionsAgreement
      * @return array
      */
-    private function getPersonalInfoFormData($legalConditionsAgreement)
+    private function getPersonalInfoFormData()
     {
         $personalInfoFormData = [];
         $personalInfoFormData['gender'] = 'female';
@@ -83,7 +67,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $personalInfoFormData['postcode'] = '12345';
         $personalInfoFormData['country'] = 1;
         $personalInfoFormData['password'] = ['first' => 'testtest', 'second' => 'testtest'];
-        $personalInfoFormData['legalConditionsAgreement'] = $legalConditionsAgreement;
 
         return $personalInfoFormData;
     }
@@ -91,7 +74,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     public function testHeurekaShopCertificationActivatedAndDisallowedByUser()
     {
         $this->enableHeurekaShopCertification();
-        $personalInfoFormData = $this->getPersonalInfoFormData(true);
+        $personalInfoFormData = $this->getPersonalInfoFormData();
         $personalInfoFormData['disallowHeurekaVerifiedByCustomers'] = true;
 
         $personalInfoForm = $this->createPersonalInfoForm();

@@ -84,7 +84,7 @@ class PersonalInfoFormType extends AbstractType
             $builder
                 ->add('gender', ChoiceType::class, [
                     'choices' => array_flip(CustomerUser::getAllGenders()),
-                    'placeholder' => t('-- Vyber oslovení --'),
+                    'placeholder' => t(''),
                     'constraints' => [
                         new Constraints\NotBlank([
                             'message' => 'Prosím vyberte si oslovení',
@@ -316,15 +316,6 @@ class PersonalInfoFormType extends AbstractType
                 ],
             ])
             ->add('note', TextareaType::class, ['required' => false])
-            ->add('legalConditionsAgreement', CheckboxType::class, [
-                'required' => true,
-                'mapped' => false,
-                'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'You have to agree with terms and conditions and privacy policy',
-                    ]),
-                ],
-            ])
             ->add('save', SubmitType::class);
 
         if ($this->currentCustomerUser->findCurrentCustomerUser() === null) {

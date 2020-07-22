@@ -99,13 +99,21 @@
             width: 100%;
             text-align: center;
 
-            font-size: 11px;
-            line-height: 1.4;
+            font-size: 13px;
+            line-height: 1.2;
 
             @media @query-lg {
                 padding: 18px 15px 15px;
 
-                font-size: 13px;
+                line-height: 1.4;
+            }
+        }
+
+        &__title {
+            @media @query-mobile {
+                display: block;
+                max-width: 90%;
+                margin: auto;
             }
         }
 

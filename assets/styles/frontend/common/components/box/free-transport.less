@@ -10,6 +10,7 @@
     &__content {
         position: relative;
         padding: 8px 12px;
+        width: 100%;
 
         border: 1px solid @color-border-light;
         border-radius: @radius;
@@ -34,7 +35,8 @@
 
         &__image {
             display: block;
-            width: 30px;
+            width: 32px;
+            min-width: 32px;
         }
     }
 
@@ -43,6 +45,10 @@
 
         font-size: 14px;
         color: @color-light-tertiary;
+
+        &--standalone {
+            margin-bottom: 0;
+        }
 
         &__strong {
             font-family: @font-quartenary;

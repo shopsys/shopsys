@@ -6,7 +6,7 @@
         <div class="box-free-transport">
             <div class="box-free-transport__icon">
                 {% if loop is not null and loop.first %}
-                    <img class="box-free-transport__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.png') }}" alt="{{ 'Doprava zdarma'|trans }}">
+                    <img class="box-free-transport__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.svg') }}" alt="{{ 'Doprava zdarma'|trans }}">
                 {% else %}
                     <img class="box-free-transport__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-delivery.svg') }}" alt="{{ 'Doprava zdarma'|trans }}">
                 {% endif %}
@@ -20,8 +20,8 @@
                         <div class="box-free-transport__progress__bar" style="width: {{ percentageOfFreeTransport }}%;"></div>
                     </div>
                 {% else %}
-                    <div class="box-free-transport__desc">
-                        {{ 'Získali jste doručení <strong>Zdarma</strong>'|trans|raw }}
+                    <div class="box-free-transport__desc box-free-transport__desc--standalone">
+                        {{ 'Získali jste doručení <strong class="box-free-transport__desc__strong">Zdarma</strong>'|trans|raw }}
                     </div>
                 {% endif %}
             </div>

@@ -15,6 +15,14 @@ export default class FormField {
                 $parent.addClass(focusClass);
             }
 
+            if ($currField.parents('.js-trigger-focus').length) {
+                // Manually trigger focus because of webkit-autofill, which is not currently detectable in chrome
+                // (since 2020)
+                setTimeout(function () {
+                    $currField.trigger('focus');
+                }, 0);
+            }
+
             $currField.on({
                 focus: function () {
                     $parent.addClass(focusClass);

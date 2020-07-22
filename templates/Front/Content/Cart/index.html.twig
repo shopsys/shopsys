@@ -40,9 +40,17 @@
             <div class="web__container">
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form box-cart' }}) }}
                     {{ form_errors(form) }}
+                    <div class="box-cart__buttons box-cart__buttons--mobile">
+                        <button
+                            type="submit"
+                            name="cart_form[submit]"
+                            class="btn btn--dark btn--checkout-step js-no-validate-button">
+                            {{ 'Další krok'|trans }}
+                        </button>
+                    </div>
                     {% if splitOrderPreview.morePreviews %}
                         <div class="box-cart-message-box">
-                            <img class="box-cart-message-box__img" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.png') }}" alt="{{ 'Doprava zdarma'|trans }}">
+                            <img class="box-cart-message-box__img" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.svg') }}" alt="{{ 'Doprava zdarma'|trans }}">
                             <div class="box-cart-message-box__content">
                                 <strong class="box-cart-message-box__title">{{ 'V košíku máte nadrozměrnou položku'|trans }}</strong>
                                 <p class="box-cart-message-box__desc">{{ 'Tohle zboží má kvůli svým rozměrům a náročnosti manipulace jiné požadavky na dopravu. Proto jsme váš nákup rozdělili na víc zásilek.'|trans }}</p>
@@ -78,14 +86,14 @@
                         {% endfor %}
 
                         <div class="box-cart__buttons">
-                            <div class="box-cart__buttons__left">
+                            <div class="box-cart__buttons__back">
                                 <a href="{{ url('front_homepage') }}" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev">
                                     <i class="btn__icon svg svg-chevron"></i>
                                     {{ 'Zpět do obchodu'|trans }}
                                 </a>
                             </div>
                             {% if cart.itemsCount > 0 %}
-                                <div class="box-cart__buttons__left">
+                                <div class="box-cart__buttons__next">
                                     {{ form_row(form.submit, { label: 'Další krok'|trans, attr: { class: 'btn btn--dark btn--checkout-step'}}) }}
                                 </div>
                             {% endif %}
@@ -98,7 +106,8 @@
                                     transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
                                     paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
                                     showProducts: true,
-                                    showAdvert: true
+                                    showAdvert: true,
+                                    showPromo: true
                                 })) }}
                             </div>
                         </div>

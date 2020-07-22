@@ -4,7 +4,7 @@ export default class PaymentTransportChooser {
 
     constructor (paymentTransportRelations, $groups) {
         this.$groups = $groups;
-        this.$submitButton = $('#transport_and_payment_form_save');
+        this.$submitButton = $('.js-transport_and_payment_form_save');
         this.paymentTransportRelations = {};
 
         paymentTransportRelations.forEach(item => {
@@ -54,10 +54,10 @@ export default class PaymentTransportChooser {
             const $checkboxContainers = $(group).find('.js-payment-transport-checkbox-container');
             if ($(group).find('.js-payment-transport-checkbox:checked').length > 0) {
                 $checkboxContainers.each((key, container) => {
-                    $(container).toggleClass('display-none', $(container).find('.js-payment-transport-checkbox:checked').length === 0);
+                    $(container).toggleClass('is-disabled', $(container).find('.js-payment-transport-checkbox:checked').length === 0);
                 });
             } else {
-                $checkboxContainers.removeClass('display-none');
+                $checkboxContainers.removeClass('is-disabled');
             }
         });
     }
@@ -66,7 +66,7 @@ export default class PaymentTransportChooser {
         let hideNextGroups = false;
         this.$groups.each((key, group) => {
             const $changeButton = $(group).find('.js-payment-transport-change-button');
-            $(group).toggleClass('display-none', hideNextGroups);
+            $(group).toggleClass('is-disabled', hideNextGroups);
 
             if ($(group).find('.js-payment-transport-checkbox:checked').length > 0) {
                 $changeButton.removeClass('display-none');
