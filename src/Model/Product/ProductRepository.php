@@ -170,4 +170,18 @@ class ProductRepository extends BaseProductRepository
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param string $catnum
+     * @return \App\Model\Product\Product|null
+     */
+    public function findByCatnum(string $catnum): ?Product
+    {
+        $queryBuilder = $this->getProductRepository()
+            ->createQueryBuilder('p')
+            ->andWhere('p.catnum = :catnum')
+            ->setParameter('catnum', $catnum);
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
 }

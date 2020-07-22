@@ -79,6 +79,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->name = $names;
         $productData->categoriesByDomainId = [Domain::FIRST_DOMAIN_ID => [$category]];
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+        $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $this->setPriceForAllDomains($productData, Money::create(100));
         $this->setVatsForAllDomains($productData);

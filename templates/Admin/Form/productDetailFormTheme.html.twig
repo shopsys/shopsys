@@ -27,13 +27,13 @@
                             {{ form_widget(quantityForm.productExposed) }}
                         </td>
                         <td class="table-form__cell">
-                            {{ form_row(quantityForm.futureProductQuantity) }}
+                            {{ quantityForm.vars.data.futureProductQuantity }}
                         </td>
                         <td class="table-form__cell">
-                            {{ form_row(quantityForm.dateOfStorage) }}
+                            {{ quantityForm.vars.data.dateOfStorage }}
                         </td>
                         <td class="table-form__cell">
-                            {{ form_row(quantityForm.daysOfStorage) }}
+                            {{ quantityForm.vars.data.daysOfStorage }}
                         </td>
                     </tr>
                 {% endfor %}

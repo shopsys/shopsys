@@ -46,6 +46,12 @@ class Product extends BaseProduct
     public const OVERSIZED_PRODUCT_TYPE_ID = 1;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=100, unique=true, nullable=false)
+     */
+    protected $catnum;
+
+    /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
@@ -794,5 +800,13 @@ class Product extends BaseProduct
         }
 
         $this->variantType = self::VARIANT_TYPE_MAIN;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCatnum(): string
+    {
+        return $this->catnum;
     }
 }

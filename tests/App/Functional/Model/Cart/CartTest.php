@@ -45,12 +45,15 @@ class CartTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->availability = $availability;
+        $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
         $this->setProductTypes($productData);
         $this->setVats($productData);
         $product1 = Product::create($productData);
-        $product2 = Product::create($productData);
+        $productData2 = $productData;
+        $productData2->catnum = '321';
+        $product2 = Product::create($productData2);
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 

@@ -7,6 +7,7 @@ namespace App\Form\Admin;
 use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Product;
+use App\Model\Product\ProductFacade;
 use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
@@ -27,6 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormTypeExtension extends AbstractTypeExtension
 {
@@ -92,24 +94,37 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private $flagFacade;
 
     /**
+     * @var \App\Model\Product\ProductFacade
+     */
+    private $productFacade;
+
+    /**
+     * @var \App\Model\Product\Product|null
+     */
+    private $product;
+
+    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         FormBuilderHelper $formBuilderHelper,
         VatFacade $vatFacade,
         Domain $domain,
         ProductTypeFacade $productTypeFacade,
-        FlagFacade $flagFacade
+        FlagFacade $flagFacade,
+        ProductFacade $productFacade
     ) {
         $this->formBuilderHelper = $formBuilderHelper;
         $this->domain = $domain;
         $this->vatFacade = $vatFacade;
         $this->productTypeFacade = $productTypeFacade;
         $this->flagFacade = $flagFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -117,8 +132,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $product = $options['product'];
-        /* @var $product \App\Model\Product\Product|null */
+        $this->product = $options['product'];
 
         $builder->add('namePrefix', LocalizedFullWidthType::class, [
             'required' => false,
@@ -144,19 +158,52 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'position' => ['after' => 'name'],
         ]);
 
-        $this->setVariantGroup($builder, $product);
+        $catnumAttributes = $builder->get('basicInformationGroup')->get('catnum')->getAttributes();
+        $builder->get('basicInformationGroup')->remove('catnum');
+        $builder->get('basicInformationGroup')->add('catnum', TextType::class, [
+            'required' => true,
+            'constraints' => [
+                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']),
+                new Constraints\Callback([$this, 'validateUniqueCatnum']),
+            ],
+            'disabled' => $this->isProductMainVariant($this->product),
+            'attr' => $catnumAttributes,
+            'label' => t('Catalog number'),
+            'position' => ['before' => 'partno'],
+        ]);
+
+        $this->setVariantGroup($builder, $this->product);
         $this->setBasicInformationGroup($builder);
         $this->setSeoGroup($builder);
         $this->setShortDescriptionsUspGroup($builder, $options);
         $this->setStocksGroup($builder);
-        $this->setDisplayAvailabilityGroup($builder, $product);
-        $this->setPricesGroup($builder, $product);
-        $this->setTransferredFilesGroup($builder, $product);
+        $this->setDisplayAvailabilityGroup($builder, $this->product);
+        $this->setPricesGroup($builder, $this->product);
+        $this->setTransferredFilesGroup($builder, $this->product);
         $this->setPackagesGroup($builder);
 
         $builder->remove('parametersGroup');
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+    }
+
+    /**
+     * @param string $catnum
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateUniqueCatnum($catnum, ExecutionContextInterface $context)
+    {
+        if ($catnum == null) {
+            return;
+        }
+
+        if ($this->product !== null && $catnum !== $this->product->getCatnum()) {
+            $productByCatnum = $this->productFacade->findByCatnum($catnum);
+
+            if ($productByCatnum !== null) {
+                $context->addViolation(t('Produkt s tímto katalogovým číslem již existuje'));
+            }
+        }
     }
 
     /**
