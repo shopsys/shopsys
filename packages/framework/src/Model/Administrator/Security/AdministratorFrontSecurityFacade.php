@@ -60,7 +60,10 @@ class AdministratorFrontSecurityFacade
     {
         try {
             $token = $this->getAdministratorToken();
-        } catch (\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException $e) {
+        } catch (
+            \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException |
+            \Symfony\Component\Security\Core\Exception\AuthenticationException $e
+        ) {
             return false;
         }
 
