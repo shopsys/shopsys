@@ -38,8 +38,8 @@ class ProductStockRepository
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
-            ->select('sp')
-            ->from(ProductStock::class, 'sp');
+            ->select('ps')
+            ->from(ProductStock::class, 'ps');
     }
 
     /**
@@ -49,7 +49,7 @@ class ProductStockRepository
     protected function getProductStockQueryBuilderByProduct(Product $product): QueryBuilder
     {
         return $this->getQueryBuilder()
-            ->where('sp.product = :product')
+            ->where('ps.product = :product')
             ->setParameter('product', $product);
     }
 
@@ -62,7 +62,7 @@ class ProductStockRepository
     public function findProductStockByStockAndProduct(Stock $stock, Product $product): ?ProductStock
     {
         return $this->getProductStockQueryBuilderByProduct($product)
-            ->andWhere('sp.stock = :stock')
+            ->andWhere('ps.stock = :stock')
             ->setParameter('stock', $stock)
             ->getQuery()
             ->getOneOrNullResult();
@@ -77,8 +77,8 @@ class ProductStockRepository
     public function findProductStockByStockExternalIdAndProductCatnum(string $stockExternalId, string $productCatnum): ?ProductStock
     {
         return $this->getQueryBuilder()
-            ->join(Product::class, 'p', JOIN::WITH, 'sp.product = p')
-            ->join(Stock::class, 's', JOIN::WITH, 'sp.stock = s')
+            ->join(Product::class, 'p', JOIN::WITH, 'ps.product = p')
+            ->join(Stock::class, 's', JOIN::WITH, 'ps.stock = s')
             ->andWhere('s.externalId = :stockExternalId')
             ->andWhere('p.catnum = :productCatnum')
             ->setParameter('stockExternalId', $stockExternalId)
@@ -101,12 +101,34 @@ class ProductStockRepository
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
+     * @return bool
+     */
+    public function isProductAvailableOnDomain(Product $product, int $domainId): bool
+    {
+        $queryBuilder = $this->getQueryBuilder()
+            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock AND s.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->select('CASE WHEN SUM(ps.productQuantity) > 0 THEN TRUE ELSE FALSE END');
+
+        if ($product->isMainVariant()) {
+            $queryBuilder->join(Product::class, 'p', Join::WITH, 'ps.product = p AND p.mainVariant = :product');
+        } else {
+            $queryBuilder->where('ps.product = :product');
+        }
+        $queryBuilder->setParameter('product', $product);
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return \App\Model\Stock\ProductStock[]
      */
     public function getProductStocksExcludeCentralStockByProductAndDomainId(Product $product, int $domainId): array
     {
         return $this->getProductStockQueryBuilderByProduct($product)
-            ->join(Stock::class, 's', Join::WITH, 's.id = sp.stock')
+            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock')
             ->andWhere('s.centralStock = false')
             ->andWhere('s.domainId = :domainId')
             ->setParameter('domainId', $domainId)
@@ -120,8 +142,8 @@ class ProductStockRepository
     public function findFutureProductStockAfterNowDate(): array
     {
         return $this->getQueryBuilder()
-            ->where('sp.dateOfStorage IS NOT NULL')
-            ->andWhere('sp.dateOfStorage < :nowDate')
+            ->where('ps.dateOfStorage IS NOT NULL')
+            ->andWhere('ps.dateOfStorage < :nowDate')
             ->setParameter('nowDate', new \DateTime())
             ->getQuery()
             ->execute();

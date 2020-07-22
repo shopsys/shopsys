@@ -87,12 +87,23 @@
                 </div>
             </div>
         </div>
-        {% if inSaleProducts|length > 0 %}
-            <h2>{{ 'Výprodej'|trans }}</h2>
-            {{ productList.list(inSaleProducts) }}
-        {% endif %}
     </div>
 </div>
+{% if inSaleProducts|length > 0 %}
+    <div class="web__line">
+        <div class="web__container">
+            <div class="box-products-carousel box-products-carousel--bg" id="products-in-sales">
+                <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--sales">
+                    <h2 class="box-products-carousel__heading">{{ 'Výprodej'|trans }}</h2>
+                    <div class="list-products-grid list-products-grid--sales js-products-slick-carousel">
+                        {{ productList.list(inSaleProducts, null, 'h3') }}
+                    </div>
+                    <a class="box-products-carousel__in__btn btn btn--secondary js-not-implemented-yet" href="#">{{ 'Všechny produkty'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
 <div class="web__line">
     <div class="web__container">
         <h2>{{ 'Nakupujte podle kategorií'|trans }}</h2>
@@ -357,8 +368,8 @@
     <div class="web__line">
         <div class="web__container">
             <div class="box-products-carousel box-products-carousel--bg" id="top-products">
-                <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--sales">
-                    <h2 class="box-products-carousel__heading">{{ 'Výprodej'|trans }}</h2>
+                <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--top-products">
+                    <h2 class="box-products-carousel__heading">{{ 'Top produkty'|trans }}</h2>
                     <div class="list-products-grid list-products-grid--sales js-products-slick-carousel">
                         {{ productList.list(topProducts, null, 'h3') }}
                     </div>

@@ -125,7 +125,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'brand' => $product->getBrand() ? $product->getBrand()->getId() : '',
             'flags' => $flagIds,
             'categories' => $categoryIds,
-            'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomain($product, $domainId),
+            'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             'prices' => $prices,
             'parameters' => $parameters,
             'ordering_priority' => $product->getDomainOrderingPriority($domainId),

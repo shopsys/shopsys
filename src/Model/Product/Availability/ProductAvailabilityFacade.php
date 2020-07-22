@@ -30,6 +30,11 @@ class ProductAvailabilityFacade
     private $productStockRepository;
 
     /**
+     * @var array
+     */
+    private $productAvailabilityDomainCache;
+
+    /**
      * @param \App\Model\Stock\ProductStockRepository $productStockRepository
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
@@ -42,6 +47,7 @@ class ProductAvailabilityFacade
         $this->productStockFacade = $productStockFacade;
         $this->setting = $setting;
         $this->productStockRepository = $productStockRepository;
+        $this->productAvailabilityDomainCache = [];
     }
 
     /**
@@ -51,7 +57,7 @@ class ProductAvailabilityFacade
      */
     public function getProductAvailabilityInformationByDomainId(Product $product, int $domainId): string
     {
-        if ($this->isProductAvailableOnDomain($product, $domainId)) {
+        if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             return t('Skladem');
         }
 
@@ -108,7 +114,7 @@ class ProductAvailabilityFacade
     {
         $availabilityStatus = 'out-of-stock';
 
-        if ($this->isProductAvailableOnDomain($product, $domainId)) {
+        if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             $availabilityStatus = 'in-stock';
         }
 
@@ -174,7 +180,7 @@ class ProductAvailabilityFacade
      */
     public function calculateProductAvailabilityDaysForDomainId(Product $product, int $domainId): int
     {
-        if ($this->isProductAvailableOnDomain($product, $domainId)) {
+        if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             return 0;
         }
 
@@ -186,17 +192,16 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return bool
      */
-    public function isProductAvailableOnDomain(Product $product, int $domainId): bool
+    public function isProductAvailableOnDomainCached(Product $product, int $domainId): bool
     {
-        $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
-
-        foreach ($productStocks as $productStock) {
-            if ($productStock->getStock()->getDomainId() === $domainId && $productStock->getProductQuantity() > 0) {
-                return true;
-            }
+        $cacheKey = sprintf('product:%d-domain:%d', $product->getId(), $domainId);
+        if (array_key_exists($cacheKey, $this->productAvailabilityDomainCache)) {
+            return $this->productAvailabilityDomainCache[$cacheKey];
         }
 
-        return false;
+        $this->productAvailabilityDomainCache[$cacheKey] = $this->productStockRepository->isProductAvailableOnDomain($product, $domainId);
+
+        return $this->productAvailabilityDomainCache[$cacheKey];
     }
 
     /**
@@ -206,7 +211,7 @@ class ProductAvailabilityFacade
      */
     public function isProductExcludedOnDomain(Product $product, int $domainId): bool
     {
-        return $product->getSaleExclusion($domainId) && !$this->isProductAvailableOnDomain(
+        return $product->getSaleExclusion($domainId) && !$this->isProductAvailableOnDomainCached(
             $product,
             $domainId
         );
@@ -219,7 +224,7 @@ class ProductAvailabilityFacade
      */
     public function isProductAvailableOnDomainOrHasPreorder(Product $product, int $domainId): bool
     {
-        return $product->hasPreorder() || $this->isProductAvailableOnDomain(
+        return $product->hasPreorder() || $this->isProductAvailableOnDomainCached(
             $product,
             $domainId
         );
@@ -234,7 +239,7 @@ class ProductAvailabilityFacade
     {
         $productStocks = $this->productStockRepository->getProductStocksExcludeCentralStockByProductAndDomainId($product, $domainId);
 
-        if ($this->isProductAvailableOnDomain($product, $domainId)) {
+        if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             $weeks = $this->getTransferWeeksByDomainId($domainId);
         } else {
             $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
@@ -329,7 +334,7 @@ class ProductAvailabilityFacade
      */
     public function getShippingDaysByDomainId(Product $product, int $domainId): int
     {
-        if ($this->isProductAvailableOnDomain($product, $domainId)) {
+        if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             return $this->getTransferDaysByDomainId($domainId);
         } else {
             return $this->getDeliveryDaysByDomainId($product, $domainId);

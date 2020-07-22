@@ -84,6 +84,7 @@ class HomepageController extends FrontBaseController
         $this->topCategoryFacade = $topCategoryFacade;
         $this->blogArticleFacade = $blogArticleFacade;
         $this->productVariantFilterFacade = $productVariantFilterFacade;
+        $this->listedProductViewFacade = $listedProductViewFacade;
     }
 
     public function indexAction()
