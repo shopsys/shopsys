@@ -34,7 +34,14 @@ final class MergeReleaseCandidateBranchReleaseWorker extends AbstractShopsysRele
     public function work(Version $version): void
     {
         $this->symfonyStyle->note('You need to create a merge commit, see https://docs.shopsys.com/en/latest/contributing/merging-on-github/ for detailed instructions.');
-        $this->symfonyStyle->warning(sprintf('If you are creating the merge commit locally, do not forget to push the "%s" branch!', $this->initialBranchName));
+        $this->symfonyStyle->warning(sprintf(
+            'If you are creating the merge commit locally, do not forget to push the "%s" branch!',
+            $this->initialBranchName
+        ));
+        $this->symfonyStyle->warning(sprintf(
+            'If you are merging it on github do not forget to fetch and checkout initial branch "%s" to prevent conflicts!',
+            $this->initialBranchName
+        ));
         $this->confirm(sprintf('Confirm "%s" branch was merged to "%s"', $this->createBranchName($version), $this->initialBranchName));
 
         if ($this->initialBranchName === 'master') {
