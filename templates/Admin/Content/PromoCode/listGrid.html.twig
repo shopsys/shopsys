@@ -1,0 +1,9 @@
+{% extends '@ShopsysFramework/Admin/Content/PromoCode/listGrid.html.twig' %}
+
+{% block grid_value_cell_id_percent %}
+    {% if value|length > 1 %}
+        {{ 'Škálovaný slevový kupón'|trans }}
+    {% else %}
+        {{ value[0]|formatPercent }}
+    {% endif %}
+{% endblock %}

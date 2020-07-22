@@ -14,6 +14,7 @@ class Version20200716132559 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
+        $this->sql('INSERT INTO promo_code_limit ("from", percent, promo_code_id) SELECT 1, percent, id FROM promo_codes WHERE percent IS NOT NULL;');
         $this->sql('ALTER TABLE "promo_codes" DROP "percent";');
     }
 

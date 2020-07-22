@@ -10,6 +10,6 @@ import './payment/payment';
 import './validation';
 import './advert/advert';
 
-import './promocode/promocode'
+import './promocode/promocode';
 
 registerAdmin();
