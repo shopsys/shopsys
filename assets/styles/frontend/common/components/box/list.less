@@ -5,8 +5,12 @@
 @box-list-sort-info-color: #8a8b8f;
 
 .box-list {
-    padding: 30px @web-padding 30px;
+    padding: 30px @web-padding / 2 20px;
     margin-bottom: 30px;
+
+    @media screen and (min-width: 350px) {
+        padding: 30px @web-padding 30px;
+    }
 
     @media @query-lg {
         padding: 0 0 54px;
