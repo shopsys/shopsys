@@ -49,9 +49,9 @@
                             {{ productFlags.list(product.getFlagsForDomain(domain.id)) }}
 
                             {% if showGallery %}
-                                <div class="box-gallery dont-print js-gallery js-gallery-slick-carousel">
+                                {% set galleryImagesCount = galleryImages|length %}
+                                <div class="box-gallery dont-print js-gallery{{ galleryImagesCount > 5 ? ' js-gallery-slick-carousel' }}">
                                     <div class="box-gallery__in js-gallery-wrap">
-                                        {% set galleryImagesCount = galleryImages|length %}
                                         {% for galleryImage in galleryImages %}
                                             {% if loop.index != 1 %}
                                                 <div class="box-gallery__item js-gallery-item">
