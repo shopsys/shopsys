@@ -10,14 +10,21 @@ class DynamicFieldsInOrderTest extends AbstractOrderTestCase
     {
         $orderMutation = $this->getOrderMutation(__DIR__ . '/Resources/dynamicFieldsInOrder.graphql');
 
-        $responseData = $this->getResponseContentForQuery($orderMutation)['data']['CreateOrder'];
+        $graphQlType = 'CreateOrder';
+        $response = $this->getResponseContentForQuery($orderMutation);
+
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
+        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
         $this->assertArrayHasKey('uuid', $responseData);
         $this->assertIsString($responseData['uuid']);
+
         $this->assertArrayHasKey('number', $responseData);
         $this->assertIsString($responseData['number']);
+
         $this->assertArrayHasKey('urlHash', $responseData);
         $this->assertIsString($responseData['urlHash']);
+
         $this->assertArrayHasKey('creationDate', $responseData);
         $this->assertIsString($responseData['creationDate']);
     }
