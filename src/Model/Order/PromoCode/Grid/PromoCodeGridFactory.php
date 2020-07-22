@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Model\Order\PromoCode\Grid;
 
 use App\Model\Order\PromoCode\PromoCode;
+use App\Model\Order\PromoCode\PromoCodeLimit;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory as BasePromoCodeGridFactory;
@@ -46,7 +49,7 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
         $grid = $this->gridFactory->create('promoCodeList', $dataSource);
         $grid->setDefaultOrder('code');
         $grid->addColumn('code', 'pc.code', t('Code'), true);
-        $grid->addColumn('percent', 'pc.percent', t('Discount'), true);
+        //$grid->addColumn('percent', 'pc.percent', t('Discount'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         if ($withEditButton === true) {

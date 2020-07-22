@@ -62,6 +62,11 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private $hashGenerator;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
+     */
+    private $promoCodeLimitRepository;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
@@ -71,6 +76,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryFactory $promoCodeCategoryFactory
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
@@ -83,6 +89,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         PromoCodeCategoryRepository $promoCodeCategoryRepository,
         PromoCodeProductFactory $promoCodeProductFactory,
         PromoCodeCategoryFactory $promoCodeCategoryFactory,
+        PromoCodeLimitRepository $promoCodeLimitRepository,
         HashGenerator $hashGenerator
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
@@ -92,6 +99,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->promoCodeProductFactory = $promoCodeProductFactory;
         $this->promoCodeCategoryFactory = $promoCodeCategoryFactory;
+        $this->promoCodeLimitRepository = $promoCodeLimitRepository;
         $this->hashGenerator = $hashGenerator;
     }
 
@@ -124,6 +132,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::create($promoCodeData);
+        $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
         $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
         $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
 
@@ -141,6 +150,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::edit($promoCodeId, $promoCodeData);
+        $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
         $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
         $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
 
@@ -178,6 +188,22 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
         $this->em->flush();
         $this->em->clear();
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \App\Model\Order\PromoCode\PromoCodeLimit[] $limits
+     */
+    private function refreshPromoCodeLimits(PromoCode $promoCode, array $limits): void
+    {
+        $this->promoCodeLimitRepository->deleteByPromoCodeId($promoCode->getId());
+
+        foreach ($limits as $limit) {
+            $limit->setPromoCode($promoCode);
+            $this->em->persist($limit);
+        }
+
+        $this->em->flush();
     }
 
     /**

@@ -4,23 +4,62 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Component\Domain\Domain;
+use App\Model\Cart\CartFacade;
+use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver;
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory as BaseOrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
  * @property \App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
- * @method __construct(\App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation, \App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Cart\CartFacade $cartFacade, \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade)
  * @property \App\Model\Cart\CartFacade $cartFacade
  * @property \App\Component\Domain\Domain $domain
  */
 class OrderPreviewFactory extends BaseOrderPreviewFactory
 {
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver
+     */
+    private $promoCodeLimitByCartTotalResolver;
+
+    /**
+     * @param \App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
+     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Cart\CartFacade $cartFacade
+     * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+     */
+    public function __construct(
+        OrderPreviewCalculation $orderPreviewCalculation,
+        Domain $domain,
+        CurrencyFacade $currencyFacade,
+        CurrentCustomerUser $currentCustomerUser,
+        CartFacade $cartFacade,
+        CurrentPromoCodeFacade $currentPromoCodeFacade,
+        PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+    ) {
+        parent::__construct(
+            $orderPreviewCalculation,
+            $domain,
+            $currencyFacade,
+            $currentCustomerUser,
+            $cartFacade,
+            $currentPromoCodeFacade
+        );
+        $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
+    }
+
     /**
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
@@ -36,7 +75,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         $validEnteredPromoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
         $validEnteredPromoCodePercent = null;
         if ($validEnteredPromoCode !== null) {
-            $validEnteredPromoCodePercent = $validEnteredPromoCode->getPercent();
+            $validEnteredPromoCodePercent = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode($validEnteredPromoCode)->getPercent();
         }
 
         return $this->create(

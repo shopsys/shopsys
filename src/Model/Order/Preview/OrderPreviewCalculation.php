@@ -109,10 +109,13 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $promoCodePerProduct
         );
 
+        $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
+
         $quantifiedItemsDiscounts = $this->quantifiedProductDiscountCalculation->calculateDiscountsPerProductRoundedByCurrency(
             $quantifiedProducts,
             $quantifiedItemsPrices,
             $promoCodePerProduct,
+            $productsFullPrice,
             $currency
         );
 

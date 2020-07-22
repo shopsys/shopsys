@@ -6,6 +6,7 @@ namespace App\Model\Order\Preview;
 
 use App\Model\Order\OrderData;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver;
 use App\Model\Product\Type\ProductType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -64,6 +65,11 @@ class OrderPreviewSplittingFacade
     private $pricesPreviewFacade;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver
+     */
+    private $promoCodeLimitByCartTotalResolver;
+
+    /**
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -73,6 +79,7 @@ class OrderPreviewSplittingFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \App\Model\Order\Preview\PricesPreviewFacade $pricesPreviewFacade
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
      */
     public function __construct(
         OrderPreviewFactory $orderPreviewFactory,
@@ -83,7 +90,8 @@ class OrderPreviewSplittingFacade
         CurrentPromoCodeFacade $currentPromoCodeFacade,
         OrderPriceCalculation $orderPriceCalculation,
         PaymentPriceCalculation $paymentPriceCalculation,
-        PricesPreviewFacade $pricesPreviewFacade
+        PricesPreviewFacade $pricesPreviewFacade,
+        PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
     ) {
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->domain = $domain;
@@ -94,6 +102,7 @@ class OrderPreviewSplittingFacade
         $this->orderPriceCalculation = $orderPriceCalculation;
         $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->pricesPreviewFacade = $pricesPreviewFacade;
+        $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
     }
 
     /**
@@ -173,7 +182,7 @@ class OrderPreviewSplittingFacade
             return null;
         }
 
-        return $validEnteredPromoCode->getPercent();
+        return $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode($validEnteredPromoCode)->getPercent();
     }
 
     /**

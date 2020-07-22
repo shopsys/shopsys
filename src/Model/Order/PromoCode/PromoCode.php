@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
+use App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
@@ -250,5 +251,15 @@ class PromoCode extends BasePromoCode
     public function isWithoutLowPrice(): bool
     {
         return $this->withoutLowPrice;
+    }
+
+    /**
+     * @deprecated
+     * @throws \App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException
+     * @return string
+     */
+    public function getPercent(): string
+    {
+        throw new DeprecatedParameterPropertyException('percent');
     }
 }
