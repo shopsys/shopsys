@@ -45,7 +45,7 @@ parameters:
             message: '#Call to an undefined method \(Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser&Stringable\)|\(Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser&Symfony\\Component\\Security\\Core\\User\\UserInterface\)::getUuid\(\)\.#'
             path: %currentWorkingDirectory%/src/Model/Customer/User/CurrentCustomerUser.php*
         -
-            message: '#^Unsafe usage of new static().#'
+            message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/src/*
     excludes_analyse:
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
