@@ -94,6 +94,9 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             }
         }
 
+        // temporary cache credentials (for 1 hour) to prevent asking for username and password for each package
+        $this->processRunner->run('git config --global credential.helper "cache --timeout=3600"');
+
         if (count($packageNamesWithProblems) === 0) {
             foreach ($packageNames as $packageName) {
                 $this->processRunner->run(sprintf('cd %s/%s && git push origin %s', $tempDirectory, $packageName, $versionString));
