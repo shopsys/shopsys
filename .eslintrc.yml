@@ -14,9 +14,9 @@ rules:
     - warn
     - 1tbs
   camelcase: warn
-  comma-dangle:
-    - warn
-    - always-multiline
+  #comma-dangle:
+  #  - warn
+  #  - always-multiline
   comma-style:
     - error
     - last
@@ -30,7 +30,10 @@ rules:
   eol-last:
     - error
     - always
-  id-length: error
+  id-length:
+    - warn
+    - exceptions:
+        - "$"
   max-lines: error
   max-params:
     - error
@@ -39,9 +42,9 @@ rules:
   no-eq-null: error
   no-eval: error
   no-implied-eval: error
-  no-invalid-this: error
+  #no-invalid-this: error
   no-shadow: error
-  no-undefined: error
+  #no-undefined: warn
   no-warning-comments:
     - warn
     - location: anywhere
