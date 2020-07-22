@@ -42,7 +42,7 @@ class ReleaseNewNodeModulePackageVersion extends AbstractShopsysReleaseWorker
 npm login
 # pass your credentials (login, password, email)
 
-npm release
+npm publish
 
 # set new version attribute to %s in project-base/package.json
 
