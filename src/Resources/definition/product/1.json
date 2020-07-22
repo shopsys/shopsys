@@ -86,13 +86,19 @@
           "filter": [
             "edge_ngram"
           ]
+        },
+        "edge_ngram_unanalyzed_words": {
+          "tokenizer": "whitespace",
+          "filter": [
+            "edge_ngram"
+          ]
         }
       }
     }
   },
   "mappings": {
     "properties": {
-      "name": {
+      "searching_names": {
         "type": "text",
         "analyzer": "stemming",
         "fields": {
@@ -114,6 +120,16 @@
             "analyzer": "edge_ngram_without_diacritic",
             "search_analyzer": "full_without_diacritic"
           },
+          "keyword": {
+            "type": "icu_collation_keyword",
+            "language": "cs",
+            "index": false
+          }
+        }
+      },
+      "name": {
+        "type": "text",
+        "fields": {
           "keyword": {
             "type": "icu_collation_keyword",
             "language": "cs",
@@ -122,105 +138,68 @@
         }
       },
       "name_prefix": {
-        "type": "text",
-        "analyzer": "stemming",
-        "fields": {
-          "full_with_diacritic": {
-            "type": "text",
-            "analyzer": "full_with_diacritic"
-          },
-          "full_without_diacritic": {
-            "type": "text",
-            "analyzer": "full_without_diacritic"
-          },
-          "edge_ngram_with_diacritic": {
-            "type": "text",
-            "analyzer": "edge_ngram_with_diacritic",
-            "search_analyzer": "full_with_diacritic"
-          },
-          "edge_ngram_without_diacritic": {
-            "type": "text",
-            "analyzer": "edge_ngram_without_diacritic",
-            "search_analyzer": "full_without_diacritic"
-          },
-          "keyword": {
-            "type": "icu_collation_keyword",
-            "language": "cs",
-            "index": false
-          }
-        }
+        "type": "text"
       },
       "name_sufix": {
+        "type": "text"
+      },
+      "searching_catnum": {
         "type": "text",
-        "analyzer": "stemming",
+        "analyzer": "whitespace",
         "fields": {
-          "full_with_diacritic": {
+          "edge_ngram": {
             "type": "text",
-            "analyzer": "full_with_diacritic"
-          },
-          "full_without_diacritic": {
-            "type": "text",
-            "analyzer": "full_without_diacritic"
-          },
-          "edge_ngram_with_diacritic": {
-            "type": "text",
-            "analyzer": "edge_ngram_with_diacritic",
-            "search_analyzer": "full_with_diacritic"
-          },
-          "edge_ngram_without_diacritic": {
-            "type": "text",
-            "analyzer": "edge_ngram_without_diacritic",
-            "search_analyzer": "full_without_diacritic"
-          },
-          "keyword": {
-            "type": "icu_collation_keyword",
-            "language": "cs",
-            "index": false
+            "analyzer": "edge_ngram_unanalyzed_words",
+            "search_analyzer": "whitespace"
           }
         }
       },
       "catnum": {
+        "type": "text"
+      },
+      "searching_partno": {
         "type": "text",
-        "analyzer": "keyword",
+        "analyzer": "whitespace",
         "fields": {
           "edge_ngram": {
             "type": "text",
-            "analyzer": "edge_ngram_unanalyzed",
-            "search_analyzer": "keyword"
+            "analyzer": "edge_ngram_unanalyzed_words",
+            "search_analyzer": "whitespace"
           }
         }
       },
       "partno": {
+        "type": "text"
+      },
+      "searching_ean": {
         "type": "text",
-        "analyzer": "keyword",
+        "analyzer": "whitespace",
         "fields": {
           "edge_ngram": {
             "type": "text",
-            "analyzer": "edge_ngram_unanalyzed",
-            "search_analyzer": "keyword"
+            "analyzer": "edge_ngram_unanalyzed_words",
+            "search_analyzer": "whitespace"
           }
         }
       },
       "ean": {
-        "type": "text",
-        "analyzer": "keyword",
-        "fields": {
-          "edge_ngram": {
-            "type": "text",
-            "analyzer": "edge_ngram_unanalyzed",
-            "search_analyzer": "keyword"
-          }
-        }
+        "type": "text"
       },
-      "short_description": {
+      "searching_short_description": {
         "type": "text",
         "analyzer": "edge_ngram_without_diacritic",
         "search_analyzer": "full_without_diacritic"
       },
-      "description": {
+      "short_description": {
+        "type": "text"
+      },
+      "searching_descriptions": {
         "type": "text",
         "analyzer": "edge_ngram_without_diacritic_html",
         "search_analyzer": "full_without_diacritic_html"
+      },
+      "description": {
+        "type": "text"
       },
       "flags": {
         "type": "integer"

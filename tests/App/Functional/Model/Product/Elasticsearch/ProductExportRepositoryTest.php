@@ -72,6 +72,12 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'product_available_stocks_count_information',
             'product_count_exposed_in_stores',
             'variants_parameters_setup',
+            'searching_names',
+            'searching_descriptions',
+            'searching_catnums',
+            'searching_eans',
+            'searching_partnos',
+            'searching_short_descriptions',
         ];
     }
 }

@@ -113,6 +113,12 @@ class ProductExportRepository extends BaseProductExportRepository
         $variantIds = $this->extractVariantIds($product);
         $highPriceWithVat = $product->getHighPriceWithVat($domainId);
         $variantsParametersSetup = $product->isMainVariant() ? $this->parameterFacade->getVariantsSetupForElasticByMainProduct($product, $locale, $domainId) : null;
+        $searchingNames = $this->extractSearchingNames($product, $locale);
+        $searchingDescriptions = $this->extractSearchingDescriptions($product, $domainId);
+        $searchingCatnums = $this->extractSearchingCatnums($product);
+        $searchingEans = $this->extractSearchingEans($product);
+        $searchingPartnos = $this->extractSearchingPartnos($product);
+        $searchingShortDescriptions = $this->extractSearchingShortDescriptions($product, $domainId);
 
         return [
             'id' => $product->getId(),
@@ -149,7 +155,136 @@ class ProductExportRepository extends BaseProductExportRepository
             'product_available_stocks_count_information' => $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
             'product_count_exposed_in_stores' => $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),
             'variants_parameters_setup' => $variantsParametersSetup,
+            'searching_names' => $searchingNames,
+            'searching_descriptions' => $searchingDescriptions,
+            'searching_catnums' => $searchingCatnums,
+            'searching_eans' => $searchingEans,
+            'searching_partnos' => $searchingPartnos,
+            'searching_short_descriptions' => $searchingShortDescriptions,
         ];
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return string
+     */
+    private function extractSearchingCatnums(Product $product): string
+    {
+        if ($product->isMainVariant()) {
+            $variantCatnums = [];
+            $variantCatnums[] = $product->getCatnum() ?? '';
+            foreach ($product->getVariants() as $variant) {
+                $variantCatnums[] = $variant->getCatnum() ?? '';
+            }
+
+            return trim(implode(' ', array_unique($variantCatnums)));
+        } else {
+            return $product->getCatnum() ?? '';
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return string
+     */
+    private function extractSearchingEans(Product $product): string
+    {
+        if ($product->isMainVariant()) {
+            $variantEans = [];
+            $variantEans[] = $product->getEan() ?? '';
+            foreach ($product->getVariants() as $variant) {
+                $variantEans[] = $variant->getEan() ?? '';
+            }
+
+            return trim(implode(' ', array_unique($variantEans)));
+        } else {
+            return $product->getEan() ?? '';
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return string
+     */
+    private function extractSearchingPartnos(Product $product): string
+    {
+        if ($product->isMainVariant()) {
+            $variantEans = [];
+            $variantEans[] = $product->getPartno() ?? '';
+            foreach ($product->getVariants() as $variant) {
+                $variantEans[] = $variant->getPartno() ?? '';
+            }
+
+            return trim(implode(' ', array_unique($variantEans)));
+        } else {
+            return $product->getPartno() ?? '';
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param string $locale
+     * @return string
+     */
+    private function extractSearchingNames(Product $product, string $locale): string
+    {
+        if ($product->isMainVariant()) {
+            $variantNames = $product->getFullname($locale);
+            foreach ($product->getVariants() as $variant) {
+                $variantFullName = $variant->getFullname($locale);
+                if (!empty($variantFullName) && strpos($variantNames, $variantFullName) === false) {
+                    $variantNames .= ' ' . $variantFullName;
+                }
+            }
+
+            return trim($variantNames);
+        } else {
+            return $product->getFullname($locale);
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return string
+     */
+    private function extractSearchingDescriptions(Product $product, int $domainId): string
+    {
+        if ($product->isMainVariant()) {
+            $variantDescriptions = $product->getDescription($domainId) ?? '';
+            foreach ($product->getVariants() as $variant) {
+                $variantDescription = $variant->getDescription($domainId);
+                if (!empty($variantDescription) && strpos($variantDescriptions, $variantDescription) === false) {
+                    $variantDescriptions .= ' ' . $variantDescription;
+                }
+            }
+
+            return trim($variantDescriptions);
+        } else {
+            return $product->getDescription($domainId) ?? '';
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return string
+     */
+    private function extractSearchingShortDescriptions(Product $product, int $domainId): string
+    {
+        if ($product->isMainVariant()) {
+            $variantDescriptions = $product->getShortDescription($domainId) ?? '';
+            foreach ($product->getVariants() as $variant) {
+                $variantDescription = $variant->getShortDescription($domainId);
+                if (!empty($variantDescription) && strpos($variantDescriptions, $variantDescription) === false) {
+                    $variantDescriptions .= ' ' . $variantDescription;
+                }
+            }
+
+            return trim($variantDescriptions);
+        } else {
+            return $product->getShortDescription($domainId) ?? '';
+        }
     }
 
     /**

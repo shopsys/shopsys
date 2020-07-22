@@ -180,4 +180,12 @@ class ListedProductView extends BaseListedProductView
     {
         $this->variantImageUrl = $variantImageUrl;
     }
+
+    /**
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        return trim(sprintf('%s %s %s', $this->namePrefix, $this->name, $this->nameSufix));
+    }
 }

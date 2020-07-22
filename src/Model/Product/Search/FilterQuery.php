@@ -37,19 +37,40 @@ class FilterQuery extends BaseFilterQuery
     public function search(string $text): BaseFilterQuery
     {
         /** @var \App\Model\Product\Search\FilterQuery $clonedQuery */
-        $clonedQuery = parent::search($text);
+        $clonedQuery = clone $this;
 
-        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.full_with_diacritic^60';
-        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.full_without_diacritic^50';
-        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix^45';
-        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.edge_ngram_with_diacritic^40';
-        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.edge_ngram_without_diacritic^35';
+        $clonedQuery->match = [
+            'multi_match' => [
+                'query' => $text,
+                'fields' => [
+                    'searching_names.full_with_diacritic^60',
+                    'searching_names.full_without_diacritic^50',
+                    'searching_names^45',
+                    'searching_names.edge_ngram_with_diacritic^40',
+                    'searching_names.edge_ngram_without_diacritic^35',
+                    'searching_catnums^50',
+                    'searching_catnums.edge_ngram^25',
+                    'searching_partnos^40',
+                    'searching_partnos.edge_ngram^20',
+                    'searching_eans^60',
+                    'searching_eans.edge_ngram^30',
+                    'searching_short_descriptions^5',
+                    'searching_descriptions^5',
+                ],
+            ],
+        ];
 
-        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.full_with_diacritic^60';
-        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.full_without_diacritic^50';
-        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix^45';
-        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.edge_ngram_with_diacritic^40';
-        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.edge_ngram_without_diacritic^35';
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.full_with_diacritic^60';
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.full_without_diacritic^50';
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix^45';
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.edge_ngram_with_diacritic^40';
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.edge_ngram_without_diacritic^35';
+//
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.full_with_diacritic^60';
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.full_without_diacritic^50';
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix^45';
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.edge_ngram_with_diacritic^40';
+//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.edge_ngram_without_diacritic^35';
 
         $clonedQuery->match['multi_match']['operator'] = 'and';
 

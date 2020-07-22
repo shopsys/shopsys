@@ -27,14 +27,16 @@
                          <picture>
                             <img
                                 src="{{ productView.variantImageUrl }}"
-                                alt="{{ productView.name }}"
-                                title="{{ productView.name }}"
+                                alt="{{ productView.fullName }}"
+                                title="{{ productView.fullName }}"
                                 width="30"
                             />
                          </picture>
                      {% endif %}
                 </span>
-                <span class="search__hint__name js-search-autocomplete-item-label">{{ productView.name }}</span>
+                <span class="search__hint__name js-search-autocomplete-item-label">
+                    {{ productView.fullName }}
+                </span>
             </a>
         </li>
     {% endfor %}
