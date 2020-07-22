@@ -91,7 +91,8 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $discountOptions['label'] = t('Sleva (%)');
         $builder->remove('percent');
 
-        $this->buildLimitFields($builder, $discountOptions);
+        $putLimitsAfter = $options['mass_generate'] ? 'identifier' : 'code';
+        $this->buildLimitFields($builder, $discountOptions, $putLimitsAfter);
 
         $builder->add('identifier', TextType::class, [
             'label' => t('Identifikátor kupónu pro IS'),
@@ -343,15 +344,16 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param FormBuilderInterface $builder
      * @param array $discountOptions
+     * @param string $after
      */
-    private function buildLimitFields(FormBuilderInterface $builder, array $discountOptions): void
+    private function buildLimitFields(FormBuilderInterface $builder, array $discountOptions, string $after): void
     {
         $builder->add(
             $builder->create('limits', PromoCodeLimitCollectionType::class, [
                 'label' => t('Limity'),
-                'position' => ['after' => 'code'],
+                'position' => ['after' => $after],
                 'entry_type' => PromoCodeLimitType::class,
                 'entry_options' => ['percent' => $discountOptions],
                 'required' => false,
