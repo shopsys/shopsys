@@ -41,6 +41,11 @@ abstract class AbstractCheckPackagesTravisBuildsReleaseWorker extends AbstractSh
     }
 
     /**
+     * @return string
+     */
+    abstract protected function getCheckingBranchName(): string;
+
+    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

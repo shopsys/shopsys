@@ -25,4 +25,12 @@ final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackages
     {
         return Stage::RELEASE_CANDIDATE;
     }
+
+    /**
+     * @return string
+     */
+    protected function getCheckingBranchName(): string
+    {
+        return $this->initialBranchName;
+    }
 }
