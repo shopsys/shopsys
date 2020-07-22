@@ -344,7 +344,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $discountOptions
      * @param string $after
      */

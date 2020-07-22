@@ -10,7 +10,6 @@ use App\Model\Order\PromoCode\PromoCodeLimitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory as BasePromoCodeGridFactory;
 
@@ -20,8 +19,9 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
      * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
      */
     private $adminDomainTabsFacade;
+
     /**
-     * @var PromoCodeLimitRepository
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
      */
     private PromoCodeLimitRepository $promoCodeLimitRepository;
 
@@ -29,6 +29,7 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      */
     public function __construct(EntityManagerInterface $em, GridFactory $gridFactory, AdminDomainTabsFacade $adminDomainTabsFacade, PromoCodeLimitRepository $promoCodeLimitRepository)
     {
@@ -74,6 +75,10 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
         return $grid;
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
     private function getLimitsByPromoCodeId(int $id): array
     {
         $limits = $this->promoCodeLimitRepository->getLimitsByPromoCodeId($id);
