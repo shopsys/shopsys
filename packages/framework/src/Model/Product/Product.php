@@ -634,17 +634,38 @@ class Product extends AbstractTranslatableEntity
      */
     public function setProductCategoryDomains(array $productCategoryDomains)
     {
-        $this->productCategoryDomains->clear();
-
-        foreach ($productCategoryDomains as $productCategoryDomain) {
-            $this->productCategoryDomains->add($productCategoryDomain);
+        foreach ($this->productCategoryDomains as $productCategoryDomain) {
+            if ($this->isProductCategoryDomainInArray($productCategoryDomain, $productCategoryDomains) === false) {
+                $this->productCategoryDomains->removeElement($productCategoryDomain);
+            }
         }
-
+        foreach ($productCategoryDomains as $productCategoryDomain) {
+            if ($this->isProductCategoryDomainInArray($productCategoryDomain, $this->productCategoryDomains->toArray()) === false) {
+                $this->productCategoryDomains->add($productCategoryDomain);
+            }
+        }
         if ($this->isMainVariant()) {
             foreach ($this->getVariants() as $variant) {
                 $variant->copyProductCategoryDomains($productCategoryDomains);
             }
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain $searchProductCategoryDomain
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
+     * @return bool
+     */
+    protected function isProductCategoryDomainInArray(ProductCategoryDomain $searchProductCategoryDomain, array $productCategoryDomains): bool
+    {
+        foreach ($productCategoryDomains as $productCategoryDomain) {
+            if ($productCategoryDomain->getCategory() === $searchProductCategoryDomain->getCategory()
+                && $productCategoryDomain->getDomainId() === $searchProductCategoryDomain->getDomainId()
+            ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
