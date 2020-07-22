@@ -1,0 +1,52 @@
+env:
+  browser: true
+  es6: true
+  mocha: true
+  node: true
+parser: 'babel-eslint'
+extends:
+  - 'eslint:recommended'
+parserOptions:
+  ecmaVersion: 6
+  sourceType: 'module'
+rules:
+  brace-style:
+    - warn
+    - 1tbs
+  camelcase: warn
+  comma-dangle:
+    - warn
+    - always-multiline
+  comma-style:
+    - error
+    - last
+  complexity:
+    - error
+    - 10
+  curly: warn
+  quote-props:
+    - warn
+    - consistent
+  eol-last:
+    - error
+    - always
+  id-length: error
+  max-lines: error
+  max-params:
+    - error
+    - 4
+  no-duplicate-imports: error
+  no-eq-null: error
+  no-eval: error
+  no-implied-eval: error
+  no-invalid-this: error
+  no-shadow: error
+  no-undefined: error
+  no-warning-comments:
+    - warn
+    - location: anywhere
+      terms:
+        - todo
+        - fixme
+  prefer-promise-reject-errors: error
+  semi: error
