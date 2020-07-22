@@ -33,11 +33,12 @@ for BRANCH in $BRANCHES; do
   BRANCH_MERGED=$(echo "${BRANCH}" | jq -r '.merged')
 
   if [ -z "${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${BRANCH_NAME}]}" ] && ${BRANCH_MERGED} == "true"; then
+    ENCODED_BRANCH_NAME=$(echo "${BRANCH_NAME}" | sed 's;/;%2F;g')
   	CURL_OUTPUT=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" \
       -X DELETE \
-      "${API_URL}/repository/branches/${BRANCH_NAME}")
+      "${API_URL}/repository/branches/${ENCODED_BRANCH_NAME}")
 
-    echo -e "    ${BRANCH_NAME} --> ${RED}DELETED!${NO_COLOR}"
+    echo -e "    ${BRANCH_NAME} --> ${RED}DELETED!${NO_COLOR} (${CURL_OUTPUT})"
     CURL_OUTPUT=''
   else
     echo -e "    ${BRANCH_NAME} --> ${GREEN}NOTHING TO DO!${NO_COLOR}"
@@ -57,32 +58,38 @@ for REGISTRY_REPOSITORY in $(echo "${REGISTRY_REPOSITORIES}" | jq -rc '.[]'); do
       -X DELETE "${API_URL}/registry/repositories/${REPOSITORY_ID}")
 
     echo -e "    ${REPOSITORY_NAME} --> ${RED}GONE!${NO_COLOR} (${CURL_OUTPUT})"
+    continue
   else
 
-    if [ ! -z "${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${REPOSITORY_NAME}]}" ]; then
-      ENVIRONMENT=${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${REPOSITORY_NAME}]}
+    if [ ! -z "${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${REPOSITORY_NAME%%-*}]}" ]; then
+      ENVIRONMENT=${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${REPOSITORY_NAME%%-*}]}
       DEPLOYED_TAG=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/deployments?environment=${ENVIRONMENT}&status=success&sort=desc" | jq -r '.[0].sha')
+      DEPLOYED_TAG_CREATED_DATE=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags/${DEPLOYED_TAG}" | jq -r '.created_at')
 
-      if [ ! -z "${DEPLOYED_TAG}" ]; then
-        CURL_OUTPUT=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" \
-          -X DELETE \
-          --data 'keep_n=3' \
-          --data 'name_regex_delete=.*' \
-          --data "'name_regex_keep=${DEPLOYED_TAG}'" \
-          "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags")
+      if [ ! -z "${DEPLOYED_TAG}" ] && [ "${DEPLOYED_TAG_CREATED_DATE}" != "null" ]; then
 
-        echo -e "    ${REPOSITORY_NAME} --> ${YELLOW}DELETED OLD TAGS!${NO_COLOR} (${CURL_OUTPUT})"
+        TAGS_FOR_BRANCH=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags")
+
+        for TAG in $(echo "${TAGS_FOR_BRANCH}" | jq -r '.[].name'); do
+      		TAG_DETAIL_CREATED_DATE=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags/${TAG}" | jq -r '.created_at')
+
+      		if [[ ${DEPLOYED_TAG_CREATED_DATE} > ${TAG_DETAIL_CREATED_DATE} ]]; then
+      			CURL_OUTPUT=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" -X DELETE "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags/${TAG}")
+      		fi
+      	done
+
+      	echo -e "    ${REPOSITORY_NAME} --> ${YELLOW}DELETED OLD TAGS FOR DEPLOYED BRANCH ON ${ENVIRONMENT} ENVIRONMENT!${NO_COLOR} (${CURL_OUTPUT})"
+      	continue
       fi
-
-    else
-      CURL_OUTPUT=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" \
-        -X DELETE \
-        --data 'keep_n=3' \
-        --data 'name_regex_delete=.*' \
-        "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags")
-
-      echo -e "    ${REPOSITORY_NAME} --> ${YELLOW}DELETED OLD TAGS!${NO_COLOR} (${CURL_OUTPUT})"
     fi
   fi
+
+  CURL_OUTPUT=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" \
+    -X DELETE \
+    --data 'keep_n=2' \
+    --data 'name_regex_delete=.*' \
+    "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags")
+
+  echo -e "    ${REPOSITORY_NAME} --> ${YELLOW}DELETED OLD TAGS!${NO_COLOR} (${CURL_OUTPUT})"
   CURL_OUTPUT=''
 done
