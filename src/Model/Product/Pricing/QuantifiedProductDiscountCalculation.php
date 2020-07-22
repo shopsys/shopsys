@@ -38,10 +38,11 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
      * @param string[] $discountPercentPerProduct
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $cartTotalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function calculateDiscountsPerProductRoundedByCurrency(array $quantifiedProducts, array $quantifiedItemsPrices, array $discountPercentPerProduct, Currency $currency): array
+    public function calculateDiscountsPerProductRoundedByCurrency(array $quantifiedProducts, array $quantifiedItemsPrices, array $discountPercentPerProduct, Price $cartTotalPrice, Currency $currency): array
     {
         $quantifiedItemsDiscounts = [];
         foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
@@ -167,5 +168,17 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
 
         return new Price($priceWithoutVat, $priceWithVat);
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $cartTotalPrice
+     * @return string
+     */
+    private function getDiscountFromPromoCodeByCartTotalPrice(PromoCode $promoCode, Price $cartTotalPrice): string
+    {
+        $limit = $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice($promoCode, $cartTotalPrice->getPriceWithVat()->getAmount());
+
+        return $limit->getPercent();
     }
 }
