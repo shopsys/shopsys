@@ -53,3 +53,6 @@ rules:
         - fixme
   prefer-promise-reject-errors: error
   semi: error
+globals:
+  "$": readonly
+  "jQuery": readonly
