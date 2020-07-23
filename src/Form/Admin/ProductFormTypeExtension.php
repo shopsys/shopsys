@@ -378,6 +378,11 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'disabled' => $this->isProductMainVariant($product),
                 'label' => 'Povolit nákup do mínusu',
             ])
+            ->add('canBeShippedAsPackage', MultidomainType::class, [
+                'label' => t('Lze přepravovat balíkovou přepravou'),
+                'required' => false,
+                'entry_type' => YesNoType::class,
+            ])
             ->add('saleExclusion', MultidomainType::class, [
                 'label' => t('Vyřazení z prodeje'),
                 'required' => false,

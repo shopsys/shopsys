@@ -180,6 +180,11 @@ class ProductData extends BaseProductData
      */
     public $domainOrderingPriority;
 
+    /**
+     * @var bool[]
+     */
+    public array $canBeShippedAsPackage;
+
     public function __construct()
     {
         parent::__construct();
@@ -210,5 +215,6 @@ class ProductData extends BaseProductData
         $this->variantParameters = [];
         $this->domainHidden = [];
         $this->domainOrderingPriority = [];
+        $this->canBeShippedAsPackage = [];
     }
 }

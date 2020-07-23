@@ -166,6 +166,12 @@ class ProductDomain extends BaseProductDomain
     protected $domainOrderingPriority;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $canBeShippedAsPackage;
+
+    /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      */
@@ -534,5 +540,21 @@ class ProductDomain extends BaseProductDomain
     public function setDomainOrderingPriority(int $domainOrderingPriority): void
     {
         $this->domainOrderingPriority = $domainOrderingPriority;
+    }
+
+    /**
+     * @return bool
+     */
+    public function canBeShippedAsPackage(): bool
+    {
+        return $this->canBeShippedAsPackage;
+    }
+
+    /**
+     * @param bool $canBeShippedAsPackage
+     */
+    public function setCanBeShippedAsPackage(bool $canBeShippedAsPackage): void
+    {
+        $this->canBeShippedAsPackage = $canBeShippedAsPackage;
     }
 }

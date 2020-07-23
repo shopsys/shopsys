@@ -202,6 +202,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->embeddedAccessories[$domainId] = null;
             $productData->domainHidden[$domainId] = false;
             $productData->domainOrderingPriority[$domainId] = 0;
+            $productData->canBeShippedAsPackage[$domainId] = false;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -254,6 +255,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->embeddedAccessories[$domainId] = $product->getEmbeddedAccessories($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
             $productData->domainOrderingPriority[$domainId] = $product->getDomainOrderingPriority($domainId);
+            $productData->canBeShippedAsPackage[$domainId] = $product->canBeShippedAsPackage($domainId);
 
             $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }

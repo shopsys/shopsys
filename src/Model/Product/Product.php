@@ -224,6 +224,7 @@ class Product extends BaseProduct
             $productDomain->setTotalPackageWeight($productData->totalPackageWeight[$domainId] !== null ? (float)$productData->totalPackageWeight[$domainId] : null);
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
             $productDomain->setDomainOrderingPriority((int)$productData->domainOrderingPriority[$domainId]);
+            $productDomain->setCanBeShippedAsPackage($productData->canBeShippedAsPackage[$domainId]);
         }
     }
 
@@ -839,5 +840,14 @@ class Product extends BaseProduct
     protected function setData(BaseProductData $productData): void
     {
         parent::setData($productData);
+    }
+
+    /**
+     * @param int $domainId
+     * @return bool
+     */
+    public function canBeShippedAsPackage(int $domainId): bool
+    {
+        return $this->getProductDomain($domainId)->canBeShippedAsPackage();
     }
 }
