@@ -312,6 +312,7 @@ class ProductController extends FrontBaseController
             $page,
             self::PRODUCTS_PER_PAGE
         );
+        $this->productVariantFilterFacade->setupDefaultVariantsInPaginationResult($paginatedSimilarProducts);
 
         $productSeriesList = $this->productSeriesFacade->getAllVisibleByProductAndDomainId($product, $this->domain);
         $productSeriesProducts = [];

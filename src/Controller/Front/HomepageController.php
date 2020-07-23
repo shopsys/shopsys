@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Model\Blog\Article\BlogArticleFacade;
 use App\Model\Blog\Category\BlogCategoryFacade;
+use App\Model\Product\Filter\ProductVariantFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
@@ -47,6 +48,11 @@ class HomepageController extends FrontBaseController
     private $topCategoryFacade;
 
     /**
+     * @var \App\Model\Product\Filter\ProductVariantFilterFacade
+     */
+    private ProductVariantFilterFacade $productVariantFilterFacade;
+
+    /**
      * @var \App\Model\Blog\Article\BlogArticleFacade
      */
     private $blogArticleFacade;
@@ -59,6 +65,7 @@ class HomepageController extends FrontBaseController
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
+     * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
      */
     public function __construct(
         SeoSettingFacade $seoSettingFacade,
@@ -67,15 +74,17 @@ class HomepageController extends FrontBaseController
         ListedProductViewElasticFacade $listedProductViewElasticFacade,
         ListedProductViewFacadeInterface $listedProductViewFacade,
         TopCategoryFacade $topCategoryFacade,
-        BlogArticleFacade $blogArticleFacade
+        BlogArticleFacade $blogArticleFacade,
+        ProductVariantFilterFacade $productVariantFilterFacade
     ) {
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
         $this->sliderItemFacade = $sliderItemFacade;
         $this->listedProductViewElasticFacade = $listedProductViewElasticFacade;
-        $this->listedProductViewFacade = $listedProductViewFacade;
         $this->topCategoryFacade = $topCategoryFacade;
         $this->blogArticleFacade = $blogArticleFacade;
+        $this->productVariantFilterFacade = $productVariantFilterFacade;
+        $this->listedProductViewFacade = $listedProductViewFacade;
     }
 
     public function indexAction()
@@ -93,8 +102,11 @@ class HomepageController extends FrontBaseController
     public function slightlyChangingPartsOnHomepageAction(BlogCategoryFacade $blogCategoryFacade): Response
     {
         $sliderItems = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
-        $inSaleListedProducts = $this->listedProductViewElasticFacade->getListedSaleProducts();
         $topProducts = $this->listedProductViewFacade->getAllTop();
+        $this->productVariantFilterFacade->setupDefaultVariantsInListedProductViews($topProducts);
+
+        $inSaleListedProducts = $this->listedProductViewElasticFacade->getListedSaleProducts();
+        $this->productVariantFilterFacade->setupDefaultVariantsInListedProductViews($inSaleListedProducts);
         $mainCategory = $blogCategoryFacade->getVisibleOnDomainById($this->domain->getId(), BlogArticleController::MAIN_BLOG_CATEGORY_ID);
 
         return $this->render('Front/Content/Default/slightlyChangingPartsOnHomePage.html.twig', [

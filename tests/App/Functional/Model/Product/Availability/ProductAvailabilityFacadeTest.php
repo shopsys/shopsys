@@ -131,7 +131,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
 
         $this->em->refresh($product);
 
-        $this->assertSame($expectedIsProductAvailableOnDomain, $this->productAvailabilityFacade->isProductAvailableOnDomain($product, self::FIRST_DOMAIN_ID));
+        $this->assertSame($expectedIsProductAvailableOnDomain, $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, self::FIRST_DOMAIN_ID));
     }
 
     /**

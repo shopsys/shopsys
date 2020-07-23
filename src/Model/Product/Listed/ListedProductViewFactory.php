@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Listed;
 
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -25,17 +26,25 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
     private $productAvailabilityFacade;
 
     /**
+     * @var \App\Model\Product\Parameter\ParameterFacade
+     */
+    private ParameterFacade $parameterFacade;
+
+    /**
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
         Domain $domain,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade
+        ProductAvailabilityFacade $productAvailabilityFacade,
+        ParameterFacade $parameterFacade
     ) {
         parent::__construct($domain, $productCachedAttributesFacade);
         $this->productAvailabilityFacade = $productAvailabilityFacade;
+        $this->parameterFacade = $parameterFacade;
     }
 
     /**
@@ -46,6 +55,15 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      */
     public function createFromProduct(Product $product, ?ImageView $imageView, ProductActionView $productActionView): BaseListedProductView
     {
+        $variantsParametersSetup = [];
+        if ($product->isMainVariant()) {
+            $variantsParametersSetup = $this->parameterFacade->getVariantsSetupForElasticByMainProduct(
+                $product,
+                $this->domain->getLocale(),
+                $this->domain->getId()
+            );
+        }
+
         return new ListedProductView(
             $product->getId(),
             $product->getName(),
@@ -55,12 +73,12 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $this->getFlagIdsForProductForDomain($product, $this->domain->getId()),
             $productActionView,
             $imageView,
-            $product->getNamePrefix(),
-            $product->getNameSufix(),
+            $product->isMainVariant() ? $product->getDefaultVariant()->getNamePrefix() : $product->getNamePrefix(),
+            $product->isMainVariant() ? '' : $product->getNameSufix(),
             $this->getProductPriceWithVatByMoney($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero()),
             $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId()),
             $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId()),
-            []
+            $this->prepareVariantsParametersSetup($variantsParametersSetup)
         );
     }
 

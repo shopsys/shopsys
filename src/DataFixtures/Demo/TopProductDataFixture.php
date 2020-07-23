@@ -41,6 +41,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
             ProductDataFixture::PRODUCT_PREFIX . '1',
             ProductDataFixture::PRODUCT_PREFIX . '17',
             ProductDataFixture::PRODUCT_PREFIX . '9',
+            ProductDataFixture::PRODUCT_PREFIX . '69',
         ];
         $distinctTopProductReferenceNames = [
             ProductDataFixture::PRODUCT_PREFIX . '14',

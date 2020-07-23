@@ -483,7 +483,7 @@ class Product extends BaseProduct
      */
     public function isProductInSale(int $domainId): bool
     {
-        foreach ($this->getProductDomain($domainId)->getFlags() as $flag) {
+        foreach ($this->getFlagsForDomain($domainId) as $flag) {
             if ($flag->isSale()) {
                 return true;
             }
