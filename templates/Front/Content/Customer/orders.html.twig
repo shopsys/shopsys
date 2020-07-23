@@ -8,48 +8,63 @@
     {{ 'My orders'|trans }}
 {% endblock %}
 
+{% block breadcrumb %}
+{% endblock %}
+
 {% block main_content %}
-    <div class="web__line">
+   <div class="web__line web__line--grey web__line--spacing web__line--spacing--big web__line--margin-bottom-up">
         <div class="web__container">
-            <h1>{{ 'My orders'|trans }}</h1>
+            <h1 class="web__container__heading">{{ 'My orders'|trans }}</h1>
+            {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             {% if orders|length == 0 %}
                 {{ 'No order so far.'|trans }}
             {% else %}
-                <div class="in-scroll box-orders">
+                <div class="in-scroll box-table box-table--orders">
                     <div class="in-scroll__in">
-                        <table class="table-main box-orders__table">
-                            <tr>
-                                <th>{{ 'Order number'|trans }}</th>
-                                <th>{{ 'Creation date'|trans }}</th>
-                                <th>{{ 'Current status'|trans }}</th>
-                                <th class="text-right">{{ 'Number of items'|trans }}</th>
-                                <th>{{ 'Shipping'|trans }}</th>
-                                <th>{{ 'Payment'|trans }}</th>
-                                <th class="text-right">{{ 'Total price including VAT'|trans }}</th>
-                                <th class="text-center">{{ 'Detail'|trans }}</th>
+                        <table class="box-table__table">
+                            <tr class="box-table__row">
+                                <th class="box-table__item box-table__item--order-number box-table__item--heading">{{ 'Order number'|trans }}</th>
+                                <th class="box-table__item box-table__item--heading text-right">{{ 'Datum objednávky'|trans }}</th>
+                                <th class="box-table__item box-table__item--orders-count box-table__item--heading text-right">{{ 'Number of items'|trans }}</th>
+                                <th class="box-table__item box-table__item--heading">{{ 'Shipping'|trans }}</th>
+                                <th class="box-table__item box-table__item--payment-name box-table__item--heading">{{ 'Payment'|trans }}</th>
+                                <th class="box-table__item box-table__item--heading text-right">{{ 'Total price including VAT'|trans }}</th>
+                                <th class="box-table__item box-table__item--heading text-center">&nbsp;</th>
                             </tr>
                             {% for order in orders %}
-                                <tr>
-                                    <td><a href="{{ url('front_customer_order_detail_registered', { orderNumber: order.number }) }}">{{ order.number }}</a></td>
-                                    <td>{{ order.createdAt|formatDate }}</td>
-                                    <td>
-                                        {{ order.status.name }}
-                                        {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
-                                            <a class="btn btn--success btn--mini btn--in-text" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
-                                                {{ 'Zaplatit'|trans }}
-                                            </a>
-                                        {% endif %}
+                                <tr class="box-table__row">
+                                    <td class="box-table__item box-table__item--order-number">
+                                        <a href="{{ url('front_customer_order_detail_registered', { orderNumber: order.number }) }}">{{ order.number }}</a>
                                     </td>
-                                    <td class="text-right">{{ order.productItemsCount }}</td>
-                                    <td>
-                                        {% for transportItem in order.uniqTransportItems %}
-                                            {{ transportItem.name }}
-                                            {% if not loop.last %}, {% endif %}
+                                    <td class="box-table__item text-right">{{ order.createdAt|formatDate }}</td>
+                                    <td class="box-table__item box-table__item--orders-count text-right">{{ order.productItemsCount }}</td>
+                                    <td class="box-table__item box-table__item--transports">
+                                        {# TODO: Tady bych chtěl v rámci CR poprosit o radu jak napojit obrázek dopravy v rámci metody order.uniqTransportItems,
+                                        která je definovaná v /model/Order/Order.php, nyní je obrázek dostupný jen v rámci obecného objektu dopravy tj. v metodě getTransports
+                                        Napadá mě tady ve twigu možnost přes metodu attribute() a přímo si sáhnout na daný index v tom poli bez nutnosti for cyklu viz. https://twig.symfony.com/doc/2.x/functions/attribute.html ale nedokážu to propojit:
+                                        {{ parameters(order.uniqTransportItems, ???, ????).name }} ????? nebo jestli to bude potřeba doprogramovat?
+                                        Nyní to mám takhle blbě v rámci 2 for cyklů - ono to na výstupu funguje ale není to takhle dobře no :)
+                                        Taková otrava, kvůli malé 18px ikonce dopravy :D
+                                        Díky Díky moc, s pozdravem Fejfy. #}
+                                        {% for transportItem in order.getTransports %}
+                                            {% if imageExists(transportItem) %}
+                                                <span class="box-table__item__img box-table__item__img--{{ loop.index }}">
+                                                    {{ image(transportItem) }}
+                                                </span>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for uniqTransportItem in order.uniqTransportItems %}
+                                            <span class="box-table__item__transport box-table__item__transport--{{ loop.index }}">{{ uniqTransportItem.name }}</span>
                                         {% endfor %}
                                     </td>
-                                    <td>{{ order.paymentName }}</td>
-                                    <td class="text-right">{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</td>
-                                    <td class="text-center"><a href="{{ url('front_customer_order_detail_registered', { orderNumber: order.number }) }}" class="in-icon in-icon--detail"><i class="svg svg-search"></i></a></td>
+                                    <td class="box-table__item box-table__item--payment-name">{{ order.paymentName }}</td>
+                                    <td class="box-table__item box-table__item--price text-right">{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</td>
+                                    <td class="box-table__item box-table__item--detail text-center">
+                                        <a href="{{ url('front_customer_order_detail_registered', { orderNumber: order.number }) }}" class="in-icon in-icon--detail">
+                                            {{ 'Detail'|trans }}
+                                            <i class="box-table__item--detail__icon svg svg-chevron"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </table>
@@ -58,4 +73,8 @@
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'Front/Layout/footer.html.twig' with { 'showNesletter' : false } %}
 {% endblock %}

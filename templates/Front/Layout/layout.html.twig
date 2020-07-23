@@ -42,7 +42,7 @@
         {% block content %}{% endblock %}
 
         {% block footer %}
-            {% embed 'Front/Layout/footer.html.twig' %}{% endembed %}
+            {% embed 'Front/Layout/footer.html.twig' with { 'showNesletter' : true } %}{% endembed %}
         {% endblock %}
     </div>
     {% if not isCookiesConsentGiven() %}
