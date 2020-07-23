@@ -1,19 +1,105 @@
-.window-bar {
-    padding: 0 20px;
+@window-bar-default-bg: #0d0D0d;
+@window-bar-highlight-color: #ffff00;
 
-    text-align: center;
-    background: @color-0;
+.window-bar {
+    background: @window-bar-default-bg;
     color: @color-f;
 
     &__item {
-        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        min-height: 40px;
+
+        @media @query-mobile {
+            position: relative;
+            padding-left: 0;
+        }
+
+        &__img {
+            display: block;
+            max-width: none;
+            width: 230px;
+
+            @media @query-mobile {
+                margin-left: -25px;
+                margin-right: -15px;
+            }
+
+            @media screen and (max-width: 330px) {
+                margin-left: -50px;
+            }
+
+            @media @query-vl {
+                margin-left: -10px;
+                margin-right: -10px;
+            }
+        }
+    }
+
+    p {
+        margin: 0;
+
+        color: @color-f;
+
+        & + a {
+            @media @query-md {
+                margin-left: 30px;
+            }
+        }
+    }
+
+    strong {
+        font-family: @font-tertiary;
+
+        &.highlight {
+            color: @window-bar-highlight-color;
+        }
+
+        &.highlight-dark {
+            color: @color-add;
+        }
     }
 
     a {
         color: @color-f;
+        font-family: @font-quartenary;
+        text-decoration: underline;
+
+        &.mobile-overlay {
+            @media @query-mobile {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                padding-right: 10px;
+
+                text-decoration: none;
+            }
+        }
 
         &:hover {
             color: @color-f;
+            text-decoration: none;
         }
+
+        span {
+            @media @query-mobile {
+                display: none;
+            }
+        }
+
+        .svg {
+            margin-left: 6px;
+
+            color: @window-bar-highlight-color;
+        }
+    }
+
+    .color-dark {
+        color: @color-primary;
     }
 }

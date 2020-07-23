@@ -1,8 +1,8 @@
 {% for notificationBar in notificationBars %}
     <div class="window-bar dont-print" style="background-color: {{ notificationBar.rgbColor }}">
-        <div class="window-bar__item">
+        <div class="window-bar__item web__container">
             {% if imageExists(notificationBar) %}
-                {{ image(notificationBar) }}
+                {{ image(notificationBar, { class: 'window-bar__item__img', lazy: true }) }}
             {% endif %}
             {{ notificationBar.text|placeholders|raw }}
         </div>

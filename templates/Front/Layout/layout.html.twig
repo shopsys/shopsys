@@ -11,11 +11,6 @@
                     <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}">{{ 'Log out'|trans }}</a>
                 </div>
             {% endif %}
-            {% if isMailerSettingUnusual() %}
-                <div class="window-bar__item">
-                    {{ getMailerSettingInfo() }}
-                </div>
-            {% endif %}
         </div>
     {% endif %}
     {% if getRoute() != 'front_cart' and getRoute() != 'front_order_index' %}
