@@ -36,12 +36,14 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
      * @var \App\Model\Order\PromoCode\PromoCodeCategoryFactory
      */
     private $promoCodeCategoryFactory;
+
     /**
-     * @var PromoCodeLimitFactory
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitFactory
      */
     private PromoCodeLimitFactory $promoCodeLimitFactory;
+
     /**
-     * @var EntityManagerInterface
+     * @var \Doctrine\ORM\EntityManagerInterface
      */
     private EntityManagerInterface $em;
 
@@ -50,6 +52,8 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
      * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryFactory $promoCodeCategoryFactory
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
