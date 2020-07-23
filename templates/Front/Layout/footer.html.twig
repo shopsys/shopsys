@@ -4,7 +4,7 @@
 
 <div class="footer">
     {% if getRoute() != 'front_cart' and getRoute() != 'front_order_index'  %}
-        {% if showNesletter %}
+        {% if showNewsletter %}
             <div class="web__line clearfix dont-print">
                 <div class="web__container">
                     {% cache "newsletter_form" {lifetime:60*60*24, domainId:getDomain().id} %}
