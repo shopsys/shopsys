@@ -50,7 +50,10 @@ abstract class AbstractCheckPackagesTravisBuildsReleaseWorker extends AbstractSh
      */
     public function work(Version $version): void
     {
-        $statusForPackages = $this->travisStatusReporter->getStatusForPackagesByOrganizationAndBranch('shopsys', $this->initialBranchName);
+        $statusForPackages = $this->travisStatusReporter->getStatusForPackagesByOrganizationAndBranch(
+            'shopsys',
+            $this->getCheckingBranchName()
+        );
 
         $isPassing = true;
 
