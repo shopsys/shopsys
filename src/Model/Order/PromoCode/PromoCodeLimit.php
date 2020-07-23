@@ -14,8 +14,8 @@ class PromoCodeLimit
     /**
      * @var \App\Model\Order\PromoCode\PromoCode
      *
-     * @ORM\ManyToOne(targetEntity="App\Model\Order\PromoCode\PromoCode")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Model\Order\PromoCode\PromoCode", )
+     * @ORM\JoinColumn(nullable=false, onDelete="cascade")
      * @ORM\Id
      */
     private $promoCode;
