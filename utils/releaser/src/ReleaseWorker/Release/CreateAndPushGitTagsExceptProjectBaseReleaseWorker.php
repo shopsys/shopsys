@@ -94,8 +94,11 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             }
         }
 
-        // temporary cache credentials (for 1 hour) to prevent asking for username and password for each package
-        $this->processRunner->run('git config --global credential.helper "cache --timeout=3600"');
+        $this->symfonyStyle->note(sprintf(
+            'When you do not have saved github credentials you may want to cache them temporarily to prevent asking them for each repository.'
+            . ' To do so you may use following command `%s`',
+            'git config --global credential.helper "cache --timeout=3600"'
+        ));
 
         if (count($packageNamesWithProblems) === 0) {
             foreach ($packageNames as $packageName) {
