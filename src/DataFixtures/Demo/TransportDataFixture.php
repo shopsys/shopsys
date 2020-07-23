@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Transport\Transport;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -19,6 +20,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_CZECH_POST = 'transport_cp';
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
+    public const TRANSPORT_PALLET = 'transport_pallet';
 
     /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade */
     private $transportFacade;
@@ -72,6 +74,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
         }
 
+        $transportData->type = Transport::TYPE_PACKAGE;
         $transportData->productTypes = [
             $productTypeCommon,
         ];
@@ -84,6 +87,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
         }
 
+        $transportData->type = Transport::TYPE_PACKAGE;
         $transportData->productTypes = [
             $productTypeCommon,
             $productTypeOversized,
@@ -99,6 +103,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->instructions[$locale] = t('We are looking forward to your visit.', [], 'dataFixtures', $locale);
         }
 
+        $transportData->type = Transport::TYPE_COMMON;
         $transportData->productTypes = [
             $productTypeCommon,
             $productTypeOversized,
@@ -108,6 +113,25 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
+
+        $transportData = $this->transportDataFactory->create();
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $transportData->name[$locale] = t('Paletová přeprava', [], 'dataFixtures', $locale);
+            $transportData->description[$locale] = t('Dovezeme Vám  to až domů naším vlastním rozvozem.', [], 'dataFixtures', $locale);
+            $transportData->instructions[$locale] = t('Zásilku může převzít pouze osoba starší 18-ti let.', [], 'dataFixtures', $locale);
+        }
+
+        $transportData->type = Transport::TYPE_PALLET;
+        $transportData->productTypes = [
+            $productTypeCommon,
+            $productTypeOversized,
+        ];
+
+        $transportData->personalPickup = false;
+
+        $this->setPriceForAllDomains($transportData, Money::create('399.95'));
+        $this->createTransport(self::TRANSPORT_PALLET, $transportData);
     }
 
     /**

@@ -21,6 +21,11 @@ class TransportData extends BaseTransportData
      */
     public $personalPickup;
 
+    /**
+     * @var string
+     */
+    public string $type;
+
     public function __construct()
     {
         parent::__construct();

@@ -16,6 +16,8 @@ class Version20200723053320 extends AbstractMigration
     {
         $this->sql('ALTER TABLE product_domains ADD can_be_shipped_as_package BOOLEAN NOT NULL DEFAULT FALSE');
         $this->sql('ALTER TABLE product_domains ALTER can_be_shipped_as_package DROP DEFAULT;');
+        $this->sql('ALTER TABLE transports ADD type VARCHAR(255) NOT NULL DEFAULT \'common\'');
+        $this->sql('ALTER TABLE transports ALTER type DROP DEFAULT;');
     }
 
     /**

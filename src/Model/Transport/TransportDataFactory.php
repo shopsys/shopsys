@@ -30,6 +30,15 @@ class TransportDataFactory extends BaseTransportDataFactory
     }
 
     /**
+     * @param \App\Model\Transport\TransportData $transportData
+     */
+    protected function fillNew(BaseTransportData $transportData)
+    {
+        parent::fillNew($transportData);
+        $transportData->type = Transport::TYPE_COMMON;
+    }
+
+    /**
      * @param \App\Model\Transport\Transport $transport
      * @return \App\Model\Transport\TransportData $transportData
      */
@@ -39,6 +48,7 @@ class TransportDataFactory extends BaseTransportDataFactory
         $this->fillFromTransport($transportData, $transport);
         $transportData->productTypes = $transport->getProductTypes();
         $transportData->personalPickup = $transport->isPersonalPickup();
+        $transportData->type = $transport->getType();
 
         return $transportData;
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\Product\Type\ProductTypeFacade;
+use App\Model\Transport\Transport;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -40,6 +41,17 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                 'multiple' => true,
                 'expanded' => true,
                 'label' => t('Určeno pro typy produktů'),
+            ])
+            ->add('type', ChoiceType::class, [
+                'required' => true,
+                'choices' => [
+                    t('Basic') => Transport::TYPE_COMMON,
+                    t('Balíková') => Transport::TYPE_PACKAGE,
+                    t('Paletová') => Transport::TYPE_PALLET,
+                ],
+                'multiple' => false,
+                'expanded' => true,
+                'label' => t('Typ'),
             ])
             ->add('personalPickup', YesNoType::class, [
                 'required' => false,
