@@ -6,11 +6,17 @@ This guide contains instructions to upgrade from version v9.0.1 to v9.0.2-dev.
 There you can find links to upgrade notes for other versions too.
 
 ## Application
-- add `psr/event-dispatcher` to your composer dependencies in order to prevent PHPStan errors in Event classes ([#1894](https://github.com/shopsys/shopsys/pull/1894))
-    - add `"psr/event-dispatcher": "^1.0.0",` to `require-dev` section in your `composer.json` file
-
-- add support for changing personal data and password to your Frontend API ([#1891](https://github.com/shopsys/shopsys/pull/1891))
+- generate images_id_seq in data fixtures automatically ([#1918](https://github.com/shopsys/shopsys/pull/1918))
     - see #project-base-diff to update your project
 
-- fix not working upload of files in wysiwyg editor ([#1899](https://github.com/shopsys/shopsys/pull/1899))
+- remove unused route /contactForm/ ([#1940](https://github.com/shopsys/shopsys/pull/1940))
+    - see #project-base-diff] to update your project
+
+- remove unnecessary else conditions ([#1938](https://github.com/shopsys/shopsys/pull/1938))
+    - see #project-base-diff to update your project
+
+- use __DIR__ instead of dirname(__FILE__) ([#1939](https://github.com/shopsys/shopsys/pull/1939))
+    - see #project-base-diff to update your project
+
+- call static method as static ([#1937](https://github.com/shopsys/shopsys/pull/1937))
     - see #project-base-diff to update your project

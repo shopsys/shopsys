@@ -41,7 +41,7 @@ final class CreateAndPushGitTagReleaseWorker extends AbstractShopsysReleaseWorke
         if ($this->initialBranchName === 'master') {
             $this->symfonyStyle->note('Rest assured, after you push the tagged master branch, the new tag will be propagated to packagist once the project is built and split on Heimdall automatically.');
         } else {
-            $this->symfonyStyle->note(sprintf('After you push the tag, you need use to split the "%s" branch using "tool-monorepo-split-branch" on Heimdall (http://heimdall:8080/view/Tools/job/tool-monorepo-split-branch/)', $this->initialBranchName));
+            $this->symfonyStyle->note(sprintf('After you push the tag, you need use to split the "%s" branch using "tool-monorepo-split" on Heimdall (http://heimdall:8080/view/Tools/job/tool-monorepo-split/)', $this->initialBranchName));
             $this->symfonyStyle->note('Rest assured, after you split the branch, the new tag will be propagated to packagist automatically.');
             $this->confirm('Confirm the branch is split.');
         }
