@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class PaymentGridFactory implements GridFactoryInterface
 {
@@ -41,32 +40,24 @@ class PaymentGridFactory implements GridFactoryInterface
     protected $adminDomainTabsFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository $paymentRepository
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         GridFactory $gridFactory,
         PaymentRepository $paymentRepository,
         Localization $localization,
         PaymentFacade $paymentFacade,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        CurrencyFacade $currencyFacade
+        AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
         $this->gridFactory = $gridFactory;
         $this->paymentRepository = $paymentRepository;
         $this->localization = $localization;
         $this->paymentFacade = $paymentFacade;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**

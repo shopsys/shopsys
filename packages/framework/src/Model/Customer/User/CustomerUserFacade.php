@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
@@ -40,11 +39,6 @@ class CustomerUserFacade
      * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade
      */
     protected $customerMailFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface
-     */
-    protected $billingAddressFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface
@@ -91,7 +85,6 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
@@ -106,7 +99,6 @@ class CustomerUserFacade
         CustomerUserRepository $customerUserRepository,
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         CustomerMailFacade $customerMailFacade,
-        BillingAddressFactoryInterface $billingAddressFactory,
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         CustomerUserFactoryInterface $customerUserFactory,
         CustomerUserPasswordFacade $customerUserPasswordFacade,
@@ -120,7 +112,6 @@ class CustomerUserFacade
         $this->customerUserRepository = $customerUserRepository;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerMailFacade = $customerMailFacade;
-        $this->billingAddressFactory = $billingAddressFactory;
         $this->billingAddressDataFactory = $billingAddressDataFactory;
         $this->customerUserFactory = $customerUserFactory;
         $this->customerUserPasswordFacade = $customerUserPasswordFacade;

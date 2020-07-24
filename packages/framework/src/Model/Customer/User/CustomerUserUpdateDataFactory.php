@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
@@ -30,26 +29,18 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     protected $customerUserDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface
-     */
-    protected $customerFactory;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      */
     public function __construct(
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
-        CustomerUserDataFactoryInterface $customerUserDataFactory,
-        CustomerFactoryInterface $customerFactory
+        CustomerUserDataFactoryInterface $customerUserDataFactory
     ) {
         $this->billingAddressDataFactory = $billingAddressDataFactory;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
         $this->customerUserDataFactory = $customerUserDataFactory;
-        $this->customerFactory = $customerFactory;
     }
 
     /**

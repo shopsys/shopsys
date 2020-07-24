@@ -12,25 +12,13 @@ use Twig\TwigFunction;
 class MailerSettingExtension extends AbstractExtension
 {
     /**
-     * @var \Twig\Environment
-     */
-    protected Environment $twigEnvironment;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider
-     */
-    protected MailerSettingProvider $mailerSettingProvider;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
      * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
-        MailerSettingProvider $mailerSettingProvider,
-        Environment $twigEnvironment
+        protected readonly MailerSettingProvider $mailerSettingProvider,
+        protected readonly Environment $twigEnvironment,
     ) {
-        $this->mailerSettingProvider = $mailerSettingProvider;
-        $this->twigEnvironment = $twigEnvironment;
     }
 
     /**

@@ -10,14 +10,12 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 class CategoryDataFactory implements CategoryDataFactoryInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        protected readonly CategoryRepository $categoryRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         protected readonly Domain $domain,
