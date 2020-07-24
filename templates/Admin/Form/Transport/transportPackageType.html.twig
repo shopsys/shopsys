@@ -1,0 +1,47 @@
+{% macro packageRow(packageForm, index) %}
+    <div class="js-transport-package-item form-group transport-package-item" data-index="{{ index }}">
+        <div class="transport-package-item__button">
+            <button class="btn js-transport-packages-item-remove">
+                <i class="svg svg-delete-thin in-icon"></i>
+                {{ 'Odebrat balík'|trans }}
+            </button>
+        </div>
+        {{ form_widget(packageForm) }}
+    </div>
+{% endmacro %}
+
+{% block _transport_form_packagesGroup_transportPackages_widget %}
+    {% import _self as self %}
+    <div
+        id="{{ form.vars.id }}"
+        class="js-form-group form-group js-transport-packages clear"
+        data-prototype="{{ self.packageRow(form.vars.prototype, '__name__')|escape }}"
+    >
+        <div>
+            <div class="js-transport-packages-items">
+                {% for key, packageForm in form %}
+                    {{ self.packageRow(packageForm, key) }}
+                {% else %}
+                    {% do form.setRendered %}
+                {% endfor %}
+            </div>
+
+            <div class="in-message in-message--info js-transport-packages-empty">
+                {{ 'Musíte přidat nějaký balík'|trans }}
+            </div>
+        </div>
+
+        <div class="form-line form-line--no-top-border">
+            <div class="form-line__line form-line__line--no-space">
+                <a href="#" class="js-transport-packages-item-add btn btn--plus">
+                    <i class="btn__icon">+</i>
+                    {{ 'Přidat další balík'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _transport_form_packagesGroup_transportPackages__dimensions_row %}
+    aaaa
+{% endblock %}

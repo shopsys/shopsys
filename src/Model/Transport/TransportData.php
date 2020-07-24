@@ -26,10 +26,16 @@ class TransportData extends BaseTransportData
      */
     public string $type;
 
+    /**
+     * @var \App\Model\Transport\TransportPackage\TransportPackageData[]
+     */
+    public array $transportPackages;
+
     public function __construct()
     {
         parent::__construct();
         $this->productTypes = [];
         $this->personalPickup = false;
+        $this->transportPackages = [];
     }
 }
