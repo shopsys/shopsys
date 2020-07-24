@@ -527,7 +527,19 @@ class ProductTransferAkeneoMapper
         $productParameterValueData = $this->productParameterValueDataFactory->create();
         $parameterValueData = $this->parameterValueDataFactory->create();
 
-        $parameterValueData->text = $this->getParameterValueTextByAkeneoValueCode($parameter, $locale, $akeneoParameterValueCode);
+        $parameterTextValue = $this->getParameterValueTextByAkeneoValueCode($parameter, $locale, $akeneoParameterValueCode);
+
+        if (mb_strlen($parameterTextValue) > 100) {
+            throw new TransferException(
+                sprintf(
+                    'Value for parameter "%s" is too long: "%s"',
+                    $parameter->getAkeneoCode(),
+                    $akeneoParameterValueCode,
+                )
+            );
+        }
+
+        $parameterValueData->text = $parameterTextValue;
         $parameterValueData->locale = $locale;
 
         $productParameterValueData->parameterValueData = $parameterValueData;
