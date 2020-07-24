@@ -33,3 +33,4 @@ parameters:
     shopsys.data_fixtures_images.resources_dir: '%shopsys.data_fixtures.resources_dir%/images/'
     shopsys.elasticsearch.structure_dir: '%shopsys.resources_dir%/definition/'
     shopsys.json_entrypoints_path: '%kernel.project_dir%/web/build/entrypoints.json'
+    shopsys.var_dir: '/var'

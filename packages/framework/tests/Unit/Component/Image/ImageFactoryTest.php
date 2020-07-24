@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactory;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
-use Symfony\Component\Filesystem\Filesystem;
 
 class ImageFactoryTest extends TestCase
 {
@@ -83,10 +82,9 @@ class ImageFactoryTest extends TestCase
     private function getFileUpload(): FileUpload
     {
         $fileNamingConvention = new FileNamingConvention();
-        $filesystem = new Filesystem();
         $mountManager = new MountManager();
         $abstractFilesystem = $this->createMock(FilesystemInterface::class);
 
-        return new FileUpload('temporaryDir', 'uploadedFileDir', 'imageDir', $fileNamingConvention, $filesystem, $mountManager, $abstractFilesystem);
+        return new FileUpload('temporaryDir', 'uploadedFileDir', 'imageDir', $fileNamingConvention, $mountManager, $abstractFilesystem);
     }
 }

@@ -3,3 +3,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+
+    # @deprecated This has been added to be backward compatible and will be removed in next major version
+    Shopsys\FrameworkBundle\Component\FileUpload\DeleteOldUploadedFilesCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '5', minutes: '0', readableName: 'Delete old temporary uploaded files' }

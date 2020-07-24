@@ -19,3 +19,6 @@ There you can find links to upgrade notes for other versions too.
 
 - call static method as static ([#1937](https://github.com/shopsys/shopsys/pull/1937))
     - see #project-base-diff to update your project
+
+- update your project to upload temporary files to abstract filesystem ([#1955](https://github.com/shopsys/shopsys/pull/1955))
+    - see #project-base-diff to update your project
