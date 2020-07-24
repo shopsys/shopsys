@@ -275,6 +275,16 @@ Great tool when you want to translate your application into another language.
 
 For more information about translations, see [the separate article](../introduction/translations.md).
 
+### Production
+
+### environment-change
+!!! important
+    Do not use this target on your production server, because it could cause some security vulnerabilities.
+
+Change environment to production, development or test using this target.
+This target comes handy when you need to debug some functionality on your development / testing server.
+Switching to development environment will also install composer dev dependencies.
+
 ### For monorepo developers
 
 #### backend-api-install
