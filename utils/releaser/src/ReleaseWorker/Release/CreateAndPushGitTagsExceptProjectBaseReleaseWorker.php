@@ -23,10 +23,13 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         // not maintained anymore
         'shopsys/product-feed-interface',
         'shopsys/phpstorm-inspect',
+        'shopsys/changelog-linker',
+        'shopsys/monorepo-builder',
         // forks
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
         'shopsys/jparser',
+        'shopsys/ordered-form',
         // not related packages
         'shopsys/syscart',
         'shopsys/sysconfig',
