@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
@@ -51,11 +50,7 @@ class PriceCalculationTest extends TestCase
         string $vatPercent,
         Money $expectedPriceWithVat
     ) {
-        $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $rounding = new Rounding($pricingSettingMock);
+        $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
         $vatData = new VatData();
         $vatData->name = 'testVat';
@@ -99,11 +94,7 @@ class PriceCalculationTest extends TestCase
         string $vatPercent,
         Money $expectedVatAmount
     ) {
-        $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $rounding = new Rounding($pricingSettingMock);
+        $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
         $vatData = new VatData();
         $vatData->name = 'testVat';

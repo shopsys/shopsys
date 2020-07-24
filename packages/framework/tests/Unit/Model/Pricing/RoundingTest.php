@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
@@ -67,10 +66,7 @@ class RoundingTest extends TestCase
         $expectedAsPriceWithoutVat,
         $expectedAsVatAmount
     ) {
-        $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $rounding = new Rounding($pricingSettingMock);
+        $rounding = new Rounding();
 
         $currencyData = new CurrencyData();
         $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
@@ -149,15 +145,11 @@ class RoundingTest extends TestCase
         $inputPrice,
         $outputPrice
     ) {
-        $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $currencyData = new CurrencyData();
         $currencyData->roundingType = $roundingType;
         $currency = new Currency($currencyData);
 
-        $rounding = new Rounding($pricingSettingMock);
+        $rounding = new Rounding();
         $roundedPrice = $rounding->roundPriceWithVatByCurrency($inputPrice, $currency);
 
         $this->assertThat($roundedPrice, new IsMoneyEqual($outputPrice));

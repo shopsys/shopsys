@@ -10,13 +10,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 class PaymentDataFactory implements PaymentDataFactoryInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        protected readonly PaymentFacade $paymentFacade,
         protected readonly VatFacade $vatFacade,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,

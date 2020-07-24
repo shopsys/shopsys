@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -26,13 +25,11 @@ class AdministratorFrontSecurityFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider $administratorUserProvider
      * @param \Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface $accessDecisionManager
-     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         protected readonly RequestStack $requestStack,
         protected readonly AdministratorUserProvider $administratorUserProvider,
         protected readonly AccessDecisionManagerInterface $accessDecisionManager,
-        protected readonly AuthorizationCheckerInterface $authorizationChecker,
     ) {
     }
 
@@ -43,7 +40,7 @@ class AdministratorFrontSecurityFacade
     {
         try {
             $token = $this->getAdministratorToken();
-        } catch (InvalidTokenException | AuthenticationException) {
+        } catch (InvalidTokenException|AuthenticationException) {
             return false;
         }
 

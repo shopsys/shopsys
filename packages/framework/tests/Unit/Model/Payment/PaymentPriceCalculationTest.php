@@ -88,7 +88,7 @@ class PaymentPriceCalculationTest extends TestCase
             ->expects($this->any())->method('getInputPriceType')
                 ->willReturn($inputPriceType);
 
-        $rounding = new Rounding($pricingSettingMock);
+        $rounding = new Rounding();
 
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
@@ -160,7 +160,7 @@ class PaymentPriceCalculationTest extends TestCase
             ->expects($this->any())->method('getFreeTransportAndPaymentPriceLimit')
                 ->willReturn($priceLimit);
 
-        $rounding = new Rounding($pricingSettingMock);
+        $rounding = new Rounding();
 
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
