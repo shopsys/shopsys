@@ -17,7 +17,7 @@ FpJsFormValidator.preparePrototype = function (prototype, name) {
 
     if (typeof prototype.children === 'object') {
         for (let childName in prototype.children) {
-            prototype[childName] = this.preparePrototype(prototype.children[childName], name);
+            prototype.children[childName] = this.preparePrototype(prototype.children[childName], name);
         }
     }
 
