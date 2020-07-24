@@ -29,7 +29,7 @@ final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackages
     /**
      * @return string
      */
-    protected function getCheckingBranchName(): string
+    protected function getBranchName(): string
     {
         return $this->initialBranchName;
     }
