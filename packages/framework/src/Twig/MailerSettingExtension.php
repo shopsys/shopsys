@@ -13,28 +13,16 @@ use Twig\TwigFunction;
 
 class MailerSettingExtension extends AbstractExtension
 {
-    use SetterInjectionTrait;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
      * @param \Twig\Environment $twigEnvironment
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        protected /* readonly */ MailerSettingProvider $mailerSettingProvider,
-        protected /* readonly */ Environment $twigEnvironment,
-        protected /* readonly */ ?Domain $domain = null,
+        protected readonly MailerSettingProvider $mailerSettingProvider,
+        protected readonly Environment $twigEnvironment,
+        protected readonly Domain $domain,
     ) {
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setDomain(Domain $domain): void
-    {
-        $this->setDependency($domain, 'domain');
     }
 
     /**

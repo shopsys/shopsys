@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
@@ -104,11 +103,6 @@ class ProductFacade
     protected $productAccessoryRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade
      */
     protected $pluginCrudExtensionFacade;
@@ -163,7 +157,6 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface $productAccessoryFactory
@@ -188,7 +181,6 @@ class ProductFacade
         ProductHiddenRecalculator $productHiddenRecalculator,
         ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         ProductAccessoryRepository $productAccessoryRepository,
-        AvailabilityFacade $availabilityFacade,
         PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         ProductFactoryInterface $productFactory,
         ProductAccessoryFactoryInterface $productAccessoryFactory,
@@ -212,7 +204,6 @@ class ProductFacade
         $this->productHiddenRecalculator = $productHiddenRecalculator;
         $this->productSellingDeniedRecalculator = $productSellingDeniedRecalculator;
         $this->productAccessoryRepository = $productAccessoryRepository;
-        $this->availabilityFacade = $availabilityFacade;
         $this->pluginCrudExtensionFacade = $pluginCrudExtensionFacade;
         $this->productFactory = $productFactory;
         $this->productAccessoryFactory = $productAccessoryFactory;

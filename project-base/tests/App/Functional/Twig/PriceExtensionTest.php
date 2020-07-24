@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Twig;
 
-use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -90,22 +89,22 @@ class PriceExtensionTest extends FunctionalTestCase
                 'result' => 'CZK123,456,789.1234567891',
             ],
             ['input' => Money::create(
-                12
+                12,
             ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
             ['input' => Money::create(
-                '12.00'
+                '12.00',
             ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
             ['input' => Money::create(
-                '12.600'
+                '12.600',
             ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,60' . self::NBSP . '€'],
             ['input' => Money::create(
-                '12.630000'
+                '12.630000',
             ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
             ['input' => Money::create(
-                '12.638000'
+                '12.638000',
             ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,638' . self::NBSP . '€'],
             ['input' => Money::create(
-                '12.630000'
+                '12.630000',
             ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
             [
                 'input' => Money::create('123456789.123456789'),
@@ -177,7 +176,6 @@ class PriceExtensionTest extends FunctionalTestCase
             $currencyFacadeMock,
             $this->domain,
             $localization,
-            new NumberFormatRepository(),
             $this->intlCurrencyRepository,
             $this->currencyFormatterFactory
         );

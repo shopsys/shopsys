@@ -3,8 +3,6 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -19,11 +17,6 @@ class ProductInputPriceFacade
     protected $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
      */
     protected $pricingSetting;
@@ -32,16 +25,6 @@ class ProductInputPriceFacade
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository
      */
     protected $productManualInputPriceRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\DomainFacade
-     */
-    protected $domainFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    protected $pricingGroupFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
@@ -60,27 +43,21 @@ class ProductInputPriceFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator $productInputPriceRecalculator
      */
     public function __construct(
         EntityManagerInterface $em,
-        CurrencyFacade $currencyFacade,
         PricingSetting $pricingSetting,
         ProductManualInputPriceRepository $productManualInputPriceRepository,
-        PricingGroupFacade $pricingGroupFacade,
         ProductRepository $productRepository,
         ProductInputPriceRecalculator $productInputPriceRecalculator
     ) {
         $this->em = $em;
-        $this->currencyFacade = $currencyFacade;
         $this->pricingSetting = $pricingSetting;
         $this->productManualInputPriceRepository = $productManualInputPriceRepository;
-        $this->pricingGroupFacade = $pricingGroupFacade;
         $this->productRepository = $productRepository;
         $this->productInputPriceRecalculator = $productInputPriceRecalculator;
     }

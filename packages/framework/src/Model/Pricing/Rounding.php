@@ -11,19 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\InvalidCurrencyRoun
 class Rounding
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
-     */
-    protected $pricingSetting;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
-    public function __construct(PricingSetting $pricingSetting)
-    {
-        $this->pricingSetting = $pricingSetting;
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Component\Money\Money

@@ -10,13 +10,11 @@ class BrandDataFactory implements BrandDataFactoryInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
-        protected readonly BrandFacade $brandFacade,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
@@ -98,7 +96,7 @@ class BrandDataFactory implements BrandDataFactoryInterface
                 $this->friendlyUrlFacade->findMainFriendlyUrl(
                     $domainId,
                     'front_brand_detail',
-                    $brand->getId()
+                    $brand->getId(),
                 );
         }
 

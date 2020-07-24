@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Validator\Constraint;
@@ -23,21 +20,6 @@ class PaymentTransportRelationValidator extends ConstraintValidator
     protected $paymentFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    protected $paymentPriceCalculation;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      */
     protected $transportFacade;
@@ -45,21 +27,12 @@ class PaymentTransportRelationValidator extends ConstraintValidator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         PaymentFacade $paymentFacade,
-        TransportFacade $transportFacade,
-        Domain $domain,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        CurrencyFacade $currencyFacade
+        TransportFacade $transportFacade
     ) {
         $this->paymentFacade = $paymentFacade;
-        $this->domain = $domain;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->currencyFacade = $currencyFacade;
         $this->transportFacade = $transportFacade;
     }
 

@@ -23,7 +23,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
@@ -38,7 +37,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         protected readonly ProductInputPriceFacade $productInputPriceFacade,
         protected readonly UnitFacade $unitFacade,
         protected readonly Domain $domain,
-        protected readonly ProductRepository $productRepository,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductAccessoryRepository $productAccessoryRepository,
@@ -145,7 +143,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
                 'front_product_detail',
-                $product->getId()
+                $product->getId(),
             );
             $productData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
@@ -175,9 +173,9 @@ class ProductDataFactory implements ProductDataFactoryInterface
 
         try {
             $productData->manualInputPricesByPricingGroupId = $this->productInputPriceFacade->getManualInputPricesDataIndexedByPricingGroupId(
-                $product
+                $product,
             );
-        } catch (MainVariantPriceCalculationException $ex) {
+        } catch (MainVariantPriceCalculationException) {
             $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
         }
         $productData->accessories = $this->getAccessoriesData($product);
@@ -212,7 +210,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
 
         foreach ($productParameterValues as $productParameterValue) {
             $productParameterValuesData[] = $this->productParameterValueDataFactory->createFromProductParameterValue(
-                $productParameterValue
+                $productParameterValue,
             );
         }
 

@@ -10,7 +10,6 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
@@ -28,7 +27,6 @@ class CustomerUserMutation extends BaseTokenMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
      * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordHasher
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
@@ -39,7 +37,6 @@ class CustomerUserMutation extends BaseTokenMutation
         protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
         protected readonly UserPasswordHasherInterface $userPasswordHasher,
         protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
-        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
         protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly CustomerUserDataFactory $customerUserDataFactory,
@@ -89,7 +86,7 @@ class CustomerUserMutation extends BaseTokenMutation
         $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUserWithArgument(
             $customerUser,
-            $argument
+            $argument,
         );
         $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
 
