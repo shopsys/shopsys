@@ -39,22 +39,13 @@
                                     <td class="box-table__item text-right">{{ order.createdAt|formatDate }}</td>
                                     <td class="box-table__item box-table__item--orders-count text-right">{{ order.productItemsCount }}</td>
                                     <td class="box-table__item box-table__item--transports">
-                                        {# TODO: Tady bych chtěl v rámci CR poprosit o radu jak napojit obrázek dopravy v rámci metody order.uniqTransportItems,
-                                        která je definovaná v /model/Order/Order.php, nyní je obrázek dostupný jen v rámci obecného objektu dopravy tj. v metodě getTransports
-                                        Napadá mě tady ve twigu možnost přes metodu attribute() a přímo si sáhnout na daný index v tom poli bez nutnosti for cyklu viz. https://twig.symfony.com/doc/2.x/functions/attribute.html ale nedokážu to propojit:
-                                        {{ parameters(order.uniqTransportItems, ???, ????).name }} ????? nebo jestli to bude potřeba doprogramovat?
-                                        Nyní to mám takhle blbě v rámci 2 for cyklů - ono to na výstupu funguje ale není to takhle dobře no :)
-                                        Taková otrava, kvůli malé 18px ikonce dopravy :D
-                                        Díky Díky moc, s pozdravem Fejfy. #}
                                         {% for transportItem in order.getTransports %}
                                             {% if imageExists(transportItem) %}
                                                 <span class="box-table__item__img box-table__item__img--{{ loop.index }}">
                                                     {{ image(transportItem) }}
                                                 </span>
                                             {% endif %}
-                                        {% endfor %}
-                                        {% for uniqTransportItem in order.uniqTransportItems %}
-                                            <span class="box-table__item__transport box-table__item__transport--{{ loop.index }}">{{ uniqTransportItem.name }}</span>
+                                            <span class="box-table__item__transport box-table__item__transport--{{ loop.index }}">{{ transportItem.name }}</span>
                                         {% endfor %}
                                     </td>
                                     <td class="box-table__item box-table__item--payment-name">{{ order.paymentName }}</td>
