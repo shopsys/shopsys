@@ -65,11 +65,6 @@ class FeedExport
     protected $lastSeekId;
 
     /**
-     * @var string|null
-     */
-    protected $fileContentBuffer;
-
-    /**
      * @var bool
      */
     protected $finished = false;

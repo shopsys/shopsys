@@ -14,11 +14,6 @@ class JsFileExtractor implements FileVisitorInterface
     protected const DUMP_FILE = 'translationsDump.json';
 
     /**
-     * @var \JMS\TranslationBundle\Model\MessageCatalogue
-     */
-    protected $catalogue;
-
-    /**
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      */
