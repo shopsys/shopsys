@@ -11,7 +11,7 @@ use Shopsys\Releaser\Stage;
 final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackagesTravisBuildsReleaseWorker
 {
     /** @var string */
-    private $checkingBranchName;
+    private $releasingBranchName;
 
     /**
      * Higher first
@@ -35,7 +35,7 @@ final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackages
      */
     protected function getBranchName(): string
     {
-        return $this->checkingBranchName;
+        return $this->releasingBranchName;
     }
 
     /**
@@ -43,7 +43,7 @@ final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackages
      */
     public function work(Version $version): void
     {
-        $this->checkingBranchName = $version->getVersionString();
+        $this->releasingBranchName = $version->getVersionString();
         parent::work($version);
     }
 }
