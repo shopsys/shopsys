@@ -95,8 +95,8 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         }
 
         $this->symfonyStyle->note(sprintf(
-            'When you do not have saved github credentials you may want to cache them temporarily to prevent asking them for each repository.'
-            . ' To do so you may use following command `%s`',
+            'In case you do not have saved GIT credentials you may want to cache them temporarily so you do not need to fill them for each repository.'
+            . ' This can be done by using following command `%s`',
             'git config --global credential.helper "cache --timeout=3600"'
         ));
 
