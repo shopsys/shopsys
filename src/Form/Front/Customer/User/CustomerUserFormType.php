@@ -54,10 +54,10 @@ class CustomerUserFormType extends AbstractType
 
         $builder->add('email', EmailType::class, [
                 'attr' => ['readonly' => true],
-                'required' => false,
+                'required' => true,
             ])
             ->add('telephone', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new Constraints\Length([
                         'max' => 30,
@@ -67,7 +67,7 @@ class CustomerUserFormType extends AbstractType
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'required' => false,
+                'required' => true,
                 'options' => [
                     'attr' => ['autocomplete' => 'new-password'],
                 ],
