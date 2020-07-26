@@ -1,23 +1,23 @@
 {% macro table(orderItems, orderItemTotalPricesById, currency) %}
-    <div class="in-scroll margin-bottom-20">
-        <div class="in-scroll__in">
-            <table class="table-main box-order-detail__table">
-                <tr>
-                    <th>{{ 'Name'|trans }}</th>
-                    <th class="text-right">{{ 'Unit price including VAT'|trans }}</th>
-                    <th class="text-right">{{ 'Amount'|trans }}</th>
-                    <th class="text-right">{{ 'VAT rate'|trans }}</th>
-                    <th class="text-right">{{ 'Total including VAT'|trans }}</th>
-                    <th class="text-right">{{ 'Total excluding VAT'|trans }}</th>
+    <div class="in-scroll">
+        <div class="in-scroll__in box-table box-table--in">
+            <table class="box-table__table">
+                <tr class="box-table__row">
+                    <th class="box-table__item box-table__item--heading box-table__item--name">{{ 'Name'|trans }}</th>
+                    <th class="box-table__item box-table__item--heading text-right">{{ 'Unit price including VAT'|trans }}</th>
+                    <th class="box-table__item box-table__item--heading text-right">{{ 'Amount'|trans }}</th>
+                    <th class="box-table__item box-table__item--heading text-right">{{ 'VAT rate'|trans }}</th>
+                    <th class="box-table__item box-table__item--heading text-right">{{ 'Celková cena bez DPH'|trans }}</th>
+                    <th class="box-table__item box-table__item--heading text-right">{{ 'Celková cena s DPH'|trans }}</th>
                 </tr>
                 {% for item in orderItems %}
-                    <tr>
-                        <td>{{ item.name }}</td>
-                        <td class="text-right">{{ item.priceWithVat|priceWithCurrency(currency) }}</td>
-                        <td class="text-right">{{ item.quantity|formatNumber }} {{ item.unitName }}</td>
-                        <td class="text-right">{{ item.vatPercent|formatPercent }}</td>
-                        <td class="text-right">{{ orderItemTotalPricesById[item.id].priceWithVat|priceWithCurrency(currency) }}</td>
-                        <td class="text-right">{{ orderItemTotalPricesById[item.id].priceWithoutVat|priceWithCurrency(currency) }}</td>
+                    <tr class="box-table__row">
+                        <td class="box-table__item box-table__item--name">{{ item.name }}</td>
+                        <td class="box-table__item text-right">{{ item.priceWithVat|priceWithCurrency(currency) }}</td>
+                        <td class="box-table__item text-right">{{ item.quantity|formatNumber }} {{ item.unitName }}</td>
+                        <td class="box-table__item text-right">{{ item.vatPercent|formatPercent }}</td>
+                        <td class="box-table__item text-right">{{ orderItemTotalPricesById[item.id].priceWithoutVat|priceWithCurrency(currency) }}</td>
+                        <td class="box-table__item text-right">{{ orderItemTotalPricesById[item.id].priceWithVat|priceWithCurrency(currency) }}</td>
                     </tr>
                 {% endfor %}
             </table>
