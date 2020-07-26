@@ -128,6 +128,10 @@
                                     rowClass: 'form-line-block form-line-block--small-width js-form-field'
                                 }) }}
                             </div>
+                            {{ form_row(form.billingAddressData.country, {
+                                label: 'Country'|trans,
+                                rowClass: 'form-line-block js-form-field'
+                            }) }}
                         </div>
                         <div id="{{ form.deliveryAddressData.vars.id }}" class="js-delivery-address-form">
                             {{ form_row(form.customerUserData.defaultDeliveryAddress) }}
@@ -198,6 +202,10 @@
                                         rowClass: 'form-line-block form-line-block--small-width js-form-field'
                                     }) }}
                                 </div>
+                                {{ form_row(form.deliveryAddressData.country, {
+                                    label: 'Country'|trans,
+                                    rowClass: 'form-line-block js-form-field'
+                                }) }}
                             </div>
                         </div>
                     </div>
