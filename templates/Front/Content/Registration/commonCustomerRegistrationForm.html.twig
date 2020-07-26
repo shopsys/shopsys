@@ -18,7 +18,7 @@
 </div>
 <div class="form-line-block-section">
     <h2 class="form-line-block-section__heading">{{ 'Fakturační adresa'|trans }}</h2>
-    {{ form_row(form.street, { label: 'Ulice'|trans, rowClass: 'form-line-block js-form-field' }) }}
+    {{ form_row(form.street, { label: 'Ulice a č. popisné'|trans, rowClass: 'form-line-block js-form-field' }) }}
     <div class="form-line-block-section__grid">
         {{ form_row(form.city, { label: 'Město'|trans, rowClass: 'form-line-block form-line-block--full-width form-line-block--first js-form-field' }) }}
         {{ form_row(form.postcode, { label: 'PSČ'|trans, rowClass: 'form-line-block form-line-block--small-width js-form-field' }) }}

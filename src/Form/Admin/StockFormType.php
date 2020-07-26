@@ -89,7 +89,7 @@ class StockFormType extends AbstractType
             TextType::class,
             [
                     'required' => false,
-                    'label' => t('Ulice'),
+                    'label' => t('Ulice a č. popisné'),
                     'constraints' => [
                         new Constraints\Length(['max' => 100, 'maxMessage' => 'Ulice nesmí být delší než {{ limit }} znaků']),
                     ],
