@@ -45,7 +45,9 @@
                                                     {{ image(transportItem) }}
                                                 </span>
                                             {% endif %}
-                                            <span class="box-table__item__transport box-table__item__transport--{{ loop.index }}">{{ transportItem.name }}</span>
+                                        {% endfor %}
+                                        {% for uniqTransportItem in order.uniqTransportItems %}
+                                            <span class="box-table__item__transport box-table__item__transport--{{ loop.index }}">{{ uniqTransportItem.name }}</span>
                                         {% endfor %}
                                     </td>
                                     <td class="box-table__item box-table__item--payment-name">{{ order.paymentName }}</td>

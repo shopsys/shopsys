@@ -147,7 +147,9 @@ img {
     }
 
     &__main {
-        padding-bottom: 20px;
+        @media @query-md {
+            padding-bottom: 20px;
+        }
 
         &--with-panel {
             padding: 0 @web-padding-small;
