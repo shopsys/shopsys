@@ -20,3 +20,6 @@ There you can find links to upgrade notes for other versions too.
 
 - call static method as static ([#1937](https://github.com/shopsys/shopsys/pull/1937))
     - see #project-base-diff to update your project
+
+- update tests to use tests container to decrease amount of services defined in `services_test.yaml` ([#](https://github.com/shopsys/shopsys/pull/))
+    - see #project-base-diff to update your project
