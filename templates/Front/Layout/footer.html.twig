@@ -4,13 +4,15 @@
 
 <div class="footer">
     {% if getRoute() != 'front_cart' and getRoute() != 'front_order_index'  %}
-        <div class="web__line clearfix dont-print">
-            <div class="web__container">
-                {% cache "newsletter_form" {lifetime:60*60*24, domainId:getDomain().id} %}
-                    {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction')) }}
-                {% endcache %}
+        {% if showNewsletter %}
+            <div class="web__line clearfix dont-print">
+                <div class="web__container">
+                    {% cache "newsletter_form" {lifetime:60*60*24, domainId:getDomain().id} %}
+                        {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction')) }}
+                    {% endcache %}
+                </div>
             </div>
-        </div>
+        {% endif %}
         <div class="web__line">
             <div class="web__container">
                 {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : null } %}

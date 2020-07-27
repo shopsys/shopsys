@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block footer %}
-    {% embed 'Front/Layout/footer.html.twig' %}
+    {% embed 'Front/Layout/footer.html.twig' with { 'showNewsletter' : false } %}
         {% block newsletter_subscription %}{% endblock %}
     {% endembed %}
 {% endblock %}

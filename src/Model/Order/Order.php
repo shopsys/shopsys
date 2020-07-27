@@ -31,7 +31,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  * @method \App\Model\Order\Item\OrderItem getItemById(int $orderItemId)
  * @method \App\Model\Order\Item\OrderItem[] getProductItems()
  * @method \App\Model\Administrator\Administrator|null getCreatedAsAdministrator()
- * @method editData(\App\Model\Order\OrderData $orderData)
  * @method editOrderTransport(\App\Model\Order\OrderData $orderData)
  * @method editOrderPayment(\App\Model\Order\OrderData $orderData)
  * @method setDeliveryAddress(\App\Model\Order\OrderData $orderData)

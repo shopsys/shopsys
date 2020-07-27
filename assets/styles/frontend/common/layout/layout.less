@@ -70,6 +70,10 @@ img {
             margin-bottom: 1.5rem;
         }
 
+        &--margin-bottom-up {
+            margin-bottom: 2rem;
+        }
+
         &--zi {
             position: relative;
             z-index: 10;
@@ -129,6 +133,13 @@ img {
             max-width: 100%;
         }
 
+        &__heading {
+            margin-bottom: 0;
+            text-align: center;
+
+            font-size: 30px;
+        }
+
         .web__main--with-panel & {
             padding: 0;
             width: 100%;
@@ -136,7 +147,9 @@ img {
     }
 
     &__main {
-        padding-bottom: 20px;
+        @media @query-md {
+            padding-bottom: 20px;
+        }
 
         &--with-panel {
             padding: 0 @web-padding-small;
