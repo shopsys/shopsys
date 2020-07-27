@@ -96,7 +96,7 @@ class OrderController extends FrontBaseController
     private $currencyFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     * @var \App\Model\Transport\TransportFacade
      */
     private $transportFacade;
 
@@ -154,7 +154,7 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\OrderDataMapper $orderDataMapper

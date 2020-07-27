@@ -135,6 +135,9 @@ services:
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
         alias: App\Model\Transport\TransportDataFactory
 
+    Shopsys\FrameworkBundle\Model\Transport\TransportFacade:
+        alias: App\Model\Transport\TransportFacade
+
     Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation:
         alias: App\Model\Transport\TransportPriceCalculation
 

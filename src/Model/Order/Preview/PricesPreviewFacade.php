@@ -24,7 +24,7 @@ class PricesPreviewFacade
     private $paymentPriceCalculation;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     * @var \App\Model\Transport\TransportFacade
      */
     private $transportFacade;
 
@@ -46,7 +46,7 @@ class PricesPreviewFacade
     /**
      * @param \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
