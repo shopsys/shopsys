@@ -20,6 +20,7 @@ use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
 use App\Model\Product\Type\ProductTypeFacade;
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
@@ -82,6 +83,11 @@ class ProductTransferAkeneoMapper
     private $parameterTransferCachedAkeneoFacade;
 
     /**
+     * @var LoggerInterface
+     */
+    private LoggerInterface $logger;
+
+    /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
@@ -103,7 +109,8 @@ class ProductTransferAkeneoMapper
         ParameterValueDataFactoryInterface $parameterValueDataFactory,
         FlagRepository $flagRepository,
         ProductPackageDataFactory $productPackageDataFactory,
-        ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade
+        ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade,
+        LoggerInterface $logger
     ) {
         $this->productDataFactory = $productDataFactory;
         $this->categoryFacade = $categoryFacade;
@@ -115,6 +122,7 @@ class ProductTransferAkeneoMapper
         $this->flagRepository = $flagRepository;
         $this->productPackageDataFactory = $productPackageDataFactory;
         $this->parameterTransferCachedAkeneoFacade = $parameterTransferCachedAkeneoFacade;
+        $this->logger = $logger;
     }
 
     /**
@@ -319,11 +327,15 @@ class ProductTransferAkeneoMapper
             if ($parameter === null) {
                 continue;
             }
-            if (count($akeneoProductParameterData) === 1) {
-                $akeneoParameterValueCodes = $this->getParameterValueAkeneoCodes($akeneoProductParameterData, $parameter, $productData->catnum);
-                $this->addParameterValuesByAkeneoValueCodes($parameter, $akeneoParameterValueCodes, $productData);
-            } else {
-                $this->addLocalizedParameterValues($akeneoProductParameterData, $parameter, $productData);
+            try {
+                if (count($akeneoProductParameterData) === 1) {
+                    $akeneoParameterValueCodes = $this->getParameterValueAkeneoCodes($akeneoProductParameterData, $parameter, $productData->catnum);
+                    $this->addParameterValuesByAkeneoValueCodes($parameter, $akeneoParameterValueCodes, $productData);
+                } else {
+                    $this->addLocalizedParameterValues($akeneoProductParameterData, $parameter, $productData);
+                }
+            } catch (TransferException $e) {
+                $this->logger->warning($e->getMessage());
             }
         }
     }
@@ -332,6 +344,7 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param string[] $akeneoParameterValueCodes
      * @param \App\Model\Product\ProductData $productData
+     * @throws TransferException
      */
     private function addParameterValuesByAkeneoValueCodes(Parameter $parameter, array $akeneoParameterValueCodes, ProductData $productData): void
     {
@@ -379,6 +392,7 @@ class ProductTransferAkeneoMapper
      * @param array $akeneoProductParameterData
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param \App\Model\Product\ProductData $productData
+     * @throws TransferException
      */
     private function addLocalizedParameterValues(
         array $akeneoProductParameterData,
