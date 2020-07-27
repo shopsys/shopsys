@@ -428,6 +428,29 @@ class OrderFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getCustomerUserOrderLimitedList(
+        CustomerUser $customerUser,
+        int $limit,
+        int $offset
+    ): array {
+        return $this->orderRepository->getCustomerUserOrderLimitedList($customerUser, $limit, $offset);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return int
+     */
+    public function getCustomerUserOrderCount(CustomerUser $customerUser): int
+    {
+        return $this->orderRepository->getCustomerUserOrderCount($customerUser);
+    }
+
+    /**
      * @param string $email
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]

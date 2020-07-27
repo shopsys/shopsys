@@ -178,6 +178,40 @@ class OrderRepository
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getCustomerUserOrderLimitedList(CustomerUser $customerUser, int $limit, int $offset): array
+    {
+        return $this->createOrderQueryBuilder()
+            ->andWhere('o.customerUser = :customerUser')
+            ->setParameter('customerUser', $customerUser)
+            ->orderBy('o.createdAt', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return int
+     */
+    public function getCustomerUserOrderCount(CustomerUser $customerUser): int
+    {
+        return $this->em->createQueryBuilder()
+            ->select('count(o.id)')
+            ->from(Order::class, 'o')
+            ->where('o.deleted = FALSE')
+            ->andWhere('o.customerUser = :customerUser')
+            ->setParameter('customerUser', $customerUser)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * @param string $email
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]

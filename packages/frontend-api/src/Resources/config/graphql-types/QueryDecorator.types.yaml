@@ -54,3 +54,8 @@ QueryDecorator:
                 type: 'CurrentCustomerUser!'
                 resolve: "@=resolver('currentCustomerUser')"
                 description: "Returns currently logged in customer user"
+            orders:
+                type: "OrderConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('orders', [args])"
+                description: "Returns list of order that can be paginated using `first`, `last`, `before` and `after` keywords"
