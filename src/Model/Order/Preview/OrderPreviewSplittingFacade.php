@@ -194,12 +194,14 @@ class OrderPreviewSplittingFacade
     }
 
     /**
+     * This method is not used, because SD-1236 disables temporary splitting of cart. It is reason for to be public (coding standards)
+     *
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Product\Type\ProductType $productType
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    private function filterQuantifiedProductsByProductType(array $quantifiedProducts, ProductType $productType, int $domainId): array
+    public function filterQuantifiedProductsByProductType(array $quantifiedProducts, ProductType $productType, int $domainId): array
     {
         $filtered = [];
         foreach ($quantifiedProducts as $index => $quantifiedProduct) {
@@ -317,14 +319,16 @@ class OrderPreviewSplittingFacade
         $promoCodeDiscountPercent = $this->findAppliedPromoCodePercentDiscount();
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
 
-        $productTypes = $this->getUsedProductTypesInCurrentCart();
+        $productTypes = array_filter([$this->findFirstUsedProductTypeInCurrentCart()]);
         usort($productTypes, static function (ProductType $productType1, ProductType $productType2) {
             return $productType1->getPosition() <=> $productType2->getPosition();
         });
 
         $orderPreviews = [];
         foreach ($productTypes as $productType) {
-            $productTypeQuantifiedProducts = $this->filterQuantifiedProductsByProductType($quantifiedProducts, $productType, $domainId);
+            // Following filtering by type is skipped, because SD-1236 disables temporary splitting of cart.
+            // $productTypeQuantifiedProducts = $this->filterQuantifiedProductsByProductType($quantifiedProducts, $productType, $domainId);
+            $productTypeQuantifiedProducts = $quantifiedProducts;
             if (count($productTypeQuantifiedProducts) > 0) {
                 $orderPreviews[] = $this->orderPreviewFactory->create(
                     $currency,
@@ -344,6 +348,8 @@ class OrderPreviewSplittingFacade
     }
 
     /**
+     * This method is not used, because SD-1236 disables temporary splitting of cart.
+     *
      * @return \App\Model\Product\Type\ProductType[]
      */
     public function getUsedProductTypesInCurrentCart(): array
@@ -359,5 +365,22 @@ class OrderPreviewSplittingFacade
         }
 
         return $productTypes;
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType|null
+     */
+    public function findFirstUsedProductTypeInCurrentCart(): ?ProductType
+    {
+        $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
+        if (count($quantifiedProducts) === 0) {
+            return null;
+        }
+
+        $quantifiedProduct = reset($quantifiedProducts);
+        /** @var \App\Model\Product\Product $product */
+        $product = $quantifiedProduct->getProduct();
+
+        return $product->getProductType($this->domain->getId());
     }
 }
