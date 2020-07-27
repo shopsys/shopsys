@@ -24,7 +24,7 @@ class PromoCodeLimitRepository
 
     /**
      * @param int $id
-     * @return array
+     * @return \App\Model\Order\PromoCode\PromoCodeLimit[]
      */
     public function getLimitsByPromoCodeId(int $id): array
     {
