@@ -440,6 +440,15 @@ class ProductFacade extends BaseProductFacade
     }
 
     /**
+     * @param string $catnum
+     * @return \App\Model\Product\Product|null
+     */
+    public function findByCatnum(string $catnum): ?Product
+    {
+        return $this->productRepository->findByCatnum($catnum);
+    }
+
+    /**
      * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Product
      */
