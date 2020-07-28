@@ -62,6 +62,7 @@ parameters:
             - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoMapper.php'
             - '*/src/Form/Admin/ProductFormTypeExtension.php'
             - '*/src/Model/Product/Availability/ProductAvailabilityFacade.php'
+            - '*/tests/App/Functional/Model/Transport/Logistic/TransportLogisticFacadeTest.php'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
@@ -71,6 +72,7 @@ parameters:
         Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
             - '*/tests/App/Functional/EntityExtension/EntityExtensionTest.php'
             - '*/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php'
+            - '*/tests/App/Functional/Model/Transport/Logistic/TransportLogisticFacadeTest.php'
 
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
@@ -96,3 +98,6 @@ parameters:
 
         ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff:
             - '*/src/Model/Product/ProductData.php'
+
+        PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff.NotCamelCaps:
+            - '*/tests/App/Functional/Model/Transport/Logistic/TransportLogisticFacadeTest.php'
