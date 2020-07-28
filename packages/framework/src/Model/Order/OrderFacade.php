@@ -470,6 +470,26 @@ class OrderFacade
     }
 
     /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser): Order
+    {
+        return $this->orderRepository->getByUuidAndCustomerUser($uuid, $customerUser);
+    }
+
+    /**
+     * @param string $uuid
+     * @param string $urlHash
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuidAndUrlHash(string $uuid, string $urlHash): Order
+    {
+        return $this->orderRepository->getByUuidAndUrlHash($uuid, $urlHash);
+    }
+
+    /**
      * @param string $urlHash
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order

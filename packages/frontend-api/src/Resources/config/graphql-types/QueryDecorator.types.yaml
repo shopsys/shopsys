@@ -58,4 +58,13 @@ QueryDecorator:
                 type: "OrderConnection"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=resolver('orders', [args])"
-                description: "Returns list of order that can be paginated using `first`, `last`, `before` and `after` keywords"
+                description: "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
+            order:
+                type: 'Order'
+                resolve: "@=resolver('order', [args['uuid'], args['urlHash']])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlHash:
+                        type: "String"
+                description: "Returns order filtered using UUID or urlHash"

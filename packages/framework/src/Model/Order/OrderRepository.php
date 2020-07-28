@@ -94,6 +94,34 @@ class OrderRepository
     }
 
     /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
+     */
+    protected function findByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser)
+    {
+        return $this->createOrderQueryBuilder()
+            ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
+            ->andWhere('o.customerUser = :customerUser')->setParameter(':customerUser', $customerUser)
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $uuid
+     * @param string $urlHash
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
+     */
+    protected function findByUuidAndUrlHash(string $uuid, string $urlHash)
+    {
+        return $this->createOrderQueryBuilder()
+            ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
+            ->andWhere('o.urlHash = :urlHash')->setParameter(':urlHash', $urlHash)
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
@@ -103,6 +131,44 @@ class OrderRepository
 
         if ($order === null) {
             throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException('Order with ID ' . $id . ' not found.');
+        }
+
+        return $order;
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser): Order
+    {
+        $order = $this->findByUuidAndCustomerUser($uuid, $customerUser);
+
+        if ($order === null) {
+            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException(sprintf(
+                'Order with UUID \'%s\' not found.',
+                $uuid
+            ));
+        }
+
+        return $order;
+    }
+
+    /**
+     * @param string $uuid
+     * @param string $urlHash
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuidAndUrlHash(string $uuid, string $urlHash): Order
+    {
+        $order = $this->findByUuidAndUrlHash($uuid, $urlHash);
+
+        if ($order === null) {
+            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException(sprintf(
+                'Order with UUID \'%s\' not found.',
+                $uuid
+            ));
         }
 
         return $order;
@@ -241,7 +307,10 @@ class OrderRepository
             ->getQuery()->getOneOrNullResult();
 
         if ($order === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException();
+            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException(sprintf(
+                'Order with urlHash "%s" was not found.',
+                $urlHash
+            ));
         }
 
         return $order;
