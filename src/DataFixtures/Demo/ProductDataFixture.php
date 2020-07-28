@@ -6134,23 +6134,21 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setDetailProductPackagesInformation(Product $product): void
     {
-        $productPackageData = $this->productPackageDataFactory->create();
-        $productPackageData->position = 1;
-        $productPackageData->length = 150;
-        $productPackageData->width = 50;
-        $productPackageData->height = 20;
-        $productPackageData->weight = 10.5;
+        $productPackageData1 = $this->productPackageDataFactory->create();
+        $productPackageData1->position = 1;
+        $productPackageData1->length = 150;
+        $productPackageData1->width = 50;
+        $productPackageData1->height = 20;
+        $productPackageData1->weight = 10.5;
 
-        $this->productPackageFacade->createOrEdit($productPackageData, $product);
+        $productPackageData2 = $this->productPackageDataFactory->create();
+        $productPackageData2->position = 2;
+        $productPackageData2->length = 100;
+        $productPackageData2->width = 30;
+        $productPackageData2->height = 10;
+        $productPackageData2->weight = 5;
 
-        $productPackageData = $this->productPackageDataFactory->create();
-        $productPackageData->position = 2;
-        $productPackageData->length = 100;
-        $productPackageData->width = 30;
-        $productPackageData->height = 10;
-        $productPackageData->weight = 5;
-
-        $this->productPackageFacade->createOrEdit($productPackageData, $product);
+        $this->productPackageFacade->updateProductPackages($product, [$productPackageData1, $productPackageData2]);
     }
 
     /**
