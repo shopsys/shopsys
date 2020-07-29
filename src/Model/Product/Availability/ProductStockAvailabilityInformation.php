@@ -12,6 +12,11 @@ class ProductStockAvailabilityInformation
     private $stockName;
 
     /**
+     * @var int
+     */
+    private int $stockId;
+
+    /**
      * @var string
      */
     private $availabilityInformation;
@@ -28,13 +33,15 @@ class ProductStockAvailabilityInformation
 
     /**
      * @param string $stockName
+     * @param int $stockId
      * @param string $availabilityInformation
      * @param bool $exposedProduct
      * @param string $availabilityStatus
      */
-    public function __construct(string $stockName, string $availabilityInformation, bool $exposedProduct, string $availabilityStatus)
+    public function __construct(string $stockName, int $stockId, string $availabilityInformation, bool $exposedProduct, string $availabilityStatus)
     {
         $this->stockName = $stockName;
+        $this->stockId = $stockId;
         $this->availabilityInformation = $availabilityInformation;
         $this->exposedProduct = $exposedProduct;
         $this->availabilityStatus = $availabilityStatus;
@@ -46,6 +53,14 @@ class ProductStockAvailabilityInformation
     public function getStockName(): string
     {
         return $this->stockName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStockId(): int
+    {
+        return $this->stockId;
     }
 
     /**
