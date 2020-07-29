@@ -72,7 +72,7 @@ class PromoCodeLimitByCartTotalResolver
      */
     public function getLimitByPromoCode(PromoCode $promoCode): PromoCodeLimit
     {
-        $totalCartPrice = $this->getCartTotalPrice()->getPriceWithVat()->getAmount();
+        $totalCartPrice = $this->getApplicableProductsCartTotalPrice()->getPriceWithVat()->getAmount();
 
         return $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice($promoCode, $totalCartPrice);
     }
@@ -80,7 +80,7 @@ class PromoCodeLimitByCartTotalResolver
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    private function getCartTotalPrice(): Price
+    private function getApplicableProductsCartTotalPrice(): Price
     {
         $domainId = $this->domain->getId();
         $currentCustomer = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -89,7 +89,7 @@ class PromoCodeLimitByCartTotalResolver
             $quantifiedProducts,
             $domainId
         );
-        $quantifiedProductsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
+        $quantifiedProductsPrices = $this->quantifiedProductPriceCalculation->calculatePromoCodeApplicablePrices(
             $quantifiedProducts,
             $domainId,
             $currentCustomer,
