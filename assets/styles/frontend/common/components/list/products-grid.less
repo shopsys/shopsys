@@ -74,8 +74,13 @@
         }
 
         &__item__title {
+            display: block;
             padding-right: 10px;
-            justify-content: flex-start;
+
+            &__prefix,
+            &__suffix {
+                display: block;
+            }
         }
 
         &__item__info__availability {
