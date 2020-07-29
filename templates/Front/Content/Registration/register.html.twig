@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="web__line web__line--bg-color web__line--spacing--big">
+    <div class="web__line web__line--bg-color web__line--spacing--big web__line--margin-bottom-up-big">
         <div class="web__container">
             <h1 class="heading heading--primary heading--primary-subpage">{{ 'Registration'|trans }}</h1>
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
