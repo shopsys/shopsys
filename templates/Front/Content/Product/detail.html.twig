@@ -28,15 +28,15 @@
     <div itemscope itemtype="http://schema.org/Product">
         <div class="web__line">
             <div class="web__container">
-                <div class="box-detail box-detail--primary">
+                {% set galleryImages = getImages(product) %}
+                {% set showGallery = galleryImages|length > 1 %}
+                <div class="box-detail box-detail--primary{{ showGallery ? '' : ' box-detail--no-gallery' }}">
                     <h1 class="box-detail__heading" itemprop="name">
                         <span class="box-detail__heading__prefix">{{ product.nameFirstLine }}</span>
                         {{ product.nameSecondLine }}
                     </h1>
                     <div class="box-detail__wrap">
                         <div class="box-detail__image">
-                            {% set galleryImages = getImages(product) %}
-                            {% set showGallery = galleryImages|length > 1 %}
                             <div class="box-detail__image__main">
                                 {% if imageExists(product) %}
                                     <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(product, 'original') }}" class="box-detail__image__main__link {{ showGallery ? 'js-gallery-main-image' }}">
