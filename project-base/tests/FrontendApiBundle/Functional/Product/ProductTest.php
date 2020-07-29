@@ -11,7 +11,7 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class ProductTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\Product\Product
+     * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
     private $product;
 

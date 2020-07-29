@@ -1,6 +1,9 @@
 parameters:
 
     treatPhpDocTypesAsCertain: false
+    symfony:
+        container_xml_path: '%currentWorkingDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        constant_hassers: false
 
     ignoreErrors:
         -
@@ -19,6 +22,19 @@ parameters:
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
             path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
+        -
+            # phpstan-symfony extension cannot work right with symfony test container at the moment https://github.com/phpstan/phpstan-symfony/issues/27
+            message: '#^Service "[^"]+" is private.$#'
+            path: %currentWorkingDirectory%/tests/*
+        -
+            message: '#^Service "test.service_container" is not registered in the container.$#'
+            path: %currentWorkingDirectory%/*/tests/*
+        -
+            message: '#^Service "snc_redis.test" is not registered in the container.$#'
+            path: %currentWorkingDirectory%/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
+
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
