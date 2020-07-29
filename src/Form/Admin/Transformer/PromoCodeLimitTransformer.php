@@ -45,6 +45,6 @@ class PromoCodeLimitTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value): PromoCodeLimit
     {
-        return $this->promoCodeLimitFactory->create($value['from'], (string)$value['percent']);
+        return $this->promoCodeLimitFactory->create((string)$value['from'], (string)$value['percent']);
     }
 }

@@ -182,7 +182,15 @@ class OrderPreviewSplittingFacade
             return null;
         }
 
-        return $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode($validEnteredPromoCode)->getPercent();
+        $limit = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode(
+            $validEnteredPromoCode,
+            $this->cartFacade->getQuantifiedProductsOfCurrentCustomer()
+        );
+        if ($limit === null) {
+            return null;
+        }
+
+        return $limit->getPercent();
     }
 
     /**

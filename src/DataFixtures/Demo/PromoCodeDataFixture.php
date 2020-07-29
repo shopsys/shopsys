@@ -90,7 +90,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $category = $this->getReference(CategoryDataFixture::CATEGORY_FOOD);
         $this->promoCodeCategoryFactory->create($promoCode, $category);
 
-        $promoCodeLimit = $this->promoCodeLimitFactory->create(1, '10');
+        $promoCodeLimit = $this->promoCodeLimitFactory->create('1.0', '10');
         $promoCodeLimit->setPromoCode($promoCode);
         $this->em->persist($promoCodeLimit);
         $this->em->flush();

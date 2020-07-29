@@ -75,7 +75,13 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         $validEnteredPromoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
         $validEnteredPromoCodePercent = null;
         if ($validEnteredPromoCode !== null) {
-            $validEnteredPromoCodePercent = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode($validEnteredPromoCode)->getPercent();
+            $limit = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode(
+                $validEnteredPromoCode,
+                $this->cartFacade->getQuantifiedProductsOfCurrentCustomer()
+            );
+            if ($limit !== null) {
+                $validEnteredPromoCodePercent = $limit->getPercent();
+            }
         }
 
         return $this->create(

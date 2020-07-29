@@ -21,9 +21,9 @@ class PromoCodeLimit
     private $promoCode;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(type="integer",name="`from`")
+     * @ORM\Column(type="decimal", name="`from`", precision=20, scale=4)
      * @ORM\Id
      */
     private $from;
@@ -37,19 +37,19 @@ class PromoCodeLimit
     private $percent;
 
     /**
-     * @param int $from
+     * @param string $from
      * @param string $percent
      */
-    public function __construct(int $from, string $percent)
+    public function __construct(string $from, string $percent)
     {
         $this->from = $from;
         $this->percent = $percent;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getFrom(): ?int
+    public function getFrom(): ?string
     {
         return $this->from;
     }

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Model\Gtm;
 
+use App\Model\Cart\CartFacade;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\OrderData;
 use App\Model\Order\PromoCode\PromoCode;
@@ -28,18 +29,26 @@ class GtmHelper
     private $promoCodeLimitByCartTotalResolver;
 
     /**
+     * @var \App\Model\Cart\CartFacade
+     */
+    private CartFacade $cartFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      * @param \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+     * @param \App\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         NumberFormatterExtension $numberFormatterExtension,
         GtmContainer $gtmContainer,
-        PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+        PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver,
+        CartFacade $cartFacade
     ) {
         $this->numberFormatterExtension = $numberFormatterExtension;
         $this->gtmContainer = $gtmContainer;
         $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
+        $this->cartFacade = $cartFacade;
     }
 
     /**
@@ -52,11 +61,18 @@ class GtmHelper
             return;
         }
 
-        $percent = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode($usedPromoCode)->getPercent();
+        $limit = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode(
+            $usedPromoCode,
+            $this->cartFacade->getQuantifiedProductsOfCurrentCustomer()
+        );
+        if ($limit === null) {
+            return;
+        }
+
         $orderData->gtmCoupon = sprintf(
             '%s|%s',
             $usedPromoCode->getCode(),
-            $this->numberFormatterExtension->formatPercent($percent)
+            $this->numberFormatterExtension->formatPercent($limit->getPercent())
         );
     }
 

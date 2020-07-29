@@ -105,6 +105,9 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     ): ?Price {
         $vat = $quantifiedItemPrice->getVat();
         $percent = $this->getDiscountFromPromoCodeByCartTotalPrice($promoCode, $cartTotalPrice);
+        if ($percent === null) {
+            return null;
+        }
         $discountMultiplier = (string)($percent / 100);
         if ($promoCode->isApplyOnSecondProduct()) {
             $quantity = $quantifiedProduct->getQuantity();
@@ -164,9 +167,12 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $cartTotalPrice
      * @return string
      */
-    private function getDiscountFromPromoCodeByCartTotalPrice(PromoCode $promoCode, Price $cartTotalPrice): string
+    private function getDiscountFromPromoCodeByCartTotalPrice(PromoCode $promoCode, Price $cartTotalPrice): ?string
     {
         $limit = $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice($promoCode, $cartTotalPrice->getPriceWithVat()->getAmount());
+        if ($limit === null) {
+            return null;
+        }
 
         return $limit->getPercent();
     }
