@@ -74,8 +74,8 @@ export default class ProductsPickerWindow {
             .click(() => false);
     }
 
-    static init () {
-        $('.js-products-picker-window-add-product').each(function () {
+    static init ($container) {
+        $container.filterAllNodes('.js-products-picker-window-add-product').each(function () {
             // eslint-disable-next-line no-new
             new ProductsPickerWindow($(this));
         });
