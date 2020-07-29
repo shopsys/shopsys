@@ -81,7 +81,7 @@ class BillingAddressFormType extends AbstractType
                 ],
             ])
             ->add('street', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new Constraints\Length([
                         'max' => 100,
@@ -90,7 +90,7 @@ class BillingAddressFormType extends AbstractType
                 ],
             ])
             ->add('city', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new Constraints\Length([
                         'max' => 100,
@@ -99,7 +99,7 @@ class BillingAddressFormType extends AbstractType
                 ],
             ])
             ->add('postcode', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new Constraints\Length([
                         'max' => 30,
@@ -108,7 +108,7 @@ class BillingAddressFormType extends AbstractType
                 ],
             ])
             ->add('country', ChoiceType::class, [
-                'required' => false,
+                'required' => true,
                 'choices' => $countries,
                 'choice_label' => 'name',
                 'choice_value' => 'id',

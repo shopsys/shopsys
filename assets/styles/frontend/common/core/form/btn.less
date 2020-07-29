@@ -332,6 +332,30 @@
         }
     }
 
+    &--dark {
+        display: flex;
+        align-items: center;
+        padding: 16px 25px 15px;
+
+        font-family: @font-quartenary;
+        font-size: 15px;
+        letter-spacing: 0;
+        text-transform: none;
+        background-color: #222631;
+        color: #fff;
+        -webkit-font-smoothing: antialiased;
+
+        @media @query-lg {
+            padding-left: 35px;
+            padding-right: 35px;
+        }
+
+        &:hover {
+            background-color: lighten(#222631, 10%);
+            color: #fff;
+        }
+    }
+
     &--checkout-step,
     &--submit-next {
         display: flex;

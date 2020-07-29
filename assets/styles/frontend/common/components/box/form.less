@@ -6,7 +6,7 @@
     position: relative;
     width: @box-form-width;
     max-width: 100%;
-    padding: 0.6rem 0.6rem 2rem 0.6rem;
+    padding: 1.5rem 0.6rem 2rem 0.6rem;
     margin: 0 auto 7rem;
 
     background-color: @box-form-bg-color;
@@ -24,8 +24,22 @@
         padding: 3rem 12.5rem;
     }
 
+    &--no-bottom-spacing {
+        margin-bottom: 0;
+    }
+
     &--registration {
         margin-top: 2rem;
+    }
+
+    &--edit {
+        @media @query-md {
+            margin-top: 2rem;
+        }
+
+        @media @query-vl {
+            padding-bottom: 1.5rem;
+        }
     }
 
     .btn--registration {
@@ -34,5 +48,53 @@
         bottom: -105px;
         width: 170px;
         margin-left: -85px;
+    }
+
+    &__sep {
+        margin: 2rem -0.6rem 0;
+
+        border: 0;
+        background-color: @color-border-lighter;
+
+        @media @query-md {
+            margin: 2rem -1.5rem 0;
+        }
+
+        @media @query-lg {
+            margin: 2rem -6rem 0;
+        }
+
+        @media @query-vl {
+            margin: 2rem -12.5rem 0;
+        }
+    }
+
+    &-buttons {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: @box-form-width;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 2rem 0 1rem;
+
+        @media @query-md {
+            padding: 3rem 0 2rem;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .btn--dark {
+            @media @query-mobile {
+                justify-content: center;
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            @media @query-md {
+                order: 1;
+            }
+        }
     }
 }
