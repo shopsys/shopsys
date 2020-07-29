@@ -418,14 +418,25 @@
     }
 
     &--login {
-        min-width: 135px;
+        min-width: 100px;
+        min-height: 43px;
 
         letter-spacing: 0;
         text-transform: none;
         color: @color-primary-light;
         font-family: @font-quartenary;
 
+        @media screen and (min-width: 360px) {
+            min-width: 120px;
+        }
+
+        @media screen and (min-width: 370px) {
+            min-width: 125px;
+        }
+
         @media @query-md {
+            min-width: 135px;
+
             font-size: 15px;
         }
     }
