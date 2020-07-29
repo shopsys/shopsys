@@ -36,7 +36,7 @@ class RouteConfigCustomization
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->container = $container;
+        $this->container = $container->get('test.service_container');
     }
 
     /**
@@ -129,6 +129,7 @@ class RouteConfigCustomization
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
                         ->addCallDuringTestExecution(function (RequestDataSet $requestDataSet, ContainerInterface $container) {
+                            $container = $container->get('test.service_container');
                             /** @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector */
                             $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
                             /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
