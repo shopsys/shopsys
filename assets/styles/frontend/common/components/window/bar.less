@@ -32,9 +32,12 @@
                 margin-left: -50px;
             }
 
+            @media @query-md {
+                margin-right: 10px;
+            }
+
             @media @query-vl {
                 margin-left: -10px;
-                margin-right: -10px;
             }
         }
     }
@@ -104,5 +107,9 @@
 
     .color-dark {
         color: @color-primary;
+    }
+
+    &--top {
+        background-color: lighten(@window-bar-default-bg, 15%);
     }
 }
