@@ -65,6 +65,11 @@
     &--login {
         @media @query-md {
             position: fixed;
+            left: 15px;
+            width: calc(100% - 30px);
+        }
+
+        @media @query-lg-up {
             left: 50%;
             width: @window-popup-login-width;
             margin-left: -@window-popup-login-width / 2;
