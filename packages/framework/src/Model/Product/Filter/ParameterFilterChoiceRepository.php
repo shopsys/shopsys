@@ -106,8 +106,8 @@ class ParameterFilterChoiceRepository
         $parameters = $parametersQueryBuilder->getQuery()->execute();
 
         $parametersIndexedById = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter */
         foreach ($parameters as $parameter) {
-            /* @var $parameter \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter */
             $parametersIndexedById[$parameter->getId()] = $parameter;
         }
 
@@ -164,8 +164,8 @@ class ParameterFilterChoiceRepository
         $values = $valuesQueryBuilder->getQuery()->execute();
 
         $valuesIndexedById = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $value */
         foreach ($values as $value) {
-            /* @var $value \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue */
             $valuesIndexedById[$value->getId()] = $value;
         }
 

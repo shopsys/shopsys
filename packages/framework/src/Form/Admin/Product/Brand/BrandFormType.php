@@ -50,8 +50,8 @@ class BrandFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null $brand */
         $brand = $options['brand'];
-        /* @var $brand \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null */
 
         $seoTitlesOptionsByDomainId = [];
         $seoMetaDescriptionsOptionsByDomainId = [];

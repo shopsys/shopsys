@@ -64,8 +64,8 @@ SAMPLE
      */
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
+        /** @var \PhpCsFixer\Tokenizer\Token $token */
         foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $token) {
-            /** @var \PhpCsFixer\Tokenizer\Token $token */
             $doc = new DocBlock($token->getContent());
             foreach ($doc->getAnnotations() as $annotation) {
                 if ($this->isRelationAnnotation($annotation)) {

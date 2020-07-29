@@ -76,11 +76,10 @@ class GridTest extends TestCase
         $columns = $grid->getColumnsById();
 
         $this->assertCount(2, $columns);
+        /** @var \Shopsys\FrameworkBundle\Component\Grid\Column $column2 */
         $column2 = array_pop($columns);
-        /* @var $column2 \Shopsys\FrameworkBundle\Component\Grid\Column */
+        /** @var \Shopsys\FrameworkBundle\Component\Grid\Column $column1 */
         $column1 = array_pop($columns);
-        /* @var $column1 \Shopsys\FrameworkBundle\Component\Grid\Column */
-
         $this->assertSame('columnId1', $column1->getId());
         $this->assertSame('sourceColumnName1', $column1->getSourceColumnName());
         $this->assertSame('title1', $column1->getTitle());

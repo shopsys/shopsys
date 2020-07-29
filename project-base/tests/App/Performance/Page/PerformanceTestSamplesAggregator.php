@@ -25,9 +25,8 @@ class PerformanceTestSamplesAggregator
             $worstStatusCode = null;
             $performanceTestSample = null;
 
+            /** @var \Tests\App\Performance\Page\PerformanceTestSample $performanceTestSample */
             foreach ($performanceTestSamplesOfUrl as $performanceTestSample) {
-                /* @var $performanceTestSample \Tests\App\Performance\Page\PerformanceTestSample */
-
                 $samplesCount++;
                 $totalDuration += $performanceTestSample->getDuration();
 

@@ -41,7 +41,7 @@ class OrderNumberSequenceRepository
             $requestedNumber = time();
 
             $orderNumberSequence = $this->getOrderNumberSequenceRepository()->find(static::ID, LockMode::PESSIMISTIC_WRITE);
-            /* @var $orderNumberSequence \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequence|null */
+            /** @var \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequence|null $orderNumberSequence */
             if ($orderNumberSequence === null) {
                 throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNumberSequenceNotFoundException(
                     'Order number sequence ID ' . static::ID . ' not found.'
@@ -51,7 +51,7 @@ class OrderNumberSequenceRepository
             $lastNumber = $orderNumberSequence->getNumber();
 
             if ($requestedNumber <= $lastNumber) {
-                $requestedNumber = $lastNumber + 1;
+                $requestedNumber = (int)$lastNumber + 1;
             }
 
             $orderNumberSequence->setNumber($requestedNumber);

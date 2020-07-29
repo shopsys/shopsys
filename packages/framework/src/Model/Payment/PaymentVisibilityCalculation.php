@@ -67,7 +67,6 @@ class PaymentVisibilityCalculation
     protected function hasIndependentlyVisibleTransport(Payment $payment, $domainId)
     {
         foreach ($payment->getTransports() as $transport) {
-            /* @var $transport \Shopsys\FrameworkBundle\Model\Transport\Transport */
             if ($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, $domainId)) {
                 return true;
             }

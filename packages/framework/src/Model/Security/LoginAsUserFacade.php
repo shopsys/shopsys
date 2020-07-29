@@ -84,7 +84,7 @@ class LoginAsUserFacade
             throw new \Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException('User not set.');
         }
 
-        /* @var $unserializedUser \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser */
+        /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $unserializedUser */
         $unserializedUser = unserialize($this->session->get(static::SESSION_LOGIN_AS));
 
         $freshUser = $this->customerUserRepository->getCustomerUserById($unserializedUser->getId());

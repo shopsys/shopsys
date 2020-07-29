@@ -137,7 +137,7 @@ class AdvertController extends AdminBaseController
      */
     public function listAction()
     {
-        /* @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
 
         /** @var \Doctrine\Common\Persistence\ManagerRegistry $doctrine */

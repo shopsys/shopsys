@@ -32,8 +32,9 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
 
         if ($form->isSubmitted() && !$form->isValid()) {
             $formErrors = [];
+
+            /** @var \Symfony\Component\Form\FormError $error */
             foreach ($form->getErrors(true) as $error) {
-                /* @var $error \Symfony\Component\Form\FormError */
                 $formErrors[] = $error->getMessage();
             }
             throw new \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException($formErrors);

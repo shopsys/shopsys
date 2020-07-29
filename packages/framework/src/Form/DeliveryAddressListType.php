@@ -31,7 +31,7 @@ class DeliveryAddressListType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
-        /** @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[] $options['customerUser'] */
+
         $view->vars['deliveryAddresses'] = $options['customerUser']->getCustomer()->getDeliveryAddresses();
     }
 

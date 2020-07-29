@@ -78,8 +78,8 @@ class ZboziFeedItemTest extends TestCase
         $this->defaultProduct->method('getId')->willReturn(1);
         $this->defaultProduct->method('getName')->with('cs')->willReturn('product name');
 
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|\PHPUnit\Framework\MockObject\MockObject $availabilityMock */
         $availabilityMock = $this->createMock(Availability::class);
-        /* @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|\PHPUnit\Framework\MockObject\MockObject $availabilityMock */
         $availabilityMock->method('getDispatchTime')->willReturn(0);
         $this->defaultProduct->method('getCalculatedAvailability')->willReturn($availabilityMock);
 
@@ -188,8 +188,8 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithManufacturer()
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
         $brand = $this->createMock(Brand::class);
-        /* @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
         $brand->method('getName')->willReturn('manufacturer name');
         $this->defaultProduct->method('getBrand')->willReturn($brand);
 

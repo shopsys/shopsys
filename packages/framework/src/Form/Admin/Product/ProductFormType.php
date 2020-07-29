@@ -165,9 +165,8 @@ class ProductFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product|null $product */
         $product = $options['product'];
-        /* @var $product \Shopsys\FrameworkBundle\Model\Product\Product|null */
-
         $disabledItemInMainVariantAttr = [];
         if ($this->isProductMainVariant($product)) {
             $disabledItemInMainVariantAttr = [
@@ -219,9 +218,8 @@ class ProductFormType extends AbstractType
                 'csrf_token_id' => self::CSRF_TOKEN_ID,
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
+                    /** @var \Shopsys\FrameworkBundle\Model\Product\ProductData $productData */
                     $productData = $form->getData();
-                    /* @var $productData \Shopsys\FrameworkBundle\Model\Product\ProductData */
-
                     if ($productData->usingStock) {
                         $validationGroups[] = static::VALIDATION_GROUP_USING_STOCK;
                         if ($productData->outOfStockAction === Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY) {

@@ -78,8 +78,8 @@ class HeurekaFeedItemTest extends TestCase
         $this->defaultProduct->method('getId')->willReturn(1);
         $this->defaultProduct->method('getName')->with('cs')->willReturn('product name');
 
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|\PHPUnit\Framework\MockObject\MockObject $availabilityMock */
         $availabilityMock = $this->createMock(Availability::class);
-        /* @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|\PHPUnit\Framework\MockObject\MockObject $availabilityMock */
         $availabilityMock->method('getDispatchTime')->willReturn(0);
         $this->defaultProduct->method('getCalculatedAvailability')->willReturn($availabilityMock);
 
@@ -174,8 +174,8 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithManufacturer()
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
         $brand = $this->createMock(Brand::class);
-        /* @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
         $brand->method('getName')->willReturn('manufacturer name');
         $this->defaultProduct->method('getBrand')->willReturn($brand);
 
@@ -186,12 +186,12 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithCategoryText()
     {
+        /** @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory|\PHPUnit\Framework\MockObject\MockObject $heurekaCategoryMock */
         $heurekaCategoryMock = $this->createMock(HeurekaCategory::class);
-        /* @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory|\PHPUnit\Framework\MockObject\MockObject $heurekaCategoryMock */
         $heurekaCategoryMock->method('getFullName')->willReturn('heureka category full text');
 
+        /** @var \Shopsys\FrameworkBundle\Model\Category\Category|\PHPUnit\Framework\MockObject\MockObject $categoryMock */
         $categoryMock = $this->createMock(Category::class);
-        /* @var \Shopsys\FrameworkBundle\Model\Category\Category|\PHPUnit\Framework\MockObject\MockObject $categoryMock */
         $categoryMock->method('getId')->willReturn(1);
 
         $this->categoryFacadeMock->method('findProductMainCategoryByDomainId')
