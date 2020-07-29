@@ -46,3 +46,7 @@
         {% include '/Front/Inline/Payment/goPayPayment.html.twig' %}
     {% endif %}
 {% endblock %}
+
+{% block footer %}
+    {% include 'Front/Layout/footer.html.twig' with { 'showNewsletter' : false } %}
+{% endblock %}
