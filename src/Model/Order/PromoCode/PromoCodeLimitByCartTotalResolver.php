@@ -14,7 +14,7 @@ class PromoCodeLimitByCartTotalResolver
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
-    private ?Price $totalPrice;
+    private ?Price $totalPrice = null;
 
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
