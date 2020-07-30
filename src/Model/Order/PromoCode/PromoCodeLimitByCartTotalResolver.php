@@ -12,6 +12,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 class PromoCodeLimitByCartTotalResolver
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private ?Price $totalPrice;
+
+    /**
      * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
      */
     private $promoCodeLimitRepository;
@@ -76,21 +81,25 @@ class PromoCodeLimitByCartTotalResolver
      */
     private function getApplicableProductsCartTotalPrice(PromoCode $promoCode, array $quantifiedProducts): Price
     {
-        $domainId = $this->domain->getId();
-        $currentCustomer = $this->currentCustomerUser->findCurrentCustomerUser();
-        $promoCodePerProduct = $this->productPromoCodeFiller->getPromoCodePerProductByDomainId(
-            $quantifiedProducts,
-            $domainId,
-            $promoCode
-        );
-        $quantifiedProductsPrices = $this->quantifiedProductPriceCalculation->calculatePromoCodeApplicablePrices(
-            $quantifiedProducts,
-            $domainId,
-            $currentCustomer,
-            $promoCodePerProduct
-        );
+        if ($this->totalPrice === null) {
+            $domainId = $this->domain->getId();
+            $currentCustomer = $this->currentCustomerUser->findCurrentCustomerUser();
+            $promoCodePerProduct = $this->productPromoCodeFiller->getPromoCodePerProductByDomainId(
+                $quantifiedProducts,
+                $domainId,
+                $promoCode
+            );
+            $quantifiedProductsPrices = $this->quantifiedProductPriceCalculation->calculatePromoCodeApplicablePrices(
+                $quantifiedProducts,
+                $domainId,
+                $currentCustomer,
+                $promoCodePerProduct
+            );
 
-        return $this->countTotalPrice($quantifiedProductsPrices);
+            $this->totalPrice = $this->countTotalPrice($quantifiedProductsPrices);
+        }
+
+        return $this->totalPrice;
     }
 
     /**

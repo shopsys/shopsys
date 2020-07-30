@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Product\Pricing;
 
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeLimitRepository;
+use App\Model\Order\PromoCode\PromoCodeLimit;
+use App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -17,43 +18,49 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalcu
 class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscountCalculation
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver
      */
-    private $promoCodeLimitRepository;
+    private PromoCodeLimitByCartTotalResolver $resolver;
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver $resolver
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      */
-    public function __construct(PromoCodeLimitRepository $promoCodeLimitRepository, PriceCalculation $priceCalculation, Rounding $rounding)
+    public function __construct(PromoCodeLimitByCartTotalResolver $resolver, PriceCalculation $priceCalculation, Rounding $rounding)
     {
         parent::__construct($priceCalculation, $rounding);
 
-        $this->promoCodeLimitRepository = $promoCodeLimitRepository;
+        $this->resolver = $resolver;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
      * @param string[] $discountPercentPerProduct
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $cartTotalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function calculateDiscountsPerProductRoundedByCurrency(array $quantifiedProducts, array $quantifiedItemsPrices, array $discountPercentPerProduct, Price $cartTotalPrice, Currency $currency): array
+    public function calculateDiscountsPerProductRoundedByCurrency(array $quantifiedProducts, array $quantifiedItemsPrices, array $discountPercentPerProduct, Currency $currency): array
     {
         $quantifiedItemsDiscounts = [];
         foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
             $productId = $quantifiedProduct->getProduct()->getId();
+
             if (array_key_exists($productId, $discountPercentPerProduct)) {
-                $quantifiedItemsDiscounts[$quantifiedItemIndex] = $this->calculateRoundedDiscountByPromoCode(
-                    $quantifiedItemsPrices[$quantifiedItemIndex],
-                    $discountPercentPerProduct[$productId],
-                    $cartTotalPrice,
-                    $currency,
-                    $quantifiedProduct
-                );
+                $promoCode = $discountPercentPerProduct[$productId];
+                $promoCodeLimit = $this->resolver->getLimitByPromoCode($promoCode, $quantifiedProducts);
+                if ($promoCodeLimit !== null) {
+                    $quantifiedItemsDiscounts[$quantifiedItemIndex] = $this->calculateRoundedDiscountByPromoCode(
+                        $quantifiedItemsPrices[$quantifiedItemIndex],
+                        $promoCode,
+                        $promoCodeLimit,
+                        $currency,
+                        $quantifiedProduct
+                    );
+                } else {
+                    $quantifiedItemsDiscounts[$quantifiedItemIndex] = null;
+                }
             } else {
                 $quantifiedItemsDiscounts[$quantifiedItemIndex] = null;
             }
@@ -91,7 +98,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     /**
      * @param \App\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $cartTotalPrice
+     * @param \App\Model\Order\PromoCode\PromoCodeLimit $promoCodeLimit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
@@ -99,12 +106,12 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     private function calculateRoundedDiscountByPromoCode(
         QuantifiedItemPrice $quantifiedItemPrice,
         PromoCode $promoCode,
-        Price $cartTotalPrice,
+        PromoCodeLimit $promoCodeLimit,
         Currency $currency,
         QuantifiedProduct $quantifiedProduct
     ): ?Price {
         $vat = $quantifiedItemPrice->getVat();
-        $percent = $this->getDiscountFromPromoCodeByCartTotalPrice($promoCode, $cartTotalPrice);
+        $percent = $promoCodeLimit->getPercent();
         if ($percent === null) {
             return null;
         }
@@ -160,20 +167,5 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
 
         return new Price($priceWithoutVat, $priceWithVat);
-    }
-
-    /**
-     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $cartTotalPrice
-     * @return string
-     */
-    private function getDiscountFromPromoCodeByCartTotalPrice(PromoCode $promoCode, Price $cartTotalPrice): ?string
-    {
-        $limit = $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice($promoCode, $cartTotalPrice->getPriceWithVat()->getAmount());
-        if ($limit === null) {
-            return null;
-        }
-
-        return $limit->getPercent();
     }
 }
