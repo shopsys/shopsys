@@ -80,6 +80,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
 
         return $paginator->auto($argument, $this->productOnCurrentDomainFacade->getProductsCountOnCurrentDomain());
     }
+
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      */
