@@ -60,6 +60,7 @@
         border-radius: @search-form-border-radius;
         background-color: @search-form-bg-color;
         border-color: @search-form-border-color;
+        border-width: 1px;
 
         @media @query-mobile {
             padding-top: 0;
@@ -95,68 +96,115 @@
     &__hint {
         .reset-ul();
         position: absolute;
-        top: 34px;
+        top: -2px;
         left: 0;
         width: 100%;
         z-index: 10;
 
-        border: 1px solid @color-border;
-        border-top: 0;
         background: @color-f;
         border-radius: 0 0 @radius @radius;
+        box-shadow: 0 30px 20px 0 rgba(@color-0, .15);
 
         &__item {
-            border-top: 1px dashed @color-border;
+            border-top: 1px solid @color-border-lighter;
+
+            &:first-child {
+                border-top: 0;
+            }
+
+            &--last {
+                border-bottom: 1px solid @color-border-lighter;
+            }
 
             &__link {
                 .clearfix();
                 display: flex;
                 align-items: center;
                 width: 100%;
-                padding: 10px;
+                padding: 12px 15px 10px;
 
                 text-decoration: none;
+                line-height: 1.3;
 
                 &:hover {
                     text-decoration: none;
+                    background-color: @color-border-lighter;
                 }
             }
 
             &--info {
-                padding: 10px 0;
+                margin: 16px 0 7px;
 
                 text-align: center;
                 font-size: 12px;
                 border: none;
+                color: @color-base-lighter;
+            }
+
+            &--show-results {
+                margin-bottom: 22px;
+                text-align: center;
+                border: 0;
             }
 
             &:last-child {
                 border-radius: 0 0 @radius @radius;
             }
+
+            &__strong {
+                font-family: @font-quartenary;
+                color: @color-primary-light;
+                font-weight: 400;
+            }
         }
 
         &__image {
             position: relative;
-            height: 30px;
-            width: 30px;
+            height: 32px;
+            width: 32px;
 
             img {
                 .center-image();
+                mix-blend-mode: multiply;
             }
 
-            .svg {
-                position: relative;
-                top: -2px;
-                margin-bottom: -2px;
-
-                font-size: 20px;
-                color: @color-base;
+            &--no-result {
+                img {
+                    transform: scale(0.7);
+                }
             }
         }
 
         &__name {
-            padding-left: 10px;
+            padding-left: 15px;
             flex: 1;
+
+            font-size: 13px;
+
+            @media @query-xl {
+                font-size: 15px;
+            }
+
+            &--no-results {
+                font-size: 14px;
+            }
+        }
+    }
+
+    &__autocomplete {
+        position: relative;
+        z-index: 10;
+
+        opacity: 0;
+        transform: scaleY(0.9);
+        pointer-events: none;
+        transition: all .2s ease-in-out;
+        transform-origin: center top;
+
+        &.is-active {
+            opacity: 1;
+            transform: scaleY(1);
+            pointer-events: auto;
         }
     }
 }

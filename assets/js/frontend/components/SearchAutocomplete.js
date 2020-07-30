@@ -14,6 +14,7 @@ export default class SearchAutocomplete {
         this.requestTimer = null;
         this.resultExists = false;
         this.searchDataCache = {};
+        this.activeClass = 'is-active';
     }
 
     static init () {
@@ -25,7 +26,7 @@ export default class SearchAutocomplete {
         searchAutocomplete.$input.on('keyup paste', (event) => SearchAutocomplete.onInputChange(event, searchAutocomplete));
         searchAutocomplete.$input.on('focus', function () {
             if (searchAutocomplete.resultExists) {
-                searchAutocomplete.$searchAutocompleteResults.show();
+                searchAutocomplete.$searchAutocompleteResults.addClass(searchAutocomplete.activeClass);
             }
         });
 
@@ -49,7 +50,7 @@ export default class SearchAutocomplete {
     static onDocumentClickHideAutocompleteResults (event, searchAutocomplete) {
         const $autocompleteElements = searchAutocomplete.$input.add(searchAutocomplete.$searchAutocompleteResults);
         if (searchAutocomplete.resultExists && $(event.target).closest($autocompleteElements).length === 0) {
-            searchAutocomplete.$searchAutocompleteResults.hide();
+            searchAutocomplete.$searchAutocompleteResults.removeClass(searchAutocomplete.activeClass);
         }
     }
 
@@ -64,7 +65,7 @@ export default class SearchAutocomplete {
             }
         } else {
             searchAutocomplete.resultExists = false;
-            searchAutocomplete.$searchAutocompleteResults.hide();
+            searchAutocomplete.$searchAutocompleteResults.removeClass(searchAutocomplete.activeClass);
         }
     }
 
@@ -90,12 +91,7 @@ export default class SearchAutocomplete {
 
         this.resultExists = $response.find('li').length > 0;
 
-        if (this.resultExists) {
-            this.$searchAutocompleteResults.show();
-        } else {
-            this.$searchAutocompleteResults.hide();
-        }
-
+        this.$searchAutocompleteResults.addClass(this.activeClass);
         this.$searchAutocompleteResults.html(responseHtml);
     }
 }
