@@ -16,7 +16,7 @@ class ProductAvailabilityCalculation
     protected $availabilityFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator
      */
     protected $productSellingDeniedRecalculator;
 
