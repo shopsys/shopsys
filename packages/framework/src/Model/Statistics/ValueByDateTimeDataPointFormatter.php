@@ -75,8 +75,8 @@ class ValueByDateTimeDataPointFormatter
     protected function getDateTimes(array $valueByDateTimeDataPoints)
     {
         $returnData = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint $valueByDateTimeDataPoint */
         foreach ($valueByDateTimeDataPoints as $key => $valueByDateTimeDataPoint) {
-            /* @var $valueByDateTimeDataPoint \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint */
             $returnData[$key] = $valueByDateTimeDataPoint->getDateTime();
         }
 
@@ -90,8 +90,8 @@ class ValueByDateTimeDataPointFormatter
     public function getCounts(array $valueByDateTimeDataPoints)
     {
         $returnData = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint $valueByDateTimeDataPoint */
         foreach ($valueByDateTimeDataPoints as $key => $valueByDateTimeDataPoint) {
-            /* @var $valueByDateTimeDataPoint \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint */
             $returnData[$key] = $valueByDateTimeDataPoint->getValue();
         }
 

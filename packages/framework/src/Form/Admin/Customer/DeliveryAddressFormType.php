@@ -176,8 +176,8 @@ class DeliveryAddressFormType extends AbstractType
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
+                    /** @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData */
                     $deliveryAddressData = $form->getData();
-                    /* @var $deliveryAddressData \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData */
 
                     if ($deliveryAddressData->addressFilled) {
                         $validationGroups[] = static::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS;

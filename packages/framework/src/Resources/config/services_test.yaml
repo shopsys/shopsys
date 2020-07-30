@@ -11,6 +11,32 @@ services:
         arguments:
             - '%overwrite_domain_url%'
 
+    Shopsys\FrameworkBundle\Model\Feed\FeedRegistry:
+        arguments:
+            $knownTypes: ['daily', 'hourly']
+            $defaultType: 'daily'
+
+    Shopsys\FrameworkBundle\Component\Domain\Domain:
+        factory: ['@Shopsys\FrameworkBundle\Component\Domain\DomainFactory', create]
+        arguments:
+            - '%shopsys.domain_config_filepath%'
+            - '%shopsys.domain_urls_config_filepath%'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: ~
+
+    Shopsys\FrameworkBundle\Model\Localization\TranslatableListener: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber:
+        autoconfigure: false
+
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:
+        arguments:
+            $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'
+            $indexPrefix: 'test_%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
+
+    # @deprecated - services between these two comment blocks are supposed to be removed in next major version
+    # as it is no longer necessary to be defined here - start -------->
+
     Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade: ~
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository: ~
@@ -70,20 +96,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Feed\Delivery\DeliveryFeedItemRepository: ~
 
-    Shopsys\FrameworkBundle\Model\Feed\FeedRegistry:
-        arguments:
-            $knownTypes: ['daily', 'hourly']
-            $defaultType: 'daily'
-
     Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade:
         arguments:
             - '%shopsys.default_db_schema_filepath%'
-
-    Shopsys\FrameworkBundle\Component\Domain\Domain:
-        factory: ['@Shopsys\FrameworkBundle\Component\Domain\DomainFactory', create]
-        arguments:
-            - '%shopsys.domain_config_filepath%'
-            - '%shopsys.domain_urls_config_filepath%'
 
     Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader: ~
 
@@ -163,8 +178,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: ~
-
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade: ~
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
@@ -172,9 +185,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductRepository: ~
 
     Shopsys\FrameworkBundle\Model\Script\ScriptFacade: ~
-
-    Shopsys\FrameworkBundle\Model\Localization\TranslatableListener: ~
-
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
 
@@ -204,11 +214,5 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber:
-        autoconfigure: false
-
-    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:
-        arguments:
-            $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'
-            $indexPrefix: 'test_%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
-
+# @deprecated - services between these two comment blocks are supposed to be removed in next major version
+# as it is no longer necessary to be defined here - <-------- end

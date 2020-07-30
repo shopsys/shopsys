@@ -46,8 +46,8 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
         }
 
         $normValue = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData $productParameterValueData */
         foreach ($normData as $productParameterValueData) {
-            /* @var $productParameterValueData \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData */
             $parameterId = $productParameterValueData->parameter->getId();
             $locale = $productParameterValueData->parameterValueData->locale;
 
@@ -76,9 +76,8 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
         if (is_array($viewData)) {
             $normData = [];
 
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData $productParameterValuesLocalizedData */
             foreach ($viewData as $productParameterValuesLocalizedData) {
-                /* @var $productParameterValuesLocalizedData \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData */
-
                 foreach ($productParameterValuesLocalizedData->valueTextsByLocale as $locale => $valueText) {
                     if ($valueText !== null) {
                         $productParameterValueData = $this->productParameterValueDataFactory->create();

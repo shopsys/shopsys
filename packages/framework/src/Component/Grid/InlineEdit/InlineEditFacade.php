@@ -54,9 +54,9 @@ class InlineEditFacade
     public function getRenderedRowHtml($serviceName, $rowId)
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
-        $grid = $gridInlineEdit->getGrid();
-        /* @var $grid \Shopsys\FrameworkBundle\Component\Grid\Grid */
 
+        /** @var \Shopsys\FrameworkBundle\Component\Grid\Grid $grid */
+        $grid = $gridInlineEdit->getGrid();
         $gridView = $grid->createViewWithOneRow($rowId);
         $rows = $grid->getRows();
         $rowData = array_pop($rows);

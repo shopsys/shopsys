@@ -120,12 +120,11 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
+     * @param \PhpParser\Node\Expr\MethodCall $node
      * @return bool
      */
     protected function isAddViolationMethodCall(Node $node): bool
     {
-        /** @var \PhpParser\Node\Expr\MethodCall $node */
         return $node->var instanceof Variable
             && in_array($node->var->name, $this->currentExecutionContextVariableNames, true)
             && $node->name->name === 'addViolation';

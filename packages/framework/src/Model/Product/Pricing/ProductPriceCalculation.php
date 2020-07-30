@@ -139,9 +139,9 @@ class ProductPriceCalculation
             throw new \Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException('Array can not be empty.');
         }
 
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null $minimumPrice */
         $minimumPrice = null;
         foreach ($prices as $price) {
-            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null $minimumPrice */
             if ($minimumPrice === null || $price->getPriceWithoutVat()->isLessThan($minimumPrice->getPriceWithoutVat())) {
                 $minimumPrice = $price;
             }
@@ -160,8 +160,8 @@ class ProductPriceCalculation
             throw new \Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException('Array can not be empty.');
         }
 
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price $firstPrice */
         $firstPrice = array_pop($prices);
-        /* @var $firstPrice \Shopsys\FrameworkBundle\Model\Pricing\Price */
         foreach ($prices as $price) {
             if (!$price->getPriceWithoutVat()->equals($firstPrice->getPriceWithoutVat())
                 || !$price->getPriceWithVat()->equals($firstPrice->getPriceWithVat())

@@ -530,9 +530,9 @@ class OrderFacade
         foreach ($orderPreview->getQuantifiedProducts() as $index => $quantifiedProduct) {
             $product = $quantifiedProduct->getProduct();
 
-            /* @var $quantifiedItemPrice \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice */
+            /** @var \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice */
             $quantifiedItemPrice = $quantifiedItemPrices[$index];
-            /* @var $quantifiedItemDiscount \Shopsys\FrameworkBundle\Model\Pricing\Price|null */
+            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null $quantifiedItemDiscount */
             $quantifiedItemDiscount = $quantifiedItemDiscounts[$index];
 
             $orderItem = $this->orderItemFactory->createProduct(

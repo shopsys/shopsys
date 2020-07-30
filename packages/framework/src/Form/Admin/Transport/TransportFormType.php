@@ -52,9 +52,8 @@ class TransportFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transport */
         $transport = $options['transport'];
-        /* @var $transport \Shopsys\FrameworkBundle\Model\Transport\Transport */
-
         $builderBasicInformationGroup = $builder->create('basicInformation', GroupType::class, [
             'label' => t('Basic information'),
         ]);

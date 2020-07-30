@@ -27,46 +27,6 @@ services:
     Symfony\Bridge\Twig\Extension\HttpKernelRuntime:
         arguments: ['@fragment.handler']
 
-    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
-
     Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
 
-    Shopsys\FrameworkBundle\Model\Feed\FeedFacade: ~
-
-    Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector: ~
-
-    Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade: ~
-
-    Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
-        arguments: ['%router.resource%']
-
-    Shopsys\ReadModelBundle\Image\ImageViewFacade: ~
-
-    Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade: ~
-
-    Shopsys\FrameworkBundle\Component\Image\ImageFacade:
-        arguments: ['%shopsys.image_url_prefix%']
-
-    Shopsys\FrameworkBundle\Component\Image\ImageLocator:
-        arguments: ['%shopsys.image_dir%']
-
     League\Flysystem\FilesystemInterface: '@main_filesystem'
-
-    Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter:
-        tags:
-            - { name: router, priority: 70 }
-
-    Shopsys\FrameworkBundle\Model\Localization\Localization:
-        arguments:
-            $adminLocale: '%shopsys.admin_locale%'
-
-    CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
-        class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
-
-    Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory: ~
-
-    Shopsys\FrameworkBundle\Twig\NumberFormatterExtension: ~
-
-    Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
-
-    Shopsys\FrontendApiBundle\Model\Token\TokenFacade: ~

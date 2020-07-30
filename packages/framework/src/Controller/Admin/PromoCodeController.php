@@ -65,7 +65,7 @@ class PromoCodeController extends AdminBaseController
      */
     public function listAction()
     {
-        /* @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
 
         $grid = $this->promoCodeGridFactory->create(true);

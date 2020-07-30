@@ -189,8 +189,9 @@ class FileUpload
     public function postFlushEntity(EntityFileUploadInterface $entity)
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
+
+        /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
         foreach ($filesForUpload as $fileForUpload) {
-            /* @var $fileForUpload FileForUpload */
             $sourceFilepath = TransformString::removeDriveLetterFromPath($this->getTemporaryFilepath($fileForUpload->getTemporaryFilename()));
             $originalFilename = $this->fileNamingConvention->getFilenameByNamingConvention(
                 $fileForUpload->getNameConventionType(),

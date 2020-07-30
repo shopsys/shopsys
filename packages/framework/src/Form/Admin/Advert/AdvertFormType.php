@@ -201,8 +201,8 @@ class AdvertFormType extends AbstractType
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
+                    /** @var \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData */
                     $advertData = $form->getData();
-                    /* @var $advertData \Shopsys\FrameworkBundle\Model\Advert\AdvertData */
 
                     if ($advertData->type === Advert::TYPE_CODE) {
                         $validationGroups[] = static::VALIDATION_GROUP_TYPE_CODE;

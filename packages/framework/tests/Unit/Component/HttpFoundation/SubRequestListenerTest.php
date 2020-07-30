@@ -100,7 +100,7 @@ class SubRequestListenerTest extends TestCase
 
     public function testOnKernelController()
     {
-        /* @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $masterRequestMock */
+        /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $masterRequestMock */
         $masterRequestMock = $this->getMockBuilder(Request::class)
             ->setMethods(['getMethod'])
             ->getMock();
@@ -112,10 +112,10 @@ class SubRequestListenerTest extends TestCase
         ]);
         $masterRequestMock->request->replace(['post' => 'value']);
 
+        /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $subRequestMock */
         $subRequestMock = $this->getMockBuilder(Request::class)
             ->setMethods(['setMethod'])
             ->getMock();
-        /* @var $subRequestMock \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject */
         $subRequestMock->expects($this->once())->method('setMethod')->with($this->equalTo('POST'));
         $subRequestMock->query->replace([
             'key2' => 'value2_2',

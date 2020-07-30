@@ -56,7 +56,7 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
                 continue;
             }
 
-            /* @var \DateTime $inputDate */
+            /** @var \DateTime $inputDate */
             $inputDate = clone $ruleData->value;
 
             $parameterName = 'orderCreatedAt_' . $index;

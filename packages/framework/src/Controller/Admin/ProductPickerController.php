@@ -111,9 +111,8 @@ class ProductPickerController extends AdminBaseController
      */
     protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters)
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
-        /* @var $administrator \Shopsys\FrameworkBundle\Model\Administrator\Administrator */
-
         $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
         $quickSearchData = new QuickSearchFormData();

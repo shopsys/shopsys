@@ -90,7 +90,7 @@ trait FlashMessageTrait
      */
     public function isFlashMessageBagEmpty()
     {
-        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface */
+        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
         $flashBag = $this->container->get('session')->getFlashBag();
 
         return !$flashBag->has(FlashMessage::KEY_ERROR)
@@ -128,7 +128,7 @@ trait FlashMessageTrait
      */
     protected function getMessages($key)
     {
-        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface */
+        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
         $flashBag = $this->container->get('session')->getFlashBag();
         $messages = $flashBag->get($key);
 

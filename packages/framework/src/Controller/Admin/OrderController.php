@@ -179,9 +179,8 @@ class OrderController extends AdminBaseController
      */
     public function listAction(Request $request)
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
-        /* @var $administrator \Shopsys\FrameworkBundle\Model\Administrator\Administrator */
-
         $advancedSearchForm = $this->advancedSearchOrderFacade->createAdvancedSearchOrderForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
 

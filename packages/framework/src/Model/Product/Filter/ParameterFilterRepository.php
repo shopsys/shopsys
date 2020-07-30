@@ -16,9 +16,8 @@ class ParameterFilterRepository
     {
         $parameterIndex = 1;
 
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData $parameterFilterData */
         foreach ($parameters as $parameterFilterData) {
-            /* @var $parameterFilterData \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData */
-
             if (count($parameterFilterData->values) === 0) {
                 continue;
             }

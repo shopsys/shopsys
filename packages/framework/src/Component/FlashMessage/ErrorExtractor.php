@@ -16,8 +16,9 @@ class ErrorExtractor
     public function getAllErrorsAsArray(FormInterface $form, array $errorFlashMessages): array
     {
         $errors = $errorFlashMessages;
+
+        /** @var \Symfony\Component\Form\FormError $error */
         foreach ($form->getErrors(true) as $error) {
-            /* @var $error \Symfony\Component\Form\FormError */
             $errors[] = $error->getMessage();
         }
 
