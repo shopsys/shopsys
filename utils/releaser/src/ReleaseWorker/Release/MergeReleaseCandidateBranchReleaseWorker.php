@@ -33,7 +33,7 @@ final class MergeReleaseCandidateBranchReleaseWorker extends AbstractShopsysRele
      */
     public function work(Version $version): void
     {
-        $this->symfonyStyle->note('You need to create a merge commit locally, see https://docs.shopsys.com/en/latest/contributing/merging-on-github/ for detailed instructions.');
+        $this->symfonyStyle->note('You need to create a merge commit locally.');
         $this->symfonyStyle->warning(sprintf(
             'Do not forget to push the "%s" branch!',
             $this->initialBranchName
