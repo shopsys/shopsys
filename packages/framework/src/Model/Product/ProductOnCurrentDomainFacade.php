@@ -209,8 +209,6 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->currentCustomerUser->getPricingGroup()
         );
 
-        $this->productRepository->addTranslation($queryBuilder, $this->domain->getLocale());
-
         return $queryBuilder
             ->select('count(p.id)')
             ->getQuery()
