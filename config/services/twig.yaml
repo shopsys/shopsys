@@ -28,3 +28,5 @@ services:
     Shopsys\ReadModelBundle\Twig\ImageExtension: '@App\Twig\ImageExtension'
 
     Shopsys\FrameworkBundle\Twig\ImageExtension: '@App\Twig\ImageExtension'
+
+    Shopsys\FrameworkBundle\Twig\MailerSettingExtension: '@App\Twig\MailerSettingExtension'

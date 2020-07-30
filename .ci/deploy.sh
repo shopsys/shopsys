@@ -43,6 +43,7 @@ declare -A PARAMETERS=(
     ["parameters.promo_code_manage_page_config.user"]=${PROMO_CODE_MANAGE_PAGE_USER_LOGIN}
     ["parameters.promo_code_manage_page_config.pass"]=${PROMO_CODE_MANAGE_PAGE_USER_PASS}
     ["parameters.promo_code_manage_page_config.allowed_ips[+]"]=${PROMO_CODE_MANAGE_PAGE_ALLOWED_IPS}
+    ["parameters.show_mail_restriction_info_bar"]=${SHOW_MAIL_RESTRICTION_INFO_BAR}
 )
 
 VARS=(

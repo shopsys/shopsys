@@ -99,3 +99,5 @@ parameters:
             container_id: GTM-TK8MMWT
             container_environment: null
             data_layer_locale: sk
+
+    show_mail_restriction_info_bar: true
