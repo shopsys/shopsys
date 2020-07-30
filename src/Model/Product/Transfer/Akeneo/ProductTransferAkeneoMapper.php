@@ -31,6 +31,7 @@ class ProductTransferAkeneoMapper
 {
     public const PRODUCT_PACKAGE_MINIMAL_INDEX = 1;
     public const PRODUCT_PACKAGE_MAXIMAL_INDEX = 9;
+    private const PARAMETER_TEXT_MAX_LENGTH = 100;
 
     /**
      * @var \App\Model\Product\ProductDataFactory
@@ -536,12 +537,13 @@ class ProductTransferAkeneoMapper
 
         $parameterTextValue = $this->getParameterValueTextByAkeneoValueCode($parameter, $locale, $akeneoParameterValueCode);
 
-        if (mb_strlen($parameterTextValue) > 100) {
+        if (mb_strlen($parameterTextValue) > self::PARAMETER_TEXT_MAX_LENGTH) {
             throw new TransferException(
                 sprintf(
-                    'Value for parameter "%s" is too long: "%s"',
+                    'Value for parameter "%s" is too long: "%s", expected max %d',
                     $parameter->getAkeneoCode(),
                     $akeneoParameterValueCode,
+                    self::PARAMETER_TEXT_MAX_LENGTH
                 )
             );
         }
