@@ -39,6 +39,11 @@ class ProductAvailabilityFacade
     private $productAvailabilityDomainCache;
 
     /**
+     * @var array
+     */
+    private $productFutureAvailabilityDomainCache;
+
+    /**
      * @param \App\Model\Stock\ProductStockRepository $productStockRepository
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
@@ -52,6 +57,7 @@ class ProductAvailabilityFacade
         $this->setting = $setting;
         $this->productStockRepository = $productStockRepository;
         $this->productAvailabilityDomainCache = [];
+        $this->productFutureAvailabilityDomainCache = [];
     }
 
     /**
@@ -235,6 +241,23 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return bool
      */
+    public function isProductFutureAvailableOnDomainCached(Product $product, int $domainId): bool
+    {
+        $cacheKey = sprintf('product:%d-domain:%d', $product->getId(), $domainId);
+        if (array_key_exists($cacheKey, $this->productFutureAvailabilityDomainCache)) {
+            return $this->productFutureAvailabilityDomainCache[$cacheKey];
+        }
+
+        $this->productFutureAvailabilityDomainCache[$cacheKey] = $this->productStockRepository->isProductAvailableByFutureStockOnDomain($product, $domainId);
+
+        return $this->productFutureAvailabilityDomainCache[$cacheKey];
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return bool
+     */
     public function isProductExcludedOnDomain(Product $product, int $domainId): bool
     {
         return $product->getSaleExclusion($domainId) && !$this->isProductAvailableOnDomainCached(
@@ -254,6 +277,26 @@ class ProductAvailabilityFacade
             $product,
             $domainId
         );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return bool
+     */
+    public function isProductAvailableWithFutureStockOnDomainOrHasPreorder(Product $product, int $domainId): bool
+    {
+        return $product->hasPreorder()
+            ||
+            $this->isProductAvailableOnDomainCached(
+                $product,
+                $domainId
+            )
+            ||
+            $this->isProductFutureAvailableOnDomainCached(
+                $product,
+                $domainId
+            );
     }
 
     /**
@@ -493,9 +536,32 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return int
      */
+    public function getGroupedStockQuantityWithFutureByProductAndDomainId(Product $product, int $domainId): int
+    {
+        $productStocksByDomainIdIndexedByStockId = $this->productStockFacade->getProductStocksByProductAndDomainIdIndexedByStockId($product, $domainId);
+        $totalProductStocksQuantity = 0;
+        foreach ($productStocksByDomainIdIndexedByStockId as $productStock) {
+            $totalProductStocksQuantity += $productStock->getProductQuantity();
+            if ($productStock->getDateOfStorage() !== null) {
+                $totalProductStocksQuantity += $productStock->getFutureProductQuantity();
+            }
+        }
+
+        return $totalProductStocksQuantity;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return int
+     */
     public function getMaximumOrderQuantity(Product $product, int $domainId): int
     {
-        return ($product->hasPreorder()) ? PHP_INT_MAX : $this->getGroupedStockQuantityByProductAndDomainId($product, $domainId);
+        if ($product->hasPreorder()) {
+            return PHP_INT_MAX;
+        }
+
+        return $this->getGroupedStockQuantityWithFutureByProductAndDomainId($product, $domainId);
     }
 
     /**

@@ -221,7 +221,7 @@ class CartController extends FrontBaseController
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
-        $productAvailable = $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder(
+        $productAvailable = $this->productAvailabilityFacade->isProductAvailableWithFutureStockOnDomainOrHasPreorder(
             $product,
             $this->domain->getId()
         );
