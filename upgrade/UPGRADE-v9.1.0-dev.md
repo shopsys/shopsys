@@ -20,3 +20,7 @@ There you can find links to upgrade notes for other versions too.
 
 - update tests to use tests container to decrease amount of services defined in `services_test.yaml` ([#1957](https://github.com/shopsys/shopsys/pull/1957))
     - see #project-base-diff to update your project
+
+- add new coding standards for YAML files ([#1552](https://github.com/shopsys/shopsys/pull/1552))
+    - see #project-base-diff and update your `yaml-standards.yaml` file
+    - run `php phing standards-fix` to fix your `yaml` files
