@@ -20,3 +20,6 @@ There you can find links to upgrade notes for other versions too.
 
 - update tests to use tests container to decrease amount of services defined in `services_test.yaml` ([#1957](https://github.com/shopsys/shopsys/pull/1957))
     - see #project-base-diff to update your project
+
+- apply fixers for compliance with [PSR-12](https://www.php-fig.org/psr/psr-12/) ([#1324](https://github.com/shopsys/shopsys/pull/1324))
+    - see #project-base-diff to update your project
