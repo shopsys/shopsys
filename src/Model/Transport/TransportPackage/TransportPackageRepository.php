@@ -41,6 +41,25 @@ class TransportPackageRepository
     }
 
     /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param int $domainId
+     * @return \App\Model\Transport\TransportPackage\TransportPackage[]
+     */
+    public function getTransportPackagesByTransportAndDomainId(Transport $transport, int $domainId): array
+    {
+        return $this->getRepository()->findBy(
+            [
+                'transport' => $transport,
+                'domainId' => $domainId,
+            ],
+            [
+                'domainId' => 'ASC',
+                'priceWithVat' => 'ASC',
+            ]
+        );
+    }
+
+    /**
      * @param int $transportPackageId
      * @return \App\Model\Transport\TransportPackage\TransportPackage|null
      */

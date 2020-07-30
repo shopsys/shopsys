@@ -70,4 +70,14 @@ class TransportPackageFacade
 
         $this->entityManager->flush();
     }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param int $domainId
+     * @return \App\Model\Transport\TransportPackage\TransportPackage[]
+     */
+    public function getTransportPackagesByTransportAndDomainId(Transport $transport, int $domainId): array
+    {
+        return $this->transportPackageRepository->getTransportPackagesByTransportAndDomainId($transport, $domainId);
+    }
 }

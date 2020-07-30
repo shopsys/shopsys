@@ -7,8 +7,11 @@ namespace App\Model\Transport\Logistic;
 use App\Component\Domain\Domain;
 use App\Model\Cart\CartFacade;
 use App\Model\Payment\PaymentFacade;
+use App\Model\Product\Package\ProductPackageRepository;
+use App\Model\Product\Package\ProductPackagesCollection;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportFacade;
+use App\Model\Transport\TransportPackage\TransportPackageFacade;
 
 class TransportLogisticFacade
 {
@@ -33,21 +36,37 @@ class TransportLogisticFacade
     private Domain $domain;
 
     /**
+     * @var \App\Model\Product\Package\ProductPackageRepository
+     */
+    private ProductPackageRepository $productPackageRepository;
+
+    /**
+     * @var \App\Model\Transport\TransportPackage\TransportPackageFacade
+     */
+    private TransportPackageFacade $transportPackageFacade;
+
+    /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
+     * @param \App\Model\Product\Package\ProductPackageRepository $productPackageRepository
+     * @param \App\Model\Transport\TransportPackage\TransportPackageFacade $transportPackageFacade
      */
     public function __construct(
         PaymentFacade $paymentFacade,
         TransportFacade $transportFacade,
         CartFacade $cartFacade,
-        Domain $domain
+        Domain $domain,
+        ProductPackageRepository $productPackageRepository,
+        TransportPackageFacade $transportPackageFacade
     ) {
         $this->paymentFacade = $paymentFacade;
         $this->transportFacade = $transportFacade;
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
+        $this->productPackageRepository = $productPackageRepository;
+        $this->transportPackageFacade = $transportPackageFacade;
     }
 
     /**
@@ -60,34 +79,47 @@ class TransportLogisticFacade
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
         $domainId = $this->domain->getId();
 
-        foreach ($transports as $key => $transport) {
-            if ($this->isTransportPossibleForQuantifiedProducts($transport, $quantifiedProducts, $domainId) === false) {
-                unset($transports[$key]);
+        $productPackagesCollection = $this->productPackageRepository->getProductPackagesCollectionByQuantifiedProducts($quantifiedProducts);
+
+        $packageTransports = $this->filterTransportsByType($transports, Transport::TYPE_PACKAGE);
+        $possiblePackageTransports = [];
+        if ($this->existsProductWhichIsNotSupportPackageTransport($quantifiedProducts, $domainId) === false) {
+            foreach ($packageTransports as $packageTransport) {
+                if ($this->isTransportPossibleByProductPackageCollection($packageTransport, $productPackagesCollection, $domainId) === true) {
+                    $possiblePackageTransports[] = $packageTransport;
+                }
             }
         }
 
-        return $transports;
+        return $this->filterPossibleTransports($transports, $possiblePackageTransports);
     }
 
     /**
      * @param \App\Model\Transport\Transport $transport
-     * @param array $quantifiedProducts
+     * @param \App\Model\Product\Package\ProductPackagesCollection $productPackagesCollection
      * @param int $domainId
      * @return bool
      */
-    private function isTransportPossibleForQuantifiedProducts(Transport $transport, array $quantifiedProducts, int $domainId): bool
-    {
-        if ($transport->getType() === Transport::TYPE_COMMON) {
-            return true;
+    private function isTransportPossibleByProductPackageCollection(
+        Transport $transport,
+        ProductPackagesCollection $productPackagesCollection,
+        int $domainId
+    ): bool {
+        $transportPackages = $this->transportPackageFacade->getTransportPackagesByTransportAndDomainId($transport, $domainId);
+
+        foreach ($transportPackages as $transportPackage) {
+            if ($transportPackage->getMaxWeight() >= $productPackagesCollection->getWeightSum()
+                && ($transportPackage->getMaxProductPackagesCount() === null || $transportPackage->getMaxProductPackagesCount() >= $productPackagesCollection->getTotalPackagesCount())
+                && ($transportPackage->getMaxGirth() === null || $transportPackage->getMaxGirth() >= $productPackagesCollection->getTotalGirth())
+                && ($transportPackage->getDimension1() === null || $transportPackage->getDimension1() >= $productPackagesCollection->getTopDimension1())
+                && ($transportPackage->getDimension2() === null || $transportPackage->getDimension2() >= $productPackagesCollection->getTopDimension2())
+                && ($transportPackage->getDimension3() === null || $transportPackage->getDimension3() >= $productPackagesCollection->getDimension3Sum())
+            ) {
+                return true;
+            }
         }
 
-        $existsProductWhichIsNotSupportPackageTransport = $this->existsProductWhichIsNotSupportPackageTransport($quantifiedProducts, $domainId);
-
-        if ($existsProductWhichIsNotSupportPackageTransport === true) {
-            return $transport->getType() === Transport::TYPE_PALLET;
-        }
-
-        return $transport->getType() === Transport::TYPE_PACKAGE;
+        return false;
     }
 
     /**
@@ -106,5 +138,54 @@ class TransportLogisticFacade
         }
 
         return false;
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport[] $transports
+     * @param \App\Model\Transport\Transport[] $possiblePackageTransports
+     * @return \App\Model\Transport\Transport[]
+     */
+    private function filterPossibleTransports(array $transports, array $possiblePackageTransports): array
+    {
+        $isAllowedPackageTransport = count($possiblePackageTransports) > 0;
+        foreach ($transports as $key => $transport) {
+            if ($isAllowedPackageTransport === true
+                && $transport->getType() === Transport::TYPE_PALLET
+            ) {
+                unset($transports[$key]);
+                continue;
+            }
+
+            if ($isAllowedPackageTransport === false && $transport->getType() === Transport::TYPE_PACKAGE) {
+                unset($transports[$key]);
+                continue;
+            }
+
+            if ($isAllowedPackageTransport === true
+                && $transport->getType() === Transport::TYPE_PACKAGE
+                && in_array($transport, $possiblePackageTransports, true) === false
+            ) {
+                unset($transports[$key]);
+            }
+        }
+
+        return $transports;
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport[] $transports
+     * @param string $type
+     * @return \App\Model\Transport\Transport[]
+     */
+    private function filterTransportsByType(array $transports, string $type): array
+    {
+        $filteredTransports = [];
+        foreach ($transports as $transport) {
+            if ($transport->getType() === $type) {
+                $filteredTransports[] = $transport;
+            }
+        }
+
+        return $filteredTransports;
     }
 }
