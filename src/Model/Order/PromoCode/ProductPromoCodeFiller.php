@@ -53,15 +53,17 @@ class ProductPromoCodeFiller
      */
     public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId, PromoCode $promoCode): array
     {
-        $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
-        $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($promoCode->getId(), $domainId);
+        $allowedProductIdsByPromoCode = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
+        $allowedProductIdsFromCategoriesByPromoCode = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($promoCode->getId(), $domainId);
 
-        if (count(array_unique(array_merge($allowedProductIds, $allowedProductIdsFromCategories))) === 0) {
+        $allowedProductIds = array_merge($allowedProductIdsByPromoCode, $allowedProductIdsFromCategoriesByPromoCode);
+        $uniqueAllowedProductIds = array_unique($allowedProductIds);
+        if (count($uniqueAllowedProductIds) === 0) {
             return $this->fillPromoCodeDiscountsForAllProducts($quantifiedProducts, $promoCode);
         }
 
-        $promoCodeDiscountPercentPerProduct = $this->fillPromoCodes($quantifiedProducts, $allowedProductIds, $promoCode);
-        $promoCodeDiscountPercentPerProductFromCategories = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsFromCategories, $promoCode);
+        $promoCodeDiscountPercentPerProduct = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsByPromoCode, $promoCode);
+        $promoCodeDiscountPercentPerProductFromCategories = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsFromCategoriesByPromoCode, $promoCode);
 
         return array_replace($promoCodeDiscountPercentPerProduct, $promoCodeDiscountPercentPerProductFromCategories);
     }

@@ -41,7 +41,7 @@ class PromoCodeLimitType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('from', IntegerType::class, [
+        $builder->add('fromPriceWithVat', IntegerType::class, [
             'constraints' => [
                 new NotBlank([
                     'message' => 'Prosím vložte limit od',

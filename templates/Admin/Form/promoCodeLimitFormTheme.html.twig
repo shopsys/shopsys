@@ -1,8 +1,8 @@
 {% macro limitRow(limit, index) %}
     <tr class="js-limits-item js-form-group table-form__row" data-index="{{ index }}">
         <td class="table-form__cell table-form__cell--del-before">
-            {{ form_widget(limit.from, { isSimple: true} ) }}
-            {{ form_errors(limit.from, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
+            {{ form_widget(limit.fromPriceWithVat, { isSimple: true} ) }}
+            {{ form_errors(limit.fromPriceWithVat, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
         </td>
         <td class="table-form__cell table-form__cell--del">
             <span class="svg svg-arrow-right"></span>

@@ -64,8 +64,8 @@ class PromoCodeLimitByCartTotalResolver
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     * @param array $quantifiedProducts
-     * @return null|\App\Model\Order\PromoCode\PromoCodeLimit
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @return \App\Model\Order\PromoCode\PromoCodeLimit|null
      */
     public function getLimitByPromoCode(PromoCode $promoCode, array $quantifiedProducts): ?PromoCodeLimit
     {
@@ -76,7 +76,7 @@ class PromoCodeLimitByCartTotalResolver
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     * @param array $quantifiedProducts
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     private function getApplicableProductsCartTotalPrice(PromoCode $promoCode, array $quantifiedProducts): Price

@@ -16,10 +16,10 @@ class Version20200714114004 extends AbstractMigration
     {
         $this->sql('
             CREATE TABLE promo_code_limit (
-                "from" INT NOT NULL,
+                from_price_with_vat INT NOT NULL,
                 percent NUMERIC(20, 4) NOT NULL, 
                 promo_code_id INT NOT NULL, 
-                PRIMARY KEY(promo_code_id, "from", percent)
+                PRIMARY KEY(promo_code_id, from_price_with_vat)
             );
             ');
         $this->sql('CREATE INDEX IDX_CF58514F2FAE4625 ON promo_code_limit (promo_code_id)');

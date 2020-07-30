@@ -14,7 +14,7 @@ class Version20200729090755 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE "promo_code_limit" ALTER "from" TYPE numeric(20,4)');
+        $this->sql('ALTER TABLE "promo_code_limit" ALTER from_price_with_vat TYPE numeric(20,4)');
     }
 
     /**

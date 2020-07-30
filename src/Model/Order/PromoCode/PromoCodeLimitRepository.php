@@ -61,18 +61,18 @@ class PromoCodeLimitRepository
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      * @param string $price
-     * @return \App\Model\Order\PromoCode\PromoCodeLimit
+     * @return \App\Model\Order\PromoCode\PromoCodeLimit|null
      */
     public function getHighestLimitByPromoCodeAndTotalPrice(PromoCode $promoCode, string $price): ?PromoCodeLimit
     {
         return $this->getQueryBuilder()
             ->select('l')
             ->from(PromoCodeLimit::class, 'l')
-            ->where('l.from <= :totalPrice')
+            ->where('l.fromPriceWithVat <= :totalPrice')
             ->setParameter('totalPrice', $price)
             ->andWhere('l.promoCode = :promoCode')
             ->setParameter('promoCode', $promoCode)
-            ->orderBy('l.from', 'desc')
+            ->orderBy('l.fromPriceWithVat', 'desc')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
