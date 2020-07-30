@@ -44,28 +44,15 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(Argument $argument)
     {
-        if ($argument->offsetExists('last')) {
-            $limit = (int)$argument->offsetGet('last');
-            $cursor = $argument->offsetGet('before');
-            $offset = max((int)$this->connectionBuilder->cursorToOffset($cursor) - $limit, 0);
-        } else {
-            $this->setDefaultFirstOffsetIfNecessary($argument);
-            $limit = (int)$argument->offsetGet('first');
-            $cursor = $argument->offsetGet('after');
-            $offset = (int)$this->connectionBuilder->cursorToOffset($cursor);
-        }
-
-        $products = $this->productOnCurrentDomainFacade->getProductsOnCurrentDomain(
-            $limit + static::EDGE_COUNT,
-            $offset,
-            ProductListOrderingConfig::ORDER_BY_PRIORITY
-        );
-
-        $paginator = new Paginator(function () use ($products) {
-            return $products;
+        $paginator = new Paginator(function ($offset, $limit) {
+            return $this->productOnCurrentDomainFacade->getProductsOnCurrentDomain(
+                $limit,
+                $offset,
+                ProductListOrderingConfig::ORDER_BY_PRIORITY
+            );
         });
 
-        return $paginator->auto($argument, count($products));
+        return $paginator->auto($argument, $this->productOnCurrentDomainFacade->getProductsCountOnCurrentDomain());
     }
 
     /**

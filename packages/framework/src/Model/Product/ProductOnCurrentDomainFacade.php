@@ -200,6 +200,24 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     }
 
     /**
+     * @return int
+     */
+    public function getProductsCountOnCurrentDomain(): int
+    {
+        $queryBuilder = $this->productRepository->getAllListableQueryBuilder(
+            $this->domain->getId(),
+            $this->currentCustomerUser->getPricingGroup()
+        );
+
+        $this->productRepository->addTranslation($queryBuilder, $this->domain->getLocale());
+
+        return $queryBuilder
+            ->select('count(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
