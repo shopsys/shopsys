@@ -11,6 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
@@ -183,5 +184,21 @@ class ProductRepository extends BaseProductRepository
             ->setParameter('catnum', $catnum);
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]
+     */
+    public function getProductIteratorForReplaceVat()
+    {
+        $query = $this->em->createQuery('
+            SELECT distinct p
+            FROM ' . Product::class . ' p
+            JOIN ' . ProductDomain::class . ' pd WITH pd.product = p
+            JOIN pd.vat v
+            WHERE v.replaceWith IS NOT NULL
+        ');
+
+        return $query->iterate();
     }
 }
