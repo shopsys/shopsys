@@ -6,25 +6,14 @@ namespace App\Model\Transport\Logistic;
 
 use App\Component\Domain\Domain;
 use App\Model\Cart\CartFacade;
-use App\Model\Payment\PaymentFacade;
 use App\Model\Product\Package\ProductPackageRepository;
 use App\Model\Product\Package\ProductPackagesCollection;
 use App\Model\Transport\Transport;
-use App\Model\Transport\TransportFacade;
+use App\Model\Transport\TransportPackage\TransportPackage;
 use App\Model\Transport\TransportPackage\TransportPackageFacade;
 
 class TransportLogisticFacade
 {
-    /**
-     * @var \App\Model\Payment\PaymentFacade
-     */
-    private PaymentFacade $paymentFacade;
-
-    /**
-     * @var \App\Model\Transport\TransportFacade
-     */
-    private TransportFacade $transportFacade;
-
     /**
      * @var \App\Model\Cart\CartFacade
      */
@@ -46,23 +35,17 @@ class TransportLogisticFacade
     private TransportPackageFacade $transportPackageFacade;
 
     /**
-     * @param \App\Model\Payment\PaymentFacade $paymentFacade
-     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Product\Package\ProductPackageRepository $productPackageRepository
      * @param \App\Model\Transport\TransportPackage\TransportPackageFacade $transportPackageFacade
      */
     public function __construct(
-        PaymentFacade $paymentFacade,
-        TransportFacade $transportFacade,
         CartFacade $cartFacade,
         Domain $domain,
         ProductPackageRepository $productPackageRepository,
         TransportPackageFacade $transportPackageFacade
     ) {
-        $this->paymentFacade = $paymentFacade;
-        $this->transportFacade = $transportFacade;
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
         $this->productPackageRepository = $productPackageRepository;
@@ -70,13 +53,12 @@ class TransportLogisticFacade
     }
 
     /**
+     * @param \App\Model\Transport\Transport[] $transports
      * @return \App\Model\Transport\Transport[]
      */
-    public function getAllowedTransportsForCurrentCart(): array
+    public function filterAllowedTransportsForCurrentCart(array $transports): array
     {
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
-        $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
-        $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
         $domainId = $this->domain->getId();
 
         $productPackagesCollection = $this->productPackageRepository->getProductPackagesCollectionByQuantifiedProducts($quantifiedProducts);
@@ -105,6 +87,20 @@ class TransportLogisticFacade
         ProductPackagesCollection $productPackagesCollection,
         int $domainId
     ): bool {
+        return $this->findFirstPossibleTransportPackageByProductPackageCollection($transport, $productPackagesCollection, $domainId) !== null;
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param \App\Model\Product\Package\ProductPackagesCollection $productPackagesCollection
+     * @param int $domainId
+     * @return \App\Model\Transport\TransportPackage\TransportPackage|null
+     */
+    public function findFirstPossibleTransportPackageByProductPackageCollection(
+        Transport $transport,
+        ProductPackagesCollection $productPackagesCollection,
+        int $domainId
+    ): ?TransportPackage {
         $transportPackages = $this->transportPackageFacade->getTransportPackagesByTransportAndDomainId($transport, $domainId);
 
         foreach ($transportPackages as $transportPackage) {
@@ -115,11 +111,11 @@ class TransportLogisticFacade
                 && ($transportPackage->getDimension2() === null || $transportPackage->getDimension2() >= $productPackagesCollection->getTopDimension2())
                 && ($transportPackage->getDimension3() === null || $transportPackage->getDimension3() >= $productPackagesCollection->getDimension3Sum())
             ) {
-                return true;
+                return $transportPackage;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

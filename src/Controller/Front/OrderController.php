@@ -276,7 +276,8 @@ class OrderController extends FrontBaseController
         $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
 
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
+        $transports = $this->transportLogisticFacade->filterAllowedTransportsForCurrentCart($transports);
         $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
         $prefilledCustomerEmail = $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null);
 

@@ -70,6 +70,12 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
     private $transportFacade;
 
     /**
+     * @var \App\Model\Payment\PaymentFacade
+     * @inject
+     */
+    private $paymentFacade;
+
+    /**
      * @var \App\Model\Transport\TransportDataFactory
      * @inject
      */
@@ -101,7 +107,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         $productData2->canBeShippedAsPackage[Domain::FIRST_DOMAIN_ID] = false;
         $this->productFacade->edit($this->product2->getId(), $productData2);
 
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertContainsTransport($this->transportPallet, $transports);
         self::assertNotContainsTransport($this->transportCzechPost, $transports);
@@ -112,7 +118,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
     {
         $this->prepareDefaultUseCaseData();
 
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertNotContainsTransport($this->transportPallet, $transports);
         self::assertContainsTransport($this->transportCzechPost, $transports);
@@ -140,7 +146,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Total weight is 2 * (10 + 12) + 5 = 49
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertNotContainsTransport($this->transportPallet, $transports);
         self::assertContainsTransport($this->transportCzechPost, $transports);
@@ -168,7 +174,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Total weight is 2 * (10 + 12) + 5 = 49
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertContainsTransport($this->transportPallet, $transports);
         self::assertNotContainsTransport($this->transportCzechPost, $transports);
@@ -196,7 +202,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Total packages count is 2 * 2 + 1 = 5
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertNotContainsTransport($this->transportPallet, $transports);
         self::assertContainsTransport($this->transportCzechPost, $transports);
@@ -224,7 +230,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Total packages count is 2 * 2 + 1 = 5
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertContainsTransport($this->transportPallet, $transports);
         self::assertNotContainsTransport($this->transportCzechPost, $transports);
@@ -252,7 +258,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Total girth is 60 + 2 * 60 + 2 * 55 = 290
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertNotContainsTransport($this->transportPallet, $transports);
         self::assertContainsTransport($this->transportCzechPost, $transports);
@@ -280,7 +286,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Total girth is 60 + 2 * 60 + 2 * 55 = 290
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertContainsTransport($this->transportPallet, $transports);
         self::assertNotContainsTransport($this->transportCzechPost, $transports);
@@ -308,7 +314,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Limit of dimension1 is 10000 (max of 10000, 50, 30)
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertNotContainsTransport($this->transportPallet, $transports);
         self::assertContainsTransport($this->transportCzechPost, $transports);
@@ -336,7 +342,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Limit of dimension1 is 1000 (max of 10000, 50, 30)
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertContainsTransport($this->transportPallet, $transports);
         self::assertNotContainsTransport($this->transportCzechPost, $transports);
@@ -364,7 +370,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Limit of dimension2 is 1000 (max of 10, 19, 1000)
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertNotContainsTransport($this->transportPallet, $transports);
         self::assertContainsTransport($this->transportCzechPost, $transports);
@@ -392,7 +398,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Limit of dimension2 is 1000 (max of 10, 19, 1000)
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertContainsTransport($this->transportPallet, $transports);
         self::assertNotContainsTransport($this->transportCzechPost, $transports);
@@ -420,7 +426,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Limit of dimension3 is 2 * (10 + 15) + 5 = 55
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertNotContainsTransport($this->transportPallet, $transports);
         self::assertContainsTransport($this->transportCzechPost, $transports);
@@ -448,7 +454,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
         ]);
 
         // Limit of dimension3 is 2 * (10 + 15) + 5 = 55
-        $transports = $this->transportLogisticFacade->getAllowedTransportsForCurrentCart();
+        $transports = $this->getAllowedTransportForCurrentCart();
 
         self::assertContainsTransport($this->transportPallet, $transports);
         self::assertNotContainsTransport($this->transportCzechPost, $transports);
@@ -479,6 +485,17 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
             $message = sprintf('Transport "%s" (id=%d) should not be in array', $needle->getName(), $needle->getId());
             self::fail($message);
         }
+    }
+
+    /**
+     * @return \App\Model\Transport\Transport[]
+     */
+    private function getAllowedTransportForCurrentCart(): array
+    {
+        $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
+
+        return $this->transportLogisticFacade->filterAllowedTransportsForCurrentCart($transports);
     }
 
     private function prepareDefaultUseCaseData(): void
