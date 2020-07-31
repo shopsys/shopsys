@@ -187,7 +187,7 @@ class ProductRepository extends BaseProductRepository
     }
 
     /**
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]
+     * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][]
      */
     public function getProductIteratorForReplaceVat()
     {
