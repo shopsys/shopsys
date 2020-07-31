@@ -11,14 +11,17 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class ProductTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Product
+     * @var \App\Model\Product\Product
      */
     private $product;
 
     protected function setUp(): void
     {
         $productFacade = $this->getContainer()->get(ProductFacade::class);
-        $this->product = $productFacade->getById(1);
+
+        /** @var \App\Model\Product\Product $product */
+        $product = $productFacade->getById(1);
+        $this->product = $product;
 
         parent::setUp();
     }
