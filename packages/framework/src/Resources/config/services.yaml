@@ -61,9 +61,11 @@ services:
         tags:
             - { name: data_collector, id: shopsys_framework_core, template: '@ShopsysFramework/Components/Collector/shopsysFramework.html.twig', priority: -300 }
 
-    Symfony\Component\Translation\MessageSelector: '@translator.selector'
+    Symfony\Component\Translation\MessageSelector:
+        alias: translator.selector
 
-    Doctrine\Common\Annotations\DocParser: '@jms_translation.doc_parser'
+    Doctrine\Common\Annotations\DocParser:
+        alias: jms_translation.doc_parser
 
     Ivory\OrderedForm\Orderer\FormOrderer: ~
 
@@ -464,7 +466,8 @@ services:
     Symfony\Bundle\FrameworkBundle\Controller\RedirectController:
         public: true
 
-    Symfony\Component\Config\Loader\LoaderInterface: '@routing.loader'
+    Symfony\Component\Config\Loader\LoaderInterface:
+        alias: routing.loader
 
     Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter: ~
 
@@ -526,7 +529,8 @@ services:
             - '@twig'
             - '%kernel.debug%'
 
-    Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener: '@exception_listener'
+    Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener:
+        alias: exception_listener
 
     exception_listener:
         class: Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener
@@ -542,7 +546,8 @@ services:
     twig.stringloader:
         class: Twig\Loader\ArrayLoader
 
-    Shopsys\FrameworkBundle\Component\Domain\Multidomain\Twig\FilesystemLoader: '@twig.loader.filesystem'
+    Shopsys\FrameworkBundle\Component\Domain\Multidomain\Twig\FilesystemLoader:
+        alias: twig.loader.filesystem
 
     twig.loader.filesystem:
         class: Shopsys\FrameworkBundle\Component\Domain\Multidomain\Twig\FilesystemLoader
@@ -566,9 +571,11 @@ services:
     monolog.handler.fingers_crossed.error_level_activation_strategy:
         abstract: true
 
-    Doctrine\Common\EventManager: '@doctrine.dbal.default_connection.event_manager'
+    Doctrine\Common\EventManager:
+        alias: doctrine.dbal.default_connection.event_manager
 
-    Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader: '@doctrine.fixtures.loader'
+    Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader:
+        alias: doctrine.fixtures.loader
 
     Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder: ~
 
@@ -597,11 +604,14 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: -10 }
 
-    Metadata\MetadataFactory: '@prezent_doctrine_translatable.metadata_factory'
+    Metadata\MetadataFactory:
+        alias: prezent_doctrine_translatable.metadata_factory
 
-    Craue\FormFlowBundle\Storage\DataManager: '@craue.form.flow.data_manager_default'
+    Craue\FormFlowBundle\Storage\DataManager:
+        alias: craue.form.flow.data_manager_default
 
-    FM\ElfinderBundle\Configuration\ElFinderConfigurationReader: '@fm_elfinder.configurator.default'
+    FM\ElfinderBundle\Configuration\ElFinderConfigurationReader:
+        alias: fm_elfinder.configurator.default
 
     Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactory

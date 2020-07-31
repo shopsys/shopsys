@@ -187,4 +187,3 @@ front_customer_delivery_address_delete:
     methods: [GET]
     requirements:
         deliveryAddressId: \d+
-
