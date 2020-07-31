@@ -69,8 +69,12 @@ class ProductPickerController extends AdminBaseController
      * @param bool $allowMainVariants
      * @param bool $allowVariants
      */
-    public function pickMultipleAction(Request $request, $jsInstanceId, bool $allowMainVariants=true, bool $allowVariants=true)
-    {
+    public function pickMultipleAction(
+        Request $request,
+        $jsInstanceId,
+        bool $allowMainVariants = true,
+        bool $allowVariants = true
+    ) {
         return $this->getPickerResponse(
             $request,
             [
