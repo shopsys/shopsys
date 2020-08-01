@@ -82,12 +82,20 @@
         &:hover {
             color: @color-f;
             text-decoration: none;
+
+            strong {
+                text-decoration: none;
+            }
         }
 
         span {
             @media @query-mobile {
                 display: none;
             }
+        }
+
+        strong {
+            text-decoration: underline;
         }
 
         .svg {
@@ -97,8 +105,12 @@
         }
     }
 
-    .color-dark {
+    .color-primary {
         color: @color-primary;
+
+        &:hover {
+            color: @color-primary;
+        }
     }
 
     &--top {
