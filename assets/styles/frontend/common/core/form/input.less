@@ -25,6 +25,8 @@
     border-radius: @input-border-radius;
     caret-color: @color-add-secondary;
     font-size: 16px;
+    // iOS ugly shadows etc. fix
+    -webkit-appearance: none !important;
 
     @media @query-md {
         font-size: 14px;
