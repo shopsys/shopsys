@@ -16,7 +16,7 @@
     width: @input-width;
     max-width: 100%;
     height: @input-height;
-    line-height: @input-height - 2;
+    line-height: normal;
     padding: 0 @input-padding-horizontal;
 
     border: 2px solid @input-border-color;
@@ -25,7 +25,7 @@
     border-radius: @input-border-radius;
     caret-color: @color-add-secondary;
     font-size: 16px;
-    // iOS ugly shadows etc. fix
+    // iOS ugly appearance fix
     -webkit-appearance: none !important;
 
     @media @query-md {
