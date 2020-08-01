@@ -31,6 +31,13 @@
                                 </tr>
                             </table>
                         </div>
+                        {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
+                            <div class="wrap-box__in__col wrap-box__in__col--last wrap-box__in__col--payment-repeat">
+                                <a class="btn btn--dark btn--inline-block btn--center" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
+                                    {{ 'Opakovat platbu'|trans }}
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -75,7 +82,7 @@
                                     </tr>
                                 {% endif %}
                                 <tr class="box-table__row">
-                                    <th class="box-table__item box-table__item--heading">{{ 'Street'|trans }}: </th>
+                                    <th class="box-table__item box-table__item--heading">{{ 'Ulice a č. popisné'|trans }}: </th>
                                     <td class="box-table__item">{{ order.street }}</td>
                                 </tr>
                                 <tr class="box-table__row">
@@ -117,7 +124,7 @@
                                         </tr>
                                     {% endif %}
                                     <tr class="box-table__row">
-                                        <th class="box-table__item box-table__item--heading">{{ 'Street'|trans }}: </th>
+                                        <th class="box-table__item box-table__item--heading">{{ 'Ulice a č. popisné'|trans }}: </th>
                                         <td class="box-table__item">{{ order.deliveryStreet }}</td>
                                     </tr>
                                     <tr class="box-table__row">

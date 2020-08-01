@@ -144,9 +144,17 @@
             }
         }
 
-        a {
+        a:not(.btn) {
             color: inherit;
         }
+    }
+
+    &__btn {
+        display: block;
+        min-height: 0;
+        max-width: 100px;
+        padding: 8px;
+        margin-top: 4px
     }
 
     &--params {

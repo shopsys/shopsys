@@ -1697,7 +1697,7 @@ msgid "Stocks"
 msgstr ""
 
 msgid "Street"
-msgstr "Ulice a č. popisné"
+msgstr "Ulice"
 
 msgid "Stránka"
 msgstr ""

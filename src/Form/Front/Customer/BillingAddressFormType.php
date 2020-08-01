@@ -83,6 +83,9 @@ class BillingAddressFormType extends AbstractType
             ->add('street', TextType::class, [
                 'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Vyplňte prosím ulici a č. popisné',
+                    ]),
                     new Constraints\Length([
                         'max' => 100,
                         'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',

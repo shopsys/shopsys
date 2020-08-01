@@ -81,9 +81,10 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('telephone', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
-                    new Constraints\Length(['max' => 20, 'maxMessage' => 'Phone number cannot be longer than {{ limit }} characters']),
+                    new Constraints\NotBlank(['message' => 'Please enter telephone number']),
+                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('email', EmailType::class, [

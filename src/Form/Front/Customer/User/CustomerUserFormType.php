@@ -67,7 +67,7 @@ class CustomerUserFormType extends AbstractType
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'required' => true,
+                'required' => false,
                 'options' => [
                     'attr' => ['autocomplete' => 'new-password'],
                 ],
