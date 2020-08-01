@@ -112,10 +112,6 @@
                 border-top: 0;
             }
 
-            &--last {
-                border-bottom: 1px solid @color-border-lighter;
-            }
-
             &__link {
                 .clearfix();
                 display: flex;
@@ -133,18 +129,30 @@
             }
 
             &--info {
-                margin: 16px 0 7px;
+                margin-bottom: 7px;
+                padding-top: 16px;
 
                 text-align: center;
                 font-size: 12px;
                 border: none;
                 color: @color-base-lighter;
+                border-top: 1px solid @color-border-lighter;
+
+                & + .search__hint__item--show-results {
+                    margin-top: 0;
+                    padding-top: 0;
+
+                    border: 0;
+                }
             }
 
             &--show-results {
                 margin-bottom: 22px;
+                padding-top: 16px;
                 text-align: center;
+
                 border: 0;
+                border-top: 1px solid @color-border-lighter;
             }
 
             &:last-child {
