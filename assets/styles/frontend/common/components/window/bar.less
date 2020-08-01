@@ -12,7 +12,7 @@
 
         @media @query-mobile {
             position: relative;
-            padding-left: 0;
+            padding: 0.5rem 0.75rem;
         }
 
         &--info {
@@ -20,19 +20,11 @@
         }
 
         &__img {
-            display: block;
-            max-width: none;
-
-            @media @query-mobile {
-                margin-left: -25px;
-                margin-right: -15px;
-            }
-
-            @media screen and (max-width: 330px) {
-                margin-left: -50px;
-            }
+            display: none;
 
             @media @query-md {
+                display: block;
+                max-width: none;
                 margin-right: 10px;
             }
 
