@@ -11,69 +11,63 @@
     {{ productSeries.getSeoTitle(domain.id)|default(productSeries.getName(domain.locale)) }}
 {% endblock %}
 
+{% block breadcrumb %}
+{% endblock %}
+
 {% block main_content %}
-    <div class="web__line">
+    <div class="web__line web__line--spacing--medium">
         <div class="web__container">
-            <div class="box-detail">
-                <div class="box-detail__info">
-                    <h1 itemprop="name">
-                        {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
-                    </h1>
-                    <div class="product-series-categories">
-                        {% for seriesCategory in productSeries.productSeriesCategories %}
-                            <a href="{{ url('front_productseriescategory_detail', { id: seriesCategory.id }) }}">{{ seriesCategory.getName(domain.locale) }}</a>
-                        {% endfor %}
-                    </div>
-                    <p>
-                        {{ productSeries.description|raw }}
-                    </p>
-                </div>
-                <div class="box-detail__image">
-                    {% set galleryImages = getImages(productSeries) %}
-                    {% set showGallery = galleryImages|length > 1 %}
-                    <div class="box-detail__image__main">
+            <h1 class="heading heading--primary heading--primary-subpage" itemprop="name">
+                {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+            </h1>
+            {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+            <div class="box-blog__desc box-blog__desc--detail">
+                {{ productSeries.description|raw }}
+            </div>
+            <div class="box-blog__categories box-blog__categories--detail">
+                {% for seriesCategory in productSeries.productSeriesCategories %}
+                    <a
+                    href="{{ url('front_productseriescategory_detail', { id: seriesCategory.id }) }}"
+                    class="box-blog__categories__item btn btn--tag btn--tag--category selected"
+                    >
+                    {{ seriesCategory.getName(domain.locale) }}
+                    </a>
+                {% endfor %}
+            </div>
+
+            <div class="box-series box-series--detail">
+                {% set galleryImages = getImages(productSeries) %}
+                {% set showGallery = galleryImages|length > 1 %}
+                <ul class="box-series__grid box-series__grid--detail">
+                    <li class="box-series__grid__item">
                         {% if imageExists(productSeries) %}
                             <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(productSeries, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' }}">
-                                {{ image(productSeries, { itemprop: 'image', size: 'preview', alt: productSeries.name }) }}
+                                {{ image(productSeries, { itemprop: 'image', size: 'largePreview', alt: productSeries.name }) }}
                             </a>
                         {% else %}
                             {{ noimage({ alt: productSeries.name }) }}
                         {% endif %}
-                    </div>
-
+                    </li>
                     {% if showGallery %}
-                        <div class="box-gallery dont-print js-gallery">
-                            <div class="box-gallery__in js-gallery-slides">
-                                {% for galleryImage in galleryImages %}
-                                    {% if loop.index != 1 %}
-                                        <div class="box-gallery__item js-gallery-item {% if loop.index > showGalleryMaxCount %}display-none{% endif %}">
-                                            <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link">
-                                                {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: productSeries.name ~ ' ' ~ loop.index}) }}
-                                            </a>
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                                {% if galleryImages|length > showGalleryMaxCount %}
-                                    <div class="box-gallery__item js-gallery-item-more">
-                                        <a href="#" class="box-gallery__item__link underline">
-                                            {{ 'Další'|trans }} ({{ galleryImages|length - showGalleryMaxCount }})
-                                        </a>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
+                            {% for galleryImage in galleryImages %}
+                            {% if loop.index != 1 %}
+                                <li class="box-series__grid__item">
+                                    <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(galleryImage, 'original') }}">
+                                        {{ image(galleryImage, {size: 'largePreview', lazy: false, alt: productSeries.name ~ ' ' ~ loop.index}) }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
-                </div>
-                {% if products|length > 0 %}
-                    <div class="box-detail__info">
-                        <h2>
-                            {{ "Produkty programu"|trans }}
-                        </h2>
-                        {{ productList.list(products, null, 'h2') }}
-                    </div>
-                {% endif %}
+                </ul>
             </div>
-
         </div>
     </div>
+    {% if products|length > 0 %}
+        <div class="web__line web__line--bg-color web__line--spacing--big  web__line--spacing--bottom-small web__line--margin-bottom-up-big">
+            <div class="web__container">
+                {{ productList.list(products, 'list-products--series', 'h2') }}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

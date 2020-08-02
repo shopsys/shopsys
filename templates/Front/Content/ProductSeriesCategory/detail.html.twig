@@ -9,41 +9,43 @@
     {{ productSeriesCategory.getSeoTitle(domain.id)|default(productSeriesCategory.getName(domain.locale)) }}
 {% endblock %}
 
-{% block main_content %}
-    <div class="web__line">
-        <div class="web__container">
-            <div class="box-detail">
-                <div>
-                    <h1 itemprop="name">
-                        {{ productSeriesCategory.getSeoH1(domain.id)|default(productSeriesCategory.name) }}
-                    </h1>
-                    <p>
-                        {{ productSeriesCategory.description|raw }}
-                    </p>
-                </div>
-                <div>
-                    <h2>
-                        {{ "Programy produktů"|trans }}
-                    </h2>
-                    {% for productSeries in productSeriesList %}
-                        <div class="box-detail">
-                            <h3><a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">{{ productSeries.getName(domain.locale) }}</a></h3>
-                            <div class="box-detail__image">
-                                <div class="box-detail__image__main">
-                                    <a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
-                                        {% if imageExists(productSeries) %}
-                                            {{ image(productSeries, { itemprop: 'image', size: 'preview' }) }}
-                                        {% else %}
-                                            {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
-                                        {% endif %}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+{% block breadcrumb %}
+{% endblock %}
 
+{% block main_content %}
+    <div class="web__line web__line--spacing--medium">
+        <div class="web__container">
+            <h1 class="heading heading--primary heading--primary-subpage" itemprop="name">
+                {{ productSeriesCategory.getSeoH1(domain.id)|default(productSeriesCategory.name) }}
+            </h1>
+            {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+            <div class="box-blog__desc box-blog__desc--detail">
+                {{ productSeriesCategory.description|raw }}
+            </div>
+            <div class="box-series box-series--list">
+                <ul class="box-series__grid box-series__grid--list js-list">
+                    {% for productSeries in productSeriesList %}
+                        <li class="box-series__grid__item">
+                            <a class="box-series__grid__item__link" href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
+                                {% if imageExists(productSeries) %}
+                                    {{ image(productSeries, {
+                                        itemprop: 'image',
+                                        size: 'preview',
+                                        alt: productSeries.getName(domain.locale),
+                                        class: 'box-series__grid__item__image'
+                                    }) }}
+                                {% else %}
+                                    {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
+                                {% endif %}
+                                <strong class="box-series__grid__item__name btn btn--next btn-no-style dont-print">
+                                    {{ productSeries.getName(domain.locale) }}
+                                    <i class="btn__icon svg svg-long-arrow-right"></i>
+                                </strong>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}
