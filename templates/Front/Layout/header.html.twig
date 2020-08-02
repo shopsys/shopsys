@@ -3,12 +3,17 @@
     {% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
     {% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
     {% set shopInfoEmail = getShopInfoEmail() %}
+    {% set domain = getDomain() %}
+    {% set logoName = domain.id == 1 ? 'logo' : 'logo_sk' %}
 
     <header class="header">
         <div class="header__logo">
             {% block logo %}
                 <a class="logo" href="{{ url('front_homepage') }}">
-                    <img src="{{ asset('public/frontend/images/logo.svg') }}" alt="{{ 'Online shop'|trans }}">
+                    <img
+                        src="{{ asset("public/frontend/images/#{logoName}.svg") }}"
+                        alt="{{ 'Online shop'|trans }}"
+                    >
                 </a>
             {% endblock %}
         </div>

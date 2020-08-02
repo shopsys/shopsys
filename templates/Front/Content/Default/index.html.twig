@@ -11,12 +11,6 @@
     {{- title -}}
 {% endblock %}
 
-{% block logo %}
-    <h1 class="logo">
-        <img src="{{ asset('public/frontend/images/logo.svg') }}" alt="{{ 'Online shop'|trans }}">
-    </h1>
-{% endblock %}
-
 {% block main_content %}
     {% cache constant('App\\Twig\\Cache\\TwigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE') {lifetime:60*60*4, domainId:getDomain().id} %}
         {{ render(controller('App\\Controller\\Front\\HomepageController:slightlyChangingPartsOnHomepageAction')) }}
