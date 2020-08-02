@@ -38,7 +38,7 @@ export default class SlickCarousel {
                 {
                     breakpoint: 600,
                     settings: {
-                        slidesToShow: 2
+                        slidesToShow: 3
                     }
                 }]
             });

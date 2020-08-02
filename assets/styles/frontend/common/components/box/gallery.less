@@ -8,23 +8,36 @@
 
     .slick-list {
         position: relative;
-        left: 4px;
         overflow: hidden;
+
+        @media @query-vl {
+            left: 8px;
+        }
+
+        @media screen and (min-width: 1500px) {
+            left: 4px;
+        }
     }
 
     &__item {
         float: left;
         padding: 0 @box-gallery-item-gap;
-        width: 70px;
-        height: 80px;
+        width: 85px;
 
         @media @query-md {
             width: 90px;
-            height: 100px;
         }
 
         @media @query-lg {
             padding: 0 @box-gallery-item-gap-lg;
+        }
+
+        @media @query-vl {
+            width: 125px;
+        }
+
+        @media @query-xl {
+            width: 120px;
         }
 
         @media screen and (min-width: 1500px) {
@@ -35,12 +48,17 @@
         &__link {
             display: block;
             width: 100%;
-            height: 100%;
+            padding-top: 90%;
             position: relative;
             overflow: hidden;
 
             border-radius: @radius;
             border: 1px solid @color-border-lighter;
+
+            @media screen and (min-width: 1500px) {
+                height: 100%;
+                padding-top: 0;
+            }
 
             &:hover img {
                 transform: scale(1.15);
