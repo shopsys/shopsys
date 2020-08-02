@@ -20,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Shopsys\FrameworkBundle\Form\Constraints\Email;
 
 class CustomerUserFormType extends AbstractType
 {
@@ -55,10 +56,15 @@ class CustomerUserFormType extends AbstractType
         $builder->add('email', EmailType::class, [
                 'attr' => ['readonly' => true],
                 'required' => true,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Email(['message' => 'Please enter valid email']),
+                ],
             ])
             ->add('telephone', TextType::class, [
                 'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter telephone number']),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',

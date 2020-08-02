@@ -95,6 +95,9 @@ class BillingAddressFormType extends AbstractType
             ->add('city', TextType::class, [
                 'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Vyplňte prosím město',
+                    ]),
                     new Constraints\Length([
                         'max' => 100,
                         'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
@@ -104,6 +107,9 @@ class BillingAddressFormType extends AbstractType
             ->add('postcode', TextType::class, [
                 'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Vyplňte prosím PSČ',
+                    ]),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
@@ -115,6 +121,11 @@ class BillingAddressFormType extends AbstractType
                 'choices' => $countries,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Vyplňte prosím Stát',
+                    ]),
+                ],
             ]);
 
         if ($options['domain_id'] == Domain::SECOND_DOMAIN_ID) {
