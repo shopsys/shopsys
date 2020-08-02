@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Front\Contact;
 
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
+use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\HoneyPotType;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData;
 use Symfony\Component\Form\AbstractType;
@@ -16,7 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
-use Shopsys\FrameworkBundle\Form\Constraints\Email;
 
 class ContactFormType extends AbstractType
 {

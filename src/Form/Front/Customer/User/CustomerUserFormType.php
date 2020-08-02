@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Front\Customer\User;
 
 use App\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
 use Shopsys\FrameworkBundle\Form\DeliveryAddressChoiceType;
@@ -20,7 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
-use Shopsys\FrameworkBundle\Form\Constraints\Email;
 
 class CustomerUserFormType extends AbstractType
 {
