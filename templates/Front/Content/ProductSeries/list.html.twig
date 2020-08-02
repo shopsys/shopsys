@@ -2,40 +2,83 @@
 
 {% set domain = getDomain() %}
 {% block meta_description %}
-    {{- "Nábytkové programy"|trans|default(getSeoMetaDescription()) -}}
+    {{- "Programy"|trans|default(getSeoMetaDescription()) -}}
 {% endblock %}
 
 {% block title %}
-    {{- "Nábytkové programy"|trans -}}
+    {{- "Programy"|trans -}}
+{% endblock %}
+
+{% block breadcrumb %}
 {% endblock %}
 
 {% block main_content %}
-    <div class="web__line">
+    <div class="web__line web__line--spacing--big">
         <div class="web__container">
-            <h1>{{ "Nábytkové programy"|trans }}</h1>
-            <p>
-                {{ "Zde najdete přehled všech nábytkových programů."|trans }}
-            </p>
-            {% for seriesCategory in productSeriesCategories %}
-                <a href="{{ url('front_productseriescategory_detail', { id: seriesCategory.id }) }}">{{ seriesCategory.getName(domain.locale) }}</a>
-            {% endfor %}
+            <h1 class="heading heading--primary heading--primary-subpage">{{ "Programy"|trans }}</h1>
+            {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+            <div class="box-blog__desc js-not-implemented-yet">
+                {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit, magna quis condimentum molestie, nunc nunc imperdiet mauris, ut pharetra odio ex nec augue. Suspendisse porttitor augue vel dolor auctor, ac cursus tortor consectetur. Pellentesque rhoncus mi et massa vulputate, non vestibulum urna tincidunt. Donec et posuere erat....'|trans }}
+                <a class="btn btn--next btn--in-text btn-no-style dont-print js-smooth-scroll-anchor" href="#series-desc">
+                   {{ 'Číst dál'|trans }}
+                    <i class="btn__icon svg svg-chevron"></i>
+                </a>
+            </div>
+            <div class="box-blog__categories box-blog__categories--programs">
+                {% for seriesCategory in productSeriesCategories %}
+                    <a
+                        href="{{ url('front_productseriescategory_detail', { id: seriesCategory.id }) }}"
+                        class="box-blog__categories__item btn btn--tag btn--tag--category"
+                    >
+                        {{ seriesCategory.getName(domain.locale) }}
+                    </a>
+                {% endfor %}
+            </div>
 
-            {% for productSeries in productSeriesList %}
-                <div class="box-detail">
-                    <h3><a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">{{ productSeries.getName(domain.locale) }}</a></h3>
-                    <div class="box-detail__image">
-                        <div class="box-detail__image__main">
-                            <a href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
+            <div class="box-series box-series--list">
+                <ul class="box-series__grid box-series__grid--list js-list">
+                    {% for productSeries in productSeriesList %}
+                        <li class="box-series__grid__item">
+                            <a class="box-series__grid__item__link" href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
                                 {% if imageExists(productSeries) %}
-                                    {{ image(productSeries, { itemprop: 'image', size: 'preview', alt: productSeries.getName(domain.locale) }) }}
+                                    {{ image(productSeries, {
+                                        itemprop: 'image',
+                                        size: 'preview',
+                                        alt: productSeries.getName(domain.locale),
+                                        class: 'box-series__grid__item__image'
+                                    }) }}
                                 {% else %}
                                     {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
                                 {% endif %}
+                                <strong class="box-series__grid__item__name btn btn--next btn-no-style dont-print">
+                                    {{ productSeries.getName(domain.locale) }}
+                                    <i class="btn__icon svg svg-long-arrow-right"></i>
+                                </strong>
                             </a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="box-series-pagination js-not-implemented-yet">
+                <input type="button" class="btn btn--secondary btn--load-more" value="{{ 'Ukázat dalších 40'|trans }}">
+            </div>
+
+            <div class="box-blog__desc box-blog__desc--bottom in-user-text js-not-implemented-yet" id="series-desc">
+                <h2>Nádherné provedení, příjemné užívání</h2>
+                <p>Luxusní sedací soupravy jsou tu pro ty, kteří hledají do svého domova pravý designový skvost. Nabídka luxusních designových sedaček SCONTO té nejvyšší kvality čeká jen na to, aby mohla být ozdobou vašeho obývacího pokoje. Za luxusní sedací soupravy si z pravidla připlatíte, ale věřte, že vyšší pořizovací náklady se odrazí v životnosti, designu a kvalitě zpracování. Luxusní sedací soupravy si zamilujete a vám i vašim návštěvám se z nich jen stěží bude vstávat.</p>
+                <p>
+                Vybrali jsme sedací soupravy od prověřených dodavatelů tak, abychom uspokojili i ty nejnáročnější zákazníky. V luxusních sedacích soupravách hledejte designové sedačky, které následují nejmodernější trendy interiérového designu. Jsou zhotoveny z prvotřídních materiálů v té nejvyšší kvalitě. Ačkoliv se jedná o modely výborné kvality a pečlivého zpracování, jsou nabízeny za atraktivní ceny. Proto se i váš domov může pyšnit kvalitní sedací soupravou.</p>
+
+                <p>Luxusní sedací soupravy vám poskytnou ten nejvyšší komfort užívání. Jsou to z pravidla prostorné sedačky, aby každý člen rodiny měl dostatek místa a dokonalé pohodlí. Také jsou díky moderním materiálům snadné na údržbu a čištění. Pokud však máte strach o ušpinění potahu, není nic snadnějšího než si vybrat ze sortimentu kožených sedacích souprav. Tam se o snadné čištění nemusíte obávat.</p>
+
+                <h2>Patří do prostorných obývacích pokojů</h2>
+                <p>Je to právě sedací souprava, která je duchem obývacího pokoje i celé domácnosti. Na sedací soupravě se scházíme s partnerem, trávíme čas s dětmi. Zveme si přátele, setkáváme se s rodinou. Je s námi, když chceme klidně relaxovat i když hledáme zábavu. Najdete stejně významný kus nábytku ve vašem domově? Proto nedělejte kompromisy. Při výběru luxusní kožené sedací soupravy se nenechte ničím omezovat. Bude vám sloužit dlouhá léta. Vyberte si prostorný model a dopřejte členům rodiny příjemně strávené společné chvíle.</p>
+
+                <p>Velká sedací souprava je perlou každé domácnosti, ústředním bodem, kam se stočí oči hostů. Ať je krásná, ať je praktická, ať je pohodlná, zkrátka luxusní!</p>
+
+                <h2>Elegantní vzhled, moderní doplňky</h2>
+                <p>Luxusní sedací soupravy budou potěchou nejen pro vaše oči. Těšit se můžete na celou řadu atraktivních prvků pro to nejpříjemnější používaní. Jsou doplněny o různě polohovatelné opěrky a vybaveny područkami stejně jako Moderní sedací soupravy. Dopřejte si nádherný kousek nábytku, dopřejte si luxusní sedací soupravu!</p>
+            </div>
         </div>
     </div>
 {% endblock %}

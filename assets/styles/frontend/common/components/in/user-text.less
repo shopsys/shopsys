@@ -1,10 +1,10 @@
 @in-user-text-ul-point-size: 5px;
 @in-user-text-heading-font-size: 18px;
-@in-user-text-heading-margin-bottom: 0.8rem;
+@in-user-text-heading-margin-bottom: 0.6rem;
 @in-user-text-paragraph-margin: 0 0 1.75rem;
 @in-user-text-component-margin: @in-user-text-paragraph-margin;
-@in-user-text-font-size: 16px;
-@in-user-text-line-height: 1.8;
+@in-user-text-font-size: 15px;
+@in-user-text-line-height: 1.6;
 @in-user-text-font-color: @color-base-lighter;
 
 .in-user-text {
@@ -44,6 +44,10 @@
 
     p {
         margin: @in-user-text-paragraph-margin;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
     }
 
     a {

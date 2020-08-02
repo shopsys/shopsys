@@ -41,6 +41,14 @@
         @media @query-md {
             text-align: left;
         }
+
+        &--bottom {
+            text-align: left;
+
+            @media @query-mobile {
+                margin-bottom: 0;
+            }
+        }
     }
 
     &__breadcrumb {
@@ -60,6 +68,18 @@
 
         @media @query-lg {
             margin-bottom: 5rem;
+        }
+
+        &--programs {
+            margin-bottom: 0.5rem;
+
+            @media @query-mobile {
+                margin-top: 2rem;
+            }
+
+            @media @query-lg {
+                margin-bottom: 2rem;
+            }
         }
     }
 
