@@ -30,9 +30,15 @@
                             {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
                         </div>
                         <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
-                            <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
-                            {{ productView.name }}
-                            <span class="list-products__item__title__suffix">{{ productView.nameSufix }}</span>
+                            {% if productView.namePrefix is not empty %}
+                                <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                            {% endif %}
+                            <span>
+                                {{ productView.name }}{{ productView.nameSufix is not empty ? ',' }}
+                            </span>
+                            {% if productView.nameSufix is not empty %}
+                                <span class="list-products__item__title__suffix"> {{ productView.nameSufix }}</span>
+                            {% endif %}
                         </{{ productHeadingTagName|default('h2') }}>
                         <div class="list-products__item__info dont-print">
                             <div class="list-products__item__info__availability">
