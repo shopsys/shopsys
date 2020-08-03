@@ -6,7 +6,10 @@ $(document).ready(function () {
     $('a').filter(function () {
         return $(this).data('gtm-event') !== undefined;
     }).click(function (e) {
-        e.preventDefault();
+        /* eslint-disable camelcase */
+        if (typeof google_tag_manager != 'undefined') {
+            e.preventDefault();
+        }
 
         let ctrl = false;
         let url = this.href;
