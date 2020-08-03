@@ -89,7 +89,10 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     {
         $discountOptions = $builder->get('percent')->getOptions();
         $discountOptions['label'] = t('Sleva (%)');
-        $builder->add('percent', IntegerType::class, $discountOptions);
+        $builder->remove('percent');
+
+        $putLimitsAfter = $options['mass_generate'] ? 'identifier' : 'code';
+        $this->buildLimitFields($builder, $discountOptions, $putLimitsAfter);
 
         $builder->add('identifier', TextType::class, [
             'label' => t('Identifikátor kupónu pro IS'),
@@ -109,7 +112,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $builder->add('applyOnSecondProduct', YesNoType::class, [
             'label' => t('Platí na druhý produkt v košíku'),
             'required' => false,
-            'position' => ['after' => 'percent'],
+            'position' => ['after' => 'limits'],
         ]);
 
         $codeOptions = $builder->get('code')->getOptions();
@@ -338,5 +341,32 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             ]);
 
         return $builderMassPromoCodeGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $discountOptions
+     * @param string $after
+     */
+    private function buildLimitFields(FormBuilderInterface $builder, array $discountOptions, string $after): void
+    {
+        $builder->add(
+            $builder->create('limits', PromoCodeLimitCollectionType::class, [
+                'label' => t('Limity'),
+                'position' => ['after' => $after],
+                'entry_type' => PromoCodeLimitType::class,
+                'entry_options' => ['percent' => $discountOptions],
+                'required' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'error_bubbling' => false,
+                'constraints' => [
+                    new Constraints\Count([
+                        'min' => 1,
+                        'minMessage' => t('Vložte, prosím, alespoň jeden limit se slevou'),
+                    ]),
+                ],
+            ])
+        );
     }
 }

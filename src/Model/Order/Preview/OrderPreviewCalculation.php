@@ -144,8 +144,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             }
         }
 
-        $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
-
         $totalPriceDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
 
         if ($transport !== null) {
@@ -193,6 +191,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         $promoCodeCode = $this->currentPromoCodeFacade->getPromoCodeCode();
         $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
         $promoCodeIdentifier = $this->currentPromoCodeFacade->getPromoCodeIdentifier();
+        $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
 
         return new OrderPreview(
             $quantifiedProducts,

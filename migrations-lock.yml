@@ -703,3 +703,15 @@
 20200713040211:
     class: App\Migrations\Version20200713040211
     skip: false
+20200714114004:
+    class: App\Migrations\Version20200714114004
+    skip: false
+20200716132559:
+    class: App\Migrations\Version20200716132559
+    skip: false
+20200723082531:
+    class: App\Migrations\Version20200723082531
+    skip: false
+20200729090755:
+    class: App\Migrations\Version20200729090755
+    skip: false

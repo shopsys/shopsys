@@ -91,4 +91,25 @@ class QuantifiedProductPriceCalculation extends BaseQuantifiedProductPriceCalcul
 
         return $quantifiedItemsPrices;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param int $domainId
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
+     */
+    public function calculatePromoCodeApplicablePrices(array $quantifiedProducts, int $domainId, ?CustomerUser $customerUser, array $promoCodePerProduct): array
+    {
+        $quantifiedItemsPrices = [];
+        foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
+            $promoCode = $promoCodePerProduct[$quantifiedProduct->getProduct()->getId()] ?? null;
+            if ($promoCode !== null) {
+                $quantifiedItemsPrices[$quantifiedItemIndex] = $this->calculatePrice($quantifiedProduct, $domainId, $customerUser, $promoCode);
+            }
+        }
+
+        return $quantifiedItemsPrices;
+    }
 }

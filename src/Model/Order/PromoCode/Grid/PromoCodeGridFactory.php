@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Model\Order\PromoCode\Grid;
 
 use App\Model\Order\PromoCode\PromoCode;
+use App\Model\Order\PromoCode\PromoCodeLimit;
+use App\Model\Order\PromoCode\PromoCodeLimitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory as BasePromoCodeGridFactory;
 
 class PromoCodeGridFactory extends BasePromoCodeGridFactory
@@ -19,14 +21,21 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
     private $adminDomainTabsFacade;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
+     */
+    private PromoCodeLimitRepository $promoCodeLimitRepository;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      */
-    public function __construct(EntityManagerInterface $em, GridFactory $gridFactory, AdminDomainTabsFacade $adminDomainTabsFacade)
+    public function __construct(EntityManagerInterface $em, GridFactory $gridFactory, AdminDomainTabsFacade $adminDomainTabsFacade, PromoCodeLimitRepository $promoCodeLimitRepository)
     {
         parent::__construct($em, $gridFactory);
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
+        $this->promoCodeLimitRepository = $promoCodeLimitRepository;
     }
 
     /**
@@ -41,12 +50,17 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
             ->from(PromoCode::class, 'pc')
             ->where('pc.domainId = :domainId')
             ->setParameter('domainId', $this->adminDomainTabsFacade->getSelectedDomainId());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'pc.id');
+        $manipulator = function ($row) {
+            $row['pc']['percent'] = $this->getLimitsByPromoCodeId($row['pc']['id']);
+
+            return $row;
+        };
+        $dataSource = new QueryBuilderWithRowManipulatorDataSource($queryBuilder, 'pc.id', $manipulator);
 
         $grid = $this->gridFactory->create('promoCodeList', $dataSource);
         $grid->setDefaultOrder('code');
         $grid->addColumn('code', 'pc.code', t('Code'), true);
-        $grid->addColumn('percent', 'pc.percent', t('Discount'), true);
+        $grid->addColumn('percent', 'pc.percent', t('Discount'));
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         if ($withEditButton === true) {
@@ -56,8 +70,22 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
         $grid->addDeleteActionColumn('admin_promocode_delete', ['id' => 'pc.id'])
             ->setConfirmMessage(t('Do you really want to remove this promo code?'));
 
-        $grid->setTheme('@ShopsysFramework/Admin/Content/PromoCode/listGrid.html.twig');
+        $grid->setTheme('Admin/Content/PromoCode/listGrid.html.twig');
 
         return $grid;
+    }
+
+    /**
+     * @param int $id
+     * @return int[]
+     */
+    private function getLimitsByPromoCodeId(int $id): array
+    {
+        $limits = $this->promoCodeLimitRepository->getLimitsByPromoCodeId($id);
+        $flatten = static function (PromoCodeLimit $limit) {
+            return $limit->getPercent();
+        };
+
+        return array_map($flatten, $limits);
     }
 }

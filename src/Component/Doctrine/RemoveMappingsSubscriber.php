@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Doctrine;
 
 use App\Model\Order\Order;
+use App\Model\Order\PromoCode\PromoCode;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
@@ -46,6 +47,8 @@ class RemoveMappingsSubscriber implements EventSubscriber
             ],
             $classMetadata
         );
+
+        $this->removeColumnsFromEntityMappings(PromoCode::class, ['percent'], $classMetadata);
     }
 
     /**
