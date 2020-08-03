@@ -20,3 +20,20 @@ Separating the cron jobs into two (or more) cron instances allows you to run som
 The instance of cron is actually a named group of cron jobs.
 
 You can learn how to set up multiple cron instances in [Working with Multiple Cron Instances](../cookbook/working-with-multiple-cron-instances.md) cookbook.
+
+## Cron Limitations
+One cron run can only be run for a limited time by default to prevent high memory usage of long-running jobs in PHP.
+In `shopsys/framework/src/Resources/config/services.yml` is set the default timeout to 240 seconds:
+
+```yaml
+Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor:
+    arguments:
+        $secondsTimeout: 240
+```
+
+That means, if the time needed to run all planned cron modules is higher than 240s, not all cron modules will be run in a current iteration.
+That's usually not a problem as long-running cron modules are not executed every iteration (eg. every 5 minutes),
+but in some cases, the overall time of the "every 5 minutes" cron modules can be higher (for example considerable amount of products to export to Elasticsearch).
+Then it's possible, some cron modules will never be run.
+
+It's crucial to monitor your crons and, if necessary, split them into [multiple Cron Instances](#multiple-cron-instances).
