@@ -4,6 +4,7 @@ import Translator from 'bazinga-translator';
 
 const defaults = {
     content: '',
+    errors: '',
     buttonClose: true,
     buttonCancel: false,
     buttonContinue: false,
@@ -28,6 +29,7 @@ export default class Window {
 
     /**
      * content (string)
+     * errors (string)
      * buttonClose (bool)
      * buttonContinue (bool)
      * textContinue (string)
@@ -55,7 +57,7 @@ export default class Window {
             $windowContent.append('<h2 class="' + this.options.cssClassHeading + '">' + this.options.textHeading + '</h2>');
         }
 
-        let displayClass = this.options.errors === undefined || this.options.errors === '' ? 'display-none' : '';
+        const displayClass = this.options.errors === '' ? 'display-none' : '';
         $windowContent.append(
             '<div class="' + displayClass + ' in-message in-message--alert js-window-validation-errors">'
             + this.options.errors

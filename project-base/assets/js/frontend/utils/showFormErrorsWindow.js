@@ -16,9 +16,9 @@ export default function showFormErrorsWindow (container) {
         new Window({
             errors: $errorListHtml
         });
+    } else {
+        $window.filterAllNodes('.js-window-validation-errors')
+            .html($errorListHtml)
+            .removeClass('display-none');
     }
-
-    $window.filterAllNodes('.js-window-validation-errors')
-        .html($errorListHtml)
-        .removeClass('display-none');
 }
