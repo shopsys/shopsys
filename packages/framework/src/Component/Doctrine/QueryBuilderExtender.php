@@ -37,8 +37,7 @@ class QueryBuilderExtender
         $joinAlreadyUsed = false;
         $resolvedClass = $this->entityNameResolver->resolve($class);
         foreach ($joins as $join) {
-            $resolvedJoinClass = $this->entityNameResolver->resolve($join->getJoin());
-            if ($resolvedJoinClass === $resolvedClass) {
+            if ($join->getAlias() === $alias) {
                 $joinAlreadyUsed = true;
                 break;
             }
