@@ -8,7 +8,6 @@ use Intervention\Image\ImageManager;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
-use Symfony\Component\Filesystem\Filesystem;
 
 class ImageProcessor
 {
@@ -35,19 +34,12 @@ class ImageProcessor
     protected $filesystem;
 
     /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $localFilesystem;
-
-    /**
      * @param \Intervention\Image\ImageManager $imageManager
      * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      */
     public function __construct(
         ImageManager $imageManager,
-        FilesystemInterface $filesystem,
-        Filesystem $localFilesystem
+        FilesystemInterface $filesystem
     ) {
         $this->imageManager = $imageManager;
         $this->filesystem = $filesystem;
@@ -58,7 +50,6 @@ class ImageProcessor
             self::EXTENSION_GIF,
             self::EXTENSION_PNG,
         ];
-        $this->localFilesystem = $localFilesystem;
     }
 
     /**
@@ -77,8 +68,6 @@ class ImageProcessor
                 $file = $this->filesystem->read($filepath);
 
                 return $this->imageManager->make($file);
-            } elseif ($this->localFilesystem->exists($filepath)) {
-                return $this->imageManager->make($filepath);
             } else {
                 throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException('File ' . $filepath . ' not found.');
             }
@@ -93,23 +82,26 @@ class ImageProcessor
      */
     public function convertToShopFormatAndGetNewFilename($filepath)
     {
+        $filename = pathinfo($filepath, PATHINFO_FILENAME);
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
-        $newFilepath = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . pathinfo($filepath, PATHINFO_FILENAME) . '.';
+        $newFilepath = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . $filename . '.';
 
         if ($extension === self::EXTENSION_PNG) {
-            $newFilepath .= self::EXTENSION_PNG;
+            $extension = self::EXTENSION_PNG;
         } elseif (in_array($extension, $this->supportedImageExtensions, true)) {
-            $newFilepath .= self::EXTENSION_JPG;
+            $extension = self::EXTENSION_JPG;
         } else {
             throw new \Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException($filepath);
         }
+        $newFilepath .= $extension;
 
-        $image = $this->createInterventionImage($filepath)->save($newFilepath);
-        if (realpath($filepath) !== realpath($newFilepath)) {
-            $this->localFilesystem->remove($filepath);
-        }
+        $image = $this->createInterventionImage($filepath);
+        $data = $image->encode($extension);
 
-        return $image->filename . '.' . $image->extension;
+        $this->filesystem->delete($filepath);
+        $this->filesystem->write($newFilepath, $data);
+
+        return $filename . '.' . $extension;
     }
 
     /**
