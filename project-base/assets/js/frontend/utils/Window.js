@@ -55,8 +55,11 @@ export default class Window {
             $windowContent.append('<h2 class="' + this.options.cssClassHeading + '">' + this.options.textHeading + '</h2>');
         }
 
+        let displayClass = this.options.errors === undefined || this.options.errors === '' ? 'display-none' : '';
         $windowContent.append(
-            '<div class="display-none in-message in-message--alert js-window-validation-errors"></div>'
+            '<div class="' + displayClass + ' in-message in-message--alert js-window-validation-errors">'
+            + this.options.errors
+            + '</div>'
             + this.options.content
         );
 
