@@ -37,6 +37,16 @@
 
     list-style: none;
 
+    &-wrap {
+        &--centered {
+            .list-categories {
+                @media @query-md {
+                    justify-content: center;
+                }
+            }
+        }
+    }
+
     &__item {
         width: @list-categories-item-width;
         margin: @list-categories-item-margin;

@@ -44,7 +44,9 @@
                 {% endif %}
             </div>
             {% if visibleChildren is not empty %}
-                {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
+                <div class="list-categories-wrap list-categories-wrap--centered">
+                    {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
+                </div>
             {% endif %}
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
             {% if categoryProductSeries is not empty %}
