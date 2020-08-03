@@ -68,13 +68,19 @@
                 text-decoration: underline;
             }
         }
+
+        &--no-anchor {
+            .box-slider__item__link__text {
+                text-decoration: none;
+            }
+        }
     }
 
     &__thumbnails {
         padding: 1rem;
 
         @media @query-lg {
-            padding: 1.7rem 1.5rem 2rem;
+            padding: 1.7rem 1.5rem 1rem;
             min-width: 345px;
             max-width: 345px;
         }

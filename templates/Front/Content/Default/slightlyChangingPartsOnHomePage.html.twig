@@ -29,7 +29,9 @@
                                         <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
                                     </a>
                                 {% elseif item.sliderExtendedText %}
-                                    <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
+                                    <span class="box-slider__item__link box-slider__item__link--no-anchor text-center">
+                                        <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
+                                    </span>
                                 {% endif %}
                             </div>
                         {% endfor %}
