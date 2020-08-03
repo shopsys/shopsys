@@ -20,6 +20,7 @@ use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
 use App\Model\Product\Type\ProductTypeFacade;
+use App\Model\Transfer\TransferLoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
@@ -30,6 +31,7 @@ class ProductTransferAkeneoMapper
 {
     public const PRODUCT_PACKAGE_MINIMAL_INDEX = 1;
     public const PRODUCT_PACKAGE_MAXIMAL_INDEX = 9;
+    private const PARAMETER_TEXT_MAX_LENGTH = 100;
 
     /**
      * @var \App\Model\Product\ProductDataFactory
@@ -175,9 +177,10 @@ class ProductTransferAkeneoMapper
     /**
      * @param array $akeneoProductData
      * @param \App\Model\Product\Product|null $product
+     * @param \App\Model\Transfer\TransferLoggerInterface $transferLogger
      * @return \App\Model\Product\ProductData
      */
-    public function mapAkeneoProductDataToProductData(array $akeneoProductData, ?Product $product): ProductData
+    public function mapAkeneoProductDataToProductData(array $akeneoProductData, ?Product $product, TransferLoggerInterface $transferLogger): ProductData
     {
         if ($product === null) {
             $productData = $this->productDataFactory->create();
@@ -216,7 +219,7 @@ class ProductTransferAkeneoMapper
             Domain::SECOND_DOMAIN_ID => $productCategories,
         ];
 
-        $this->mapProductParameters($akeneoProductData, $productData);
+        $this->mapProductParameters($akeneoProductData, $productData, $transferLogger);
 
         $productData->preorder = $akeneoProductData['values']['preorder'][0]['data'] ?? false;
 
@@ -308,8 +311,9 @@ class ProductTransferAkeneoMapper
     /**
      * @param array $akeneoProductData
      * @param \App\Model\Product\ProductData $productData
+     * @param \App\Model\Transfer\TransferLoggerInterface $transferLogger
      */
-    private function mapProductParameters(array $akeneoProductData, ProductData $productData): void
+    private function mapProductParameters(array $akeneoProductData, ProductData $productData, TransferLoggerInterface $transferLogger): void
     {
         $akeneoProductParameters = $this->getParametersFromAkeneoData($akeneoProductData);
         $productData->parameters = [];
@@ -319,11 +323,15 @@ class ProductTransferAkeneoMapper
             if ($parameter === null) {
                 continue;
             }
-            if (count($akeneoProductParameterData) === 1) {
-                $akeneoParameterValueCodes = $this->getParameterValueAkeneoCodes($akeneoProductParameterData, $parameter, $productData->catnum);
-                $this->addParameterValuesByAkeneoValueCodes($parameter, $akeneoParameterValueCodes, $productData);
-            } else {
-                $this->addLocalizedParameterValues($akeneoProductParameterData, $parameter, $productData);
+            try {
+                if (count($akeneoProductParameterData) === 1) {
+                    $akeneoParameterValueCodes = $this->getParameterValueAkeneoCodes($akeneoProductParameterData, $parameter, $productData->catnum);
+                    $this->addParameterValuesByAkeneoValueCodes($parameter, $akeneoParameterValueCodes, $productData);
+                } else {
+                    $this->addLocalizedParameterValues($akeneoProductParameterData, $parameter, $productData);
+                }
+            } catch (TransferException $e) {
+                $transferLogger->addWarning($e->getMessage());
             }
         }
     }
@@ -527,7 +535,20 @@ class ProductTransferAkeneoMapper
         $productParameterValueData = $this->productParameterValueDataFactory->create();
         $parameterValueData = $this->parameterValueDataFactory->create();
 
-        $parameterValueData->text = $this->getParameterValueTextByAkeneoValueCode($parameter, $locale, $akeneoParameterValueCode);
+        $parameterTextValue = $this->getParameterValueTextByAkeneoValueCode($parameter, $locale, $akeneoParameterValueCode);
+
+        if (mb_strlen($parameterTextValue) > self::PARAMETER_TEXT_MAX_LENGTH) {
+            throw new TransferException(
+                sprintf(
+                    'Value for parameter "%s" is too long: "%s", expected max %d',
+                    $parameter->getAkeneoCode(),
+                    $akeneoParameterValueCode,
+                    self::PARAMETER_TEXT_MAX_LENGTH
+                )
+            );
+        }
+
+        $parameterValueData->text = $parameterTextValue;
         $parameterValueData->locale = $locale;
 
         $productParameterValueData->parameterValueData = $parameterValueData;

@@ -74,18 +74,4 @@ class TransferLoggerFactory
 
         return $newLogger;
     }
-
-    /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
-     * @param string $identifier
-     * @return \App\Model\Transfer\TransferLoggerInterface
-     */
-    private function create(Logger $logger, string $identifier): TransferLoggerInterface
-    {
-        return new TransferLogger(
-            $logger,
-            $identifier,
-            $this->transferIssueFacade
-        );
-    }
 }

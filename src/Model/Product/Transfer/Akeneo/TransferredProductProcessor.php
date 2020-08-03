@@ -178,7 +178,7 @@ class TransferredProductProcessor
             $entityId = $product->getId();
             $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
         }
-        $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product);
+        $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product, $logger);
 
         if ($product === null) {
             $product = $this->createProduct($productData, $isMainVariant, $logger);
