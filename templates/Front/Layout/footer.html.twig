@@ -1,6 +1,8 @@
 {% set shopInfoEmail = getShopInfoEmail() %}
 {% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
 {% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
+{% set domain = getDomain() %}
+{% set logoName = domain.id == 1 ? 'logo_footer' : 'logo_footer_sk' %}
 
 <div class="footer">
     {% if getRoute() != 'front_cart' and getRoute() != 'front_order_index'  %}
@@ -25,7 +27,12 @@
                 <div class="footer__block">
                     <div class="footer__block__contact">
                         <div class="footer__block__menu__item padding-0">
-                            <img class="footer__block__img footer__block__img--logo" loading="lazy" data-src="{{ asset('public/frontend/images/logo_footer.svg') }}" alt="{{ 'SCONTO'|trans }}">
+                            <img
+                                class="footer__block__img footer__block__img--logo"
+                                loading="lazy"
+                                data-src="{{ asset("public/frontend/images/#{logoName}.svg") }}"
+                                alt="{{ 'SCONTO'|trans }}"
+                            >
                             <p class="footer__block__paragraph">{{ 'SCONTO Nábytek s.r.o. je součástí německého<br>koncernu Höffner, který patří k největším<br>producentům nábytku v Evropě již od roku 1990.'|trans|raw }}</p>
                             <div class="footer__block__langs">
                                 <a href="#" class="footer__block__langs__link no-hover-decoration js-not-implemented-yet">
