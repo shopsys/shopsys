@@ -295,6 +295,7 @@ class ProductFacade
     public function edit($productId, ProductData $productData)
     {
         $product = $this->productRepository->getById($productId);
+        $originalNames = $product->getNames();
 
         $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
         $product->edit($productCategoryDomains, $productData);
@@ -312,7 +313,7 @@ class ProductFacade
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
+        $this->createFriendlyUrlWhenRenamed($product, $originalNames);
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
@@ -565,5 +566,28 @@ class ProductFacade
     public function getProductsWithUnit(Unit $unit): array
     {
         return $this->productRepository->getProductsWithUnit($unit);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param array $originalNames
+     */
+    protected function createFriendlyUrlWhenRenamed(Product $product, array $originalNames): void
+    {
+        $domainIdsByLocale = $this->domain->getDomainIdsByLocale();
+        foreach ($product->getNames() as $locale => $name) {
+            if ($name === $originalNames[$locale]) {
+                continue;
+            }
+
+            foreach ($domainIdsByLocale[$locale] as $domainId) {
+                $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                    'front_product_detail',
+                    $product->getId(),
+                    $product->getName($locale),
+                    $domainId
+                );
+            }
+        }
     }
 }

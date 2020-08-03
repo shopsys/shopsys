@@ -119,18 +119,23 @@ class BrandFacade
     {
         $domains = $this->domain->getAll();
         $brand = $this->brandRepository->getById($brandId);
+        $originalName = $brand->getName();
+
         $brand->edit($brandData);
         $this->imageFacade->manageImages($brand, $brandData->image);
         $this->em->flush();
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_brand_detail', $brand->getId(), $brandData->urls);
-        foreach ($domains as $domain) {
-            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_brand_detail',
-                $brand->getId(),
-                $brand->getName(),
-                $domain->getId()
-            );
+
+        if ($originalName !== $brand->getName()) {
+            foreach ($domains as $domain) {
+                $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                    'front_brand_detail',
+                    $brand->getId(),
+                    $brand->getName(),
+                    $domain->getId()
+                );
+            }
         }
         $this->em->flush();
 

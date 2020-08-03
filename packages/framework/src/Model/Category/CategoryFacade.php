@@ -146,13 +146,16 @@ class CategoryFacade
     {
         $rootCategory = $this->getRootCategory();
         $category = $this->categoryRepository->getById($categoryId);
+        $originalNames = $category->getNames();
+
         $category->edit($categoryData);
         if ($category->getParent() === null) {
             $category->setParent($rootCategory);
         }
         $this->em->flush();
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_list', $category->getId(), $categoryData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_list', $category->getId(), $category->getNames());
+        $this->createFriendlyUrlWhenRenamed($category, $originalNames);
+
         $this->imageFacade->manageImages($category, $categoryData->image);
 
         $this->pluginCrudExtensionFacade->saveAllData('category', $category->getId(), $categoryData->pluginData);
@@ -434,5 +437,28 @@ class CategoryFacade
             $pricingGroup,
             $domainId
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param array $originalNames
+     */
+    protected function createFriendlyUrlWhenRenamed(Category $category, array $originalNames): void
+    {
+        $domainIdsByLocale = $this->domain->getDomainIdsByLocale();
+        foreach ($category->getNames() as $locale => $name) {
+            if ($name === $originalNames[$locale]) {
+                continue;
+            }
+
+            foreach ($domainIdsByLocale[$locale] as $domainId) {
+                $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                    'front_product_list',
+                    $category->getId(),
+                    $category->getName($locale),
+                    $domainId
+                );
+            }
+        }
     }
 }
