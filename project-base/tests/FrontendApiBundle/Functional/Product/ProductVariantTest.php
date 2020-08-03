@@ -24,8 +24,13 @@ class ProductVariantTest extends GraphQlTestCase
     {
         $productFacade = $this->getContainer()->get(ProductFacade::class);
 
-        $this->productAsMainVariant = $productFacade->getById(150);
-        $this->productAsVariant = $productFacade->getById(75);
+        /** @var \App\Model\Product\Product $productAsMainVariant */
+        $productAsMainVariant = $productFacade->getById(150);
+        $this->productAsMainVariant = $productAsMainVariant;
+
+        /** @var \App\Model\Product\Product $productAsVariant */
+        $productAsVariant = $productFacade->getById(75);
+        $this->productAsVariant = $productAsVariant;
 
         parent::setUp();
     }

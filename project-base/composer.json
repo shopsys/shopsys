@@ -111,6 +111,7 @@
         "phpstan/phpstan": "^0.12.19",
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
+        "phpstan/phpstan-symfony": "^0.12",
         "phpunit/phpunit": "^8.0",
         "psr/event-dispatcher": "^1.0.0",
         "shopsys/coding-standards": "9.1.x-dev",

@@ -3,6 +3,9 @@ parameters:
     parallel:
         maximumNumberOfProcesses: 5
     treatPhpDocTypesAsCertain: false
+    symfony:
+        container_xml_path: '%currentWorkingDirectory%/project-base/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        constant_hassers: false
 
     ignoreErrors:
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
@@ -56,6 +59,20 @@ parameters:
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
             path: %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
+        -
+            # phpstan-symfony extension cannot work right with symfony test container at the moment https://github.com/phpstan/phpstan-symfony/issues/27
+            message: '#^Service "[^"]+" is private.$#'
+            path: %currentWorkingDirectory%/*/tests/*
+        -
+            message: '#^Service "test.service_container" is not registered in the container.$#'
+            path: %currentWorkingDirectory%/*/tests/*
+        -
+            message: '#^Service "snc_redis.test" is not registered in the container.$#'
+            path: %currentWorkingDirectory%/project-base/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
+        -
+            message: '#^Service "doctrine.orm.default_metadata_driver" is private.$#'
+            path: %currentWorkingDirectory%/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php
+
     excludes_analyse:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
@@ -64,3 +81,5 @@ parameters:
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
