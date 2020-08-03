@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-final class NumericToMoneyTransformer implements DataTransformerInterface
+class NumericToMoneyTransformer implements DataTransformerInterface
 {
     /**
      * @var int
