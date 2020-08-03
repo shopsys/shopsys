@@ -16,7 +16,7 @@ $(document).ready(function () {
         }
 
         /* eslint-disable camelcase */
-        if (google_tag_manager) {
+        if (typeof google_tag_manager != 'undefined') {
             dataLayer.push(
                 $.extend({}, $(this).data('gtm-event'), {
                     'eventCallback': function (gtmId) {
@@ -41,7 +41,7 @@ $(document).ready(function () {
             })
             .onStepEnter(response => {
                 /* eslint-disable camelcase */
-                if (google_tag_manager) {
+                if (typeof google_tag_manager != 'undefined') {
                     dataLayer.push($(response.element).data('gtm-event'));
                 }
             });
