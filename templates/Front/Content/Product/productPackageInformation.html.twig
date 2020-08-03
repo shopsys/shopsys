@@ -79,19 +79,19 @@
                             <h2>{{ 'Balík č.'|trans }} {{ productPackage.position }}</h2>
                         </li>
                         {% if productPackage.width != null %}
-                            <li class="box-detail-list__item">{{ 'Šířka'|trans }} {{ productPackage.width }} {{ 'cm'|trans }}</li>
+                            <li class="box-detail-list__item">{{ 'Šířka'|trans }}: {{ productPackage.width }} {{ 'cm'|trans }}</li>
                         {% endif %}
 
                         {% if productPackage.length != null %}
-                            <li class="box-detail-list__item">{{ 'Délka'|trans }} {{ productPackage.length }} {{ 'cm'|trans }}</li>
+                            <li class="box-detail-list__item">{{ 'Délka'|trans }}: {{ productPackage.length }} {{ 'cm'|trans }}</li>
                         {% endif %}
 
                         {% if productPackage.height != null %}
-                            <li class="box-detail-list__item">{{ 'Výška'|trans }} {{ productPackage.height }} {{ 'cm'|trans }}</li>
+                            <li class="box-detail-list__item">{{ 'Výška'|trans }}: {{ productPackage.height }} {{ 'cm'|trans }}</li>
                         {% endif %}
 
                         {% if productPackage.weight != null %}
-                            <li class="box-detail-list__item">{{ 'Hmotnost balíku'|trans }} {{ productPackage.weight }} {{ 'Kg'|trans }}</li>
+                            <li class="box-detail-list__item">{{ 'Hmotnost balíku'|trans }}: {{ productPackage.weight }} {{ 'Kg'|trans }}</li>
                         {% endif %}
                     </ul>
                     {% endif %}
