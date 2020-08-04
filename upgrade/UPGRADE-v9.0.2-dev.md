@@ -22,3 +22,6 @@ There you can find links to upgrade notes for other versions too.
 
 - update your project to upload temporary files to abstract filesystem ([#1955](https://github.com/shopsys/shopsys/pull/1955))
     - see #project-base-diff to update your project
+
+- fixed displaying errors in popup window ([#1970](https://github.com/shopsys/shopsys/pull/1970))
+    - see #project-base-diff to update your project
