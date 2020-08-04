@@ -3,7 +3,9 @@
         <li class="search__hint__item">
             <a href="{{ url('front_product_list', { id: category.id }) }}" class="search__hint__item__link">
                 <span class="search__hint__image">
-                    <i class="svg svg-folder"></i>
+                    <img
+                        class="search__hint__image__icon"
+                        src="{{ asset('public/frontend/images/category_icon.png') }}" alt="{{ category.name }}">
                 </span>
                 <span class="search__hint__name js-search-autocomplete-item-label">{{ category.name }}</span>
             </a>
@@ -22,7 +24,7 @@
                 class="search__hint__item__link">
                 <span class="search__hint__image">
                      {% if productView.variantImageUrl is null %}
-                         {{ image(productView.image, { size: 'thumbnail', alt: productView.name }) }}
+                         {{ image(productView.image, { size: 'thumbnailSearch', alt: productView.name, lazy: false }) }}
                      {% else %}
                          <picture>
                             <img
@@ -41,17 +43,40 @@
         </li>
     {% endfor %}
 
+    {% if productsPaginationResult.totalCount <= 0 and categoriesPaginationResult.totalCount <= 0 %}
+        <li class="search__hint__item">
+            <span class="search__hint__item__link">
+                <picture class="search__hint__image search__hint__image--no-result">
+                    <source
+                        srcset="
+                            {{ asset('public/frontend/images/warning2x.png') }} 2x,
+                            {{ asset('public/frontend/images/warning.png') }} 1x"
+                    />
+                    <img
+                        src="{{ asset('public/frontend/images/warning.png') }}"
+                        alt="{{ 'Žádné výsledky vyhledávání'|trans }}"
+                    >
+                </picture>
+                <span class="search__hint__name search__hint__name--no-results">
+                    {{ 'Pro tento výraz jsme bohužel nenašli žádné výsledky.'|trans }}
+                </span>
+            </span>
+        </li>
+    {% endif %}
+
     {% if productsPaginationResult.totalCount > 0 %}
         <li class="search__hint__item search__hint__item--info">
             {% transchoice productsPaginationResult.totalCount with {'%totalProductCount%': productsPaginationResult.totalCount} %}
-                {0} No product found | {1} 1 product found | [2,Inf] %totalProductCount% product found
+                {0} Nenalezen žádný produkt
+                | {1} Nalezen <strong class="search__hint__item__strong">1</strong> produkt
+                | [2,Inf] Celkem nalezeno <strong class="search__hint__item__strong">%totalProductCount%</strong> produktů
             {% endtranschoice %}
         </li>
     {% endif %}
 
     {% if categoriesPaginationResult.totalCount > 0 or productsPaginationResult.totalCount > 0 %}
-        <li class="search__hint__item search__hint__item--info">
-            <a href="{{ searchUrl }}">
+        <li class="search__hint__item search__hint__item--show-results">
+            <a class="btn btn--show-results" href="{{ searchUrl }}">
                 {{ 'View all results'|trans }}
             </a>
         </li>

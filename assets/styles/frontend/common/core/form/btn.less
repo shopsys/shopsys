@@ -472,6 +472,24 @@
         font-family: @font-quartenary;
         font-weight: 400;
     }
+
+    &--show-results {
+        padding: 8px 16px;
+        min-height: 0;
+
+        background-color: @color-light-secondary;
+        border-radius: 2em;
+        text-transform: none;
+        font-family: @font-quartenary;
+        font-weight: 400;
+        font-size: 12px;
+        color: @color-primary-light;
+        letter-spacing: 0;
+
+        &:hover {
+            background-color: darken(@color-light-secondary, 5%);
+        }
+    }
 }
 
 // Button with icon
