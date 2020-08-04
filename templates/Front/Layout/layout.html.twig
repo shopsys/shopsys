@@ -4,18 +4,18 @@
 {% block html_body %}
     {% set adminLoggedAsCustomer = app.session.has(constant('Shopsys\\FrameworkBundle\\Model\\Security\\LoginAsUserFacade::SESSION_LOGIN_AS')) %}
     {% if adminLoggedAsCustomer or isMailerSettingUnusual() %}
-        <div class="window-bar dont-print">
+        <div class="window-bar dont-print window-bar--top">
             {% if adminLoggedAsCustomer %}
-                <div class="window-bar__item">
+                <div class="window-bar__item window-bar__item--info web__container">
                     {{ 'Attention! You are administrator logged in as the customer.'|trans }}
                     <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}">{{ 'Log out'|trans }}</a>
                 </div>
             {% endif %}
             {% if isMailerSettingUnusual() %}
-                <div class="window-bar__item">
+                <div class="window-bar__item window-bar__item--info web__container">
                     {{ getMailerSettingInfo() }}
                 </div>
-            {% endif %}
+           {% endif %}
         </div>
     {% endif %}
     {% if getRoute() != 'front_cart' and getRoute() != 'front_order_index' %}

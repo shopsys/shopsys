@@ -1,19 +1,113 @@
-.window-bar {
-    padding: 0 20px;
+@window-bar-default-bg: #0d0D0d;
+@window-bar-highlight-color: #ffff00;
 
-    text-align: center;
-    background: @color-0;
+.window-bar {
+    background: @window-bar-default-bg;
     color: @color-f;
 
     &__item {
-        padding: 5px 0;
+        display: flex;
+        align-items: center;
+        min-height: 40px;
+
+        @media @query-mobile {
+            position: relative;
+            padding: 0.5rem 0.75rem;
+        }
+
+        &--info {
+            font-size: 13px;
+        }
+
+        &__img {
+            display: none;
+
+            @media @query-md {
+                display: block;
+                max-width: none;
+                margin-right: 10px;
+            }
+
+            @media @query-vl {
+                margin-left: -10px;
+            }
+        }
+    }
+
+    p {
+        margin: 0;
+
+        color: @color-f;
+
+        & + a {
+            @media @query-md {
+                margin-left: 30px;
+            }
+        }
+    }
+
+    strong {
+        font-family: @font-tertiary;
+
+        &.highlight {
+            color: @window-bar-highlight-color;
+        }
+
+        &.highlight-dark {
+            color: @color-add;
+        }
     }
 
     a {
         color: @color-f;
+        font-family: @font-quartenary;
+        text-decoration: underline;
+
+        &.mobile-overlay {
+            @media @query-mobile {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                padding-right: 10px;
+
+                text-decoration: none;
+            }
+        }
 
         &:hover {
             color: @color-f;
+            text-decoration: none;
+
+            strong {
+                text-decoration: none;
+            }
         }
+
+        strong {
+            text-decoration: underline;
+        }
+
+        .svg {
+            margin-left: 6px;
+
+            color: @window-bar-highlight-color;
+        }
+    }
+
+    .color-primary {
+        color: @color-primary;
+
+        &:hover {
+            color: @color-primary;
+        }
+    }
+
+    &--top {
+        background-color: lighten(@window-bar-default-bg, 15%);
     }
 }
