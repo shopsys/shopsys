@@ -155,7 +155,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'uuid' => $product->getUuid(),
             'unit' => $product->getUnit()->getName($locale),
             'is_using_stock' => $product->isUsingStock(),
-            'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
+            'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityWithFutureByProductAndDomainId($product, $domainId),
             'variants' => $variantIds,
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             'name_prefix' => $product->isMainVariant() ? $product->getDefaultVariant()->getNamePrefix($locale) : $product->getNamePrefix($locale),

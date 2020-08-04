@@ -123,6 +123,28 @@ class ProductStockRepository
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
+     * @return bool
+     */
+    public function isProductAvailableByFutureStockOnDomain(Product $product, int $domainId): bool
+    {
+        $queryBuilder = $this->getQueryBuilder()
+            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock AND s.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->select('CASE WHEN SUM(ps.futureProductQuantity) > 0 THEN TRUE ELSE FALSE END');
+
+        if ($product->isMainVariant()) {
+            $queryBuilder->join(Product::class, 'p', Join::WITH, 'ps.product = p AND p.mainVariant = :product');
+        } else {
+            $queryBuilder->where('ps.product = :product');
+        }
+        $queryBuilder->setParameter('product', $product);
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return \App\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
