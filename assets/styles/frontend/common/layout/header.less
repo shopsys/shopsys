@@ -6,7 +6,8 @@
 @header-mobile-button-dropdown-position: @web-header-mobile-dropdown-position;
 
 @header-padding: 15px 0;
-@header-padding-vl: 5px 0;
+
+@header-height-vl: 80px;
 
 @query-header-vl-custom: ~"(min-width: 1300px)";
 
@@ -31,7 +32,8 @@
     }
 
     @media @query-vl {
-        padding: @header-padding-vl;
+        height: @header-height-vl;
+        padding: 0;
     }
 
     &__logo {
@@ -109,6 +111,10 @@
     &__links {
         display: flex;
         align-items: center;
+
+        @media @query-vl {
+            height: 100%;
+        }
     }
 
     &__mobile-button {
