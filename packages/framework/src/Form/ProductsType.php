@@ -42,8 +42,8 @@ class ProductsType extends AbstractType
         $view->vars['products'] = $form->getData();
         $view->vars['main_product'] = $options['main_product'];
         $view->vars['sortable'] = $options['sortable'];
-        $view->vars['allow_main_variants'] = $options['allow_main_variants'];
-        $view->vars['allow_variants'] = $options['allow_variants'];
+        $view->vars['allow_main_variants'] = (int)$options['allow_main_variants'];
+        $view->vars['allow_variants'] = (int)$options['allow_variants'];
         $view->vars['label_button_add'] = $options['label_button_add'];
         $view->vars['top_info_title'] = $options['top_info_title'];
     }
