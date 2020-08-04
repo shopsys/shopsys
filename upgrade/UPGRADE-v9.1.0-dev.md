@@ -28,6 +28,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff and update your `yaml-standards.yaml` file
     - run `php phing standards-fix` to fix your `yaml` files
 
-- add phpstan-symfony extension ([#1961](https://github.com/shopsys/shopsys/pull/1961))
-    - see #project-base-diff to update your project
-
+- add phpstan-symfony extension ([#1961](https://github.com/shopsys/shopsys/pull/1961)) and ([#1974](https://github.com/shopsys/shopsys/pull/1974))
+    - see #project-base-diff1 and #project-base-diff2 to update your project
