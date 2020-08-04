@@ -28,7 +28,7 @@ parameters:
             path: %currentWorkingDirectory%/tests/*
         -
             message: '#^Service "test.service_container" is not registered in the container.$#'
-            path: %currentWorkingDirectory%/*/tests/*
+            path: %currentWorkingDirectory%/tests/*
         -
             message: '#^Service "snc_redis.test" is not registered in the container.$#'
             path: %currentWorkingDirectory%/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
