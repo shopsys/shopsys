@@ -10,6 +10,7 @@ parameters:
         - '%kernel.project_dir%/var/lock'
         - '%kernel.project_dir%/var/log'
         - '%kernel.project_dir%/var/errorPages'
+        - '%kernel.project_dir%/var/uploadedFiles'
         - '%shopsys.web_dir%/assets/admin/styles'
         - '%shopsys.web_dir%/assets/frontend/styles'
         - '%shopsys.web_dir%/assets/scripts'

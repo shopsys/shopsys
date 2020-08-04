@@ -46,8 +46,8 @@ class ProductType extends AbstractType
 
         $view->vars['placeholder'] = $options['placeholder'];
         $view->vars['enableRemove'] = $options['enableRemove'];
-        $view->vars['allow_main_variants'] = $options['allow_main_variants'];
-        $view->vars['allow_variants'] = $options['allow_variants'];
+        $view->vars['allow_main_variants'] = (int)$options['allow_main_variants'];
+        $view->vars['allow_variants'] = (int)$options['allow_variants'];
 
         $product = $form->getData();
         if ($product !== null) {

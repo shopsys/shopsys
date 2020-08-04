@@ -366,6 +366,18 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     }
 
     /**
+     * @return int
+     */
+    public function getProductsCountOnCurrentDomain(): int
+    {
+        $filterQuery = $this->filterQueryFactory->create($this->getIndexName())
+            ->filterOnlySellable()
+            ->filterOnlyVisible($this->currentCustomerUser->getPricingGroup());
+
+        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $limit
      * @param int $offset

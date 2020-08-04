@@ -63,12 +63,18 @@ class ProductPickerController extends AdminBaseController
     }
 
     /**
-     * @Route("/product-picker/pick-multiple/{jsInstanceId}/")
+     * @Route("/product-picker/pick-multiple/{jsInstanceId}/{allowMainVariants}/{allowVariants}")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $jsInstanceId
+     * @param bool $allowMainVariants
+     * @param bool $allowVariants
      */
-    public function pickMultipleAction(Request $request, $jsInstanceId)
-    {
+    public function pickMultipleAction(
+        Request $request,
+        $jsInstanceId,
+        bool $allowMainVariants = true,
+        bool $allowVariants = true
+    ) {
         return $this->getPickerResponse(
             $request,
             [
@@ -77,8 +83,8 @@ class ProductPickerController extends AdminBaseController
             [
                 'isMultiple' => true,
                 'jsInstanceId' => $jsInstanceId,
-                'allowMainVariants' => $request->query->getBoolean('allowMainVariants', true),
-                'allowVariants' => $request->query->getBoolean('allowVariants', true),
+                'allowMainVariants' => $allowMainVariants,
+                'allowVariants' => $allowVariants,
             ]
         );
     }

@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-final class CopyTotalPricesOfOrderItemTransformer implements DataTransformerInterface
+class CopyTotalPricesOfOrderItemTransformer implements DataTransformerInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null $value

@@ -123,4 +123,9 @@ interface ProductOnCurrentDomainFacadeInterface
      * @return array
      */
     public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array;
+
+    /**
+     * @return int
+     */
+    public function getProductsCountOnCurrentDomain(): int;
 }

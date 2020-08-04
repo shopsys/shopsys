@@ -121,4 +121,43 @@ class ProductsTest extends GraphQlTestCase
 
         return $arrayExpected;
     }
+
+    public function testLastProduct(): void
+    {
+        $query = '
+            query {
+                products (last: 1) {
+                    edges {
+                        node {
+                            name
+                        }
+                    }
+                }
+            }
+        ';
+
+        $jsonExpected = $this->getExpectedDataForLastProduct();
+
+        $this->assertQueryWithExpectedJson($query, $jsonExpected);
+    }
+
+    /**
+     * @return string
+     */
+    private function getExpectedDataForLastProduct(): string
+    {
+        return '{
+    "data": {
+        "products": {
+            "edges": [
+                {
+                    "node": {
+                        "name": "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
+                    }
+                }
+            ]
+        }
+    }
+}';
+    }
 }
