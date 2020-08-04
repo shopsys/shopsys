@@ -445,20 +445,31 @@ class CategoryFacade
      */
     protected function createFriendlyUrlWhenRenamed(Category $category, array $originalNames): void
     {
-        $domainIdsByLocale = $this->domain->getDomainIdsByLocale();
-        foreach ($category->getNames() as $locale => $name) {
-            if ($name === $originalNames[$locale]) {
-                continue;
-            }
+        $domainIdsByLocale = $this->domain->getDomainIdsIndexedByLocale();
+        $changedNames = $this->getChangedNamesByLocale($category, $originalNames);
+        foreach ($changedNames as $locale => $name) {
+            $this->friendlyUrlFacade->createFriendlyUrlForDomains(
+                'front_product_list',
+                $category->getId(),
+                $category->getName($locale),
+                $domainIdsByLocale[$locale]
+            );
+        }
+    }
 
-            foreach ($domainIdsByLocale[$locale] as $domainId) {
-                $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                    'front_product_list',
-                    $category->getId(),
-                    $category->getName($locale),
-                    $domainId
-                );
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param array $originalNames
+     * @return array
+     */
+    protected function getChangedNamesByLocale(Category $category, array $originalNames): array
+    {
+        $changedCategoryNames = [];
+        foreach ($category->getNames() as $locale => $name) {
+            if ($name !== $originalNames[$locale]) {
+                $changedCategoryNames[$locale] = $name;
             }
         }
+        return $changedCategoryNames;
     }
 }

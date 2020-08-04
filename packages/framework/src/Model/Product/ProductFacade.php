@@ -574,20 +574,31 @@ class ProductFacade
      */
     protected function createFriendlyUrlWhenRenamed(Product $product, array $originalNames): void
     {
-        $domainIdsByLocale = $this->domain->getDomainIdsByLocale();
-        foreach ($product->getNames() as $locale => $name) {
-            if ($name === $originalNames[$locale]) {
-                continue;
-            }
+        $domainIdsByLocale = $this->domain->getDomainIdsIndexedByLocale();
+        $changedProductNames = $this->getChangedNamesByLocale($product, $originalNames);
+        foreach ($changedProductNames as $locale => $name) {
+            $this->friendlyUrlFacade->createFriendlyUrlForDomains(
+                'front_product_detail',
+                $product->getId(),
+                $product->getName($locale),
+                $domainIdsByLocale[$locale]
+            );
+        }
+    }
 
-            foreach ($domainIdsByLocale[$locale] as $domainId) {
-                $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                    'front_product_detail',
-                    $product->getId(),
-                    $product->getName($locale),
-                    $domainId
-                );
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param array $originalNames
+     * @return array
+     */
+    protected function getChangedNamesByLocale(Product $product, array $originalNames): array
+    {
+        $changedProductNames = [];
+        foreach ($product->getNames() as $locale => $name) {
+            if ($name !== null && $name !== $originalNames[$locale]) {
+                $changedProductNames[$locale] = $name;
             }
         }
+        return $changedProductNames;
     }
 }

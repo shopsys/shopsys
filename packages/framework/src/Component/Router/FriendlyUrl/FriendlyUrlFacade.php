@@ -95,6 +95,23 @@ class FriendlyUrlFacade
     }
 
     /**
+     * @param string $routeName
+     * @param int $entityId
+     * @param string $entityName
+     * @param array $domainIds
+     */
+    public function createFriendlyUrlForDomains(
+        string $routeName,
+        int $entityId,
+        string $entityName,
+        array $domainIds
+    ): void {
+        foreach ($domainIds as $domainId) {
+            $this->createFriendlyUrlForDomain($routeName, $entityId, $entityName, $domainId);
+        }
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param string $entityName
      */

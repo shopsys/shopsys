@@ -155,9 +155,9 @@ class Domain implements DomainIdsProviderInterface
     }
 
     /**
-     * @return int[][]
+     * @return array
      */
-    public function getDomainIdsByLocale(): array
+    public function getDomainIdsIndexedByLocale(): array
     {
         $domainIdsByLocale = [];
         foreach ($this->domainConfigs as $domainConfig) {
