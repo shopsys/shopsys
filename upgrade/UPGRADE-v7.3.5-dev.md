@@ -49,3 +49,6 @@ There you can find links to upgrade notes for other versions too.
 
 - fix wrong url of freshly uploaded files in wysiwyg ([#1926](https://github.com/shopsys/shopsys/pull/1926))
     - see #project-base-diff to update your project
+
+- fixed displaying errors in popup window ([#1970](https://github.com/shopsys/shopsys/pull/1970))
+    - see #project-base-diff to update your project
