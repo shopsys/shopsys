@@ -24,16 +24,6 @@
             <div class="box-blog__desc box-blog__desc--detail">
                 {{ productSeries.description|raw }}
             </div>
-            <div class="box-blog__categories box-blog__categories--detail">
-                {% for seriesCategory in productSeries.productSeriesCategories %}
-                    <a
-                    href="{{ url('front_productseriescategory_detail', { id: seriesCategory.id }) }}"
-                    class="box-blog__categories__item btn btn--tag btn--tag--category selected"
-                    >
-                    {{ seriesCategory.getName(domain.locale) }}
-                    </a>
-                {% endfor %}
-            </div>
 
             <div class="box-series box-series--detail">
                 {% set galleryImages = getImages(productSeries) %}
