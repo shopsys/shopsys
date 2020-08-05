@@ -28,7 +28,7 @@
             <div class="box-series box-series--detail">
                 {% set galleryImages = getImages(productSeries) %}
                 {% set showGallery = galleryImages|length > 1 %}
-                <ul class="box-series__grid box-series__grid--detail">
+                <ul class="box-series__grid box-series__grid--detail{{ galleryImages|length <= 1 ? ' box-series__grid--centered' }}">
                     <li class="box-series__grid__item">
                         {% if imageExists(productSeries) %}
                             <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(productSeries, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' }}">

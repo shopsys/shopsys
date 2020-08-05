@@ -207,6 +207,18 @@
                 }
             }
         }
+
+        &--centered {
+            justify-content: center;
+
+            .box-series__grid__item {
+                width: auto;
+
+                @media @query-mobile {
+                    width: 90%;
+                }
+            }
+        }
     }
 
     &--standalone {
