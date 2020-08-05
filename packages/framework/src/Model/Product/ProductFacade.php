@@ -313,7 +313,7 @@ class ProductFacade
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->createFriendlyUrlWhenRenamed($product, $originalNames);
+        $this->createFriendlyUrlsWhenRenamed($product, $originalNames);
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
@@ -572,12 +572,17 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param array $originalNames
      */
-    protected function createFriendlyUrlWhenRenamed(Product $product, array $originalNames): void
+    protected function createFriendlyUrlsWhenRenamed(Product $product, array $originalNames): void
     {
+        $changedNames = $this->getChangedNamesByLocale($product, $originalNames);
+        if (empty($changedNames)) {
+            return;
+        }
+
         $this->friendlyUrlFacade->createFriendlyUrls(
             'front_product_detail',
             $product->getId(),
-            $changedProductNames = $this->getChangedNamesByLocale($product, $originalNames)
+            $changedNames
         );
     }
 

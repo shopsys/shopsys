@@ -154,7 +154,7 @@ class CategoryFacade
         }
         $this->em->flush();
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_list', $category->getId(), $categoryData->urls);
-        $this->createFriendlyUrlWhenRenamed($category, $originalNames);
+        $this->createFriendlyUrlsWhenRenamed($category, $originalNames);
 
         $this->imageFacade->manageImages($category, $categoryData->image);
 
@@ -443,12 +443,17 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param array $originalNames
      */
-    protected function createFriendlyUrlWhenRenamed(Category $category, array $originalNames): void
+    protected function createFriendlyUrlsWhenRenamed(Category $category, array $originalNames): void
     {
+        $changedNames = $this->getChangedNamesByLocale($category, $originalNames);
+        if (empty($changedNames)) {
+            return;
+        }
+
         $this->friendlyUrlFacade->createFriendlyUrls(
             'front_product_list',
             $category->getId(),
-            $this->getChangedNamesByLocale($category, $originalNames)
+            $changedNames
         );
     }
 
