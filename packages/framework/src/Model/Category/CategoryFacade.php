@@ -445,16 +445,11 @@ class CategoryFacade
      */
     protected function createFriendlyUrlWhenRenamed(Category $category, array $originalNames): void
     {
-        $domainIdsByLocale = $this->domain->getDomainIdsIndexedByLocale();
-        $changedNames = $this->getChangedNamesByLocale($category, $originalNames);
-        foreach ($changedNames as $locale => $name) {
-            $this->friendlyUrlFacade->createFriendlyUrlForDomains(
-                'front_product_list',
-                $category->getId(),
-                $category->getName($locale),
-                $domainIdsByLocale[$locale]
-            );
-        }
+        $this->friendlyUrlFacade->createFriendlyUrls(
+            'front_product_list',
+            $category->getId(),
+            $this->getChangedNamesByLocale($category, $originalNames)
+        );
     }
 
     /**

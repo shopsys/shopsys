@@ -574,16 +574,11 @@ class ProductFacade
      */
     protected function createFriendlyUrlWhenRenamed(Product $product, array $originalNames): void
     {
-        $domainIdsByLocale = $this->domain->getDomainIdsIndexedByLocale();
-        $changedProductNames = $this->getChangedNamesByLocale($product, $originalNames);
-        foreach ($changedProductNames as $locale => $name) {
-            $this->friendlyUrlFacade->createFriendlyUrlForDomains(
-                'front_product_detail',
-                $product->getId(),
-                $product->getName($locale),
-                $domainIdsByLocale[$locale]
-            );
-        }
+        $this->friendlyUrlFacade->createFriendlyUrls(
+            'front_product_detail',
+            $product->getId(),
+            $changedProductNames = $this->getChangedNamesByLocale($product, $originalNames)
+        );
     }
 
     /**

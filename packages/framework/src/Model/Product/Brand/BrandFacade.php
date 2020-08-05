@@ -128,12 +128,14 @@ class BrandFacade
         $this->friendlyUrlFacade->saveUrlListFormData('front_brand_detail', $brand->getId(), $brandData->urls);
 
         if ($originalName !== $brand->getName()) {
-            $this->friendlyUrlFacade->createFriendlyUrlForDomains(
-                'front_brand_detail',
-                $brand->getId(),
-                $brand->getName(),
-                $domains
-            );
+            foreach ($domains as $domain) {
+                $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                    'front_brand_detail',
+                    $brand->getId(),
+                    $brand->getName(),
+                    $domain->getId()
+                );
+            }
         }
         $this->em->flush();
 
