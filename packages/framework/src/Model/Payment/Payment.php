@@ -105,14 +105,31 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
         $this->transports = new ArrayCollection();
-        $this->hidden = $paymentData->hidden;
+        $this->setData($paymentData);
         $this->deleted = false;
-        $this->setTranslations($paymentData);
         $this->createDomains($paymentData);
         $this->prices = new ArrayCollection();
-        $this->czkRounding = $paymentData->czkRounding;
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->uuid = $paymentData->uuid ?: Uuid::uuid4()->toString();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     */
+    public function edit(PaymentData $paymentData)
+    {
+        $this->setData($paymentData);
+        $this->setDomains($paymentData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     */
+    protected function setData(PaymentData $paymentData): void
+    {
+        $this->hidden = $paymentData->hidden;
+        $this->czkRounding = $paymentData->czkRounding;
+        $this->setTranslations($paymentData);
     }
 
     /**
@@ -175,17 +192,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         foreach ($paymentData->instructions as $locale => $instructions) {
             $this->translation($locale)->setInstructions($instructions);
         }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
-    public function edit(PaymentData $paymentData)
-    {
-        $this->hidden = $paymentData->hidden;
-        $this->czkRounding = $paymentData->czkRounding;
-        $this->setTranslations($paymentData);
-        $this->setDomains($paymentData);
     }
 
     /**

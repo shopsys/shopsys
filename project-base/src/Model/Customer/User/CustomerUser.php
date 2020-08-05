@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  *     }
  * )
  * @ORM\Entity
+ * @method setData(\App\Model\Customer\User\CustomerUserData $customerUserData)
  */
 class CustomerUser extends BaseUser
 {

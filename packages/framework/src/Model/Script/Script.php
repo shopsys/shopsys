@@ -49,6 +49,22 @@ class Script
      */
     public function __construct(ScriptData $scriptData)
     {
+        $this->setData($scriptData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
+     */
+    public function edit(ScriptData $scriptData)
+    {
+        $this->setData($scriptData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
+     */
+    protected function setData(ScriptData $scriptData): void
+    {
         $this->name = $scriptData->name;
         $this->code = $scriptData->code;
         $this->placement = $scriptData->placement;
@@ -84,15 +100,5 @@ class Script
     public function getPlacement()
     {
         return $this->placement;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
-     */
-    public function edit(ScriptData $scriptData)
-    {
-        $this->name = $scriptData->name;
-        $this->code = $scriptData->code;
-        $this->placement = $scriptData->placement;
     }
 }

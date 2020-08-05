@@ -56,9 +56,25 @@ class Vat
      */
     public function __construct(VatData $vatData, int $domainId)
     {
-        $this->name = $vatData->name;
+        $this->setData($vatData);
         $this->percent = $vatData->percent;
         $this->domainId = $domainId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
+     */
+    public function edit(VatData $vatData)
+    {
+        $this->setData($vatData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
+     */
+    protected function setData(VatData $vatData): void
+    {
+        $this->name = $vatData->name;
     }
 
     /**
@@ -91,14 +107,6 @@ class Vat
     public function getReplaceWith()
     {
         return $this->replaceWith;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     */
-    public function edit(VatData $vatData)
-    {
-        $this->name = $vatData->name;
     }
 
     /**

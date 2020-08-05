@@ -30,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method refreshVariants(\App\Model\Product\Product[] $currentVariants)
  * @method addNewVariants(\App\Model\Product\Product[] $currentVariants)
  * @method unsetRemovedVariants(\App\Model\Product\Product[] $currentVariants)
+ * @method setData(\App\Model\Product\ProductData $productData)
  */
 class Product extends BaseProduct
 {

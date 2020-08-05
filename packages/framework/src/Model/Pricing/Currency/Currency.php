@@ -71,9 +71,25 @@ class Currency
      */
     public function __construct(CurrencyData $currencyData)
     {
+        $this->setData($currencyData);
+        $this->exchangeRate = $currencyData->exchangeRate;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
+     */
+    public function edit(CurrencyData $currencyData)
+    {
+        $this->setData($currencyData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
+     */
+    protected function setData(CurrencyData $currencyData): void
+    {
         $this->name = $currencyData->name;
         $this->code = $currencyData->code;
-        $this->exchangeRate = $currencyData->exchangeRate;
         $this->minFractionDigits = $currencyData->minFractionDigits;
         $this->setRoundingType($currencyData->roundingType);
     }
@@ -156,16 +172,5 @@ class Currency
             self::ROUNDING_TYPE_FIFTIES,
             self::ROUNDING_TYPE_INTEGER,
         ];
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     */
-    public function edit(CurrencyData $currencyData)
-    {
-        $this->name = $currencyData->name;
-        $this->code = $currencyData->code;
-        $this->minFractionDigits = $currencyData->minFractionDigits;
-        $this->setRoundingType($currencyData->roundingType);
     }
 }

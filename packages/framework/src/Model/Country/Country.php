@@ -54,9 +54,26 @@ class Country extends AbstractTranslatableEntity
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
-        $this->setTranslations($countryData);
         $this->createDomains($countryData);
+        $this->setData($countryData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
+     */
+    public function edit(CountryData $countryData): void
+    {
+        $this->setDomains($countryData);
+        $this->setData($countryData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
+     */
+    protected function setData(CountryData $countryData): void
+    {
         $this->code = $countryData->code;
+        $this->setTranslations($countryData);
     }
 
     /**
@@ -85,16 +102,6 @@ class Country extends AbstractTranslatableEntity
     public function isEnabled(int $domainId): bool
     {
         return $this->getCountryDomain($domainId)->isEnabled();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
-    public function edit(CountryData $countryData): void
-    {
-        $this->code = $countryData->code;
-        $this->setTranslations($countryData);
-        $this->setDomains($countryData);
     }
 
     /**

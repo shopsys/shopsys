@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData as BaseAdminis
  *     @ORM\Index(columns={"username"})
  *   }
  * )
+ * @method setData(\App\Model\Administrator\AdministratorData $administratorData)
  */
 class Administrator extends BaseAdministrator
 {

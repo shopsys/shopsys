@@ -54,8 +54,7 @@ class HeurekaCategory
     public function __construct(HeurekaCategoryData $heurekaCategoryData)
     {
         $this->id = $heurekaCategoryData->id;
-        $this->name = $heurekaCategoryData->name;
-        $this->fullName = $heurekaCategoryData->fullName;
+        $this->setData($heurekaCategoryData);
         $this->categories = new ArrayCollection($heurekaCategoryData->categories);
     }
 
@@ -64,9 +63,17 @@ class HeurekaCategory
      */
     public function edit(HeurekaCategoryData $heurekaCategoryData)
     {
+        $this->setData($heurekaCategoryData);
+        $this->editCategories($heurekaCategoryData->categories);
+    }
+
+    /**
+     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData $heurekaCategoryData
+     */
+    protected function setData(HeurekaCategoryData $heurekaCategoryData): void
+    {
         $this->name = $heurekaCategoryData->name;
         $this->fullName = $heurekaCategoryData->fullName;
-        $this->editCategories($heurekaCategoryData->categories);
     }
 
     /**

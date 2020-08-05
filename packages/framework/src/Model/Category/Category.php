@@ -95,12 +95,11 @@ class Category extends AbstractTranslatableEntity
      */
     public function __construct(CategoryData $categoryData)
     {
-        $this->setParent($categoryData->parent);
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
         $this->children = new ArrayCollection();
 
-        $this->setTranslations($categoryData);
+        $this->setData($categoryData);
         $this->createDomains($categoryData);
 
         $this->uuid = $categoryData->uuid ?: Uuid::uuid4()->toString();
@@ -114,6 +113,15 @@ class Category extends AbstractTranslatableEntity
         $this->setParent($categoryData->parent);
         $this->setTranslations($categoryData);
         $this->setDomains($categoryData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
+     */
+    protected function setData(CategoryData $categoryData): void
+    {
+        $this->setParent($categoryData->parent);
+        $this->setTranslations($categoryData);
     }
 
     /**

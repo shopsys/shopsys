@@ -51,12 +51,29 @@ class Brand extends AbstractTranslatableEntity
      */
     public function __construct(BrandData $brandData)
     {
-        $this->name = $brandData->name;
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
 
-        $this->setTranslations($brandData);
+        $this->setData($brandData);
         $this->createDomains($brandData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
+     */
+    public function edit(BrandData $brandData)
+    {
+        $this->setData($brandData);
+        $this->setDomains($brandData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
+     */
+    protected function setData(BrandData $brandData): void
+    {
+        $this->name = $brandData->name;
+        $this->setTranslations($brandData);
     }
 
     /**
@@ -73,16 +90,6 @@ class Brand extends AbstractTranslatableEntity
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     */
-    public function edit(BrandData $brandData)
-    {
-        $this->name = $brandData->name;
-        $this->setTranslations($brandData);
-        $this->setDomains($brandData);
     }
 
     /**

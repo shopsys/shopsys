@@ -37,6 +37,22 @@ class Unit extends AbstractTranslatableEntity
     public function __construct(UnitData $unitData)
     {
         $this->translations = new ArrayCollection();
+        $this->setData($unitData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
+     */
+    public function edit(UnitData $unitData)
+    {
+        $this->setData($unitData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
+     */
+    protected function setData(UnitData $unitData): void
+    {
         $this->setTranslations($unitData);
     }
 
@@ -73,13 +89,5 @@ class Unit extends AbstractTranslatableEntity
     protected function createTranslation()
     {
         return new UnitTranslation();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     */
-    public function edit(UnitData $unitData)
-    {
-        $this->setTranslations($unitData);
     }
 }

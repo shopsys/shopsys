@@ -39,3 +39,6 @@ There you can find links to upgrade notes for other versions too.
         - `Shopsys\FrameworkBundle\Model\Product\Product::$recalculateAvailability`
         - `Shopsys\FrameworkBundle\Model\Product\Product::$recalculatePrice`
         - `Shopsys\FrameworkBundle\Model\Product\Product::$recalculateVisibility`
+
+- moved setting of common entity data to new method ([#1976](https://github.com/shopsys/shopsys/pull/1976))
+    - see #project-base-diff1 and #project-base-diff2 to update your project

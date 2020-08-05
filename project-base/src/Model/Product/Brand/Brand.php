@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandData as BaseBrandData;
  * @method setTranslations(\App\Model\Product\Brand\BrandData $brandData)
  * @method setDomains(\App\Model\Product\Brand\BrandData $brandData)
  * @method createDomains(\App\Model\Product\Brand\BrandData $brandData)
+ * @method setData(\App\Model\Product\Brand\BrandData $brandData)
  */
 class Brand extends BaseBrand
 {
