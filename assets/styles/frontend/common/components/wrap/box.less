@@ -63,8 +63,11 @@
         padding: 15px;
 
         @media @query-md {
-            display: flex;
             padding: 25px;
+        }
+
+        @media @query-lg {
+            display: flex;
         }
 
         &--no-spacing {
@@ -73,7 +76,7 @@
         }
 
         &__col {
-            @media @query-md {
+            @media @query-lg {
                 width: 50%;
                 padding-right: 15px;
             }
@@ -81,7 +84,7 @@
             &--last {
                 margin-top: 1rem;
 
-                @media @query-md {
+                @media @query-lg {
                     margin-top: 0;
                     padding-right: 0;
                     padding-left: 15px;

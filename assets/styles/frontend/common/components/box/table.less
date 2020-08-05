@@ -73,6 +73,10 @@
             }
         }
 
+        &--break-all {
+            word-break: break-all;
+        }
+
         &--detail {
             min-width: 100px;
 
@@ -190,6 +194,14 @@
             padding-left: 0;
 
             @media screen and (min-width: 375px) {
+                width: 150px;
+            }
+
+            @media @query-md {
+                width: 180px;
+            }
+
+            @media @query-lg {
                 width: 150px;
             }
         }
