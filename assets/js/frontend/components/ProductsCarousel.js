@@ -23,6 +23,8 @@ export default class SlickCarousel {
                 swipeToSlide: true,
                 variableWidth: false,
                 speed: 300,
+                prevArrow: '<button type="button" data-role="none" class="slick-prev slick-arrow" aria-label="Předchozí" role="button"></button>',
+                nextArrow: '<button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Další" role="button"></button>',
                 responsive: [{
                     breakpoint: 1300,
                     settings: {
