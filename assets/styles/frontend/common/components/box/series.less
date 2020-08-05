@@ -19,10 +19,14 @@
     &--list {
         margin-top: 0;
         padding-top: 0;
-        overflow-x: auto;
 
-        @media @query-mobile {
-            margin-bottom: 1rem;
+        @media @query-tablet {
+            margin: 0 0 1rem;
+            padding: 0;
+
+            .box-series__grid {
+                min-width: 0;
+            }
         }
 
         @media @query-md {
@@ -201,7 +205,20 @@
             left: 0;
             padding-left: 0;
 
+            @media @query-mobile {
+                display: block;
+            }
+
             .box-series__grid__item {
+                @media @query-mobile {
+                    width: 100%;
+                    margin: 0 0 1.25rem;
+
+                    &:last-child {
+                        margin-bottom: 2.5rem;
+                    }
+                }
+
                 @media @query-vl {
                     width: calc(33.333% - (@box-series-grid-margin-lg * 2) - 1px);
                 }
