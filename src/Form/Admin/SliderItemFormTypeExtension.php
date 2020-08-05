@@ -125,6 +125,9 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
         $builder->add('gtmId', TextType::class, [
             'required' => true,
             'label' => t('GTM ID'),
+            'constraints' => [
+                new Constraints\NotBlank(['message' => 'Prosím vyplňte GTM ID']),
+            ],
             'attr' => ['placeholder' => t('např. Akce-zidle-20-2020-04')],
         ])->add('gtmCreative', TextType::class, [
             'required' => false,
