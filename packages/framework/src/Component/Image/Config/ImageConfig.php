@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
+use BadMethodCallException;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 
 class ImageConfig
@@ -15,11 +17,63 @@ class ImageConfig
     protected $imageEntityConfigsByClass;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
+     */
+    protected $entityNameResolver;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     */
+    public function __construct(array $imageEntityConfigsByClass, ?EntityNameResolver $entityNameResolver = null)
+    {
+        $this->entityNameResolver = $entityNameResolver;
+        if ($entityNameResolver !== null) {
+            $this->setUpImageEntityConfigsByClass($imageEntityConfigsByClass);
+        } else {
+            $this->imageEntityConfigsByClass = $imageEntityConfigsByClass;
+        }
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass
      */
-    public function __construct(array $imageEntityConfigsByClass)
+    protected function setUpImageEntityConfigsByClass(array $imageEntityConfigsByClass): void
     {
-        $this->imageEntityConfigsByClass = $imageEntityConfigsByClass;
+        $imageEntityConfigsByNormalizedClass = [];
+        foreach ($imageEntityConfigsByClass as $class => $imageEntityConfig) {
+            $normalizedClass = $this->entityNameResolver->resolve($class);
+            $imageEntityConfigsByNormalizedClass[$normalizedClass] = $imageEntityConfig;
+        }
+
+        $this->imageEntityConfigsByClass = $imageEntityConfigsByNormalizedClass;
+    }
+
+    /**
+     * @required
+     * @internal This function will be replaced by constructor injection in next major
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     */
+    public function setEntityNameResolver(EntityNameResolver $entityNameResolver): void
+    {
+        if ($this->entityNameResolver !== null && $this->entityNameResolver !== $entityNameResolver) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->entityNameResolver === null) {
+            @trigger_error(
+                sprintf(
+                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+
+            $this->entityNameResolver = $entityNameResolver;
+            $this->setUpImageEntityConfigsByClass($this->imageEntityConfigsByClass);
+        }
     }
 
     /**
@@ -137,8 +191,9 @@ class ImageConfig
      */
     public function getImageEntityConfigByClass($class)
     {
-        if (array_key_exists($class, $this->imageEntityConfigsByClass)) {
-            return $this->imageEntityConfigsByClass[$class];
+        $normalizedClass = $this->entityNameResolver->resolve($class);
+        if (array_key_exists($normalizedClass, $this->imageEntityConfigsByClass)) {
+            return $this->imageEntityConfigsByClass[$normalizedClass];
         }
 
         throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException($class);
