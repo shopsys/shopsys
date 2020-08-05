@@ -38,7 +38,7 @@ class NewsletterSubscriber
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable", options={"default": "1970-01-01 00:00:00"})
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $createdAt;
 

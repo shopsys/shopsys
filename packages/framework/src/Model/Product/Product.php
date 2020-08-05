@@ -179,7 +179,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", options={"default" = true})
+     * @ORM\Column(type="boolean")
      */
     protected $recalculateAvailability;
 
@@ -213,14 +213,14 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", options={"default" = true})
+     * @ORM\Column(type="boolean")
      */
     protected $recalculatePrice;
 
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", options={"default" = true})
+     * @ORM\Column(type="boolean")
      */
     protected $recalculateVisibility;
 

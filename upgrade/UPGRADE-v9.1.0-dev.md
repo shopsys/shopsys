@@ -30,3 +30,12 @@ There you can find links to upgrade notes for other versions too.
 
 - add phpstan-symfony extension ([#1961](https://github.com/shopsys/shopsys/pull/1961)) and ([#1974](https://github.com/shopsys/shopsys/pull/1974))
     - see #project-base-diff1 and #project-base-diff2 to update your project
+
+- stop using Doctrine default value option ([#1395](https://github.com/shopsys/shopsys/pull/1395))
+    - following properties no longer have a database default value, check if you set a default value in the constructor
+        - `Shopsys\FrameworkBundle\Component\Cron\CronModule::$suspended`
+        - `Shopsys\FrameworkBundle\Component\Cron\CronModule::$enabled`
+        - `Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber::$createdAt`
+        - `Shopsys\FrameworkBundle\Model\Product\Product::$recalculateAvailability`
+        - `Shopsys\FrameworkBundle\Model\Product\Product::$recalculatePrice`
+        - `Shopsys\FrameworkBundle\Model\Product\Product::$recalculateVisibility`

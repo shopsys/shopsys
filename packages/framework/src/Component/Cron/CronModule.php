@@ -34,14 +34,14 @@ class CronModule
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", options={"default"=false})
+     * @ORM\Column(type="boolean")
      */
     protected $suspended;
 
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", options={"default"=true})
+     * @ORM\Column(type="boolean")
      */
     protected $enabled;
 
