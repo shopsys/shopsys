@@ -28,18 +28,9 @@
             <div class="box-series box-series--detail">
                 {% set galleryImages = getImages(productSeries) %}
                 {% set showGallery = galleryImages|length > 1 %}
-                <ul class="box-series__grid box-series__grid--detail{{ galleryImages|length <= 1 ? ' box-series__grid--centered' }}">
-                    <li class="box-series__grid__item">
-                        {% if imageExists(productSeries) %}
-                            <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(productSeries, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' }}">
-                                {{ image(productSeries, { itemprop: 'image', size: 'largePreview', alt: productSeries.name }) }}
-                            </a>
-                        {% else %}
-                            {{ noimage({ alt: productSeries.name }) }}
-                        {% endif %}
-                    </li>
+                <ul class="box-series__grid box-series__grid--detail{{ galleryImages|length == 2 ? ' box-series__grid--centered' }}">
                     {% if showGallery %}
-                            {% for galleryImage in galleryImages %}
+                        {% for galleryImage in galleryImages %}
                             {% if loop.index != 1 %}
                                 <li class="box-series__grid__item">
                                     <a data-fancybox="products-gallery" data-caption="{{ productSeries.name }}" href="{{ imageUrl(galleryImage, 'original') }}">
