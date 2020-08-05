@@ -142,6 +142,9 @@
             </div>
         </div>
     {% endif %}
+    {% if gtmEvent is defined %}
+        <div class="gtm-info" data-gtm-event="{{ gtmEvent|json_encode() }}"></div>
+    {% endif %}
 {% endblock %}
 
 {% block footer %}

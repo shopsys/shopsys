@@ -17,8 +17,12 @@ class DataLayer
     public const EVENT_NAME_PRODUCT_REMOVE_FROM_CART = 'ec.removeFromCart';
     public const EVENT_NAME_PROMO_VIEW = 'ec.promoView';
     public const EVENT_NAME_PROMO_CLICK = 'ec.promoClick';
+    public const EVENT_NAME_CATEGORY_FILTER = 'category.filter';
 
     public const LIST_NAME_HOME_TOP_PRODUCTS = 'home - akční zboží';
+    public const LIST_NAME_PRODUCT_SIMILAR_PRODUCTS = 'Product - podobné produkty';
+    public const LIST_NAME_PRODUCT_ACCESSORIES = 'Product - příslušenství';
+    public const LIST_NAME_PRODUCT_PROGRAM = 'Product - program';
 
     public const HOMEPAGE_SLIDER_LABEL = 'homepage-top-center';
 
@@ -116,7 +120,7 @@ class DataLayer
     {
         $data = $this->session->get(self::SESSION_DATA_KEY);
 
-        $data[] = $eventData;
+        $data = array_merge($data, $eventData);
 
         $this->session->set(self::SESSION_DATA_KEY, $data);
     }

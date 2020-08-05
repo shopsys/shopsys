@@ -5,7 +5,7 @@
     <div class="js-product-list-with-paginator">
         {% set entityName = 'products'|trans %}
 
-        {{ productList.list(paginationResult.results) }}
+        {{ productList.list(paginationResult.results, null, null, gtmList|default(null)) }}
 
         <div class="list-pagination">
             <div class="list-pagination__item">

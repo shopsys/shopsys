@@ -7,6 +7,7 @@ namespace App\Controller\Front;
 use App\Form\Front\Cart\AddProductFormType;
 use App\Form\Front\Cart\CartFormType;
 use App\Model\Gtm\GtmFacade;
+use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
@@ -82,6 +83,11 @@ class CartController extends FrontBaseController
     private $gtmFacade;
 
     /**
+     * @var \App\Model\Gtm\GtmJsPushFacade
+     */
+    private $gtmJsPushFacade;
+
+    /**
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
@@ -92,6 +98,7 @@ class CartController extends FrontBaseController
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
+     * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -103,7 +110,8 @@ class CartController extends FrontBaseController
         OrderPreviewSplittingFacade $cartSplittingFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductFacade $productFacade,
-        GtmFacade $gtmFacade
+        GtmFacade $gtmFacade,
+        GtmJsPushFacade $gtmJsPushFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -115,6 +123,7 @@ class CartController extends FrontBaseController
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->productFacade = $productFacade;
         $this->gtmFacade = $gtmFacade;
+        $this->gtmJsPushFacade = $gtmJsPushFacade;
     }
 
     /**
@@ -123,6 +132,7 @@ class CartController extends FrontBaseController
     public function indexAction(Request $request)
     {
         $domainId = $this->domain->getId();
+        $viewParameters = [];
 
         /** @var \App\Model\Cart\Cart|null $cart */
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
@@ -143,6 +153,15 @@ class CartController extends FrontBaseController
         $invalidCart = false;
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                foreach ($this->cartFacade->getQuantifiedProductsOfCurrentCustomer() as $id => $quantifiedProduct) {
+                    $originalQuantity = $quantifiedProduct->getQuantity();
+                    $newQuantity = $form->getData()['quantities'][$id];
+                    $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getCartItemChangedEvent(
+                        $quantifiedProduct->getProduct(),
+                        $newQuantity - $originalQuantity
+                    );
+                }
+
                 $this->cartFacade->changeQuantities($form->getData()['quantities']);
 
                 if (!$request->get(self::RECALCULATE_ONLY_PARAMETER_NAME, false)) {
@@ -165,12 +184,12 @@ class CartController extends FrontBaseController
 
         $this->gtmFacade->onOrderPages($splitOrderPreview, 1);
 
-        return $this->render('Front/Content/Cart/index.html.twig', [
-            'splitOrderPreview' => $splitOrderPreview,
-            'cart' => $cart,
-            'form' => $form->createView(),
-            'maximumOrderQuantity' => $maximumOrderQuantity,
-        ]);
+        $viewParameters['splitOrderPreview'] = $splitOrderPreview;
+        $viewParameters['cart'] = $cart;
+        $viewParameters['form'] = $form->createView();
+        $viewParameters['maximumOrderQuantity'] = $maximumOrderQuantity;
+
+        return $this->render('Front/Content/Cart/index.html.twig', $viewParameters);
     }
 
     /**

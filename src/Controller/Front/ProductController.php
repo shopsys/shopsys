@@ -15,7 +15,10 @@ use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use App\Model\Gtm\DataLayer;
+use App\Model\Gtm\GtmContainer;
 use App\Model\Gtm\GtmFacade;
+use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\CachedProductFilterConfig;
@@ -181,6 +184,11 @@ class ProductController extends FrontBaseController
     private $gtmFacade;
 
     /**
+     * @var \App\Model\Gtm\GtmJsPushFacade
+     */
+    private $gtmJsPushFacade;
+
+    /**
      * @var \App\Model\Product\Filter\ProductVariantFilterFacade
      */
     private $productVariantFilterFacade;
@@ -189,6 +197,11 @@ class ProductController extends FrontBaseController
      * @var \App\Model\Product\Filter\ProductFilterCacheFacade
      */
     private ProductFilterCacheFacade $productFilterCacheFacade;
+
+    /**
+     * @var \App\Model\Gtm\GtmContainer
+     */
+    private $gtmContainer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
@@ -216,7 +229,10 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
+     * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
      * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
+     * @param \App\Model\Product\Filter\ProductFilterCacheFacade $productFilterCacheFacade
+     * @param \App\Model\Gtm\GtmContainer $gtmContainer
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -244,8 +260,10 @@ class ProductController extends FrontBaseController
         ParameterFacade $parameterFacade,
         ProductFilterFacade $productFilterFacade,
         GtmFacade $gtmFacade,
+        GtmJsPushFacade $gtmJsPushFacade,
         ProductVariantFilterFacade $productVariantFilterFacade,
-        ProductFilterCacheFacade $productFilterCacheFacade
+        ProductFilterCacheFacade $productFilterCacheFacade,
+        GtmContainer $gtmContainer
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -272,8 +290,10 @@ class ProductController extends FrontBaseController
         $this->parameterFacade = $parameterFacade;
         $this->productFilterFacade = $productFilterFacade;
         $this->gtmFacade = $gtmFacade;
+        $this->gtmJsPushFacade = $gtmJsPushFacade;
         $this->productVariantFilterFacade = $productVariantFilterFacade;
         $this->productFilterCacheFacade = $productFilterCacheFacade;
+        $this->gtmContainer = $gtmContainer;
     }
 
     /**
@@ -311,8 +331,13 @@ class ProductController extends FrontBaseController
 
         $productSeriesList = $this->productSeriesFacade->getAllVisibleByProductAndDomainId($product, $this->domain);
         $productSeriesProducts = [];
+        $gtmProductSeriesProducts = [];
         foreach ($productSeriesList as $productSeries) {
             $productSeriesProducts[$productSeries->getId()] = $this->listedProductViewFacade->getAvailableProductsByProductSeries($productSeries);
+            $gtmProductSeriesProducts[$productSeries->getId()] = $this->gtmJsPushFacade->getListedProductViewsScrollData(
+                $productSeriesProducts[$productSeries->getId()],
+                DataLayer::LIST_NAME_PRODUCT_PROGRAM
+            );
         }
 
         return $this->render('Front/Content/Product/detail.html.twig', [
@@ -332,6 +357,11 @@ class ProductController extends FrontBaseController
             'productSeriesProductsIndexedByProductSeries' => $productSeriesProducts,
             'productPackages' => $productPackages,
             'productMainVariantId' => $product->getId(),
+            'gtmAccessoriesScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
+                $accessories,
+                DataLayer::LIST_NAME_PRODUCT_ACCESSORIES
+            ),
+            'gtmProductSeriesScrollEvent' => $gtmProductSeriesProducts,
         ]);
     }
 
@@ -372,6 +402,11 @@ class ProductController extends FrontBaseController
             [
                 'productMainVariantId' => $product->getId(),
                 'paginationResult' => $paginatedSimilarProducts,
+                'gtmSimilarProductsScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
+                    $paginatedSimilarProducts->getResults(),
+                    DataLayer::LIST_NAME_PRODUCT_SIMILAR_PRODUCTS
+                ),
+                'gtmList' => DataLayer::LIST_NAME_PRODUCT_SIMILAR_PRODUCTS
             ]
         );
     }
@@ -465,7 +500,8 @@ class ProductController extends FrontBaseController
         $productFilterFormRequestData = ($request->query->has('product_filter_form')) ? $request->query->get('product_filter_form') : [];
         $productFilterSetup = $this->productFilterFacade->getProductFilterSetupByProductFilterFormRequestData($productFilterFormRequestData);
 
-        $this->gtmFacade->onProductListByCategoryPage($category, $paginationResult->getResults());
+        $nextIndex = ($page - 1) * self::PRODUCTS_PER_PAGE + 1;
+        $this->gtmFacade->onProductListByCategoryPage($category, $paginationResult->getResults(), $nextIndex);
 
         $allParameterValuesImageFilePathsIndexedById = $this->uploadedFileFacade->getAllUploadedFilesFilePathByEntityName(self::PARAMETER_VALUE_ENTITY_NAME);
 
@@ -488,6 +524,7 @@ class ProductController extends FrontBaseController
             'disableIndexingBySeznamBot' => $disableIndexingBySeznamBot,
             'productFilterSetup' => $productFilterSetup,
             'orderModeName' => $orderModeName,
+            'gtmList' => 'Category - ' . $category->getName($this->domain->getLocale()) . ' - standard',
         ];
 
         $viewParameters = array_merge(
@@ -505,6 +542,11 @@ class ProductController extends FrontBaseController
                 $request->query->all(),
                 UrlGeneratorInterface::ABSOLUTE_URL
             );
+
+            $viewParameters['gtmEvent'] = $this->gtmContainer->getDataLayer()->getData();
+            if (!($viewParameters['gtmEvent']['ecommerce']['impressions'] ?? false)) {
+                $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getEmptyFilterResult();
+            }
 
             return $this->render('Front/Content/Product/ajaxList.html.twig', $viewParameters);
         } else {
@@ -624,6 +666,9 @@ class ProductController extends FrontBaseController
         $productFilterFormRequestData = ($request->query->has('product_filter_form')) ? $request->query->get('product_filter_form') : [];
         $productFilterSetup = $this->productFilterFacade->getProductFilterSetupByProductFilterFormRequestData($productFilterFormRequestData);
 
+        $nextIndex = ($page - 1) * self::PRODUCTS_PER_PAGE + 1;
+        $this->gtmFacade->onProductListBySearchPage($paginationResult->getResults(), $nextIndex);
+
         $allParameterValuesImageFilePathsIndexedById = $this->uploadedFileFacade->getAllUploadedFilesFilePathByEntityName(self::PARAMETER_VALUE_ENTITY_NAME);
 
         $productListOrderingConfig = $this->productListOrderingModeForSearchFacade->getProductListOrderingConfig();
@@ -653,6 +698,11 @@ class ProductController extends FrontBaseController
         );
 
         if ($request->isXmlHttpRequest()) {
+            $viewParameters['gtmEvent'] = $this->gtmContainer->getDataLayer()->getData();
+            if (!($viewParameters['gtmEvent']['ecommerce']['impressions'] ?? false)) {
+                $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getEmptyFilterResult();
+            }
+
             return $this->render('Front/Content/Product/ajaxSearch.html.twig', $viewParameters);
         } else {
             $viewParameters['foundCategories'] = $this->searchCategories($searchText);

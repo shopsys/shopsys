@@ -3,6 +3,7 @@ import 'framework/common/components';
 import Ajax from 'framework/common/utils/Ajax';
 import Register from 'framework/common/utils/Register';
 import Translator from 'bazinga-translator';
+import Gtm from '../../gtm';
 
 const optionsDefaults = {
     buttonTextCallback: function (loadNextCount) {
@@ -49,6 +50,9 @@ export default class AjaxMoreLoader {
             success: function (data) {
                 const $response = $($.parseHTML(data));
                 const $nextItems = $response.find('.js-list > *');
+
+                Gtm.pushEvent($response.find('.gtm-info').data('gtmEvent'));
+
                 ajaxMoreLoader.$currentList.append($nextItems);
                 ajaxMoreLoader.page++;
                 ajaxMoreLoader.paginationToItem += $nextItems.length;

@@ -6,6 +6,7 @@ namespace App\Model\Gtm;
 
 use App\Component\Domain\Domain;
 use App\Model\Product\Listed\ListedProductView;
+use App\Model\Product\Product;
 use App\Model\Slider\SliderItem;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
@@ -32,21 +33,29 @@ class GtmJsPushFacade
     private $currencyFacade;
 
     /**
+     * @var \App\Model\Gtm\GtmFacade
+     */
+    private $gtmFacade;
+
+    /**
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      * @param \App\Model\Gtm\DataLayerMapper $dataLayerMapper
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \App\Model\Gtm\GtmFacade $gtmFacade
      */
     public function __construct(
         GtmContainer $gtmContainer,
         DataLayerMapper $dataLayerMapper,
         Domain $domain,
-        CurrencyFacade $currencyFacade
+        CurrencyFacade $currencyFacade,
+        GtmFacade $gtmFacade
     ) {
         $this->gtmContainer = $gtmContainer;
         $this->dataLayerMapper = $dataLayerMapper;
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
+        $this->gtmFacade = $gtmFacade;
     }
 
     /**
@@ -61,7 +70,7 @@ class GtmJsPushFacade
         }
 
         return [
-            'event' => DataLayer::EVENT_NAME_PRODUCT_CLICK,
+            'event' => DataLayer::EVENT_NAME_PROMO_CLICK,
             'eventData' => [
                 'action' => 'Proklik banneru',
                 'label' => $sliderItem->getGtmId(),
@@ -101,11 +110,11 @@ class GtmJsPushFacade
     }
 
     /**
-     * @param \App\Model\Product\Listed\ListedProductView[] $topProducts
+     * @param \App\Model\Product\Listed\ListedProductView[] $listedProductViews
      * @param string $list
      * @return array
      */
-    public function getTopProductsScrollData(array $topProducts, $list): array
+    public function getListedProductViewsScrollData(array $listedProductViews, string $list): array
     {
         if (!$this->gtmContainer->isEnabled()) {
             return [];
@@ -116,7 +125,8 @@ class GtmJsPushFacade
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
                 'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews(
-                    $topProducts,
+                    $listedProductViews,
+                    1,
                     null,
                     $list
                 ),
@@ -146,10 +156,38 @@ class GtmJsPushFacade
                     ],
                     'products' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews(
                         [$listedProductView],
+                        1,
                         $position,
                         $list
                     ),
                 ],
+            ],
+        ];
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $quantity
+     * @return array
+     */
+    public function getCartItemChangedEvent(Product $product, int $quantity): array
+    {
+        if ($quantity > 0) {
+            $this->gtmFacade->onAddProductToCart($product, $quantity);
+        } else {
+            $this->gtmFacade->onRemoveProductFromCart($product, abs($quantity));
+        }
+
+        return $this->gtmContainer->getDataLayer()->getPushes()[0];
+    }
+
+    public function getEmptyFilterResult()
+    {
+        return [
+            'event' => DataLayer::EVENT_NAME_CATEGORY_FILTER,
+            'eventData' => [
+                'category' => 'Filtrace',
+                'action' => 'Prázdný výsledek filtru',
             ],
         ];
     }

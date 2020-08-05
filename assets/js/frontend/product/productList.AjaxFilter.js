@@ -1,6 +1,7 @@
 import Register from 'framework/common/utils/Register';
 import Ajax from 'framework/common/utils/Ajax';
 import pushReloadState from '../components/pushReloadState';
+import Gtm from '../../gtm';
 
 export default class ProductListAjaxFilter {
 
@@ -125,6 +126,9 @@ export default class ProductListAjaxFilter {
         let data = productListAjaxFilter.$productFilterForm.serialize()
             .replace(/(&|^)product_filter_form%5BminimalPrice%5D=(&|$)/g, '$2')
             .replace(/(&|^)product_filter_form%5BmaximalPrice%5D=(&|$)/g, '$2');
+
+        Gtm.pushFilterData(productListAjaxFilter.$productFilterForm.serializeArray());
+
         Ajax.ajax({
             overlayDelay: 0,
             url: productListAjaxFilter.$productFilterForm.attr('action'),
@@ -137,6 +141,8 @@ export default class ProductListAjaxFilter {
                 productListAjaxFilter.updateFilterLinks($wrappedData);
                 productListAjaxFilter.updateBoxFilterOpener($wrappedData);
                 productListAjaxFilter.updateFiltersDisabled();
+
+                Gtm.pushEvent($wrappedData.find('.gtm-info').data('gtm-event'));
             }
         });
     }

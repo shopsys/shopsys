@@ -3,6 +3,7 @@ import Timeout from 'framework/common/utils/Timeout';
 import Register from 'framework/common/utils/Register';
 import constant from '../utils/constant';
 import { KeyCodes } from 'framework/common/utils/KeyCodes';
+import Gtm from '../../gtm';
 
 export default class CartRecalculator {
 
@@ -52,6 +53,8 @@ export default class CartRecalculator {
 
                 const $mainContent = $html.find('.js-main-content');
                 const $cartBox = $html.find('#js-cart-box');
+
+                Gtm.pushEvent($html.find('.gtm-info').data('gtm-event'));
 
                 $('.js-main-content').replaceWith($mainContent);
                 $('#js-cart-box').replaceWith($cartBox);

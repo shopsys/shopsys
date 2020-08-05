@@ -6,6 +6,7 @@ import Register from 'framework/common/utils/Register';
 import Translator from 'bazinga-translator';
 import getBaseUrl from '../utils/getBaseUrl';
 import pushReloadState from '../components/pushReloadState';
+import Gtm from '../../gtm';
 
 export default class ProductList {
     constructor ($container) {
@@ -17,6 +18,8 @@ export default class ProductList {
             const orderingName = $(this).data('ordering-mode');
 
             $.cookie(cookieName, orderingName, { path: '/' });
+
+            Gtm.pushSortData($(this).text());
 
             _this.reloadWithAjax(_this);
 
@@ -69,6 +72,8 @@ export default class ProductList {
                 if ($wrappedData.filterAllNodes('.js-ready-category-seo-mix-values').length === 0) {
                     pushReloadState(url + (queryData ? '?' : '') + queryData);
                 }
+
+                Gtm.pushEvent($wrappedData.find('.gtm-info').data('gtm-event'));
             }
         });
     }

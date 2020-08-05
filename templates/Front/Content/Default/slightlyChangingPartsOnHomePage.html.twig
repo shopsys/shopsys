@@ -118,7 +118,7 @@
                 <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--sales">
                     <h2 class="box-products-carousel__heading">{{ 'Výprodej'|trans }}</h2>
                     <div class="list-products-grid list-products-grid--sales js-products-slick-carousel">
-                        {{ productList.list(inSaleProducts, null, 'h3') }}
+                        {{ productList.list(inSaleProducts, null, 'h3', constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_HOME_TOP_PRODUCTS')) }}
                     </div>
                 </div>
             </div>
@@ -440,7 +440,7 @@
                 <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--top-products">
                     <h2 class="box-products-carousel__heading">{{ 'Top produkty'|trans }}</h2>
                     <div class="list-products-grid list-products-grid--sales js-products-slick-carousel">
-                        {{ productList.list(topProducts, null, 'h3') }}
+                        {{ productList.list(topProducts, null, 'h3', constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_HOME_TOP_PRODUCTS')) }}
                     </div>
                 </div>
             </div>

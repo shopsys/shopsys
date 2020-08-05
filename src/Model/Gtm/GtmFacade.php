@@ -92,8 +92,9 @@ class GtmFacade
     /**
      * @param \App\Model\Category\Category $category
      * @param \App\Model\Product\Listed\ListedProductView[] $listedProductViews
+     * @param int $nextIndex
      */
-    public function onProductListByCategoryPage(Category $category, array $listedProductViews): void
+    public function onProductListByCategoryPage(Category $category, array $listedProductViews, int $nextIndex): void
     {
         if (!$this->gtmContainer->isEnabled()) {
             return;
@@ -105,7 +106,27 @@ class GtmFacade
         $gtmEventData = [
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
-                'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews($listedProductViews),
+                'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews($listedProductViews, $nextIndex),
+            ],
+        ];
+
+        $this->dataLayer->addEvent($gtmEventData);
+    }
+
+    /**
+     * @param \App\Model\Product\Listed\ListedProductView[] $listedProductViews
+     * @param int $nextIndex
+     */
+    public function onProductListBySearchPage(array $listedProductViews, int $nextIndex): void
+    {
+        if (!$this->gtmContainer->isEnabled()) {
+            return;
+        }
+
+        $gtmEventData = [
+            'ecommerce' => [
+                'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
+                'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews($listedProductViews, $nextIndex),
             ],
         ];
 
@@ -236,10 +257,10 @@ class GtmFacade
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
                 'add' => [
-                    'products' => $this->dataLayerMapper->createdDataLayerProductsFromAddedProduct(
+                    'products' => $this->dataLayerMapper->createdDataLayerProductsFromAddedOrRemovedProduct(
                         $product,
-                        $quantity,
-                        $this->dataLayer->getLocale()
+                        $this->dataLayer->getLocale(),
+                        $quantity
                     ),
                 ],
             ],
@@ -250,8 +271,9 @@ class GtmFacade
 
     /**
      * @param \App\Model\Product\Product $product
+     * @param int|null $quantity
      */
-    public function onRemoveProductFromCart(Product $product): void
+    public function onRemoveProductFromCart(Product $product, ?int $quantity = null): void
     {
         if (!$this->gtmContainer->isEnabled()) {
             return;
@@ -261,9 +283,10 @@ class GtmFacade
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
                 'remove' => [
-                    'products' => $this->dataLayerMapper->createDataLayerProductsFromProducts(
-                        [$product],
-                        $this->dataLayer->getLocale()
+                    'products' => $this->dataLayerMapper->createdDataLayerProductsFromAddedOrRemovedProduct(
+                        $product,
+                        $this->dataLayer->getLocale(),
+                        $quantity
                     ),
                 ],
             ],

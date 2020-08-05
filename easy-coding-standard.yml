@@ -53,6 +53,7 @@ parameters:
             - '*/src/Model/Product/Availability/ProductAvailabilityFacade.php'
             - '*/src/Form/Admin/TransportPackageFormType.php'
             - '*/src/Model/Product/Parameter/ParameterFacade.php'
+            - '*/src/Controller/Front/CartController.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'

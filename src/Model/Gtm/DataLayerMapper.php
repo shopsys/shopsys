@@ -242,26 +242,21 @@ class DataLayerMapper
 
     /**
      * @param \App\Model\Product\Listed\ListedProductView[] $listedProductViews
+     * @param int|null $index
      * @param int|null $position
      * @param string|null $list
      * @return \App\Model\Gtm\Data\DataLayerProduct[]
      */
     public function createDataLayerProductsFromListedProductViews(
         array $listedProductViews,
+        ?int $index = 1,
         ?int $position = null,
         ?string $list = null
     ): array {
         $dataLayerProducts = [];
-        $i = 1;
         foreach ($listedProductViews as $listedProductView) {
-            $category = '';
-            if ($list === null) {
-                $categories = preg_split('/\//', $listedProductView->getMainCategoryPath());
-                $category = end($categories);
-            }
-
             $dataLayerProduct = new DataLayerProduct();
-            $this->mapListedProductViewToDataLayerProduct($listedProductView, $dataLayerProduct, $i++, $list ?? $category);
+            $this->mapListedProductViewToDataLayerProduct($listedProductView, $dataLayerProduct, $index++, $list);
 
             if (!is_null($position)) {
                 $dataLayerProduct->setPosition($position);
@@ -397,14 +392,14 @@ class DataLayerMapper
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param int $quantity
      * @param string $locale
+     * @param int|null $quantity
      * @return \App\Model\Gtm\Data\DataLayerProduct[]
      */
-    public function createdDataLayerProductsFromAddedProduct(Product $product, int $quantity, string $locale): array
+    public function createdDataLayerProductsFromAddedOrRemovedProduct(Product $product, string $locale, ?int $quantity): array
     {
         $dataLayerProduct = new DataLayerProduct();
-        $this->mapProductWithQuantityToDataLayerProduct($product, $dataLayerProduct, $quantity, $locale);
+        $this->mapProductWithQuantityToDataLayerProduct($product, $dataLayerProduct, $locale, $quantity);
 
         return [$dataLayerProduct];
     }
@@ -412,17 +407,19 @@ class DataLayerMapper
     /**
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Gtm\Data\DataLayerProduct $dataLayerProduct
-     * @param int $quantity
      * @param string $locale
+     * @param int|null $quantity
      */
     private function mapProductWithQuantityToDataLayerProduct(
         Product $product,
         DataLayerProduct $dataLayerProduct,
-        int $quantity,
-        string $locale
+        string $locale,
+        ?int $quantity
     ): void {
         $this->mapProductToDataLayerProduct($product, $dataLayerProduct, $locale);
-        $dataLayerProduct->setQuantity($quantity);
+        if ($quantity !== null && $quantity > 0) {
+            $dataLayerProduct->setQuantity($quantity);
+        }
     }
 
     /**
@@ -439,8 +436,8 @@ class DataLayerMapper
                 $this->mapProductWithQuantityToDataLayerProduct(
                     $quantifiedProduct->getProduct(),
                     $dataLayerProduct,
-                    $quantifiedProduct->getQuantity(),
-                    $locale
+                    $locale,
+                    $quantifiedProduct->getQuantity()
                 );
                 $dataLayerProducts[] = $dataLayerProduct;
             }

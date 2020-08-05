@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Model\Blog\Article\BlogArticleFacade;
 use App\Model\Blog\Category\BlogCategoryFacade;
+use App\Model\Gtm\DataLayer;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Product\Filter\ProductVariantFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
@@ -129,13 +130,13 @@ class HomepageController extends FrontBaseController
                 BlogArticleController::HOMEPAGE_BLOG_ARTICLES
             ),
             'rootCategory' => $mainCategory,
-            'gtmTopProductsScrollEvent' => $this->gtmJsPushFacade->getTopProductsScrollData(
+            'gtmTopProductsScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
                 $topProducts,
-                \App\Model\Gtm\DataLayer::LIST_NAME_HOME_TOP_PRODUCTS
+                DataLayer::LIST_NAME_HOME_TOP_PRODUCTS
             ),
             'gtmSliderScrollEvent' => $this->gtmJsPushFacade->getSliderScrollData(
                 $sliderItems,
-                \App\Model\Gtm\DataLayer::HOMEPAGE_SLIDER_LABEL
+                DataLayer::HOMEPAGE_SLIDER_LABEL
             ),
         ]);
     }

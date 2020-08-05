@@ -1,4 +1,4 @@
-{% macro list(productViews, listCssClass, productHeadingTagName) %}
+{% macro list(productViews, listCssClass, productHeadingTagName, gtmList) %}
 
     <div class="list-products js-list js-product-list {{ listCssClass|default('') }}">
         {% for productView in productViews %}
@@ -10,7 +10,7 @@
                         {% else %}
                             {{ productView.variantUrl }}
                         {% endif %}
-                    " class="list-products__item__block" {{ gtm(productView, loop.index, { 'list': constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_HOME_TOP_PRODUCTS') }) }}>
+                    " class="list-products__item__block" {{ gtm(productView, loop.index, { 'list': gtmList }) }}>
                         <div class="list-products__item__image dont-print">
                             {% if productView.variantImageUrl is null %}
                                 {{ image(productView.image, { size: 'list', alt: productView.name }) }}

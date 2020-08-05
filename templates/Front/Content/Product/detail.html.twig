@@ -467,10 +467,10 @@
                 {% endif %}
 
                 {% if accessories|length > 0 %}
-                    <div class="box-detail box-detail--accessories">
+                    <div class="box-detail box-detail--accessories gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
                         <h2 class="box-detail__title">{{ 'Accessories'|trans }}</h2>
                         <div class="box-products-accessories js-products-slick-carousel-cols">
-                            {{ productList.list(accessories) }}
+                            {{ productList.list(accessories, null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
                         </div>
                     </div>
                 {% endif %}
@@ -499,10 +499,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="box-products-carousel box-products-carousel--detail">
+                            <div
+                                class="box-products-carousel box-products-carousel--detail gtm-scroll"
+                                data-gtm-event="{{ gtmProductSeriesScrollEvent[productSeries.id]|json_encode() }}"
+                            >
                                 <div class="box-products-carousel__in box-products-carousel__in--detail">
                                     <div class="list-products-grid js-products-slick-carousel">
-                                        {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id]) }}
+                                        {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id], null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_PROGRAM')) }}
                                     </div>
                                 </div>
                             </div>
@@ -513,7 +516,6 @@
                 {% cache 'products_similar_id_'~productMainVariantId {lifetime:60*60, domainId:getDomain().id} %}
                     {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: productMainVariantId} )) }}
                 {% endcache %}
-
             </div>
         </div>
 

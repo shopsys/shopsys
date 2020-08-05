@@ -25,6 +25,7 @@
         </div>
     </div>
     {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, searchText: searchText} %}
+    <div class="gtm-info" data-gtm-event="{{ gtmEvent|json_encode() }}"></div>
 </div>
 
 <span class="js-product-filter-results"
