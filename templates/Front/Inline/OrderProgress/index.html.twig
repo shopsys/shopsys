@@ -2,17 +2,37 @@
     <div class="web__container">
         <ul class="box-progress">
             <li class="box-progress__item {% if step == 1 %}box-progress__item--active{% elseif step > 1 %}box-progress__item--done{% endif %}{% if step == 2 %} box-progress__item--previous-active{% endif %}">
-                <span class="box-progress__item__inner">
-                    <span class="box-progress__item__step">1.</span>
-                    <span class="box-progress__item__title">{{ 'Cart'|trans }}</span>
-                </span>
+                {% if step == 1 %}
+                    <span class="box-progress__item__inner">
+                        <span class="box-progress__item__step">1.</span>
+                        <span class="box-progress__item__title">{{ 'Cart'|trans }}</span>
+                    </span>
+                {% else %}
+                    <a
+                        class="box-progress__item__inner box-progress__item__inner--link"
+                        href="{{ url('front_cart') }}"
+                    >
+                        <span class="box-progress__item__step">1.</span>
+                        <span class="box-progress__item__title">{{ 'Cart'|trans }}</span>
+                    </a>
+                {% endif %}
             </li>
 
             <li class="box-progress__item {% if step == 2 %}box-progress__item--active{% elseif step > 2 %}box-progress__item--done{% endif %}{% if step == 3 %} box-progress__item--previous-active{% endif %}">
-                <span class="box-progress__item__inner">
-                    <span class="box-progress__item__step">2.</span>
-                    <span class="box-progress__item__title">{{ 'Shipping and payment'|trans }}</span>
-                </span>
+                {% if step == 3 %}
+                    <a
+                        class="box-progress__item__inner box-progress__item__inner--link"
+                        href="{{ url('front_order_index') }}"
+                    >
+                        <span class="box-progress__item__step">2.</span>
+                        <span class="box-progress__item__title">{{ 'Shipping and payment'|trans }}</span>
+                    </a>
+                {% else %}
+                    <span class="box-progress__item__inner">
+                        <span class="box-progress__item__step">2.</span>
+                        <span class="box-progress__item__title">{{ 'Shipping and payment'|trans }}</span>
+                    </span>
+                {% endif %}
             </li>
 
             <li class="box-progress__item {% if step == 3 %}box-progress__item--active{% endif %}">
