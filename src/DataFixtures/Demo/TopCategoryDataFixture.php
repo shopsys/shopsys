@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 class TopCategoryDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade
+     * @var \App\Model\Category\TopCategory\TopCategoryFacade
      */
     private $topCategoryFacade;
 
@@ -23,7 +23,7 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     private $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
+     * @param \App\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(TopCategoryFacade $topCategoryFacade, Domain $domain)

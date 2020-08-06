@@ -724,3 +724,5 @@ services:
     App\Model\Product\Filter\ProductFilterCacheFacade:
         arguments:
             - '@shopsys.shop.model.product_filter.cache_provider'
+
+    Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade: '@App\Model\Category\TopCategory\TopCategoryFacade'

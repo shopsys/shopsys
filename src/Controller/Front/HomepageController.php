@@ -44,7 +44,7 @@ class HomepageController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade
+     * @var \App\Model\Category\TopCategory\TopCategoryFacade
      */
     private $topCategoryFacade;
 
@@ -69,7 +69,7 @@ class HomepageController extends FrontBaseController
      * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
      * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewElasticFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
+     * @param \App\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
