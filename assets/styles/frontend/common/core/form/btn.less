@@ -405,6 +405,10 @@
         -webkit-font-smoothing: antialiased;
         transition: box-shadow @transition;
 
+        @media @query-mobile {
+            justify-content: center;
+        }
+
         &:hover {
             background: linear-gradient(to bottom, #88c21a, #75ab0d);
             box-shadow: 0 0 30px 0 rgba(#88c21a, .9);
