@@ -11,10 +11,9 @@ class DuplicatedAliasException extends LogicException
 {
     /**
      * @param string $alias
-     * @param int|null $code
      * @param \Throwable|null $previous
      */
-    public function __construct(string $alias, ?int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $alias, ?Throwable $previous = null)
     {
         $message = sprintf(
             'Alias "%s" is already assigned to different entity.',
@@ -22,7 +21,7 @@ class DuplicatedAliasException extends LogicException
         );
         parent::__construct(
             $message,
-            $code,
+            0,
             $previous
         );
     }
