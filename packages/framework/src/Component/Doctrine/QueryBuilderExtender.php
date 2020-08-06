@@ -41,7 +41,7 @@ class QueryBuilderExtender
             if ($join->getAlias() === $alias) {
                 $resolvedJoinClass = $this->entityNameResolver->resolve($join->getJoin());
                 if ($resolvedJoinClass !== $resolvedClass) {
-                    throw new DuplicatedAliasException($alias);
+                    throw new DuplicatedAliasException($alias, $resolvedClass, $resolvedJoinClass);
                 }
 
                 $joinAlreadyUsed = true;

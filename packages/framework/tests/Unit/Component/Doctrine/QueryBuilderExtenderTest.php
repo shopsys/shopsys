@@ -143,7 +143,11 @@ class QueryBuilderExtenderTest extends TestCase
         $queryBuilderExtender = new QueryBuilderExtender($entityNameResolver);
 
         $this->expectException(DuplicatedAliasException::class);
-        $this->expectExceptionMessage('Alias "p" is already assigned to different entity.');
+        $this->expectExceptionMessage(
+            'You cannot use "Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter" as "p"'
+            . ' because this alias is already assigned to'
+            . ' "Tests\FrameworkBundle\Unit\Component\Doctrine\__fixtures\Product" in the same QueryBuilder instance.'
+        );
         $queryBuilderExtender->addOrExtendJoin(
             $queryBuilder,
             Parameter::class,
