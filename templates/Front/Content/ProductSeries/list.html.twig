@@ -19,10 +19,6 @@
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             <div class="box-blog__desc js-not-implemented-yet">
                 {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit, magna quis condimentum molestie, nunc nunc imperdiet mauris, ut pharetra odio ex nec augue. Suspendisse porttitor augue vel dolor auctor, ac cursus tortor consectetur. Pellentesque rhoncus mi et massa vulputate, non vestibulum urna tincidunt. Donec et posuere erat....'|trans }}
-                <a class="btn btn--next btn--in-text btn-no-style dont-print js-smooth-scroll-anchor" href="#series-desc">
-                   {{ 'Číst dál'|trans }}
-                    <i class="btn__icon svg svg-chevron"></i>
-                </a>
             </div>
             <div class="box-blog__categories box-blog__categories--programs">
                 {% for seriesCategory in productSeriesCategories %}
@@ -58,9 +54,6 @@
                         </li>
                     {% endfor %}
                 </ul>
-            </div>
-            <div class="box-series-pagination js-not-implemented-yet">
-                <input type="button" class="btn btn--secondary btn--load-more" value="{{ 'Ukázat dalších 40'|trans }}">
             </div>
 
             <div class="box-blog__desc box-blog__desc--bottom in-user-text js-not-implemented-yet" id="series-desc">
