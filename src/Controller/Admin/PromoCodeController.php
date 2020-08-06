@@ -72,4 +72,47 @@ class PromoCodeController extends BasePromoCodeController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/promo-code/new")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function newAction(Request $request)
+    {
+        $fillFromPromoCodeId = $request->query->get('fillFromPromoCodeId');
+
+        if ($fillFromPromoCodeId === null) {
+            $promoCodeData = $this->promoCodeDataFactory->create();
+        } else {
+            $promoCode = $this->promoCodeFacade->getById($fillFromPromoCodeId);
+            $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($promoCode);
+            $promoCodeData->code = null;
+        }
+
+        $form = $this->createForm(PromoCodeFormType::class, $promoCodeData, [
+            'promo_code' => null,
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $promoCode = $this->promoCodeFacade->create($form->getData());
+
+            $this->addSuccessFlashTwig(
+                t('Promo code <strong><a href="{{ url }}">{{ code }}</a></strong> created'),
+                [
+                    'code' => $promoCode->getCode(),
+                    'url' => $this->generateUrl('admin_promocode_edit', ['id' => $promoCode->getId()]),
+                ]
+            );
+            return $this->redirectToRoute('admin_promocode_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        return $this->render('@ShopsysFramework/Admin/Content/PromoCode/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }

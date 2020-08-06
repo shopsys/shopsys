@@ -70,6 +70,8 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
         $grid->addDeleteActionColumn('admin_promocode_delete', ['id' => 'pc.id'])
             ->setConfirmMessage(t('Do you really want to remove this promo code?'));
 
+        $grid->addActionColumn('document-copy', t('Duplikovat'), 'admin_promocode_new', ['fillFromPromoCodeId' => 'pc.id']);
+
         $grid->setTheme('Admin/Content/PromoCode/listGrid.html.twig');
 
         return $grid;
