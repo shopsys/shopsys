@@ -51,6 +51,22 @@ class OrderStatus extends AbstractTranslatableEntity
     {
         $this->translations = new ArrayCollection();
         $this->setType($type);
+        $this->setData($orderStatusData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
+     */
+    public function edit(OrderStatusData $orderStatusData)
+    {
+        $this->setData($orderStatusData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
+     */
+    protected function setData(OrderStatusData $orderStatusData): void
+    {
         $this->setTranslations($orderStatusData);
     }
 
@@ -112,14 +128,6 @@ class OrderStatus extends AbstractTranslatableEntity
         } else {
             throw new \Shopsys\FrameworkBundle\Model\Order\Status\Exception\InvalidOrderStatusTypeException($type);
         }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
-     */
-    public function edit(OrderStatusData $orderStatusData)
-    {
-        $this->setTranslations($orderStatusData);
     }
 
     public function checkForDelete()
