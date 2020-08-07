@@ -99,10 +99,9 @@ class Category extends AbstractTranslatableEntity
         $this->domains = new ArrayCollection();
         $this->children = new ArrayCollection();
 
-        $this->setData($categoryData);
         $this->createDomains($categoryData);
-
         $this->uuid = $categoryData->uuid ?: Uuid::uuid4()->toString();
+        $this->setData($categoryData);
     }
 
     /**
@@ -110,9 +109,8 @@ class Category extends AbstractTranslatableEntity
      */
     public function edit(CategoryData $categoryData)
     {
-        $this->setParent($categoryData->parent);
-        $this->setTranslations($categoryData);
         $this->setDomains($categoryData);
+        $this->setData($categoryData);
     }
 
     /**
