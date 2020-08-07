@@ -71,8 +71,8 @@ class Currency
      */
     public function __construct(CurrencyData $currencyData)
     {
-        $this->setData($currencyData);
         $this->exchangeRate = $currencyData->exchangeRate;
+        $this->setData($currencyData);
     }
 
     /**

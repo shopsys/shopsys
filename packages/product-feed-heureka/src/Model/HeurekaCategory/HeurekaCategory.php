@@ -54,8 +54,8 @@ class HeurekaCategory
     public function __construct(HeurekaCategoryData $heurekaCategoryData)
     {
         $this->id = $heurekaCategoryData->id;
-        $this->setData($heurekaCategoryData);
         $this->categories = new ArrayCollection($heurekaCategoryData->categories);
+        $this->setData($heurekaCategoryData);
     }
 
     /**
@@ -63,8 +63,8 @@ class HeurekaCategory
      */
     public function edit(HeurekaCategoryData $heurekaCategoryData)
     {
-        $this->setData($heurekaCategoryData);
         $this->editCategories($heurekaCategoryData->categories);
+        $this->setData($heurekaCategoryData);
     }
 
     /**

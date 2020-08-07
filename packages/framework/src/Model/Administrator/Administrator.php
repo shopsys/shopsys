@@ -116,7 +116,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
      */
     public function __construct(AdministratorData $administratorData)
     {
-        $this->setData($administratorData);
         $this->lastActivity = new DateTime();
         $this->gridLimits = new ArrayCollection();
         $this->loginToken = '';
@@ -124,6 +123,7 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         $this->multidomainLoginToken = '';
         $this->multidomainLoginTokenExpiration = new DateTime();
         $this->roles = new ArrayCollection();
+        $this->setData($administratorData);
     }
 
     /**

@@ -91,8 +91,8 @@ class DeliveryAddress
      */
     public function __construct(DeliveryAddressData $deliveryAddressData)
     {
-        $this->setData($deliveryAddressData);
         $this->customer = $deliveryAddressData->customer;
+        $this->setData($deliveryAddressData);
     }
 
     /**

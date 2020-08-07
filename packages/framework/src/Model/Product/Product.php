@@ -293,7 +293,6 @@ class Product extends AbstractTranslatableEntity
         $this->catnum = $productData->catnum;
         $this->partno = $productData->partno;
         $this->ean = $productData->ean;
-        $this->setData($productData);
         $this->setAvailabilityAndStock($productData);
         $this->calculatedAvailability = $this->availability;
         $this->calculatedVisibility = false;
@@ -315,6 +314,7 @@ class Product extends AbstractTranslatableEntity
         }
 
         $this->uuid = $productData->uuid ?: Uuid::uuid4()->toString();
+        $this->setData($productData);
     }
 
     /**
@@ -325,7 +325,6 @@ class Product extends AbstractTranslatableEntity
         array $productCategoryDomains,
         ProductData $productData
     ) {
-        $this->setData($productData);
 
         $this->editFlags($productData->flags);
         $this->setDomains($productData);
@@ -339,6 +338,7 @@ class Product extends AbstractTranslatableEntity
             $this->partno = $productData->partno;
             $this->ean = $productData->ean;
         }
+        $this->setData($productData);
 
         $this->markForVisibilityRecalculation();
     }

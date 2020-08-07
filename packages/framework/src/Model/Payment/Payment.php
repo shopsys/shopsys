@@ -105,12 +105,12 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
         $this->transports = new ArrayCollection();
-        $this->setData($paymentData);
         $this->deleted = false;
         $this->createDomains($paymentData);
         $this->prices = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->uuid = $paymentData->uuid ?: Uuid::uuid4()->toString();
+        $this->setData($paymentData);
     }
 
     /**
@@ -118,8 +118,8 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     public function edit(PaymentData $paymentData)
     {
-        $this->setData($paymentData);
         $this->setDomains($paymentData);
+        $this->setData($paymentData);
     }
 
     /**

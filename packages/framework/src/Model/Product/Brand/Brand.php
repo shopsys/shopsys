@@ -54,8 +54,8 @@ class Brand extends AbstractTranslatableEntity
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
 
-        $this->setData($brandData);
         $this->createDomains($brandData);
+        $this->setData($brandData);
     }
 
     /**
@@ -63,8 +63,8 @@ class Brand extends AbstractTranslatableEntity
      */
     public function edit(BrandData $brandData)
     {
-        $this->setData($brandData);
         $this->setDomains($brandData);
+        $this->setData($brandData);
     }
 
     /**

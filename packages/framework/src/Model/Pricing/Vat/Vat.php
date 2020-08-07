@@ -56,9 +56,9 @@ class Vat
      */
     public function __construct(VatData $vatData, int $domainId)
     {
-        $this->setData($vatData);
         $this->percent = $vatData->percent;
         $this->domainId = $domainId;
+        $this->setData($vatData);
     }
 
     /**

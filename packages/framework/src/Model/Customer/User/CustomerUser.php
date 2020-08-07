@@ -138,7 +138,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     public function __construct(CustomerUserData $customerUserData)
     {
         $this->domainId = $customerUserData->domainId;
-        $this->setData($customerUserData);
         $this->setEmail($customerUserData->email);
         $this->customer = $customerUserData->customer;
         $this->uuid = $customerUserData->uuid ?: Uuid::uuid4()->toString();
@@ -148,6 +147,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         } else {
             $this->createdAt = new \DateTime();
         }
+        $this->setData($customerUserData);
     }
 
     /**
