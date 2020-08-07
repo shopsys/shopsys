@@ -32,30 +32,37 @@ export default class Spinbox {
     }
 
     static plus () {
-        let value = $.trim($(this).val());
-        let max = $(this).data('spinbox-max');
-
-        if (value.match(/^\d+$/)) {
-            value = parseInt(value) + 1;
-            if (max !== undefined && max < value) {
-                value = max;
-            }
-            $(this).val(value);
-            $(this).change();
-        }
+        Spinbox.changeValue($(this), '+');
     }
 
     static minus () {
-        let value = $.trim($(this).val());
-        let min = $(this).data('spinbox-min');
+        Spinbox.changeValue($(this), '-');
+    }
+
+    static changeValue (input, action) {
+        let value = $.trim(input.val());
+        const min = input.data('spinbox-min');
+        const max = input.data('spinbox-max');
 
         if (value.match(/^\d+$/)) {
-            value = parseInt(value) - 1;
+            value = parseInt(value);
+
+            if (action === '+') {
+                value += 1;
+            } else {
+                value -= 1;
+            }
+
             if (min !== undefined && min > value) {
                 value = min;
             }
-            $(this).val(value);
-            $(this).change();
+
+            if (max !== undefined && max < value) {
+                value = max;
+            }
+
+            input.val(value);
+            input.change();
         }
     }
 
