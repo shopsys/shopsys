@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentData as BasePaymentData;
  * @method setTranslations(\App\Model\Payment\PaymentData $paymentData)
  * @method setDomains(\App\Model\Payment\PaymentData $paymentData)
  * @method createDomains(\App\Model\Payment\PaymentData $paymentData)
- * @method setData(\App\Model\Payment\PaymentData $paymentData)
  */
 class Payment extends BasePayment
 {
@@ -37,5 +36,13 @@ class Payment extends BasePayment
     public function edit(BasePaymentData $paymentData)
     {
         parent::edit($paymentData);
+    }
+
+    /**
+     * @param \App\Model\Payment\PaymentData $paymentData
+     */
+    protected function setData(BasePaymentData $paymentData): void
+    {
+        parent::setData($paymentData);
     }
 }

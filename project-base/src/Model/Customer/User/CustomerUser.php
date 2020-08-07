@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  *     }
  * )
  * @ORM\Entity
- * @method setData(\App\Model\Customer\User\CustomerUserData $customerUserData)
  */
 class CustomerUser extends BaseUser
 {
@@ -38,5 +37,13 @@ class CustomerUser extends BaseUser
     public function edit(BaseUserData $customerUserData)
     {
         parent::edit($customerUserData);
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUserData $customerUserData
+     */
+    protected function setData(BaseUserData $customerUserData): void
+    {
+        parent::setData($customerUserData);
     }
 }

@@ -21,7 +21,6 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  * @method setTranslations(\App\Model\Category\CategoryData $categoryData)
  * @method setDomains(\App\Model\Category\CategoryData $categoryData)
  * @method createDomains(\App\Model\Category\CategoryData $categoryData)
- * @method setData(\App\Model\Category\CategoryData $categoryData)
  */
 class Category extends BaseCategory
 {
@@ -39,5 +38,13 @@ class Category extends BaseCategory
     public function edit(BaseCategoryData $categoryData)
     {
         parent::edit($categoryData);
+    }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     */
+    protected function setData(BaseCategoryData $categoryData): void
+    {
+        parent::setData($categoryData);
     }
 }

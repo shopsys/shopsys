@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
  * @method addPayment(\App\Model\Payment\Payment $payment)
  * @method setPayments(\App\Model\Payment\Payment[] $payments)
  * @method removePayment(\App\Model\Payment\Payment $payment)
- * @method setData(\App\Model\Transport\TransportData $transportData)
  */
 class Transport extends BaseTransport
 {
@@ -37,5 +36,13 @@ class Transport extends BaseTransport
     public function edit(BaseTransportData $transportData)
     {
         parent::edit($transportData);
+    }
+
+    /**
+     * @param \App\Model\Transport\TransportData $transportData
+     */
+    protected function setData(BaseTransportData $transportData): void
+    {
+        parent::setData($transportData);
     }
 }
