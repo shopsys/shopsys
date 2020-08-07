@@ -283,6 +283,8 @@ class CustomerUserFacade
 
         $this->em->remove($customerUser);
         $this->em->flush();
+
+        $this->customerFacade->deleteIfNoCustomerUsersLeft($customerUser->getCustomer());
     }
 
     /**

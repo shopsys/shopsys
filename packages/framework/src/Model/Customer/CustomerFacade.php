@@ -64,4 +64,15 @@ class CustomerFacade
 
         return $customer;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     */
+    public function deleteIfNoCustomerUsersLeft(Customer $customer): void
+    {
+        if ($this->customerRepository->isWithoutCustomerUsers($customer)) {
+            $this->em->remove($customer);
+            $this->em->flush();
+        }
+    }
 }
