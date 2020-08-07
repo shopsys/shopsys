@@ -303,7 +303,7 @@ class ProductController extends FrontBaseController
         $productAvailableStocksCountInformation = $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId());
         $productCountExposedInStores = $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId());
         $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($product, $this->domain->getId());
-        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($product, $this->domain);
+        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($productVariant, $this->domain);
 
         $paginatedSimilarProducts = $this->listedProductViewFacade->getSimilarPaginatedProductsFormProductInCategory(
             $product,
