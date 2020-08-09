@@ -151,6 +151,16 @@
                     height: ~
                     crop: false
                     occurrence: 'Front-end: Main page slider - retina display'
+                -   name: fullwidthSlider
+                    width: 1410
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Main page slider - fullwidth slider'
+                -   name: fullwidthSliderRetina
+                    width: 2820
+                    height: ~
+                    crop: false
+                    occurrence: 'Front-end: Main page slider - fullwidth slider - retina display'
         -   name: mobile
             sizes:
                 -   name: ~
