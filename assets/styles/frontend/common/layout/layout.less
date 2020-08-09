@@ -53,11 +53,25 @@ img {
                 }
             }
 
+            &--medium {
+                padding: 2rem 0;
+
+                @media @query-md {
+                    padding: 3rem 0 2rem;
+                }
+            }
+
             &--large {
                 padding: 3rem 0;
 
                 @media @query-lg {
                     padding: 4rem 0;
+                }
+            }
+
+            &--bottom-small {
+                @media @query-md {
+                    padding-bottom: 0.25rem;
                 }
             }
         }

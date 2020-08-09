@@ -128,6 +128,13 @@
             height: 80
             crop: false
             occurrence: 'Front-end: Thumbnail of images under the main image in product series detail'
+        -   name: largePreview
+            width: 690
+            height: ~
+            crop: false
+            occurrence: 'Front-end: in detail'
+            additionalSizes:
+                - {width: 1380, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: sliderItem
     class: Shopsys\FrameworkBundle\Model\Slider\SliderItem

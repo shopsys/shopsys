@@ -16,6 +16,65 @@
         padding: 0;
     }
 
+    &--list {
+        margin-top: 0;
+        padding-top: 0;
+        margin-bottom: 4rem;
+
+        @media @query-tablet {
+            margin: 0 0 1rem;
+            padding: 0;
+
+            .box-series__grid {
+                min-width: 0;
+            }
+        }
+
+        @media @query-md {
+            display: block;
+            width: 100%;
+        }
+
+        &::before {
+            display: none;
+        }
+    }
+
+    &--detail {
+        width: 100%;
+        margin: 0;
+
+        @media @query-mobile {
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        .box-series__grid {
+            min-width: 100%;
+            left: 0;
+            padding: 0;
+            margin: 0 -15px;
+
+            &__item {
+                height: auto;
+
+                &::after {
+                    display: none;
+                }
+            }
+
+            img {
+                display: block;
+
+                border-radius: @radius;
+            }
+        }
+
+        &::before {
+            display: none;
+        }
+    }
+
     &::before {
         position: absolute;
         top: 0;
@@ -139,6 +198,43 @@
                 pointer-events: none;
                 color: @color-f;
                 font-size: 16px;
+            }
+        }
+
+        &--list {
+            width: 100%;
+            left: 0;
+            padding-left: 0;
+
+            @media @query-mobile {
+                display: block;
+            }
+
+            .box-series__grid__item {
+                @media @query-mobile {
+                    width: 100%;
+                    margin: 0 0 1.25rem;
+
+                    &:last-child {
+                        margin-bottom: 2.5rem;
+                    }
+                }
+
+                @media @query-vl {
+                    width: calc(33.333% - (@box-series-grid-margin-lg * 2) - 1px);
+                }
+            }
+        }
+
+        &--centered {
+            justify-content: center;
+
+            .box-series__grid__item {
+                width: auto;
+
+                @media @query-mobile {
+                    width: 90%;
+                }
             }
         }
     }
@@ -275,6 +371,18 @@
                 border-bottom-right-radius: @radius;
                 background-color: @color-f;
             }
+        }
+    }
+
+    &-pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 2rem;
+
+        @media @query-lg {
+            margin: 2.5rem 0 5rem;
         }
     }
 }

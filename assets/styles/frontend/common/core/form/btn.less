@@ -220,6 +220,22 @@
         }
     }
 
+    &.btn--load-more {
+        padding: 20px 40px;
+
+        @media @query-vl {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            width: 450px;
+            padding: 0;
+
+            letter-spacing: 0;
+            font-size: 20px;
+        }
+    }
+
     @btn-small-padding-vertical: 5px;
     @btn-small-padding-horizontal: 10px;
     @btn-small-height: @btn-height - 10;
@@ -469,6 +485,26 @@
         }
     }
 
+    &--in-text {
+        @media @query-md {
+            margin-left: 20px;
+        }
+
+        @media @query-mobile {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .btn__icon {
+            top: -2px;
+            padding-left: 2px;
+
+            color: @color-add-secondary;
+            font-size: 15px;
+        }
+    }
+
     &--registration {
         padding-top: 1.25rem;
         padding-bottom: 1.25rem;
@@ -564,11 +600,13 @@
     }
 
     &--category {
-        margin-bottom: 0.5rem;
+        padding: 14px 25px 12px;
+        margin: 0 1rem 1rem 0;
+
+        font-size: 14px;
 
         @media @query-lg {
             padding: 16px 30px;
-            margin: 0 1rem 1rem 0;
 
             font-size: 15px;
         }

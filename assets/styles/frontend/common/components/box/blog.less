@@ -41,6 +41,18 @@
         @media @query-md {
             text-align: left;
         }
+
+        &--bottom {
+            text-align: left;
+
+            @media @query-mobile {
+                margin-bottom: 0;
+            }
+        }
+
+        &--detail {
+            margin-bottom: 2rem;
+        }
     }
 
     &__breadcrumb {
@@ -55,11 +67,27 @@
         align-items: center;
         flex-wrap: wrap;
         margin: 0 auto 1.5rem;
-        padding: 0 @web-padding-small;
         justify-content: center;
 
         @media @query-lg {
+            padding: 0 @web-padding-small;
             margin-bottom: 5rem;
+        }
+
+        &--programs {
+            margin-bottom: 0.5rem;
+
+            @media @query-mobile {
+                margin-top: 2rem;
+            }
+
+            @media @query-lg {
+                margin-bottom: 2rem;
+            }
+        }
+
+        &--detail {
+            margin-bottom: 0;
         }
     }
 
