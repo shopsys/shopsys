@@ -1,7 +1,20 @@
 .wrap-box {
-    margin-bottom: @margin-gap;
+    margin-bottom: 1.5rem;
 
-    border: 1px solid @color-border;
+    border-radius: @radius;
+    background-color: @color-f;
+
+    @media @query-md {
+        margin-bottom: 3rem;
+    }
+
+    &--small-spacing {
+        margin-bottom: 15px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 
     &__block {
         margin-bottom: 30px;
@@ -16,11 +29,25 @@
     }
 
     &__title {
-        padding: 10px 20px;
         margin-bottom: 0;
+        padding-bottom: 15px;
 
-        border-bottom: 1px solid @color-border;
-        background: @color-box;
+        font-family: @font-quartenary;
+        font-size: 18px;
+        font-weight: 400;
+        border-bottom: 2px solid @color-border-lighter;
+        text-transform: none;
+
+        &--spaced {
+            padding: 16px 15px 12px;
+
+            border-bottom-width: 1px;
+
+            @media @query-lg {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
     }
 
     &__button {
@@ -32,6 +59,43 @@
     }
 
     &__in {
-        padding: 20px;
+        width: 100%;
+        padding: 15px;
+
+        @media @query-md {
+            padding: 25px;
+        }
+
+        @media @query-lg {
+            display: flex;
+        }
+
+        &--no-spacing {
+            display: block;
+            padding: 0;
+        }
+
+        &__col {
+            @media @query-lg {
+                width: 50%;
+                padding-right: 15px;
+            }
+
+            &--last {
+                margin-top: 1rem;
+
+                @media @query-lg {
+                    margin-top: 0;
+                    padding-right: 0;
+                    padding-left: 15px;
+                }
+            }
+
+            &--payment-repeat {
+                @media @query-md {
+                    text-align: right;
+                }
+            }
+        }
     }
 }

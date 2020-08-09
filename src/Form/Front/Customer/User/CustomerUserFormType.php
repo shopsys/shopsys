@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Front\Customer\User;
 
 use App\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
 use Shopsys\FrameworkBundle\Form\DeliveryAddressChoiceType;
@@ -55,10 +56,15 @@ class CustomerUserFormType extends AbstractType
         $builder->add('email', EmailType::class, [
                 'attr' => ['readonly' => true],
                 'required' => true,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Email(['message' => 'Please enter valid email']),
+                ],
             ])
             ->add('telephone', TextType::class, [
                 'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter telephone number']),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
@@ -67,7 +73,7 @@ class CustomerUserFormType extends AbstractType
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'required' => true,
+                'required' => false,
                 'options' => [
                     'attr' => ['autocomplete' => 'new-password'],
                 ],

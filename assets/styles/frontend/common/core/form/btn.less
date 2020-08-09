@@ -220,22 +220,6 @@
         }
     }
 
-    &.btn--load-more {
-        padding: 20px 40px;
-
-        @media @query-vl {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 80px;
-            width: 450px;
-            padding: 0;
-
-            letter-spacing: 0;
-            font-size: 20px;
-        }
-    }
-
     @btn-small-padding-vertical: 5px;
     @btn-small-padding-horizontal: 10px;
     @btn-small-height: @btn-height - 10;
@@ -421,10 +405,6 @@
         -webkit-font-smoothing: antialiased;
         transition: box-shadow @transition;
 
-        @media @query-mobile {
-            justify-content: center;
-        }
-
         &:hover {
             background: linear-gradient(to bottom, #88c21a, #75ab0d);
             box-shadow: 0 0 30px 0 rgba(#88c21a, .9);
@@ -462,45 +442,14 @@
     }
 
     &--login {
-        min-width: 100px;
-        min-height: 43px;
+        min-width: 135px;
 
         letter-spacing: 0;
         text-transform: none;
         color: @color-primary-light;
         font-family: @font-quartenary;
 
-        @media screen and (min-width: 360px) {
-            min-width: 110px;
-        }
-
-        @media screen and (min-width: 370px) {
-            min-width: 125px;
-        }
-
         @media @query-md {
-            min-width: 135px;
-
-            font-size: 15px;
-        }
-    }
-
-    &--in-text {
-        @media @query-md {
-            margin-left: 20px;
-        }
-
-        @media @query-mobile {
-            display: block;
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .btn__icon {
-            top: -2px;
-            padding-left: 2px;
-
-            color: @color-add-secondary;
             font-size: 15px;
         }
     }
@@ -513,22 +462,14 @@
         font-weight: 400;
     }
 
-    &--show-results {
-        padding: 8px 16px;
-        min-height: 0;
-
-        background-color: @color-light-secondary;
-        border-radius: 2em;
-        text-transform: none;
-        font-family: @font-quartenary;
-        font-weight: 400;
-        font-size: 12px;
-        color: @color-primary-light;
-        letter-spacing: 0;
-
-        &:hover {
-            background-color: darken(@color-light-secondary, 5%);
+    &--inline-block {
+        @media @query-md {
+            display: inline-block;
         }
+    }
+
+    &--center {
+        justify-content: center;
     }
 }
 
@@ -600,13 +541,11 @@
     }
 
     &--category {
-        padding: 14px 25px 12px;
-        margin: 0 1rem 1rem 0;
-
-        font-size: 14px;
+        margin-bottom: 0.5rem;
 
         @media @query-lg {
             padding: 16px 30px;
+            margin: 0 1rem 1rem 0;
 
             font-size: 15px;
         }

@@ -35,6 +35,11 @@
                                 <tr class="box-table__row">
                                     <td class="box-table__item box-table__item--order-number">
                                         <a href="{{ url('front_customer_order_detail_registered', { orderNumber: order.number }) }}">{{ order.number }}</a>
+                                        {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
+                                            <a class="btn btn--success btn--mini btn--in-text box-table__btn" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
+                                                {{ 'Zaplatit'|trans }}
+                                            </a>
+                                        {% endif %}
                                     </td>
                                     <td class="box-table__item text-right">{{ order.createdAt|formatDate }}</td>
                                     <td class="box-table__item box-table__item--orders-count text-right">{{ order.productItemsCount }}</td>
