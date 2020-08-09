@@ -409,7 +409,7 @@
                 {% if productStocksAvailabilitiesInformation|length > 0 %}
                     <div class="box-accordion box-accordion--opened-on-mobile is-opened js-accordion" id="stocks-availabilities">
                         <a class="box-accordion__header js-accordion-header" href="#">
-                            <strong class="box-accordion__heading" id="stocks-availabilities">{{ 'Dostupnost'|trans }}</strong>
+                            <strong class="box-accordion__heading">{{ 'Dostupnost'|trans }}</strong>
                             <span class="box-accordion__header__toggle">
                                 <span
                                     class="box-accordion__header__toggle__text js-accordion-toggle-text"
@@ -486,14 +486,14 @@
                                             {{ noimage({ alt: productSeries.name }) }}
                                         </span>
                                     {% endif %}
-                                    <span class="box-series__content">
+                                    <div class="box-series__content">
                                         <h2 class="box-series__heading">{{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}</h2>
                                         <p class="box-series__content__text">{{ productSeries.getDescription }}</p>
                                         <a class="box-series__content__link box-detail__info__anchor" href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
                                             {{ 'Zobrazit celý program'|trans }}
                                             <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
                                         </a>
-                                    </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="box-products-carousel box-products-carousel--detail">
