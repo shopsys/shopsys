@@ -15,7 +15,7 @@ It is a common modification when you need your ecommerce application and ERP sys
 
 Add new `extId` field with Doctrine ORM annotations and a getter for the field into `App\Model\Product\Product` class.
 
-Overwrite constructor for creating `Product` instances.
+Overwrite `setData` method for setting entity data from data object.
 
 ```php
 namespace App\Model\Product;
@@ -39,13 +39,13 @@ class Product extends BaseProduct
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product[]|null $variants
      */
-    protected function __construct(BaseProductData $productData, array $variants = null)
+    protected function setData(BaseProductData $productData): void
     {
-        parent::__construct($productData, $variants);
-
+        parent::setData($productData);
+        
         $this->extId = $productData->extId ?? 0;
+
     }
 
     /**
