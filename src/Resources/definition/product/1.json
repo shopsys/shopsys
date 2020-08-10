@@ -227,6 +227,12 @@
           },
           "price_from": {
             "type": "boolean"
+          },
+          "filtering_minimal_price": {
+            "type": "float"
+          },
+          "filtering_maximal_price": {
+            "type": "float"
           }
         }
       },

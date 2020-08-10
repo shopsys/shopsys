@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
@@ -26,7 +27,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @method string extractDetailUrl(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractFlags(\App\Model\Product\Product $product)
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
- * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
@@ -173,6 +173,36 @@ class ProductExportRepository extends BaseProductExportRepository
             'searching_partnos' => $searchingPartnos,
             'searching_short_descriptions' => $searchingShortDescriptions,
         ];
+    }
+
+    /**
+     * @param int $domainId
+     * @param \App\Model\Product\Product $product
+     * @return array
+     */
+    protected function extractPrices(int $domainId, BaseProduct $product): array
+    {
+        $prices = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] $productSellingPrices */
+        $productSellingPrices = $this->productFacade->getAllProductSellingPricesByDomainId($product, $domainId);
+        foreach ($productSellingPrices as $productSellingPrice) {
+            $sellingPrice = $productSellingPrice->getSellingPrice();
+            $priceFrom = false;
+            if ($sellingPrice instanceof ProductPrice) {
+                $priceFrom = $sellingPrice->isPriceFrom();
+            }
+            $prices[] = [
+                'pricing_group_id' => $productSellingPrice->getPricingGroup()->getId(),
+                'price_with_vat' => (float)$sellingPrice->getPriceWithVat()->getAmount(),
+                'price_without_vat' => (float)$sellingPrice->getPriceWithoutVat()->getAmount(),
+                'vat' => (float)$sellingPrice->getVatAmount()->getAmount(),
+                'price_from' => $priceFrom,
+                'filtering_minimal_price' => (float)$product->getMaximalVariantPriceForFilteringMinimalPrice($domainId)->getAmount(),
+                'filtering_maximal_price' => (float)$product->getMinimalVariantPriceForFilteringMaximalPrice($domainId)->getAmount(),
+            ];
+        }
+
+        return $prices;
     }
 
     /**

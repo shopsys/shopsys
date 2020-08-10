@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
 
 /**
  * @method \App\Model\Product\Search\FilterQuery applyOrdering(string $orderingModeId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Search\FilterQuery applyDefaultOrdering()
  * @method \App\Model\Product\Search\FilterQuery filterByParameters(array $parameters)
- * @method \App\Model\Product\Search\FilterQuery filterByPrices(\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \Shopsys\FrameworkBundle\Component\Money\Money|null $minimalPrice, \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice)
  * @method \App\Model\Product\Search\FilterQuery filterByCategory(int[] $categoryIds)
  * @method \App\Model\Product\Search\FilterQuery filterByBrands(int[] $brandIds)
  * @method \App\Model\Product\Search\FilterQuery filterByFlags(int[] $flagIds)
@@ -274,5 +275,60 @@ class FilterQuery extends BaseFilterQuery
                 ],
             ],
         ];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $minimalPrice
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function filterByPrices(PricingGroup $pricingGroup, ?Money $minimalPrice = null, ?Money $maximalPrice = null): self
+    {
+        $clone = clone $this;
+        $priceGte = null;
+        $priceLte = null;
+
+        if ($minimalPrice !== null) {
+            $priceGte = (float)$minimalPrice->getAmount();
+        }
+        if ($maximalPrice !== null) {
+            $priceLte = (float)$maximalPrice->getAmount();
+        }
+
+        $clone->filters[] = [
+            'nested' => [
+                'path' => 'prices',
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            'match_all' => new \stdClass(),
+                        ],
+                        'filter' => [
+                            'bool' => [
+                                'must' => [
+                                    [
+                                        'range' => [
+                                            'prices.filtering_minimal_price' => [
+                                                'gte' => $priceGte,
+                                            ],
+                                        ],
+                                    ],
+                                    [
+                                        'range' => [
+                                            'prices.filtering_maximal_price' => [
+                                                'lte' => $priceLte,
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        return $clone;
     }
 }

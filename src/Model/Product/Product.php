@@ -300,6 +300,46 @@ class Product extends BaseProduct
     }
 
     /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getMaximalVariantPriceForFilteringMinimalPrice($domainId): ?Money
+    {
+        $price = null;
+        if (!$this->isMainVariant()) {
+            $price = $this->getSellingPriceWithVat($domainId);
+        } else {
+            foreach ($this->getVariants() as $variant) {
+                if ($price === null || $variant->getSellingPriceWithVat($domainId) > $price) {
+                    $price = $variant->getSellingPriceWithVat($domainId);
+                }
+            }
+        }
+
+        return $price;
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getMinimalVariantPriceForFilteringMaximalPrice($domainId): ?Money
+    {
+        $price = null;
+        if (!$this->isMainVariant()) {
+            $price = $this->getSellingPriceWithVat($domainId);
+        } else {
+            foreach ($this->getVariants() as $variant) {
+                if ($price === null || $variant->getSellingPriceWithVat($domainId) < $price) {
+                    $price = $variant->getSellingPriceWithVat($domainId);
+                }
+            }
+        }
+
+        return $price;
+    }
+
+    /**
      * @param \App\Model\Product\Product $variant
      */
     public function setDefaultVariant(self $variant): void
