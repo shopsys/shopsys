@@ -50,7 +50,7 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
     public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
     {
         foreach ($rulesData as $index => $ruleData) {
-            if ($ruleData->value === null || $ruleData->value == '') {
+            if ($ruleData->value === null || $ruleData->value === '') {
                 $searchValue = '%';
             } else {
                 $searchValue = DatabaseSearching::getFullTextLikeSearchString($ruleData->value);
