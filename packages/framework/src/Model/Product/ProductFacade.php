@@ -295,6 +295,7 @@ class ProductFacade
     public function edit($productId, ProductData $productData)
     {
         $product = $this->productRepository->getById($productId);
+        $originalNames = $product->getNames();
 
         $product->edit($this->productCategoryDomainFactory, $productData, $this->productPriceRecalculationScheduler);
 
@@ -312,7 +313,7 @@ class ProductFacade
         $this->imageFacade->uploadImages($product, $productData->images->uploadedFiles, null);
         $this->imageFacade->deleteImages($product, $productData->images->imagesToDelete);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
+        $this->createFriendlyUrlsWhenRenamed($product, $originalNames);
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
@@ -482,5 +483,39 @@ class ProductFacade
     public function getOneByCatnumExcludeMainVariants($productCatnum)
     {
         return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param array $originalNames
+     */
+    protected function createFriendlyUrlsWhenRenamed(Product $product, array $originalNames): void
+    {
+        $changedNames = $this->getChangedNamesByLocale($product, $originalNames);
+        if (empty($changedNames)) {
+            return;
+        }
+
+        $this->friendlyUrlFacade->createFriendlyUrls(
+            'front_product_detail',
+            $product->getId(),
+            $changedNames
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param array $originalNames
+     * @return array
+     */
+    protected function getChangedNamesByLocale(Product $product, array $originalNames): array
+    {
+        $changedProductNames = [];
+        foreach ($product->getNames() as $locale => $name) {
+            if ($name !== null && $name !== $originalNames[$locale]) {
+                $changedProductNames[$locale] = $name;
+            }
+        }
+        return $changedProductNames;
     }
 }
