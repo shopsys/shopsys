@@ -146,13 +146,16 @@ class CategoryFacade
     {
         $rootCategory = $this->getRootCategory();
         $category = $this->categoryRepository->getById($categoryId);
+        $originalNames = $category->getNames();
+
         $category->edit($categoryData);
         if ($category->getParent() === null) {
             $category->setParent($rootCategory);
         }
         $this->em->flush();
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_list', $category->getId(), $categoryData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_list', $category->getId(), $category->getNames());
+        $this->createFriendlyUrlsWhenRenamed($category, $originalNames);
+
         $this->imageFacade->manageImages($category, $categoryData->image);
 
         $this->pluginCrudExtensionFacade->saveAllData('category', $category->getId(), $categoryData->pluginData);
@@ -434,5 +437,39 @@ class CategoryFacade
             $pricingGroup,
             $domainId
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param array $originalNames
+     */
+    protected function createFriendlyUrlsWhenRenamed(Category $category, array $originalNames): void
+    {
+        $changedNames = $this->getChangedNamesByLocale($category, $originalNames);
+        if (empty($changedNames)) {
+            return;
+        }
+
+        $this->friendlyUrlFacade->createFriendlyUrls(
+            'front_product_list',
+            $category->getId(),
+            $changedNames
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param array $originalNames
+     * @return array
+     */
+    protected function getChangedNamesByLocale(Category $category, array $originalNames): array
+    {
+        $changedCategoryNames = [];
+        foreach ($category->getNames() as $locale => $name) {
+            if ($name !== $originalNames[$locale]) {
+                $changedCategoryNames[$locale] = $name;
+            }
+        }
+        return $changedCategoryNames;
     }
 }
