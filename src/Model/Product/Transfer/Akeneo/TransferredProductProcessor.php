@@ -312,6 +312,8 @@ class TransferredProductProcessor
     private function setProductAccessoriesByAkeneoProductDetailData(Product $product, array $akeneoProductDetailData, TransferLoggerInterface $logger): void
     {
         $accessoryCatnums = $this->productTransferAkeneoMapper->getProductAccessoryCatnumListFromAkeneoProductData($akeneoProductDetailData);
+        $mainVariantCatnums = $this->productTransferAkeneoMapper->getMainVariantAccessoryCatnumListFromAkeneoProductData($akeneoProductDetailData);
+        $accessoryCatnums = array_unique(array_merge($accessoryCatnums, $mainVariantCatnums));
         $accessories = $this->getAccessoriesByCatnums($accessoryCatnums);
         $this->productFacade->refreshProductAccessories($product, $accessories);
         $accessoriesCount = count($accessories);
@@ -326,7 +328,7 @@ class TransferredProductProcessor
     {
         $accessories = [];
         foreach ($catnums as $catnum) {
-            $product = $this->productFacade->findOneByCatnumExcludeMainVariants($catnum);
+            $product = $this->productFacade->findByCatnum($catnum);
             if ($product !== null) {
                 $accessories[] = $product;
             }
