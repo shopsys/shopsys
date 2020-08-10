@@ -160,11 +160,29 @@ class CategoryRepository extends NestedTreeRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $categoryBranch
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslatedWithoutBranch
      */
     public function getTranslatedAllWithoutBranch(Category $categoryBranch, DomainConfig $domainConfig)
     {
         $queryBuilder = $this->getAllQueryBuilder();
         $this->addTranslation($queryBuilder, $domainConfig->getLocale());
+
+        return $queryBuilder->andWhere('c.lft < :branchLft OR c.rgt > :branchRgt')
+            ->setParameter('branchLft', $categoryBranch->getLft())
+            ->setParameter('branchRgt', $categoryBranch->getRgt())
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $categoryBranch
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getAllTranslatedWithoutBranch(Category $categoryBranch, string $locale): array
+    {
+        $queryBuilder = $this->getAllQueryBuilder();
+        $this->addTranslation($queryBuilder, $locale);
 
         return $queryBuilder->andWhere('c.lft < :branchLft OR c.rgt > :branchRgt')
             ->setParameter('branchLft', $categoryBranch->getLft())
@@ -560,6 +578,7 @@ class CategoryRepository extends NestedTreeRepository
     /**
      * @param  \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslated
      */
     public function getTranslatedAll(DomainConfig $domainConfig)
     {
@@ -568,5 +587,17 @@ class CategoryRepository extends NestedTreeRepository
 
         return $queryBuilder->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getAllTranslated(string $locale): array
+    {
+        $queryBuilder = $this->getAllQueryBuilder();
+        $this->addTranslation($queryBuilder, $locale);
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }
