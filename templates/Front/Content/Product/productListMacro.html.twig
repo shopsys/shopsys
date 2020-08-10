@@ -29,6 +29,25 @@
                             {% endif %}
                             {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
                         </div>
+                        <div>
+                            {% if productView.countColorsInVariants > 0 %}
+                                {% transchoice productView.countColorsInVariants with { '%itemsCount%': productView.countColorsInVariants } %}
+                                    {1} + 1 barva
+                                    |{2, 3, 4} + %itemsCount% barvy
+                                    |]4,Inf[ + %itemsCount% barev
+                                {% endtranschoice %}
+                            {% endif %}
+                            {% if productView.countColorsInVariants > 0 and productView.countDifferentVariants > 0 %}
+                                |
+                            {% endif %}
+                            {% if productView.countDifferentVariants > 0 %}
+                                {% transchoice productView.countDifferentVariants with { '%itemsCount%': productView.countDifferentVariants } %}
+                                    {1} 1 varianta
+                                    |{2, 3, 4} %itemsCount% varianty
+                                    |]4,Inf[ %itemsCount% variant
+                                {% endtranschoice %}
+                            {% endif %}
+                        </div>
                         <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
                             {% if productView.namePrefix is not empty %}
                                 <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>

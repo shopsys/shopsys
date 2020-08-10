@@ -6,6 +6,7 @@ namespace App\Model\Product\Listed;
 
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -35,6 +36,11 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
+
+    /**
+     * @var mixed
+     */
+    private $cachedColorParameterId = true;
 
     /**
      * @param \App\Component\Domain\Domain $domain
@@ -72,6 +78,8 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
                 $this->domain->getId()
             );
         }
+        $variantsParametersSetup = $this->prepareVariantsParametersSetup($variantsParametersSetup);
+        list($countColorsInVariants, $countDifferentVariants) = $this->getParametersValuesInformation($variantsParametersSetup);
 
         return new ListedProductView(
             $product->getId(),
@@ -87,11 +95,13 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $this->getProductPriceWithVatByMoney($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero()),
             $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId()),
             $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId()),
-            $this->prepareVariantsParametersSetup($variantsParametersSetup),
+            $variantsParametersSetup,
             $this->categoryFacade->getCategoriesNamesInPathAsString(
                 $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId()),
                 $this->domain->getLocale()
-            )
+            ),
+            $countColorsInVariants,
+            $countDifferentVariants
         );
     }
 
@@ -104,6 +114,9 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      */
     public function createFromArray(array $productArray, ?ImageView $imageView, ProductActionView $productActionView, PricingGroup $pricingGroup): BaseListedProductView
     {
+        $variantsParametersSetup = $this->prepareVariantsParametersSetup($productArray['variants_parameters_setup'] ?? []);
+        list($countColorsInVariants, $countDifferentVariants) = $this->getParametersValuesInformation($variantsParametersSetup);
+
         return new ListedProductView(
             $productArray['id'],
             $productArray['name'],
@@ -118,9 +131,46 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $this->getProductPriceWithVatByMoney($productArray['non_selling_price'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price'])),
             $productArray['product_available_stocks_count_information'],
             $productArray['product_count_exposed_in_stores'],
-            $this->prepareVariantsParametersSetup($productArray['variants_parameters_setup'] ?? []),
-            $productArray['main_category_path']
+            $variantsParametersSetup,
+            $productArray['main_category_path'],
+            $countColorsInVariants,
+            $countDifferentVariants
         );
+    }
+
+    /**
+     * @param array $variantsParametersSetup
+     * @return array
+     */
+    private function getParametersValuesInformation(array $variantsParametersSetup): array
+    {
+        if ($this->cachedColorParameterId === true) {
+            $colorParameter = $this->parameterFacade->findParameterByAkeneoCode(Parameter::COLOR_PARAMETER_AKENEO_CODE);
+            if ($colorParameter !== null) {
+                $this->cachedColorParameterId = $colorParameter->getId();
+            } else {
+                $this->cachedColorParameterId = false;
+            }
+        }
+
+        $colorParameterValueIds = [];
+        $differentParameterValueIds = [];
+        foreach ($variantsParametersSetup as $variantParametersSetup) {
+            foreach ($variantParametersSetup['parameter_values_setup'] as $parameterId => $parameterValuesSetup) {
+                if ($parameterId === $this->cachedColorParameterId) {
+                    $colorParameterValueIds = array_merge($colorParameterValueIds, $parameterValuesSetup);
+                } else {
+                    $differentParameterValueIds = array_merge($differentParameterValueIds, $parameterValuesSetup);
+                }
+            }
+        }
+        $colorParameterValueIds = array_unique($colorParameterValueIds);
+        $countDifferentColorsInVariants = count($colorParameterValueIds);
+
+        $differentParameterValueIds = array_unique($differentParameterValueIds);
+        $countDifferentVariants = count($differentParameterValueIds);
+
+        return [$countDifferentColorsInVariants, $countDifferentVariants];
     }
 
     /**

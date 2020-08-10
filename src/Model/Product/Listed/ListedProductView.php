@@ -57,6 +57,16 @@ class ListedProductView extends BaseListedProductView
     private $mainCategoryPath;
 
     /**
+     * @var int
+     */
+    private $countColorsInVariants;
+
+    /**
+     * @var int
+     */
+    private $countDifferentVariants;
+
+    /**
      * @param int $id
      * @param string $name
      * @param string|null $shortDescription
@@ -72,6 +82,8 @@ class ListedProductView extends BaseListedProductView
      * @param string $productCountExposedInStores
      * @param array|null $variantsParametersSetup
      * @param string $mainCategoryPath
+     * @param int $countColorsInVariants
+     * @param int $countDifferentVariants
      */
     public function __construct(
         int $id,
@@ -88,7 +100,9 @@ class ListedProductView extends BaseListedProductView
         string $productAvailableStocksCountInformation,
         string $productCountExposedInStores,
         ?array $variantsParametersSetup,
-        string $mainCategoryPath
+        string $mainCategoryPath,
+        int $countColorsInVariants,
+        int $countDifferentVariants
     ) {
         parent::__construct($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
 
@@ -99,6 +113,8 @@ class ListedProductView extends BaseListedProductView
         $this->productCountExposedInStores = $productCountExposedInStores;
         $this->variantsParametersSetup = $variantsParametersSetup;
         $this->mainCategoryPath = $mainCategoryPath;
+        $this->countColorsInVariants = $countColorsInVariants;
+        $this->countDifferentVariants = $countDifferentVariants;
     }
 
     /**
@@ -203,5 +219,21 @@ class ListedProductView extends BaseListedProductView
     public function getMainCategoryPath(): string
     {
         return $this->mainCategoryPath;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountColorsInVariants(): int
+    {
+        return $this->countColorsInVariants;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountDifferentVariants(): int
+    {
+        return $this->countDifferentVariants;
     }
 }
