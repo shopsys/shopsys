@@ -13,8 +13,14 @@
                 </li>
                 <li class="menu__item">
                     <a class="menu__item__link" href="#">
-                    {{ 'Cookies'|trans }}
-                    <img class="menu__item__link__icon" loading="lazy" src="" data-src="{{ asset('public/frontend/images/cookie.png') }}" alt="{{ 'Cookies'|trans }}">
+                        {{ 'Cookies'|trans }}
+                        <img
+                            class="menu__item__link__icon"
+                            loading="lazy"
+                            src="{{ imgLazyloadPlaceholder }}"
+                            data-src="{{ asset('public/frontend/images/cookie.png') }}"
+                            alt="{{ 'Cookies'|trans }}"
+                        >
                     </a>
                 </li>
             </ul>

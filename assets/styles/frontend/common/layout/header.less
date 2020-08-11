@@ -128,10 +128,6 @@
             cursor: pointer;
             font-size: @header-mobile-button-font-size;
 
-            @media @query-lg {
-                display: none;
-            }
-
             &--menu {
                 position: relative;
                 order: 2;
@@ -197,6 +193,10 @@
                     text-decoration: none;
                 }
             }
+        }
+
+        @media @query-lg {
+            display: none;
         }
 
         &__placeholder {

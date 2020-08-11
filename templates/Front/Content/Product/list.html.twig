@@ -64,7 +64,7 @@
                                 <div class="box-series__grid__item">
                                     <a class="box-series__grid__item__link" href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
                                         {% if imageExists(productSeries) %}
-                                            {{ image(productSeries, { itemprop: 'image', size: 'preview', class: 'box-series__grid__item__image' }) }}
+                                            {{ image(productSeries, { size: 'preview', class: 'box-series__grid__item__image' }) }}
                                         {% else %}
                                             {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
                                         {% endif %}

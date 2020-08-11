@@ -153,6 +153,11 @@
             }
         }
 
+        &__detail,
+        &__action {
+            display: none;
+        }
+
         &__info {
             &__price {
                 min-height: 40px;
@@ -218,11 +223,6 @@
                         color: @list-products-availability-primary-color;
                     }
                 }
-            }
-
-            &__detail,
-            &__action {
-                display: none;
             }
         }
     }
@@ -364,16 +364,6 @@
                 font-size: 16px;
             }
 
-            &__action {
-                display: block;
-
-                @media screen and (min-width: 1100px) {
-                    position: absolute;
-                    bottom: 15px;
-                    right: 15px;
-                }
-            }
-
             .btn--success {
                 padding: 12px 25px;
                 margin-top: 10px;
@@ -387,6 +377,16 @@
 
                     font-size: 15px;
                 }
+            }
+        }
+
+        &__action {
+            display: block;
+
+            @media screen and (min-width: 1100px) {
+                position: absolute;
+                bottom: 15px;
+                right: 15px;
             }
         }
 
