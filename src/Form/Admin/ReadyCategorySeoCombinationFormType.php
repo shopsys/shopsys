@@ -6,6 +6,7 @@ namespace App\Form\Admin;
 
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixDataForForm;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -47,7 +48,7 @@ class ReadyCategorySeoCombinationFormType extends AbstractType
                 'label' => t('Krátký popis kategorie'),
                 'required' => false,
             ])
-            ->add('description', TextareaType::class, [
+            ->add('description', CKEditorType::class, [
                 'label' => t('Popis kategorie'),
                 'required' => false,
             ])
