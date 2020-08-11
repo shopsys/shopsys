@@ -49,21 +49,21 @@
     <div class="header__links dont-print">
         <ul class="menu-iconic">
             {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
-                <li class="menu-iconic__item">
+                <li class="menu-iconic__item menu-iconic__item--sub">
                     <a href="#" class="menu-iconic__item__link">
                         <i class="menu-iconic__item__icon svg svg-user"></i>
                         <span class="menu-iconic__item__text">{{ 'Můj účet'|trans }}</span>
                     </a>
                     <ul class="menu-iconic__sub">
                         <li class="menu-iconic__sub__item">
-                            <a href="{{ url('front_customer_edit') }}" class="menu-iconic__sub__item__link">{{ 'Personal data'|trans }}</a>
-                        </li>
-                        <li class="menu-iconic__sub__item">
                             <a href="{{ url('front_customer_orders') }}" class="menu-iconic__sub__item__link">{{ 'My orders'|trans }}</a>
                         </li>
                         <li class="menu-iconic__sub__item">
+                            <a href="{{ url('front_customer_edit') }}" class="menu-iconic__sub__item__link">{{ 'Upravit údaje'|trans }}</a>
+                        </li>
+                        <li class="menu-iconic__sub__item">
                             <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}" class="js-logout-link-desktop menu-iconic__sub__item__link">
-                                {{ 'Log out'|trans }}
+                                {{ 'Odhlásit'|trans }}
                             </a>
                         </li>
                     </ul>
