@@ -8,6 +8,9 @@ use App\Component\ScontoBridge\ScontoBridgeClient;
 use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeImportTransfer;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
+use App\Model\Stock\Future\FutureProductStockData;
+use App\Model\Stock\Future\FutureProductStockDataFactory;
+use App\Model\Stock\Future\FutureProductStockFacade;
 use App\Model\Stock\ProductStockFacade;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -73,6 +76,21 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
     private $domain;
 
     /**
+     * @var \App\Model\Stock\Future\FutureProductStockFacade
+     */
+    private FutureProductStockFacade $futureProductStockFacade;
+
+    /**
+     * @var \App\Model\Stock\Future\FutureProductStockDataFactory
+     */
+    private FutureProductStockDataFactory $futureProductStockDataFactory;
+
+    /**
+     * @var string[][]
+     */
+    private array $importedStoreCodesBySku = [];
+
+    /**
      * @param \App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency
      * @param \App\Component\ScontoBridge\ScontoBridgeClient $scontoBridgeClient
      * @param \App\Component\Setting\Setting $setting
@@ -83,6 +101,8 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index
      * @param \App\Component\Domain\Domain $domain
+     * @param \App\Model\Stock\Future\FutureProductStockFacade $futureProductStockFacade
+     * @param \App\Model\Stock\Future\FutureProductStockDataFactory $futureProductStockDataFactory
      */
     public function __construct(
         ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency,
@@ -94,7 +114,9 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
         IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
         ProductIndex $index,
-        Domain $domain
+        Domain $domain,
+        FutureProductStockFacade $futureProductStockFacade,
+        FutureProductStockDataFactory $futureProductStockDataFactory
     ) {
         parent::__construct($scontoBridgeImportTransferDependency);
 
@@ -107,6 +129,8 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->index = $index;
         $this->domain = $domain;
+        $this->futureProductStockFacade = $futureProductStockFacade;
+        $this->futureProductStockDataFactory = $futureProductStockDataFactory;
     }
 
     /**
@@ -115,6 +139,7 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
     protected function doBeforeTransfer(): void
     {
         $this->productStockFacade->resetFutureProductStockAfterNowDate();
+        $this->futureProductStockFacade->cleanOrdersAfterDeadline();
 
         if ($this->lastModificationAtFromScontoBridge === null) {
             $this->lastModificationAtFromScontoBridge = new DateTime($this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_FUTURE_PRODUCT_STOCK_LAST_UPDATED_DATETIME));
@@ -165,66 +190,59 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
 
         $this->futureProductStockTransferScontoBridgeValidator->validate($scontoBridgeItemData);
 
-        $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId(
-            $scontoBridgeItemData['sku'],
-            $scontoBridgeItemData['storeCode']
-        );
+        $erpId = (string)$scontoBridgeItemData['erpId'];
+        $futureProductStock = $this->futureProductStockFacade->findByErpId($erpId);
 
-        if ($productStock === null) {
-            $this->logger->addWarning(sprintf(
-                'ProductStock with product catnum %s and stock ID %s not found',
-                $scontoBridgeItemData['sku'],
-                $scontoBridgeItemData['storeCode']
-            ));
-        } else {
-            if ($this->buildDate($scontoBridgeItemData['dateArrival']) !== null) {
-                $productStock->setFutureProductQuantity(null);
-                $productStock->setDateOfStorage(null);
-            } else {
-                $futureDateOfStorage = $this->buildDate($scontoBridgeItemData['dateConfirmedArrival']);
-                if ($futureDateOfStorage === null) {
-                    $futureDateOfStorage = $this->buildDate($scontoBridgeItemData['dateExpectedArrival']);
-                }
-
-                if ($futureDateOfStorage < (new DateTime())) {
-                    $productStock->setFutureProductQuantity(null);
-                    $productStock->setDateOfStorage(null);
-                } else {
-                    $productStock->setFutureProductQuantity($scontoBridgeItemData['amount']);
-                    $productStock->setDateOfStorage($futureDateOfStorage);
-                }
+        if ($futureProductStock === null) {
+            if ($scontoBridgeItemData['isLate'] === false) {
+                $futureProductStockData = $this->futureProductStockDataFactory->create();
+                $futureProductStockData = $this->mapScontoBridgeItemDataToFutureProductStorageData($scontoBridgeItemData, $futureProductStockData);
+                $futureProductStock = $this->futureProductStockFacade->create($futureProductStockData);
             }
-
-            $this->em->flush();
-            $this->productExportScheduler->scheduleRowIdForImmediateExport($productStock->getProduct()->getId());
-            $this->logger->addInfo(sprintf(
-                'ProductStock with product catnum %s and stock ID %s edited',
-                $scontoBridgeItemData['sku'],
-                $scontoBridgeItemData['storeCode']
-            ));
+        } else {
+            $futureProductStockData = $this->futureProductStockDataFactory->createFromFutureProductStock($futureProductStock);
+            $futureProductStockData = $this->mapScontoBridgeItemDataToFutureProductStorageData($scontoBridgeItemData, $futureProductStockData);
+            $futureProductStock = $this->futureProductStockFacade->edit($erpId, $futureProductStockData);
         }
 
+        if ($futureProductStock !== null) {
+            $this->importedStoreCodesBySku[$futureProductStock->getSku()][$futureProductStock->getStoreCode()] = $futureProductStock->getStoreCode();
+        }
         $this->lastModificationAtFromScontoBridge = $scontoBridgeItemData['modificationTime'] !== null ? new DateTime($scontoBridgeItemData['modificationTime']) : $this->lastModificationAtFromScontoBridge;
     }
 
     /**
-     * @param array|null $erpDate
+     * @param array $scontoBridgeItemData
+     * @param \App\Model\Stock\Future\FutureProductStockData $futureProductStockData
+     * @return \App\Model\Stock\Future\FutureProductStockData
+     */
+    private function mapScontoBridgeItemDataToFutureProductStorageData(array $scontoBridgeItemData, FutureProductStockData $futureProductStockData): FutureProductStockData
+    {
+        $futureProductStockData->erpId = $scontoBridgeItemData['erpId'];
+        $futureProductStockData->sku = $scontoBridgeItemData['sku'];
+        $futureProductStockData->storeCode = $scontoBridgeItemData['storeCode'];
+        $futureProductStockData->amount = $scontoBridgeItemData['amount'];
+        $futureProductStockData->dateExpectedArrival = $this->buildDate($scontoBridgeItemData['dateExpectedArrival']);
+        $futureProductStockData->dateConfirmedArrival = $this->buildDate($scontoBridgeItemData['dateConfirmedArrival']);
+        $futureProductStockData->isLate = $scontoBridgeItemData['isLate'];
+        if($scontoBridgeItemData['dateArrival'] !== null){
+            $futureProductStockData->isLate = true;
+        }
+
+        return $futureProductStockData;
+    }
+
+    /**
+     * @param string|null $erpDate
      * @return \DateTime|null
      */
-    private function buildDate(?array $erpDate): ?DateTime
+    private function buildDate(?string $erpDate): ?DateTime
     {
         if ($erpDate === null) {
             return null;
         }
 
-        $dateTime = new DateTime();
-        if ($erpDate['month'] === 0 && $erpDate['day'] === 0) {
-            $dateTime->setISODate($erpDate['year'], $erpDate['week'], 7);
-        } else {
-            $dateTime->setDate($erpDate['year'], $erpDate['month'], $erpDate['day']);
-        }
-
-        return $dateTime;
+        return new DateTime($erpDate);
     }
 
     /**
@@ -235,10 +253,67 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
         $this->logger->addInfo('Importing iterable transfer is done.');
         $this->setting->set(Setting::SCONTO_BRIDGE_TRANSFER_FUTURE_PRODUCT_STOCK_LAST_UPDATED_DATETIME, $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT));
 
+        foreach ($this->importedStoreCodesBySku as $sku => $storeCodes) {
+            foreach ($storeCodes as $storeCode) {
+                $this->calculateClosestFutureProductStockBySkuAndStoreCode((string)$sku, (string)$storeCode);
+            }
+        }
+
         $productIds = $this->productExportScheduler->getRowIdsForImmediateExport();
         foreach ($this->domain->getAllIds() as $domainId) {
             $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index::getName(), $domainId);
             $this->indexFacade->exportIds($this->index, $indexDefinition, $productIds);
+        }
+    }
+
+    /**
+     * @param string $sku
+     * @param string $storeCode
+     */
+    private function calculateClosestFutureProductStockBySkuAndStoreCode(string $sku, string $storeCode): void
+    {
+        $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId(
+            $sku,
+            $storeCode
+        );
+
+        if ($productStock === null) {
+            $this->logger->addWarning(sprintf(
+                'ProductStock with product catnum %s and stock ID %s not found',
+                $sku,
+                $storeCode
+            ));
+        } else {
+            $futureProductStock = $this->futureProductStockFacade->findClosestFutureProductStockBySkuAndStoreCode($sku, $storeCode);
+            if ($futureProductStock === null) {
+                $productStock->setFutureProductQuantity(null);
+                $productStock->setDateOfStorage(null);
+            } else {
+                $futureDateOfStorage = $futureProductStock->getDateConfirmedArrival();
+                if ($futureDateOfStorage === null) {
+                    $futureDateOfStorage = $futureProductStock->getDateExpectedArrival();
+                }
+
+                if ($futureDateOfStorage < (new DateTime())->setTime(0, 0)) {
+                    $productStock->setFutureProductQuantity(null);
+                    $productStock->setDateOfStorage(null);
+                } else {
+                    $productStock->setFutureProductQuantity($futureProductStock->getAmount());
+                    $productStock->setDateOfStorage($futureDateOfStorage);
+                }
+            }
+
+            $this->em->flush();
+            $this->productExportScheduler->scheduleRowIdForImmediateExport($productStock->getProduct()->getId());
+            $futureDate = $productStock->getDateOfStorage() !== null ? $productStock->getDateOfStorage()->format('Y-m-d') : 'null';
+            $futureProductQuantity = $productStock->getFutureProductQuantity() !== null ? $productStock->getFutureProductQuantity() : null;
+            $this->logger->addInfo(sprintf(
+                'ProductStock with product catnum %s and stock ID %s edited, (date: %s, futureQuantity: %d)',
+                $sku,
+                $storeCode,
+                $futureDate,
+                $futureProductQuantity
+            ));
         }
     }
 

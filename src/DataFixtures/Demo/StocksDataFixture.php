@@ -103,7 +103,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Praha - Stodůlky',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => '701',
+                    self::ATTR_EXTERNAL => '701-cz',
                     self::ATTR_CITY => 'Praha 5-Stodůlky',
                     self::ATTR_STREET => 'Jeremiášova 947',
                     self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00',
@@ -115,7 +115,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Modřice u Brna',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => '704',
+                    self::ATTR_EXTERNAL => '704-cz',
                     self::ATTR_CITY => '664 42 Modřice u Brna',
                     self::ATTR_STREET => 'Svratecká 879',
                     self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00',
@@ -127,7 +127,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Centrální sklad',
                     self::ATTR_CENTRAL => true,
-                    self::ATTR_EXTERNAL => '800',
+                    self::ATTR_EXTERNAL => '800-cz',
                     self::ATTR_CITY => null,
                     self::ATTR_STREET => null,
                     self::ATTR_OPENING_HOURS => null,
@@ -139,7 +139,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Ostrava - Mariánské Hory',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => '702',
+                    self::ATTR_EXTERNAL => '702-cz',
                     self::ATTR_CITY => '709 00 Ostrava-Mariánské Hory',
                     self::ATTR_STREET => 'Grmelova 2033/4',
                     self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00',
@@ -151,7 +151,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Praha - Černý most',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => '703',
+                    self::ATTR_EXTERNAL => '703-cz',
                     self::ATTR_CITY => '198 29 Praha 9 - Černý Most',
                     self::ATTR_STREET => 'Chlumecká 2420',
                     self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 20:00 hod',
@@ -163,7 +163,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Liberec',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => '705',
+                    self::ATTR_EXTERNAL => '705-cz',
                     self::ATTR_CITY => '463 12 Liberec',
                     self::ATTR_STREET => 'České mládeže 570',
                     self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00 hod',
@@ -175,7 +175,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Ústí nad Labem',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => '706',
+                    self::ATTR_EXTERNAL => '706-cz',
                     self::ATTR_CITY => '400 04 Trmice',
                     self::ATTR_STREET => 'Tyršova ul. 887 (u OC Trmice)',
                     self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00 hod',
@@ -187,7 +187,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'České Budějovice',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => '707',
+                    self::ATTR_EXTERNAL => '707-cz',
                     self::ATTR_CITY => '370 04 České Budějovice',
                     self::ATTR_STREET => 'Strakonická 2800',
                     self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00 hod',
@@ -199,7 +199,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Hradec Králové',
                     self::ATTR_CENTRAL => false,
-                    self::ATTR_EXTERNAL => '708',
+                    self::ATTR_EXTERNAL => '708-cz',
                     self::ATTR_CITY => 'Rovná 1724',
                     self::ATTR_STREET => '503 32 Hradec Králové',
                     self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00 So-Ne 09:00-20:00 hod',
@@ -213,7 +213,7 @@ class StocksDataFixture extends AbstractReferenceFixture
             [
                 self::ATTR_NAME => 'Centrální sklad SK',
                 self::ATTR_CENTRAL => true,
-                self::ATTR_EXTERNAL => '801',
+                self::ATTR_EXTERNAL => '801-sk',
                 self::ATTR_CITY => null,
                 self::ATTR_STREET => null,
                 self::ATTR_OPENING_HOURS => null,
@@ -225,7 +225,7 @@ class StocksDataFixture extends AbstractReferenceFixture
             [
                 self::ATTR_NAME => 'Trnava',
                 self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => '731',
+                self::ATTR_EXTERNAL => '731-sk',
                 self::ATTR_CITY => '917 01 Trnava',
                 self::ATTR_STREET => 'Nová 8144/10',
                 self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00',
@@ -237,7 +237,7 @@ class StocksDataFixture extends AbstractReferenceFixture
             [
                 self::ATTR_NAME => 'Nitra',
                 self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => '732',
+                self::ATTR_EXTERNAL => '732-sk',
                 self::ATTR_CITY => '951 41 Lužianky pri Nitre',
                 self::ATTR_STREET => 'Hlohovecká 2',
                 self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00',
@@ -249,7 +249,7 @@ class StocksDataFixture extends AbstractReferenceFixture
             [
                 self::ATTR_NAME => 'Bratislava',
                 self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => '733',
+                self::ATTR_EXTERNAL => '733-sk',
                 self::ATTR_CITY => '821 02 Bratislava - Ružinov',
                 self::ATTR_STREET => 'Obch. zóna PHAROS (pri letisku)',
                 self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00',
@@ -261,7 +261,7 @@ class StocksDataFixture extends AbstractReferenceFixture
             [
                 self::ATTR_NAME => 'Žilina',
                 self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => '734',
+                self::ATTR_EXTERNAL => '734-sk',
                 self::ATTR_CITY => '010 01 Žilina',
                 self::ATTR_STREET => 'Košická ulica 8962/22',
                 self::ATTR_OPENING_HOURS => 'Po-Ne 09:00 - 19:00',
