@@ -35,30 +35,37 @@
     };
 
     Shopsys.spinbox.plus = function () {
-        var value = $.trim($(this).val());
-        var max = $(this).data('spinbox-max');
-
-        if (value.match(/^\d+$/)) {
-            value = parseInt(value) + 1;
-            if (max !== undefined && max < value) {
-                value = max;
-            }
-            $(this).val(value);
-            $(this).change();
-        }
+        Shopsys.spinbox.changeValue($(this), '+');
     };
 
     Shopsys.spinbox.minus = function () {
-        var value = $.trim($(this).val());
-        var min = $(this).data('spinbox-min');
+        Shopsys.spinbox.changeValue($(this), '-');
+    };
+
+    Shopsys.spinbox.changeValue = function (input, action) {
+        var value = $.trim(input.val());
+        var min = input.data('spinbox-min');
+        var max = input.data('spinbox-max');
 
         if (value.match(/^\d+$/)) {
-            value = parseInt(value) - 1;
+            value = parseInt(value);
+
+            if (action === '+') {
+                value += 1;
+            } else {
+                value -= 1;
+            }
+
             if (min !== undefined && min > value) {
                 value = min;
             }
-            $(this).val(value);
-            $(this).change();
+
+            if (max !== undefined && max < value) {
+                value = max;
+            }
+
+            input.val(value);
+            input.change();
         }
     };
 
