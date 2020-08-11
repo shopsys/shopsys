@@ -215,10 +215,20 @@ class CategoryFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslated
      */
     public function getTranslatedAll(DomainConfig $domainConfig)
     {
         return $this->categoryRepository->getTranslatedAll($domainConfig);
+    }
+
+    /**
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getAllTranslated(string $locale): array
+    {
+        return $this->categoryRepository->getAllTranslated($locale);
     }
 
     /**
@@ -324,10 +334,21 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslatedWithoutBranch
      */
     public function getTranslatedAllWithoutBranch(Category $category, DomainConfig $domainConfig)
     {
         return $this->categoryRepository->getTranslatedAllWithoutBranch($category, $domainConfig);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getAllTranslatedWithoutBranch(Category $category, string $locale): array
+    {
+        return $this->categoryRepository->getAllTranslatedWithoutBranch($category, $locale);
     }
 
     /**

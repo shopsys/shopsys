@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -53,21 +54,29 @@ class CategoryFormType extends AbstractType
     private $pluginCrudExtensionFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     */
+    private $localization;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         CategoryFacade $categoryFacade,
         Domain $domain,
         SeoSettingFacade $seoSettingFacade,
-        PluginCrudExtensionFacade $pluginCrudExtensionFacade
+        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+        Localization $localization
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->domain = $domain;
         $this->seoSettingFacade = $seoSettingFacade;
         $this->pluginCrudExtensionFacade = $pluginCrudExtensionFacade;
+        $this->localization = $localization;
     }
 
     /**
@@ -104,9 +113,9 @@ class CategoryFormType extends AbstractType
         }
 
         if ($options['category'] !== null) {
-            $parentChoices = $this->categoryFacade->getTranslatedAllWithoutBranch($options['category'], $this->domain->getCurrentDomainConfig());
+            $parentChoices = $this->categoryFacade->getAllTranslatedWithoutBranch($options['category'], $this->localization->getAdminLocale());
         } else {
-            $parentChoices = $this->categoryFacade->getTranslatedAll($this->domain->getCurrentDomainConfig());
+            $parentChoices = $this->categoryFacade->getAllTranslated($this->localization->getAdminLocale());
         }
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
