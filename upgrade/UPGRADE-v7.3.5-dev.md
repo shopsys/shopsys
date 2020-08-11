@@ -65,3 +65,14 @@ There you can find links to upgrade notes for other versions too.
 
 - fix Elasticsearch test reliability on fail ([#1662](https://github.com/shopsys/shopsys/pull/1662))
     - see #project-base-diff to update your project
+
+- categories in admin are now loaded using admin locale ([#1982](https://github.com/shopsys/shopsys/pull/1982))
+    - `CategoryRepository::getTranslatedAllWithoutBranch()` is deprecated, use `CategoryRepository::getAllTranslatedWithoutBranch()` instead
+    - `CategoryRepository::getTranslatedAll` is deprecated, use `CategoryRepository::getAllTranslated()` instead
+    - `CategoryFacade::getTranslatedAllWithoutBranch()` is deprecated, use `CategoryFacade::getAllTranslatedWithoutBranch()` instead
+    - `CategoryFacade::getTranslatedAll` is deprecated, use `CategoryFacade::getAllTranslated()` instead
+    - `ProductCategoryFilter::__construct()` has changed its interface and argument Domain will be removed in next major
+    ```diff
+    -   public function __construct(CategoryFacade $categoryFacade, Domain $domain = null)
+    +   public function __construct(CategoryFacade $categoryFacade, ?Domain $domain = null, ?LocalizationAlias $localization = null)
+    ```
