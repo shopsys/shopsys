@@ -4,10 +4,12 @@
 {% block title %}- {{ 'Categories'|trans }}{% endblock %}
 {% block h1 %}{{ 'Categories'|trans }}{% endblock %}
 {% block btn %}
-    <a href="{{ url('admin_category_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-        <i class="btn__icon">+</i>
-        {{ 'Create new category'|trans }}
-    </a>
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_category_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Create new category'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}

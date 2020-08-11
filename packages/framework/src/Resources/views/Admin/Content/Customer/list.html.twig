@@ -4,10 +4,12 @@
 {% block h1 %}{{ 'Customers overview'|trans }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ url('admin_customer_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-        <i class="btn__icon">+</i>
-        {{ 'Create new customer'|trans }}
-    </a>
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_customer_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Create new customer'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}

@@ -3,10 +3,12 @@
 {% block title %}- {{ 'Scripts overview'|trans }}{% endblock %}
 {% block h1 %}{{ 'Scripts overview'|trans }}{% endblock %}
 {% block btn %}
-    <a href="{{ url('admin_script_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-        <i class="btn__icon">+</i>
-        {{ 'Create new script'|trans }}
-    </a>
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_script_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Create new script'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}
