@@ -67,6 +67,11 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private $promoCodeLimitRepository;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitFactory
+     */
+    private PromoCodeLimitFactory $promoCodeLimitFactory;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
@@ -78,6 +83,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryFactory $promoCodeCategoryFactory
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Component\String\HashGenerator $hashGenerator
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -90,7 +96,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
         PromoCodeProductFactory $promoCodeProductFactory,
         PromoCodeCategoryFactory $promoCodeCategoryFactory,
         PromoCodeLimitRepository $promoCodeLimitRepository,
-        HashGenerator $hashGenerator
+        HashGenerator $hashGenerator,
+        PromoCodeLimitFactory $promoCodeLimitFactory
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
         $this->domain = $domain;
@@ -101,6 +108,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->promoCodeCategoryFactory = $promoCodeCategoryFactory;
         $this->promoCodeLimitRepository = $promoCodeLimitRepository;
         $this->hashGenerator = $hashGenerator;
+        $this->promoCodeLimitFactory = $promoCodeLimitFactory;
     }
 
     /**
@@ -172,6 +180,11 @@ class PromoCodeFacade extends BasePromoCodeFacade
             if (!in_array($code, $existingPromoCodeCodes, true)) {
                 $promoCodeDataForCreate->code = $code;
 
+                $promoCodeDataForCreate->limits = [];
+                foreach ($promoCodeData->limits as $promoCodeLimit) {
+                    $promoCodeDataForCreate->limits[] = $this->promoCodeLimitFactory->create($promoCodeLimit->getFromPriceWithVat(), $promoCodeLimit->getPercent());
+                }
+
                 $promoCode = $this->create($promoCodeDataForCreate);
                 $this->em->persist($promoCode);
 
@@ -181,6 +194,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
                 if ($generatedPromoCodeCount % self::MASS_CREATE_BATCH_SIZE === 0) {
                     $this->em->flush();
                     $this->em->clear(PromoCodeCategory::class);
+                    $this->em->clear(PromoCodeLimit::class);
                     $this->em->clear(PromoCode::class);
                 }
             }
