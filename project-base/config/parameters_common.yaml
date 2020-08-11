@@ -19,6 +19,6 @@ parameters:
     shopsys.performance_test.feed.min_duration_seconds: 5
     container.autowiring.strict_mode: true
     container.dumper.inline_class_loader: true
-    build-version: '0000000000000000'
+    build-version: '0000000000000000_%kernel.environment%'
     shopsys.display_timezone: Europe/Prague
     shopsys.image.enable_lazy_load: true
