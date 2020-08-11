@@ -664,7 +664,7 @@ class ProductRepository
     public function getProductIteratorForReplaceVat()
     {
         $query = $this->em->createQuery('
-            SELECT p
+            SELECT DISTINCT p
             FROM ' . Product::class . ' p
             JOIN ' . ProductDomain::class . ' pd WITH pd.product = p
             JOIN pd.vat v
