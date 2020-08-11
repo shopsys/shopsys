@@ -4,18 +4,59 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
+use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
+use CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface;
+use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Twig\PriceExtension as BasePriceExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
  * @property \App\Component\Domain\Domain $domain
- * @method __construct(\Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository, \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository, \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory $currencyFormatterFactory)
  */
 class PriceExtension extends BasePriceExtension
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    private AdminDomainTabsFacade $adminDomainTabsFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository
+     * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
+     * @param \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory $currencyFormatterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     */
+    public function __construct(
+        CurrencyFacade $currencyFacade,
+        Domain $domain,
+        Localization $localization,
+        NumberFormatRepositoryInterface $numberFormatRepository,
+        CurrencyRepositoryInterface $intlCurrencyRepository,
+        CurrencyFormatterFactory $currencyFormatterFactory,
+        AdminDomainTabsFacade $adminDomainTabsFacade
+    ) {
+        parent::__construct(
+            $currencyFacade,
+            $domain,
+            $localization,
+            $numberFormatRepository,
+            $intlCurrencyRepository,
+            $currencyFormatterFactory
+        );
+
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
+    }
+
     /**
      * @return \Twig\TwigFilter[]
      */
@@ -26,6 +67,10 @@ class PriceExtension extends BasePriceExtension
         $filters[] = new TwigFilter(
             'priceWithoutCurrency',
             [$this, 'priceWithoutCurrencyFilter']
+        );
+        $filters[] = new TwigFilter(
+            'priceFromDecimalStringWithCurrencyAdmin',
+            [$this, 'priceFromDecimalStringWithCurrencyAdmin']
         );
 
         return $filters;
@@ -67,6 +112,18 @@ class PriceExtension extends BasePriceExtension
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
 
         return $this->formatCurrencyWithoutSymbol($price, $currency);
+    }
+
+    /**
+     * @param string $priceDecimal
+     * @return string
+     */
+    public function priceFromDecimalStringWithCurrencyAdmin(string $priceDecimal): string
+    {
+        $money = Money::create($priceDecimal);
+        $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+
+        return $this->priceWithCurrencyByDomainIdFilter($money, $domainId);
     }
 
     /**

@@ -33,16 +33,16 @@ class PromoCodeLimit
      *
      * @ORM\Column(type="decimal", precision=20, scale=4)
      */
-    private $percent;
+    private $discount;
 
     /**
      * @param string $from
-     * @param string $percent
+     * @param string $discount
      */
-    public function __construct(string $from, string $percent)
+    public function __construct(string $from, string $discount)
     {
         $this->fromPriceWithVat = $from;
-        $this->percent = $percent;
+        $this->discount = $discount;
     }
 
     /**
@@ -56,9 +56,9 @@ class PromoCodeLimit
     /**
      * @return string
      */
-    public function getPercent(): ?string
+    public function getDiscount(): ?string
     {
-        return $this->percent;
+        return $this->discount;
     }
 
     /**

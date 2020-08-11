@@ -79,7 +79,7 @@ class QuantifiedProductPriceCalculation extends BaseQuantifiedProductPriceCalcul
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
      *
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
+     * @return \App\Model\Order\Item\QuantifiedItemPrice[]
      */
     public function calculatePrices(array $quantifiedProducts, int $domainId, ?CustomerUser $customerUser = null, array $promoCodePerProduct = []): array
     {
@@ -98,7 +98,7 @@ class QuantifiedProductPriceCalculation extends BaseQuantifiedProductPriceCalcul
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
      *
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
+     * @return \App\Model\Order\Item\QuantifiedItemPrice[]
      */
     public function calculatePromoCodeApplicablePrices(array $quantifiedProducts, int $domainId, ?CustomerUser $customerUser, array $promoCodePerProduct): array
     {

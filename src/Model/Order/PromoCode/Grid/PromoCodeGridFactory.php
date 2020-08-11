@@ -8,9 +8,7 @@ use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeLimit;
 use App\Model\Order\PromoCode\PromoCodeLimitRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory as BasePromoCodeGridFactory;
@@ -87,7 +85,7 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
     {
         $limits = $this->promoCodeLimitRepository->getLimitsByPromoCodeId($id);
         $flatten = static function (PromoCodeLimit $limit) {
-            return $limit->getPercent();
+            return $limit->getDiscount();
         };
 
         return array_map($flatten, $limits);

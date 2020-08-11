@@ -18,10 +18,13 @@ use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
+use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -30,6 +33,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PromoCodeFormTypeExtension extends AbstractTypeExtension
 {
+    public const VALIDATION_GROUP_TYPE_PERCENT = 'type_percent';
+    public const VALIDATION_GROUP_TYPE_NOMINAL = 'type_nominal';
+
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeFacade
      */
@@ -87,6 +93,17 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      */
     private function buildBaseFormGroup(FormBuilderInterface $builder, array $options): void
     {
+        $builder->add('discountType', ChoiceType::class, [
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => [
+                t('Procenta') => PromoCode::DISCOUNT_TYPE_PERCENT,
+                t('Nominální') => PromoCode::DISCOUNT_TYPE_NOMINAL,
+            ],
+            'position' => ['before' => 'limits'],
+            'label' => t('Typ slevy'),
+        ]);
+
         $discountOptions = $builder->get('percent')->getOptions();
         $discountOptions['label'] = t('Sleva (%)');
         $builder->remove('percent');
@@ -239,6 +256,19 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
                     new Constraints\Callback([$this, 'validateDateTimeFrom']),
                     new Constraints\Callback([$this, 'validateDateTimeTo']),
                 ],
+                'validation_groups' => static function (FormInterface $form) {
+                    $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
+                    /** @var \App\Model\Order\PromoCode\PromoCodeData $promoCodeData */
+                    $promoCodeData = $form->getData();
+
+                    if ($promoCodeData->discountType === PromoCode::DISCOUNT_TYPE_NOMINAL) {
+                        $validationGroups[] = self::VALIDATION_GROUP_TYPE_NOMINAL;
+                    } else {
+                        $validationGroups[] = self::VALIDATION_GROUP_TYPE_PERCENT;
+                    }
+
+                    return $validationGroups;
+                },
             ]);
     }
 
@@ -355,7 +385,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Limity'),
                 'position' => ['after' => $after],
                 'entry_type' => PromoCodeLimitType::class,
-                'entry_options' => ['percent' => $discountOptions],
+                'entry_options' => ['discount' => $discountOptions],
                 'required' => false,
                 'allow_add' => true,
                 'allow_delete' => true,

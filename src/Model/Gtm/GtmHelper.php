@@ -8,7 +8,7 @@ use App\Model\Cart\CartFacade;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\OrderData;
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver;
+use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 class GtmHelper
@@ -24,7 +24,7 @@ class GtmHelper
     private $gtmContainer;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
      */
     private $promoCodeLimitByCartTotalResolver;
 
@@ -36,13 +36,13 @@ class GtmHelper
     /**
      * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
      * @param \App\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         NumberFormatterExtension $numberFormatterExtension,
         GtmContainer $gtmContainer,
-        PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver,
+        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
         CartFacade $cartFacade
     ) {
         $this->numberFormatterExtension = $numberFormatterExtension;
@@ -69,11 +69,7 @@ class GtmHelper
             return;
         }
 
-        $orderData->gtmCoupon = sprintf(
-            '%s|%s',
-            $usedPromoCode->getCode(),
-            $this->numberFormatterExtension->formatPercent($limit->getPercent())
-        );
+        $orderData->gtmCoupon = $usedPromoCode->getCode();
     }
 
     /**

@@ -32,7 +32,7 @@ class PromoCodeLimitTransformer implements DataTransformerInterface
         if ($promoCodeLimit instanceof PromoCodeLimit) {
             return [
                 'fromPriceWithVat' => $promoCodeLimit->getFromPriceWithVat(),
-                'percent' => $promoCodeLimit->getPercent(),
+                'discount' => $promoCodeLimit->getDiscount(),
             ];
         }
 
@@ -45,10 +45,10 @@ class PromoCodeLimitTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value): PromoCodeLimit
     {
-        if (is_array($value) === false || $value['fromPriceWithVat'] === null || $value['percent'] === null) {
+        if (is_array($value) === false || $value['fromPriceWithVat'] === null || $value['discount'] === null) {
             $this->promoCodeLimitFactory->create('0', '0');
         }
 
-        return $this->promoCodeLimitFactory->create((string)$value['fromPriceWithVat'], (string)$value['percent']);
+        return $this->promoCodeLimitFactory->create((string)$value['fromPriceWithVat'], (string)$value['discount']);
     }
 }

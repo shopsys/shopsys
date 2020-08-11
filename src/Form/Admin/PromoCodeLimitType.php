@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints;
 
 class PromoCodeLimitType extends AbstractType
 {
@@ -31,8 +31,8 @@ class PromoCodeLimitType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired('percent')
-            ->addAllowedTypes('percent', 'array');
+        $resolver->setRequired('discount')
+            ->addAllowedTypes('discount', 'array');
     }
 
     /**
@@ -43,15 +43,33 @@ class PromoCodeLimitType extends AbstractType
     {
         $builder->add('fromPriceWithVat', IntegerType::class, [
             'constraints' => [
-                new NotBlank([
+                new Constraints\NotBlank([
                     'message' => 'Prosím vložte limit od',
                 ]),
             ],
         ]);
+
+        $options = $options['discount'];
+        foreach ($options['constraints'] as $constraint) {
+            $constraint->groups = [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_PERCENT];
+        }
+        $options['constraints'] = array_merge($options['constraints'], [
+            new Constraints\NotBlank([
+                'groups' => [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL],
+            ]),
+            new Constraints\GreaterThanOrEqual([
+                'groups' => [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL],
+                'value' => 1,
+            ]),
+            new Constraints\Regex([
+                'groups' => PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL,
+                'pattern' => '/^\d+$/',
+            ]),
+        ]);
         $builder->add(
-            'percent',
+            'discount',
             IntegerType::class,
-            $options['percent']
+            $options
         );
         $builder->addModelTransformer($this->promoCodeLimitTransformer);
     }

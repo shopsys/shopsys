@@ -81,7 +81,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $productTypeQuantifiedProducts
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
@@ -93,7 +93,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     public function calculatePreview(
         Currency $currency,
         int $domainId,
-        array $quantifiedProducts,
+        array $productTypeQuantifiedProducts,
         ?Transport $transport = null,
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
@@ -101,21 +101,18 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         ?ProductType $productType = null,
         ?Stock $personalPickupStock = null
     ): BaseOrderPreview {
-        $promoCodePerProduct = $this->currentPromoCodeFacade->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId);
+        $promoCodePerProduct = $this->currentPromoCodeFacade->getPromoCodePerProductByDomainId($productTypeQuantifiedProducts, $domainId);
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
-            $quantifiedProducts,
+            $productTypeQuantifiedProducts,
             $domainId,
             $customerUser,
             $promoCodePerProduct
         );
 
-        $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
-
         $quantifiedItemsDiscounts = $this->quantifiedProductDiscountCalculation->calculateDiscountsPerProductRoundedByCurrency(
-            $quantifiedProducts,
+            $productTypeQuantifiedProducts,
             $quantifiedItemsPrices,
             $promoCodePerProduct,
-            $productsFullPrice,
             $currency
         );
 
@@ -146,8 +143,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
                 }
             }
         }
-
-        $totalPriceDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
 
         if ($transport !== null) {
             if ($transportForFree) {
@@ -190,14 +185,15 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $roundingPrice
         );
 
-        $totalProductHighPrice = $this->calculateTotalProductsHighPriceByDomain($quantifiedProducts, $domainId);
+        $totalProductHighPrice = $this->calculateTotalProductsHighPriceByDomain($productTypeQuantifiedProducts, $domainId);
         $promoCodeCode = $this->currentPromoCodeFacade->getPromoCodeCode();
-        $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
+        $productsAvailability = $this->getProductsAvailability($productTypeQuantifiedProducts, $domainId);
         $promoCodeIdentifier = $this->currentPromoCodeFacade->getPromoCodeIdentifier();
         $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
+        $totalPriceDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
 
         return new OrderPreview(
-            $quantifiedProducts,
+            $productTypeQuantifiedProducts,
             $quantifiedItemsPrices,
             $quantifiedItemsDiscounts,
             $productsPrice,
