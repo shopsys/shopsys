@@ -325,7 +325,6 @@ class Product extends AbstractTranslatableEntity
         array $productCategoryDomains,
         ProductData $productData
     ) {
-
         $this->editFlags($productData->flags);
         $this->setDomains($productData);
 
