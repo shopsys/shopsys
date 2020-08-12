@@ -46,3 +46,7 @@ There you can find links to upgrade notes for other versions too.
 
 - moved setting of common entity data to new method ([#1976](https://github.com/shopsys/shopsys/pull/1976))
     - see #project-base-diff to update your project
+
+- required new line at the end of each file ([#1989](https://github.com/shopsys/shopsys/pull/1989))
+    - see #project-base-diff
+    - to fix errors you may run `php phing standards-fix`
