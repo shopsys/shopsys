@@ -48,15 +48,21 @@ class HeurekaProductDomain
      */
     public function __construct(HeurekaProductDomainData $heurekaProductDomainData)
     {
-        $this->product = $heurekaProductDomainData->product;
-        $this->cpc = $heurekaProductDomainData->cpc;
-        $this->domainId = $heurekaProductDomainData->domainId;
+        $this->setData($heurekaProductDomainData);
     }
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
      */
     public function edit(HeurekaProductDomainData $heurekaProductDomainData)
+    {
+        $this->setData($heurekaProductDomainData);
+    }
+
+    /**
+     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
+     */
+    protected function setData(HeurekaProductDomainData $heurekaProductDomainData): void
     {
         $this->product = $heurekaProductDomainData->product;
         $this->cpc = $heurekaProductDomainData->cpc;

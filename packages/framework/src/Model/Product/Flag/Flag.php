@@ -51,6 +51,22 @@ class Flag extends AbstractTranslatableEntity
     public function __construct(FlagData $flagData)
     {
         $this->translations = new ArrayCollection();
+        $this->setData($flagData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
+     */
+    public function edit(FlagData $flagData)
+    {
+        $this->setData($flagData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
+     */
+    protected function setData(FlagData $flagData): void
+    {
         $this->setTranslations($flagData);
         $this->rgbColor = $flagData->rgbColor;
         $this->visible = $flagData->visible;
@@ -105,15 +121,5 @@ class Flag extends AbstractTranslatableEntity
     protected function createTranslation()
     {
         return new FlagTranslation();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
-    public function edit(FlagData $flagData)
-    {
-        $this->setTranslations($flagData);
-        $this->rgbColor = $flagData->rgbColor;
-        $this->visible = $flagData->visible;
     }
 }

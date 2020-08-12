@@ -37,4 +37,12 @@ class Transport extends BaseTransport
     {
         parent::edit($transportData);
     }
+
+    /**
+     * @param \App\Model\Transport\TransportData $transportData
+     */
+    protected function setData(BaseTransportData $transportData): void
+    {
+        parent::setData($transportData);
+    }
 }

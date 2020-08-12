@@ -99,20 +99,22 @@ class Article implements OrderableEntityInterface
     public function __construct(ArticleData $articleData)
     {
         $this->domainId = $articleData->domainId;
-        $this->name = $articleData->name;
-        $this->text = $articleData->text;
-        $this->seoTitle = $articleData->seoTitle;
-        $this->seoMetaDescription = $articleData->seoMetaDescription;
-        $this->seoH1 = $articleData->seoH1;
-        $this->placement = $articleData->placement;
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
-        $this->hidden = $articleData->hidden;
+        $this->setData($articleData);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      */
     public function edit(ArticleData $articleData)
+    {
+        $this->setData($articleData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
+     */
+    protected function setData(ArticleData $articleData): void
     {
         $this->name = $articleData->name;
         $this->text = $articleData->text;

@@ -34,4 +34,12 @@ class Administrator extends BaseAdministrator
     {
         parent::edit($administratorData);
     }
+
+    /**
+     * @param \App\Model\Administrator\AdministratorData $administratorData
+     */
+    protected function setData(BaseAdministratorData $administratorData): void
+    {
+        parent::setData($administratorData);
+    }
 }

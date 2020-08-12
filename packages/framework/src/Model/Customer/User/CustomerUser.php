@@ -137,27 +137,31 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
      */
     public function __construct(CustomerUserData $customerUserData)
     {
-        $this->firstName = $customerUserData->firstName;
-        $this->lastName = $customerUserData->lastName;
+        $this->domainId = $customerUserData->domainId;
+        $this->setEmail($customerUserData->email);
+        $this->customer = $customerUserData->customer;
+        $this->uuid = $customerUserData->uuid ?: Uuid::uuid4()->toString();
+        $this->refreshTokenChain = new ArrayCollection();
         if ($customerUserData->createdAt !== null) {
             $this->createdAt = $customerUserData->createdAt;
         } else {
             $this->createdAt = new \DateTime();
         }
-        $this->domainId = $customerUserData->domainId;
-        $this->pricingGroup = $customerUserData->pricingGroup;
-        $this->telephone = $customerUserData->telephone;
-        $this->setEmail($customerUserData->email);
-        $this->customer = $customerUserData->customer;
-        $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
-        $this->uuid = $customerUserData->uuid ?: Uuid::uuid4()->toString();
-        $this->refreshTokenChain = new ArrayCollection();
+        $this->setData($customerUserData);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function edit(CustomerUserData $customerUserData)
+    {
+        $this->setData($customerUserData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     */
+    protected function setData(CustomerUserData $customerUserData): void
     {
         $this->firstName = $customerUserData->firstName;
         $this->lastName = $customerUserData->lastName;

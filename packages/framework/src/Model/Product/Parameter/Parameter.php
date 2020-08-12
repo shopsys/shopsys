@@ -44,6 +44,22 @@ class Parameter extends AbstractTranslatableEntity
     public function __construct(ParameterData $parameterData)
     {
         $this->translations = new ArrayCollection();
+        $this->setData($parameterData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
+     */
+    public function edit(ParameterData $parameterData)
+    {
+        $this->setData($parameterData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
+     */
+    protected function setData(ParameterData $parameterData): void
+    {
         $this->setTranslations($parameterData);
         $this->visible = $parameterData->visible;
     }
@@ -89,14 +105,5 @@ class Parameter extends AbstractTranslatableEntity
     protected function createTranslation()
     {
         return new ParameterTranslation();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     */
-    public function edit(ParameterData $parameterData)
-    {
-        $this->setTranslations($parameterData);
-        $this->visible = $parameterData->visible;
     }
 }

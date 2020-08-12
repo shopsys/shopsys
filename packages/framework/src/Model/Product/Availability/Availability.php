@@ -44,6 +44,22 @@ class Availability extends AbstractTranslatableEntity
     public function __construct(AvailabilityData $availabilityData)
     {
         $this->translations = new ArrayCollection();
+        $this->setData($availabilityData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
+     */
+    public function edit(AvailabilityData $availabilityData)
+    {
+        $this->setData($availabilityData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
+     */
+    protected function setData(AvailabilityData $availabilityData): void
+    {
         $this->setTranslations($availabilityData);
         $this->dispatchTime = $availabilityData->dispatchTime;
     }
@@ -81,15 +97,6 @@ class Availability extends AbstractTranslatableEntity
     protected function createTranslation()
     {
         return new AvailabilityTranslation();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
-     */
-    public function edit(AvailabilityData $availabilityData)
-    {
-        $this->setTranslations($availabilityData);
-        $this->dispatchTime = $availabilityData->dispatchTime;
     }
 
     /**

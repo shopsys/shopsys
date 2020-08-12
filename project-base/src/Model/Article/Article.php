@@ -28,8 +28,6 @@ class Article extends BaseArticle
     public function __construct(BaseArticleData $articleData)
     {
         parent::__construct($articleData);
-
-        $this->createdAt = $articleData->createdAt ?? new DateTime();
     }
 
     /**
@@ -38,7 +36,14 @@ class Article extends BaseArticle
     public function edit(BaseArticleData $articleData)
     {
         parent::edit($articleData);
+    }
 
+    /**
+     * @param \App\Model\Article\ArticleData $articleData
+     */
+    protected function setData(BaseArticleData $articleData): void
+    {
+        parent::setData($articleData);
         $this->createdAt = $articleData->createdAt ?? new DateTime();
     }
 

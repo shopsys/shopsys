@@ -35,7 +35,7 @@ class SalesmanData
 }
 ```
 
-### 1.2 Add constructor, `edit` method, and getters to `Salesman` entity
+### 1.2 Add constructor, `edit` and `setData` method, and getters to `Salesman` entity
 ```diff
 // src/Model/Salesman/Salesman.php
 
@@ -46,13 +46,20 @@ class Salesman
 +      */
 +     public function __construct(SalesmanData $salesmanData)
 +     {
-+         $this->edit($salesmanData);
++         $this->setData($salesmanData);
 +     }
 
 +     /**
 +      * @param \App\Model\Salesman\SalesmanData $salesmanData
 +      */
 +     public function edit(SalesmanData $salesmanData)
++     {
++         $this->setData($salesmanData);
++     }
++
++      * @param \App\Model\Salesman\SalesmanData $salesmanData
++      */
++     public function setData(SalesmanData $salesmanData)
 +     {
 +         $this->name = $salesmanData->name;
 +         $this->registeredAt = $salesmanData->registeredAt;

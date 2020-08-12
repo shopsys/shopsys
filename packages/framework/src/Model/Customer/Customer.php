@@ -47,8 +47,8 @@ class Customer
      */
     public function __construct(CustomerData $customerData)
     {
-        $this->setData($customerData);
         $this->domainId = $customerData->domainId;
+        $this->setData($customerData);
     }
 
     /**

@@ -62,17 +62,21 @@ class ZboziProductDomain
      */
     public function __construct(ZboziProductDomainData $zboziProductDomainData)
     {
-        $this->product = $zboziProductDomainData->product;
-        $this->show = $zboziProductDomainData->show;
-        $this->cpc = $zboziProductDomainData->cpc;
-        $this->cpcSearch = $zboziProductDomainData->cpcSearch;
-        $this->domainId = $zboziProductDomainData->domainId;
+        $this->setData($zboziProductDomainData);
     }
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
      */
     public function edit(ZboziProductDomainData $zboziProductDomainData)
+    {
+        $this->setData($zboziProductDomainData);
+    }
+
+    /**
+     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
+     */
+    protected function setData(ZboziProductDomainData $zboziProductDomainData): void
     {
         $this->product = $zboziProductDomainData->product;
         $this->show = $zboziProductDomainData->show;

@@ -15,7 +15,7 @@ It is a common modification when you need your ecommerce application and ERP sys
 
 Add new `extId` field with Doctrine ORM annotations and a getter for the field into `App\Model\Product\Product` class.
 
-Overwrite constructor for creating `Product` instances.
+Overwrite `setData` method for setting entity data from data object.
 
 ```php
 namespace App\Model\Product;
@@ -39,13 +39,13 @@ class Product extends BaseProduct
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product[]|null $variants
      */
-    protected function __construct(BaseProductData $productData, array $variants = null)
+    protected function setData(BaseProductData $productData): void
     {
-        parent::__construct($productData, $variants);
-
+        parent::setData($productData);
+        
         $this->extId = $productData->extId ?? 0;
+
     }
 
     /**
@@ -219,7 +219,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 !!! tip
     If you want to change order for your newly created field, please look at section [Changing order of groups and fields](../extensibility/form-extension.md#changing-order-of-groups-and-fields)
 
-In your `Product` class, overwrite the `edit()` method.
+In your `Product` class, overwrite the `setData()` method.
 
 ```php
 namespace App\Model\Product;
@@ -229,14 +229,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 // ...
 
 /**
- * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
  * @param \App\Model\Product\ProductData $productData
  */
-public function edit(
-    array $productCategoryDomains  
-    BaseProductData $productData,
-) {
-    parent::edit($productCategoryDomains, $productData);
+public function setData(BaseProductData $productData) {
+    parent::setData($productData);
 
     $this->extId = $productData->extId;
 }

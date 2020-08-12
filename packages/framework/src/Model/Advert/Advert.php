@@ -76,19 +76,21 @@ class Advert
      */
     public function __construct(AdvertData $advert)
     {
-        $this->domainId = $advert->domainId;
-        $this->name = $advert->name;
-        $this->type = $advert->type;
-        $this->code = $advert->code;
-        $this->link = $advert->link;
-        $this->positionName = $advert->positionName;
-        $this->hidden = $advert->hidden;
+        $this->setData($advert);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advert
      */
     public function edit(AdvertData $advert)
+    {
+        $this->setData($advert);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advert
+     */
+    protected function setData(AdvertData $advert): void
     {
         $this->domainId = $advert->domainId;
         $this->name = $advert->name;

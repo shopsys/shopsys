@@ -52,4 +52,12 @@ class Product extends BaseProduct
     ) {
         parent::edit($productCategoryDomains, $productData);
     }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function setData(BaseProductData $productData): void
+    {
+        parent::setData($productData);
+    }
 }

@@ -47,15 +47,21 @@ class GoogleProductDomain
      */
     public function __construct(GoogleProductDomainData $googleProductDomainData)
     {
-        $this->product = $googleProductDomainData->product;
-        $this->show = $googleProductDomainData->show;
-        $this->domainId = $googleProductDomainData->domainId;
+        $this->setData($googleProductDomainData);
     }
 
     /**
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
      */
     public function edit(GoogleProductDomainData $googleProductDomainData)
+    {
+        $this->setData($googleProductDomainData);
+    }
+
+    /**
+     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
+     */
+    protected function setData(GoogleProductDomainData $googleProductDomainData): void
     {
         $this->product = $googleProductDomainData->product;
         $this->show = $googleProductDomainData->show;

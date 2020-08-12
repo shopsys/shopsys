@@ -37,4 +37,12 @@ class Payment extends BasePayment
     {
         parent::edit($paymentData);
     }
+
+    /**
+     * @param \App\Model\Payment\PaymentData $paymentData
+     */
+    protected function setData(BasePaymentData $paymentData): void
+    {
+        parent::setData($paymentData);
+    }
 }

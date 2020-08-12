@@ -88,23 +88,22 @@ class BillingAddress
      */
     public function __construct(BillingAddressData $billingAddressData)
     {
-        $this->street = $billingAddressData->street;
-        $this->city = $billingAddressData->city;
-        $this->postcode = $billingAddressData->postcode;
-        $this->companyCustomer = $billingAddressData->companyCustomer;
-        if ($this->companyCustomer) {
-            $this->companyName = $billingAddressData->companyName;
-            $this->companyNumber = $billingAddressData->companyNumber;
-            $this->companyTaxNumber = $billingAddressData->companyTaxNumber;
-        }
-        $this->country = $billingAddressData->country;
         $this->customer = $billingAddressData->customer;
+        $this->setData($billingAddressData);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
      */
     public function edit(BillingAddressData $billingAddressData)
+    {
+        $this->setData($billingAddressData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
+     */
+    protected function setData(BillingAddressData $billingAddressData): void
     {
         $this->street = $billingAddressData->street;
         $this->city = $billingAddressData->city;

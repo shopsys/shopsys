@@ -293,16 +293,9 @@ class Product extends AbstractTranslatableEntity
         $this->catnum = $productData->catnum;
         $this->partno = $productData->partno;
         $this->ean = $productData->ean;
-        $this->sellingFrom = $productData->sellingFrom;
-        $this->sellingTo = $productData->sellingTo;
-        $this->sellingDenied = $productData->sellingDenied;
-        $this->hidden = $productData->hidden;
-        $this->unit = $productData->unit;
         $this->setAvailabilityAndStock($productData);
         $this->calculatedAvailability = $this->availability;
-        $this->recalculateAvailability = true;
         $this->calculatedVisibility = false;
-        $this->setTranslations($productData);
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
         $this->flags = new ArrayCollection($productData->flags);
@@ -311,8 +304,6 @@ class Product extends AbstractTranslatableEntity
         $this->calculatedHidden = true;
         $this->calculatedSellingDenied = true;
         $this->exportProduct = true;
-        $this->brand = $productData->brand;
-        $this->orderingPriority = $productData->orderingPriority;
 
         $this->variants = new ArrayCollection();
         if ($variants === null) {
@@ -323,6 +314,49 @@ class Product extends AbstractTranslatableEntity
         }
 
         $this->uuid = $productData->uuid ?: Uuid::uuid4()->toString();
+        $this->setData($productData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     */
+    public function edit(
+        array $productCategoryDomains,
+        ProductData $productData
+    ) {
+
+        $this->editFlags($productData->flags);
+        $this->setDomains($productData);
+
+        if (!$this->isVariant()) {
+            $this->setProductCategoryDomains($productCategoryDomains);
+        }
+        if (!$this->isMainVariant()) {
+            $this->setAvailabilityAndStock($productData);
+            $this->catnum = $productData->catnum;
+            $this->partno = $productData->partno;
+            $this->ean = $productData->ean;
+        }
+        $this->setData($productData);
+
+        $this->markForVisibilityRecalculation();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     */
+    protected function setData(ProductData $productData): void
+    {
+        $this->sellingFrom = $productData->sellingFrom;
+        $this->sellingTo = $productData->sellingTo;
+        $this->sellingDenied = $productData->sellingDenied;
+        $this->hidden = $productData->hidden;
+        $this->brand = $productData->brand;
+        $this->unit = $productData->unit;
+        $this->recalculateAvailability = true;
+        $this->setTranslations($productData);
+        $this->orderingPriority = $productData->orderingPriority;
     }
 
     /**
@@ -342,40 +376,6 @@ class Product extends AbstractTranslatableEntity
     public static function createMainVariant(ProductData $productData, array $variants)
     {
         return new static($productData, $variants);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    public function edit(
-        array $productCategoryDomains,
-        ProductData $productData
-    ) {
-        $this->sellingFrom = $productData->sellingFrom;
-        $this->sellingTo = $productData->sellingTo;
-        $this->sellingDenied = $productData->sellingDenied;
-        $this->recalculateAvailability = true;
-        $this->hidden = $productData->hidden;
-        $this->editFlags($productData->flags);
-        $this->brand = $productData->brand;
-        $this->unit = $productData->unit;
-        $this->setTranslations($productData);
-        $this->setDomains($productData);
-
-        if (!$this->isVariant()) {
-            $this->setProductCategoryDomains($productCategoryDomains);
-        }
-        if (!$this->isMainVariant()) {
-            $this->setAvailabilityAndStock($productData);
-            $this->catnum = $productData->catnum;
-            $this->partno = $productData->partno;
-            $this->ean = $productData->ean;
-        }
-
-        $this->orderingPriority = $productData->orderingPriority;
-
-        $this->markForVisibilityRecalculation();
     }
 
     /**

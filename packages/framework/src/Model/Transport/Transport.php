@@ -96,14 +96,13 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
-        $this->hidden = $transportData->hidden;
-        $this->deleted = false;
-        $this->setTranslations($transportData);
         $this->createDomains($transportData);
+        $this->deleted = false;
         $this->prices = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->payments = new ArrayCollection();
         $this->uuid = $transportData->uuid ?: Uuid::uuid4()->toString();
+        $this->setData($transportData);
     }
 
     /**
@@ -111,9 +110,17 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     public function edit(TransportData $transportData)
     {
+        $this->setDomains($transportData);
+        $this->setData($transportData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
+     */
+    protected function setData(TransportData $transportData): void
+    {
         $this->hidden = $transportData->hidden;
         $this->setTranslations($transportData);
-        $this->setDomains($transportData);
     }
 
     /**
