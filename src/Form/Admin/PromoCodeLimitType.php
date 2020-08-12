@@ -53,24 +53,24 @@ class PromoCodeLimitType extends AbstractType
         foreach ($options['constraints'] as $constraint) {
             $constraint->groups = [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_PERCENT];
         }
-        $options['constraints'] = array_merge($options['constraints'], [
-            new Constraints\NotBlank([
-                'groups' => [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL],
-            ]),
-            new Constraints\GreaterThanOrEqual([
+
+        $options['constraints'][] = new Constraints\NotBlank([
+            'groups' => [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL],
+        ]);
+        $options['constraints'][] = new Constraints\GreaterThanOrEqual([
                 'groups' => [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL],
                 'value' => 1,
-            ]),
-            new Constraints\Regex([
+        ]);
+        $options['constraints'][] = new Constraints\Regex([
                 'groups' => PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL,
                 'pattern' => '/^\d+$/',
-            ]),
         ]);
         $builder->add(
             'discount',
             IntegerType::class,
             $options
         );
+
         $builder->addModelTransformer($this->promoCodeLimitTransformer);
     }
 }

@@ -19,9 +19,6 @@ class PromoCodeLimitResolver
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator $calculator
-     * @param \App\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
      */
     public function __construct(
         PromoCodeLimitRepository $promoCodeLimitRepository,

@@ -29,7 +29,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
      */
-    private $promoCodeLimitByCartTotalResolver;
+    private $promoCodeLimitResolver;
 
     /**
      * @param \App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
@@ -38,7 +38,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
      */
     public function __construct(
         OrderPreviewCalculation $orderPreviewCalculation,
@@ -47,7 +47,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         CurrentCustomerUser $currentCustomerUser,
         CartFacade $cartFacade,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
-        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
+        PromoCodeLimitResolver $promoCodeLimitResolver
     ) {
         parent::__construct(
             $orderPreviewCalculation,
@@ -57,7 +57,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $cartFacade,
             $currentPromoCodeFacade
         );
-        $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
+        $this->promoCodeLimitResolver = $promoCodeLimitResolver;
     }
 
     /**
@@ -76,7 +76,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         $validEnteredPromoCodePercent = null;
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
         if ($validEnteredPromoCode !== null) {
-            $limit = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode(
+            $limit = $this->promoCodeLimitResolver->getLimitByPromoCode(
                 $validEnteredPromoCode,
                 $quantifiedProducts
             );
