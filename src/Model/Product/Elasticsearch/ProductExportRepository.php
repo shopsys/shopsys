@@ -121,7 +121,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $visibility = $this->extractVisibility($domainId, $product);
         $detailUrl = $this->extractDetailUrl($domainId, $product);
         $variantIds = $this->extractVariantIds($product);
-        $highPriceWithVat = $product->getHighPriceWithVat($domainId);
+        $nonSellingPrice = $this->productFacade->getNonSellingPriceByProductAndDomainId($product, $domainId);
         $variantsParametersSetup = $product->isMainVariant() ? $this->parameterFacade->getVariantsSetupForElasticByMainProduct($product, $locale, $domainId) : null;
         $searchingNames = $this->extractSearchingNames($product, $locale);
         $searchingDescriptions = $this->extractSearchingDescriptions($product, $domainId);
@@ -160,7 +160,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             'name_prefix' => $product->isMainVariant() ? $product->getDefaultVariant()->getNamePrefix($locale) : $product->getNamePrefix($locale),
             'name_sufix' => $product->isMainVariant() ? '' : $product->getNameSufix($locale),
-            'non_selling_price' => $highPriceWithVat === null ? null : $highPriceWithVat->getAmount(),
+            'non_selling_price' => $nonSellingPrice === null ? null : $nonSellingPrice->getAmount(),
             'is_in_sale' => $product->isProductInSale($domainId),
             'is_sale_exclusion' => $product->getSaleExclusion($domainId),
             'product_available_stocks_count_information' => $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),

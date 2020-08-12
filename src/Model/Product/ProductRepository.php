@@ -36,7 +36,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  * @method \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][] getProductIteratorForReplaceVat()
  * @method \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][] getProductsForPriceRecalculationIterator()
  * @method \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][] getProductsForAvailabilityRecalculationIterator()
- * @method \App\Model\Product\Product[] getAllSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Product[] getAtLeastSomewhereSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant)
  * @method \App\Model\Product\Product[] getOfferedByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
  * @method \App\Model\Product\Product[] getListableByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
@@ -88,6 +87,49 @@ class ProductRepository extends BaseProductRepository
         $queryBuilder->setParameter('domainId', $domainId);
 
         return $queryBuilder;
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllSellableQueryBuilder($domainId, ?PricingGroup $pricingGroup = null)
+    {
+        $queryBuilder = $this->getAllOfferedQueryBuilder($domainId, $pricingGroup);
+        $queryBuilder->andWhere('p.variantType != :variantTypeMain')
+            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllOfferedQueryBuilder($domainId, ?PricingGroup $pricingGroup = null)
+    {
+        $queryBuilder = $this->getAllVisibleQueryBuilder($domainId, $pricingGroup);
+        $queryBuilder->andWhere('p.calculatedSellingDenied = FALSE');
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $mainVariant
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup|null $pricingGroup
+     * @return mixed|\App\Model\Product\Product[]
+     */
+    public function getAllSellableVariantsByMainVariant(Product $mainVariant, $domainId, ?PricingGroup $pricingGroup = null)
+    {
+        $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
+        $queryBuilder
+            ->andWhere('p.mainVariant = :mainVariant')
+            ->setParameter('mainVariant', $mainVariant);
+
+        return $queryBuilder->getQuery()->execute();
     }
 
     /**

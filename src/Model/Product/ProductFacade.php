@@ -10,6 +10,7 @@ use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
@@ -478,5 +479,53 @@ class ProductFacade extends BaseProductFacade
     {
         $product->setDefaultVariant($variant);
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getNonSellingPriceByProductAndDomainId(Product $product, int $domainId): ?Money
+    {
+        if ($product->isMainVariant()) {
+            $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
+                $product,
+                $domainId,
+                null
+            );
+
+            /** @var \App\Model\Product\Product[] $variants */
+            if (count($variants) === 0) {
+                return null;
+            }
+
+            $nonSellingVariantMoney = null;
+            $sellingVariantMoney = null;
+            foreach ($variants as $variant) {
+                $variantSellingPriceWithVat = $variant->getSellingPriceWithVat($domainId);
+                $variantHighPriceWithVat = $variant->getHighPriceWithVat($domainId);
+                if ($variantHighPriceWithVat === null) {
+                    return null;
+                }
+                /** @var \Shopsys\FrameworkBundle\Component\Money\Money $variantHighPriceWithVat */
+                if ($nonSellingVariantMoney === null) {
+                    $sellingVariantMoney = $variantSellingPriceWithVat;
+                    $nonSellingVariantMoney = $variantHighPriceWithVat;
+                    continue;
+                }
+
+                if ($variantSellingPriceWithVat->compare($sellingVariantMoney) !== 0) {
+                    return null;
+                }
+                if ($variantHighPriceWithVat->compare($nonSellingVariantMoney) !== 0) {
+                    return null;
+                }
+            }
+
+            return $nonSellingVariantMoney;
+        }
+
+        return $product->getHighPriceWithVat($domainId);
     }
 }

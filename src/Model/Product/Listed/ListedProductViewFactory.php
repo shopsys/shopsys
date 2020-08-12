@@ -8,6 +8,7 @@ use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
+use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -43,23 +44,31 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
     private $cachedColorParameterId = true;
 
     /**
+     * @var \App\Model\Product\ProductFacade
+     */
+    private ProductFacade $productFacade;
+
+    /**
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         Domain $domain,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         ParameterFacade $parameterFacade,
-        CategoryFacade $categoryFacade
+        CategoryFacade $categoryFacade,
+        ProductFacade $productFacade
     ) {
         parent::__construct($domain, $productCachedAttributesFacade);
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->parameterFacade = $parameterFacade;
         $this->categoryFacade = $categoryFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -92,7 +101,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $imageView,
             $product->isMainVariant() ? $product->getDefaultVariant()->getNamePrefix() : $product->getNamePrefix(),
             $product->isMainVariant() ? '' : $product->getNameSufix(),
-            $this->getProductPriceWithVatByMoney($product->getHighPriceWithVat($this->domain->getId()) ?? Money::zero()),
+            $this->getProductPriceWithVatByMoney($this->productFacade->getNonSellingPriceByProductAndDomainId($product, $this->domain->getId()) ?? Money::zero()),
             $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId()),
             $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId()),
             $variantsParametersSetup,
