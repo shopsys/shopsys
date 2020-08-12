@@ -288,6 +288,7 @@ class ProductController extends FrontBaseController
         } else {
             $product = $productVariant;
         }
+        $productPackages = $this->productPackageFacade->getProductPackagesByProduct($productVariant);
 
         $this->gtmFacade->onProductDetailPage($product);
 
@@ -317,8 +318,6 @@ class ProductController extends FrontBaseController
         foreach ($productSeriesList as $productSeries) {
             $productSeriesProducts[$productSeries->getId()] = $this->listedProductViewFacade->getAvailableProductsByProductSeries($productSeries);
         }
-
-        $productPackages = $this->productPackageFacade->getProductPackagesByProduct($product);
 
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $productVariant,
