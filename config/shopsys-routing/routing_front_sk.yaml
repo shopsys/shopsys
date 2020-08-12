@@ -94,3 +94,11 @@ front_personal_data_access_export:
 front_productseries_list:
     path: /nabytkove-programy
     defaults: { _controller: App\Controller\Front\ProductSeriesController:listAction }
+
+front_stores:
+    path: /predajne
+    defaults: { _controller: App\Controller\Front\StoreController:indexAction }
+
+front_stores_detail:
+    path: /predajne/{id}
+    defaults: { _controller: App\Controller\Front\StoreController:detailAction }

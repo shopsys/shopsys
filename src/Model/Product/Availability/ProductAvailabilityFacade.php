@@ -358,6 +358,7 @@ class ProductAvailabilityFacade
 
             $stocksList[$productStock->getStock()->getId()] = new ProductStockAvailabilityInformation(
                 $productStock->getStock()->getName(),
+                $productStock->getStock()->getId(),
                 $availabilityInformation,
                 $productStock->isProductExposed(),
                 $availabilityStatus

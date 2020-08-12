@@ -449,8 +449,8 @@
                                                 {{ '<strong class="box-accordion__grid-table__col__expose">Není vystaveno</strong> na prodejně'|transHtml }}
                                             {% endif %}
                                         </td>
-                                        <td class="box-accordion__grid-table__col box-accordion__grid-table__col--showrooms js-not-implemented-yet">
-                                            <a class="box-detail__info__anchor" href="#product-desc">
+                                        <td class="box-accordion__grid-table__col box-accordion__grid-table__col--showrooms">
+                                            <a class="box-detail__info__anchor" href="{{ url('front_stores_detail', { id: productStockAvailabilityInformation.stockId }) }}">
                                                 {{ 'Detail prodejny'|trans }}
                                                 <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
                                             </a>

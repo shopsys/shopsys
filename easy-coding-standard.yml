@@ -46,6 +46,7 @@ parameters:
             - '*/src/Form/Admin/NotificationBarFormType.php'
             - '*/tests/App/Functional/Model/Product/Elasticsearch/ProductExportRepositoryTest.php'
             - '*/src/Model/Product/Elasticsearch/ProductExportRepository.php'
+            - '*/src/Model/Product/Availability/ProductAvailabilityFacade.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'

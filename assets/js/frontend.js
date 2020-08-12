@@ -35,6 +35,8 @@ import './frontend/customer';
 
 import 'framework/common/validation';
 
+import './frontend/store/index';
+
 import Register from 'framework/common/utils/Register';
 
 import './gtm';

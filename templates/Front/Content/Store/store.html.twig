@@ -1,0 +1,55 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block title %}
+    {{- 'Prodejny'|trans -}}
+{% endblock %}
+
+{% block main_content %}
+
+    <style>
+        #js-google-map-box {
+            width: 100%;
+            height: 400px;
+            background-color: grey;
+        }
+    </style>
+    <div id="js-google-map-box"></div>
+
+   {% for store in stores %}
+        <div class="js-store-info display-none" data-store-id="{{ store.id }}">
+            {% if imageExists(store, 'main') %}
+                {{ image(store, { itemprop: 'image', lazy:true, type: 'main' }) }}
+            {% endif %}
+
+            <h1>{{ store.name }}</h1>
+            {{ store.street }} <br>
+            {{ store.city }} <br>
+            {{ store.openingHours }} <br>
+            {{ store.extraordinaryOpeningHours }} <br>
+            {{ store.contactText1 }} <br>
+            {{ store.contactText2 }} <br>
+
+            <a href="{{ url('front_stores_detail', {id: store.id}) }}">{{ 'Detail obchodního domu'|trans }}</a>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
+
+{% block javascripts_bottom %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var markersData = [];
+
+        {% for store in stores %}
+        {% if store.locationLng is not null and store.locationLat is not null  %}
+            markersData.push({locations: {lat: {{ store.locationLat }}, lng: {{ store.locationLng }} }, data: {id: '{{ store.id }}' }});
+        {% endif %}
+        {% endfor %}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC45HTvv-a3bIIclGABHAm2tk8iU8-IKcU"></script>
+    <script type="text/javascript">function initMap() { } // this function is callback on load google map, but we have own callback on registerCallback in googleMap.js </script>
+{% endblock %}
