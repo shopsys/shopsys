@@ -152,6 +152,6 @@ class NumberFormatterExtension extends AbstractExtension
      */
     public function isInteger($number)
     {
-        return is_numeric($number) && (int)$number == $number;
+        return is_numeric($number) && (string)(int)$number === (string)$number;
     }
 }

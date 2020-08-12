@@ -54,7 +54,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     {
         foreach ($rulesData as $index => $ruleData) {
             if ($ruleData->operator === self::OPERATOR_CONTAINS || $ruleData->operator === self::OPERATOR_NOT_CONTAINS) {
-                if ($ruleData->value === null || $ruleData->value == '') {
+                if ($ruleData->value === null || $ruleData->value === '') {
                     $searchValue = '%';
                 } else {
                     $searchValue = DatabaseSearching::getFullTextLikeSearchString($ruleData->value);

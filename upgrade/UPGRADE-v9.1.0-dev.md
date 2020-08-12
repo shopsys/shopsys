@@ -40,5 +40,9 @@ There you can find links to upgrade notes for other versions too.
         - `Shopsys\FrameworkBundle\Model\Product\Product::$recalculatePrice`
         - `Shopsys\FrameworkBundle\Model\Product\Product::$recalculateVisibility`
 
+- introduced sniff for strict comparasion ([#1658](https://github.com/shopsys/shopsys/pull/1658))
+    - this change is temporary to help you prepare your project for next major version, where this will be required directly in coding-standards package
+    - see #project-base-diff to update your project
+
 - moved setting of common entity data to new method ([#1976](https://github.com/shopsys/shopsys/pull/1976))
     - see #project-base-diff to update your project

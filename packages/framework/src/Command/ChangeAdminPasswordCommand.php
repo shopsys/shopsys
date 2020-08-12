@@ -72,7 +72,7 @@ class ChangeAdminPasswordCommand extends Command
         $question->setHidden(true);
         $question->setHiddenFallback(false);
         $question->setValidator(function ($password) use ($io) {
-            if ($password == '') {
+            if ($password === null) {
                 throw new \Exception('The password cannot be empty');
             }
 
