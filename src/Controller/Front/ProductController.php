@@ -294,6 +294,7 @@ class ProductController extends FrontBaseController
 
         //parts build from main product
         $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
+        $this->productVariantFilterFacade->setupDefaultVariantsInListedProductViews($accessories);
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());

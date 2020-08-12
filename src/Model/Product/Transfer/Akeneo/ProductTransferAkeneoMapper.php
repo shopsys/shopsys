@@ -245,6 +245,15 @@ class ProductTransferAkeneoMapper
     }
 
     /**
+     * @param array $akeneoProductData
+     * @return string[]
+     */
+    public function getMainVariantAccessoryCatnumListFromAkeneoProductData(array $akeneoProductData): array
+    {
+        return $akeneoProductData['associations']['accessories']['product_models'] ?? [];
+    }
+
+    /**
      * @param string[] $akeneoCategoryCodes
      * @return \App\Model\Category\Category[]
      */
