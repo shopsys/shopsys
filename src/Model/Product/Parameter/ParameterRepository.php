@@ -344,9 +344,10 @@ class ParameterRepository extends BaseParameterRepository
      * @param \App\Model\Product\Product $product
      * @param string $locale
      * @param int $domainId
+     * @param \App\Model\Product\Parameter\Parameter[] $parameters
      * @return array
      */
-    public function getVariantProductParameterValuesData(Product $product, string $locale, int $domainId): array
+    public function getVariantProductParameterValuesData(Product $product, string $locale, int $domainId, array $parameters): array
     {
         return $this->getProductParameterValueRepository()
             ->createQueryBuilder('ppv')
@@ -359,7 +360,7 @@ class ParameterRepository extends BaseParameterRepository
             ->addOrderBy('IDENTITY(ppv.value)', 'ASC')
             ->setParameters([
                 'product' => $product,
-                'variantParameters' => $product->getVariantParameters(),
+                'variantParameters' => $parameters,
                 'locale' => $locale,
                 'domainId' => $domainId,
             ])
@@ -448,5 +449,21 @@ class ParameterRepository extends BaseParameterRepository
             ])
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @return \App\Model\Product\Parameter\Parameter[]
+     */
+    public function getColorPickerParameters(): array
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('p')
+            ->from(Parameter::class, 'p')
+            ->where('p.parameterType = :parameter_type')
+            ->setParameters([
+                'parameter_type' => \App\Model\Product\Parameter\Parameter::PARAMETER_TYPE_COLOR,
+            ]);
+
+        return $queryBuilder->getQuery()->execute();
     }
 }

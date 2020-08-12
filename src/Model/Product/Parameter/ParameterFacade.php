@@ -68,6 +68,11 @@ class ParameterFacade extends BaseParameterFacade
     private $friendlyUrlFacade;
 
     /**
+     * @var \App\Model\Product\Parameter\Parameter[]|null
+     */
+    private $colorPickerParameters;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
@@ -106,6 +111,7 @@ class ParameterFacade extends BaseParameterFacade
         $this->imageFacade = $imageFacade;
         $this->friendlyUrlRepository = $friendlyUrlRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
+        $this->colorPickerParameters = null;
     }
 
     /**
@@ -290,10 +296,10 @@ class ParameterFacade extends BaseParameterFacade
      */
     public function getVariantSetupKeyMapByMainProduct(Product $product, string $locale, int $domainId): array
     {
-        $data = $this->parameterRepository->getVariantProductParameterValuesData($product, $locale, $domainId);
+        $variantProductParameterValuesData = $this->parameterRepository->getVariantProductParameterValuesData($product, $locale, $domainId, $product->getVariantParameters());
 
         $variantSetupPartsIndexedByProductVariantId = [];
-        foreach ($data as $variantParameterValue) {
+        foreach ($variantProductParameterValuesData as $variantParameterValue) {
             $variantSetupPartsIndexedByProductVariantId[$variantParameterValue['ppv_product_id']][] = $variantParameterValue['ppv_parameter_id'] . '_' . $variantParameterValue['ppv_value_id'];
         }
 
@@ -314,18 +320,18 @@ class ParameterFacade extends BaseParameterFacade
      */
     public function getVariantsSetupForElasticByMainProduct(Product $mainProduct, string $locale, int $domainId): array
     {
-        $data = $this->parameterRepository->getVariantProductParameterValuesData($mainProduct, $locale, $domainId);
-
-        $variantSetup = [];
-        foreach ($data as $variantParameterValue) {
-            $variantSetup[$variantParameterValue['ppv_product_id']][] = [
-                'parameter_id' => $variantParameterValue['ppv_parameter_id'],
-                'parameter_value_id' => $variantParameterValue['ppv_value_id'],
-            ];
+        if ($this->colorPickerParameters === null) {
+            $this->colorPickerParameters = $this->getColorPickerParameters();
         }
+        $variantProductParameterValuesData = $this->parameterRepository->getVariantProductParameterValuesData($mainProduct, $locale, $domainId, $mainProduct->getVariantParameters());
+        $variantProductExtendedParameterValuesData = $this->parameterRepository->getVariantProductParameterValuesData($mainProduct, $locale, $domainId, $this->colorPickerParameters);
 
+        $variantSetup = $this->transformParameterValuesDataToSetupArray($variantProductParameterValuesData);
+        $variantExtendedSetup = $this->transformParameterValuesDataToSetupArray($variantProductExtendedParameterValuesData);
+
+        $entityIds = array_unique(array_merge(array_keys($variantSetup), array_keys($variantExtendedSetup)));
         /** @var \App\Component\Image\Image[] $imagesIndexedByEntityIds */
-        $imagesIndexedByEntityIds = $this->imageFacade->getImagesByEntitiesIndexedByEntityId(array_keys($variantSetup), Product::class);
+        $imagesIndexedByEntityIds = $this->imageFacade->getImagesByEntitiesIndexedByEntityId($entityIds, Product::class);
 
         $defaultVariantId = null;
         if (count($variantSetup) > 0 && $mainProduct->getDefaultVariant() !== null) {
@@ -333,6 +339,8 @@ class ParameterFacade extends BaseParameterFacade
         }
 
         $variantsSetupForElastic = [];
+        $indexVariantIdPairing = [];
+        $index = 0;
         foreach ($variantSetup as $variantId => $parameterValuesList) {
             $variantParametersSetup = [
                 'variant_id' => $variantId,
@@ -349,6 +357,25 @@ class ParameterFacade extends BaseParameterFacade
             }
 
             $variantsSetupForElastic[] = $variantParametersSetup;
+            $indexVariantIdPairing[$variantId] = $index++;
+        }
+
+        foreach ($variantExtendedSetup as $variantId => $parameterValuesList) {
+            if (isset($indexVariantIdPairing[$variantId])) {
+                $variantsSetupForElastic[$indexVariantIdPairing[$variantId]]['extended_parameter_values_setup'] = $parameterValuesList;
+            } else {
+                $variantParametersSetup = [
+                    'variant_id' => $variantId,
+                    'extended_parameter_values_setup' => $parameterValuesList,
+                    'variant_url' => $this->getVariantUrl($variantId, $domainId),
+                ];
+
+                if (array_key_exists($variantId, $imagesIndexedByEntityIds)) {
+                    $variantParametersSetup['image_url'] = $this->getVariantImageUrl($imagesIndexedByEntityIds[$variantId], $domainId);
+                }
+
+                $variantsSetupForElastic[] = $variantParametersSetup;
+            }
         }
 
         return $variantsSetupForElastic;
@@ -376,5 +403,30 @@ class ParameterFacade extends BaseParameterFacade
         $friendlyUrl = $this->friendlyUrlRepository->getMainFriendlyUrl($domainId, 'front_product_detail', $variantId);
 
         return $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl);
+    }
+
+    /**
+     * @return \App\Model\Product\Parameter\Parameter[]
+     */
+    public function getColorPickerParameters(): array
+    {
+        return $this->parameterRepository->getColorPickerParameters();
+    }
+
+    /**
+     * @param array $parameterValuesData
+     * @return array
+     */
+    private function transformParameterValuesDataToSetupArray(array $parameterValuesData): array
+    {
+        $setupArray = [];
+        foreach ($parameterValuesData as $parameterValue) {
+            $setupArray[$parameterValue['ppv_product_id']][] = [
+                'parameter_id' => $parameterValue['ppv_parameter_id'],
+                'parameter_value_id' => $parameterValue['ppv_value_id'],
+            ];
+        }
+
+        return $setupArray;
     }
 }

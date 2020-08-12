@@ -60,6 +60,9 @@ class ProductVariantFilterFacade
 
             $rank = $this->evaluateParameterValuesSetup($variantParameterSetup['parameter_values_setup'], $productFilterData);
 
+            if (isset($variantParameterSetup['extended_parameter_values_setup'])) {
+                $rank += $this->evaluateParameterValuesSetup($variantParameterSetup['extended_parameter_values_setup'], $productFilterData);
+            }
             if ($rank > $highestRank) {
                 $highestRank = $rank;
                 $mostValuableVariantId = $variantId;

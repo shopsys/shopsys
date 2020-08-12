@@ -336,6 +336,17 @@
                 "type": "integer"
               }
             }
+          },
+          "extended_parameter_values_setup": {
+            "type": "nested",
+            "properties": {
+              "parameter_id": {
+                "type": "integer"
+              },
+              "parameter_value_id": {
+                "type": "integer"
+              }
+            }
           }
         }
       },

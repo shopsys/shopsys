@@ -192,9 +192,15 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
         foreach ($originalVariantsParametersSetup as $originalVariantParametersSetup) {
             $variantId = $originalVariantParametersSetup['variant_id'];
             $variantsParametersSetup[$variantId] = $originalVariantParametersSetup;
-            unset($variantsParametersSetup[$variantId]['parameter_values_setup']);
+            unset($variantsParametersSetup[$variantId]['parameter_values_setup'], $variantsParametersSetup[$variantId]['extended_parameter_values_setup']);
+
             foreach ($originalVariantParametersSetup['parameter_values_setup'] as $parameterValueSetup) {
                 $variantsParametersSetup[$variantId]['parameter_values_setup'][$parameterValueSetup['parameter_id']][$parameterValueSetup['parameter_value_id']] = $parameterValueSetup['parameter_value_id'];
+            }
+            if (isset($originalVariantParametersSetup['extended_parameter_values_setup'])) {
+                foreach ($originalVariantParametersSetup['extended_parameter_values_setup'] as $parameterValueSetup) {
+                    $variantsParametersSetup[$variantId]['extended_parameter_values_setup'][$parameterValueSetup['parameter_id']][$parameterValueSetup['parameter_value_id']] = $parameterValueSetup['parameter_value_id'];
+                }
             }
         }
 
