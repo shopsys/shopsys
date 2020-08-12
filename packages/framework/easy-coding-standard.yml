@@ -22,6 +22,8 @@ services:
     SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff: ~
 
 parameters:
+    sets:
+        - 'psr12'
     skip:
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
             - '*/src/Form/Admin/*/*FormType.php'

@@ -95,4 +95,3 @@ class OrderResolver implements ResolverInterface, AliasedInterface
         return $this->orderFacade->getByUuidAndCustomerUser($uuid, $customerUser);
     }
 }
-
