@@ -36,6 +36,6 @@ class FrontOrderDataMapper extends BaseFrontOrderDataMapper
      */
     protected function prefillTransportAndPaymentFromOrder(FrontOrderData $frontOrderData, Order $order)
     {
-        $frontOrderData->payment = $order->getPayment()->isDeleted() ? null : $order->getPayment();
+        //sconto - the transport and payment settings function according to the last order is switched off
     }
 }
