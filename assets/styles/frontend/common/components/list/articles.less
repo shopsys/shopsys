@@ -101,9 +101,15 @@
             min-width: 80vw;
 
             @media @query-md {
+                display: flex;
+                flex-direction: column;
                 min-width: 50%;
                 // IE11 Fix - only partial support of flexbox
                 max-width: 467px;
+
+                &__desc {
+                    flex-grow: 1;
+                }
             }
         }
     }
