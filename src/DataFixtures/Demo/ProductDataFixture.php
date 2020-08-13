@@ -2351,6 +2351,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('36"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Color', [], 'dataFixtures', $locale), t('black', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
@@ -2395,6 +2396,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('54"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Color', [], 'dataFixtures', $locale), t('white', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('CRT', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
@@ -2983,6 +2985,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('36"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Color', [], 'dataFixtures', $locale), t('black', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('CRT', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
@@ -5852,6 +5855,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('24"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Color', [], 'dataFixtures', $locale), t('black', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
@@ -5896,6 +5900,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('36"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Color', [], 'dataFixtures', $locale), t('white', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('CRT', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
@@ -5940,6 +5945,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('54"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Color', [], 'dataFixtures', $locale), t('black', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
@@ -5984,6 +5990,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('24"', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Color', [], 'dataFixtures', $locale), t('white', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('CRT', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
@@ -6232,6 +6239,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $parameterData = $this->parameterDataFactory->create();
             $parameterData->name = $parameterNamesByLocale;
             $parameterData->group = $parameterGroup;
+            if ($parameterNamesByLocale['cs'] === 'Barva') {
+                $parameterData->akeneoCode = \App\Model\Product\Parameter\Parameter::COLOR_PARAMETER_AKENEO_CODE;
+            }
 
             /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
             $parameter = $this->parameterFacade->create($parameterData);

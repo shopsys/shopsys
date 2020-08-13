@@ -22,6 +22,8 @@ class Parameter extends BaseParameter
     public const AKENEO_ATTRIBUTES_TYPE_SIMPLE_SELECT = 'pim_catalog_simpleselect';
     public const AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT = 'pim_catalog_multiselect';
 
+    public const COLOR_PARAMETER_AKENEO_CODE = 'param__variant_color';
+
     public const PARAMETER_TYPE_COMMON = 'checkbox';
 
     public const PARAMETER_TYPE_SLIDER = 'slider';
