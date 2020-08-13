@@ -26,17 +26,23 @@
             cursor: pointer;
 
             &--empty {
+                transition: all @transition;
+
                 &:hover {
                     box-shadow: 0 10px 20px 0 rgba(@color-0, .15);
 
                     .cart__detail--empty {
-                        display: block;
+                        opacity: 1;
+                        transform: scale(1);
+                        pointer-events: auto;
                     }
                 }
 
                 .cart__block:hover {
                     & + .cart__detail--empty {
-                        display: block;
+                        opacity: 1;
+                        transform: scale(1);
+                        pointer-events: auto;
                     }
                 }
             }
@@ -157,7 +163,7 @@
             &::after {
                 position: absolute;
                 right: 0;
-                top: -1px;
+                top: -2px;
                 width: 200px;
                 height: 1px;
 
@@ -167,12 +173,18 @@
         }
 
         &--empty {
-            display: none;
+            display: block;
             padding: 15px 0 15px 15px;
             min-width: 400px;
             max-width: 400px;
 
             background-color: @color-f;
+            transition: all .2s ease-in-out;
+            will-change: transform;
+            opacity: 0;
+            transform-origin: right top;
+            transform: scaleY(0.5) scaleX(0.75);
+            pointer-events: none;
 
             &::after {
                 width: 143px;

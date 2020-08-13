@@ -1,6 +1,5 @@
 @menu-iconic-link-font-size: 14px;
 @menu-iconic-link-padding: 0 10px;
-@menu-iconic-link-padding-xl: 0 15px;
 @menu-iconic-icon-size: 24px;
 
 .menu-iconic {
@@ -30,12 +29,6 @@
 
                 font-size: @menu-iconic-link-font-size;
                 text-decoration: none;
-
-                &:hover {
-                    .svg {
-                        transform: scale(1.2);
-                    }
-                }
             }
 
             &__icon {
@@ -61,38 +54,96 @@
 
         &__sub {
             .reset-ul();
-            display: none;
+            display: block;
             position: absolute;
-            top: 26px;
-            left: 50%;
-            width: 140px;
-            margin-left: -70px;
+            top: 63px;
+            right: 0;
+            min-width: 150px;
 
             background: @color-f;
-            border: 1px solid @color-border;
-            border-top: 0;
             z-index: 30;
+            border-bottom-left-radius: @radius;
+            border-bottom-right-radius: @radius;
+            box-shadow: 0 20px 20px 0 rgba(@color-0, .15);
+            transition: all .2s ease-in-out;
+            transform-origin: right top;
+            opacity: 0;
+            transform: scaleY(0.5) scaleX(0.7);
+            will-change: transform;
 
             .menu-iconic__item:hover & {
-                display: block;
+                opacity: 1;
+                transform: scale(1);
             }
 
             &__item {
                 display: block;
 
-                border-top: 1px solid @color-border;
+                border-top: 1px solid @color-border-lighter;
+
+                &:first-child {
+                    border-top: 0;
+                }
 
                 &__link {
                     display: block;
-                    padding: 5px 10px;
+                    padding: 12px 20px;
+
+                    font-family: @font-quartenary;
+                    color: @color-primary;
+
+                    &:hover {
+                        text-decoration: none;
+                        color: @color-add-secondary;
+                    }
                 }
             }
         }
     }
 
-    @media @query-xl {
+    @media @query-vl {
+        height: 100%;
+
+        &__item {
+            margin: 0 5px;
+        }
+
+        &__item,
         &__item__link {
-            padding: @menu-iconic-link-padding-xl;
+            height: 100%;
+        }
+
+        &__sub {
+            top: @header-height-vl + 1px;
+        }
+
+        &__item--sub {
+            &:hover {
+                box-shadow: 0 10px 20px 0 rgba(@color-0, 0.15);
+
+                .menu-iconic__item__link::after {
+                    opacity: 1;
+                }
+            }
+
+            .menu-iconic__item__link {
+                position: relative;
+
+                &::after {
+                    position: absolute;
+                    left: 0;
+                    bottom: -1px;
+                    width: 100%;
+                    height: 2px;
+                    content: '';
+                    z-index: 1;
+
+                    background-color: @color-f;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: opacity @transition;
+                }
+            }
         }
     }
 }

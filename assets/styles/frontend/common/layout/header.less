@@ -3,10 +3,11 @@
 @header-mobile-button-border-radius: 5px;
 @header-mobile-button-font-size: 33px;
 @header-mobile-button-search-bg: #f0f3f4;
-@header-mobile-button-dropdown-position: @web-header-mobile-dropdown-position;
+@header-mobile-button-dropdown-position: 75px;
 
 @header-padding: 15px 0;
-@header-padding-vl: 5px 0;
+
+@header-height-vl: 80px;
 
 @query-header-vl-custom: ~"(min-width: 1300px)";
 
@@ -31,7 +32,8 @@
     }
 
     @media @query-vl {
-        padding: @header-padding-vl;
+        height: @header-height-vl;
+        padding: 0;
     }
 
     &__logo {
@@ -109,6 +111,10 @@
     &__links {
         display: flex;
         align-items: center;
+
+        @media @query-vl {
+            height: 100%;
+        }
     }
 
     &__mobile-button {
@@ -143,6 +149,8 @@
                 justify-content: center;
                 position: relative;
                 transition: @transition color;
+                width: 100%;
+                height: 100%;
 
                 color: @color-base;
                 text-decoration: none;
@@ -151,7 +159,7 @@
                     color: @color-primary;
                     text-decoration: none;
 
-                    & + .header__mobile-button__placeholder {
+                    .header__mobile-button__placeholder {
                         transform: scale(1);
                         opacity: 1;
                         visibility: visible;
@@ -180,17 +188,32 @@
                 left: -@web-padding;
                 right: -@web-padding;
                 z-index: 10;
+                padding: 15px 15px 20px;
 
                 background: @color-f;
-                border-top: 1px solid @color-border;
-                box-shadow: 0 10px 15px rgba(0,0,0, 0.2);
+                box-shadow: 0 15px 15px rgba(0,0,0, 0.2);
 
                 a {
                     display: block;
-                    padding: 3px 10px;
+                    padding: 10px 15px 8px;
 
-                    border-bottom: 1px solid @color-border;
+                    font-family: @font-quartenary;
+                    font-size: 15px;
+                    color: @color-primary;
+                    border: 1px solid @color-border-lighter;
+                    border-top: 0;
                     text-decoration: none;
+
+                    &:first-child {
+                        border-top: 1px solid @color-border-lighter;
+                        border-top-left-radius: @radius;
+                        border-top-right-radius: @radius;
+                    }
+
+                    &:last-child {
+                        border-bottom-left-radius: @radius;
+                        border-bottom-right-radius: @radius;
+                    }
                 }
             }
         }
@@ -268,8 +291,8 @@
         }
 
         @media @query-xl {
-            .menu-iconic__item__link {
-                padding-right: 0;
+            .menu-iconic {
+                margin-right: -10px;
             }
         }
     }

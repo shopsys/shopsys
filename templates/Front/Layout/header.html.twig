@@ -31,6 +31,10 @@
             {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
                 <span class="header__mobile-button__in js-responsive-toggle" data-element="js-user-menu" data-hide-on-click-out="true">
                     <i class="svg svg-user"></i>
+                    <span class="header__mobile-button__placeholder">
+                        <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
+                        <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
+                    </span>
                 </span>
             {% else %}
                 <a
@@ -58,10 +62,10 @@
         <div class="header__mobile-button header__mobile-button--menu">
             <span class="header__mobile-button__in js-responsive-toggle" data-element="js-mobile-menu" data-hide-on-click-out="true">
                 <i class="svg svg-burger-menu"></i>
-            </span>
-            <span class="header__mobile-button__placeholder">
-                <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
-                <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
+                <span class="header__mobile-button__placeholder">
+                    <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
+                    <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
+                </span>
             </span>
         </div>
         <div class="header__links dont-print">
@@ -79,21 +83,21 @@
                     </a>
                 </li>
                 {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
-                    <li class="menu-iconic__item">
+                    <li class="menu-iconic__item menu-iconic__item--sub">
                         <a href="#" class="menu-iconic__item__link">
                             <i class="menu-iconic__item__icon svg svg-user"></i>
                             <span class="menu-iconic__item__text">{{ 'Můj účet'|trans }}</span>
                         </a>
                         <ul class="menu-iconic__sub">
                             <li class="menu-iconic__sub__item">
-                                <a href="{{ url('front_customer_edit') }}" class="menu-iconic__sub__item__link">{{ 'Personal data'|trans }}</a>
-                            </li>
-                            <li class="menu-iconic__sub__item">
                                 <a href="{{ url('front_customer_orders') }}" class="menu-iconic__sub__item__link">{{ 'My orders'|trans }}</a>
                             </li>
                             <li class="menu-iconic__sub__item">
+                                <a href="{{ url('front_customer_edit') }}" class="menu-iconic__sub__item__link">{{ 'Upravit údaje'|trans }}</a>
+                            </li>
+                            <li class="menu-iconic__sub__item">
                                 <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}" class="js-logout-link-desktop menu-iconic__sub__item__link">
-                                    {{ 'Log out'|trans }}
+                                    {{ 'Odhlásit'|trans }}
                                 </a>
                             </li>
                         </ul>
