@@ -16,6 +16,7 @@ class Version20200814063510 extends AbstractMigration
     {
         $this->sql('ALTER TABLE category_parameters ADD position INT NOT NULL DEFAULT 1');
         $this->sql('ALTER TABLE category_parameters ALTER position DROP DEFAULT');
+        $this->sql('CREATE INDEX ordering_idx ON category_parameters (position)');
     }
 
     /**

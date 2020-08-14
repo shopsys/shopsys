@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 /**
- * @ORM\Table(name="category_parameters")
+ * @ORM\Table(name="category_parameters", indexes={@ORM\Index(name="ordering_idx", columns={"position"})})
  * @ORM\Entity
  */
 class CategoryParameter
