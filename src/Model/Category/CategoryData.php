@@ -24,11 +24,6 @@ class CategoryData extends BaseCategoryData
     /**
      * @var \App\Model\Product\Parameter\Parameter[]
      */
-    public $parameters;
-
-    /**
-     * @var \App\Model\Product\Parameter\Parameter[]
-     */
     public $parametersCollapsed;
 
     /**
@@ -56,6 +51,11 @@ class CategoryData extends BaseCategoryData
      */
     public $categoryProductSeries;
 
+    /**
+     * @var int[]|null[]
+     */
+    public $parametersPosition;
+
     public function __construct()
     {
         parent::__construct();
@@ -64,5 +64,6 @@ class CategoryData extends BaseCategoryData
         $this->productSeriesListDescription = [];
         $this->productSeriesListLink = [];
         $this->categoryProductSeries = [];
+        $this->parametersPosition = [];
     }
 }

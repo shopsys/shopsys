@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
+use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CategoryParameterFacade
@@ -19,23 +20,31 @@ class CategoryParameterFacade
     private $categoryParameterRepository;
 
     /**
+     * @var \App\Model\Product\Parameter\ParameterFacade
+     */
+    private ParameterFacade $parameterFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
         EntityManagerInterface $em,
-        CategoryParameterRepository $categoryParameterRepository
+        CategoryParameterRepository $categoryParameterRepository,
+        ParameterFacade $parameterFacade
     ) {
         $this->em = $em;
         $this->categoryParameterRepository = $categoryParameterRepository;
+        $this->parameterFacade = $parameterFacade;
     }
 
     /**
      * @param \App\Model\Category\Category $category
-     * @param \App\Model\Product\Parameter\Parameter[] $parameters
+     * @param int[] $parameterIds
      * @param \App\Model\Product\Parameter\Parameter[] $parametersCollapsed
      */
-    public function saveRelation(Category $category, array $parameters, array $parametersCollapsed): void
+    public function saveRelation(Category $category, array $parameterIds, array $parametersCollapsed): void
     {
         $parametersCollapsedById = [];
         foreach ($parametersCollapsed as $parameterCollapsed) {
@@ -48,23 +57,27 @@ class CategoryParameterFacade
             $oldCategoryParametersById[$oldCategoryParameter->getParameter()->getId()] = $oldCategoryParameter;
         }
         $catFlushAfterSaveRelation = false;
-        foreach ($parameters as $parameter) {
+        foreach ($parameterIds as $position => $parameterId) {
             $collapsed = false;
-            if (array_key_exists($parameter->getId(), $parametersCollapsedById)) {
+            if (array_key_exists($parameterId, $parametersCollapsedById)) {
                 $collapsed = true;
             }
-            if (array_key_exists($parameter->getId(), $oldCategoryParametersById)) {
-                $oldCategoryParameter = $oldCategoryParametersById[$parameter->getId()];
+            if (array_key_exists($parameterId, $oldCategoryParametersById)) {
+                $oldCategoryParameter = $oldCategoryParametersById[$parameterId];
                 if ($oldCategoryParameter->isCollapsed() !== $collapsed) {
                     $oldCategoryParameter->setCollapsed($collapsed);
                     $catFlushAfterSaveRelation = true;
                 }
-                unset($oldCategoryParametersById[$parameter->getId()]);
+                if ($oldCategoryParameter->getPosition() !== $position) {
+                    $oldCategoryParameter->setPosition($position);
+                    $catFlushAfterSaveRelation = true;
+                }
+                unset($oldCategoryParametersById[$parameterId]);
                 continue;
             }
 
-            $categoryParameter = new CategoryParameter($category, $parameter, $collapsed);
-
+            $parameter = $this->parameterFacade->getById($parameterId);
+            $categoryParameter = new CategoryParameter($category, $parameter, $collapsed, $position);
             $this->em->persist($categoryParameter);
             $catFlushAfterSaveRelation = true;
         }

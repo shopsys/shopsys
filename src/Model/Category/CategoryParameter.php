@@ -39,15 +39,24 @@ class CategoryParameter
     private $collapsed;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $position;
+
+    /**
      * @param \App\Model\Category\Category $category
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param bool $collapsed
+     * @param int $position
      */
-    public function __construct(Category $category, Parameter $parameter, $collapsed)
+    public function __construct(Category $category, Parameter $parameter, bool $collapsed, int $position)
     {
         $this->category = $category;
         $this->parameter = $parameter;
         $this->collapsed = $collapsed;
+        $this->position = $position;
     }
 
     /**
@@ -80,5 +89,21 @@ class CategoryParameter
     public function setCollapsed(bool $collapsed): void
     {
         $this->collapsed = $collapsed;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition(int $position): void
+    {
+        $this->position = $position;
     }
 }
