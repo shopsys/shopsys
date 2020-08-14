@@ -4,9 +4,11 @@
 {% block h1 %}{{ 'Administrators overview'|trans }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ url('admin_administrator_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-        <i class="btn__icon">+</i>{{ 'Create new administrator'|trans }}
-    </a>
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_administrator_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new administrator'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}

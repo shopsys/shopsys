@@ -3,24 +3,26 @@
 {% block title %}- {{ 'Products overview'|trans }}{% endblock %}
 {% block h1 %}{{ 'Products overview'|trans }}{% endblock %}
 {% block btn %}
-    {% if productCanBeCreated %}
-        <a href="{{ url('admin_product_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-            <i class="btn__icon">+</i>{{ 'Create new product'|trans }}
-        </a>
-        <a href="{{ url('admin_product_createvariant') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-            <i class="btn__icon">+</i>{{ 'Create variant'|trans }}
-        </a>
-    {% else %}
-        <span class="btn btn--primary btn--plus wrap-bar__btn btn--disabled">
-            <i class="btn__icon">+</i>{{ 'Create new product'|trans }}
-        </span>
-        <span class="btn btn--primary btn--plus wrap-bar__btn btn--disabled">
-            <i class="btn__icon">+</i>{{ 'Create variant'|trans }}
-        </span>
-        <a href="{{ url('admin_default_dashboard') }}" class="btn-link-style wrap-bar__btn">
-            {{ 'Fill missing settings to enable creating products. More information here.'|trans }}
-        </a>
-    {% endif %}
+    <div class="wrap-bar__buttons">
+        {% if productCanBeCreated %}
+            <a href="{{ url('admin_product_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+                <i class="btn__icon">+</i>{{ 'Create new product'|trans }}
+            </a>
+            <a href="{{ url('admin_product_createvariant') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+                <i class="btn__icon">+</i>{{ 'Create variant'|trans }}
+            </a>
+        {% else %}
+            <span class="btn btn--primary btn--plus wrap-bar__btn btn--disabled">
+                <i class="btn__icon">+</i>{{ 'Create new product'|trans }}
+            </span>
+            <span class="btn btn--primary btn--plus wrap-bar__btn btn--disabled">
+                <i class="btn__icon">+</i>{{ 'Create variant'|trans }}
+            </span>
+            <a href="{{ url('admin_default_dashboard') }}" class="btn-link-style wrap-bar__btn">
+                {{ 'Fill missing settings to enable creating products. More information here.'|trans }}
+            </a>
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block main_content %}
