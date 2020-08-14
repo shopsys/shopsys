@@ -32,8 +32,10 @@
                                         >
                                         <img
                                             {% if slidersCount > 1 %}
+                                                src="{{ imgLazyloadPlaceholder }}"
                                                 data-src="{{ imageUrl(item, null, 'web') }}"
                                             {% else %}
+                                                src="{{ imgLazyloadPlaceholder }}"
                                                 data-src="{{ imageUrl(item, 'fullwidthSlider', 'web') }}"
                                             {% endif %}
                                             itemprop="image" class="image-sliderItem-web"
@@ -80,7 +82,7 @@
                         <img
                                 class="box-block__item__img box-block__item__img--left"
                                 loading="lazy"
-                                src=""
+                                src="{{ imgLazyloadPlaceholder }}"
                                 data-src="{{ asset('public/frontend/images/letak.png') }}"
                                 alt="{{ 'Aktuální leták'|trans }}">
                     </picture>
@@ -98,7 +100,7 @@
                         <img
                                 class="box-block__item__img box-block__item__img--right"
                                 loading="lazy"
-                                src=""
+                                src="{{ imgLazyloadPlaceholder }}"
                                 data-src="{{ asset('public/frontend/images/prodejny.png') }}"
                                 alt="{{ 'Prodejny Sconto'|trans }}">
                     </picture>
@@ -156,7 +158,13 @@
                                     {{ asset('public/frontend/images/rooms/predsin2x.jpg') }} 2x,
                                     {{ asset('public/frontend/images/rooms/predsin.jpg') }} 1x"
                             />
-                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/predsin.jpg') }}" alt="{{ 'Předsíň'|trans }}">
+                            <img
+                                loading="lazy"
+                                class="list-grid__item__img"
+                                src="{{ imgLazyloadPlaceholder }}"
+                                data-src="{{ asset('public/frontend/images/rooms/predsin.jpg') }}"
+                                alt="{{ 'Předsíň'|trans }}"
+                            >
                         </picture>
                     </a>
                 </div>
@@ -181,7 +189,13 @@
                                     {{ asset('public/frontend/images/rooms/obyvaci_pokoj2x.jpg') }} 2x,
                                     {{ asset('public/frontend/images/rooms/obyvaci_pokoj.jpg') }} 1x"
                             />
-                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/obyvaci_pokoj.jpg') }}" alt="{{ 'Obývací pokoj'|trans }}">
+                            <img
+                                loading="lazy"
+                                class="list-grid__item__img"
+                                src="{{ imgLazyloadPlaceholder }}"
+                                data-src="{{ asset('public/frontend/images/rooms/obyvaci_pokoj.jpg') }}"
+                                alt="{{ 'Obývací pokoj'|trans }}"
+                            >
                         </picture>
                     </a>
                 </div>
@@ -207,7 +221,13 @@
                                         {{ asset('public/frontend/images/rooms/kuchyne2x.jpg') }} 2x,
                                         {{ asset('public/frontend/images/rooms/kuchyne.jpg') }} 1x"
                                 />
-                                <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/kuchyne.jpg') }}" alt="{{ 'Kuchyně'|trans }}">
+                                <img
+                                    loading="lazy"
+                                    class="list-grid__item__img"
+                                    src="{{ imgLazyloadPlaceholder }}"
+                                    data-src="{{ asset('public/frontend/images/rooms/kuchyne.jpg') }}"
+                                    alt="{{ 'Kuchyně'|trans }}"
+                                >
                             </picture>
                         </a>
                     </div>
@@ -232,7 +252,13 @@
                                         {{ asset('public/frontend/images/rooms/jidelna2x.jpg') }} 2x,
                                         {{ asset('public/frontend/images/rooms/jidelna.jpg') }} 1x"
                                 />
-                                <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/jidelna.jpg') }}" alt="{{ 'Jídelna'|trans }}">
+                                <img
+                                    loading="lazy"
+                                    class="list-grid__item__img"
+                                    src="{{ imgLazyloadPlaceholder }}"
+                                    data-src="{{ asset('public/frontend/images/rooms/jidelna.jpg') }}"
+                                    alt="{{ 'Jídelna'|trans }}"
+                                >
                             </picture>
                         </a>
                     </div>
@@ -258,7 +284,13 @@
                                     {{ asset('public/frontend/images/rooms/pracovna2x.jpg') }} 2x,
                                     {{ asset('public/frontend/images/rooms/pracovna.jpg') }} 1x"
                             />
-                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/pracovna.jpg') }}" alt="{{ 'Pracovna'|trans }}">
+                            <img
+                                loading="lazy"
+                                class="list-grid__item__img"
+                                src="{{ imgLazyloadPlaceholder }}"
+                                data-src="{{ asset('public/frontend/images/rooms/pracovna.jpg') }}"
+                                alt="{{ 'Pracovna'|trans }}"
+                            >
                         </picture>
                     </a>
                 </div>
@@ -285,7 +317,13 @@
                                     {{ asset('public/frontend/images/rooms/loznice2x.jpg') }} 2x,
                                     {{ asset('public/frontend/images/rooms/loznice.jpg') }} 1x"
                             />
-                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/loznice.jpg') }}" alt="{{ 'Ložnice'|trans }}">
+                            <img
+                                loading="lazy"
+                                class="list-grid__item__img"
+                                src="{{ imgLazyloadPlaceholder }}"
+                                data-src="{{ asset('public/frontend/images/rooms/loznice.jpg') }}"
+                                alt="{{ 'Ložnice'|trans }}"
+                            >
                         </picture>
                     </a>
                 </div>
@@ -310,7 +348,13 @@
                                     {{ asset('public/frontend/images/rooms/detsky_pokoj2x.jpg') }} 2x,
                                     {{ asset('public/frontend/images/rooms/detsky_pokoj.jpg') }} 1x"
                             />
-                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/detsky_pokoj.jpg') }}" alt="{{ 'Dětský pokoj'|trans }}">
+                            <img
+                                loading="lazy"
+                                class="list-grid__item__img"
+                                src="{{ imgLazyloadPlaceholder }}"
+                                data-src="{{ asset('public/frontend/images/rooms/detsky_pokoj.jpg') }}"
+                                alt="{{ 'Dětský pokoj'|trans }}"
+                            >
                         </picture>
                     </a>
                 </div>
@@ -335,7 +379,13 @@
                                     {{ asset('public/frontend/images/rooms/koupelny2x.jpg') }} 2x,
                                     {{ asset('public/frontend/images/rooms/koupelny.jpg') }} 1x"
                             />
-                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('public/frontend/images/rooms/koupelny.jpg') }}" alt="{{ 'Koupelny'|trans }}">
+                            <img
+                                loading="lazy"
+                                class="list-grid__item__img"
+                                src="{{ imgLazyloadPlaceholder }}"
+                                data-src="{{ asset('public/frontend/images/rooms/koupelny.jpg') }}"
+                                alt="{{ 'Koupelny'|trans }}"
+                            >
                         </picture>
                     </a>
                 </div>
