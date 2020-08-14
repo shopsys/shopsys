@@ -182,7 +182,10 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
                 $promoCodeDataForCreate->limits = [];
                 foreach ($promoCodeData->limits as $promoCodeLimit) {
-                    $promoCodeDataForCreate->limits[] = $this->promoCodeLimitFactory->create($promoCodeLimit->getFromPriceWithVat(), $promoCodeLimit->getPercent());
+                    $promoCodeDataForCreate->limits[] = $this->promoCodeLimitFactory->create(
+                        $promoCodeLimit->getFromPriceWithVat(),
+                        $promoCodeLimit->getDiscount()
+                    );
                 }
 
                 $promoCode = $this->create($promoCodeDataForCreate);
