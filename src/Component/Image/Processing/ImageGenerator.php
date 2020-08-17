@@ -101,8 +101,14 @@ class ImageGenerator extends BaseImageGenerator
     {
         $krakenImageData = $this->imageKrakenProcessor->resizeBySizeConfig($sourceImageFilepath, [$sizeConfig]);
 
-        if ($krakenImageData['success'] === false) {
-            $this->logger->addError(sprintf('Generating image by kraken error: image id: %s with result: %s', $image->getId(), $krakenImageData['message']));
+        if (!array_key_exists('success', $krakenImageData) || $krakenImageData['success'] === false) {
+            $this->logger->addError(
+                sprintf(
+                    'Generating image by kraken error: image id: %s with result: %s',
+                    $image->getId(),
+                    $krakenImageData['message'] ?? implode("|", $krakenImageData)
+                )
+            );
             $this->processImageInFramework($sourceImageFilepath, $targetImageFilepath, $sizeConfig);
             return;
         }
