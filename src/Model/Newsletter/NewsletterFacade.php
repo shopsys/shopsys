@@ -21,11 +21,11 @@ class NewsletterFacade extends BaseNewsletterFacade
     public function addSubscribedEmail($email, $domainId): void
     {
         /**
-         * @var \App\Model\Newsletter\NewsletterSubscriber
+         * @var \App\Model\Newsletter\NewsletterSubscriber|null
          */
         $newsletterSubscriber = $this->newsletterRepository->findNewsletterSubscribeByEmailAndDomainId($email, $domainId);
 
-        if ($newsletterSubscriber == null) {
+        if ($newsletterSubscriber === null) {
             $newsletterSubscriber = $this->newsletterSubscriberFactory->create($email, new \DateTimeImmutable(), $domainId);
         } else {
             $newsletterSubscriber->setDeleted(false);

@@ -77,7 +77,7 @@ class ProductDataFactory extends BaseProductDataFactory
     /**
      * @var \App\Model\Product\Availability\AvailabilityFacade
      */
-    private $availabilityFacade;
+    protected $availabilityFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade

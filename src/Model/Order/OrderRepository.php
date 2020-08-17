@@ -20,6 +20,12 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
  * @method \App\Model\Order\Order getByUrlHashAndDomain(string $urlHash, int $domainId)
  * @method \App\Model\Order\Order getByOrderNumberAndCustomerUser(string $orderNumber, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order|null findByUrlHashIncludingDeletedOrders(string $urlHash)
+ * @method \App\Model\Order\Order|null findByUuidAndCustomerUser(string $uuid, \App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Order\Order|null findByUuidAndUrlHash(string $uuid, string $urlHash)
+ * @method \App\Model\Order\Order getByUuidAndCustomerUser(string $uuid, \App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Order\Order getByUuidAndUrlHash(string $uuid, string $urlHash)
+ * @method \App\Model\Order\Order[] getCustomerUserOrderLimitedList(\App\Model\Customer\User\CustomerUser $customerUser, int $limit, int $offset)
+ * @method int getCustomerUserOrderCount(\App\Model\Customer\User\CustomerUser $customerUser)
  */
 class OrderRepository extends BaseOrderRepository
 {

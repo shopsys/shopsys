@@ -315,7 +315,7 @@ class OrderController extends FrontBaseController
 
         $this->gtmFacade->onOrderPages($splitOrderPreview, $orderFlow->getCurrentStepNumber());
 
-        if ($isValid && $orderFlow->getCurrentStepNumber() == 3 && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) {
+        if ($isValid && $orderFlow->getCurrentStepNumber() === 3 && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) {
             $customerEmailExists = $this->session->get(self::SESSION_CUSTOMER_EMAIL_EXISTS, null);
             $this->session->remove(self::SESSION_CUSTOMER_EMAIL_EXISTS);
             if ($customerEmailExists !== false) {

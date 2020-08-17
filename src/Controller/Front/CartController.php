@@ -486,7 +486,7 @@ class CartController extends FrontBaseController
      */
     private function maxStockAmountAlreadyReached(AddProductResult $addProductResult): bool
     {
-        return $addProductResult->getNotOnStockQuantity() == $addProductResult->getAddedQuantity();
+        return $addProductResult->getNotOnStockQuantity() === $addProductResult->getAddedQuantity();
     }
 
     /**

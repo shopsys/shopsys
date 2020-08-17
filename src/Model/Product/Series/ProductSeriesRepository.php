@@ -51,9 +51,9 @@ class ProductSeriesRepository
      */
     public function getById(int $id): ProductSeries
     {
-        /** @var \App\Model\Product\Series\ProductSeries $productSeries */
+        /** @var \App\Model\Product\Series\ProductSeries|null $productSeries */
         $productSeries = $this->getRepository()->find($id);
-        if ($productSeries == null) {
+        if ($productSeries === null) {
             $message = 'Product series with ID ' . $id . ' not found';
             throw new ProductSeriesNotFoundException($message);
         }

@@ -336,6 +336,9 @@
     "kraken-io/kraken-php": {
         "version": "1.6"
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.0.4"
+    },
     "lcobucci/jwt": {
         "version": "3.3.2"
     },
@@ -351,6 +354,9 @@
     "league/iso3166": {
         "version": "2.1.5"
     },
+    "league/mime-type-detection": {
+        "version": "1.4.0"
+    },
     "litipk/php-bignumbers": {
         "version": "0.8.6"
     },
@@ -363,23 +369,11 @@
     "myclabs/deep-copy": {
         "version": "1.9.3"
     },
-    "nette/application": {
-        "version": "v3.0.4"
-    },
-    "nette/component-model": {
-        "version": "v3.0.0"
-    },
     "nette/finder": {
         "version": "v2.5.1"
     },
-    "nette/http": {
-        "version": "v3.0.3"
-    },
     "nette/robot-loader": {
         "version": "v3.1.1"
-    },
-    "nette/routing": {
-        "version": "v3.0.0"
     },
     "nette/utils": {
         "version": "v2.5.3"
@@ -487,6 +481,9 @@
     },
     "phpstan/phpstan-phpunit": {
         "version": "0.11.2"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.12.7"
     },
     "phpunit/php-code-coverage": {
         "version": "6.1.4"
@@ -900,6 +897,9 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.12.0"
     },
+    "symfony/polyfill-php70": {
+        "version": "v1.18.1"
+    },
     "symfony/polyfill-php72": {
         "version": "v1.12.0"
     },
@@ -1121,6 +1121,9 @@
     },
     "vasek-purchart/console-errors-bundle": {
         "version": "1.0.1"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.0.1"
     },
     "webmozart/assert": {
         "version": "1.5.0"

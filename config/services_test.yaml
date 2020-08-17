@@ -15,7 +15,8 @@ services:
         arguments:
             - "%shopsys.entity_extension.map%"
 
-    Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver: '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
+    Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver:
+        alias: Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
 
     Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber:
         arguments:
@@ -27,7 +28,8 @@ services:
     Symfony\Bridge\Twig\Extension\HttpKernelRuntime:
         arguments: ['@fragment.handler']
 
-    Shopsys\FrameworkBundle\Component\Domain\Domain: '@App\Component\Domain\Domain'
+    Shopsys\FrameworkBundle\Component\Domain\Domain:
+        alias: App\Component\Domain\Domain
 
     App\Component\Domain\Domain:
         factory: ['@App\Component\Domain\DomainFactoryOverwritingDomainUrl', create]
@@ -63,95 +65,131 @@ services:
         arguments:
             - '%shopsys.image_config_filepath%'
 
-    Shopsys\FrameworkBundle\Component\Image\ImageLocator: '@App\Component\Image\ImageLocator'
+    Shopsys\FrameworkBundle\Component\Image\ImageLocator:
+        alias: App\Component\Image\ImageLocator
 
     App\Component\Image\ImageLocator:
         arguments: ['%shopsys.image_dir%']
 
-    League\Flysystem\FilesystemInterface: '@main_filesystem'
+    League\Flysystem\FilesystemInterface:
+        alias: main_filesystem
 
-    Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider: '@App\Model\MultidomainEntityClassProvider'
+    Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider:
+        alias: App\Model\MultidomainEntityClassProvider
 
-    Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface: '@Shopsys\FrameworkBundle\Model\Article\ArticleFactory'
+    Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Article\ArticleFactory
 
     Shopsys\FrameworkBundle\Model\Article\ArticleFactory: ~
 
-    Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface: '@App\Model\Article\ArticleDataFactory'
+    Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface:
+        alias: App\Model\Article\ArticleDataFactory
 
-    Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface: '@App\Model\Administrator\AdministratorDataFactory'
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
+        alias: App\Model\Administrator\AdministratorDataFactory
 
-    Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface: '@App\Model\Category\CategoryDataFactory'
+    Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
+        alias: App\Model\Category\CategoryDataFactory
 
-    Shopsys\FrameworkBundle\Model\Category\CategoryFacade: '@App\Model\Category\CategoryFacade'
+    Shopsys\FrameworkBundle\Model\Category\CategoryFacade:
+        alias: App\Model\Category\CategoryFacade
 
-    Shopsys\FrameworkBundle\Model\Category\CategoryRepository: '@App\Model\Category\CategoryRepository'
+    Shopsys\FrameworkBundle\Model\Category\CategoryRepository:
+        alias: App\Model\Category\CategoryRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface: '@App\Model\Product\Flag\FlagDataFactory'
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface:
+        alias: App\Model\Product\Flag\FlagDataFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade: '@App\Model\Product\Flag\FlagFacade'
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade:
+        alias: App\Model\Product\Flag\FlagFacade
 
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository: '@App\Model\Product\Flag\FlagRepository'
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository:
+        alias: App\Model\Product\Flag\FlagRepository
 
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface: '@App\Model\Customer\User\CustomerUserDataFactory'
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
+        alias: App\Model\Customer\User\CustomerUserDataFactory
 
-    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade: '@App\Model\Newsletter\NewsletterFacade'
+    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade:
+        alias: App\Model\Newsletter\NewsletterFacade
 
-    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository: '@App\Model\Newsletter\NewsletterRepository'
+    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository:
+        alias: App\Model\Newsletter\NewsletterRepository
 
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface:
+        alias: App\Model\Order\Item\OrderItemDataFactory
 
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface: '@Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory'
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory
 
-    Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'
+    Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
+        alias: App\Model\Order\OrderDataFactory
 
     App\Model\Order\Preview\OrderPreviewFactory: ~
 
-    Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory: '@App\Model\Order\Preview\OrderPreviewFactory'
+    Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory:
+        alias: App\Model\Order\Preview\OrderPreviewFactory
 
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade: '@App\Model\Order\PromoCode\CurrentPromoCodeFacade'
+    Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade:
+        alias: App\Model\Order\PromoCode\CurrentPromoCodeFacade
 
-    Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@App\Model\Transport\TransportDataFactory'
+    Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
+        alias: App\Model\Transport\TransportDataFactory
 
-    Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation: '@App\Model\Transport\TransportPriceCalculation'
+    Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation:
+        alias: App\Model\Transport\TransportPriceCalculation
 
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface: '@Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory'
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation: '@App\Model\Product\Availability\ProductAvailabilityCalculation'
+    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation:
+        alias: App\Model\Product\Availability\ProductAvailabilityCalculation
 
     Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade: '@App\Model\Product\Availability\AvailabilityFacade'
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade:
+        alias: App\Model\Product\Availability\AvailabilityFacade
 
-    Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
+    Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
+        alias: App\Model\Payment\PaymentDataFactory
 
     App\Model\Product\ProductDataFactory: ~
 
-    Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@App\Model\Product\ProductDataFactory'
+    Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
+        alias: App\Model\Product\ProductDataFactory
 
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: '@App\Model\Product\Elasticsearch\ProductExportRepository'
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository:
+        alias: App\Model\Product\Elasticsearch\ProductExportRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@App\Model\Product\Brand\BrandDataFactory'
+    Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface:
+        alias: App\Model\Product\Brand\BrandDataFactory
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade: ~
 
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface:
+        alias: Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade
     Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter:
         tags:
             - { name: router, priority: 70 }
 
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade: '@App\Model\Product\Listed\ListedProductViewElasticFacade'
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade:
+        alias: App\Model\Product\Listed\ListedProductViewElasticFacade
 
-    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade: '@App\Model\Product\ProductOnCurrentDomainElasticFacade'
+    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade:
+        alias: App\Model\Product\ProductOnCurrentDomainElasticFacade
 
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: '@App\Model\Product\ProductVisibilityRepository'
+    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository:
+        alias: App\Model\Product\ProductVisibilityRepository
 
-    Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator: '@App\Model\Product\ProductHiddenRecalculator'
+    Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator:
+        alias: App\Model\Product\ProductHiddenRecalculator
 
-    Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator: '@App\Model\Product\ProductSellingDeniedRecalculator'
+    Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator:
+        alias: App\Model\Product\ProductSellingDeniedRecalculator
 
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository: '@App\Model\Product\Availability\AvailabilityRepository'
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository:
+        alias: App\Model\Product\Availability\AvailabilityRepository
 
     Shopsys\FrameworkBundle\Model\Localization\Localization:
         arguments:
@@ -168,63 +206,88 @@ services:
 
     App\Component\Setting\Setting: ~
 
-    Shopsys\FrameworkBundle\Component\Setting\Setting: '@App\Component\Setting\Setting'
+    Shopsys\FrameworkBundle\Component\Setting\Setting:
+        alias: App\Component\Setting\Setting
 
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\Listed\ListedProductViewFactory'
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory:
+        alias: App\Model\Product\Listed\ListedProductViewFactory
 
     App\Model\Order\OrderFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Order\OrderFacade: '@App\Model\Order\OrderFacade'
+    Shopsys\FrameworkBundle\Model\Order\OrderFacade:
+        alias: App\Model\Order\OrderFacade
 
-    Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator: '@App\Model\Product\ProductBreadcrumbGenerator'
+    Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator:
+        alias: App\Model\Product\ProductBreadcrumbGenerator
 
-    Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
+    Shopsys\FrameworkBundle\Model\Product\ProductFacade:
+        alias: App\Model\Product\ProductFacade
 
-    Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
+    Shopsys\FrameworkBundle\Model\Product\ProductRepository:
+        alias: App\Model\Product\ProductRepository
 
-    Shopsys\FrameworkBundle\Model\Product\ProductFactory: '@App\Model\Product\ProductFactory'
+    Shopsys\FrameworkBundle\Model\Product\ProductFactory:
+        alias: App\Model\Product\ProductFactory
 
     App\Model\Product\Search\FilterQueryFactory: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory: '@App\Model\Product\Search\FilterQueryFactory'
+    Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory:
+        alias: App\Model\Product\Search\FilterQueryFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository: '@App\Model\Product\Filter\PriceRangeRepository'
+    Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository:
+        alias: App\Model\Product\Filter\PriceRangeRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository: '@App\Model\Product\Filter\ParameterFilterChoiceRepository'
+    Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository:
+        alias: App\Model\Product\Filter\ParameterFilterChoiceRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository: '@App\Model\Product\Parameter\ParameterRepository'
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository:
+        alias: App\Model\Product\Parameter\ParameterRepository
 
-    Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository: '@App\Model\Sitemap\SitemapRepository'
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository:
+        alias: App\Model\Sitemap\SitemapRepository
 
-    Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory: '@App\Model\Slider\SliderItemDataFactory'
+    Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory:
+        alias: App\Model\Slider\SliderItemDataFactory
 
-    Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository: '@App\Model\Slider\SliderItemRepository'
+    Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository:
+        alias: App\Model\Slider\SliderItemRepository
 
-    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory: '@App\Model\Advert\AdvertDataFactory'
+    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory:
+        alias: App\Model\Advert\AdvertDataFactory
 
-    Shopsys\FrameworkBundle\Model\Advert\AdvertRepository: '@App\Model\Advert\AdvertRepository'
+    Shopsys\FrameworkBundle\Model\Advert\AdvertRepository:
+        alias: App\Model\Advert\AdvertRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository: '@App\Model\Product\Filter\FlagFilterChoiceRepository'
+    Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository:
+        alias: App\Model\Product\Filter\FlagFilterChoiceRepository
 
     App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: '@App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser'
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser:
+        alias: App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
 
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface: '@App\Model\Product\Parameter\ParameterDataFactory'
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface:
+        alias: App\Model\Product\Parameter\ParameterDataFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface: '@App\Model\Product\Parameter\ParameterValueDataFactory'
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface:
+        alias: App\Model\Product\Parameter\ParameterValueDataFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade: '@App\Model\Product\Parameter\ParameterFacade'
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade:
+        alias: App\Model\Product\Parameter\ParameterFacade
 
     Shopsys\FrontendApiBundle\Model\Token\TokenFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Order\OrderRepository: '@App\Model\Order\OrderRepository'
+    Shopsys\FrameworkBundle\Model\Order\OrderRepository:
+        alias: App\Model\Order\OrderRepository
 
-    Shopsys\FrameworkBundle\Model\Payment\PaymentFacade: '@App\Model\Payment\PaymentFacade'
+    Shopsys\FrameworkBundle\Model\Payment\PaymentFacade:
+        alias: App\Model\Payment\PaymentFacade
 
-    Shopsys\FrameworkBundle\Model\Payment\PaymentRepository: '@App\Model\Payment\PaymentRepository'
+    Shopsys\FrameworkBundle\Model\Payment\PaymentRepository:
+        alias: App\Model\Payment\PaymentRepository
 
-    Shopsys\FrameworkBundle\Component\Image\ImageFacade: '@App\Component\Image\ImageFacade'
+    Shopsys\FrameworkBundle\Component\Image\ImageFacade:
+        alias: App\Component\Image\ImageFacade
 
     App\Component\Image\ImageFacade:
         arguments: ['%shopsys.image_url_prefix%']

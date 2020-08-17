@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use App\Component\Domain\Domain;
 use App\Model\Product\Package\ProductPackageDataFactory;
 use App\Model\Product\Package\ProductPackageFacade;
+use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
 use App\Model\Product\Parameter\ParameterGroupFacade;
 use App\Model\Product\Product;

@@ -188,12 +188,12 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @param string $catnum
+     * @param string|null $catnum
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validateUniqueCatnum($catnum, ExecutionContextInterface $context)
     {
-        if ($catnum == null) {
+        if ($catnum === null) {
             return;
         }
 

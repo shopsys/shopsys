@@ -227,7 +227,7 @@ class TargitoNewsletterFacade
             );
         }
 
-        if ($request->getBody()->getContents() != 'true') {
+        if ($request->getBody()->getContents() !== 'true') {
             throw new TargitoNewsletterSubscriptionException('Targito API : contacts/OptOutContact : return FALSE : ' . $request->getBody()->getContents());
         }
     }

@@ -96,13 +96,13 @@ class CustomerUserFacade extends BaseCustomerUserFacade
 
         $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId($customerUser->getEmail(), $customerUser->getDomainId());
 
-        if ($newsletterSubscriber == null && $customerUser->isNewsletterSubscription()
+        if ($newsletterSubscriber === null && $customerUser->isNewsletterSubscription()
             || ($newsletterSubscriber !== null && $newsletterSubscriber->isDeleted() === true)
         ) {
             $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
         }
 
-        if ($newsletterSubscriber != null && !$customerUser->isNewsletterSubscription()) {
+        if ($newsletterSubscriber !== null && !$customerUser->isNewsletterSubscription()) {
             $this->newsletterFacade->deleteById($newsletterSubscriber->getId());
         }
 

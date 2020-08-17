@@ -128,7 +128,7 @@ class BillingAddressFormType extends AbstractType
                 ],
             ]);
 
-        if ($options['domain_id'] == Domain::SECOND_DOMAIN_ID) {
+        if ($options['domain_id'] === Domain::SECOND_DOMAIN_ID) {
             $builder->add('companyNumberWithVat', TextType::class, [
                     'required' => true,
                     'constraints' => [
