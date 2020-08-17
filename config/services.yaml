@@ -837,6 +837,8 @@ services:
 
     App\Command\ElFinderPostInstallCommand: ~
 
+    App\Command\SingleImportPromoCodesCommand: ~
+
     App\Model\Gtm\GtmContainer:
         arguments:
             $containersConfigs: '%gtm_config%'
@@ -859,3 +861,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade:
         alias: App\Model\Category\TopCategory\TopCategoryFacade
+
+    App\Model\Order\PromoCode\Import\SingleImportPromoCodeFacade:
+        arguments:
+            $displayTimezone: '%shopsys.display_timezone%'
