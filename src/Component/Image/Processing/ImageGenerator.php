@@ -106,7 +106,7 @@ class ImageGenerator extends BaseImageGenerator
                 sprintf(
                     'Generating image by kraken error: image id: %s with result: %s',
                     $image->getId(),
-                    $krakenImageData['message'] ?? implode("|", $krakenImageData)
+                    $krakenImageData['message'] ?? implode('|', $krakenImageData)
                 )
             );
             $this->processImageInFramework($sourceImageFilepath, $targetImageFilepath, $sizeConfig);
