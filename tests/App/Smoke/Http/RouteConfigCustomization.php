@@ -35,7 +35,7 @@ class RouteConfigCustomization
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->container = $container;
+        $this->container = $container->get('test.service_container');
     }
 
     /**
@@ -134,6 +134,7 @@ class RouteConfigCustomization
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
                         ->addCallDuringTestExecution(function (RequestDataSet $requestDataSet, ContainerInterface $container) {
+                            $container = $container->get('test.service_container');
                             /** @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector */
                             $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
                             /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
@@ -260,6 +261,20 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setParameter('id', $vat->getId())
                     ->setParameter('newId', $newVat->getId());
+            })
+            ->customizeByRouteName('admin_currency_list', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Currency setting is available only to superadmin.')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_currency_deleteconfirm', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Currency setting is available only to superadmin.')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(200);
             })
             ->customizeByRouteName('admin_blogcategory_edit', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('It is forbidden to edit blog category with ID 1 as it is the root.')

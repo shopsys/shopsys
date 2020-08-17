@@ -849,4 +849,12 @@ class Product extends BaseProduct
     {
         return $this->catnum;
     }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function setData(BaseProductData $productData): void
+    {
+        parent::setData($productData);
+    }
 }

@@ -32,9 +32,16 @@ class ProductsTest extends GraphQlTestCase
             ['name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale)],
         ];
 
-        $edges = $this->getResponseContentForQuery($query)['data']['products']['edges'];
+        $graphQlType = 'products';
+        $response = $this->getResponseContentForQuery($query);
+
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
+        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+        $this->assertArrayHasKey('edges', $responseData);
+
         $queryResult = [];
-        foreach ($edges as $edge) {
+        foreach ($responseData['edges'] as $edge) {
+            $this->assertArrayHasKey('node', $edge);
             $queryResult[] = $edge['node'];
         }
 
@@ -78,9 +85,16 @@ class ProductsTest extends GraphQlTestCase
 
         $arrayExpected = $this->getExpectedDataForNineteenthProduct();
 
-        $edges = $this->getResponseContentForQuery($query)['data']['products']['edges'];
+        $graphQlType = 'products';
+        $response = $this->getResponseContentForQuery($query);
+
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
+        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+        $this->assertArrayHasKey('edges', $responseData);
+
         $queryResult = [];
-        foreach ($edges as $edge) {
+        foreach ($responseData['edges'] as $edge) {
+            $this->assertArrayHasKey('node', $edge);
             $queryResult[] = $edge['node'];
         }
 

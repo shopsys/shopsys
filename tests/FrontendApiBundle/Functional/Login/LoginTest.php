@@ -17,9 +17,15 @@ class LoginTest extends GraphQlTestCase
 
     public function testLoginMutation(): void
     {
-        $responseData = $this->getResponseContentForQuery($this->getLoginQuery())['data']['Login'];
+        $graphQlType = 'Login';
+        $response = $this->getResponseContentForQuery($this->getLoginQuery());
+
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
+        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+
         $this->assertArrayHasKey('accessToken', $responseData);
         $this->assertIsString($responseData['accessToken']);
+
         $this->assertArrayHasKey('refreshToken', $responseData);
         $this->assertIsString($responseData['refreshToken']);
 
@@ -29,9 +35,18 @@ class LoginTest extends GraphQlTestCase
             $this->fail('Token is not valid');
         }
 
-        $authorizationResponseData = $this->getResponseContentForQuery($this->getLoginQuery(), [], ['HTTP_Authorization' => sprintf('Bearer %s', $responseData['accessToken'])])['data']['Login'];
+        $authorizationResponse = $this->getResponseContentForQuery(
+            $this->getLoginQuery(),
+            [],
+            ['HTTP_Authorization' => sprintf('Bearer %s', $responseData['accessToken'])]
+        );
+
+        $this->assertResponseContainsArrayOfDataForGraphQlType($authorizationResponse, $graphQlType);
+        $authorizationResponseData = $this->getResponseDataForGraphQlType($authorizationResponse, $graphQlType);
+
         $this->assertArrayHasKey('accessToken', $authorizationResponseData);
         $this->assertIsString($authorizationResponseData['accessToken']);
+
         $this->assertArrayHasKey('refreshToken', $authorizationResponseData);
         $this->assertIsString($authorizationResponseData['refreshToken']);
     }

@@ -72,7 +72,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
             ProductTranslation::class => ExtendedProductTranslation::class,
         ];
 
-        $applicationEntityExtensionMap = static::bootKernel()->getContainer()->getParameter('shopsys.entity_extension.map');
+        $applicationEntityExtensionMap = $this->getContainer()->getParameter('shopsys.entity_extension.map');
 
         foreach ($applicationEntityExtensionMap as $baseClass => $extendedClass) {
             if (!array_key_exists($baseClass, $entityExtensionMap)) {

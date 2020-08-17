@@ -26,9 +26,11 @@ class RequiredFieldsTest extends AbstractOrderTestCase
 
         $orderMutation = $this->getOrderMutation(__DIR__ . '/Resources/requiredFields.graphql');
 
-        $responseData = $this->getResponseContentForQuery($orderMutation)['errors'];
+        $response = $this->getResponseContentForQuery($orderMutation);
+        $this->assertResponseContainsArrayOfErrors($response);
 
-        foreach ($responseData as $key => $responseRow) {
+        foreach ($this->getErrorsFromResponse($response) as $key => $responseRow) {
+            $this->assertArrayHasKey('message', $responseRow);
             $this->assertEquals($expectedViolationMessages[$key], $responseRow['message']);
         }
     }

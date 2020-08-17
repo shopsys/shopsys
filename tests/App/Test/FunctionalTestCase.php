@@ -135,7 +135,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected function getContainer()
     {
-        return $this->findClient()->getContainer();
+        return $this->findClient()->getContainer()->get('test.service_container');
     }
 
     /**
@@ -152,7 +152,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     public function createContainer(): ContainerInterface
     {
-        return $this->getContainer();
+        return $this->getContainer()->get('test.service_container');
     }
 
     /**

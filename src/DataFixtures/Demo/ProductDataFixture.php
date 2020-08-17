@@ -163,7 +163,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ProductParameterValueDataFactory $productParameterValueDataFactory,
         ParameterValueDataFactoryInterface $parameterValueDataFactory,
         ParameterFacade $parameterFacade,
-        ParameterDataFactoryInterface $parameterDataFactory,
+        ParameterDataFactory $parameterDataFactory,
         PriceConverter $priceConverter,
         ParameterGroupDataFactory $parameterGroupDataFactory,
         Generator $generator,
@@ -6204,7 +6204,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     private function createVariants(): void
     {
-        $variantCatnumsByMainVariantCatnum = $this->getVariantCatnumsByMainVariantCatnum();
+        $variantCatnumsByMainVariantCatnum = self::getVariantCatnumsByMainVariantCatnum();
 
         foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
             /** @var \App\Model\Product\Product $mainProduct */
@@ -6442,7 +6442,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->addReference(self::PRODUCT_PREFIX . $this->productNo, $product);
         $this->productNo++;
 
-        if (in_array($product->getCatnum(), $this->arrayFlat(self::getVariantCatnumsByMainVariantCatnum()), true)) {
+        if (in_array($product->getCatnum(), $this->getAllVariantCatnumsFromAssociativeArray(self::getVariantCatnumsByMainVariantCatnum()), true)) {
             $this->saveProductToCache($product);
         }
 
@@ -6463,7 +6463,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function getProductFromCacheByCatnum(string $catnum): Product
     {
-        return $this->productFacade->getById($this->productIdsByCatnum[$catnum]);
+        /** @var \App\Model\Product\Product $product */
+        $product = $this->productFacade->getById($this->productIdsByCatnum[$catnum]);
+
+        return $product;
     }
 
     /**
@@ -6481,6 +6484,23 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             SettingValueDataFixture::class,
             ProductTypeDataFixture::class,
         ];
+    }
+
+    /**
+     * @param array $productCatnumsByMainVariantCatnum
+     *
+     * @return string[]
+     */
+    private function getAllVariantCatnumsFromAssociativeArray(array $productCatnumsByMainVariantCatnum): array
+    {
+        $catnums = [];
+
+        foreach ($productCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantCatnums) {
+            $catnums[] = $mainVariantCatnum;
+            $catnums = array_merge($catnums, $variantCatnums);
+        }
+
+        return array_unique($catnums);
     }
 
     /**
@@ -6534,21 +6554,5 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productStock->setDateOfStorage($dateOfStorage);
 
         $this->em->flush();
-    }
-
-    /**
-     * @param array $array
-     * @return string[]
-     */
-    private function arrayFlat(array $array): array
-    {
-        $result = [];
-
-        foreach ($array as $key => $values) {
-            $result[] = $key;
-            $result = array_merge($result, $values);
-        }
-
-        return array_unique($result);
     }
 }

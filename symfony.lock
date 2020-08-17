@@ -894,6 +894,9 @@
     "symfony/polyfill-intl-idn": {
         "version": "v1.12.0"
     },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.18.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.12.0"
     },
@@ -904,7 +907,10 @@
         "version": "v1.12.0"
     },
     "symfony/polyfill-php80": {
-        "version": "v1.17.1"
+        "version": "v1.18.0"
+    },
+    "symfony/polyfill-util": {
+        "version": "v1.12.0"
     },
     "symfony/process": {
         "version": "v3.4.33"
@@ -1071,11 +1077,20 @@
     "symplify/coding-standard": {
         "version": "v5.4.16"
     },
+    "symplify/console-color-diff": {
+        "version": "v7.3.18"
+    },
     "symplify/easy-coding-standard": {
         "version": "v7.2.2"
     },
     "symplify/package-builder": {
         "version": "v5.4.16"
+    },
+    "symplify/parameter-name-guard": {
+        "version": "v7.3.18"
+    },
+    "symplify/phpstan-extensions": {
+        "version": "v7.3.18"
     },
     "symplify/set-config-resolver": {
         "version": "v7.2.3"

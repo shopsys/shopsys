@@ -280,7 +280,7 @@ class OrderController extends FrontBaseController
                     t('Došlo ke změně v košíku, která vyžaduje, aby jste překontrolovali dopravu objednávky.')
                 );
                 return $this->redirectToRoute('front_order_index');
-            } elseif ($this->isFlashMessageBagEmpty()) {
+            } elseif (count($this->getErrorMessages()) === 0 && count($this->getInfoMessages()) === 0) {
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
                 $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);

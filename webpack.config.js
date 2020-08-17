@@ -60,7 +60,7 @@ Encore
                 sources.getFrameworkVendorDir() + '/src/Resources/translations/*.po',
                 './translations/*.po',
             ];
-            const outputDirForExportedTranslations = Encore.isProduction() ? './web/build/' : './assets/js/';
+            const outputDirForExportedTranslations = './assets/js/';
 
             try {
                 processTrans(dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations);

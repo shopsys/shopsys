@@ -45,7 +45,7 @@ class AllFeedsTest extends KernelTestCase
             'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),
         ]);
 
-        $container = static::bootKernel()->getContainer();
+        $container = static::$container;
         $container->get(Domain::class)
             ->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
@@ -89,7 +89,7 @@ class AllFeedsTest extends KernelTestCase
 
         $this->exportJmeterCsvReport(
             $performanceTestSamples,
-            static::bootKernel()->getContainer()->getParameter('shopsys.root_dir') . '/build/stats/performance-tests-feeds.csv'
+            static::$container->getParameter('shopsys.root_dir') . '/build/stats/performance-tests-feeds.csv'
         );
 
         $this->assertSamplesAreSuccessful($performanceTestSamples);
@@ -115,9 +115,9 @@ class AllFeedsTest extends KernelTestCase
     public function getAllFeedGenerationData()
     {
         /** @var \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry */
-        $feedRegistry = static::bootKernel()->getContainer()->get(FeedRegistry::class);
+        $feedRegistry = static::$container->get(FeedRegistry::class);
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = static::bootKernel()->getContainer()->get(Domain::class);
+        $domain = static::$container->get(Domain::class);
         $dailyFeedGenerationData = $this->getFeedGenerationData(
             $feedRegistry->getFeeds('daily'),
             $domain->getAll(),
@@ -184,7 +184,7 @@ class AllFeedsTest extends KernelTestCase
         $this->setUp();
 
         /** @var \Symfony\Component\Routing\RouterInterface $router */
-        $router = static::bootKernel()->getContainer()->get('router');
+        $router = static::$container->get('router');
 
         $uri = $router->generate(
             self::ROUTE_NAME_GENERATE_FEED,
@@ -198,7 +198,7 @@ class AllFeedsTest extends KernelTestCase
         $auth->authenticateRequest($request);
 
         /** @var \Doctrine\ORM\EntityManager $entityManager */
-        $entityManager = static::bootKernel()->getContainer()->get('doctrine.orm.entity_manager');
+        $entityManager = static::$container->get('doctrine.orm.entity_manager');
 
         $startTime = microtime(true);
         $entityManager->beginTransaction();

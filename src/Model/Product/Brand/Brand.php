@@ -32,4 +32,12 @@ class Brand extends BaseBrand
     {
         parent::edit($brandData);
     }
+
+    /**
+     * @param \App\Model\Product\Brand\BrandData $brandData
+     */
+    protected function setData(BaseBrandData $brandData): void
+    {
+        parent::setData($brandData);
+    }
 }

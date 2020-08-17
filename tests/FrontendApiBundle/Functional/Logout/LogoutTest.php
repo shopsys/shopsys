@@ -10,7 +10,10 @@ class LogoutTest extends GraphQlWithLoginTestCase
 {
     public function testLogoutMutation()
     {
-        $isLogoutSuccess = $this->getResponseContentForQuery($this->getLogoutQuery())['data']['Logout'];
+        $response = $this->getResponseContentForQuery($this->getLogoutQuery());
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('Logout', $response['data']);
+        $isLogoutSuccess = $response['data']['Logout'];
         $this->assertTrue($isLogoutSuccess);
     }
 

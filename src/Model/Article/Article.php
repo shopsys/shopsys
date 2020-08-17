@@ -80,6 +80,16 @@ class Article extends BaseArticle
     }
 
     /**
+     * @param \App\Model\Article\ArticleData $articleData
+     */
+    protected function setData(BaseArticleData $articleData): void
+    {
+        parent::setData($articleData);
+        $this->createdAt = $articleData->createdAt ?? new DateTime();
+    }
+
+
+    /**
      * @return \DateTime
      */
     public function getCreatedAt(): DateTime
