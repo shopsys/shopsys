@@ -139,4 +139,66 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     {
         return $this->overwriteDomainUrl . $uri;
     }
+
+    /**
+     * @param array $response
+     * @return array
+     */
+    protected function getErrorsFromResponse(array $response): array
+    {
+        return $response['errors'];
+    }
+
+    /**
+     * @param array $response
+     * @return array
+     */
+    protected function getErrorsExtensionValidationFromResponse(array $response): array
+    {
+        return $this->getErrorsFromResponse($response)[0]['extensions']['validation'];
+    }
+
+    /**
+     * @param array $response
+     * @param string $graphQlType
+     * @return array
+     */
+    protected function getResponseDataForGraphQlType(array $response, string $graphQlType): array
+    {
+        return $response['data'][$graphQlType];
+    }
+
+    /**
+     * @param array $response
+     * @param string $graphQlType
+     */
+    protected function assertResponseContainsArrayOfDataForGraphQlType(array $response, string $graphQlType): void
+    {
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey($graphQlType, $response['data']);
+        $this->assertIsArray($response['data'][$graphQlType]);
+    }
+
+    /**
+     * @param array $response
+     */
+    protected function assertResponseContainsArrayOfErrors(array $response): void
+    {
+        $this->assertArrayHasKey('errors', $response);
+        $this->assertIsArray($response['errors']);
+    }
+
+    /**
+     * @param array $response
+     */
+    protected function assertResponseContainsArrayOfExtensionValidationErrors(array $response): void
+    {
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertArrayHasKey(0, $errors);
+        $this->assertArrayHasKey('extensions', $errors[0]);
+        $this->assertArrayHasKey('validation', $errors[0]['extensions']);
+        $this->assertIsArray($errors[0]['extensions']['validation']);
+    }
 }

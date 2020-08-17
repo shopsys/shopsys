@@ -46,8 +46,6 @@ class CategoriesTest extends GraphQlTestCase
             }
         ';
 
-        $output = $this->getResponseContentForQuery($query);
-
         $expected = [
             'name' => 'Electronics',
             'children' => [
@@ -60,6 +58,13 @@ class CategoriesTest extends GraphQlTestCase
             ],
         ];
 
-        $this->assertEquals($expected, $output['data']['categories'][0]);
+        $graphQlType = 'categories';
+        $response = $this->getResponseContentForQuery($query);
+
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
+        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+
+        $this->assertArrayHasKey(0, $responseData);
+        $this->assertEquals($expected, $responseData[0]);
     }
 }

@@ -66,7 +66,7 @@ class FileSystemFactoryDecorator implements FilesystemFactoryInterface
      */
     public function create(): FilesystemInterface
     {
-        if ($this->s3ApiHost != '') {
+        if ($this->s3ApiHost !== '') {
             $s3Client = new S3Client([
                 'version' => '2006-03-01',
                 'region' => '',

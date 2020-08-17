@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 /**
  * @ORM\Table(name="billing_addresses")
  * @ORM\Entity
+ * @method setData(\App\Model\Customer\BillingAddressData $billingAddressData)
  */
 class BillingAddress extends BaseBillingAddress
 {

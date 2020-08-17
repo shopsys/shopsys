@@ -33,7 +33,7 @@ class AllPagesTest extends KernelTestCase
             'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),
         ]);
 
-        self::$kernel->getContainer()->get(Domain::class)
+        static::$container->get(Domain::class)
             ->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
@@ -61,7 +61,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^admin_~'),
-            self::$kernel->getContainer()->getParameter('shopsys.root_dir') . '/build/stats/performance-tests-admin.csv'
+            static::$container->getParameter('shopsys.root_dir') . '/build/stats/performance-tests-admin.csv'
         );
     }
 
@@ -69,7 +69,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^front~'),
-            self::$kernel->getContainer()->getParameter('shopsys.root_dir') . '/build/stats/performance-tests-front.csv'
+            static::$container->getParameter('shopsys.root_dir') . '/build/stats/performance-tests-front.csv'
         );
     }
 
@@ -87,7 +87,7 @@ class AllPagesTest extends KernelTestCase
         }
 
         $routeConfigCustomizer = new RouteConfigCustomizer($requestDataSetGenerators);
-        $routeConfigCustomization = new RouteConfigCustomization(self::$kernel->getContainer());
+        $routeConfigCustomization = new RouteConfigCustomization(static::$container);
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);
 
         $routeConfigCustomizer->customize(function (RouteConfig $config, RouteInfo $info) use ($routeNamePattern) {
@@ -178,7 +178,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->setUp();
 
-        $requestDataSet->executeCallsDuringTestExecution(static::$kernel->getContainer());
+        $requestDataSet->executeCallsDuringTestExecution(static::$container);
 
         $uri = $this->getRouterAdapter()->generateUri($requestDataSet);
 
@@ -186,7 +186,7 @@ class AllPagesTest extends KernelTestCase
         $requestDataSet->getAuth()->authenticateRequest($request);
 
         /** @var \Doctrine\ORM\EntityManager $entityManager */
-        $entityManager = self::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $entityManager = static::$container->get('doctrine.orm.entity_manager');
 
         $startTime = microtime(true);
         $entityManager->beginTransaction();
@@ -269,7 +269,7 @@ class AllPagesTest extends KernelTestCase
      */
     private function getRouterAdapter()
     {
-        $router = static::$kernel->getContainer()->get('router');
+        $router = static::$container->get('router');
         $routerAdapter = new SymfonyRouterAdapter($router);
 
         return $routerAdapter;
@@ -302,7 +302,7 @@ class AllPagesTest extends KernelTestCase
      */
     private function createPerformanceTestSampleQualifier()
     {
-        $container = self::$kernel->getContainer();
+        $container = static::$container;
 
         return new PerformanceTestSampleQualifier(
             $container->getParameter('shopsys.performance_test.page.duration_milliseconds.warning'),

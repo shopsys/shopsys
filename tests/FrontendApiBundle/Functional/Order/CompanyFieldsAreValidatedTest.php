@@ -25,8 +25,9 @@ class CompanyFieldsAreValidatedTest extends AbstractOrderTestCase
 
         $orderMutation = $this->getOrderMutation(__DIR__ . '/Resources/companyFieldsAreValidated.graphql');
 
-        $responseData = $this->getResponseContentForQuery($orderMutation);
+        $response = $this->getResponseContentForQuery($orderMutation);
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
 
-        $this->assertEquals($expectedValidations, $responseData['errors'][0]['extensions']['validation']);
+        $this->assertEquals($expectedValidations, $this->getErrorsExtensionValidationFromResponse($response));
     }
 }

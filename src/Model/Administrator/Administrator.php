@@ -45,6 +45,14 @@ class Administrator extends BaseAdministrator
     }
 
     /**
+     * @param \App\Model\Administrator\AdministratorData $administratorData
+     */
+    protected function setData(BaseAdministratorData $administratorData): void
+    {
+        parent::setData($administratorData);
+    }
+
+    /**
      * @return \DateTime
      */
     public function getTransferIssuesLastSeenDateTime(): DateTime

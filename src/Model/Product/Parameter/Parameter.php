@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParamet
  * @ORM\Table(name="parameters")
  * @ORM\Entity
  * @method setTranslations(\App\Model\Product\Parameter\ParameterData $parameterData)
+ * @method setData(\App\Model\Product\Parameter\ParameterData $parameterData)
  */
 class Parameter extends BaseParameter
 {

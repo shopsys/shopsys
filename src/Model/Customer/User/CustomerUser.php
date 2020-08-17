@@ -128,4 +128,12 @@ class CustomerUser extends BaseUser
     {
         return parent::getFullName();
     }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUserData $customerUserData
+     */
+    protected function setData(BaseUserData $customerUserData): void
+    {
+        parent::setData($customerUserData);
+    }
 }

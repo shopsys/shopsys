@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\App\Model\Product\Availability\AvailabilityFacade $availabilityFacade, \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator, \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade, \Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository)
  * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+ * @method \Shopsys\FrameworkBundle\Model\Product\Availability\Availability calculateAvailabilityForUsingStockProduct(\App\Model\Product\Product $product)
  */
 class ProductAvailabilityCalculation extends BaseProductAvailabilityCalculation
 {

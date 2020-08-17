@@ -163,4 +163,12 @@ class Category extends BaseCategory
     {
         return $this->domains;
     }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     */
+    protected function setData(BaseCategoryData $categoryData): void
+    {
+        parent::setData($categoryData);
+    }
 }

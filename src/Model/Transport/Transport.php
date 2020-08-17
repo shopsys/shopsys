@@ -91,4 +91,12 @@ class Transport extends BaseTransport
     {
         return $this->personalPickup;
     }
+
+    /**
+     * @param \App\Model\Transport\TransportData $transportData
+     */
+    protected function setData(BaseTransportData $transportData): void
+    {
+        parent::setData($transportData);
+    }
 }

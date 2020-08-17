@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Advert\Advert as BaseAdvert;
 /**
  * @ORM\Table(name="adverts")
  * @ORM\Entity
+ * @method setData(\App\Model\Advert\AdvertData $advert)
  */
 class Advert extends BaseAdvert
 {

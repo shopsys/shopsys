@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
  * @ORM\Table(name="flags")
  * @ORM\Entity
  * @method setTranslations(\App\Model\Product\Flag\FlagData $flagData)
+ * @method setData(\App\Model\Product\Flag\FlagData $flagData)
  */
 class Flag extends BaseFlag
 {

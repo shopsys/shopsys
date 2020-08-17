@@ -70,16 +70,17 @@ class NewsletterController extends FrontBaseController
              */
             $this->formTimeProvider->generateFormTime($form->getName());
 
-            if ($form->isValid()) {
-                $email = $form->getData()['email'];
-                $this->newsletterFacade->addSubscribedEmail($email, $this->domain->getId());
-                return $this->json(['success' => true]);
-            } else {
+            if (!$form->isValid()) {
                 return $this->json([
                     'success' => false,
                     'errors' => $this->parseErrors($form->getErrors()),
                 ]);
             }
+
+            $email = $form->getData()['email'];
+            $this->newsletterFacade->addSubscribedEmail($email, $this->domain->getId());
+
+            return $this->json(['success' => true]);
         }
 
         return null;

@@ -82,6 +82,11 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Order\OrderRepository $orderRepository
  * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
  * @property \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+ * @method \App\Model\Order\Order[] getCustomerUserOrderLimitedList(\App\Model\Customer\User\CustomerUser $customerUser, int $limit, int $offset)
+ * @method int getCustomerUserOrderCount(\App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Order\Order getByUuidAndCustomerUser(string $uuid, \App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Order\Order getByUuidAndUrlHash(string $uuid, string $urlHash)
+ * @method updateTransportAndPaymentNamesInOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -592,9 +597,9 @@ class OrderFacade extends BaseOrderFacade
      */
     public function tryRegisterUserFromOrderData(\App\Model\Order\OrderData $orderData): CustomerUser
     {
-        /** @var \App\Model\Customer\User\CustomerUser $existingUser */
+        /** @var \App\Model\Customer\User\CustomerUser|null $existingUser */
         $existingUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($orderData->email, $orderData->domainId);
-        if ($existingUser == null) {
+        if ($existingUser === null) {
             $registrationData = $this->registrationDataFactory->createForDomainId($orderData->domainId);
 
             $registrationData->gender = $orderData->gender;

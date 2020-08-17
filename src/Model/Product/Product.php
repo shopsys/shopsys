@@ -816,23 +816,6 @@ class Product extends BaseProduct
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain $searchProductCategoryDomain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
-     * @return bool
-     */
-    private function isProductCategoryDomainInArray(ProductCategoryDomain $searchProductCategoryDomain, array $productCategoryDomains)
-    {
-        foreach ($productCategoryDomains as $productCategoryDomain) {
-            if ($productCategoryDomain->getCategory() === $searchProductCategoryDomain->getCategory()
-                && $productCategoryDomain->getDomainId() === $searchProductCategoryDomain->getDomainId()
-            ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public function setAsMainVariant(): void
     {
         if ($this->isMainVariant() || $this->isVariant()) {
@@ -848,5 +831,13 @@ class Product extends BaseProduct
     public function getCatnum(): string
     {
         return $this->catnum;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function setData(BaseProductData $productData): void
+    {
+        parent::setData($productData);
     }
 }

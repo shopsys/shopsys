@@ -3,6 +3,8 @@ imports:
 
 services:
     PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff: ~
 
 parameters:
     exclude_files:

@@ -89,8 +89,8 @@ class UnitDataFixture extends AbstractReferenceFixture
 
     private function setPiecesAsDefaultUnit(): void
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $defaultUnit */
         $defaultUnit = $this->getReference(self::UNIT_PIECES);
-        /** @var $defaultUnit \Shopsys\FrameworkBundle\Model\Product\Unit\Unit */
         $this->setting->set(Setting::DEFAULT_UNIT, $defaultUnit->getId());
     }
 }

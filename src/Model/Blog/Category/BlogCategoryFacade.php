@@ -150,7 +150,7 @@ class BlogCategoryFacade
     }
 
     /**
-     * @param int[] $parentIdByBlogCategoryId
+     * @param int[]|null[] $parentIdByBlogCategoryId
      */
     public function editOrdering(array $parentIdByBlogCategoryId): void
     {
@@ -160,7 +160,7 @@ class BlogCategoryFacade
         $rootCategory = $this->getRootBlogCategory();
 
         foreach ($parentIdByBlogCategoryId as $blogCategoryId => $parentId) {
-            if ($parentId == null) {
+            if ($parentId === null) {
                 $parent = $rootCategory;
             } else {
                 $parent = $this->blogCategoryRepository->getById($parentId);

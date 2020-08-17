@@ -21,8 +21,9 @@ class Environment
      */
     public static function checkEnvironment(Event $event)
     {
+        /** @var \Composer\IO\IOInterface $io */
         $io = $event->getIO();
-        /* @var $io \Composer\IO\IOInterface */
+
         $environmentFileSetting = self::getEnvironmentFileSetting();
         if (!$environmentFileSetting->isAnyEnvironmentSet()) {
             $environment = $event->isDevMode() ? EnvironmentType::DEVELOPMENT : EnvironmentType::PRODUCTION;

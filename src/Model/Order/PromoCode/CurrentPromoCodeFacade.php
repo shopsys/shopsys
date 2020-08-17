@@ -145,7 +145,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     public function validateRemainigUses(PromoCode $promoCode): void
     {
         $remainingCodeUses = $promoCode->getRemainingUses();
-        if ($remainingCodeUses !== null && $remainingCodeUses == 0) {
+        if ($remainingCodeUses !== null && $remainingCodeUses === 0) {
             throw new \Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException($promoCode->getCode());
         }
     }
@@ -171,7 +171,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 
         $isValidPromoCode = false;
         foreach ($cartItems as $cartItem) {
-            if (in_array($cartItem->getProduct()->getId(), $allowedProductIds, true) == true) {
+            if (in_array($cartItem->getProduct()->getId(), $allowedProductIds, true) === true) {
                 $isValidPromoCode = true;
                 break;
             }

@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
  *     })}
  * )
  * @ORM\Entity
+ * @method setData(\App\Model\Order\PromoCode\PromoCodeData $promoCodeData)
  */
 class PromoCode extends BasePromoCode
 {
