@@ -14,6 +14,8 @@ services:
     Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff: ~
 
 parameters:
+    sets:
+        - 'psr12'
     skip:
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
             - '*/src/DataFixtures/ZboziPluginDataFixture.php'

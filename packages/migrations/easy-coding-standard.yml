@@ -5,6 +5,8 @@ services:
     Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff: ~
 
 parameters:
+    sets:
+        - 'psr12'
     exclude_files:
         - '*/src/Resources/views/Migration/migration.php.twig'
     skip:

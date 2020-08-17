@@ -4,6 +4,8 @@ imports:
     - { resource: 'project-base/easy-coding-standard.yml' }
 
 parameters:
+    sets:
+        - 'psr12'
     skip:
         PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer:
             - 'packages/*'
