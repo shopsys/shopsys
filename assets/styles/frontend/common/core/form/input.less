@@ -21,7 +21,7 @@
 
     border: 2px solid @input-border-color;
     color: @color-primary;
-    background: @input-background;
+    background-color: @input-background;
     border-radius: @input-border-radius;
     caret-color: @color-add-secondary;
     font-size: 16px;
@@ -46,13 +46,7 @@
     .form-input-error & ,
     &.form-input-error {
         padding-right: 25px;
-
-        border-color: @input-error-border-color;
         box-shadow: none;
-
-        &:focus {
-            border-color: @input-error-border-color;
-        }
     }
 
     .form-input-disabled &,
@@ -184,4 +178,12 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
     box-shadow: 0 0 0 1000px @input-background inset;
+}
+
+select {
+    background-image: url('@{path-design}/warning.svg');
+    background-size: 10px 10px;
+    background-size: contain;
+    background-position: center right;
+    background-repeat: no-repeat;
 }
