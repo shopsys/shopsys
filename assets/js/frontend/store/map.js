@@ -5,11 +5,17 @@ import Register from 'framework/common/utils/Register';
 
 export default class Map {
     static init ($container) {
+        var googleMapsDivElement = document.getElementById('js-google-map-box');
+
+        if (googleMapsDivElement == null) {
+            return;
+        }
+
         this.$container = $container;
         var map;
         var bounds = new google.maps.LatLngBounds();
 
-        map = new google.maps.Map(document.getElementById('js-google-map-box'), {
+        map = new google.maps.Map(googleMapsDivElement, {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
