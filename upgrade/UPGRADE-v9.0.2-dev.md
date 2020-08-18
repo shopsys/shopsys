@@ -42,3 +42,4 @@ There you can find links to upgrade notes for other versions too.
 
 - update your redis build-version to include application environment ([#1985](https://github.com/shopsys/shopsys/pull/#1985))
     - see #project-base-diff to update your project
+    - run `php phing build-version-generate`

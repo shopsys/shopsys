@@ -37,4 +37,4 @@ snc_redis:
     session:
         client: 'session'
         ttl: 604800
-        prefix: '%env(REDIS_PREFIX)%%build-version%session:'
+        prefix: '%env(REDIS_PREFIX)%session:'
