@@ -144,6 +144,7 @@ class TransportLogisticFacade
     private function filterPossibleTransports(array $transports, array $possiblePackageTransports): array
     {
         $isAllowedPackageTransport = count($possiblePackageTransports) > 0;
+        $isOverLimitTransport = $this->cartFacade->isCartContainsProductWithOverLimitQuantity();
         foreach ($transports as $key => $transport) {
             if ($isAllowedPackageTransport === true
                 && $transport->getType() === Transport::TYPE_PALLET
@@ -161,6 +162,10 @@ class TransportLogisticFacade
                 && $transport->getType() === Transport::TYPE_PACKAGE
                 && in_array($transport, $possiblePackageTransports, true) === false
             ) {
+                unset($transports[$key]);
+            }
+
+            if($transport->isOverLimitTransport() !== $isOverLimitTransport) {
                 unset($transports[$key]);
             }
         }

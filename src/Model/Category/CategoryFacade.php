@@ -240,4 +240,19 @@ class CategoryFacade extends BaseCategoryFacade
 
         return implode($delimiter, $categoriesNamesInPath);
     }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return int|null
+     */
+    public function getOverLimitQuantity(Product $product, int $domainId): ?int
+    {
+        $productMainCategory = $this->findProductMainCategoryByDomainId($product, $domainId);
+        if ($productMainCategory === null || $productMainCategory->getOverLimitQuantity() === null) {
+            return null;
+        }
+
+        return $productMainCategory->getOverLimitQuantity();
+    }
 }

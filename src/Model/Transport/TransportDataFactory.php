@@ -92,6 +92,7 @@ class TransportDataFactory extends BaseTransportDataFactory
         foreach ($transportPackages as $transportPackage) {
             $transportData->transportPackages[] = $this->transportPackageDataFactory->createFromTransportPackage($transportPackage);
         }
+        $transportData->isOverLimitTransport = $transport->isOverLimitTransport();
 
         return $transportData;
     }

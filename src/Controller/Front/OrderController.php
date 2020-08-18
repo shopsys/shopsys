@@ -271,13 +271,16 @@ class OrderController extends FrontBaseController
         }
         $form = $orderFlow->createForm();
         $isValid = $orderFlow->isValid($form);
-        // FormData are filled during isValid() call
+
+        $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        $payments = $this->paymentFacade->filterAllowedPaymentsForCurrentCart($payments);
+        $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
+        $transports = $this->transportLogisticFacade->filterAllowedTransportsForCurrentCart($transports);
+
+        $frontOrderFormData = $this->orderFacade->revalidatePaymentAndTransport($frontOrderFormData, $payments, $transports);
         $orderData = $this->orderDataMapper->getOrderDataFromFrontOrderData($frontOrderFormData);
         $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
 
-        $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
-        $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
-        $transports = $this->transportLogisticFacade->filterAllowedTransportsForCurrentCart($transports);
         $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
         $prefilledCustomerEmail = $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null);
 

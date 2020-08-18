@@ -41,6 +41,12 @@ class Category extends BaseCategory
     private $svgIcon;
 
     /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $overLimitQuantity;
+
+    /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
     public function __construct(BaseCategoryData $categoryData)
@@ -49,6 +55,7 @@ class Category extends BaseCategory
 
         $this->akeneoCode = $categoryData->akeneoCode;
         $this->svgIcon = $categoryData->svgIcon;
+        $this->overLimitQuantity = $categoryData->overLimitQuantity;
     }
 
     /**
@@ -59,6 +66,15 @@ class Category extends BaseCategory
         parent::edit($categoryData);
 
         $this->svgIcon = $categoryData->svgIcon;
+        $this->overLimitQuantity = $categoryData->overLimitQuantity;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getOverLimitQuantity(): ?int
+    {
+        return $this->overLimitQuantity;
     }
 
     /**

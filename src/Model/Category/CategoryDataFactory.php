@@ -120,6 +120,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         $categoryData->svgIcon = $category->getSvgIcon();
         $categoryData->parametersCollapsed = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
         $categoryData->categoryProductSeries = $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category);
+        $categoryData->overLimitQuantity = $category->getOverLimitQuantity();
         $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
     }
 

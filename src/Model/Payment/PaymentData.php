@@ -26,10 +26,16 @@ class PaymentData extends BasePaymentData
      */
     public $hiddenByGoPay;
 
+    /**
+     * @var bool
+     */
+    public $isOverLimitPayment;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->type = Payment::TYPE_BASIC;
+        $this->isOverLimitPayment = false;
     }
 }

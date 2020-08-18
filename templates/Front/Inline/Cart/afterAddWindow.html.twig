@@ -10,6 +10,9 @@
             </svg>
             {{ 'Skvělá volba! Vaše zboží jsme přidali do košíku'|trans }}
         </h2>
+        {% if isAddedQuantityOverLimit %}
+            {{ 'Přidali jste velké množství zboží. Limit je %quantity% ks, proto budete mít speciální typ objednávky'|trans({'%quantity%': overLimitQuantity}) }}
+        {% endif %}
         <div class="window-popup__cart">
             <div class="window-popup__cart__img">
                 {% if imageExists(product) %}

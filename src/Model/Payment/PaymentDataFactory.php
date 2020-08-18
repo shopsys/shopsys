@@ -62,6 +62,7 @@ class PaymentDataFactory extends BasePaymentDataFactory
         $paymentData->type = $payment->getType();
         $paymentData->goPayPaymentMethod = $payment->getGoPayPaymentMethod();
         $paymentData->hiddenByGoPay = $payment->isHiddenByGoPay();
+        $paymentData->isOverLimitPayment = $payment->isOverLimitPayment();
 
         return $paymentData;
     }

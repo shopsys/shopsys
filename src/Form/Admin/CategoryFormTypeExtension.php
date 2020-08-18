@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryFormTypeExtension extends AbstractTypeExtension
@@ -86,6 +87,10 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Nastavení SVG ikony'),
                 'required' => false,
                 'choices' => $this->svgProvider->getAllSvgIconsNames(),
+            ])
+            ->add('overLimitQuantity', TextType::class, [
+                'label' => t('Nastavení nadlimitního množství'),
+                'required' => false,
             ]);
 
         /** @var \Ivory\OrderedForm\Builder\OrderedFormBuilder $builderShortDescriptionGroup */

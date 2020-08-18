@@ -59,6 +59,10 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
                 'attr' => [
                     'class' => 'js-payment-gopay-payment-method',
                 ],
+            ])
+            ->add('isOverLimitPayment', YesNoType::class, [
+                'label' => t('Platba pro nadlimitní množství'),
+                'required' => false,
             ]);
 
         if ($options['payment'] !== null) {

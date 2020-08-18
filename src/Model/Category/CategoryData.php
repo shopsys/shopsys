@@ -12,6 +12,11 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 class CategoryData extends BaseCategoryData
 {
     /**
+     * @var int|null
+     */
+    public $overLimitQuantity;
+
+    /**
      * @var string|null
      */
     public $akeneoCode;

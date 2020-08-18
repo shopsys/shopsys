@@ -66,6 +66,10 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                 'multiple' => false,
                 'expanded' => true,
                 'label' => t('Typ'),
+            ])
+            ->add('isOverLimitTransport', YesNoType::class, [
+                'label' => t('Doprava pro nadlimitní množství'),
+                'required' => false,
             ]);
 
         $builder->add($this->createTransportPackages($builder));

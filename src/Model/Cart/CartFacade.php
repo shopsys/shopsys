@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Cart;
 
+use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,6 +44,11 @@ class CartFacade extends BaseCartFacade
     private $productAvailabilityFacade;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private $categoryFacade;
+
+    /**
      * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
      */
     private $flashBag;
@@ -67,6 +73,7 @@ class CartFacade extends BaseCartFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag
      * @param \Twig\Environment $twigEnvironment
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -82,7 +89,8 @@ class CartFacade extends BaseCartFacade
         CartWatcherFacade $cartWatcherFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         FlashBagInterface $flashBag,
-        Environment $twigEnvironment
+        Environment $twigEnvironment,
+        CategoryFacade $categoryFacade
     ) {
         parent::__construct(
             $em,
@@ -100,6 +108,7 @@ class CartFacade extends BaseCartFacade
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->flashBag = $flashBag;
         $this->twigEnvironment = $twigEnvironment;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -120,6 +129,8 @@ class CartFacade extends BaseCartFacade
         $maximumOrderQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($product, $this->domain->getId());
         $notOnStockQuantity = 0;
 
+        $overLimitQuantity = $this->categoryFacade->getOverLimitQuantity($product, $this->domain->getId());
+
         if (!is_int($quantity) || $quantity <= 0) {
             throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($quantity);
         }
@@ -131,9 +142,10 @@ class CartFacade extends BaseCartFacade
                     $notOnStockQuantity = $newQuantity - $maximumOrderQuantity;
                     $newQuantity = $maximumOrderQuantity;
                 }
+                $isQuantityOverLimit = $this->isQuantityOverLimitReached($newQuantity, $overLimitQuantity);
                 $item->changeQuantity($newQuantity);
                 $item->changeAddedAt(new DateTime());
-                $result = new AddProductResult($item, false, $quantity, $notOnStockQuantity);
+                $result = new AddProductResult($item, false, $quantity, $notOnStockQuantity, $overLimitQuantity, $isQuantityOverLimit);
                 $this->em->persist($result->getCartItem());
                 $this->em->flush();
 
@@ -146,12 +158,13 @@ class CartFacade extends BaseCartFacade
             $quantity = $maximumOrderQuantity;
         }
 
+        $isQuantityOverLimit = $this->isQuantityOverLimitReached($quantity, $overLimitQuantity);
         $productPrice = $this->productPriceCalculation->calculatePriceForCurrentUser($product);
         $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPriceWithVat());
         $cart->addItem($newCartItem);
         $cart->setModifiedNow();
 
-        $result = new AddProductResult($newCartItem, true, $quantity, $notOnStockQuantity);
+        $result = new AddProductResult($newCartItem, true, $quantity, $notOnStockQuantity, $overLimitQuantity, $isQuantityOverLimit);
 
         $this->em->persist($result->getCartItem());
         $this->em->flush();
@@ -213,5 +226,48 @@ class CartFacade extends BaseCartFacade
         if ($cart->isEmpty()) {
             $this->deleteCart($cart);
         }
+    }
+
+    /**
+     * @param int $quantity
+     * @param int|null $quantityLimit
+     * @return bool
+     */
+    private function isQuantityOverLimitReached(int $quantity, ?int $quantityLimit): bool
+    {
+        if ($quantityLimit === null) {
+            return false;
+        }
+
+        if ($quantity >= $quantityLimit) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCartContainsProductWithOverLimitQuantity(): bool
+    {
+        $cart = $this->findCartOfCurrentCustomerUser();
+
+        if ($cart === null) {
+            return false;
+        }
+
+        foreach ($cart->getItems() as $item) {
+            $product = $item->getProduct();
+            $domainId = $this->domain->getId();
+            $itemQuantity = $item->getQuantity();
+            $overLimitQuantity = $this->categoryFacade->getOverLimitQuantity($product, $domainId);
+
+            if ($this->isQuantityOverLimitReached($itemQuantity, $overLimitQuantity)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

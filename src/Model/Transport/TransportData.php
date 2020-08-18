@@ -31,11 +31,17 @@ class TransportData extends BaseTransportData
      */
     public array $transportPackages;
 
+    /**
+     * @var bool
+     */
+    public $isOverLimitTransport;
+
     public function __construct()
     {
         parent::__construct();
         $this->productTypes = [];
         $this->personalPickup = false;
         $this->transportPackages = [];
+        $this->isOverLimitTransport = false;
     }
 }

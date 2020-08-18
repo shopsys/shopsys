@@ -4,13 +4,23 @@ declare(strict_types=1);
 
 namespace App\Model\Payment;
 
+use App\Model\Cart\CartFacade;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use App\Model\Transport\Transport;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 /**
  * @property \App\Model\Payment\PaymentRepository $paymentRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Payment\PaymentRepository $paymentRepository, \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation, \App\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory)
  * @method \App\Model\Payment\Payment create(\App\Model\Payment\PaymentData $paymentData)
  * @method edit(\App\Model\Payment\Payment $payment, \App\Model\Payment\PaymentData $paymentData)
  * @method \App\Model\Payment\Payment getById(int $id)
@@ -28,6 +38,40 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
  */
 class PaymentFacade extends BasePaymentFacade
 {
+    /**
+     * @var CartFacade
+     */
+    private $cartFacade;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        PaymentRepository $paymentRepository,
+        TransportRepository $transportRepository,
+        PaymentVisibilityCalculation $paymentVisibilityCalculation,
+        Domain $domain,
+        ImageFacade $imageFacade,
+        CurrencyFacade $currencyFacade,
+        PaymentPriceCalculation $paymentPriceCalculation,
+        PaymentFactoryInterface $paymentFactory,
+        PaymentPriceFactoryInterface $paymentPriceFactory,
+        CartFacade $cartFacade
+    ) {
+        parent::__construct(
+            $em,
+            $paymentRepository,
+            $transportRepository,
+            $paymentVisibilityCalculation,
+            $domain,
+            $imageFacade,
+            $currencyFacade,
+            $paymentPriceCalculation,
+            $paymentFactory,
+            $paymentPriceFactory
+        );
+
+        $this->cartFacade = $cartFacade;
+    }
+
     /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
      */
@@ -67,5 +111,23 @@ class PaymentFacade extends BasePaymentFacade
         $payments = $this->paymentVisibilityCalculation->filterVisible($paymentsByTransport, $this->domain->getId());
 
         return $payments;
+    }
+
+    /**
+     * @param \App\Model\Payment\Payment[] $payments
+     * @return \App\Model\Payment\Payment[]
+     */
+    public function filterAllowedPaymentsForCurrentCart(array $payments): array
+    {
+        $isOverLimitPayment = $this->cartFacade->isCartContainsProductWithOverLimitQuantity();
+        $allowedPayments = [];
+        foreach ($payments as $payment)
+        {
+            if($isOverLimitPayment === $payment->isOverLimitPayment() ){
+                $allowedPayments[] = $payment;
+            }
+        }
+
+        return $allowedPayments;
     }
 }

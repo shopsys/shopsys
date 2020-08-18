@@ -47,6 +47,12 @@ class Transport extends BaseTransport
     private string $type;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $isOverLimitTransport;
+
+    /**
      * @param \App\Model\Transport\TransportData $transportData
      */
     public function __construct(BaseTransportData $transportData)
@@ -55,6 +61,7 @@ class Transport extends BaseTransport
         $this->productTypes = new ArrayCollection($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
+        $this->isOverLimitTransport = $transportData->isOverLimitTransport;
     }
 
     /**
@@ -66,6 +73,7 @@ class Transport extends BaseTransport
         $this->editProductTypes($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
+        $this->isOverLimitTransport = $transportData->isOverLimitTransport;
     }
 
     /**
@@ -118,5 +126,13 @@ class Transport extends BaseTransport
     public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOverLimitTransport(): bool
+    {
+        return $this->isOverLimitTransport;
     }
 }

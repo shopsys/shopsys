@@ -323,10 +323,13 @@ class CartController extends FrontBaseController
                 $formData = $form->getData();
 
                 $addProductResult = $this->cartFacade->addProductToCart($formData['productId'], (int)$formData['quantity']);
-
                 $maxStockAmountAlreadyReached = $this->maxStockAmountAlreadyReached($addProductResult);
                 if ($maxStockAmountAlreadyReached) {
                     $this->addMaxStockAmountAlreadyReachedFlash($addProductResult);
+                }
+
+                if ($addProductResult->isQuantityOverLimit()) {
+                    $this->addQuantityOverLimitFlash($addProductResult);
                 }
 
                 /** @var \App\Model\Product\Product $product */
@@ -345,6 +348,8 @@ class CartController extends FrontBaseController
                     'domain' => $this->domain,
                     'accessories' => $accessories,
                     'ACCESSORIES_ON_BUY' => ModuleList::ACCESSORIES_ON_BUY,
+                    'isAddedQuantityOverLimit' => $addProductResult->isQuantityOverLimit(),
+                    'overLimitQuantity' => $addProductResult->getOverLimitQuantity(),
                 ]);
             } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $ex) {
                 $this->addErrorFlash(t('Selected product no longer available or doesn\'t exist.'));
@@ -493,6 +498,21 @@ class CartController extends FrontBaseController
             t('V košíku máte maximální dostupné množství, nelze přidat další (celkem již {{ quantity|formatNumber }} {{ unitName }})'),
             [
                 'quantity' => $addProductResult->getCartItem()->getQuantity(),
+                'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
+            ]
+        );
+    }
+
+    /**
+     * @param \App\Model\Cart\AddProductResult $addProductResult
+     */
+    private function addQuantityOverLimitFlash(AddProductResult $addProductResult): void
+    {
+        $this->addInfoFlashTwig(
+            t('V košíku máte velké množství zboží {{name}}. Limit je {{ limit|formatNumber }} {{ unitName }}, proto budete mít speciální typ objednávky.'),
+            [
+                'name' => $addProductResult->getCartItem()->getName(),
+                'limit' => $addProductResult->getOverLimitQuantity(),
                 'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
             ]
         );
