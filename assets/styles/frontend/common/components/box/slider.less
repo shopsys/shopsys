@@ -137,4 +137,22 @@
             min-width: 100%;
         }
     }
+
+    &--fullwidth {
+        background-color: transparent;
+
+        .box-slider__item {
+            width: auto;
+            float: none;
+        }
+
+        img {
+            display: block;
+            margin: auto;
+
+            @media @query-tablet {
+                width: auto;
+            }
+        }
+    }
 }

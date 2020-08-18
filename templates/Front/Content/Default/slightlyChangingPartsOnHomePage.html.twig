@@ -2,9 +2,14 @@
 <div class="web__line web__line--grey web__line--spacing web__line--margin-bottom">
     <div class="web__container">
         {% if sliderItems is not empty %}
-            <div class="box-slider">
+            {% set slidersCount = sliderItems|length %}
+            <div class="box-slider{{ slidersCount <= 1 ? ' box-slider--fullwidth' }}">
                 <div class="box-slider__wrap">
-                    <div id="js-slider-homepage" class="box-slider__in gtm-scroll" data-gtm-event="{{ gtmSliderScrollEvent|json_encode() }}">
+                    <div
+                        {% if slidersCount > 1 %} id="js-slider-homepage"{% endif %}
+                        class="box-slider__in gtm-scroll"
+                        data-gtm-event="{{ gtmSliderScrollEvent|json_encode() }}"
+                    >
                         {% for item in sliderItems|slice(0, 4) %}
                             <div class="box-slider__item">
                                 <a href="{{ item.link }}" {{ gtm(item, loop.index) }}>
@@ -19,13 +24,21 @@
                                         >
                                         <source
                                                 media="(min-width: 481px)"
-                                                srcset="{{ imageUrl(item, 'retinaSlider', 'web') }} 2x, {{ imageUrl(item, null, 'web') }} 1x"
+                                                {% if slidersCount > 1 %}
+                                                    srcset="{{ imageUrl(item, 'retinaSlider', 'web') }} 2x, {{ imageUrl(item, null, 'web') }} 1x"
+                                                {% else %}
+                                                    srcset="{{ imageUrl(item, 'fullwidthSliderRetina', 'web') }} 2x, {{ imageUrl(item, 'fullwidthSlider', 'web') }} 1x"
+                                                {% endif %}
                                         >
                                         <img
-                                            src="{{ imgLazyloadPlaceholder }}"
-                                            data-src="{{ imageUrl(item, null, 'web') }}"
+                                            {% if slidersCount > 1 %}
+                                                src="{{ imgLazyloadPlaceholder }}"
+                                                data-src="{{ imageUrl(item, null, 'web') }}"
+                                            {% else %}
+                                                src="{{ imgLazyloadPlaceholder }}"
+                                                data-src="{{ imageUrl(item, 'fullwidthSlider', 'web') }}"
+                                            {% endif %}
                                             itemprop="image" class="image-sliderItem-web"
-                                            alt="{{ item.name }}"
                                         />
                                     </picture>
                                 </a>
@@ -41,16 +54,18 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="box-slider__thumbnails">
-                        <div class="box-slider__thumbnails__block" id="js-slider-homepage-thumbnails">
-                            {% for item in sliderItems|slice(0, 4) %}
-                                <button class="box-slider__thumbnails__item">
-                                    <span class="box-slider__thumbnails__item__text">{{ item.name }}</span>
-                                </button>
-                            {% endfor %}
+                    {% if slidersCount > 1 %}
+                        <div class="box-slider__thumbnails">
+                            <div class="box-slider__thumbnails__block" id="js-slider-homepage-thumbnails">
+                                {% for item in sliderItems|slice(0, 4) %}
+                                    <button class="box-slider__thumbnails__item">
+                                        <span class="box-slider__thumbnails__item__text">{{ item.name }}</span>
+                                    </button>
+                                {% endfor %}
+                            </div>
+                            <a href="#" class="btn btn--outline btn--outline--slider btn--block js-not-implemented-yet">{{ 'Všechny akce'|trans }}</a>
                         </div>
-                        <a href="#" class="btn btn--outline btn--outline--slider btn--block js-not-implemented-yet">{{ 'Všechny akce'|trans }}</a>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
