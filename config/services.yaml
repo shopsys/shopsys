@@ -222,6 +222,8 @@ services:
 
     App\Model\Order\PromoCode\ProductPromoCodeFiller: ~
 
+    App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
+
     Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory:
         class: 'App\Model\Customer\BillingAddressDataFactory'
 

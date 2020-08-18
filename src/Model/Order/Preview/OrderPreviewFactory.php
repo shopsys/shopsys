@@ -7,7 +7,7 @@ namespace App\Model\Order\Preview;
 use App\Component\Domain\Domain;
 use App\Model\Cart\CartFacade;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver;
+use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -27,9 +27,9 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 class OrderPreviewFactory extends BaseOrderPreviewFactory
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
      */
-    private $promoCodeLimitByCartTotalResolver;
+    private $promoCodeLimitResolver;
 
     /**
      * @param \App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
@@ -38,7 +38,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
      */
     public function __construct(
         OrderPreviewCalculation $orderPreviewCalculation,
@@ -47,7 +47,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         CurrentCustomerUser $currentCustomerUser,
         CartFacade $cartFacade,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
-        PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+        PromoCodeLimitResolver $promoCodeLimitResolver
     ) {
         parent::__construct(
             $orderPreviewCalculation,
@@ -57,7 +57,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $cartFacade,
             $currentPromoCodeFacade
         );
-        $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
+        $this->promoCodeLimitResolver = $promoCodeLimitResolver;
     }
 
     /**
@@ -74,20 +74,21 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
         $validEnteredPromoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
         $validEnteredPromoCodePercent = null;
+        $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
         if ($validEnteredPromoCode !== null) {
-            $limit = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode(
+            $limit = $this->promoCodeLimitResolver->getLimitByPromoCode(
                 $validEnteredPromoCode,
-                $this->cartFacade->getQuantifiedProductsOfCurrentCustomer()
+                $quantifiedProducts
             );
             if ($limit !== null) {
-                $validEnteredPromoCodePercent = $limit->getPercent();
+                $validEnteredPromoCodePercent = $limit->getDiscount();
             }
         }
 
         return $this->create(
             $currency,
             $this->domain->getId(),
-            $this->cartFacade->getQuantifiedProductsOfCurrentCustomer(),
+            $quantifiedProducts,
             $transport,
             $payment,
             $this->currentCustomerUser->findCurrentCustomerUser(),
@@ -99,7 +100,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $productTypeQuantifiedProducts
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
@@ -111,7 +112,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
     public function create(
         Currency $currency,
         $domainId,
-        array $quantifiedProducts,
+        array $productTypeQuantifiedProducts,
         ?Transport $transport = null,
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
@@ -122,7 +123,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         return $this->orderPreviewCalculation->calculatePreview(
             $currency,
             $domainId,
-            $quantifiedProducts,
+            $productTypeQuantifiedProducts,
             $transport,
             $payment,
             $customerUser,

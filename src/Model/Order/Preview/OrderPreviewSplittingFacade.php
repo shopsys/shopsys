@@ -6,7 +6,7 @@ namespace App\Model\Order\Preview;
 
 use App\Model\Order\OrderData;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver;
+use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use App\Model\Product\Type\ProductType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -65,7 +65,7 @@ class OrderPreviewSplittingFacade
     private $pricesPreviewFacade;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
      */
     private $promoCodeLimitByCartTotalResolver;
 
@@ -79,7 +79,7 @@ class OrderPreviewSplittingFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \App\Model\Order\Preview\PricesPreviewFacade $pricesPreviewFacade
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
      */
     public function __construct(
         OrderPreviewFactory $orderPreviewFactory,
@@ -91,7 +91,7 @@ class OrderPreviewSplittingFacade
         OrderPriceCalculation $orderPriceCalculation,
         PaymentPriceCalculation $paymentPriceCalculation,
         PricesPreviewFacade $pricesPreviewFacade,
-        PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
     ) {
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->domain = $domain;
@@ -190,7 +190,7 @@ class OrderPreviewSplittingFacade
             return null;
         }
 
-        return $limit->getPercent();
+        return $limit->getDiscount();
     }
 
     /**

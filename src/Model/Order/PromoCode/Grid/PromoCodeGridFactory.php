@@ -85,7 +85,7 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
     {
         $limits = $this->promoCodeLimitRepository->getLimitsByPromoCodeId($id);
         $flatten = static function (PromoCodeLimit $limit) {
-            return $limit->getPercent();
+            return $limit->getDiscount();
         };
 
         return array_map($flatten, $limits);

@@ -8,23 +8,17 @@ use App\Model\Cart\CartFacade;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\OrderData;
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver;
-use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
+use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 
 class GtmHelper
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension
-     */
-    private $numberFormatterExtension;
-
     /**
      * @var \App\Model\Gtm\GtmContainer
      */
     private $gtmContainer;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
      */
     private $promoCodeLimitByCartTotalResolver;
 
@@ -34,18 +28,15 @@ class GtmHelper
     private CartFacade $cartFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
      * @param \App\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
-        NumberFormatterExtension $numberFormatterExtension,
         GtmContainer $gtmContainer,
-        PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver,
+        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
         CartFacade $cartFacade
     ) {
-        $this->numberFormatterExtension = $numberFormatterExtension;
         $this->gtmContainer = $gtmContainer;
         $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
         $this->cartFacade = $cartFacade;
@@ -69,11 +60,7 @@ class GtmHelper
             return;
         }
 
-        $orderData->gtmCoupon = sprintf(
-            '%s|%s',
-            $usedPromoCode->getCode(),
-            $this->numberFormatterExtension->formatPercent($limit->getPercent())
-        );
+        $orderData->gtmCoupon = $usedPromoCode->getCode();
     }
 
     /**

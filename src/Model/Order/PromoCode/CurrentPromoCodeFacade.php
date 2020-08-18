@@ -51,9 +51,9 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private ProductPromoCodeFiller $productPromoCodeFiller;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver
+     * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
      */
-    private PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver;
+    private PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver;
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
@@ -64,7 +64,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+     * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
@@ -75,7 +75,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         CartRepository $cartRepository,
         ProductPromoCodeFiller $productPromoCodeFiller,
-        PromoCodeLimitByCartTotalResolver $promoCodeLimitByCartTotalResolver
+        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
     ) {
         parent::__construct(
             $promoCodeFacade,

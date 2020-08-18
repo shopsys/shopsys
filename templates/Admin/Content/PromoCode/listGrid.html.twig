@@ -4,6 +4,10 @@
     {% if value|length > 1 %}
         {{ 'Škálovaný slevový kupón'|trans }}
     {% else %}
-        {{ value[0]|formatPercent }}
+        {% if row['pc']['discountType'] == constant('\\App\\Model\\Order\\PromoCode\\PromoCode::DISCOUNT_TYPE_PERCENT') %}
+            {{ value[0]|formatPercent }}
+        {% else %}
+            {{ value[0]|priceFromDecimalStringWithCurrencyAdmin }}
+        {% endif %}
     {% endif %}
 {% endblock %}

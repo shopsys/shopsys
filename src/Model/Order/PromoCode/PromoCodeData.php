@@ -107,4 +107,9 @@ class PromoCodeData extends BasePromoCodeData
      * @var \App\Model\Order\PromoCode\PromoCodeLimit[]
      */
     public $limits = [];
+
+    /**
+     * @var int
+     */
+    public $discountType = PromoCode::DISCOUNT_TYPE_PERCENT;
 }

@@ -21,6 +21,8 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
 class PromoCode extends BasePromoCode
 {
     public const MASS_GENERATED_CODE_LENGTH = 6;
+    public const DISCOUNT_TYPE_PERCENT = 1;
+    public const DISCOUNT_TYPE_NOMINAL = 2;
 
     /**
      * @var int
@@ -112,6 +114,13 @@ class PromoCode extends BasePromoCode
     private $withoutLowPrice;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $discountType;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
     public function __construct(PromoCodeData $promoCodeData)
@@ -129,6 +138,7 @@ class PromoCode extends BasePromoCode
         $this->inAction = $promoCodeData->inAction;
         $this->scontoPrice = $promoCodeData->scontoPrice;
         $this->withoutLowPrice = $promoCodeData->withoutLowPrice;
+        $this->discountType = $promoCodeData->discountType;
     }
 
     /**
@@ -149,6 +159,7 @@ class PromoCode extends BasePromoCode
         $this->inAction = $promoCodeData->inAction;
         $this->scontoPrice = $promoCodeData->scontoPrice;
         $this->withoutLowPrice = $promoCodeData->withoutLowPrice;
+        $this->discountType = $promoCodeData->discountType;
     }
 
     /**
@@ -262,5 +273,13 @@ class PromoCode extends BasePromoCode
     public function getPercent(): string
     {
         throw new DeprecatedParameterPropertyException('percent');
+    }
+
+    /**
+     * @return int
+     */
+    public function getDiscountType(): int
+    {
+        return $this->discountType;
     }
 }

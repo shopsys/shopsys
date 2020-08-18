@@ -8,11 +8,11 @@ class PromoCodeLimitFactory
 {
     /**
      * @param string $from
-     * @param string $percent
+     * @param string $discount
      * @return \App\Model\Order\PromoCode\PromoCodeLimit
      */
-    public function create(string $from, string $percent): PromoCodeLimit
+    public function create(string $from, string $discount): PromoCodeLimit
     {
-        return new PromoCodeLimit($from, $percent);
+        return new PromoCodeLimit($from, $discount);
     }
 }
