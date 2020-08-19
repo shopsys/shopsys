@@ -25,14 +25,14 @@ class Customer
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddress[]|\Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Customer\BillingAddress", mappedBy="customer", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Customer\BillingAddress", mappedBy="customer", cascade={"persist", "remove"})
      */
     protected $billingAddresses;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]|\Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress", mappedBy="customer", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress", mappedBy="customer", cascade={"persist", "remove"})
      */
     protected $deliveryAddresses;
 
