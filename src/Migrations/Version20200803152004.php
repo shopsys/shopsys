@@ -14,12 +14,9 @@ class Version20200803152004 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('
-            ALTER TABLE promo_codes ADD discount_type INT NOT NULL;
-        ');
-        $this->sql('
-            ALTER TABLE promo_code_limit RENAME COLUMN percent TO discount;
-        ');
+        $this->sql('ALTER TABLE promo_codes ADD discount_type INT NOT NULL default 1;');
+        $this->sql('ALTER TABLE promo_codes ALTER discount_type DROP DEFAULT;');
+        $this->sql('ALTER TABLE promo_code_limit RENAME COLUMN percent TO discount;');
     }
 
     /**
