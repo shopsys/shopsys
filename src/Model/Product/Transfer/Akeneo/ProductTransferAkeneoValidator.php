@@ -131,6 +131,10 @@ class ProductTransferAkeneoValidator
             new Assert\Length(['max' => 65534]),
         ]);
 
+        $this->validateLocalizedData($violations, $akeneoProductData['values'] ?? null, 'delivery_method_parcel_allowed', [
+            new Assert\Type(['type' => 'bool']),
+        ]);
+
         if (count($violations) > 0) {
             throw new TransferInvalidDataAdministratorCriticalException($violations);
         }

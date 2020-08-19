@@ -205,6 +205,7 @@ class ProductTransferAkeneoMapper
         $productData->shortDescriptionUsp3 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp3, $akeneoProductData['values']['usp3'] ?? null);
         $productData->shortDescriptionUsp4 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp4, $akeneoProductData['values']['usp4'] ?? null);
         $productData->shortDescriptionUsp5 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp5, $akeneoProductData['values']['usp5'] ?? null);
+        $productData->canBeShippedAsPackage = AkeneoProductHelper::mapDomainDataBool($productData->shortDescriptionUsp5, $akeneoProductData['values']['delivery_method_parcel_allowed'] ?? null, false);
 
         $productData->domainOrderingPriority = AkeneoProductHelper::mapDomainDataInt($productData->domainOrderingPriority, $akeneoProductData['values']['product_priority'] ?? []);
 
