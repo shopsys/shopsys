@@ -43,7 +43,6 @@ class Product extends BaseProduct
     public const PDF_SUFFIX = '.pdf';
     public const FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE = 'assemblyInstruction';
     public const FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE = 'productTypePlan';
-    public const OVERSIZED_PRODUCT_TYPE_ID = 1;
 
     /**
      * @var string
@@ -211,7 +210,6 @@ class Product extends BaseProduct
             $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
             $productDomain->calcSellingPriceWithVat();
-            $productDomain->setProductType($productData->productType[$domainId]);
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
             $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
 
@@ -608,15 +606,6 @@ class Product extends BaseProduct
 
     /**
      * @param int $domainId
-     * @return \App\Model\Product\Type\ProductType
-     */
-    public function getProductType(int $domainId): ProductType
-    {
-        return $this->getProductDomain($domainId)->getProductType();
-    }
-
-    /**
-     * @param int $domainId
      * @return bool|null
      */
     public function isMountingState(int $domainId): ?bool
@@ -676,15 +665,6 @@ class Product extends BaseProduct
     public function isDomainHidden(int $domainId): ?bool
     {
         return $this->getProductDomain($domainId)->isDomainHidden();
-    }
-
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isOversized(int $domainId): bool
-    {
-        return $this->getProductType($domainId)->getId() === self::OVERSIZED_PRODUCT_TYPE_ID;
     }
 
     /**

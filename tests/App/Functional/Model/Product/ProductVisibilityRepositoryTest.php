@@ -83,7 +83,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $this->setPriceForAllDomains($productData, Money::create(100));
         $this->setVatsForAllDomains($productData);
-        $this->setProductTypeForAllDomains($productData);
         $this->setDescriptionForAllDomain($productData);
 
         return $productData;
@@ -118,19 +117,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
 
         $productData->vatsIndexedByDomainId = $productVats;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function setProductTypeForAllDomains(ProductData $productData): void
-    {
-        /** @var \App\Model\Product\Type\ProductType $productType */
-        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->productType[$domainId] = $productType;
-        }
     }
 
     /**

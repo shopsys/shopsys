@@ -60,7 +60,6 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
         $productData->catnum = '123';
 
-        $this->setProductTypes($productData);
         $this->setVats($productData);
 
         $product = $this->productFactory->create($productData);
@@ -94,7 +93,6 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->catnum = '123';
-        $this->setProductTypes($productData);
         $this->setVats($productData);
 
         $product = $this->productFactory->create($productData);
@@ -134,18 +132,5 @@ class ProductDomainTest extends TransactionFunctionalTestCase
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function setProductTypes(ProductData $productData): void
-    {
-        /** @var \App\Model\Product\Type\ProductType $productType */
-        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->productType[$domainId] = $productType;
-        }
     }
 }

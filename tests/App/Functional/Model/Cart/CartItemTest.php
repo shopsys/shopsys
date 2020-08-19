@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Cart;
 
-use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
@@ -40,8 +38,6 @@ class CartItemTest extends TransactionFunctionalTestCase
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);
-        /** @var \App\Model\Product\Type\ProductType $productType */
-        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
 
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
@@ -49,10 +45,6 @@ class CartItemTest extends TransactionFunctionalTestCase
         $productData->availability = $availability;
         $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
-        $productData->productType = [
-            Domain::FIRST_DOMAIN_ID => $productType,
-            Domain::SECOND_DOMAIN_ID => $productType,
-        ];
 
         $productVatsIndexedByDomainId = [];
         foreach ($this->domain->getAllIds() as $domainId) {

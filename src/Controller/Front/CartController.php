@@ -127,16 +127,12 @@ class CartController extends FrontBaseController
         /** @var \App\Model\Cart\Cart|null $cart */
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         $cartItems = $cart === null ? [] : $cart->getItems();
-        $oversizedCount = 0;
 
         $cartFormData = ['quantities' => []];
         $maximumOrderQuantity = [];
 
         foreach ($cartItems as $cartItem) {
             $cartFormData['quantities'][$cartItem->getId()] = $cartItem->getQuantity();
-            if ($cartItem->getProduct()->isOversized($domainId)) {
-                $oversizedCount++;
-            }
             $maximumOrderQuantity[$cartItem->getProduct()->getId()] =
                 $this->productAvailabilityFacade->getMaximumOrderQuantity($cartItem->getProduct(), $domainId);
         }
@@ -173,7 +169,6 @@ class CartController extends FrontBaseController
             'splitOrderPreview' => $splitOrderPreview,
             'cart' => $cart,
             'form' => $form->createView(),
-            'showOversizedMsg' => $oversizedCount !== 0 && $oversizedCount !== count($cartItems),
             'maximumOrderQuantity' => $maximumOrderQuantity,
         ]);
     }

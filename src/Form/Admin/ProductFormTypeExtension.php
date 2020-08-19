@@ -8,7 +8,6 @@ use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
-use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -50,7 +49,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'transferredFilesGroup',
         'productTypePlanFileUrl',
         'assemblyInstructionFileUrl',
-        'productType',
         'accessories',
         'preorder',
         'saleExclusion',
@@ -84,11 +82,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private $vatFacade;
 
     /**
-     * @var \App\Model\Product\Type\ProductTypeFacade
-     */
-    private $productTypeFacade;
-
-    /**
      * @var \App\Model\Product\Flag\FlagFacade
      */
     private $flagFacade;
@@ -107,7 +100,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \App\Component\Domain\Domain $domain
-     * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      */
@@ -115,14 +107,12 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         FormBuilderHelper $formBuilderHelper,
         VatFacade $vatFacade,
         Domain $domain,
-        ProductTypeFacade $productTypeFacade,
         FlagFacade $flagFacade,
         ProductFacade $productFacade
     ) {
         $this->formBuilderHelper = $formBuilderHelper;
         $this->domain = $domain;
         $this->vatFacade = $vatFacade;
-        $this->productTypeFacade = $productTypeFacade;
         $this->flagFacade = $flagFacade;
         $this->productFacade = $productFacade;
     }
@@ -322,23 +312,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     {
         $groupBuilder = $builder->get('basicInformationGroup');
 
-        $groupBuilder->add('productType', MultidomainType::class, [
-                'required' => true,
-                'entry_type' => ChoiceType::class,
-                'entry_options' => [
-                    'required' => true,
-                    'choices' => $this->productTypeFacade->getAll(),
-                    'choice_label' => 'name',
-                    'choice_value' => 'id',
-                    'constraints' => [
-                        new Constraints\NotBlank([
-                            'message' => 'Prosím vyberte typ',
-                        ]),
-                    ],
-                ],
-                'label' => t('Typ'),
-            ])
-
+        $groupBuilder
             ->add('flags', MultidomainType::class, [
                 'entry_type' => ChoiceType::class,
                 'entry_options' => [

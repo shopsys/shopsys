@@ -25,7 +25,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
@@ -6157,12 +6156,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function createProduct(ProductData $productData): Product
     {
-        static $oddProduct = true;
-        $oddProduct = !$oddProduct;
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $productData->productType[$domain->getId()] = $this->getReference($oddProduct ? ProductTypeDataFixture::TYPE_COMMON : ProductTypeDataFixture::TYPE_OVERSIZED);
-        }
-
         $this->setDefaultPackagesInformationForAlDomains($productData);
 
         /** @var \App\Model\Product\Product $product */
@@ -6481,7 +6474,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             UnitDataFixture::class,
             PricingGroupDataFixture::class,
             SettingValueDataFixture::class,
-            ProductTypeDataFixture::class,
         ];
     }
 

@@ -7,7 +7,7 @@ namespace App\Model\Order\Preview;
 use App\Model\Order\OrderData;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Order\PromoCode\PromoCodeLimitResolver;
-use App\Model\Product\Type\ProductType;
+use App\Model\Product\Type\ProductTypeFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -70,6 +70,11 @@ class OrderPreviewSplittingFacade
     private $promoCodeLimitByCartTotalResolver;
 
     /**
+     * @var \App\Model\Product\Type\ProductTypeFacade
+     */
+    private ProductTypeFacade $productTypeFacade;
+
+    /**
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -80,6 +85,7 @@ class OrderPreviewSplittingFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \App\Model\Order\Preview\PricesPreviewFacade $pricesPreviewFacade
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
+     * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      */
     public function __construct(
         OrderPreviewFactory $orderPreviewFactory,
@@ -91,7 +97,8 @@ class OrderPreviewSplittingFacade
         OrderPriceCalculation $orderPriceCalculation,
         PaymentPriceCalculation $paymentPriceCalculation,
         PricesPreviewFacade $pricesPreviewFacade,
-        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
+        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
+        ProductTypeFacade $productTypeFacade
     ) {
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->domain = $domain;
@@ -103,6 +110,7 @@ class OrderPreviewSplittingFacade
         $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->pricesPreviewFacade = $pricesPreviewFacade;
         $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
+        $this->productTypeFacade = $productTypeFacade;
     }
 
     /**
@@ -191,28 +199,6 @@ class OrderPreviewSplittingFacade
         }
 
         return $limit->getDiscount();
-    }
-
-    /**
-     * This method is not used, because SD-1236 disables temporary splitting of cart. It is reason for to be public (coding standards)
-     *
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param \App\Model\Product\Type\ProductType $productType
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
-     */
-    public function filterQuantifiedProductsByProductType(array $quantifiedProducts, ProductType $productType, int $domainId): array
-    {
-        $filtered = [];
-        foreach ($quantifiedProducts as $index => $quantifiedProduct) {
-            /** @var \App\Model\Product\Product $product */
-            $product = $quantifiedProduct->getProduct();
-            if ($product->getProductType($domainId) === $productType) {
-                $filtered[$index] = $quantifiedProduct;
-            }
-        }
-
-        return $filtered;
     }
 
     /**
@@ -319,10 +305,7 @@ class OrderPreviewSplittingFacade
         $promoCodeDiscountPercent = $this->findAppliedPromoCodePercentDiscount();
         $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
 
-        $productTypes = array_filter([$this->findFirstUsedProductTypeInCurrentCart()]);
-        usort($productTypes, static function (ProductType $productType1, ProductType $productType2) {
-            return $productType1->getPosition() <=> $productType2->getPosition();
-        });
+        $productTypes = [$this->productTypeFacade->getFirstProductType()];
 
         $orderPreviews = [];
         foreach ($productTypes as $productType) {
@@ -348,39 +331,12 @@ class OrderPreviewSplittingFacade
     }
 
     /**
-     * This method is not used, because SD-1236 disables temporary splitting of cart.
+     * This method is dummy, because SD-1236 disables temporary splitting of cart.
      *
      * @return \App\Model\Product\Type\ProductType[]
      */
     public function getUsedProductTypesInCurrentCart(): array
     {
-        $productTypes = [];
-
-        $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
-        foreach ($quantifiedProducts as $quantifiedProduct) {
-            /** @var \App\Model\Product\Product $product */
-            $product = $quantifiedProduct->getProduct();
-            $productType = $product->getProductType($this->domain->getId());
-            $productTypes[$productType->getId()] = $productType;
-        }
-
-        return $productTypes;
-    }
-
-    /**
-     * @return \App\Model\Product\Type\ProductType|null
-     */
-    public function findFirstUsedProductTypeInCurrentCart(): ?ProductType
-    {
-        $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
-        if (count($quantifiedProducts) === 0) {
-            return null;
-        }
-
-        $quantifiedProduct = reset($quantifiedProducts);
-        /** @var \App\Model\Product\Product $product */
-        $product = $quantifiedProduct->getProduct();
-
-        return $product->getProductType($this->domain->getId());
+        return [$this->productTypeFacade->getFirstProductType()];
     }
 }
