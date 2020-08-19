@@ -92,6 +92,19 @@
           "filter": [
             "edge_ngram"
           ]
+        },
+        "whitespace_without_dots": {
+          "tokenizer": "whitespace",
+          "char_filter": [
+            "dots_replace_filter"
+          ]
+        }
+      },
+      "char_filter": {
+        "dots_replace_filter": {
+          "type": "pattern_replace",
+          "pattern": "\\.",
+          "replacement": ""
         }
       }
     }
@@ -143,25 +156,26 @@
       "name_sufix": {
         "type": "text"
       },
-      "searching_catnum": {
+      "searching_catnums": {
         "type": "text",
         "analyzer": "whitespace",
+        "search_analyzer": "whitespace_without_dots",
         "fields": {
-          "edge_ngram": {
+          "edge_ngram_unanalyzed_words": {
             "type": "text",
             "analyzer": "edge_ngram_unanalyzed_words",
-            "search_analyzer": "whitespace"
+            "search_analyzer": "whitespace_without_dots"
           }
         }
       },
       "catnum": {
         "type": "text"
       },
-      "searching_partno": {
+      "searching_partnos": {
         "type": "text",
         "analyzer": "whitespace",
         "fields": {
-          "edge_ngram": {
+          "edge_ngram_unanalyzed_words": {
             "type": "text",
             "analyzer": "edge_ngram_unanalyzed_words",
             "search_analyzer": "whitespace"
@@ -171,11 +185,11 @@
       "partno": {
         "type": "text"
       },
-      "searching_ean": {
+      "searching_eans": {
         "type": "text",
         "analyzer": "whitespace",
         "fields": {
-          "edge_ngram": {
+          "edge_ngram_unanalyzed_words": {
             "type": "text",
             "analyzer": "edge_ngram_unanalyzed_words",
             "search_analyzer": "whitespace"
@@ -185,7 +199,7 @@
       "ean": {
         "type": "text"
       },
-      "searching_short_description": {
+      "searching_short_descriptions": {
         "type": "text",
         "analyzer": "edge_ngram_without_diacritic",
         "search_analyzer": "full_without_diacritic"
