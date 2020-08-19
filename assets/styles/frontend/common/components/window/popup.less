@@ -530,6 +530,31 @@
             }
         }
     }
+
+    &__errors {
+        ul {
+            padding: 0;
+
+            list-style: none;
+
+            li {
+                padding: 6px;
+
+                border-bottom: 1px solid @color-border-light;
+                font-family: @font-quartenary;
+
+                li {
+                    padding: 0;
+                    margin: -6px 0 0;
+
+                    border: 0;
+
+                    font-family: @font-base;
+                    color: @color-alert;
+                }
+            }
+        }
+    }
 }
 
 @keyframes stroke {

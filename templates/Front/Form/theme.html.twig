@@ -35,17 +35,13 @@
 {% endblock form_end %}
 
 {% block form_row %}
-    <dl class="{{ rowClass|default('form-line') }}">
-        <dt>
-            {{ form_label(form, label) }}
-            {{ block('icon') }}
-        </dt>
-        <dd>
-            {{ form_widget(form) }}
-            {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--line'))}) %}
-            {{ form_errors(form, { errors_attr: errors_attr } ) }}
-        </dd>
-    </dl>
+    <div class="{{ rowClass|default('form-line') }}">
+        {{ form_widget(form) }}
+        {{ form_label(form, label) }}
+        {{ block('icon') }}
+        {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--line'))}) %}
+        {{ form_errors(form, { errors_attr: errors_attr } ) }}
+    </div>
 {% endblock form_row %}
 
 {% block checkbox_row %}

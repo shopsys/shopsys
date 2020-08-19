@@ -38,7 +38,7 @@
 
     &__icon {
         position: absolute;
-        top: 14px;
+        top: 11px;
         right: 15px;
         display: inline-block;
         vertical-align: middle;
@@ -48,7 +48,7 @@
 
         color: @color-alert;
         font-weight: bold;
-        font-size: 17px;
+        font-size: 19px;
 
         .form-error--inline & {
             width: auto;
@@ -64,7 +64,7 @@
         top: 3px;
 
         li {
-            padding-left: 12px;
+            padding-left: 9px;
 
             color: @color-alert;
             font-size: 12px;
@@ -74,4 +74,8 @@
             }
         }
     }
+}
+
+select + .form-error .form-error__icon {
+    right: 45px;
 }
