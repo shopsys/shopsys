@@ -176,6 +176,10 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         ->add('withoutLowPrice', YesNoType::class, [
             'required' => false,
             'label' => t('Produkt bez nižší ceny'),
+        ])
+        ->add('priceHit', YesNoType::class, [
+            'required' => false,
+            'label' => t('Produkt cenový hit'),
         ]);
     }
 

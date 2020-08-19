@@ -14,6 +14,7 @@ class ProductPromoCodeFiller
     private const BIT_IN_ACTION = 2;
     private const BIT_SCONTO_PRICE = 4;
     private const BIT_WITHOUT_LOW_PRICE = 8;
+    private const BIT_PRICE_HIT = 16;
 
     /**
      * @var \App\Component\Domain\Domain
@@ -130,12 +131,14 @@ class ProductPromoCodeFiller
         $filterMask += $validEnteredPromoCode->isInAction() ? self::BIT_IN_ACTION : 0;
         $filterMask += $validEnteredPromoCode->isScontoPrice() ? self::BIT_SCONTO_PRICE : 0;
         $filterMask += $validEnteredPromoCode->isWithoutLowPrice() ? self::BIT_WITHOUT_LOW_PRICE : 0;
+        $filterMask += $validEnteredPromoCode->isPriceHit() ? self::BIT_PRICE_HIT : 0;
 
         $productSetup = 0;
         $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $this->domain->getId()) ? self::BIT_ON_SALE : 0;
         $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_ACTION, $this->domain->getId()) ? self::BIT_IN_ACTION : 0;
         $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $this->domain->getId()) ? self::BIT_SCONTO_PRICE : 0;
         $productSetup += $product->getLowPriceWithVat($this->domain->getId())->isZero() ? self::BIT_WITHOUT_LOW_PRICE : 0;
+        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_HIT, $this->domain->getId()) ? self::BIT_PRICE_HIT : 0;
 
         if (($filterMask & $productSetup ^ $filterMask) === 0) {
             return $product;

@@ -121,6 +121,13 @@ class PromoCode extends BasePromoCode
     private $discountType;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $priceHit;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
     public function __construct(PromoCodeData $promoCodeData)
@@ -138,6 +145,7 @@ class PromoCode extends BasePromoCode
         $this->inAction = $promoCodeData->inAction;
         $this->scontoPrice = $promoCodeData->scontoPrice;
         $this->withoutLowPrice = $promoCodeData->withoutLowPrice;
+        $this->priceHit = $promoCodeData->priceHit;
         $this->discountType = $promoCodeData->discountType;
     }
 
@@ -159,6 +167,7 @@ class PromoCode extends BasePromoCode
         $this->inAction = $promoCodeData->inAction;
         $this->scontoPrice = $promoCodeData->scontoPrice;
         $this->withoutLowPrice = $promoCodeData->withoutLowPrice;
+        $this->priceHit = $promoCodeData->priceHit;
         $this->discountType = $promoCodeData->discountType;
     }
 
@@ -263,6 +272,14 @@ class PromoCode extends BasePromoCode
     public function isWithoutLowPrice(): bool
     {
         return $this->withoutLowPrice;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPriceHit(): bool
+    {
+        return $this->priceHit;
     }
 
     /**

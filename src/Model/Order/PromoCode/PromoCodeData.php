@@ -104,6 +104,11 @@ class PromoCodeData extends BasePromoCodeData
     public $withoutLowPrice = true;
 
     /**
+     * @var bool
+     */
+    public $priceHit = true;
+
+    /**
      * @var \App\Model\Order\PromoCode\PromoCodeLimit[]
      */
     public $limits = [];
