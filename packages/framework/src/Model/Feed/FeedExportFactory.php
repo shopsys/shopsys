@@ -67,11 +67,22 @@ class FeedExportFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string|null $lastSeekId
+     * @param int|null $lastSeekId
      * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExport
      */
-    public function create(FeedInterface $feed, DomainConfig $domainConfig, ?string $lastSeekId = null): FeedExport
+    public function create(FeedInterface $feed, DomainConfig $domainConfig, $lastSeekId = null): FeedExport
     {
+        if ($lastSeekId !== null && !is_int($lastSeekId)) {
+            @trigger_error(
+                sprintf(
+                    'The argument "$lastSeekId" passed to method "%s()" should be type of int or null.'
+                    . ' Argument will be strict typed in the next major.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+        }
+
         $feedRenderer = $this->feedRendererFactory->create($feed);
         $feedFilepath = $this->feedPathProvider->getFeedFilepath($feed->getInfo(), $domainConfig);
         $feedLocalFilepath = $this->feedPathProvider->getFeedLocalFilepath($feed->getInfo(), $domainConfig);
@@ -86,7 +97,7 @@ class FeedExportFactory
             $this->em,
             $feedFilepath,
             $feedLocalFilepath,
-            $lastSeekId
+            (int)$lastSeekId
         );
     }
 }

@@ -75,7 +75,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param \Symfony\Component\Routing\Route $route
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param array $parameters
-     * @param string $referenceType
+     * @param int $referenceType
      * @return string
      */
     public function getGeneratedUrl($routeName, Route $route, FriendlyUrl $friendlyUrl, array $parameters, $referenceType)

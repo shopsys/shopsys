@@ -86,8 +86,8 @@ class NewProductTest extends FunctionalTestCase
         $form['product_form[displayAvailabilityGroup][sellingFrom]'] = '1.1.1990';
         $form['product_form[displayAvailabilityGroup][sellingTo]'] = '1.1.2000';
         $form['product_form[displayAvailabilityGroup][stockGroup][stockQuantity]'] = '10';
-        $form['product_form[displayAvailabilityGroup][unit]']->setValue($unit->getId());
-        $form['product_form[displayAvailabilityGroup][availability]']->setValue($availability->getId());
+        $form['product_form[displayAvailabilityGroup][unit]']->setValue((string)$unit->getId());
+        $form['product_form[displayAvailabilityGroup][availability]']->setValue((string)$availability->getId());
     }
 
     /**

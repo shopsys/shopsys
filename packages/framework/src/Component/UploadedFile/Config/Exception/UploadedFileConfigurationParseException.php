@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception;
 
 use Exception;
+use Throwable;
 
 class UploadedFileConfigurationParseException extends Exception implements UploadedFileConfigException
 {
@@ -13,9 +14,9 @@ class UploadedFileConfigurationParseException extends Exception implements Uploa
 
     /**
      * @param string $entityClass
-     * @param \Exception|null $previous
+     * @param \Throwable|null $previous
      */
-    public function __construct($entityClass, ?Exception $previous = null)
+    public function __construct($entityClass, ?Throwable $previous = null)
     {
         $this->entityClass = $entityClass;
 

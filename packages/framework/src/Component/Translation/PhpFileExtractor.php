@@ -87,8 +87,10 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     {
         if ($this->isTransMethodOrFuncCall($node)) {
             if (!$this->isIgnored($node)) {
-                $messageId = $this->getMessageId($node);
-                $domain = $this->getDomain($node);
+                /** @var \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\MethodCall $transNode */
+                $transNode = $node;
+                $messageId = $this->getMessageId($transNode);
+                $domain = $this->getDomain($transNode);
 
                 $message = new Message($messageId, $domain);
                 $message->addSource(new FileSource((string)$this->file->getFilename(), $node->getLine()));

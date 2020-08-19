@@ -34,7 +34,7 @@ class BestsellingProductFormType extends AbstractType
 
         for ($i = 0; $i < BestsellingProductFacade::MAX_RESULTS_ADMIN; $i++) {
             $builder->get('products')
-                ->add($i, ProductType::class, [
+                ->add((string)$i, ProductType::class, [
                     'required' => false,
                     'placeholder' => null,
                     'enableRemove' => true,

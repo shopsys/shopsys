@@ -45,7 +45,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     private $vatFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
+     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private $productDataFactory;

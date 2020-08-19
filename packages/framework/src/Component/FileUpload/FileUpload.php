@@ -134,7 +134,7 @@ class FileUpload
     }
 
     /**
-     * @param string $isImage
+     * @param bool $isImage
      * @param string $category
      * @param string|null $targetDirectory
      * @return string

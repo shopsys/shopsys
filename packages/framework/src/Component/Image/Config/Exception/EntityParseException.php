@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Image\Config\Exception;
 
 use Exception;
+use Throwable;
 
 class EntityParseException extends Exception implements ImageConfigException
 {
@@ -13,9 +14,9 @@ class EntityParseException extends Exception implements ImageConfigException
 
     /**
      * @param string $entityClass
-     * @param \Exception|null $previous
+     * @param \Throwable|null $previous
      */
-    public function __construct($entityClass, ?Exception $previous = null)
+    public function __construct($entityClass, ?Throwable $previous = null)
     {
         $this->entityClass = $entityClass;
 

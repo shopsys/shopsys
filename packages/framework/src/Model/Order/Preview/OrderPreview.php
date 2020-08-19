@@ -59,7 +59,7 @@ class OrderPreview
     protected $roundingPrice;
 
     /**
-     * @var float|null
+     * @var string|null
      */
     protected $promoCodeDiscountPercent;
 
@@ -74,7 +74,7 @@ class OrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
-     * @param float|null $promoCodeDiscountPercent
+     * @param string|null $promoCodeDiscountPercent
      */
     public function __construct(
         array $quantifiedProductsByIndex,
@@ -183,7 +183,7 @@ class OrderPreview
     }
 
     /**
-     * @return float|null
+     * @return string|null
      */
     public function getPromoCodeDiscountPercent()
     {

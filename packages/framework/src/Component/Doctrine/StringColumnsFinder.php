@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 class StringColumnsFinder
 {
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata[] $classesMetadata
+     * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $classesMetadata
      * @return string[][]
      */
     public function getAllStringColumnNamesIndexedByTableName(array $classesMetadata)

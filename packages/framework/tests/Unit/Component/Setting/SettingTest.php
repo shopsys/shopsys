@@ -83,6 +83,7 @@ class SettingTest extends TestCase
         $setting = new Setting($entityManagerMock, $settingValueRepositoryMock);
 
         $this->expectException(InvalidArgumentException::class);
+        /** @phpstan-ignore-next-line */
         $setting->setForDomain('key2', 'value', null);
     }
 

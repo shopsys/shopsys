@@ -54,7 +54,7 @@ class OrderNumberSequenceRepository
                 $requestedNumber = (int)$lastNumber + 1;
             }
 
-            $orderNumberSequence->setNumber($requestedNumber);
+            $orderNumberSequence->setNumber((string)$requestedNumber);
 
             $this->em->flush($orderNumberSequence);
             $this->em->commit();

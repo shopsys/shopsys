@@ -162,7 +162,7 @@ class CronCommand extends Command
      */
     private function getCurrentRoundedTime()
     {
-        $time = new DateTime(null);
+        $time = new DateTime();
         $time->modify('-' . $time->format('s') . ' sec');
         $time->modify('-' . ($time->format('i') % 5) . ' min');
 

@@ -19,7 +19,7 @@ class ProductDetailPage extends AbstractPage
     {
         $this->tester->fillFieldByCss(
             self::PRODUCT_DETAIL_QUANTITY_INPUT,
-            $quantity
+            (string)$quantity
         );
         $this->tester->clickByTranslationFrontend('Add to cart', 'messages', [], WebDriverBy::cssSelector(self::PRODUCT_DETAIL_MAIN_WRAPPER));
         $this->tester->waitForAjax();

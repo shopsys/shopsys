@@ -243,11 +243,13 @@ class CartFacadeTest extends TransactionFunctionalTestCase
      */
     private function createCartFacade(CustomerUserIdentifier $customerUserIdentifier)
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory */
+        $customerUserIdentifierFactory = $this->getCustomerUserIdentifierFactoryMock($customerUserIdentifier);
         return new CartFacade(
             $this->em,
             $this->cartFactory,
             $this->productRepository,
-            $this->getCustomerUserIdentifierFactoryMock($customerUserIdentifier),
+            $customerUserIdentifierFactory,
             $this->domain,
             $this->currentCustomerUser,
             $this->currentPromoCodeFacade,
@@ -318,6 +320,8 @@ class CartFacadeTest extends TransactionFunctionalTestCase
         $product = $this->createProduct();
 
         $this->expectException('Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException');
+
+        /** @phpstan-ignore-next-line */
         $this->cartFacadeFromContainer->addProductToCart($product->getId(), 1.1);
     }
 

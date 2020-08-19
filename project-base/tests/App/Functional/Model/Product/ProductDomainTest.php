@@ -6,7 +6,7 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\Model\Product\Product;
-use App\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -56,6 +56,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
         $this->setVats($productData);
 
+        /** @var \App\Model\Product\Product $product */
         $product = $this->productFactory->create($productData);
 
         $refreshedProduct = $this->getRefreshedProductFromDatabase($product);
@@ -88,6 +89,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
         $this->setVats($productData);
 
+        /** @var \App\Model\Product\Product $product */
         $product = $this->productFactory->create($productData);
 
         $refreshedProduct = $this->getRefreshedProductFromDatabase($product);
@@ -116,9 +118,9 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \App\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      */
-    private function setVats(ProductData $productData): void
+    private function setVats(BaseProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];
         foreach ($this->domain->getAllIds() as $domainId) {

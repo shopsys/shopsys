@@ -76,7 +76,7 @@ class CustomerUserRepository
     {
         $customerUser = $this->findById($id);
         if ($customerUser === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException($id);
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException((string)$id);
         }
         return $customerUser;
     }

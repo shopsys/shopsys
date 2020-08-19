@@ -33,7 +33,7 @@ class CategoryCheckboxType extends AbstractType
     {
         $categoryId = $form->getName();
         if (is_numeric($categoryId)) {
-            $category = $this->categoryFacade->getById($categoryId);
+            $category = $this->categoryFacade->getById((int)$categoryId);
 
             $view->vars['visible'] = $category->isVisible($options['domain_id']);
             $view->vars['has_children'] = $category->hasChildren();

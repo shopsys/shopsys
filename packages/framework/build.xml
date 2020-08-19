@@ -42,7 +42,7 @@
     <property name="path.web.styles.front" value="${path.web}/assets/frontend/styles"/>
     <property name="path.web.styles.styleguide" value="${path.web}/assets/styleguide/styles"/>
     <property name="path.yaml-standards.executable" value="${path.bin}/yaml-standards"/>
-    <property name="phpstan.level" value="4"/>
+    <property name="phpstan.level" value="5"/>
     <property name="phpstan.memory-limit" value="2048M"/>
     <property name="translations.dump.flags" value="--keep"/>
     <property name="yaml-standards.indent-count" value="4"/>

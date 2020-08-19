@@ -2,12 +2,12 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain\Multidomain;
 
-use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\ClassMetadata;
 
 class MultidomainEntityClassFinder
 {
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata[] $allClassesMetadata
+     * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $allClassesMetadata
      * @param string[] $ignoredEntitiesNames
      * @param string[] $manualMultidomainEntitiesNames
      * @return string[]
@@ -33,7 +33,7 @@ class MultidomainEntityClassFinder
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
+     * @param \Doctrine\Persistence\Mapping\ClassMetadata $classMetadata
      * @return bool
      */
     protected function isMultidomainEntity(ClassMetadata $classMetadata)

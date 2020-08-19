@@ -5647,6 +5647,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 $variants[] = $this->getProductFromCacheByCatnum($variantCatnum);
             }
 
+            /** @var \App\Model\Product\Product $mainVariant */
             $mainVariant = $this->productVariantFacade->createVariant($mainProduct, $variants);
             $this->addProductReference($mainVariant);
         }

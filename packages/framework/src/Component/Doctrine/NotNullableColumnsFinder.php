@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 class NotNullableColumnsFinder
 {
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata[] $classesMetadata
+     * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $classesMetadata
      * @return string[][]
      */
     public function getAllNotNullableColumnNamesIndexedByTableName(array $classesMetadata)

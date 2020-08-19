@@ -19,6 +19,7 @@ class TranslatableListener extends PrezentTranslatableListener
 
         // set default locale to NULL
         // (currentLocale of entities should be set by request or stay NULL)
+        // @phpstan-ignore-next-line
         $this->setCurrentLocale(null);
     }
 

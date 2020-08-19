@@ -125,7 +125,7 @@ class DomainInfoCommand extends Command
 
         $propertyExtractor = new ReflectionExtractor();
         $io->writeln('You can access these properties:');
-        $io->listing($propertyExtractor->getProperties($domainConfig));
+        $io->listing($propertyExtractor->getProperties(get_class($domainConfig)));
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Command;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Redis;
 use Shopsys\FrameworkBundle\Command\CheckRedisCommand;
@@ -43,10 +42,11 @@ final class CheckRedisCommandTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Redis
      */
-    private function createRedisMockExpectingPing(): MockObject
+    private function createRedisMockExpectingPing(): Redis
     {
+        /** @var \Redis|\PHPUnit\Framework\MockObject\MockObject $redisMock */
         $redisMock = $this->createMock(Redis::class);
         $redisMock->expects($this->once())->method('ping');
 
@@ -54,10 +54,11 @@ final class CheckRedisCommandTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Redis
      */
-    private function createRedisMockThrowingException(): MockObject
+    private function createRedisMockThrowingException(): Redis
     {
+        /** @var \Redis|\PHPUnit\Framework\MockObject\MockObject $redisMock */
         $redisMock = $this->createMock(Redis::class);
         $redisMock->method('ping')->willThrowException(new \RedisException());
 

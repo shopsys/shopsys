@@ -54,7 +54,7 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
         $formBuilderForDomains = $builder->create(self::DOMAINS_SUBFORM_NAME, null, ['compound' => true]);
 
         foreach ($this->domain->getAll() as $domainConfig) {
-            $formBuilderForDomain = $builder->create($domainConfig->getId(), null, [
+            $formBuilderForDomain = $builder->create((string)$domainConfig->getId(), null, [
                     'compound' => true,
                     'validation_groups' => function (FormInterface $form) {
                         $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];

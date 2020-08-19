@@ -639,7 +639,7 @@ class ProductFormType extends AbstractType
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $vatsIndexedByDomainId
-                ->add($domainId, ChoiceType::class, [
+                ->add((string)$domainId, ChoiceType::class, [
                     'required' => true,
                     'choices' => $this->vatFacade->getAllForDomainIncludingMarkedForDeletion($domainId),
                     'choice_label' => 'name',
@@ -652,7 +652,7 @@ class ProductFormType extends AbstractType
         }
 
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $manualInputPricesByPricingGroup->add($pricingGroup->getId(), MoneyType::class, [
+            $manualInputPricesByPricingGroup->add((string)$pricingGroup->getId(), MoneyType::class, [
                 'scale' => 6,
                 'required' => false,
                 'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',

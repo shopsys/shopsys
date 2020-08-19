@@ -50,3 +50,7 @@ There you can find links to upgrade notes for other versions too.
 - required new line at the end of each file ([#1989](https://github.com/shopsys/shopsys/pull/1989))
     - see #project-base-diff
     - to fix errors you may run `php phing standards-fix`
+
+- phpstan analyse increased to level 5 ([#1922](https://github.com/shopsys/shopsys/pull/1922))
+    - increasing phpstan level on your project is optional and may be set in `build.xml`
+    - see #project-base-diff to update your project

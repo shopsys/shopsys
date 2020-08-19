@@ -70,7 +70,7 @@ class VatFacadeTest extends TransactionFunctionalTestCase
         $paymentData->vatsIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $vatToDelete;
         $this->paymentFacade->edit($payment, $paymentData);
 
-        $this->vatFacade->deleteById($vatToDelete, $vatToReplaceWith);
+        $this->vatFacade->deleteById($vatToDelete->getId(), $vatToReplaceWith->getId());
 
         $this->em->refresh($transport->getTransportDomain(Domain::FIRST_DOMAIN_ID));
         $this->em->refresh($payment->getPaymentDomain(Domain::FIRST_DOMAIN_ID));
