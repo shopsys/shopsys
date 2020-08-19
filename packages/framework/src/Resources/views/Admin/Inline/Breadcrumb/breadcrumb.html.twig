@@ -8,11 +8,9 @@
             <span class="in-breadcrumb__item in-breadcrumb__item--actual">{{ breadcrumbOverrider.lastItemOverridden ? breadcrumbOverrider.lastItemLabel : item.label }}</span>
         {% else %}
             {% if item.uri is not null %}
-                <a href="{{ item.uri }}">
-            {% endif %}
-            <span class="in-breadcrumb__item">{{ item.label }}</span>
-            {% if item.uri is not null %}
-                </a>
+                <a href="{{ item.uri }}"><span class="in-breadcrumb__item">{{ item.label }}</span></a>
+            {% else %}
+                <span class="in-breadcrumb__item">{{ item.label }}</span>
             {% endif %}
         {% endif %}
 
