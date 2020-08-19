@@ -51,6 +51,11 @@ class ArticleData
      */
     public $seoH1;
 
+    /**
+     * @var string
+     */
+    public $uuid;
+
     public function __construct()
     {
         $this->urls = new UrlListData();
