@@ -29,7 +29,7 @@ snc_redis:
             alias: 'global'
             dsn: 'redis://%redis_host%'
             options:
-                prefix: '%env(REDIS_PREFIX)%'
+                prefix: '%env(REDIS_PREFIX)%%build-version%'
         session:
             type: 'phpredis'
             alias: 'session'

@@ -39,3 +39,7 @@ There you can find links to upgrade notes for other versions too.
 
 - remove customer and his addresses when customer user is deleted ([#1977](https://github.com/shopsys/shopsys/pull/1977))
     - there is no need to update your project in any way, we are just noticing you that customer and his addresses are now removed when all his customer users were deleted
+
+- update your redis build-version to include application environment ([#1985](https://github.com/shopsys/shopsys/pull/#1985))
+    - see #project-base-diff to update your project
+    - run `php phing build-version-generate`
