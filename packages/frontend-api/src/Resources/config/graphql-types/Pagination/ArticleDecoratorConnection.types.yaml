@@ -1,0 +1,3 @@
+ArticleConnectionDecorator:
+    type: object
+    decorator: true

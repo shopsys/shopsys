@@ -110,6 +110,64 @@ class ArticleFacade
     }
 
     /**
+     * @param int $domainId
+     * @return int
+     */
+    public function getAllVisibleArticlesCountByDomainId(int $domainId): int
+    {
+        return $this->articleRepository->getAllVisibleArticlesCountByDomainId($domainId);
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $placement
+     * @return int
+     */
+    public function getAllVisibleArticlesCountByDomainIdAndPlacement(int $domainId, string $placement): int
+    {
+        return $this->articleRepository->getAllVisibleArticlesCountByDomainIdAndPlacement($domainId, $placement);
+    }
+
+    /**
+     * @param int $domainId
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
+     */
+    public function getVisibleArticlesListByDomainId(
+        int $domainId,
+        int $limit,
+        int $offset
+    ): array {
+        return $this->articleRepository->getVisibleListByDomainId(
+            $domainId,
+            $limit,
+            $offset
+        );
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $placement
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
+     */
+    public function getVisibleArticlesListByDomainIdAndPlacement(
+        int $domainId,
+        string $placement,
+        int $limit,
+        int $offset
+    ): array {
+        return $this->articleRepository->getVisibleListByDomainIdAndPlacement(
+            $domainId,
+            $placement,
+            $limit,
+            $offset
+        );
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */

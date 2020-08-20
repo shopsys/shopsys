@@ -68,3 +68,11 @@ QueryDecorator:
                     urlHash:
                         type: "String"
                 description: "Returns order filtered using UUID or urlHash"
+            articles:
+                type: "ArticleConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('articles', [args, args['placement']])"
+                args:
+                    placement:
+                        type: "String"
+                description: "Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"

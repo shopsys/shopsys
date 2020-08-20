@@ -1,0 +1,26 @@
+ArticleDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            placement:
+                type: "String!"
+                description: "Placement of article"
+            name:
+                type: "String!"
+                description: "Name of article"
+            text:
+                type: "String"
+                description: "Text of article"
+            seoH1:
+                type: "String"
+                description: "Seo first level heading of article"
+            seoTitle:
+                type: "String"
+                description: "Seo title of article"
+            seoMetaDescription:
+                type: "String"
+                description: "Seo meta description of article"

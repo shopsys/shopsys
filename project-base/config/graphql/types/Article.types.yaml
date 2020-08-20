@@ -1,0 +1,4 @@
+Article:
+    type: object
+    inherits:
+        - 'ArticleDecorator'

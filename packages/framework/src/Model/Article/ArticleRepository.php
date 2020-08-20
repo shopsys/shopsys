@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 
 class ArticleRepository
 {
@@ -89,11 +90,45 @@ class ArticleRepository
      */
     public function getVisibleArticlesForPlacement($domainId, $placement)
     {
-        $queryBuilder = $this->getVisibleArticlesByDomainIdQueryBuilder($domainId)
-            ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
-            ->orderBy('a.position, a.id');
+        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder($domainId, $placement);
 
         return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $placement
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
+     */
+    public function getVisibleListByDomainIdAndPlacement(
+        int $domainId,
+        string $placement,
+        int $limit,
+        int $offset
+    ): array {
+        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder($domainId, $placement)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $placement
+     * @return int
+     */
+    public function getAllVisibleArticlesCountByDomainIdAndPlacement(int $domainId, string $placement): int
+    {
+        $queryBuilder = $this->getArticlesByDomainIdQueryBuilder($domainId)
+            ->select('COUNT(a)')
+            ->andWhere('a.hidden = false')
+            ->andWhere('a.placement = :placement')
+            ->setParameter('placement', $placement);
+
+        return (int)$queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     /**
@@ -141,6 +176,41 @@ class ArticleRepository
 
     /**
      * @param int $domainId
+     * @return int
+     */
+    public function getAllVisibleArticlesCountByDomainId($domainId): int
+    {
+        $queryBuilder = $this->getArticlesByDomainIdQueryBuilder($domainId)
+            ->select('COUNT(a)')
+            ->andWhere('a.hidden = false');
+
+        return (int)$queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param int $domainId
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
+     */
+    public function getVisibleListByDomainId(
+        int $domainId,
+        int $limit,
+        int $offset
+    ): array {
+        $queryBuilder = $this->getAllVisibleQueryBuilder()
+            ->andWhere('a.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->orderBy('a.placement')
+            ->addOrderBy('a.position')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
     public function getAllByDomainId($domainId)
@@ -148,5 +218,20 @@ class ArticleRepository
         return $this->getArticleRepository()->findBy([
             'domainId' => $domainId,
         ]);
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $placement
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
+        int $domainId,
+        string $placement
+    ): QueryBuilder {
+        $queryBuilder = $this->getVisibleArticlesByDomainIdQueryBuilder($domainId)
+            ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
+            ->orderBy('a.position, a.id');
+        return $queryBuilder;
     }
 }
