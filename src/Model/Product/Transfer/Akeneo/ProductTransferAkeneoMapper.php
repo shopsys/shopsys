@@ -494,7 +494,7 @@ class ProductTransferAkeneoMapper
         string $akeneoParameterValueCode
     ): ProductParameterValueData {
         $productParameterValueData = $this->productParameterValueDataFactory->create();
-        $parameterValueData = $this->parameterValueDataFactory->create();
+
         $parameterTextValue = $this->getParameterValueTextByAkeneoValueCode($parameter, $locale, $akeneoParameterValueCode);
 
         if (mb_strlen($parameterTextValue) > self::PARAMETER_TEXT_MAX_LENGTH) {
@@ -508,8 +508,14 @@ class ProductTransferAkeneoMapper
             );
         }
 
-        $parameterValueData->text = $parameterTextValue;
-        $parameterValueData->locale = $locale;
+        $parameterValue = $this->parameterFacade->findParameterValueByText($parameterTextValue, $locale);
+        if ($parameterValue === null) {
+            $parameterValueData = $this->parameterValueDataFactory->create();
+            $parameterValueData->text = $parameterTextValue;
+            $parameterValueData->locale = $locale;
+        } else {
+            $parameterValueData = $this->parameterValueDataFactory->createFromParameterValue($parameterValue);
+        }
 
         $productParameterValueData->parameterValueData = $parameterValueData;
         $productParameterValueData->parameter = $parameter;

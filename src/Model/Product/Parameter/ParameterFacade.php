@@ -150,6 +150,16 @@ class ParameterFacade extends BaseParameterFacade
     }
 
     /**
+     * @param string $parameterValueText
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\ParameterValue|null
+     */
+    public function findParameterValueByText(string $parameterValueText, string $locale): ?ParameterValue
+    {
+        return $this->parameterRepository->findParameterValueByText($parameterValueText, $locale);
+    }
+
+    /**
      * @param int $parameterId
      */
     public function deleteById($parameterId): void

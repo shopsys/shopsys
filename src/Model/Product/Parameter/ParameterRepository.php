@@ -405,6 +405,22 @@ class ParameterRepository extends BaseParameterRepository
     }
 
     /**
+     * @param string $parameterValueText
+     * @param string $locale
+     * @return \App\Model\Product\Parameter\ParameterValue|null
+     */
+    public function findParameterValueByText(string $parameterValueText, string $locale): ?ParameterValue
+    {
+        $parameterValue = $this->getParameterValueRepository()->findOneBy([
+            'text' => $parameterValueText,
+            'locale' => $locale,
+        ]);
+
+        /** @var \App\Model\Product\Parameter\ParameterValue $parameterValue */
+        return $parameterValue;
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @return \Doctrine\ORM\QueryBuilder
      */
