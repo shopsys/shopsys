@@ -266,3 +266,8 @@ front_promo_code_management_use_code:
     defaults:
         _controller: App\Controller\Front\PromoCodeController:usePromoCodeAction
     methods: [POST]
+
+front_similar_products:
+    path: /similar-products/
+    defaults:
+        _controller: App\Controller\Front\ProductController:similarProductsAction
