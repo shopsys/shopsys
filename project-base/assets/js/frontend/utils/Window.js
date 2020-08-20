@@ -1,6 +1,7 @@
 import { KeyCodes } from 'framework/common/utils/KeyCodes';
 import Timeout from 'framework/common/utils/Timeout';
 import Translator from 'bazinga-translator';
+import Register from 'framework/common/utils/Register';
 
 const defaults = {
     content: '',
@@ -83,7 +84,9 @@ export default class Window {
             this.$activeWindow = null;
         });
 
+        (new Register()).registerNewContent($windowContent);
         this.$window.append($windowContent);
+
         if (this.options.buttonClose) {
             const $windowButtonClose = $('<a href="#" class="window-button-close window-popup__close js-window-button-close" title="' + Translator.trans('Close (Esc)') + '"><i class="svg svg-remove-thin"></i></a>');
             $windowButtonClose
