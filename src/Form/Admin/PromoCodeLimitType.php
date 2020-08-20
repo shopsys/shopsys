@@ -7,6 +7,7 @@ namespace App\Form\Admin;
 use App\Form\Admin\Transformer\PromoCodeLimitTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -65,9 +66,10 @@ class PromoCodeLimitType extends AbstractType
                 'groups' => PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL,
                 'pattern' => '/^\d+$/',
         ]);
+        $options['scale'] = 3;
         $builder->add(
             'discount',
-            IntegerType::class,
+            NumberType::class,
             $options
         );
 
