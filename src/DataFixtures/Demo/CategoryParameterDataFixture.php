@@ -45,7 +45,11 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
             /** @var \App\Model\Category\Category $category */
             $category = $this->getReference($constant);
             $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID);
-            $this->categoryParameterFacade->saveRelation($category, $parameters, []);
+            $parametersId = [];
+            foreach ($parameters as $parameter) {
+                $parametersId[] = $parameter->getId();
+            }
+            $this->categoryParameterFacade->saveRelation($category, $parametersId, []);
         }
     }
 

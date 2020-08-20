@@ -177,10 +177,12 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 
         $parameter = $this->parameterFacade->create($parameterData);
 
+        $counter = 0;
         foreach ($asFilterInCategories as $category) {
-            $categoryParameter = new CategoryParameter($category, $parameter, false);
+            $categoryParameter = new CategoryParameter($category, $parameter, false, $counter);
             $this->entityManager->persist($categoryParameter);
             $this->entityManager->flush($categoryParameter);
+            $counter++;
         }
 
         return $parameter;

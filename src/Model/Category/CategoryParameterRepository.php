@@ -54,15 +54,15 @@ class CategoryParameterRepository
 
     /**
      * @param \App\Model\Category\Category $category
-     * @return \App\Model\Product\Parameter\Parameter[]
+     * @return \App\Model\Category\CategoryParameter[]
      */
-    public function getParametersByCategory(Category $category): array
+    public function getCategoryParametersByCategorySortedByPosition(Category $category): array
     {
         return $this->getQueryBuilder()
-            ->select('p')
             ->join(Parameter::class, 'p', Join::WITH, 'cp.parameter = p')
             ->where('cp.category = :category')
             ->setParameter('category', $category)
+            ->orderBy('cp.position')
             ->getQuery()
             ->execute();
     }

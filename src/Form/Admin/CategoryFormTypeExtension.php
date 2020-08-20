@@ -103,7 +103,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
 
         $builderShortDescriptionGroup->setPosition(['after' => 'seo']);
 
-        $this->buildFilterParameters($builder, $options['category']);
+        $this->buildFilterParameters($builder, $options['category'], $options);
 
         $this->buildCategoryProductSeriesBlock($builder);
 
@@ -113,21 +113,24 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \App\Model\Category\Category|null $category
+     * @param array $options
      */
-    private function buildFilterParameters(FormBuilderInterface $builder, ?Category $category): void
+    private function buildFilterParameters(FormBuilderInterface $builder, ?Category $category, array $options): void
     {
         if ($category === null) {
             return;
         }
         $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Parametry filtru')]);
-        $parametersFilterBuilder->add('parameters', ChoiceType::class, [
+
+        $parameterNamesById = [];
+        foreach ($this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID) as $parameter) {
+            $parameterNamesById[$parameter->getId()] = $parameter->getName();
+        }
+
+        $parametersFilterBuilder->add('parametersPosition', SortableValuesType::class, [
+            'labels_by_value' => $parameterNamesById,
+            'label' => t('Parametry a pořadí v kategorii'),
             'required' => false,
-            'label' => t('Parametry'),
-            'choices' => $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID),
-            'expanded' => true,
-            'choice_label' => 'name',
-            'choice_value' => 'id',
-            'multiple' => true,
         ]);
 
         $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [

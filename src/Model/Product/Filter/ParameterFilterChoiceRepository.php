@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository)
  * @method \App\Model\Product\Parameter\ParameterValue[][] getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, string $locale)
  * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesIndexedByIdOrderedByText(array $rows, string $locale)
+ * @method \App\Model\Product\Parameter\Parameter[] getVisibleParametersIndexedByIdOrderedByName(array $rows, string $locale)
  */
 class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepository
 {
@@ -51,7 +52,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
 
         $rows = $productsQueryBuilder->getQuery()->execute(null, GroupedScalarHydrator::HYDRATION_MODE);
 
-        $visibleParametersIndexedById = $this->getVisibleParametersIndexedByIdOrderedByName($rows, $locale);
+        $visibleParametersIndexedById = $this->getVisibleParametersIndexedByIdOrderedByParameterPositionInCategory($rows, $locale, $category);
         $parameterValuesIndexedByParameterId = $this->getParameterValuesIndexedByParameterIdOrderedByValueText($rows, $locale);
         $parameterFilterChoices = [];
 
@@ -70,9 +71,10 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     /**
      * @param array $rows
      * @param string $locale
-     * @return \App\Model\Product\Parameter\Parameter[]
+     * @param \App\Model\Category\Category $category
+     * @return array
      */
-    protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale): array
+    protected function getVisibleParametersIndexedByIdOrderedByParameterPositionInCategory(array $rows, string $locale, Category $category): array
     {
         $parameterIds = [];
         foreach ($rows as $row) {
@@ -83,10 +85,12 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
             ->select('pp, pt')
             ->from(Parameter::class, 'pp')
             ->join('pp.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->join(CategoryParameter::class, 'cp', Join::WITH, 'cp.parameter = pp AND cp.category = :category')
             ->where('pp.id IN (:parameterIds)')
-            ->orderBy('pt.name', 'asc');
+            ->orderBy('cp.position', 'asc');
         $parametersQueryBuilder->setParameter('parameterIds', $parameterIds);
         $parametersQueryBuilder->setParameter('locale', $locale);
+        $parametersQueryBuilder->setParameter('category', $category);
         $parameters = $parametersQueryBuilder->getQuery()->execute();
 
         $parametersIndexedById = [];
