@@ -76,3 +76,10 @@ QueryDecorator:
                     placement:
                         type: "String"
                 description: "Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"
+            article:
+                type: 'Article'
+                resolve: "@=resolver('article', [args['uuid']])"
+                args:
+                    uuid:
+                        type: "Uuid!"
+                description: "Returns article filtered using UUID"

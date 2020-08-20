@@ -256,4 +256,14 @@ class ArticleFacade
             t('without positioning') => Article::PLACEMENT_NONE,
         ];
     }
+
+    /**
+     * @param int $domainId
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article
+     */
+    public function getVisibleByDomainIdAndUuid(int $domainId, string $uuid): Article
+    {
+        return $this->articleRepository->getVisibleByDomainIdAndUuid($domainId, $uuid);
+    }
 }

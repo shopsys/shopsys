@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleRepository
 {
@@ -233,5 +234,26 @@ class ArticleRepository
             ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
             ->orderBy('a.position, a.id');
         return $queryBuilder;
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article
+     */
+    public function getVisibleByDomainIdAndUuid(int $domainId, string $uuid): Article
+    {
+        $article = $this->getAllVisibleQueryBuilder()
+            ->andWhere('a.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->andWhere('a.uuid = :uuid')
+            ->setParameter('uuid', $uuid)
+            ->getQuery()->getOneOrNullResult();
+
+        if ($article === null) {
+            $message = 'Article with UUID \'' . $uuid . '\' not found.';
+            throw new ArticleNotFoundException($message);
+        }
+        return $article;
     }
 }
