@@ -830,4 +830,19 @@ class Product extends BaseProduct
     {
         return $this->getProductDomain($domainId)->canBeShippedAsPackage();
     }
+
+    /**
+     * @param string $akeneoCode
+     * @return bool
+     */
+    public function hasFlagByAkeneoCodeForDomain(string $akeneoCode, int $domainId): bool
+    {
+        foreach ($this->getFlagsForDomain($domainId) as $flag) {
+            if ($flag->getAkeneoCode() === $akeneoCode) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

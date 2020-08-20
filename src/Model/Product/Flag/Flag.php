@@ -21,6 +21,7 @@ class Flag extends BaseFlag
     public const AKENEO_CODE_SALE = 'flag__product_sale';
     public const AKENEO_CODE_ACTION = 'flag__product_action';
     public const AKENEO_CODE_SCONTO = 'flag__product_sconto';
+    public const AKENEO_CODE_HIT = 'flag__product_hit';
 
     /**
      * @var bool

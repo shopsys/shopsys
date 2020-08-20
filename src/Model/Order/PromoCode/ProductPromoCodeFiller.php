@@ -132,9 +132,9 @@ class ProductPromoCodeFiller
         $filterMask += $validEnteredPromoCode->isWithoutLowPrice() ? self::BIT_WITHOUT_LOW_PRICE : 0;
 
         $productSetup = 0;
-        $productSetup += $this->hasProductFlagByAkeneoCode($product, Flag::AKENEO_CODE_SALE) ? self::BIT_ON_SALE : 0;
-        $productSetup += $this->hasProductFlagByAkeneoCode($product, Flag::AKENEO_CODE_ACTION) ? self::BIT_IN_ACTION : 0;
-        $productSetup += $this->hasProductFlagByAkeneoCode($product, Flag::AKENEO_CODE_SCONTO) ? self::BIT_SCONTO_PRICE : 0;
+        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $this->domain->getId()) ? self::BIT_ON_SALE : 0;
+        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_ACTION, $this->domain->getId()) ? self::BIT_IN_ACTION : 0;
+        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $this->domain->getId()) ? self::BIT_SCONTO_PRICE : 0;
         $productSetup += $product->getLowPriceWithVat($this->domain->getId())->isZero() ? self::BIT_WITHOUT_LOW_PRICE : 0;
 
         if (($filterMask & $productSetup ^ $filterMask) === 0) {
@@ -142,21 +142,5 @@ class ProductPromoCodeFiller
         }
 
         return null;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param string $akeneoCode
-     * @return bool
-     */
-    private function hasProductFlagByAkeneoCode(Product $product, string $akeneoCode): bool
-    {
-        foreach ($product->getFlagsForDomain($this->domain->getId()) as $flag) {
-            if ($flag->getAkeneoCode() === $akeneoCode) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
