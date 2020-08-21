@@ -33,6 +33,10 @@ class FutureProductStockTransferScontoBridgeValidator
         $violations = $this->validator->validate($scontoBridgeCustomerData, new Assert\Collection([
             'allowExtraFields' => true,
             'fields' => [
+                'erpId' => [
+                    new Assert\NotBlank(),
+                    new Assert\Type(['type' => 'int']),
+                ],
                 'sku' => [
                     new Assert\NotBlank(),
                     new Assert\Type(['type' => 'string']),
@@ -47,6 +51,9 @@ class FutureProductStockTransferScontoBridgeValidator
                 ],
                 'dateExpectedArrival' => [
                     new Assert\NotBlank(),
+                ],
+                'isLate' => [
+                    new Assert\Type(['type' => 'bool']),
                 ],
                 'modificationTime' => [
                     new Assert\NotBlank(),
