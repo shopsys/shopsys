@@ -124,6 +124,7 @@ class PersonalInfoFormType extends AbstractType
 
         $builder
             ->add('email', EmailType::class, [
+                'attr' => ['readonly' => true],
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Email(['message' => 'Please enter valid email']),
