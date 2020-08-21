@@ -51,33 +51,6 @@
         </if>
     </target>
 
-    <target name="deploy-part-2-lock-release" description="Release deploy part 2 lock.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="app:deploy-part-2-locking"/>
-            <arg value="unlock" />
-        </exec>
-    </target>
-
-    <target name="build-deploy-part-2-only-on-first-pod" description="Part 2 can be performed only by one pod. This checks and creates lock used by first pod.">
-        <exec executable="${path.php.executable}" checkreturn="true" outputProperty="deployPart2LockingOutput">
-            <arg value="${path.bin-console}"/>
-            <arg value="app:deploy-part-2-locking"/>
-            <arg value="lock" />
-        </exec>
-        <if>
-            <contains string="${deployPart2LockingOutput}" substring="Deploy part 2 lock is already exist" />
-            <then>
-                <echo message="This instance does not perform deploy part 2. Deployment part 2 is running by another pod." />
-                <phingcall target="warmup" />
-            </then>
-            <else>
-                <phingcall target="db-migrations-count-with-maintenance" />
-                <phingcall target="build-deploy-part-2-db-dependent" />
-            </else>
-        </if>
-    </target>
-
     <target name="assets" description="Installs web assets from external bundles into a public web directory.">
         <delete failonerror="false" includeemptydirs="true">
             <fileset dir="${path.root}/web/bundles/">

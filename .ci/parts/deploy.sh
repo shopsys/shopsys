@@ -18,7 +18,6 @@ sed -i "s/S3_API_HOST/${S3_API_HOST_ESCAPED}/g" "${BASE_PATH}/docker/nginx/s3/ng
 echo "Try create namespace if not exists"
 kubectl create namespace ${PROJECT_NAME} || echo "${PROJECT_NAME} namespace already existing"
 
-
 echo "Delete secret for docker registry if exists"
 kubectl delete secret dockerregistry -n ${PROJECT_NAME} || echo "Secret for docker registry does not exist"
 echo "Create secret for docker registry"
@@ -50,19 +49,38 @@ yq write --inplace "${CONFIGURATION_TARGET_PATH}/horizontalPodAutoscaler/webserv
 
 echo "Apply kubernetes configuration"
 if [ $FIRST_DEPLOY -eq "0" ]; then
-    # try to release deploy part 2 lock before deployment
-    RUNNING_WEBSERVER_PHP_FPM_PODS_STRING=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l version=${OLD_APP_VERSION} -o=jsonpath='{.items[*].metadata.name}')
-    read -r -a RUNNING_WEBSERVER_PHP_FPM_PODS <<< $RUNNING_WEBSERVER_PHP_FPM_PODS_STRING
-    if [ ${#RUNNING_WEBSERVER_PHP_FPM_PODS[@]} -eq 0 ]; then
-        echo "Any running php-fpm container to prevent deploy part 2 locking. The lock may be released manually."
+    kubectl delete job migration --namespace=${PROJECT_NAME} || echo "No migration job exists - cannot be deleted"
+    if [ $DISPLAY_FINAL_CONFIGURATION ]; then
+        kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/migration"
+    fi
+    kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/migration" | kubectl apply -f -
+
+    MIGRATION_COMPLETE_EXIT_CODE=1
+    MIGRATION_FAILED_EXIT_CODE=1
+    while [[ $MIGRATION_COMPLETE_EXIT_CODE -eq 1 ]] && [[ $MIGRATION_FAILED_EXIT_CODE -eq 1 ]]; do
+      sleep 5
+      echo -n "."
+      MIGRATION_FAILED_EXIT_CODE=$(kubectl wait --for=condition=failed job/migration --timeout=0 --namespace=${PROJECT_NAME} > /dev/null 2>&1)$? || true
+      MIGRATION_COMPLETE_EXIT_CODE=$(kubectl wait --for=condition=complete job/migration --timeout=0 --namespace=${PROJECT_NAME} > /dev/null 2>&1)$? || true
+    done
+    echo ""
+
+    echo -e "section_start:`date +%s`:migrate_application_section\r\e[0KDeploy log"
+    kubectl logs job/migration --namespace=${PROJECT_NAME}
+    echo -e "section_end:`date +%s`:migrate_application_section\r\e[0K"
+
+    if [ $MIGRATION_COMPLETE_EXIT_CODE -eq 0 ]; then
+        if [ $DISPLAY_FINAL_CONFIGURATION ]; then
+            kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-deploy"
+        fi
+        kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-deploy" | kubectl apply -f -
     else
-        kubectl exec ${RUNNING_WEBSERVER_PHP_FPM_PODS[0]} --namespace=${PROJECT_NAME} ./phing deploy-part-2-lock-release || echo "Deploy part 2 lock could not be released. The lock may be released manually if exists."
+        echo -e "\n\n>>>>>>>>> Migration failed !!!!!!!!!"
+        RUNNING_WEBSERVER_PHP_FPM_POD=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l version=${OLD_APP_VERSION} -o=jsonpath='{.items[0].metadata.name}')
+        kubectl exec ${RUNNING_WEBSERVER_PHP_FPM_POD} --namespace=${PROJECT_NAME} ./phing maintenance-off
+        exit 1
     fi
 
-    if [ $DISPLAY_FINAL_CONFIGURATION ]; then
-        kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-deploy"
-    fi
-    kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-deploy" | kubectl apply -f -
 else
     if [ $DISPLAY_FINAL_CONFIGURATION ]; then
         kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/first-deploy"

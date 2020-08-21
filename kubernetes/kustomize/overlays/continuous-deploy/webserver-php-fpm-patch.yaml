@@ -3,7 +3,7 @@
     value:
         name: upgrade-application
         image: "{{TAG}}"
-        command: ["sh", "-c", "cd /var/www/html && ./phing build-deploy-part-2-only-on-first-pod"]
+        command: ["sh", "-c", "cd /var/www/html && ./phing warmup"]
         securityContext:
             runAsUser: 33
         volumeMounts:
