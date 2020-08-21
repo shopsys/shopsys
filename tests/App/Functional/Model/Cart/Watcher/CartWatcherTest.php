@@ -6,7 +6,6 @@ namespace Tests\App\Functional\Model\Cart\Watcher;
 
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -110,7 +109,6 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
-        $this->setProductTypes($productData);
         $this->setVats($productData);
         $product = Product::create($productData);
 
@@ -170,18 +168,5 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function setProductTypes(ProductData $productData): void
-    {
-        /** @var \App\Model\Product\Type\ProductType $productType */
-        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->productType[$domainId] = $productType;
-        }
     }
 }

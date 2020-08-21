@@ -24,6 +24,7 @@ use App\Model\Order\Preview\SplitOrderPreview;
 use App\Model\Order\Watcher\SplitTransportAndPaymentWatcher;
 use App\Model\Payment\Payment;
 use App\Model\Stock\StockFacade;
+use App\Model\Transport\Logistic\TransportLogisticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -96,7 +97,7 @@ class OrderController extends FrontBaseController
     private $currencyFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     * @var \App\Model\Transport\TransportFacade
      */
     private $transportFacade;
 
@@ -151,10 +152,15 @@ class OrderController extends FrontBaseController
     private $authenticator;
 
     /**
+     * @var \App\Model\Transport\Logistic\TransportLogisticFacade
+     */
+    private TransportLogisticFacade $transportLogisticFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\OrderDataMapper $orderDataMapper
@@ -171,6 +177,7 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
+     * @param \App\Model\Transport\Logistic\TransportLogisticFacade $transportLogisticFacade
      */
     public function __construct(
         OrderFacade $orderFacade,
@@ -192,7 +199,8 @@ class OrderController extends FrontBaseController
         OrderDataFactory $orderDataFactory,
         StockFacade $stockFacade,
         GtmFacade $gtmFacade,
-        Authenticator $authenticator
+        Authenticator $authenticator,
+        TransportLogisticFacade $transportLogisticFacade
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
@@ -214,6 +222,7 @@ class OrderController extends FrontBaseController
         $this->goPayTransactionFacade = $goPayTransactionFacade;
         $this->gtmFacade = $gtmFacade;
         $this->authenticator = $authenticator;
+        $this->transportLogisticFacade = $transportLogisticFacade;
     }
 
     /**
@@ -268,6 +277,7 @@ class OrderController extends FrontBaseController
 
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
+        $transports = $this->transportLogisticFacade->filterAllowedTransportsForCurrentCart($transports);
         $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
         $prefilledCustomerEmail = $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null);
 

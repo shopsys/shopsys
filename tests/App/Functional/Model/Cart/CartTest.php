@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Cart;
 
-use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Cart\Cart;
 use App\Model\Cart\Item\CartItem;
@@ -48,7 +47,6 @@ class CartTest extends TransactionFunctionalTestCase
         $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
-        $this->setProductTypes($productData);
         $this->setVats($productData);
         $product1 = Product::create($productData);
         $productData2 = $productData;
@@ -102,7 +100,6 @@ class CartTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->create();
         $productData->name = ['cs' => 'Any name'];
         $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
-        $this->setProductTypes($productData);
         $this->setVats($productData);
         $product = Product::create($productData);
 
@@ -119,18 +116,5 @@ class CartTest extends TransactionFunctionalTestCase
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function setProductTypes(ProductData $productData): void
-    {
-        /** @var \App\Model\Product\Type\ProductType $productType */
-        $productType = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->productType[$domainId] = $productType;
-        }
     }
 }

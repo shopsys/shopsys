@@ -30,10 +30,36 @@ class ProductPackageFacade
     }
 
     /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Product\Package\ProductPackageData[] $productPackagesData
+     */
+    public function updateProductPackages(Product $product, array $productPackagesData): void
+    {
+        $dontDropProductPositions = [];
+        foreach ($productPackagesData as $productPackageData) {
+            $this->createOrEdit($productPackageData, $product);
+            $dontDropProductPositions[] = $productPackageData->position;
+        }
+
+        $productPackages = $this->getProductPackagesByProduct($product);
+        $canFlush = false;
+        foreach ($productPackages as $productPackage) {
+            if (in_array($productPackage->getPosition(), $dontDropProductPositions, true) === false) {
+                $this->em->remove($productPackage);
+                $canFlush = true;
+            }
+        }
+
+        if ($canFlush) {
+            $this->em->flush();
+        }
+    }
+
+    /**
      * @param \App\Model\Product\Package\ProductPackageData $productPackageData
      * @param \App\Model\Product\Product $product
      */
-    public function createOrEdit(ProductPackageData $productPackageData, Product $product): void
+    private function createOrEdit(ProductPackageData $productPackageData, Product $product): void
     {
         $productPackage = $this->productPackageRepository->findProductPackageByProductAndPosition($product, $productPackageData->position);
         if ($productPackage === null) {
@@ -51,8 +77,6 @@ class ProductPackageFacade
             $productPackage->setWidth($productPackageData->width);
             $productPackage->setWeight($productPackageData->weight);
         }
-
-        $this->em->flush();
     }
 
     /**

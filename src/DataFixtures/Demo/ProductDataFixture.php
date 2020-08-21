@@ -25,7 +25,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
@@ -6134,23 +6133,21 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setDetailProductPackagesInformation(Product $product): void
     {
-        $productPackageData = $this->productPackageDataFactory->create();
-        $productPackageData->position = 1;
-        $productPackageData->length = 150;
-        $productPackageData->width = 50;
-        $productPackageData->height = 20;
-        $productPackageData->weight = 10.5;
+        $productPackageData1 = $this->productPackageDataFactory->create();
+        $productPackageData1->position = 1;
+        $productPackageData1->length = 150;
+        $productPackageData1->width = 50;
+        $productPackageData1->height = 20;
+        $productPackageData1->weight = 10.5;
 
-        $this->productPackageFacade->createOrEdit($productPackageData, $product);
+        $productPackageData2 = $this->productPackageDataFactory->create();
+        $productPackageData2->position = 2;
+        $productPackageData2->length = 100;
+        $productPackageData2->width = 30;
+        $productPackageData2->height = 10;
+        $productPackageData2->weight = 5;
 
-        $productPackageData = $this->productPackageDataFactory->create();
-        $productPackageData->position = 2;
-        $productPackageData->length = 100;
-        $productPackageData->width = 30;
-        $productPackageData->height = 10;
-        $productPackageData->weight = 5;
-
-        $this->productPackageFacade->createOrEdit($productPackageData, $product);
+        $this->productPackageFacade->updateProductPackages($product, [$productPackageData1, $productPackageData2]);
     }
 
     /**
@@ -6159,12 +6156,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function createProduct(ProductData $productData): Product
     {
-        static $oddProduct = true;
-        $oddProduct = !$oddProduct;
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $productData->productType[$domain->getId()] = $this->getReference($oddProduct ? ProductTypeDataFixture::TYPE_COMMON : ProductTypeDataFixture::TYPE_OVERSIZED);
-        }
-
         $this->setDefaultPackagesInformationForAlDomains($productData);
 
         /** @var \App\Model\Product\Product $product */
@@ -6483,7 +6474,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             UnitDataFixture::class,
             PricingGroupDataFixture::class,
             SettingValueDataFixture::class,
-            ProductTypeDataFixture::class,
         ];
     }
 

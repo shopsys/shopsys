@@ -363,26 +363,8 @@ class TransferredProductProcessor
      */
     private function setProductPackageDetailInformationFormProduct(Product $product, array $akeneoProductData): void
     {
-        $dontDropProductPositions = [];
-
         $productPackageDataList = $this->productTransferAkeneoMapper->mapAkeneoProductPackageDetailInformationToProductPackageDataList($akeneoProductData);
-        foreach ($productPackageDataList as $productPackageData) {
-            $this->productPackageFacade->createOrEdit($productPackageData, $product);
-            $dontDropProductPositions[] = $productPackageData->position;
-        }
-
-        $productPackages = $this->productPackageFacade->getProductPackagesByProduct($product);
-        $canFlush = false;
-        foreach ($productPackages as $productPackage) {
-            if (in_array($productPackage->getPosition(), $dontDropProductPositions, true) === false) {
-                $this->em->remove($productPackage);
-                $canFlush = true;
-            }
-        }
-
-        if ($canFlush) {
-            $this->em->flush();
-        }
+        $this->productPackageFacade->updateProductPackages($product, $productPackageDataList);
     }
 
     /**

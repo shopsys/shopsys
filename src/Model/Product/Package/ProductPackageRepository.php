@@ -71,4 +71,19 @@ class ProductPackageRepository
     {
         return $this->getRepository()->findOneBy(['product' => $product, 'position' => $position]);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @return \App\Model\Product\Package\ProductPackagesCollection
+     */
+    public function getProductPackagesCollectionByQuantifiedProducts(array $quantifiedProducts): ProductPackagesCollection
+    {
+        $products = [];
+        foreach ($quantifiedProducts as $quantifiedProduct) {
+            $products[] = $quantifiedProduct->getProduct();
+        }
+        $productPackages = $this->getRepository()->findBy(['product' => $products]);
+
+        return new ProductPackagesCollection($quantifiedProducts, $productPackages);
+    }
 }

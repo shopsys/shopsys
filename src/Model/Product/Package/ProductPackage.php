@@ -75,6 +75,14 @@ class ProductPackage
     }
 
     /**
+     * @return \App\Model\Product\Product
+     */
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
+    /**
      * @return int
      */
     public function getPosition(): int

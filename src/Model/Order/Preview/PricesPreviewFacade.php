@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Transport\Logistic\TransportLogisticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -24,7 +25,7 @@ class PricesPreviewFacade
     private $paymentPriceCalculation;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     * @var \App\Model\Transport\TransportFacade
      */
     private $transportFacade;
 
@@ -44,12 +45,18 @@ class PricesPreviewFacade
     private $currencyFacade;
 
     /**
+     * @var \App\Model\Transport\Logistic\TransportLogisticFacade
+     */
+    private TransportLogisticFacade $transportLogisticFacade;
+
+    /**
      * @param \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \App\Model\Transport\Logistic\TransportLogisticFacade $transportLogisticFacade
      */
     public function __construct(
         TransportPriceCalculation $transportPriceCalculation,
@@ -57,7 +64,8 @@ class PricesPreviewFacade
         TransportFacade $transportFacade,
         PaymentFacade $paymentFacade,
         Domain $domain,
-        CurrencyFacade $currencyFacade
+        CurrencyFacade $currencyFacade,
+        TransportLogisticFacade $transportLogisticFacade
     ) {
         $this->transportPriceCalculation = $transportPriceCalculation;
         $this->paymentPriceCalculation = $paymentPriceCalculation;
@@ -65,6 +73,7 @@ class PricesPreviewFacade
         $this->paymentFacade = $paymentFacade;
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
+        $this->transportLogisticFacade = $transportLogisticFacade;
     }
 
     /**
@@ -85,22 +94,18 @@ class PricesPreviewFacade
             $domainId
         );
 
-        /** @var \App\Model\Transport\Transport[] $transports */
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
+        $transports = $this->transportLogisticFacade->filterAllowedTransportsForCurrentCart($transports);
         $transportPricesByProductTypeIdAndTransportId = [];
         foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
             $productTypeId = $orderPreview->getProductType()->getId();
-            $allowedTransports = [];
-            foreach ($transports as $transport) {
-                if ($transport->hasProductType($orderPreview->getProductType())) {
-                    $allowedTransports[] = $transport;
-                }
-            }
+            $quantifiedProducts = $orderPreview->getQuantifiedProducts();
             $transportPricesByProductTypeIdAndTransportId[$productTypeId] = $this->transportPriceCalculation
                 ->getCalculatedPricesIndexedByTransportIdByFreeTransport(
-                    $allowedTransports,
+                    $transports,
                     $currency,
                     $domainId,
+                    $quantifiedProducts,
                     $orderPreview->isTransportForFree()
                 );
         }

@@ -14,20 +14,16 @@ import './loadTranslations';
 import './frontend/components';
 
 import './frontend/validation/form';
-
 // HP entry?
 import './frontend/homepage/slickInit';
 
 import './frontend/deliveryAddress';
 
 import './frontend/blog/index';
-
 // order entry?
 import './frontend/order';
-
 // product entry?
 import './frontend/product';
-
 // cart entry?
 import './frontend/cart';
 
@@ -36,6 +32,7 @@ import './frontend/customer';
 import 'framework/common/validation';
 
 import './frontend/store/index';
+import './common/validation/customizeFpValidator';
 
 import Register from 'framework/common/utils/Register';
 

@@ -19,7 +19,6 @@ use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
-use App\Model\Product\Type\ProductTypeFacade;
 use App\Model\Transfer\TransferLoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -47,11 +46,6 @@ class ProductTransferAkeneoMapper
      * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
-
-    /**
-     * @var \App\Model\Product\Type\ProductTypeFacade
-     */
-    private $productTypeFacade;
 
     /**
      * @var \App\Model\Product\Parameter\ParameterFacade
@@ -87,7 +81,6 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
-     * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
@@ -99,7 +92,6 @@ class ProductTransferAkeneoMapper
         ProductDataFactory $productDataFactory,
         CategoryFacade $categoryFacade,
         ProductFilesDataFactory $productFilesDataFactory,
-        ProductTypeFacade $productTypeFacade,
         ParameterFacade $parameterFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         ParameterValueDataFactoryInterface $parameterValueDataFactory,
@@ -110,7 +102,6 @@ class ProductTransferAkeneoMapper
         $this->productDataFactory = $productDataFactory;
         $this->categoryFacade = $categoryFacade;
         $this->productFilesDataFactory = $productFilesDataFactory;
-        $this->productTypeFacade = $productTypeFacade;
         $this->parameterFacade = $parameterFacade;
         $this->productParameterValueDataFactory = $productParameterValueDataFactory;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
@@ -193,7 +184,6 @@ class ProductTransferAkeneoMapper
         $productData->domainHidden = AkeneoProductHelper::mapDomainDataString($productData->domainHidden, $akeneoProductData['values']['domain_hidden'] ?? null);
 
         $productData->ean = AkeneoProductHelper::mapDataString($akeneoProductData['values']['ean'] ?? null);
-        $productData->productType = $this->getProductType($productData->productType, $akeneoProductData);
 
         $productData->namePrefix = AkeneoProductHelper::mapLocalizedDataString($productData->namePrefix, $akeneoProductData['values']['name_prefix'] ?? null);
         $productData->name = AkeneoProductHelper::mapLocalizedDataString($productData->name, $akeneoProductData['values']['name'] ?? null);
@@ -205,6 +195,7 @@ class ProductTransferAkeneoMapper
         $productData->shortDescriptionUsp3 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp3, $akeneoProductData['values']['usp3'] ?? null);
         $productData->shortDescriptionUsp4 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp4, $akeneoProductData['values']['usp4'] ?? null);
         $productData->shortDescriptionUsp5 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp5, $akeneoProductData['values']['usp5'] ?? null);
+        $productData->canBeShippedAsPackage = AkeneoProductHelper::mapDomainDataBool($productData->shortDescriptionUsp5, $akeneoProductData['values']['delivery_method_parcel_allowed'] ?? null, false);
 
         $productData->domainOrderingPriority = AkeneoProductHelper::mapDomainDataInt($productData->domainOrderingPriority, $akeneoProductData['values']['product_priority'] ?? []);
 
@@ -276,45 +267,6 @@ class ProductTransferAkeneoMapper
         }
 
         return $productCategories;
-    }
-
-    /**
-     * @param \App\Model\Product\Type\ProductType[]|null[] $productTypesByDomainId
-     * @param array $akeneoProductData
-     * @return \App\Model\Product\Type\ProductType[]
-     */
-    private function getProductType(array $productTypesByDomainId, array $akeneoProductData): array
-    {
-        $productTypeAkeneoCodesByDomainId = [];
-        foreach ($productTypesByDomainId as $domainId => $productType) {
-            if ($productType === null) {
-                $productTypeAkeneoCodesByDomainId[$domainId] = null;
-            } else {
-                $productTypeAkeneoCodesByDomainId[$domainId] = $productType->getAkeneoCode();
-            }
-        }
-
-        $akeneoCodesByDomainId = AkeneoProductHelper::mapDomainDataString(
-            $productTypeAkeneoCodesByDomainId,
-            $akeneoProductData['values']['product_type'] ?? null
-        );
-        foreach ($akeneoCodesByDomainId as $domainId => $akeneoCode) {
-            if ($akeneoCode === null) {
-                $productType = current($this->productTypeFacade->getAll());
-            } else {
-                $productType = $this->productTypeFacade->findByAkeneoCode($akeneoCode);
-                if ($productType === null) {
-                    throw TransferInvalidDataException::createWithViolation(
-                        sprintf('ProductType with Akeneo code `%s` wasn\'t found.', $akeneoCode),
-                        'product_type'
-                    );
-                }
-            }
-
-            $productTypesByDomainId[$domainId] = $productType;
-        }
-
-        return $productTypesByDomainId;
     }
 
     /**
@@ -613,11 +565,13 @@ class ProductTransferAkeneoMapper
      */
     private function fixMandatoryPrices(ProductData $productData): void
     {
-        foreach ($productData->productType as $domainId => $productType) {
-            if ($productData->lowPriceWithVat[$domainId] === null) {
+        foreach ($productData->lowPriceWithVat as $domainId => $lowPriceWithVat) {
+            if ($lowPriceWithVat === null) {
                 $productData->lowPriceWithVat[$domainId] = Money::zero();
             }
-            if ($productData->highPriceWithVat[$domainId] === null) {
+        }
+        foreach ($productData->highPriceWithVat as $domainId => $highPriceWithVat) {
+            if ($highPriceWithVat === null) {
                 $productData->highPriceWithVat[$domainId] = Money::zero();
             }
         }

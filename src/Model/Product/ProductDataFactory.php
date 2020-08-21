@@ -191,7 +191,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->highPriceWithoutVat[$domainId] = null;
             $productData->assemblyInstructionFileUrl[$domainId] = null;
             $productData->productTypePlanFileUrl[$domainId] = null;
-            $productData->productType[$domainId] = null;
             $productData->flags[$domainId] = [];
             $productData->saleExclusion[$domainId] = false;
             $productData->mountingState[$domainId] = null;
@@ -202,6 +201,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->embeddedAccessories[$domainId] = null;
             $productData->domainHidden[$domainId] = false;
             $productData->domainOrderingPriority[$domainId] = 0;
+            $productData->canBeShippedAsPackage[$domainId] = false;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -243,7 +243,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
             $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
             $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
-            $productData->productType[$domainId] = $product->getProductType($domainId);
             $productData->flags[$domainId] = $product->getFlagsForDomain($domainId);
             $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
             $productData->mountingState[$domainId] = $product->isMountingState($domainId);
@@ -254,6 +253,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->embeddedAccessories[$domainId] = $product->getEmbeddedAccessories($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
             $productData->domainOrderingPriority[$domainId] = $product->getDomainOrderingPriority($domainId);
+            $productData->canBeShippedAsPackage[$domainId] = $product->canBeShippedAsPackage($domainId);
 
             $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }

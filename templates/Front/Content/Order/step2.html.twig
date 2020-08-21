@@ -64,7 +64,7 @@
                                     {% endif %}
 
                                     <div id="{{ transportFormId }}">
-                                        {% for transport in transports if transport.hasProductType(orderPreview.productType) %}
+                                        {% for transport in transports %}
                                             {% set transportPrice = splitOrderPreview.transportAndPaymentPricesPreview.getTransportPrice(transport, orderPreview.productType) %}
                                             <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ transportFormId ~ '_' ~ transport.id }}">
                                                 <span class="box-chooser__item__check">

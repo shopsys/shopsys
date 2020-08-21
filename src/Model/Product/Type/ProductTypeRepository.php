@@ -79,18 +79,6 @@ class ProductTypeRepository
      */
     public function existsRelationToProductType(ProductType $productType): bool
     {
-        $productsCount = $this->em->createQueryBuilder()
-            ->select('COUNT(pd)')
-            ->from(ProductDomain::class, 'pd')
-            ->where('pd.productType = :productType')
-            ->setParameter('productType', $productType)
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        if ($productsCount > 0) {
-            return true;
-        }
-
         $orderItemsCount = $this->em->createQueryBuilder()
             ->select('COUNT(oi)')
             ->from(OrderItem::class, 'oi')
@@ -100,5 +88,13 @@ class ProductTypeRepository
             ->getSingleScalarResult();
 
         return $orderItemsCount > 0;
+    }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType
+     */
+    public function getFirstProductType(): ProductType
+    {
+        return $this->getRepository()->findOneBy([], ['position' => 'asc']);
     }
 }

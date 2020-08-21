@@ -95,4 +95,12 @@ class ProductTypeFacade
     {
         return $this->productTypeRepository->findByAkeneoCode($akeneoCode);
     }
+
+    /**
+     * @return \App\Model\Product\Type\ProductType
+     */
+    public function getFirstProductType(): ProductType
+    {
+        return $this->productTypeRepository->getFirstProductType();
+    }
 }

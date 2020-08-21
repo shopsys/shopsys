@@ -96,13 +96,6 @@ class ProductDomain extends BaseProductDomain
     protected $productTypePlanCode;
 
     /**
-     * @var \App\Model\Product\Type\ProductType
-     * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType")
-     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
-     */
-    private $productType;
-
-    /**
      * @var \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="App\Model\Product\Flag\Flag")
@@ -164,6 +157,12 @@ class ProductDomain extends BaseProductDomain
      * @ORM\Column(type="integer")
      */
     protected $domainOrderingPriority;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $canBeShippedAsPackage;
 
     /**
      * @param \App\Model\Product\Product $product
@@ -337,22 +336,6 @@ class ProductDomain extends BaseProductDomain
     public function setProductTypePlanCode(?string $productTypePlanCode): void
     {
         $this->productTypePlanCode = $productTypePlanCode;
-    }
-
-    /**
-     * @return \App\Model\Product\Type\ProductType
-     */
-    public function getProductType(): ProductType
-    {
-        return $this->productType;
-    }
-
-    /**
-     * @param \App\Model\Product\Type\ProductType $productType
-     */
-    public function setProductType(ProductType $productType): void
-    {
-        $this->productType = $productType;
     }
 
     /**
@@ -534,5 +517,21 @@ class ProductDomain extends BaseProductDomain
     public function setDomainOrderingPriority(int $domainOrderingPriority): void
     {
         $this->domainOrderingPriority = $domainOrderingPriority;
+    }
+
+    /**
+     * @return bool
+     */
+    public function canBeShippedAsPackage(): bool
+    {
+        return $this->canBeShippedAsPackage;
+    }
+
+    /**
+     * @param bool $canBeShippedAsPackage
+     */
+    public function setCanBeShippedAsPackage(bool $canBeShippedAsPackage): void
+    {
+        $this->canBeShippedAsPackage = $canBeShippedAsPackage;
     }
 }

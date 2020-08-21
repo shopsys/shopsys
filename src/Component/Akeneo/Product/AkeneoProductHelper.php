@@ -83,6 +83,32 @@ class AkeneoProductHelper
     }
 
     /**
+     * @param bool[] $productData
+     * @param array|null $akeneoData
+     * @param bool $default
+     * @return bool[]
+     */
+    public static function mapDomainDataBool(array $productData, ?array $akeneoData, bool $default): array
+    {
+        foreach ($productData as $key => $value) {
+            $productData[$key] = $default;
+        }
+
+        if ($akeneoData === null) {
+            return $productData;
+        }
+
+        foreach ($akeneoData as $data) {
+            $domainId = AkeneoHelper::findEshopDomainIdByAkeneoLocale($data['locale']);
+            if ($domainId !== null) {
+                $productData[$domainId] = $data['data'];
+            }
+        }
+
+        return $productData;
+    }
+
+    /**
      * @param int[]|null[] $productData
      * @param array $akeneoData
      * @return int[]|null[]
