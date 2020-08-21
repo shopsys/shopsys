@@ -77,7 +77,7 @@ class Parameter extends BaseParameter
      *
      * @ORM\Column(type="string", length=100, nullable=false)
      */
-    private $parameterType;
+    protected $parameterType;
 
     /**
      * @param \App\Model\Product\Parameter\ParameterData $parameterData
