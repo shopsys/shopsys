@@ -91,6 +91,9 @@ export default class Map {
             ]
         });
 
+        var markerIcon = '/public/frontend/images/marker.svg';
+        var markerSelectedIcon = '/public/frontend/images/marker-selected.svg';
+        var markerDetailIcon = '/public/frontend/images/marker-detail.svg';
         var markers = getMarkers();
 
         map.fitBounds(bounds);
@@ -108,6 +111,10 @@ export default class Map {
         function getMarkers () {
             var markers = [];
 
+            if (markersData.length == 1) {
+                markerIcon = markerDetailIcon;
+            }
+
             for (var i = 0, len = markersData.length; i < len; i++) {
                 var marker = createMarker(markersData[i]);
                 markers.push(marker);
@@ -119,16 +126,20 @@ export default class Map {
         function createMarker (markerData) {
             var marker = new google.maps.Marker({
                 position: markerData.locations,
-                icon: '/public/frontend/images/marker.svg'
+                icon: markerIcon
             });
 
             marker.addListener('click', function () {
-                replaceMarkerContentBoxById(markerData.data.id);
-                for (var j = 0; j < markers.length; j++) {
-                    markers[j].setIcon('/public/frontend/images/marker.svg');
+                if (markersData.length <= 1) {
+                    return;
                 }
-                marker.setIcon('/public/frontend/images/marker-selected.svg');
+                replaceMarkerContentBoxById(markerData.data.id);
+                markers.forEach(function (marker, i) {
+                    marker.setIcon(markerIcon);
+                });
+                marker.setIcon(markerSelectedIcon);
             });
+
             bounds.extend(markerData.locations);
 
             marker.setMap(map);
@@ -151,9 +162,9 @@ export default class Map {
 
         function hideAllContentBoxes () {
             $container.filterAllNodes('.js-store-info').addClass('display-none');
-            for (var j = 0; j < markers.length; j++) {
-                markers[j].setIcon('/public/frontend/images/marker.svg');
-            }
+            markers.forEach(function (marker) {
+                marker.setIcon(markerIcon);
+            });
         }
     }
 }

@@ -58,14 +58,12 @@
                                 <strong class="box-stores__store__subtitle">{{ 'Otevírací doba'|trans }}</strong>
                                 <div class="box-stores__store__hours">
                                     <div class="box-stores__store__hours__classic">{{ store.openingHours }}</div>
-                                    <div class="box-stores__store__hours__extra">{{ store.extraordinaryOpeningHours }}</div>
                                 </div>
                             {% endif %}
                             {% if store.contactText1 is not empty or store.contactText2 is not empty %}
                                 <strong class="box-stores__store__subtitle">{{ 'Kontakt na obchodní dům'|trans }}</strong>
                                 <div class="box-stores__store__phones">
                                     {{ store.contactText1 }}
-                                    {{ store.contactText2 }}
                                 </div>
                             {% endif %}
 

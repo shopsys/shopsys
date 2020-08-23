@@ -9,18 +9,63 @@
         height: 500px;
     }
 
+    &--detail {
+        height: auto;
+    }
+
+    &__heading {
+        margin-bottom: 1rem;
+        text-align: left;
+
+        @media @query-md {
+            margin-bottom: 1.5rem;
+        }
+    }
+
     &__map {
         display: none;
 
         @media @query-lg {
             display: block;
             width: calc(100% - 420px);
+        }
 
-            &__google {
+        &__google {
+            @media @query-lg {
                 width: 100%;
                 height: 100%;
 
                 background-color: @color-light;
+            }
+
+            &--detail {
+                @media @query-lg {
+                    height: 350px;
+                    margin-bottom: 2rem;
+                }
+
+                @media @query-vl {
+                    height: 500px;
+                }
+
+                @media @query-xl {
+                    height: 645px;
+                }
+            }
+        }
+
+        &--detail {
+            @media @query-lg {
+                width: 350px;
+                height: auto;
+            }
+
+            @media @query-vl {
+                width: 500px;
+            }
+
+            @media @query-xl {
+                width: 645px;
             }
         }
     }
@@ -39,6 +84,47 @@
             border-radius: 0;
             border-top-right-radius: 0.5em;
             border-bottom-right-radius: 0.5em;
+        }
+
+        &--detail {
+            height: auto;
+
+            border: 0;
+            border-radius: 0;
+
+            @media @query-lg {
+                width: calc(100% - 350px);
+                padding-left: 45px;
+            }
+
+            @media @query-vl {
+                width: calc(100% - 500px);
+            }
+
+            @media @query-xl {
+                width: calc(100% - 645px);
+                padding-left: 75px;
+            }
+        }
+
+        &__grid {
+            @media @query-md {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            &__item {
+                margin-bottom: 1rem;
+
+                @media @query-md {
+                    width: 50%;
+                    margin-bottom: 1.5rem;
+                }
+
+                &--full {
+                    width: 100%;
+                }
+            }
         }
     }
 
@@ -82,6 +168,12 @@
             font-family: @font-quartenary;
             font-weight: 400;
             color: @color-primary;
+
+            &--detail {
+                margin-top: 0;
+
+                font-size: 18px;
+            }
         }
 
         &__img {
@@ -108,6 +200,10 @@
 
             &__extra {
                 font-size: 13px;
+            }
+
+            &__detail {
+                max-width: 155px;
             }
         }
 
@@ -178,6 +274,10 @@
 
                 font-size: 24px;
                 color: @color-add;
+
+                &--detail {
+                    font-size: 34px;
+                }
             }
 
             &__to-detail {
@@ -192,6 +292,12 @@
                         position: relative;
                         top: 3px;
                     }
+
+                    &--detail {
+                        @media @query-not-large-desktop {
+                            display: none;
+                        }
+                    }
                 }
 
                 .svg {
@@ -205,6 +311,45 @@
                     }
                 }
             }
+
+            &--detail {
+                width: 100%;
+            }
+        }
+    }
+
+    &__gallery {
+        &__wrap {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -1rem;
+        }
+
+        &__item {
+            position: relative;
+            width: calc(50% - 1rem);
+            margin: 0 0 1rem 1rem;
+            height: 90px;
+
+            border-radius: @radius;
+            overflow: hidden;
+
+            @media @query-md {
+                width: calc(33.333% - 1rem);
+            }
+
+            @media @query-vl {
+                width: calc(25% - 1rem);
+                height: 100px;
+            }
+
+            @media @query-xl {
+                height: 120px;
+            }
+        }
+
+        img {
+            .image-object-fit-cover();
         }
     }
 
