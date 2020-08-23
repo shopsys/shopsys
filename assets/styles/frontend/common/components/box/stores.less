@@ -1,0 +1,214 @@
+.box-stores {
+    width: 100%;
+    margin-bottom: 2rem;
+
+    border-radius: 0.5em;
+
+    @media @query-lg {
+        display: flex;
+        height: 500px;
+    }
+
+    &__map {
+        display: none;
+
+        @media @query-lg {
+            display: block;
+            width: calc(100% - 420px);
+
+            &__google {
+                width: 100%;
+                height: 100%;
+
+                background-color: @color-light;
+            }
+        }
+    }
+
+    &__info {
+        position: relative;
+
+        border: 2px solid @color-border-lighter;
+        border-radius: 0.5em;
+
+        @media @query-lg {
+            width: 420px;
+            height: 100%;
+
+            border-left: 0;
+            border-radius: 0;
+            border-top-right-radius: 0.5em;
+            border-bottom-right-radius: 0.5em;
+        }
+    }
+
+    &__store {
+        position: relative;
+        height: 100%;
+        padding: 1rem;
+        z-index: 2;
+        text-align: center;
+
+        background-color: @color-f;
+        line-height: 1.6;
+
+        &--default {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 1;
+
+            @media @query-lg {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        &__title {
+            margin-bottom: 0;
+
+            font-family: @font-tertiary;
+            font-size: 18px;
+            text-transform: none;
+        }
+
+        &__subtitle {
+            display: block;
+            margin-top: 0.75rem;
+
+            font-family: @font-quartenary;
+            font-weight: 400;
+            color: @color-primary;
+        }
+
+        &__img {
+            margin-top: 0.75rem;
+
+            &--default {
+                margin: 0;
+
+                @media @query-lg {
+                    margin: 0 0 1.5rem;
+                }
+            }
+        }
+
+        &__desc {
+            margin-top: 0.5rem;
+        }
+
+        &__hours {
+            &__classic {
+                max-width: 155px;
+                margin: 0 auto;
+            }
+
+            &__extra {
+                font-size: 13px;
+            }
+        }
+
+        &__link {
+            display: inline-block;
+            margin-top: 0.75rem;
+
+            font-family: @font-quartenary;
+            font-weight: 400;
+            color: @color-primary;
+
+            &__icon {
+                color: @color-add-secondary;
+            }
+        }
+    }
+
+    &-list {
+
+        @media @query-md {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -2rem;
+        }
+
+        &__item {
+            margin-bottom: 1rem;
+
+            @media @query-md {
+                width: 50%;
+                padding-left: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            &__link {
+                display: flex;
+                align-items: center;
+                padding: 0.75rem;
+
+                border-radius: @radius;
+                border: 1px solid @color-border-lighter;
+
+                @media @query-md {
+                    padding: 1rem 1rem 1rem 1.5rem;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                    border-color: darken(@color-border, 5%);
+                }
+            }
+
+            &__name {
+                flex-grow: 1;
+
+                font-family: @font-quartenary;
+                font-size: 16px;
+                color: @color-primary;
+                font-weight: 400;
+
+                @media @query-md {
+                    font-size: 18px;
+                }
+            }
+
+            &__icon {
+                margin-right: 0.75rem;
+
+                font-size: 24px;
+                color: @color-add;
+            }
+
+            &__to-detail {
+                font-family: @font-quartenary;
+                color: @color-primary;
+
+                &__text {
+                    display: none;
+
+                    @media @query-lg {
+                        display: inline;
+                        position: relative;
+                        top: 3px;
+                    }
+                }
+
+                .svg {
+                    vertical-align: middle;
+                    margin-left: 12px;
+
+                    font-size: 20px;
+
+                    @media @query-lg {
+                        font-size: 33px;
+                    }
+                }
+            }
+        }
+    }
+
+    .gmnoprint {
+        transform: scale(0.8);
+    }
+}

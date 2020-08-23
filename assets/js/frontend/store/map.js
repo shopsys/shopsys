@@ -1,6 +1,5 @@
 import '../components/filterAllNodes';
 import $ from 'jquery';
-import MarkerClusterer from '@google/markerclustererplus';
 import Register from 'framework/common/utils/Register';
 
 export default class Map {
@@ -16,15 +15,83 @@ export default class Map {
         var bounds = new google.maps.LatLngBounds();
 
         map = new google.maps.Map(googleMapsDivElement, {
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            fullscreenControl: false,
+            mapTypeControl: false,
+            rotateControl: false,
+            streetViewControl: false,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+            styles: [
+                {
+                    'featureType': 'administrative.country',
+                    'elementType': 'labels.text',
+                    'stylers': [
+                        {
+                            'visibility': 'off'
+                        }
+                    ]
+                },
+                {
+                    'featureType': 'administrative.land_parcel',
+                    'stylers': [
+                        {
+                            'visibility': 'off'
+                        }
+                    ]
+                },
+                {
+                    'featureType': 'administrative.locality',
+                    'elementType': 'labels.text',
+                    'stylers': [
+                        {
+                            'color': '#898a85'
+                        },
+                        {
+                            'visibility': 'simplified'
+                        }
+                    ]
+                },
+                {
+                    'featureType': 'administrative.neighborhood',
+                    'stylers': [
+                        {
+                            'visibility': 'off'
+                        }
+                    ]
+                },
+                {
+                    'featureType': 'poi',
+                    'elementType': 'labels.text',
+                    'stylers': [
+                        {
+                            'visibility': 'off'
+                        }
+                    ]
+                },
+                {
+                    'featureType': 'road',
+                    'elementType': 'labels',
+                    'stylers': [
+                        {
+                            'visibility': 'off'
+                        }
+                    ]
+                },
+                {
+                    'featureType': 'water',
+                    'elementType': 'labels.text',
+                    'stylers': [
+                        {
+                            'visibility': 'off'
+                        }
+                    ]
+                }
+            ]
         });
 
         var markers = getMarkers();
-        var markerCluster = new MarkerClusterer(map, markers, {
-            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-        });
-
-        markerCluster.setMap(map);
 
         map.fitBounds(bounds);
 
@@ -51,13 +118,20 @@ export default class Map {
 
         function createMarker (markerData) {
             var marker = new google.maps.Marker({
-                position: markerData.locations
+                position: markerData.locations,
+                icon: '/public/frontend/images/marker.svg'
             });
 
             marker.addListener('click', function () {
                 replaceMarkerContentBoxById(markerData.data.id);
+                for (var j = 0; j < markers.length; j++) {
+                    markers[j].setIcon('/public/frontend/images/marker.svg');
+                }
+                marker.setIcon('/public/frontend/images/marker-selected.svg');
             });
             bounds.extend(markerData.locations);
+
+            marker.setMap(map);
 
             return marker;
         }
@@ -73,6 +147,14 @@ export default class Map {
             }
         }
 
+        $('.js-google-map-close-store').on('click', hideAllContentBoxes);
+
+        function hideAllContentBoxes () {
+            $container.filterAllNodes('.js-store-info').addClass('display-none');
+            for (var j = 0; j < markers.length; j++) {
+                markers[j].setIcon('/public/frontend/images/marker.svg');
+            }
+        }
     }
 }
 
