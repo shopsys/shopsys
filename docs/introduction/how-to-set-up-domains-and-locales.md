@@ -62,7 +62,7 @@ Set up the locale of the domain according to the instructions in the section [Lo
 #### 2.4 Create multidomains data
 
 !!! note
-    When you want to set up new domain to fresh new project you may run `php phing db-demo` instead of following steps (you should avoid doing so for running project).
+    When you want to set up new domain for new project you may run `php phing db-demo` instead of following steps (you should avoid doing so for running project).
 
 There need to be created some multidomain data for the newly added domain.
 Run the phing target
@@ -113,7 +113,7 @@ Set up the locale of the domain in `config/domains.yaml`.
 This configuration file contains pieces of information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
 !!! note
-    Changing locales for domain may cause the tests starts failing. It is necessary to [configure default locale](#38-default-application-locale) properly to fix it.
+    Changing locales for domain may cause tests to start failing. It is necessary to [configure default locale](#38-default-application-locale) properly to fix it.
 
 #### 3.2 Frontend routes
 Create a file with the frontend routes for the added locale if this file is not already created for this locale.
