@@ -22,7 +22,13 @@ export default class ProductListReadyCategorySeoMix {
     static setSeoPropertiesToProperElements (h1, description, shortDescription, seoTitle, seoMetaDescription, url) {
         $('.js-ready-category-seo-mix-product-list-h1').text(h1);
         $('.js-ready-category-seo-mix-product-list-description').html(description);
-        $('.js-ready-category-seo-mix-product-list-short-description').html(shortDescription);
+        const $shortDescription = $('.js-ready-category-seo-mix-product-list-short-description');
+        $shortDescription.html(shortDescription);
+        if (shortDescription == '') {
+            $shortDescription.siblings('.btn--next').hide();
+        } else {
+            $shortDescription.siblings('.btn--next').show();
+        }
         $(document).attr('title', seoTitle);
         $('meta[name=description]').attr('content', seoMetaDescription);
         pushReloadState(url);
