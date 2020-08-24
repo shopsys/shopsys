@@ -13,6 +13,8 @@ If you want to show Cron overview table for non-superadmin users you need add pa
 
 ## Default Cron Commands
 There is some prepared configuration in a file [`config/services/cron.yaml`](https://github.com/shopsys/project-base/blob/master/config/services/cron.yaml) in `project-base`.
+!!! note
+    Hours set in [`config/services/cron.yaml`](https://github.com/shopsys/project-base/blob/master/config/services/cron.yaml) are consider to be in timezone set in `shopsys.cron_timezone` parameter in [`config/parameters_common.yaml`](https://github.com/shopsys/project-base/blob/master/config/parameters_common.yaml) file.
 
 ## Running Cron Jobs
 Do not forget to set up a cron on your server to execute [`php phing cron`](../introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.

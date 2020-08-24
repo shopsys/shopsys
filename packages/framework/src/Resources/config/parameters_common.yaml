@@ -11,6 +11,9 @@ parameters:
     # All time values are displayed in this timezone (default is PHP timezone)
     shopsys.display_timezone: ~
 
+    # Hours defined in cron.yaml correspond to this timezone (default is PHP timezone)
+    shopsys.cron_timezone: ~
+
     # Default extended classes mapping
     shopsys.entity_extension.map: {}
 
