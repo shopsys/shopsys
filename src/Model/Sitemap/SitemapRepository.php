@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository as BaseSitemapRepository;
 
@@ -70,8 +71,9 @@ class SitemapRepository extends BaseSitemapRepository
     public function getSitemapItemsForVisibleProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup): array
     {
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup);
+        $queryBuilder->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId');
         $queryBuilder
-            ->addSelect('fu.slug')
+            ->select('fu.slug')
             ->join(
                 FriendlyUrl::class,
                 'fu',
@@ -81,6 +83,8 @@ class SitemapRepository extends BaseSitemapRepository
                 AND fu.domainId = :domainId
                 AND fu.main = TRUE'
             )
+            ->andWhere('p.variantType != :variantTypeMain')
+            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
             ->setParameter('productDetailRouteName', 'front_product_detail')
             ->setParameter('domainId', $domainConfig->getId());
 
@@ -91,7 +95,6 @@ class SitemapRepository extends BaseSitemapRepository
             ->where('ps.product = p')
             ->having('SUM(ps.productQuantity) > 0');
 
-        $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
         $queryBuilder->andWhere('EXISTS(' . $subquery->getDQL() . ') OR (p.preorder = true AND pd.saleExclusion = false)');
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
@@ -141,6 +144,8 @@ class SitemapRepository extends BaseSitemapRepository
                 AND fu.domainId = :domainId
                 AND fu.main = TRUE'
             )
+            ->andWhere('p.variantType != :variantTypeMain')
+            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
             ->setParameter('productDetailRouteName', 'front_product_detail')
             ->setParameter('domainId', $domainConfig->getId());
 
