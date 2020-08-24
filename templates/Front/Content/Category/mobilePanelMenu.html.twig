@@ -50,13 +50,15 @@
             </li>
         {% endfor %}
         {% if isFirstLevel %}
-            <li class="mobile-menu__item mobile-menu__item--sale">
-                <a
-                    href="#"
-                    class="mobile-menu__item__link mobile-menu__item__link--sale mobile-menu__item__link--level-1 menu-horizontal__item__link--sale js-not-implemented-yet">
-                    {{ "Výprodej"|trans }}
-                </a>
-            </li>
+            {% if saleCategory is not null %}
+                <li class="mobile-menu__item mobile-menu__item--sale">
+                    <a
+                        href="{{ url('front_product_list', { id: saleCategory.id }) }}"
+                        class="mobile-menu__item__link mobile-menu__item__link--sale mobile-menu__item__link--level-1 menu-horizontal__item__link--sale js-not-implemented-yet">
+                        {{ "Výprodej"|trans }}
+                    </a>
+                </li>
+            {% endif %}
             <li class="mobile-menu__item mobile-menu__item--blog">
                 <a
                     href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}"

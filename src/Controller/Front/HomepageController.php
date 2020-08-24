@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Model\Blog\Article\BlogArticleFacade;
 use App\Model\Blog\Category\BlogCategoryFacade;
+use App\Model\Category\CategoryFacade;
 use App\Model\Gtm\DataLayer;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Product\Filter\ProductVariantFilterFacade;
@@ -65,6 +66,11 @@ class HomepageController extends FrontBaseController
     private $gtmJsPushFacade;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private $categoryFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
@@ -84,7 +90,8 @@ class HomepageController extends FrontBaseController
         TopCategoryFacade $topCategoryFacade,
         BlogArticleFacade $blogArticleFacade,
         ProductVariantFilterFacade $productVariantFilterFacade,
-        GtmJsPushFacade $gtmJsPushFacade
+        GtmJsPushFacade $gtmJsPushFacade,
+        CategoryFacade $categoryFacade
     ) {
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
@@ -95,6 +102,7 @@ class HomepageController extends FrontBaseController
         $this->productVariantFilterFacade = $productVariantFilterFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->gtmJsPushFacade = $gtmJsPushFacade;
+        $this->categoryFacade = $categoryFacade;
     }
 
     public function indexAction()
@@ -138,6 +146,7 @@ class HomepageController extends FrontBaseController
                 $sliderItems,
                 DataLayer::HOMEPAGE_SLIDER_LABEL
             ),
+            'saleCategory' => $this->categoryFacade->findSaleCategory(),
         ]);
     }
 }

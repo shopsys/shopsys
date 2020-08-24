@@ -61,6 +61,11 @@ class CategoryData extends BaseCategoryData
      */
     public $parametersPosition;
 
+    /**
+     * @var bool
+     */
+    public $isSaleCategory;
+
     public function __construct()
     {
         parent::__construct();
@@ -70,5 +75,6 @@ class CategoryData extends BaseCategoryData
         $this->productSeriesListLink = [];
         $this->categoryProductSeries = [];
         $this->parametersPosition = [];
+        $this->isSaleCategory = false;
     }
 }

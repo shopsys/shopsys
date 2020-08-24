@@ -255,4 +255,40 @@ class CategoryFacade extends BaseCategoryFacade
 
         return $productMainCategory->getOverLimitQuantity();
     }
+
+    /**
+     * @return \App\Model\Category\Category|null
+     */
+    public function findSaleCategory(): ?Category
+    {
+        return $this->categoryRepository->findSaleCategory();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Category\Category[]
+     */
+    public function getAllVisibleCategoriesByDomainId(int $domainId): array
+    {
+        return $this->categoryRepository->getAllVisibleByDomainId($domainId);
+    }
+
+    /**
+     * @param Category|null $category
+     */
+    public function saveSaleCategory(?Category $category): void
+    {
+        $currentSaleCategory = $this->findSaleCategory();
+        if ($currentSaleCategory !== null) {
+            $currentSaleCategory->setIsSaleCategory(false);
+            $this->em->persist($currentSaleCategory);
+        }
+
+        if ($category !== null) {
+            $category->setIsSaleCategory(true);
+            $this->em->persist($category);
+        }
+
+        $this->em->flush();
+    }
 }

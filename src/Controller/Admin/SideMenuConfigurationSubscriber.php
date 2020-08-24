@@ -122,5 +122,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 
         $parameterValueMenu = $listMenu->addChild('parameter_values', ['route' => 'admin_parametervalue_list', 'label' => t('Hodnota parametru typu barva')]);
         $parameterValueMenu->addChild('parameter_values_edit', ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editace hodnoty parametru typu barva')]);
+
+        $listMenu->addChild('sale_category', ['route' => 'admin_set_sale_category', 'label' => t('Výběr výprodejové kategorie')]);
     }
 }

@@ -34,13 +34,15 @@
                     {% endif %}
                     </li>
             {% endfor %}
-            <li class="list-menu__item list-menu__item--sale">
-                <a
-                    href="#"
-                    class="list-menu__item__link list-menu__item__link--sale list-menu__item__link--level-1 intented js-not-implemented-yet">
-                    {{ "Výprodej"|trans }}
-                </a>
-            </li>
+            {% if saleCategory is not null %}
+                <li class="list-menu__item list-menu__item--sale">
+                    <a
+                        href="{{ url('front_product_list', { id: saleCategory.id }) }}"
+                        class="list-menu__item__link list-menu__item__link--sale list-menu__item__link--level-1 intented js-not-implemented-yet">
+                        {{ "Výprodej"|trans }}
+                    </a>
+                </li>
+            {% endif %}
             <li class="list-menu__item list-menu__item--blog">
                 <a
                     href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}"

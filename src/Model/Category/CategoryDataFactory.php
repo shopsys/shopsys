@@ -122,6 +122,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         $categoryData->categoryProductSeries = $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category);
         $categoryData->overLimitQuantity = $category->getOverLimitQuantity();
         $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
+        $categoryData->isSaleCategory = $category->isSaleCategory();
     }
 
     /**

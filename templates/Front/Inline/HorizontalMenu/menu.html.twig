@@ -65,13 +65,15 @@
 				{% endif %}
 			</li>
 		{% endfor %}
-		<li class="menu-horizontal__item menu-horizontal__item--sale">
-			<a
-				href="#"
-				class="menu-horizontal__item__link menu-horizontal__item__link--sale js-not-implemented-yet">
-				<span class="menu-horizontal__item__link__text">{{ "Výprodej"|trans }}</span>
-			</a>
-		</li>
+		{% if saleCategory is not null %}
+			<li class="menu-horizontal__item menu-horizontal__item--sale">
+				<a
+					href="{{ url('front_product_list', { id: saleCategory.id }) }}"
+					class="menu-horizontal__item__link menu-horizontal__item__link--sale">
+					<span class="menu-horizontal__item__link__text">{{ "Výprodej"|trans }}</span>
+				</a>
+			</li>
+		{% endif %}
 		<li class="menu-horizontal__item menu-horizontal__item--blog">
 			<a
 				href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}"

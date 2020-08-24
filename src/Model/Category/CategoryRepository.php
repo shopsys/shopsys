@@ -154,4 +154,23 @@ class CategoryRepository extends BaseCategoryRepository
 
         return $listableProductCountsIndexedByCategoryId;
     }
+
+    /**
+     * @return \App\Model\Category\Category|null
+     */
+    public function findSaleCategory(): ?Category
+    {
+        return $this->getCategoryRepository()->findOneBy(['isSaleCategory' => true]);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Category\Category[]
+     */
+    public function getAllVisibleByDomainId($domainId): array
+    {
+        return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->getQuery()
+            ->getResult();
+    }
 }
