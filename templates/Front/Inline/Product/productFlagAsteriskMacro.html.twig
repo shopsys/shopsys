@@ -2,7 +2,7 @@
 
     {% set break = false %}
     {% for productFlag in flags if not break %}
-        {% if productFlag.visible and productFlag.noticeLowPrice %}
+        {% if productFlag.noticeLowPrice %}
             {{ productFlag.noticeLowPrice }}
             {% set break = true %}
         {% endif %}
@@ -14,7 +14,7 @@
 
     {% set break = false %}
     {% for productFlag in flags if not break %}
-        {% if productFlag.visible and productFlag.noticeHighPrice %}
+        {% if productFlag.noticeHighPrice %}
             {{ productFlag.noticeHighPrice }}
             {% set break = true %}
         {% endif %}
