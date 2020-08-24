@@ -78,6 +78,9 @@ export default class CustomizeBundle {
                 }
             })
             .focus(function () {
+                if (this.jsFormValidator) {
+                    CustomizeBundle.removeDelayedValidationWithParents(this.jsFormValidator);
+                }
                 $(this).closest('.form-input-error').removeClass('form-input-error');
             })
             .jsFormValidator({
@@ -86,21 +89,27 @@ export default class CustomizeBundle {
     }
 
     static validateWithParentsDelayed (jsFormValidator) {
-        const delayedValidators = {};
-        const id = jsFormValidator.id;
-
         do {
-            delayedValidators[jsFormValidator.id] = jsFormValidator;
+            CustomizeBundle.delayedValidators[jsFormValidator.id] = jsFormValidator;
             jsFormValidator = jsFormValidator.parent;
         } while (jsFormValidator);
 
-        Timeout.setTimeoutAndClearPrevious('Shopsys.validation.validateWithParentsDelayed' + id, () => this.executeDelayedValidators(delayedValidators), 100);
+        Timeout.setTimeoutAndClearPrevious('Shopsys.validation.validateWithParentsDelayed', this.executeDelayedValidators, 100);
     }
 
-    static executeDelayedValidators (validators) {
+    static executeDelayedValidators () {
+        const validators = CustomizeBundle.delayedValidators;
+
         $.each(validators, function () {
             this.validate();
         });
+    }
+
+    static removeDelayedValidationWithParents (jsFormValidator) {
+        do {
+            delete CustomizeBundle.delayedValidators[jsFormValidator.id];
+            jsFormValidator = jsFormValidator.parent;
+        } while (jsFormValidator);
     }
 
     static findDomElementRecursive (model, fpJsFormValidator) {
@@ -328,3 +337,5 @@ export default class CustomizeBundle {
         return $errorList;
     }
 }
+
+CustomizeBundle.delayedValidators = {};
