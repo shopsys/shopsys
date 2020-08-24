@@ -18,13 +18,7 @@
                 <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
                 <a href="{{ url('front_stores') }}" class="box-breadcrumb__item">{{ 'Prodejny'|trans }}</a>
             </div>
-            <div class="box-stores box-stores--detail">
-                <div class="box-stores__map box-stores__map--detail">
-                    <div id="js-google-map-box" class="box-stores__map__google box-stores__map__google--detail"></div>
-                    {% if imageExists(store, 'main') %}
-                        {{ image(store, { itemprop: 'image', lazy:true, type: 'main' }) }}
-                    {% endif %}
-                </div>
+            <div class="box-stores box-stores--detail{{ imageExists(store, 'main') ? ' box-stores--detail-has-img' }}">
                 <div class="box-stores__info box-stores__info--detail">
                     <h1 class="heading heading--primary heading--primary-subpage box-stores__heading">{{ store.name }}</h1>
                     <div class="box-stores__info__grid">
@@ -63,6 +57,14 @@
                             {{ store.contactInfo }}
                         </div>
                     </div>
+
+                    <div class="box-stores__map box-stores__map--detail">
+                        <div id="js-google-map-box" class="box-stores__map__google box-stores__map__google--detail"></div>
+                        {% if imageExists(store, 'main') %}
+                            {{ image(store, { itemprop: 'image', lazy:true, type: 'main' }) }}
+                        {% endif %}
+                    </div>
+
                     <div class="box-stores-list js-not-implemented-yet">
                         <div class="box-stores-list__item box-stores-list__item--detail">
                             <a class="box-stores-list__item__link" href="#">

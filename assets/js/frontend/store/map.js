@@ -1,6 +1,7 @@
 import '../components/filterAllNodes';
 import $ from 'jquery';
 import Register from 'framework/common/utils/Register';
+import Responsive from '../utils/Responsive';
 
 export default class Map {
     static init ($container) {
@@ -100,7 +101,11 @@ export default class Map {
 
         var listener = google.maps.event.addListener(map, 'idle', function () {
             if (markers.length > 1) {
-                map.setZoom(7);
+                if ($(window).width() < Responsive.LG) {
+                    map.setZoom(6);
+                } else {
+                    map.setZoom(7);
+                }
             } else {
                 map.setZoom(15);
             }
@@ -133,11 +138,16 @@ export default class Map {
                 if (markersData.length <= 1) {
                     return;
                 }
-                replaceMarkerContentBoxById(markerData.data.id);
-                markers.forEach(function (marker, i) {
-                    marker.setIcon(markerIcon);
-                });
-                marker.setIcon(markerSelectedIcon);
+
+                if ($(window).width() < Responsive.LG) {
+                    goToStoreDetail(markerData.data.id);
+                } else {
+                    replaceMarkerContentBoxById(markerData.data.id);
+                    markers.forEach(function (marker, i) {
+                        marker.setIcon(markerIcon);
+                    });
+                    marker.setIcon(markerSelectedIcon);
+                }
             });
 
             bounds.extend(markerData.locations);
@@ -155,6 +165,14 @@ export default class Map {
 
                 var $markerContent = $container.filterAllNodes('.js-store-info[data-store-id=' + storeId + ']');
                 $markerContent.removeClass('display-none');
+            }
+        }
+
+        function goToStoreDetail (storeId) {
+            if (storeId !== '0') {
+                var $storeElement = $('[data-store-id=' + storeId + ']');
+                var storeHref = $storeElement.attr('data-store-href');
+                window.location = storeHref;
             }
         }
 

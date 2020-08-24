@@ -1,16 +1,40 @@
 .box-stores {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin-bottom: 2rem;
 
     border-radius: 0.5em;
 
     @media @query-lg {
-        display: flex;
+        flex-direction: row;
         height: 500px;
     }
 
     &--detail {
         height: auto;
+
+        @media @query-mobile {
+            margin-bottom: 0;
+        }
+
+        @media @query-vl {
+            min-height: 430px;
+        }
+
+        @media @query-xl {
+            min-height: 650px;
+        }
+
+        &-has-img {
+            @media @query-vl {
+                min-height: 730px;
+            }
+
+            @media @query-xl {
+                min-height: 950px;
+            }
+        }
     }
 
     &__heading {
@@ -23,22 +47,36 @@
     }
 
     &__map {
-        display: none;
+        width: 100%;
+        height: 250px;
 
         @media @query-lg {
-            display: block;
             width: calc(100% - 420px);
+            height: auto;
+        }
+
+        &--detail {
+            height: auto;
+            margin-bottom: 1rem;
+
+            @media @query-lg {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin-bottom: 0;
+            }
         }
 
         &__google {
-            @media @query-lg {
-                width: 100%;
-                height: 100%;
+            width: 100%;
+            height: 100%;
 
-                background-color: @color-light;
-            }
+            background-color: @color-light;
 
             &--detail {
+                height: 250px;
+                margin-bottom: 1.5rem;
+
                 @media @query-lg {
                     height: 350px;
                     margin-bottom: 2rem;
@@ -87,23 +125,23 @@
         }
 
         &--detail {
+            position: relative;
             height: auto;
+            width: auto;
 
             border: 0;
             border-radius: 0;
 
             @media @query-lg {
-                width: calc(100% - 350px);
-                padding-left: 45px;
+                padding-left: 395px;
             }
 
             @media @query-vl {
-                width: calc(100% - 500px);
+                padding-left: 535px;
             }
 
             @media @query-xl {
-                width: calc(100% - 645px);
-                padding-left: 75px;
+                padding-left: 720px;
             }
         }
 
@@ -119,6 +157,11 @@
                 @media @query-md {
                     width: 50%;
                     margin-bottom: 1.5rem;
+                    padding-right: 10px;
+                }
+
+                @media @query-xl {
+                    padding-right: 0;
                 }
 
                 &--full {
@@ -131,12 +174,16 @@
     &__store {
         position: relative;
         height: 100%;
-        padding: 1rem;
+        padding: 2rem 1rem 1rem;
         z-index: 2;
         text-align: center;
 
         background-color: @color-f;
         line-height: 1.6;
+
+        @media @query-lg {
+            padding: 1rem;
+        }
 
         &--default {
             display: flex;
@@ -170,9 +217,10 @@
             color: @color-primary;
 
             &--detail {
-                margin-top: 0;
+                margin: 0 0 4px;
 
                 font-size: 18px;
+                line-height: 1.4;
             }
         }
 

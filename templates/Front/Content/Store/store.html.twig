@@ -46,7 +46,11 @@
                         </p>
                     </div>
                     {% for store in stores %}
-                        <div class="box-stores__store js-store-info display-none" data-store-id="{{ store.id }}">
+                        <div
+                            class="box-stores__store js-store-info display-none"
+                            data-store-id="{{ store.id }}"
+                            data-store-href="{{ url('front_stores_detail', {id: store.id}) }}"
+                        >
                             <button class="window-popup__close js-google-map-close-store">
                                 <i class="svg svg-remove"></i>
                             </button>
