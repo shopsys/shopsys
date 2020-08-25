@@ -501,6 +501,10 @@ class RouteConfigCustomization
             ->customizeByRouteName('front_category_seo', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Check not implemented route.')
                     ->setParameter('id', 1);
+            })
+            ->customizeByRouteName('front_similar_products', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Similar product internal route.')
+                    ->setParameter('id', 1);
             });
     }
 

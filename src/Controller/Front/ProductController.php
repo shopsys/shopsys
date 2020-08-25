@@ -50,6 +50,7 @@ class ProductController extends FrontBaseController
     public const SEARCH_TEXT_PARAMETER = 'q';
     public const PAGE_QUERY_PARAMETER = 'page';
     public const PRODUCTS_PER_PAGE = 36;
+    public const SIMILAR_PRODUCTS_PER_PAGE = 8;
     private const PARAMETER_VALUE_ENTITY_NAME = 'parameterValue';
 
     /**
@@ -272,12 +273,6 @@ class ProductController extends FrontBaseController
      */
     public function detailAction(Request $request, $id)
     {
-        $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
-        if (!$this->isRequestPageValid($requestPage)) {
-            return $this->redirectToRoute('front_product_detail', $this->getRequestParametersWithoutPage());
-        }
-        $page = $requestPage === null ? 1 : (int)$requestPage;
-
         /** @var \App\Model\Product\Product $productVariant */
         $productVariant = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
 
@@ -305,15 +300,6 @@ class ProductController extends FrontBaseController
         $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($product, $this->domain->getId());
         $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($productVariant, $this->domain);
 
-        $paginatedSimilarProducts = $this->listedProductViewFacade->getSimilarPaginatedProductsFormProductInCategory(
-            $product,
-            $this->domain->getId(),
-            ProductListOrderingConfig::ORDER_BY_PRIORITY,
-            $page,
-            self::PRODUCTS_PER_PAGE
-        );
-        $this->productVariantFilterFacade->setupDefaultVariantsInPaginationResult($paginatedSimilarProducts);
-
         $productSeriesList = $this->productSeriesFacade->getAllVisibleByProductAndDomainId($product, $this->domain);
         $productSeriesProducts = [];
         foreach ($productSeriesList as $productSeries) {
@@ -333,11 +319,50 @@ class ProductController extends FrontBaseController
             'productAvailableStocksCountInformation' => $productAvailableStocksCountInformation,
             'productCountExposedInStores' => $productCountExposedInStores,
             'downloadFiles' => $downloadFiles,
-            'paginatedSimilarProducts' => $paginatedSimilarProducts,
             'productSeriesList' => $productSeriesList,
             'productSeriesProductsIndexedByProductSeries' => $productSeriesProducts,
             'productPackages' => $productPackages,
+            'productMainVariantId' => $product->getId(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function similarProductsAction(Request $request): Response
+    {
+        $id = (int) $request->get('id');
+
+        $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
+        if (!$this->isRequestPageValid($requestPage)) {
+            $requestPage = null;
+        }
+        $page = $requestPage === null ? 1 : (int)$requestPage;
+
+        /** @var \App\Model\Product\Product $productVariant */
+        $productVariant = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
+        if ($productVariant->isVariant()) {
+            $product = $productVariant->getMainVariant();
+        } else {
+            $product = $productVariant;
+        }
+
+        $paginatedSimilarProducts = $this->listedProductViewFacade->getSimilarPaginatedProductsFormProductInCategory(
+            $product,
+            $this->domain->getId(),
+            ProductListOrderingConfig::ORDER_BY_PRIORITY,
+            $page,
+            self::SIMILAR_PRODUCTS_PER_PAGE
+        );
+
+        $this->productVariantFilterFacade->setupDefaultVariantsInPaginationResult($paginatedSimilarProducts);
+
+        return $this->render('Front/Content/Product/similarProducts.html.twig',
+            [
+                'productMainVariantId' => $product->getId(),
+                'paginationResult' => $paginatedSimilarProducts,
+            ]);
     }
 
     /**

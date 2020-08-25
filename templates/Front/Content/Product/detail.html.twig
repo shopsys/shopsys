@@ -513,20 +513,10 @@
                     </div>
                 {% endif %}
 
-                {% cache 'products_similar_id_'~product.getId() {lifetime:60*60, domainId:getDomain().id} %}
-                    {% if paginatedSimilarProducts.results|length > 0 %}
-                        <div class="box-detail box-detail--similar">
-                            <h2 class="box-detail__title">{{ 'Podobné produkty'|trans }}</h2>
-                            <div class="box-products-carousel box-products-carousel--detail">
-                                <div class="box-products-carousel__in box-products-carousel__in--detail">
-                                    <div class="list-products-grid js-products-slick-carousel">
-                                        {% include 'Front/Content/Product/similarProducts.html.twig' with {paginationResult: paginatedSimilarProducts} %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
+                {% cache 'products_similar_id_'~productMainVariantId {lifetime:60*60, domainId:getDomain().id} %}
+                    {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: productMainVariantId} )) }}
                 {% endcache %}
+
             </div>
         </div>
 

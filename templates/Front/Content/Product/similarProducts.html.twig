@@ -1,17 +1,17 @@
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
-{% import 'Front/Inline/Paginator/paginator.html.twig' as paginator %}
-
 
 {% if paginationResult.results|length > 0 %}
-    {{ productList.list(paginationResult.results) }}
-    {#<div class="js-product-list-with-paginator">
-        {% set entityName = 'products'|trans %}
-        {{ paginator.paginatorNavigation(paginationResult, entityName) }}
-
-        <div class="text-center margin-bottom-20">
-            {{ paginator.loadMoreButton(paginationResult) }}
+    <div class="box-detail box-detail--similar">
+        <h2 class="box-detail__title">{{ 'Podobné produkty'|trans }}</h2>
+        <div class="box-products-carousel box-products-carousel--detail">
+            <div class="box-products-carousel__in box-products-carousel__in--detail">
+                <div class="list-products-grid js-similar-products-slick-carousel"
+                     data-product-id="{{ productMainVariantId }}"
+                     data-similar-products-url="{{ url('front_similar_products') }}"
+                >
+                    {{ productList.list(paginationResult.results) }}
+                </div>
+            </div>
         </div>
-
-        {{ paginator.paginatorNavigation(paginationResult, entityName) }}
-    </div>#}
+    </div>
 {% endif %}
