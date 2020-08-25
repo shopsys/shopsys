@@ -374,24 +374,6 @@ class ProductDomain extends BaseProductDomain
     }
 
     /**
-     * @param \App\Model\Product\Flag\Flag[] $flags
-     * @return bool
-     */
-    public function calcSaleExclusion($flags): bool
-    {
-        $exclusion = false;
-
-        foreach ($flags as $flag) {
-            if ($flag->getAkeneoCode() === self::FLAG_PRODUCT_SALE_AKENEO_CODE) {
-                $exclusion = true;
-                break;
-            }
-        }
-
-        return $exclusion;
-    }
-
-    /**
      * @return int|null
      */
     public function getCountPackages(): ?int

@@ -211,7 +211,7 @@ class Product extends BaseProduct
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
             $productDomain->calcSellingPriceWithVat();
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
-            $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
+            $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
 
             $productDomain->setEmbeddedAccessories($productData->embeddedAccessories[$domainId]);
             $productDomain->setPackageNotIncluded($productData->packageNotIncluded[$domainId]);
