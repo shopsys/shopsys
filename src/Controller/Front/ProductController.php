@@ -358,11 +358,13 @@ class ProductController extends FrontBaseController
 
         $this->productVariantFilterFacade->setupDefaultVariantsInPaginationResult($paginatedSimilarProducts);
 
-        return $this->render('Front/Content/Product/similarProducts.html.twig',
+        return $this->render(
+            'Front/Content/Product/similarProducts.html.twig',
             [
                 'productMainVariantId' => $product->getId(),
                 'paginationResult' => $paginatedSimilarProducts,
-            ]);
+            ]
+        );
     }
 
     /**

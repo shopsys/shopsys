@@ -225,7 +225,7 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
         $futureProductStockData->dateExpectedArrival = $this->buildDate($scontoBridgeItemData['dateExpectedArrival']);
         $futureProductStockData->dateConfirmedArrival = $this->buildDate($scontoBridgeItemData['dateConfirmedArrival']);
         $futureProductStockData->isLate = $scontoBridgeItemData['isLate'];
-        if($scontoBridgeItemData['dateArrival'] !== null){
+        if ($scontoBridgeItemData['dateArrival'] !== null) {
             $futureProductStockData->isLate = true;
         }
 

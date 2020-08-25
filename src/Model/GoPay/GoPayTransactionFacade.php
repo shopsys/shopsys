@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Model\GoPay;
 
@@ -83,7 +83,7 @@ class GoPayTransactionFacade
 
         foreach ($goPayResponsesData as $goPayStatusResponseData) {
             $goPayStatusResponse = $goPayStatusResponseData->response;
-            if (array_key_exists('state',(array) $goPayStatusResponse->json)) {
+            if (array_key_exists('state', (array) $goPayStatusResponse->json)) {
                 $goPayTransaction = $goPayStatusResponseData->goPayTransaction;
                 $goPayTransaction->setGoPayStatus($goPayStatusResponse->json['state']);
                 $toFlush = true;
