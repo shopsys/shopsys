@@ -75,7 +75,7 @@ class ListedProductViewFactory
     {
         return $this->create(
             $product->getId(),
-            $product->getName(),
+            $product->isVariant() && $product->getVariantAlias() ? $product->getVariantAlias() : $product->getName(),
             $product->getShortDescription($this->domain->getId()),
             $product->getCalculatedAvailability()->getName(),
             $this->productCachedAttributesFacade->getProductSellingPrice($product),
