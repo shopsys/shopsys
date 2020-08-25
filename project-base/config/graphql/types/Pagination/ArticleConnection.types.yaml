@@ -1,0 +1,6 @@
+ArticleConnection:
+    type: relay-connection
+    config:
+        nodeType: Article
+    inherits:
+        - 'ArticleConnectionDecorator'

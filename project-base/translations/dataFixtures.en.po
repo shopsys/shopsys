@@ -1297,6 +1297,15 @@ msgstr ""
 msgid "Shopping guide"
 msgstr ""
 
+msgid "Shopping guide - Tips and tricks how to quickly find what you are looking for"
+msgstr ""
+
+msgid "Shopping guide for quick shopping"
+msgstr ""
+
+msgid "Shopping guide to improve your shopping experience"
+msgstr ""
+
 msgid "Shopsys Framework - Title page"
 msgstr ""
 

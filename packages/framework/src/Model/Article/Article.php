@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
 /**
@@ -26,6 +27,13 @@ class Article implements OrderableEntityInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var int
@@ -100,6 +108,7 @@ class Article implements OrderableEntityInterface
     {
         $this->domainId = $articleData->domainId;
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
+        $this->uuid = $articleData->uuid ?: Uuid::uuid4()->toString();
         $this->setData($articleData);
     }
 
@@ -131,6 +140,14 @@ class Article implements OrderableEntityInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**

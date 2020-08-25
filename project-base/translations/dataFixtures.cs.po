@@ -1297,6 +1297,15 @@ msgstr "Citlivost (ISO)"
 msgid "Shopping guide"
 msgstr "Jak nakupovat"
 
+msgid "Shopping guide - Tips and tricks how to quickly find what you are looking for"
+msgstr "Jak nakupovat - Tipy a triky jak rychle najít co potřebujete"
+
+msgid "Shopping guide for quick shopping"
+msgstr "Nákupní rádce pro rychlý nákup"
+
+msgid "Shopping guide to improve your shopping experience"
+msgstr "Zlepšení zážitku z nakupovaní"
+
 msgid "Shopsys Framework - Title page"
 msgstr "Shopsys Framework - Titulní strana"
 
