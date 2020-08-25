@@ -64,6 +64,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
 
         $promoCodeMenu = $marketingMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
+        $promoCodeMenu->addChild('admin_promocode_listmassgeneratebatch', ['route' => 'admin_promocode_listmassgeneratebatch', 'display' => true, 'label' => t('Vygenerované dávky')]);
         $promoCodeMenu->addChild('promo_codes_new', ['route' => 'admin_promocode_new', 'display' => false, 'label' => t('Nový slevový kupóny')]);
         $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
         $promoCodeMenu->addChild('promo_codes_newmassgenerate', ['route' => 'admin_promocode_newmassgenerate', 'label' => t('Hromadné vytvoření slevových kupónů'), 'display' => false]);

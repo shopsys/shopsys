@@ -44,4 +44,26 @@ class PromoCodeRepository extends BasePromoCodeRepository
 
         return array_column($queryBuilder->getQuery()->execute(), 'code');
     }
+
+    /**
+     * @return int
+     */
+    public function getMassLastGeneratedBatchId(): int
+    {
+        $queryBuilder = $this->getAllQueryBuilder()
+            ->select('COALESCE(MAX(pc.massGenerateBatchId), 0) AS lastBatchId');
+
+        $result = $queryBuilder->getQuery()->getSingleResult();
+
+        return $result['lastBatchId'];
+    }
+
+    /**
+     * @param int $batchId
+     * @return \App\Model\Order\PromoCode\PromoCode[]|null
+     */
+    public function findByMassBatchId(int $batchId): ?array
+    {
+        return $this->getPromoCodeRepository()->findBy(['massGenerateBatchId' => $batchId]);
+    }
 }

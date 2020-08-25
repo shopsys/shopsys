@@ -79,6 +79,13 @@ class PromoCode extends BasePromoCode
     private $prefix;
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $massGenerateBatchId;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
@@ -140,6 +147,7 @@ class PromoCode extends BasePromoCode
         $this->identifier = $promoCodeData->identifier;
         $this->massGenerate = $promoCodeData->massGenerate;
         $this->prefix = $promoCodeData->prefix;
+        $this->massGenerateBatchId = $promoCodeData->massGenerateBatchId;
         $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
         $this->onSale = $promoCodeData->onSale;
         $this->inAction = $promoCodeData->inAction;
@@ -162,6 +170,7 @@ class PromoCode extends BasePromoCode
         $this->identifier = $promoCodeData->identifier;
         $this->massGenerate = $promoCodeData->massGenerate;
         $this->prefix = $promoCodeData->prefix;
+        $this->massGenerateBatchId = $promoCodeData->massGenerateBatchId;
         $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
         $this->onSale = $promoCodeData->onSale;
         $this->inAction = $promoCodeData->inAction;

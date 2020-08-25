@@ -748,3 +748,6 @@
 20200817110249:
     class: App\Migrations\Version20200817110249
     skip: false
+20200821124308:
+    class: App\Migrations\Version20200821124308
+    skip: false
