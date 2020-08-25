@@ -31,11 +31,6 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     private $fileUpload;
 
     /**
-     * @var \Symfony\Component\Validator\Constraint[]
-     */
-    private $fileConstraints;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      */
     public function __construct(FileUpload $fileUpload)
@@ -93,7 +88,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->fileConstraints = array_merge(
+        $fileConstraints = array_merge(
             [
                 new FileExtensionMaxLength(['limit' => 5]),
             ],
@@ -106,7 +101,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
                 'entry_type' => HiddenType::class,
                 'allow_add' => true,
                 'constraints' => [
-                    new Constraints\Callback([$this, 'validateUploadedFiles']),
+                    new Constraints\Callback(['callback' => [$this, 'validateUploadedFiles'], 'payload' => $fileConstraints]),
                 ],
             ])
             ->add('uploadedFilenames', CollectionType::class, [
@@ -127,15 +122,16 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     /**
      * @param string[]|null $uploadedFiles
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     * @param \Symfony\Component\Validator\Constraint[] $fileConstraints
      */
-    public function validateUploadedFiles(?array $uploadedFiles, ExecutionContextInterface $context): void
+    public function validateUploadedFiles(?array $uploadedFiles, ExecutionContextInterface $context, array $fileConstraints): void
     {
         foreach ($uploadedFiles as $uploadedFile) {
             $filepath = $this->fileUpload->getTemporaryFilepath($uploadedFile);
             $file = new File($filepath, false);
 
             $validator = $context->getValidator();
-            $violations = $validator->validate($file, $this->fileConstraints);
+            $violations = $validator->validate($file, $fileConstraints);
             foreach ($violations as $violation) {
                 $context->addViolation($violation->getMessageTemplate(), $violation->getParameters());
             }
