@@ -5,15 +5,15 @@ import Responsive from '../utils/Responsive';
 
 export default class Map {
     static init ($container) {
-        var googleMapsDivElement = document.getElementById('js-google-map-box');
+        const googleMapsDivElement = document.getElementById('js-google-map-box');
 
         if (googleMapsDivElement == null) {
             return;
         }
 
         this.$container = $container;
-        var map;
-        var bounds = new google.maps.LatLngBounds();
+        let map;
+        const bounds = new google.maps.LatLngBounds();
 
         map = new google.maps.Map(googleMapsDivElement, {
             mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -92,14 +92,14 @@ export default class Map {
             ]
         });
 
-        var markerIcon = '/public/frontend/images/marker.svg';
+        let markerIcon = '/public/frontend/images/marker.svg';
         const markerSelectedIcon = '/public/frontend/images/marker-selected.svg';
         const markerDetailIcon = '/public/frontend/images/marker-detail.svg';
-        var markers = getMarkers();
+        let markers = getMarkers();
 
         map.fitBounds(bounds);
 
-        var listener = google.maps.event.addListener(map, 'idle', function () {
+        const listener = google.maps.event.addListener(map, 'idle', function () {
             if (markers.length > 1) {
                 if ($(window).width() < Responsive.LG) {
                     map.setZoom(6);
@@ -114,14 +114,14 @@ export default class Map {
         });
 
         function getMarkers () {
-            var markers = [];
+            let markers = [];
 
             if (markersData.length == 1) {
                 markerIcon = markerDetailIcon;
             }
 
-            for (var i = 0, len = markersData.length; i < len; i++) {
-                var marker = createMarker(markersData[i]);
+            for (let i = 0, len = markersData.length; i < len; i++) {
+                const marker = createMarker(markersData[i]);
                 markers.push(marker);
             }
 
@@ -129,7 +129,7 @@ export default class Map {
         }
 
         function createMarker (markerData) {
-            var marker = new google.maps.Marker({
+            const marker = new google.maps.Marker({
                 position: markerData.locations,
                 icon: markerIcon
             });
@@ -163,15 +163,15 @@ export default class Map {
                     $(group).addClass('display-none');
                 });
 
-                var $markerContent = $container.filterAllNodes('.js-store-info[data-store-id=' + storeId + ']');
+                const $markerContent = $container.filterAllNodes('.js-store-info[data-store-id=' + storeId + ']');
                 $markerContent.removeClass('display-none');
             }
         }
 
         function goToStoreDetail (storeId) {
             if (storeId !== '0') {
-                var $storeElement = $('[data-store-id=' + storeId + ']');
-                var storeHref = $storeElement.attr('data-store-href');
+                const $storeElement = $('[data-store-id=' + storeId + ']');
+                const storeHref = $storeElement.attr('data-store-href');
                 window.location = storeHref;
             }
         }
