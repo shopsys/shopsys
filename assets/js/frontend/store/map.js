@@ -93,8 +93,8 @@ export default class Map {
         });
 
         var markerIcon = '/public/frontend/images/marker.svg';
-        var markerSelectedIcon = '/public/frontend/images/marker-selected.svg';
-        var markerDetailIcon = '/public/frontend/images/marker-detail.svg';
+        const markerSelectedIcon = '/public/frontend/images/marker-selected.svg';
+        const markerDetailIcon = '/public/frontend/images/marker-detail.svg';
         var markers = getMarkers();
 
         map.fitBounds(bounds);

@@ -112,5 +112,5 @@
             markersData.push({locations: {lat: {{ store.locationLat }}, lng: {{ store.locationLng }} }, data: {id: '{{ store.id }}' }});
         {% endif %}
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkbxpC65m4vJAoWjioff5kYktYQDiEtiE&amp;token=38432"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ googleMapApiKey }}"></script>
 {% endblock %}
