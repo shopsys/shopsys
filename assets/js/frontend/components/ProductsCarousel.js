@@ -75,6 +75,8 @@ export default class SlickCarousel {
                     }
                 }]
             });
+
+            preventClickWhenSliding($galleryCarouselCols);
         }
 
         // Common product grid carousel
@@ -111,6 +113,26 @@ export default class SlickCarousel {
                         slidesToShow: 1
                     }
                 }]
+            });
+
+            preventClickWhenSliding($productsCarousel);
+        }
+
+        function preventClickWhenSliding (carousel) {
+            let isSliding = false;
+
+            $(carousel).on('beforeChange', function () {
+                isSliding = true;
+            });
+
+            $(carousel).on('afterChange', function () {
+                isSliding = false;
+            });
+
+            $(carousel).find('a').on('click', function (e) {
+                if (isSliding) {
+                    e.preventDefault();
+                }
             });
         }
     }
