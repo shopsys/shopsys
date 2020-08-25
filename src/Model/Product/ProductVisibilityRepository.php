@@ -85,13 +85,6 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                                     AND pdom1.description <> \'\'
                             )
                         )
-                        AND EXISTS (
-                            SELECT 1
-                            FROM product_domains AS pdom2
-                            WHERE pdom2.domain_id = :domainId
-                                AND pdom2.product_id = p.id
-                                AND pdom2.sale_exclusion = FALSE
-                        )
                     )
                     THEN TRUE
                     ELSE FALSE
