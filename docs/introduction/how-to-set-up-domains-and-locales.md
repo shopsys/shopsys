@@ -60,6 +60,10 @@ Set the url address for the domain in `config/domains_urls.yaml`.
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
 #### 2.4 Create multidomains data
+
+!!! note
+    When you want to set up new domain for new project you may run `php phing db-demo` instead of following steps (you should avoid doing so for running project).
+
 There need to be created some multidomain data for the newly added domain.
 Run the phing target
 ```sh
@@ -71,6 +75,13 @@ This command performs multiple actions:
 - if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilang attributes
 - pricing group with the name Default is created for every new domain
 - the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
+
+!!! note
+    After creating multidomain data you will need to do some extra steps to display products on new domain:
+    
+    1. Enter category names for new locale to make them visible
+    2. Enter product names and prices
+    3. Recalculate product prices and visibilities
 
 #### 2.5 Multilang attributes
 Demo data of Shopsys Framework are translated only for `en` and `cs` locales.
@@ -101,14 +112,15 @@ Some parts of these instructions are already prepared for the locales `en` and `
 Set up the locale of the domain in `config/domains.yaml`.
 This configuration file contains pieces of information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
+!!! note
+    Changing locales for domain may cause tests to start failing. It is necessary to [configure default locale](#38-default-application-locale) properly to fix it.
+
 #### 3.2 Frontend routes
 Create a file with the frontend routes for the added locale if this file is not already created for this locale.
 Create this file in the directory `config/shopsys-routing` with the name `routing_front_xx.yaml` where `xx` replace for the code of added locale.
 
 #### 3.3 Translations and messages
 In order to correctly display the labels like *Registration*, *Cart*, ..., create a file with translations of messages in `translations` directory.
-Override the Phing property `translations.dump.locales` in the `build.xml` and set a space-separated list of locales you want to dump.
-For example, if you want to add `xx` to the locales, add `<property name="translations.dump.locales" value="cs en xx"/>` to your `build.xml`.
 
 Then run
 ```sh
