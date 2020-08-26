@@ -28,6 +28,7 @@ twig:
         - 'Admin/Form/productsFormTheme.html.twig'
         - 'Front/Form/sliderFormTheme.html.twig'
         - 'Admin/Form/promoCodeLimitFormTheme.html.twig'
+        - 'Admin/Form/imageuploadFields.html.twig'
     strict_variables: true
     globals:
         globalMultipleFormSetting: '@Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting'
