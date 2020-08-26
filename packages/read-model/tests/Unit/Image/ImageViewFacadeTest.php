@@ -33,7 +33,7 @@ class ImageViewFacadeTest extends TestCase
         $imageFactory = new ImageViewFactory();
         $imageViewFacade = new ImageViewFacade($this->imageFacadeMock, $imageFactory);
 
-        $imageViews = $imageViewFacade->getForEntityIds('product', [1, 3, 5]);
+        $imageViews = $imageViewFacade->getMainImagesByEntityIds('product', [1, 3, 5]);
 
         $expected = [
             1 => new ImageView(1, self::IMAGE_EXTENSION, 'product', null),
@@ -49,7 +49,7 @@ class ImageViewFacadeTest extends TestCase
         $imageFactory = new ImageViewFactory();
         $imageViewFacade = new ImageViewFacade($this->imageFacadeMock, $imageFactory);
 
-        $imageViews = $imageViewFacade->getForEntityIds('product', [10, self::NOT_EXISTING_PRODUCT_ID, 2]);
+        $imageViews = $imageViewFacade->getMainImagesByEntityIds('product', [10, self::NOT_EXISTING_PRODUCT_ID, 2]);
 
         $expected = [
             10 => new ImageView(10, self::IMAGE_EXTENSION, 'product', null),

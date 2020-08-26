@@ -229,7 +229,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     protected function createFromArray(array $productsArray): array
     {
-        $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, array_column($productsArray, 'id'));
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, array_column($productsArray, 'id'));
 
         $listedProductViews = [];
         foreach ($productsArray as $productArray) {

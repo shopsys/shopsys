@@ -30,7 +30,7 @@ class ImageViewFacadeTest extends FunctionalTestCase
 
     public function testGetForSingleEntityId(): void
     {
-        $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, [self::PRODUCT_ID_1]);
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, [self::PRODUCT_ID_1]);
 
         $expected = [
             self::PRODUCT_ID_1 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_1], 'jpg', 'product', null),
@@ -41,7 +41,7 @@ class ImageViewFacadeTest extends FunctionalTestCase
 
     public function testGetForInvalidEntityId(): void
     {
-        $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, [self::INVALID_PRODUCT_ID]);
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, [self::INVALID_PRODUCT_ID]);
 
         $expected = [
             self::INVALID_PRODUCT_ID => null,
@@ -52,7 +52,7 @@ class ImageViewFacadeTest extends FunctionalTestCase
 
     public function testGetForEntityIds(): void
     {
-        $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, [self::PRODUCT_ID_1, self::PRODUCT_ID_2, self::PRODUCT_ID_3]);
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, [self::PRODUCT_ID_1, self::PRODUCT_ID_2, self::PRODUCT_ID_3]);
 
         $expected = [
             self::PRODUCT_ID_1 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_1], 'jpg', 'product', null),
