@@ -59,7 +59,8 @@
             {{ form_widget(form.imagesToDelete) }}
         </div>
     {% endif %}
-    <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
+    {% set disabledField = form.vars.disabled %}
+    <div class="form-line{{ disabledField == true ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}
         {{ form_label(form, label) }}
         {{ form_widget(form) }}
