@@ -53,7 +53,7 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                         'mimeTypesMessage' => 'Image can be only in JPG or PNG format',
-                        'maxSize' => '2M',
+                        'maxSize' => '15M',
                         'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
@@ -74,7 +74,7 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
                         'mimeTypesMessage' => 'Image can be only in JPG or PNG format',
-                        'maxSize' => '2M',
+                        'maxSize' => '15M',
                         'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),

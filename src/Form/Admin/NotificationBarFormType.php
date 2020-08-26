@@ -94,7 +94,7 @@ class NotificationBarFormType extends AbstractType
                     new Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
                         'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '2M',
+                        'maxSize' => '15M',
                         'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                           . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
