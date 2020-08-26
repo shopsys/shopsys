@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
+use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -36,21 +38,31 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
         /** @var \App\Model\Product\Product $variant2 */
         $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
+        /** @var \App\Model\Product\Product $variant3 */
+        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
         /** @var \App\Model\Product\Product $mainVariant */
         $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
 
         $variant1productData = $this->productDataFactory->createFromProduct($variant1);
         $variant1productData->sellingDenied = true;
         $this->productFacade->edit($variant1->getId(), $variant1productData);
 
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($variant1);
+        /** @var \App\Model\Product\ProductData $variant3productData */
+        $variant3productData = $this->productDataFactory->createFromProduct($variant3);
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $variant3productData->saleExclusion[$domainConfig->getId()] = true;
+        }
+        $this->productFacade->edit($variant3->getId(), $variant3productData);
 
         $this->em->refresh($variant1);
         $this->em->refresh($variant2);
+        $this->em->refresh($variant3);
         $this->em->refresh($mainVariant);
 
         $this->assertTrue($variant1->getCalculatedSellingDenied());
         $this->assertFalse($variant2->getCalculatedSellingDenied());
+        $this->assertFalse($variant3->getCalculatedSellingDenied());
         $this->assertFalse($mainVariant->getCalculatedSellingDenied());
     }
 
@@ -122,8 +134,6 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $mainVariantproductData->sellingDenied = true;
         $this->productFacade->edit($mainVariant->getId(), $mainVariantproductData);
 
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
-
         $this->em->refresh($variant1);
         $this->em->refresh($variant2);
         $this->em->refresh($mainVariant);
@@ -131,5 +141,31 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $this->assertTrue($variant1->getCalculatedSellingDenied());
         $this->assertTrue($variant2->getCalculatedSellingDenied());
         $this->assertTrue($mainVariant->getCalculatedSellingDenied());
+    }
+
+    public function testPropagationCalculatedSaleExclusionToCalculateSellingDeniedForVariant()
+    {
+        /** @var \App\Model\Product\Product $variant1 */
+        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
+
+        /** @var \App\Model\Product\ProductData $variant1ProductData */
+        $variant1ProductData = $this->productDataFactory->createFromProduct($variant1);
+        $variant1ProductData->sellingDenied = false;
+        $variant1ProductData->preorder = false;
+
+        foreach ($variant1ProductData->stockProductData as &$stockProductData) {
+            $stockProductData->productQuantity = 0;
+        }
+
+        $this->productFacade->edit($variant1->getId(), $variant1ProductData);
+
+        $this->em->clear();
+
+        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $this->assertTrue($variant1->getCalculatedSaleExclusion($domainConfig->getId()));
+        }
+        $this->assertTrue($variant1->getCalculatedSellingDenied());
     }
 }

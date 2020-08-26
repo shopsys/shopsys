@@ -137,7 +137,7 @@
                             {% if not product.isMainVariant %}
                                 <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
                                     {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
-                                    {% if not product.calculatedSellingDenied %}
+                                    {% if not product.calculatedSaleExclusion(domain.id) %}
                                         <div class="box-detail-add__info">
                                             <div itemprop="offers"
                                                 itemscope
@@ -174,7 +174,7 @@
                                                     content="{{ getProductSellingPrice(product).priceWithVat|moneyFormat }}"
                                                 >
                                                 <link itemprop="availability"
-                                                    href="{{ product.calculatedSellingDenied ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
+                                                    href="{{ product.calculatedSaleExclusion(domain.id) ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
                                                 >
                                             </div>
                                             {{ render(controller('App\\Controller\\Front\\CartController:addProductFormAction', {product: product, type: 'large'})) }}
@@ -224,7 +224,7 @@
         </div>
         <div class="web__line web__line--bg-color web__line--spacing--large">
             <div class="web__container">
-                {% if product.isMainVariant and not product.calculatedSellingDenied %}
+                {% if product.isMainVariant and not product.calculatedSaleExclusion(domain.id) %}
                     <table {% if getProductSellingPrice(product) is not null %}itemprop="offers"
                         itemscope
                         itemtype="http://schema.org/AggregateOffer" {% endif %}
@@ -245,7 +245,7 @@
                                             content="{{ getProductSellingPrice(product).priceWithVat|moneyFormat }}"
                                         >
                                         <link itemprop="availability"
-                                            href="{{ product.calculatedSellingDenied ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
+                                            href="{{ product.calculatedSaleExclusion(domain.id) ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
                                         >
                                     {% endif %}
                                 </th>

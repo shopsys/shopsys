@@ -15,7 +15,7 @@ class ProductAvailabilityFacade
 {
     private const DAYS_IN_WEEK = 7;
 
-    private const AVAILABILITY_STATUS_IN_STOCK = 'int-stock';
+    private const AVAILABILITY_STATUS_IN_STOCK = 'in-stock';
     private const AVAILABILITY_STATUS_OUT_OF_STOCK = 'out-of-stock';
 
     /**

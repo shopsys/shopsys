@@ -224,7 +224,6 @@ class ProductFacade extends BaseProductFacade
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->em->flush();
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->storeUrls($product);
@@ -242,6 +241,8 @@ class ProductFacade extends BaseProductFacade
             $stock = $this->stockFacade->getById($productStockData->stockId);
             $this->productStockFacade->editProductStockRelation($product, $stock, $productStockData);
         }
+
+        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
         return $product;
     }

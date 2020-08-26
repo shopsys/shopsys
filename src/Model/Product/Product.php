@@ -211,7 +211,7 @@ class Product extends BaseProduct
             $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
             $productDomain->calcSellingPriceWithVat();
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
-            $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
+            $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
 
             $productDomain->setEmbeddedAccessories($productData->embeddedAccessories[$domainId]);
             $productDomain->setPackageNotIncluded($productData->packageNotIncluded[$domainId]);
@@ -528,11 +528,20 @@ class Product extends BaseProduct
      */
     public function isProductInSale(int $domainId): bool
     {
+        if ($this->isMainVariant()) {
+            foreach ($this->getVariants() as $variant) {
+                if ($variant->isProductInSale($domainId)) {
+                    return true;
+                }
+            }
+        }
+
         foreach ($this->getFlagsForDomain($domainId) as $flag) {
             if ($flag->isSale()) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -682,6 +691,15 @@ class Product extends BaseProduct
     public function getSaleExclusion(int $domainId): bool
     {
         return $this->getProductDomain($domainId)->getSaleExclusion();
+    }
+
+    /**
+     * @param int $domainId
+     * @return bool
+     */
+    public function getCalculatedSaleExclusion(int $domainId): bool
+    {
+        return $this->getProductDomain($domainId)->getCalculatedSaleExclusion();
     }
 
     /**
