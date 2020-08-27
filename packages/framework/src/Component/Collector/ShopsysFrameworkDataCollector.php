@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
-final class ShopsysFrameworkDataCollector extends DataCollector
+class ShopsysFrameworkDataCollector extends DataCollector
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain

@@ -46,8 +46,8 @@ class ProductType extends AbstractType
 
         $view->vars['placeholder'] = $options['placeholder'];
         $view->vars['enableRemove'] = $options['enableRemove'];
-        $view->vars['allow_main_variants'] = $options['allow_main_variants'];
-        $view->vars['allow_variants'] = $options['allow_variants'];
+        $view->vars['allow_main_variants'] = (int)$options['allow_main_variants'];
+        $view->vars['allow_variants'] = (int)$options['allow_variants'];
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         $product = $form->getData();

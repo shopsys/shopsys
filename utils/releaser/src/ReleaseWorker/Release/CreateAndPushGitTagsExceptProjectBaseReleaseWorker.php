@@ -97,6 +97,12 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             }
         }
 
+        $this->symfonyStyle->note(sprintf(
+            'In case you do not have saved GIT credentials you may want to cache them temporarily so you do not need to fill them for each repository.'
+            . ' This can be done by using following command `%s`',
+            'git config --global credential.helper "cache --timeout=3600"'
+        ));
+
         if (count($packageNamesWithProblems) === 0) {
             foreach ($packageNames as $packageName) {
                 $this->processRunner->run(sprintf('cd %s/%s && git push origin %s', $tempDirectory, $packageName, $versionString));

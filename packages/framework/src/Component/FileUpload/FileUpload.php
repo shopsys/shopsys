@@ -2,15 +2,17 @@
 
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
+use BadMethodCallException;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
-use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUpload
 {
     protected const TEMPORARY_DIRECTORY = 'fileUploads';
+    protected const DELETE_OLD_FILES_SECONDS = 86400;
 
     /**
      * @var string
@@ -33,11 +35,6 @@ class FileUpload
     protected $fileNamingConvention;
 
     /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $localFilesystem;
-
-    /**
      * @var \League\Flysystem\MountManager
      */
     protected $mountManager;
@@ -48,30 +45,51 @@ class FileUpload
     protected $filesystem;
 
     /**
+     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null
+     */
+    protected $parameterBag;
+
+    /**
      * @param string $temporaryDir
      * @param string $uploadedFileDir
      * @param string $imageDir
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
-     * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null $parameterBag
      */
     public function __construct(
         $temporaryDir,
         $uploadedFileDir,
         $imageDir,
         FileNamingConvention $fileNamingConvention,
-        Filesystem $symfonyFilesystem,
         MountManager $mountManager,
-        FilesystemInterface $filesystem
+        FilesystemInterface $filesystem,
+        ?ParameterBagInterface $parameterBag = null
     ) {
         $this->temporaryDir = $temporaryDir;
         $this->uploadedFileDir = $uploadedFileDir;
         $this->imageDir = $imageDir;
         $this->fileNamingConvention = $fileNamingConvention;
-        $this->localFilesystem = $symfonyFilesystem;
         $this->mountManager = $mountManager;
         $this->filesystem = $filesystem;
+        $this->parameterBag = $parameterBag;
+    }
+
+    /**
+     * @required
+     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setEventDispatcher(ParameterBagInterface $parameterBag): void
+    {
+        if ($this->parameterBag !== null && $this->parameterBag !== $parameterBag) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->parameterBag === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->parameterBag = $parameterBag;
+        }
     }
 
     /**
@@ -85,7 +103,7 @@ class FileUpload
         }
 
         $temporaryFilename = $this->getTemporaryFilename($file->getClientOriginalName());
-        $file->move($this->getTemporaryDirectory(), $temporaryFilename);
+        $this->mountManager->move('local://' . $file->getRealPath(), 'main://' . $this->getTemporaryDirectory() . '/' . $temporaryFilename);
 
         return $temporaryFilename;
     }
@@ -99,8 +117,8 @@ class FileUpload
         if (!empty($filename)) {
             $filepath = $this->getTemporaryFilepath($filename);
             try {
-                $this->localFilesystem->remove($filepath);
-            } catch (\Symfony\Component\Filesystem\Exception\IOException $ex) {
+                $this->filesystem->delete($filepath);
+            } catch (\League\Flysystem\FileNotFoundException $ex) {
                 return false;
             }
         }
@@ -123,6 +141,15 @@ class FileUpload
     public function getTemporaryFilepath($temporaryFilename)
     {
         return $this->getTemporaryDirectory() . '/' . TransformString::safeFilename($temporaryFilename);
+    }
+
+    /**
+     * @param string $temporaryFilename
+     * @return string
+     */
+    public function getAbsoluteTemporaryFilepath($temporaryFilename)
+    {
+        return $this->parameterBag->get('kernel.root_dir') . $this->getTemporaryDirectory() . '/' . TransformString::safeFilename($temporaryFilename);
     }
 
     /**
@@ -210,11 +237,30 @@ class FileUpload
                     $this->filesystem->delete($targetFilename);
                 }
 
-                $this->mountManager->move('local://' . $sourceFilepath, 'main://' . $targetFilename);
+                $this->mountManager->move('main://' . $sourceFilepath, 'main://' . $targetFilename);
             } catch (\Symfony\Component\Filesystem\Exception\IOException $ex) {
                 $message = 'Failed to rename file from temporary directory to entity';
                 throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException($message, $ex);
             }
         }
+    }
+
+    /**
+     * @return int Count of deleted files
+     */
+    public function deleteOldUploadedFiles(): int
+    {
+        $deletedCounter = 0;
+        $currentTimestamp = time();
+        $uploadedFiles = $this->filesystem->listContents($this->getTemporaryDirectory());
+
+        foreach ($uploadedFiles as $uploadedFile) {
+            if ($uploadedFile['type'] === 'file' && $currentTimestamp - $uploadedFile['timestamp'] >= static::DELETE_OLD_FILES_SECONDS) {
+                $this->filesystem->delete($uploadedFile['path']);
+                $deletedCounter++;
+            }
+        }
+
+        return $deletedCounter;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
+use BadMethodCallException;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateMediaException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\WidthAndHeightMissingException;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
@@ -27,11 +29,43 @@ class ImageConfigLoader
     protected $foundEntityNames;
 
     /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
      */
-    public function __construct(Filesystem $filesystem)
+    protected $entityNameResolver;
+
+    /**
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     */
+    public function __construct(Filesystem $filesystem, ?EntityNameResolver $entityNameResolver = null)
     {
         $this->filesystem = $filesystem;
+        $this->entityNameResolver = $entityNameResolver;
+    }
+
+    /**
+     * @required
+     * @internal This function will be replaced by constructor injection in next major
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     */
+    public function setEntityNameResolver(EntityNameResolver $entityNameResolver): void
+    {
+        if ($this->entityNameResolver !== null && $this->entityNameResolver !== $entityNameResolver) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->entityNameResolver === null) {
+            @trigger_error(
+                sprintf(
+                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+            $this->entityNameResolver = $entityNameResolver;
+        }
     }
 
     /**
@@ -56,7 +90,7 @@ class ImageConfigLoader
 
         $preparedConfig = $this->loadFromArray($outputConfig);
 
-        return new ImageConfig($preparedConfig);
+        return new ImageConfig($preparedConfig, $this->entityNameResolver);
     }
 
     /**

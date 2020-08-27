@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Component\Image\Config;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateMediaException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateSizeNameException;
@@ -24,7 +25,8 @@ class ImageConfigLoaderTest extends TestCase
     protected function setUp(): void
     {
         $filesystem = new Filesystem();
-        $this->imageConfigLoader = new ImageConfigLoader($filesystem);
+        $entityNameResolver = new EntityNameResolver([]);
+        $this->imageConfigLoader = new ImageConfigLoader($filesystem, $entityNameResolver);
     }
 
     public function testLoadFromArrayDuplicateEntityName()

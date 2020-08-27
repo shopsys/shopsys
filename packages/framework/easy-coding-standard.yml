@@ -38,6 +38,7 @@ parameters:
             - '*/tests/Unit/Component/Image/ImageLocatorTest.php'
             - '*/tests/Unit/Component/Image/Config/ImageConfigLoaderTest.php'
             - '*/tests/Unit/Component/Image/Config/ImageConfigTest.php'
+            - '*/src/Form/Constraints/FileAbstractFilesystemValidator.php'
 
         ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff:
             - '*/src/Model/Order/Order.php'
@@ -56,6 +57,7 @@ parameters:
             - '*/tests/Unit/Component/Money/MoneyTest.php'
             - '*/src/Model/Product/Search/FilterQuery.php'
             - '*/src/Model/Category/CategoryRepository.php'
+            - '*/src/Model/Product/ProductFacade.php'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedWhile:
             - '*/src/Model/Product/Availability/ProductAvailabilityRecalculator.php'
@@ -92,3 +94,6 @@ parameters:
 
         PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\MethodDeclarationSniff.Underscore:
             - '*/src/Component/Filesystem/Flysystem/VolumeDriver.php'
+
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff.MaxExceeded:
+            - '*/src/Form/Constraints/FileAbstractFilesystemValidator.php'

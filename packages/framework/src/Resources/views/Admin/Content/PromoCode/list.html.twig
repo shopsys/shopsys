@@ -8,10 +8,12 @@
 {% endblock %}
 
 {% block btn %}
-    <div class="wrap-bar">
-        <a href="{{ url('admin_promocode_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-            <i class="btn__icon">+</i>
-            {{ 'Create promo code'|trans }}
-        </a>
+    <div class="wrap-bar__buttons">
+        <div class="wrap-bar">
+            <a href="{{ url('admin_promocode_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+                <i class="btn__icon">+</i>
+                {{ 'Create promo code'|trans }}
+            </a>
+        </div>
     </div>
 {% endblock %}

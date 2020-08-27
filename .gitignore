@@ -2,6 +2,7 @@
 /nbproject
 /vendor
 /.php_cs.cache
+/.phpcs-cache
 /.docker-sync
 .DS_Store
 /composer.lock

@@ -24,9 +24,7 @@
                     <h1 class="wrap-bar__heading">
                         {% block h1 %}{{ 'Administration'|trans }}{% endblock %}
                     </h1>
-                    <div class="wrap-bar__buttons">
-                        {% block btn %}{% endblock %}
-                    </div>
+                    {% block btn %}{% endblock %}
                 </div>
                 {% block visibility_info %}{% endblock %}
             {% endif %}

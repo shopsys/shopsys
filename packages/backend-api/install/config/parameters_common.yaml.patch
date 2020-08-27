@@ -1,5 +1,5 @@
 @@ -22,3 +22,4 @@ parameters:
-     build-version: '0000000000000000'
+     build-version: '0000000000000000_%kernel.environment%'
      shopsys.display_timezone: Europe/Prague
      shopsys.image.enable_lazy_load: true
 +    oauth2_encryption_key: '0' #placeholder for correctly running composer post script, replaced by config/oauth2/parameters_oauth.yaml

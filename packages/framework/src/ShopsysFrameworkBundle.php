@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Shopsys\FrameworkBundle\DependencyInjection\Compiler\AddConstraintValidatorsPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\LazyRedisCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterCronModulesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterExtendedEntitiesCompilerPass;
@@ -35,6 +36,7 @@ class ShopsysFrameworkBundle extends Bundle
         $container->addCompilerPass(new RegisterProductFeedConfigsCompilerPass());
         $container->addCompilerPass(new LazyRedisCompilerPass());
         $container->addCompilerPass(new RegisterExtendedEntitiesCompilerPass());
+        $container->addCompilerPass(new AddConstraintValidatorsPass());
 
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
 

@@ -4,9 +4,11 @@
 {% block h1 %}{{ 'Advertising system'|trans }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ url('admin_advert_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-        <i class="btn__icon">+</i>{{ 'Create new advertising'|trans }}
-    </a>
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_advert_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new advertising'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}

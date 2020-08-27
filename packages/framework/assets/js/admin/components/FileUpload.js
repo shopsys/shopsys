@@ -20,7 +20,7 @@ export default class FileUpload {
         this.lastUploadItemId = null;
         this.$uploader = $uploader;
 
-        this.$uploader.closest('form').submit(() => this.onFormSubmit());
+        this.$uploader.closest('form').submit((event) => this.onFormSubmit(event));
         this.initUploadedFiles();
         this.initUploader();
     }

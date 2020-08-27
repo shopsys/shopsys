@@ -854,15 +854,16 @@
     <target name="standards-fix-diff" depends="ecs-fix-diff,annotations-fix,yaml-standards-fix,eslint-fix-diff" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
 
     <target name="stylelint" description="Checks conventions in styles">
-        <exec executable="${path.stylelint.executable}" logoutput="true" passthru="true" checkreturn="true" dir="${path.root}">
+        <exec executable="${path.stylelint.executable}" logoutput="true" passthru="true" checkreturn="true" dir="${path.root}" escape="true">
+            <arg value="${path.assets}/styles/**/*.less"/>
             <arg value="--color"/>
-            <arg path="${path.src}/**/*.less"/>
         </exec>
     </target>
 
     <target name="stylelint-fix" description="Checks conventions in styles and fixes the violations automatically if possible">
-        <exec executable="${path.stylelint.executable}" logoutput="true" passthru="true" checkreturn="true" dir="${path.root}">
-            <arg path="${path.src}/**/*.less"/>
+        <exec executable="${path.stylelint.executable}" logoutput="true" passthru="true" checkreturn="true" dir="${path.root}" escape="true">
+            <arg value="${path.assets}/styles/**/*.less"/>
+            <arg value="--color"/>
             <arg value="--fix"/>
         </exec>
     </target>

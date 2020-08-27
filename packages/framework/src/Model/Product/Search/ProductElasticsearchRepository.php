@@ -188,4 +188,15 @@ class ProductElasticsearchRepository
     {
         return (int)$result['hits']['total']['value'];
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
+     * @return int
+     */
+    public function getProductsCountByFilterQuery(FilterQuery $filterQuery): int
+    {
+        $result = $this->client->search($filterQuery->getQuery());
+
+        return $this->extractTotalCount($result);
+    }
 }

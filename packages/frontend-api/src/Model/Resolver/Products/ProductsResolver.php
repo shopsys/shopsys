@@ -16,6 +16,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 class ProductsResolver implements ResolverInterface, AliasedInterface
 {
     protected const DEFAULT_FIRST_LIMIT = 10;
+    /**
+     * @deprecated This will be removed in next major release
+     */
     protected const EDGE_COUNT = 2;
 
     /**
@@ -44,28 +47,17 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(Argument $argument)
     {
-        if ($argument->offsetExists('last')) {
-            $limit = (int)$argument->offsetGet('last');
-            $cursor = $argument->offsetGet('before');
-            $offset = max((int)$this->connectionBuilder->cursorToOffset($cursor) - $limit, 0);
-        } else {
-            $this->setDefaultFirstOffsetIfNecessary($argument);
-            $limit = (int)$argument->offsetGet('first');
-            $cursor = $argument->offsetGet('after');
-            $offset = (int)$this->connectionBuilder->cursorToOffset($cursor);
-        }
+        $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $products = $this->productOnCurrentDomainFacade->getProductsOnCurrentDomain(
-            $limit + static::EDGE_COUNT,
-            $offset,
-            ProductListOrderingConfig::ORDER_BY_PRIORITY
-        );
-
-        $paginator = new Paginator(function () use ($products) {
-            return $products;
+        $paginator = new Paginator(function ($offset, $limit) {
+            return $this->productOnCurrentDomainFacade->getProductsOnCurrentDomain(
+                $limit,
+                $offset,
+                ProductListOrderingConfig::ORDER_BY_PRIORITY
+            );
         });
 
-        return $paginator->auto($argument, count($products));
+        return $paginator->auto($argument, $this->productOnCurrentDomainFacade->getProductsCountOnCurrentDomain());
     }
 
     /**
@@ -75,28 +67,18 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function resolveByCategory(Argument $argument, Category $category)
     {
-        if ($argument->offsetExists('last')) {
-            $limit = (int)$argument->offsetGet('last');
-            $cursor = $argument->offsetGet('before');
-            $offset = max((int)$this->connectionBuilder->cursorToOffset($cursor) - $limit, 0);
-        } else {
-            $this->setDefaultFirstOffsetIfNecessary($argument);
-            $limit = (int)$argument->offsetGet('first');
-            $cursor = $argument->offsetGet('after');
-            $offset = (int)$this->connectionBuilder->cursorToOffset($cursor);
-        }
+        $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $products = $this->productOnCurrentDomainFacade->getProductsByCategory(
-            $category,
-            $limit + static::EDGE_COUNT,
-            $offset,
-            ProductListOrderingConfig::ORDER_BY_PRIORITY
-        );
-        $paginator = new Paginator(function () use ($products) {
-            return $products;
+        $paginator = new Paginator(function ($offset, $limit) use ($category) {
+            return $this->productOnCurrentDomainFacade->getProductsByCategory(
+                $category,
+                $limit,
+                $offset,
+                ProductListOrderingConfig::ORDER_BY_PRIORITY
+            );
         });
 
-        return $paginator->auto($argument, count($products));
+        return $paginator->auto($argument, $this->productOnCurrentDomainFacade->getProductsCountOnCurrentDomain());
     }
 
     /**
@@ -104,7 +86,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     protected function setDefaultFirstOffsetIfNecessary(Argument $argument): void
     {
-        if ($argument->offsetExists('first') === false) {
+        if ($argument->offsetExists('first') === false && $argument->offsetExists('last') === false) {
             $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
         }
     }

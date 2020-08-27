@@ -196,15 +196,19 @@ class ArticleFacade
     public function edit($articleId, ArticleData $articleData)
     {
         $article = $this->articleRepository->getById($articleId);
-        $article->edit($articleData);
+        $originalName = $article->getName();
 
+        $article->edit($articleData);
         $this->friendlyUrlFacade->saveUrlListFormData('front_article_detail', $article->getId(), $articleData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-            'front_article_detail',
-            $article->getId(),
-            $article->getName(),
-            $article->getDomainId()
-        );
+
+        if ($originalName !== $article->getName()) {
+            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                'front_article_detail',
+                $article->getId(),
+                $article->getName(),
+                $article->getDomainId()
+            );
+        }
         $this->em->flush();
 
         return $article;
