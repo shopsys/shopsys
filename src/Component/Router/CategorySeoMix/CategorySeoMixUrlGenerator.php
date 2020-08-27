@@ -65,7 +65,6 @@ class CategorySeoMixUrlGenerator
         int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
     ): string {
         $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getCategorySeoMixByRawQueryData($categoryId, $parameters);
-
         return $this->generateUrlByCategorySeoMixAndQueryParams($readyCategorySeoMix, $parameters, $referenceType);
     }
 
