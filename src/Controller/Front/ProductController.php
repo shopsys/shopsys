@@ -18,6 +18,8 @@ use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Gtm\GtmFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Filter\CachedProductFilterConfig;
+use App\Model\Product\Filter\ProductFilterCacheFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Filter\ProductVariantFilterFacade;
@@ -182,6 +184,11 @@ class ProductController extends FrontBaseController
      * @var \App\Model\Product\Filter\ProductVariantFilterFacade
      */
     private $productVariantFilterFacade;
+    
+    /**
+     * @var \App\Model\Product\Filter\ProductFilterCacheFacade
+     */
+    private ProductFilterCacheFacade $productFilterCacheFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
@@ -237,7 +244,8 @@ class ProductController extends FrontBaseController
         ParameterFacade $parameterFacade,
         ProductFilterFacade $productFilterFacade,
         GtmFacade $gtmFacade,
-        ProductVariantFilterFacade $productVariantFilterFacade
+        ProductVariantFilterFacade $productVariantFilterFacade,
+        ProductFilterCacheFacade $productFilterCacheFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -265,6 +273,7 @@ class ProductController extends FrontBaseController
         $this->productFilterFacade = $productFilterFacade;
         $this->gtmFacade = $gtmFacade;
         $this->productVariantFilterFacade = $productVariantFilterFacade;
+        $this->productFilterCacheFacade = $productFilterCacheFacade;
     }
 
     /**
@@ -427,7 +436,7 @@ class ProductController extends FrontBaseController
         );
 
         $productFilterData = new ProductFilterData();
-        $productFilterConfig = $this->createProductFilterConfigForCategory($category);
+        $productFilterConfig = $this->createProductFilterConfigForCategory($category, $readyCategorySeoMix);
         $filterForm = $this->createForm(ProductFilterFormType::class, $productFilterData, [
             'product_filter_config' => $productFilterConfig,
         ]);
@@ -738,15 +747,34 @@ class ProductController extends FrontBaseController
 
     /**
      * @param \App\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
+     * @return \App\Model\Product\Filter\CachedProductFilterConfig
      */
-    private function createProductFilterConfigForCategory(Category $category)
+    private function createProductFilterConfigForCategory(Category $category, ?ReadyCategorySeoMix $readyCategorySeoMix): CachedProductFilterConfig
     {
-        return $this->productFilterConfigFactory->createForCategory(
+        $cachedProductFilterConfig = $this->productFilterCacheFacade->findProductFilterConfigInCache(
+            $category->getId(),
             $this->domain->getId(),
-            $this->domain->getLocale(),
-            $category
+            $readyCategorySeoMix
         );
+
+        if ($cachedProductFilterConfig === null) {
+            $productFilterConfig = $this->productFilterConfigFactory->createForCategory(
+                $this->domain->getId(),
+                $this->domain->getLocale(),
+                $category
+            );
+            $cachedProductFilterConfig = new CachedProductFilterConfig($productFilterConfig);
+
+            $this->productFilterCacheFacade->setProductFilterConfigIntoCache(
+                $cachedProductFilterConfig,
+                $category->getId(),
+                $this->domain->getId(),
+                $readyCategorySeoMix
+            );
+        }
+
+        return $cachedProductFilterConfig;
     }
 
     /**
