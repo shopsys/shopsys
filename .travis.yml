@@ -15,5 +15,10 @@ install:
     - docker-compose up -d postgres elasticsearch redis selenium-server php-fpm webserver
     - docker-compose exec php-fpm composer install --no-interaction
 
-script:
-    - docker-compose exec php-fpm ./phing db-create test-db-create build-demo-dev tests-acceptance
+jobs:
+    include:
+        -   stage: Tests
+            name: Build all
+            script: docker-compose exec php-fpm ./phing db-create test-db-create build-demo-dev tests-acceptance
+        -   name: Build tests only
+            script: docker-compose exec php-fpm ./phing test-db-create tests tests-acceptance
