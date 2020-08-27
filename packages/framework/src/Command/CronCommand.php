@@ -2,8 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use BadMethodCallException;
 use DateTime;
 use DateTimeImmutable;
+use DateTimeZone;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
@@ -12,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CronCommand extends Command
 {
@@ -35,17 +38,41 @@ class CronCommand extends Command
     private $mutexFactory;
 
     /**
+     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null
+     */
+    private $parameterBag;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
+     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null $parameterBag
      */
     public function __construct(
         CronFacade $cronFacade,
-        MutexFactory $mutexFactory
+        MutexFactory $mutexFactory,
+        ?ParameterBagInterface $parameterBag = null
     ) {
         $this->cronFacade = $cronFacade;
         $this->mutexFactory = $mutexFactory;
+        $this->parameterBag = $parameterBag;
 
         parent::__construct();
+    }
+
+    /**
+     * @required
+     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setParameterBag(ParameterBagInterface $parameterBag): void
+    {
+        if ($this->parameterBag !== null && $this->parameterBag !== $parameterBag) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->parameterBag === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->parameterBag = $parameterBag;
+        }
     }
 
     protected function configure()
@@ -162,7 +189,7 @@ class CronCommand extends Command
      */
     private function getCurrentRoundedTime()
     {
-        $time = new DateTime();
+        $time = new DateTime('now', $this->getCronTimeZone());
         $time->modify('-' . $time->format('s') . ' sec');
         $time->modify('-' . ($time->format('i') % 5) . ' min');
 
@@ -198,5 +225,16 @@ class CronCommand extends Command
         );
 
         return $chosenInstanceName;
+    }
+
+    /**
+     * @return \DateTimeZone
+     */
+    private function getCronTimeZone(): DateTimeZone
+    {
+        $cronTimezone = $this->parameterBag->get('shopsys.cron_timezone');
+        $cronTimezone = $cronTimezone ?? date_default_timezone_get();
+
+        return new DateTimeZone($cronTimezone);
     }
 }

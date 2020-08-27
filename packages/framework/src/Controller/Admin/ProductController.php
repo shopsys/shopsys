@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
@@ -163,6 +164,7 @@ class ProductController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->setSellingToUntilEndOfDay($productData);
             $this->productFacade->edit($id, $productData);
 
             $this
@@ -209,6 +211,7 @@ class ProductController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->setSellingToUntilEndOfDay($productData);
             $product = $this->productFacade->create($productData);
 
             $this
@@ -428,5 +431,15 @@ class ProductController extends AdminBaseController
         }
 
         return true;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData|null $productData
+     */
+    protected function setSellingToUntilEndOfDay(?ProductData $productData): void
+    {
+        if ($productData->sellingTo !== null) {
+            $productData->sellingTo->modify('+1 day -1 second');
+        }
     }
 }

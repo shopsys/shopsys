@@ -21,4 +21,5 @@ parameters:
     container.dumper.inline_class_loader: true
     build-version: '0000000000000000_%kernel.environment%'
     shopsys.display_timezone: Europe/Prague
+    shopsys.cron_timezone: Europe/Prague
     shopsys.image.enable_lazy_load: true
