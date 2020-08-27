@@ -30,7 +30,7 @@
         "doctrine/annotations": "^1.6"
     },
     "require-dev": {
-        "shopsys/coding-standards": "9.0.x-dev",
+        "shopsys/coding-standards": "9.0.2",
         "jakub-onderka/php-parallel-lint": "^0.9"
     },
     "conflict": {
