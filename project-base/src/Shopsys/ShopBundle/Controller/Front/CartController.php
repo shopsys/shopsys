@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -20,7 +21,6 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 class CartController extends FrontBaseController
 {
     public const AFTER_ADD_WINDOW_ACCESSORIES_LIMIT = 3;
-
     public const RECALCULATE_ONLY_PARAMETER_NAME = 'recalculateOnly';
 
     /**
@@ -54,12 +54,18 @@ class CartController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
+     */
+    protected $moduleFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -67,7 +73,8 @@ class CartController extends FrontBaseController
         FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
         OrderPreviewFactory $orderPreviewFactory,
         ErrorExtractor $errorExtractor,
-        ListedProductViewFacadeInterface $listedProductViewFacade
+        ListedProductViewFacadeInterface $listedProductViewFacade,
+        ModuleFacade $moduleFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -75,6 +82,7 @@ class CartController extends FrontBaseController
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->errorExtractor = $errorExtractor;
         $this->listedProductViewFacade = $listedProductViewFacade;
+        $this->moduleFacade = $moduleFacade;
     }
 
     /**
@@ -241,10 +249,13 @@ class CartController extends FrontBaseController
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
 
-                $accessories = $this->listedProductViewFacade->getAccessories(
-                    $addProductResult->getCartItem()->getProduct()->getId(),
-                    self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
-                );
+                $accessories = [];
+                if ($this->moduleFacade->isEnabled(ModuleList::ACCESSORIES_ON_BUY)) {
+                    $accessories = $this->listedProductViewFacade->getAccessories(
+                        $addProductResult->getCartItem()->getProduct()->getId(),
+                        self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
+                    );
+                }
 
                 return $this->render('@ShopsysShop/Front/Inline/Cart/afterAddWindow.html.twig', [
                     'accessories' => $accessories,

@@ -59,3 +59,6 @@ There you can find links to upgrade notes for other versions too.
 
 - fix spinbox increase value with set min-value ([#1979](https://github.com/shopsys/shopsys/pull/#1979))
     - see #project-base-diff to update your project
+
+- load product accessories in after add window only if corresponding module is enabled ([#1990](https://github.com/shopsys/shopsys/pull/#1990))
+    - see #project-base-diff to update your project
