@@ -35,6 +35,7 @@ class RedisVersionsFacade
         $versionPattern = $prefix . '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'; // redis pattern is a glob style and doesn't support repetitions
         $currentVersionPrefix = $prefix . $this->currentVersion;
 
+        /** @var int|null $iterator */
         $iterator = null;
 
         do {
