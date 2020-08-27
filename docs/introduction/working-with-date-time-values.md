@@ -38,3 +38,18 @@ This date should be visible near the article.
 Due to limitations of PHP, the value is in variable of the `DateTime` type with zero time (midnight).
 Presenting such date back to the user results into date shift (one day back), because this "midnight DateTime" is converted to the display timezone.
 Storing the dates in the database as a DateTime type prevents it.
+
+## Filling the dates programmatically
+
+When storing dates in different way than using application forms (e.g. from 3rd party application), it is necessary to convert them into UTC timezone.
+This can be done like this:
+```php
+$dateFormOtherSource = '2020-08-24 18:30:02';
+$dateTime = new \DateTime($dateFormOtherSource, new \DateTimeZone('Europe/Prague'));
+$dateTime->setTimezone(new \DateTimeZone('UTC'));
+```
+
+## When to use Date
+
+As described in previous paragraph, the best way to store date is to use `DateTime`.
+There is one exception to that and it is storing of historical data like birthdays, historical events etc.
