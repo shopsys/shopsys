@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -64,6 +65,11 @@ class CartController extends FrontBaseController
     private $requestStack;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
+     */
+    private $moduleFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
@@ -71,6 +77,7 @@ class CartController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade|null $moduleFacade
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -79,7 +86,8 @@ class CartController extends FrontBaseController
         OrderPreviewFactory $orderPreviewFactory,
         ErrorExtractor $errorExtractor,
         ListedProductViewFacadeInterface $listedProductViewFacade,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        ?ModuleFacade $moduleFacade = null
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -88,6 +96,7 @@ class CartController extends FrontBaseController
         $this->errorExtractor = $errorExtractor;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->requestStack = $requestStack;
+        $this->moduleFacade = $moduleFacade;
     }
 
     /**
@@ -275,14 +284,16 @@ class CartController extends FrontBaseController
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
 
-                $accessories = $this->listedProductViewFacade->getAccessories(
-                    $addProductResult->getCartItem()->getProduct()->getId(),
-                    self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
-                );
+                $accessories = [];
+                if ($this->moduleFacade->isEnabled(ModuleList::ACCESSORIES_ON_BUY)) {
+                    $accessories = $this->listedProductViewFacade->getAccessories(
+                        $addProductResult->getCartItem()->getProduct()->getId(),
+                        self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
+                    );
+                }
 
                 return $this->render('Front/Inline/Cart/afterAddWindow.html.twig', [
                     'accessories' => $accessories,
-                    'ACCESSORIES_ON_BUY' => ModuleList::ACCESSORIES_ON_BUY,
                 ]);
             } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $ex) {
                 $this->addErrorFlash(t('Selected product no longer available or doesn\'t exist.'));
@@ -405,5 +416,21 @@ class CartController extends FrontBaseController
         }
 
         return !in_array($masterRequest->get('_route'), self::PAGES_WITH_DISABLED_CART_HOVER, true);
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setModuleFacade(ModuleFacade $moduleFacade): void
+    {
+        if ($this->moduleFacade !== null && $this->moduleFacade !== $moduleFacade) {
+            throw new \BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->moduleFacade === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->moduleFacade = $moduleFacade;
+        }
     }
 }

@@ -1,7 +1,7 @@
 {{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
-{% if isModuleEnabled(ACCESSORIES_ON_BUY) %}
+{% if isModuleEnabled(constant('Shopsys\\FrameworkBundle\\Model\\Module\\ModuleList::ACCESSORIES_ON_BUY')) %}
     {% if accessories|length > 0 %}
         <div class="wrap-box margin-top-20 margin-bottom-0">
             <h3 class="wrap-box__title">
