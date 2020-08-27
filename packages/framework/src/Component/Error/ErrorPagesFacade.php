@@ -139,7 +139,7 @@ class ErrorPagesFacade
      */
     protected function getErrorPageFilename($domainId, $statusCode)
     {
-        return $this->errorPagesDir . $statusCode . '_ ' . $domainId . '.html';
+        return $this->errorPagesDir . $statusCode . '_' . $domainId . '.html';
     }
 
     /**
