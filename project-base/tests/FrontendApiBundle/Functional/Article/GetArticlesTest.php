@@ -53,7 +53,7 @@ class GetArticlesTest extends GraphQlTestCase
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
         foreach ($keys as $key) {
-            $this->assertArrayHasKey('placement', $actual);
+            $this->assertArrayHasKey($key, $actual);
             $this->assertSame($expected[$key], $actual[$key]);
         }
     }
