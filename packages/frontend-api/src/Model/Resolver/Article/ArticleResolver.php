@@ -30,12 +30,12 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
     /**
      * @var \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade
      */
-    private $legalConditionsFacade;
+    protected $legalConditionsFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade
      */
-    private $cookiesFacade;
+    protected $cookiesFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
