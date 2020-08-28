@@ -285,7 +285,8 @@ class ProductTransferAkeneoMapper
                 continue;
             }
             try {
-                if (count($akeneoProductParameterData) === 1) {
+                $currentAkeneoProductParameterData = current($akeneoProductParameterData);
+                if (array_key_exists('locale', $currentAkeneoProductParameterData) === false || $currentAkeneoProductParameterData['locale'] === null) {
                     $akeneoParameterValueCodes = $this->getParameterValueAkeneoCodes($akeneoProductParameterData, $parameter, $productData->catnum);
                     $this->addParameterValuesByAkeneoValueCodes($parameter, $akeneoParameterValueCodes, $productData);
                 } else {
