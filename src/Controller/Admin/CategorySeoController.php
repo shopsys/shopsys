@@ -243,7 +243,7 @@ class CategorySeoController extends AdminBaseController
         $this->storeJsonsToReadyCategorySeoMixDataForForm($readyCategorySeoMixDataForForm, $categorySeoFilterFormTypeAllQueries, $choseCategorySeoMixCombination);
 
         $readyCategorySeoCombinationFormType = $this->createForm(ReadyCategorySeoCombinationFormType::class, $readyCategorySeoMixDataForForm, [
-            'method' => 'GET',
+            'method' => 'POST',
             'readyCategorySeoMix' => $choseCategorySeoMixCombination !== null ? $this->readyCategorySeoMixFacade->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination) : null,
         ]);
 
