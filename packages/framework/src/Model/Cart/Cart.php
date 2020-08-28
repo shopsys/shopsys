@@ -47,9 +47,7 @@ class Cart
      *
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Cart\Item\CartItem",
-     *     mappedBy="cart",
-     *     cascade={"remove"},
-     *     orphanRemoval=true
+     *     mappedBy="cart"
      * )
      * @ORM\OrderBy({"id" = "DESC"})
      */
