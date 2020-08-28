@@ -9,10 +9,11 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
+use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
+use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 
 class ArticleResolver implements ResolverInterface, AliasedInterface
 {
@@ -27,23 +28,31 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
+     * @var \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade
      */
-    protected $setting;
+    private $legalConditionsFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade
+     */
+    private $cookiesFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
+     * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
      */
     public function __construct(
         ArticleFacade $articleFacade,
         Domain $domain,
-        Setting $setting
+        LegalConditionsFacade $legalConditionsFacade,
+        CookiesFacade $cookiesFacade
     ) {
         $this->articleFacade = $articleFacade;
         $this->domain = $domain;
-        $this->setting = $setting;
+        $this->legalConditionsFacade = $legalConditionsFacade;
+        $this->cookiesFacade = $cookiesFacade;
     }
 
     /**
@@ -68,15 +77,13 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
      */
     public function termsAndConditionsArticle(): Article
     {
-        try {
-            $articleId = $this->setting->getForDomain(
-                Setting::TERMS_AND_CONDITIONS_ARTICLE_ID,
-                $this->domain->getId()
-            );
-            return $this->articleFacade->getById($articleId);
-        } catch (ArticleNotFoundException $articleNotFoundException) {
-            throw new UserError($articleNotFoundException->getMessage());
+        $article = $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId());
+
+        if ($article === null) {
+            throw new UserError('Terms and condition article was not found');
         }
+
+        return $article;
     }
 
     /**
@@ -84,15 +91,13 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
      */
     public function privacyPolicyArticle(): Article
     {
-        try {
-            $articleId = $this->setting->getForDomain(
-                Setting::PRIVACY_POLICY_ARTICLE_ID,
-                $this->domain->getId()
-            );
-            return $this->articleFacade->getById($articleId);
-        } catch (ArticleNotFoundException $articleNotFoundException) {
-            throw new UserError($articleNotFoundException->getMessage());
+        $article = $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId());
+
+        if ($article === null) {
+            throw new UserError('Privacy policy article was not found');
         }
+
+        return $article;
     }
 
     /**
@@ -100,15 +105,13 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
      */
     public function cookiesArticle(): Article
     {
-        try {
-            $articleId = $this->setting->getForDomain(
-                Setting::COOKIES_ARTICLE_ID,
-                $this->domain->getId()
-            );
-            return $this->articleFacade->getById($articleId);
-        } catch (ArticleNotFoundException $articleNotFoundException) {
-            throw new UserError($articleNotFoundException->getMessage());
+        $article = $this->cookiesFacade->findCookiesArticleByDomainId($this->domain->getId());
+
+        if ($article === null) {
+            throw new UserError('Information about cookies article was not found');
         }
+
+        return $article;
     }
 
     /**

@@ -90,8 +90,8 @@ QueryDecorator:
             privacyPolicyArticle:
                 type: 'Article'
                 resolve: "@=resolver('privacyPolicyArticle')"
-                description: "Returns Privacy Policy article"
+                description: "Returns privacy policy article"
             cookiesArticle:
                 type: 'Article'
                 resolve: "@=resolver('cookiesArticle')"
-                description: "Returns Cookies article"
+                description: "Returns information about cookies article"
