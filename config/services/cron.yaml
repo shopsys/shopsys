@@ -6,35 +6,27 @@ services:
 
     Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Delete vats' }
+            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: service, readableName: 'Delete vats' }
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityImmediateCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate immediate product visibilities' }
+            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: service, readableName: 'Recalculate immediate product visibilities' }
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityMidnightCronModule:
         tags:
-            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: 'Recalculate midnight product visibilities' }
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate product availabilities' }
+            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: service, readableName: 'Recalculate midnight product visibilities' }
 
     Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule:
         tags:
-            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: 'Delete old customer carts' }
+            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: service, readableName: 'Delete old customer carts' }
 
     Shopsys\FrameworkBundle\Model\Feed\DailyFeedCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*/6', minutes: '0', readableName: 'Generate daily feeds' }
-
-    Shopsys\FrameworkBundle\Model\Feed\HourlyFeedCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '10', readableName: 'Generate hourly feeds' }
+            - { name: shopsys.cron, hours: '*/6', minutes: '0', instanceName: export, readableName: 'Generate daily feeds' }
 
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule:
         tags:
-            - { name: shopsys.cron, hours: '4', minutes: '0', readableName: 'Generate Sitemap' }
+            - { name: shopsys.cron, hours: '4', minutes: '0', instanceName: export, readableName: 'Generate Sitemap' }
 
     Shopsys\FrameworkBundle\Component\FileUpload\DeleteOldUploadedFilesCronModule:
         tags:
@@ -42,79 +34,75 @@ services:
 
     App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import stromu kategorií z Akeneo' }
-
-    App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '01', minutes: '30', readableName: 'Import číselníku parametrů z Akeneo' }
+            - { name: shopsys.cron, hours: '*', minutes: '15', instanceName: importAkeneoProduct, readableName: 'Import stromu kategorií z Akeneo' }
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import produktů z Akeneo' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importAkeneoProduct, readableName: 'Import produktů z Akeneo' }
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportFlagCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import číselníku příznaků z Akeneo' }
+            - { name: shopsys.cron, hours: '*', minutes: '20', instanceName: importAkeneoProduct, readableName: 'Import číselníku příznaků z Akeneo' }
 
     App\Model\Customer\Transfer\ScontoBridge\ScontoBridgeImportCustomerCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import zákazníků z IM' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import zákazníků z IM' }
 
     App\Model\Product\Transfer\ScontoBridge\ScontoBridgeImportProductStockCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import skladovách zásob z IM' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import skladovách zásob z IM' }
 
     App\Model\Product\Transfer\ScontoBridge\ScontoBridgeImportFutureProductStockCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import budoucích skladovách zásob z IM' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import budoucích skladovách zásob z IM' }
 
     App\Model\Product\Transfer\ScontoBridge\ScontoBridgeImportExposedProductCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import vystavených produktů z IM' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import vystavených produktů z IM' }
 
     App\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
         tags:
-            - { name: shopsys.cron, hours: '23', minutes: '10', readableName: 'Mazání starých problémů v přenosech' }
+            - { name: shopsys.cron, hours: '23', minutes: '10', instanceName: service, readableName: 'Mazání starých problémů v přenosech' }
 
     App\Model\Product\Elasticsearch\ProductExportCronModule:
         tags:
-            - { name: shopsys.cron, hours: '0', minutes: '0', readableName: "Export products to Elasticsearch" }
+            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: service, readableName: "Export products to Elasticsearch" }
 
     App\Model\Product\Elasticsearch\ProductExportChangedCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: "Export changed products to Elasticsearch" }
+            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: service, readableName: "Export changed products to Elasticsearch" }
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import souborů k produktům z Akeneo' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importAkeneoProduct, readableName: 'Import souborů k produktům z Akeneo' }
 
     App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesCronModule:
         tags:
-            - { name: shopsys.cron, hours: '23', minutes: '10', readableName: 'Import nábytkových programů z Akeneo' }
+            - { name: shopsys.cron, hours: '23', minutes: '10', instanceName: importAkeneoOther, readableName: 'Import nábytkových programů z Akeneo' }
 
     App\Model\Newsletter\Synchronization\TargitoSynchronizationCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Synchronizace odběratelů v Targitu' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: export, readableName: 'Synchronizace odběratelů v Targitu' }
 
     App\Model\GoPay\GoPayAvailablePaymentsCronModule:
         arguments:
             - '%gopay_config%'
         tags:
-            - { name: shopsys.cron, hours: '3', minutes: '50', readableFrequency: '1x za den' }
+            - { name: shopsys.cron, hours: '3', minutes: '50', instanceName: gopay, readableName: 'Import dostupných platebních metod z GoPay', readableFrequency: '1x za den' }
 
     App\Model\GoPay\OrderGoPayStatusUpdateCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '15', readableFrequency: '1x za hodinu' }
+            - { name: shopsys.cron, hours: '*', minutes: '15', instanceName: gopay, readableName: 'Import stavu plateb objednávek z GoPay', readableFrequency: '1x za hodinu' }
 
     App\Component\Image\Kraken\KrakenImageOptimizationCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Optimalizace obrázků Kraken.io' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: export, readableName: 'Optimalizace obrázků Kraken.io' }
 
     App\Component\FileUpload\DeleteOldUploadedFilesCronModule:
         tags:
-            - { name: shopsys.cron, hours: '2', minutes: '50', readableName: 'Promazání pozůstalých uploadovaných souborů' }
+            - { name: shopsys.cron, hours: '2', minutes: '50', instanceName: service, readableName: 'Promazání pozůstalých uploadovaných souborů' }
 
     # This module should run as last because it creates multiple kernels and fake requests.
     Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule:
         tags:
-            - { name: shopsys.cron, hours: '21', minutes: '10', readableName: 'Generate Error pages' }
+            - { name: shopsys.cron, hours: '21', minutes: '10', instanceName: service, readableName: 'Generate Error pages' }

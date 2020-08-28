@@ -1,0 +1,59 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+    name: cron-executor-import-im
+spec:
+    concurrencyPolicy: Forbid
+    failedJobsHistoryLimit: 2
+    successfulJobsHistoryLimit: 1
+    startingDeadlineSeconds: 600 # Prevents disable creating cron jobs
+    schedule: "*/5 * * * *"
+    jobTemplate:
+        spec:
+            backoffLimit: 0
+            activeDeadlineSeconds: 86400
+            template:
+                spec:
+                    volumes:
+                        -   name: domains-urls
+                            configMap:
+                                name: domains-urls
+                        -   name: parameters
+                            configMap:
+                                name: parameters
+                    containers:
+                        -   name: cron-executor-import-im
+                            image: "{{TAG}}"
+                            args:
+                                - /bin/sh
+                                - -c
+                                - ./phing cron-import-im > /dev/null 2>&1
+                            securityContext:
+                                runAsUser: 33
+                            imagePullPolicy: Always
+                            workingDir: /var/www/html
+                            volumeMounts:
+                                -   name: domains-urls
+                                    mountPath: /var/www/html/config/domains_urls.yaml
+                                    subPath: domains_urls.yaml
+                                -   name: parameters
+                                    mountPath: /var/www/html/config/parameters.yaml
+                                    subPath: parameters.yaml
+                            env:
+                                -   name: S3_API_HOST
+                                    value: "{{S3_API_HOST}}"
+                                -   name: S3_API_USERNAME
+                                    value: "{{S3_API_USERNAME}}"
+                                -   name: S3_API_PASSWORD
+                                    value: "{{S3_API_PASSWORD}}"
+                                -   name: S3_API_BUCKET_NAME
+                                    value: "{{S3_API_BUCKET_NAME}}"
+                                -   name: CDN_DOMAIN
+                                    value: "{{CDN_DOMAIN}}"
+                                -   name: REDIS_PREFIX
+                                    value: "{{REDIS_PREFIX}}"
+                                -   name: ELASTIC_SEARCH_INDEX_PREFIX
+                                    value: "{{ELASTIC_SEARCH_INDEX_PREFIX}}"
+                    restartPolicy: Never
+                    imagePullSecrets:
+                        -   name: dockerregistry
