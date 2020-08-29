@@ -1,46 +1,41 @@
 .box-articles {
-    position: relative;
-    padding-top: 1.5rem;
-
-    &::before {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 70%;
-        height: 350px;
-        content: "";
-
-        background-color: @color-light;
-
-        @media @query-lg {
-            left: 50%;
-            right: auto;
-            width: 85%;
-            height: 170px;
-            transform: translateX(-50%);
-        }
+    @media @query-lg {
+        margin-top: 5rem;
     }
 
     &__wrap {
         position: relative;
         z-index: 1;
 
-        @media @query-lg {            
+        @media @query-lg {
             display: flex;
         }
     }
 
     &__text {
+        width: 100%;
         margin-bottom: 2rem;
+        padding: 2rem;
 
-        @media @query-lg { 
-            margin-bottom: 0;
-            min-width: 33%;
-            max-width: 33%;
+        background-color: @color-light-secondary;
+        border-radius: @radius;
+
+        @media @query-lg {
+            position: absolute;
+            left: 0;
+            top: -2rem;
+            width: 95%;
+        }
+
+        &__inner {
+            @media @query-lg {
+                min-width: 33%;
+                max-width: 33%;
+            }
         }
     }
 
-    &__desc {        
+    &__desc {
         margin-bottom: 1rem;
 
         @media @query-md {

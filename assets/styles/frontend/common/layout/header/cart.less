@@ -1,4 +1,4 @@
-@cart-box-border: 1px solid @color-border-secondary;
+@cart-box-border: 2px solid @color-border-tertiary;
 @cart-box-border-radius: 6px;
 @cart-box-color: #909194;
 @cart-box-items-count-size: 17px;
@@ -17,10 +17,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: absolute;
+            position: relative;
             right: -10px;
             top: auto;
-            height: 83px;
+            height: 85px;
             padding: 0 10px;
 
             cursor: pointer;
@@ -71,8 +71,13 @@
     }
 
     &__icon {
-        font-size: 40px;
+        font-size: 26px;
         line-height: 1;
+
+        @media @query-lg {
+            position: relative;
+            top: -2px;
+        }
     }
 
     &__info {
@@ -80,8 +85,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0.75rem 0.75rem 0.75rem 1rem;
-            margin-right: 0.5rem;
+            padding: 0.75rem 0.75rem 0.75rem 1.15rem;
+            margin-right: 0.8rem;
             min-width: 65px;
             text-align: right;
 
@@ -97,7 +102,7 @@
         &::after {
             @media @query-lg {
                 position: absolute;
-                right: 43px;
+                right: 30px;
                 top: 22px;
                 width: 8px;
                 height: 8px;
@@ -129,8 +134,8 @@
         align-items: center;
         justify-content: center;
         position: absolute;
-        right: 0;
-        top: -4px;
+        right: 3px;
+        top: 4px;
         width: @cart-box-items-count-size;
         height: @cart-box-items-count-size;
 
@@ -143,7 +148,8 @@
         line-height: 1;
 
         @media @query-lg {
-            top: 3px;
+            top: 6px;
+            right: -12px;
         }
     }
 

@@ -123,9 +123,11 @@
     @btn-outline-bg-hover: @color-add;
 
     &--outline {
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
 
+        text-transform: none;
+        font-size: 15px;
         border: @btn-outline-border;
         background-color: @btn-outline-bg;
 
@@ -161,6 +163,20 @@
             &:hover {
                 background-color: transparent;
             }
+        }
+    }
+
+    &--add {
+        padding-left: 30px;
+        padding-right: 30px;
+
+        font-size: 15px;
+        text-transform: none;
+        background-color: @color-add;
+        color: @color-primary;
+
+        &:hover {
+            background-color: lighten(@color-add, 2%);
         }
     }
 
@@ -231,6 +247,14 @@
         font-size: 11px;
     }
 
+    &--newsletter {
+        position: relative;
+        top: 2px;
+        height: 34px;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
     &--next {
         font-family: @font-quartenary;
         font-size: 15px;
@@ -240,10 +264,8 @@
 
         .btn__icon {
             position: relative;
-            top: 2px;
-            padding-left: 0.25rem;
-
-            font-size: 30px;
+            top: -2px;
+            padding-left: 2px;
         }
     }
 
@@ -528,7 +550,7 @@
     margin: 0 6px 6px 0;
 
     background-color: @color-f;
-    border-radius: 2em;
+    border-radius: @radius;
     border: 1px solid #dae1e4;
     font-family: @font-quartenary;
     font-size: 13px;

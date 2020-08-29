@@ -1,21 +1,27 @@
 .box-block {
-    &__wrap {        
+    &__wrap {
         @media @query-lg {
-            display: flex;    
+            display: flex;
             justify-content: space-between;
         }
     }
-    
+
     &__item {
         position: relative;
-        padding: 10rem 1.5rem 1.5rem;   
-        margin-bottom: 2rem;     
+        padding: 10rem 1.5rem 1rem;
+        margin-bottom: 2rem;
 
         background-color: @color-f;
         border-radius: @radius;
 
         @media @query-lg {
-            padding-top: 1.5em;
+            padding-top: 1rem;
+            padding-bottom: 0.75rem;
+            margin-bottom: 0;
+        }
+
+        &--bg {
+            background-color: @color-light;
         }
 
         &--left {
@@ -38,7 +44,7 @@
 
         &__heading {
             margin-bottom: 0;
-            
+
             font-family: @font-tertiary;
             font-size: 18px;
             text-transform: none;
@@ -58,9 +64,17 @@
                 right: 0;
             }
 
+            @media @query-xl {
+                right: 15px;
+            }
+
             &--right {
                 @media @query-lg {
                     right: -7px;
+                }
+
+                @media @query-xl {
+                    right: 15px;
                 }
             }
         }
