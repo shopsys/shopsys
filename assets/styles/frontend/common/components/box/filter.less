@@ -1,14 +1,16 @@
 @box-filter-input-width: 100px;
 @box-filter-input-bg-color: #f0f3f4;
 @box-filter-input-border-color: @box-filter-input-bg-color;
-@box-filter-padding: 20px;
+@box-filter-padding: 20px 15px;
+@box-filter-header-padding: 20px 15px 15px;
 @box-filter-width-lg: 315px;
 @box-filter-width-xl: @web-panel-width-xl;
 @box-filter-z-index: 10001;
 @box-filter-background: @color-f;
-@box-filter-delimiter-color: #f0f3f4;
+@box-filter-delimiter-color: @color-border-lighter;
 @box-filter-arrow-size: 12px;
 @box-filter-title-font-size: 16px;
+@box-filter-title-color: #242d3B;
 @box-filter-price-currency-color: @color-0;
 @box-filter-input-font-size: 14px;
 @box-filter-input-color: @color-primary-light;
@@ -21,6 +23,7 @@
 
     background-color: @box-filter-background;
     border-radius: @radius;
+    border: 2px solid @color-border-lighter;
 
     @media @query-lg {
         display: block;
@@ -40,7 +43,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: @box-filter-padding;
+        padding: @box-filter-header-padding;
     }
 
     &__heading {
@@ -54,7 +57,7 @@
     &__reset,
     &__more {
         font-family: @font-base;
-        color: #8a8b8f;
+        color: @color-primary-light;
         text-transform: none;
         text-decoration: underline;
         letter-spacing: 0;
@@ -64,13 +67,28 @@
         }
     }
 
+    &__reset {
+        text-decoration: none;
+
+        &__icon {
+            margin-left: 5px;
+            vertical-align: middle;
+
+            font-size: 24px;
+        }
+
+        &__text {
+            text-decoration: underline;
+        }
+    }
+
     &__opener {
         position: relative;
         display: flex;
         margin-bottom: 1.5rem;
 
         background-color: @color-f;
-        border: 1px solid @color-border-light;
+        border: 2px solid @color-border-lighter;
         border-radius: @radius;
 
         &::after {
@@ -81,7 +99,7 @@
             height: 100%;
             content: '';
 
-            background-color: @color-border-light;
+            background-color: @color-border-lighter;
         }
 
         @media @query-lg {
@@ -247,6 +265,7 @@
 
             font-family: @font-quartenary;
             font-size: @box-filter-title-font-size;
+            color: @box-filter-title-color;
 
             .svg {
                 position: absolute;
@@ -281,6 +300,15 @@
 
         &__inputs {
             margin-top: 15px;
+
+            &--flags {
+                margin-top: 0;
+
+                .box-filter__choice__link {
+                    font-size: 14px;
+                    color: @color-primary-light;
+                }
+            }
 
             &--color {
                 display: flex;
@@ -323,6 +351,10 @@
         &__input {
             display: block;
             margin: 0 0 8px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
 
             &--color {
                 margin: 15px 0 0 12px;

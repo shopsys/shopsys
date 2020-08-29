@@ -1,6 +1,6 @@
 @list-products-item-padding: 16px;
 @list-products-item-gap: 10px;
-@list-products-item-gap-md: 30px;
+@list-products-item-gap-md: 15px;
 @list-products-item-inner-gap: 10px;
 @list-products-item-image-height: 200px;
 @list-products-item-image-height-md: 280px;
@@ -83,6 +83,7 @@
             background-color: @color-f;
             border-radius: @radius;
             transition: box-shadow @transition;
+            border: 1px solid @color-border-lighter;
 
             &:hover {
                 box-shadow: @list-products-item-hover-shadow;
@@ -173,7 +174,7 @@
                 }
 
                 &__item {
-                    font-size: 14px;
+                    font-size: 15px;
                     color: @color-price;
 
                     &--main {
