@@ -10,15 +10,15 @@
 
     border-radius: @radius;
     background-color: @box-accordion-bg-color;
-    transition: box-shadow @transition;
     outline: 0;
+    border: 2px solid @color-border-lighter;
 
     @media @query-lg {
         margin-bottom: 2rem;
     }
 
     &:hover {
-        box-shadow: 0 0 10px 0 rgba(@color-0, .05);
+        border-color: darken(@color-border-lighter, 5%);
     }
 
     &--opened-on-mobile {
@@ -90,6 +90,8 @@
                 @media @query-lg {
                     display: inline;
                     margin-right: 10px;
+
+                    color: @color-base-lighter;
                 }
             }
         }
@@ -294,6 +296,10 @@
                 vertical-align: middle;
                 margin-right: 6px;
                 width: 25px;
+
+                &--out-of-stock {
+                    filter: grayscale(1);
+                }
             }
         }
 

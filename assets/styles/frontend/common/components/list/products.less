@@ -82,11 +82,10 @@
 
             background-color: @color-f;
             border-radius: @radius;
-            transition: box-shadow @transition;
             border: 1px solid @color-border-lighter;
 
             &:hover {
-                box-shadow: @list-products-item-hover-shadow;
+                border-color: darken(@color-border-lighter, 10%);
             }
         }
 
@@ -292,7 +291,7 @@
         }
 
         @media screen and (min-width: 1440px) {
-            width: 639px;
+            width: 630px;
         }
 
         &__in {

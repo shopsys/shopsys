@@ -4,16 +4,18 @@
             <div class="box-detail-variant">
                 {% set hasMoreValues = parameterValuesIndexedByParameterId[parameter.id]|length > 1 %}
                 <a href="#" class="box-detail-variant__link {% if hasMoreValues %}js-variant-parameter-select{% else %}js-stop-propagation{% endif %}">
-                    <span class="box-detail-variant__name">{{ parameter.name }}:</span>
-                    <span class="box-detail-variant__value js-variant-parameter-selected ">
-                        <span class="box-detail-variant__value__img">
-                            {% if imageExists(variant) %}
-                                {{ image(variant, {size: 'thumbnail', itemprop: 'image' }) }}
-                            {% else %}
-                                {{ noimage({ alt: variant.fullname }) }}
-                            {% endif %}
+                    <span class="box-detail-variant__link__wrap">
+                        <span class="box-detail-variant__name">{{ parameter.name }}</span>
+                        <span class="box-detail-variant__value js-variant-parameter-selected ">
+                            <span class="box-detail-variant__value__text">{{ variantParameterValuesIndexedByParameterId[parameter.id].text }}</span>
                         </span>
-                        <span class="box-detail-variant__value__text">{{ variantParameterValuesIndexedByParameterId[parameter.id].text }}</span>
+                    </span>
+                    <span class="box-detail-variant__img">
+                        {% if imageExists(variant) %}
+                            {{ image(variant, {size: 'thumbnail', itemprop: 'image' }) }}
+                        {% else %}
+                            {{ noimage({ alt: variant.fullname }) }}
+                        {% endif %}
                     </span>
                     {% if hasMoreValues %}
                         <span class="box-detail-variant__toggle svg svg-arrow"></span>
@@ -29,13 +31,13 @@
                                 <a href="{{ url('front_product_detail', {'id': variantId}) }}"
                                     class="box-detail-variant__link box-detail-variant__link--drop js-variant-parameter-value"
                                 >
-                                    <span class="box-detail-variant__value">
-                                        <span class="box-detail-variant__value__img">
-                                            <picture>
-                                                <img src="{{ productImageUrl(variantId,'thumbnail') }}" alt="{{ mainProduct.name }} - {{ parameter.name }}: {{ parameterValue.text }}" itemprop="image" />
-                                            </picture>
-                                        </span>
+                                    <span class="box-detail-variant__link__wrap">
                                         <span class="box-detail-variant__value__text">{{ parameterValue.text }}</span>
+                                    </span>
+                                    <span class="box-detail-variant__img">
+                                        <picture>
+                                            <img src="{{ productImageUrl(variantId,'thumbnail') }}" alt="{{ mainProduct.name }} - {{ parameter.name }}: {{ parameterValue.text }}" itemprop="image" />
+                                        </picture>
                                     </span>
                                 </a>
                             </li>

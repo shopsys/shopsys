@@ -42,9 +42,9 @@
 .btn {
     // call to action button
     @btn-success-color: @color-f;
-    @btn-success-color-hover: @color-f;
-    @btn-success-bg: #222631;
-    @btn-success-bg-hover: lighten(@btn-success-bg, 10%);
+    @btn-success-color-hover: @color-primary;
+    @btn-success-bg: linear-gradient(to bottom, #fcd80B, #fcc308);
+    @btn-success-bg-hover: linear-gradient(to bottom, #fcd80B, #fcc308);
 
     &--success {
         text-transform: none;
@@ -60,18 +60,61 @@
             position: relative;
             padding-right: 55px;
 
+            @media screen and (max-width: 340px) {
+                padding-left: 20px;
+                padding-right: 20px;
+
+                &::after {
+                    display: none;
+                }
+            }
+
+            &::before {
+                position: absolute;
+                top: calc(100% - 3px);
+                left: 50%;
+                width: 90%;
+                height: 3px;
+                transform: translateX(-50%);
+                content: '';
+
+                box-shadow: 0 3px 7px 0 rgba(#fcc308, 0.9);
+            }
+
             &::after {
                 position: absolute;
                 right: 15px;
-                top: 10px;
-                width: 32px;
-                height: 32px;
+                top: 15px;
+                width: 25px;
+                height: 25px;
                 content: '';
 
                 background-image: url('@{path-design}/cart-button.svg');
                 background-position: center center;
                 background-size: contain;
                 background-repeat: no-repeat;
+            }
+        }
+
+        &.btn--success--cart--small {
+            padding: 0 20px;
+
+            font-size: 14px;
+
+            @media @query-md {
+                min-height: 40px;
+                padding-left: 25px;
+                padding-right: 50px;
+
+                font-size: 15px;
+            }
+
+            &::after {
+                @media @query-mobile {
+                    display: none;
+                }
+
+                top: 6px;
             }
         }
     }
@@ -219,13 +262,13 @@
     }
 
     @btn-very-large-padding: 18px 20px;
-    @btn-very-large-padding-lg: 18px 30px;
+    @btn-very-large-padding-lg: 21px 30px;
 
     &--very-large {
         padding: @btn-very-large-padding;
 
         font-family: @font-quartenary;
-        font-size: 16px;
+        font-size: 15px;
 
         @media @query-md {
             font-size: 18px;

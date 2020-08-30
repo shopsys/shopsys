@@ -75,7 +75,7 @@
                                     {% if not product.isMainVariant %}
                                         {% if product.catnum %}
                                             <dt>
-                                                {{ 'Číslo produktu'|trans }}
+                                                {{ 'č. produktu:'|trans }}
                                             </dt>
                                             <dd>
                                                 {{ product.catnum }}
@@ -98,17 +98,20 @@
                                         <li class="box-detail-list__item box-detail-list__item--anchor">
                                             <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#product-desc">
                                                 <span class="box-detail__info__anchor__underline">{{ 'Celý popis'|trans }}</span>
-                                                <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--down box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
                                             </a>
                                         </li>
                                     {% endif %}
                                 </ul>
                             </div>
 
-                            <div class="box-detail__info__availability">
+                            {% if not product.isMainVariant %}
+                                {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
+                            {% endif %}
+
+                            <div class="box-detail__info__availability box-detail__info__availability--{{ productAvailabilityStatus }}">
                                 <div class="box-detail__info__availability__value">
                                     <span class="box-detail__avail box-detail__avail--{{ productAvailabilityStatus }}">{{ productAvailabilityInformation }}</span>
-                                    {% if productAvailabilityStatus == "in-stock" %}
+                                    {% if productAvailabilityStatus == "int-stock" %}
                                         {% if productAvailableStocksCountInformation is not empty %}
                                             <span class="box-detail__avail__text">{{ productAvailableStocksCountInformation|raw }}</span>
                                         {% endif %}
@@ -117,10 +120,30 @@
                                         {% endif %}
                                     {% endif %}
                                     <span class="box-detail__avail__icon box-detail__avail__icon--{{ productAvailabilityStatus }}">
-                                        {% if productAvailabilityStatus == "in-stock" %}
-                                            <img class="box-detail__avail__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-stock.svg') }}" alt="{{ 'Skladem'|trans }}">
+                                        {% if productAvailabilityStatus == "int-stock" %}
+                                            <picture>
+                                                <source
+                                                    srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
+                                                >
+                                                <img
+                                                    class="box-detail__avail__icon__image"
+                                                    loading="lazy"
+                                                    data-src="{{ asset('public/frontend/images/package-in-stock.png') }}"
+                                                    alt="{{ 'Skladem'|trans }}"
+                                                >
+                                            </picture>
                                         {% else %}
-                                            <img class="box-detail__avail__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-out-of-stock.svg') }}" alt="{{ 'Není skladem'|trans }}">
+                                            <picture>
+                                                <source
+                                                    srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
+                                                >
+                                                <img
+                                                    class="box-detail__avail__icon__image"
+                                                    loading="lazy"
+                                                    data-src="{{ asset('public/frontend/images/package-in-stock.png') }}"
+                                                    alt="{{ 'Není skladem'|trans }}"
+                                                >
+                                            </picture>
                                         {% endif %}
                                     </span>
                                 </div>
@@ -136,8 +159,7 @@
 
                             {% if not product.isMainVariant %}
                                 <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
-                                    {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
-                                    {% if not product.calculatedSaleExclusion(domain.id) %}
+                                    {% if not product.calculatedSellingDenied %}
                                         <div class="box-detail-add__info">
                                             <div itemprop="offers"
                                                 itemscope
@@ -174,7 +196,7 @@
                                                     content="{{ getProductSellingPrice(product).priceWithVat|moneyFormat }}"
                                                 >
                                                 <link itemprop="availability"
-                                                    href="{{ product.calculatedSaleExclusion(domain.id) ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
+                                                    href="{{ product.calculatedSellingDenied ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
                                                 >
                                             </div>
                                             {{ render(controller('App\\Controller\\Front\\CartController:addProductFormAction', {product: product, type: 'large'})) }}
@@ -222,9 +244,9 @@
                 </div>
             </div>
         </div>
-        <div class="web__line web__line--bg-color web__line--spacing--large">
+        <div class="web__line">
             <div class="web__container">
-                {% if product.isMainVariant and not product.calculatedSaleExclusion(domain.id) %}
+                {% if product.isMainVariant and not product.calculatedSellingDenied %}
                     <table {% if getProductSellingPrice(product) is not null %}itemprop="offers"
                         itemscope
                         itemtype="http://schema.org/AggregateOffer" {% endif %}
@@ -245,7 +267,7 @@
                                             content="{{ getProductSellingPrice(product).priceWithVat|moneyFormat }}"
                                         >
                                         <link itemprop="availability"
-                                            href="{{ product.calculatedSaleExclusion(domain.id) ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
+                                            href="{{ product.calculatedSellingDenied ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
                                         >
                                     {% endif %}
                                 </th>
@@ -427,19 +449,42 @@
                                 <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                             </span>
                         </a>
-                        <div class="box-accordion__body box-accordion__body--no-spacing box-accordion__body--table js-accordion-body">
+                        <div class="box-accordion__body box-accordion__body--no-spacing js-accordion-body">
+                            <select class="box-accordion__body__input input js-not-implemented-yet">
+                                <option disabled selected>{{ 'Vyberte prodejnu'|trans }}</option>
+                            </select>
                             <table class="box-accordion__grid-table">
                                 <tbody class="box-accordion__grid-table__body">
                                 {% for productStockAvailabilityInformation in productStocksAvailabilitiesInformation %}
                                     <tr class="box-accordion__grid-table__row">
-                                        <th class="box-accordion__grid-table__col box-accordion__grid-table__col--title">
+                                        <th class="box-accordion__grid-table__col">
                                             <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.stockName }}</strong>
                                         </th>
                                         <td class="box-accordion__grid-table__col">
-                                            {% if productStockAvailabilityInformation.availabilityStatus == "in-stock" %}
-                                                <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-stock.svg') }}" alt="{{ 'Skladem'|trans }}">
+                                            {% if productStockAvailabilityInformation.availabilityStatus == "int-stock" %}
+                                                <picture>
+                                                    <source
+                                                        srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
+                                                    >
+                                                    <img
+                                                        class="box-accordion__grid-table__col__icon"
+                                                        loading="lazy"
+                                                        data-src="{{ asset('public/frontend/images/package-in-stock.png') }}"
+                                                        alt="{{ 'Skladem'|trans }}"
+                                                    >
+                                                </picture>
                                             {% else %}
-                                                <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-out-of-stock.svg') }}" alt="{{ 'Není skladem'|trans }}">
+                                                <picture>
+                                                    <source
+                                                        srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
+                                                    >
+                                                    <img
+                                                        class="box-accordion__grid-table__col__icon box-accordion__grid-table__col__icon--out-of-stock"
+                                                        loading="lazy"
+                                                        data-src="{{ asset('public/frontend/images/package-in-stock.png') }}"
+                                                        alt="{{ 'Není skladem'|trans }}"
+                                                    >
+                                                </picture>
                                             {% endif %}
                                             {{ productStockAvailabilityInformation.availabilityInformation|raw }}
                                         </td>
@@ -467,10 +512,10 @@
                 {% endif %}
 
                 {% if accessories|length > 0 %}
-                    <div class="box-detail box-detail--accessories gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
+                    <div class="box-detail box-detail--accessories">
                         <h2 class="box-detail__title">{{ 'Accessories'|trans }}</h2>
                         <div class="box-products-accessories js-products-slick-carousel-cols">
-                            {{ productList.list(accessories, null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
+                            {{ productList.list(accessories) }}
                         </div>
                     </div>
                 {% endif %}
@@ -499,13 +544,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="box-products-carousel box-products-carousel--detail gtm-scroll"
-                                data-gtm-event="{{ gtmProductSeriesScrollEvent[productSeries.id]|json_encode() }}"
-                            >
+                            <div class="box-products-carousel box-products-carousel--detail">
                                 <div class="box-products-carousel__in box-products-carousel__in--detail">
-                                    <div class="list-products-grid js-products-slick-carousel">
-                                        {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id], null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_PROGRAM')) }}
+                                    <div class="list-products-grid list-products-grid--large js-products-slick-carousel">
+                                        {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id]) }}
                                     </div>
                                 </div>
                             </div>

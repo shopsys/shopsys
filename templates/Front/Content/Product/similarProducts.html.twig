@@ -3,9 +3,9 @@
 {% if paginationResult.results|length > 0 %}
     <div class="box-detail box-detail--similar gtm-scroll" data-gtm-event="{{ gtmSimilarProductsScrollEvent|json_encode() }}">
         <h2 class="box-detail__title">{{ 'Podobné produkty'|trans }}</h2>
-        <div class="box-products-carousel box-products-carousel--detail">
+        <div class="box-products-carousel box-products-carousel--detail box-products-carousel--similar">
             <div class="box-products-carousel__in box-products-carousel__in--detail">
-                <div class="list-products-grid js-similar-products-slick-carousel"
+                <div class="list-products-grid list-products-grid--similar js-similar-products-slick-carousel"
                      data-product-id="{{ productMainVariantId }}"
                      data-similar-products-url="{{ url('front_similar_products') }}"
                 >
