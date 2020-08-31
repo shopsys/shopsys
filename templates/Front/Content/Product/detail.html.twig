@@ -111,7 +111,7 @@
                             <div class="box-detail__info__availability box-detail__info__availability--{{ productAvailabilityStatus }}">
                                 <div class="box-detail__info__availability__value">
                                     <span class="box-detail__avail box-detail__avail--{{ productAvailabilityStatus }}">{{ productAvailabilityInformation }}</span>
-                                    {% if productAvailabilityStatus == "int-stock" %}
+                                    {% if productAvailabilityStatus == "in-stock" %}
                                         {% if productAvailableStocksCountInformation is not empty %}
                                             <span class="box-detail__avail__text">{{ productAvailableStocksCountInformation|raw }}</span>
                                         {% endif %}
@@ -120,7 +120,7 @@
                                         {% endif %}
                                     {% endif %}
                                     <span class="box-detail__avail__icon box-detail__avail__icon--{{ productAvailabilityStatus }}">
-                                        {% if productAvailabilityStatus == "int-stock" %}
+                                        {% if productAvailabilityStatus == "in-stock" %}
                                             <picture>
                                                 <source
                                                     srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
@@ -461,7 +461,7 @@
                                             <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.stockName }}</strong>
                                         </th>
                                         <td class="box-accordion__grid-table__col">
-                                            {% if productStockAvailabilityInformation.availabilityStatus == "int-stock" %}
+                                            {% if productStockAvailabilityInformation.availabilityStatus == "in-stock" %}
                                                 <picture>
                                                     <source
                                                         srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
