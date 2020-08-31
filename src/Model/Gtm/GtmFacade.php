@@ -106,7 +106,12 @@ class GtmFacade
         $gtmEventData = [
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
-                'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews($listedProductViews, $nextIndex),
+                'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews(
+                    $listedProductViews,
+                    $nextIndex,
+                    null,
+                    'Category - standard'
+                ),
             ],
         ];
 

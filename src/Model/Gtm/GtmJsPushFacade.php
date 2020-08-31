@@ -63,7 +63,7 @@ class GtmJsPushFacade
      * @param string $positionText
      * @return array
      */
-    public function getSliderItemClickData(SliderItem $sliderItem, $positionText): array
+    public function getSliderItemClickData(SliderItem $sliderItem, $positionText, $index): array
     {
         if (!$this->gtmContainer->isEnabled()) {
             return [];
@@ -78,7 +78,7 @@ class GtmJsPushFacade
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
                 'promoView' => [
-                    'promotions' => $this->dataLayerMapper->createDataLayerSliderItemsFromSliderItems([$sliderItem], $positionText),
+                    'promotions' => $this->dataLayerMapper->createDataLayerSliderItemsFromSliderItems([$sliderItem], $positionText, $index),
                 ],
             ],
         ];
@@ -157,8 +157,7 @@ class GtmJsPushFacade
                     'products' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews(
                         [$listedProductView],
                         1,
-                        $position,
-                        $list
+                        $position
                     ),
                 ],
             ],

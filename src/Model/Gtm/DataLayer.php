@@ -15,6 +15,7 @@ class DataLayer
     public const EVENT_NAME_PRODUCT_CLICK = 'ec.productClick';
     public const EVENT_NAME_PRODUCT_ADD_TO_CART = 'ec.addToCart';
     public const EVENT_NAME_PRODUCT_REMOVE_FROM_CART = 'ec.removeFromCart';
+    public const EVENT_NAME_CHECKOUT_OPTION = 'ec.checkout_option';
     public const EVENT_NAME_PROMO_VIEW = 'ec.promoView';
     public const EVENT_NAME_PROMO_CLICK = 'ec.promoClick';
     public const EVENT_NAME_CATEGORY_FILTER = 'category.filter';

@@ -58,7 +58,8 @@ class GtmExtension extends AbstractExtension
         } elseif (is_subclass_of($element, 'Shopsys\FrameworkBundle\Model\Slider\SliderItem')) {
             $gtm = $this->gtmJsPushFacade->getSliderItemClickData(
                 $element,
-                DataLayer::HOMEPAGE_SLIDER_LABEL . '-' . $position
+                DataLayer::HOMEPAGE_SLIDER_LABEL,
+                $position
             );
         } else {
             throw new \App\Twig\Gtm\Exception\InvalidProductObjectTypeException(get_class($element));

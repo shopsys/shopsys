@@ -47,42 +47,38 @@ export default class Gtm {
             });
     }
 
-    static pushTransportAndPayment () {
-        $('.js-transport_and_payment_form_save').click(function (e) {
-            e.preventDefault();
+    static pushTransportAndPayment (form, e) {
+        e.preventDefault();
 
-            const form = $(this.closest('form'));
+        let options = [];
+        $('form[name=transport_and_payment_form]').find('input:checkbox:checked').each((index, val) => {
+            options.push($(val).closest('label').find('span.box-chooser__item__title strong').text().trim());
+        });
 
-            let options = [];
-            $('form[name=transport_and_payment_form]').find('input:checkbox:checked').each((index, val) => {
-                options.push($(val).closest('label').find('span.box-chooser__item__title strong').text().trim());
-            });
-
-            const data = {
-                'event': EVENT_NAME_CHECKOUT_OPTION,
-                'ecommerce': {
-                    'currencyCode': currencyCode,
-                    'checkout_option': {
-                        'actionField': {
-                            'step': 1,
-                            'option': options.join('|')
-                        }
+        const data = {
+            'event': EVENT_NAME_CHECKOUT_OPTION,
+            'ecommerce': {
+                'currencyCode': currencyCode,
+                'checkout_option': {
+                    'actionField': {
+                        'step': 1,
+                        'option': options.join('|')
                     }
                 }
-            };
-
-            /* eslint-disable camelcase */
-            if (typeof google_tag_manager != 'undefined') {
-                dataLayer.push(
-                    $.extend({}, data, {
-                        'eventCallback': function (gtmId) {
-                            $(form).submit();
-                        },
-                        'eventTimeout': 2000
-                    })
-                );
             }
-        });
+        };
+
+        /* eslint-disable camelcase */
+        if (typeof google_tag_manager != 'undefined') {
+            dataLayer.push(
+                $.extend({}, data, {
+                    'eventCallback': function (gtmId) {
+                        $(form).submit();
+                    },
+                    'eventTimeout': 2000
+                })
+            );
+        }
     }
 
     static pushFilterData (serializedData) {
@@ -152,6 +148,10 @@ export default class Gtm {
 
             Gtm.initScrollerPush(scroller);
         }
+
+        $('.js-transport_and_payment_form_save').click(function (e) {
+            Gtm.pushTransportAndPayment($(this.closest('form')), e);
+        });
     }
 
     static compare (otherArray) {

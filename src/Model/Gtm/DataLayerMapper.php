@@ -449,16 +449,16 @@ class DataLayerMapper
     /**
      * @param array $sliderItems
      * @param string $positionText
+     * @param int $index
      * @return \App\Model\Gtm\Data\DataLayerSliderItem[]
      */
-    public function createDataLayerSliderItemsFromSliderItems(array $sliderItems, string $positionText): array
+    public function createDataLayerSliderItemsFromSliderItems(array $sliderItems, string $positionText, ?int $index = 1): array
     {
         $dataLayerSliderItems = [];
-        $i = 0;
         foreach ($sliderItems as $sliderItem) {
             $dataLayerSliderItem = new DataLayerSliderItem();
             $this->mapSliderItemToDataLayerSliderItem($sliderItem, $dataLayerSliderItem);
-            $dataLayerSliderItem->setPosition($positionText . '-' . ++$i);
+            $dataLayerSliderItem->setPosition($positionText . '-' . $index++);
             $dataLayerSliderItems[] = $dataLayerSliderItem;
         }
 
