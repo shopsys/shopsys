@@ -171,6 +171,10 @@ class GtmJsPushFacade
      */
     public function getCartItemChangedEvent(Product $product, int $quantity): array
     {
+        if (!$this->gtmContainer->isEnabled()) {
+            return [];
+        }
+
         if ($quantity > 0) {
             $this->gtmFacade->onAddProductToCart($product, $quantity);
         } else {
