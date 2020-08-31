@@ -8,9 +8,12 @@ assertVariable "FIRST_DEPLOY"
 assertVariable "DISPLAY_FINAL_CONFIGURATION"
 assertVariable "PROJECT_NAME"
 assertVariable "S3_API_BUCKET_NAME"
+assertVariable "S3_API_HOST"
 
 # Replace bucket name for S3 images URL
 sed -i "s/S3_BUCKET_NAME/${S3_API_BUCKET_NAME}/g" "${BASE_PATH}/docker/nginx/s3/nginx.conf"
+S3_API_HOST_ESCAPED="$(echo "${S3_API_HOST}" | sed 's/[.[\*^$/]/\\&/g')"
+sed -i "s/S3_API_HOST/${S3_API_HOST_ESCAPED}/g" "${BASE_PATH}/docker/nginx/s3/nginx.conf"
 
 echo "Try create namespace if not exists"
 kubectl create namespace ${PROJECT_NAME} || echo "${PROJECT_NAME} namespace already existing"

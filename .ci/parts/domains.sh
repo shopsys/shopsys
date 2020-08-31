@@ -32,10 +32,4 @@ for DOMAIN in ${DOMAINS[@]}; do
     domain_iterator=$(expr $domain_iterator + 1)
 done
 
-yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/smtp-server.yaml" spec.template.spec.containers[0].env[1].value ${DOMAINS[0]}
-
-if [ ${domain_iterator} -gt "1" ]; then
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/smtp-server.yaml" spec.template.spec.containers[0].env[2].value ${smtp_other_hostnames}
-fi
-
 echo "End of domains.sh"
