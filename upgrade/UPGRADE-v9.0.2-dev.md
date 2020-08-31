@@ -46,3 +46,6 @@ There you can find links to upgrade notes for other versions too.
 
 - set timezone for your crons ([#2000](https://github.com/shopsys/shopsys/pull/2000))
     - see #project-base-diff to update your project
+
+- add acceptance test for testing sending order as logged customer ([#2011](https://github.com/shopsys/shopsys/pull/2011))
+    - see #project-base-diff to update your project
