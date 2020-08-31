@@ -5,6 +5,8 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use Doctrine\Persistence\Proxy;
+
 trait LoadFromParentTrait
 {
     /**
@@ -12,6 +14,10 @@ trait LoadFromParentTrait
      */
     private function loadFromParent($parent): void
     {
+        if ($parent instanceof Proxy) {
+            $parent->__load();
+        }
+
         $objValues = get_object_vars($parent);
         foreach ($objValues as $key => $value) {
             //ignore
