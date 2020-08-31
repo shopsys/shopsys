@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageLocator as BaseImageLocator;
  */
 class ImageLocator extends BaseImageLocator
 {
-    protected const ADDITIONAL_IMAGE_MASK = '{index}-{filename}';
+    protected const ADDITIONAL_IMAGE_MASK = '{index}--{filename}';
 
     /**
      * @param string $imageDir

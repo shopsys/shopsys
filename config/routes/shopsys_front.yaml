@@ -82,6 +82,14 @@ front_image:
     requirements:
         imageId: \d+
 
+front_additional_image_seo:
+    path: "/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{additionalIndex}--{seoSlug}_{imageId}.{extension}"
+    defaults:
+        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
+    requirements:
+        imageId: \d+
+        additionalIndex: \d+
+
 front_image_seo:
     path: '/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{seoSlug}_{imageId}.{extension}'
     defaults:
@@ -90,15 +98,7 @@ front_image_seo:
         imageId: \d+
 
 front_additional_image:
-    path: "/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{additionalIndex}-{imageId}.{extension}"
-    defaults:
-        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
-    requirements:
-        imageId: \d+
-        additionalIndex: \d+
-
-front_additional_image_seo:
-    path: "/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{additionalIndex}-{seoSlug}_{imageId}.{extension}"
+    path: "/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{additionalIndex}--{imageId}.{extension}"
     defaults:
         _controller: App\Controller\Front\ImageController:getAdditionalImageAction
     requirements:
@@ -113,6 +113,15 @@ front_image_without_type:
     requirements:
         imageId: \d+
 
+front_additional_image_seo_without_type:
+    path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{additionalIndex}--{seoSlug}_{imageId}.{extension}"
+    defaults:
+        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
+        type: ~
+    requirements:
+        imageId: \d+
+        additionalIndex: \d+
+
 front_image_seo_without_type:
     path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{seoSlug}_{imageId}.{extension}"
     defaults:
@@ -122,16 +131,7 @@ front_image_seo_without_type:
         imageId: \d+
 
 front_additional_image_without_type:
-    path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{additionalIndex}-{imageId}.{extension}"
-    defaults:
-        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
-        type: ~
-    requirements:
-        imageId: \d+
-        additionalIndex: \d+
-
-front_additional_image_seo_without_type:
-    path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{additionalIndex}-{seoSlug}_{imageId}.{extension}"
+    path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{additionalIndex}--{imageId}.{extension}"
     defaults:
         _controller: App\Controller\Front\ImageController:getAdditionalImageAction
         type: ~
