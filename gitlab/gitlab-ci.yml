@@ -156,18 +156,6 @@ deploy:production:
         - master
         - /^master-.*$/
     environment:
-        name: production
-        url: https://prod.eshop.scontodev.cz
-
-deploy:production2:
-    <<: *deploy
-    when: manual
-    resource_group: deploy_production2
-    only:
-        - master
-        - /^master-.*$/
-        - pk/sd-1428-production-cluster
-    environment:
         name: production2
         url: https://prod.scontodev.cz
 
