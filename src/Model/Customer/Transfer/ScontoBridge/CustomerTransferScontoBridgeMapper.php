@@ -143,7 +143,6 @@ class CustomerTransferScontoBridgeMapper
         if ($billingAddress->isCompanyCustomer()) {
             $erpUser->setCompany($this->mapCompany($customerUser));
             $erpUser->setCustomerType(self::CUSTOMER_TYPE_COMPANY);
-
         } else {
             $erpUser->setIndividual($this->mapIndividual($customerUser));
             $erpUser->setCustomerType(self::CUSTOMER_TYPE_INDIVIDUAL);

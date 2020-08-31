@@ -115,9 +115,10 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
     {
         $existingPayment = $this->paymentFacade->findByExternalId($id);
         if ($existingPayment !== null) {
-            if ($this->payment === null  || $existingPayment->getId() !== $this->payment->getId()) {
+            if ($this->payment === null || $existingPayment->getId() !== $this->payment->getId()) {
                 $context->buildViolation(sprintf(
-                    t('Zadané párovací ID můstku je již použito u jiné platby (%s)'), $existingPayment->getName()
+                    t('Zadané párovací ID můstku je již použito u jiné platby (%s)'),
+                    $existingPayment->getName()
                 ))
                     ->atPath('externalId')
                     ->addViolation();

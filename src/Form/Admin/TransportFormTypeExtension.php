@@ -188,7 +188,8 @@ class TransportFormTypeExtension extends AbstractTypeExtension
         if ($existingTransport !== null) {
             if ($this->transport === null || $existingTransport->getId() !== $this->transport->getId()) {
                 $context->buildViolation(sprintf(
-                    t('Zadané párovací ID můstku je již použito u jiné dopravy (%s)'), $existingTransport->getName()
+                    t('Zadané párovací ID můstku je již použito u jiné dopravy (%s)'),
+                    $existingTransport->getName()
                 ))
                     ->atPath('externalId')
                     ->addViolation();

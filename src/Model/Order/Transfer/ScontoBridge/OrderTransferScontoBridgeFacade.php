@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Order\Transfer\ScontoBridge;
@@ -71,7 +72,7 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
         foreach ($this->getData() as $order) {
             //$this->markOrderScontoBridgeStatusProcessing($order);
 //            try {
-                $this->processItem($order);
+            $this->processItem($order);
 //            } catch (\Exception $e) { //fixme
                 //$this->logger->addCritical($e->getMessage());
                 //$this->markOrderScontoBridgeStatusError($order);
