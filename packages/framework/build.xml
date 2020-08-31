@@ -579,6 +579,35 @@
 
     <target name="elasticsearch-index-recreate" depends="production-protection, elasticsearch-index-delete, elasticsearch-index-create" description="Recreates indexes into elasticsearch (deletes existing indexes and creates new one)"/>
 
+    <target name="environment-change" depends="production-protection" description="Change application environment and install composer dev-dependencies when development environment is selected.">
+        <input propertyName="change.environment" validArgs="dev, prod, test" defaultValue="prod" message="Select environment you want to change to"/>
+        <phingcall target="maintenance-on"/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:environment:change"/>
+            <arg value="${change.environment}"/>
+        </exec>
+        <if>
+            <equals arg1="${change.environment}" arg2="prod"/>
+            <then>
+                <exec executable="${path.composer.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="install"/>
+                    <arg value="--no-dev"/>
+                    <arg value="--no-scripts"/>
+                </exec>
+            </then>
+            <else>
+                <phingcall target="composer-check"/>
+                <exec executable="${path.composer.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="install"/>
+                    <arg value="--no-scripts"/>
+                </exec>
+            </else>
+        </if>
+        <phingcall target="clean-cache"/>
+        <phingcall target="maintenance-off"/>
+    </target>
+
     <target name="environment-load" description="Load application environment into Phing property." hidden="true">
         <if>
             <not><isset property="environment"/></not>
