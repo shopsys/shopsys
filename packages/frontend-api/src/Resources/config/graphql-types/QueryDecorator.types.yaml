@@ -83,3 +83,15 @@ QueryDecorator:
                     uuid:
                         type: "Uuid!"
                 description: "Returns article filtered using UUID"
+            termsAndConditionsArticle:
+                type: 'Article'
+                resolve: "@=resolver('termsAndConditionsArticle')"
+                description: "Returns Terms and Conditions article"
+            privacyPolicyArticle:
+                type: 'Article'
+                resolve: "@=resolver('privacyPolicyArticle')"
+                description: "Returns privacy policy article"
+            cookiesArticle:
+                type: 'Article'
+                resolve: "@=resolver('cookiesArticle')"
+                description: "Returns information about cookies article"
