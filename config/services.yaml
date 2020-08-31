@@ -126,6 +126,11 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade:
         class: 'App\Model\Customer\User\CustomerUserFacade'
 
+    Shopsys\FrameworkBundle\Model\Security\LoginListener:
+        class: 'App\Model\Security\LoginListener'
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+
     App\Model\Blog\BlogVisibilityRecalculationListener:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
