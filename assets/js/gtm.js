@@ -145,20 +145,23 @@ export default class Gtm {
     }
 
     static init ($container) {
-        $container.find('a').filter(function () {
-            return $(this).data('gtm-event') !== undefined;
-        }).on('click', Gtm.clickPush);
+        /* eslint-disable camelcase */
+        if (typeof google_tag_manager != 'undefined') {
+            $container.find('a').filter(function () {
+                return $(this).data('gtm-event') !== undefined;
+            }).on('click', Gtm.clickPush);
 
-        if ($container.find('.gtm-scroll').length > 0) {
-            const scrollama = require('scrollama');
-            var scroller = scrollama();
+            if ($container.find('.gtm-scroll').length > 0) {
+                const scrollama = require('scrollama');
+                var scroller = scrollama();
 
-            Gtm.initScrollerPush(scroller);
+                Gtm.initScrollerPush(scroller);
+            }
+
+            $('.js-transport_and_payment_form_save').click(function (e) {
+                Gtm.pushTransportAndPayment($(this.closest('form')), e);
+            });
         }
-
-        $('.js-transport_and_payment_form_save').click(function (e) {
-            Gtm.pushTransportAndPayment($(this.closest('form')), e);
-        });
     }
 
     static compare (otherArray) {
