@@ -139,7 +139,7 @@ export default class Map {
                     return;
                 }
 
-                if ($(window).width() < Responsive.LG) {
+                if ($(window).width() < Responsive.VLX) {
                     goToStoreDetail(markerData.data.id);
                 } else {
                     replaceMarkerContentBoxById(markerData.data.id);
