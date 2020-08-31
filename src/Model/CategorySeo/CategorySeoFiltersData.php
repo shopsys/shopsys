@@ -20,4 +20,9 @@ class CategorySeoFiltersData
      * @var \App\Model\Product\Parameter\Parameter[]
      */
     public $parameters = [];
+
+    public function __construct()
+    {
+        $this->useOrdering = true;
+    }
 }

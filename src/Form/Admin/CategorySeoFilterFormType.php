@@ -45,13 +45,8 @@ class CategorySeoFilterFormType extends AbstractType
 
         $builder
             ->add('useFlags', YesNoType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => t('Dle příznaků'),
-                'data' => false,
-            ])
-            ->add('useOrdering', YesNoType::class, [
-                'required' => true,
-                'label' => t('Dle řazení'),
                 'data' => false,
             ])
             ->add('parameters', ChoiceType::class, [
@@ -84,22 +79,6 @@ class CategorySeoFilterFormType extends AbstractType
             ->setDefaults([
                 'data_class' => CategorySeoFiltersData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'constraints' => [
-                    new Callback([$this, 'validate']),
-                ],
             ]);
-    }
-
-    /**
-     * @param \App\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
-    public function validate(CategorySeoFiltersData $categorySeoFiltersData, ExecutionContextInterface $context): void
-    {
-        if ($categorySeoFiltersData->useFlags === false && $categorySeoFiltersData->useOrdering === false) {
-            $context->buildViolation(t('Prosím vyberte alespoň jedno z příznaků nebo řazení.'))
-                ->atPath('useFlags')
-                ->addViolation();
-        }
     }
 }
