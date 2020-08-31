@@ -633,49 +633,48 @@ class OrderFacade extends BaseOrderFacade
      */
     public function revalidatePaymentAndTransport(FrontOrderData $frontOrderFormData, array $payments, array $transports)
     {
-        if($frontOrderFormData->payment !== null){
+        if ($frontOrderFormData->payment !== null) {
             $isPaymentValid = false;
             $paymentId = $frontOrderFormData->payment->getId();
-            foreach ($payments as $payment){
-                if($payment->getId() === $paymentId){
+            foreach ($payments as $payment) {
+                if ($payment->getId() === $paymentId) {
                     $isPaymentValid = true;
                     break;
                 }
             }
-            if($isPaymentValid === false){
+            if ($isPaymentValid === false) {
                 $frontOrderFormData->payment = null;
             }
         }
 
-        if($frontOrderFormData->transport !== null){
+        if ($frontOrderFormData->transport !== null) {
             $transportId = $frontOrderFormData->transport->getId();
             $isTransportValid = false;
-            foreach ($transports as $transport){
-                if($transport->getId() === $transportId){
+            foreach ($transports as $transport) {
+                if ($transport->getId() === $transportId) {
                     $isTransportValid = true;
                     break;
                 }
             }
-            if($isTransportValid === false){
+            if ($isTransportValid === false) {
                 $frontOrderFormData->transport = null;
-
             }
         }
 
-        if(empty($frontOrderFormData->transportsByProductTypeId) === false){
-            foreach ($frontOrderFormData->transportsByProductTypeId as $key => $transportByProductTypeId){
-                if($transportByProductTypeId === null){
+        if (empty($frontOrderFormData->transportsByProductTypeId) === false) {
+            foreach ($frontOrderFormData->transportsByProductTypeId as $key => $transportByProductTypeId) {
+                if ($transportByProductTypeId === null) {
                     continue;
                 }
                 $transportId = $transportByProductTypeId->getId();
                 $isTransportValid = false;
-                foreach ($transports as $transport){
-                    if($transport->getId() === $transportId){
+                foreach ($transports as $transport) {
+                    if ($transport->getId() === $transportId) {
                         $isTransportValid = true;
                         break;
                     }
                 }
-                if($isTransportValid === false){
+                if ($isTransportValid === false) {
                     unset($frontOrderFormData->transportsByProductTypeId[$key]);
                     unset($frontOrderFormData->transportPersonalPickupStockByProductTypeId[$key]);
                 }

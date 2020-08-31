@@ -165,7 +165,7 @@ class TransportLogisticFacade
                 unset($transports[$key]);
             }
 
-            if($transport->isOverLimitTransport() !== $isOverLimitTransport) {
+            if ($transport->isOverLimitTransport() !== $isOverLimitTransport) {
                 unset($transports[$key]);
             }
         }

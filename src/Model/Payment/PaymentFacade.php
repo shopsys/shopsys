@@ -121,9 +121,8 @@ class PaymentFacade extends BasePaymentFacade
     {
         $isOverLimitPayment = $this->cartFacade->isCartContainsProductWithOverLimitQuantity();
         $allowedPayments = [];
-        foreach ($payments as $payment)
-        {
-            if($isOverLimitPayment === $payment->isOverLimitPayment() ){
+        foreach ($payments as $payment) {
+            if ($isOverLimitPayment === $payment->isOverLimitPayment()) {
                 $allowedPayments[] = $payment;
             }
         }
