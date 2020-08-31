@@ -427,15 +427,12 @@
                                 <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                             </span>
                         </a>
-                        <div class="box-accordion__body box-accordion__body--no-spacing js-accordion-body">
-                            <select class="box-accordion__body__input input js-not-implemented-yet">
-                                <option disabled selected>{{ 'Vyberte prodejnu'|trans }}</option>
-                            </select>
+                        <div class="box-accordion__body box-accordion__body--no-spacing box-accordion__body--table js-accordion-body">
                             <table class="box-accordion__grid-table">
                                 <tbody class="box-accordion__grid-table__body">
                                 {% for productStockAvailabilityInformation in productStocksAvailabilitiesInformation %}
                                     <tr class="box-accordion__grid-table__row">
-                                        <th class="box-accordion__grid-table__col">
+                                        <th class="box-accordion__grid-table__col box-accordion__grid-table__col--title">
                                             <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.stockName }}</strong>
                                         </th>
                                         <td class="box-accordion__grid-table__col">

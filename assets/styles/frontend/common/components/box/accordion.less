@@ -200,11 +200,12 @@
     }
 
     &__grid-table {
-        display: none;
+        display: block;
+        width: 100%;
+        overflow-x: auto;
 
-        @media @query-lg {
-            display: block;
-            width: 100%;
+        @media @query-vl {
+            overflow: visible;
         }
 
         &__body {
@@ -213,34 +214,69 @@
         }
 
         &__row {
-            display: flex;
-            width: 100%;
-            padding: 15px @box-accordion-padding-horisontal;
 
-            border-bottom: 1px solid @color-border-lighter;
+            @media @query-vl {
+                display: flex;
+                width: 100%;
+                padding: 1rem @box-accordion-padding-horisontal-lg;
 
-            @media @query-lg {
-                padding-left: @box-accordion-padding-horisontal-lg;
-                padding-right: @box-accordion-padding-horisontal-lg;
+                border-bottom: 1px solid @color-border-lighter;
             }
 
             &:last-child {
                 border-bottom: 0;
+
+                .box-accordion__grid-table__col {
+                    border-bottom: 0;
+                }
             }
         }
 
         &__col {
-            flex: 1 1 0;
+            min-width: 200px;
+            padding: 0.75rem 0.5rem;
 
             color: @color-light-tertiary;
+            border-bottom: 1px solid @color-border-lighter;
+
+            @media @query-vl {
+                flex: 1 1 0;
+                min-width: 0;
+                padding: 0;
+
+                border: 0;
+            }
+
+            &--title {
+                min-width: 180px;
+                padding-right: 1rem;
+
+                @media @query-tablet {
+                    padding-left: 0;
+                }
+
+                @media @query-vl {
+                    min-width: 0;
+                    padding-right: 0;
+                }
+            }
 
             &--expose {
-                position: relative;
-                left: 60px;
+                min-width: 270px;
+
+                @media screen and (min-width: 1200px) {
+                    position: relative;
+                    left: 60px;
+                    min-width: 0;
+                }
             }
 
             &--showrooms {
                 text-align: right;
+
+                @media @query-tablet {
+                    min-width: 160px;
+                }
             }
 
             .is-in-stock {
