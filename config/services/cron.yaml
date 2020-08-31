@@ -106,3 +106,7 @@ services:
     Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule:
         tags:
             - { name: shopsys.cron, hours: '21', minutes: '10', instanceName: service, readableName: 'Generate Error pages' }
+
+    App\Model\Order\Transfer\ScontoBridge\OrderTransferScontoBridgeCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: export, readableName: 'Export objednávek do můstku' }

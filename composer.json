@@ -110,6 +110,7 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/workflow": "^4.4.0",
         "tracy/tracy": "^2.4.13",
+        "tuscanicz/enum": "^2.1",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.9",
         "vasek-purchart/console-errors-bundle": "^3.0.0",

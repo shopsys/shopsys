@@ -57,6 +57,11 @@ class OrderData extends BaseOrderData
      */
     public $gtmCoupon;
 
+    /**
+     * @var string
+     */
+    public $scontoBridgeStatus = OrderScontoBridgeStatusEnum::STATUS_NEW;
+
     public function __construct()
     {
         parent::__construct();

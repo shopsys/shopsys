@@ -47,4 +47,13 @@ class OrderRepository extends BaseOrderRepository
 
         return $queryBuilder->getQuery()->execute();
     }
+
+    public function getAllOrdersNotSentToScontoBridge(): array
+    {
+        $queryBuilder = $this->createOrderQueryBuilder()
+            ->andWhere('o.scontoBridgeStatus = :status')
+            ->setParameter('status', OrderScontoBridgeStatusEnum::STATUS_NEW);
+
+        return $queryBuilder->getQuery()->execute();
+    }
 }

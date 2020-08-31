@@ -21,6 +21,10 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 /**
  * @property \App\Model\Payment\PaymentRepository $paymentRepository
+<<<<<<< HEAD
+=======
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Payment\PaymentRepository $paymentRepository, \App\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation, \App\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory)
+>>>>>>> b565de401... SD-1451 orders & customers bridge export stub
  * @method \App\Model\Payment\Payment create(\App\Model\Payment\PaymentData $paymentData)
  * @method edit(\App\Model\Payment\Payment $payment, \App\Model\Payment\PaymentData $paymentData)
  * @method \App\Model\Payment\Payment getById(int $id)
@@ -35,6 +39,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
  * @method \App\Model\Payment\Payment getByUuid(string $uuid)
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
+ * @property \App\Model\Transport\TransportRepository $transportRepository
  */
 class PaymentFacade extends BasePaymentFacade
 {
@@ -113,6 +118,7 @@ class PaymentFacade extends BasePaymentFacade
         return $payments;
     }
 
+<<<<<<< HEAD
     /**
      * @param \App\Model\Payment\Payment[] $payments
      * @return \App\Model\Payment\Payment[]
@@ -128,5 +134,10 @@ class PaymentFacade extends BasePaymentFacade
         }
 
         return $allowedPayments;
+=======
+    public function findByExternalId(int $id): ?Payment
+    {
+        return $this->paymentRepository->findByExternalId($id);
+>>>>>>> b565de401... SD-1451 orders & customers bridge export stub
     }
 }

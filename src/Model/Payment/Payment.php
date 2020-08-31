@@ -49,10 +49,18 @@ class Payment extends BasePayment
     private $hiddenByGoPay;
 
     /**
+<<<<<<< HEAD
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $isOverLimitPayment;
+=======
+     * @var int
+     *
+     * @ORM\Column(type="integer", unique=true)
+     */
+    private int $externalId;
+>>>>>>> b565de401... SD-1451 orders & customers bridge export stub
 
     /**
      * @param \App\Model\Payment\PaymentData $paymentData
@@ -64,7 +72,11 @@ class Payment extends BasePayment
         $this->type = $paymentData->type;
         $this->setGoPayPaymentMethod($paymentData);
         $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
+<<<<<<< HEAD
         $this->isOverLimitPayment = $paymentData->isOverLimitPayment;
+=======
+        $this->externalId = $paymentData->externalId;
+>>>>>>> b565de401... SD-1451 orders & customers bridge export stub
     }
 
     /**
@@ -77,7 +89,11 @@ class Payment extends BasePayment
         $this->type = $paymentData->type;
         $this->setGoPayPaymentMethod($paymentData);
         $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
+<<<<<<< HEAD
         $this->isOverLimitPayment = $paymentData->isOverLimitPayment;
+=======
+        $this->externalId = $paymentData->externalId;
+>>>>>>> b565de401... SD-1451 orders & customers bridge export stub
     }
 
     /**
@@ -125,6 +141,14 @@ class Payment extends BasePayment
     public function unHideByGoPay(): void
     {
         $this->hiddenByGoPay = false;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExternalId(): int
+    {
+        return $this->externalId;
     }
 
     /**

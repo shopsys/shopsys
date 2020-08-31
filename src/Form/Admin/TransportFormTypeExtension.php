@@ -7,6 +7,7 @@ namespace App\Form\Admin;
 use App\Model\Product\Type\ProductTypeFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportData;
+use App\Model\Transport\TransportFacade;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,13 +30,23 @@ class TransportFormTypeExtension extends AbstractTypeExtension
      * @var \App\Model\Product\Type\ProductTypeFacade
      */
     private $productTypeFacade;
+    /**
+     * @var TransportFacade
+     */
+    private TransportFacade $transportFacade;
+
+    /**
+     * @var Transport|null
+     */
+    private $transport;
 
     /**
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      */
-    public function __construct(ProductTypeFacade $productTypeFacade)
+    public function __construct(ProductTypeFacade $productTypeFacade, TransportFacade $transportFacade)
     {
         $this->productTypeFacade = $productTypeFacade;
+        $this->transportFacade = $transportFacade;
     }
 
     /**
@@ -42,6 +54,7 @@ class TransportFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $this->transport = $options['transport'];
         $builder->get('basicInformation')
             ->add('productTypes', ChoiceType::class, [
                 'required' => false,
@@ -70,6 +83,14 @@ class TransportFormTypeExtension extends AbstractTypeExtension
             ->add('isOverLimitTransport', YesNoType::class, [
                 'label' => t('Doprava pro nadlimitní množství'),
                 'required' => false,
+            ])
+            ->add('externalId', IntegerType::class, [
+                'label' => t('Párovací ID můstku'),
+                'constraints' => [
+                    new Callback([
+                        'callback' => [$this, 'validateUniqueExternalId']
+                    ])
+                ]
             ]);
 
         $builder->add($this->createTransportPackages($builder));
@@ -153,6 +174,24 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                         ->atPath('type') // I can not set to `transportPackages` and I do not know how to solve it :(
                         ->addViolation();
                 }
+            }
+        }
+    }
+
+    /**
+     * @param int $id
+     * @param ExecutionContextInterface $context
+     */
+    public function validateUniqueExternalId(int $id, ExecutionContextInterface $context): void
+    {
+        $existingTransport = $this->transportFacade->findByExternalId($id);
+        if ($existingTransport !== null) {
+            if ($this->transport === null || $existingTransport->getId() !== $this->transport->getId()) {
+                $context->buildViolation(sprintf(
+                    t('Zadané párovací ID můstku je již použito u jiné dopravy (%s)'), $existingTransport->getName()
+                ))
+                    ->atPath('externalId')
+                    ->addViolation();
             }
         }
     }

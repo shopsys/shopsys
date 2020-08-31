@@ -6,11 +6,15 @@ namespace App\Form\Admin;
 
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use App\Model\Payment\Payment;
+use App\Model\Payment\PaymentFacade;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PaymentFormTypeExtension extends AbstractTypeExtension
 {
@@ -20,11 +24,22 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
     private $goPayPaymentMethodFacade;
 
     /**
+     * @var PaymentFacade
+     */
+    private PaymentFacade $paymentFacade;
+
+    /**
+     * @var Payment|null
+     */
+    private $payment;
+
+    /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      */
-    public function __construct(GoPayPaymentMethodFacade $goPayPaymentMethodFacade)
+    public function __construct(GoPayPaymentMethodFacade $goPayPaymentMethodFacade, PaymentFacade $paymentFacade)
     {
         $this->goPayPaymentMethodFacade = $goPayPaymentMethodFacade;
+        $this->paymentFacade = $paymentFacade;
     }
 
     /**
@@ -32,6 +47,8 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->payment = $options['payment'];
+
         $builderBasicInformationGroup = $builder->get('basicInformation');
 
         $builderBasicInformationGroup
@@ -63,6 +80,14 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
             ->add('isOverLimitPayment', YesNoType::class, [
                 'label' => t('Platba pro nadlimitní množství'),
                 'required' => false,
+            ])
+            ->add('externalId', IntegerType::class, [
+                'label' => t('Párovací ID můstku'),
+                'constraints' => [
+                    new Callback([
+                        'callback' => [$this, 'validateUniqueExternalId']
+                    ])
+                ]
             ]);
 
         if ($options['payment'] !== null) {
@@ -78,6 +103,24 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
                         'iconTitle' => t('Tento způsob platby je skrytý systémem GoPay.'),
                     ],
                 ]);
+            }
+        }
+    }
+
+    /**
+     * @param int $id
+     * @param ExecutionContextInterface $context
+     */
+    public function validateUniqueExternalId(int $id, ExecutionContextInterface $context): void
+    {
+        $existingPayment = $this->paymentFacade->findByExternalId($id);
+        if ($existingPayment !== null) {
+            if ($this->payment === null  || $existingPayment->getId() !== $this->payment->getId()) {
+                $context->buildViolation(sprintf(
+                    t('Zadané párovací ID můstku je již použito u jiné platby (%s)'), $existingPayment->getName()
+                ))
+                    ->atPath('externalId')
+                    ->addViolation();
             }
         }
     }

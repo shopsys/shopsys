@@ -27,9 +27,15 @@ class PaymentData extends BasePaymentData
     public $hiddenByGoPay;
 
     /**
+<<<<<<< HEAD
      * @var bool
      */
     public $isOverLimitPayment;
+=======
+     * @var int
+     */
+    public $externalId;
+>>>>>>> b565de401... SD-1451 orders & customers bridge export stub
 
     public function __construct()
     {

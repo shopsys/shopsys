@@ -901,3 +901,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Feed\FeedFacade:
         alias: App\Model\Feed\FeedFacade
+
+    Shopsys\FrameworkBundle\Model\Transport\TransportRepository:
+        alias: App\Model\Transport\TransportRepository

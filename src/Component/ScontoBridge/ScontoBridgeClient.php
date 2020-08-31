@@ -7,6 +7,8 @@ namespace App\Component\ScontoBridge;
 use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use JsonSerializable;
+use Psr\Http\Message\ResponseInterface;
 
 class ScontoBridgeClient
 {
@@ -96,5 +98,24 @@ class ScontoBridgeClient
         $responseData = json_decode($response->getBody()->getContents(), true);
 
         return $responseData['result'];
+    }
+
+    public function post(string $uri, JsonSerializable $data): ResponseInterface
+    {
+        $client = new Client([
+            'base_uri' => $this->scontoBridgeConfig->getBaseUri(),
+            'timeout' => $this->timeout
+        ]);
+
+        $headers = [
+            'Authorization' => 'Bearer ' . $this->getScontoBridgeAccessToken(),
+            'Accept' => 'application/json',
+        ];
+
+        $dataJson = json_encode($data);
+        return $client->post($uri, [
+            RequestOptions::HEADERS => $headers,
+            RequestOptions::JSON => $data
+        ]);
     }
 }
