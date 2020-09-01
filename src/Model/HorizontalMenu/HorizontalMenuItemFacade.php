@@ -100,6 +100,8 @@ class HorizontalMenuItemFacade
      */
     public function create(HorizontalMenuItemData $horizontalMenuItemData): HorizontalMenuItem
     {
+        $this->fixUrlInHorizontalMenuItemData($horizontalMenuItemData);
+
         $horizontalMenuItem = new HorizontalMenuItem($horizontalMenuItemData);
 
         $this->em->persist($horizontalMenuItem);
@@ -121,6 +123,7 @@ class HorizontalMenuItemFacade
     public function edit(int $id, HorizontalMenuItemData $horizontalMenuItemData): HorizontalMenuItem
     {
         $horizontalMenuItem = $this->getById($id);
+        $this->fixUrlInHorizontalMenuItemData($horizontalMenuItemData);
 
         $horizontalMenuItem->edit($horizontalMenuItemData);
 
@@ -132,6 +135,28 @@ class HorizontalMenuItemFacade
         $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($horizontalMenuItem->getDomainId());
 
         return $horizontalMenuItem;
+    }
+
+    /**
+     * @param \App\Model\HorizontalMenu\HorizontalMenuItemData $horizontalMenuItemData
+     */
+    private function fixUrlInHorizontalMenuItemData(HorizontalMenuItemData $horizontalMenuItemData): void
+    {
+        if ($horizontalMenuItemData->url === null) {
+            return;
+        }
+
+        if (strpos($horizontalMenuItemData->url, 'http') === 0) {
+            return;
+        }
+
+        if (strpos($horizontalMenuItemData->url, 'www') === 0) {
+            return;
+        }
+
+        if (strpos($horizontalMenuItemData->url, '/') !== 0) {
+            $horizontalMenuItemData->url = '/' . $horizontalMenuItemData->url;
+        }
     }
 
     /**
