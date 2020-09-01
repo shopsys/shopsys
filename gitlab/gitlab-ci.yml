@@ -174,8 +174,8 @@ deploy:devel:
     only:
         - devel
     environment:
-        name: devel
-        url: https://devel.eshop.scontodev.cz
+        name: develop
+        url: https://develop.scontodev.cz
 
 repository:clean:
     stage: service
