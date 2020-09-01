@@ -1,0 +1,31 @@
+version: '1'
+
+tools:
+    bandit:
+        enabled: false
+    detekt:
+        enabled: false
+    eslint:
+        enabled: false
+    ethlint:
+        enabled: false
+    hadolint:
+        enabled: false
+    npmAudit:
+        enabled: false
+    phpmd:
+        enabled: false
+    phpstan:
+        enabled: false
+    pylint:
+        enabled: false
+    revive:
+        enabled: false
+    rubocop:
+        enabled: false
+    scsslint:
+        enabled: false
+    tfsec:
+        enabled: false
+    tslint:
+        enabled: false
