@@ -32,6 +32,36 @@
         margin-top: 2rem;
     }
 
+    &--forgot-pswd {
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+
+        form {
+            @media @query-md {
+                display: flex;
+            }
+        }
+
+        .form-line-block {
+            @media @query-md {
+                flex-grow: 1;
+                margin: 0 1rem 0 0;
+            }
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+
+            @media @query-md {
+                width: auto;
+                margin: auto;
+                justify-content: flex-start;
+            }
+        }
+    }
+
     &--edit {
         @media @query-md {
             margin-top: 2rem;
