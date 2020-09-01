@@ -50,7 +50,7 @@
         "webpack-notifier": "^1.6.0"
     },
     "dependencies": {
-        "@shopsys/framework": "9.0.0",
+        "@shopsys/framework": "9.0.2",
         "codemirror": "^5.49.2",
         "jquery-ui": "^1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",

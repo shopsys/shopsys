@@ -29,8 +29,8 @@ class CartItem
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Cart
      *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Cart\Cart", inversedBy="items")
-     * @ORM\JoinColumn(name="cart_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Cart\Cart", inversedBy="items", cascade={"persist"})
+     * @ORM\JoinColumn(name="cart_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $cart;
 

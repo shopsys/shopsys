@@ -30,6 +30,77 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
+## [v9.0.2](https://github.com/shopsys/shopsys/compare/v9.0.1...v9.0.2) - 2020-09-01
+
+### [shopsys/framework]
+
+#### Changed
+
+- [#1823] remove final from relevant classes, Thanks to [@pk16011990]
+- [#1941] better extensibility of article form type
+- [#1972] fixed removing friendly urls
+- [#1977] remove customer and his addresses with customer user
+- [#2006] sellingTo is now set with the end of day time
+
+#### Fixed
+
+- [#1750] Product::setProductCategoryDomains() fix
+- [#1932] updated AdministratorFrontSecurityFacade::isAdministratorLogged() to work well if used on frontend, Thanks to [@pk16011990]
+- [#1956] IndexExportedEvent is called after elasticsearch export cron module finished
+- [#1963] fixed multiple binding of product picker events
+- [#1966] fixed clearing form options in product picker
+- [#1967] select distinct product for vat replace, Thanks to [@mposchl]
+- [#1971] fixed joining the same table with different alias
+- [#1979] spinbox plus now works correctly with min value
+- [#1982] categories in administration are now loaded using admin locale
+- [#1986] design - admin - title button wrap bar only if contains buttons
+- [#1987] design - admin - domain switcher for more domains
+- [#1988] fixed stylelint phing targets
+- [#1998] fixed delayed javascript validators
+- [#2001] AbstractFileUploadType: remove fileConstraints class property
+- [#2004] remove space in error page filename, Thanks to [@pk16011990]
+- [#2009] test environment is no longer wrongly detected as prod
+- [#2010] cart items are now correctly deleted when cart is deleted
+
+### [shopsys/project-base]
+
+#### Changed
+
+- [#1918] generate images_id_seq in data fixtures automatically, Thanks to [@pk16011990]
+- [#1937] call static method as static, Thanks to [@pk16011990]
+- [#1938] removed unnecessary else conditions, Thanks to [@pk16011990]
+- [#1939] use __DIR__ instead of dirname(__FILE__), Thanks to [@pk16011990]
+
+#### Fixed
+
+- [#1970] fixed displaying errors in popup window
+- [#1995] design - in popup window with html conntent - call registerNewContent…
+
+#### Removed
+
+- [#1940] removed unused route /contactForm/, Thanks to [@pk16011990]
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1944] added note about possibility of credentials caching while releasing
+- [#1949] releaser added warning when merging RC branch
+
+#### Changed
+
+- [#1777] ImageConfig accepts extended entities, Thanks to [@pk16011990]
+- [#1946] updated releaser list of excluded packages
+- [#1955] temporary fileupload is now uploaded to abstract filesystem
+- [#1985] redis build-version now includes application environment
+- [#2000] timezone for running crons
+
+#### Fixed
+
+- [#1947] fixed checking builds in after-release stage
+- [#1948] releaser fixed npm command
+- [#1964] fixed filtering of products in frontend API
+
 ## [v9.0.1](https://github.com/shopsys/shopsys/compare/v9.0.0...v9.0.1) - 2020-07-14
 
 ### [shopsys/http-smoke-testing]
@@ -3581,3 +3652,43 @@ That's why is this section formatted differently.
 [@PetrHeinz]: https://github.com/PetrHeinz
 [@MattCzerner]: https://github.com/MattCzerner
 [@RostislavKreisinger]: https://github.com/RostislavKreisinger
+
+[#2010]: https://github.com/shopsys/shopsys/pull/2010
+[#2009]: https://github.com/shopsys/shopsys/pull/2009
+[#2006]: https://github.com/shopsys/shopsys/pull/2006
+[#2004]: https://github.com/shopsys/shopsys/pull/2004
+[#2001]: https://github.com/shopsys/shopsys/pull/2001
+[#2000]: https://github.com/shopsys/shopsys/pull/2000
+[#1998]: https://github.com/shopsys/shopsys/pull/1998
+[#1995]: https://github.com/shopsys/shopsys/pull/1995
+[#1988]: https://github.com/shopsys/shopsys/pull/1988
+[#1987]: https://github.com/shopsys/shopsys/pull/1987
+[#1986]: https://github.com/shopsys/shopsys/pull/1986
+[#1985]: https://github.com/shopsys/shopsys/pull/1985
+[#1982]: https://github.com/shopsys/shopsys/pull/1982
+[#1979]: https://github.com/shopsys/shopsys/pull/1979
+[#1977]: https://github.com/shopsys/shopsys/pull/1977
+[#1972]: https://github.com/shopsys/shopsys/pull/1972
+[#1971]: https://github.com/shopsys/shopsys/pull/1971
+[#1970]: https://github.com/shopsys/shopsys/pull/1970
+[#1967]: https://github.com/shopsys/shopsys/pull/1967
+[#1966]: https://github.com/shopsys/shopsys/pull/1966
+[#1964]: https://github.com/shopsys/shopsys/pull/1964
+[#1963]: https://github.com/shopsys/shopsys/pull/1963
+[#1956]: https://github.com/shopsys/shopsys/pull/1956
+[#1955]: https://github.com/shopsys/shopsys/pull/1955
+[#1949]: https://github.com/shopsys/shopsys/pull/1949
+[#1948]: https://github.com/shopsys/shopsys/pull/1948
+[#1947]: https://github.com/shopsys/shopsys/pull/1947
+[#1946]: https://github.com/shopsys/shopsys/pull/1946
+[#1944]: https://github.com/shopsys/shopsys/pull/1944
+[#1941]: https://github.com/shopsys/shopsys/pull/1941
+[#1940]: https://github.com/shopsys/shopsys/pull/1940
+[#1939]: https://github.com/shopsys/shopsys/pull/1939
+[#1938]: https://github.com/shopsys/shopsys/pull/1938
+[#1937]: https://github.com/shopsys/shopsys/pull/1937
+[#1932]: https://github.com/shopsys/shopsys/pull/1932
+[#1918]: https://github.com/shopsys/shopsys/pull/1918
+[#1823]: https://github.com/shopsys/shopsys/pull/1823
+[#1777]: https://github.com/shopsys/shopsys/pull/1777
+[#1750]: https://github.com/shopsys/shopsys/pull/1750
