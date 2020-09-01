@@ -17,11 +17,21 @@ export default class FindCustomerByEmail {
     }
 
     static onComplete () {
-        location.reload();
+        const $form = $('<form action="' + window.location.href + '" method="post">'
+            + '<input type="text" name="flow_order_instance" value="flow_order" />'
+            + '<input type="text" name="flow_order_step" value="3" />'
+            + '</form>');
+        $('body').append($form);
+        $form.submit();
     }
 
     static onError () {
-        location.reload();
+        const $form = $('<form action="' + window.location.href + '" method="post">'
+            + '<input type="text" name="flow_order_instance" value="flow_order" />'
+            + '<input type="text" name="flow_order_step" value="3" />'
+            + '</form>');
+        $('body').append($form);
+        $form.submit();
     }
 
     static init ($container) {
