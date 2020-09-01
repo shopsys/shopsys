@@ -8,35 +8,100 @@
 {% endblock %}
 
 {% block main_content %}
+    <div class="web__line web__line--spacing--big">
+        <div class="web__container">
+            <h1 class="heading heading--primary heading--primary-subpage">{{ "Prodejny"|trans }}</h1>
+            <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing">
+                <div class="box-breadcrumb js-not-implemented-yet">
+                    <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
+                        <i class="box-breadcrumb__item__icon svg svg-home"></i>
+                        <span>{{ 'Domů'|trans }}</span>
+                    </a>
+                    <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                    <a href="{{ url('front_stores') }}" class="box-breadcrumb__item">{{ 'Prodejny'|trans }}</a>
+                </div>
+            </div>
+            <div class="box-stores">
+                <div class="box-stores__map">
+                    <div id="js-google-map-box" class="box-stores__map__google"></div>
+                </div>
+                <div class="box-stores__info">
+                    <div class="box-stores__store box-stores__store--default">
+                        <picture>
+                            <source
+                                    srcset="
+                                    {{ asset('public/frontend/images/prodejny2x.png') }} 2x,
+                                    {{ asset('public/frontend/images/prodejny.png') }} 1x"
+                            />
+                            <img
+                                    class="box-stores__store__img box-stores__store__img--default"
+                                    loading="lazy"
+                                    src="{{ imgLazyloadPlaceholder }}"
+                                    data-src="{{ asset('public/frontend/images/prodejny.png') }}"
+                                    alt="{{ 'Prodejny Sconto'|trans }}">
+                        </picture>
+                        <h2 class="box-stores__store__title">{{ 'Prodejny Sconto'|trans }}</h2>
+                        <p class="box-stores__store__desc">
+                            {{ 'Další doplňkový sortiment, zákaznické<br>centrum nebo osobní vyzvednutí zboží z<br>e-shopu zdarma na 8 místech v ČR.'|transHtml }}
+                        </p>
+                    </div>
+                    {% for store in stores %}
+                        <div
+                            class="box-stores__store js-store-info display-none"
+                            data-store-id="{{ store.id }}"
+                            data-store-href="{{ url('front_stores_detail', {id: store.id}) }}"
+                        >
+                            <button class="window-popup__close js-google-map-close-store">
+                                <i class="svg svg-remove"></i>
+                            </button>
 
-    <style>
-        #js-google-map-box {
-            width: 100%;
-            height: 400px;
-            background-color: grey;
-        }
-    </style>
-    <div id="js-google-map-box"></div>
+                            <h2 class="box-stores__store__title">{{ store.name }}</h2>
+                            {{ store.street }} <br>
+                            {{ store.city }} <br>
+                            {% if store.openingHours is not empty %}
+                                <strong class="box-stores__store__subtitle">{{ 'Otevírací doba'|trans }}</strong>
+                                <div class="box-stores__store__hours">
+                                    <div class="box-stores__store__hours__classic">{{ store.openingHours }}</div>
+                                </div>
+                            {% endif %}
+                            {% if store.contactText1 is not empty or store.contactText2 is not empty %}
+                                <strong class="box-stores__store__subtitle">{{ 'Kontakt na obchodní dům'|trans }}</strong>
+                                <div class="box-stores__store__phones">
+                                    {{ store.contactText1 }}
+                                </div>
+                            {% endif %}
 
-   {% for store in stores %}
-        <div class="js-store-info display-none" data-store-id="{{ store.id }}">
-            {% if imageExists(store, 'main') %}
-                {{ image(store, { itemprop: 'image', lazy:true, type: 'main' }) }}
-            {% endif %}
+                            {% if imageExists(store, 'main') %}
+                                {{ image(store, { itemprop: 'image', lazy: true, type: 'main', class: 'box-stores__store__img' }) }}
+                            {% endif %}
 
-            <h1>{{ store.name }}</h1>
-            {{ store.street }} <br>
-            {{ store.city }} <br>
-            {{ store.openingHours }} <br>
-            {{ store.extraordinaryOpeningHours }} <br>
-            {{ store.contactText1 }} <br>
-            {{ store.contactText2 }} <br>
-
-            <a href="{{ url('front_stores_detail', {id: store.id}) }}">{{ 'Detail obchodního domu'|trans }}</a>
+                            <a
+                                class="box-stores__store__link"
+                                href="{{ url('front_stores_detail', {id: store.id}) }}"
+                            >
+                                {{ 'Detail obchodního domu'|trans }}
+                                <i class="box-stores__store__link__icon svg svg-chevron"></i>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="box-stores-list">
+                {% for store in stores %}
+                    <div class="box-stores-list__item">
+                        <a class="box-stores-list__item__link" href="{{ url('front_stores_detail', {id: store.id}) }}">
+                            <i class="box-stores-list__item__icon svg svg-marker"></i>
+                            <strong class="box-stores-list__item__name">{{ store.name }}</strong>
+                            <span class="box-stores-list__item__to-detail">
+                                <span class="box-stores-list__item__to-detail__text">{{ 'Detail prodejny'|trans }}</span>
+                                <i class="svg svg-chevron"></i>
+                            </span>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-
-    {% endfor %}
-
+    </div>
 {% endblock %}
 
 {% block javascripts_bottom %}
@@ -50,5 +115,5 @@
         {% endif %}
         {% endfor %}
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ googleMapApiKey }}"></script>
 {% endblock %}

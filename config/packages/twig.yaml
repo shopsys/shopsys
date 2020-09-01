@@ -35,3 +35,4 @@ twig:
         imgSrcsetMobileBreakpoint: '600px'
         imgSrcsetDesktopBreakpoint: '601px'
         imgLazyloadPlaceholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII='
+        googleMapApiKey: 'AIzaSyCkbxpC65m4vJAoWjioff5kYktYQDiEtiE&amp;token=38432'

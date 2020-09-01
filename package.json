@@ -51,7 +51,6 @@
     },
     "dependencies": {
         "@fancyapps/fancybox": "^3.5.7",
-        "@google/markerclustererplus": "^5.0.4",
         "@shopsys/framework": "9.0.0",
         "codemirror": "^5.49.2",
         "intersection-observer": "^0.11.0",

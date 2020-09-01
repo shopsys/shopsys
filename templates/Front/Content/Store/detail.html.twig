@@ -8,33 +8,99 @@
 {% endblock %}
 
 {% block main_content %}
-    <style>
-        #js-google-map-box {
-            width: 100%;
-            height: 400px;
-            background-color: grey;
-        }
-    </style>
-    <div id="js-google-map-box"></div>
+    <div class="web__line web__line--spacing">
+        <div class="web__container">
+            <div class="box-breadcrumb box-breadcrumb--align-left js-not-implemented-yet">
+                <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
+                    <i class="box-breadcrumb__item__icon svg svg-home"></i>
+                    <span>{{ 'Domů'|trans }}</span>
+                </a>
+                <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                <a href="{{ url('front_stores') }}" class="box-breadcrumb__item">{{ 'Prodejny'|trans }}</a>
+            </div>
+            <div class="box-stores box-stores--detail{{ imageExists(store, 'main') ? ' box-stores--detail-has-img' }}">
+                <div class="box-stores__info box-stores__info--detail">
+                    <h1 class="heading heading--primary heading--primary-subpage box-stores__heading">{{ store.name }}</h1>
+                    <div class="box-stores__info__grid">
+                        <div class="box-stores__info__grid__item">
+                            <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
+                                {{ 'Adresa obchodu'|trans }}
+                            </strong>
+                            {{ store.street }} <br>
+                            {{ store.city }} <br>
+                        </div>
+                        <div class="box-stores__info__grid__item">
+                            <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
+                                {{ 'Otevírací doba'|trans }}
+                            </strong>
+                            <div class="box-stores__store__hours">
+                                <div class="box-stores__store__hours__detail">{{ store.openingHours }}</div>
+                            </div>
+                        </div>
+                        <div class="box-stores__info__grid__item">
+                            <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
+                                {{ 'Kontakt na obchodní dům'|trans }}
+                            </strong>
+                            {{ store.contactText1 }}<br>
+                            {{ store.contactText2 }}
+                        </div>
+                        <div class="box-stores__info__grid__item">
+                            <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
+                                {{ 'Mimořádná otevírací doba'|trans }}
+                            </strong>
+                            {{ store.extraordinaryOpeningHours }}
+                        </div>
+                        <div class="box-stores__info__grid__item box-stores__info__grid__item--full">
+                            <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
+                                {{ 'Další popisky'|trans }}
+                            </strong>
+                            {{ store.contactInfo|raw }}
+                        </div>
+                    </div>
 
-    {% if imageExists(store, 'main') %}
-        {{ image(store, { itemprop: 'image', lazy:true, type: 'main' }) }}
-    {% endif %}
+                    <div class="box-stores__map box-stores__map--detail">
+                        <div id="js-google-map-box" class="box-stores__map__google box-stores__map__google--detail"></div>
+                        {% if imageExists(store, 'main') %}
+                            {{ image(store, { itemprop: 'image', lazy:true, type: 'main' }) }}
+                        {% endif %}
+                    </div>
 
-    <h1>{{ store.name }}</h1>
-    {{ store.street }} <br>
-    {{ store.city }} <br>
-    {{ store.openingHours }} <br>
-    {{ store.extraordinaryOpeningHours }} <br>
-    {{ store.contactInfo }} <br>
-    {{ store.contactText1 }} <br>
-    {{ store.contactText2 }} <br>
+                    <div class="box-stores-list js-not-implemented-yet">
+                        <div class="box-stores-list__item box-stores-list__item--detail">
+                            <a class="box-stores-list__item__link" href="#">
+                                <i class="box-stores-list__item__icon box-stores-list__item__icon--detail svg svg-headphones"></i>
+                                <strong class="box-stores-list__item__name">{{ 'Máte další otázky?'|trans }}</strong>
+                                <span class="box-stores-list__item__to-detail">
+                                    <span class="box-stores-list__item__to-detail__text box-stores-list__item__to-detail__text--detail">
+                                        {{ 'Zákaznické centrum'|trans }}
+                                    </span>
+                                    <i class="svg svg-chevron"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
 
-    {% set galleryImages = getImages(store, 'gallery') %}
-    {% for galleryImage in galleryImages %}
-        {{ image(galleryImage, { itemprop: 'image', lazy:true, type: 'gallery' }) }}
-    {% endfor %}
-
+                    {% set galleryImages = getImages(store, 'gallery') %}
+                    {% if galleryImages is not empty %}
+                        <div class="box-stores__gallery dont-print js-gallery">
+                            <div class="box-stores__gallery__wrap js-gallery-wrap">
+                                {% for galleryImage in galleryImages %}
+                                    <div class="box-stores__gallery__item js-gallery-item">
+                                        <a
+                                            data-fancybox="products-gallery"
+                                            href="{{ imageUrl(galleryImage, 'original') }}"
+                                            class="box-stores__ballery__item__link">
+                                            {{ image(galleryImage, { itemprop: 'image', lazy: true, type: 'gallery' }) }}
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts_bottom %}
@@ -46,5 +112,5 @@
             markersData.push({locations: {lat: {{ store.locationLat }}, lng: {{ store.locationLng }} }, data: {id: '{{ store.id }}' }});
         {% endif %}
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ googleMapApiKey }}"></script>
 {% endblock %}
