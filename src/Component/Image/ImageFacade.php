@@ -33,7 +33,6 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
  * @method \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] getAdditionalImagesData(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, \App\Component\Image\Image $imageOrEntity, string|null $sizeName, string|null $type)
  * @method \App\Component\Image\Image getImageByObject(\App\Component\Image\Image|object $imageOrEntity, string|null $type)
  * @method \App\Component\Image\Image getById(int $imageId)
- * @method setImagePositionsByOrder(\App\Component\Image\Image[] $orderedImages)
  * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
  * @property \App\Component\Image\Config\ImageConfig $imageConfig
  * @method \App\Component\Image\Image[] getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, string|null $type)
@@ -42,6 +41,8 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
  */
 class ImageFacade extends BaseImageFacade
 {
+    public const AKENEO_MAIN_IMAGE_TYPE = 'image_main';
+
     /**
      * @var string|null
      */
@@ -548,5 +549,31 @@ class ImageFacade extends BaseImageFacade
         $targetImageUrl = str_replace(ImageExtension::NOIMAGE_FILENAME, ImageExtension::OPTIMIZED_NOIMAGE_FILENAME, $emptyImageUrl);
 
         return $this->replaceDomainUrlByCdnDomain($targetImageUrl, $this->domain->getCurrentDomainConfig());
+    }
+
+    /**
+     * @param \App\Component\Image\Image[] $orderedImages
+     */
+    protected function setImagePositionsByOrder($orderedImages)
+    {
+        $position = 0;
+        $canUpdateAkeneoType = false;
+        foreach ($orderedImages as $image) {
+            $image->setPosition($position);
+            $position++;
+            if ($image->getEntityName() === 'product') {
+                $canUpdateAkeneoType = true;
+            }
+        }
+
+        if ($canUpdateAkeneoType) {
+            foreach ($orderedImages as $image) {
+                if ($image->getPosition() === 0) {
+                    $image->setAkeneoImageType(self::AKENEO_MAIN_IMAGE_TYPE);
+                } elseif ($image->getAkeneoImageType() === self::AKENEO_MAIN_IMAGE_TYPE) {
+                    $image->setAkeneoImageType(null);
+                }
+            }
+        }
     }
 }

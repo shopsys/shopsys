@@ -223,8 +223,9 @@ class ProductFacade extends BaseProductFacade
         }
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->em->flush();
-        $this->productHiddenRecalculator->calculateHiddenForProduct($product);
         $this->imageFacade->manageImages($product, $productData->images);
+        $this->productHiddenRecalculator->calculateHiddenForProduct($product);
+        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->storeUrls($product);
 
@@ -307,13 +308,13 @@ class ProductFacade extends BaseProductFacade
         $this->saveParameters($product, $productData->parameters);
         $this->createProductVisibilities($product);
         $this->refreshProductAccessories($product, $productData->accessories);
+        $this->imageFacade->manageImages($product, $productData->images);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
         if ($product->isVariant()) {
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product->getMainVariant());
         }
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
-        $this->imageFacade->manageImages($product, $productData->images);
         $this->storeUrls($product);
 
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
