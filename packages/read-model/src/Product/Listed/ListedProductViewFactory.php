@@ -75,9 +75,9 @@ class ListedProductViewFactory
     {
         return $this->create(
             $product->getId(),
-            $product->getName(),
+            $product->getName($this->domain->getLocale()),
             $product->getShortDescription($this->domain->getId()),
-            $product->getCalculatedAvailability()->getName(),
+            $product->getCalculatedAvailability()->getName($this->domain->getLocale()),
             $this->productCachedAttributesFacade->getProductSellingPrice($product),
             $this->getFlagIdsForProduct($product),
             $productActionView,
