@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Model\CachedTranslatableTrait;
 use App\Model\LoadFromParentTrait;
 use App\Model\Product\Parameter\ParameterGroup as ParameterGroupEntity;
 
@@ -16,6 +17,7 @@ use App\Model\Product\Parameter\ParameterGroup as ParameterGroupEntity;
 class CachedParameterGroup extends ParameterGroupEntity
 {
     use LoadFromParentTrait;
+    use CachedTranslatableTrait;
 
     /**
      * @param \App\Model\Product\Parameter\ParameterGroup $parameterGroup
