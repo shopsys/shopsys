@@ -152,10 +152,8 @@ export default class ProductListAjaxFilter {
     }
 
     static init ($container) {
-        if ($container.filterAllNodes('.js-product-list-with-paginator').length > 0) {
-            // eslint-disable-next-line no-new
-            new ProductListAjaxFilter($container);
-        }
+        // eslint-disable-next-line no-new
+        new ProductListAjaxFilter($container);
     }
 }
 
