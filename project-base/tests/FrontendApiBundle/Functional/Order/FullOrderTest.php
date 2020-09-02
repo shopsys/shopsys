@@ -8,16 +8,17 @@ class FullOrderTest extends AbstractOrderTestCase
 {
     public function testCreateFullOrder(): void
     {
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expected = [
             'data' => [
                 'CreateOrder' => [
                     'transport' => [
-                        'name' => 'Czech post',
+                        'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
                     ],
                     'payment' => [
-                        'name' => 'Cash on delivery',
+                        'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
                     ],
-                    'status' => 'New',
+                    'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
                     'totalPrice' => [
                         'priceWithVat' => '1406.44',
                         'priceWithoutVat' => '1162.69',

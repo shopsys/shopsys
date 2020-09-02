@@ -10,16 +10,17 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
 {
     public function testCreateFullOrder(): void
     {
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expected = [
             'data' => [
                 'CreateOrder' => [
                     'transport' => [
-                        'name' => 'Czech post',
+                        'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
                     ],
                     'payment' => [
-                        'name' => 'Cash on delivery',
+                        'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
                     ],
-                    'status' => 'New',
+                    'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
                     'totalPrice' => [
                         'priceWithVat' => '4964.44',
                         'priceWithoutVat' => '4103.19',
@@ -80,9 +81,10 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
      */
     protected function getExpectedOrderItems(): array
     {
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         return [
             0 => [
-                'name' => '22" Sencor SLE 22F46DM4 HELLO KITTY',
+                'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => [
                     'priceWithVat' => '139.96',
                     'priceWithoutVat' => '115.67',
@@ -95,10 +97,10 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 ],
                 'quantity' => 10,
                 'vatRate' => '21.0000',
-                'unit' => 'pcs',
+                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             1 => [
-                'name' => '100 Czech crowns ticket',
+                'name' => t('100 Czech crowns ticket', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => [
                     'priceWithVat' => '4.84',
                     'priceWithoutVat' => '4.00',
@@ -111,10 +113,10 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 ],
                 'quantity' => 100,
                 'vatRate' => '21.0000',
-                'unit' => 'pcs',
+                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             2 => [
-                'name' => '27” Hyundai T27D590EY',
+                'name' => t('27” Hyundai T27D590EY', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => [
                     'priceWithVat' => '300.03',
                     'priceWithoutVat' => '247.96',
@@ -127,10 +129,10 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 ],
                 'quantity' => 1,
                 'vatRate' => '21.0000',
-                'unit' => 'pcs',
+                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             3 => [
-                'name' => '27” Hyundai T27D590EZ',
+                'name' => t('27” Hyundai T27D590EZ', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => [
                     'priceWithVat' => '309.71',
                     'priceWithoutVat' => '255.96',
@@ -143,10 +145,10 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 ],
                 'quantity' => 2,
                 'vatRate' => '21.0000',
-                'unit' => 'pcs',
+                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             4 => [
-                'name' => '30” Hyundai 22MT44D',
+                'name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => [
                     'priceWithVat' => '193.55',
                     'priceWithoutVat' => '159.96',
@@ -159,10 +161,10 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 ],
                 'quantity' => 5,
                 'vatRate' => '21.0000',
-                'unit' => 'pcs',
+                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             5 => [
-                'name' => '32" Philips 32PFL4308',
+                'name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => [
                     'priceWithVat' => '395.60',
                     'priceWithoutVat' => '326.94',
@@ -175,10 +177,10 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 ],
                 'quantity' => 3,
                 'vatRate' => '21.0000',
-                'unit' => 'pcs',
+                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             6 => [
-                'name' => 'Cash on delivery',
+                'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => [
                     'priceWithVat' => '2.00',
                     'priceWithoutVat' => '2.00',
@@ -194,7 +196,7 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 'unit' => null,
             ],
             7 => [
-                'name' => 'Czech post',
+                'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => [
                     'priceWithVat' => '4.84',
                     'priceWithoutVat' => '4.00',
