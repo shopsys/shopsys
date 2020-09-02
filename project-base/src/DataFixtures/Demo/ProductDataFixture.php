@@ -143,6 +143,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9177759';
         $productData->partno = 'SLE 22F46DM4';
         $productData->ean = '8845781245930';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 
@@ -2947,6 +2948,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9176544MS';
         $productData->partno = 'TIC100';
         $productData->ean = '8845781243207';
+        $productData->orderingPriority = 2;
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
@@ -3062,6 +3064,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9176578';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781243205';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 
@@ -3148,6 +3151,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '7700769';
         $productData->partno = '22MT44D';
         $productData->ean = '8845781245931';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 
@@ -3255,6 +3259,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '8981537';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781245939';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 
@@ -3298,6 +3303,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '8981538';
         $productData->partno = 'T27D590EZ';
         $productData->ean = '8845781245940';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 

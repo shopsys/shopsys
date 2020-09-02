@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -39,7 +38,7 @@ class ProductTest extends GraphQlTestCase
         $arrayExpected = [
             'data' => [
                 'product' => [
-                    'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()),
+                    'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                 ],
             ],
         ];
@@ -85,7 +84,7 @@ class ProductTest extends GraphQlTestCase
      */
     private function getExpectedProductDetailWithAllAttributes(): array
     {
-        $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         $shortDescription = t(
             'Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback',
             [],
