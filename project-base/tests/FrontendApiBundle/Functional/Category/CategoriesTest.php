@@ -18,14 +18,15 @@ class CategoriesTest extends GraphQlTestCase
             }
         ';
 
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         $arrayExpected = [
             'data' => [
                 'categories' => [
-                    ['name' => 'Electronics'],
-                    ['name' => 'Books'],
-                    ['name' => 'Toys'],
-                    ['name' => 'Garden tools'],
-                    ['name' => 'Food'],
+                    ['name' => t('Electronics', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('Books', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('Toys', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('Garden tools', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('Food', [], 'dataFixtures', $firstDomainLocale)],
                 ],
             ],
         ];
@@ -46,15 +47,16 @@ class CategoriesTest extends GraphQlTestCase
             }
         ';
 
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expected = [
-            'name' => 'Electronics',
+            'name' => t('Electronics', [], 'dataFixtures', $firstDomainLocale),
             'children' => [
-                ['name' => 'TV, audio'],
-                ['name' => 'Cameras & Photo'],
-                ['name' => 'Printers'],
-                ['name' => 'Personal Computers & accessories'],
-                ['name' => 'Mobile Phones'],
-                ['name' => 'Coffee Machines'],
+                ['name' => t('TV, audio', [], 'dataFixtures', $firstDomainLocale)],
+                ['name' => t('Cameras & Photo', [], 'dataFixtures', $firstDomainLocale)],
+                ['name' => t('Printers', [], 'dataFixtures', $firstDomainLocale)],
+                ['name' => t('Personal Computers & accessories', [], 'dataFixtures', $firstDomainLocale)],
+                ['name' => t('Mobile Phones', [], 'dataFixtures', $firstDomainLocale)],
+                ['name' => t('Coffee Machines', [], 'dataFixtures', $firstDomainLocale)],
             ],
         ];
 
