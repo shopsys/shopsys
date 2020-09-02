@@ -110,6 +110,12 @@ class ProductDomain extends BaseProductDomain
     protected $saleExclusion;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $calculatedSaleExclusion;
+
+    /**
      * @var bool|null
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -173,6 +179,7 @@ class ProductDomain extends BaseProductDomain
         parent::__construct($product, $domainId);
 
         $this->flags = new ArrayCollection();
+        $this->calculatedSaleExclusion = true;
     }
 
     /**
@@ -366,14 +373,6 @@ class ProductDomain extends BaseProductDomain
     }
 
     /**
-     * @param bool $saleExclusion
-     */
-    public function setSaleExclusion(bool $saleExclusion): void
-    {
-        $this->saleExclusion = $saleExclusion;
-    }
-
-    /**
      * @param \App\Model\Product\Flag\Flag[] $flags
      * @return bool
      */
@@ -389,6 +388,22 @@ class ProductDomain extends BaseProductDomain
         }
 
         return $exclusion;
+    }
+
+    /**
+     * @param bool $saleExclusion
+     */
+    public function setSaleExclusion(bool $saleExclusion): void
+    {
+        $this->saleExclusion = $saleExclusion;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCalculatedSaleExclusion(): bool
+    {
+        return $this->calculatedSaleExclusion;
     }
 
     /**

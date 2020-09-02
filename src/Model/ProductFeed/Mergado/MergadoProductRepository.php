@@ -36,13 +36,13 @@ class MergadoProductRepository
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
-            ->andWhere('p.calculatedSellingDenied = FALSE')
             ->orderBy('p.id', 'asc')
             ->setMaxResults($maxResults);
 
         $this->productRepository->filterTemporaryExcludedProducts($queryBuilder, $domainConfig->getId());
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
         $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
+        $queryBuilder->andWhere('pd.calculatedSaleExclusion = FALSE');
 
         $queryBuilder->addSelect('v')->join('pd.vat', 'v');
 

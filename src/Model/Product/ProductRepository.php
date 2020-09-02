@@ -8,8 +8,10 @@ use App\Model\Stock\ProductStock;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
@@ -28,7 +30,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginationResultForListableInCategory(\App\Model\Category\Category $category, int $domainId, string $locale, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $page, int $limit)
  * @method \Doctrine\ORM\QueryBuilder getAllListableTranslatedAndOrderedQueryBuilderByCategory(int $domainId, string $locale, string $orderingModeId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginationResultForListableForBrand(\App\Model\Product\Brand\Brand $brand, int $domainId, string $locale, string $orderingModeId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $page, int $limit)
- * @method \Doctrine\ORM\QueryBuilder getFilteredListableInCategoryQueryBuilder(\App\Model\Category\Category $category, int $domainId, string $locale, \App\Model\Product\Filter\ProductFilterData $productFilterData, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Product getById(int $id)
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
  * @method \App\Model\Product\Product getVisible(int $id, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
@@ -111,7 +112,8 @@ class ProductRepository extends BaseProductRepository
     public function getAllOfferedQueryBuilder($domainId, ?PricingGroup $pricingGroup = null)
     {
         $queryBuilder = $this->getAllVisibleQueryBuilder($domainId, $pricingGroup);
-        $queryBuilder->andWhere('p.calculatedSellingDenied = FALSE');
+        $queryBuilder->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId');
+        $queryBuilder->andWhere('pd.calculatedSaleExclusion = FALSE');
 
         return $queryBuilder;
     }
@@ -242,5 +244,58 @@ class ProductRepository extends BaseProductRepository
         ');
 
         return $query->iterate();
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $locale
+     * @param string|null $searchText
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getListableBySearchTextQueryBuilder(
+        $domainId,
+        PricingGroup $pricingGroup,
+        $locale,
+        $searchText
+    ) {
+        $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
+
+        $this->addTranslation($queryBuilder, $locale);
+
+        $this->productElasticsearchRepository->filterBySearchText($queryBuilder, $searchText);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param int $domainId
+     * @param string $locale
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getFilteredListableInCategoryQueryBuilder(
+        Category $category,
+        $domainId,
+        $locale,
+        ProductFilterData $productFilterData,
+        PricingGroup $pricingGroup
+    ) {
+        $queryBuilder = $this->getListableInCategoryQueryBuilder(
+            $domainId,
+            $pricingGroup,
+            $category
+        );
+
+        $this->addTranslation($queryBuilder, $locale);
+        $this->productFilterRepository->applyFiltering(
+            $queryBuilder,
+            $productFilterData,
+            $pricingGroup
+        );
+
+        return $queryBuilder;
     }
 }

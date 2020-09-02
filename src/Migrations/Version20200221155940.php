@@ -21,7 +21,7 @@ final class Version20200221155940 extends AbstractMigration
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (1, 1, \'Výprodej\', \'cs\')');
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (2, 1, \'Výpredaj\', \'sk\')');
 
-        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code, sale) VALUES (2, \'#ffffff\', true, \'flag__product_action\', true)');
+        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (2, \'#ffffff\', true, \'flag__product_action\')');
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (3, 2, \'Akce\', \'cs\')');
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (4, 2, \'Akcia\', \'sk\')');
 

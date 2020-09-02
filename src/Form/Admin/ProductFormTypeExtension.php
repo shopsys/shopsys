@@ -361,6 +361,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Vyřazení z prodeje'),
                 'required' => false,
                 'entry_type' => YesNoType::class,
+                'position' => ['after' => 'sellingDenied'],
             ])
             ->add('vendorDeliveryDate', TextType::class, [
                 'required' => false,

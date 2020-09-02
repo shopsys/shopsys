@@ -1595,11 +1595,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->usingStock = false;
         $productData->stockQuantity = 0;
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
+        $this->setStocksQuantity($productData, 1);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
-        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_ACTION]);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SCONTO, FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_SALE]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, null);
@@ -2373,7 +2374,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
-        $this->setFlags($productData, []);
+        $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
