@@ -19,12 +19,12 @@ class ParameterValue extends BaseParameterValue
      *
      * @ORM\Column(type="string", length=10, nullable=true)
      */
-    private $rgbHex;
+    protected $rgbHex;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
      */
-    private $colourIcon;
+    protected $colourIcon;
 
     /**
      * @param \App\Model\Product\Parameter\ParameterValueData $parameterData
