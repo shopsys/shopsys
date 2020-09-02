@@ -34,7 +34,10 @@ class ImageCacheFacade
     {
         $cacheId = $this->getCacheIdForSingleEntity($entityName, $entityId, $type);
         if ($this->cacheProvider->contains($cacheId)) {
-            return $this->cacheProvider->fetch($cacheId);
+            $image = $this->cacheProvider->fetch($cacheId);
+            if ($image instanceof Image) {
+                return $image;
+            }
         }
 
         return null;
@@ -50,7 +53,10 @@ class ImageCacheFacade
     {
         $cacheId = $this->getCacheIdForMultipleEntities($entityName, $entityId, $type);
         if ($this->cacheProvider->contains($cacheId)) {
-            return $this->cacheProvider->fetch($cacheId);
+            $image = $this->cacheProvider->fetch($cacheId);
+            if ($image !== false) {
+                return $image;
+            }
         }
 
         return null;
@@ -67,7 +73,10 @@ class ImageCacheFacade
     {
         $cacheId = $this->getCacheIdForImageUrl($imageId, $type, $sizeName, $additionalIndex);
         if ($this->cacheProvider->contains($cacheId)) {
-            return (string)$this->cacheProvider->fetch($cacheId);
+            $url = $this->cacheProvider->fetch($cacheId);
+            if ($url !== false) {
+                return (string)$url;
+            }
         }
 
         return null;
