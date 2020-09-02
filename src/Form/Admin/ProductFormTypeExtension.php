@@ -187,9 +187,13 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             return;
         }
 
-        if ($this->product !== null && $catnum !== $this->product->getCatnum()) {
-            $productByCatnum = $this->productFacade->findByCatnum($catnum);
+        $productByCatnum = $this->productFacade->findByCatnum($catnum);
 
+        if ($this->product === null && $productByCatnum !== null) {
+            $context->addViolation(t('Produkt s tímto katalogovým číslem již existuje'));
+        }
+
+        if ($this->product !== null && $catnum !== $this->product->getCatnum()) {
             if ($productByCatnum !== null) {
                 $context->addViolation(t('Produkt s tímto katalogovým číslem již existuje'));
             }
