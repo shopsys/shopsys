@@ -64,6 +64,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'urls',
         'sellingPriceWithVat',
         'stockProductData',
+        'sellingDenied',
     ];
 
     /**
@@ -361,8 +362,16 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'entry_type' => YesNoType::class,
             ])
+            ->add('sellingDenied', YesNoType::class, [
+                'required' => false,
+                'label' => t('Vyřadit z prodeje v celém eshopu'),
+                'attr' => [
+                    'icon' => true,
+                    'iconTitle' => t('Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.'),
+                ],
+            ])
             ->add('saleExclusion', MultidomainType::class, [
-                'label' => t('Vyřazení z prodeje'),
+                'label' => t('Vyřazení z prodeje dle domén'),
                 'required' => false,
                 'entry_type' => YesNoType::class,
                 'position' => ['after' => 'sellingDenied'],
