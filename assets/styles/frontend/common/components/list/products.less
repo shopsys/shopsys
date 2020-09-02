@@ -221,6 +221,10 @@
 
                     &--primary {
                         color: @list-products-availability-primary-color;
+                        font-family: @font-quartenary;
+                        font-weight: 400;
+                        font-size: 13px;
+                        line-height: 1;
                     }
                 }
             }
@@ -346,17 +350,15 @@
                 color: @color-primary;
 
                 &__icon {
-                    color: @color-add-secondary;
-
-                    @media @query-md {
-                        display: none;
-                    }
+                    position: relative;
+                    top: -1px;
+                    margin-left: 5px;
                 }
             }
 
             &__price {
                 @media @query-md {
-                    margin-top: 25px;
+                    margin-top: 30px;
                 }
             }
 
