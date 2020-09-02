@@ -2,6 +2,7 @@
 @box-slider-point-size: 8px;
 @box-slider-bottom-gap: 1.5rem;
 @box-slider-bg-color: @color-f;
+@query-box-slider: ~"@{query-base} (min-width: 1100px)";
 
 .box-slider {
     display: block;
@@ -21,7 +22,7 @@
     }
 
     &__wrap {
-        @media @query-lg {
+        @media @query-box-slider {
             display: flex;
         }
     }
@@ -79,8 +80,11 @@
     &__thumbnails {
         padding: 1rem;
 
-        @media @query-lg {
+        @media @query-md {
             padding: 1.7rem 1.5rem 1rem;
+        }
+
+        @media @query-box-slider {
             min-width: 345px;
             max-width: 345px;
         }
