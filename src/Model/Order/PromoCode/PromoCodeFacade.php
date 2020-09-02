@@ -208,6 +208,14 @@ class PromoCodeFacade extends BasePromoCodeFacade
     }
 
     /**
+     * @return int
+     */
+    public function getMassLastGeneratedBatchId(): int
+    {
+        return $this->promoCodeRepository->getMassLastGeneratedBatchId();
+    }
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      * @param \App\Model\Order\PromoCode\PromoCodeLimit[] $limits
      */
@@ -334,5 +342,14 @@ class PromoCodeFacade extends BasePromoCodeFacade
     {
         $promoCode->decreaseRemainingUses();
         $this->em->flush();
+    }
+
+    /**
+     * @param int $batchId
+     * @return \App\Model\Order\PromoCode\PromoCode[]|null
+     */
+    public function findByMassBatchId(int $batchId): ?array
+    {
+        return $this->promoCodeRepository->findByMassBatchId($batchId);
     }
 }

@@ -76,6 +76,11 @@ class PromoCodeData extends BasePromoCodeData
     /**
      * @var int|null
      */
+    public $massGenerateBatchId;
+
+    /**
+     * @var int|null
+     */
     public $quantity;
 
     /**
