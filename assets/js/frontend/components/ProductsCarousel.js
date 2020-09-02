@@ -119,20 +119,12 @@ export default class SlickCarousel {
         }
 
         function preventClickWhenSliding (carousel) {
-            let isSliding = false;
-
             $(carousel).on('beforeChange', function () {
-                isSliding = true;
+                $(carousel).addClass('is-not-clickable');
             });
 
             $(carousel).on('afterChange', function () {
-                isSliding = false;
-            });
-
-            $(carousel).find('a').on('click', function (e) {
-                if (isSliding) {
-                    e.preventDefault();
-                }
+                $(carousel).removeClass('is-not-clickable');
             });
         }
     }

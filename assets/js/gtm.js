@@ -6,7 +6,13 @@ const EVENT_NAME_CHECKOUT_OPTION = 'ec.checkout_option';
 
 export default class Gtm {
     static clickPush (e) {
-        e.preventDefault();
+        if ($(this).parents('.is-not-clickable').length) {
+            return;
+        }
+
+        if (typeof google_tag_manager != 'undefined') {
+            e.preventDefault();
+        }
 
         let ctrl = false;
         let url = this.href;
