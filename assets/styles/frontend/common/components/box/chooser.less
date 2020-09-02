@@ -214,8 +214,8 @@
         cursor: pointer;
         transition: all @transition;
 
-        @media @query-mobile {
-            padding-left: 100px;
+        @media @query-tablet {
+            padding-left: 110px;
         }
 
         @media @query-lg {
@@ -264,11 +264,11 @@
 
         &--payment {
             @media @query-mobile {
-                padding-left: 50px;
+                padding-left: 110px;
             }
 
             .box-chooser__item__title {
-                @media @query-md {
+                @media @query-lg {
                     padding-left: 25px;
                 }
             }
@@ -277,28 +277,21 @@
                 width: auto;
                 order: 1;
 
-                @media @query-mobile {
-                    position: static;
-                    width: 100%;
-                    justify-content: flex-start;
-                    margin-top: 3px;
-
-                    transform: none;
-                }
-
                 @media @query-md {
                     justify-content: flex-end;
                 }
 
                 img {
-                    max-width: none;
+                    @media @query-lg {
+                        max-width: none;
+                    }
                 }
             }
 
             .box-chooser__item__price {
                 order: 2;
 
-                @media @query-md {
+                @media @query-lg {
                     min-width: 200px;
                 }
             }
@@ -319,7 +312,7 @@
             width: @box-chooser-check-size;
             height: @box-chooser-check-size;
 
-            @media @query-mobile {
+            @media @query-tablet {
                 position: absolute;
                 left: 10px;
                 top: 50%;
@@ -382,11 +375,16 @@
             justify-content: center;
             width: @box-chooser-image-width;
 
-            @media @query-mobile {
+            @media @query-tablet {
                 position: absolute;
-                left: 30px;
+                left: 42px;
                 top: 50%;
                 transform: translateY(-50%);
+                max-width: 50px;
+            }
+
+            @media @query-mobile {
+                left: 38px;
             }
 
             img {
@@ -426,6 +424,7 @@
             color: @color-primary;
 
             @media @query-md {
+                flex-grow: 1;
                 width: @box-chooser-price-width;
                 margin-top: 0;
                 text-align: right;

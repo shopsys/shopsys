@@ -10,6 +10,7 @@ export default class Gtm {
             return;
         }
 
+        /* eslint-disable camelcase */
         if (typeof google_tag_manager != 'undefined') {
             e.preventDefault();
         }
