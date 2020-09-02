@@ -10,13 +10,8 @@
 {% block main_content %}
     <div class="web__line web__line--spacing">
         <div class="web__container">
-            <div class="box-breadcrumb box-breadcrumb--align-left js-not-implemented-yet">
-                <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
-                    <i class="box-breadcrumb__item__icon svg svg-home"></i>
-                    <span>{{ 'Domů'|trans }}</span>
-                </a>
-                <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
-                <a href="{{ url('front_stores') }}" class="box-breadcrumb__item">{{ 'Prodejny'|trans }}</a>
+            <div class="box-breadcrumb box-breadcrumb--align-left">
+                {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             </div>
             <div class="box-stores box-stores--detail{{ imageExists(store, 'main') ? ' box-stores--detail-has-img' }}">
                 <div class="box-stores__info box-stores__info--detail">
