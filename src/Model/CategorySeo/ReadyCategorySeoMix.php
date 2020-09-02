@@ -61,9 +61,9 @@ class ReadyCategorySeoMix
     private $flag;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $ordering;
 
@@ -178,9 +178,9 @@ class ReadyCategorySeoMix
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getOrdering(): ?string
+    public function getOrdering(): string
     {
         return $this->ordering;
     }

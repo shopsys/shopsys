@@ -553,7 +553,7 @@ class ProductController extends FrontBaseController
             $response = $this->render('Front/Content/Product/list.html.twig', $viewParameters);
 
             // Direct access on SeoMixUrl with ordering lost ordering after change in filter - This prevent it
-            if ($readyCategorySeoMix !== null && $readyCategorySeoMix->getOrdering() !== null) {
+            if ($readyCategorySeoMix !== null) {
                 // The cookie must have httpOnly=false, because It is edited by JS
                 $cookie = Cookie::create(
                     $productListOrderingConfig->getCookieName(),

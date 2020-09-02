@@ -271,20 +271,15 @@ class ReadyCategorySeoMixFacade
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    private function getCurrentOrderingModeId(): ?string
+    private function getCurrentOrderingModeId(): string
     {
-        $orderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
         $request = $this->requestStack->getMasterRequest();
         if ($request === null) {
             throw new \RuntimeException('Master request is mandatory for generating CategorySeoMix url');
         }
-        $orderingModeId = $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest($request);
-        if ($orderingModeId === $orderingConfig->getDefaultOrderingModeId()) {
-            return null;
-        }
 
-        return $orderingModeId;
+        return $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest($request);
     }
 }
