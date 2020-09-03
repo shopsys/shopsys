@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class TransportPriceFactory implements TransportPriceFactoryInterface
 {
@@ -29,10 +30,11 @@ class TransportPriceFactory implements TransportPriceFactoryInterface
     public function create(
         Transport $transport,
         Money $price,
-        int $domainId
+        int $domainId,
+        Currency $currency
     ): TransportPrice {
         $classData = $this->entityNameResolver->resolve(TransportPrice::class);
 
-        return new $classData($transport, $price, $domainId);
+        return new $classData($transport, $price, $domainId, $currency);
     }
 }

@@ -182,14 +182,15 @@ class TransportFacade
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $existPriceForDomain = $transport->hasPriceForDomain($domainId);
-            $transport->setPrice($pricesIndexedByDomainId[$domainId], $domainId);
+            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+            $transport->setPrice($pricesIndexedByDomainId[$domainId], $domainId, $currency);
 
             if ($existPriceForDomain !== false) {
                 continue;
             }
 
             $transport->addPrice(
-                $this->transportPriceFactory->create($transport, $pricesIndexedByDomainId[$domainId], $domainId)
+                $this->transportPriceFactory->create($transport, $pricesIndexedByDomainId[$domainId], $domainId, $currency)
             );
         }
     }

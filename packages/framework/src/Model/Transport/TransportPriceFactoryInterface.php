@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 interface TransportPriceFactoryInterface
 {
@@ -15,6 +16,7 @@ interface TransportPriceFactoryInterface
     public function create(
         Transport $transport,
         Money $price,
-        int $domainId
+        int $domainId,
+        Currency $currency
     ): TransportPrice;
 }

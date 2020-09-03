@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\Money\BetterMoney;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Money\MoneyWithCurrency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 /**
  * @ORM\Table(name="transport_prices")
@@ -28,6 +31,11 @@ class TransportPrice
     protected $price;
 
     /**
+     * @ORM\Embedded(class="Shopsys\FrameworkBundle\Component\Money\MoneyWithCurrency")
+     */
+    protected $priceWithCurrency;
+
+    /**
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -39,11 +47,12 @@ class TransportPrice
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      * @param int $domainId
      */
-    public function __construct(Transport $transport, Money $price, int $domainId)
+    public function __construct(Transport $transport, Money $price, int $domainId, Currency $currency)
     {
         $this->transport = $transport;
         $this->price = $price;
         $this->domainId = $domainId;
+        $this->setPriceWithCurrency(BetterMoney::create($price->getAmount(), $currency));
     }
 
     /**
@@ -68,6 +77,11 @@ class TransportPrice
     public function setPrice(Money $price): void
     {
         $this->price = $price;
+    }
+
+    public function setPriceWithCurrency(BetterMoney $money): void
+    {
+        $this->priceWithCurrency = new MoneyWithCurrency($money->getAmount(), $money->getCurrency());
     }
 
     /**

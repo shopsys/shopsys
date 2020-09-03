@@ -14,6 +14,8 @@ doctrine:
         types:
             money:
                 class: \Shopsys\FrameworkBundle\Component\Doctrine\MoneyType
+            big_numbers_decimal:
+                class: \Shopsys\FrameworkBundle\Component\Doctrine\BigNumbersDecimalType
             tsvector:
                 class: \Intaro\PostgresSearchBundle\DBAL\TsvectorType
                 commented: false

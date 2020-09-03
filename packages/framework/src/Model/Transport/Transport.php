@@ -9,10 +9,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Component\Money\BetterMoney;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
 
 /**
@@ -189,11 +191,13 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     public function setPrice(
         Money $price,
-        int $domainId
+        int $domainId,
+        Currency $currency
     ): void {
         foreach ($this->prices as $transportInputPrice) {
             if ($transportInputPrice->getDomainId() === $domainId) {
                 $transportInputPrice->setPrice($price);
+                $transportInputPrice->setPriceWithCurrency(BetterMoney::create($price->getAmount(), $currency));
                 return;
             }
         }
