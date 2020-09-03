@@ -25,7 +25,7 @@
             {% do filterForm.flags.setRendered %}
         {% else %}
             <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.flags.vars.id }}">
-                <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs">
+                <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs box-filter__choice__inputs--flags">
                     {% for flagForm in filterForm.flags %}
 
                         {% set flagChecked = flagForm.vars.checked %}
