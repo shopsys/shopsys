@@ -20,7 +20,7 @@
             {% if colourIcon is not null %}
                 <div class="form-choice form-choice--color js-form-choice box-filter__choice__input box-filter__choice__input--color js-product-filter-parameter-value">
                     {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
-                    <label class="form-choice-color-picker form-choice-color-picker--image"
+                    <label class="form-choice-color-picker form-choice-color-picker--image is-dark-bg"
                            for="{{ parameterValueForm.vars.id }}"
                            style="background-image: url({{ colourIcon }})"
                            title="{{ parameterValueForm.vars.label }}"
