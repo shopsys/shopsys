@@ -1,5 +1,6 @@
 @list-products-grid-item-width: 210px;
 @list-products-grid-item-width-md: 240px;
+@list-products-grid-item-width-large-lg: 245px;
 @list-products-grid-sales-width-mobile: 240px;
 @list-products-grid-img-height: 200px;
 
@@ -68,7 +69,7 @@
             }
 
             &__info {
-                padding-right: 0;
+                padding: 0;
 
                 &__price__item {
                     @media @query-vl {
@@ -85,7 +86,7 @@
 
         &__item__title {
             display: block;
-            padding-right: 10px;
+            padding: 0;
 
             &__prefix {
                 display: block;
@@ -113,6 +114,64 @@
 
         &__item__info__price__item--high-price {
             line-height: 1;
+        }
+    }
+
+    &--large {
+        .list-products__item {
+            padding-left: 15px;
+
+            @media @query-vl {
+                width: @list-products-grid-item-width-large-lg;
+                min-width: @list-products-grid-item-width-large-lg;
+                max-width: @list-products-grid-item-width-large-lg;
+            }
+
+            &__in {
+                @media @query-md {
+                    min-height: 360px;
+                }
+            }
+
+            &__info__price {
+                flex-direction: column;
+            }
+
+            &__info__price__item--main {
+                order: 1;
+            }
+
+            &__info__price__item--high-price {
+                margin-bottom: 6px;
+
+                font-size: 13px;
+            }
+        }
+
+        .slick-slider {
+            .slick-arrow {
+                &.slick-prev {
+                    @media @query-xl {
+                        left: 15px;
+                    }
+                }
+
+                &.slick-next {
+                    @media @query-xl {
+                        left: calc(@web-width - 130px);
+                    }
+                }
+            }
+        }
+    }
+
+    &--similar {
+        .list-products__item {
+            &__in {
+                @media @query-md {
+                    min-height: 360px;
+                }
+            }
         }
     }
 }

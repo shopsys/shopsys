@@ -2,7 +2,8 @@
 @box-breadcrumb-padding-vertical: 3px;
 @box-breadcrumb-item-font-size: 12px;
 @box-breadcrumb-item-icon-font-size: 12px;
-@box-breadcrumb-item-color: #8a8b8f;
+@box-breadcrumb-item-color: @color-primary;
+@box-breadcrumb-item-color-current: #b0bec5;
 
 .box-breadcrumb {
     display: flex;
@@ -23,13 +24,13 @@
     }
 
     &__item {
-        padding: 0 8px;
+        padding: 0 4px;
 
         font-size: @box-breadcrumb-item-font-size;
         color: @box-breadcrumb-item-color;
 
         &:hover {
-            text-decoration: none;
+            text-decoration: underline;
         }
 
         &--separator {
@@ -44,16 +45,21 @@
         }
 
         &--current {
-            font-family: @font-quartenary;
-            color: @color-primary;
+            color: @box-breadcrumb-item-color-current;
+
+            &:hover {
+                text-decoration: none;
+            }
         }
 
         &__icon {
             position: relative;
             top: -2px;
             left: -3px;
+            margin-right: 0.5rem;
 
             font-size: @box-breadcrumb-item-icon-font-size;
+            color: @box-breadcrumb-item-color-current;
         }
     }
 }

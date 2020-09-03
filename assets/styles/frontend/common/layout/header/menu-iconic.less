@@ -29,9 +29,13 @@
 
                 font-size: @menu-iconic-link-font-size;
                 text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
             }
 
-            &__icon {
+            .menu-iconic__item__icon {
                 display: block;
                 margin-bottom: 3px;
                 height: 26px;
@@ -39,12 +43,6 @@
                 font-size: @menu-iconic-icon-size;
                 will-change: transform;
                 transition: transform .2s ease-in-out;
-
-                &.svg-headphones {
-                    position: relative;
-                    top: -4px;
-                    font-size: 34px;
-                }
             }
 
             &__text {

@@ -8,7 +8,7 @@
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    padding: @form-input-spinbox-padding-vertical @form-input-spinbox-buttons-width @form-input-spinbox-padding-vertical 3px;
+    padding: @form-input-spinbox-padding-vertical 3px @form-input-spinbox-padding-vertical 3px;
 
     border: 2px solid @form-input-spinbox-border-color;
     border-radius: @radius;
@@ -32,35 +32,27 @@
         justify-content: center;
         align-items: center;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 3px;
+        right: 3px;
         width: @form-input-spinbox-buttons-width;
-        height: 50%;
+        height: calc(100% - 6px);
 
         background: @color-f;
-        color: @color-base;
+        color: @color-primary;
         cursor: pointer;
-
-        &--plus {
-            border-top-left-radius: @radius;
-            border-top-right-radius: @radius;
-            border-bottom: 1px solid @form-input-spinbox-border-color;
-        }
+        border-radius: @radius / 2;
 
         &--minus {
-            top: auto;
-            bottom: 0;
-
-            border-top: 1px solid @form-input-spinbox-border-color;
-            border-bottom-left-radius: @radius;
-            border-bottom-right-radius: @radius;
+            left: 3px;
+            right: auto;
         }
 
         &__icon {
+            transform: rotate(90deg);
             font-size: 8px;
 
             &--plus {
-                transform: rotate(180deg);
+                transform: rotate(-90deg);
             }
         }
 
@@ -71,9 +63,14 @@
 
     &--light {
         background-color: @color-f;
+        border-color: @color-border-lighter;
 
         .form-input-spinbox__btn {
-            background-color: @color-light-secondary;
+            background-color: @color-border-lighter;
+
+            &:hover {
+                background-color: darken(@color-border-lighter, 3%);
+            }
         }
     }
 
@@ -93,15 +90,7 @@
         }
 
         .form-input-spinbox__btn {
-            width: 24px;
-            height: 22px;
-            right: 5px;
-            top: 5px;
-
-            &--minus {
-                top: auto;
-                bottom: 5px;
-            }
+            width: 20px;
 
             &__icon {
                 font-size: 12px;

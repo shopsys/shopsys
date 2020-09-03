@@ -27,7 +27,7 @@
                 {% endif %}
             </span>
             <span class="cart__icon">
-                <i class="svg svg-cart"></i>
+                <i class="svg svg-cart svg-fw-bold"></i>
             </span>
         </a>
         {% if loadItems %}
@@ -79,7 +79,7 @@
     </div>
     <div class="cart-mobile header__mobile-button">
         <a href="{{ url('front_cart') }}" class="header__mobile-button__in">
-            <i class="svg svg-cart"></i>
+            <i class="svg svg-cart svg-fw-bold"></i>
             {% if cart is not null %}
                 <span class="cart__count">{{ cart.itemsCount }}</span>
             {% else %}

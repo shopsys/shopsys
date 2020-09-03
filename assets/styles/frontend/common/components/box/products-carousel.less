@@ -25,7 +25,7 @@
         }
 
         &--bg {
-            margin: 3rem 0 2.5rem;
+            margin: 4rem 0 2.5rem;
             padding: 2.5rem 0 2rem 4rem;
 
             border-top-left-radius: @radius;
@@ -37,6 +37,26 @@
                 margin-bottom: 1rem;
             }
 
+            .slick-arrow {
+                height: 90px;
+                margin-top: -45px;
+
+                &::before {
+                    top: 39px;
+                }
+
+                &::after {
+                    bottom: 39px;
+                }
+            }
+
+            .slick-arrow.slick-next {
+                &::before,
+                &::after {
+                    left: 13px;
+                }
+            }
+
             .slick-arrow.slick-prev {
                 left: 12px;
 
@@ -46,12 +66,16 @@
             }
 
             .list-products {
-                margin-left: -30px;
+                margin-left: -15px;
 
                 &__item {
-                    padding-left: 30px;
+                    padding-left: 15px;
                 }
             }
+        }
+
+        &--top-products {
+            margin: 0 0 3rem;
         }
 
         &--sales {
@@ -82,23 +106,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            margin-right: 1rem;
+            width: 30px;
+            height: 30px;
+            margin-right: 0.5rem;
             padding-top: 3px;
             content: '%';
             box-sizing: border-box;
 
             font-family: @font-quartenary;
-            font-size: 30px;
+            font-size: 24px;
             font-weight: 600;
             color: @color-f;
-            border-radius: 100%;
+            border-radius: @radius;
             background-color: @color-price-sale;
-
-            @media @query-md {
-                margin-right: 2rem;
-            }
         }
     }
 
@@ -119,7 +139,7 @@
 
         @media screen and (min-width: 1600px) {
             right: auto;
-            left: calc(@web-width - 70px);
+            left: calc(@web-width + 20px);
         }
     }
 }

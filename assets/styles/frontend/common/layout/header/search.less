@@ -4,8 +4,7 @@
 @search-form-width-lg: 100%;
 @search-form-width-vl: 100%;
 @search-form-bg-color: @color-f;
-@search-form-border-color: #d7dee2;
-@search-form-border-color-md: @color-border-secondary;
+@search-form-border-color: @color-border-tertiary;
 @search-form-border-radius: @radius;
 
 .search {
@@ -30,13 +29,13 @@
 
         &__icon {
             position: absolute;
-            top: 4px;
-            right: 10px;
-            width: 33px;
-            height: 33px;
+            top: 10px;
+            right: 15px;
+            width: 23px;
+            height: 23px;
 
             background-image: url('@{path-design}/search.svg');
-            background-size: 33px;
+            background-size: 23px;
             background-position: center center;
             background-color: transparent;
             transition: @transition color;
@@ -46,7 +45,8 @@
             border: 0;
 
             @media @query-md {
-                top: 10px;
+                top: 16px;
+                right: 16px;
             }
 
             .search__input:focus + & {
@@ -64,36 +64,29 @@
         border-radius: @search-form-border-radius;
         background-color: @search-form-bg-color;
         border-color: @search-form-border-color;
-        border-width: 1px;
+        border-width: 2px;
 
         @media @query-mobile {
             padding-top: 0;
-
-            border-width: 1px;
-            border-color: #d7dee2;
-        }
-
-        @media @query-md {
-            border-color: @search-form-border-color-md;
         }
 
         @media @query-vl {
             padding-top: 4px;
         }
 
-        &::-webkit-input-placeholder { /* Firefox 18- */
+        &::-webkit-input-placeholder {
             color: @color-primary;
-            opacity: 0.6;
+            opacity: 1;
         }
 
-        &::-moz-placeholder { /* Firefox 18- */
+        &::-moz-placeholder {
             color: @color-primary;
-            opacity: 0.6;
+            opacity: 1;
         }
 
-        &:-ms-input-placeholder { /* Firefox 18- */
+        &:-ms-input-placeholder {
             color: @color-primary;
-            opacity: 0.6;
+            opacity: 1;
         }
     }
 

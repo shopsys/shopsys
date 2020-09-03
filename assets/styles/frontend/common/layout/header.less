@@ -1,7 +1,7 @@
 @header-mobile-button-size: 50px;
 @header-mobile-button-border: 1px solid #e7ebed;
 @header-mobile-button-border-radius: 5px;
-@header-mobile-button-font-size: 33px;
+@header-mobile-button-font-size: 27px;
 @header-mobile-button-search-bg: #f0f3f4;
 @header-mobile-button-dropdown-position: 75px;
 
@@ -91,12 +91,6 @@
 
         @media @query-lg {
             margin-left: 0;
-            padding-left: 10px;
-            min-width: 180px;
-        }
-
-        @media @query-vl {
-            padding-left: 20px;
         }
 
         .in-overlay {
@@ -179,6 +173,14 @@
                 display: flex;
 
                 color: @color-primary;
+
+                &-chat {
+                    font-size: 25px;
+                }
+
+                &-burger-menu {
+                    font-size: 35px;
+                }
             }
 
             &__menu {

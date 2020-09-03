@@ -6,7 +6,7 @@
 @breakpoint-desktop: 1175px;
 @query-sl: ~"@{query-base} (min-width: @{breakpoint-desktop})";
 
-@menu-horizontal-height: 50px;
+@menu-horizontal-height: 46px;
 @menu-horizontal-item-padding: 18px;
 @menu-horizontal-item-font-size: 15px;
 @menu-horizontal-sub-padding: 20px;
@@ -37,7 +37,7 @@
 .menu-list-menu-wrap {
     @media @query-lg {
         border-top: 1px solid @list-menu-border-color;
-        border-bottom: 1px solid @list-menu-border-color;
+        border-bottom: 2px solid @list-menu-border-color;
     }
 }
 
@@ -53,16 +53,12 @@
 
     @media @query-lg {
         display: flex;
+        justify-content: space-between;
         max-width: @web-width;
         margin: 0 auto;
-        padding-right: 100px;
         position: relative;
         top: 0;
         flex-direction: row;
-    }
-
-    @media @query-sl {
-        padding-right: 220px;
     }
 
     .js-sticky-menu-fixed & {
@@ -227,22 +223,9 @@
                 }
             }
 
-            &--blog {
-                position: absolute;
-                right: 5px;
-                top: 0;
-
-                @media @query-vl {
-                    right: 0;
-                }
-            }
-
             &--sale {
                 display: flex;
                 align-items: center;
-                position: absolute;
-                right: 75px;
-                top: 0;
 
                 color: @menu-horizontal-item-sale-color;
 
@@ -260,7 +243,7 @@
                     justify-content: center;
                     width: @menu-horizontal-item-sale-size;
                     height: @menu-horizontal-item-sale-size;
-                    margin-right: 5px;
+                    margin-right: 8px;
                     padding-top: 1px;
                     box-sizing: border-box;
                     content: '%';
@@ -269,7 +252,7 @@
                     font-size: 20px;
                     font-weight: 600;
                     background-color: @menu-horizontal-item-sale-color;
-                    border-radius: 100%;
+                    border-radius: @radius;
                     color: @color-f;
                 }
 

@@ -1,6 +1,5 @@
 @box-media-margin: 1rem;
 @box-media-margin-md: 3rem;
-@box-media-wrap-max-width: 900px;
 @box-media-img-max-width: 200px;
 @box-media-img-max-width-md: 315px;
 @box-media-bg-height: 81px;
@@ -17,39 +16,39 @@
         margin: @box-media-margin-md 0;
     }
 
-    &::before {
-        position: absolute;
-        left: 0;
-        top: 75px;
-        height: @box-media-bg-height;
-        width: @box-media-bg-width;
-        content: '';
-
-        background-color: @color-light;
-
-        @media @query-md {
-            bottom: 0;
-            top: auto;
-            width: @box-media-bg-width-md;
-            height: @box-media-bg-height-md;
-        }
-
-        @media @query-xl {
-            width: @box-media-bg-width-xl;
-        }
-    }
-
     &__wrap {
         position: relative;
         z-index: 1;
 
         @media @query-md {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            max-width: @box-media-wrap-max-width;
+            align-items: flex-end;
             margin: auto;
-            padding-left: 3rem;
+        }
+    }
+
+    &__picture {
+        position: relative;
+
+        @media @query-md {
+            width: 50%;
+            min-width: 50%;
+        }
+
+        &::after {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 130px;
+            content: '';
+
+            background-color: #fff3b3;
+            border-radius: @radius;
+
+            @media @query-md {
+                height: 155px;
+            }
         }
     }
 
@@ -59,27 +58,27 @@
         left: 2rem;
         max-width: @box-media-img-max-width;
         margin-bottom: 1.75rem;
+        z-index: 1;
 
         @media @query-md {
-            left: -2rem;
+            left: auto;
             max-width: @box-media-img-max-width-md;
-            margin-bottom: 0;
+            margin: 0 auto;
         }
+    }
 
-        @media @query-xl {
-            left: 2.5rem;
-        }
+    &__heading {
+        margin-bottom: 0;
     }
 
     &__text {
         position: relative;
-
-        @media @query-xl {
-            left: 7rem;
-        }
+        padding-left: 2rem;
     }
 
     &__desc {
+        margin-top: 9px;
+        max-width: 535px;
 
         @media @query-mobile {
             margin-bottom: 1.5rem;

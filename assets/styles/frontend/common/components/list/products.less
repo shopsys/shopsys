@@ -1,6 +1,6 @@
 @list-products-item-padding: 16px;
 @list-products-item-gap: 10px;
-@list-products-item-gap-md: 30px;
+@list-products-item-gap-md: 15px;
 @list-products-item-inner-gap: 10px;
 @list-products-item-image-height: 200px;
 @list-products-item-image-height-md: 280px;
@@ -82,10 +82,10 @@
 
             background-color: @color-f;
             border-radius: @radius;
-            transition: box-shadow @transition;
+            border: 1px solid @color-border-lighter;
 
             &:hover {
-                box-shadow: @list-products-item-hover-shadow;
+                border-color: darken(@color-border-lighter, 10%);
             }
         }
 
@@ -173,7 +173,7 @@
                 }
 
                 &__item {
-                    font-size: 14px;
+                    font-size: 15px;
                     color: @color-price;
 
                     &--main {
@@ -221,6 +221,10 @@
 
                     &--primary {
                         color: @list-products-availability-primary-color;
+                        font-family: @font-quartenary;
+                        font-weight: 400;
+                        font-size: 13px;
+                        line-height: 1;
                     }
                 }
             }
@@ -286,12 +290,16 @@
         }
 
         @media @query-md {
-            width: calc(50vw - 83px);
+            width: calc(50vw - 85px);
             margin-bottom: 0;
         }
 
+        @media @query-vl {
+            width: calc(50vw - 95px);
+        }
+
         @media screen and (min-width: 1440px) {
-            width: 639px;
+            width: 630px;
         }
 
         &__in {
@@ -299,7 +307,7 @@
                 padding: 5px;
             }
 
-            @media @query-lg {
+            @media @query-vl-up {
                 align-items: flex-start;
                 flex-direction: row;
                 position: relative;
@@ -312,7 +320,7 @@
         &__title {
             display: block;
 
-            @media @query-lg {
+            @media @query-xl {
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -321,7 +329,12 @@
         }
 
         &__image {
-            @media @query-lg {
+            @media screen and (max-width: 1100px) {
+                height: 200px;
+                min-height: 200px;
+            }
+
+            @media @query-vl-up {
                 position: absolute;
                 left: 0;
                 top: 50%;
@@ -346,17 +359,15 @@
                 color: @color-primary;
 
                 &__icon {
-                    color: @color-add-secondary;
-
-                    @media @query-md {
-                        display: none;
-                    }
+                    position: relative;
+                    top: -1px;
+                    margin-left: 5px;
                 }
             }
 
             &__price {
                 @media @query-md {
-                    margin-top: 25px;
+                    margin-top: 30px;
                 }
             }
 

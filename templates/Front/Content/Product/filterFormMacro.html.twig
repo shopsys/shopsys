@@ -15,17 +15,16 @@
 
         <div class="box-filter__header">
             <h2 class="box-filter__heading">{{ 'Filtr'|trans }}</h2>
-            <a class="box-filter__reset btn btn-no-style js-product-filter-reset-button" href="{{ resetUrl }}">{{ 'Zrušit filtry'|trans }}</a>
+            <a class="box-filter__reset btn btn-no-style js-product-filter-reset-button" href="{{ resetUrl }}">
+                <span class="box-filter__reset__text">{{ 'Zrušit filtry'|trans }}</span>
+                <i class="box-filter__reset__icon svg svg-remove"></i>
+            </a>
         </div>
 
         {% if filterForm.flags is empty %}
             {% do filterForm.flags.setRendered %}
         {% else %}
             <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.flags.vars.id }}">
-                <span class="box-filter__choice__title active cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
-                    {{ 'Flags'|trans }}
-                    <i class="svg svg-arrow"></i>
-                </span>
                 <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs">
                     {% for flagForm in filterForm.flags %}
 

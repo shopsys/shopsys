@@ -24,13 +24,13 @@
 
         <div class="header__mobile-button header__mobile-button--search">
             <a class="header__mobile-button__in js-not-implemented-yet" href="#">
-                <i class="svg svg-headphones"></i>
+                <i class="svg svg-chat svg-fw-bold"></i>
             </a>
         </div>
         <div class="header__mobile-button header__mobile-button--login">
             {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
                 <span class="header__mobile-button__in js-responsive-toggle" data-element="js-user-menu" data-hide-on-click-out="true">
-                    <i class="svg svg-user"></i>
+                    <i class="svg svg-user svg-fw-bold"></i>
                     <span class="header__mobile-button__placeholder">
                         <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
                         <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
@@ -42,7 +42,7 @@
                     data-url="{{ url('front_login_window_form') }}"
                     class="js-login-button menu-iconic__item__link"
                 >
-                    <i class="svg svg-user"></i>
+                    <i class="svg svg-user svg-fw-bold"></i>
                 </a>
             {% endif %}
             <div class="header__mobile-button__menu" id="js-user-menu">
@@ -72,20 +72,20 @@
             <ul class="menu-iconic">
                 <li class="menu-iconic__item">
                     <a href="#" class="menu-iconic__item__link js-not-implemented-yet">
-                        <i class="menu-iconic__item__icon svg svg-headphones"></i>
+                        <i class="menu-iconic__item__icon svg svg-chat svg-fw-bold"></i>
                         <span class="menu-iconic__item__text">{{ 'Zákaznický servis'|trans }}</span>
                     </a>
                 </li>
                 <li class="menu-iconic__item">
                     <a href="{{ url('front_stores') }}" class="menu-iconic__item__link">
-                        <i class="menu-iconic__item__icon svg svg-marker"></i>
+                        <i class="menu-iconic__item__icon svg svg-marker svg-fw-bold"></i>
                         <span class="menu-iconic__item__text">{{ 'Prodejny'|trans }}</span>
                     </a>
                 </li>
                 {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
                     <li class="menu-iconic__item menu-iconic__item--sub">
                         <a href="#" class="menu-iconic__item__link">
-                            <i class="menu-iconic__item__icon svg svg-user"></i>
+                            <i class="menu-iconic__item__icon svg svg-user svg-fw-bold"></i>
                             <span class="menu-iconic__item__text">{{ 'Můj účet'|trans }}</span>
                         </a>
                         <ul class="menu-iconic__sub">
@@ -109,7 +109,7 @@
                             data-url="{{ url('front_login_window_form') }}"
                             class="js-login-link-desktop js-login-button menu-iconic__item__link"
                         >
-                            <i class="menu-iconic__item__icon svg svg-user"></i>
+                            <i class="menu-iconic__item__icon svg svg-user svg-fw-bold"></i>
                             <span class="menu-iconic__item__text">{{ 'Log in'|trans }}</span>
                         </a>
                     </li>

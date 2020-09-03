@@ -1,10 +1,10 @@
 @box-info-margin-bottom: 2rem;
 @box-info-margin-bottom-md: 3rem;
 
-@box-info-img-size: 80px;
-@box-info-img-size-md: 80px;
+@box-info-img-size: 82px;
+@box-info-img-size-md: 82px;
 
-@box-info-border-color: #b0bec5;
+@box-info-border-color: @color-border-lighter;
 
 @box-info-arrow-size: 18px;
 
@@ -20,7 +20,7 @@
 
 @box-info-icon-font-size: 16px;
 @box-info-icon-font-size-lg: 20px;
-@box-info-icon-color: #f99f1d;
+@box-info-icon-color: @color-add;
 
 .box-info {
     display: flex;
@@ -50,21 +50,17 @@
         margin-left: 1.5rem;
         padding: 1rem;
 
-        border: 1px solid @box-info-border-color;
+        border: 2px solid @box-info-border-color;
         border-radius: @radius;
-
-        @media @query-vl {
-            padding: 1.5rem;
-        }
 
         @media @query-vl {
             display: flex;
             justify-content: space-between;
+            padding: 1.1rem 1.1rem 1.1rem 2rem;
         }
 
         @media @query-xl {
             margin-left: 2.5rem;
-            padding-right: 5rem;
         }
 
         &::before {
@@ -79,8 +75,8 @@
             content: "";
 
             background-color: @color-f;
-            border-left: 1px solid @box-info-border-color;
-            border-bottom: 1px solid @box-info-border-color;
+            border-left: 2px solid @box-info-border-color;
+            border-bottom: 2px solid @box-info-border-color;
         }
     }
 
@@ -105,7 +101,7 @@
 
     &__hours {
         font-size: @box-info-hours-font-size;
-        color: #62656e;
+        color: #aabbc3;
         letter-spacing: 1px;
         -moz-font-smoothing: antialiased;
         -webkit-font-smoothing: antialiased;
@@ -201,6 +197,26 @@
                 vertical-align: baseline;
             }
         }
+
+        &__btn {
+            justify-content: center;
+            padding-top: 15px;
+            padding-bottom: 10px;
+
+            font-size: 13px;
+
+            &__text {
+                margin-right: 7px;
+            }
+        }
+    }
+
+    &__text,
+    &__contacts__link {
+        @media @query-vl {
+            position: relative;
+            top: 3px;
+        }
     }
 
     &--in-cart {
@@ -264,8 +280,12 @@
         }
 
         .box-info__hours {
-            font-size: 12px;
+            font-size: 13px;
             line-height: 1.1;
+
+            @media @query-md {
+                font-size: 12px;
+            }
         }
 
         .box-info__contacts__link {
