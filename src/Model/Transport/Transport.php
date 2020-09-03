@@ -68,7 +68,11 @@ class Transport extends BaseTransport
         $this->productTypes = new ArrayCollection($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
+<<<<<<< HEAD
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
+=======
+        $this->externalId = $transportData->externalId;
+>>>>>>> 5ff90e7ca... SD-1451 orders sent to sconto bridge, fixed tests
     }
 
     /**

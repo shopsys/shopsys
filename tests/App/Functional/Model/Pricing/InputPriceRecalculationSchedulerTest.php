@@ -155,12 +155,14 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $this->em->persist($availability);
 
         $paymentData->name = ['cs' => 'name'];
+        $paymentData->externalId = $this->getNextPaymentExternalId();
 
         /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentFacade->create($paymentData);
 
         $transportData->name = ['cs' => 'name'];
         $transportData->description = ['cs' => 'desc'];
+        $transportData->externalId = $this->getNextTransportExternalId();
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportFacade->create($transportData);
 

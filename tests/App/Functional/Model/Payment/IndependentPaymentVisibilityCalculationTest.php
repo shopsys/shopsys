@@ -60,6 +60,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
             self::FIRST_DOMAIN_ID => true,
             self::SECOND_DOMAIN_ID => false,
         ]);
+        $paymentData->externalId = $this->getNextPaymentExternalId();
 
         $payment = new Payment($paymentData);
 
@@ -112,6 +113,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $paymentData->name = $names;
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
+        $paymentData->externalId = $this->getNextPaymentExternalId();
 
         return new Payment($paymentData);
     }

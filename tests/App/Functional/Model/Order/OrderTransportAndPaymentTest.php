@@ -38,6 +38,11 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
      */
     private $transportDataFactory;
 
+    /**
+     * @var int
+     */
+    private static $externalId = 0;
+
     public function testVisibleTransport()
     {
         $enabledForDomains = [
@@ -314,6 +319,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $paymentData->name = $names;
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
+        $paymentData->externalId = $this->getNextPaymentExternalId();
 
         return new Payment($paymentData);
     }
@@ -336,6 +342,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $transportData->hidden = $hidden;
         $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
+        $transportData->externalId = $this->getNextTransportExternalId();
 
         return new Transport($transportData);
     }

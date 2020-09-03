@@ -8,15 +8,35 @@ use JsonSerializable;
 
 class ScontoBridgeIndividual implements JsonSerializable
 {
-    private string $individualTitle;
-    private string $firstName;
-    private string $lastName;
-    private string $birthDate;
+    /**
+     * @var int
+     */
+    private int $individualTitle;
 
     /**
-     * @param string $individualTitle
+     * @var string
      */
-    public function setIndividualTitle(string $individualTitle): void
+    private string $firstName;
+
+    /**
+     * @var string
+     */
+    private string $lastName;
+
+    /**
+     * @var string|null
+     */
+    private ?string $birthDate;
+
+    public function __construct()
+    {
+        $this->birthDate = null;
+    }
+
+    /**
+     * @param int $individualTitle
+     */
+    public function setIndividualTitle(int $individualTitle): void
     {
         $this->individualTitle = $individualTitle;
     }
@@ -45,7 +65,10 @@ class ScontoBridgeIndividual implements JsonSerializable
         $this->birthDate = $birthDate;
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             'individualTitle' => $this->individualTitle,

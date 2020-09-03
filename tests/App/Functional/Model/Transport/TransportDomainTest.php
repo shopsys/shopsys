@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Transport;
 
 use App\Model\Transport\Transport;
+use App\Model\Transport\TransportData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -29,7 +30,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
 
     public function testCreateTransportEnabledOnDomain()
     {
-        $transportData = $this->transportDataFactory->create();
+        $transportData = $this->createTransportData();
 
         $transportData->enabled[self::FIRST_DOMAIN_ID] = true;
 
@@ -43,7 +44,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
 
     public function testCreateTransportDisabledOnDomain()
     {
-        $transportData = $this->transportDataFactory->create();
+        $transportData = $this->createTransportData();
 
         $transportData->enabled[self::FIRST_DOMAIN_ID] = false;
 
@@ -61,7 +62,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
             $this->markTestSkipped('Test is skipped for single domain');
         }
 
-        $transportData = $this->transportDataFactory->create();
+        $transportData = $this->createTransportData();
 
         $transportData->enabled[self::FIRST_DOMAIN_ID] = true;
         $transportData->enabled[self::SECOND_DOMAIN_ID] = false;
@@ -89,5 +90,17 @@ class TransportDomainTest extends TransactionFunctionalTestCase
         $this->em->clear();
 
         return $this->em->getRepository(Transport::class)->find($transportId);
+    }
+
+    /**
+     * @return TransportData
+     */
+    private function createTransportData(): TransportData
+    {
+        /** @var TransportData $transportData */
+        $transportData = $this->transportDataFactory->create();
+        $transportData->externalId = $this->getNextTransportExternalId();
+
+        return $transportData;
     }
 }

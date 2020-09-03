@@ -100,6 +100,11 @@ class ScontoBridgeClient
         return $responseData['result'];
     }
 
+    /**
+     * @param string $uri
+     * @param JsonSerializable $data
+     * @return ResponseInterface
+     */
     public function post(string $uri, JsonSerializable $data): ResponseInterface
     {
         $client = new Client([
@@ -112,7 +117,6 @@ class ScontoBridgeClient
             'Accept' => 'application/json',
         ];
 
-        $dataJson = json_encode($data);
         return $client->post($uri, [
             RequestOptions::HEADERS => $headers,
             RequestOptions::JSON => $data

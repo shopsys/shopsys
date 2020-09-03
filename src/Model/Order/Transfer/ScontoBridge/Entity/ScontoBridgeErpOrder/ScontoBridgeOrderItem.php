@@ -2,20 +2,58 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Transfer\ScontoBridge\Mapper\Entity\ScontoBridgeErpOrder;
+namespace App\Model\Order\Transfer\ScontoBridge\Entity\ScontoBridgeErpOrder;
 
 use JsonSerializable;
 
 class ScontoBridgeOrderItem implements JsonSerializable
 {
+    /**
+     * @var int
+     */
     private int $eshopId;
-    private string $storeCode;
-    private string $sku;
+
+    /**
+     * @var string|null
+     */
+    private ?string $storeCode;
+
+    /**
+     * @var string|null
+     */
+    private ?string $sku;
+
+    /**
+     * @var int
+     */
     private int $quantity;
+
+    /**
+     * @var float
+     */
     private float $unitPriceWithVat;
+
+    /**
+     * @var float
+     */
     private float $priceWithVat;
+
+    /**
+     * @var int
+     */
     private int $type;
-    private string $promocodeIdentifier;
+
+    /**
+     * @var string|null
+     */
+    private ?string $promocodeIdentifier;
+
+    public function __construct()
+    {
+        $this->storeCode = null;
+        $this->sku = null;
+        $this->promocodeIdentifier = null;
+    }
 
     /**
      * @param int $eshopId
@@ -81,6 +119,9 @@ class ScontoBridgeOrderItem implements JsonSerializable
         $this->promocodeIdentifier = $promocodeIdentifier;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

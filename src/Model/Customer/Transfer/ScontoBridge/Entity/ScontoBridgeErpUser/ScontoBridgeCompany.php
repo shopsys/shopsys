@@ -8,9 +8,24 @@ use JsonSerializable;
 
 class ScontoBridgeCompany implements JsonSerializable
 {
+    /**
+     * @var string
+     */
     private string $name;
+
+    /**
+     * @var string
+     */
     private string $companyNumber;
+
+    /**
+     * @var string|null
+     */
     private ?string $vatNumber;
+
+    /**
+     * @var string|null
+     */
     private ?string $taxNumber;
 
     public function __construct()
@@ -51,7 +66,10 @@ class ScontoBridgeCompany implements JsonSerializable
         $this->taxNumber = $taxNumber;
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             'name' => $this->name,

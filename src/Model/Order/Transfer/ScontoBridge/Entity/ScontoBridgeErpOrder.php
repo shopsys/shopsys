@@ -2,44 +2,154 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Transfer\ScontoBridge\Mapper\Entity;
+namespace App\Model\Order\Transfer\ScontoBridge\Entity;
 
-use App\Model\Product\Transfer\ScontoBridge\Mapper\Entity\ScontoBridgeErpOrder\ScontoBridgeOrderItem;
+use App\Model\Order\Transfer\ScontoBridge\Entity\ScontoBridgeErpOrder\ScontoBridgeOrderItem;
 use JsonSerializable;
 
 class ScontoBridgeErpOrder implements JsonSerializable
 {
+    /**
+     * @var int
+     */
     private int $eshopId;
+
+    /**
+     * @var string
+     */
     private string $eshopOrderNumber;
-    private int $distributionChannelId;
+
+    /**
+     * @var int
+     */
+    private int $distributionChannelCode;
+
+    /**
+     * @var int
+     */
     private int $eshopUserId;
+
+    /**
+     * @var string
+     */
     private string $creationTime;
+
+    /**
+     * @var float
+     */
     private float $priceWithVat;
+
+    /**
+     * @var string
+     */
     private string $priceCurrency;
-    private string $title;
+
+    /**
+     * @var int|null
+     */
+    private ?int $title;
+
+    /**
+     * @var string
+     */
     private string $lastName;
+
+    /**
+     * @var string
+     */
     private string $firstName;
+
+    /**
+     * @var string
+     */
     private string $invoiceAddressStreet;
+
+    /**
+     * @var string
+     */
     private string $invoiceAddressCountryISO;
+
+    /**
+     * @var string
+     */
     private string $invoiceAddressZipCode;
+
+    /**
+     * @var string
+     */
     private string $invoiceAddressCity;
+
+    /**
+     * @var string
+     */
     private string $phone;
+
+    /**
+     * @var string
+     */
     private string $email;
+
+    /**
+     * @var int
+     */
     private int $paymentMethodId;
+
+    /**
+     * @var int
+     */
     private int $deliveryMethodId;
-    private string $collectionStoreCode;
+
+    /**
+     * @var string|null
+     */
+    private ?string $collectionStoreCode;
+
+    /**
+     * @var string
+     */
     private string $deliveryAddressLastName;
+
+    /**
+     * @var string
+     */
     private string $deliveryAddressFirstName;
+
+    /**
+     * @var string
+     */
     private string $deliveryAddressStreet;
-    private string $deliveryAddressCountryISO;
+
+    /**
+     * @var string|null
+     */
+    private ?string $deliveryAddressCountryISO;
+
+    /**
+     * @var string
+     */
     private string $deliveryAddressZipCode;
+
+    /**
+     * @var string
+     */
     private string $deliveryAddressCity;
+
+    /**
+     * @var string
+     */
     private string $deliveryAddressPhone;
 
     /**
      * @var ScontoBridgeOrderItem[]
      */
     private array $orderItems = [];
+
+    public function __construct()
+    {
+        $this->title = null;
+        $this->collectionStoreCode = null;
+        $this->deliveryAddressCountryISO = null;
+    }
 
     /**
      * @param int $eshopId
@@ -58,11 +168,11 @@ class ScontoBridgeErpOrder implements JsonSerializable
     }
 
     /**
-     * @param int $distributionChannelId
+     * @param int $distributionChannelCode
      */
-    public function setDistributionChannelId(int $distributionChannelId): void
+    public function setDistributionChannelCode(int $distributionChannelCode): void
     {
-        $this->distributionChannelId = $distributionChannelId;
+        $this->distributionChannelCode = $distributionChannelCode;
     }
 
     /**
@@ -98,9 +208,9 @@ class ScontoBridgeErpOrder implements JsonSerializable
     }
 
     /**
-     * @param string $title
+     * @param int $title
      */
-    public function setTitle(string $title): void
+    public function setTitle(int $title): void
     {
         $this->title = $title;
     }
@@ -249,17 +359,23 @@ class ScontoBridgeErpOrder implements JsonSerializable
         $this->deliveryAddressPhone = $deliveryAddressPhone;
     }
 
+    /**
+     * @param ScontoBridgeOrderItem $item
+     */
     public function addItem(ScontoBridgeOrderItem $item): void
     {
         $this->orderItems[] = $item;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [
             'eshopId' => $this->eshopId,
             'eshopOrderNumber' => $this->eshopOrderNumber,
-            'distributionChannelId' => $this->distributionChannelId,
+            'distributionChannelCode' => $this->distributionChannelCode,
             'eshopUserId' => $this->eshopUserId,
             'creationTime' => $this->creationTime,
             'priceWithVat' => $this->priceWithVat,

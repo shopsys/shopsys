@@ -11,22 +11,62 @@ use JsonSerializable;
 
 class ScontoBridgeErpUser implements JsonSerializable
 {
+    /**
+     * @var int
+     */
     private int $eshopId;
+
+    /**
+     * @var string
+     */
     private string $email;
+
+    /**
+     * @var bool
+     */
     private bool $newsletter;
+
+    /**
+     * @var int
+     */
     private int $distributionChannelCode;
+
+    /**
+     * @var int
+     */
     private int $customerType;
+
+    /**
+     * @var int
+     */
     private int $phonePrefix;
+
+    /**
+     * @var string|null
+     */
     private ?string $phoneNumber;
+
+    /**
+     * @var ScontoBridgePrimaryAddress|null
+     */
     private ?ScontoBridgePrimaryAddress $primaryAddress;
+
+    /**
+     * @var ScontoBridgeIndividual|null
+     */
     private ?ScontoBridgeIndividual $individual;
-    private ScontoBridgeCompany $company;
+
+    /**
+     * @var ScontoBridgeCompany|null
+     */
+    private ?ScontoBridgeCompany $company;
 
     public function __construct()
     {
         $this->phoneNumber = null;
         $this->primaryAddress = null;
         $this->individual = null;
+        $this->company = null;
     }
 
     /**
@@ -109,6 +149,9 @@ class ScontoBridgeErpUser implements JsonSerializable
         $this->company = $company;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

@@ -19,7 +19,7 @@ class OrderTransferScontoBridgeCronModule implements SimpleCronModuleInterface
         $this->orderTransferScontoBridgeFacade = $orderTransferScontoBridgeFacade;
     }
 
-    public function run()
+    public function run(): void
     {
         $this->orderTransferScontoBridgeFacade->runTransfer();
     }

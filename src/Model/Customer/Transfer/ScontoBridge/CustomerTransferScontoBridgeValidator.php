@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Customer\Transfer\ScontoBridge;
 
 use App\Component\ScontoBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
+use App\Component\ScontoBridge\Transfer\ScontoBridgeDistributionChannelResolver;
+use App\Component\ScontoBridge\Transfer\ScontoBridgeTitleResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -44,8 +46,8 @@ class CustomerTransferScontoBridgeValidator
                 ],
                 'distributionChannelCode' => [
                     new Assert\Choice([
-                        CustomerTransferScontoBridgeMapper::DISTRIBUTION_CHANEL_CODE_CZ,
-                        CustomerTransferScontoBridgeMapper::DISTRIBUTION_CHANEL_CODE_SK,
+                        ScontoBridgeDistributionChannelResolver::DISTRIBUTION_CHANEL_CODE_CZ,
+                        ScontoBridgeDistributionChannelResolver::DISTRIBUTION_CHANEL_CODE_SK,
                     ]),
                 ],
                 'customerType' => [
@@ -89,8 +91,8 @@ class CustomerTransferScontoBridgeValidator
                         'fields' => [
                             'individualTitle' => [
                                 new Assert\Choice([
-                                    CustomerTransferScontoBridgeMapper::INDIVIDUAL_TITLE_MALE,
-                                    CustomerTransferScontoBridgeMapper::INDIVIDUAL_TITLE_FEMALE,
+                                    ScontoBridgeTitleResolver::INDIVIDUAL_TITLE_MALE,
+                                    ScontoBridgeTitleResolver::INDIVIDUAL_TITLE_FEMALE,
                                 ]),
                             ],
                             'firstName' => [

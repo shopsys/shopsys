@@ -8,11 +8,25 @@ use JsonSerializable;
 
 class ScontoBridgePrimaryAddress implements JsonSerializable
 {
+    /**
+     * @var string
+     */
     private string $street;
+
+    /**
+     * @var string
+     */
     private string $city;
+
+    /**
+     * @var string
+     */
     private string $country;
+
+    /**
+     * @var string
+     */
     private string $zipCode;
-    private int $id;
 
     /**
      * @param string $street
@@ -47,13 +61,8 @@ class ScontoBridgePrimaryAddress implements JsonSerializable
     }
 
     /**
-     * @param int $id
+     * @return array
      */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
     public function jsonSerialize(): array
     {
         return [
@@ -61,7 +70,6 @@ class ScontoBridgePrimaryAddress implements JsonSerializable
             "city" => $this->city,
             "country" => $this->country,
             "zipCode" => $this->zipCode,
-            "id" => $this->id,
         ];
     }
 }

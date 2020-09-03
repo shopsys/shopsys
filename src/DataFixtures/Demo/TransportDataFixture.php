@@ -78,6 +78,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $productTypeOversized = $this->getReference(ProductTypeDataFixture::TYPE_OVERSIZED);
 
         $transportData = $this->transportDataFactory->create();
+        $transportData->externalId = 1;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
@@ -109,6 +110,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
+        $transportData->externalId = 2;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
@@ -147,6 +149,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
+        $transportData->externalId = 3;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Personal collection', [], 'dataFixtures', $locale);
@@ -166,6 +169,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
+        $transportData->externalId = 4;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Paletová přeprava', [], 'dataFixtures', $locale);
