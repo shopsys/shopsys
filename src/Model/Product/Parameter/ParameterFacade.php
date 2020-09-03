@@ -11,6 +11,7 @@ use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
@@ -359,7 +360,10 @@ class ParameterFacade extends BaseParameterFacade
             ];
 
             if (array_key_exists($variantId, $imagesIndexedByEntityIds)) {
-                $variantParametersSetup['image_url'] = $this->getVariantImageUrl($imagesIndexedByEntityIds[$variantId], $domainId);
+                try {
+                    $variantParametersSetup['image_url'] = $this->getVariantImageUrl($imagesIndexedByEntityIds[$variantId], $domainId);
+                } catch (ImageNotFoundException $imageNotFoundException) {
+                }
             }
 
             if ($variantId === $defaultVariantId) {
@@ -381,7 +385,10 @@ class ParameterFacade extends BaseParameterFacade
                 ];
 
                 if (array_key_exists($variantId, $imagesIndexedByEntityIds)) {
-                    $variantParametersSetup['image_url'] = $this->getVariantImageUrl($imagesIndexedByEntityIds[$variantId], $domainId);
+                    try {
+                        $variantParametersSetup['image_url'] = $this->getVariantImageUrl($imagesIndexedByEntityIds[$variantId], $domainId);
+                    } catch (ImageNotFoundException $imageNotFoundException) {
+                    }
                 }
 
                 $variantsSetupForElastic[] = $variantParametersSetup;
