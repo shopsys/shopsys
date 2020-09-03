@@ -25,7 +25,7 @@
             {% do filterForm.flags.setRendered %}
         {% else %}
             <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.flags.vars.id }}">
-                <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs box-filter__choice__inputs--flags">
+                <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs">
                     {% for flagForm in filterForm.flags %}
 
                         {% set flagChecked = flagForm.vars.checked %}
@@ -35,7 +35,7 @@
                             {{ form_widget(flagForm, { attr: { class: "css-checkbox" } }) }}
                             <label class="css-checkbox__image form-choice__label" for="{{ flagForm.vars.id }}">
                                 <a href="{{ getUrlByFlagValue(productFilterSetup, flagId, flagChecked) }}"
-                                   class="box-filter__choice__link js-product-filter-links"
+                                   class="js-product-filter-links"
                                    data-link-id="flag-{{ flagId }}"
                                 >
                                 {{ flagForm.vars.label }}
@@ -58,9 +58,9 @@
         {% endif %}
 
         <div class="box-filter__content js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
-            <span class="box-filter__choice__title active js-product-filter-box-label">
+            <span class="box-filter__choice__title active cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
                 {{ 'Price'|trans }}
-                <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+                <i class="svg svg-arrow"></i>
             </span>
             <div id="product_filter_box_price" class="box-filter__slider__wrap">
                 <div class="ui-slider-wrap">
@@ -91,9 +91,9 @@
         {% if productFilterCountData is not null %}
 
             <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="product_filter_box_availability">
-                <span class="box-filter__choice__title active js-product-filter-box-label">
+                <span class="box-filter__choice__title active cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
                     {{ 'Availability'|trans }}
-                    <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+                    <i class="svg svg-arrow"></i>
                 </span>
                 <div id="product_filter_box_availability" class="box-filter__choice__inputs">
                     <div class="form-choice box-filter__choice__input">
@@ -128,9 +128,9 @@
             {% do filterForm.brands.setRendered %}
         {% else %}
             <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.brands.vars.id }}">
-                <span class="box-filter__choice__title active js-product-filter-box-label">
+                <span class="box-filter__choice__title active cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
                     {{ 'Brand'|trans }}
-                    <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+                    <i class="svg svg-arrow"></i>
                 </span>
                 <div id="{{ filterForm.brands.vars.id }}" class="box-filter__choice__inputs">
 
