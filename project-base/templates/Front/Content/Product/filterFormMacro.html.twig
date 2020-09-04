@@ -87,7 +87,8 @@
                                         data-form-id="{{ flagForm.vars.id }}"
                                     >
                                         {% if not flagForm.vars.checked %}
-                                            ({% if filterForm.flags.vars.data is not empty %}+{% endif %}{{ productFilterCountData.countByFlagId[flagForm.vars.value]|default(0) }})
+                                            {% set flagsCount = productFilterCountData.countByFlagId[flagForm.vars.value]|default(0) %}
+                                            ({% if filterForm.flags.vars.data is not empty and flagsCount > 0 %}+{% endif %}{{ flagsCount }})
                                         {% endif %}
                                     </span>
                                 {% endif %}
@@ -153,9 +154,10 @@
                                                     data-form-id="{{ parameterValueForm.vars.id }}"
                                                 >
                                                     {% if not parameterValueForm.vars.checked %}
+                                                        {% set parameterValueCount = productFilterCountData.countByParameterIdAndValueId[parameterId][parameterValueForm.vars.value]|default(0) %}
                                                         (
-                                                            {%- if parameterForm.vars.data is not empty %}+{% endif -%}
-                                                            {{- productFilterCountData.countByParameterIdAndValueId[parameterId][parameterValueForm.vars.value]|default(0) -}}
+                                                            {%- if parameterForm.vars.data is not empty and parameterValueCount > 0 %}+{% endif -%}
+                                                            {{- parameterValueCount -}}
                                                         )
                                                     {% endif %}
                                                 </span>

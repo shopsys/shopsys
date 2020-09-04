@@ -65,3 +65,6 @@ There you can find links to upgrade notes for other versions too.
     -   tail -f $PIPE &
     +   tail -n +1 -f $PIPE &
     ```
+
+- fix displaying '+' sign in product filter ([#2023](https://github.com/shopsys/shopsys/pull/2023))
+    - see #project-base-diff to update your project
