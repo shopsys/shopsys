@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter\Unit;
 
+use App\Model\CachedTranslatableTrait;
 use App\Model\LoadFromParentTrait;
 use App\Model\Product\Parameter\Unit\ParameterUnit as ParameterUnitEntity;
 
@@ -16,6 +17,7 @@ use App\Model\Product\Parameter\Unit\ParameterUnit as ParameterUnitEntity;
 class CachedParameterUnit extends ParameterUnitEntity
 {
     use LoadFromParentTrait;
+    use CachedTranslatableTrait;
 
     /**
      * @param \App\Model\Product\Parameter\Unit\ParameterUnit $parameterUnit
