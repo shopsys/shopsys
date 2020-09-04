@@ -15,12 +15,15 @@
                             <h2 class="box-cart-card__form__title">{{ 'Začněte zadáním e-mailu'|trans }}</h2>
                             <dl class="form-line-block form-line-block--no-margin js-form-field">
                                 <dt>
-                                    <label for="check-existing-email">{{ 'Váš e-mail'|trans }}</label>
+                                    <label for="js-check-existing-email">{{ 'Váš e-mail'|trans }}</label>
                                 </dt>
                                 <dd>
+                                    <ul class="js-check-existing-email-error" style="display: none">
+                                        <li>{{ 'Toto pole je povinné a musí obsahovat e-mailovou adresu.'|trans }}</li>
+                                    </ul>
                                     <input
                                         type="text"
-                                        id="check-existing-email"
+                                        id="js-check-existing-email"
                                         class="input"
                                         value="">
                                 </dd>
@@ -35,7 +38,7 @@
                             </a>
                         </div>
                         <div class="box-cart__buttons__next">
-                            <button id="check-existing-email-submit" class="btn btn--success btn--checkout-step" type="submit">{{ 'Pokračovat'|trans }}</button>
+                            <button id="js-check-existing-email-submit" class="btn btn--success btn--checkout-step" type="submit">{{ 'Pokračovat'|trans }}</button>
                         </div>
                     </div>
                 {% else %}

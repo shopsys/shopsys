@@ -5,15 +5,31 @@ import Register from 'framework/common/utils/Register';
 
 export default class FindCustomerByEmail {
     ajaxSubmit () {
-        const email = $('#check-existing-email').val();
-        Ajax.ajax({
-            url: '/customer/find-customer-by-email/',
-            type: 'POST',
-            data: { email: email },
-            dataType: 'json',
-            complete: FindCustomerByEmail.onComplete,
-            error: FindCustomerByEmail.onError
-        });
+
+        const $emailInput = $('#js-check-existing-email');
+
+        if (FindCustomerByEmail.validateEmail($emailInput)) {
+            Ajax.ajax({
+                url: '/customer/find-customer-by-email/',
+                type: 'POST',
+                data: { email: $emailInput.val() },
+                dataType: 'json',
+                complete: FindCustomerByEmail.onComplete,
+                error: FindCustomerByEmail.onError
+            });
+        }
+    }
+
+    static validateEmail ($emailInput) {
+        const inputText = $emailInput.val();
+        const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+        if (inputText.match(mailFormat)) {
+            return true;
+        } else {
+            $emailInput.siblings('.js-check-existing-email-error').show();
+            $emailInput.focus();
+            return false;
+        }
     }
 
     static onComplete () {
@@ -36,8 +52,8 @@ export default class FindCustomerByEmail {
 
     static init ($container) {
         const findCustomerByEmail = new FindCustomerByEmail();
-        $container.filterAllNodes('#check-existing-email-submit').click((event) => findCustomerByEmail.ajaxSubmit());
-        $container.filterAllNodes('#check-existing-email').keypress(function (event) {
+        $container.filterAllNodes('#js-check-existing-email-submit').click((event) => findCustomerByEmail.ajaxSubmit());
+        $container.filterAllNodes('#js-check-existing-email').keypress(function (event) {
             if (event.keyCode === KeyCodes.ENTER) {
                 findCustomerByEmail.ajaxSubmit();
                 return false;
