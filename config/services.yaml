@@ -486,7 +486,7 @@ services:
 
     App\Model\GoPay\GoPayClientFactory:
         arguments:
-            - '%gopay.config%'
+            - '%gopay_config%'
 
     App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade:
         public: true
