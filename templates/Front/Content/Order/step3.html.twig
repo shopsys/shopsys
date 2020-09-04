@@ -4,18 +4,19 @@
 {% do form.note.setRendered %}
 
 {% block content %}
-    <div class="web__line web__line--bg-color web__line--cart web__line--cart-final-step">
+    <div class="web__line web__line--cart web__line--cart-final-step">
         <div class="web__container">
 
             <div class="box-cart box-cart--personals">
                 <div class="box-cart__col box-cart__col--info">
-                    <div class="box-cart-card box-cart-card--form">
+                    <div class="box-cart-card box-cart-card--form box-cart-card box-cart-card--form--spaced">
                         <div class="box-cart-card__form">
-                            <h2 class="box-cart-card__form__title">
+                            <h2 class="box-cart-card__form__title box-cart-card__form__title--centered">
                                 {% if(isWithoutRegistration == false) %}
-                                    {{ 'Ještě jste u nás nenakupovali? Pro dokončení nákupu se prosím zaregistrujte. Budete u nás nakupovat jako:'|trans }}
+                                    {{ '<strong class="box-cart-card__form__title__strong">Ještě jste u nás nenakupovali?</strong>
+                                    Pro dokončení nákupu se prosím zaregistrujte. Budete u nás nakupovat jako:'|transHtml }}
                                 {% else %}
-                                    {{ 'Zkontrolujte vaše údaje:'|trans }}
+                                    {{ 'Zkontrolujte prosím vaše údaje:'|trans }}
                                 {% endif %}
                             </h2>
                             <div class="in-tab js-responsive-tabs js-tabs-only">
@@ -192,7 +193,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box-cart__buttons">
+                    <div class="box-cart__buttons box-cart__buttons--final">
                         <div class="box-cart__buttons__back">
                             <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
                                 <i class="btn__icon svg svg-chevron"></i>

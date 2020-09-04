@@ -430,6 +430,7 @@
 
     &--checkout-step,
     &--submit-next {
+        position: relative;
         display: flex;
         align-items: center;
         padding: 16px 25px 15px;
@@ -443,30 +444,43 @@
         -webkit-font-smoothing: antialiased;
 
         @media @query-lg {
-            padding-left: 35px;
-            padding-right: 35px;
+            padding: 0 35px;
+            height: 60px;
+
+            font-size: 18px;
         }
 
         &::before {
             order: 1;
             margin-left: 10px;
-            content: "\f105";
+            content: "\f106";
 
             font-family: svg;
-            color: @color-add;
-            font-size: 20px;
+            color: @color-primary;
+            font-size: 18px;
+            font-weight: 700;
         }
 
-        &:hover {
-            background-color: lighten(#222631, 10%);
-            color: #fff;
+        &::after {
+            position: absolute;
+            top: calc(100% - 3px);
+            left: 50%;
+            width: 90%;
+            height: 3px;
+            transform: translateX(-50%);
+            content: '';
+
+            box-shadow: 0 3px 7px 0 rgba(#fcc308, 0.9);
         }
     }
 
     &--checkout-send {
+        position: relative;
         display: flex;
         align-items: center;
+        justify-content: center;
         padding: 16px 25px 15px;
+        height: 65px;
 
         font-family: @font-quartenary;
         font-size: 15px;
@@ -495,6 +509,18 @@
             background-repeat: no-repeat;
         }
 
+        &::after {
+            position: absolute;
+            top: calc(100% - 3px);
+            left: 50%;
+            width: 90%;
+            height: 3px;
+            transform: translateX(-50%);
+            content: '';
+
+            box-shadow: 0 3px 7px 0 #75ab0d;
+        }
+
         @media @query-mobile {
             width: 100%;
         }
@@ -502,6 +528,10 @@
         @media @query-lg {
             padding-left: 25px;
             padding-right: 25px;
+        }
+
+        @media @query-xl {
+            font-size: 17px;
         }
     }
 

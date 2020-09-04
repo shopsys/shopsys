@@ -5,11 +5,19 @@
         {% set percentageOfFreeTransport = orderPreview.getPercentageOfFreeTransport() %}
         <div class="box-free-transport">
             <div class="box-free-transport__icon">
-                {% if loop is not null and loop.first %}
-                    <img class="box-free-transport__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.svg') }}" alt="{{ 'Doprava zdarma'|trans }}">
-                {% else %}
-                    <img class="box-free-transport__icon__image" loading="lazy" data-src="{{ asset('public/frontend/images/package-icon-delivery.svg') }}" alt="{{ 'Doprava zdarma'|trans }}">
-                {% endif %}
+                <picture>
+                    <source
+                        srcset="
+                        {{ asset('public/frontend/images/free-delivery-icon2x.jpg') }} 2x,
+                        {{ asset('public/frontend/images/free-delivery-icon.jpg') }} 1x"
+                    >
+                    <img
+                        data-src="{{ asset('public/frontend/images/free-delivery-icon.jpg') }}"
+                        class="box-free-transport__icon__image"
+                        loading="lazy"
+                        alt="{{ 'Doprava zdarma'|trans }}"
+                    />
+                </picture>
             </div>
             <div class="box-free-transport__content">
                 {% if restForFreeTransportPriceAmount > 0 %}

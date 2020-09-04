@@ -1,7 +1,7 @@
 {% import 'Front/Content/Cart/cartFreeTransportMacro.html.twig' as cartFreeTransportMacro %}
 
 {% block content %}
-    <div class="web__line web__line--bg-color web__line--cart">
+    <div class="web__line web__line--cart">
         <div class="web__container">
             <div class="box-cart box-cart--order">
                 <div id="{{ form.vars.id }}" class="box-cart__col box-cart__col--info js-no-validate">
@@ -12,7 +12,7 @@
                         <button
                             type="submit"
                             name="transport_and_payment_form[save]"
-                            class="btn btn--dark btn--checkout-step js-no-validate-button js-transport_and_payment_form_save">
+                            class="btn btn--success btn--checkout-step js-no-validate-button js-transport_and_payment_form_save">
                             {{ 'Další krok'|trans }}
                         </button>
                     </div>
@@ -30,7 +30,7 @@
 
                             <div class="box-cart-card box-cart-card--transport js-payment-transport-group" data-product-type-id="{{ orderPreview.productType.id }}">
                                 <div class="box-cart-card__top box-cart-card__top--bordered">
-                                    <h2 class="box-cart-card__title box-cart-card__title--no-margin-lg-up" id="js-label-{{ transportFormId }}">
+                                    <h2 class="box-cart-card__title box-cart-card__title--small box-cart-card__title--no-margin" id="js-label-{{ transportFormId }}">
                                         {% if splitOrderPreview.morePreviews %}
                                             {{ 'Shipping selection'|trans }}
                                             -
@@ -41,12 +41,6 @@
                                             {{ 'Doprava pro celý nákup'|trans }}
                                         {% endif %}
                                     </h2>
-                                    {% if loop.first and not splitOrderPreview.morePreviews %}
-                                        {{ cartFreeTransportMacro.progressBar(orderPreview) }}
-                                    {% endif %}
-                                    {% if splitOrderPreview.morePreviews %}
-                                        {{ cartFreeTransportMacro.progressBar(orderPreview, loop) }}
-                                    {% endif %}
                                 </div>
 
                                 <input type="hidden"
@@ -111,6 +105,16 @@
                                                 </span>
                                             </label>
                                         {% endfor %}
+                                        {% if loop.first and not splitOrderPreview.morePreviews %}
+                                            <div class="box-chooser__free-transport">
+                                                {{ cartFreeTransportMacro.progressBar(orderPreview) }}
+                                            </div>
+                                        {% endif %}
+                                        {% if splitOrderPreview.morePreviews %}
+                                            <div class="box-chooser__free-delivery">
+                                                {{ cartFreeTransportMacro.progressBar(orderPreview, loop) }}
+                                            </div>
+                                        {% endif %}
                                         <div class="box-chooser__toggle">
                                             <button type="button" class="btn box-chooser__toggle__btn js-payment-transport-change-button">
                                                 {{ 'Změnit dopravu' }}
@@ -129,7 +133,7 @@
 
                     <div class="box-cart-card box-cart-card--payments js-payment-transport-group">
                         <div class="box-cart-card__top box-cart-card__top--bordered">
-                            <h2 class="box-cart-card__title box-cart-card__title--no-margin" id="js-label-{{ form.payment.vars.id }}">{{ 'Payment selection'|trans }}</h2>
+                            <h2 class="box-cart-card__title box-cart-card__title--small box-cart-card__title--no-margin" id="js-label-{{ form.payment.vars.id }}">{{ 'Platba za celý nákup'|trans }}</h2>
                         </div>
 
                         <div class="box-chooser box-chooser--smaller js-form-group">
@@ -228,17 +232,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box-cart__buttons">
-                        <div class="box-cart__buttons__back">
-                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
-                                <i class="btn__icon svg svg-chevron"></i>
-                                {{ 'Back to cart'|trans }}
-                            </button>
-                        </div>
-                        <div class="box-cart__buttons__next">
-                            {{ form_widget(form.save, { label: 'Další krok'|trans, attr: { class: 'btn btn--dark btn--checkout-step js-no-validate-button js-transport_and_payment_form_save' } }) }}
-                        </div>
-                    </div>
                 </div>
 
 
@@ -250,6 +243,17 @@
                             showAdvert: false,
                             showPromo: false
                         })) }}
+                    </div>
+                    <div class="box-cart__buttons">
+                        <div class="box-cart__buttons__back">
+                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                                <i class="btn__icon svg svg-chevron"></i>
+                                {{ 'Back to cart'|trans }}
+                            </button>
+                        </div>
+                        <div class="box-cart__buttons__next">
+                            {{ form_widget(form.save, { label: 'Další krok'|trans, attr: { class: 'btn btn--success btn--checkout-step js-no-validate-button js-transport_and_payment_form_save' } }) }}
+                        </div>
                     </div>
                 </div>
             </div>

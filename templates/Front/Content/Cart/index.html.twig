@@ -36,7 +36,7 @@
         {% endblock %}
 
         {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
-        <div class="web__line web__line--bg-color web__line--cart">
+        <div class="web__line web__line--cart">
             <div class="web__container">
                 {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form box-cart' }}) }}
                     {{ form_errors(form) }}
@@ -44,7 +44,7 @@
                         <button
                             type="submit"
                             name="cart_form[submit]"
-                            class="btn btn--dark btn--checkout-step js-no-validate-button">
+                            class="btn btn--success btn--checkout-step js-no-validate-button">
                             {{ 'Další krok'|trans }}
                         </button>
                     </div>
@@ -63,11 +63,10 @@
                             {% set previewNumber = previewNumber + 1 %}
                             {% if loop.first and not splitOrderPreview.morePreviews %}
                                 <div class="box-cart-card box-cart-card--info">
-                                    <div class="box-cart-card__top">
-                                        <h1 class="box-cart-card__title box-cart-card__title--no-margin">{{ 'Váš košík'|trans }}</h1>
+                                    {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
+                                    <div class="box-cart-card__bottom">
                                         {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                                     </div>
-                                    {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
                                 </div>
                             {% endif %}
                             {% if splitOrderPreview.morePreviews %}
@@ -78,13 +77,27 @@
                                             -
                                             {{ orderPreview.productType.name }}
                                         </h2>
-                                            {{ cartFreeTransportMacro.progressBar(orderPreview, loop) }}
                                     </div>
                                     {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
+                                    <div class="box-cart-card__bottom">
+                                        {{ cartFreeTransportMacro.progressBar(orderPreview, loop) }}
+                                    </div>
                                 </div>
                             {% endif %}
                         {% endfor %}
-
+                    </div>
+                    <div class="box-cart__col box-cart__col--preview box-cart__col--preview-step-1">
+                        <div class="box-cart-card box-cart-card--preview box-cart-card--preview">
+                            <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
+                                {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                                    transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
+                                    paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
+                                    showProducts: false,
+                                    showAdvert: true,
+                                    showPromo: true
+                                })) }}
+                            </div>
+                        </div>
                         <div class="box-cart__buttons">
                             <div class="box-cart__buttons__back">
                                 <a href="{{ url('front_homepage') }}" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev">
@@ -94,22 +107,9 @@
                             </div>
                             {% if cart.itemsCount > 0 %}
                                 <div class="box-cart__buttons__next">
-                                    {{ form_row(form.submit, { label: 'Další krok'|trans, attr: { class: 'btn btn--dark btn--checkout-step'}}) }}
+                                    {{ form_row(form.submit, { label: 'Další krok'|trans, attr: { class: 'btn btn--success btn--checkout-step'}}) }}
                                 </div>
                             {% endif %}
-                        </div>
-                    </div>
-                    <div class="box-cart__col box-cart__col--preview">
-                        <div class="box-cart-card box-cart-card--preview">
-                            <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
-                                {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                                    transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
-                                    paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
-                                    showProducts: true,
-                                    showAdvert: true,
-                                    showPromo: true
-                                })) }}
-                            </div>
                         </div>
                     </div>
                 {{ form_end(form) }}

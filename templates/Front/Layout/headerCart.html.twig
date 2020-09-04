@@ -5,12 +5,6 @@
 {% set logoName = domain.id == 1 ? 'logo' : 'logo_sk' %}
 
 <header class="header header--cart">
-    <div class="header__button">
-        <a class="btn btn--header-back" href="{{ url('front_homepage') }}">
-            <i class="btn__icon svg svg-chevron"></i>
-            {{ 'Zpět'|trans }}
-        </a>
-    </div>
     <div class="header__logo">
         {% block logo %}
             <a class="logo" href="{{ url('front_homepage') }}">
@@ -19,11 +13,11 @@
         {% endblock %}
     </div>
     <div class="header__info-box">
-        {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : 'box-info--in-header' } %}
+        {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : 'box-info--in-header', 'inHeader' : true } %}
     </div>
     <div class="header__mobile-button header__mobile-button--login">
         <span class="header__mobile-button__in js-responsive-toggle" data-element="js-user-menu" data-hide-on-click-out="true">
-            <i class="svg svg-user"></i>
+            <i class="svg svg-user svg-fw-bold"></i>
         </span>
         <div class="header__mobile-button__menu" id="js-user-menu">
             {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
@@ -51,7 +45,7 @@
             {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
                 <li class="menu-iconic__item menu-iconic__item--sub">
                     <a href="#" class="menu-iconic__item__link">
-                        <i class="menu-iconic__item__icon svg svg-user"></i>
+                        <i class="menu-iconic__item__icon svg svg-user svg-fw-bold"></i>
                         <span class="menu-iconic__item__text">{{ 'Můj účet'|trans }}</span>
                     </a>
                     <ul class="menu-iconic__sub">
@@ -75,7 +69,7 @@
                         data-url="{{ url('front_login_window_form') }}"
                         class="js-login-link-desktop js-login-button menu-iconic__item__link"
                     >
-                        <i class="menu-iconic__item__icon svg svg-user"></i>
+                        <i class="menu-iconic__item__icon svg svg-user svg-fw-bold"></i>
                         <span class="menu-iconic__item__text">{{ 'Log in'|trans }}</span>
                     </a>
                 </li>

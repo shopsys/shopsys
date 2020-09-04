@@ -252,7 +252,7 @@
         .box-info__content {
             display: block;
             margin-left: 1.5rem;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
 
             @media screen and (min-width: 1200px) {
                 display: flex;
@@ -282,10 +282,6 @@
         .box-info__hours {
             font-size: 13px;
             line-height: 1.1;
-
-            @media @query-md {
-                font-size: 12px;
-            }
         }
 
         .box-info__contacts__link {
@@ -293,6 +289,17 @@
 
             font-size: 16px;
             line-height: 1.1;
+        }
+
+        .box-info__contacts__btn {
+            padding: 4px 10px 2px 13px;
+            min-height: 0;
+
+            .box-info__contacts__icon {
+                margin-right: 0;
+
+                font-size: 22px;
+            }
         }
     }
 }

@@ -16,7 +16,7 @@
         width: 100%;
         margin: 0;
 
-        border: 1px solid @color-border-light;
+        border: 1px solid @color-border-tertiary;
 
         &:first-child {
             border-top-left-radius: @radius;
@@ -38,6 +38,16 @@
 
         & + .table-cart-preview__section {
             border-top: 0;
+        }
+
+        &--products,
+        &--payment {
+            .table-cart-preview__cell {
+                padding-top: 1px;
+                padding-bottom: 1px;
+
+                color: #7a929d;
+            }
         }
     }
 
@@ -63,7 +73,8 @@
     &__cell {
         padding: 3px 12px;
 
-        font-size: 12px;
+        font-size: 13px;
+        color: @color-primary;
 
         .table-cart-preview__row--total & {
             font-weight: bold;
@@ -81,6 +92,10 @@
         &--summary {
             padding-top: 0;
             padding-bottom: 0;
+        }
+
+        &--no-spacing {
+            padding: 0;
         }
 
         &__title {

@@ -1,6 +1,6 @@
 @box-chooser-item-spacing: @box-cart-card-padding;
 @box-chooser-item-padding: 14px @box-chooser-item-spacing;
-@box-chooser-item-hover-bg: #e6eaeb;
+@box-chooser-item-hover-bg: @color-light-secondary;
 
 @box-chooser-check-size: 20px;
 @box-chooser-image-width: 70px;
@@ -220,13 +220,14 @@
 
         @media @query-lg {
             flex-wrap: nowrap;
+            padding-right: 25px;
         }
 
         &::after {
             position: absolute;
-            left: @box-chooser-item-spacing;
+            left: 0;
             bottom: 0;
-            width: calc(100% - 2 * @box-chooser-item-spacing);
+            width: 100%;
             height: 1px;
             content: '';
 
@@ -421,7 +422,8 @@
             margin-top: 5px;
 
             font-family: @font-quartenary;
-            color: @color-primary;
+            color: @color-primary-light;
+            font-size: 14px;
 
             @media @query-md {
                 flex-grow: 1;
@@ -438,6 +440,11 @@
                 color: @color-inactive;
             }
         }
+    }
+
+    &__free-transport {
+        display: flex;
+        margin: 10px 0 15px;
     }
 
     &__toggle {
