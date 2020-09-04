@@ -64,6 +64,8 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             SET calculated_sale_exclusion = CASE
                     WHEN (
                         p.calculated_selling_denied = TRUE
+                        OR
+                        pd.domain_hidden = TRUE
                         OR 
                         (
                             pd.sale_exclusion = TRUE
