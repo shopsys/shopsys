@@ -123,6 +123,10 @@
             </div>
         </div>
     {% endif %}
-    {% include 'Front/Layout/copyright.html.twig' with { 'cssClass' : '' } %}
+    {% set copyrightCssClass = null %}
+    {% if getRoute() == 'front_order_index' or getRoute() == 'front_cart' %}
+        {% set copyrightCssClass = 'footer__bottom--checkout' %}
+    {% endif %}
+    {% include 'Front/Layout/copyright.html.twig' with { 'cssClass' : copyrightCssClass } %}
 </div>
 
