@@ -235,6 +235,7 @@ class OrderController extends FrontBaseController
             return $this->redirectToRoute('front_cart');
         }
 
+        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->getUser();
         $frontOrderFormData = new FrontOrderData();
         $frontOrderFormData->deliveryAddressSameAsBillingAddress = true;
@@ -272,8 +273,11 @@ class OrderController extends FrontBaseController
         $form = $orderFlow->createForm();
         $isValid = $orderFlow->isValid($form);
 
+        /** @var \App\Model\Payment\Payment[] $payments */
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
         $payments = $this->paymentFacade->filterAllowedPaymentsForCurrentCart($payments);
+
+        /** @var \App\Model\Transport\Transport[] $transports */
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
         $transports = $this->transportLogisticFacade->filterAllowedTransportsForCurrentCart($transports);
 
@@ -295,6 +299,7 @@ class OrderController extends FrontBaseController
                 return $this->redirectToRoute('front_order_index');
             } elseif (count($this->getErrorMessages()) === 0 && count($this->getInfoMessages()) === 0) {
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
+                /** @var \App\Model\Order\Order $order */
                 $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
 

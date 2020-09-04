@@ -6,6 +6,9 @@ namespace App\Component\Domain;
 
 use Shopsys\FrameworkBundle\Component\Domain\DomainFactory as BaseDomainFactory;
 
+/**
+ * @property \App\Component\Setting\Setting $setting
+ */
 class DomainFactory extends BaseDomainFactory
 {
     /**

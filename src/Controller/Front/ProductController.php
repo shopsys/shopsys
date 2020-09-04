@@ -317,6 +317,7 @@ class ProductController extends FrontBaseController
         $this->gtmFacade->onProductDetailPage($product);
 
         //parts build from main product
+        /** @var \App\Model\Product\Listed\ListedProductView[] $accessories */
         $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
         $this->productVariantFilterFacade->setupDefaultVariantsInListedProductViews($accessories);
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
@@ -452,6 +453,7 @@ class ProductController extends FrontBaseController
      */
     public function listByCategoryAction(Request $request, int $id, ?int $readyCategorySeoMixId = null)
     {
+        /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $id);
         $readyCategorySeoMix = $this->findReadyCategorySeoMix($readyCategorySeoMixId, $request, $category);
         $request->attributes->set('isCategorySeoMix', $readyCategorySeoMix === null ? false : true);

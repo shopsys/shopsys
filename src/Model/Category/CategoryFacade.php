@@ -44,6 +44,10 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory;
  * @method int[] getListableProductCountsIndexedByCategoryId(\App\Model\Category\Category[] $categories, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
+ * @method \App\Model\Category\Category[] getAllTranslated(string $locale)
+ * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch(\App\Model\Category\Category $category, string $locale)
+ * @method createFriendlyUrlsWhenRenamed(\App\Model\Category\Category $category, array $originalNames)
+ * @method array getChangedNamesByLocale(\App\Model\Category\Category $category, array $originalNames)
  */
 class CategoryFacade extends BaseCategoryFacade
 {
@@ -125,7 +129,7 @@ class CategoryFacade extends BaseCategoryFacade
     {
         /** @var \App\Model\Category\Category $category */
         $category = parent::create($categoryData);
-        $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersCollapsed, $categoryData->parametersCollapsed);
+        $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
         $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
         $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($category);
 

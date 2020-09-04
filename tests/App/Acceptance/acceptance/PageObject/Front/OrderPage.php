@@ -117,6 +117,15 @@ class OrderPage extends AbstractPage
         $this->tester->fillFieldByName('order_personal_info_form[postcode]', $postcode);
     }
 
+    public function acceptLegalConditions()
+    {
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#order_personal_info_form_legalConditionsAgreement'
+        );
+        $frontCheckboxClicker->check();
+    }
+
     /**
      * @param string $note
      */

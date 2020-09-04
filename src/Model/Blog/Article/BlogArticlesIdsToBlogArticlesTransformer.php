@@ -52,7 +52,7 @@ class BlogArticlesIdsToBlogArticlesTransformer implements DataTransformerInterfa
                 try {
                     $blogArticles[] = $this->blogArticleFacade->getById((int)$blogArticlesId);
                 } catch (\App\Model\Blog\Article\Exception\BlogArticleNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Blog article not found', null, $e);
+                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Blog article not found', 0, $e);
                 }
             }
         }

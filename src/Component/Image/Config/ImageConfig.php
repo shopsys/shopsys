@@ -15,7 +15,7 @@ class ImageConfig extends BaseImageConfig
     /**
      * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
      */
-    private $entityNameResolver;
+    protected $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass

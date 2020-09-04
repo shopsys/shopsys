@@ -62,6 +62,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
 
         $this->setVats($productData);
 
+        /** @var \App\Model\Product\Product $product */
         $product = $this->productFactory->create($productData);
 
         $refreshedProduct = $this->getRefreshedProductFromDatabase($product);
@@ -95,6 +96,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->catnum = '123';
         $this->setVats($productData);
 
+        /** @var \App\Model\Product\Product $product */
         $product = $this->productFactory->create($productData);
 
         $refreshedProduct = $this->getRefreshedProductFromDatabase($product);

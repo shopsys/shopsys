@@ -19,6 +19,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 
         $queryBuilderDataSource = new QueryBuilderDataSource($qb, 'p.id');
 
+        /** @phpstan-ignore-next-line */
         $row = $queryBuilderDataSource->getOneRow($this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1'));
 
         $this->assertIsArray($row);

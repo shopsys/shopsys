@@ -59,7 +59,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $productTypeQuantifiedProducts
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
+     * @param \App\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
@@ -285,7 +285,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $discountsPerProduct
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $productTypeQuantifiedProducts
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
+     * @param \App\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      * @param \App\Model\Order\PromoCode\PromoCodeLimit $promoCodeLimit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency

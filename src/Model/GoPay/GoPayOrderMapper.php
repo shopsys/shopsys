@@ -89,7 +89,7 @@ class GoPayOrderMapper
      */
     private function formatPriceForGoPay(Money $price): int
     {
-        return (int)round($price->multiply(100)->getAmount());
+        return (int)round((float)$price->multiply(100)->getAmount());
     }
 
     /**

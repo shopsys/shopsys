@@ -33,6 +33,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @property \App\Component\Setting\Setting $setting
  * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
  * @property \App\Component\Domain\Domain $domain
+ * @method setSellingToUntilEndOfDay(\App\Model\Product\ProductData|null $productData)
  */
 class ProductController extends BaseProductController
 {

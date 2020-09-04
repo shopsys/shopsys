@@ -29,6 +29,7 @@ class QuantifiedProductPriceCalculation extends BaseQuantifiedProductPriceCalcul
      */
     public function calculatePrice(QuantifiedProduct $quantifiedProduct, int $domainId, ?CustomerUser $customerUser = null, ?PromoCode $promoCode = null): BaseQuantifiedItemPrice
     {
+        /** @var \App\Model\Product\Product $product */
         $product = $quantifiedProduct->getProduct();
 
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(

@@ -112,8 +112,8 @@ class ImageFacade extends BaseImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param Object|\App\Component\Image\Image $imageOrEntity
-     * @param null $sizeName
-     * @param null $type
+     * @param string|null $sizeName
+     * @param string|null $type
      * @return string
      */
     public function getImageUrl(DomainConfig $domainConfig, $imageOrEntity, $sizeName = null, $type = null)

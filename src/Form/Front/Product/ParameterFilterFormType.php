@@ -66,7 +66,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
             }
 
             if ($parameter->getParameterType() === Parameter::PARAMETER_TYPE_SLIDER) {
-                $builder->add($parameter->getId(), SliderFilterFormType::class, [
+                $builder->add((string)$parameter->getId(), SliderFilterFormType::class, [
                     'label' => $parameter->getName(),
                     'slider_config' => $this->createSliderConfig($parameterFilterChoice),
                     'attr' => [
@@ -75,7 +75,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
                     ],
                 ]);
             } else {
-                $builder->add($parameter->getId(), ChoiceType::class, [
+                $builder->add((string)$parameter->getId(), ChoiceType::class, [
                     'label' => $parameter->getName(),
                     'choices' => $parameterValues,
                     'choice_label' => 'text',

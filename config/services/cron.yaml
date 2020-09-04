@@ -36,6 +36,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '4', minutes: '0', readableName: 'Generate Sitemap' }
 
+    Shopsys\FrameworkBundle\Component\FileUpload\DeleteOldUploadedFilesCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '5', minutes: '0', readableName: 'Delete old temporary uploaded files' }
+
     App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Import stromu kategorií z Akeneo' }

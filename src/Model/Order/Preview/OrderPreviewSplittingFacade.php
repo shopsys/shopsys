@@ -312,6 +312,8 @@ class OrderPreviewSplittingFacade
             // Following filtering by type is skipped, because SD-1236 disables temporary splitting of cart.
             // $productTypeQuantifiedProducts = $this->filterQuantifiedProductsByProductType($quantifiedProducts, $productType, $domainId);
             $productTypeQuantifiedProducts = $quantifiedProducts;
+            /** @var \App\Model\Customer\User\CustomerUser $currentCustomerUser */
+            $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
             if (count($productTypeQuantifiedProducts) > 0) {
                 $orderPreviews[] = $this->orderPreviewFactory->create(
                     $currency,
@@ -319,7 +321,7 @@ class OrderPreviewSplittingFacade
                     $productTypeQuantifiedProducts,
                     $transportsByProductTypeId[$productType->getId()] ?? null,
                     null,
-                    $this->currentCustomerUser->findCurrentCustomerUser(),
+                    $currentCustomerUser,
                     $promoCodeDiscountPercent,
                     $productType,
                     $transportPersonalPickupStockByProductTypeId[$productType->getId()] ?? null
