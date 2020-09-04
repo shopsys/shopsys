@@ -9,6 +9,7 @@ use App\Model\Product\Product;
 use App\Model\Stock\ProductStock;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\ProductStockRepository;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 
 class ProductAvailabilityFacade
@@ -332,7 +333,7 @@ class ProductAvailabilityFacade
             $closestFutureStockAvailabilityInformationForOtherStocks = $outOfStockAvailabilityInformation;
         }
 
-        $stocksList = [];
+        $productStocksAvailabilityInformationList = [];
         foreach ($productStocks as $productStock) {
             if ($productStock->getStock()->isCentralStock()) {
                 continue;
@@ -356,7 +357,7 @@ class ProductAvailabilityFacade
                 }
             }
 
-            $stocksList[$productStock->getStock()->getId()] = new ProductStockAvailabilityInformation(
+            $productStocksAvailabilityInformationList[$productStock->getStock()->getId()] = new ProductStockAvailabilityInformation(
                 $productStock->getStock()->getName(),
                 $productStock->getStock()->getId(),
                 $availabilityInformation,
@@ -365,7 +366,7 @@ class ProductAvailabilityFacade
             );
         }
 
-        return $stocksList;
+        return $productStocksAvailabilityInformationList;
     }
 
     /**

@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace App\Model\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
 /**
  * @ORM\Table(name="stocks")
  * @ORM\Entity
  */
-class Stock
+class Stock implements OrderableEntityInterface
 {
+    private const GEDMO_SORTABLE_LAST_POSITION = 1;
+
     /**
      * @var int
      *
@@ -116,6 +120,14 @@ class Stock
     protected $locationLng;
 
     /**
+     * @var int
+     *
+     * @Gedmo\SortablePosition
+     * @ORM\Column(type="integer")
+     */
+    protected $position;
+
+    /**
      * @param \App\Model\Stock\StockData $stockData
      */
     public function __construct(StockData $stockData)
@@ -133,6 +145,7 @@ class Stock
         $this->contactInfo = $stockData->contactInfo;
         $this->locationLat = $stockData->locationLat;
         $this->locationLng = $stockData->locationLng;
+        $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
     }
 
     /**
@@ -264,5 +277,22 @@ class Stock
     public function getLocationLng(): ?string
     {
         return $this->locationLng;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 }

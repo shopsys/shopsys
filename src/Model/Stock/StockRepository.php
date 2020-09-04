@@ -60,7 +60,7 @@ class StockRepository
      */
     public function getAllStocks(): array
     {
-        return $this->getStockRepository()->findAll();
+        return $this->getStockRepository()->findBy([], ['domainId' => 'ASC', 'position' => 'ASC']);
     }
 
     /**
@@ -71,7 +71,8 @@ class StockRepository
     {
         return $this->getQueryBuilder()
             ->where('s.domainId = :domainId')
-            ->orderBy('s.id')
+            ->orderBy('s.domainId', 'ASC')
+            ->orderBy('s.position', 'ASC')
             ->setParameter('domainId', $domainId);
     }
 
