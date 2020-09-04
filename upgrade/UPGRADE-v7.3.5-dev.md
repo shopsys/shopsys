@@ -62,3 +62,6 @@ There you can find links to upgrade notes for other versions too.
 
 - load product accessories in after add window only if corresponding module is enabled ([#1990](https://github.com/shopsys/shopsys/pull/#1990))
     - see #project-base-diff to update your project
+
+- fix Elasticsearch test reliability on fail ([#1662](https://github.com/shopsys/shopsys/pull/1662))
+    - see #project-base-diff to update your project
