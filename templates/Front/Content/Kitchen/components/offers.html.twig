@@ -1,0 +1,58 @@
+<div class="box-furniture-offer-wrap">
+    <div class="box-furniture-offer box-furniture-offer--meeting theme-kitchen-bg-darker">
+        <div class="box-furniture-offer__content">
+            <span class="box-furniture-label">{{ 'Zdarma'|trans }}</span>
+            <p class="box-furniture-offer__desc theme-kitchen-color-secondary">
+                {{ 'Domluvte si nezávaznou schůzku v jednom z našich 8 kuchyňských studií.'|trans }}
+            </p>
+            <a class="box-furniture-offer__btn btn btn--ghost btn--ghost--wider js-not-implemented-yet" href="#">
+                {{ 'Domluvit schůzku'|trans }}
+            </a>
+        </div>
+        <div class="box-furniture-offer__image">
+            <picture>
+                <source
+                    srcset="
+                    {{ asset('public/frontend/images/kitchen/usp_banner_1_2x.png') }} 2x,
+                    {{ asset('public/frontend/images/kitchen/usp_banner_1.png') }} 1x"
+                >
+                <img
+                    alt="{{ 'Domluvte si schůzku'|trans }}"
+                    class="box-furniture-offer__img"
+                    title="{{ 'Domluvte si schůzku'|trans }}"
+                    loading="lazy"
+                    data-src="{{ asset('public/frontend/images/kitchen/usp_banner_1.png') }}"
+                    itemprop="image"
+                >
+            </picture>
+        </div>
+    </div>
+    <div class="box-furniture-offer box-furniture-offer--plan theme-kitchen-bg-very-dark">
+        <div class="box-furniture-offer__content">
+            <p class="box-furniture-offer__desc theme-kitchen-color-white">
+                {{ '<span class="theme-kitchen-color-tertiary">Návrh kuchyně</span> umíme připravit<br>
+                i online, <span class="theme-kitchen-color-tertiary">bezpečně z pohodlí vašeho<br>domova.</span>'|transHtml }}
+            </p>
+            <a class="box-furniture-offer__btn btn btn--ghost btn--ghost--light btn--ghost--wider js-not-implemented-yet" href="#">
+                {{ 'Domluvit plánování'|trans }}
+            </a>
+        </div>
+        <div class="box-furniture-offer__image">
+            <picture>
+                <source
+                    srcset="
+                    {{ asset('public/frontend/images/kitchen/usp_banner_2_2x.png') }} 2x,
+                    {{ asset('public/frontend/images/kitchen/usp_banner_2.png') }} 1x"
+                >
+                <img
+                    alt="{{ 'Plánování kuchyně'|trans }}"
+                    class="box-furniture-offer__img"
+                    title="{{ 'Plánování kuchyně'|trans }}"
+                    loading="lazy"
+                    data-src="{{ asset('public/frontend/images/kitchen/usp_banner_2.png') }}"
+                    itemprop="image"
+                >
+            </picture>
+        </div>
+    </div>
+</div>

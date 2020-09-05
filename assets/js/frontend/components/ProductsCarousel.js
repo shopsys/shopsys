@@ -12,6 +12,7 @@ export default class SlickCarousel {
         const $galleryCarousel = $(`.js-gallery-slick-carousel`).find('.js-gallery-wrap');
         const $galleryCarouselCols = $('.js-products-slick-carousel-cols').find('.js-product-list');
         const $productsCarousel = $('.js-products-slick-carousel').find('.js-product-list');
+        const $furnitureCatsCarousel = $('.js-furniture-cats-carousel');
 
         // Product detail gallery carousel
         if ($galleryCarousel.length) {
@@ -120,6 +121,20 @@ export default class SlickCarousel {
             });
 
             preventClickWhenSliding($productsCarousel);
+        }
+
+        // Common product grid carousel
+        if ($furnitureCatsCarousel.length) {
+            $furnitureCatsCarousel.slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: false,
+                infinite: true,
+                swipeToSlide: true,
+                variableWidth: true,
+                speed: 500
+            });
         }
 
         function preventClickWhenSliding (carousel) {

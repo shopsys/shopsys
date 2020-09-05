@@ -118,9 +118,66 @@
                 display: block;
             }
         }
+
+        &--brand {
+            height: auto;
+            margin-bottom: 4rem;
+
+            @media screen and (min-width: 1160px) {
+                height: 220px;
+                align-items: center;
+            }
+
+            @media @query-mobile {
+                margin-top: 2rem;
+            }
+
+            .box-furniture-banner__title {
+                margin-bottom: 0.25rem;
+            }
+
+            .box-furniture-banner__desc {
+                margin-top: 0;
+            }
+
+            .box-furniture-banner__image {
+                min-width: 0;
+                padding: 0 1.5rem 1.5rem;
+                justify-content: flex-end;
+
+                @media screen and (min-width: 1160px) {
+                    min-width: 690px;
+                    padding: 0;
+                }
+            }
+
+            .box-furniture-banner__img {
+                height: 100%;
+                object-fit: cover;
+                margin: 0;
+            }
+
+            .box-furniture-banner__content {
+                padding: 1.5rem;
+
+                background-color: @theme-kitchen-bg;
+                border-radius: @radius;
+
+                @media @query-md {
+                    max-width: 70%;
+                }
+
+                @media screen and (min-width: 1160px) {
+                    padding: 1rem 3rem;
+                    max-width: none;
+
+                    background-color: transparent;
+                }
+            }
+        }
     }
 
-    @query-furniture-usp-break: ~"@{query-base} (min-width: 1260px)";
+    @query-furniture-offer-break: ~"@{query-base} (min-width: 1260px)";
 
     &-grid-gallery {
         display: flex;
@@ -166,7 +223,7 @@
         }
     }
 
-    &-usp {
+    &-offer {
         display: flex;
         flex-direction: column;
         margin-bottom: 2rem;
@@ -178,12 +235,12 @@
             flex-direction: row;
         }
 
-        @media @query-furniture-usp-break {
+        @media @query-furniture-offer-break {
             margin: 0;
         }
 
         &-wrap {
-            @media @query-furniture-usp-break {
+            @media @query-furniture-offer-break {
                 display: flex;
                 justify-content: space-between;
             }
@@ -202,7 +259,7 @@
                 padding: 2rem 0 2rem 2rem;
             }
 
-            @media @query-furniture-usp-break {
+            @media @query-furniture-offer-break {
                 padding: 1.5rem 0 0.5rem 1.5rem;
             }
 
@@ -250,20 +307,6 @@
             }
         }
 
-        &__tag {
-            display: inline-block;
-            padding: 7px 6px 6px 9px;
-
-            text-transform: uppercase;
-            color: @color-f;
-            font-family: @font-tertiary;
-            font-size: 13px;
-            border-radius: @radius;
-            background-color: @theme-kitchen-color;
-            letter-spacing: 4px;
-            line-height: 1;
-        }
-
         &--meeting {
             @media @query-lg {
                 width: 85%;
@@ -271,7 +314,7 @@
                 margin-bottom: 1rem;
             }
 
-            @media @query-furniture-usp-break {
+            @media @query-furniture-offer-break {
                 width: 60%;
                 margin-left: 0;
                 margin-right: 20px;
@@ -281,7 +324,7 @@
                 min-width: 810px;
             }
 
-            .box-furniture-usp__image {
+            .box-furniture-offer__image {
                 margin-right: 20px;
                 max-width: 80%;
 
@@ -291,7 +334,7 @@
                 }
             }
 
-            .box-furniture-usp__desc {
+            .box-furniture-offer__desc {
                 max-width: 400px;
             }
         }
@@ -301,7 +344,7 @@
                 width: 70%;
             }
 
-            @media @query-furniture-usp-break {
+            @media @query-furniture-offer-break {
                 width: 40%;
                 margin-left: 20px;
             }
@@ -310,7 +353,7 @@
                 min-width: 570px;
             }
 
-            .box-furniture-usp__img {
+            .box-furniture-offer__img {
                 margin-right: 25px;
                 max-width: 80%;
 
@@ -319,7 +362,7 @@
                 }
             }
 
-            .box-furniture-usp__desc {
+            .box-furniture-offer__desc {
                 margin-top: 10px;
             }
         }
@@ -406,6 +449,358 @@
 
             &--top-spacing {
                 margin-top: 3rem;
+            }
+        }
+    }
+
+    &-tag {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        padding: 6px 8px 5px 4px;
+        white-space: nowrap;
+
+        color: @theme-kitchen-color-secondary;
+        text-transform: uppercase;
+        font-family: @font-tertiary;
+        letter-spacing: 3px;
+        font-size: 13px;
+        background-color: @color-f;
+        border-radius: @radius;
+
+        &__text {
+            position: relative;
+            top: 2px;
+            line-height: 1;
+        }
+
+        &__img {
+            margin-right: 10px;
+        }
+    }
+
+    &-usp {
+        padding-left: 10px;
+        width: 50%;
+
+        @media @query-md {
+            padding-left: 30px;
+            width: calc(100% / 3);
+        }
+
+        @media @query-vl-up {
+            width: auto;
+            flex: 0 0 1px;
+            flex-grow: 1;
+        }
+
+        &-wrap {
+            margin-bottom: 2rem;
+            text-align: center;
+
+            @media @query-md {
+                margin-bottom: 6rem;
+            }
+        }
+
+        &__heading {
+            margin-bottom: 1.5rem;
+
+            @media @query-md {
+                margin-bottom: 3rem;
+            }
+        }
+
+        &-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-left: -10px;
+
+            @media @query-md {
+                margin-left: -30px;
+            }
+
+            @media @query-vl-up {
+                flex-wrap: nowrap;
+            }
+        }
+
+        &__image {
+            position: relative;
+            margin-bottom: 15px;
+
+            .box-furniture-label {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+            }
+        }
+
+        &__img {
+            display: block;
+            margin: auto;
+        }
+
+        &__title {
+            display: block;
+            margin-bottom: 5px;
+
+            text-transform: uppercase;
+            font-family: @font-tertiary;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 1.5;
+
+            @media @query-md {
+                font-size: 16px;
+            }
+        }
+
+        &__desc {
+            margin-top: 0;
+
+            font-size: 14px;
+
+            @media @query-md {
+                font-size: 15px;
+            }
+        }
+    }
+
+    &-cat {
+        margin-bottom: 1.5rem;
+
+        @media @query-md {
+            margin-bottom: 3rem;
+        }
+
+        @media @query-lg {
+            display: flex;
+            align-items: center;
+        }
+
+        &__title {
+            font-size: 25px;
+
+            @media @query-vl-up {
+                font-size: 30px;
+            }
+        }
+
+        &__image {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            max-height: 180px;
+
+            border-radius: @radius;
+            background-color: #e4f9f5;
+            cursor: pointer;
+
+            @media @query-md {
+                max-height: none;
+            }
+
+            @media @query-lg {
+                min-width: 400px;
+                max-width: 400px;
+            }
+
+            @media @query-vl {
+                min-width: 500px;
+                max-width: 500px;
+            }
+
+            @media @query-vl-up {
+                min-width: 650px;
+                max-width: 650px;
+            }
+
+            @media screen and (min-width: 1270px) {
+                min-width: 810px;
+                max-width: 810px;
+            }
+
+            .slick-track {
+                display: flex;
+            }
+        }
+
+        &__link {
+            display: block;
+            padding: 1.5rem;
+
+            border: 3px solid #e4f9f5;
+            border-top-right-radius: @radius;
+            border-bottom-right-radius: @radius;
+            transition: background-color @transition;
+
+            @media @query-mobile {
+                border-top: 0;
+                border-radius: 0;
+                border-bottom-left-radius: @radius;
+                border-bottom-right-radius: @radius;
+            }
+
+            @media @query-lg {
+                border-left-width: 0;
+            }
+
+            @media @query-vl-up {
+                padding: 2rem;
+            }
+
+            @media @query-xl {
+                padding: 2.5rem 3.5rem 2.5rem 2.5rem;
+            }
+
+            &:hover {
+                text-decoration: none;
+                background-color: #e4f9f5;
+            }
+        }
+
+        &--reverse {
+            .box-furniture-cat__image {
+                order: 1;
+            }
+
+            .box-furniture-cat__link {
+                border-left-width: 3px;
+                border-right-width: 0;
+                border-radius: 0;
+                border-top-left-radius: @radius;
+                border-bottom-left-radius: @radius;
+            }
+        }
+    }
+
+    &-label {
+        display: inline-block;
+        padding: 7px 6px 6px 9px;
+
+        text-transform: uppercase;
+        color: @color-f;
+        font-family: @font-tertiary;
+        font-size: 13px;
+        border-radius: @radius;
+        background-color: @theme-kitchen-color;
+        letter-spacing: 4px;
+        line-height: 1;
+    }
+
+    &-grid {
+        &-wrap {
+            margin-top: 2rem;
+
+            @media @query-md {
+                margin-top: 4rem;
+            }
+        }
+
+        &__heading {
+            margin-bottom: 1.5rem;
+            text-align: center;
+
+            @media @query-lg {
+                margin-bottom: 3rem;
+            }
+        }
+
+        &__row {
+            @media @query-md {
+                display: flex;
+                justify-content: center;
+                margin-left: -10px;
+            }
+
+            @media @query-lg {
+                margin-left: -15px;
+            }
+
+            @media @query-vl {
+                margin-left: -30px;
+            }
+        }
+
+        &__item {
+            @media @query-mobile {
+                max-width: 450px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            @media @query-md {
+                padding-left: 10px;
+            }
+
+            @media @query-lg {
+                padding-left: 15px;
+            }
+
+            @media @query-vl {
+                padding-left: 30px;
+            }
+
+            &__link {
+                display: block;
+                position: relative;
+
+                transition: box-shadow @transition;
+
+                &:hover {
+                    @media @query-vl {
+                        box-shadow: 0 6px 15px 0 rgba(@color-0, .65);
+
+                        .box-furniture-grid__item__img {
+                            transform: scale(1.03);
+                        }
+                    }
+                }
+            }
+
+            &__img {
+                display: block;
+                margin-bottom: 10px;
+
+                transition: transform @transition;
+                will-change: transform;
+
+                @media @query-lg {
+                    margin-bottom: 15px;
+                }
+
+                @media @query-vl {
+                    margin-bottom: 30px;
+                }
+            }
+
+            &__btn {
+                position: absolute;
+                left: 1.5rem;
+                bottom: 1rem;
+
+                pointer-events: none;
+                color: @color-f;
+                text-transform: uppercase;
+                font-family: @font-quartenary;
+                font-size: 16px;
+
+                @media @query-vl {
+                    font-size: 20px;
+                }
+
+                &__icon {
+                    margin-left: 5px;
+
+                    color: inherit;
+                    font-size: 25px;
+
+                    @media @query-vl {
+                        font-size: 32px;
+                    }
+                }
             }
         }
     }

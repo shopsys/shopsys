@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>Icon/Germany Copy 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="NiceToHave" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02_Kategorie_B" transform="translate(-311.000000, -1803.000000)">
+            <g id="Nobilia" transform="translate(255.000000, 1775.000000)">
+                <g id="Tag" transform="translate(49.000000, 21.000000)">
+                    <g id="Icon/Flags/flag_de" transform="translate(7.000000, 7.000000)">
+                        <g id="germany">
+                            <path d="M0.49759375,10.7825938 C1.6279375,13.8289688 4.56028125,16 8,16 C11.4397188,16 14.3720625,13.8289688 15.5024063,10.7825938 L8,10.0869688 L0.49759375,10.7825938 Z" id="Path" fill="#FFDA44" fill-rule="nonzero"></path>
+                            <path d="M8,0 C4.56028125,0 1.6279375,2.171 0.49759375,5.21740625 L8,5.91303125 L15.5024063,5.217375 C14.3720625,2.171 11.4397188,0 8,0 Z" id="Path" fill="#000000" fill-rule="nonzero"></path>
+                            <path d="M0.49759375,5.21740625 C0.17603125,6.0840625 0,7.0214375 0,8 C0,8.9785625 0.17603125,9.9159375 0.49759375,10.7825938 L15.5024375,10.7825938 C15.824,9.9159375 16,8.9785625 16,8 C16,7.0214375 15.824,6.0840625 15.5024062,5.21740625 L0.49759375,5.21740625 Z" id="Path" fill="#D80027" fill-rule="nonzero"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

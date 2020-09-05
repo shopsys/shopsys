@@ -38,8 +38,8 @@
             {# Category list #}
             <div class="list-categories-wrap list-categories-wrap--centered">
                 <ul class="list-categories box-furniture-categories">
-                    <li class="list-categories__item list-categories__item--special js-not-implemented-yet">
-                        <a href="#" class="list-categories__item__block">
+                    <li class="list-categories__item list-categories__item--special">
+                        <a href="{{ url('front_kitchen_list') }}" class="list-categories__item__block">
                             <span class="list-categories__item__image__wrap">
                                 <picture>
                                     <source
@@ -253,8 +253,8 @@
                     </picture>
                 </div>
             </div>
-            {# USP #}
-            {% include 'Front/Content/Kitchen/components/usp.html.twig' %}
+            {# Offers #}
+            {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
             <hr class="box-furniture-sep box-furniture-sep--smaller-spacing box-furniture-sep--top-spacing"/>
             {# Articles #}
             <div class="box-furniture-blog">
