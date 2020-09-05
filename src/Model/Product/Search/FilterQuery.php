@@ -24,7 +24,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
  */
 class FilterQuery extends BaseFilterQuery
 {
-    protected const MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 200;
+    protected const MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 400;
 
     /**
      * @var array
