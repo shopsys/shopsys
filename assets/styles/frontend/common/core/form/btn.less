@@ -573,6 +573,30 @@
     &--center {
         justify-content: center;
     }
+
+    &--ghost {
+        font-family: @font-quartenary;
+        color: @color-primary-light;
+        text-transform: none;
+        letter-spacing: 0;
+        border: 2px solid @color-f;
+        background-color: transparent;
+        font-size: 15px;
+
+        &:hover {
+            background-color: @color-f;
+            color: @color-primary;
+        }
+
+        &--light {
+            color: @color-f;
+        }
+
+        &--wider {
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+    }
 }
 
 // Button with icon

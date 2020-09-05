@@ -67,6 +67,23 @@
             box-shadow: @hover-shadow;
         }
 
+        &--special {
+            .list-categories__item__image {
+                display: block;
+                bottom: 0;
+                max-width: 90%;
+                max-height: none;
+
+                @media @query-vl {
+                    max-width: none;
+                }
+
+                &__wrap::before {
+                    background-color: #eef9f5;
+                }
+            }
+        }
+
         &__block {
             display: block;
             width: 100%;

@@ -155,6 +155,10 @@
                 height: @box-list-description-line-height * @box-list-description-lines;
             }
 
+            &--centered {
+                text-align: center;
+            }
+
             &--top {
                 display: none;
 
@@ -209,6 +213,18 @@
                     position: absolute;
                     right: 0;
                     top: -10px;
+                }
+            }
+
+            &--no-spacing {
+                padding-top: 0;
+            }
+        }
+
+        &--furniture {
+            .box-breadcrumb {
+                @media @query-mobile {
+                    margin-bottom: 1rem;
                 }
             }
         }

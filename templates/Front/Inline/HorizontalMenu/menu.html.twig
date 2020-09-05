@@ -1,6 +1,17 @@
 <nav class="menu-list-menu-wrap dont-print">
 	<ul class="menu-horizontal js-menuHorizontal" data-hovered="false">
 		{% for itemDetail in itemDetails %}
+			{# TODO:
+			- For development/testing purpose only
+			- before master merge will be removed.
+			- after master merge will added in administration. #}
+			{% if loop.index == 2 %}
+				<li class="menu-horizontal__item js-menu-horizontal-item">
+					<a href="{{ url('front_kitchen') }}" class="menu-horizontal__item__link">
+						{{ 'Kuchyně'|trans }}
+					</a>
+				</li>
+			{% endif %}
 			<li class="menu-horizontal__item js-menu-horizontal-item
 				{{ itemDetail.categoryDetailsByColumnNumber is not empty ? ' menu-horizontal__item--drop' }}">
 				{% if itemDetail.horizontalMenuItem.url %}

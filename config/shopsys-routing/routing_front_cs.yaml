@@ -102,3 +102,7 @@ front_stores:
 front_stores_detail:
     path: /prodejna/{id}
     defaults: { _controller: App\Controller\Front\StoreController:detailAction }
+
+front_kitchen:
+    path: /kuchyne
+    defaults: { _controller: App\Controller\Front\KitchenController:indexAction }
