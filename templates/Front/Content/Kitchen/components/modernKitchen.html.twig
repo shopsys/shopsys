@@ -1,7 +1,9 @@
-<div class="box-furniture-grid-wrap">
-    <h2 class="box-furniture-grid__heading theme-kitchen-color-secondary">
-        {{ 'Vybrané modely kuchyní na míru' }}
-    </h2>
+<div class="box-furniture-grid-wrap{{ inDetail ? ' box-furniture-grid-wrap--in-detail' }}">
+    {% if not inDetail %}
+        <h2 class="box-furniture-grid__heading theme-kitchen-color-secondary">
+            {{ 'Vybrané modely kuchyní na míru' }}
+        </h2>
+    {% endif %}
     <div class="box-furniture-grid">
         <div class="box-furniture-grid__row">
             <div class="box-furniture-grid__item box-furniture-grid__item--wide">

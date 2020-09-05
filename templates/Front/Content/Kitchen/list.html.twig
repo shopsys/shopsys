@@ -120,7 +120,7 @@
                         </picture>
                     </div>
                     <div class="box-furniture-cat__content">
-                        <a class="box-furniture-cat__link js-not-implemented-yet" href="#">
+                        <a class="box-furniture-cat__link" href="{{ url('front_kitchen_list_sub') }}">
                             <h2 class="box-furniture-cat__title theme-kitchen-color-secondary">{{ 'Moderní kuchyně' }}</h2>
                             <p class="box-furniture-cat__desc theme-kitchen-color">
                                 {{ 'Hledáte kuchyni, která odpovídá aktuálním moderním trendům,
@@ -336,7 +336,7 @@
             {# Offers #}
             {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
             {# Grid #}
-            {% include 'Front/Content/Kitchen/components/modernKitchen.html.twig' %}
+            {% include 'Front/Content/Kitchen/components/modernKitchen.html.twig' with { 'inDetail': false } %}
         </div>
     </div>
 {% endblock %}
