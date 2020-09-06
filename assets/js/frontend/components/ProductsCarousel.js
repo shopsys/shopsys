@@ -129,7 +129,7 @@ export default class SlickCarousel {
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 dots: true,
-                arrows: false,
+                arrows: true,
                 infinite: true,
                 swipeToSlide: true,
                 variableWidth: true,

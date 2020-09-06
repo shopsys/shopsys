@@ -1,0 +1,115 @@
+.box-furniture {
+    &-desc {
+        @media @query-lg {
+            max-width: 960px;
+        }
+
+        h2, h3, h4 {
+            margin-bottom: 0.5rem;
+
+            font-size: 18px;
+            text-transform: none;
+            font-family: @font-quartenary;
+            font-weight: 400;
+        }
+
+        p {
+            margin: 0 0 2rem;
+        }
+    }
+
+    &-sep {
+        display: none;
+
+        @media @query-vl {
+            display: block;
+            position: relative;
+            left: calc(-50vw + 50%);
+            width: 100vw;
+            height: 2px;
+            margin-bottom: 5rem;
+            border: 0;
+
+            background-color: @color-light-secondary;
+
+            &--small-spacing {
+                margin-bottom: 3rem;
+            }
+
+            &--smaller-spacing {
+                margin-bottom: 4rem;
+            }
+
+            &--top-spacing {
+                margin-top: 3rem;
+
+                &-small {
+                    margin-top: 2rem;
+                }
+            }
+        }
+    }
+
+    &-tag {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        padding: 6px 8px 7px 4px;
+        white-space: nowrap;
+
+        color: @theme-kitchen-color-secondary;
+        text-transform: uppercase;
+        font-family: @font-tertiary;
+        letter-spacing: 3px;
+        font-size: 13px;
+        background-color: @color-f;
+        border-radius: @radius;
+
+        &__text {
+            position: relative;
+            top: 2px;
+            line-height: 1;
+        }
+
+        &__img {
+            margin-right: 10px;
+        }
+
+        &--simple {
+            padding: 0;
+            margin-bottom: 0.5rem;
+
+            background-color: transparent;
+            letter-spacing: 0;
+            font-family: @font-quartenary;
+            font-size: 16px;
+        }
+    }
+
+    &-label {
+        display: inline-block;
+        padding: 7px 6px 6px 9px;
+
+        text-transform: uppercase;
+        color: @color-f;
+        font-family: @font-tertiary;
+        font-size: 13px;
+        border-radius: @radius;
+        background-color: @theme-kitchen-color;
+        letter-spacing: 4px;
+        line-height: 1;
+    }
+
+    &-outline-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 90px;
+        width: 210px;
+
+        border: 2px solid @theme-kitchen-color-tertiary;
+        border-radius: @radius;
+        font-family: @font-tertiary;
+        font-size: 16px;
+    }
+}

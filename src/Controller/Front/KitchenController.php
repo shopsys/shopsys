@@ -46,4 +46,12 @@ class KitchenController extends FrontBaseController
     {
         return $this->render('Front/Content/Kitchen/listSub.html.twig');
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailAction(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail.html.twig');
+    }
 }
