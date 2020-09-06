@@ -47,27 +47,6 @@
                                         }) }}
                                     {% endif %}
                                     <div class="form-line-block-wrap form-line-block-wrap--phone js-form-phone-drop js-not-implemented-yet">
-                                        <div class="input-drop">
-                                            <button class="input-drop__btn" type="button">
-                                                <img
-                                                    class="input-drop__img"
-                                                    loading="lazy"
-                                                    data-src="{{ asset('public/frontend/images/flags/cz.svg') }}"
-                                                    alt="{{ 'Česká republika'|trans }}"
-                                                >
-                                                <i class="input-drop__arrow svg svg-arrow"></i>
-                                            </button>
-                                            <ul class="input-drop__list">
-                                                <li class="input-drop__list__item">
-                                                    <img
-                                                        class="input-drop__img"
-                                                        loading="lazy"
-                                                        data-src="{{ asset('public/frontend/images/flags/sk.svg') }}"
-                                                        alt="{{ 'Slovensko'|trans }}"
-                                                    >
-                                                </li>
-                                            </ul>
-                                        </div>
                                         {{ form_row(form.telephone, {
                                             label: 'Telephone'|trans,
                                             rowClass: 'form-line-block js-form-field'
