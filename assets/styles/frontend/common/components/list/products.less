@@ -83,9 +83,18 @@
             background-color: @color-f;
             border-radius: @radius;
             border: 1px solid @color-border-lighter;
+            transition: all @transition;
+            will-change: transform;
 
             &:hover {
-                border-color: darken(@color-border-lighter, 10%);
+                @media @query-vl {
+                    transform: translateY(-4px);
+                    box-shadow: 0 10px 20px 5px @color-border-lighter;
+                }
+
+                .slick-slide & {
+                    transform: none;
+                }
             }
         }
 
