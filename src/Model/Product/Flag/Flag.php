@@ -18,10 +18,14 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
  */
 class Flag extends BaseFlag
 {
-    public const AKENEO_CODE_SALE = 'flag__product_sale';
-    public const AKENEO_CODE_ACTION = 'flag__product_action';
+    public const AKENEO_CODE_NEW = 'flag__product_new';
     public const AKENEO_CODE_SCONTO = 'flag__product_sconto';
+    public const AKENEO_CODE_ACTION = 'flag__product_action';
     public const AKENEO_CODE_HIT = 'flag__product_hit';
+    public const AKENEO_CODE_SALE = 'flag__product_sale';
+    public const AKENEO_CODE_MADE_IN_CZ = 'flag__product_made_in_cz';
+    public const AKENEO_CODE_MADE_IN_DE = 'flag__product_made_in_de';
+    public const AKENEO_CODE_MADE_IN_SK = 'flag__product_made_in_sk';
 
     /**
      * @var bool
