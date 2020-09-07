@@ -9,7 +9,8 @@
         "no-multi-str": "off",
         "no-redeclare": "off",
         "eqeqeq": "off",
-        "no-eval": "off"
+        "no-eval": "off",
+        "eol-last": ["error", "always"]
     },
     "globals": {
         "Shopsys": true,

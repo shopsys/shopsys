@@ -6,6 +6,9 @@ namespace App\Component\Domain;
 
 use Shopsys\FrameworkBundle\Component\Domain\DomainFactoryOverwritingDomainUrl as BaseDomainFactoryOverwritingDomainUrl;
 
+/**
+ * @property \App\Component\Setting\Setting $setting
+ */
 class DomainFactoryOverwritingDomainUrl extends BaseDomainFactoryOverwritingDomainUrl
 {
     /**
@@ -24,7 +27,7 @@ class DomainFactoryOverwritingDomainUrl extends BaseDomainFactoryOverwritingDoma
 
         $domainId = getenv('DOMAIN');
         if ($domainId !== false) {
-            $domain->switchDomainById($domainId);
+            $domain->switchDomainById((int)$domainId);
         }
 
         return $domain;

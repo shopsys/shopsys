@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Filter;
 
+use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Listed\ListedProductView;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductVariantFilterFacade
 {

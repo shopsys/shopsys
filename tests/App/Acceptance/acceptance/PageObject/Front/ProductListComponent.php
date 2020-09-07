@@ -22,7 +22,7 @@ class ProductListComponent extends AbstractPage
         $quantityElement = $productItemElement->findElement(WebDriverBy::name('add_product_form[quantity]'));
         $addButtonElement = $productItemElement->findElement(WebDriverBy::name('add_product_form[add]'));
 
-        $this->tester->fillFieldByElement($quantityElement, $quantity);
+        $this->tester->fillFieldByElement($quantityElement, (string)$quantity);
         $this->tester->clickByElement($addButtonElement);
         $this->tester->waitForAjax();
         $this->tester->wait(1); // animation of popup window

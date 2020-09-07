@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
@@ -88,6 +89,11 @@ class CartController extends FrontBaseController
     private $gtmJsPushFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
+     */
+    private $moduleFacade;
+
+    /**
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
@@ -99,6 +105,7 @@ class CartController extends FrontBaseController
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
+     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade|null $moduleFacade
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -111,7 +118,8 @@ class CartController extends FrontBaseController
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductFacade $productFacade,
         GtmFacade $gtmFacade,
-        GtmJsPushFacade $gtmJsPushFacade
+        GtmJsPushFacade $gtmJsPushFacade,
+        ?ModuleFacade $moduleFacade = null
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -124,6 +132,7 @@ class CartController extends FrontBaseController
         $this->productFacade = $productFacade;
         $this->gtmFacade = $gtmFacade;
         $this->gtmJsPushFacade = $gtmJsPushFacade;
+        $this->moduleFacade = $moduleFacade;
     }
 
     /**
@@ -156,8 +165,10 @@ class CartController extends FrontBaseController
                 foreach ($this->cartFacade->getQuantifiedProductsOfCurrentCustomer() as $id => $quantifiedProduct) {
                     $originalQuantity = $quantifiedProduct->getQuantity();
                     $newQuantity = $form->getData()['quantities'][$id];
+                    /** @var \App\Model\Product\Product $product */
+                    $product = $quantifiedProduct->getProduct();
                     $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getCartItemChangedEvent(
-                        $quantifiedProduct->getProduct(),
+                        $product,
                         $newQuantity - $originalQuantity
                     );
                 }
@@ -351,12 +362,14 @@ class CartController extends FrontBaseController
                     $this->addQuantityOverLimitFlash($addProductResult);
                 }
 
-                /** @var \App\Model\Product\Product $product */
                 $product = $addProductResult->getCartItem()->getProduct();
-                $accessories = $this->listedProductViewFacade->getAccessories(
-                    $product->getId(),
-                    self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
-                );
+                $accessories = [];
+                if ($this->moduleFacade->isEnabled(ModuleList::ACCESSORIES_ON_BUY)) {
+                    $accessories = $this->listedProductViewFacade->getAccessories(
+                        $product->getId(),
+                        self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
+                    );
+                }
 
                 $this->gtmFacade->onAddProductToCart($product, (int)$formData['quantity']);
 
@@ -535,5 +548,21 @@ class CartController extends FrontBaseController
                 'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
             ]
         );
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setModuleFacade(ModuleFacade $moduleFacade): void
+    {
+        if ($this->moduleFacade !== null && $this->moduleFacade !== $moduleFacade) {
+            throw new \BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->moduleFacade === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->moduleFacade = $moduleFacade;
+        }
     }
 }

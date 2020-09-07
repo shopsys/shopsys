@@ -84,7 +84,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
             try {
                 $this->goPayTransactionFacade->updateOrderTransactions($order);
             } catch (GoPayPaymentDownloadException $e) {
-                $this->logger->addError($e);
+                $this->logger->addError($e->getMessage());
 
                 continue;
             }

@@ -28,10 +28,10 @@ class ProductFilterCest
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
         $productListPage->assertProductsTotalCount(28);
 
-        $productFilterPage->setMinimalPrice(1000);
+        $productFilterPage->setMinimalPrice('1000');
         $productListPage->assertProductsTotalCount(22);
 
-        $productFilterPage->setMaximalPrice(10000);
+        $productFilterPage->setMaximalPrice('10000');
         $productListPage->assertProductsTotalCount(16);
 
         $productFilterPage->filterByBrand(static::BRAND_LG_POSITION);

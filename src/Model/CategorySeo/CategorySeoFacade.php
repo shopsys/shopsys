@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Model\CategorySeo;
 
 use App\Model\Category\Category;
+use App\Model\Product\Flag\Flag;
+use App\Model\Product\Flag\FlagFacade;
+use App\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use App\Model\Product\Parameter\ParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
-use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use App\Model\Product\Parameter\ParameterValue;
 
 class CategorySeoFacade
 {
@@ -174,7 +174,7 @@ class CategorySeoFacade
 
     /**
      * @param \App\Model\CategorySeo\CategorySeoMix[] $categorySeoMixes
-     * @param object[] $newValues
+     * @param object[]|string[] $newValues
      * @param callable $categorySeoMixCallback
      * @return \App\Model\CategorySeo\CategorySeoMix[]
      */

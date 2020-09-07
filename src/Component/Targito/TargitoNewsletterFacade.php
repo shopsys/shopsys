@@ -90,6 +90,7 @@ class TargitoNewsletterFacade
     private function synchronizeSubscribersOnDomain(array $newsletterSubscribers, int $domainId): void
     {
         foreach ($newsletterSubscribers as $newsletterSubscriber) {
+            /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($newsletterSubscriber->getEmail(), $domainId);
 
             if ($customerUser === null) {

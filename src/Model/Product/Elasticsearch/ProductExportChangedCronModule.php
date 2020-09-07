@@ -17,7 +17,7 @@ class ProductExportChangedCronModule extends BaseProductExportChangedCronModule
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    private $eventDispatcher;
+    protected $eventDispatcher;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index

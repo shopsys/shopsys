@@ -35,3 +35,4 @@ parameters:
     shopsys.json_entrypoints_path: '%kernel.project_dir%/web/build/entrypoints.json'
     shopsys.product_files_dir: '/web%shopsys.product_files_url_prefix%'
     shopsys.product_files_url_prefix: '/%shopsys.content_dir_name%/frontend/products/'
+    shopsys.var_dir: '/var'

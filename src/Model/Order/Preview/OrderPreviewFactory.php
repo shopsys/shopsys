@@ -85,13 +85,16 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             }
         }
 
+        /** @var \App\Model\Customer\User\CustomerUser $currentCustomerUser */
+        $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
         return $this->create(
             $currency,
             $this->domain->getId(),
             $quantifiedProducts,
             $transport,
             $payment,
-            $this->currentCustomerUser->findCurrentCustomerUser(),
+            $currentCustomerUser,
             $validEnteredPromoCodePercent,
             $productType
         );

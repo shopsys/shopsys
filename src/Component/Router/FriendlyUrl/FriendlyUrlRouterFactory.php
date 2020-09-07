@@ -13,6 +13,9 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactor
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\RequestContext;
 
+/**
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+ */
 class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
 {
     /**

@@ -35,6 +35,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
             self::FIRST_DOMAIN_ID => true,
         ];
 
+        /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentFactory->create($paymentData);
 
         $refreshedPayment = $this->getRefreshedPaymentFromDatabase($payment);
@@ -48,6 +49,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
 
         $paymentData->enabled[self::FIRST_DOMAIN_ID] = false;
 
+        /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentFactory->create($paymentData);
 
         $refreshedPayment = $this->getRefreshedPaymentFromDatabase($payment);
@@ -66,6 +68,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
         $paymentData->enabled[self::FIRST_DOMAIN_ID] = true;
         $paymentData->enabled[self::SECOND_DOMAIN_ID] = false;
 
+        /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentFactory->create($paymentData);
 
         $refreshedPayment = $this->getRefreshedPaymentFromDatabase($payment);

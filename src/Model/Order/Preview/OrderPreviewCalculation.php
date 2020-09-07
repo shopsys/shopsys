@@ -228,8 +228,10 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     {
         $totalHighPrice = Price::zero();
         foreach ($quantifiedProducts as $quantifiedProduct) {
+            /** @var \App\Model\Product\Product $product */
+            $product = $quantifiedProduct->getProduct();
             $productHighPrice = $this->productPriceCalculation->calculateProductNonSellingPrice(
-                $quantifiedProduct->getProduct(),
+                $product,
                 $domainId,
                 $quantifiedProduct->getQuantity()
             );

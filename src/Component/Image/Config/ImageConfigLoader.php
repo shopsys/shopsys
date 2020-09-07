@@ -13,7 +13,7 @@ class ImageConfigLoader extends BaseImageConfigLoader
     /**
      * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
      */
-    private $entityNameResolver;
+    protected $entityNameResolver;
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem

@@ -17,8 +17,14 @@ class CachedProductFilterConfig extends BaseProductFilterConfig
     public function __construct(BaseProductFilterConfig $productFilterConfig)
     {
         $this->setParameterChoices($productFilterConfig->getParameterChoices());
-        $this->setFlagChoices($productFilterConfig->getFlagChoices());
-        $this->setBrandChoices($productFilterConfig->getBrandChoices());
+        /** @var \App\Model\Product\Flag\Flag[] $flagChoices */
+        $flagChoices = $productFilterConfig->getFlagChoices();
+        $this->setFlagChoices($flagChoices);
+
+        /** @var \App\Model\Product\Brand\Brand[] $brandChoices */
+        $brandChoices = $productFilterConfig->getBrandChoices();
+        $this->setBrandChoices($brandChoices);
+        
         $this->priceRange = $productFilterConfig->getPriceRange();
     }
 
@@ -29,10 +35,13 @@ class CachedProductFilterConfig extends BaseProductFilterConfig
     {
         $cachedParameterFilterChoices = [];
         foreach ($parameterChoices as $parameterFilterChoice) {
-            $cachedParameterFilterChoice = new CachedParameterFilterChoice(
-                $parameterFilterChoice->getParameter(),
-                $parameterFilterChoice->getValues()
-            );
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
+            $parameter = $parameterFilterChoice->getParameter();
+
+            /** @var \App\Model\Product\Parameter\ParameterValue[] $values */
+            $values = $parameterFilterChoice->getValues();
+
+            $cachedParameterFilterChoice = new CachedParameterFilterChoice($parameter, $values);
             $cachedParameterFilterChoices[] = $cachedParameterFilterChoice;
         }
         $this->parameterChoices = $cachedParameterFilterChoices;

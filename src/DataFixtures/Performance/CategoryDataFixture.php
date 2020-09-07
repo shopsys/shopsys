@@ -93,6 +93,7 @@ class CategoryDataFixture
     {
         $progressBar = $this->progressBarFactory->create($output, $this->recursivelyCountCategoriesInCategoryTree());
 
+        /** @var \App\Model\Category\Category $rootCategory */
         $rootCategory = $this->categoryFacade->getRootCategory();
         $this->sqlLoggerFacade->temporarilyDisableLogging();
         $this->recursivelyCreateCategoryTree($rootCategory, $progressBar);
@@ -108,6 +109,7 @@ class CategoryDataFixture
     {
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
             $categoryData = $this->getRandomCategoryDataByParentCategory($parentCategory);
+            /** @var \App\Model\Category\Category $newCategory */
             $newCategory = $this->categoryFacade->create($categoryData);
             $progressBar->advance();
             $this->categoriesCreated++;

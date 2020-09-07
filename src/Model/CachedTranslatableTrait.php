@@ -19,7 +19,7 @@ trait CachedTranslatableTrait
         /** @var mixed $translations */
         $translations = $this->translations;
         if (is_array($translations)) {
-            $this->translations = new ArrayCollection($this->translations);
+            $this->translations = new ArrayCollection($translations);
         }
 
         /** @var ArrayCollection $translations */

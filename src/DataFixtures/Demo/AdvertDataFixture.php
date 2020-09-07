@@ -40,6 +40,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
      */
     public function load(ObjectManager $manager)
     {
+        /** @var \App\Model\Advert\AdvertData $advertData */
         $advertData = $this->advertDataFactory->create();
         $advertData->domainId = Domain::FIRST_DOMAIN_ID;
         $advertData->name = t('Demo advert', [], 'dataFixtures');

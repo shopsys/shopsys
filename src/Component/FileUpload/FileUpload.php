@@ -81,17 +81,16 @@ class FileUpload extends BaseFileUpload
     }
 
     /**
-     * @param int $howOldInSeconds
      * @return int Count of deleted files
      */
-    public function deleteOldUploadedFiles(int $howOldInSeconds): int
+    public function deleteOldUploadedFiles(): int
     {
         $deletedCounter = 0;
         $currentTimestamp = time();
 
         $uploadedFiles = $this->filesystem->listContents($this->getTemporaryDirectory());
         foreach ($uploadedFiles as $uploadedFile) {
-            if ($uploadedFile['type'] === 'file' && $currentTimestamp - $uploadedFile['timestamp'] > $howOldInSeconds) {
+            if ($uploadedFile['type'] === 'file' && $currentTimestamp - $uploadedFile['timestamp'] > static::DELETE_OLD_FILES_SECONDS) {
                 $this->filesystem->delete($uploadedFile['path']);
                 $deletedCounter++;
             }

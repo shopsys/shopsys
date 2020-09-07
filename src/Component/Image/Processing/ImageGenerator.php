@@ -88,7 +88,7 @@ class ImageGenerator extends BaseImageGenerator
 
         $interventionImage->encode();
 
-        $this->filesystem->put($targetImageFilepath, $interventionImage);
+        $this->filesystem->put($targetImageFilepath, $interventionImage->getEncoded());
     }
 
     /**

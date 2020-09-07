@@ -20,6 +20,9 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
  * @method \App\Model\Article\Article getVisibleById(int $articleId)
  * @method \App\Model\Article\Article[] getVisibleArticlesForPlacementOnCurrentDomain(string $placement)
  * @method \App\Model\Article\Article[] getAllByDomainId(int $domainId)
+ * @method \App\Model\Article\Article[] getVisibleArticlesListByDomainId(int $domainId, int $limit, int $offset)
+ * @method \App\Model\Article\Article[] getVisibleArticlesListByDomainIdAndPlacement(int $domainId, string $placement, int $limit, int $offset)
+ * @method \App\Model\Article\Article getVisibleByDomainIdAndUuid(int $domainId, string $uuid)
  */
 class ArticleFacade extends BaseArticleFacade
 {

@@ -9,7 +9,6 @@ use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor as BaseImageProcessor;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
-use Symfony\Component\Filesystem\Filesystem;
 
 class ImageProcessor extends BaseImageProcessor
 {
@@ -28,18 +27,16 @@ class ImageProcessor extends BaseImageProcessor
     /**
      * @param \Intervention\Image\ImageManager $imageManager
      * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param string $localTemporaryDir
      */
     public function __construct(
         ImageManager $imageManager,
         FilesystemInterface $filesystem,
-        Filesystem $localFilesystem,
         MountManager $mountManager,
         string $localTemporaryDir
     ) {
-        parent::__construct($imageManager, $filesystem, $localFilesystem);
+        parent::__construct($imageManager, $filesystem);
         $this->mountManager = $mountManager;
         $this->localTemporaryDir = $localTemporaryDir;
     }
