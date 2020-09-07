@@ -14,7 +14,7 @@ export default function showFormErrorsWindow (container) {
     if ($window.length === 0) {
         // eslint-disable-next-line no-new
         new Window({
-            content: $errorListHtml
+            errors: $errorListHtml
         });
     } else {
         $window.filterAllNodes('.js-window-validation-errors')

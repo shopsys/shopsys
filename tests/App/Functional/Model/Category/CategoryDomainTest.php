@@ -36,6 +36,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
 
         $categoryData->enabled[self::FIRST_DOMAIN_ID] = true;
 
+        /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFactory->create($categoryData, null);
 
         $refreshedCategory = $this->getRefreshedCategoryFromDatabase($category);
@@ -49,6 +50,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
 
         $categoryData->enabled[self::FIRST_DOMAIN_ID] = false;
 
+        /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFactory->create($categoryData, null);
 
         $refreshedCategory = $this->getRefreshedCategoryFromDatabase($category);
@@ -66,6 +68,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $categoryData->enabled[self::FIRST_DOMAIN_ID] = true;
         $categoryData->enabled[self::SECOND_DOMAIN_ID] = false;
 
+        /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFactory->create($categoryData, null);
 
         $refreshedCategory = $this->getRefreshedCategoryFromDatabase($category);
@@ -85,6 +88,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $categoryData->seoMetaDescriptions[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
         $categoryData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
 
+        /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFactory->create($categoryData, null);
 
         $refreshedCategory = $this->getRefreshedCategoryFromDatabase($category);
@@ -108,6 +112,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $categoryData->seoMetaDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_META_DESCRIPTION;
         $categoryData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
 
+        /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFactory->create($categoryData, null);
 
         $refreshedCategory = $this->getRefreshedCategoryFromDatabase($category);

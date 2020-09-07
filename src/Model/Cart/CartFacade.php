@@ -160,6 +160,7 @@ class CartFacade extends BaseCartFacade
 
         $isQuantityOverLimit = $this->isQuantityOverLimitReached($quantity, $overLimitQuantity);
         $productPrice = $this->productPriceCalculation->calculatePriceForCurrentUser($product);
+        /** @var \App\Model\Cart\Item\CartItem $newCartItem */
         $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPriceWithVat());
         $cart->addItem($newCartItem);
         $cart->setModifiedNow();

@@ -500,7 +500,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $vatsIndexedByDomainId
-                ->add($domainConfig->getId(), ChoiceType::class, [
+                ->add((string)$domainConfig->getId(), ChoiceType::class, [
                     'required' => true,
                     'disabled' => true,
                     'choices' => $this->vatFacade->getAllForDomainIncludingMarkedForDeletion($domainConfig->getId()),

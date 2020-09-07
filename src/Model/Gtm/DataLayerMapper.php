@@ -167,7 +167,7 @@ class DataLayerMapper
         $categoriesNamesInPath = [];
         foreach ($categoriesInPath as $categoryInPath) {
             /** @var \App\Model\Category\Category $categoryInPath */
-            $categoriesIdsInPath[] = (string)$categoryInPath->getId();
+            $categoriesIdsInPath[] = $categoryInPath->getId();
             $categoriesNamesInPath[] = $categoryInPath->getName($locale);
         }
 
@@ -433,8 +433,10 @@ class DataLayerMapper
         foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
             foreach ($orderPreview->getQuantifiedProducts() as $quantifiedProduct) {
                 $dataLayerProduct = new DataLayerProduct();
+                /** @var \App\Model\Product\Product $product */
+                $product = $quantifiedProduct->getProduct();
                 $this->mapProductWithQuantityToDataLayerProduct(
-                    $quantifiedProduct->getProduct(),
+                    $product,
                     $dataLayerProduct,
                     $locale,
                     $quantifiedProduct->getQuantity()

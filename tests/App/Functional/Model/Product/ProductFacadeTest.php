@@ -8,7 +8,7 @@ use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
-use App\Model\Product\ProductData;
+use App\Model\Product\ProductData as ProductData;
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;

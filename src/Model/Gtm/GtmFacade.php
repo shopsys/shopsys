@@ -85,6 +85,7 @@ class GtmFacade
         $dataLayerUser = new DataLayerUser();
         $this->dataLayer->set('user', $dataLayerUser);
 
+        /** @var \App\Model\Customer\User\CustomerUser $currentCustomer */
         $currentCustomer = $this->currentCustomer->findCurrentCustomerUser();
         $this->dataLayerMapper->mapCurrentCustomerToDataLayerUser($currentCustomer, $dataLayerUser);
     }

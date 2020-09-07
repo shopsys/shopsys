@@ -67,6 +67,7 @@ class MergadoFeedItemFacade
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());
+        /** @var \App\Model\Product\Product[] $products */
         $products = $this->mergadoProductRepository->getProducts($domainConfig, $pricingGroup, $lastSeekId, $maxResults);
         $this->productUrlsBatchLoader->loadForProducts($products, $domainConfig);
         $this->productParametersBatchLoader->loadForProducts($products, $domainConfig);

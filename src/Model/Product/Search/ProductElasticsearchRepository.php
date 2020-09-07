@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository 
  * @method __construct(\Elasticsearch\Client $client, \App\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter, \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader)
  * @method \Shopsys\FrameworkBundle\Model\Product\Search\ProductIdsResult getSortedProductIdsByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
  * @method \Shopsys\FrameworkBundle\Model\Product\Search\ProductsResult getSortedProductsResultByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
+ * @method int getProductsCountByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
  */
 class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
 {

@@ -6,6 +6,8 @@ namespace App\Twig\Gtm;
 
 use App\Model\Gtm\DataLayer;
 use App\Model\Gtm\GtmJsPushFacade;
+use App\Model\Product\Listed\ListedProductView;
+use App\Model\Slider\SliderItem;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -52,10 +54,10 @@ class GtmExtension extends AbstractExtension
      */
     public function getGtmCode($element, int $position, ?array $attributes = null): string
     {
-        if (is_subclass_of($element, 'Shopsys\ReadModelBundle\Product\Listed\ListedProductView')) {
+        if ($element instanceof ListedProductView) {
             $list = $attributes['list'] ?? null;
             $gtm = $this->gtmJsPushFacade->getListedProductViewClickData($element, (int)$position, $list);
-        } elseif (is_subclass_of($element, 'Shopsys\FrameworkBundle\Model\Slider\SliderItem')) {
+        } elseif ($element instanceof SliderItem) {
             $gtm = $this->gtmJsPushFacade->getSliderItemClickData(
                 $element,
                 DataLayer::HOMEPAGE_SLIDER_LABEL,

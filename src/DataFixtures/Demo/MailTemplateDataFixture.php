@@ -139,7 +139,7 @@ team of {domain}
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      * @param mixed $name
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
      * @param int $domainId

@@ -6,20 +6,20 @@ namespace App\Model\Product\Listed;
 
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Filter\ProductFilterData;
+use App\Model\Product\Listed\ListedProductViewFactory;
 use App\Model\Product\Product;
 use App\Model\Product\Series\ProductSeriesProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\ReadModelBundle\Image\ImageViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade as BaseListedProductViewElasticFacade;
-use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory;
 
 /**
  * Class ListedProductViewElasticFacade
@@ -50,7 +50,7 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
      * @param \App\Model\Product\TopProduct\TopProductFacade $topProductFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
-     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
+     * @param \App\Model\Product\Listed\ListedProductViewFactory $listedProductViewFactory
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
@@ -121,19 +121,21 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
     }
 
     /**
-     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     * @return \App\Model\Product\Listed\ListedProductView[]
      */
     public function getListedSaleProducts(): array
     {
         $productFilterData = new ProductFilterData();
         $productsArray = $this->productOnCurrentDomainFacade->getInSaleProductsHits($productFilterData);
 
-        return $this->createFromArray($productsArray);
+        /** @var \App\Model\Product\Listed\ListedProductView[] $listedSaleProducts */
+        $listedSaleProducts = $this->createFromArray($productsArray);
+        return $listedSaleProducts;
     }
 
     /**
      * @param \App\Model\Product\Product[] $products
-     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     * @return \App\Model\Product\Listed\ListedProductView[]
      */
     protected function createFromProducts(array $products): array
     {
@@ -147,6 +149,7 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
             if (!$this->productAvailabilityFacade->isProductExcludedOnDomain($product, $this->domain->getId())
                 && $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId())
             ) {
+                /** @var \App\Model\Product\Listed\ListedProductView[] $listedProductViews */
                 $listedProductViews[$productId] = $this->listedProductViewFactory->createFromProduct(
                     $product,
                     $imageViews[$productId],
@@ -160,7 +163,7 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
 
     /**
      * @param \App\Model\Product\Series\ProductSeries $productSeries
-     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     * @return \App\Model\Product\Listed\ListedProductView[]
      */
     public function getAvailableProductsByProductSeries($productSeries): array
     {

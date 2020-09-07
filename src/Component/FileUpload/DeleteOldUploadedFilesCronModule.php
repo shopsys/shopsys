@@ -37,7 +37,7 @@ class DeleteOldUploadedFilesCronModule implements SimpleCronModuleInterface
 
     public function run()
     {
-        $count = $this->fileUpload->deleteOldUploadedFiles(3600 * 24);
+        $count = $this->fileUpload->deleteOldUploadedFiles();
         $this->logger->info($count . ' files were deleted.');
     }
 }

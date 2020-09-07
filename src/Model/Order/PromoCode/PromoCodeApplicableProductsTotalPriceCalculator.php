@@ -57,6 +57,7 @@ class PromoCodeApplicableProductsTotalPriceCalculator
     public function calculateTotalPrice(PromoCode $promoCode, array $quantifiedProducts): Price
     {
         $domainId = $this->domain->getId();
+        /** @var \App\Model\Customer\User\CustomerUser $currentCustomer */
         $currentCustomer = $this->currentCustomerUser->findCurrentCustomerUser();
         $promoCodePerProduct = $this->productPromoCodeFiller->getPromoCodePerProductByDomainId(
             $quantifiedProducts,

@@ -78,7 +78,7 @@ class NewProductTest extends FunctionalTestCase
         $this->fillAkeneoPrices($form);
         $form['product_form[displayAvailabilityGroup][sellingFrom]'] = '1.1.1990';
         $form['product_form[displayAvailabilityGroup][sellingTo]'] = '1.1.2000';
-        $form['product_form[displayAvailabilityGroup][unit]']->setValue($unit->getId());
+        $form['product_form[displayAvailabilityGroup][unit]']->setValue((string)$unit->getId());
         $form['product_form[stocksGroup][stockProductData][1][productQuantity]'] = '1';
         $form['product_form[stocksGroup][stockProductData][2][productQuantity]'] = '2';
         $form['product_form[stocksGroup][stockProductData][3][productQuantity]'] = '3';

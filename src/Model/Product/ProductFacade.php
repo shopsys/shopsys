@@ -61,6 +61,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @method \App\Model\Product\Product getSellableByUuid(string $uuid, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
+ * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
  */
 class ProductFacade extends BaseProductFacade
 {
