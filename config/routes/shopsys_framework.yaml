@@ -1,2 +1,4 @@
 shopsys_framework:
-    resource: "@ShopsysFrameworkBundle/Resources/config/routing.yaml"
+    resource: "@ShopsysFrameworkBundle/Controller/Admin"
+    prefix: /%admin_url%
+    type: annotation

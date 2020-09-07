@@ -1,4 +1,5 @@
 parameters:
+    admin_url: admin
     test_database_host: postgres
     test_database_port: ~
     test_database_name: shopsys-test

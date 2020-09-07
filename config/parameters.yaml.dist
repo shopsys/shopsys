@@ -1,4 +1,5 @@
 parameters:
+    admin_url: admin
     database_host: postgres
     database_port: ~
     database_name: shopsys
