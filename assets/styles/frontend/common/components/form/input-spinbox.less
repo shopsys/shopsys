@@ -97,4 +97,30 @@
             }
         }
     }
+
+    &--mini {
+        width: 60px;
+        height: 38px;
+
+        .form-input-spinbox__input {
+            width: 100%;
+            height: 100%;
+
+            @media @query-md {
+                font-size: 14px;
+            }
+        }
+
+        .form-input-spinbox__btn {
+            width: 12px;
+
+            &__icon {
+                font-size: 6px;
+            }
+        }
+    }
+
+    &--light {
+        border: 1px solid @color-border-tertiary;
+    }
 }

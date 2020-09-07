@@ -20,8 +20,15 @@
 
     .input {
         width: 100%;
-        transition: padding .2s ease-in-out;
+
+        transition: all .2s ease-in-out;
         will-change: padding;
+
+        &:focus {
+            border-color: @color-add-secondary;
+            background-color: @color-f;
+            box-shadow: 0 0 5px 0 rgba(@color-add-secondary, .5);
+        }
     }
 
     label {
@@ -56,6 +63,10 @@
 
     &--full-width {
         width: 100%;
+    }
+
+    &--no-margin {
+        margin: 0;
     }
 
     &--check {
@@ -111,5 +122,11 @@
         margin-bottom: 1.5rem;
 
         font-size: 13px;
+
+        &--smaller {
+            margin-bottom: 0;
+
+            line-height: 1.5;
+        }
     }
 }

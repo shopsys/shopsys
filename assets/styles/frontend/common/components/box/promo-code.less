@@ -9,8 +9,8 @@
         padding: 0 120px 0 13px;
 
         border-radius: @radius;
-        background-color: #f0f3f4;
-        border: 2px solid #f0f3f4;
+        background-color: @color-f;
+        border: 2px solid @color-f;
         outline: 0;
 
         &:focus {
@@ -22,6 +22,14 @@
         position: absolute;
         top: 8px;
         right: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        text-transform: none;
+        font-size: 14px;
+        font-family: @font-quartenary;
+        font-weight: 400;
+        letter-spacing: 0;
     }
 
     &__added {
@@ -34,7 +42,7 @@
 
             .svg {
                 font-size: 16px;
-                color: @color-f;
+                color: #7f00ff;
             }
         }
     }

@@ -3,17 +3,23 @@
 {% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
 
 <div class="box-info {{ cssClass }}">
+    {% set inofoboxIcon = 'potrebujete_poradit' %}
+    {% set inofoboxIcon2x = 'potrebujete_poradit2x' %}
+    {% if inHeader is defined and inHeader == true %}
+        {% set inofoboxIcon = 'potrebujete_poradit-light' %}
+        {% set inofoboxIcon2x = 'potrebujete_poradit-light2x' %}
+    {% endif %}
     <picture>
         <source
             srcset="
-            {{ asset('public/frontend/images/potrebujete_poradit2x.png') }} 2x,
-            {{ asset('public/frontend/images/potrebujete_poradit.png') }} 1x"
+            {{ asset("public/frontend/images/#{inofoboxIcon2x}.png") }} 2x,
+            {{ asset("public/frontend/images/#{inofoboxIcon}.png") }} 1x"
         >
         <img
             class="box-info__img"
             loading="lazy"
             src="{{ imgLazyloadPlaceholder }}"
-            data-src="{{ asset('public/frontend/images/potrebujete_poradit.png') }}"
+            data-src="{{ asset("public/frontend/images/#{inofoboxIcon}.png") }}"
             alt="{{ 'Potřebujete poradit?'|trans }}"
         >
     </picture>

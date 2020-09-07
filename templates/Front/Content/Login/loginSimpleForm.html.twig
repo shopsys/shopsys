@@ -1,6 +1,6 @@
 {% block content %}
 
-<div class="web__line web__line--bg-color web__line--cart web__line--cart-buttons-up-mobile">
+<div class="web__line web__line--cart web__line--cart-buttons-up-mobile">
     <div class="web__container">
 
         <div class="box-cart box-cart--personals">
@@ -13,7 +13,7 @@
                             {% do form.rememberMe.setRendered() %}
                             {% do form.login.setRendered() %}
                             <h2 class="box-cart-card__form__title">{{ 'Začněte zadáním e-mailu'|trans }}</h2>
-                            <dl class="form-line-block js-form-field">
+                            <dl class="form-line-block form-line-block--no-margin js-form-field">
                                 <dt>
                                     <label for="check-existing-email">{{ 'Váš e-mail'|trans }}</label>
                                 </dt>
@@ -25,6 +25,10 @@
                                         value="">
                                 </dd>
                             </dl>
+                            <p class="form-line-block-desc form-line-block-desc--smaller js-not-implemented-yet">
+                                {{ 'Doporučoval bych nějakým způsobem zde v tomto textu zdůvodnit, proč v tomto kroce požadujeme e-mail
+                                a proč v tomto kroce e-mail není povinný - že to slouží pro přihlášení nebo něco na ten způsob.'|trans }}
+                            </p>
                         </div>
                     </div>
                     <div class="box-cart__buttons box-cart__buttons--personal-info">
@@ -35,16 +39,17 @@
                             </a>
                         </div>
                         <div class="box-cart__buttons__next">
-                            <button id="check-existing-email-submit" class="btn btn--dark btn--checkout-step" type="submit">{{ 'Pokračovat'|trans }}</button>
+                            <button id="check-existing-email-submit" class="btn btn--success btn--checkout-step" type="submit">{{ 'Pokračovat'|trans }}</button>
                         </div>
                     </div>
                 {% else %}
                     {{ form_start(form, {attr: {'multipleForm': true, 'data-login-url': url('front_login_in_order_ajax'), class: loginFormInOrder ? 'js-login-in-order':''}}) }}
                         {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
-                        <div class="box-cart-card box-cart-card--form">
+                        <div class="box-cart-card box-cart-card--form box-cart-card--form--spaced">
                             <div class="box-cart-card__form">
-                                <h2 class="box-cart-card__form__title">
-                                    {{ 'Vítejte zpět ve Scontu, pro dokončení nákupu se prosím přihlašte'|trans }}
+                                <h2 class="box-cart-card__form__title box-cart-card__form__title--centered">
+                                    {{ '<strong class="box-cart-card__form__title__strong">Vítejte zpět ve Scontu</strong>
+                                    Pro dokončení nákupu se prosím přihlašte'|transHtml }}
                                 </h2>
                                 <dl class="form-line-block js-form-field">
                                     <dt>
@@ -108,7 +113,7 @@
                                 </a>
                             </div>
                             <div class="box-cart__buttons__next">
-                                {{ form_widget(form.login, { label: 'Log in'|trans, attr: { class: 'btn btn--dark btn--checkout-step'} }) }}
+                                {{ form_widget(form.login, { label: 'Log in'|trans, attr: { class: 'btn btn--success btn--checkout-step'} }) }}
                             </div>
                         </div>
                     {{ form_end(form) }}

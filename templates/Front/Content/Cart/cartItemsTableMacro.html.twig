@@ -2,15 +2,13 @@
     <table class="table-cart js-cart">
         <thead>
             <tr class="table-cart__row table-cart__row--head">
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--image">{{ 'Váš nákup'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--head table-cart__cell--image">{{ 'Vaše produkty'|trans }}</th>
                 <th class="table-cart__cell table-cart__cell--head table-cart__cell--name">
                     <span class="visibility-hidden">{{ 'Name'|trans }}</span>
                 </th>
                 <th class="table-cart__cell table-cart__cell--head table-cart__cell--avail">{{ 'Dostupnost'|trans }}</th>
+                <th class="table-cart__cell table-cart__cell--head table-cart__cell--price">{{ 'Cena za kus'|trans }}</th>
                 <th class="table-cart__cell table-cart__cell--head table-cart__cell--amount">{{ 'Počet kusů'|trans }}</th>
-                {% if (orderPreview.hasAnyProductCommonPrice(getDomain().id)) %}
-                    <th class="table-cart__cell table-cart__cell--head table-cart__cell--price">{{ 'Common price'|trans }}</th>
-                {% endif %}
                 <th class="table-cart__cell table-cart__cell--head table-cart__cell--price-final">{{ 'Zaplatíte'|trans }}</th>
                 <th class="table-cart__cell table-cart__cell--head table-cart__cell--action">&nbsp;</th>
             </tr>
@@ -57,16 +55,22 @@
                         {% endif %}
                     </div>
                     <div class="table-cart__product-sku">
-                        {{ product.catnum }}
+                        {{ 'č. produktu: ' }}{{ product.catnum }}
                     </div>
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--avail">
-                    <strong class="table-cart__cell__avail">{{ orderPreview.productsAvailability[product.id] }}</strong>
+                    <strong class="table-cart__cell__avail">
+                        {{ orderPreview.productsAvailability[product.id] }}
+                    </strong>
+                </td>
+
+                <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
+                    <strong class="cart-price cart-price--secondary">{{ cartItemPrice.unitPrice.priceWithVat|price }}</strong>
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--amount">
-                    <span class="form-input-spinbox js-spinbox">
+                    <span class="form-input-spinbox form-input-spinbox--light form-input-spinbox--mini js-spinbox">
                         {{ form_widget(form.quantities[index], { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1, 'data-spinbox-max': dataSpinboxMax}}) }}
                         <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--plus js-spinbox-plus">
                             <i class="form-input-spinbox__btn__icon form-input-spinbox__btn__icon--plus svg svg-arrow"></i>
@@ -76,14 +80,6 @@
                         </button>
                     </span>
                 </td>
-
-                {% if orderPreview.hasAnyProductCommonPrice(getDomain().id) %}
-                    <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
-                        {% if product.getHighPriceWithVat(getDomain().id).isGreaterThan(cartItemPrice.unitPrice.priceWithVat) %}
-                            <strong class="cart-price cart-price--secondary">{{ product.getHighPriceWithVat(getDomain().id)|price }}</strong>
-                        {% endif %}
-                    </td>
-                {% endif %}
 
                 <td class="table-cart__cell table-cart__cell--price-final js-cart-item-total-price">
                     {% if cartItemDiscount is not null %}
@@ -116,26 +112,5 @@
             </tr>
         {% endfor %}
         </tbody>
-
-        <tfoot class="table-cart__footer">
-            <tr class="table-cart__row table-cart__row--footer">
-                <td class="table-cart__cell table-cart__cell--footer table-cart__cell-caption">
-                    <strong class="table-cart__cell__caption">{{ 'Zaplatíte'|trans }}</strong>
-                </td>
-                {% if (orderPreview.hasAnyProductCommonPrice(getDomain().id)) %}
-                    <td class="table-cart__cell table-cart__cell--footer table-cart__cell--price">
-                        <span class="cart-price cart-price--secondary cart-price--previous">
-                            {{ orderPreview.totalProductHighPrice.priceWithVat|price }}
-                        </span>
-                    </td>
-                {% endif %}
-                <td class="table-cart__cell table-cart__cell--footer table-cart__cell--price-final js-cart-total-price">
-                    <span class="cart-price cart-price--primary cart-price--bigger">
-                        {{ orderPreview.productsPrice.priceWithVat|price }}
-                    </span>
-                </td>
-            </tr>
-        </tfoot>
-
     </table>
 {% endmacro %}

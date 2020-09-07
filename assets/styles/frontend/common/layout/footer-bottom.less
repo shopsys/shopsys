@@ -3,6 +3,10 @@
 @footer-bottom-item-color: #8a8B8f;
 @footer-bottom-item-font-size: 12px;
 
+.footer {
+    position: relative;
+}
+
 .footer__bottom {
     display: flex;
     flex-direction: column;
@@ -57,7 +61,19 @@
         }
     }
 
+    &--checkout,
     &--cart {
-        padding-top: 5px;
+        padding-top: 1.5rem;
+
+        &::after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 2px;
+            content: '';
+
+            background-color: @color-border-lighter;
+        }
     }
 }
