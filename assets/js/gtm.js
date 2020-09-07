@@ -105,8 +105,10 @@ export default class Gtm {
 
         localStorage.setItem('filter', JSON.stringify(serializedData));
 
-        const newValues = $.isEmptyObject(originalValues) ? serializedData : serializedData.filter(Gtm.compare(originalValues));
-        newValues.forEach(item => {
+        const addedValues = $.isEmptyObject(originalValues) ? serializedData : serializedData.filter(Gtm.compare(originalValues));
+        const removedValues = $.isEmptyObject(originalValues) ? [] : originalValues.filter(Gtm.compare(serializedData));
+
+        addedValues.forEach(item => {
             if (item.name !== 'q') {
                 const section = $(`*[name="${item.name}"]`).closest('.js-product-filter-box').children('.js-product-filter-box-label').text().trim();
                 const valueEl = $(`*[name="${item.name}"][value="${item.value}"]`).siblings('label').children('a');
@@ -116,7 +118,26 @@ export default class Gtm {
                 const data = {
                     'event': EVENT_NAME_CATEGORY_FILTER,
                     'eventData': {
-                        'category': 'Filtrace',
+                        'category': 'Filtrace on',
+                        'action': section,
+                        'label': value
+                    }
+                };
+                Gtm.pushEvent(data);
+            }
+        });
+
+        removedValues.forEach(item => {
+            if (item.name !== 'q') {
+                const section = $(`*[name="${item.name}"]`).closest('.js-product-filter-box').children('.js-product-filter-box-label').text().trim();
+                const valueEl = $(`*[name="${item.name}"][value="${item.value}"]`).siblings('label').children('a');
+                valueEl.find('span').remove();
+                const value = valueEl.text().trim();
+
+                const data = {
+                    'event': EVENT_NAME_CATEGORY_FILTER,
+                    'eventData': {
+                        'category': 'Filtrace off',
                         'action': section,
                         'label': value
                     }

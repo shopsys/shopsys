@@ -111,7 +111,7 @@ class GtmFacade
                     $listedProductViews,
                     $nextIndex,
                     null,
-                    'Category - standard'
+                    sprintf('Category - %s - standard', $category->getName($this->dataLayer->getLocale()))
                 ),
             ],
         ];
