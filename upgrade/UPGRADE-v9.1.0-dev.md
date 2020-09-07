@@ -73,3 +73,6 @@ There you can find links to upgrade notes for other versions too.
     - in tests is used extended class of `Shopsys\FrameworkBundle\Model\Localization\TranslatableListener`
     - removed `config/packages/test/prezent_doctrine_translatable.yaml`
     - see #project-base-diff to update your project
+
+- fix frontend-api tests when domain locales are changed ([#2019](https://github.com/shopsys/shopsys/pull/2019))
+    - see #project-base-diff to update your project
