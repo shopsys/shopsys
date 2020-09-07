@@ -4,6 +4,10 @@
             <input type="text" value="" id="js-promo-code-input" class="box-promo-code__input" placeholder="{{ 'Slevový kód'|trans }}" data-apply-code-url="{{ url('front_promo_code_apply') }}"/>
             <button type="button" id="js-promo-code-submit-button" class="btn btn--primary box-promo-code__btn">{{ 'Apply'|trans }}</button>
         </div>
+        <p class="box-cart__promo__desc js-not-implemented-yet">
+            {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget lacus aliquet,
+            <a class="box-cart__promo__desc__link" href="#">bibendum massa sit amet.</a>'|transHtml }}
+        </p>
     {% else %}
         <strong class="box-promo-code__title">{{ 'Vaše sleva s kódem byla uplatněna'|trans }}</strong>
         <span class="box-promo-code__added">
@@ -16,6 +20,9 @@
                 </strong>
             </span>
         </span>
-        <p class="box-promo-code__desc">{{ 'Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle pravidel'|trans }}</p>
+        <p class="box-cart__promo__desc box-cart__promo__desc--apply">
+            {{ 'Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle
+            <a class="box-cart__promo__desc__link js-not-implemented-yet" href="#">pravidel</a>'|transHtml }}
+        </p>
     {% endif %}
 </div>

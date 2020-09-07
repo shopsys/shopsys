@@ -240,12 +240,6 @@
     &__promo {
         margin-bottom: 18px;
 
-        &--active {
-            padding: 10px;
-
-            border-width: 1px;
-        }
-
         &__top {
             display: flex;
             justify-content: space-between;
@@ -259,6 +253,10 @@
             font-size: 12px;
             line-height: 1.2;
             color: #7a929d;
+
+            &--apply {
+                margin-top: 17px;
+            }
 
             &__link {
                 color: @color-primary;
@@ -495,24 +493,21 @@
 .cart-tag {
     &--promo {
         display: inline-block;
-        padding: 4px 8px 3px;
+        padding: 5px 6px 3px;
 
         font-family: @font-quartenary;
-        font-size: 10px;
+        font-size: 13px;
         line-height: 1;
         text-transform: uppercase;
         background-color: rgba(#7f00ff, .18);
         color: #7f00ff;
-        border-radius: 2em;
+        border-radius: 2px;
         font-weight: 400;
 
         &--primary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: space-between;
             position: relative;
-            padding: 3px 10px 3px 10px;
-            min-width: 85px;
+            padding: 4px 8px 3px 8px;
+            min-width: 84px;
 
             font-size: 14px;
 

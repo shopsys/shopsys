@@ -25,10 +25,6 @@
                     {% endif %}
                 {% endif %}
                 {{ render(controller('App\\Controller\\Front\\PromoCodeController:indexAction')) }}
-                <p class="box-cart__promo__desc js-not-implemented-yet">
-                    {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget lacus aliquet,
-                    <a class="box-cart__promo__desc__link" href="#">bibendum massa sit amet.</a>'|transHtml }}
-                </p>
             </div>
         {% endif %}
         <hr class="box-cart-card__separator" />
@@ -85,17 +81,6 @@
                         </tr>
                     {% endif %}
 
-                    {% if isDiscountInOrderPreview %}
-                        <tr class="table-cart-preview__row table-cart-preview__row--promo">
-                            <td class="table-cart-preview__cell">
-                                <span class="cart-tag cart-tag--promo">{{ orderPreview.promoCodeCode }}</span>
-                            </td>
-                            <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                                <span class="cart-price cart-price--promo">-&nbsp;{{ orderPreview.totalPriceDiscount.priceWithVat|price }}</span>
-                            </td>
-                        </tr>
-                    {% endif %}
-
                     {% if splitOrderPreview.morePreviews %}
                         <tr class="table-cart-preview__row table-cart-preview__row--section-price">
                             <td class="table-cart-preview__cell">
@@ -133,14 +118,16 @@
     <tfoot>
 
         {% if splitOrderPreview.hasAnyProductCommonPrice(getDomain().id) %}
-            <tr class="table-cart-preview__row">
-                <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary">
-                    {{ 'Původně'|trans }}:
-                </td>
-                <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary table-cart-preview__cell--price">
-                    <span class="cart-price cart-price--secondary cart-price--previous">{{ splitOrderPreview.productsCommonPrice.priceWithVat|price }}</span>
-                </td>
-            </tr>
+            {% if splitOrderPreview.sumTotalPriceDiscount is null %}
+                <tr class="table-cart-preview__row">
+                    <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary">
+                        {{ 'Původně'|trans }}:
+                    </td>
+                    <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary table-cart-preview__cell--price">
+                        <span class="cart-price cart-price--secondary cart-price--previous">{{ splitOrderPreview.productsCommonPrice.priceWithVat|price }}</span>
+                    </td>
+                </tr>
+            {% endif %}
         {% endif %}
 
         {% if splitOrderPreview.roundingPrice is not empty %}
@@ -157,13 +144,13 @@
         {% if splitOrderPreview.sumTotalPriceDiscount is not null %}
             <tr class="table-cart-preview__row">
                 <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing">
-                    {{ 'Vaše původní cena'|trans }}
+                    {{ 'Původně'|trans }}
                 </td>
                 <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--price">
                     <span class="line-through">{{ splitOrderPreview.sumTotalPriceWithoutDiscount.priceWithVat|price }}</span>
                 </td>
             </tr>
-            <tr class="table-cart-preview__row table-cart-preview__row--total">
+            <tr class="table-cart-preview__row table-cart-preview__row--total table-cart-preview__row--total--discount">
                 <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing">
                     <span class="cart-tag cart-tag--promo">{{ promoCodeCode }}</span>
                 </td>
