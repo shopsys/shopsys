@@ -312,7 +312,14 @@ class ProductController extends FrontBaseController
         } else {
             $product = $productVariant;
         }
+        //parts build from variant
         $productPackages = $this->productPackageFacade->getProductPackagesByProduct($productVariant);
+        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($productVariant, $this->domain);
+        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($productVariant, $this->domain->getId());
+        $productAvailabilityStatus = $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($productVariant, $this->domain->getId());
+        $productAvailableStocksCountInformation = $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($productVariant, $this->domain->getId());
+        $productCountExposedInStores = $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($productVariant, $this->domain->getId());
+        $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($productVariant, $this->domain->getId());
 
         $this->gtmFacade->onProductDetailPage($product);
 
@@ -323,13 +330,6 @@ class ProductController extends FrontBaseController
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
-        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId());
-        $productAvailabilityStatus = $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $this->domain->getId());
-        $productAvailableStocksCountInformation = $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId());
-        $productCountExposedInStores = $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId());
-        $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($product, $this->domain->getId());
-        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($productVariant, $this->domain);
-
         $productSeriesList = $this->productSeriesFacade->getAllVisibleByProductAndDomainId($product, $this->domain);
         $productSeriesProducts = [];
         $gtmProductSeriesProducts = [];
