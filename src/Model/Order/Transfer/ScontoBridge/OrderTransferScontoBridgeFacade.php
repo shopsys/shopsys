@@ -178,9 +178,9 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     }
 
     /**
-     * @param $order
+     * @param Order $order
      */
-    private function markOrderScontoBridgeStatusError($order)
+    private function markOrderScontoBridgeStatusError(Order $order): void
     {
         $this->setOrderScontoBridgeStatus(
             $order,

@@ -162,7 +162,7 @@ class CustomerTransferScontoBridgeMapper
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
         $country = $billingAddress->getCountry();
         if ($country === null) {
-            throw new CustomerTransferScontoBridgeMapperExcepttestIsIndependentlyVisibleion(
+            throw new CustomerTransferScontoBridgeMapperException(
                 sprintf('Country not defined for customer user id \'%d\' - billing address', $customerUser->getId())
             );
         }
