@@ -98,7 +98,7 @@ services:
 
     App\Model\GoPay\GoPayAvailablePaymentsCronModule:
         arguments:
-            - '%gopay.config%'
+            - '%gopay_config%'
         tags:
             - { name: shopsys.cron, hours: '3', minutes: '50', readableFrequency: '1x za den' }
 

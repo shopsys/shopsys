@@ -35,6 +35,11 @@ do
     yq write --inplace $paremeters_filepath $PARAMETER_KEY ${MERGED_PARAMETERS[$PARAMETER_KEY]}
 done
 
+for CAST_PARAMETER_KEY in "${!CAST_PARAMETERS[@]}"
+do
+    yq write --inplace $paremeters_filepath $CAST_PARAMETER_KEY "\"${CAST_PARAMETERS[$CAST_PARAMETER_KEY]}\""
+done
+
 sed -i 's/nullPlaceholder/null/' $paremeters_filepath
 
 echo "End of parameters.sh"
