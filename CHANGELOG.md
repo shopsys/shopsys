@@ -28,6 +28,82 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
+## [v7.3.5](https://github.com/shopsys/shopsys/compare/v7.3.4...v7.3.5) - 2020-09-09
+
+### [shopsys/framework]
+
+#### Added
+- [#1994] added link into breadcrumb item in admin if uri is not null, Thanks to [@pesektomas]
+
+#### Changed
+
+- [#1972] fixed removing friendly urls
+
+#### Fixed
+
+- [#1651] fixed call sleep() on null on sleep cron module between two feeds, Thanks to [@pk16011990]
+- [#1672] edit transport and payment names in order items after order is changed, Thanks to [@pk16011990]
+- [#1719] ProductExportRepository: prevent Undefined offset notice
+- [#1723] default product data now have availability set
+- [#1760] added array_key_exists condition into to NotNullableColumnsFinder method, Thanks to [@pesektomas]
+- [#1794] fix condition for plus numbers of parameters in the product filter, Thanks to [@RostislavKreisinger]
+- [#1885] fixed calculate availability for new product
+- [#1909] fixed error 500 during logout when the user is already logged out
+- [#1915] datepicker.js assigns options per instance, Thanks to [@milanStano]
+- [#1916] fixed throwing OrderItemNotFoundException
+- [#1919] fixed saving thumbnails in elfinder
+- [#1920] fixed renaming files in elfinder
+- [#1959] fixed property annotation in ProductAvailabilityCalculation
+- [#1966] fixed clearing form options in product picker
+- [#1967] select distinct product for vat replace, Thanks to [@mposchl]
+- [#1971] fixed joining the same table with different alias
+- [#1979] spinbox plus now works correctly with min value
+- [#1982] categories in administration are now loaded using admin locale
+- [#2010] cart items are now correctly deleted when cart is deleted
+
+### [shopsys/project-base]
+
+#### Added
+
+- [#1861] added extra_host for elasticsearch in production docker-compose.yml file, Thanks to [@ondrejbohac]
+
+#### Changed
+
+- [#1644] order can now be completed when successful flash message exists, Thanks to [@pk16011990]
+- [#1842] automatically delete sessions after 7 days of user inactivity, Thanks to [@stanoMilan]
+- [#1990] added condition for get accessories if module is enabled only, Thanks to [@pesektomas]
+
+#### Fixed
+
+- [#1662] delete backup index if exists before creating new backup, Thanks to [@pk16011990]
+- [#1827] container log now catches all lines from first command output, Thanks to [@pk16011990]
+- [#1906] windowForm: fix initialization of JS validation
+- [#1926] fixed wrong url of freshly uploaded files in wysiwyg
+- [#1970] fixed displaying errors in popup window
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1944] added note about possibility of credentials caching while releasing
+- [#1975] added cron limitation documentation
+
+#### Changed
+
+- [#1946] updated releaser list of excluded packages
+- [#1985] redis build-version now includes application environment
+
+#### Fixed
+
+- [#1713] fixed installation documentation for Windows 10 via Docker
+- [#1947] fixed checking builds in after-release stage
+
+### [shopsys/read-model]
+
+#### Changed
+
+- [#1730] ProductActionView creation: use calculatedSellingDenied
+
 ## [v7.3.4](https://github.com/shopsys/shopsys/compare/v7.3.3...v7.3.4) - 2020-06-01
 
 ### [shopsys/framework]
@@ -2792,3 +2868,46 @@ That's why is this section formatted differently.
 [#1790]: https://github.com/shopsys/shopsys/pull/1790
 [#1670]: https://github.com/shopsys/shopsys/pull/1670
 [#1391]: https://github.com/shopsys/shopsys/pull/1391
+
+[#1994]: https://github.com/shopsys/shopsys/pull/1994
+[#1972]: https://github.com/shopsys/shopsys/pull/1972
+[#1651]: https://github.com/shopsys/shopsys/pull/1651
+[#1672]: https://github.com/shopsys/shopsys/pull/1672
+[#1719]: https://github.com/shopsys/shopsys/pull/1719
+[#1723]: https://github.com/shopsys/shopsys/pull/1723
+[#1760]: https://github.com/shopsys/shopsys/pull/1760
+[#1794]: https://github.com/shopsys/shopsys/pull/1794
+[#1885]: https://github.com/shopsys/shopsys/pull/1885
+[#1909]: https://github.com/shopsys/shopsys/pull/1909
+[#1915]: https://github.com/shopsys/shopsys/pull/1915
+[#1916]: https://github.com/shopsys/shopsys/pull/1916
+[#1919]: https://github.com/shopsys/shopsys/pull/1919
+[#1920]: https://github.com/shopsys/shopsys/pull/1920
+[#1959]: https://github.com/shopsys/shopsys/pull/1959
+[#1966]: https://github.com/shopsys/shopsys/pull/1966
+[#1967]: https://github.com/shopsys/shopsys/pull/1967
+[#1971]: https://github.com/shopsys/shopsys/pull/1971
+[#1979]: https://github.com/shopsys/shopsys/pull/1979
+[#1982]: https://github.com/shopsys/shopsys/pull/1982
+[#2010]: https://github.com/shopsys/shopsys/pull/2010
+[#1861]: https://github.com/shopsys/shopsys/pull/1861
+[#1644]: https://github.com/shopsys/shopsys/pull/1644
+[#1842]: https://github.com/shopsys/shopsys/pull/1842
+[#1990]: https://github.com/shopsys/shopsys/pull/1990
+[#1662]: https://github.com/shopsys/shopsys/pull/1662
+[#1827]: https://github.com/shopsys/shopsys/pull/1827
+[#1906]: https://github.com/shopsys/shopsys/pull/1906
+[#1926]: https://github.com/shopsys/shopsys/pull/1926
+[#1970]: https://github.com/shopsys/shopsys/pull/1970
+[#1944]: https://github.com/shopsys/shopsys/pull/1944
+[#1975]: https://github.com/shopsys/shopsys/pull/1975
+[#1946]: https://github.com/shopsys/shopsys/pull/1946
+[#1985]: https://github.com/shopsys/shopsys/pull/1985
+[#1713]: https://github.com/shopsys/shopsys/pull/1713
+[#1947]: https://github.com/shopsys/shopsys/pull/1947
+[#1730]: https://github.com/shopsys/shopsys/pull/1730
+[@pesektomas]: https://github.com/pesektomas
+[@RostislavKreisinger]: https://github.com/RostislavKreisinger
+[@milanStano]: https://github.com/milanStano
+[@mposchl]: https://github.com/mposchl
+[@ondrejbohac]: https://github.com/ondrejbohac
