@@ -119,6 +119,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     {
         $baseFilterQuery = $this->filterQueryFactory->create($this->getIndexName())
             ->filterOnlyInSale()
+            ->setLimit(15) // Temporary solution until SD-1543 will be done.
             ->filterOnlyVisible($this->currentCustomerUser->getPricingGroup())
             ->odrderByStockQuantity();
         $baseFilterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery($productFilterData, $baseFilterQuery, $this->currentCustomerUser->getPricingGroup());
