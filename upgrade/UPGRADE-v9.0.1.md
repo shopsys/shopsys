@@ -71,6 +71,3 @@ There you can find links to upgrade notes for other versions too.
 
 - fix wrong url of freshly uploaded files in wysiwyg ([#1926](https://github.com/shopsys/shopsys/pull/1926))
     - see [project-base diff](https://github.com/shopsys/project-base/commit/31c3469fb984c6a0224bcbf8db5549a6331afed5) to update your project
-
-- fix ImageConfig does not accept extended entities ([#1777](https://github.com/shopsys/shopsys/pull/1777))
-    - see #project-base-diff to update your project
