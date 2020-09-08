@@ -80,13 +80,6 @@ services:
                 'Symfony\Component\Validator\Constraints\FileValidator': 'app.component.validator.file_validator'
             }
 
-    App\Component\Image\Processing\ImageProcessor:
-        arguments:
-            $localTemporaryDir: '%kernel.cache_dir%'
-
-    Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor:
-        alias: App\Component\Image\Processing\ImageProcessor
-
     App\Component\Doctrine\QueryBuilderExtender: ~
 
     App\Component\Doctrine\RemoveMappingsSubscriber:

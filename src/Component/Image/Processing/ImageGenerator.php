@@ -18,7 +18,7 @@ use Symfony\Bridge\Monolog\Logger;
  * @method string generateAdditionalImageSizeAndGetFilepath(\App\Component\Image\Image $image, int $additionalIndex, string|null $sizeName)
  * @method checkSizeNameIsNotOriginal(\App\Component\Image\Image $image, string|null $sizeName)
  * @property \App\Component\Image\Config\ImageConfig $imageConfig
- * @property \App\Component\Image\Processing\ImageProcessor $imageProcessor
+ * @property \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
  * @property \App\Component\Image\ImageLocator $imageLocator
  */
 class ImageGenerator extends BaseImageGenerator
@@ -34,7 +34,7 @@ class ImageGenerator extends BaseImageGenerator
     private $logger;
 
     /**
-     * @param \App\Component\Image\Processing\ImageProcessor $imageProcessor
+     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      * @param \App\Component\Image\ImageLocator $imageLocator
      * @param \App\Component\Image\Config\ImageConfig $imageConfig
      * @param \League\Flysystem\FilesystemInterface $filesystem
