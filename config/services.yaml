@@ -34,6 +34,21 @@ services:
     App\Component\FileUpload\FileUpload:
         arguments: ['var/cache/%kernel.environment%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
 
+    shopsys.framework.cache_driver.annotations_cache:
+        class: Doctrine\Common\Cache\ChainCache
+        arguments:
+            -
+                - '@shopsys.framework.cache_driver.annotations_cache.array_cache'
+                - '@shopsys.framework.cache_driver.annotations_cache.permanent_php_file_cache'
+
+    shopsys.framework.cache_driver.annotations_cache.array_cache:
+        class: Doctrine\Common\Cache\ArrayCache
+
+    shopsys.framework.cache_driver.annotations_cache.permanent_php_file_cache:
+        class: Doctrine\Common\Cache\PhpFileCache
+        arguments:
+            - '%kernel.cache_dir%/annotations'
+
     Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
         alias: App\Component\FileUpload\FileUpload
 
