@@ -43,3 +43,6 @@ There you can find links to upgrade notes for other versions too.
             +       ?AvailabilityFacade $availabilityFacade = null
                 ) {
             ```
+
+- update docker-php-entrypoint to show all lines from first command output ([#1827](https://github.com/shopsys/shopsys/pull/1827))
+    - see #project-base-diff to update your project
