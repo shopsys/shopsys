@@ -57,3 +57,11 @@ There you can find links to upgrade notes for other versions too.
 
 - move npm-global directory to project in order to make it included in Docker volumes ([#2024](https://github.com/shopsys/shopsys/pull/2024))
     - see #project-base-diff to update your project
+
+- update `docker/php-fpm/docker-php-entrypoint` to show all lines from first command output ([#1827](https://github.com/shopsys/shopsys/pull/1827))
+    ```diff
+        mkfifo $PIPE
+        chmod 666 $PIPE
+    -   tail -f $PIPE &
+    +   tail -n +1 -f $PIPE &
+    ```
