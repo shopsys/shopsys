@@ -99,8 +99,6 @@ class VolumeDriver extends Driver
      */
     protected function createTmb($thumbnailPath, $stat)
     {
-        $tmpThumbnailPath = $this->tmbPath;
-        $this->tmbPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $tmpThumbnailPath;
         @mkdir($this->tmbPath, 0777, true);
 
         $name = parent::createTmb($thumbnailPath, $stat);
@@ -109,7 +107,7 @@ class VolumeDriver extends Driver
             if ($fp === false) {
                 return false;
             }
-            $this->_save($fp, $tmpThumbnailPath, $name, $stat);
+            $this->_save($fp, $this->tmbPath, $name, $stat);
             unlink($this->createThumbnailPath($name));
         }
 
@@ -121,7 +119,7 @@ class VolumeDriver extends Driver
      */
     protected function rmTmb($stat)
     {
-        $path = $stat['realpath'];
+        $path = $this->tmbPath . DIRECTORY_SEPARATOR . $this->tmbname($stat);
         if ($this->tmbURL) {
             $thumbnailName = $this->gettmb($path, $stat);
             $stat['tmb'] = $thumbnailName ? $thumbnailName : 1;

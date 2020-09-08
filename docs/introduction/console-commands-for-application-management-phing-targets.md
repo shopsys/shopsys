@@ -107,7 +107,7 @@ Useful in a development environment and during deploying to production.
 #### build-version-generate
 
 Generates a Symfony configuration `build-version` variable that is used to distinguish different application builds.
-The variable itself contains current datetime in PHP format `YmdHis` (16 digits, eg. `20190311135223`) and you can use it in any configuration file by `'%build-version%'`.
+The variable itself contains current datetime in PHP format `YmdHis` and application environment (eg. `20190311135223_dev`) so you can use it in any configuration file by `'%build-version%'`.
 
 The variable is generated to file `app/config/parameters_version.yml` and this file is excluded from git.
 

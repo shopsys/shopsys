@@ -1,4 +1,3 @@
-{{ init_js_validation(null, false) }}
 {{ form_start(form, {attr: {class: 'js-front-login-window'}}) }}
     {{ form_errors(form) }}
 
@@ -36,3 +35,4 @@
     </div>
 
 {{ form_end(form) }}
+{{ init_js_validation(form, false) }}

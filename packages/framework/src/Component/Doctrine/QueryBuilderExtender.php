@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\Doctrine;
 use BadMethodCallException;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Doctrine\Exception\DuplicatedAliasException;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class QueryBuilderExtender
@@ -55,8 +56,12 @@ class QueryBuilderExtender
         $joinAlreadyUsed = false;
         $resolvedClass = $this->entityNameResolver->resolve($class);
         foreach ($joins as $join) {
-            $resolvedJoinClass = $this->entityNameResolver->resolve($join->getJoin());
-            if ($resolvedJoinClass === $resolvedClass) {
+            if ($join->getAlias() === $alias) {
+                $resolvedJoinClass = $this->entityNameResolver->resolve($join->getJoin());
+                if ($resolvedJoinClass !== $resolvedClass) {
+                    throw new DuplicatedAliasException($alias, $resolvedClass, $resolvedJoinClass);
+                }
+
                 $joinAlreadyUsed = true;
                 break;
             }

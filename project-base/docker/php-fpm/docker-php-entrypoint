@@ -11,7 +11,7 @@ PIPE=/tmp/log-pipe
 rm -rf $PIPE
 mkfifo $PIPE
 chmod 666 $PIPE
-tail -f $PIPE &
+tail -n +1 -f $PIPE &
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then

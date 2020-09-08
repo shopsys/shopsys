@@ -159,8 +159,11 @@ class ProductSearchExportWithFilterRepository extends ProductSearchExportReposit
     protected function extractCategories(int $domainId, Product $product): array
     {
         $categoryIds = [];
-        foreach ($product->getCategoriesIndexedByDomainId()[$domainId] as $category) {
-            $categoryIds[] = $category->getId();
+        $categoriesIndexedByDomainId = $product->getCategoriesIndexedByDomainId();
+        if (isset($categoriesIndexedByDomainId[$domainId])) {
+            foreach ($categoriesIndexedByDomainId[$domainId] as $category) {
+                $categoryIds[] = $category->getId();
+            }
         }
 
         return $categoryIds;

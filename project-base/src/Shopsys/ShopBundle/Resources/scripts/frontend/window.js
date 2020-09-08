@@ -51,6 +51,7 @@
 
     /**
      * content (string)
+     * errors (string)
      * buttonClose (bool)
      * buttonContinue (bool)
      * textContinue (string)
@@ -61,6 +62,7 @@
     Shopsys.window = function (options) {
         var defaults = {
             content: '',
+            errors: '',
             buttonClose: true,
             buttonCancel: false,
             buttonContinue: false,
@@ -95,8 +97,11 @@
             $windowContent.append('<h2 class="' + options.cssClassHeading + '">' + options.textHeading + '</h2>');
         }
 
+        var displayClass = options.errors === '' ? 'display-none' : '';
         $windowContent.append(
-            '<div class="display-none in-message in-message--alert js-window-validation-errors"></div>'
+            '<div class="' + displayClass + ' in-message in-message--alert js-window-validation-errors">'
+            + options.errors
+            + '</div>'
             + options.content
         );
 

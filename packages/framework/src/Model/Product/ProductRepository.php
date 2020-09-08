@@ -586,7 +586,7 @@ class ProductRepository
     public function getProductIteratorForReplaceVat()
     {
         $query = $this->em->createQuery('
-            SELECT p
+            SELECT DISTINCT p
             FROM ' . Product::class . ' p
             JOIN p.vat v
             WHERE v.replaceWith IS NOT NULL

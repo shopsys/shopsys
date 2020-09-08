@@ -33,22 +33,10 @@ class NotNullableColumnsFinderTest extends TestCase
                     return 'not_nullable_field';
                 }
             });
-        $associationMapping1['joinColumns'] = [
-            [
-                'nullable' => true,
-                'name' => 'nullable_association',
-            ],
-        ];
-        $associationMapping2['joinColumns'] = [
-            [
-                'nullable' => false,
-                'name' => 'not_nullable_association',
-            ],
-        ];
-        $associationMappings = [$associationMapping1, $associationMapping2];
+
         $classMetadataInfoMock
             ->method('getAssociationMappings')
-            ->willReturn($associationMappings);
+            ->willReturn($this->getAssociationMappings());
 
         $expectedResult = [
             'EntityName' => [
@@ -61,6 +49,30 @@ class NotNullableColumnsFinderTest extends TestCase
         $actualResult = $notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName([$classMetadataInfoMock]);
 
         $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return array
+     */
+    private function getAssociationMappings(): array
+    {
+        $associationMapping1['joinColumns'] = [
+            [
+                'nullable' => true,
+                'name' => 'nullable_association',
+            ],
+        ];
+        $associationMapping2['joinColumns'] = [
+            [
+                'nullable' => false,
+                'name' => 'not_nullable_association',
+            ],
+        ];
+
+        // this array can simulate bidirectional association
+        $associationMapping3 = [];
+
+        return [$associationMapping1, $associationMapping2, $associationMapping3];
     }
 
     public function testGetAllNotNullableColumnNamesIndexedByTableNameException()

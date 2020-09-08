@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
+use BadMethodCallException;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Localization\Localization as LocalizationAlias;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -21,18 +24,45 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     protected $categoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|null
+     * @deprecated This will be removed in next major version
      */
     protected $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization|null
      */
-    public function __construct(CategoryFacade $categoryFacade, Domain $domain)
-    {
+    protected $localization;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization|null $localization
+     */
+    public function __construct(
+        CategoryFacade $categoryFacade,
+        ?Domain $domain = null,
+        ?LocalizationAlias $localization = null
+    ) {
         $this->categoryFacade = $categoryFacade;
         $this->domain = $domain;
+        $this->localization = $localization;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setLocalization(Localization $localization): void
+    {
+        if ($this->localization !== null && $this->localization !== $localization) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->localization === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->localization = $localization;
+        }
     }
 
     /**
@@ -70,7 +100,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
         return [
             'expanded' => false,
             'multiple' => false,
-            'choices' => $this->categoryFacade->getTranslatedAll($this->domain->getCurrentDomainConfig()),
+            'choices' => $this->categoryFacade->getAllTranslated($this->localization->getAdminLocale()),
             'choice_label' => 'name',
             'choice_value' => 'id',
             'attr' => ['class' => 'js-autocomplete-selectbox'],

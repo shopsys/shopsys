@@ -41,11 +41,19 @@ abstract class AbstractCheckPackagesTravisBuildsReleaseWorker extends AbstractSh
     }
 
     /**
+     * @return string
+     */
+    abstract protected function getBranchName(): string;
+
+    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void
     {
-        $statusForPackages = $this->travisStatusReporter->getStatusForPackagesByOrganizationAndBranch('shopsys', $this->initialBranchName);
+        $statusForPackages = $this->travisStatusReporter->getStatusForPackagesByOrganizationAndBranch(
+            'shopsys',
+            $this->getBranchName()
+        );
 
         $isPassing = true;
 

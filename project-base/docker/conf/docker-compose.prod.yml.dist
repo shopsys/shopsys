@@ -26,6 +26,7 @@ services:
         extra_hosts:
             - postgres:192.168.0.1
             - redis:192.168.0.1
+            - elasticsearch:192.168.0.1
         networks:
             - shopsys-network
 

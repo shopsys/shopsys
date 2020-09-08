@@ -52,6 +52,10 @@ class NotNullableColumnsFinder
     {
         $notNullableAssociationNames = [];
         foreach ($classMetadataInfo->getAssociationMappings() as $associationMapping) {
+            if (array_key_exists('joinColumns', $associationMapping) === false) {
+                continue;
+            }
+
             if ($associationMapping['joinColumns'][0]['nullable'] === false) {
                 $notNullableAssociationNames[] = $associationMapping['joinColumns'][0]['name'];
             }
