@@ -15,7 +15,10 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade as Bas
  */
 class ProductInputPriceFacade extends BaseProductInputPriceFacade
 {
-    public function replaceBatchVatAndRecalculateInputPrices()
+    /**
+     * @return bool
+     */
+    public function replaceBatchVatAndRecalculateInputPrices(): bool
     {
         if ($this->productRowsIterator === null) {
             $this->productRowsIterator = $this->productRepository->getProductIteratorForReplaceVat();
@@ -38,7 +41,6 @@ class ProductInputPriceFacade extends BaseProductInputPriceFacade
                 $newVat = $product->getVatForDomain($domainId)->getReplaceWith();
                 $product->changeVatForDomain($newVat, $domainId);
                 $product->markForExport();
-                d($product->getId());
             }
         }
 
