@@ -382,6 +382,9 @@ msgstr ""
 msgid "Please check the correctness of all data filled."
 msgstr ""
 
+msgid "Please check the entered values.<br>"
+msgstr ""
+
 msgid "Please enter promo code."
 msgstr ""
 
