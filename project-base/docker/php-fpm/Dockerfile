@@ -89,8 +89,8 @@ RUN usermod -m -d /home/www-data www-data && \
 # Switch to user
 USER www-data
 
-RUN mkdir /home/www-data/.npm-global
-ENV NPM_CONFIG_PREFIX /home/www-data/.npm-global
+RUN mkdir -p /var/www/html/.npm-global
+ENV NPM_CONFIG_PREFIX /var/www/html/.npm-global
 
 # hirak/prestissimo makes the install of Composer dependencies faster by parallel downloading
 RUN composer global require hirak/prestissimo

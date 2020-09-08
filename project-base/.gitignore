@@ -2,6 +2,7 @@
 /docs/generated
 /nbproject
 /node_modules
+/.npm-global
 /var/*
 !/var/.gitkeep
 /vendor

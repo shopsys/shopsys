@@ -1,5 +1,6 @@
 /.idea
 /nbproject
+/.npm-global
 /vendor
 /.php_cs.cache
 /.phpcs-cache

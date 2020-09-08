@@ -54,3 +54,6 @@ There you can find links to upgrade notes for other versions too.
 - phpstan analyse increased to level 5 ([#1922](https://github.com/shopsys/shopsys/pull/1922))
     - increasing phpstan level on your project is optional and may be set in `build.xml`
     - see #project-base-diff to update your project
+
+- move npm-global directory to project in order to make it included in Docker volumes ([#2024](https://github.com/shopsys/shopsys/pull/2024))
+    - see #project-base-diff to update your project
