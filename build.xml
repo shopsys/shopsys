@@ -140,5 +140,27 @@
         </if>
     </target>
 
-
+    <target name="translations-frontend-dump" depends="domains-info-load" description="Extracts translatable messages from front-end source files in your project.">
+        <phingcall target="npm-translations-dump"/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true" >
+            <arg value="${path.bin-console}"/>
+            <arg value="translation:extract"/>
+            <arg value="--dir=${path.src}"/>
+            <arg value="--dir=${path.templates}"/>
+            <arg value="--dir=${path.var}/translations/projectBase"/>
+            <arg value="--exclude-dir=admin/plugins" />
+            <arg value="--exclude-dir=frontend/plugins"/>
+            <arg value="--exclude-name=*GridFactory.php" />
+            <arg value="--exclude-dir=styleguide/plugins"/>
+            <arg value="--exclude-dir=${path.templates}/Admin" />
+            <arg value="--exclude-dir=admin" />
+            <arg value="--exclude-dir=Admin" />
+            <arg value="--exclude-dir=DataFixtures/Demo"/>
+            <arg value="--exclude-dir=Transfer/Akeneo"/>
+            <arg value="--output-format=po"/>
+            <arg value="--output-dir=${path.root}/translations-frontend"/>
+            <arg line="${translations.dump.flags}"/>
+            <arg line="${domains-info.locales}"/>
+        </exec>
+    </target>
 </project>

@@ -120,12 +120,12 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'required' => true,
             'constraints' => [
                 new Constraints\NotNull([
-                    'message' => t('Identifikátor musí obsahovat dva znaky'),
+                    'message' => 'Identifikátor musí obsahovat dva znaky',
                 ]),
                 new Constraints\Length([
                     'min' => 2,
                     'max' => 2,
-                    'exactMessage' => t('Identifikátor musí obsahovat dva znaky'),
+                    'exactMessage' => 'Identifikátor musí obsahovat dva znaky',
                 ]),
             ],
         ]);
@@ -401,7 +401,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
                 'constraints' => [
                     new Constraints\Count([
                         'min' => 1,
-                        'minMessage' => t('Vložte, prosím, alespoň jeden limit se slevou'),
+                        'minMessage' => 'Vložte, prosím, alespoň jeden limit se slevou',
                     ]),
                 ],
             ])
