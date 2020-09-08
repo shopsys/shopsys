@@ -82,7 +82,7 @@ class ProductDataFactory extends BaseProductDataFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
+     * @param \App\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductRepository $productRepository
