@@ -441,12 +441,6 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\ArticleController:
         class: 'App\Controller\Admin\ArticleController'
 
-    Shopsys\FrameworkBundle\Controller\Admin\CustomerController:
-        class: 'App\Controller\Admin\CustomerController'
-
-    Shopsys\FrameworkBundle\Controller\Admin\LoginController:
-        class: 'App\Controller\Admin\LoginController'
-
     App\Controller\Front\ErrorController:
         arguments:
             $environment: '%kernel.environment%'
@@ -890,3 +884,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade:
         alias: App\Model\Product\Pricing\ProductInputPriceFacade
+
+    Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
+        alias: App\Component\Router\DomainRouterFactory
+
+    App\Component\Router\DomainRouterFactory:
+        arguments: ['%router.resource%']

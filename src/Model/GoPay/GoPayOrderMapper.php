@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class GoPayOrderMapper
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
+     * @var \App\Component\Router\DomainRouterFactory
      */
     private $domainRouterFactory;
 
@@ -24,7 +24,7 @@ class GoPayOrderMapper
     private $goPayPaymentMethodFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \App\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      */
     public function __construct(

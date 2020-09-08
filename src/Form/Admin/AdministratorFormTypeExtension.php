@@ -31,7 +31,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
                 'constraints' => $this->getFirstPasswordConstraints($options['scenario']),
                 'attr' => [
                     'icon' => true,
-                    'iconTitle' => t('Heslo musí obsahovat velké, malé písmena, číslice a musí být delsí jan 10 znaků.'),
+                    'iconTitle' => t('Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků.'),
                 ],
             ],
             'second_options' => [
@@ -49,7 +49,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
     private function getFirstPasswordConstraints($scenario)
     {
         $constraints = [
-            new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{10,}$/', 'message' => 'Heslo musí obsahovat velké, malé písmena, číslice a musí být delsí jan 10 znaků.']),
+            new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{10,}$/', 'message' => 'Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků.']),
         ];
 
         if ($scenario === AdministratorFormType::SCENARIO_CREATE) {
