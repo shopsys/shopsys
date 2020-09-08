@@ -7,6 +7,7 @@ namespace App\Model\Stock;
 use App\Component\Image\ImageFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class StockFacade
 {

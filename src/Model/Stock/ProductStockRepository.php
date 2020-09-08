@@ -94,6 +94,9 @@ class ProductStockRepository
     public function getProductStocksByProduct(Product $product): array
     {
         return $this->getProductStockQueryBuilderByProduct($product)
+            ->join('ps.stock', 's')
+            ->orderBy('s.domainId', 'ASC')
+            ->addOrderBy('s.position', 'ASC')
             ->getQuery()
             ->execute();
     }

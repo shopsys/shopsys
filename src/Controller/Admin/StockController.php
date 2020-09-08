@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Form\Admin\StockFormType;
 use App\Form\Admin\StockSettingsFormType;
 use App\Model\Stock\Exception\StockNotFoundException;
+use App\Model\Stock\Stock;
 use App\Model\Stock\StockDataFactory;
 use App\Model\Stock\StockFacade;
 use App\Model\Stock\StockSettingsDataFacade;
@@ -284,10 +285,12 @@ class StockController extends AdminBaseController
         $grid = $this->gridFactory->create('stockList', $dataSource);
 
         $grid->addColumn('name', 's.name', t('Name'));
+        $grid->setDefaultOrder('s.position');
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id']);
+        $grid->enableDragAndDrop(Stock::class);
 
         $grid->setTheme('Admin/Content/Stock/listGrid.html.twig');
 
