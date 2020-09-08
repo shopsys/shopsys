@@ -34,7 +34,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     public function getParameterFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
     {
         // it must contain variants + main variants
-        $productsQueryBuilder = $this->productRepository->getOfferedInCategoryQueryBuilder(
+        $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
             $category

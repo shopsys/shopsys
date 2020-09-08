@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\ReadModelBundle\Twig\ImageExtension as BaseImageExtension;
 use Twig\TwigFunction;
 
@@ -15,7 +16,6 @@ use Twig\TwigFunction;
  * @method __construct(string $frontDesignImageUrlPrefix, \App\Component\Domain\Domain $domain, \App\Component\Image\ImageLocator $imageLocator, \App\Component\Image\ImageFacade $imageFacade, \Twig\Environment $twigEnvironment, bool $isLazyLoadEnabled)
  * @method bool imageExists(\App\Component\Image\Image|object $imageOrEntity, string|null $type)
  * @method string getImageUrl(\App\Component\Image\Image|object $imageOrEntity, string|null $sizeName, string|null $type)
- * @method string getImageHtml(\App\Component\Image\Image|object $imageOrEntity, array $attributes)
  * @property \App\Component\Image\ImageLocator $imageLocator
  */
 class ImageExtension extends BaseImageExtension
@@ -49,7 +49,7 @@ class ImageExtension extends BaseImageExtension
     {
         try {
             return $this->imageFacade->getProductImageUrlByProductId($productId, $this->domain->getCurrentDomainConfig(), $sizeName, $type);
-        } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
+        } catch (ImageNotFoundException $e) {
             return $this->getEmptyImageUrl();
         }
     }
@@ -72,7 +72,7 @@ class ImageExtension extends BaseImageExtension
             $additionalImagesData = $this->imageFacade->getAdditionalImagesData($this->domain->getCurrentDomainConfig(), $image, $attributes['size'], $attributes['type']);
 
             return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
-        } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
+        } catch (ImageNotFoundException $e) {
             return '';
         }
     }
@@ -87,7 +87,7 @@ class ImageExtension extends BaseImageExtension
         try {
             $this->imageFacade->getImageByObjectAndAkeneoType($entity, $akeneoImageType);
             return true;
-        } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
+        } catch (ImageNotFoundException $e) {
             return false;
         }
     }
@@ -98,5 +98,19 @@ class ImageExtension extends BaseImageExtension
     protected function getEmptyImageUrl(): string
     {
         return $this->imageFacade->getEmptyImageUrl(parent::getEmptyImageUrl());
+    }
+
+    /**
+     * @param \App\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|Object|null $imageView
+     * @param array $attributes
+     * @return string
+     */
+    public function getImageHtml($imageView, array $attributes = []): string
+    {
+        try {
+            return parent::getImageHtml($imageView, $attributes);
+        } catch (ImageNotFoundException $e) {
+            return $this->getNoimageHtml($attributes);
+        }
     }
 }
