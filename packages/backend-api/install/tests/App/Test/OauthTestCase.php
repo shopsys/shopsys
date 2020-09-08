@@ -36,6 +36,7 @@ class OauthTestCase extends FunctionalTestCase
             $statement->execute();
         } catch (UniqueConstraintViolationException $e) {
             // ok, client is there probably from last unsuccessful run
+            return;
         }
     }
 

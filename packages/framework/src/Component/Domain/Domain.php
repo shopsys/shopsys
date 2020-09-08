@@ -98,6 +98,7 @@ class Domain implements DomainIdsProviderInterface
                 $this->setting->getForDomain(Setting::DOMAIN_DATA_CREATED, $domainId);
                 $domainConfigsWithDataCreated[] = $domainConfig;
             } catch (\Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException $ex) {
+                continue;
             }
         }
 

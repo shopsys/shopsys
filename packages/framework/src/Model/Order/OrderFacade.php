@@ -490,6 +490,7 @@ class OrderFacade
                 $orderData->createdAsAdministrator = $currentAdmin;
                 $orderData->createdAsAdministratorName = $currentAdmin->getRealName();
             } catch (\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException $ex) {
+                return;
             }
         }
     }

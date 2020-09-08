@@ -209,6 +209,7 @@ class ProductController extends AbstractFOSRestController
 
             throw new UnprocessableEntityHttpException('Product with ' . $uuid . ' UUID already exists');
         } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $e) {
+            return;
         }
     }
 

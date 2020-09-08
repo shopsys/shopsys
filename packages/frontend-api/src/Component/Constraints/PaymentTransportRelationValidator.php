@@ -84,6 +84,7 @@ class PaymentTransportRelationValidator extends ConstraintValidator
                     ->addViolation();
             }
         } catch (PaymentNotFoundException | TransportNotFoundException $exception) {
+            return;
         }
     }
 }
