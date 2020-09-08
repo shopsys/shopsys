@@ -1,4 +1,7 @@
 overblog_graphql:
+    security:
+        # for more flexibility use https://github.com/nelmio/NelmioCorsBundle
+        handle_cors: true
     definitions:
         schema:
             query: Query
