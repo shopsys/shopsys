@@ -352,6 +352,9 @@
       },
       "main_category_path": {
         "type": "text"
+      },
+      "has_sconto_flag": {
+        "type": "boolean"
       }
     }
   }

@@ -2,6 +2,7 @@
 {% import 'Front/Inline/Product/productFlagsMacro.html.twig' as productFlags %}
 {% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
+{% import 'Front/Inline/Product/productDiscountMacro.html.twig' as discount %}
 
 {% set domain = getDomain() %}
 {% set descriptionHeadline = 'Product information'|trans %}
@@ -166,13 +167,7 @@
                                                 itemtype="http://schema.org/Offer"
                                                 class="box-detail-add__prices">
                                                 {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
-                                                    {% set productDiscount = (nonSellingPriceWithVat|moneyFormat - sellingPriceWithVat|moneyFormat) / (nonSellingPriceWithVat|moneyFormat / 100) %}
-                                                    {% if productDiscount >= 1 %}
-                                                        <span class="box-detail-add__discount">
-                                                            -{{ productDiscount|round }}
-                                                            <span class="box-detail-add__discount__perc">%</span>
-                                                        </span>
-                                                    {% endif %}
+                                                    {{ discount.circle(sellingPriceWithVat, nonSellingPriceWithVat) }}
                                                     <div class="box-detail-add__prices__wrap">
                                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
                                                             {{ nonSellingPriceWithVat|price }}

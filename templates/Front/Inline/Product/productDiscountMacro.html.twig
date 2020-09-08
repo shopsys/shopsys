@@ -1,0 +1,11 @@
+{% macro circle(sellingPriceWithVat, nonSellingPriceWithVat) %}
+
+    {% set productDiscount = (nonSellingPriceWithVat|moneyFormat - sellingPriceWithVat|moneyFormat) / (nonSellingPriceWithVat|moneyFormat / 100) %}
+    {% if productDiscount >= 1 %}
+        <span class="box-detail-add__discount">
+            -{{ productDiscount|round }}
+            <span class="box-detail-add__discount__perc">%</span>
+        </span>
+    {% endif %}
+
+{% endmacro %}

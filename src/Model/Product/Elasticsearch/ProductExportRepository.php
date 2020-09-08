@@ -6,6 +6,7 @@ namespace App\Model\Product\Elasticsearch;
 
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
@@ -129,6 +130,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $searchingEans = $this->extractSearchingEans($product);
         $searchingPartnos = $this->extractSearchingPartnos($product);
         $searchingShortDescriptions = $this->extractSearchingShortDescriptions($product, $domainId);
+        $hasScontoFlag = $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId);
 
         return [
             'id' => $product->getId(),
@@ -172,6 +174,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'searching_eans' => $searchingEans,
             'searching_partnos' => $searchingPartnos,
             'searching_short_descriptions' => $searchingShortDescriptions,
+            'has_sconto_flag' => $hasScontoFlag,
         ];
     }
 

@@ -6,6 +6,8 @@ namespace App\Model\Product\Listed;
 
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Flag\Flag;
+use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\ProductFacade;
@@ -90,13 +92,15 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
         $variantsParametersSetup = $this->prepareVariantsParametersSetup($variantsParametersSetup);
         list($countColorsInVariants, $countDifferentVariants) = $this->getParametersValuesInformation($variantsParametersSetup);
 
+        $flagIds = $this->getFlagIdsForProductForDomain($product, $this->domain->getId());
+
         return new ListedProductView(
             $product->getId(),
             $product->getName(),
             $product->getShortDescription($this->domain->getId()),
             $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId()),
             $this->productCachedAttributesFacade->getProductSellingPrice($product),
-            $this->getFlagIdsForProductForDomain($product, $this->domain->getId()),
+            $flagIds,
             $productActionView,
             $imageView,
             $product->isMainVariant() ? $product->getDefaultVariant()->getNamePrefix() : $product->getNamePrefix(),
@@ -110,7 +114,8 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
                 $this->domain->getLocale()
             ),
             $countColorsInVariants,
-            $countDifferentVariants
+            $countDifferentVariants,
+            $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $this->domain->getId())
         );
     }
 
@@ -143,7 +148,8 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $variantsParametersSetup,
             $productArray['main_category_path'],
             $countColorsInVariants,
-            $countDifferentVariants
+            $countDifferentVariants,
+            $productArray['has_sconto_flag']
         );
     }
 

@@ -67,6 +67,11 @@ class ListedProductView extends BaseListedProductView
     private $countDifferentVariants;
 
     /**
+     * @var bool
+     */
+    private $hasScontoFlag;
+
+    /**
      * @param int $id
      * @param string $name
      * @param string|null $shortDescription
@@ -84,6 +89,7 @@ class ListedProductView extends BaseListedProductView
      * @param string $mainCategoryPath
      * @param int $countColorsInVariants
      * @param int $countDifferentVariants
+     * @param bool $hasScontoFlag
      */
     public function __construct(
         int $id,
@@ -102,7 +108,8 @@ class ListedProductView extends BaseListedProductView
         ?array $variantsParametersSetup,
         string $mainCategoryPath,
         int $countColorsInVariants,
-        int $countDifferentVariants
+        int $countDifferentVariants,
+        bool $hasScontoFlag
     ) {
         parent::__construct($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
 
@@ -115,6 +122,7 @@ class ListedProductView extends BaseListedProductView
         $this->mainCategoryPath = $mainCategoryPath;
         $this->countColorsInVariants = $countColorsInVariants;
         $this->countDifferentVariants = $countDifferentVariants;
+        $this->hasScontoFlag = $hasScontoFlag;
     }
 
     /**
@@ -235,5 +243,13 @@ class ListedProductView extends BaseListedProductView
     public function getCountDifferentVariants(): int
     {
         return $this->countDifferentVariants;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasScontoFlag(): bool
+    {
+        return $this->hasScontoFlag;
     }
 }

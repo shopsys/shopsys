@@ -1,4 +1,5 @@
 {% macro list(productViews, listCssClass, productHeadingTagName, gtmList) %}
+    {% import 'Front/Inline/Product/productDiscountMacro.html.twig' as discount %}
 
     <div class="list-products js-list js-product-list {{ listCssClass|default('') }}">
         {% for productView in productViews %}
@@ -29,6 +30,11 @@
                             {% endif %}
                             {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
                         </div>
+
+                        {% if productView.nonSellingPrice.priceWithVat.isPositive and not productView.hasScontoFlag %}
+                            {{ discount.circle(productView.sellingPrice.priceWithVat, productView.nonSellingPrice.priceWithVat) }}
+                        {% endif %}
+
                         <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
                             {% if productView.namePrefix is not empty %}
                                 <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
