@@ -1,11 +1,25 @@
 @box-cart-info-width: (100% / 3 * 2);
 @box-cart-preview-width: ~"calc(100% - @{box-cart-info-width})";
 
+@not-implemented-bg-color: #da0000;
+
 .js-not-implemented-yet + .tooltip {
     .tooltip-inner {
-        border-color: red;
-        background-color: #ffaaaa;
-        color: #000000;
+        border: 2px solid @not-implemented-bg-color;
+        background-color: lighten(@not-implemented-bg-color, 10%);
+        font-family: @font-tertiary;
+        color: @color-f;
+        font-size: 15px;
+        padding: 8px 12px;
+
+        &::after,
+        &::before {
+            display: none;
+        }
+    }
+
+    .tooltip-arrow {
+        border-top-color: @not-implemented-bg-color;
     }
 }
 

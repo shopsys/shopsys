@@ -1,0 +1,119 @@
+@box-contact-subtitle-color: #7a929d;
+
+.box-contact {
+    display: flex;
+    position: relative;
+    flex: 1 1 0;
+    margin-bottom: 30px;
+    padding: 1.25rem;
+
+    border-radius: @radius;
+    background-color: @color-light;
+
+    @media screen and (min-width: 760px) {
+        height: 220px;
+    }
+
+    @media @query-lg {
+        margin: 0 0 30px 30px;
+        padding: 2rem;
+    }
+
+    &--phone {
+        padding-top: 1.5rem;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    &__img {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: -15px;
+        max-width: 60px;
+
+        @media screen and (min-width: 760px) {
+            max-width: 100%;
+            bottom: 0;
+            top: auto;
+        }
+
+        @media @query-vl {
+            right: 50px;
+        }
+    }
+
+    &-wrap {
+        @media @query-lg {
+            display: flex;
+            justify-content: space-between;
+            margin: 50px 0 0 -30px;
+        }
+    }
+
+    &__title {
+        display: block;
+        flex-grow: 1;
+
+        color: @color-primary;
+        font-family: @font-quartenary;
+        font-size: 26px;
+        font-weight: 400;
+
+        &--phone {
+            flex-grow: 0;
+
+            line-height: 1.5;
+
+            @media @query-vl {
+                font-size: 30px;
+            }
+        }
+    }
+
+    &__subtitle {
+        display: block;
+
+        font-size: 18px;
+        line-height: 1;
+        color: @box-contact-subtitle-color;
+
+        &--hours {
+            flex-grow: 1;
+        }
+    }
+
+    &__btn {
+        height: 46px;
+        width: 180px;
+        padding: 0 25px;
+        justify-content: center;
+
+        font-size: 16px;
+
+        .svg {
+            margin-right: 0;
+
+            font-size: 22px;
+        }
+    }
+
+    &__infolink {
+        &__title {
+            font-family: @font-tertiary;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: @color-primary;
+        }
+
+        &__img {
+            display: block;
+        }
+    }
+}

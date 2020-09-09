@@ -1,0 +1,122 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block title %}
+    {{- 'Zákaznický servis'|trans -}}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line web__line--spacing--big">
+        <div class="web__container">
+            <h1 class="heading heading--primary heading--primary-subpage">{{ "Zákaznický servis"|trans }}</h1>
+            <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing">
+                <div class="box-breadcrumb">
+                    <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
+                        <i class="box-breadcrumb__item__icon svg svg-home"></i>
+                        <span>{{ 'Domů'|trans }}</span>
+                    </a>
+                    <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                    <span class="box-breadcrumb__item box-breadcrumb__item--current">{{ 'Zákaznický servis' }}</span>
+                </div>
+            </div>
+            <div class="box-contact-wrap">
+                <div class="box-contact box-contact--form">
+                    <div class="box-contact__content">
+                        <span class="box-contact__subtitle">{{ 'Využijte náš'|trans }}</span>
+                        <strong class="box-contact__title box-contact__title--form">
+                            {{ 'Kontaktní formulář'|trans }}
+                        </strong>
+                        <a href="#" class="box-contact__btn btn btn--dark js-not-implemented-yet">
+                            <span class="box-info__contacts__btn__text">{{ 'Napište nám'|trans }}</span>
+                            <i class="box-info__contacts__icon svg svg-email"></i>
+                        </a>
+                    </div>
+                    <picture class="box-contact__image">
+                        <source
+                                srcset="
+                                {{ asset('public/frontend/images/zakaznicky_servis_formular_2x.png') }} 2x,
+                                {{ asset('public/frontend/images/zakaznicky_servis_formular.png') }} 1x"
+                        >
+                        <img
+                            loading="lazy"
+                            class="box-contact__img"
+                            src="{{ imgLazyloadPlaceholder }}"
+                            data-src="{{ asset('public/frontend/images/zakaznicky_servis_formular.png') }}"
+                            alt="{{ 'Zákaznický servis telefon'|trans }}"
+                        >
+                    </picture>
+                </div>
+                <div class="box-contact box-contact--phone">
+                    <div class="box-contact__content">
+                        <strong class="box-contact__title box-contact__title--phone">
+                            {{ '257 893 893'|trans }}
+                        </strong>
+                        <span class="box-contact__subtitle box-contact__subtitle--hours">
+                            {{ 'Po–Pá 8–19h | So–Ne 8–16h'|trans }}
+                        </span>
+                        <div class="box-contact__infolink">
+                            <strong class="box-contact__infolink__title">
+                                {{ 'Vytíženost infolinky'|trans }}
+                            </strong>
+                            <picture class="box-contact__infolink__image">
+                                <source
+                                        srcset="
+                                        {{ asset('public/frontend/images/infolinka_2x.png') }} 2x,
+                                        {{ asset('public/frontend/images/infolinka.png') }} 1x"
+                                >
+                                <img
+                                    loading="lazy"
+                                    class="box-contact__infolink__img"
+                                    src="{{ imgLazyloadPlaceholder }}"
+                                    data-src="{{ asset('public/frontend/images/infolinka.png') }}"
+                                    alt="{{ 'Vytíženost infolinky'|trans }}"
+                                >
+                            </picture>
+                        </div>
+                    </div>
+                    <picture class="box-contact__image">
+                        <source
+                                srcset="
+                                {{ asset('public/frontend/images/zakaznicky_servis_telefon_2x.png') }} 2x,
+                                {{ asset('public/frontend/images/zakaznicky_servis_telefon.png') }} 1x"
+                        >
+                        <img
+                            loading="lazy"
+                            class="box-contact__img"
+                            src="{{ imgLazyloadPlaceholder }}"
+                            data-src="{{ asset('public/frontend/images/zakaznicky_servis_telefon.png') }}"
+                            alt="{{ 'Zákaznický servis telefon'|trans }}"
+                        >
+                    </picture>
+                </div>
+            </div>
+            <div class="box-stores-list box-stores-list--big">
+                <div class="box-stores-list__item">
+                    <a class="box-stores-list__item__link js-not-implemented-yet" href="#">
+                        <i class="box-stores-list__item__icon svg svg-refresh svg-fw-bold"></i>
+                        <strong class="box-stores-list__item__name">
+                            {{ 'Reklamace, vrácení a výměna zboží'|trans }}
+                        </strong>
+                        <span class="box-stores-list__item__to-detail">
+                            <i class="svg svg-chevron"></i>
+                        </span>
+                    </a>
+                </div>
+                <div class="box-stores-list__item">
+                    <a class="box-stores-list__item__link" href="{{ url('front_stores') }}">
+                        <i class="box-stores-list__item__icon svg svg-marker svg-fw-bold"></i>
+                        <strong class="box-stores-list__item__name">
+                            {{ 'Kontakty na prodejny'|trans }}
+                        </strong>
+                        <span class="box-stores-list__item__to-detail">
+                            <i class="svg svg-chevron"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
