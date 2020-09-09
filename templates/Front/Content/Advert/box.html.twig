@@ -13,6 +13,9 @@
                 </picture>
             {% else %}
                 {% if advert.link is not empty %}
+                    {% if imageExists(advert, 'web') %}
+                        <a href="{{ advert.link }}">{{ 'Pravidla akce'|trans }}</a>
+                    {% endif %}
                 <a href="{{ advert.link }}">
                 {% endif %}
                     <picture>
