@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Customer\Transfer\ScontoBridge;
@@ -7,7 +8,7 @@ use App\Component\ScontoBridge\ScontoBridgeClient;
 use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeExporter;
 use App\Model\Customer\User\CustomerUser;
 
-class CustomerTransferScontoBridgetExporter extends AbstractScontoBridgeExporter
+class CustomerTransferScontoBridgeExporter extends AbstractScontoBridgeExporter
 {
     private const URI_ERP_CUSTOMER = '/api/services/app/ErpUser/SaveErpUser';
 

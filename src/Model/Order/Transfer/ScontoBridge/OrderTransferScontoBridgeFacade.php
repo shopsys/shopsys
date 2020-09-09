@@ -6,7 +6,7 @@ namespace App\Model\Order\Transfer\ScontoBridge;
 
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeMapperException;
-use App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgetExporter;
+use App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeExporter;
 use App\Model\Order\Order;
 use App\Model\Order\OrderRepository;
 use App\Model\Order\OrderScontoBridgeStatusEnum;
@@ -38,15 +38,15 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     private OrderTransferScontoBridgeExporter $orderTransferScontoBridgeExporter;
 
     /**
-     * @var CustomerTransferScontoBridgetExporter
+     * @var CustomerTransferScontoBridgeExporter
      */
-    private CustomerTransferScontoBridgetExporter $customerTransferScontoBridgetExporter;
+    private CustomerTransferScontoBridgeExporter $customerTransferScontoBridgetExporter;
 
     public function __construct(
         ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency,
         OrderRepository $orderRepository,
         OrderTransferScontoBridgeExporter $orderTransferScontoBridgeExporter,
-        CustomerTransferScontoBridgetExporter $customerTransferScontoBridgetExporter
+        CustomerTransferScontoBridgeExporter $customerTransferScontoBridgetExporter
     ) {
         $this->scontoBridgeImportTransferDependency = $scontoBridgeImportTransferDependency;
         $this->orderRepository = $orderRepository;
