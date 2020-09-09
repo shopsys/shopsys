@@ -1,56 +1,75 @@
-<div class="menu-horizontal__furniture js-not-implemented-yet">
+{% set domain = getDomain() %}
+<div class="menu-horizontal__furniture">
     <div class="menu-horizontal__furniture__item">
-        <a class="menu-horizontal__furniture__item__link" href="#">
+        <a
+            class="menu-horizontal__furniture__item__link"
+            href="{{ domain.id == 1 ? '/nabytek-do-obyvaku' : '/nabytok-do-obyvacky' }}"
+        >
             <img loading="lazy" class="menu-horizontal__furniture__item__img" data-src="{{ asset('public/frontend/images/rooms/obyvaci_pokoj_m.jpg') }}" alt="{{ 'Obývací pokoj'|trans }}">
             <strong class="menu-horizontal__furniture__item__name">{{ 'Obývací pokoj'|trans }}</strong>
         </a>
     </div>
     <div class="menu-horizontal__furniture__item">
-        <a class="menu-horizontal__furniture__item__link" href="#">
+        <a
+            class="menu-horizontal__furniture__item__link"
+            href="{{ domain.id == 1 ? '/predsine' : '/predsiene' }}"
+        >
             <img loading="lazy" class="menu-horizontal__furniture__item__img" data-src="{{ asset('public/frontend/images/rooms/predsin_m.jpg') }}" alt="{{ 'Předsíň'|trans }}">
             <strong class="menu-horizontal__furniture__item__name">{{ 'Předsíň'|trans }}</strong>
         </a>
     </div>
     <div class="menu-horizontal__furniture__item">
-        <a class="menu-horizontal__furniture__item__link" href="#">
+        <a
+            class="menu-horizontal__furniture__item__link"
+            href="{{ domain.id == 1 ? '/loznice' : '/spalne' }}"
+        >
             <img loading="lazy" class="menu-horizontal__furniture__item__img" data-src="{{ asset('public/frontend/images/rooms/loznice_m.jpg') }}" alt="{{ 'Ložnice'|trans }}">
             <strong class="menu-horizontal__furniture__item__name">{{ 'Ložnice'|trans }}</strong>
         </a>
     </div>
     <div class="menu-horizontal__furniture__item">
-        <a class="menu-horizontal__furniture__item__link" href="#">
+        <a
+            class="menu-horizontal__furniture__item__link"
+            href="{{ domain.id == 1 ? '/kancelarsky-nabytek' : '/kancelarsky-nabytok' }}"
+        >
             <img loading="lazy" class="menu-horizontal__furniture__item__img" data-src="{{ asset('public/frontend/images/rooms/pracovna_m.jpg') }}" alt="{{ 'Pracovna'|trans }}">
             <strong class="menu-horizontal__furniture__item__name">{{ 'Pracovna'|trans }}</strong>
         </a>
     </div>
     <div class="menu-horizontal__furniture__item">
-        <a class="menu-horizontal__furniture__item__link" href="#">
+        <a
+            class="menu-horizontal__furniture__item__link"
+            href="/kuchyne"
+        >
             <img loading="lazy" class="menu-horizontal__furniture__item__img" data-src="{{ asset('public/frontend/images/rooms/kuchyne_m.jpg') }}" alt="{{ 'Kuchyně'|trans }}">
             <strong class="menu-horizontal__furniture__item__name">{{ 'Kuchyně'|trans }}</strong>
         </a>
     </div>
     <div class="menu-horizontal__furniture__item">
-        <a class="menu-horizontal__furniture__item__link" href="#">
+        <a
+            class="menu-horizontal__furniture__item__link"
+             href="{{ domain.id == 1 ? '/jidelny' : '/jedalne' }}"
+        >
             <img loading="lazy" class="menu-horizontal__furniture__item__img" data-src="{{ asset('public/frontend/images/rooms/jidelna_m.jpg') }}" alt="{{ 'Jídelna'|trans }}">
             <strong class="menu-horizontal__furniture__item__name">{{ 'Jídelna'|trans }}</strong>
         </a>
     </div>
     <div class="menu-horizontal__furniture__item">
-        <a class="menu-horizontal__furniture__item__link" href="#">
+        <a
+            class="menu-horizontal__furniture__item__link"
+            href="{{ domain.id == 1 ? '/detske-pokoje' : '/detske-izby' }}"
+        >
             <img loading="lazy" class="menu-horizontal__furniture__item__img" data-src="{{ asset('public/frontend/images/rooms/detsky_pokoj_m.jpg') }}" alt="{{ 'Dětský pokoj'|trans }}">
             <strong class="menu-horizontal__furniture__item__name">{{ 'Dětský pokoj'|trans }}</strong>
         </a>
     </div>
     <div class="menu-horizontal__furniture__item">
-        <a class="menu-horizontal__furniture__item__link" href="#">
+        <a
+            class="menu-horizontal__furniture__item__link"
+            href="{{ domain.id == 1 ? '/koupelna' : '/kupelne' }}"
+        >
             <img loading="lazy" class="menu-horizontal__furniture__item__img" data-src="{{ asset('public/frontend/images/rooms/koupelny_m.jpg') }}" alt="{{ 'Koupelny'|trans }}">
             <strong class="menu-horizontal__furniture__item__name">{{ 'Koupelny'|trans }}</strong>
-        </a>
-    </div>
-    <div class="menu-horizontal__furniture__item">
-        <a class="menu-horizontal__furniture__item__link" href="#">
-            <img loading="lazy" class="menu-horizontal__furniture__item__img" data-src="{{ asset('public/frontend/images/rooms/obyvaci_pokoj_m.jpg') }}" alt="{{ 'Další kategorie'|trans }}">
-            <strong class="menu-horizontal__furniture__item__name">{{ 'Další kategorie'|trans }}</strong>
         </a>
     </div>
 </div>

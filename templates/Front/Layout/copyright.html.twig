@@ -1,18 +1,27 @@
+{% set domain = getDomain() %}
 <div class="web__line web__line--copyright">
     <footer class="web__container footer__bottom {{ cssClass }}">
         <div class="footer__bottom__copyright dont-print">
             &copy; {{ 'now' | date('Y') }} {{ 'Copyright Sconto Nábytek, s.r.o.'|trans }}
         </div>
-        <div class="footer__bottom__articles js-not-implemented-yet">
+        <div class="footer__bottom__articles">
             <ul class="menu dont-print">
                 <li class="menu__item">
-                    <a class="menu__item__link" href="#">{{ 'Copyright'|trans }}</a>
+                    <a class="menu__item__link" href="/copyright">{{ 'Copyright'|trans }}</a>
                 </li>
                 <li class="menu__item">
-                    <a class="menu__item__link" href="#">{{ 'Ochrana osobních údajů'|trans }}</a>
+                    <a
+                        class="menu__item__link"
+                        href="{{ domain.id == 1 ? '/ochrana-osobnich-udaju' : '/ochrana-osobnych-udajov' }}"
+                    >
+                        {{ 'Ochrana osobních údajů'|trans }}
+                    </a>
                 </li>
                 <li class="menu__item">
-                    <a class="menu__item__link" href="#">
+                    <a
+                        class="menu__item__link"
+                        href="/cookie"
+                    >
                         {{ 'Cookies'|trans }}
                         <img
                             class="menu__item__link__icon"

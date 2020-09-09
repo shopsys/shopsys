@@ -1,4 +1,5 @@
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
+{% set domain = getDomain() %}
 <div class="web__line web__line--spacing web__line--margin-bottom web__line--hp">
     <div class="web__container">
         {% if sliderItems is not empty %}
@@ -63,7 +64,12 @@
                                     </button>
                                 {% endfor %}
                             </div>
-                            <a href="#" class="btn btn--outline btn--outline--slider btn--block js-not-implemented-yet">{{ 'Všechny akce'|trans }}</a>
+                            <a
+                                href="{{ domain.id == 1 ? '/akce' : '/akcia' }}"
+                                class="btn btn--outline btn--outline--slider btn--block"
+                            >
+                                {{ 'Všechny akce'|trans }}
+                            </a>
                         </div>
                     {% endif %}
                 </div>
@@ -87,7 +93,13 @@
                                 alt="{{ 'Aktuální leták'|trans }}">
                     </picture>
                     <p class="box-block__item__desc">{{ 'Tuny slev, lorem ipsum dolor sit amet,<br> consectur adispic elit.'|trans|raw }}</p>
-                    <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <i class="btn__icon svg svg-chevron"></i></a>
+                    <a
+                        class="btn btn--next btn-no-style"
+                        href="/letak"
+                    >
+                        {{ 'Číst dál'|trans }}
+                        <i class="btn__icon svg svg-chevron"></i>
+                    </a>
                 </div>
                 <div class="box-block__item box-block__item box-block__item--bg box-block__item--half box-block__item--right">
                     <h2 class="box-block__item__heading">{{ 'Prodejny Sconto'|trans }}</h2>
@@ -105,7 +117,13 @@
                                 alt="{{ 'Prodejny Sconto'|trans }}">
                     </picture>
                     <p class="box-block__item__desc">{{ 'Další doplňkový sortiment, zákaznické centrum nebo osobní<br>vyzvednutí zboží z e-shopu zdarma na 8 místech v ČR.'|trans|raw }}</p>
-                    <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <i class="btn__icon svg svg-chevron"></i></a>
+                    <a
+                        class="btn btn--next btn-no-style js-not-implemented-yet"
+                        href="#"
+                    >
+                        {{ 'Číst dál'|trans }}
+                        <i class="btn__icon svg svg-chevron"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -139,14 +157,18 @@
 <div class="web__line">
     <div class="web__container">
         <h2>{{ 'Nakupujte podle místností'|trans }}</h2>
-        <div class="list-grid js-not-implemented-yet">
+        <div class="list-grid">
             <div class="list-grid__row">
                 <div class="list-grid__item list-grid__item--long list-grid__item--sixth">
                         <span class="list-grid__item__name btn btn--next btn-no-style">
                             <span class="list-grid__item__name__text">{{ 'Předsíň'|trans }}</span>
                             <i class="btn__icon svg svg-chevron"></i>
                         </span>
-                    <a class="list-grid__item__link" href="#" title="{{ 'Předsíň'|trans }}">
+                    <a
+                        class="list-grid__item__link"
+                        href="{{ domain.id == 1 ? '/predsine' : '/predsiene' }}"
+                        title="{{ 'Předsíň'|trans }}"
+                    >
                         <picture class="list-grid__item__picture">
                             <source
                                     media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
@@ -177,7 +199,11 @@
                             <span class="list-grid__item__name__text">{{ 'Obývací pokoj'|trans }}</span>
                             <i class="btn__icon svg svg-chevron"></i>
                         </span>
-                    <a class="list-grid__item__link" href="#" title="{{ 'Obývací pokoj'|trans }}">
+                    <a
+                        class="list-grid__item__link"
+                        href="{{ domain.id == 1 ? '/nabytek-do-obyvaku' : '/nabytok-do-obyvacky' }}"
+                        title="{{ 'Obývací pokoj'|trans }}"
+                    >
                         <picture class="list-grid__item__picture">
                             <source
                                     media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
@@ -209,7 +235,11 @@
                                 <span class="list-grid__item__name__text">{{ 'Kuchyně'|trans }}</span>
                                 <i class="btn__icon svg svg-chevron"></i>
                             </span>
-                        <a class="list-grid__item__link" href="#" title="{{ 'Kuchyně'|trans }}">
+                        <a
+                            class="list-grid__item__link"
+                            href="/kuchyne"
+                            title="{{ 'Kuchyně'|trans }}"
+                        >
                             <picture class="list-grid__item__picture">
                                 <source
                                         media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
@@ -240,7 +270,11 @@
                                 <span class="list-grid__item__name__text">{{ 'Jídelna'|trans }}</span>
                                 <i class="btn__icon svg svg-chevron"></i>
                             </span>
-                        <a class="list-grid__item__link" href="#" title="{{ 'Jídelna'|trans }}">
+                        <a
+                            class="list-grid__item__link"
+                            href="{{ domain.id == 1 ? '/jidelny' : '/jedalne' }}"
+                            title="{{ 'Jídelna'|trans }}"
+                        >
                             <picture class="list-grid__item__picture">
                                 <source
                                         media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
@@ -272,7 +306,11 @@
                             <span class="list-grid__item__name__text">{{ 'Pracovna'|trans }}</span>
                             <i class="btn__icon svg svg-chevron"></i>
                         </span>
-                    <a class="list-grid__item__link" href="#" title="{{ 'Pracovna'|trans }}">
+                    <a
+                        class="list-grid__item__link"
+                        href="{{ domain.id == 1 ? '/kancelarsky-nabytek' : '/kancelarsky-nabytok' }}"
+                        title="{{ 'Pracovna'|trans }}"
+                    >
                         <picture class="list-grid__item__picture">
                             <source
                                     media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
@@ -305,7 +343,11 @@
                             <span class="list-grid__item__name__text">{{ 'Ložnice'|trans }}</span>
                             <i class="btn__icon svg svg-chevron"></i>
                         </span>
-                    <a class="list-grid__item__link" href="#" title="{{ 'Ložnice'|trans }}">
+                    <a
+                        class="list-grid__item__link"
+                        href="{{ domain.id == 1 ? '/loznice' : '/spalne' }}"
+                        title="{{ 'Ložnice'|trans }}"
+                    >
                         <picture class="list-grid__item__picture">
                             <source
                                     media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
@@ -336,7 +378,11 @@
                             <span class="list-grid__item__name__text">{{ 'Dětský pokoj'|trans }}</span>
                             <i class="btn__icon svg svg-chevron"></i>
                         </span>
-                    <a class="list-grid__item__link" href="#" title="{{ 'Dětský pokoj'|trans }}">
+                    <a
+                        class="list-grid__item__link"
+                        href="{{ domain.id == 1 ? '/detske-pokoje' : '/detske-izby' }}"
+                        title="{{ 'Dětský pokoj'|trans }}"
+                    >
                         <picture class="list-grid__item__picture">
                             <source
                                     media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
@@ -367,7 +413,11 @@
                             <span class="list-grid__item__name__text">{{ 'Koupelny'|trans }}</span>
                             <i class="btn__icon svg svg-chevron"></i>
                         </span>
-                    <a class="list-grid__item__link" href="#" title="{{ 'Koupelny'|trans }}">
+                    <a
+                        class="list-grid__item__link"
+                        href="{{ domain.id == 1 ? '/koupelna' : '/kupelne' }}"
+                        title="{{ 'Koupelny'|trans }}"
+                    >
                         <picture class="list-grid__item__picture">
                             <source
                                     media="(max-width: {{ imgSrcsetMobileBreakpoint }})"
