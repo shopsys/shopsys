@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Component\Domain\Domain;
-use App\Model\Stock\StockFacade;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends FrontBaseController
@@ -16,7 +15,6 @@ class ContactController extends FrontBaseController
     private Domain $domain;
 
     /**
-     * StoreController constructor.
      * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(Domain $domain)
