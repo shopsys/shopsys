@@ -33,7 +33,7 @@
             {% cache constant('App\\Component\\Cache\\TwigCachedMenuFacade::HORIZONTAL_PANEL_MENU') {lifetime:60*60*24, domainId:getDomain().id} %}
                 <div class="web__line">
                     <div class="web__container web__container--full-width web__container--no-padding">
-                        {{ render(controller('App\\Controller\\Front\\HorizontalMenuController:menuAction')) }}
+                        {{ render(controller('App\\Controller\\Front\\HorizontalMenuController:menuAction'))|spaceless }}
                     </div>
                 </div>
             {% endcache %}

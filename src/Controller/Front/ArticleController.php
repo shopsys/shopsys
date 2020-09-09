@@ -6,9 +6,12 @@ namespace App\Controller\Front;
 
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends FrontBaseController
 {
+    public const FOOTER_MENU_TWIG_CACHE_KEY = 'footer_menu';
+
     /**
      * @var \App\Model\Article\ArticleFacade
      */
@@ -45,21 +48,14 @@ class ArticleController extends FrontBaseController
     }
 
     /**
-     * @param int $id
-     * @param string $title
-     * @param string $icon
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function footerAction(int $id, string $title, string $icon)
+    public function footerMenuAction(): Response
     {
-        $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(
-            constant('App\Model\Article\Article::PLACEMENT_FOOTER_' . $id)
-        );
+        $articlesByPlacements = $this->articleFacade->getVisibleFooterArticlesIndexedByPlacementOnCurrentDomain();
 
         return $this->render('Front/Content/Article/footerMenu.html.twig', [
-            'id' => $id,
-            'title' => $title,
-            'icon' => $icon,
-            'articles' => $articles,
+            'articlesByPlacements' => $articlesByPlacements,
         ]);
     }
 }

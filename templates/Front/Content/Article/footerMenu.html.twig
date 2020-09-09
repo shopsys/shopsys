@@ -1,13 +1,35 @@
-<h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-{{ id }}">{{ title }} <i class="svg {{ icon }}"></i></h2>
-<ul class="footer__block__list footer__block__toggle" id="js-footer-menu-{{ id }}">
-    {% for article in articles %}
-        <li class="footer__block__list__item">
-            <a class="footer__block__list__link"
-                href="{{ article.isSiteType() ? url('front_article_detail', { id: article.id }) : article.getUrl() }}"
-                {{ article.external ? 'target="_blank"' : '' }}
+{% import 'Front/Content/Article/footerMenuMacro.html.twig' as footerMenu %}
+
+<div class="footer__block__menu">
+    <div class="footer__block__menu__item">
+        {{ footerMenu.articlesList(1, articlesByPlacements[constant('App\\Model\\Article\\Article::PLACEMENT_FOOTER_1')], 'O Scontu'|trans, 'svg-arrow') }}
+    </div>
+    <div class="footer__block__menu__item">
+        {{ footerMenu.articlesList(2, articlesByPlacements[constant('App\\Model\\Article\\Article::PLACEMENT_FOOTER_2')], 'O nákupu'|trans, 'svg-arrow') }}
+    </div>
+    <div class="footer__block__menu__item">
+        {{ footerMenu.articlesList(3, articlesByPlacements[constant('App\\Model\\Article\\Article::PLACEMENT_FOOTER_3')], 'E-shop'|trans, 'svg-arrow') }}
+        <h2 class="footer__block__heading footer__block__heading--inner footer__block__heading--toggle js-responsive-toggle footer__block__list--top-spacing" data-element="js-footer-menu-5">
+            {{ 'Možnosti platby'|trans }} <i class="svg svg-arrow"></i>
+        </h2>
+        <div class="footer__block__toggle" id="js-footer-menu-5">
+            <img
+                    class="footer__block__img footer__block__img--payment"
+                    loading="lazy"
+                    src="{{ imgLazyloadPlaceholder }}"
+                    data-src="{{ asset('public/frontend/images/payments/mastercard.svg') }}"
+                    alt="{{ 'Mastercard'|trans }}"
             >
-                {{ article.name }}
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+            <img
+                    class="footer__block__img footer__block__img--payment"
+                    loading="lazy"
+                    src="{{ imgLazyloadPlaceholder }}"
+                    data-src="{{ asset('public/frontend/images/payments/visa.svg') }}"
+                    alt="{{ 'VISA'|trans }}"
+            >
+        </div>
+    </div>
+    <div class="footer__block__menu__item margin-0">
+        {{ footerMenu.articlesList(4, articlesByPlacements[constant('App\\Model\\Article\\Article::PLACEMENT_FOOTER_4')], 'Prodejny'|trans, 'svg-arrow') }}
+    </div>
+</div>

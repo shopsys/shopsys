@@ -559,7 +559,7 @@
                 {% endif %}
 
                 {% cache 'products_similar_id_'~productMainVariantId {lifetime:60*60, domainId:getDomain().id} %}
-                    {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: productMainVariantId} )) }}
+                    {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: productMainVariantId} ))|spaceless }}
                 {% endcache %}
             </div>
         </div>

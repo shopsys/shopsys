@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Article;
 
+use App\Controller\Front\ArticleController;
 use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -15,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 
 /**
  * @property \App\Component\Domain\Domain $domain
+ * @property \App\Model\Article\ArticleRepository $articleRepository
  * @method \App\Model\Article\Article|null findById(int $articleId)
  * @method \App\Model\Article\Article getById(int $articleId)
  * @method \App\Model\Article\Article getVisibleById(int $articleId)
@@ -33,7 +35,7 @@ class ArticleFacade extends BaseArticleFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
+     * @param \App\Model\Article\ArticleRepository $articleRepository
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
@@ -67,7 +69,7 @@ class ArticleFacade extends BaseArticleFacade
         $article = parent::create($articleData);
 
         if (in_array($article->getPlacement(), $this->getFooterPlacements(), true)) {
-            $this->twigCacheFacade->invalidateByKey($article->getPlacement(), $article->getDomainId());
+            $this->twigCacheFacade->invalidateByKey(ArticleController::FOOTER_MENU_TWIG_CACHE_KEY, $article->getDomainId());
         }
 
         return $article;
@@ -84,7 +86,7 @@ class ArticleFacade extends BaseArticleFacade
         $article = parent::edit($articleId, $articleData);
 
         if (in_array($article->getPlacement(), $this->getFooterPlacements(), true)) {
-            $this->twigCacheFacade->invalidateByKey($article->getPlacement(), $article->getDomainId());
+            $this->twigCacheFacade->invalidateByKey(ArticleController::FOOTER_MENU_TWIG_CACHE_KEY, $article->getDomainId());
         }
 
         return $article;
@@ -101,5 +103,23 @@ class ArticleFacade extends BaseArticleFacade
             Article::PLACEMENT_FOOTER_3,
             Article::PLACEMENT_FOOTER_4,
             ];
+    }
+
+    /**
+     * @return \App\Model\Article\Article[][]
+     */
+    public function getVisibleFooterArticlesIndexedByPlacementOnCurrentDomain(): array
+    {
+        $articles = $this->articleRepository->getVisibleArticlesForPlacements($this->domain->getId(), $this->getFooterPlacements());
+
+        $articlesByPlacement = [];
+        foreach ($this->getFooterPlacements() as $placement) {
+            $articlesByPlacement[$placement] = [];
+        }
+        foreach ($articles as $article) {
+            $articlesByPlacement[$article->getPlacement()][] = $article;
+        }
+
+        return $articlesByPlacement;
     }
 }

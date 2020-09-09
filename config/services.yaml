@@ -251,6 +251,9 @@ services:
     Shopsys\FrameworkBundle\Model\Article\ArticleFacade:
         alias: App\Model\Article\ArticleFacade
 
+    Shopsys\FrameworkBundle\Model\Article\ArticleRepository:
+        alias: App\Model\Article\ArticleRepository
+
     App\Model\Category\CurrentCategoryResolver: ~
 
     League\Flysystem\FilesystemInterface:

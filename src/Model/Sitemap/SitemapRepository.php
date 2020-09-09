@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository as BaseSitemapReposi
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Category\CategoryRepository $categoryRepository
+ * @property \App\Model\Article\ArticleRepository $articleRepository
  */
 class SitemapRepository extends BaseSitemapRepository
 {
@@ -43,7 +44,7 @@ class SitemapRepository extends BaseSitemapRepository
     /**
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
+     * @param \App\Model\Article\ArticleRepository $articleRepository
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
      * @param \App\Model\Product\Series\ProductSeriesRepository $productSeriesRepository
      * @param \App\Model\Product\Series\Category\ProductSeriesCategoryRepository $productSeriesCategoryRepository
