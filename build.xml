@@ -72,6 +72,10 @@
         </exec>
     </target>
 
+    <target name="cron" description="Disabled - use new cron instances instead.">
+        <fail message="Default cron instance is disabled. All modules are in new instances."/>
+    </target>
+
     <target name="cron-service" description="Runs SERVICE background jobs. Should be executed periodically by system Cron every 5 minutes.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />

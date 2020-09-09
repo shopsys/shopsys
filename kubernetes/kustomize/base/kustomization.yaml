@@ -1,5 +1,4 @@
 resources:
-    - ../../cron/php-fpm-cron-executor-default.yaml
     - ../../cron/php-fpm-cron-executor-export.yaml
     - ../../cron/php-fpm-cron-executor-gopay.yaml
     - ../../cron/php-fpm-cron-executor-service.yaml
