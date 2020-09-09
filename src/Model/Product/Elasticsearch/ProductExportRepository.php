@@ -335,12 +335,7 @@ class ProductExportRepository extends BaseProductExportRepository
      */
     protected function extractFlagsForDomain(int $domainId, Product $product): array
     {
-        $flagIds = [];
-        foreach ($product->getFlagsForDomain($domainId) as $flag) {
-            $flagIds[] = $flag->getId();
-        }
-
-        return $flagIds;
+        return $product->getFlagsIdsForDomain($domainId);
     }
 
     /**

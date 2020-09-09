@@ -881,3 +881,6 @@ services:
     App\Model\Order\PromoCode\Import\SingleImportPromoCodeFacade:
         arguments:
             $displayTimezone: '%shopsys.display_timezone%'
+
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade:
+        alias: App\Model\Product\Pricing\ProductInputPriceFacade
