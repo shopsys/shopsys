@@ -11,6 +11,9 @@ use App\Component\ScontoBridge\Transfer\ScontoBridgeTitleResolver;
 use App\Model\Country\CountryDataInvalidException;
 use App\Model\Country\CountryFacade;
 use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser;
+use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser\ScontoBridgeCompany;
+use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser\ScontoBridgeIndividual;
+use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser\ScontoBridgePrimaryAddress;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserDataFactory;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
@@ -49,7 +52,6 @@ class CustomerTransferScontoBridgeMapper
     private ScontoBridgeTitleResolver $scontoBridgeTitleResolver;
 
     /**
-     * CustomerTransferScontoBridgeMapper constructor.
      * @param CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param CountryFacade $countryFacade
      * @param CustomerUserDataFactory $customerUserDataFactory
@@ -150,7 +152,6 @@ class CustomerTransferScontoBridgeMapper
     /**
      * @param CustomerUser $customerUser
      * @return ScontoBridgeErpUser
-     * @throws CustomerTransferScontoBridgeMapperException
      */
     public function mapCustomerUserToScontoBridgeCustomerData(CustomerUser $customerUser): ScontoBridgeErpUser
     {
@@ -202,14 +203,13 @@ class CustomerTransferScontoBridgeMapper
 
     /**
      * @param CustomerUser $customer
-     * @return ScontoBridgeErpUser\ScontoBridgeCompany
-     * @throws CustomerTransferScontoBridgeMapperException
+     * @return ScontoBridgeCompany
      */
-    private function mapCompany(CustomerUser $customer): ScontoBridgeErpUser\ScontoBridgeCompany
+    private function mapCompany(CustomerUser $customer): ScontoBridgeCompany
     {
         $billingAddress = $customer->getCustomer()->getBillingAddress();
 
-        $erpCompany = new ScontoBridgeErpUser\ScontoBridgeCompany();
+        $erpCompany = new ScontoBridgeCompany();
         $erpCompany->setCompanyNumber($billingAddress->getCompanyNumber());
         $erpCompany->setName($billingAddress->getCompanyName());
         $erpCompany->setVatNumber($billingAddress->getCompanyTaxNumber());
@@ -224,16 +224,16 @@ class CustomerTransferScontoBridgeMapper
 
     /**
      * @param CustomerUser $customerUser
-     * @return ScontoBridgeErpUser\ScontoBridgePrimaryAddress|null
+     * @return ScontoBridgePrimaryAddress|null
      */
-    private function mapPrimaryAddress(CustomerUser $customerUser): ?ScontoBridgeErpUser\ScontoBridgePrimaryAddress
+    private function mapPrimaryAddress(CustomerUser $customerUser): ?ScontoBridgePrimaryAddress
     {
         $userDefaultAddress = $customerUser->getDefaultDeliveryAddress();
         if ($userDefaultAddress === null) {
             return null;
         }
 
-        $erpAddress = new ScontoBridgeErpUser\ScontoBridgePrimaryAddress();
+        $erpAddress = new ScontoBridgePrimaryAddress();
         $erpAddress->setStreet($userDefaultAddress->getStreet());
         $erpAddress->setCity($userDefaultAddress->getCity());
         $country = $userDefaultAddress->getCountry();
@@ -247,11 +247,11 @@ class CustomerTransferScontoBridgeMapper
 
     /**
      * @param CustomerUser $customerUser
-     * @return ScontoBridgeErpUser\ScontoBridgeIndividual
+     * @return ScontoBridgeIndividual
      */
-    private function mapIndividual(CustomerUser $customerUser): ScontoBridgeErpUser\ScontoBridgeIndividual
+    private function mapIndividual(CustomerUser $customerUser): ScontoBridgeIndividual
     {
-        $erpIndividual = new ScontoBridgeErpUser\ScontoBridgeIndividual();
+        $erpIndividual = new ScontoBridgeIndividual();
 
         $erpIndividual->setIndividualTitle(
             $this->scontoBridgeTitleResolver->getIndividualTitleByGender(
@@ -267,7 +267,6 @@ class CustomerTransferScontoBridgeMapper
     /**
      * @param Country $country
      * @return int
-     * @throws CustomerTransferScontoBridgeMapperException
      */
     private function getPhonePrefixByCountry(Country $country): int
     {
@@ -283,7 +282,6 @@ class CustomerTransferScontoBridgeMapper
     /**
      * @param string $code
      * @return int
-     * @throws CustomerTransferScontoBridgeMapperException
      */
     private function getDomainIdByCountryCode(string $code): int
     {
@@ -297,7 +295,6 @@ class CustomerTransferScontoBridgeMapper
     /**
      * @param Country $country
      * @return int
-     * @throws CustomerTransferScontoBridgeMapperException
      */
     private function getDistributionChannelByCountry(Country $country): int
     {

@@ -35,15 +35,9 @@ class ScontoBridgeDistributionChannelResolver
      */
     public function getDomainIdByDistributionChannelCode(?int $countryString): ?int
     {
-        if ($countryString === self::DISTRIBUTION_CHANEL_CODE_CZ) {
-            return Domain::FIRST_DOMAIN_ID;
-        }
+        $codesByDomain = array_flip(self::DISTRIBUTION_CODES_BY_DOMAIN);
 
-        if ($countryString === self::DISTRIBUTION_CHANEL_CODE_SK) {
-            return Domain::SECOND_DOMAIN_ID;
-        }
-
-        return null;
+        return $codesByDomain[$countryString] ?? null;
     }
 
     /**
@@ -76,12 +70,9 @@ class ScontoBridgeDistributionChannelResolver
      */
     public function getCountryByDistributionChannelCode(?int $distributionChannelCode): ?Country
     {
-        if ($distributionChannelCode === self::DISTRIBUTION_CHANEL_CODE_CZ) {
-            return $this->countryFacade->findByCode(CountryFacade::COUNTRY_CODES_BY_DOMAIN_ID[Domain::FIRST_DOMAIN_ID]);
-        }
-
-        if ($distributionChannelCode === self::DISTRIBUTION_CHANEL_CODE_SK) {
-            return $this->countryFacade->findByCode(CountryFacade::COUNTRY_CODES_BY_DOMAIN_ID[Domain::SECOND_DOMAIN_ID]);
+        $domainId = $this->getDomainIdByDistributionChannelCode($distributionChannelCode);
+        if ($domainId !== null){
+            return $this->countryFacade->findByCode(CountryFacade::COUNTRY_CODES_BY_DOMAIN_ID[$domainId]);
         }
 
         return null;

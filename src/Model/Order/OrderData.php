@@ -45,7 +45,7 @@ class OrderData extends BaseOrderData
     /**
      * @var bool|null
      */
-    public $isCompanyCustomer = false;
+    public $isCompanyCustomer;
 
     /**
      * @var string|null
@@ -60,10 +60,13 @@ class OrderData extends BaseOrderData
     /**
      * @var string
      */
-    public $scontoBridgeStatus = OrderScontoBridgeStatusEnum::STATUS_NEW;
+    public $scontoBridgeStatus;
 
     public function __construct()
     {
         parent::__construct();
+
+        $this->isCompanyCustomer = false;
+        $this->scontoBridgeStatus = OrderScontoBridgeStatusEnum::STATUS_NEW;
     }
 }

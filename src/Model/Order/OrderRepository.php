@@ -48,6 +48,9 @@ class OrderRepository extends BaseOrderRepository
         return $queryBuilder->getQuery()->execute();
     }
 
+    /**
+     * @return Order[]
+     */
     public function getAllOrdersNotSentToScontoBridge(): array
     {
         $queryBuilder = $this->createOrderQueryBuilder()

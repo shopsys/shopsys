@@ -11,6 +11,7 @@ use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Order\Transfer\ScontoBridge\Entity\ScontoBridgeErpOrder;
+use App\Model\Order\Transfer\ScontoBridge\Entity\ScontoBridgeErpOrder\ScontoBridgeOrderItem;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 
 class OrderTransferScontoBridgeMapper
@@ -31,6 +32,10 @@ class OrderTransferScontoBridgeMapper
      */
     private ScontoBridgeTitleResolver $scontoBridgeTitleResolver;
 
+    /**
+     * @param ScontoBridgeDistributionChannelResolver $scontoBridgeDistributionChannelResolver
+     * @param ScontoBridgeTitleResolver $scontoBridgeTitleResolver
+     */
     public function __construct(
         ScontoBridgeDistributionChannelResolver $scontoBridgeDistributionChannelResolver,
         ScontoBridgeTitleResolver $scontoBridgeTitleResolver
@@ -42,7 +47,6 @@ class OrderTransferScontoBridgeMapper
     /**
      * @param Order $order
      * @return ScontoBridgeErpOrder
-     * @throws OrderTransferScontoBridgeMapperException
      */
     public function mapOrderToScontoBridgeOrderData(Order $order): ScontoBridgeErpOrder
     {
@@ -59,7 +63,7 @@ class OrderTransferScontoBridgeMapper
             );
         }
         $erpOrder->setEshopUserId($customerUser->getId());
-        $erpOrder->setCreationTime($order->getCreatedAt()->format('c')); //todo
+        $erpOrder->setCreationTime($order->getCreatedAt()->format('c')); //todo domluvit jak s mikrosekundama
         $erpOrder->setPriceWithVat((float)$order->getTotalPriceWithVat()->getAmount());
         $erpOrder->setPriceCurrency($order->getCurrency()->getCode());
 
@@ -78,7 +82,6 @@ class OrderTransferScontoBridgeMapper
     /**
      * @param Country $country
      * @return int
-     * @throws OrderTransferScontoBridgeMapperException
      */
     private function getDistributionChannelCode(Country $country): int
     {
@@ -89,6 +92,11 @@ class OrderTransferScontoBridgeMapper
         }
     }
 
+    /**
+     * @param ScontoBridgeErpOrder $erpOrder
+     * @param Order $order
+     * @param CustomerUser $customerUser
+     */
     private function fillCustomerDetails(ScontoBridgeErpOrder $erpOrder, Order $order, CustomerUser $customerUser): void
     {
         $title = $this->scontoBridgeTitleResolver->getIndividualTitleByGender($customerUser->getGender());
@@ -101,6 +109,10 @@ class OrderTransferScontoBridgeMapper
         $erpOrder->setEmail($order->getEmail());
     }
 
+    /**
+     * @param ScontoBridgeErpOrder $erpOrder
+     * @param Order $order
+     */
     private function fillInvoiceDetails(ScontoBridgeErpOrder $erpOrder, Order $order): void
     {
         $erpOrder->setInvoiceAddressStreet($order->getStreet());
@@ -109,6 +121,10 @@ class OrderTransferScontoBridgeMapper
         $erpOrder->setInvoiceAddressZipCode($order->getPostcode());
     }
 
+    /**
+     * @param ScontoBridgeErpOrder $erpOrder
+     * @param Order $order
+     */
     private function fillDeliveryAddress(ScontoBridgeErpOrder $erpOrder, Order $order): void
     {
         $erpOrder->setDeliveryAddressFirstName($order->getDeliveryFirstName());
@@ -123,6 +139,10 @@ class OrderTransferScontoBridgeMapper
         $erpOrder->setDeliveryAddressPhone($order->getDeliveryTelephone());
     }
 
+    /**
+     * @param ScontoBridgeErpOrder $erpOrder
+     * @param Order $order
+     */
     private function fillOrderItems(ScontoBridgeErpOrder $erpOrder, Order $order): void
     {
         foreach ($order->getItems() as $orderItem) {
@@ -136,9 +156,13 @@ class OrderTransferScontoBridgeMapper
         }
     }
 
-    private function mapOrderItem(OrderItem $orderItem): ScontoBridgeErpOrder\ScontoBridgeOrderItem
+    /**
+     * @param OrderItem $orderItem
+     * @return ScontoBridgeOrderItem
+     */
+    private function mapOrderItem(OrderItem $orderItem): ScontoBridgeOrderItem
     {
-        $erpOrderItem = new ScontoBridgeErpOrder\ScontoBridgeOrderItem();
+        $erpOrderItem = new ScontoBridgeOrderItem();
         $erpOrderItem->setEshopId($orderItem->getId());
         $erpOrderItem->setQuantity($orderItem->getQuantity());
         $erpOrderItem->setUnitPriceWithVat((float)$orderItem->getPriceWithVat()->getAmount());
