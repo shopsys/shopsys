@@ -16,9 +16,11 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -91,7 +93,20 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                         'callback' => [$this, 'validateUniqueExternalId']
                     ])
                 ]
-            ]);
+            ])
+            ->add('daysUntilDelivery', TextType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Constraints\GreaterThanOrEqual([
+                        'value' => 0,
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => '/^\d+$/',
+                    ]),
+                ],
+                'label' => t('Dnů do doručení'),
+            ])
+        ;
 
         $builder->add($this->createTransportPackages($builder));
     }

@@ -73,6 +73,7 @@ class TransportDataFactory extends BaseTransportDataFactory
     {
         parent::fillNew($transportData);
         $transportData->type = Transport::TYPE_COMMON;
+        $transportData->daysUntilDelivery = 0;
     }
 
     /**
@@ -93,6 +94,7 @@ class TransportDataFactory extends BaseTransportDataFactory
             $transportData->transportPackages[] = $this->transportPackageDataFactory->createFromTransportPackage($transportPackage);
         }
         $transportData->isOverLimitTransport = $transport->isOverLimitTransport();
+        $transportData->daysUntilDelivery = $transport->getDaysUntilDelivery();
 
         $transportData->externalId = $transport->getExternalId();
 

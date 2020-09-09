@@ -79,6 +79,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $transportData = $this->transportDataFactory->create();
         $transportData->externalId = 1;
+        $transportData->daysUntilDelivery = 5;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
@@ -111,6 +112,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $transportData = $this->transportDataFactory->create();
         $transportData->externalId = 2;
+        $transportData->daysUntilDelivery = 4;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
@@ -150,6 +152,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $transportData = $this->transportDataFactory->create();
         $transportData->externalId = 3;
+        $transportData->daysUntilDelivery = 0;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Personal collection', [], 'dataFixtures', $locale);
@@ -170,6 +173,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $transportData = $this->transportDataFactory->create();
         $transportData->externalId = 4;
+        $transportData->daysUntilDelivery = 14;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Paletová přeprava', [], 'dataFixtures', $locale);
