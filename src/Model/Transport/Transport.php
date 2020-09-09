@@ -47,17 +47,16 @@ class Transport extends BaseTransport
     private string $type;
 
     /**
-<<<<<<< HEAD
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $isOverLimitTransport;
-=======
+
+    /**
      * @var int
      * @ORM\Column(type="integer", unique=true)
      */
     private int $externalId;
->>>>>>> b565de401... SD-1451 orders & customers bridge export stub
 
     /**
      * @param \App\Model\Transport\TransportData $transportData
@@ -68,11 +67,8 @@ class Transport extends BaseTransport
         $this->productTypes = new ArrayCollection($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
-<<<<<<< HEAD
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
-=======
         $this->externalId = $transportData->externalId;
->>>>>>> 5ff90e7ca... SD-1451 orders sent to sconto bridge, fixed tests
     }
 
     /**
@@ -84,11 +80,8 @@ class Transport extends BaseTransport
         $this->editProductTypes($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
-<<<<<<< HEAD
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
-=======
         $this->externalId = $transportData->externalId;
->>>>>>> b565de401... SD-1451 orders & customers bridge export stub
     }
 
     /**
@@ -144,18 +137,18 @@ class Transport extends BaseTransport
     }
 
     /**
-<<<<<<< HEAD
      * @return bool
      */
     public function isOverLimitTransport(): bool
     {
         return $this->isOverLimitTransport;
-=======
+    }
+
+    /**
      * @return int
      */
     public function getExternalId(): int
     {
         return $this->externalId;
->>>>>>> b565de401... SD-1451 orders & customers bridge export stub
     }
 }

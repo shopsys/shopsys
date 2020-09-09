@@ -32,15 +32,14 @@ class TransportData extends BaseTransportData
     public array $transportPackages;
 
     /**
-<<<<<<< HEAD
      * @var bool
      */
     public $isOverLimitTransport;
-=======
+
+    /**
      * @var int
      */
     public int $externalId;
->>>>>>> b565de401... SD-1451 orders & customers bridge export stub
 
     public function __construct()
     {

@@ -62,11 +62,8 @@ class PaymentDataFactory extends BasePaymentDataFactory
         $paymentData->type = $payment->getType();
         $paymentData->goPayPaymentMethod = $payment->getGoPayPaymentMethod();
         $paymentData->hiddenByGoPay = $payment->isHiddenByGoPay();
-<<<<<<< HEAD
         $paymentData->isOverLimitPayment = $payment->isOverLimitPayment();
-=======
         $paymentData->externalId = $payment->getExternalId();
->>>>>>> b565de401... SD-1451 orders & customers bridge export stub
 
         return $paymentData;
     }
