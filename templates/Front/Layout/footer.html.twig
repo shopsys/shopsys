@@ -36,7 +36,11 @@
                             >
                             <p class="footer__block__paragraph">{{ 'SCONTO Nábytek s.r.o. je součástí německého<br>koncernu Höffner, který patří k největším<br>producentům nábytku v Evropě již od roku 1990.'|trans|raw }}</p>
                             <div class="footer__block__langs">
-                                <a href="#" class="footer__block__langs__link no-hover-decoration js-not-implemented-yet">
+                                <a
+                                    href="{{ domain.id == 1 ? '/' : 'https://www.sconto.sk/' }}"
+                                    class="footer__block__langs__link no-hover-decoration"
+                                    {% if domain.id == 2 %}target="_blank"{% endif %}
+                                >
                                     <img
                                         class="footer__block__img footer__block__img--lang"
                                         loading="lazy"
@@ -46,7 +50,11 @@
                                     >
                                     <span class="footer__block__label">{{ 'Česká republika'|trans }}</span>
                                 </a>
-                                <a href="#" class="footer__block__langs__link no-hover-decoration js-not-implemented-yet">
+                                <a
+                                    href="{{ domain.id ==  2 ? '/' : 'https://www.sconto.cz/' }}"
+                                    class="footer__block__langs__link no-hover-decoration"
+                                    {% if domain.id == 1 %}target="_blank"{% endif %}
+                                >
                                     <img
                                         class="footer__block__img footer__block__img--lang"
                                         loading="lazy"
@@ -58,7 +66,11 @@
                                 </a>
                             </div>
                             <h2 class="footer__block__heading footer__block__heading--inline-xs">{{ 'Sledujte nás'|trans }}</h2>
-                            <a class="no-hover-decoration js-not-implemented-yet" href="https://www.facebook.com/scontonabytekcz/" target="_blank">
+                            <a
+                                class="no-hover-decoration"
+                                href="{{ domain.id == 1 ? 'https://www.facebook.com/scontonabytekcz/' : 'https://www.facebook.com/scontosk' }}"
+                                target="_blank"
+                            >
                                 <img
                                     class="footer__block__img footer__block__img--social"
                                     loading="lazy"
@@ -67,7 +79,11 @@
                                     alt="{{ 'Facebook'|trans }}"
                                 >
                             </a>
-                            <a class="no-hover-decoration js-not-implemented-yet" href="https://www.instagram.com/sconto_nabytek/" target="_blank">
+                            <a
+                                class="no-hover-decoration"
+                                href="{{ domain.id == 1 ? 'https://www.instagram.com/sconto_nabytek/' : 'https://www.instagram.com/sconto_nabytek/' }}"
+                                target="_blank"
+                            >
                                 <img
                                     class="footer__block__img footer__block__img--social"
                                     loading="lazy"
