@@ -15,7 +15,6 @@ class KitchenController extends FrontBaseController
     private Domain $domain;
 
     /**
-     * KitchenController constructor.
      * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(Domain $domain)
