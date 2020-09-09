@@ -144,7 +144,7 @@ private function method()
      */
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens->findGivenKind(T_PRIVATE) as $index => $privateToken) {
+        foreach (array_keys($tokens->findGivenKind(T_PRIVATE)) as $index) {
             $tokens[$index] = new Token([T_PROTECTED, 'protected']);
         }
     }

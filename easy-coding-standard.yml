@@ -6,6 +6,7 @@ imports:
 parameters:
     sets:
         - 'psr12'
+        - 'dead-code'
     skip:
         PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer:
             - 'packages/*'

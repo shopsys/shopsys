@@ -85,7 +85,7 @@ class Cart
      */
     public function removeItemById($itemId)
     {
-        foreach ($this->items as $key => $item) {
+        foreach ($this->items as $item) {
             if ($item->getId() === $itemId) {
                 $this->items->removeElement($item);
                 $this->setModifiedNow();

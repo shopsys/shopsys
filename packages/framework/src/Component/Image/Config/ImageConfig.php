@@ -154,7 +154,7 @@ class ImageConfig
      */
     public function hasImageConfig($entity)
     {
-        foreach ($this->imageEntityConfigsByClass as $className => $entityConfig) {
+        foreach (array_keys($this->imageEntityConfigsByClass) as $className) {
             if ($entity instanceof $className) {
                 return true;
             }

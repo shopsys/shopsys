@@ -49,7 +49,7 @@ class UploadedFileConfig
      */
     public function hasUploadedFileEntityConfig(object $entity): bool
     {
-        foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {
+        foreach (array_keys($this->uploadedFileEntityConfigsByClass) as $className) {
             if ($entity instanceof $className) {
                 return true;
             }
