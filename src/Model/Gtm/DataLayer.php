@@ -21,6 +21,7 @@ class DataLayer
     public const EVENT_NAME_CATEGORY_FILTER = 'category.filter';
 
     public const LIST_NAME_HOME_TOP_PRODUCTS = 'home - akční zboží';
+    public const LIST_NAME_HOME_SALE_PRODUCTS = 'home - výprodejové zboží';
     public const LIST_NAME_PRODUCT_SIMILAR_PRODUCTS = 'Product - podobné produkty';
     public const LIST_NAME_PRODUCT_ACCESSORIES = 'Product - příslušenství';
     public const LIST_NAME_PRODUCT_PROGRAM = 'Product - program';

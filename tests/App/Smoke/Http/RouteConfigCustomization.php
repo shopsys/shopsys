@@ -505,6 +505,10 @@ class RouteConfigCustomization
             ->customizeByRouteName('front_similar_products', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Similar product internal route.')
                     ->setParameter('id', 1);
+            })
+            ->customizeByRouteName('front_products_in_sale_on_home_page', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Sale product internal route.')
+                    ->setParameter('id', 1);
             });
     }
 

@@ -125,14 +125,10 @@ class HomepageController extends FrontBaseController
         $topProducts = $this->listedProductViewFacade->getAllTop();
         $this->productVariantFilterFacade->setupDefaultVariantsInListedProductViews($topProducts);
 
-        /** @var \App\Model\Product\Listed\ListedProductView[] $inSaleListedProducts */
-        $inSaleListedProducts = $this->listedProductViewElasticFacade->getListedSaleProducts();
-        $this->productVariantFilterFacade->setupDefaultVariantsInListedProductViews($inSaleListedProducts);
         $mainCategory = $blogCategoryFacade->getVisibleOnDomainById($this->domain->getId(), BlogArticleController::MAIN_BLOG_CATEGORY_ID);
 
         return $this->render('Front/Content/Default/slightlyChangingPartsOnHomePage.html.twig', [
             'sliderItems' => $sliderItems,
-            'inSaleProducts' => $inSaleListedProducts,
             'categories' => $this->topCategoryFacade->getVisibleCategoriesByDomainId($this->domain->getId()),
             'topProducts' => $topProducts,
             'homepageArticles' => $this->blogArticleFacade->getHomepageBlogArticlesByDomainId(

@@ -121,16 +121,16 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
     }
 
     /**
-     * @return \App\Model\Product\Listed\ListedProductView[]
+     * @param int $page
+     * @param int $limit
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getListedSaleProducts(): array
+    public function getPaginatedSaleProducts(int $page, int $limit): PaginationResult
     {
         $productFilterData = new ProductFilterData();
-        $productsArray = $this->productOnCurrentDomainFacade->getInSaleProductsHits($productFilterData);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInSale($productFilterData, $page, $limit);
 
-        /** @var \App\Model\Product\Listed\ListedProductView[] $listedSaleProducts */
-        $listedSaleProducts = $this->createFromArray($productsArray);
-        return $listedSaleProducts;
+        return $this->createPaginationResultWithArray($paginationResult);
     }
 
     /**

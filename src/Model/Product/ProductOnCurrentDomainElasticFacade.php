@@ -113,13 +113,19 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
 
     /**
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return array
+     * @param int $page
+     * @param int $limit
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getInSaleProductsHits(ProductFilterData $productFilterData): array
-    {
+    public function getPaginatedProductsInSale(
+        ProductFilterData $productFilterData,
+        int $page,
+        int $limit
+    ): PaginationResult {
         $baseFilterQuery = $this->filterQueryFactory->create($this->getIndexName())
             ->filterOnlyInSale()
-            ->setLimit(15) // Temporary solution until SD-1543 will be done.
+            ->setLimit($limit)
+            ->setPage($page)
             ->filterOnlyVisible($this->currentCustomerUser->getPricingGroup())
             ->odrderByStockQuantity();
         $baseFilterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery($productFilterData, $baseFilterQuery, $this->currentCustomerUser->getPricingGroup());
@@ -127,7 +133,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($baseFilterQuery);
 
-        return $productsResult->getHits();
+        return new PaginationResult($page, $limit, $productsResult->getTotal(), $productsResult->getHits());
     }
 
     /**
