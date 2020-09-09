@@ -15,3 +15,8 @@ There you can find links to upgrade notes for other versions too.
         - `ProductOnCurrentDomainElasticFacade::createListableProductsForSearchTextFilterQuery()` use `ProductFilterQueryFactory::createListableProductsBySearchText()` instead
         - `ProductOnCurrentDomainElasticFacade::createFilterQueryWithProductFilterData()` use `ProductFilterQueryFactory::createWithProductFilterData()` instead
         - `ProductOnCurrentDomainElasticFacade::getIndexName()` use `ProductFilterQueryFactory::getIndexName()` instead
+
+- remove FE API only dependencies from framework ([#2041](https://github.com/shopsys/shopsys/pull/2041))
+    - this methods has been marked as deprecated and will be removed in next major version:
+        - `Shopsys\FrameworkBundle\Model\Product\ProductFacade::getSellableByUuid()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getSellableByUuid()` instead
+        - `Shopsys\FrameworkBundle\Model\Product\ProductRepository::getSellableByUuid()` use `Shopsys\FrontendApiBundle\Model\Product\ProductRepository::getSellableByUuid()` instead
