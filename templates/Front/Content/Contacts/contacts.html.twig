@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block main_content %}
+    {% set domain = getDomain() %}
     <div class="web__line web__line--spacing--big">
         <div class="web__container">
             <h1 class="heading heading--primary heading--primary-subpage">{{ "Zákaznický servis"|trans }}</h1>
@@ -41,7 +42,7 @@
                         >
                         <img
                             loading="lazy"
-                            class="box-contact__img"
+                            class="box-contact__img box-contact__img--phone"
                             src="{{ imgLazyloadPlaceholder }}"
                             data-src="{{ asset('public/frontend/images/zakaznicky_servis_formular.png') }}"
                             alt="{{ 'Zákaznický servis telefon'|trans }}"
@@ -94,7 +95,10 @@
             </div>
             <div class="box-stores-list box-stores-list--big">
                 <div class="box-stores-list__item">
-                    <a class="box-stores-list__item__link js-not-implemented-yet" href="#">
+                    <a
+                        class="box-stores-list__item__link"
+                        href="{{ domain.id == 1 ? '/reklamace' : '/reklamacie' }}"
+                    >
                         <i class="box-stores-list__item__icon svg svg-refresh svg-fw-bold"></i>
                         <strong class="box-stores-list__item__name">
                             {{ 'Reklamace, vrácení a výměna zboží'|trans }}
@@ -116,6 +120,76 @@
                     </a>
                 </div>
             </div>
+            <hr class="wrap-box-separator" />
+            <div class="box-contact-info">
+                <h2 class="box-contact-info__title">{{ 'Centrála společnosti'|trans }}</h2>
+                <div class="box-contact-info__wrap">
+                    <div class="box-contact-info__item">
+                        <strong class="box-contact-info__subtitle">
+                            {{ 'Sídlo společnosti'|trans }}
+                        </strong>
+                        <p class="box-contact-info__desc">
+                            {{
+                                'Sconto Nábytek, s.r.o.<br>
+                                Jeremiášova 947<br>
+                                155 00 Praha 5 - Stodůlky
+                                '|transHtml
+                            }}
+                        </p>
+                    </div>
+                    <div class="box-contact-info__item">
+                        <strong class="box-contact-info__subtitle">
+                            {{ 'Centrála společnosti'|trans }}
+                        </strong>
+                        <p class="box-contact-info__desc">
+                            {{
+                                'Sconto Nábytek, s.r.o.<br>
+                                Oregon House Zličín<br>
+                                Řevnická 170/4<br>
+                                155 21 Praha - Zličín'|transHtml
+                            }}
+                        </p>
+                    </div>
+                    <div class="box-contact-info__item">
+                        <strong class="box-contact-info__subtitle">
+                            {{ 'Fakturační údaje'|trans }}
+                        </strong>
+                        <p class="box-contact-info__desc">
+                            {{
+                                'Sconto Nábytek, s.r.o.<br>
+                                Jeremiášova 947<br>
+                                155 00 Praha 5 - Stodůlky<br>
+                                IČ: 25723944<br>
+                                DIČ: CZ25723944
+                                '|transHtml
+                            }}
+                        </p>
+                    </div>
+                    <div class="box-contact-info__item box-contact-info__item--no-heading">
+                        <p class="box-contact-info__desc">
+                            {{
+                                'Společnost je zapsaná v obchodním<br>
+                                rejstříku vedeném Městským soudem<br>
+                                v Praze, oddíl C, vložka 145176'|transHtml
+                            }}
+                        </p>
+                    </div>
+                    <div class="box-contact-info__item box-contact-info__item--last">
+                        <strong class="box-contact-info__subtitle">
+                            {{ 'Bankovní spojení'|trans }}
+                        </strong>
+                        <p class="box-contact-info__desc">
+                            {{
+                                'ČSOB<br>
+                                Č.ú. 117983223 / 0300<br>
+                                IBAN: CZ54 0300 0000 0001 1798 3223 <br>
+                                BIC / SWIFT: CEKOCZPP'|transHtml
+                            }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <hr class="wrap-box-separator wrap-box-separator--no-spacing" />
         </div>
     </div>
 {% endblock %}

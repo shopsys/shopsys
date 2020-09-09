@@ -98,4 +98,26 @@
             }
         }
     }
+
+    &-separator {
+        display: block;
+        position: relative;
+        left: calc(-50vw + 50%);
+        width: 100vw;
+        height: 2px;
+        margin-bottom: 1.5rem;
+
+        border: 0;
+        background-color: @color-light;
+
+        @media @query-md {
+            margin-bottom: 3rem;
+        }
+
+        &--no-spacing {
+            @media @query-md {
+                margin-bottom: 1.5rem;
+            }
+        }
+    }
 }

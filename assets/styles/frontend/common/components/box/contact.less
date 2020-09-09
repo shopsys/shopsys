@@ -1,4 +1,4 @@
-@box-contact-subtitle-color: #7a929d;
+@box-contact-subtitle-color: @color-base-secondary;
 
 .box-contact {
     display: flex;
@@ -6,6 +6,7 @@
     flex: 1 1 0;
     margin-bottom: 30px;
     padding: 1.25rem;
+    height: 190px;
 
     border-radius: @radius;
     background-color: @color-light;
@@ -24,10 +25,12 @@
     }
 
     &__content {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
+        z-index: 1;
     }
 
     &__img {
@@ -37,7 +40,7 @@
         top: -15px;
         max-width: 60px;
 
-        @media screen and (min-width: 760px) {
+        @media @query-md {
             max-width: 100%;
             bottom: 0;
             top: auto;
@@ -45,6 +48,14 @@
 
         @media @query-vl {
             right: 50px;
+        }
+
+        &--phone {
+            @media @query-mobile {
+                top: auto;
+                right: 25px;
+                bottom: 0;
+            }
         }
     }
 
@@ -114,6 +125,66 @@
 
         &__img {
             display: block;
+        }
+    }
+
+    &-info {
+        margin-bottom: 2rem;
+
+        &__wrap {
+            @media @query-md {
+                display: flex;
+                flex-wrap: wrap;
+                margin-left: -35px;
+            }
+
+            @media @query-vl-up {
+                flex-wrap: nowrap;
+                margin-left: -60px;
+            }
+        }
+
+        &__item {
+            margin-top: 1rem;
+
+            @media @query-md {
+                margin-left: 35px;
+            }
+
+            @media @query-vl-up {
+                margin-left: 60px;
+            }
+
+            &--last {
+                @media @query-xl {
+                    margin-left: 90px;
+                }
+            }
+
+            &--no-heading {
+                @media @query-lg {
+                    margin-top: 45px;
+                }
+            }
+        }
+
+        &__subtitle {
+            margin-bottom: 0;
+
+            font-family: @font-quartenary;
+            font-size: 18px;
+            font-weight: 400;
+            color: @color-primary;
+
+            @media @query-md {
+                white-space: nowrap;
+            }
+        }
+
+        &__desc {
+            margin-top: 0;
+
+            color: @color-base-secondary;
         }
     }
 }
