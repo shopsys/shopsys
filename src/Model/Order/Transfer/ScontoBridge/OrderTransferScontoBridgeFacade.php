@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Order\Transfer\ScontoBridge;
 
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
-use App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeMapperException;
 use App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeExporter;
+use App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeMapperException;
 use App\Model\Order\Order;
 use App\Model\Order\OrderRepository;
 use App\Model\Order\OrderScontoBridgeStatusEnum;

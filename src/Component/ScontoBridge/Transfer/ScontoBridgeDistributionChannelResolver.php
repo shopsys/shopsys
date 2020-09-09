@@ -71,7 +71,7 @@ class ScontoBridgeDistributionChannelResolver
     public function getCountryByDistributionChannelCode(?int $distributionChannelCode): ?Country
     {
         $domainId = $this->getDomainIdByDistributionChannelCode($distributionChannelCode);
-        if ($domainId !== null){
+        if ($domainId !== null) {
             return $this->countryFacade->findByCode(CountryFacade::COUNTRY_CODES_BY_DOMAIN_ID[$domainId]);
         }
 
