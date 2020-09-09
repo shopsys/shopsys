@@ -100,6 +100,28 @@
                                                     {% endif %}
                                                 </span>
 
+                                                <span class="box-chooser__item__delivery-information">
+                                                    {% set minimalDaysAvailability = minimalDaysAvailabilityIndexedByTransportIds[transport.id] %}
+                                                    {% if minimalDaysAvailability < 7 %}
+                                                        {% if transport.isPersonalPickup() %}
+                                                            {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
+                                                                {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít <span class="box-chooser__item__avail__time box-chooser__item__avail__time--now">ihned</span></span>
+                                                            | [1,Inf] <span class="box-chooser__item__avail__text">Osobní odběr do <span class="box-chooser__item__avail__time">%daysAvailability% dnů</span></span>
+                                                            {% endtranschoice %}
+                                                        {% else %}
+                                                            {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
+                                                                {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít ještě <span class="box-chooser__item__avail__time box-chooser__item__avail__time--now">dnes</span></span>
+                                                            | [1,Inf] <span class="box-chooser__item__avail__text">Doručení do <span class="box-chooser__item__avail__time">%daysAvailability% dnů</span></span>
+                                                            {% endtranschoice %}
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% transchoice minimalDaysAvailability|daysToWeeks with {'%weeksAvailability%': minimalDaysAvailability|daysToWeeks} %}
+                                                            {1} <span class="box-chooser__item__avail__text">K dispozici do <span class="box-chooser__item__avail__time">1 týdne</span></span>
+                                                            | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do <span class="box-chooser__item__avail__time">%weeksAvailability% týdnů</span></span>
+                                                        {% endtranschoice %}
+                                                    {% endif %}
+                                                </span>
+
                                                 <span class="box-chooser__item__price">
                                                     {{ transportPrice.priceWithVat|priceText }}
                                                 </span>

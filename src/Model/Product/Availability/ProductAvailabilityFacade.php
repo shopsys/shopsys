@@ -591,6 +591,28 @@ class ProductAvailabilityFacade
     }
 
     /**
+     * @param int $domainId
+     * @param \App\Model\Stock\Stock[] $stocks
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param \App\Model\Transport\Transport[] $transports
+     * @return int[]
+     */
+    public function getMinimalDaysAvailabilityIndexedByTransportIds(int $domainId, array $stocks, array $quantifiedProducts, array $transports): array
+    {
+        $stockDayAvailabilities = $this->getStockDayAvailabilitiesIndexedByStockId($domainId, $stocks, $quantifiedProducts);
+        asort($stockDayAvailabilities);
+
+        $minimalStockDaysAvailability = reset($stockDayAvailabilities);
+
+        $minimalDaysAvailabilityIndexedByTransportIds = [];
+        foreach ($transports as $transport) {
+            $minimalDaysAvailabilityIndexedByTransportIds[$transport->getId()] = $minimalStockDaysAvailability + $transport->getDaysUntilDelivery();
+        }
+
+        return $minimalDaysAvailabilityIndexedByTransportIds;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @param int[] $maximumDayAvailabilityByStockId
      * @param int $domainId

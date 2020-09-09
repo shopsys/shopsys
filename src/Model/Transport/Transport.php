@@ -62,7 +62,7 @@ class Transport extends BaseTransport
      * @var int
      * @ORM\Column(type="integer")
      */
-    private ?int $daysUntilDelivery;
+    private int $daysUntilDelivery;
 
     /**
      * @param \App\Model\Transport\TransportData $transportData
@@ -163,7 +163,7 @@ class Transport extends BaseTransport
     /**
      * @return int
      */
-    public function getDaysUntilDelivery(): ?int
+    public function getDaysUntilDelivery(): int
     {
         return $this->daysUntilDelivery;
     }
