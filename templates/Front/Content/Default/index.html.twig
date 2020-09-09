@@ -13,7 +13,7 @@
 
 {% block main_content %}
     {% cache constant('App\\Twig\\Cache\\TwigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE') {lifetime:60*60*4, domainId:getDomain().id} %}
-        {{ render(controller('App\\Controller\\Front\\HomepageController:slightlyChangingPartsOnHomepageAction')) }}
+        {{ render(controller('App\\Controller\\Front\\HomepageController:slightlyChangingPartsOnHomepageAction'))|spaceless }}
     {% endcache %}
 
     <div class="web__line">
