@@ -251,23 +251,7 @@
         }
 
         &--inactive {
-            pointer-events: none;
-            cursor: not-allowed;
-
-            .box-chooser__item__check,
-            .box-chooser__item__image,
-            .box-chooser__item__title,
-            .box-chooser__item__price {
-                opacity: 0.4;
-
-                .is-disabled & {
-                    opacity: 1;
-                }
-            }
-
-            img {
-                filter: grayscale(1);
-            }
+            display: none;
         }
 
         &--payment {
