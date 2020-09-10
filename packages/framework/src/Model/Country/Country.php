@@ -113,7 +113,7 @@ class Country extends AbstractTranslatableEntity
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCode(): ?string
     {

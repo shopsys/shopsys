@@ -11,7 +11,9 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
 {
-    /** @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade */
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
+     */
     private $newsletterFacade;
 
     /**

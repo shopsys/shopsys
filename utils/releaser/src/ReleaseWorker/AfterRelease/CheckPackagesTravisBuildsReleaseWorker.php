@@ -10,7 +10,9 @@ use Shopsys\Releaser\Stage;
 
 final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackagesTravisBuildsReleaseWorker
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $releasingBranchName;
 
     /**

@@ -12,7 +12,7 @@ class BasicHttpAuth implements AuthInterface
     private $username;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $password;
 

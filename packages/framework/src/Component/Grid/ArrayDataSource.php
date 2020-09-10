@@ -51,9 +51,9 @@ class ArrayDataSource implements DataSourceInterface
     }
 
     /**
-     * @param null|int $limit
+     * @param int|null $limit
      * @param int $page
-     * @param null|string $orderSourceColumnName
+     * @param string|null $orderSourceColumnName
      * @param string $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */

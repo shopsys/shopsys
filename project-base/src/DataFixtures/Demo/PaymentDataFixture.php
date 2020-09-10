@@ -20,7 +20,9 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
 
-    /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade */
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
+     */
     private $paymentFacade;
 
     /**

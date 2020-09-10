@@ -236,7 +236,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @param array $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -305,7 +305,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createShortDescriptionsGroup(FormBuilderInterface $builder, ?Product $product)
@@ -343,7 +343,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product)
@@ -376,7 +376,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @param array $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -609,7 +609,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createPricesGroup(FormBuilderInterface $builder, ?Product $product)
@@ -684,7 +684,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createSeoGroup(FormBuilderInterface $builder, ?Product $product)
@@ -755,7 +755,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createVariantGroup(FormBuilderInterface $builder, ?Product $product)

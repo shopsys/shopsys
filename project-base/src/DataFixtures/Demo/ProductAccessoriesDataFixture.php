@@ -12,10 +12,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /** @var \App\Model\Product\ProductDataFactory */
+    /**
+     * @var \App\Model\Product\ProductDataFactory
+     */
     private $productDataFactory;
 
-    /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     */
     private $productFacade;
 
     /**

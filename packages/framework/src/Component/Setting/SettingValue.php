@@ -140,7 +140,7 @@ class SettingValue
     }
 
     /**
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null|mixed $value
+     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|mixed|null $value
      * @return string
      */
     protected function getValueType($value)

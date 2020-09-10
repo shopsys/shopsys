@@ -34,8 +34,8 @@ class OrderItem extends BaseOrderItem
      * @param string $vatPercent
      * @param int $quantity
      * @param string $type
-     * @param null|string $unitName
-     * @param null|string $catnum
+     * @param string|null $unitName
+     * @param string|null $catnum
      */
     public function __construct(
         BaseOrder $order,

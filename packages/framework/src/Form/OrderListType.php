@@ -49,7 +49,7 @@ class OrderListType extends AbstractType
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getParent()
     {

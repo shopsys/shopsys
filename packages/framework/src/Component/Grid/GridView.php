@@ -88,7 +88,7 @@ class GridView
      * @param string $name
      * @param array $parameters
      * @param bool $echo
-     * @return string|null|void
+     * @return string|null
      */
     public function renderBlock($name, array $parameters = [], $echo = true)
     {

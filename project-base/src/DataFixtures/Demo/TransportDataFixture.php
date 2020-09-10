@@ -20,7 +20,9 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
 
-    /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade */
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     */
     private $transportFacade;
 
     /**

@@ -112,7 +112,7 @@ class HeurekaCategory
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getName()
     {
@@ -120,7 +120,7 @@ class HeurekaCategory
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFullName()
     {

@@ -12,25 +12,39 @@ class FilterQuery
 {
     protected const MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 100;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $filters = [];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $indexName;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $sorting = [];
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $limit = 1000;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $page = 1;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $match;
 
-    /** @var int|null */
+    /**
+     * @var int|null
+     */
     protected $from;
 
     /**
