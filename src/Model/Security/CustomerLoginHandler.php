@@ -26,6 +26,11 @@ class CustomerLoginHandler extends BaseCustomerLoginHandler
      */
     private Domain $domain;
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Component\Domain\Domain $domain
+     */
     public function __construct(
         CurrentDomainRouter $router,
         CustomerUserFacade $customerUserFacade,
@@ -36,6 +41,11 @@ class CustomerLoginHandler extends BaseCustomerLoginHandler
         $this->domain = $domain;
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         if ($request->isXmlHttpRequest()) {
@@ -64,8 +74,9 @@ class CustomerLoginHandler extends BaseCustomerLoginHandler
             return;
         }
 
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $this->domain->getId());
-        if ($customerUser->getPassword() === '') {
+        if ($customerUser !== null && $customerUser->getLastLogin() === null && $customerUser->getErpCustomerNumber() !== null) {
             $responseData['errorMessage'] = t('Přihlašujete se poprvé na novém e-shopu, prosím nastavte si heslo pomocí funkce “Obnovení hesla”.');
         }
     }

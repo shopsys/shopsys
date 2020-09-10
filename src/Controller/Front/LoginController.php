@@ -101,7 +101,11 @@ class LoginController extends FrontBaseController
      */
     public function loginInOrderAction(Request $request)
     {
-        $loginSuccess = false;
+        $responseData = [
+            'success' => false,
+            'errorHeader' => t('Špatné přihlašovací údaje'),
+            'errorMessage' => t('Zadali jste špatné uživatelské jméno nebo heslo.'),
+        ];
         $formData = $request->get('front_login_form');
 
         try {
@@ -110,12 +114,18 @@ class LoginController extends FrontBaseController
             $user = null;
         }
 
+        /** @var \App\Model\Customer\User\CustomerUser $user */
+        if ($user !== null && $user->getLastLogin() === null && $user->getErpCustomerNumber() !== null) {
+            $responseData['errorHeader'] = t('Vaše první přihlášení');
+            $responseData['errorMessage'] = t('Přihlašujete se poprvé na novém e-shopu, prosím nastavte si heslo pomocí funkce “Obnovení hesla”.');
+        }
+
         if ($user !== null && $this->userPasswordEncoder->isPasswordValid($user, $formData['password'])) {
             $this->authenticator->loginUser($user, $request);
-            $loginSuccess = true;
+            $responseData['success'] = true;
             $this->session->set(self::SESSION_LOGIN_IN_ORDER_SUCCESS, true);
         }
 
-        return new JsonResponse($loginSuccess);
+        return new JsonResponse($responseData);
     }
 }

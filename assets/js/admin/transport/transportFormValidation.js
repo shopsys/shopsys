@@ -19,15 +19,6 @@ export default function transportFormValidation ($container) {
             }
         }
     });
-
-    const $externalIdField = $transportForm.find('#transport_form_basicInformation_externalId');
-    $externalIdField.jsFormValidator({
-        'callbacks': {
-            'validateUniqueExternalId': function () {
-                // JS validation is not necessary
-            }
-        }
-    });
 }
 
 (new Register()).registerCallback(transportFormValidation);
