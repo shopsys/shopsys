@@ -43,7 +43,7 @@ class MoneyRange extends Constraint
         parent::__construct($options);
 
         if ($this->min === null && $this->max === null) {
-            $message = sprintf('Either option "min" or "max" must be given for constraint "%s".', __CLASS__);
+            $message = sprintf('Either option "min" or "max" must be given for constraint "%s".', self::class);
 
             throw new \Symfony\Component\Validator\Exception\MissingOptionsException($message, ['min', 'max']);
         }
@@ -61,7 +61,7 @@ class MoneyRange extends Constraint
 
         $value = $options[$optionName];
         if ($value !== null && !($value instanceof Money)) {
-            $message = sprintf('The "%s" constraint requires the "%s" options to be either "%s" or null', __CLASS__, $optionName, Money::class);
+            $message = sprintf('The "%s" constraint requires the "%s" options to be either "%s" or null', self::class, $optionName, Money::class);
             $message .= sprintf(', "%s" given.', \is_object($value) ? \get_class($value) : \gettype($value));
 
             throw new \Symfony\Component\Validator\Exception\ConstraintDefinitionException($message);
