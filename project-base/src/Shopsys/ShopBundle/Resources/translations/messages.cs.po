@@ -382,6 +382,9 @@ msgstr "Přehled osobních údajů"
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů"
 
+msgid "Please check the entered values.<br>"
+msgstr "Prosím zkontrolujte zadané hodnoty.<br>"
+
 msgid "Please enter promo code."
 msgstr "Zadejte, prosím, slevový kupón."
 
