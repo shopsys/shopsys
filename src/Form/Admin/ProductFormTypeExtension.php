@@ -65,6 +65,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         'sellingPriceWithVat',
         'stockProductData',
         'sellingDenied',
+        'canBeShippedAsPackage',
     ];
 
     /**
