@@ -1,0 +1,128 @@
+.box-furniture-categories {
+    .list-categories__item {
+        @media @query-md {
+            width: calc((100% / 3) - @list-cagegories-item-gap-md);
+        }
+
+        @media @query-vl {
+            width: calc((100% / 5) - @list-cagegories-item-gap-md);
+        }
+
+        @media screen and (min-width: 1300px) {
+            width: calc((100% / 6) - @list-cagegories-item-gap-md);
+        }
+    }
+}
+
+.box-furniture-cat {
+    margin-bottom: 1.5rem;
+
+    @media @query-md {
+        margin-bottom: 3rem;
+    }
+
+    @media @query-lg {
+        display: flex;
+        align-items: center;
+    }
+
+    &__title {
+        font-size: 25px;
+
+        @media @query-vl-up {
+            font-size: 30px;
+        }
+    }
+
+    &__image {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        max-height: 180px;
+
+        border-radius: @radius;
+        background-color: #e4f9f5;
+        cursor: pointer;
+
+        @media @query-md {
+            max-height: none;
+        }
+
+        @media @query-lg {
+            min-width: 400px;
+            max-width: 400px;
+        }
+
+        @media @query-vl {
+            min-width: 500px;
+            max-width: 500px;
+        }
+
+        @media @query-vl-up {
+            min-width: 650px;
+            max-width: 650px;
+        }
+
+        @media screen and (min-width: 1270px) {
+            min-width: 810px;
+            max-width: 810px;
+        }
+
+        .slick-track {
+            display: flex;
+        }
+
+        .slick-arrow {
+            // Override slick carousel inline styles
+            display: none !important;
+        }
+    }
+
+    &__link {
+        display: block;
+        padding: 1.5rem;
+
+        border: 3px solid #e4f9f5;
+        border-top-right-radius: @radius;
+        border-bottom-right-radius: @radius;
+        transition: background-color @transition;
+
+        @media @query-mobile {
+            border-top: 0;
+            border-radius: 0;
+            border-bottom-left-radius: @radius;
+            border-bottom-right-radius: @radius;
+        }
+
+        @media @query-lg {
+            border-left-width: 0;
+        }
+
+        @media @query-vl-up {
+            padding: 2rem;
+        }
+
+        @media @query-xl {
+            padding: 2.5rem 3.5rem 2.5rem 2.5rem;
+        }
+
+        &:hover {
+            text-decoration: none;
+            background-color: #e4f9f5;
+        }
+    }
+
+    &--reverse {
+        .box-furniture-cat__image {
+            order: 1;
+        }
+
+        .box-furniture-cat__link {
+            border-left-width: 3px;
+            border-right-width: 0;
+            border-radius: 0;
+            border-top-left-radius: @radius;
+            border-bottom-left-radius: @radius;
+        }
+    }
+}

@@ -155,12 +155,24 @@
                 height: @box-list-description-line-height * @box-list-description-lines;
             }
 
+            &--centered {
+                text-align: center;
+            }
+
             &--top {
                 display: none;
 
                 @media @query-md {
                     display: block;
                     margin-top: 1.25rem;
+                }
+            }
+
+            &--wider {
+                max-width: 980px;
+
+                @media @query-vl {
+                    margin-bottom: 4rem;
                 }
             }
         }
@@ -209,6 +221,18 @@
                     position: absolute;
                     right: 0;
                     top: -10px;
+                }
+            }
+
+            &--no-spacing {
+                padding-top: 0;
+            }
+        }
+
+        &--furniture {
+            .box-breadcrumb {
+                @media @query-mobile {
+                    margin-bottom: 1rem;
                 }
             }
         }

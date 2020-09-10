@@ -114,6 +114,10 @@
 
             will-change: transform;
             transition: transform @transition;
+
+            @media @query-md {
+                width: auto;
+            }
         }
 
         // Name element is outside (in HTML) the link element (which received transform hover effect)

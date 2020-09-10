@@ -1,0 +1,585 @@
+.box-furniture {
+    &-banner {
+        display: flex;
+        flex-direction: column;
+        margin: 4rem 0 2rem;
+
+        border-radius: @radius;
+
+        @media @query-vl {
+            flex-direction: row;
+        }
+
+        &__content {
+            padding: 2rem;
+
+            @media @query-md {
+                padding: 2rem 3rem;
+            }
+
+            @media @query-lg {
+                padding: 2rem 3rem 2rem 4rem;
+            }
+
+            @media @query-vl {
+                width: 50%;
+            }
+
+            @media @query-xl {
+                width: auto;
+            }
+        }
+
+        &__image {
+            display: flex;
+            align-items: flex-end;
+
+            border-bottom: 3px solid @color-f;
+
+            @media @query-vl {
+                width: 50%;
+
+                border-bottom: 0;
+            }
+
+            @media @query-xl {
+                min-width: 670px;
+            }
+        }
+
+        &__img {
+            display: block;
+            margin-top: -30px;
+
+            @media @query-md {
+                max-height: 250px;
+            }
+
+            @media @query-vl {
+                max-height: none;
+            }
+        }
+
+        &__btn {
+            @media @query-mobile {
+                display: block;
+            }
+        }
+
+        &--brand {
+            height: auto;
+            margin-bottom: 4rem;
+
+            @media screen and (min-width: 1160px) {
+                height: 220px;
+                align-items: center;
+            }
+
+            @media @query-mobile {
+                margin-top: 2rem;
+            }
+
+            .box-furniture-banner__title {
+                margin-bottom: 0.25rem;
+            }
+
+            .box-furniture-banner__desc {
+                margin-top: 0;
+            }
+
+            .box-furniture-banner__image {
+                min-width: 0;
+                padding: 0 1.5rem 1.5rem;
+                justify-content: flex-end;
+
+                @media screen and (min-width: 1160px) {
+                    min-width: 690px;
+                    padding: 0;
+                }
+            }
+
+            .box-furniture-banner__img {
+                height: 100%;
+                object-fit: cover;
+                margin: 0;
+            }
+
+            .box-furniture-banner__content {
+                padding: 1.5rem;
+
+                background-color: @theme-kitchen-bg;
+                border-radius: @radius;
+
+                @media @query-md {
+                    max-width: 70%;
+                }
+
+                @media screen and (min-width: 1160px) {
+                    padding: 1rem 3rem;
+                    max-width: none;
+
+                    background-color: transparent;
+                }
+            }
+        }
+
+        &--detail {
+            padding: 1rem;
+            margin: 0 auto 1.5rem;
+
+            border-radius: 0.5em;
+            background-color: #e4f9f5;
+
+            @media @query-md {
+                height: 105px;
+                max-width: 1270px;
+                flex-direction: row;
+                margin: 2rem auto;
+                padding: 0;
+            }
+
+            .box-furniture-banner__content {
+                padding: 0 0 0.5rem;
+                text-align: center;
+
+                @media @query-md {
+                    padding: 1.35rem 0 0 1.5rem;
+                    flex-grow: 1;
+                    text-align: left;
+                }
+            }
+
+            .box-furniture-banner__title {
+                margin-bottom: 0;
+
+                font-size: 30px;
+            }
+
+            .box-furniture-banner__image {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                padding: 1rem;
+
+                background-color: @color-f;
+                border-radius: 0.5em;
+
+                @media @query-md {
+                    min-width: 365px;
+                    width: auto;
+                    height: calc(100% - 4px);
+                    right: 2px;
+                    top: 2px;
+                    padding: 0;
+                }
+            }
+
+            .box-furniture-banner__img {
+                margin: 0;
+            }
+        }
+    }
+
+    @query-furniture-offer-break: ~"@{query-base} (min-width: 1260px)";
+
+    &-offer {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2rem;
+
+        border-radius: @radius;
+
+        @media @query-md {
+            height: 220px;
+            flex-direction: row;
+        }
+
+        @media @query-furniture-offer-break {
+            margin: 0;
+        }
+
+        &-wrap {
+            @media @query-furniture-offer-break {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+        &__content {
+            padding: 1.25rem;
+            text-align: center;
+            flex-grow: 1;
+
+            @media @query-md {
+                padding: 1.5rem 0 0.5rem 1rem;
+            }
+
+            @media @query-lg {
+                padding: 2rem 0 2rem 2rem;
+            }
+
+            @media @query-furniture-offer-break {
+                padding: 1.5rem 0 0.5rem 1.5rem;
+            }
+
+            @media @query-xl {
+                padding: 2rem 0 2rem 2rem;
+            }
+        }
+
+        &__desc {
+            margin: 10px auto;
+
+            font-size: 16px;
+            line-height: 1.5;
+            font-family: @font-quartenary;
+
+            @media @query-lg {
+                font-size: 17px;
+            }
+
+            @media screen and (min-width: 1340px) {
+                margin: 15px auto;
+
+                font-size: 18px;
+            }
+
+            @media @query-xl {
+                font-size: 20px;
+            }
+        }
+
+        &__image {
+            display: none;
+
+            @media @query-md {
+                display: flex;
+                align-items: flex-end;
+            }
+
+            @media @query-lg {
+                flex-grow: 1;
+            }
+
+            @media @query-furniture-offer-break {
+                flex-grow: 0;
+            }
+        }
+
+        &__img {
+            display: block;
+
+            @media @query-md {
+                max-width: none;
+            }
+        }
+
+        &--meeting {
+            @media @query-lg {
+                width: 100%;
+                margin-left: auto;
+                margin-bottom: 3rem;
+            }
+
+            @media @query-furniture-offer-break {
+                width: 60%;
+                margin-left: 0;
+                margin-bottom: 1rem;
+                margin-right: 20px;
+            }
+
+            @media @query-xl {
+                min-width: 810px;
+            }
+
+            .box-furniture-offer__image {
+                margin-right: 20px;
+                max-width: 80%;
+
+                @media @query-md {
+                    margin-right: -15px;
+                    max-width: 100%;
+                }
+            }
+
+            .box-furniture-offer__desc {
+                max-width: 400px;
+            }
+        }
+
+        &--plan {
+            @media @query-lg {
+                width: 100%;
+            }
+
+            @media @query-furniture-offer-break {
+                width: 40%;
+                margin-left: 20px;
+            }
+
+            @media @query-xl {
+                min-width: 570px;
+            }
+
+            .box-furniture-offer__img {
+                margin-right: 25px;
+                max-width: 80%;
+
+                @media @query-md {
+                    max-width: 100%;
+                }
+            }
+
+            .box-furniture-offer__desc {
+                margin-top: 10px;
+            }
+        }
+    }
+
+    &-blog {
+        margin-bottom: 4rem;
+
+        .web__container {
+            padding: 0;
+        }
+
+        .box-articles__text {
+            background-color: @theme-kitchen-bg;
+        }
+
+        .box-articles__heading,
+        .box-articles__desc,
+        .list-articles__item__link,
+        .btn--tag,
+        .btn--next,
+        .btn--outline {
+            color: @theme-kitchen-color-secondary;
+        }
+
+        .list-articles__item__desc {
+            color: @theme-kitchen-color;
+        }
+
+        .btn--outline {
+            border-color: @theme-kitchen-color-secondary;
+
+            &:hover {
+                background-color: @theme-kitchen-color-secondary;
+                color: @color-f;
+            }
+        }
+
+        .btn--tag {
+            border-color: @theme-kitchen-color-tertiary;
+
+            &:hover {
+                background-color: @theme-kitchen-color-tertiary;
+            }
+        }
+    }
+
+    &-usp {
+        padding-left: 10px;
+        width: 50%;
+
+        @media @query-md {
+            padding-left: 30px;
+            width: calc(100% / 3);
+        }
+
+        @media @query-vl-up {
+            width: auto;
+            flex: 0 0 1px;
+            flex-grow: 1;
+        }
+
+        &-wrap {
+            margin-bottom: 2rem;
+            text-align: center;
+
+            @media @query-md {
+                margin-bottom: 5rem;
+            }
+        }
+
+        &__heading {
+            margin-bottom: 1.5rem;
+
+            @media @query-md {
+                margin-bottom: 3rem;
+            }
+        }
+
+        &-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-left: -10px;
+
+            @media @query-md {
+                margin-left: -30px;
+            }
+
+            @media @query-vl-up {
+                flex-wrap: nowrap;
+            }
+        }
+
+        &__image {
+            position: relative;
+            margin-bottom: 15px;
+
+            .box-furniture-label {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+            }
+        }
+
+        &__img {
+            display: block;
+            margin: auto;
+        }
+
+        &__title {
+            display: block;
+            margin-bottom: 5px;
+
+            text-transform: uppercase;
+            font-family: @font-tertiary;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 1.5;
+
+            @media @query-md {
+                font-size: 16px;
+            }
+        }
+
+        &__desc {
+            margin-top: 0;
+
+            font-size: 14px;
+
+            @media @query-md {
+                font-size: 15px;
+            }
+        }
+    }
+
+    &-carousel {
+        position: relative;
+        overflow: hidden;
+
+        &-wrap {
+            position: relative;
+            margin-bottom: 2rem;
+
+            &__title {
+                margin-bottom: 1.5rem;
+                text-align: center;
+            }
+
+            &__tag {
+                position: absolute;
+                left: 15px;
+                top: 18px;
+                z-index: 1;
+
+                pointer-events: none;
+
+                @media screen and (min-width: 1400px) {
+                    left: 80px;
+                }
+
+                @media @query-xl {
+                    left: 100px;
+                }
+
+                &--with-heading {
+                    top: 85px;
+                }
+            }
+        }
+
+        .slick-list {
+            max-width: 1270px;
+            margin: auto;
+            overflow: hidden;
+
+            border-radius: @radius;
+        }
+
+        .slick-track {
+            display: flex;
+        }
+
+        &__img {
+            display: block;
+            max-height: 220px;
+
+            @media @query-md {
+                max-height: 400px;
+            }
+
+            @media @query-vl {
+                max-height: none;
+            }
+        }
+    }
+
+    &-pagination {
+        @media @query-md {
+            display: flex;
+            justify-content: space-between;
+            margin: 3rem 0 0 -30px;
+        }
+
+        &__item {
+            display: flex;
+            align-items: center;
+            flex: 1 1 0;
+            height: 70px;
+            margin-bottom: 1rem;
+            padding: 0 20px;
+
+            border: 2px solid @theme-kitchen-color-tertiary;
+            border-radius: @radius;
+            text-decoration: none;
+
+            @media @query-md {
+                margin: 0 0 0 30px;
+            }
+
+            &:hover {
+                text-decoration: none;
+                background-color: @theme-kitchen-color-tertiary;
+            }
+
+            &__icon {
+                font-size: 30px;
+
+                margin-left: 30px;
+
+                &--previous {
+                    margin: 0 30px 0 0;
+                    transform: scaleX(-1);
+                }
+            }
+
+            &__text {
+                position: relative;
+                top: 1px;
+
+                font-family: @font-quartenary;
+                font-size: 18px;
+            }
+
+            &--next {
+                justify-content: flex-end;
+            }
+        }
+    }
+}

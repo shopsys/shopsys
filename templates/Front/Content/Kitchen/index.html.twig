@@ -1,0 +1,285 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block title %}
+    {{- 'Kuchyně'|trans -}}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line web__line--spacing--big">
+        <div class="web__container">
+            {# Heading, breadcrumb, description #}
+            <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
+                {# Heading #}
+                <h1 class="box-list__description__heading theme-kitchen-color-secondary">
+                    {{ "Když pro kuchyni, tak do Sconta"|trans }}
+                </h1>
+                {# Breadcrumb - not implemented yet #}
+                <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing js-not-implemented-yet">
+                    <div class="box-breadcrumb">
+                        <div class="box-breadcrumb">
+                            <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
+                                <i class="box-breadcrumb__item__icon svg svg-home"></i>
+                                <span>{{ 'Domů'|trans }}</span>
+                            </a>
+                            <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                            <a href="{{ url('front_kitchen') }}" class="box-breadcrumb__item">{{ 'Kuchyně'|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+                {# Short description #}
+                <p class="box-list__description__text box-list__description__text--centered box-list__description__text--top theme-kitchen-color">
+                    {{ 'V každém z 8 kuchyňských studií si můžete vybrat z více než 40 vystavených kuchyní různých stylů a barevných provedení.
+                    Naši pečlivě proškolení odborníci vám pomohou přeměnit sny ve skutečnost.'|trans }}
+                </p>
+            </div>
+            {# Category list #}
+            <div class="list-categories-wrap list-categories-wrap--centered">
+                <ul class="list-categories box-furniture-categories">
+                    <li class="list-categories__item list-categories__item--special">
+                        <a href="{{ url('front_kitchen_list') }}" class="list-categories__item__block">
+                            <span class="list-categories__item__image__wrap">
+                                <picture>
+                                    <source
+                                        srcset="
+                                        {{ asset('public/frontend/images/kitchen/kuchyne_na_miru2x.png') }} 2x,
+                                        {{ asset('public/frontend/images/kitchen/kuchyne_na_miru.png') }} 1x"
+                                    >
+                                    <img
+                                        alt="{{ 'Kuchyně na míru'|trans }}"
+                                        class="list-categories__item__image image-category"
+                                        title="{{ 'Kuchyně na míru'|trans }}"
+                                        loading="lazy"
+                                        data-src="{{ asset('public/frontend/images/kitchen/kuchyne_na_miru.png') }}"
+                                        itemprop="image"
+                                    >
+                                </picture>
+                            </span>
+                            <h3 class="list-categories__item__title">{{ 'Kuchyně na míru'|trans }}</h3>
+                        </a>
+                    </li>
+                    <li class="list-categories__item js-not-implemented-yet">
+                        <a href="#" class="list-categories__item__block">
+                            <span class="list-categories__item__image__wrap">
+                                <picture>
+                                    <source
+                                        srcset="
+                                        {{ asset('public/frontend/images/kitchen/kuchynske_linky2x.png') }} 2x,
+                                        {{ asset('public/frontend/images/kitchen/kuchynske_linky.png') }} 1x"
+                                    >
+                                    <img
+                                        alt="{{ 'Kuchyňské linky'|trans }}"
+                                        class="list-categories__item__image image-category"
+                                        title="{{ 'Kuchyňské linky'|trans }}"
+                                        loading="lazy"
+                                        data-src="{{ asset('public/frontend/images/kitchen/kuchynske_linky.png') }}"
+                                        itemprop="image"
+                                    >
+                                </picture>
+                            </span>
+                            <h3 class="list-categories__item__title">{{ 'Kuchyňské linky'|trans }}</h3>
+                        </a>
+                    </li>
+                    <li class="list-categories__item js-not-implemented-yet">
+                        <a href="#" class="list-categories__item__block">
+                            <span class="list-categories__item__image__wrap">
+                                <picture>
+                                    <source
+                                        srcset="
+                                        {{ asset('public/frontend/images/kitchen/jidelni_zidle2x.png') }} 2x,
+                                        {{ asset('public/frontend/images/kitchen/jidelni_zidle.png') }} 1x"
+                                    >
+                                    <img
+                                        alt="{{ 'Jídelní židle'|trans }}"
+                                        class="list-categories__item__image image-category"
+                                        title="{{ 'Jídelní židle'|trans }}"
+                                        loading="lazy"
+                                        data-src="{{ asset('public/frontend/images/kitchen/jidelni_zidle.png') }}"
+                                        itemprop="image"
+                                    >
+                                </picture>
+                            </span>
+                            <h3 class="list-categories__item__title">{{ 'Jídelní židle'|trans }}</h3>
+                        </a>
+                    </li>
+                    <li class="list-categories__item js-not-implemented-yet">
+                        <a href="#" class="list-categories__item__block">
+                            <span class="list-categories__item__image__wrap">
+                                <picture>
+                                    <source
+                                        srcset="
+                                        {{ asset('public/frontend/images/kitchen/jidelni_stoly2x.png') }} 2x,
+                                        {{ asset('public/frontend/images/kitchen/jidelni_stoly.png') }} 1x"
+                                    >
+                                    <img
+                                        alt="{{ 'Jídelní stoly'|trans }}"
+                                        class="list-categories__item__image image-category"
+                                        title="{{ 'Jídelní stoly'|trans }}"
+                                        loading="lazy"
+                                        data-src="{{ asset('public/frontend/images/kitchen/jidelni_stoly.png') }}"
+                                        itemprop="image"
+                                    >
+                                </picture>
+                            </span>
+                            <h3 class="list-categories__item__title">{{ 'Jídelní stoly'|trans }}</h3>
+                        </a>
+                    </li>
+                    <li class="list-categories__item js-not-implemented-yet">
+                        <a href="#" class="list-categories__item__block">
+                            <span class="list-categories__item__image__wrap">
+                                <picture>
+                                    <source
+                                        srcset="
+                                        {{ asset('public/frontend/images/kitchen/jidelni_sety2x.png') }} 2x,
+                                        {{ asset('public/frontend/images/kitchen/jidelni_sety.png') }} 1x"
+                                    >
+                                    <img
+                                        alt="{{ 'Jídelní sety'|trans }}"
+                                        class="list-categories__item__image image-category"
+                                        title="{{ 'Jídelní sety'|trans }}"
+                                        loading="lazy"
+                                        data-src="{{ asset('public/frontend/images/kitchen/jidelni_sety.png') }}"
+                                        itemprop="image"
+                                    >
+                                </picture>
+                            </span>
+                            <h3 class="list-categories__item__title">{{ 'Jídelní sety'|trans }}</h3>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="box-furniture-sep" />
+            {# Banner #}
+            <div class="box-furniture-banner theme-kitchen-bg">
+                <div class="box-furniture-banner__image">
+                    <picture>
+                        <source
+                            srcset="
+                            {{ asset('public/frontend/images/kitchen/kuchyne_na_miru_banner2x.png') }} 2x,
+                            {{ asset('public/frontend/images/kitchen/kuchyne_na_miru_banner.png') }} 1x"
+                        >
+                        <img
+                            alt="{{ 'Kuchyně na míru'|trans }}"
+                            class="box-furniture-banner__img"
+                            title="{{ 'Kuchyně na míru'|trans }}"
+                            loading="lazy"
+                            data-src="{{ asset('public/frontend/images/kitchen/kuchyne_na_miru_banner.png') }}"
+                            itemprop="image"
+                        >
+                    </picture>
+                </div>
+                <div class="box-furniture-banner__content">
+                    <h2 class="box-furniture-banner__title theme-kitchen-color-secondary">{{ 'Kuchyně na míru'|trans }}</h2>
+                    <p class="box-furniture-banner__desc theme-kitchen-color">
+                    {{ 'Povězte nám, jak má vaše vysněná kuchyně vypadat a my zařídíme vše ostatní.
+                    Sestavíme kuchyni tak, aby odpovídala vašim přáním a potřebám.
+                    V závislosti na prostoru plánujeme kuchyně různých tvarů a velikostí.
+                    Mezi nejoblíbenější tvary patří rohová kuchyně, kuchyně do U nebo kuchyně s ostrůvkem.
+                    Pohodlí a dlouhou výdrž pak zajistí kvalitní materiál a nejmodernější technologie.'|trans }}
+                    </p>
+                    <a class="box-furniture-banner__btn btn btn--ghost js-not-implemented-yet" href="#">
+                        {{ 'Víc informací'|trans }}
+                    </a>
+                </div>
+            </div>
+            {# Gallery #}
+            <div class="box-furniture-grid-gallery">
+                <div class="box-furniture-grid-gallery__item box-furniture-grid-gallery__item--wide">
+                    <picture>
+                        <source
+                            srcset="
+                            {{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_1_2x.jpg') }} 2x,
+                            {{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_1.jpg') }} 1x"
+                        >
+                        <img
+                            alt="{{ 'Kuchyně na míru'|trans }}"
+                            class="box-furniture-grid-gallery__img"
+                            title="{{ 'Kuchyně na míru'|trans }}"
+                            loading="lazy"
+                            data-src="{{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_1.jpg') }}"
+                            itemprop="image"
+                        >
+                    </picture>
+                </div>
+                <div class="box-furniture-grid-gallery__item">
+                    <picture>
+                        <source
+                            srcset="
+                            {{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_2_2x.jpg') }} 2x,
+                            {{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_2.jpg') }} 1x"
+                        >
+                        <img
+                            alt="{{ 'Kuchyně na míru'|trans }}"
+                            class="box-furniture-grid-gallery__img"
+                            title="{{ 'Kuchyně na míru'|trans }}"
+                            loading="lazy"
+                            data-src="{{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_2.jpg') }}"
+                            itemprop="image"
+                        >
+                    </picture>
+                </div>
+                <div class="box-furniture-grid-gallery__item box-furniture-grid-gallery__item--vertical">
+                    <picture>
+                        <source
+                            srcset="
+                            {{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_3_2x.jpg') }} 2x,
+                            {{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_3.jpg') }} 1x"
+                        >
+                        <img
+                            alt="{{ 'Kuchyně na míru'|trans }}"
+                            class="box-furniture-grid-gallery__img"
+                            title="{{ 'Kuchyně na míru'|trans }}"
+                            loading="lazy"
+                            data-src="{{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_3.jpg') }}"
+                            itemprop="image"
+                        >
+                    </picture>
+                    <picture>
+                        <source
+                            srcset="
+                            {{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_4_2x.jpg') }} 2x,
+                            {{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_4.jpg') }} 1x"
+                        >
+                        <img
+                            alt="{{ 'Kuchyně na míru'|trans }}"
+                            class="box-furniture-grid-gallery__img"
+                            title="{{ 'Kuchyně na míru'|trans }}"
+                            loading="lazy"
+                            data-src="{{ asset('public/frontend/images/kitchen/gallery/kuchyne_galerie_4.jpg') }}"
+                            itemprop="image"
+                        >
+                    </picture>
+                </div>
+            </div>
+            {# Offers #}
+            {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
+            <hr class="box-furniture-sep box-furniture-sep--smaller-spacing box-furniture-sep--top-spacing"/>
+            {# Articles #}
+            <div class="box-furniture-blog">
+                {{ render(controller('App\\Controller\\Front\\BlogArticleController:homepageArticlesAction')) }}
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--smaller-spacing"/>
+            {# Description #}
+            <div class="box-blog__desc box-blog__desc--bottom box-furniture-desc">
+                <h2 class="theme-kitchen-color-secondary">{{ 'Na co je dobré při nákupu kuchyně nezapomínat?'|trans }}</h2>
+                <p class="theme-kitchen-color">{{ 'Kuchyň je středobodem každého domova. Představuje místo, kde společně jíme, mluvíme, žijeme, diskutujeme, ale také odpočíváme.
+                Kuchyň by proto měla být vždy navržena především tak, abychom se v ní cítili příjemně  a rádi zde trávili svůj čas.
+                Existuje celá řada možností, jak se k nákupu nové kuchyně postavit.
+                Nejen proto se vyplatí poradit se s odborníkem, například v jednom z 8 kuchyňských studií SCONTO.
+                V průběhu plánování kuchyně je totiž třeba dbát na řadu věcí: funkčnost, správně zvolené spotřebiče, přesné přizpůsobení
+                disponibilnímu prostoru a mnoho dalšího. Naši vyškolení a zkušení poradci vás na cestě k vysněné kuchyni rádi posunou dále.'|trans }}</p>
+
+                <h2 class="theme-kitchen-color-secondary">{{ 'Kompetentní poradenství v kuchyňském studiu SCONTO'|trans }}</h2>
+                <p class="theme-kitchen-color">{{ 'Kuchyň pořizujeme na mnoho let, a proto by měla přesně sloužit našim požadavkům.
+                Začíná to už při výběru kuchyňských skříněk a spotřebičů, pokračuje přes design a končí u příslušenství,
+                případně bezpečností pro naše ratolesti. Kromě toho bychom měli přemýšlet také o tom,
+                zda je kuchyňský prostor zároveň jídelnou, kam by se měly vejít ještě stůl a židle.
+                Jak vidíte, je toho hodně, co je třeba patřičně zvážit.
+                Také proto je tu pro Vás připraven náš ochotný personál, který nabídne různé možnosti,
+                z nichž si určitě vyberete.'|trans }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
