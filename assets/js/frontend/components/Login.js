@@ -42,8 +42,12 @@ export default class Login {
                 } else {
                     const $validationErrors = $('.js-window-validation-errors');
                     if ($validationErrors.hasClass('display-none')) {
+                        let errorMessage = Translator.trans('This account doesn\'t exist or password is incorrect');
+                        if (data.errorMessage !== undefined) {
+                            errorMessage = data.errorMessage;
+                        }
                         $validationErrors
-                            .text(Translator.trans('This account doesn\'t exist or password is incorrect'))
+                            .text(errorMessage)
                             .show();
                     }
                 }
