@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: cron
+    labels:
+        app: cron
+spec:
+    progressDeadlineSeconds: 1500
+    replicas: 1
+    strategy:
+        rollingUpdate:
+            maxSurge: 1
+            maxUnavailable: 0
+        type: RollingUpdate
+    selector:
+        matchLabels:
+            app: cron
+    template:
+        metadata:
+            labels:
+                app: cron
+        spec:
+            volumes:
+                -   name: domains-urls
+                    configMap:
+                        name: domains-urls
+                -   name: parameters
+                    configMap:
+                        name: parameters
+                -   name: cron-list
+                    configMap:
+                        name: cron-list
+            containers:
+                -   image: "{{TAG}}"
+                    name: php-fpm
+                    securityContext:
+                        runAsUser: 0
+                    imagePullPolicy: Always
+                    workingDir: /var/www/html
+                    command: ["/bin/sh","-c"]
+                    args: ["mkfifo /tmp/log-pipe && chmod 666 /tmp/log-pipe && cron && tail -n +1 -f /tmp/log-pipe"]
+                    lifecycle:
+                        preStop:
+                            exec:
+                                command:
+                                    - sleep
+                                    - '5'
+                    volumeMounts:
+                        -   name: domains-urls
+                            mountPath: /var/www/html/config/domains_urls.yaml
+                            subPath: domains_urls.yaml
+                        -   name: parameters
+                            mountPath: /var/www/html/config/parameters.yaml
+                            subPath: parameters.yaml
+                        -   name: cron-list
+                            mountPath: /etc/cron.d/cron
+                            subPath: cron
+                    env:
+                        -   name: S3_API_HOST
+                            value: "{{S3_API_HOST}}"
+                        -   name: S3_API_USERNAME
+                            value: "{{S3_API_USERNAME}}"
+                        -   name: S3_API_PASSWORD
+                            value: "{{S3_API_PASSWORD}}"
+                        -   name: S3_API_BUCKET_NAME
+                            value: "{{S3_API_BUCKET_NAME}}"
+                        -   name: CDN_DOMAIN
+                            value: "{{CDN_DOMAIN}}"
+                        -   name: REDIS_PREFIX
+                            value: "{{REDIS_PREFIX}}"
+                        -   name: ELASTIC_SEARCH_INDEX_PREFIX
+                            value: "{{ELASTIC_SEARCH_INDEX_PREFIX}}"
+            imagePullSecrets:
+                -   name: dockerregistry
