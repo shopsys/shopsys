@@ -93,7 +93,7 @@ class OrderDataFactory
 
         foreach ($input as $key => $value) {
             if (property_exists(get_class($orderData), $key)) {
-                $orderData->$key = $value;
+                $orderData->{$key} = $value;
             }
         }
 

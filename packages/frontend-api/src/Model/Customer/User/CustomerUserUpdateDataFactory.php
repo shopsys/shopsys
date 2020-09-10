@@ -38,7 +38,7 @@ class CustomerUserUpdateDataFactory
 
         foreach ($input as $key => $value) {
             if (property_exists(get_class($customerUserData), $key)) {
-                $customerUserData->$key = $value;
+                $customerUserData->{$key} = $value;
             }
         }
 

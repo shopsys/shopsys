@@ -132,7 +132,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
 
         foreach ($constraint as $name => $value) {
             if ($value instanceof JsonSerializable) {
-                $constraint->$name = $value->jsonSerialize();
+                $constraint->{$name} = $value->jsonSerialize();
             }
         }
 
