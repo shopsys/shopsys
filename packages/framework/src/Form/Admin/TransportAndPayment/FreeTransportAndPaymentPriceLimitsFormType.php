@@ -55,17 +55,17 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $formBuilderForDomain = $builder->create((string)$domainConfig->getId(), null, [
-                    'compound' => true,
-                    'validation_groups' => function (FormInterface $form) {
-                        $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
-                        $formData = $form->getData();
-                        if ($formData[self::FIELD_ENABLED]) {
-                            $validationGroups[] = static::VALIDATION_GROUP_PRICE_LIMIT_ENABLED;
-                        }
+                'compound' => true,
+                'validation_groups' => function (FormInterface $form) {
+                    $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
+                    $formData = $form->getData();
+                    if ($formData[self::FIELD_ENABLED]) {
+                        $validationGroups[] = static::VALIDATION_GROUP_PRICE_LIMIT_ENABLED;
+                    }
 
-                        return $validationGroups;
-                    },
-                ])
+                    return $validationGroups;
+                },
+            ])
                 ->add(self::FIELD_ENABLED, CheckboxType::class, [
                     'required' => false,
                 ])

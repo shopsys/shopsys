@@ -79,8 +79,8 @@ class TransportController extends AdminBaseController
             $this->addSuccessFlashTwig(
                 t('Shipping <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                 [
-                'name' => $transport->getName(),
-                'url' => $this->generateUrl('admin_transport_edit', ['id' => $transport->getId()]),
+                    'name' => $transport->getName(),
+                    'url' => $this->generateUrl('admin_transport_edit', ['id' => $transport->getId()]),
                 ]
             );
             return $this->redirectToRoute('admin_transportandpayment_list');

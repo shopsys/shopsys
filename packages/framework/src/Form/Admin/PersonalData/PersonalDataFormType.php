@@ -21,8 +21,7 @@ class PersonalDataFormType extends AbstractType
             ])
             ->add('personalDataExportSiteContent', CKEditorType::class, [
                 'required' => false,
-
-                ])
+            ])
             ->add('save', SubmitType::class);
     }
 }

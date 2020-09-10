@@ -26,8 +26,8 @@ class OrderNameFilter implements AdvancedSearchFilterInterface
     public function getAllowedOperators()
     {
         return [
-          self::OPERATOR_CONTAINS,
-          self::OPERATOR_NOT_CONTAINS,
+            self::OPERATOR_CONTAINS,
+            self::OPERATOR_NOT_CONTAINS,
         ];
     }
 

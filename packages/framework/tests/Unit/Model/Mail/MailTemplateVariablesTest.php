@@ -28,10 +28,10 @@ class MailTemplateVariablesTest extends TestCase
 
         $this->assertEquals(
             [
-            '{variable1}' => 'Variable 1',
-            '{variable2}' => 'Variable 2',
-            '{variable3}' => 'Variable 3',
-        ],
+                '{variable1}' => 'Variable 1',
+                '{variable2}' => 'Variable 2',
+                '{variable3}' => 'Variable 3',
+            ],
             $mailTemplateConfiguration->getLabeledVariables()
         );
     }

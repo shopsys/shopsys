@@ -61,7 +61,7 @@ class HeurekaShopCertificationFormType extends AbstractType
             ->setRequired('server_name')
             ->setAllowedTypes('server_name', ['string', 'null'])
             ->setDefaults([
-            'attr' => ['novalidate' => 'novalidate'],
+                'attr' => ['novalidate' => 'novalidate'],
             ]);
     }
 }
