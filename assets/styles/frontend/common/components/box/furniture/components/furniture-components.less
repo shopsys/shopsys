@@ -258,6 +258,14 @@
                 display: flex;
                 align-items: flex-end;
             }
+
+            @media @query-lg {
+                flex-grow: 1;
+            }
+
+            @media @query-furniture-offer-break {
+                flex-grow: 0;
+            }
         }
 
         &__img {
@@ -270,14 +278,15 @@
 
         &--meeting {
             @media @query-lg {
-                width: 85%;
+                width: 100%;
                 margin-left: auto;
-                margin-bottom: 1rem;
+                margin-bottom: 3rem;
             }
 
             @media @query-furniture-offer-break {
                 width: 60%;
                 margin-left: 0;
+                margin-bottom: 1rem;
                 margin-right: 20px;
             }
 
@@ -302,7 +311,7 @@
 
         &--plan {
             @media @query-lg {
-                width: 70%;
+                width: 100%;
             }
 
             @media @query-furniture-offer-break {
