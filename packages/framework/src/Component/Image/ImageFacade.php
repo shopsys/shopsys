@@ -295,7 +295,7 @@ class ImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
      * @return string
@@ -406,7 +406,7 @@ class ImageFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */

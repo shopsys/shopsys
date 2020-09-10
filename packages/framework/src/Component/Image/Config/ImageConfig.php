@@ -77,7 +77,7 @@ class ImageConfig
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      * @return string
      */
     public function getEntityName($entity)
@@ -87,7 +87,7 @@ class ImageConfig
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      * @param string|null $type
      * @param string|null $sizeName
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
@@ -132,7 +132,7 @@ class ImageConfig
     }
 
     /**
-     * @param Object|null $entity
+     * @param object|null $entity
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
      */
     public function getImageEntityConfig($entity)

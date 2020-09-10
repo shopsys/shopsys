@@ -101,7 +101,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
      * @return string
@@ -116,7 +116,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
@@ -126,7 +126,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param array $attributes
      * @return string
      */
