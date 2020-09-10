@@ -133,7 +133,8 @@ export default class SlickCarousel {
                 infinite: true,
                 swipeToSlide: true,
                 variableWidth: true,
-                speed: 500
+                speed: 500,
+                touchMove: false
             });
         }
 
