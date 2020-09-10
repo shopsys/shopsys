@@ -20,6 +20,9 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         // @see https://github.com/shopsys/shopsys/pull/1264
         'shopsys/shopsys',
         'shopsys/project-base',
+        // not exists in 7.3.x version
+        'shopsys/backend-api',
+        'shopsys/frontend-api',
         // not maintained anymore
         'shopsys/product-feed-interface',
         'shopsys/phpstorm-inspect',
