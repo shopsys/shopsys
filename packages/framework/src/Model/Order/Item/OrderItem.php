@@ -19,10 +19,9 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
  */
 class OrderItem
 {
-    public const
-        TYPE_PAYMENT = 'payment',
-        TYPE_PRODUCT = 'product',
-        TYPE_TRANSPORT = 'transport';
+    public const TYPE_PAYMENT = 'payment';
+    public const TYPE_PRODUCT = 'product';
+    public const TYPE_TRANSPORT = 'transport';
 
     /**
      * @var int|null
