@@ -90,8 +90,7 @@ class BackendApiCreateProductTest extends OauthTestCase
     {
         $response = $this->runOauthRequest('GET', '/api/v1/products/' . $uuid);
         $this->assertSame(200, $response->getStatusCode());
-        $data = json_decode($response->getContent(), true);
-        return $data;
+        return json_decode($response->getContent(), true);
     }
 
     public function testCreateEmptyProduct(): void
@@ -223,7 +222,7 @@ class BackendApiCreateProductTest extends OauthTestCase
             $longDescriptionsByDomainId[$domainId] = sprintf('Long description for domain ID %d', $domainId);
         }
 
-        $product = [
+        return [
             'name' => $namesByLocale,
             'hidden' => true,
             'sellingDenied' => true,
@@ -235,7 +234,5 @@ class BackendApiCreateProductTest extends OauthTestCase
             'shortDescription' => $shortDescriptionsByDomainId,
             'longDescription' => $longDescriptionsByDomainId,
         ];
-
-        return $product;
     }
 }

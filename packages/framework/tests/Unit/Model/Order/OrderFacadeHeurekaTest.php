@@ -85,7 +85,7 @@ class OrderFacadeHeurekaTest extends TestCase
      */
     private function createOrderFacade(HeurekaFacade $heurekaFacade): OrderFacade
     {
-        $orderFacade = new OrderFacade(
+        return new OrderFacade(
             $this->createMock(EntityManagerInterface::class),
             $this->createMock(OrderNumberSequenceRepository::class),
             $this->createMock(OrderRepository::class),
@@ -113,8 +113,6 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createMock(TransportPriceCalculation::class),
             $this->createMock(OrderItemFactoryInterface::class)
         );
-
-        return $orderFacade;
     }
 
     /**
@@ -134,9 +132,7 @@ class OrderFacadeHeurekaTest extends TestCase
     private function createDomain(): Domain
     {
         $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs');
-        $domain = new Domain([$domainConfig], $this->createMock(Setting::class));
-
-        return $domain;
+        return new Domain([$domainConfig], $this->createMock(Setting::class));
     }
 
     /**

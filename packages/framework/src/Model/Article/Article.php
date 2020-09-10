@@ -223,7 +223,7 @@ class Article implements OrderableEntityInterface
     }
 
     /**
-     * @return bool $visible
+     * @return bool
      */
     public function isHidden()
     {

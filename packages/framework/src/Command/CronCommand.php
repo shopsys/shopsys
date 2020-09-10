@@ -218,13 +218,11 @@ class CronCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        $chosenInstanceName = $io->choice(
+        return $io->choice(
             'There is more than one cron instance. Which instance do you want to use?',
             $instanceNameChoices,
             $defaultInstanceName
         );
-
-        return $chosenInstanceName;
     }
 
     /**

@@ -119,7 +119,7 @@ class ResizeFormListener implements EventSubscriberInterface
         }
 
         // First remove all rows
-        foreach (array_keys($form) as $name) {
+        foreach ($form as $name => $child) {
             $form->remove($name);
         }
 
@@ -155,7 +155,7 @@ class ResizeFormListener implements EventSubscriberInterface
 
         // Remove all empty rows
         if ($this->allowDelete) {
-            foreach (array_keys($form) as $name) {
+            foreach ($form as $name => $child) {
                 if (!isset($data[$name])) {
                     $form->remove($name);
                 }

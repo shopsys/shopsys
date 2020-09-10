@@ -84,9 +84,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $countryData = new CountryData();
         $countryData->names = ['cz' => 'Czech Republic'];
         $countryData->code = 'CZ';
-        $country = new Country($countryData);
-
-        return $country;
+        return new Country($countryData);
     }
 
     /**
@@ -107,9 +105,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $billingAddressData->postcode = '70200';
         $billingAddressData->customer = $customer;
 
-        $billingAddress = new BillingAddress($billingAddressData);
-
-        return $billingAddress;
+        return new BillingAddress($billingAddressData);
     }
 
     /**
@@ -127,9 +123,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $deliveryAddressData->city = 'Ostrava';
         $deliveryAddressData->lastName = 'Fero';
         $deliveryAddressData->firstName = 'Mrkva';
-        $deliveryAddress = new DeliveryAddress($deliveryAddressData);
-
-        return $deliveryAddress;
+        return new DeliveryAddress($deliveryAddressData);
     }
 
     /**
@@ -177,8 +171,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->country = $country;
 
-        $order = new Order($orderData, '1523596513', 'hash');
-
-        return $order;
+        return new Order($orderData, '1523596513', 'hash');
     }
 }

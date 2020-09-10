@@ -42,7 +42,7 @@ class NumericToMoneyTransformer implements DataTransformerInterface
 
     /**
      * @param string|float|int|null $value
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null $value
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     public function reverseTransform($value): ?Money
     {

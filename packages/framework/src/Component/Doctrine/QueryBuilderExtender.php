@@ -29,7 +29,7 @@ class QueryBuilderExtender
      * @param string $class
      * @param string $alias
      * @param string $condition
-     * @return \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function addOrExtendJoin(QueryBuilder $queryBuilder, $class, $alias, $condition)
     {
@@ -73,9 +73,7 @@ class QueryBuilderExtender
         if (count($rootAliases) !== static::REQUIRED_ALIASES_COUNT) {
             throw new \Shopsys\FrameworkBundle\Component\Doctrine\Exception\InvalidCountOfAliasesException($rootAliases);
         }
-        $firstAlias = reset($rootAliases);
-
-        return $firstAlias;
+        return reset($rootAliases);
     }
 
     /**

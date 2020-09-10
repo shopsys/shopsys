@@ -35,7 +35,7 @@ class RoutingExtension implements ExtensionInterface
     {
         if (!empty($options['route'])) {
             $params = $options['routeParameters'] ?? [];
-            $absolute = (isset($options['routeAbsolute']) && $options['routeAbsolute']) ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH;
+            $absolute = isset($options['routeAbsolute']) && $options['routeAbsolute'] ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH;
             try {
                 $options['uri'] = $this->generator->generate($options['route'], $params, $absolute);
             } catch (\Symfony\Component\Routing\Exception\MissingMandatoryParametersException $e) {

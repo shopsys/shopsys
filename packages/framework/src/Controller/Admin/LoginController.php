@@ -142,7 +142,7 @@ class LoginController extends AdminBaseController
         } catch (\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException $ex) {
             return $this->render('@ShopsysFramework/Admin/Content/Login/loginFailed.html.twig');
         }
-        $redirectTo = ($originalReferer !== null) ? $originalReferer : $this->generateUrl('admin_default_dashboard');
+        $redirectTo = $originalReferer !== null ? $originalReferer : $this->generateUrl('admin_default_dashboard');
 
         return $this->redirect($redirectTo);
     }

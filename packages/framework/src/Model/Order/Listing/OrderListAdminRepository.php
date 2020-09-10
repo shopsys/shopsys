@@ -27,7 +27,7 @@ class OrderListAdminRepository
      */
     public function getOrderListQueryBuilder($locale)
     {
-        $queryBuilder = $this->em->createQueryBuilder()
+        return $this->em->createQueryBuilder()
             ->select('
                 o.id,
                 o.number,
@@ -46,7 +46,5 @@ class OrderListAdminRepository
             ->groupBy('o.id')
             ->setParameter('deleted', false)
             ->setParameter('locale', $locale);
-
-        return $queryBuilder;
     }
 }

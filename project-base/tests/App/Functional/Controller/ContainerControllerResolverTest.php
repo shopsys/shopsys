@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Controller;
 
+use function get_class;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ContainerControllerResolver;
 use Tests\App\Test\FunctionalTestCase;
-use function get_class;
 
 class ContainerControllerResolverTest extends FunctionalTestCase
 {

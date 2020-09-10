@@ -18,9 +18,7 @@ class TransportTest extends TestCase
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
         $transportData->hidden = false;
-        $transport = new Transport($transportData);
-
-        return $transport;
+        return new Transport($transportData);
     }
 
     /**
@@ -31,9 +29,7 @@ class TransportTest extends TestCase
         $paymentData = new PaymentData();
         $paymentData->name = ['cs' => 'paymentName', 'en' => 'paymentName'];
         $paymentData->hidden = true;
-        $payment = new Payment($paymentData);
-
-        return $payment;
+        return new Payment($paymentData);
     }
 
     public function testSetPayments()

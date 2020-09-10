@@ -101,11 +101,9 @@ class PropertyAnnotationsFactory
      */
     protected function isPropertyOfTypeThatIsExtendedInProject(ReflectionProperty $reflectionProperty, string $frameworkClassPattern): bool
     {
-        $isPropertyOfTypeThatIsExtendedInProject = (bool)preg_match(
+        return (bool)preg_match(
             $frameworkClassPattern,
             $reflectionProperty->getDocComment()
         );
-
-        return $isPropertyOfTypeThatIsExtendedInProject;
     }
 }

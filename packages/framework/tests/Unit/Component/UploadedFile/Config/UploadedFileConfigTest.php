@@ -104,11 +104,9 @@ class UploadedFileConfigTest extends TestCase
 
         $uploadedFileEntityConfig = new UploadedFileEntityConfig('entityName', Dummy::class, $uploadedFileTypes);
 
-        $fileEntityConfigsByClass = [
+        return [
             Dummy::class => $uploadedFileEntityConfig,
         ];
-
-        return $fileEntityConfigsByClass;
     }
 
     /**
@@ -117,8 +115,6 @@ class UploadedFileConfigTest extends TestCase
     private function getUploadedFileConfig(): UploadedFileConfig
     {
         $fileEntityConfigsByClass = $this->getFileEntityConfigsByClass();
-        $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
-
-        return $uploadedFileConfig;
+        return new UploadedFileConfig($fileEntityConfigsByClass);
     }
 }

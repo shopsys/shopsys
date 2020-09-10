@@ -165,7 +165,7 @@ class ExtendedClassesAnnotationsCommand extends Command
      */
     protected function getFinderForReplacingAnnotations(): Finder
     {
-        $finder = Finder::create()
+        return Finder::create()
             ->files()
             ->ignoreUnreadableDirs()
             ->in([
@@ -174,8 +174,6 @@ class ExtendedClassesAnnotationsCommand extends Command
             ])
             ->name('*.php')
             ->contains($this->annotationsReplacementsMap->getPatternForAny());
-
-        return $finder;
     }
 
     /**

@@ -122,7 +122,7 @@ class VolumeDriver extends Driver
         $path = $this->tmbPath . DIRECTORY_SEPARATOR . $this->tmbname($stat);
         if ($this->tmbURL) {
             $thumbnailName = $this->gettmb($path, $stat);
-            $stat['tmb'] = $thumbnailName ? $thumbnailName : 1;
+            $stat['tmb'] = $thumbnailName ?: 1;
         }
 
         if ($this->tmbPathWritable) {
@@ -156,7 +156,7 @@ class VolumeDriver extends Driver
 
         if (count($stat) > 0 && $this->tmbURL && !isset($stat['tmb']) && $this->canCreateTmb($path, $stat)) {
             $thumbnailName = $this->gettmb($path, $stat);
-            $stat['tmb'] = $thumbnailName ? $thumbnailName : 1;
+            $stat['tmb'] = $thumbnailName ?: 1;
         }
 
         return $stat;

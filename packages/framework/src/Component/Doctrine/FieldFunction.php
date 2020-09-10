@@ -47,8 +47,6 @@ class FieldFunction extends FunctionNode
         $values = array_map(function (Node $argumentExpression) use ($sqlWalker) {
             return $argumentExpression->dispatch($sqlWalker);
         }, $this->nextArgumentExpressions);
-        $sql = 'FIELD(' . $this->firstArgumentExpression->dispatch($sqlWalker) . ',ARRAY[' . implode(',', $values) . '])';
-
-        return $sql;
+        return 'FIELD(' . $this->firstArgumentExpression->dispatch($sqlWalker) . ',ARRAY[' . implode(',', $values) . '])';
     }
 }

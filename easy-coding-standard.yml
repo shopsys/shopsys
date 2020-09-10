@@ -7,6 +7,7 @@ parameters:
     sets:
         - 'psr12'
         - 'dead-code'
+        - 'clean-code'
     skip:
         PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer:
             - 'packages/*'

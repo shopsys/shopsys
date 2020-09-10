@@ -347,7 +347,7 @@ class Grid
     public function createViewWithoutRows()
     {
         $this->rows = [];
-        $gridView = new GridView(
+        return new GridView(
             $this,
             $this->requestStack,
             $this->router,
@@ -355,8 +355,6 @@ class Grid
             $this->viewTheme,
             $this->viewTemplateParameters
         );
-
-        return $gridView;
     }
 
     public function enablePaging()

@@ -133,11 +133,9 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      */
     private function createPersonalInfoForm(): FormInterface
     {
-        $personalInfoForm = $this->factory->create(PersonalInfoFormType::class, null, [
+        return $this->factory->create(PersonalInfoFormType::class, null, [
             'domain_id' => 1,
         ]);
-
-        return $personalInfoForm;
     }
 
     private function disableHeurekaShopCertification(): void

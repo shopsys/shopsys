@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\Guzzle;
 
 use GuzzleHttp\ClientInterface;
+use function GuzzleHttp\Promise\unwrap;
 use GuzzleHttp\Psr7\Request;
 use Nette\Utils\Json;
-use function GuzzleHttp\Promise\unwrap;
 
 final class ApiCaller
 {

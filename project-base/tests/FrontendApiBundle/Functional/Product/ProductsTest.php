@@ -106,7 +106,7 @@ class ProductsTest extends GraphQlTestCase
     private function getExpectedDataForFifthProduct(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
-        $arrayExpected = [
+        return [
             [
                 'name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
                 'shortDescription' => t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768', [], 'dataFixtures', $firstDomainLocale),
@@ -131,8 +131,6 @@ class ProductsTest extends GraphQlTestCase
                 ],
             ],
         ];
-
-        return $arrayExpected;
     }
 
     public function testLastProduct(): void

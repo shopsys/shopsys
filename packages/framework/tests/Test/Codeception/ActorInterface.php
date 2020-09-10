@@ -598,7 +598,7 @@ interface ActorInterface
     /**
      * @param string $table
      * @param array $data
-     * @return int $id
+     * @return int
      */
     public function haveInDatabase($table, $data);
 

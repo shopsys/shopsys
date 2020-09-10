@@ -72,7 +72,7 @@ class Customer
         }
 
         foreach ($customerData->deliveryAddresses as $deliveryAddress) {
-            $this->addDeliveryAddress(($deliveryAddress));
+            $this->addDeliveryAddress($deliveryAddress);
         }
     }
 

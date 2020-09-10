@@ -158,9 +158,8 @@ class ArticleRepository
         int $domainId,
         string $placement
     ): QueryBuilder {
-        $queryBuilder = $this->getVisibleArticlesByDomainIdQueryBuilder($domainId)
+        return $this->getVisibleArticlesByDomainIdQueryBuilder($domainId)
             ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
             ->orderBy('a.position, a.id');
-        return $queryBuilder;
     }
 }

@@ -35,7 +35,7 @@ class ImageRepository
      */
     public function findImageByEntity($entityName, $entityId, $type)
     {
-        $image = $this->getImageRepository()->findOneBy(
+        return $this->getImageRepository()->findOneBy(
             [
                 'entityName' => $entityName,
                 'entityId' => $entityId,
@@ -46,8 +46,6 @@ class ImageRepository
                 'id' => 'asc',
             ]
         );
-
-        return $image;
     }
 
     /**

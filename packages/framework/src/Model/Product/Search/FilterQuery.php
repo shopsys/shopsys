@@ -413,7 +413,7 @@ class FilterQuery
      */
     public function getQuery(): array
     {
-        $query = [
+        return [
             'index' => $this->indexName,
             'body' => [
                 'from' => $this->from !== null ? $this->from : $this->countFrom($this->page, $this->limit),
@@ -427,8 +427,6 @@ class FilterQuery
                 ],
             ],
         ];
-
-        return $query;
     }
 
     /**

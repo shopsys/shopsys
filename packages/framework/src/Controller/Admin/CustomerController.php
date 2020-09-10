@@ -315,7 +315,7 @@ class CustomerController extends AdminBaseController
         );
 
         $mainAdminDomainRouter = $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID);
-        $ssoLoginAsUserUrl = $mainAdminDomainRouter->generate(
+        return $mainAdminDomainRouter->generate(
             'admin_login_sso',
             [
                 LoginController::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $customerUser->getDomainId(),
@@ -323,7 +323,5 @@ class CustomerController extends AdminBaseController
             ],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
-
-        return $ssoLoginAsUserUrl;
     }
 }
