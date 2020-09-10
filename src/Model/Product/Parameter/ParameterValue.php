@@ -27,6 +27,13 @@ class ParameterValue extends BaseParameterValue
     protected $colourIcon;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
+    protected $text;
+
+    /**
      * @param \App\Model\Product\Parameter\ParameterValueData $parameterData
      */
     public function __construct(ParameterValueData $parameterData)
