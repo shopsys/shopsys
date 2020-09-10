@@ -714,9 +714,8 @@ class Grid
                 return $row[$sourceColumnNameParts[0]][$sourceColumnNameParts[1]];
             } elseif (array_key_exists($sourceColumnNameParts[1], $row)) {
                 return $row[$sourceColumnNameParts[1]];
-            } else {
-                return $row[$sourceColumnName];
             }
+            return $row[$sourceColumnName];
         }
 
         return $row[$sourceColumnName];

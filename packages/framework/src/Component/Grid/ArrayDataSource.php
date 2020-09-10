@@ -42,11 +42,10 @@ class ArrayDataSource implements DataSourceInterface
     {
         if ($this->rowIdSourceColumnName === null) {
             return $this->data[$rowId];
-        } else {
-            foreach ($this->data as $item) {
-                if ($item[$this->rowIdSourceColumnName] === $rowId) {
-                    return $item;
-                }
+        }
+        foreach ($this->data as $item) {
+            if ($item[$this->rowIdSourceColumnName] === $rowId) {
+                return $item;
             }
         }
     }

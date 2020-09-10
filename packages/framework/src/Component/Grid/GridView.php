@@ -108,9 +108,8 @@ class GridView
                 if ($echo) {
                     echo $template->renderBlock($name, $templateParameters);
                     return;
-                } else {
-                    return $template->renderBlock($name, $templateParameters);
                 }
+                return $template->renderBlock($name, $templateParameters);
             }
         }
 

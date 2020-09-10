@@ -68,9 +68,8 @@ class ImageProcessor
                 $file = $this->filesystem->read($filepath);
 
                 return $this->imageManager->make($file);
-            } else {
-                throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException('File ' . $filepath . ' not found.');
             }
+            throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException('File ' . $filepath . ' not found.');
         } catch (\Intervention\Image\Exception\NotReadableException $ex) {
             throw new \Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException($filepath, $ex);
         }

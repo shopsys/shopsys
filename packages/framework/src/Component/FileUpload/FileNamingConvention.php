@@ -19,9 +19,8 @@ class FileNamingConvention
             return $entityId . '.' . pathinfo($originalFilename, PATHINFO_EXTENSION);
         } elseif ($namingConventionType === static::TYPE_ORIGINAL_NAME) {
             return $originalFilename;
-        } else {
-            $message = 'Naming convention ' . $namingConventionType . ' cannot by resolved to filename';
-            throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\UnresolvedNamingConventionException($message);
         }
+        $message = 'Naming convention ' . $namingConventionType . ' cannot by resolved to filename';
+        throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\UnresolvedNamingConventionException($message);
     }
 }

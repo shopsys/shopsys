@@ -86,14 +86,13 @@ class VatController extends AdminBaseController
                     $id,
                     $this->vatFacade->getAllForDomainExceptId($this->adminDomainTabsFacade->getSelectedDomainId(), $id)
                 );
-            } else {
-                $message = t(
-                    'Do you really want to remove rate "%name%" permanently? It is not used anywhere.',
-                    ['%name%' => $vat->getName()]
-                );
-
-                return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_vat_delete', $id);
             }
+            $message = t(
+                'Do you really want to remove rate "%name%" permanently? It is not used anywhere.',
+                ['%name%' => $vat->getName()]
+            );
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_vat_delete', $id);
         } catch (\Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException $ex) {
             return new Response(t('Selected VAT doesn\'t exist'));
         }

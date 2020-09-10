@@ -93,9 +93,8 @@ class ErrorController extends FrontBaseController
             return $this->createErrorPagePrototypeResponse($request, $exception, $logger);
         } elseif ($this->exceptionController->getDebug()) {
             return $this->createExceptionResponse($request, $exception, $logger);
-        } else {
-            return $this->createErrorPageResponse($exception->getStatusCode());
         }
+        return $this->createErrorPageResponse($exception->getStatusCode());
     }
 
     /**

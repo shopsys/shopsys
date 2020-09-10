@@ -27,9 +27,8 @@ class TestController
     {
         if ($name === 'Batman') {
             return new Response(sprintf('I am %1$s!', $name), 200);
-        } else {
-            return new Response('Nothing found.', 404);
         }
+        return new Response('Nothing found.', 404);
     }
 
     /**
@@ -44,9 +43,8 @@ class TestController
     {
         if ($name === 'Batman') {
             return new Response(sprintf('I am %1$s!', $name), 200);
-        } else {
-            return new Response('Nothing found.', 404);
         }
+        return new Response('Nothing found.', 404);
     }
 
     /**

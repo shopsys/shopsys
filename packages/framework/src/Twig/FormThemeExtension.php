@@ -44,9 +44,8 @@ class FormThemeExtension extends AbstractExtension
         $masterRequest = $this->requestStack->getMasterRequest();
         if ($this->isAdmin($masterRequest->get('_controller'))) {
             return static::ADMIN_THEME;
-        } else {
-            return static::FRONT_THEME;
         }
+        return static::FRONT_THEME;
     }
 
     /**

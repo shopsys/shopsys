@@ -414,9 +414,8 @@ class ImageFacade
     {
         if ($imageOrEntity instanceof Image) {
             return $imageOrEntity;
-        } else {
-            return $this->getImageByEntity($imageOrEntity, $type);
         }
+        return $this->getImageByEntity($imageOrEntity, $type);
     }
 
     /**

@@ -339,9 +339,8 @@ class TranslationReplaceSourceCommand extends Command
                 return 0;
             } elseif ($lengthLeft < $lengthRight) {
                 return 1;
-            } else {
-                return -1;
             }
+            return -1;
         });
 
         return $replacements;

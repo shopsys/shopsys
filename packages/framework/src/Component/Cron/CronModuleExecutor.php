@@ -51,9 +51,8 @@ class CronModuleExecutor
             if ($inProgress === true) {
                 $cronModuleService->sleep();
                 return self::RUN_STATUS_SUSPENDED;
-            } else {
-                return self::RUN_STATUS_OK;
             }
+            return self::RUN_STATUS_OK;
         }
 
         return self::RUN_STATUS_OK;

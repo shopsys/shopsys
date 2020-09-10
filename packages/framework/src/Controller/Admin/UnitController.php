@@ -88,14 +88,13 @@ class UnitController extends AdminBaseController
                     $id,
                     $this->unitFacade->getAllExceptId($id)
                 );
-            } else {
-                $message = t(
-                    'Do you really want to remove unit "%name%" permanently? It is not used anywhere.',
-                    ['%name%' => $unit->getName()]
-                );
-
-                return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_unit_delete', $id);
             }
+            $message = t(
+                'Do you really want to remove unit "%name%" permanently? It is not used anywhere.',
+                ['%name%' => $unit->getName()]
+            );
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_unit_delete', $id);
         } catch (\Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException $ex) {
             return new Response(t('Selected unit doesn\'t exist'));
         }

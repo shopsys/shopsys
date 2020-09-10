@@ -66,9 +66,8 @@ class ProductResolverMap extends ResolverMap
                         return 'MainVariant';
                     } elseif ($isVariant) {
                         return 'Variant';
-                    } else {
-                        return 'RegularProduct';
                     }
+                    return 'RegularProduct';
                 },
             ],
             'RegularProduct' => $this->mapProduct(),
@@ -130,13 +129,12 @@ class ProductResolverMap extends ResolverMap
     {
         if ($data instanceof Product) {
             return $data->getFlags();
-        } else {
-            $flags = [];
-            foreach ($data['flags'] as $flagId) {
-                $flags[] = $this->flagFacade->getById($flagId);
-            }
-            return $flags;
         }
+        $flags = [];
+        foreach ($data['flags'] as $flagId) {
+            $flags[] = $this->flagFacade->getById($flagId);
+        }
+        return $flags;
     }
 
     /**

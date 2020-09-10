@@ -121,14 +121,13 @@ class OrderStatusController extends AdminBaseController
                     $id,
                     $this->orderStatusFacade->getAllExceptId($id)
                 );
-            } else {
-                $message = t(
-                    'Do you really want to remove status of orders "%name%" permanently? It is not used anywhere.',
-                    ['%name%' => $orderStatus->getName()]
-                );
-
-                return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_orderstatus_delete', $id);
             }
+            $message = t(
+                'Do you really want to remove status of orders "%name%" permanently? It is not used anywhere.',
+                ['%name%' => $orderStatus->getName()]
+            );
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_orderstatus_delete', $id);
         } catch (\Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException $ex) {
             return new Response(t('Selected order status doesn\'t exist.'));
         }

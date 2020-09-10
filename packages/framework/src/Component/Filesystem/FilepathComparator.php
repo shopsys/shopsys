@@ -34,9 +34,8 @@ class FilepathComparator
 
         if ($this->hasAncestorPath($path)) {
             return $this->isPathWithinDirectoryRealpathRecursive(dirname($path), $directoryRealpath);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

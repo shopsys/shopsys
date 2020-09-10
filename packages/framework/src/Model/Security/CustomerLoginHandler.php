@@ -42,9 +42,8 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
             ];
 
             return new JsonResponse($responseData);
-        } else {
-            return new RedirectResponse($referer);
         }
+        return new RedirectResponse($referer);
     }
 
     /**
@@ -60,10 +59,9 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
             ];
 
             return new JsonResponse($responseData);
-        } else {
-            $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
-
-            return new RedirectResponse($this->router->generate('front_login'));
         }
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+
+        return new RedirectResponse($this->router->generate('front_login'));
     }
 }

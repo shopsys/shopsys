@@ -49,9 +49,8 @@ class CurrentPromoCodeFacade
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
         if ($promoCode === null) {
             throw new \Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException($enteredCode);
-        } else {
-            $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
         }
+        $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
     }
 
     public function removeEnteredPromoCode()

@@ -161,9 +161,8 @@ class DomainInfoCommand extends Command
                 return '<options=bold;fg=green>YES</options=bold;fg=green>';
             } elseif ($propertyValue === false) {
                 return '<options=bold;fg=red>NO</options=bold;fg=red>';
-            } else {
-                return $propertyValue;
             }
+            return $propertyValue;
         }, $propertyValues);
     }
 }

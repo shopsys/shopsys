@@ -124,14 +124,13 @@ class AvailabilityController extends AdminBaseController
                     $id,
                     $this->availabilityFacade->getAllExceptId($id)
                 );
-            } else {
-                $message = t(
-                    'Do you really want to remove availability "%name%" permanently? It is not used anywhere.',
-                    ['%name%' => $availability->getName()]
-                );
-
-                return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_availability_delete', $id);
             }
+            $message = t(
+                'Do you really want to remove availability "%name%" permanently? It is not used anywhere.',
+                ['%name%' => $availability->getName()]
+            );
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_availability_delete', $id);
         } catch (\Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException $ex) {
             return new Response(t('Selected availability doesn\'t exist'));
         }

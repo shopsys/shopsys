@@ -131,9 +131,8 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 
         if ($domainArgumentIndex !== null && isset($node->args[$domainArgumentIndex])) {
             return PhpParserNodeHelper::getConcatenatedStringValue($node->args[$domainArgumentIndex]->value, $this->file);
-        } else {
-            return static::DEFAULT_MESSAGE_DOMAIN;
         }
+        return static::DEFAULT_MESSAGE_DOMAIN;
     }
 
     /**
@@ -223,9 +222,8 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
             return (string)$node->name;
         } elseif ($node instanceof FuncCall && $node->name instanceof Name) {
             return (string)$node->name;
-        } else {
-            throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException('Unable to resolve node name');
         }
+        throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException('Unable to resolve node name');
     }
 
     /**

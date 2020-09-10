@@ -92,10 +92,9 @@ class AdministratorFrontSecurityFacade
             $user = $this->getAdministratorToken()->getUser();
 
             return $user;
-        } else {
-            $message = 'Administrator is not logged.';
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException($message);
         }
+        $message = 'Administrator is not logged.';
+        throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException($message);
     }
 
     /**

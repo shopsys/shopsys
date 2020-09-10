@@ -60,9 +60,8 @@ class UniqueCollectionValidator extends ConstraintValidator
 
         if ($constraint->fields === null) {
             return $value1 === $value2;
-        } else {
-            return $this->areValuesEqualInFields($constraint->fields, $value1, $value2);
         }
+        return $this->areValuesEqualInFields($constraint->fields, $value1, $value2);
     }
 
     /**

@@ -107,8 +107,8 @@ class DomainExtension extends AbstractExtension
                         . ' title="' . htmlspecialchars($domainName, ENT_QUOTES) . '"/>
                     </span>
                 </span>';
-        } else {
-            return '
+        }
+        return '
                 <span class="in-image in-image--' . $size . '">
                     <span
                         class="in-image__in in-image__in--' . $domainId . '"
@@ -116,7 +116,6 @@ class DomainExtension extends AbstractExtension
                     >' . $domainId . '</span>
                 </span>
             ';
-        }
     }
 
     /**

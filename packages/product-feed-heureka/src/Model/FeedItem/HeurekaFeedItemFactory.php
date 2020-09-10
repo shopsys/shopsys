@@ -116,9 +116,8 @@ class HeurekaFeedItemFactory
 
         if ($mainCategory !== null) {
             return $this->findHeurekaCategoryFullNameByCategoryIdUsingCache($mainCategory->getId());
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
