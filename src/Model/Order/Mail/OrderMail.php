@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @property \App\Component\Setting\Setting $setting
- * @method __construct(\App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory, \Twig_Environment $twig, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \App\Component\Domain\Domain $domain, \App\Twig\PriceExtension $priceExtension, \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension, \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator)
+ * @method __construct(\App\Component\Setting\Setting $setting, \App\Component\Router\DomainRouterFactory $domainRouterFactory, \Twig_Environment $twig, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \App\Component\Domain\Domain $domain, \App\Twig\PriceExtension $priceExtension, \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension, \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator)
  * @method \Shopsys\FrameworkBundle\Model\Mail\MessageData createMessage(\Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate, \App\Model\Order\Order $order)
  * @method array getVariablesReplacementsForSubject(\App\Model\Order\Order $order)
  * @method string getFormattedPrice(\App\Model\Order\Order $order)
@@ -19,9 +19,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * @method string getDeliveryAddressHtmlTable(\App\Model\Order\Order $order)
  * @method string getProductsHtmlTable(\App\Model\Order\Order $order)
  * @method string getDomainLocaleByOrder(\App\Model\Order\Order $order)
- * @method __construct(\App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory, \Twig\Environment $twig, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \App\Component\Domain\Domain $domain, \App\Twig\PriceExtension $priceExtension, \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension, \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator)
+ * @method __construct(\App\Component\Setting\Setting $setting, \App\Component\Router\DomainRouterFactory $domainRouterFactory, \Twig\Environment $twig, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \App\Component\Domain\Domain $domain, \App\Twig\PriceExtension $priceExtension, \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension, \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator)
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Twig\PriceExtension $priceExtension
+ * @property \App\Component\Router\DomainRouterFactory $domainRouterFactory
  */
 class OrderMail extends BaseOrderMail
 {

@@ -45,6 +45,7 @@ declare -A PARAMETERS=(
     ["parameters.promo_code_manage_page_config.pass"]=${PROMO_CODE_MANAGE_PAGE_USER_PASS}
     ["parameters.promo_code_manage_page_config.allowed_ips[+]"]=${PROMO_CODE_MANAGE_PAGE_ALLOWED_IPS}
     ["parameters.show_mail_restriction_info_bar"]=${SHOW_MAIL_RESTRICTION_INFO_BAR}
+    ["parameters.admin_url"]=${ADMIN_URL}
     ["parameters.gopay_config.cs.clientSecret"]=${GOPAY_CS_CLIENTSECRET}
     ["parameters.gopay_config.sk.clientSecret"]=${GOPAY_SK_CLIENTSECRET}
     ["parameters.gopay_config.isProductionMode"]=${GOPAY_PRODUCTION_MODE}
