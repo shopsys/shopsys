@@ -47,14 +47,14 @@ yq write --inplace "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/first-deploy
 yq write --inplace "${CONFIGURATION_TARGET_PATH}/horizontalPodAutoscaler/webserver-php-fpm.yaml" "metadata.name" $NEW_APP_NAME
 yq write --inplace "${CONFIGURATION_TARGET_PATH}/horizontalPodAutoscaler/webserver-php-fpm.yaml" "spec.scaleTargetRef.name" $NEW_APP_NAME
 
-## cron pod
-#DEPLOYED_CRON_POD=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l app=cron -o=jsonpath='{.items[0].metadata.name}') || true
-#
-#if [[ -n ${DEPLOYED_CRON_POD} ]]; then
-#  echo "Waits until cron instances are not running and disable crons for deploy"
-#  kubectl exec -t --namespace=${PROJECT_NAME} ${DEPLOYED_CRON_POD} -- bash -c "./phing -S cron-lock > /dev/null 2>&1 & disown"
-#  kubectl exec --namespace=${PROJECT_NAME} ${DEPLOYED_CRON_POD} -- ./phing -S cron-watch
-#fi
+# cron pod
+DEPLOYED_CRON_POD=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l app=cron -o=jsonpath='{.items[0].metadata.name}') || true
+
+if [[ -n ${DEPLOYED_CRON_POD} ]]; then
+  echo "Waits until cron instances are not running and disable crons for deploy"
+  kubectl exec -t --namespace=${PROJECT_NAME} ${DEPLOYED_CRON_POD} -- bash -c "./phing -S cron-lock > /dev/null 2>&1 & disown"
+  kubectl exec --namespace=${PROJECT_NAME} ${DEPLOYED_CRON_POD} -- ./phing -S cron-watch
+fi
 
 echo "Apply kubernetes configuration"
 if [ $FIRST_DEPLOY -eq "0" ]; then
