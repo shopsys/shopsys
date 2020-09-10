@@ -851,6 +851,8 @@ services:
 
     App\Component\SeoHelper\SeoHelper: ~
 
+    App\Command\CleanOpcacheCommand: ~
+
     App\Command\ElFinderPostInstallCommand: ~
 
     App\Command\SingleImportPromoCodesCommand: ~

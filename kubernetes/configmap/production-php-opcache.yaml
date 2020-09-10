@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: production-php-opcache
+data:
+    php-opcache.ini: |
+        opcache.enable = 1
+        opcache.fast_shutdown = true
+        opcache.interned_strings_buffer = 24
+        opcache.max_accelerated_files = 60000
+        opcache.memory_consumption = 256
+        opcache.revalidate_path = 0
+        opcache.revalidate_freq = 0
+        opcache.validate_timestamps = 0
+        opcache.use_cwd = 0

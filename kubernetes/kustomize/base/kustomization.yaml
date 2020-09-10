@@ -13,6 +13,7 @@ resources:
     - ../../namespace.yaml
     - ../../configmap/nginx.yaml
     - ../../configmap/redis-health.yaml
+    - ../../configmap/production-php-opcache.yaml
     - ../../horizontalPodAutoscaler/webserver-php-fpm.yaml
 namespace: "{{PROJECT_NAME}}"
 configMapGenerator:

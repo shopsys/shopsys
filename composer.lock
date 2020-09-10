@@ -4,8 +4,45 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afd1a1c6d6b5f73a7ce93ccd4d0ae41d",
+    "content-hash": "8d72fe1ca5911b02c110b588088f468c",
     "packages": [
+        {
+            "name": "adoy/fastcgi-client",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adoy/PHP-FastCGI-Client.git",
+                "reference": "6d9a552f0206a1db7feb442824540aa6c55e5b27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adoy/PHP-FastCGI-Client/zipball/6d9a552f0206a1db7feb442824540aa6c55e5b27",
+                "reference": "6d9a552f0206a1db7feb442824540aa6c55e5b27",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Adoy\\FastCGI\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pierrick Charron",
+                    "email": "pierrick@adoy.net"
+                }
+            ],
+            "description": "Lightweight, single file FastCGI client for PHP.",
+            "keywords": [
+                "fastcgi",
+                "fcgi"
+            ],
+            "time": "2019-12-11T13:49:21+00:00"
+        },
         {
             "name": "akeneo/api-php-client",
             "version": "v5.0.0",
@@ -1552,20 +1589,6 @@
                 "orm",
                 "persistence"
             ],
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fdoctrine-bundle",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-05-25T19:50:59+00:00"
         },
         {
@@ -2113,20 +2136,6 @@
                 "lexer",
                 "parser",
                 "php"
-            ],
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Flexer",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-05-25T17:44:05+00:00"
         },
@@ -3206,6 +3215,65 @@
                 "sdk"
             ],
             "time": "2020-08-13T12:23:42+00:00"
+        },
+        {
+            "name": "gordalina/cachetool",
+            "version": "4.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gordalina/cachetool.git",
+                "reference": "9ca25fe645dce263caeb6ae24527947f3e5035a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gordalina/cachetool/zipball/9ca25fe645dce263caeb6ae24527947f3e5035a0",
+                "reference": "9ca25fe645dce263caeb6ae24527947f3e5035a0",
+                "shasum": ""
+            },
+            "require": {
+                "adoy/fastcgi-client": "~1.0",
+                "monolog/monolog": "~1.0 || ~2.0",
+                "php": ">=7.1.0",
+                "psr/log": "~1.0",
+                "symfony/console": "~4.0",
+                "symfony/dependency-injection": "~4.0",
+                "symfony/finder": "~4.0",
+                "symfony/process": "~4.0",
+                "symfony/yaml": "~4.0"
+            },
+            "require-dev": {
+                "herrera-io/phar-update": "~2.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "bin": [
+                "bin/cachetool"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CacheTool\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "gordalina",
+                    "email": "samuel.gordalina@gmail.com"
+                }
+            ],
+            "description": "Manage your OPcache & APCu cache through the CLI",
+            "keywords": [
+                "Opcache",
+                "apcu",
+                "cache",
+                "fastcgi",
+                "fpm",
+                "opcode"
+            ],
+            "time": "2019-12-03T20:39:24+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -15917,7 +15985,6 @@
             "keywords": [
                 "tokenizer"
             ],
-            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
@@ -17275,12 +17342,6 @@
                 "MIT"
             ],
             "description": "Auto bind parameters for your Symfony applications",
-            "funding": [
-                {
-                    "url": "https://github.com/tomasvotruba",
-                    "type": "github"
-                }
-            ],
             "time": "2020-05-15T21:39:16+00:00"
         },
         {
@@ -17707,12 +17768,6 @@
                 "MIT"
             ],
             "description": "Resolve config and sets from configs and cli opptions for CLI applications",
-            "funding": [
-                {
-                    "url": "https://github.com/tomasvotruba",
-                    "type": "github"
-                }
-            ],
             "time": "2020-05-15T21:39:16+00:00"
         },
         {
@@ -17756,12 +17811,6 @@
                 "MIT"
             ],
             "description": "Sanitized FileInfo with safe getRealPath() and other handy methods",
-            "funding": [
-                {
-                    "url": "https://github.com/tomasvotruba",
-                    "type": "github"
-                }
-            ],
             "time": "2020-05-09T12:47:21+00:00"
         },
         {

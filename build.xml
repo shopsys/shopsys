@@ -124,4 +124,21 @@
         </exec>
     </target>
 
+    <target name="clean-opcache" description="Clear PHP Opcache.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:clean-opcache" />
+        </exec>
+    </target>
+
+    <target name="clean-cache" depends="shopsys_framework.clean-cache,environment-load" description="Cleans up all application cache.">
+        <if>
+            <equals arg1="${environment}" arg2="prod"/>
+            <then>
+                <phingcall target="clean-opcache" />
+            </then>
+        </if>
+    </target>
+
+
 </project>

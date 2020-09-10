@@ -40,6 +40,9 @@ spec:
                         items:
                             -   key: nginx.conf
                                 path: default.conf
+                -   name: production-php-opcache
+                    configMap:
+                        name: production-php-opcache
 
             initContainers:
                 -   name: copy-source-codes-to-volume
@@ -83,6 +86,9 @@ spec:
                         -   name: parameters
                             mountPath: /var/www/html/config/parameters.yaml
                             subPath: parameters.yaml
+                        -   name: production-php-opcache
+                            mountPath: /usr/local/etc/php/conf.d/php-opcache.ini
+                            subPath: php-opcache.ini
                     env:
                         -   name: S3_API_HOST
                             value: "{{S3_API_HOST}}"

@@ -47,6 +47,10 @@ parameters:
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
             path: %currentWorkingDirectory%/tests/App/*
+        -
+            # CacheTool uses magic method __call()
+            message: '#^Call to an undefined method CacheTool\\CacheTool::opcache_reset\(\)#'
+            path: %currentWorkingDirectory%/src/Command/CleanOpcacheCommand.php
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
