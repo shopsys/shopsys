@@ -124,6 +124,21 @@
         </exec>
     </target>
 
+    <target name="cron-lock" description="This command will lock cron command so crons will not run until this command is terminated.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="devops:cron:lock" />
+        </exec>
+    </target>
+
+    <target name="cron-watch" description="Cron Watcher waits until all cron instances are finished.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="devops:cron:watch" />
+        </exec>
+    </target>
+
+
     <target name="clean-opcache" description="Clear PHP Opcache.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />

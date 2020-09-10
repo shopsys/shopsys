@@ -32,7 +32,7 @@ spec:
                         name: cron-list
             containers:
                 -   image: "{{TAG}}"
-                    name: php-fpm
+                    name: cron
                     securityContext:
                         runAsUser: 0
                     imagePullPolicy: Always

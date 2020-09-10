@@ -62,10 +62,10 @@ declare -A CAST_PARAMETERS=(
 declare -A CRON_INSTANCES=(
     ["cron-service"]='*/5 * * * *'
     ["cron-export"]='*/5 * * * *'
-#    ["cron-import-akeneo-product"]='*/5 * * * *'
-#    ["cron-import-im"]='*/5 * * * *'
-#    ["cron-import-akeneo-other"]='*/5 * * * *'
-#    ["cron-gopay"]='*/5 * * * *'
+    ["cron-import-akeneo-product"]='*/5 * * * *'
+    ["cron-import-im"]='*/5 * * * *'
+    ["cron-import-akeneo-other"]='*/5 * * * *'
+    ["cron-gopay"]='*/5 * * * *'
 )
 
 

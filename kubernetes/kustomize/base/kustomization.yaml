@@ -1,10 +1,4 @@
 resources:
-    #    - ../../cron/php-fpm-cron-executor-export.yaml
-    #    - ../../cron/php-fpm-cron-executor-gopay.yaml
-    #    - ../../cron/php-fpm-cron-executor-service.yaml
-    #    - ../../cron/php-fpm-cron-executor-import-im.yaml
-    #    - ../../cron/php-fpm-cron-executor-import-akeneo-product.yaml
-    #    - ../../cron/php-fpm-cron-executor-import-akeneo-other.yaml
     - ../../deployments/redis.yaml
     - ../../deployments/webserver-php-fpm.yaml
     - ../../services/redis.yaml
