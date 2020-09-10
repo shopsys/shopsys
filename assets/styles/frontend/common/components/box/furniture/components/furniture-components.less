@@ -2,9 +2,13 @@
     &-banner {
         display: flex;
         flex-direction: column;
-        margin: 4rem 0 2rem;
+        margin: 2rem 0 2rem;
 
         border-radius: @radius;
+
+        @media @query-md {
+            margin-top: 4rem;
+        }
 
         @media @query-vl {
             flex-direction: row;
@@ -33,13 +37,17 @@
         &__image {
             display: flex;
             align-items: flex-end;
+            justify-content: flex-end;
+            order: 1;
 
-            border-bottom: 3px solid @color-f;
+            @media @query-mobile {
+                margin-top: 1.25rem;
+            }
 
             @media @query-vl {
                 width: 50%;
-
-                border-bottom: 0;
+                justify-content: flex-start;
+                order: 0;
             }
 
             @media @query-xl {
