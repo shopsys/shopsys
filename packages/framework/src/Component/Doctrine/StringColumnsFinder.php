@@ -19,7 +19,7 @@ class StringColumnsFinder
                 throw new \Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException($message);
             }
             $stringColumnNames = $this->getStringColumnNames($classMetadata);
-            if (!empty($stringColumnNames)) {
+            if (count($stringColumnNames) > 0) {
                 $stringColumnNamesIndexedByTableName[$classMetadata->getTableName()] = $stringColumnNames;
             }
         }

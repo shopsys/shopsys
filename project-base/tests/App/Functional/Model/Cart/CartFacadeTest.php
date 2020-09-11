@@ -276,7 +276,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
             unset($actual[$key]);
         }
 
-        if (!empty($actual)) {
+        if (count($actual) > 0) {
             $this->fail('Actual array contains extra elements: ' . var_export($actual, true));
         }
     }

@@ -99,7 +99,7 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private function countFilesInStatus(string $filesStatus): int
     {
-        if (empty($filesStatus)) {
+        if ($filesStatus === '') {
             return 0;
         }
 

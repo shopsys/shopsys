@@ -67,7 +67,7 @@ class MethodAnnotationsFactory
                 if ($this->methodReturningTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes())
                     || $this->methodParameterTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getParameters())) {
                     $optionalStaticKeyword = $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '';
-                    $returnType = !empty($this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass)) ? $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) . ' ' : '';
+                    $returnType = $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) !== '' ? $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) . ' ' : '';
                     $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes($reflectionMethodFromFrameworkClass);
 
                     return sprintf(

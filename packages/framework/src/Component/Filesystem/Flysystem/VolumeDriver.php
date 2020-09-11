@@ -125,20 +125,22 @@ class VolumeDriver extends Driver
             $stat['tmb'] = $thumbnailName ?: 1;
         }
 
-        if ($this->tmbPathWritable) {
-            if ($stat['mime'] === 'directory') {
-                foreach ($this->scandirCE($this->decode($stat['hash'])) as $p) {
-                    elFinder::extendTimeLimit(30);
-                    $name = $this->basenameCE($p);
-                    if ($name !== '.' && $name !== '..') {
-                        $this->rmTmb($this->stat($p));
-                    }
+        if (!$this->tmbPathWritable) {
+            return;
+        }
+
+        if ($stat['mime'] === 'directory') {
+            foreach ($this->scandirCE($this->decode($stat['hash'])) as $p) {
+                elFinder::extendTimeLimit(30);
+                $name = $this->basenameCE($p);
+                if ($name !== '.' && $name !== '..') {
+                    $this->rmTmb($this->stat($p));
                 }
-            } elseif (!empty($stat['tmb']) && (string)$stat['tmb'] !== '1') {
-                $thumbnailPath = $this->createThumbnailPath(rawurldecode($stat['tmb']));
-                $this->_unlink($thumbnailPath);
-                clearstatcache();
             }
+        } elseif (!empty($stat['tmb']) && (string)$stat['tmb'] !== '1') {
+            $thumbnailPath = $this->createThumbnailPath(rawurldecode($stat['tmb']));
+            $this->_unlink($thumbnailPath);
+            clearstatcache();
         }
     }
 

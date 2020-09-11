@@ -95,7 +95,7 @@ class Foo
     {
         $annotations = $docBlock->getAnnotationsOfType('access');
 
-        return !empty($annotations);
+        return count($annotations) > 0;
     }
 
     /**

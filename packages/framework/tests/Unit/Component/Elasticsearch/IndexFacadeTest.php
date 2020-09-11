@@ -137,13 +137,13 @@ class IndexFacadeTest extends TestCase
         $indexDefinitionMock = $this->getIndexDefinitionMockReturningDomainId();
         $indexDefinitionMock->method('getIndexAlias')->willReturn($indexAlias);
 
-        if (empty($exportData)) {
+        if (count($exportData) === 0) {
             $this->indexRepositoryMock->expects($this->never())->method('bulkUpdate');
         } else {
             $this->indexRepositoryMock->expects($this->once())->method('bulkUpdate')->with($indexAlias, $exportData);
         }
 
-        if (empty($expectedIdsToDelete)) {
+        if (count($expectedIdsToDelete) === 0) {
             $this->indexRepositoryMock->expects($this->never())->method('deleteIds');
         } else {
             $this->indexRepositoryMock->expects($this->once())->method('deleteIds')->with($indexAlias, $expectedIdsToDelete);

@@ -859,7 +859,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     {
         $result = clone $countData;
         foreach ($countData->countByParameterIdAndValueId as $parameterId => $values) {
-            if (empty($values)) {
+            if (count($values) === 0) {
                 unset($result->countByParameterIdAndValueId[$parameterId]);
             }
         }

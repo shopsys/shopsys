@@ -202,7 +202,7 @@ SAMPLE
     private function getParamNameFromLine(Line $line): ?string
     {
         $matches = Strings::match($line->getContent(), PhpdocRegex::ARGUMENT_NAME_PATTERN);
-        if (isset($matches[1]) && !empty($matches[1])) {
+        if (isset($matches[1]) && $matches[1] !== '') {
             return $matches[1];
         }
 

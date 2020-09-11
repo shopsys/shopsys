@@ -92,7 +92,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
 
         $output = $process->getOutput();
 
-        return !(bool)empty($output);
+        return $output !== '';
     }
 
     private function configureGitIdentityIfMissing(): void

@@ -206,12 +206,12 @@ class IndexFacade
             $this->entityManager->clear();
             $currentBatchData = $index->getExportDataForIds($domainId, $idsToExport);
 
-            if (!empty($currentBatchData)) {
+            if (count($currentBatchData) > 0) {
                 $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
             }
 
             $idsToDelete = array_values(array_diff($idsToExport, array_keys($currentBatchData)));
-            if (!empty($idsToDelete)) {
+            if (count($idsToDelete) > 0) {
                 $this->indexRepository->deleteIds($indexAlias, $idsToDelete);
             }
         }

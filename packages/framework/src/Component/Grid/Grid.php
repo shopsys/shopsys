@@ -170,7 +170,7 @@ class Grid
         RouteCsrfProtector $routeCsrfProtector,
         Environment $twig
     ) {
-        if (empty($id)) {
+        if ($id === '') {
             $message = 'Grid id cannot be empty.';
             throw new \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException($message);
         }

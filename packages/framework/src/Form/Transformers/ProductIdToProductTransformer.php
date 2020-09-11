@@ -39,7 +39,7 @@ class ProductIdToProductTransformer implements DataTransformerInterface
      */
     public function reverseTransform($productId)
     {
-        if (empty($productId)) {
+        if ((int)$productId === 0) {
             return null;
         }
         try {

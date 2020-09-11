@@ -186,7 +186,7 @@ class DefaultController extends AdminBaseController
             );
         }
 
-        if (empty($this->unitFacade->getAll())) {
+        if (count($this->unitFacade->getAll()) === 0) {
             $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">There are no units, you need to create some.</a>'),
                 [
@@ -204,7 +204,7 @@ class DefaultController extends AdminBaseController
             );
         }
 
-        if (empty($this->availabilityFacade->getAll())) {
+        if (count($this->availabilityFacade->getAll()) === 0) {
             $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">There are no availabilities, you need to create some.</a>'),
                 [

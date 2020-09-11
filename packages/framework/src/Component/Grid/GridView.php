@@ -107,7 +107,7 @@ class GridView
 
                 if ($echo) {
                     echo $template->renderBlock($name, $templateParameters);
-                    return;
+                    return null;
                 }
                 return $template->renderBlock($name, $templateParameters);
             }
@@ -247,7 +247,7 @@ class GridView
      */
     protected function getTemplates()
     {
-        if (empty($this->templates)) {
+        if ($this->templates === null || count($this->templates) === 0) {
             $this->templates = [];
             if (is_array($this->theme)) {
                 foreach ($this->theme as $theme) {

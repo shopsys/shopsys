@@ -459,7 +459,7 @@ class CategoryFacade
     protected function createFriendlyUrlsWhenRenamed(Category $category, array $originalNames): void
     {
         $changedNames = $this->getChangedNamesByLocale($category, $originalNames);
-        if (empty($changedNames)) {
+        if (count($changedNames) === 0) {
             return;
         }
 

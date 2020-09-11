@@ -179,7 +179,7 @@ class IndexRepository
         $indexes = $this->elasticsearchClient->indices();
 
         $indexesWithAlias = array_keys($indexes->getAlias(['name' => $aliasName]));
-        if (empty($indexesWithAlias)) {
+        if (count($indexesWithAlias) === 0) {
             throw ElasticsearchIndexException::noIndexFoundForAlias($aliasName);
         }
 

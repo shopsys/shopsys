@@ -114,7 +114,7 @@ class FileUpload
      */
     public function tryDeleteTemporaryFile($filename)
     {
-        if (!empty($filename)) {
+        if ($filename !== '') {
             $filepath = $this->getTemporaryFilepath($filename);
             try {
                 $this->filesystem->delete($filepath);
