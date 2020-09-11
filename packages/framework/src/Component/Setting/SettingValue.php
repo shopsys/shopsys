@@ -153,7 +153,7 @@ class SettingValue
             return static::TYPE_BOOLEAN;
         } elseif (is_string($value)) {
             return static::TYPE_STRING;
-        } elseif (is_null($value)) {
+        } elseif ($value === null) {
             return static::TYPE_NULL;
         } elseif ($value instanceof DateTime) {
             return static::TYPE_DATETIME;
