@@ -337,7 +337,9 @@ class TranslationReplaceSourceCommand extends Command
 
             if ($lengthLeft === $lengthRight) {
                 return 0;
-            } elseif ($lengthLeft < $lengthRight) {
+            }
+
+            if ($lengthLeft < $lengthRight) {
                 return 1;
             }
             return -1;

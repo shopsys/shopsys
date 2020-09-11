@@ -38,21 +38,23 @@ class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscr
     {
         $meta = $eventArgs->getClassMetadata();
         $entityName = $meta->getName();
-        if ($this->mustClean($entityName)) {
-            $meta->isMappedSuperclass = true;
-            $meta->identifier = [];
-            $meta->generatorType = ClassMetadataInfo::GENERATOR_TYPE_NONE;
-            $meta->fieldMappings = [];
-            $meta->fieldNames = [];
-            $meta->columnNames = [];
-            $meta->associationMappings = [];
-            $meta->idGenerator = new AssignedGenerator();
-            $meta->embeddedClasses = [];
-            $meta->inheritanceType = ClassMetadataInfo::INHERITANCE_TYPE_NONE;
-            $meta->discriminatorColumn = null;
-            $meta->discriminatorMap = [];
-            $meta->discriminatorValue = null;
+        if (!$this->mustClean($entityName)) {
+            return;
         }
+
+        $meta->isMappedSuperclass = true;
+        $meta->identifier = [];
+        $meta->generatorType = ClassMetadataInfo::GENERATOR_TYPE_NONE;
+        $meta->fieldMappings = [];
+        $meta->fieldNames = [];
+        $meta->columnNames = [];
+        $meta->associationMappings = [];
+        $meta->idGenerator = new AssignedGenerator();
+        $meta->embeddedClasses = [];
+        $meta->inheritanceType = ClassMetadataInfo::INHERITANCE_TYPE_NONE;
+        $meta->discriminatorColumn = null;
+        $meta->discriminatorMap = [];
+        $meta->discriminatorValue = null;
     }
 
     /**

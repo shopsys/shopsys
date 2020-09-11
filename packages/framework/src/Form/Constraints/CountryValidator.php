@@ -57,12 +57,14 @@ class CountryValidator extends ConstraintValidator
             $availableCountryCodes[] = $countryOnDomain->getCode();
         }
 
-        if (!in_array($country, $availableCountryCodes, true)) {
-            $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ country_code }}', $country)
-                ->setParameter('{{ available_country_codes }}', implode(', ', $availableCountryCodes))
-                ->setCode(Country::INVALID_COUNTRY_ERROR)
-                ->addViolation();
+        if (in_array($country, $availableCountryCodes, true)) {
+            return;
         }
+
+        $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ country_code }}', $country)
+            ->setParameter('{{ available_country_codes }}', implode(', ', $availableCountryCodes))
+            ->setCode(Country::INVALID_COUNTRY_ERROR)
+            ->addViolation();
     }
 }

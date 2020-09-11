@@ -342,6 +342,7 @@ class OrderController extends FrontBaseController
                 ]
             );
         }
+
         if ($transportAndPaymentCheckResult->isPaymentPriceChanged()) {
             $this->addInfoFlashTwig(
                 t('The price of payment {{ paymentName }} changed during ordering process. Check your order, please.'),

@@ -34,16 +34,16 @@ class DeliveryAddressOfCurrentCustomerValidator extends ConstraintValidator
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, UniqueCollection::class);
         }
 
-        if ($deliveryAddress !== null) {
-            $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        if ($deliveryAddress === null) {
+            return;
+        }
 
-            if ($customerUser !== null) {
-                if (!in_array($deliveryAddress, $customerUser->getCustomer()->getDeliveryAddresses(), true)) {
-                    $this->context->addViolation($constraint->message);
-                }
-            } else {
-                $this->context->addViolation($constraint->message);
-            }
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        if (
+            $customerUser === null
+            || !in_array($deliveryAddress, $customerUser->getCustomer()->getDeliveryAddresses(), true)
+        ) {
+            $this->context->addViolation($constraint->message);
         }
     }
 }

@@ -72,9 +72,11 @@ class ProductFactory implements ProductFactoryInterface
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null $calculatedAvailability */
         $calculatedAvailability = $product->getCalculatedAvailability();
-        if ($calculatedAvailability === null) {
-            $availability = $this->productAvailabilityCalculation->calculateAvailability($product);
-            $product->setCalculatedAvailability($availability);
+        if ($calculatedAvailability !== null) {
+            return;
         }
+
+        $availability = $this->productAvailabilityCalculation->calculateAvailability($product);
+        $product->setCalculatedAvailability($availability);
     }
 }

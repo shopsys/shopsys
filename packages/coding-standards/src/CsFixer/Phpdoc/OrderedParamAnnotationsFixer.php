@@ -166,10 +166,12 @@ SAMPLE
 
         foreach ($lines as $key => $line) {
             $paramName = $this->getParamNameFromLine($line);
-            if ($paramName !== null && isset($argumentAnalyses[$paramName])) {
-                // use argument name as key, for sorting
-                $docParamNamesToKeys[$paramName] = $key;
+            if ($paramName === null || !isset($argumentAnalyses[$paramName])) {
+                continue;
             }
+
+            // use argument name as key, for sorting
+            $docParamNamesToKeys[$paramName] = $key;
         }
 
         if (count($docParamNamesToKeys) === 0) {

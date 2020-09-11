@@ -49,23 +49,25 @@ class Version20160512152113 extends AbstractMigration
                 ['domainId' => $domainId]
             )->fetchColumn(0);
 
-            if ($countOfOrdersOnDomain > 0) {
-                $this->sql(
-                    'INSERT INTO countries (name, domain_id) VALUES (:countryName, :domainId)',
-                    [
-                        'countryName' => '-',
-                        'domainId' => $domainId,
-                    ]
-                );
-                $countryId = $this->connection->lastInsertId(self::COUNTRIES_SEQUENCE_NAME);
-                $this->sql(
-                    'UPDATE orders SET country_id = :countryId WHERE domain_id = :domainId',
-                    [
-                        'countryId' => $countryId,
-                        'domainId' => $domainId,
-                    ]
-                );
+            if ($countOfOrdersOnDomain === 0) {
+                continue;
             }
+
+            $this->sql(
+                'INSERT INTO countries (name, domain_id) VALUES (:countryName, :domainId)',
+                [
+                    'countryName' => '-',
+                    'domainId' => $domainId,
+                ]
+            );
+            $countryId = $this->connection->lastInsertId(self::COUNTRIES_SEQUENCE_NAME);
+            $this->sql(
+                'UPDATE orders SET country_id = :countryId WHERE domain_id = :domainId',
+                [
+                    'countryId' => $countryId,
+                    'domainId' => $domainId,
+                ]
+            );
         }
         $this->sql('ALTER TABLE orders ALTER country_id SET NOT NULL');
 

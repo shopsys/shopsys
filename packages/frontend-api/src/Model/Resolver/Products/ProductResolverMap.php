@@ -64,7 +64,9 @@ class ProductResolverMap extends ResolverMap
 
                     if ($isMainVariant) {
                         return 'MainVariant';
-                    } elseif ($isVariant) {
+                    }
+
+                    if ($isVariant) {
                         return 'Variant';
                     }
                     return 'RegularProduct';

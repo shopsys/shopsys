@@ -149,14 +149,16 @@ class OrderTest extends TestCase
     {
         $diffInSeconds = $expected->getTimestamp() - $actual->getTimestamp();
 
-        if (abs($diffInSeconds) > $deltaInSeconds) {
-            $message = sprintf(
-                'Failed asserting that %s is close to %s (delta: %d seconds)',
-                $expected->format(DateTime::ISO8601),
-                $actual->format(DateTime::ISO8601),
-                $deltaInSeconds
-            );
-            $this->fail($message);
+        if (abs($diffInSeconds) <= $deltaInSeconds) {
+            return;
         }
+
+        $message = sprintf(
+            'Failed asserting that %s is close to %s (delta: %d seconds)',
+            $expected->format(DateTime::ISO8601),
+            $actual->format(DateTime::ISO8601),
+            $deltaInSeconds
+        );
+        $this->fail($message);
     }
 }

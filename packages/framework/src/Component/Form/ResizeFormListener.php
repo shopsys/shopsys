@@ -163,14 +163,16 @@ class ResizeFormListener implements EventSubscriberInterface
         }
 
         // Add all additional rows
-        if ($this->allowAdd) {
-            $childOptions = $this->options;
+        if (!$this->allowAdd) {
+            return;
+        }
 
-            foreach (array_keys($data) as $name) {
-                if (!$form->has($name)) {
-                    $childOptions['property_path'] = '[' . $name . ']';
-                    $form->add($name, $this->type, $childOptions);
-                }
+        $childOptions = $this->options;
+
+        foreach (array_keys($data) as $name) {
+            if (!$form->has($name)) {
+                $childOptions['property_path'] = '[' . $name . ']';
+                $form->add($name, $this->type, $childOptions);
             }
         }
     }
@@ -240,10 +242,12 @@ class ResizeFormListener implements EventSubscriberInterface
 
             // $isNew can only be true if allowAdd is true, so we don't
             // need to check allowAdd again
-            if ($child->isEmpty() && ($isNew || $this->allowDelete)) {
-                unset($viewData[$name]);
-                $form->remove($name);
+            if (!$child->isEmpty() || (!$isNew && !$this->allowDelete)) {
+                continue;
             }
+
+            unset($viewData[$name]);
+            $form->remove($name);
         }
 
         return $viewData;

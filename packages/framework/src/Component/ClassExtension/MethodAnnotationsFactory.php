@@ -63,21 +63,23 @@ class MethodAnnotationsFactory
     ): string {
         foreach ($this->annotationsReplacementsMap->getPatterns() as $frameworkClassPattern) {
             $methodName = $reflectionMethodFromFrameworkClass->getName();
-            if (!$this->isMethodImplementedInClass($methodName, $projectClassBetterReflection)) {
-                if ($this->methodReturningTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes())
-                    || $this->methodParameterTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getParameters())) {
-                    $optionalStaticKeyword = $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '';
-                    $returnType = $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) !== '' ? $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) . ' ' : '';
-                    $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes($reflectionMethodFromFrameworkClass);
+            if ($this->isMethodImplementedInClass($methodName, $projectClassBetterReflection)) {
+                continue;
+            }
 
-                    return sprintf(
-                        " * @method %s%s%s(%s)\n",
-                        $optionalStaticKeyword,
-                        $returnType,
-                        $methodName,
-                        $parameterNamesWithTypes
-                    );
-                }
+            if ($this->methodReturningTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes())
+                || $this->methodParameterTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getParameters())) {
+                $optionalStaticKeyword = $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '';
+                $returnType = $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) !== '' ? $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) . ' ' : '';
+                $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes($reflectionMethodFromFrameworkClass);
+
+                return sprintf(
+                    " * @method %s%s%s(%s)\n",
+                    $optionalStaticKeyword,
+                    $returnType,
+                    $methodName,
+                    $parameterNamesWithTypes
+                );
             }
         }
 

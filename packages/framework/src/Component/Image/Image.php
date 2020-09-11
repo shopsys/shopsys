@@ -113,11 +113,11 @@ class Image implements EntityFileUploadInterface
      */
     public function setFileAsUploaded(string $key, string $originalFilename): void
     {
-        if ($key === static::UPLOAD_KEY) {
-            $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
-        } else {
+        if ($key !== static::UPLOAD_KEY) {
             throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException($key);
         }
+
+        $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
     }
 
     /**

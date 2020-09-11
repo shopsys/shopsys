@@ -147,17 +147,29 @@ class SettingValue
     {
         if (is_int($value)) {
             return static::TYPE_INTEGER;
-        } elseif (is_float($value)) {
+        }
+
+        if (is_float($value)) {
             return static::TYPE_FLOAT;
-        } elseif (is_bool($value)) {
+        }
+
+        if (is_bool($value)) {
             return static::TYPE_BOOLEAN;
-        } elseif (is_string($value)) {
+        }
+
+        if (is_string($value)) {
             return static::TYPE_STRING;
-        } elseif ($value === null) {
+        }
+
+        if ($value === null) {
             return static::TYPE_NULL;
-        } elseif ($value instanceof DateTime) {
+        }
+
+        if ($value instanceof DateTime) {
             return static::TYPE_DATETIME;
-        } elseif ($value instanceof Money) {
+        }
+
+        if ($value instanceof Money) {
             return static::TYPE_MONEY;
         }
 

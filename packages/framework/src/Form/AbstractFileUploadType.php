@@ -144,19 +144,21 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     public function onPreSubmit(FormEvent $event)
     {
         $data = $event->getData();
-        if (is_array($data) && array_key_exists('file', $data) && is_array($data['file'])) {
-            $fallbackFiles = $data['file'];
-            foreach ($fallbackFiles as $file) {
-                if ($file instanceof UploadedFile) {
-                    try {
-                        $data['uploadedFiles'][] = $this->fileUpload->upload($file);
-                    } catch (\Shopsys\FrameworkBundle\Component\FileUpload\Exception\FileUploadException $ex) {
-                        $event->getForm()->addError(new FormError(t('File upload failed')));
-                    }
+        if (!is_array($data) || !array_key_exists('file', $data) || !is_array($data['file'])) {
+            return;
+        }
+
+        $fallbackFiles = $data['file'];
+        foreach ($fallbackFiles as $file) {
+            if ($file instanceof UploadedFile) {
+                try {
+                    $data['uploadedFiles'][] = $this->fileUpload->upload($file);
+                } catch (\Shopsys\FrameworkBundle\Component\FileUpload\Exception\FileUploadException $ex) {
+                    $event->getForm()->addError(new FormError(t('File upload failed')));
                 }
             }
-
-            $event->setData($data);
         }
+
+        $event->setData($data);
     }
 }

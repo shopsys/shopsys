@@ -138,15 +138,17 @@ class CategoryVisibilityRepository
             return;
         }
 
-        if ($this->categoryVisibilityRecalculationScheduler->isRecalculationScheduled()) {
-            try {
-                $this->em->beginTransaction();
-                $this->refreshCategoriesVisibility();
-                $this->em->commit();
-            } catch (\Exception $ex) {
-                $this->em->rollback();
-                throw $ex;
-            }
+        if (!$this->categoryVisibilityRecalculationScheduler->isRecalculationScheduled()) {
+            return;
+        }
+
+        try {
+            $this->em->beginTransaction();
+            $this->refreshCategoriesVisibility();
+            $this->em->commit();
+        } catch (\Exception $ex) {
+            $this->em->rollback();
+            throw $ex;
         }
     }
 }

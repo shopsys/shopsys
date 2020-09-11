@@ -23,12 +23,14 @@ class Version20191121145700 extends AbstractMigration
                     'domainId' => $domainId,
                 ]
             )->fetchColumn(0);
-            if ($contactFormMainTextCount <= 0) {
-                $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'contactFormMainText\', :domainId, :text, \'string\')', [
-                    'domainId' => $domainId,
-                    'text' => 'Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible.',
-                ]);
+            if ($contactFormMainTextCount > 0) {
+                continue;
             }
+
+            $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'contactFormMainText\', :domainId, :text, \'string\')', [
+                'domainId' => $domainId,
+                'text' => 'Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible.',
+            ]);
         }
     }
 

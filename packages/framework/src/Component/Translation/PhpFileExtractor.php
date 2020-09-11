@@ -220,7 +220,9 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     {
         if ($node instanceof MethodCall) {
             return (string)$node->name;
-        } elseif ($node instanceof FuncCall && $node->name instanceof Name) {
+        }
+
+        if ($node instanceof FuncCall && $node->name instanceof Name) {
             return (string)$node->name;
         }
         throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException('Unable to resolve node name');

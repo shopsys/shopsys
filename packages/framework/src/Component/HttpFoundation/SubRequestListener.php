@@ -65,14 +65,14 @@ class SubRequestListener
     protected function processSubResponse(Response $subResponse)
     {
         if ($subResponse->isRedirection()) {
-            if ($this->redirectResponse === null) {
-                /** @var \Symfony\Component\HttpFoundation\RedirectResponse $subRedirectResponse */
-                $subRedirectResponse = $subResponse;
-                $this->redirectResponse = $subRedirectResponse;
-            } else {
+            if ($this->redirectResponse !== null) {
                 $message = 'Only one subresponse can do a redirect.';
                 throw new \Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\TooManyRedirectResponsesException($message);
             }
+
+            /** @var \Symfony\Component\HttpFoundation\RedirectResponse $subRedirectResponse */
+            $subRedirectResponse = $subResponse;
+            $this->redirectResponse = $subRedirectResponse;
         }
     }
 }

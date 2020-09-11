@@ -54,16 +54,20 @@ class ProductMassActionFacade
             $checkedProductIds
         );
 
-        if ($productMassActionData->action === ProductMassActionData::ACTION_SET) {
-            if ($productMassActionData->subject === ProductMassActionData::SUBJECT_PRODUCT_HIDDEN) {
-                $this->productMassActionRepository->setHidden(
-                    $selectedProductIds,
-                    $productMassActionData->value === ProductMassActionData::VALUE_PRODUCT_HIDE
-                );
-                $this->productHiddenRecalculator->calculateHiddenForAll();
-                $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
-            }
+        if ($productMassActionData->action !== ProductMassActionData::ACTION_SET) {
+            return;
         }
+
+        if ($productMassActionData->subject !== ProductMassActionData::SUBJECT_PRODUCT_HIDDEN) {
+            return;
+        }
+
+        $this->productMassActionRepository->setHidden(
+            $selectedProductIds,
+            $productMassActionData->value === ProductMassActionData::VALUE_PRODUCT_HIDE
+        );
+        $this->productHiddenRecalculator->calculateHiddenForAll();
+        $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
     }
 
     /**

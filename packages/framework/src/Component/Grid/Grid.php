@@ -591,11 +591,13 @@ class Grid
             }
         }
         $requestData = $this->requestStack->getMasterRequest()->request->get(self::GET_PARAMETER, []);
-        if (array_key_exists($this->id, $requestData)) {
-            $gridRequestData = $requestData[$this->id];
-            if (array_key_exists('selectedRowIds', $gridRequestData) && is_array($gridRequestData['selectedRowIds'])) {
-                $this->selectedRowIds = array_map('json_decode', $gridRequestData['selectedRowIds']);
-            }
+        if (!array_key_exists($this->id, $requestData)) {
+            return;
+        }
+
+        $gridRequestData = $requestData[$this->id];
+        if (array_key_exists('selectedRowIds', $gridRequestData) && is_array($gridRequestData['selectedRowIds'])) {
+            $this->selectedRowIds = array_map('json_decode', $gridRequestData['selectedRowIds']);
         }
     }
 
@@ -707,12 +709,16 @@ class Grid
 
         if (count($sourceColumnNameParts) === 1) {
             return $row[$sourceColumnNameParts[0]];
-        } elseif (count($sourceColumnNameParts) === 2) {
+        }
+
+        if (count($sourceColumnNameParts) === 2) {
             if (array_key_exists($sourceColumnNameParts[0], $row)
                 && array_key_exists($sourceColumnNameParts[1], $row[$sourceColumnNameParts[0]])
             ) {
                 return $row[$sourceColumnNameParts[0]][$sourceColumnNameParts[1]];
-            } elseif (array_key_exists($sourceColumnNameParts[1], $row)) {
+            }
+
+            if (array_key_exists($sourceColumnNameParts[1], $row)) {
                 return $row[$sourceColumnNameParts[1]];
             }
             return $row[$sourceColumnName];

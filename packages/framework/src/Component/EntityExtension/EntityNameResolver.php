@@ -34,9 +34,13 @@ class EntityNameResolver
     {
         if (is_string($subject)) {
             return $this->resolveInString($subject);
-        } elseif (is_array($subject)) {
+        }
+
+        if (is_array($subject)) {
             return $this->resolveInArray($subject);
-        } elseif (is_object($subject)) {
+        }
+
+        if (is_object($subject)) {
             $this->resolveInObjectProperties($subject);
         }
 

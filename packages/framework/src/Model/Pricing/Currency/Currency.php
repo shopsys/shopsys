@@ -155,11 +155,11 @@ class Currency
      */
     protected function setRoundingType(string $roundingType): void
     {
-        if (in_array($roundingType, static::getRoundingTypes(), true) === true) {
-            $this->roundingType = $roundingType;
-        } else {
+        if (in_array($roundingType, static::getRoundingTypes(), true) !== true) {
             throw new InvalidRoundingTypeException($roundingType);
         }
+
+        $this->roundingType = $roundingType;
     }
 
     /**

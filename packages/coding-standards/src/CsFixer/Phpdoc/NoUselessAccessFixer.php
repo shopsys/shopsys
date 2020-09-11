@@ -69,10 +69,12 @@ class Foo
                 $this->rewriteDocBlock($tokens, $docBlock, $position);
             }
 
-            if ($this->areThereAnyEmptyAccessAnnotation($docBlock)) {
-                $this->removeEmptyAccessAnnotations($docBlock);
-                $this->rewriteDocBlock($tokens, $docBlock, $position);
+            if (!$this->areThereAnyEmptyAccessAnnotation($docBlock)) {
+                continue;
             }
+
+            $this->removeEmptyAccessAnnotations($docBlock);
+            $this->rewriteDocBlock($tokens, $docBlock, $position);
         }
     }
 

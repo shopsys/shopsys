@@ -90,11 +90,13 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
     {
         $this->truncateImagesFromDb();
 
-        if (file_exists($this->dataFixturesImagesDirectory)) {
-            $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory . '/');
-            $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory, $this->targetImagesDirectory);
-            $this->processDbImagesChanges();
+        if (!file_exists($this->dataFixturesImagesDirectory)) {
+            return;
         }
+
+        $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory . '/');
+        $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory, $this->targetImagesDirectory);
+        $this->processDbImagesChanges();
     }
 
     private function processDbImagesChanges()
@@ -274,14 +276,16 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         foreach ($finder as $file) {
             $filepath = TransformString::removeDriveLetterFromPath($file->getPathname());
 
-            if ($this->localFilesystem->exists($filepath)) {
-                $newFilepath = $target . $file->getRelativePathname();
-
-                if ($this->filesystem->has($newFilepath)) {
-                    $this->filesystem->delete($newFilepath);
-                }
-                $this->mountManager->copy('local://' . $filepath, 'main://' . $newFilepath);
+            if (!$this->localFilesystem->exists($filepath)) {
+                continue;
             }
+
+            $newFilepath = $target . $file->getRelativePathname();
+
+            if ($this->filesystem->has($newFilepath)) {
+                $this->filesystem->delete($newFilepath);
+            }
+            $this->mountManager->copy('local://' . $filepath, 'main://' . $newFilepath);
         }
     }
 

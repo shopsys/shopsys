@@ -391,17 +391,19 @@ class ProductFormType extends AbstractType
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
 
-            if (count($productMainCategoriesIndexedByDomainId) > 0) {
-                $productMainCategory = $productMainCategoriesIndexedByDomainId[$domainId];
-                $mainCategoriesOptionsByDomainId[$domainId] = [
-                    'attr' => [
-                        'readonly' => 'readonly',
-                        'show_label' => true,
-                    ],
-                    'label' => count($productMainCategoriesIndexedByDomainId) > 1 ? $this->domain->getDomainConfigById($domainId)->getName() : t('Main category'),
-                    'data' => $productMainCategory === null ? '-' : $productMainCategory->getName(),
-                ];
+            if (count($productMainCategoriesIndexedByDomainId) <= 0) {
+                continue;
             }
+
+            $productMainCategory = $productMainCategoriesIndexedByDomainId[$domainId];
+            $mainCategoriesOptionsByDomainId[$domainId] = [
+                'attr' => [
+                    'readonly' => 'readonly',
+                    'show_label' => true,
+                ],
+                'label' => count($productMainCategoriesIndexedByDomainId) > 1 ? $this->domain->getDomainConfigById($domainId)->getName() : t('Main category'),
+                'data' => $productMainCategory === null ? '-' : $productMainCategory->getName(),
+            ];
         }
 
         $categoriesOptionsByDomainId = [];

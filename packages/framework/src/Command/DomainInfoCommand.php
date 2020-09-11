@@ -157,9 +157,13 @@ class DomainInfoCommand extends Command
         return array_map(function ($propertyValue) {
             if ($propertyValue === null) {
                 return '<options=bold;fg=cyan>NULL</options=bold;fg=cyan>';
-            } elseif ($propertyValue === true) {
+            }
+
+            if ($propertyValue === true) {
                 return '<options=bold;fg=green>YES</options=bold;fg=green>';
-            } elseif ($propertyValue === false) {
+            }
+
+            if ($propertyValue === false) {
                 return '<options=bold;fg=red>NO</options=bold;fg=red>';
             }
             return $propertyValue;

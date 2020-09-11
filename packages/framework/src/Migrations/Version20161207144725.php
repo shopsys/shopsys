@@ -22,8 +22,8 @@ class Version20161207144725 extends AbstractMigration
 
             if ($phoneHours <= 0) {
                 $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES
-                    (\'shopInfoPhoneHours\', :domainId, \'(po-pá, 10:00 - 16:00)\', \'string\');
-                ', ['domainId' => $domainId]);
+                (\'shopInfoPhoneHours\', :domainId, \'(po-pá, 10:00 - 16:00)\', \'string\');
+            ', ['domainId' => $domainId]);
             }
         }
     }

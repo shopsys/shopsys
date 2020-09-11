@@ -63,24 +63,26 @@ class Version20190611114955 extends AbstractMigration
         );
         $incorrectOrderCount = $statement->rowCount();
 
-        if ($incorrectOrderCount > 0) {
-            $message = sprintf('There are %d orders in your DB where the order item total prices do not add up to the total price of the order:', $incorrectOrderCount);
-
-            for ($i = 0; $i < min($incorrectOrderCount, static::MAX_LISTED_ORDERS); $i++) {
-                $incorrectOrder = $statement->fetch(PDO::FETCH_NUM);
-
-                $message .= sprintf("\n  - ID %d: order total %s, sum %s (with VAT); order total %s, sum %s (without VAT)", ...$incorrectOrder);
-            }
-
-            if ($incorrectOrderCount > static::MAX_LISTED_ORDERS) {
-                $message .= "\n  ...";
-            }
-
-            $message .= "\n\nYou'll have to create your own DB migration to calculate the order item total prices according to your price calculation and skip this migration.";
-            $message .= "\n\nIf you have modified the VAT calculation or rounding you can extend this class and override 'calculateOrderItemTotalPrices()'.";
-            $message .= "\n\nSee https://github.com/shopsys/shopsys/blob/v7.2.1/docs/introduction/database-migrations.md for details.";
-
-            throw new RuntimeException($message);
+        if ($incorrectOrderCount === 0) {
+            return;
         }
+
+        $message = sprintf('There are %d orders in your DB where the order item total prices do not add up to the total price of the order:', $incorrectOrderCount);
+
+        for ($i = 0; $i < min($incorrectOrderCount, static::MAX_LISTED_ORDERS); $i++) {
+            $incorrectOrder = $statement->fetch(PDO::FETCH_NUM);
+
+            $message .= sprintf("\n  - ID %d: order total %s, sum %s (with VAT); order total %s, sum %s (without VAT)", ...$incorrectOrder);
+        }
+
+        if ($incorrectOrderCount > static::MAX_LISTED_ORDERS) {
+            $message .= "\n  ...";
+        }
+
+        $message .= "\n\nYou'll have to create your own DB migration to calculate the order item total prices according to your price calculation and skip this migration.";
+        $message .= "\n\nIf you have modified the VAT calculation or rounding you can extend this class and override 'calculateOrderItemTotalPrices()'.";
+        $message .= "\n\nSee https://github.com/shopsys/shopsys/blob/v7.2.1/docs/introduction/database-migrations.md for details.";
+
+        throw new RuntimeException($message);
     }
 }

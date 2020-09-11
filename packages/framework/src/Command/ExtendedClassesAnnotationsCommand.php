@@ -132,7 +132,9 @@ class ExtendedClassesAnnotationsCommand extends Command
         if (count($filesForReplacingAnnotations) === 0 && count($filesForAddingPropertyOrMethodAnnotations) === 0) {
             $symfonyStyle->success('All good!');
             return CommandResultCodes::RESULT_OK;
-        } elseif ($isDryRun) {
+        }
+
+        if ($isDryRun) {
             $symfonyStyle->note('You can fix the annotations using "annotations-fix" phing command.');
             return CommandResultCodes::RESULT_FAIL;
         }
@@ -151,10 +153,12 @@ class ExtendedClassesAnnotationsCommand extends Command
         foreach ($finder as $file) {
             $pathname = $file->getPathname();
             $filesForReplacingAnnotations[] = $file->getRealPath();
-            if (!$isDryRun) {
-                $replacedContent = $this->annotationsReplacer->replaceIn(file_get_contents($pathname));
-                file_put_contents($pathname, $replacedContent);
+            if ($isDryRun) {
+                continue;
             }
+
+            $replacedContent = $this->annotationsReplacer->replaceIn(file_get_contents($pathname));
+            file_put_contents($pathname, $replacedContent);
         }
 
         return $filesForReplacingAnnotations;

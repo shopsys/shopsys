@@ -128,13 +128,15 @@ class ProductFilterRepository
     protected function filterByFlags(QueryBuilder $productsQueryBuilder, array $flags)
     {
         $flagsCount = count($flags);
-        if ($flagsCount !== 0) {
-            $flagsQueryBuilder = $this->getFlagsQueryBuilder($flags, $productsQueryBuilder->getEntityManager());
+        if ($flagsCount === 0) {
+            return;
+        }
 
-            $productsQueryBuilder->andWhere($productsQueryBuilder->expr()->exists($flagsQueryBuilder));
-            foreach ($flagsQueryBuilder->getParameters() as $parameter) {
-                $productsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
-            }
+        $flagsQueryBuilder = $this->getFlagsQueryBuilder($flags, $productsQueryBuilder->getEntityManager());
+
+        $productsQueryBuilder->andWhere($productsQueryBuilder->expr()->exists($flagsQueryBuilder));
+        foreach ($flagsQueryBuilder->getParameters() as $parameter) {
+            $productsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
         }
     }
 
@@ -145,13 +147,15 @@ class ProductFilterRepository
     protected function filterByBrands(QueryBuilder $productsQueryBuilder, array $brands)
     {
         $brandsCount = count($brands);
-        if ($brandsCount !== 0) {
-            $brandsQueryBuilder = $this->getBrandsQueryBuilder($brands, $productsQueryBuilder->getEntityManager());
+        if ($brandsCount === 0) {
+            return;
+        }
 
-            $productsQueryBuilder->andWhere($productsQueryBuilder->expr()->exists($brandsQueryBuilder));
-            foreach ($brandsQueryBuilder->getParameters() as $parameter) {
-                $productsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
-            }
+        $brandsQueryBuilder = $this->getBrandsQueryBuilder($brands, $productsQueryBuilder->getEntityManager());
+
+        $productsQueryBuilder->andWhere($productsQueryBuilder->expr()->exists($brandsQueryBuilder));
+        foreach ($brandsQueryBuilder->getParameters() as $parameter) {
+            $productsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
         }
     }
 

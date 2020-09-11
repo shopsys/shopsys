@@ -125,10 +125,12 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
                 /** @var \App\Model\Customer\User\CustomerUser $customerUser */
                 $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
-                if ($customerUser->getId() === 1) {
-                    $this->resetPassword($customerUser);
-                    $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customerUser);
+                if ($customerUser->getId() !== 1) {
+                    continue;
                 }
+
+                $this->resetPassword($customerUser);
+                $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customerUser);
             }
         }
     }

@@ -89,9 +89,13 @@ class ErrorController extends FrontBaseController
     ) {
         if ($this->isUnableToResolveDomainInNotDebug($exception)) {
             return $this->createUnableToResolveDomainResponse($request);
-        } elseif ($this->exceptionController->isShownErrorPagePrototype()) {
+        }
+
+        if ($this->exceptionController->isShownErrorPagePrototype()) {
             return $this->createErrorPagePrototypeResponse($request, $exception, $logger);
-        } elseif ($this->exceptionController->getDebug()) {
+        }
+
+        if ($this->exceptionController->getDebug()) {
             return $this->createExceptionResponse($request, $exception, $logger);
         }
         return $this->createErrorPageResponse($exception->getStatusCode());

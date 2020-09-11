@@ -41,17 +41,19 @@ class RedisVersionsFacade
         do {
             $keys = $this->globalClient->scan($iterator, $versionPattern);
 
-            if ($keys !== false) {
-                $toRemove = [];
-
-                foreach ($keys as $key) {
-                    if (strpos($key, $currentVersionPrefix) === false) {
-                        $keyWithoutPrefix = substr($key, strlen($prefix)); // redis returns keys including prefix but needs them without prefix during removing
-                        $toRemove[] = $keyWithoutPrefix;
-                    }
-                }
-                $this->globalClient->unlink($toRemove);
+            if ($keys === false) {
+                continue;
             }
+
+            $toRemove = [];
+
+            foreach ($keys as $key) {
+                if (strpos($key, $currentVersionPrefix) === false) {
+                    $keyWithoutPrefix = substr($key, strlen($prefix)); // redis returns keys including prefix but needs them without prefix during removing
+                    $toRemove[] = $keyWithoutPrefix;
+                }
+            }
+            $this->globalClient->unlink($toRemove);
         } while (is_numeric($iterator) && $iterator > 0);
     }
 }

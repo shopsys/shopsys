@@ -23,7 +23,9 @@ class StringColumnsFinderTest extends TestCase
             ->willReturnCallback(function ($fieldName) {
                 if ($fieldName === 'stringField') {
                     return 'string';
-                } elseif ($fieldName === 'textField') {
+                }
+
+                if ($fieldName === 'textField') {
                     return 'text';
                 }
                 return 'other';
@@ -33,7 +35,9 @@ class StringColumnsFinderTest extends TestCase
             ->willReturnCallback(function ($fieldName) {
                 if ($fieldName === 'stringField') {
                     return 'string_field';
-                } elseif ($fieldName === 'textField') {
+                }
+
+                if ($fieldName === 'textField') {
                     return 'text_field';
                 }
             });

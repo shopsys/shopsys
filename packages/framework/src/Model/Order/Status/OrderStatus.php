@@ -118,16 +118,16 @@ class OrderStatus extends AbstractTranslatableEntity
      */
     protected function setType($type)
     {
-        if (in_array($type, [
+        if (!in_array($type, [
             self::TYPE_NEW,
             self::TYPE_IN_PROGRESS,
             self::TYPE_DONE,
             self::TYPE_CANCELED,
         ], true)) {
-            $this->type = $type;
-        } else {
             throw new \Shopsys\FrameworkBundle\Model\Order\Status\Exception\InvalidOrderStatusTypeException($type);
         }
+
+        $this->type = $type;
     }
 
     public function checkForDelete()

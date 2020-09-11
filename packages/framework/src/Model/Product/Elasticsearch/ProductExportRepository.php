@@ -316,12 +316,14 @@ class ProductExportRepository
         foreach ($productParameterValues as $productParameterValue) {
             $parameter = $productParameterValue->getParameter();
             $parameterValue = $productParameterValue->getValue();
-            if ($parameter->getName($locale) !== null && $parameterValue->getLocale() === $locale) {
-                $parameters[] = [
-                    'parameter_id' => $parameter->getId(),
-                    'parameter_value_id' => $parameterValue->getId(),
-                ];
+            if ($parameter->getName($locale) === null || $parameterValue->getLocale() !== $locale) {
+                continue;
             }
+
+            $parameters[] = [
+                'parameter_id' => $parameter->getId(),
+                'parameter_value_id' => $parameterValue->getId(),
+            ];
         }
 
         return $parameters;

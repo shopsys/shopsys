@@ -47,7 +47,9 @@ class HeurekaShopCertificationLocaleHelper
     {
         if ($locale === 'cs') {
             return 'Heureka.cz';
-        } elseif ($locale === 'sk') {
+        }
+
+        if ($locale === 'sk') {
             return 'Heureka.sk';
         }
 

@@ -18,15 +18,17 @@ class ErrorHandlerListener
         $exception = $event->getException();
         $routeParam = $event->getRequest()->attributes->get('_route');
 
-        if ($exception instanceof BadRequestHttpException && $this->isGraphQlRoute($routeParam)) {
-            $errors = [
-                'errors' => [
-                    ['message' => $exception->getMessage()],
-                ],
-            ];
-
-            $event->setResponse(new JsonResponse($errors));
+        if (!($exception instanceof BadRequestHttpException) || !$this->isGraphQlRoute($routeParam)) {
+            return;
         }
+
+        $errors = [
+            'errors' => [
+                ['message' => $exception->getMessage()],
+            ],
+        ];
+
+        $event->setResponse(new JsonResponse($errors));
     }
 
     /**

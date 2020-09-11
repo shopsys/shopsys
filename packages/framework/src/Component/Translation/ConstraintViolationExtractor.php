@@ -136,14 +136,16 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     protected function extractMessage(MethodCall $methodCall)
     {
         $firstArgumentWithMessage = reset($methodCall->args);
-        if ($firstArgumentWithMessage->value instanceof String_) {
-            $messageId = $firstArgumentWithMessage->value->value; // value with translatable message
-
-            $message = new Message($messageId, ConstraintMessageExtractor::CONSTRAINT_MESSAGE_DOMAIN);
-            $message->addSource(new FileSource($this->file->getFilename(), $firstArgumentWithMessage->getLine()));
-
-            $this->catalogue->add($message);
+        if (!($firstArgumentWithMessage->value instanceof String_)) {
+            return;
         }
+
+        $messageId = $firstArgumentWithMessage->value->value; // value with translatable message
+
+        $message = new Message($messageId, ConstraintMessageExtractor::CONSTRAINT_MESSAGE_DOMAIN);
+        $message->addSource(new FileSource($this->file->getFilename(), $firstArgumentWithMessage->getLine()));
+
+        $this->catalogue->add($message);
     }
 
     /**

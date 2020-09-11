@@ -36,17 +36,19 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
                 continue;
             }
 
-            if (\in_array($constantName, $protectedConstants, true)) {
-                $file->addFixableError(
-                    'For better extensibility use late static binding.',
-                    $selfPosition,
-                    self::class
-                );
-
-                $file->fixer->beginChangeset();
-                $file->fixer->replaceToken($selfPosition, 'static');
-                $file->fixer->endChangeset();
+            if (!\in_array($constantName, $protectedConstants, true)) {
+                continue;
             }
+
+            $file->addFixableError(
+                'For better extensibility use late static binding.',
+                $selfPosition,
+                self::class
+            );
+
+            $file->fixer->beginChangeset();
+            $file->fixer->replaceToken($selfPosition, 'static');
+            $file->fixer->endChangeset();
         }
     }
 

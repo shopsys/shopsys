@@ -109,10 +109,12 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
             $this->processRunner->run(['git', 'config', 'user.name', $newName]);
         }
 
-        if ($email === '') {
-            $newEmail = $this->symfonyStyle->ask('What is your email address?');
-            $this->processRunner->run(['git', 'config', 'user.email', $newEmail]);
+        if ($email !== '') {
+            return;
         }
+
+        $newEmail = $this->symfonyStyle->ask('What is your email address?');
+        $this->processRunner->run(['git', 'config', 'user.email', $newEmail]);
     }
 
     /**

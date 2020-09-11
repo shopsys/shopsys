@@ -127,11 +127,13 @@ class FriendlyUrlFacade
             $friendlyUrl = $friendlyUrlUniqueResult->getFriendlyUrlForPersist();
         } while (!$friendlyUrlUniqueResult->isUnique());
 
-        if ($friendlyUrl !== null) {
-            $this->em->persist($friendlyUrl);
-            $this->em->flush($friendlyUrl);
-            $this->setFriendlyUrlAsMain($friendlyUrl);
+        if ($friendlyUrl === null) {
+            return;
         }
+
+        $this->em->persist($friendlyUrl);
+        $this->em->flush($friendlyUrl);
+        $this->setFriendlyUrlAsMain($friendlyUrl);
     }
 
     /**

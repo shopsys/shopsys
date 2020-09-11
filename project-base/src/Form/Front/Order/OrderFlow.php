@@ -114,10 +114,12 @@ class OrderFlow extends FormFlow
         parent::bind($formData); // load current step number
 
         $firstInvalidStep = $this->getFirstInvalidStep();
-        if ($firstInvalidStep !== null && $this->getCurrentStepNumber() > $firstInvalidStep->getNumber()) {
-            $this->changeRequestToStep($firstInvalidStep);
-            parent::bind($formData); // load changed step
+        if ($firstInvalidStep === null || $this->getCurrentStepNumber() <= $firstInvalidStep->getNumber()) {
+            return;
         }
+
+        $this->changeRequestToStep($firstInvalidStep);
+        parent::bind($formData); // load changed step
     }
 
     /**

@@ -85,11 +85,13 @@ class ProductAvailabilityFilter implements AdvancedSearchFilterInterface
             }
         }
 
-        if (count($isNotAvailabilities) > 0) {
-            $subQuery = 'SELECT availability_p.id FROM ' . Product::class . ' availability_p
-                JOIN availability_p.calculatedAvailability _a WITH _a.id IN (:isNotAvailabilities)';
-            $queryBuilder->andWhere('p.id NOT IN (' . $subQuery . ')');
-            $queryBuilder->setParameter('isNotAvailabilities', $isNotAvailabilities);
+        if (count($isNotAvailabilities) === 0) {
+            return;
         }
+
+        $subQuery = 'SELECT availability_p.id FROM ' . Product::class . ' availability_p
+            JOIN availability_p.calculatedAvailability _a WITH _a.id IN (:isNotAvailabilities)';
+        $queryBuilder->andWhere('p.id NOT IN (' . $subQuery . ')');
+        $queryBuilder->setParameter('isNotAvailabilities', $isNotAvailabilities);
     }
 }

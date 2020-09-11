@@ -51,10 +51,12 @@ class RouteConfigCustomizer
         $foundRouteNames = [];
         foreach ($this->requestDataSetGenerators as $requestDataSetGenerator) {
             $routeInfo = $requestDataSetGenerator->getRouteInfo();
-            if (in_array($routeInfo->getRouteName(), $routeNames, true)) {
-                $callback($requestDataSetGenerator, $routeInfo);
-                $foundRouteNames[] = $routeInfo->getRouteName();
+            if (!in_array($routeInfo->getRouteName(), $routeNames, true)) {
+                continue;
             }
+
+            $callback($requestDataSetGenerator, $routeInfo);
+            $foundRouteNames[] = $routeInfo->getRouteName();
         }
 
         $notFoundRouteNames = array_diff($routeNames, $foundRouteNames);

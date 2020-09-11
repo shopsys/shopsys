@@ -67,7 +67,9 @@ class HoneyPotExtension extends AbstractExtension
         foreach ($formView->children as $childForm) {
             if (strpos($childForm->vars['name'], static::PASSWORD_FIELD_NAME) !== false && !$childForm->isRendered()) {
                 return true;
-            } elseif ($this->containsNotRenderedPassword($childForm)) {
+            }
+
+            if ($this->containsNotRenderedPassword($childForm)) {
                 return true;
             }
         }

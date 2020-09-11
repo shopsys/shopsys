@@ -60,10 +60,12 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
         if ($this->localization !== null && $this->localization !== $localization) {
             throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
         }
-        if ($this->localization === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->localization = $localization;
+        if ($this->localization !== null) {
+            return;
         }
+
+        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+        $this->localization = $localization;
     }
 
     /**
@@ -125,17 +127,21 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
                 $isNotCategory[] = $ruleData->value;
             }
         }
-        if (count($isCategory) + count($isNotCategory) > 0) {
-            $subQuery = 'SELECT IDENTITY(%s.product) FROM ' . ProductCategoryDomain::class . ' %1$s WHERE %1$s.category IN (:%s)';
-
-            if (count($isCategory) > 0) {
-                $queryBuilder->andWhere($queryBuilder->expr()->in('p.id', sprintf($subQuery, 'pcd_is', 'isCategory')));
-                $queryBuilder->setParameter('isCategory', $isCategory);
-            }
-            if (count($isNotCategory) > 0) {
-                $queryBuilder->andWhere($queryBuilder->expr()->notIn('p.id', sprintf($subQuery, 'pcd_not', 'isNotCategory')));
-                $queryBuilder->setParameter('isNotCategory', $isNotCategory);
-            }
+        if (count($isCategory) + count($isNotCategory) === 0) {
+            return;
         }
+
+        $subQuery = 'SELECT IDENTITY(%s.product) FROM ' . ProductCategoryDomain::class . ' %1$s WHERE %1$s.category IN (:%s)';
+
+        if (count($isCategory) > 0) {
+            $queryBuilder->andWhere($queryBuilder->expr()->in('p.id', sprintf($subQuery, 'pcd_is', 'isCategory')));
+            $queryBuilder->setParameter('isCategory', $isCategory);
+        }
+        if (count($isNotCategory) === 0) {
+            return;
+        }
+
+        $queryBuilder->andWhere($queryBuilder->expr()->notIn('p.id', sprintf($subQuery, 'pcd_not', 'isNotCategory')));
+        $queryBuilder->setParameter('isNotCategory', $isNotCategory);
     }
 }

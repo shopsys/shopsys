@@ -643,10 +643,12 @@ class Product extends AbstractTranslatableEntity
                 $this->productCategoryDomains->add($productCategoryDomain);
             }
         }
-        if ($this->isMainVariant()) {
-            foreach ($this->getVariants() as $variant) {
-                $variant->copyProductCategoryDomains($productCategoryDomains);
-            }
+        if (!$this->isMainVariant()) {
+            return;
+        }
+
+        foreach ($this->getVariants() as $variant) {
+            $variant->copyProductCategoryDomains($productCategoryDomains);
         }
     }
 
@@ -824,11 +826,13 @@ class Product extends AbstractTranslatableEntity
             throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException($variant->getId());
         }
 
-        if (!$this->variants->contains($variant)) {
-            $this->variants->add($variant);
-            $variant->setMainVariant($this);
-            $variant->copyProductCategoryDomains($this->productCategoryDomains->toArray());
+        if ($this->variants->contains($variant)) {
+            return;
         }
+
+        $this->variants->add($variant);
+        $variant->setMainVariant($this);
+        $variant->copyProductCategoryDomains($this->productCategoryDomains->toArray());
     }
 
     /**

@@ -40,7 +40,9 @@ class CronModuleExecutor
             $cronModuleService->run();
 
             return self::RUN_STATUS_OK;
-        } elseif ($cronModuleService instanceof IteratedCronModuleInterface) {
+        }
+
+        if ($cronModuleService instanceof IteratedCronModuleInterface) {
             if ($suspended) {
                 $cronModuleService->wakeUp();
             }

@@ -94,11 +94,11 @@ class UploadedFileConfigLoader
                 throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\NotSupportedTypeNameException($typeName);
             }
 
-            if (!array_key_exists($typeName, $result)) {
-                $result[$typeName] = new UploadedFileTypeConfig($typeName, $typeMultiple);
-            } else {
+            if (array_key_exists($typeName, $result)) {
                 throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateTypeNameException($typeName);
             }
+
+            $result[$typeName] = new UploadedFileTypeConfig($typeName, $typeMultiple);
         }
 
         return $result;

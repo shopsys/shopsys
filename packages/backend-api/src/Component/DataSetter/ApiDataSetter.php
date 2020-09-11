@@ -65,11 +65,13 @@ class ApiDataSetter
     {
         $entityDataKey = $entityDataKey ?: $arrayKey;
 
-        if (array_key_exists($arrayKey, $apiData)) {
-            foreach ($this->domain->getAllIds() as $domainId) {
-                if (array_key_exists($domainId, $apiData[$arrayKey])) {
-                    $entityData->{$entityDataKey}[$domainId] = $apiData[$arrayKey][$domainId];
-                }
+        if (!array_key_exists($arrayKey, $apiData)) {
+            return;
+        }
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            if (array_key_exists($domainId, $apiData[$arrayKey])) {
+                $entityData->{$entityDataKey}[$domainId] = $apiData[$arrayKey][$domainId];
             }
         }
     }
@@ -84,11 +86,13 @@ class ApiDataSetter
     {
         $entityDataKey = $entityDataKey ?: $arrayKey;
 
-        if (array_key_exists($arrayKey, $apiData)) {
-            foreach ($this->domain->getAllLocales() as $locale) {
-                if (array_key_exists($locale, $apiData[$arrayKey])) {
-                    $entityData->{$entityDataKey}[$locale] = $apiData[$arrayKey][$locale];
-                }
+        if (!array_key_exists($arrayKey, $apiData)) {
+            return;
+        }
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            if (array_key_exists($locale, $apiData[$arrayKey])) {
+                $entityData->{$entityDataKey}[$locale] = $apiData[$arrayKey][$locale];
             }
         }
     }
