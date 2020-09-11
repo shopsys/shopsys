@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
+use function get_class;
+use function gettype;
+use function is_object;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Symfony\Component\Validator\Exception\MissingOptionsException;
 
 /**
  * @Annotation
@@ -45,7 +50,7 @@ class MoneyRange extends Constraint
         if ($this->min === null && $this->max === null) {
             $message = sprintf('Either option "min" or "max" must be given for constraint "%s".', self::class);
 
-            throw new \Symfony\Component\Validator\Exception\MissingOptionsException($message, ['min', 'max']);
+            throw new MissingOptionsException($message, ['min', 'max']);
         }
     }
 
@@ -62,9 +67,9 @@ class MoneyRange extends Constraint
         $value = $options[$optionName];
         if ($value !== null && !($value instanceof Money)) {
             $message = sprintf('The "%s" constraint requires the "%s" options to be either "%s" or null', self::class, $optionName, Money::class);
-            $message .= sprintf(', "%s" given.', \is_object($value) ? \get_class($value) : \gettype($value));
+            $message .= sprintf(', "%s" given.', is_object($value) ? get_class($value) : gettype($value));
 
-            throw new \Symfony\Component\Validator\Exception\ConstraintDefinitionException($message);
+            throw new ConstraintDefinitionException($message);
         }
     }
 }

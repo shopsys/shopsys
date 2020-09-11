@@ -4,6 +4,8 @@ namespace Shopsys\HttpSmokeTesting\RouterAdapter;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use ReflectionException;
+use ReflectionMethod;
 use Shopsys\HttpSmokeTesting\Annotation\DataSet;
 use Shopsys\HttpSmokeTesting\Annotation\Skipped;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
@@ -65,8 +67,8 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     private function extractAnnotationForController(string $controller): array
     {
         try {
-            $reflectionMethod = new \ReflectionMethod($controller);
-        } catch (\ReflectionException $e) {
+            $reflectionMethod = new ReflectionMethod($controller);
+        } catch (ReflectionException $e) {
             return [];
         }
 
@@ -77,7 +79,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
      * @param \ReflectionMethod $reflectionMethod
      * @return array
      */
-    private function getControllerMethodAnnotations(\ReflectionMethod $reflectionMethod): array
+    private function getControllerMethodAnnotations(ReflectionMethod $reflectionMethod): array
     {
         $annotations = [];
         foreach ($this->annotationsReader->getMethodAnnotations($reflectionMethod) as $annotation) {

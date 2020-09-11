@@ -3,6 +3,8 @@
 namespace Tests\FrameworkBundle\Unit\Component\UploadedFile\Config;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileTypeConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
@@ -25,7 +27,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
 
         $this->expectException(
-            \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException::class
+            UploadedFileEntityConfigNotFoundException::class
         );
         $uploadedFileConfig->getEntityName($entity);
     }
@@ -45,7 +47,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
 
         $this->expectException(
-            \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException::class
+            UploadedFileEntityConfigNotFoundException::class
         );
         $uploadedFileConfig->getUploadedFileEntityConfig($entity);
     }
@@ -74,7 +76,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileEntityConfig = $uploadedFileConfig->getUploadedFileEntityConfig($entity);
 
         $this->expectException(
-            \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileTypeConfigNotFoundException::class
+            UploadedFileTypeConfigNotFoundException::class
         );
 
         $uploadedFileEntityConfig->getTypeByName('test');

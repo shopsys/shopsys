@@ -6,6 +6,7 @@ use BadMethodCallException;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
+use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
@@ -173,7 +174,7 @@ class CronCommand extends Command
 
         $mutex = $mutexFactory->getPrefixedCronMutex($instanceName);
         if (!$mutex->acquireLock(0)) {
-            throw new \Shopsys\FrameworkBundle\Command\Exception\CronCommandException(
+            throw new CronCommandException(
                 'Cron is locked. Another cron module is already running.'
             );
         }

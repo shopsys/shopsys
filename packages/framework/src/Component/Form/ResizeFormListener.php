@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Form;
 
 use ArrayAccess;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
@@ -88,8 +89,8 @@ class ResizeFormListener implements EventSubscriberInterface
             $data = [];
         }
 
-        if (!is_array($data) && !($data instanceof \Traversable && $data instanceof \ArrayAccess)) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+        if (!is_array($data) && !($data instanceof Traversable && $data instanceof ArrayAccess)) {
+            throw new UnexpectedTypeException(
                 $data,
                 'array or (\Traversable and \ArrayAccess)'
             );
@@ -112,7 +113,7 @@ class ResizeFormListener implements EventSubscriberInterface
         }
 
         if (!is_array($viewData) && !($viewData instanceof Traversable && $viewData instanceof ArrayAccess)) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+            throw new UnexpectedTypeException(
                 $viewData,
                 'array or (\Traversable and \ArrayAccess)'
             );
@@ -147,7 +148,7 @@ class ResizeFormListener implements EventSubscriberInterface
         }
 
         if (!is_array($data) && !($data instanceof Traversable && $data instanceof ArrayAccess)) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+            throw new UnexpectedTypeException(
                 $data,
                 'array or (\Traversable and \ArrayAccess)'
             );
@@ -196,7 +197,7 @@ class ResizeFormListener implements EventSubscriberInterface
             $normData = [];
         }
         if (!is_array($normData) && !($normData instanceof Traversable && $normData instanceof ArrayAccess)) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+            throw new UnexpectedTypeException(
                 $normData,
                 'array or (\Traversable and \ArrayAccess)'
             );
@@ -212,7 +213,7 @@ class ResizeFormListener implements EventSubscriberInterface
                 && $previousViewData instanceof ArrayAccess
             )
         ) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+            throw new UnexpectedTypeException(
                 $previousViewData,
                 'array or (\Traversable and \ArrayAccess)'
             );

@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\FlashMessage;
 
+use LogicException;
+
 /**
  * @property \Psr\Container\ContainerInterface $container
  */
@@ -65,7 +67,7 @@ trait FlashMessageTrait
     protected function addFlashMessage(string $type, string $message): void
     {
         if (!$this->container->has('session')) {
-            throw new \LogicException('You can not use the addFlash method if sessions are disabled. Enable them in "config/packages/framework.yaml".');
+            throw new LogicException('You can not use the addFlash method if sessions are disabled. Enable them in "config/packages/framework.yaml".');
         }
 
         $this->container->get('session')->getFlashBag()->add($type, $message);

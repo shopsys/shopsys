@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config;
 
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileTypeConfigNotFoundException;
+
 class UploadedFileEntityConfig
 {
     /**
@@ -56,7 +58,7 @@ class UploadedFileEntityConfig
     public function getTypeByName(string $typeName = UploadedFileTypeConfig::DEFAULT_TYPE_NAME): UploadedFileTypeConfig
     {
         if (!array_key_exists($typeName, $this->types)) {
-            throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileTypeConfigNotFoundException($typeName);
+            throw new UploadedFileTypeConfigNotFoundException($typeName);
         }
 
         return $this->types[$typeName];

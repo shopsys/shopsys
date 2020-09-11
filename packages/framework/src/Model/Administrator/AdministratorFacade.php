@@ -3,6 +3,10 @@
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
@@ -71,7 +75,7 @@ class AdministratorFacade
     {
         $administratorByUserName = $this->administratorRepository->findByUserName($administratorData->username);
         if ($administratorByUserName !== null) {
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException($administratorByUserName->getUsername());
+            throw new DuplicateUserNameException($administratorByUserName->getUsername());
         }
         $administrator = $this->administratorFactory->create($administratorData);
         $this->setPassword($administrator, $administratorData->password);
@@ -116,7 +120,7 @@ class AdministratorFacade
             && $administratorByUserName !== $administrator
             && $administratorByUserName->getUsername() === $username
         ) {
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException($administrator->getUsername());
+            throw new DuplicateUserNameException($administrator->getUsername());
         }
     }
 
@@ -149,13 +153,13 @@ class AdministratorFacade
     {
         $adminCountExcludingSuperadmin = $this->administratorRepository->getCountExcludingSuperadmin();
         if ($adminCountExcludingSuperadmin === 1) {
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException();
+            throw new DeletingLastAdministratorException();
         }
         if ($this->tokenStorage->getToken()->getUser() === $administrator) {
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException();
+            throw new DeletingSelfException();
         }
         if ($administrator->isSuperadmin()) {
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException();
+            throw new DeletingSuperadminException();
         }
     }
 

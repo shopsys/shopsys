@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\FrameworkBundle\Model\Order\Status\Exception\InvalidOrderStatusTypeException;
+use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException;
 
 /**
  * @ORM\Table(name="order_statuses")
@@ -124,7 +126,7 @@ class OrderStatus extends AbstractTranslatableEntity
             self::TYPE_DONE,
             self::TYPE_CANCELED,
         ], true)) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Status\Exception\InvalidOrderStatusTypeException($type);
+            throw new InvalidOrderStatusTypeException($type);
         }
 
         $this->type = $type;
@@ -133,7 +135,7 @@ class OrderStatus extends AbstractTranslatableEntity
     public function checkForDelete()
     {
         if ($this->type !== self::TYPE_IN_PROGRESS) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException($this);
+            throw new OrderStatusDeletionForbiddenException($this);
         }
     }
 }

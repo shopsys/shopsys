@@ -5,6 +5,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ParameterRepository
@@ -82,7 +84,7 @@ class ParameterRepository
 
         if ($parameter === null) {
             $message = 'Parameter with ID ' . $parameterId . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException($message);
+            throw new ParameterNotFoundException($message);
         }
 
         return $parameter;
@@ -136,7 +138,7 @@ class ParameterRepository
         ]);
 
         if ($parameterValue === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException();
+            throw new ParameterValueNotFoundException();
         }
 
         return $parameterValue;

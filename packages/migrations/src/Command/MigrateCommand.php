@@ -3,6 +3,9 @@
 namespace Shopsys\MigrationBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use Shopsys\MigrationBundle\Command\Exception\CheckSchemaCommandException;
+use Shopsys\MigrationBundle\Command\Exception\MigrateCommandException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -61,9 +64,9 @@ class MigrateCommand extends AbstractCommand
 
                 $this->executeCheckSchemaCommand($output);
             });
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $message = 'Database migration process did not run properly. Transaction was reverted.';
-            throw new \Shopsys\MigrationBundle\Command\Exception\MigrateCommandException($message, $ex);
+            throw new MigrateCommandException($message, $ex);
         }
 
         $migrationVersions = $this->getMigrationsConfiguration()->getMigrations();
@@ -90,7 +93,7 @@ class MigrateCommand extends AbstractCommand
 
         if ($exitCode !== 0) {
             $message = 'Doctrine migration command did not exit properly (exit code is ' . $exitCode . ').';
-            throw new \Shopsys\MigrationBundle\Command\Exception\MigrateCommandException($message);
+            throw new MigrateCommandException($message);
         }
     }
 
@@ -110,7 +113,7 @@ class MigrateCommand extends AbstractCommand
 
         if ($exitCode !== 0) {
             $message = 'Database schema check did not exit properly (exit code is ' . $exitCode . ').';
-            throw new \Shopsys\MigrationBundle\Command\Exception\CheckSchemaCommandException($message);
+            throw new CheckSchemaCommandException($message);
         }
     }
 }

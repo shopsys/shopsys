@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Form\Admin\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchProductFilterTranslation;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchTranslationNotFoundException;
 use Tests\App\Test\FunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -35,7 +36,7 @@ class AdvancedSearchProductFilterTranslationTest extends FunctionalTestCase
     {
         $advancedSearchTranslator = new AdvancedSearchProductFilterTranslation();
 
-        $this->expectException(\Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchTranslationNotFoundException::class);
+        $this->expectException(AdvancedSearchTranslationNotFoundException::class);
         $advancedSearchTranslator->translateFilterName('nonexistingFilterName');
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ImagesIdsToImagesTransformer implements DataTransformerInterface
 {
@@ -49,8 +51,8 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
             foreach ($imagesIds as $imageId) {
                 try {
                     $images[] = $this->imageFacade->getById($imageId);
-                } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Image not found', 0, $e);
+                } catch (ImageNotFoundException $e) {
+                    throw new TransformationFailedException('Image not found', 0, $e);
                 }
             }
         }

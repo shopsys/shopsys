@@ -3,6 +3,10 @@
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -97,7 +101,7 @@ class Domain implements DomainIdsProviderInterface
             try {
                 $this->setting->getForDomain(Setting::DOMAIN_DATA_CREATED, $domainId);
                 $domainConfigsWithDataCreated[] = $domainConfig;
-            } catch (\Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException $ex) {
+            } catch (SettingValueNotFoundException $ex) {
                 continue;
             }
         }
@@ -152,7 +156,7 @@ class Domain implements DomainIdsProviderInterface
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException();
+        throw new InvalidDomainIdException();
     }
 
     /**
@@ -178,7 +182,7 @@ class Domain implements DomainIdsProviderInterface
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException($url);
+        throw new UnableToResolveDomainException($url);
     }
 
     /**
@@ -187,7 +191,7 @@ class Domain implements DomainIdsProviderInterface
     public function getCurrentDomainConfig()
     {
         if ($this->currentDomainConfig === null) {
-            throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException();
+            throw new NoDomainSelectedException();
         }
 
         return $this->currentDomainConfig;

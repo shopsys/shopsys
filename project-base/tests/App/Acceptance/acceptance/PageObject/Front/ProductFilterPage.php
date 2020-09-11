@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
+use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverKeys;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
@@ -94,13 +95,13 @@ class ProductFilterPage extends AbstractPage
                 if (stripos($itemLabel->getText(), $translatedParameterLabel) !== false) {
                     return $item;
                 }
-            } catch (\Facebook\WebDriver\Exception\NoSuchElementException $ex) {
+            } catch (NoSuchElementException $ex) {
                 continue;
             }
         }
 
         $message = sprintf('Unable to find parameter with label "%s" (translated to "%s") in product filter.', $parameterLabel, $translatedParameterLabel);
-        throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
+        throw new NoSuchElementException($message);
     }
 
     /**
@@ -118,12 +119,12 @@ class ProductFilterPage extends AbstractPage
                 if (stripos($labelElement->getText(), $translatedParameterValueText) !== false) {
                     return $labelElement;
                 }
-            } catch (\Facebook\WebDriver\Exception\NoSuchElementException $ex) {
+            } catch (NoSuchElementException $ex) {
                 continue;
             }
         }
 
         $message = sprintf('Unable to find parameter value with label "%s" (translated to %s) in product filter.', $parameterValueText, $translatedParameterValueText);
-        throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
+        throw new NoSuchElementException($message);
     }
 }

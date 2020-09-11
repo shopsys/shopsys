@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\DeletingNotAllowedToDeleteCurrencyException;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
@@ -167,7 +168,7 @@ class CurrencyFacade
         $currency = $this->currencyRepository->getById($currencyId);
 
         if (in_array($currency->getId(), $this->getNotAllowedToDeleteCurrencyIds(), true)) {
-            throw new \Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\DeletingNotAllowedToDeleteCurrencyException();
+            throw new DeletingNotAllowedToDeleteCurrencyException();
         }
         $this->em->remove($currency);
         $this->em->flush();

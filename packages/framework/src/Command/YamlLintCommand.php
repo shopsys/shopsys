@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use function count;
+use FilesystemIterator;
+use function in_array;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\RuntimeException;
@@ -14,6 +20,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
+use Traversable;
 
 class YamlLintCommand extends Command
 {
@@ -114,7 +121,7 @@ EOF
      * @param \SplFileInfo|null $file
      * @return array
      */
-    protected function validate(string $content, int $flags, ?\SplFileInfo $file = null): array
+    protected function validate(string $content, int $flags, ?SplFileInfo $file = null): array
     {
         $prevErrorHandler = set_error_handler(function ($level, $message, $file, $line) use (&$prevErrorHandler) {
             if ($level === E_USER_DEPRECATED) {
@@ -159,7 +166,7 @@ EOF
      */
     protected function displayTxt(SymfonyStyle $io, array $filesInfo): int
     {
-        $countFiles = \count($filesInfo);
+        $countFiles = count($filesInfo);
         $erroredFiles = 0;
 
         foreach ($filesInfo as $info) {
@@ -207,17 +214,17 @@ EOF
      * @param string|null $excludeRegex
      * @return \Traversable
      */
-    protected function getFiles(string $fileOrDirectory, ?string $excludeRegex = null): \Traversable
+    protected function getFiles(string $fileOrDirectory, ?string $excludeRegex = null): Traversable
     {
         if (is_file($fileOrDirectory) && $this->isFileInExcludePath($fileOrDirectory, $excludeRegex) === false) {
-            yield new \SplFileInfo($fileOrDirectory);
+            yield new SplFileInfo($fileOrDirectory);
 
             return;
         }
 
         foreach ($this->getDirectoryIterator($fileOrDirectory) as $file) {
             if (
-                !\in_array($file->getExtension(), ['yml', 'yaml'], true)
+                !in_array($file->getExtension(), ['yml', 'yaml'], true)
                 || $this->isFileInExcludePath($file->getPathname(), $excludeRegex) === true
             ) {
                 continue;
@@ -273,12 +280,12 @@ EOF
      * @param string $directory
      * @return \RecursiveIteratorIterator
      */
-    protected function getDirectoryIterator(string $directory): \RecursiveIteratorIterator
+    protected function getDirectoryIterator(string $directory): RecursiveIteratorIterator
     {
         $default = function (string $directory) {
-            return new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS),
-                \RecursiveIteratorIterator::LEAVES_ONLY
+            return new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS),
+                RecursiveIteratorIterator::LEAVES_ONLY
             );
         };
 

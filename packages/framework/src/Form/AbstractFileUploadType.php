@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\FileUploadException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Form\Constraints\FileExtensionMaxLength;
 use Symfony\Component\Form\AbstractType;
@@ -154,7 +155,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
             if ($file instanceof UploadedFile) {
                 try {
                     $data['uploadedFiles'][] = $this->fileUpload->upload($file);
-                } catch (\Shopsys\FrameworkBundle\Component\FileUpload\Exception\FileUploadException $ex) {
+                } catch (FileUploadException $ex) {
                     $event->getForm()->addError(new FormError(t('File upload failed')));
                 }
             }

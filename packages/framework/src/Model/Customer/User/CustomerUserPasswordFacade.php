@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
@@ -109,7 +110,7 @@ class CustomerUserPasswordFacade
         $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
 
         if (!$customerUser->isResetPasswordHashValid($resetPasswordHash)) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException();
+            throw new InvalidResetPasswordHashUserException();
         }
 
         $this->changePassword($customerUser, $newPassword);

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -201,7 +202,7 @@ class BrandController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException $ex) {
+        } catch (BrandNotFoundException $ex) {
             $this->addErrorFlash(t('Selected brand doesn\'t exist.'));
         }
 

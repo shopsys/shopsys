@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 
 class UploadedFileLocator
 {
@@ -74,7 +75,7 @@ class UploadedFileLocator
             ]);
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException();
+        throw new FileNotFoundException();
     }
 
     /**

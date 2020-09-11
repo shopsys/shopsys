@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\Doctrine;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\DuplicatedAliasException;
+use Shopsys\FrameworkBundle\Component\Doctrine\Exception\InvalidCountOfAliasesException;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class QueryBuilderExtender
@@ -71,7 +72,7 @@ class QueryBuilderExtender
     {
         $rootAliases = $queryBuilder->getRootAliases();
         if (count($rootAliases) !== static::REQUIRED_ALIASES_COUNT) {
-            throw new \Shopsys\FrameworkBundle\Component\Doctrine\Exception\InvalidCountOfAliasesException($rootAliases);
+            throw new InvalidCountOfAliasesException($rootAliases);
         }
         return reset($rootAliases);
     }

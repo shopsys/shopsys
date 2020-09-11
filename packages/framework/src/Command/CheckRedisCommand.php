@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use RedisException;
 use Shopsys\FrameworkBundle\Component\Redis\RedisFacade;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -51,7 +52,7 @@ class CheckRedisCommand extends Command
         try {
             $this->redisFacade->pingAllClients();
             $io->success('Redis is available.');
-        } catch (\RedisException $e) {
+        } catch (RedisException $e) {
             $io->error('Redis is not available.');
 
             return static::RETURN_CODE_ERROR;

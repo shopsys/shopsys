@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
+use Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException;
 use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -172,7 +173,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     public static function staticTrans($id, array $parameters = [], $domain = null, $locale = null)
     {
         if (self::$self === null) {
-            throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException();
+            throw new InstanceNotInjectedException();
         }
 
         return self::$self->trans($id, $parameters, $domain, $locale);
@@ -189,7 +190,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     public static function staticTransChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
     {
         if (self::$self === null) {
-            throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException();
+            throw new InstanceNotInjectedException();
         }
 
         return self::$self->transChoice($id, $number, $parameters, $domain, $locale);

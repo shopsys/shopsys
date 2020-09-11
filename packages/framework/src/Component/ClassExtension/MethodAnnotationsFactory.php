@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
+use OutOfBoundsException;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
 
@@ -96,7 +97,7 @@ class MethodAnnotationsFactory
         try {
             $reflectionMethod = $reflectionClass->getMethod($methodName);
             return $reflectionMethod->getDeclaringClass()->getName() === $reflectionClass->getName();
-        } catch (\OutOfBoundsException $ex) {
+        } catch (OutOfBoundsException $ex) {
             return false;
         }
     }

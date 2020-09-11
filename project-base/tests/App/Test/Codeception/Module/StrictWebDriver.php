@@ -9,6 +9,7 @@ use Codeception\Util\Locator;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 use Symfony\Component\DomCrawler\Crawler;
+use Tests\App\Test\Codeception\Exception\DeprecatedMethodException;
 
 class StrictWebDriver extends WebDriver
 {
@@ -37,7 +38,7 @@ class StrictWebDriver extends WebDriver
         if (!is_array($selector) && !$selector instanceof WebDriverBy) {
             $message = 'Using match() with fuzzy locator is slow. '
                 . 'You should implement new method with strict locator. See ' . self::class;
-            throw new \Tests\App\Test\Codeception\Exception\DeprecatedMethodException($message);
+            throw new DeprecatedMethodException($message);
         }
         return parent::match($page, $selector, $throwMalformed);
     }
@@ -50,7 +51,7 @@ class StrictWebDriver extends WebDriver
         if (!is_array($selector) && !$selector instanceof WebDriverElement) {
             $message = 'Using findFields() with fuzzy locator is slow. '
                 . 'You should implement new method with strict locator. See ' . self::class;
-            throw new \Tests\App\Test\Codeception\Exception\DeprecatedMethodException($message);
+            throw new DeprecatedMethodException($message);
         }
         return parent::findFields($selector);
     }
@@ -66,7 +67,7 @@ class StrictWebDriver extends WebDriver
             'clickBy*',
         ];
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
-        throw new \Tests\App\Test\Codeception\Exception\DeprecatedMethodException($message);
+        throw new DeprecatedMethodException($message);
     }
 
     /**
@@ -144,7 +145,7 @@ class StrictWebDriver extends WebDriver
             'fillFieldBy*',
         ];
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
-        throw new \Tests\App\Test\Codeception\Exception\DeprecatedMethodException($message);
+        throw new DeprecatedMethodException($message);
     }
 
     /**
@@ -206,7 +207,7 @@ class StrictWebDriver extends WebDriver
             'seeCheckboxIsCheckedBy*',
         ];
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
-        throw new \Tests\App\Test\Codeception\Exception\DeprecatedMethodException($message);
+        throw new DeprecatedMethodException($message);
     }
 
     /**
@@ -253,7 +254,7 @@ class StrictWebDriver extends WebDriver
             'dontSeeCheckboxIsCheckedBy*',
         ];
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
-        throw new \Tests\App\Test\Codeception\Exception\DeprecatedMethodException($message);
+        throw new DeprecatedMethodException($message);
     }
 
     /**
@@ -300,7 +301,7 @@ class StrictWebDriver extends WebDriver
             'checkOptionBy*',
         ];
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
-        throw new \Tests\App\Test\Codeception\Exception\DeprecatedMethodException($message);
+        throw new DeprecatedMethodException($message);
     }
 
     /**
@@ -368,7 +369,7 @@ class StrictWebDriver extends WebDriver
             'seeInFieldBy*',
         ];
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
-        throw new \Tests\App\Test\Codeception\Exception\DeprecatedMethodException($message);
+        throw new DeprecatedMethodException($message);
     }
 
     /**
@@ -413,7 +414,7 @@ class StrictWebDriver extends WebDriver
             'pressKeysBy*',
         ];
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
-        throw new \Tests\App\Test\Codeception\Exception\DeprecatedMethodException($message);
+        throw new DeprecatedMethodException($message);
     }
 
     /**

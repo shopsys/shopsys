@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Grid\Ordering;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException;
 
 class GridOrderingFacade
 {
@@ -46,6 +47,6 @@ class GridOrderingFacade
         if (array_key_exists(OrderableEntityInterface::class, $interfaces)) {
             return $this->em->getRepository($entityClass);
         }
-        throw new \Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException();
+        throw new EntityIsNotOrderableException();
     }
 }

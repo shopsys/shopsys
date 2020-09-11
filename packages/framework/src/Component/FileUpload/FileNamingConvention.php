@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UnresolvedNamingConventionException;
+
 class FileNamingConvention
 {
     public const TYPE_ID = 1;
@@ -23,6 +25,6 @@ class FileNamingConvention
             return $originalFilename;
         }
         $message = 'Naming convention ' . $namingConventionType . ' cannot by resolved to filename';
-        throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\UnresolvedNamingConventionException($message);
+        throw new UnresolvedNamingConventionException($message);
     }
 }

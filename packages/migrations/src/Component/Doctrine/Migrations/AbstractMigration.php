@@ -4,6 +4,7 @@ namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\Migrations\AbstractMigration as DoctrineAbstractMigration;
+use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException;
 
 abstract class AbstractMigration extends DoctrineAbstractMigration
 {
@@ -13,7 +14,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     protected function addSql($sql, array $params = [], array $types = [])
     {
         $message = 'Calling method "addSql" is not allowed. Use "sql" method instead';
-        throw new \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException($message);
+        throw new MethodIsNotAllowedException($message);
     }
 
     /**

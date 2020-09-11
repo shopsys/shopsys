@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use DateTimeInterface;
+use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\InvalidTimeFormatException;
 
 class CronTimeResolver
 {
@@ -68,7 +69,7 @@ class CronTimeResolver
                     && $timeNumber % $divisibleBy === 0
                 )
             ) {
-                throw new \Shopsys\FrameworkBundle\Component\Cron\Config\Exception\InvalidTimeFormatException($timeValue, $maxValue, $divisibleBy);
+                throw new InvalidTimeFormatException($timeValue, $maxValue, $divisibleBy);
             }
         }
     }

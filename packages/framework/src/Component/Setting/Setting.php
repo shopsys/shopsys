@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Component\Setting;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 
 class Setting
 {
@@ -63,7 +65,7 @@ class Setting
         }
 
         $message = 'Common setting value with name "' . $key . '" not found.';
-        throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
+        throw new SettingValueNotFoundException($message);
     }
 
     /**
@@ -82,7 +84,7 @@ class Setting
         }
 
         $message = 'Setting value with name "' . $key . '" for domain with ID "' . $domainId . '" not found.';
-        throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
+        throw new SettingValueNotFoundException($message);
     }
 
     /**
@@ -95,7 +97,7 @@ class Setting
 
         if (!array_key_exists($key, $this->values[SettingValue::DOMAIN_ID_COMMON])) {
             $message = 'Common setting value with name "' . $key . '" not found.';
-            throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
+            throw new SettingValueNotFoundException($message);
         }
 
         $settingValue = $this->values[SettingValue::DOMAIN_ID_COMMON][$key];
@@ -115,7 +117,7 @@ class Setting
 
         if (!array_key_exists($key, $this->values[$domainId])) {
             $message = 'Setting value with name "' . $key . '" for domain ID "' . $domainId . '" not found.';
-            throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
+            throw new SettingValueNotFoundException($message);
         }
 
         $settingValue = $this->values[$domainId][$key];
@@ -131,7 +133,7 @@ class Setting
     {
         if ($domainId === null) {
             $message = 'Cannot load setting value for null domain ID';
-            throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException($message);
+            throw new InvalidArgumentException($message);
         }
 
         if (array_key_exists($domainId, $this->values)) {

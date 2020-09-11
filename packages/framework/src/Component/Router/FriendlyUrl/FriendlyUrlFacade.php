@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class FriendlyUrlFacade
 {
@@ -105,7 +107,7 @@ class FriendlyUrlFacade
         do {
             $attempt++;
             if ($attempt > static::MAX_URL_UNIQUE_RESOLVE_ATTEMPT) {
-                throw new \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException(
+                throw new ReachMaxUrlUniqueResolveAttemptException(
                     $friendlyUrl,
                     $attempt
                 );
@@ -114,7 +116,7 @@ class FriendlyUrlFacade
             $domainRouter = $this->domainRouterFactory->getRouter($friendlyUrl->getDomainId());
             try {
                 $matchedRouteData = $domainRouter->match('/' . $friendlyUrl->getSlug());
-            } catch (\Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {
+            } catch (ResourceNotFoundException $e) {
                 $matchedRouteData = null;
             }
 

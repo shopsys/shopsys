@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\MassAction;
 
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Product\MassAction\Exception\UnsupportedSelectionType;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
@@ -97,7 +98,7 @@ class ProductMassActionFacade
         } elseif ($productMassActionData->selectType === ProductMassActionData::SELECT_TYPE_CHECKED) {
             $selectedProductIds = $checkedProductIds;
         } else {
-            throw new \Shopsys\FrameworkBundle\Model\Product\MassAction\Exception\UnsupportedSelectionType($productMassActionData->selectType);
+            throw new UnsupportedSelectionType($productMassActionData->selectType);
         }
 
         return $selectedProductIds;

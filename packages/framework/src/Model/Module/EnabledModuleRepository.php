@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Module;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Module\Exception\UnsupportedModuleException;
 
 class EnabledModuleRepository
 {
@@ -43,7 +44,7 @@ class EnabledModuleRepository
     public function findByName($moduleName)
     {
         if (!in_array($moduleName, $this->moduleList->getNames(), true)) {
-            throw new \Shopsys\FrameworkBundle\Model\Module\Exception\UnsupportedModuleException($moduleName);
+            throw new UnsupportedModuleException($moduleName);
         }
 
         return $this->getEnabledModuleRepository()->find($moduleName);

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagInlineEdit;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,7 +64,7 @@ class FlagController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException $ex) {
+        } catch (FlagNotFoundException $ex) {
             $this->addErrorFlash(t('Selected flag doesn\'t exist.'));
         }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -160,18 +161,18 @@ class CronModule
 
     public function updateLastStartedAt(): void
     {
-        $this->lastStartedAt = new \DateTime();
+        $this->lastStartedAt = new DateTime();
     }
 
     public function updateLastFinishedAt(): void
     {
-        $this->lastFinishedAt = new \DateTime();
+        $this->lastFinishedAt = new DateTime();
     }
 
     /**
      * @return \DateTime|null
      */
-    public function getLastStartedAt(): ?\DateTime
+    public function getLastStartedAt(): ?DateTime
     {
         return $this->lastStartedAt;
     }
@@ -179,7 +180,7 @@ class CronModule
     /**
      * @return \DateTime|null
      */
-    public function getLastFinishedAt(): ?\DateTime
+    public function getLastFinishedAt(): ?DateTime
     {
         return $this->lastFinishedAt;
     }

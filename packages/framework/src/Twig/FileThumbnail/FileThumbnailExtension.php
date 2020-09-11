@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Twig\FileThumbnail;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -77,7 +78,7 @@ class FileThumbnailExtension extends AbstractExtension
     {
         try {
             return $this->getImageThumbnailInfo($filepath);
-        } catch (\Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException $ex) {
+        } catch (FileIsNotSupportedImageException $ex) {
             return new FileThumbnailInfo($this->getIconTypeByFilename($filepath));
         }
     }

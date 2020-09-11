@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ContainsValidator extends ConstraintValidator
 {
@@ -14,7 +15,7 @@ class ContainsValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Contains) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, Contains::class);
+            throw new UnexpectedTypeException($constraint, Contains::class);
         }
 
         if (mb_strpos($value, $constraint->needle) === false) {

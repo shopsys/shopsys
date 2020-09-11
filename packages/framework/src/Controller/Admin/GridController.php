@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -60,7 +61,7 @@ class GridController extends AdminBaseController
 
             $responseData['success'] = true;
             $responseData['rowHtml'] = $this->inlineEditFacade->getRenderedRowHtml($request->get('serviceName'), $rowId);
-        } catch (\Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException $e) {
+        } catch (InvalidFormDataException $e) {
             $responseData['success'] = false;
             // reset array keys for array representation in JSON, otherwise it could be treated as an object
             $responseData['errors'] = array_values(array_unique($e->getFormErrors()));

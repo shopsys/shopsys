@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Exception;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\Console\Command\Command;
@@ -57,11 +58,11 @@ class ChangeEnvironmentCommand extends Command
         }
 
         if ($targetEnvironment === null) {
-            throw new \Exception('The target environment cannot be empty. Please run this command in interactive mode or set it via an argument.');
+            throw new Exception('The target environment cannot be empty. Please run this command in interactive mode or set it via an argument.');
         }
 
         if (!in_array($targetEnvironment, EnvironmentType::ALL, true)) {
-            throw new \Exception(sprintf('Unknown environment "%s".', $targetEnvironment));
+            throw new Exception(sprintf('Unknown environment "%s".', $targetEnvironment));
         }
 
         $this->environmentFileSetting->removeFilesForAllEnvironments();

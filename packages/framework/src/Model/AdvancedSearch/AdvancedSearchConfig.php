@@ -2,6 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
 
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterAlreadyExistsException;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterNotFoundException;
+
 class AdvancedSearchConfig
 {
     /**
@@ -21,7 +24,7 @@ class AdvancedSearchConfig
     {
         if (array_key_exists($filter->getName(), $this->filters)) {
             $message = 'Filter "' . $filter->getName() . '" already exists.';
-            throw new \Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterAlreadyExistsException($message);
+            throw new AdvancedSearchFilterAlreadyExistsException($message);
         }
 
         $this->filters[$filter->getName()] = $filter;
@@ -43,7 +46,7 @@ class AdvancedSearchConfig
     {
         if (!array_key_exists($filterName, $this->filters)) {
             $message = 'Filter "' . $filterName . '" not found.';
-            throw new \Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterNotFoundException($message);
+            throw new AdvancedSearchFilterNotFoundException($message);
         }
 
         return $this->filters[$filterName];

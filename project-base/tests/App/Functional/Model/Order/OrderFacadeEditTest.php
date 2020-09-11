@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -249,7 +250,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
             }
         }
 
-        throw new \RuntimeException(sprintf('Order item with the name "%s" was not found in the order.', $name));
+        throw new RuntimeException(sprintf('Order item with the name "%s" was not found in the order.', $name));
     }
 
     protected function setOrderForTests(): void

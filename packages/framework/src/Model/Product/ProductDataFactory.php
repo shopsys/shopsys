@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 
@@ -258,7 +259,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->parameters = $this->getParametersData($product);
         try {
             $productData->manualInputPricesByPricingGroupId = $this->productInputPriceFacade->getManualInputPricesDataIndexedByPricingGroupId($product);
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $ex) {
+        } catch (MainVariantPriceCalculationException $ex) {
             $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
         }
         $productData->accessories = $this->getAccessoriesData($product);

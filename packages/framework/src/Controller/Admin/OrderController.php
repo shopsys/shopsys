@@ -13,6 +13,9 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
@@ -126,11 +129,11 @@ class OrderController extends AdminBaseController
                     ]
                 );
                 return $this->redirectToRoute('admin_order_list');
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $e) {
+            } catch (CustomerUserNotFoundException $e) {
                 $this->addErrorFlash(
                     t('Entered customer not found, please check entered data.')
                 );
-            } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
+            } catch (MailException $e) {
                 $this->addErrorFlash(t('Unable to send updating email'));
             }
         }
@@ -263,7 +266,7 @@ class OrderController extends AdminBaseController
                     'number' => $orderNumber,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $ex) {
+        } catch (OrderNotFoundException $ex) {
             $this->addErrorFlash(t('Selected order doesn\'t exist.'));
         }
 

@@ -3,11 +3,14 @@
 namespace Shopsys\FrameworkBundle\Component\Image\Processing;
 
 use Intervention\Image\Constraint;
+use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
+use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 
 class ImageProcessor
 {
@@ -61,7 +64,7 @@ class ImageProcessor
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
 
         if (!in_array($extension, $this->supportedImageExtensions, true)) {
-            throw new \Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException($filepath);
+            throw new FileIsNotSupportedImageException($filepath);
         }
         try {
             if ($this->filesystem->has($filepath)) {
@@ -69,9 +72,9 @@ class ImageProcessor
 
                 return $this->imageManager->make($file);
             }
-            throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException('File ' . $filepath . ' not found.');
-        } catch (\Intervention\Image\Exception\NotReadableException $ex) {
-            throw new \Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException($filepath, $ex);
+            throw new ImageNotFoundException('File ' . $filepath . ' not found.');
+        } catch (NotReadableException $ex) {
+            throw new FileIsNotSupportedImageException($filepath, $ex);
         }
     }
 
@@ -90,7 +93,7 @@ class ImageProcessor
         } elseif (in_array($extension, $this->supportedImageExtensions, true)) {
             $extension = self::EXTENSION_JPG;
         } else {
-            throw new \Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException($filepath);
+            throw new FileIsNotSupportedImageException($filepath);
         }
         $newFilepath .= $extension;
 

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Error;
 
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException;
 use Symfony\Component\HttpKernel\EventListener\ErrorListener;
+use Throwable;
 
 class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
 {
@@ -30,9 +32,9 @@ class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
     /**
      * @inheritDoc
      */
-    protected function logException(\Throwable $exception, $message): void
+    protected function logException(Throwable $exception, $message): void
     {
-        if (!$exception instanceof \Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException) {
+        if (!$exception instanceof FakeHttpException) {
             $message .= sprintf(' Error ID: %s', $this->errorIdProvider->getErrorId());
 
             parent::logException($exception, $message);

@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Csv;
 
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+
 class CsvReader
 {
     /**
@@ -12,7 +14,7 @@ class CsvReader
     public function getRowsFromCsv($filename, $delimiter = ';')
     {
         if (!file_exists($filename) || !is_readable($filename)) {
-            throw new \Symfony\Component\Filesystem\Exception\FileNotFoundException();
+            throw new FileNotFoundException();
         }
 
         $rows = [];

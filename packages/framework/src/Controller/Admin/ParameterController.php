@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterInlineEdit;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,7 +62,7 @@ class ParameterController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException $ex) {
+        } catch (ParameterNotFoundException $ex) {
             $this->addErrorFlash(t('Selected parameter doesn\'t exist.'));
         }
 

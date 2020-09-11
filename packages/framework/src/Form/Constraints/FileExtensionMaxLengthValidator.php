@@ -5,6 +5,9 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Symfony\Component\Validator\Exception\InvalidArgumentException;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class FileExtensionMaxLengthValidator extends ConstraintValidator
 {
@@ -15,15 +18,15 @@ class FileExtensionMaxLengthValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof FileExtensionMaxLength) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, FileExtensionMaxLength::class);
+            throw new UnexpectedTypeException($constraint, FileExtensionMaxLength::class);
         }
 
         if (!$value instanceof File) {
-            throw new \Symfony\Component\Validator\Exception\InvalidArgumentException('Value must be instance of ' . File::class);
+            throw new InvalidArgumentException('Value must be instance of ' . File::class);
         }
 
         if (!is_int($constraint->limit) || $constraint->limit < 0) {
-            throw new \Symfony\Component\Validator\Exception\ConstraintDefinitionException('Limit must be integer and greater than zero.');
+            throw new ConstraintDefinitionException('Limit must be integer and greater than zero.');
         }
 
         if (mb_strlen($value->getExtension()) > $constraint->limit) {

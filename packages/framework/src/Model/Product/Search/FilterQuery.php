@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use stdClass;
 
 class FilterQuery
 {
@@ -163,7 +164,7 @@ class FilterQuery
                     'query' => [
                         'bool' => [
                             'must' => [
-                                'match_all' => new \stdClass(),
+                                'match_all' => new stdClass(),
                             ],
                             'filter' => [
                                 [
@@ -210,7 +211,7 @@ class FilterQuery
                 'query' => [
                     'bool' => [
                         'must' => [
-                            'match_all' => new \stdClass(),
+                            'match_all' => new stdClass(),
                         ],
                         'filter' => [
                             [
@@ -329,7 +330,7 @@ class FilterQuery
                 'query' => [
                     'bool' => [
                         'must' => [
-                            'match_all' => new \stdClass(),
+                            'match_all' => new stdClass(),
                         ],
                         'filter' => [
                             [
@@ -449,7 +450,7 @@ class FilterQuery
     protected function matchAll(): array
     {
         return [
-            'match_all' => new \stdClass(),
+            'match_all' => new stdClass(),
         ];
     }
 

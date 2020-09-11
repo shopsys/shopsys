@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
+use Shopsys\FrameworkBundle\Component\Image\Exception\EntityIdentifierException;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class ImageFacade
@@ -282,7 +284,7 @@ class ImageFacade
         }
 
         $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
-        throw new \Shopsys\FrameworkBundle\Component\Image\Exception\EntityIdentifierException($message);
+        throw new EntityIdentifierException($message);
     }
 
     /**
@@ -309,7 +311,7 @@ class ImageFacade
                 . $this->imageLocator->getRelativeImageFilepath($image, $sizeName);
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException();
+        throw new ImageNotFoundException();
     }
 
     /**
@@ -402,7 +404,7 @@ class ImageFacade
                 . $this->imageLocator->getRelativeAdditionalImageFilepath($image, $additionalSizeIndex, $sizeName);
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException();
+        throw new ImageNotFoundException();
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Tests\MigrationBundle\Unit\Component\Doctrine\Migrations;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException;
 
 class AbstractMigrationTest extends TestCase
 {
@@ -19,7 +20,7 @@ class AbstractMigrationTest extends TestCase
         $addSqlMethod = $reflectionClass->getMethod('addSql');
         $addSqlMethod->setAccessible(true);
 
-        $this->expectException(\Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException::class);
+        $this->expectException(MethodIsNotAllowedException::class);
 
         $addSqlMethod->invokeArgs($abstractMigrationMock, ['']);
     }

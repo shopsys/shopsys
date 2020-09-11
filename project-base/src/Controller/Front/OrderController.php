@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -229,7 +230,7 @@ class OrderController extends FrontBaseController
 
                 try {
                     $this->sendMail($order);
-                } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
+                } catch (MailException $e) {
                     $this->addErrorFlash(
                         t('Unable to send some emails, please contact us for order verification.')
                     );

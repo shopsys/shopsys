@@ -722,7 +722,7 @@ class Order
                 return $orderItem;
             }
         }
-        throw new \Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException(sprintf(
+        throw new OrderItemNotFoundException(sprintf(
             'Order item id `%d` not found.',
             $orderItemId
         ));

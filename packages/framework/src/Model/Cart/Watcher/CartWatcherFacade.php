@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Twig\Environment;
 
@@ -103,7 +104,7 @@ class CartWatcherFacade
             try {
                 $productName = $cartItem->getName();
                 $this->flashBag->add(FlashMessage::KEY_ERROR, $messageTemplate->render(['name' => $productName]));
-            } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $e) {
+            } catch (ProductNotFoundException $e) {
                 $this->flashBag->add(
                     FlashMessage::KEY_ERROR,
                     t('Product you had in cart is no longer in available. Please check your order.')

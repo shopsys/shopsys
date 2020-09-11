@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade;
+use Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException;
 use Shopsys\FrameworkBundle\Component\Error\ExceptionController;
 use Shopsys\FrameworkBundle\Component\Error\ExceptionListener;
 use Symfony\Component\Debug\Exception\FlattenException;
@@ -74,7 +75,7 @@ class ErrorController extends FrontBaseController
         $this->exceptionController->setDebug(false);
         $this->exceptionController->setShowErrorPagePrototype();
 
-        throw new \Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException((int)$code);
+        throw new FakeHttpException((int)$code);
     }
 
     /**

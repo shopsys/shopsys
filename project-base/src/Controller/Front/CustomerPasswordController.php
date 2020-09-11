@@ -7,6 +7,8 @@ namespace App\Controller\Front;
 use App\Form\Front\Customer\Password\NewPasswordFormType;
 use App\Form\Front\Customer\Password\ResetPasswordFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,7 +67,7 @@ class CustomerPasswordController extends FrontBaseController
                     ]
                 );
                 return $this->redirectToRoute('front_registration_reset_password');
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException $ex) {
+            } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
                 $this->addErrorFlashTwig(
                     t('Customer with email address <strong>{{ email }}</strong> doesn\'t exist. '
                         . '<a href="{{ registrationLink }}"> Register</a>'),
@@ -107,7 +109,7 @@ class CustomerPasswordController extends FrontBaseController
                 $customerUser = $this->customerUserPasswordFacade->setNewPassword($email, $this->domain->getId(), $hash, $newPassword);
 
                 $this->authenticator->loginUser($customerUser, $request);
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException $ex) {
+            } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
                 $this->addErrorFlashTwig(
                     t('Customer with email address <strong>{{ email }}</strong> doesn\'t exist. '
                         . '<a href="{{ registrationLink }}"> Register</a>'),
@@ -116,7 +118,7 @@ class CustomerPasswordController extends FrontBaseController
                         'registrationLink' => $this->generateUrl('front_registration_register'),
                     ]
                 );
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException $ex) {
+            } catch (InvalidResetPasswordHashUserException $ex) {
                 $this->addErrorFlash(t('The link to change your password expired.'));
             }
 

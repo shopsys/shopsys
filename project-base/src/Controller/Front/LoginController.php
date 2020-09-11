@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Login\LoginFormType;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +39,7 @@ class LoginController extends FrontBaseController
 
         try {
             $this->authenticator->checkLoginProcess($request);
-        } catch (\Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException $e) {
+        } catch (LoginFailedException $e) {
             $form->addError(new FormError(t('This account doesn\'t exist or password is incorrect')));
         }
 

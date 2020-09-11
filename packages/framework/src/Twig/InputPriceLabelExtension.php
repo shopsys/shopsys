@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -47,7 +48,7 @@ class InputPriceLabelExtension extends AbstractExtension
                 return t('Input price with VAT');
 
             default:
-                throw new \Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException(
+                throw new InvalidInputPriceTypeException(
                     'Invalid input price type: ' . $inputPriceType
                 );
         }

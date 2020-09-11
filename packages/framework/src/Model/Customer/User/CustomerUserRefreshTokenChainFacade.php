@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use DateTime;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class CustomerUserRefreshTokenChainFacade
@@ -53,7 +54,7 @@ class CustomerUserRefreshTokenChainFacade
      * @param \DateTime $tokenExpiration
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain
      */
-    public function createCustomerUserRefreshTokenChain(CustomerUser $customerUser, string $tokenChain, string $deviceId, \DateTime $tokenExpiration): CustomerUserRefreshTokenChain
+    public function createCustomerUserRefreshTokenChain(CustomerUser $customerUser, string $tokenChain, string $deviceId, DateTime $tokenExpiration): CustomerUserRefreshTokenChain
     {
         $encoder = $this->encoderFactory->getEncoder($customerUser);
 

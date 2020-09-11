@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
+use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -29,7 +30,7 @@ class DomainSubscriber implements EventSubscriberInterface
         if ($event->isMasterRequest()) {
             try {
                 $this->domain->getId();
-            } catch (\Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException $exception) {
+            } catch (NoDomainSelectedException $exception) {
                 $this->domain->switchDomainByRequest($event->getRequest());
             }
         }

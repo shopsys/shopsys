@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
@@ -101,7 +102,7 @@ class RouteCsrfProtectorTest extends TestCase
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
 
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\BadRequestHttpException::class);
+        $this->expectException(BadRequestHttpException::class);
         $routeCsrfProtector->onKernelController($eventMock);
     }
 
@@ -137,7 +138,7 @@ class RouteCsrfProtectorTest extends TestCase
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
 
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\BadRequestHttpException::class);
+        $this->expectException(BadRequestHttpException::class);
         $routeCsrfProtector->onKernelController($eventMock);
     }
 }

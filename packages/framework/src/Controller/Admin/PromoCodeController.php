@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
@@ -97,7 +98,7 @@ class PromoCodeController extends AdminBaseController
                     'code' => $code,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundException $ex) {
+        } catch (PromoCodeNotFoundException $ex) {
             $this->addErrorFlash(t('Selected promo code doesn\'t exist.'));
         }
 

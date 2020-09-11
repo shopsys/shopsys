@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Grid\InlineEdit;
 
+use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidServiceException;
+
 class GridInlineEditRegistry
 {
     /**
@@ -29,6 +31,6 @@ class GridInlineEditRegistry
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidServiceException($serviceName);
+        throw new InvalidServiceException($serviceName);
     }
 }

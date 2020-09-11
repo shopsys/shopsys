@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Console\Command\Command;
@@ -68,7 +69,7 @@ class DomainInfoCommand extends Command
 
         try {
             $domainConfigs = $this->getDomainConfigs($input);
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $io->error($e->getMessage());
 
             return static::RETURN_CODE_ERROR;
@@ -108,7 +109,7 @@ class DomainInfoCommand extends Command
                 }
             }
 
-            throw new \InvalidArgumentException(sprintf('Domain with ID "%s" not found.', $domainId));
+            throw new InvalidArgumentException(sprintf('Domain with ID "%s" not found.', $domainId));
         }
 
         return $domainConfigs;

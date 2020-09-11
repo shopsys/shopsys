@@ -2,10 +2,14 @@
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
+use Shopsys\FrameworkBundle\Model\Mail\Exception\EmptyMailException;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\SendMailFailedException;
 use Swift_Attachment;
 use Swift_Mailer;
 use Swift_Message;
+use Swift_Spool;
 use Swift_Transport;
+use Swift_Transport_SpoolTransport;
 
 class Mailer
 {
@@ -39,12 +43,12 @@ class Mailer
     public function flushSpoolQueue()
     {
         $transport = $this->swiftMailer->getTransport();
-        if (!($transport instanceof \Swift_Transport_SpoolTransport)) {
+        if (!($transport instanceof Swift_Transport_SpoolTransport)) {
             return;
         }
 
         $spool = $transport->getSpool();
-        if ($spool instanceof \Swift_Spool) {
+        if ($spool instanceof Swift_Spool) {
             $spool->flushQueue($this->realSwiftTransport);
         }
     }
@@ -58,12 +62,12 @@ class Mailer
         $failedRecipients = [];
 
         if ($messageData->body === null || $messageData->subject === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Mail\Exception\EmptyMailException();
+            throw new EmptyMailException();
         }
 
         $successSend = $this->swiftMailer->send($message, $failedRecipients);
         if (!$successSend && count($failedRecipients) > 0) {
-            throw new \Shopsys\FrameworkBundle\Model\Mail\Exception\SendMailFailedException($failedRecipients);
+            throw new SendMailFailedException($failedRecipients);
         }
     }
 

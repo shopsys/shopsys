@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Filesystem;
 
+use Shopsys\FrameworkBundle\Component\Filesystem\Exception\DirectoryDoesNotExistException;
+
 class FilepathComparator
 {
     /**
@@ -13,7 +15,7 @@ class FilepathComparator
     {
         $directoryPathRealpath = realpath($directoryPath);
         if ($directoryPathRealpath === false) {
-            throw new \Shopsys\FrameworkBundle\Component\Filesystem\Exception\DirectoryDoesNotExistException(
+            throw new DirectoryDoesNotExistException(
                 $directoryPath
             );
         }

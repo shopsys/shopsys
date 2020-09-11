@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Twig\FileThumbnail;
 use Intervention\Image\Image;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 
@@ -20,7 +21,7 @@ class FileThumbnailExtensionTest extends TestCase
             ->getMock();
         $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn('dir/' . $temporaryFilename);
 
-        $exception = new \Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException($temporaryFilename);
+        $exception = new FileIsNotSupportedImageException($temporaryFilename);
         $imageThumbnailFactoryMock = $this->getMockBuilder(ImageThumbnailFactory::class)
             ->setMethods(['getImageThumbnail'])
             ->disableOriginalConstructor()
@@ -76,7 +77,7 @@ class FileThumbnailExtensionTest extends TestCase
             ->getMock();
         $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn('dir/' . $temporaryFilename);
 
-        $exception = new \Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException($temporaryFilename);
+        $exception = new FileIsNotSupportedImageException($temporaryFilename);
         $imageThumbnailFactoryMock = $this->getMockBuilder(ImageThumbnailFactory::class)
             ->setMethods(['getImageThumbnail'])
             ->disableOriginalConstructor()

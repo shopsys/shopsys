@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
@@ -48,7 +49,7 @@ class ProductResolver implements ResolverInterface, AliasedInterface
 
         try {
             return $this->productFacade->getByUuid($uuid);
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $productNotFoundException) {
+        } catch (ProductNotFoundException $productNotFoundException) {
             throw new UserError($productNotFoundException->getMessage());
         }
     }

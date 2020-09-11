@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PaymentCanBeUsedValidator extends ConstraintValidator
 {
@@ -59,7 +60,7 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof PaymentCanBeUsed) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, PaymentCanBeUsed::class);
+            throw new UnexpectedTypeException($constraint, PaymentCanBeUsed::class);
         }
         // Field types and content is assured by GraphQL type definition
         $uuid = $value['uuid'];

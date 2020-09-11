@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Command;
 use DirectoryIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Shopsys\FrameworkBundle\Command\Exception\TranslationReplaceSourceCommandException;
 use Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement;
 use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
@@ -126,7 +127,7 @@ class TranslationReplaceSourceCommand extends Command
                 $item['comments'][] = substr($line, 3);
             } elseif (substr($line, 0, 7) === 'msgid "') {
                 if (count($item['ids']) > 0) {
-                    throw new \Shopsys\FrameworkBundle\Command\Exception\TranslationReplaceSourceCommandException(
+                    throw new TranslationReplaceSourceCommandException(
                         sprintf('Parse error: Message ID "%s" must be separated from previous IDs by an empty line.', substr($line, 7, -1))
                     );
                 }

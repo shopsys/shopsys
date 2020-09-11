@@ -5,8 +5,11 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Form\Admin\Login\LoginFormType;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,8 +93,8 @@ class LoginController extends AdminBaseController
 
         try {
             $this->authenticator->checkLoginProcess($request);
-        } catch (\Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException $e) {
-            if ($e->getPrevious() instanceof \Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException) {
+        } catch (LoginFailedException $e) {
+            if ($e->getPrevious() instanceof LoginWithDefaultPasswordException) {
                 $error = t('Oh, you just tried to log in using default credentials. We do not allow that on production'
                     . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
                     . ' please use another account or contact developers and change password during deployment.');
@@ -139,7 +142,7 @@ class LoginController extends AdminBaseController
         $originalReferer = $request->get(self::ORIGINAL_REFERER_PARAMETER_NAME);
         try {
             $this->administratorLoginFacade->loginByMultidomainToken($request, $multidomainLoginToken);
-        } catch (\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException $ex) {
+        } catch (InvalidTokenException $ex) {
             return $this->render('@ShopsysFramework/Admin/Content/Login/loginFailed.html.twig');
         }
         $redirectTo = $originalReferer !== null ? $originalReferer : $this->generateUrl('admin_default_dashboard');

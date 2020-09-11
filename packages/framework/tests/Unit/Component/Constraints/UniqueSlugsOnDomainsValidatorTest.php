@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
@@ -32,7 +33,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             ->getMockForAbstractClass();
         $routerMock->method('match')->willReturnCallback(function ($path) {
             if ($path !== '/existing-url/') {
-                throw new \Symfony\Component\Routing\Exception\ResourceNotFoundException();
+                throw new ResourceNotFoundException();
             }
         });
 

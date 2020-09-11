@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PaymentTransportRelationValidator extends ConstraintValidator
 {
@@ -69,7 +70,7 @@ class PaymentTransportRelationValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof PaymentTransportRelation) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, PaymentTransportRelation::class);
+            throw new UnexpectedTypeException($constraint, PaymentTransportRelation::class);
         }
 
         try {

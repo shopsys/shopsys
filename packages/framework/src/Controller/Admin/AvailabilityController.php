@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Availability\AvailabilitySettingFormType;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityInlineEdit;
+use Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -87,7 +88,7 @@ class AvailabilityController extends AdminBaseController
                     ]
                 );
             }
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException $ex) {
+        } catch (AvailabilityNotFoundException $ex) {
             $this->addErrorFlash(t('Selected availatibily doesn\'t exist.'));
         }
 
@@ -131,7 +132,7 @@ class AvailabilityController extends AdminBaseController
             );
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_availability_delete', $id);
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException $ex) {
+        } catch (AvailabilityNotFoundException $ex) {
             return new Response(t('Selected availability doesn\'t exist'));
         }
     }
@@ -144,7 +145,7 @@ class AvailabilityController extends AdminBaseController
     {
         try {
             $defaultInStockAvailability = $this->availabilityFacade->getDefaultInStockAvailability();
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException $ex) {
+        } catch (AvailabilityNotFoundException $ex) {
             $defaultInStockAvailability = null;
         }
         $availabilitySettingsFormData['defaultInStockAvailability'] = $defaultInStockAvailability;

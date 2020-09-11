@@ -5,6 +5,8 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -128,7 +130,7 @@ class CartFacade
         $cart = $this->getCartOfCurrentCustomerUserCreateIfNotExists();
 
         if (!is_int($quantity) || $quantity <= 0) {
-            throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($quantity);
+            throw new InvalidQuantityException($quantity);
         }
 
         foreach ($cart->getItems() as $item) {
@@ -221,7 +223,7 @@ class CartFacade
 
         if ($cart === null) {
             $message = 'CartItem with id = ' . $cartItemId . ' not found in cart.';
-            throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException($message);
+            throw new InvalidCartItemException($message);
         }
 
         return $cart->getItemById($cartItemId)->getProduct();

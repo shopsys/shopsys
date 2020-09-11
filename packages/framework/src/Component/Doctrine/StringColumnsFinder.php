@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 
 class StringColumnsFinder
 {
@@ -16,7 +17,7 @@ class StringColumnsFinder
         foreach ($classesMetadata as $classMetadata) {
             if (!($classMetadata instanceof ClassMetadataInfo)) {
                 $message = 'Instance of ' . ClassMetadataInfo::class . ' is required.';
-                throw new \Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException($message);
+                throw new UnexpectedTypeException($message);
             }
             $stringColumnNames = $this->getStringColumnNames($classMetadata);
             if (count($stringColumnNames) > 0) {

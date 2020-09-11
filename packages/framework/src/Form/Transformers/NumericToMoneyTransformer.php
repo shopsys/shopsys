@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -53,7 +54,7 @@ class NumericToMoneyTransformer implements DataTransformerInterface
         if (is_string($value)) {
             try {
                 return Money::create($value);
-            } catch (\Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException $e) {
+            } catch (MoneyException $e) {
                 $message = sprintf('Unable to create Money from the string "%s".', $value);
 
                 throw new TransformationFailedException($message, 0, $e);

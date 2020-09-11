@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Router;
 
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\Router\Exception\NotSupportedException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter;
 use Symfony\Cmf\Component\Routing\ChainRouter;
@@ -64,7 +65,7 @@ class DomainRouter extends ChainRouter
     {
         if ($this->freeze) {
             $message = 'Set context is not supported in chain DomainRouter';
-            throw new \Shopsys\FrameworkBundle\Component\Router\Exception\NotSupportedException($message);
+            throw new NotSupportedException($message);
         }
 
         parent::setContext($context);

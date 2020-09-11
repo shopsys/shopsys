@@ -14,6 +14,8 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Name;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
+use Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException;
+use Shopsys\FrameworkBundle\Component\Translation\Exception\MessageIdArgumentNotPresent;
 use SplFileInfo;
 use Twig_Node;
 
@@ -114,7 +116,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $messageIdArgumentIndex = $this->transMethodSpecifications[$methodName]->getMessageIdArgumentIndex();
 
         if (!isset($node->args[$messageIdArgumentIndex])) {
-            throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\MessageIdArgumentNotPresent();
+            throw new MessageIdArgumentNotPresent();
         }
 
         return PhpParserNodeHelper::getConcatenatedStringValue($node->args[$messageIdArgumentIndex]->value, $this->file);
@@ -144,7 +146,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         if ($node instanceof MethodCall || $node instanceof FuncCall) {
             try {
                 $methodName = $this->getNormalizedMethodName($this->getNodeName($node));
-            } catch (\Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException $ex) {
+            } catch (ExtractionException $ex) {
                 return false;
             }
 
@@ -225,7 +227,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         if ($node instanceof FuncCall && $node->name instanceof Name) {
             return (string)$node->name;
         }
-        throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException('Unable to resolve node name');
+        throw new ExtractionException('Unable to resolve node name');
     }
 
     /**

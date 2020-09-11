@@ -4,8 +4,13 @@ namespace Shopsys\FrameworkBundle\Component\Setting;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use function get_class;
+use function gettype;
+use function is_object;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueTypeNotMatchValueException;
 
 /**
  * @ORM\Table(name="setting_values")
@@ -93,7 +98,7 @@ class SettingValue
     {
         if ($this->value === null && $this->type !== static::TYPE_NULL) {
             $message = 'Setting value type "' . $this->type . '" does not allow null value.';
-            throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueTypeNotMatchValueException($message);
+            throw new SettingValueTypeNotMatchValueException($message);
         }
 
         switch ($this->type) {
@@ -173,8 +178,8 @@ class SettingValue
             return static::TYPE_MONEY;
         }
 
-        $message = sprintf('Setting value type of "%s" is unsupported.', \is_object($value) ? \get_class($value) : \gettype($value))
+        $message = sprintf('Setting value type of "%s" is unsupported.', is_object($value) ? get_class($value) : gettype($value))
             . sprintf(' Supported is "%s", "%s", string, integer, float, boolean or null.', DateTime::class, Money::class);
-        throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException($message);
+        throw new InvalidArgumentException($message);
     }
 }

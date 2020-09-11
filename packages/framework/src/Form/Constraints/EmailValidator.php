@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class EmailValidator extends ConstraintValidator
 {
@@ -13,7 +14,7 @@ class EmailValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Email) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, Email::class);
+            throw new UnexpectedTypeException($constraint, Email::class);
         }
 
         if ($value === null || $value === '') {
@@ -21,7 +22,7 @@ class EmailValidator extends ConstraintValidator
         }
 
         if (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($value, 'string');
+            throw new UnexpectedTypeException($value, 'string');
         }
 
         $value = (string)$value;

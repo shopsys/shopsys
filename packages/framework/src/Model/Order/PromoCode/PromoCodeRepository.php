@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundException;
 
 class PromoCodeRepository
 {
@@ -54,7 +55,7 @@ class PromoCodeRepository
         $promoCode = $this->findById($promoCodeId);
 
         if ($promoCode === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundException(
+            throw new PromoCodeNotFoundException(
                 'Promo code with ID ' . $promoCodeId . ' not found.'
             );
         }

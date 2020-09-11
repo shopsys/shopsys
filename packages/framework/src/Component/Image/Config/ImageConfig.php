@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 
 class ImageConfig
@@ -145,7 +146,7 @@ class ImageConfig
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException(
+        throw new ImageEntityConfigNotFoundException(
             $entity ? get_class($entity) : null
         );
     }
@@ -176,7 +177,7 @@ class ImageConfig
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException($entityName);
+        throw new ImageEntityConfigNotFoundException($entityName);
     }
 
     /**
@@ -198,6 +199,6 @@ class ImageConfig
             return $this->imageEntityConfigsByClass[$normalizedClass];
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException($class);
+        throw new ImageEntityConfigNotFoundException($class);
     }
 }

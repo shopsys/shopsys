@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -58,7 +59,7 @@ class CustomerUserRepository
         $customerUser = $this->findCustomerUserByEmailAndDomain($email, $domainId);
 
         if ($customerUser === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException(
+            throw new CustomerUserNotFoundByEmailAndDomainException(
                 $email,
                 $domainId
             );
@@ -76,7 +77,7 @@ class CustomerUserRepository
     {
         $customerUser = $this->findById($id);
         if ($customerUser === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException((string)$id);
+            throw new CustomerUserNotFoundException((string)$id);
         }
         return $customerUser;
     }

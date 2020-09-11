@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CountryValidator extends ConstraintValidator
 {
@@ -40,7 +41,7 @@ class CountryValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof Country) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, Country::class);
+            throw new UnexpectedTypeException($constraint, Country::class);
         }
 
         if ($value === null || $value === '') {

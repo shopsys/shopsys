@@ -5,6 +5,8 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatMarkedAsDeletedDeleteException;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatWithReplacedDeleteException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 
 class VatFacade
@@ -131,11 +133,11 @@ class VatFacade
         $newVat = $newVatId ? $this->vatRepository->getById($newVatId) : null;
 
         if ($oldVat->isMarkedAsDeleted()) {
-            throw new \Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatMarkedAsDeletedDeleteException();
+            throw new VatMarkedAsDeletedDeleteException();
         }
 
         if ($this->vatRepository->existsVatToBeReplacedWith($oldVat)) {
-            throw new \Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatWithReplacedDeleteException();
+            throw new VatWithReplacedDeleteException();
         }
 
         if ($newVat !== null) {

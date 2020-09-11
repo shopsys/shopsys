@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNumberSequenceNotFoundException;
 
 class OrderNumberSequenceRepository
 {
@@ -43,7 +45,7 @@ class OrderNumberSequenceRepository
             $orderNumberSequence = $this->getOrderNumberSequenceRepository()->find(static::ID, LockMode::PESSIMISTIC_WRITE);
             /** @var \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequence|null $orderNumberSequence */
             if ($orderNumberSequence === null) {
-                throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNumberSequenceNotFoundException(
+                throw new OrderNumberSequenceNotFoundException(
                     'Order number sequence ID ' . static::ID . ' not found.'
                 );
             }
@@ -58,7 +60,7 @@ class OrderNumberSequenceRepository
 
             $this->em->flush($orderNumberSequence);
             $this->em->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->em->rollback();
             throw $e;
         }

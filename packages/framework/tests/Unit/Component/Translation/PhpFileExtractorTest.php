@@ -11,6 +11,7 @@ use PhpParser\Parser\Multiple;
 use PhpParser\Parser\Php5;
 use PhpParser\Parser\Php7;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractorFactory;
 use SplFileInfo;
 
@@ -71,7 +72,7 @@ class PhpFileExtractorTest extends TestCase
     private function extract($filename)
     {
         if (!is_file($filename)) {
-            throw new \RuntimeException(sprintf('The file "%s" does not exist.', $filename));
+            throw new RuntimeException(sprintf('The file "%s" does not exist.', $filename));
         }
         $file = new SplFileInfo($filename);
 

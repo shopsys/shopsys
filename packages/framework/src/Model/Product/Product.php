@@ -9,7 +9,12 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyMainVariantException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
 
 /**
  * Product
@@ -802,7 +807,7 @@ class Product extends AbstractTranslatableEntity
     public function getMainVariant()
     {
         if (!$this->isVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException();
+            throw new ProductIsNotVariantException();
         }
 
         return $this->mainVariant;
@@ -814,16 +819,16 @@ class Product extends AbstractTranslatableEntity
     public function addVariant(self $variant)
     {
         if (!$this->isMainVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException(
+            throw new VariantCanBeAddedOnlyToMainVariantException(
                 $this->getId(),
                 $variant->getId()
             );
         }
         if ($variant->isMainVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException($variant->getId());
+            throw new MainVariantCannotBeVariantException($variant->getId());
         }
         if ($variant->isVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException($variant->getId());
+            throw new ProductIsAlreadyVariantException($variant->getId());
         }
 
         if ($this->variants->contains($variant)) {
@@ -871,7 +876,7 @@ class Product extends AbstractTranslatableEntity
     public function unsetMainVariant()
     {
         if (!$this->isVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException();
+            throw new ProductIsNotVariantException();
         }
         $this->variantType = self::VARIANT_TYPE_NONE;
         $this->mainVariant->variants->removeElement($this);
@@ -1043,7 +1048,7 @@ class Product extends AbstractTranslatableEntity
     public function checkIsNotMainVariant(): void
     {
         if ($this->isMainVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyMainVariantException($this->id);
+            throw new ProductIsAlreadyMainVariantException($this->id);
         }
     }
 

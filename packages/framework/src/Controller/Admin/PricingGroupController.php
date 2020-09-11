@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupSettingsFormType;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Grid\PricingGroupInlineEdit;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -106,7 +107,7 @@ class PricingGroupController extends AdminBaseController
                     ]
                 );
             }
-        } catch (\Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException $ex) {
+        } catch (PricingGroupNotFoundException $ex) {
             $this->addErrorFlash(t('Selected pricing group doesn\'t exist.'));
         }
 
@@ -149,7 +150,7 @@ class PricingGroupController extends AdminBaseController
                 ['%name%' => $pricingGroup->getName()]
             );
             return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_pricinggroup_delete', $id);
-        } catch (\Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException $ex) {
+        } catch (PricingGroupNotFoundException $ex) {
             return new Response(t('Selected pricing group doesn\'t exist.'));
         }
     }

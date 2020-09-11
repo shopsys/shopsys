@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Administrator\Activity;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Administrator\Activity\Exception\CurrentAdministratorActivityNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class AdministratorActivityRepository
@@ -53,7 +54,7 @@ class AdministratorActivityRepository
     {
         $currentAdministratorActivity = $this->getLastActivitiesQueryBuilder($administrator, 1)->getQuery()->getSingleResult();
         if ($currentAdministratorActivity === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Activity\Exception\CurrentAdministratorActivityNotFoundException();
+            throw new CurrentAdministratorActivityNotFoundException();
         }
 
         return $currentAdministratorActivity;

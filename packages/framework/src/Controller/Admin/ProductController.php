@@ -17,6 +17,8 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\VariantException;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -312,7 +314,7 @@ class ProductController extends AdminBaseController
                     'product' => $product,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $ex) {
+        } catch (ProductNotFoundException $ex) {
             $this->addErrorFlash(t('Selected product doesn\'t exist.'));
         }
 
@@ -356,7 +358,7 @@ class ProductController extends AdminBaseController
                 );
 
                 return $this->redirectToRoute('admin_product_list');
-            } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\VariantException $ex) {
+            } catch (VariantException $ex) {
                 $this->addErrorFlash(
                     t('Not possible to create variations of products that are already variant or main variant.')
                 );

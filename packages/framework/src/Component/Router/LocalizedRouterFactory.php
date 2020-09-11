@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router;
 
+use Shopsys\FrameworkBundle\Component\Router\Exception\LocalizedRoutingConfigFileNotFoundException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Router;
@@ -46,7 +47,7 @@ class LocalizedRouterFactory
         if (file_exists($this->getLocaleRouterResourceByLocale($locale)) === false) {
             $message = 'File with localized routes for locale `' . $locale . '` was not found. '
                 . 'Please create `' . $this->getLocaleRouterResourceByLocale($locale) . '` file.';
-            throw new \Shopsys\FrameworkBundle\Component\Router\Exception\LocalizedRoutingConfigFileNotFoundException($message);
+            throw new LocalizedRoutingConfigFileNotFoundException($message);
         }
 
         if (!array_key_exists($locale, $this->routersByLocaleAndHost)

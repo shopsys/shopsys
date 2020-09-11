@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
+use Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -172,7 +174,7 @@ class Grid
     ) {
         if ($id === '') {
             $message = 'Grid id cannot be empty.';
-            throw new \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException($message);
+            throw new EmptyGridIdException($message);
         }
 
         $this->id = $id;
@@ -204,7 +206,7 @@ class Grid
     public function addColumn($id, $sourceColumnName, $title, $sortable = false)
     {
         if (array_key_exists($id, $this->columnsById)) {
-            throw new \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException(
+            throw new DuplicateColumnIdException(
                 'Duplicate column id "' . $id . '" in grid "' . $this->id . '"'
             );
         }

@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\DataFixture;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityIdIsNotSetException;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityNotFoundException;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\MethodGetIdDoesNotExistException;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\ObjectRequiredException;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 
 class PersistentReferenceFacade
 {
@@ -48,7 +53,7 @@ class PersistentReferenceFacade
         $entity = $this->em->find($persistentReference->getEntityName(), $persistentReference->getEntityId());
 
         if ($entity === null) {
-            throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityNotFoundException($name);
+            throw new EntityNotFoundException($name);
         }
 
         return $entity;
@@ -61,26 +66,26 @@ class PersistentReferenceFacade
     public function persistReference($name, $object)
     {
         if (!is_object($object)) {
-            throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\ObjectRequiredException($object);
+            throw new ObjectRequiredException($object);
         }
 
         $entityName = get_class($object);
 
         if (!method_exists($object, 'getId')) {
             $message = 'Entity "' . $entityName . '" does not have a method "getId", which is necessary for persistent references.';
-            throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\MethodGetIdDoesNotExistException($message);
+            throw new MethodGetIdDoesNotExistException($message);
         }
 
         $objectId = $object->getId();
 
         if ($objectId === null) {
-            throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityIdIsNotSetException($name, $object);
+            throw new EntityIdIsNotSetException($name, $object);
         }
 
         try {
             $persistentReference = $this->persistentReferenceRepository->getByReferenceName($name);
             $persistentReference->replace($entityName, $objectId);
-        } catch (\Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException $ex) {
+        } catch (PersistentReferenceNotFoundException $ex) {
             $persistentReference = $this->persistentReferenceFactory->create($name, $entityName, $objectId);
             $this->em->persist($persistentReference);
         }

@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Form\Exception\NotMoneyTypeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class MoneyRangeValidator extends ConstraintValidator
 {
@@ -17,7 +19,7 @@ class MoneyRangeValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof MoneyRange) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, MoneyRange::class);
+            throw new UnexpectedTypeException($constraint, MoneyRange::class);
         }
 
         if ($value === null) {
@@ -25,7 +27,7 @@ class MoneyRangeValidator extends ConstraintValidator
         }
 
         if (!($value instanceof Money)) {
-            throw new \Shopsys\FrameworkBundle\Form\Exception\NotMoneyTypeException($value);
+            throw new NotMoneyTypeException($value);
         }
 
         if ($constraint->max !== null && $value->isGreaterThan($constraint->max)) {

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentDomainNotFoundException;
+use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
@@ -394,7 +395,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
 
         $message = 'Payment price for domain ID ' . $domainId . ' and payment ID ' . $this->getId() . 'not found.';
-        throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException($message);
+        throw new PaymentPriceNotFoundException($message);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Script;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Script\Exception\ScriptNotFoundException;
 
 class ScriptRepository
 {
@@ -36,7 +37,7 @@ class ScriptRepository
         $script = $this->getScriptRepository()->find($scriptId);
 
         if ($script === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Script\Exception\ScriptNotFoundException('Script with ID ' . $scriptId . ' does not exist.');
+            throw new ScriptNotFoundException('Script with ID ' . $scriptId . ' does not exist.');
         }
 
         return $script;

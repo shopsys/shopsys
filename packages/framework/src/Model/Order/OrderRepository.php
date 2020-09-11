@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -102,7 +103,7 @@ class OrderRepository
         $order = $this->findById($id);
 
         if ($order === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException('Order with ID ' . $id . ' not found.');
+            throw new OrderNotFoundException('Order with ID ' . $id . ' not found.');
         }
 
         return $order;
@@ -207,7 +208,7 @@ class OrderRepository
             ->getQuery()->getOneOrNullResult();
 
         if ($order === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException(sprintf(
+            throw new OrderNotFoundException(sprintf(
                 'Order with urlHash "%s" was not found.',
                 $urlHash
             ));
@@ -232,7 +233,7 @@ class OrderRepository
 
         if ($order === null) {
             $message = 'Order with number "' . $orderNumber . '" and customerUserId "' . $customerUser->getId() . '" not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException($message);
+            throw new OrderNotFoundException($message);
         }
 
         return $order;

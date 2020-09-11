@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class FilesIdsToFilesTransformer implements DataTransformerInterface
 {
@@ -51,8 +53,8 @@ class FilesIdsToFilesTransformer implements DataTransformerInterface
             foreach ($fileIds as $fileId) {
                 try {
                     $files[] = $this->uploadedFileFacade->getById((int)$fileId);
-                } catch (\Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('File not found', 0, $e);
+                } catch (FileNotFoundException $e) {
+                    throw new TransformationFailedException('File not found', 0, $e);
                 }
             }
         }

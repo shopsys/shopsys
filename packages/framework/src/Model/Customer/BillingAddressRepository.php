@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\BillingAddressNotFoundException;
 
 class BillingAddressRepository
 {
@@ -39,7 +40,7 @@ class BillingAddressRepository
         $billingAddress = $this->getBillingAddressRepository()->find($billingAddressId);
 
         if ($billingAddress === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\BillingAddressNotFoundException('Billing address with ID ' . $billingAddressId . ' not found.');
+            throw new BillingAddressNotFoundException('Billing address with ID ' . $billingAddressId . ' not found.');
         }
 
         return $billingAddress;

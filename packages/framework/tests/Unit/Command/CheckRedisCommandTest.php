@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Command;
 
 use PHPUnit\Framework\TestCase;
 use Redis;
+use RedisException;
 use Shopsys\FrameworkBundle\Command\CheckRedisCommand;
 use Shopsys\FrameworkBundle\Component\Redis\RedisFacade;
 use Symfony\Component\Console\Input\StringInput;
@@ -60,7 +61,7 @@ final class CheckRedisCommandTest extends TestCase
     {
         /** @var \Redis|\PHPUnit\Framework\MockObject\MockObject $redisMock */
         $redisMock = $this->createMock(Redis::class);
-        $redisMock->method('ping')->willThrowException(new \RedisException());
+        $redisMock->method('ping')->willThrowException(new RedisException());
 
         return $redisMock;
     }

@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleRepository
 {
@@ -104,7 +105,7 @@ class ArticleRepository
         $article = $this->getArticleRepository()->find($articleId);
         if ($article === null) {
             $message = 'Article with ID ' . $articleId . ' not found';
-            throw new \Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException($message);
+            throw new ArticleNotFoundException($message);
         }
         return $article;
     }
@@ -122,7 +123,7 @@ class ArticleRepository
 
         if ($article === null) {
             $message = 'Article with ID ' . $articleId . ' not found';
-            throw new \Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException($message);
+            throw new ArticleNotFoundException($message);
         }
         return $article;
     }

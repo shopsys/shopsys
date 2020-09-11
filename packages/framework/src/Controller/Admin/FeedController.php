@@ -6,6 +6,7 @@ use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,7 +61,7 @@ class FeedController extends AdminBaseController
                     'feedName' => $feedName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException $ex) {
+        } catch (FeedNotFoundException $ex) {
             $this->addErrorFlashTwig(
                 t('Feed "{{ feedName }}" not found.'),
                 [

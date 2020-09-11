@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
@@ -194,7 +195,7 @@ class SliderController extends AdminBaseController
                     'name' => $name,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException $ex) {
+        } catch (SliderItemNotFoundException $ex) {
             $this->addErrorFlash(t('Selected page doesn\'t exist.'));
         }
 

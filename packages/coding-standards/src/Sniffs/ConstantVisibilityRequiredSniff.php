@@ -4,9 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
+use function array_reverse;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
+use function preg_match;
+use const T_CLASS;
+use const T_CLOSE_CURLY_BRACKET;
+use const T_CONST;
+use const T_DOC_COMMENT_OPEN_TAG;
+use const T_DOC_COMMENT_STRING;
+use const T_SEMICOLON;
 
 class ConstantVisibilityRequiredSniff implements Sniff
 {
@@ -15,7 +23,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
      */
     public function register(): array
     {
-        return [\T_CONST];
+        return [T_CONST];
     }
 
     /**
@@ -46,7 +54,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
      */
     private function isConstInsideClass(File $file, int $constPosition): bool
     {
-        $classStartPosition = $file->findPrevious(\T_CLASS, $constPosition);
+        $classStartPosition = $file->findPrevious(T_CLASS, $constPosition);
         if ($classStartPosition === false) {
             return false;
         }
@@ -80,7 +88,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
     {
         $previousTokenEndPosition = $this->findScopeSearchEndPosition($file, $constPosition);
 
-        $phpDocStartPosition = $file->findPrevious(\T_DOC_COMMENT_OPEN_TAG, $constPosition, $previousTokenEndPosition ?: 0);
+        $phpDocStartPosition = $file->findPrevious(T_DOC_COMMENT_OPEN_TAG, $constPosition, $previousTokenEndPosition ?: 0);
 
         if ($phpDocStartPosition === false) {
             return false;
@@ -97,15 +105,15 @@ class ConstantVisibilityRequiredSniff implements Sniff
     {
         $tokens = $file->getTokens();
 
-        $commentTagPositions = \array_reverse($tokens[$phpDocStartPosition]['comment_tags']);
+        $commentTagPositions = array_reverse($tokens[$phpDocStartPosition]['comment_tags']);
 
         $lastPosition = $tokens[$phpDocStartPosition]['comment_closer'];
 
         foreach ($commentTagPositions as $commentTagPosition) {
             if ($tokens[$commentTagPosition]['content'] === '@access') {
-                $possibleAccessModifierPosition = $file->findNext(\T_DOC_COMMENT_STRING, $commentTagPosition, $lastPosition);
+                $possibleAccessModifierPosition = $file->findNext(T_DOC_COMMENT_STRING, $commentTagPosition, $lastPosition);
 
-                if (\preg_match('~(public|protected|private)~', $tokens[$possibleAccessModifierPosition]['content']) === 1) {
+                if (preg_match('~(public|protected|private)~', $tokens[$possibleAccessModifierPosition]['content']) === 1) {
                     return true;
                 }
             }
@@ -121,6 +129,6 @@ class ConstantVisibilityRequiredSniff implements Sniff
      */
     private function findScopeSearchEndPosition(File $file, int $constPosition): int
     {
-        return $file->findPrevious([\T_SEMICOLON, \T_CLOSE_CURLY_BRACKET], $constPosition) ?: 0;
+        return $file->findPrevious([T_SEMICOLON, T_CLOSE_CURLY_BRACKET], $constPosition) ?: 0;
     }
 }

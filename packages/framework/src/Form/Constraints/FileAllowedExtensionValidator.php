@@ -5,6 +5,9 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
+use Symfony\Component\Validator\Exception\InvalidArgumentException;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class FileAllowedExtensionValidator extends ConstraintValidator
 {
@@ -15,15 +18,15 @@ class FileAllowedExtensionValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof FileAllowedExtension) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, FileAllowedExtension::class);
+            throw new UnexpectedTypeException($constraint, FileAllowedExtension::class);
         }
 
         if (!$value instanceof File) {
-            throw new \Symfony\Component\Validator\Exception\InvalidArgumentException('Value must be instance of ' . File::class);
+            throw new InvalidArgumentException('Value must be instance of ' . File::class);
         }
 
         if (!is_array($constraint->extensions)) {
-            throw new \Symfony\Component\Validator\Exception\ConstraintDefinitionException('Extensions parameter of FileAllowedExtensionsValidator must be array.');
+            throw new ConstraintDefinitionException('Extensions parameter of FileAllowedExtensionsValidator must be array.');
         }
 
         if (!in_array(strtolower($value->getExtension()), $constraint->extensions, true)) {

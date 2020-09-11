@@ -7,10 +7,13 @@ namespace App\Controller\Front;
 use App\Form\Front\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
@@ -166,7 +169,7 @@ class CustomerController extends FrontBaseController
             try {
                 /** @var \App\Model\Order\Order $order */
                 $order = $this->orderFacade->getByOrderNumberAndUser($orderNumber, $customerUser);
-            } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $ex) {
+            } catch (OrderNotFoundException $ex) {
                 $this->addErrorFlash(t('Order not found'));
                 return $this->redirectToRoute('front_customer_orders');
             }
@@ -191,11 +194,11 @@ class CustomerController extends FrontBaseController
     {
         try {
             $this->loginAsUserFacade->loginAsRememberedUser($request);
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $e) {
+        } catch (CustomerUserNotFoundException $e) {
             $this->addErrorFlash(t('User not found.'));
 
             return $this->redirectToRoute('admin_customer_list');
-        } catch (\Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException $e) {
+        } catch (LoginAsRememberedUserException $e) {
             throw $this->createAccessDeniedException('', $e);
         }
 

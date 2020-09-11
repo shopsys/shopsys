@@ -4,6 +4,9 @@ namespace Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductImageUrlNotLoadedException;
+use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductParametersNotLoadedException;
+use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductUrlNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -75,7 +78,7 @@ class HeurekaProductDataBatchLoader
     {
         $key = $this->getKey($product, $domainConfig);
         if (!array_key_exists($key, $this->loadedProductCpcs)) {
-            throw new \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataNotLoadedException($product, $domainConfig, 'CPC');
+            throw new HeurekaProductDataNotLoadedException($product, $domainConfig, 'CPC');
         }
 
         return $this->loadedProductCpcs[$key];
@@ -90,8 +93,8 @@ class HeurekaProductDataBatchLoader
     {
         try {
             return $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig);
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductParametersNotLoadedException $e) {
-            throw new \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataNotLoadedException($product, $domainConfig, 'parameters', $e);
+        } catch (ProductParametersNotLoadedException $e) {
+            throw new HeurekaProductDataNotLoadedException($product, $domainConfig, 'parameters', $e);
         }
     }
 
@@ -104,8 +107,8 @@ class HeurekaProductDataBatchLoader
     {
         try {
             return $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig);
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductUrlNotLoadedException $e) {
-            throw new \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataNotLoadedException($product, $domainConfig, 'URL', $e);
+        } catch (ProductUrlNotLoadedException $e) {
+            throw new HeurekaProductDataNotLoadedException($product, $domainConfig, 'URL', $e);
         }
     }
 
@@ -118,8 +121,8 @@ class HeurekaProductDataBatchLoader
     {
         try {
             return $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig);
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductImageUrlNotLoadedException $e) {
-            throw new \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataNotLoadedException($product, $domainConfig, 'URL for image', $e);
+        } catch (ProductImageUrlNotLoadedException $e) {
+            throw new HeurekaProductDataNotLoadedException($product, $domainConfig, 'URL for image', $e);
         }
     }
 

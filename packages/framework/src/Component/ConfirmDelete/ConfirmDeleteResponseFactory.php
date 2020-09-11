@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\ConfirmDelete;
 
+use Shopsys\FrameworkBundle\Component\ConfirmDelete\Exception\InvalidEntityPassedException;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -63,7 +64,7 @@ class ConfirmDeleteResponseFactory
             if (!is_object($object) || !method_exists($object, 'getName') || !method_exists($object, 'getId')) {
                 $message = 'All items in argument 4 passed to ' . __METHOD__ . ' must be objects with methods getId and getName.';
 
-                throw new \Shopsys\FrameworkBundle\Component\ConfirmDelete\Exception\InvalidEntityPassedException($message);
+                throw new InvalidEntityPassedException($message);
             }
         }
 

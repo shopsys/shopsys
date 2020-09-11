@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Finder;
 
+use ArrayIterator;
 use IteratorAggregate;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
@@ -33,7 +34,7 @@ final class FileFinder
             ->in($directories);
 
         // ArrayIterator will be fixed in new release
-        $finder->append(new \ArrayIterator($files));
+        $finder->append(new ArrayIterator($files));
 
         return $finder;
     }

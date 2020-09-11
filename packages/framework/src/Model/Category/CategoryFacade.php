@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
@@ -428,7 +429,7 @@ class CategoryFacade
         $category = $this->getById($categoryId);
         if (!$category->isVisible($domainId)) {
             $message = 'Category ID ' . $categoryId . ' is not visible on domain ID ' . $domainId;
-            throw new \Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException($message);
+            throw new CategoryNotFoundException($message);
         }
 
         return $category;

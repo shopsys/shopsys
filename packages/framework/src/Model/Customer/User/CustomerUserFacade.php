@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
@@ -324,7 +326,7 @@ class CustomerUserFacade
             $customerUserByEmailAndDomain !== null
             && $customerUser->getId() !== $customerUserByEmailAndDomain->getId()
         ) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException($email);
+            throw new DuplicateEmailException($email);
         }
 
         $customerUser->setEmail($email);
@@ -355,7 +357,7 @@ class CustomerUserFacade
      * @param string $deviceId
      * @param \DateTime $tokenExpiration
      */
-    public function addRefreshTokenChain(CustomerUser $customerUser, string $refreshTokenChain, string $deviceId, \DateTime $tokenExpiration): void
+    public function addRefreshTokenChain(CustomerUser $customerUser, string $refreshTokenChain, string $deviceId, DateTime $tokenExpiration): void
     {
         $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain($customerUser, $refreshTokenChain, $deviceId, $tokenExpiration);
         $customerUser->addRefreshTokenChain($refreshTokenChain);

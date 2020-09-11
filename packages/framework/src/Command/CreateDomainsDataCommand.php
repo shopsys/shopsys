@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade;
 use Shopsys\FrameworkBundle\Model\Localization\DbIndexesFacade;
@@ -119,6 +120,6 @@ class CreateDomainsDataCommand extends Command
             return $application;
         }
 
-        throw new \RuntimeException('Application must be loaded.');
+        throw new RuntimeException('Application must be loaded.');
     }
 }

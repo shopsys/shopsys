@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 
 class ProductCachedAttributesFacade
@@ -59,7 +60,7 @@ class ProductCachedAttributesFacade
         }
         try {
             $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $ex) {
+        } catch (MainVariantPriceCalculationException $ex) {
             $productPrice = null;
         }
         $this->sellingPricesByProductId[$product->getId()] = $productPrice;

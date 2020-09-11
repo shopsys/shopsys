@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
+use Shopsys\FrameworkBundle\Component\Image\Exception\EntityMultipleImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 
 class ImageFactory implements ImageFactoryInterface
@@ -76,7 +77,7 @@ class ImageFactory implements ImageFactoryInterface
         if (!$imageEntityConfig->isMultiple($type)) {
             $message = 'Entity ' . $imageEntityConfig->getEntityClass()
                 . ' is not allowed to have multiple images for type ' . ($type ?: 'NULL');
-            throw new \Shopsys\FrameworkBundle\Component\Image\Exception\EntityMultipleImageException($message);
+            throw new EntityMultipleImageException($message);
         }
 
         $images = [];

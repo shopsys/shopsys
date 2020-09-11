@@ -3,10 +3,14 @@
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
 use BadMethodCallException;
+use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUpload
@@ -101,7 +105,7 @@ class FileUpload
     public function upload(UploadedFile $file)
     {
         if ($file->getError()) {
-            throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException($file->getErrorMessage());
+            throw new UploadFailedException($file->getErrorMessage());
         }
 
         $temporaryFilename = $this->getTemporaryFilename($file->getClientOriginalName());
@@ -120,7 +124,7 @@ class FileUpload
             $filepath = $this->getTemporaryFilepath($filename);
             try {
                 $this->filesystem->delete($filepath);
-            } catch (\League\Flysystem\FileNotFoundException $ex) {
+            } catch (FileNotFoundException $ex) {
                 return false;
             }
         }
@@ -240,9 +244,9 @@ class FileUpload
                 }
 
                 $this->mountManager->move('main://' . $sourceFilepath, 'main://' . $targetFilename);
-            } catch (\Symfony\Component\Filesystem\Exception\IOException $ex) {
+            } catch (IOException $ex) {
                 $message = 'Failed to rename file from temporary directory to entity';
-                throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException($message, $ex);
+                throw new MoveToEntityFailedException($message, $ex);
             }
         }
     }

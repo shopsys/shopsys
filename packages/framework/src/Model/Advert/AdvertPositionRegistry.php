@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
+use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertPositionNotKnownException;
+
 class AdvertPositionRegistry
 {
     /**
@@ -23,7 +25,7 @@ class AdvertPositionRegistry
     {
         $knownPositionsNames = array_keys($this->getAllLabelsIndexedByNames());
         if (!in_array($positionName, $knownPositionsNames, true)) {
-            throw new \Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertPositionNotKnownException(
+            throw new AdvertPositionNotKnownException(
                 $positionName,
                 $knownPositionsNames
             );

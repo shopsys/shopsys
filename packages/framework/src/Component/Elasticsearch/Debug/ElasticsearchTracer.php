@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Debug;
 
+use function GuzzleHttp\json_decode;
+use function GuzzleHttp\json_encode;
+use InvalidArgumentException;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\Exception\NotSupportedException;
@@ -43,7 +46,7 @@ class ElasticsearchTracer extends AbstractLogger
             return null;
         }
 
-        return \GuzzleHttp\json_decode($matches['json'], true);
+        return json_decode($matches['json'], true);
     }
 
     /**
@@ -52,7 +55,7 @@ class ElasticsearchTracer extends AbstractLogger
      */
     protected function formatData($requestData): string
     {
-        return \GuzzleHttp\json_encode($requestData, JSON_PRETTY_PRINT);
+        return json_encode($requestData, JSON_PRETTY_PRINT);
     }
 
     /**
@@ -93,7 +96,7 @@ class ElasticsearchTracer extends AbstractLogger
         try {
             $requestData = $this->extractData($this->lastRequestCurl);
             $requestJson = $this->formatData($requestData);
-        } catch (\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             // It's ok, It'll not have formatted dump.
         }
 

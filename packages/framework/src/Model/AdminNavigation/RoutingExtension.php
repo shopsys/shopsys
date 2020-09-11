@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\AdminNavigation;
 
 use Knp\Menu\Factory\ExtensionInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -38,7 +39,7 @@ class RoutingExtension implements ExtensionInterface
             $absolute = isset($options['routeAbsolute']) && $options['routeAbsolute'] ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH;
             try {
                 $options['uri'] = $this->generator->generate($options['route'], $params, $absolute);
-            } catch (\Symfony\Component\Routing\Exception\MissingMandatoryParametersException $e) {
+            } catch (MissingMandatoryParametersException $e) {
                 $options['uri'] = null;
             }
 

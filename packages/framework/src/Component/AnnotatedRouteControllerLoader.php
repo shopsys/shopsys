@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component;
 
+use ReflectionClass;
+use ReflectionMethod;
 use Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader as BaseAnnotatedRouteControllerLoader;
 
 /**
@@ -17,7 +19,7 @@ class AnnotatedRouteControllerLoader extends BaseAnnotatedRouteControllerLoader
      *
      * @return string The default route name
      */
-    protected function getDefaultRouteName(\ReflectionClass $class, \ReflectionMethod $method)
+    protected function getDefaultRouteName(ReflectionClass $class, ReflectionMethod $method)
     {
         $routeName = parent::getDefaultRouteName($class, $method);
 

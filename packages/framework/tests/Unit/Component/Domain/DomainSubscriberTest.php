@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Domain;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainSubscriber;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -54,7 +55,7 @@ class DomainSubscriberTest extends TestCase
         $eventMock->expects($this->once())->method('isMasterRequest')->willReturn(true);
         $eventMock->expects($this->once())->method('getRequest')->willReturn($getRequestResult);
 
-        $exception = new \Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException();
+        $exception = new NoDomainSelectedException();
         $domainMock = $this->getMockBuilder(Domain::class)
             ->setMethods(['__construct', 'getId', 'switchDomainByRequest'])
             ->disableOriginalConstructor()

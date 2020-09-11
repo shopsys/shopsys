@@ -3,6 +3,10 @@
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\MethodGenerateIsNotSupportedException;
+use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator as BaseUrlGenerator;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -47,11 +51,11 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         $route = $routeCollection->get($routeName);
         if ($route === null) {
             $message = 'Unable to generate a URL for the named route "' . $routeName . '" as such route does not exist.';
-            throw new \Symfony\Component\Routing\Exception\RouteNotFoundException($message);
+            throw new RouteNotFoundException($message);
         }
         if (!array_key_exists('id', $parameters)) {
             $message = 'Missing mandatory parameter "id" for route ' . $routeName . '.';
-            throw new \Symfony\Component\Routing\Exception\MissingMandatoryParametersException($message);
+            throw new MissingMandatoryParametersException($message);
         }
         $entityId = $parameters['id'];
         unset($parameters['id']);
@@ -62,9 +66,9 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
                 $routeName,
                 $entityId
             );
-        } catch (\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException $e) {
+        } catch (FriendlyUrlNotFoundException $e) {
             $message = 'Unable to generate a URL for the named route "' . $routeName . '" as such route does not exist.';
-            throw new \Symfony\Component\Routing\Exception\RouteNotFoundException($message, 0, $e);
+            throw new RouteNotFoundException($message, 0, $e);
         }
 
         return $this->getGeneratedUrl($routeName, $route, $friendlyUrl, $parameters, $referenceType);
@@ -110,6 +114,6 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      */
     public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
-        throw new \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\MethodGenerateIsNotSupportedException();
+        throw new MethodGenerateIsNotSupportedException();
     }
 }

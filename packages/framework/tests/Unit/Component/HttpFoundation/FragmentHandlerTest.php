@@ -2,7 +2,9 @@
 
 namespace Tests\FrameworkBundle\Unit\Component\HttpFoundation;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\FragmentHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +27,7 @@ class FragmentHandlerTest extends TestCase
                     return array_key_exists('ignore_errors', $options) && $options['ignore_errors'] === false;
                 })
             )
-            ->willThrowException(new \Exception());
+            ->willThrowException(new Exception());
 
         $requestStackMock = $this->createMock(RequestStack::class);
         $requestStackMock->expects($this->any())->method('getCurrentRequest')->willReturn(Request::create('/'));
@@ -38,7 +40,7 @@ class FragmentHandlerTest extends TestCase
         $fragmentHandler = new FragmentHandler($containerMock, $requestStackMock, $debug);
         $fragmentHandler->addRenderer($rendererMock);
 
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $fragmentHandler->render('uri', 'rendererName', []);
     }
 
@@ -81,7 +83,7 @@ class FragmentHandlerTest extends TestCase
         $fragmentHandler = new FragmentHandler($containerMock, $requestStackMock, false);
         $fragmentHandler->addRenderer($rendererMock);
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $fragmentHandler->render('uri', 'rendererName', []);
     }
 }

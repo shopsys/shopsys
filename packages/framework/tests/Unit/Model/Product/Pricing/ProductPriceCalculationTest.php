@@ -6,12 +6,14 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -81,7 +83,7 @@ class ProductPriceCalculationTest extends TestCase
         $variant = Product::create(new ProductData());
         $product = Product::createMainVariant(new ProductData(), [$variant]);
 
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException::class);
+        $this->expectException(MainVariantPriceCalculationException::class);
 
         $productPriceCalculation->calculatePrice($product, $pricingGroup->getDomainId(), $pricingGroup);
     }
@@ -93,7 +95,7 @@ class ProductPriceCalculationTest extends TestCase
             []
         );
 
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $productPriceCalculation->getMinimumPriceByPriceWithoutVat([]);
     }
 
@@ -187,7 +189,7 @@ class ProductPriceCalculationTest extends TestCase
             []
         );
 
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $productPriceCalculation->arePricesDifferent([]);
     }
 }

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Grid\InlineEdit;
 
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
+use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractGridInlineEdit implements GridInlineEditInterface
@@ -37,7 +38,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
             foreach ($form->getErrors(true) as $error) {
                 $formErrors[] = $error->getMessage();
             }
-            throw new \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException($formErrors);
+            throw new InvalidFormDataException($formErrors);
         }
 
         $formData = $form->getData();

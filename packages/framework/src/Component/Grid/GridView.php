@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use InvalidArgumentException;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -113,7 +114,7 @@ class GridView
             }
         }
 
-        throw new \InvalidArgumentException(sprintf('Block "%s" doesn\'t exist in grid template "%s".', $name, $this->theme));
+        throw new InvalidArgumentException(sprintf('Block "%s" doesn\'t exist in grid template "%s".', $name, $this->theme));
     }
 
     /**

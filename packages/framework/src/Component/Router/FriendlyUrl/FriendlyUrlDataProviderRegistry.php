@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlRouteNotSupportedException;
 use Webmozart\Assert\Assert;
 
 class FriendlyUrlDataProviderRegistry
@@ -35,6 +36,6 @@ class FriendlyUrlDataProviderRegistry
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlRouteNotSupportedException($routeName);
+        throw new FriendlyUrlRouteNotSupportedException($routeName);
     }
 }

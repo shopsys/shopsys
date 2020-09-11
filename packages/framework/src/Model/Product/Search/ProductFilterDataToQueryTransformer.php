@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
+use function array_map;
+use function count;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -23,7 +25,7 @@ class ProductFilterDataToQueryTransformer
             return $filterQuery;
         }
 
-        $brandIds = \array_map(
+        $brandIds = array_map(
             static function (Brand $brand) {
                 return $brand->getId();
             },
@@ -44,7 +46,7 @@ class ProductFilterDataToQueryTransformer
             return $filterQuery;
         }
 
-        $flagIds = \array_map(
+        $flagIds = array_map(
             static function (Flag $flag) {
                 return $flag->getId();
             },
@@ -79,12 +81,12 @@ class ProductFilterDataToQueryTransformer
         $result = [];
 
         foreach ($parameters as $parameterFilterData) {
-            if (\count($parameterFilterData->values) === 0) {
+            if (count($parameterFilterData->values) === 0) {
                 continue;
             }
 
             $result[$parameterFilterData->parameter->getId()] =
-                \array_map(
+                array_map(
                     static function (ParameterValue $item) {
                         return $item->getId();
                     },

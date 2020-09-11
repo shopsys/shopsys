@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -489,7 +490,7 @@ class OrderFacade
                 $currentAdmin = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
                 $orderData->createdAsAdministrator = $currentAdmin;
                 $orderData->createdAsAdministratorName = $currentAdmin->getRealName();
-            } catch (\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException $ex) {
+            } catch (AdministratorIsNotLoggedException $ex) {
                 return;
             }
         }

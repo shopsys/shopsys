@@ -7,6 +7,8 @@ namespace Shopsys\FrameworkBundle\Component\Error;
 use App\Kernel;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Shopsys\FrameworkBundle\Component\Error\Exception\BadErrorPageStatusCodeException;
+use Shopsys\FrameworkBundle\Component\Error\Exception\ErrorPageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,7 +85,7 @@ class ErrorPagesFacade
     {
         $errorPageContent = file_get_contents($this->getErrorPageFilename($domainId, $statusCode));
         if ($errorPageContent === false) {
-            throw new \Shopsys\FrameworkBundle\Component\Error\Exception\ErrorPageNotFoundException($domainId, $statusCode);
+            throw new ErrorPageNotFoundException($domainId, $statusCode);
         }
 
         $errorPageContent = str_replace('{{ERROR_ID}}', $this->errorIdProvider->getErrorId(), $errorPageContent);
@@ -157,7 +159,7 @@ class ErrorPagesFacade
         $errorPageKernel->terminate($errorPageFakeRequest, $errorPageResponse);
 
         if ($expectedStatusCode !== $errorPageResponse->getStatusCode()) {
-            throw new \Shopsys\FrameworkBundle\Component\Error\Exception\BadErrorPageStatusCodeException(
+            throw new BadErrorPageStatusCodeException(
                 $errorPageUrl,
                 $expectedStatusCode,
                 $errorPageResponse->getStatusCode()

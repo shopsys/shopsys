@@ -10,6 +10,7 @@ use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Order\OrderData;
 use App\Model\Product\Product;
+use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Xml\XmlNormalizer;
@@ -137,7 +138,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $customerUserData->firstName = 'Jaromír';
         $customerUserData->lastName = 'Jágr';
         $customerUserData->domainId = self::DOMAIN_ID_FIRST;
-        $customerUserData->createdAt = new \DateTime('2018-04-13');
+        $customerUserData->createdAt = new DateTime('2018-04-13');
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->telephone = '+420987654321';
         $customerUserData->customer = $customer;
@@ -157,7 +158,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $orderData->currency = $currency;
         $orderData->status = $status;
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->createdAt = new \DateTime('2018-04-13');
+        $orderData->createdAt = new DateTime('2018-04-13');
         $orderData->domainId = self::DOMAIN_ID_FIRST;
         $orderData->lastName = 'Bořič';
         $orderData->firstName = 'Adam';

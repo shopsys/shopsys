@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasNoIdException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface;
@@ -91,7 +92,7 @@ class OrderItemPriceCalculation
         foreach ($orderItems as $orderItem) {
             if ($orderItem->getId() === null) {
                 $message = 'OrderItem must have ID filled';
-                throw new \Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasNoIdException($message);
+                throw new OrderItemHasNoIdException($message);
             }
             $prices[$orderItem->getId()] = $this->calculateTotalPrice($orderItem);
         }

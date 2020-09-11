@@ -105,7 +105,7 @@ class TransportRepository
     {
         $transport = $this->findById($id);
         if ($transport === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException(
+            throw new TransportNotFoundException(
                 'Transport with ID ' . $id . ' not found.'
             );
         }

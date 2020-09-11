@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
@@ -97,7 +98,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
 
         $promoCodeFacade = new PromoCodeFacade($emMock, $promoCodeRepositoryMock, new PromoCodeFactory(new EntityNameResolver([])));
         $currentPromoCodeFacade = new CurrentPromoCodeFacade($promoCodeFacade, $sessionMock);
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException::class);
+        $this->expectException(InvalidPromoCodeException::class);
         $currentPromoCodeFacade->setEnteredPromoCode($enteredCode);
     }
 }

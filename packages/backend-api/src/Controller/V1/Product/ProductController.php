@@ -14,6 +14,7 @@ use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
 use Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinksTransformer;
 use Shopsys\BackendApiBundle\Component\Validation\HttpUuidValidator;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductQueryParams;
@@ -208,7 +209,7 @@ class ProductController extends AbstractFOSRestController
             $this->productFacade->getByUuid($uuid);
 
             throw new UnprocessableEntityHttpException('Product with ' . $uuid . ' UUID already exists');
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $e) {
+        } catch (ProductNotFoundException $e) {
             return;
         }
     }

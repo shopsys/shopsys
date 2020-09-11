@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Collection;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductImageUrlNotLoadedException;
+use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductUrlNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductUrlsBatchLoader
@@ -57,7 +59,7 @@ class ProductUrlsBatchLoader
     {
         $key = $this->getKey($product, $domainConfig);
         if (!array_key_exists($key, $this->loadedProductUrls)) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductUrlNotLoadedException($product, $domainConfig);
+            throw new ProductUrlNotLoadedException($product, $domainConfig);
         }
 
         return $this->loadedProductUrls[$key];
@@ -72,7 +74,7 @@ class ProductUrlsBatchLoader
     {
         $key = $this->getKey($product, $domainConfig);
         if (!array_key_exists($key, $this->loadedProductImageUrls)) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductImageUrlNotLoadedException($product, $domainConfig);
+            throw new ProductImageUrlNotLoadedException($product, $domainConfig);
         }
 
         return $this->loadedProductImageUrls[$key];

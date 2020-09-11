@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -155,7 +156,7 @@ class PaymentController extends AdminBaseController
                     'name' => $paymentName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException $ex) {
+        } catch (PaymentNotFoundException $ex) {
             $this->addErrorFlash(t('Selected payment doesn\'t exist.'));
         }
 

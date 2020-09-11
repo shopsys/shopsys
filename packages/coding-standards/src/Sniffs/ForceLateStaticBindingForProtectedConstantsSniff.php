@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
+use function in_array;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\AnnotationHelper;
 use SlevomatCodingStandard\Helpers\ConstantHelper;
 use SlevomatCodingStandard\Helpers\TokenHelper;
+use const T_CLASS;
+use const T_CONST;
+use const T_PROTECTED;
+use const T_SELF;
 
 class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
 {
@@ -17,7 +22,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      */
     public function register(): array
     {
-        return [\T_CLASS];
+        return [T_CLASS];
     }
 
     /**
@@ -27,7 +32,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
     {
         $protectedConstants = $this->getAllProtectedConstantsInClass($file);
 
-        $selfPositions = TokenHelper::findNextAll($file, \T_SELF, $classPosition);
+        $selfPositions = TokenHelper::findNextAll($file, T_SELF, $classPosition);
 
         foreach ($selfPositions as $selfPosition) {
             $constantName = $this->findConstantNameFromSelfCall($file, $selfPosition);
@@ -36,7 +41,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
                 continue;
             }
 
-            if (!\in_array($constantName, $protectedConstants, true)) {
+            if (!in_array($constantName, $protectedConstants, true)) {
                 continue;
             }
 
@@ -89,7 +94,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      */
     private function getAllProtectedConstantsInClass(File $file): array
     {
-        $constPositions = TokenHelper::findNextAll($file, \T_CONST, 0);
+        $constPositions = TokenHelper::findNextAll($file, T_CONST, 0);
 
         $protectedConstants = [];
 
@@ -117,7 +122,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      */
     private function isProtectedVisibility(File $file, int $constPosition): bool
     {
-        $protectedModifierPosition = TokenHelper::findPreviousLocal($file, \T_PROTECTED, $constPosition);
+        $protectedModifierPosition = TokenHelper::findPreviousLocal($file, T_PROTECTED, $constPosition);
 
         return $protectedModifierPosition !== null;
     }

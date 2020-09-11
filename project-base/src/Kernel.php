@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use function dirname;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -39,7 +40,7 @@ class Kernel extends BaseKernel
      */
     public function getProjectDir(): string
     {
-        return \dirname(__DIR__);
+        return dirname(__DIR__);
     }
 
     public function boot()

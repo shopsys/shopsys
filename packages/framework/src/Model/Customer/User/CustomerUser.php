@@ -145,7 +145,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         if ($customerUserData->createdAt !== null) {
             $this->createdAt = $customerUserData->createdAt;
         } else {
-            $this->createdAt = new \DateTime();
+            $this->createdAt = new DateTime();
         }
         $this->setData($customerUserData);
     }

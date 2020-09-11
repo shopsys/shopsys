@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException;
 
 class UploadedFileFacade
 {
@@ -216,7 +217,7 @@ class UploadedFileFacade
         }
 
         $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
-        throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException($message);
+        throw new EntityIdentifierException($message);
     }
 
     /**

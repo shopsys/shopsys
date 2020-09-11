@@ -4,6 +4,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Grid;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
@@ -114,7 +115,7 @@ class GridTest extends TestCase
         );
         $grid->addColumn('columnId1', 'sourceColumnName1', 'title1');
 
-        $this->expectException(\Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException::class);
+        $this->expectException(DuplicateColumnIdException::class);
         $grid->addColumn('columnId1', 'sourceColumnName2', 'title2');
     }
 
