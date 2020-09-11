@@ -168,7 +168,10 @@ class PersonalDataController extends FrontBaseController
             $this->domain->getId()
         );
 
-        if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY) {
+        if (
+            $personalDataAccessRequest !== null
+            && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY
+        ) {
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
                 $this->domain->getId()
@@ -203,7 +206,10 @@ class PersonalDataController extends FrontBaseController
             $this->domain->getId()
         );
 
-        if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT) {
+        if (
+            $personalDataAccessRequest !== null
+            && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT
+        ) {
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($personalDataAccessRequest->getEmail(), $this->domain->getId());
 
             $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
@@ -239,7 +245,10 @@ class PersonalDataController extends FrontBaseController
             $this->domain->getId()
         );
 
-        if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT) {
+        if (
+            $personalDataAccessRequest !== null
+            && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT
+        ) {
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
                 $this->domain->getId()

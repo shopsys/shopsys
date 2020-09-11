@@ -25,7 +25,11 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
             if (strpos($class, 'App\\') === 0) {
                 $parentClass = get_parent_class($class);
 
-                if ($parentClass !== false && strpos($parentClass, 'Shopsys\\') === 0 && !$annotationReader->isTransient($parentClass)) {
+                if (
+                    $parentClass !== false
+                    && strpos($parentClass, 'Shopsys\\') === 0
+                    && !$annotationReader->isTransient($parentClass)
+                ) {
                     $annotationReader->loadMetadataForClass($parentClass, new ClassMetadata($parentClass));
                     $entityExtensionMap[$parentClass] = $class;
                 }

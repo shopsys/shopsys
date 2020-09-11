@@ -290,8 +290,13 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function setProductActionViewFactory(ProductActionViewFactory $productActionViewFactory): void
     {
-        if ($this->productActionViewFactory !== null && $this->productActionViewFactory !== $productActionViewFactory) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        if (
+            $this->productActionViewFactory !== null
+            && $this->productActionViewFactory !== $productActionViewFactory
+        ) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
         }
         if ($this->productActionViewFactory === null) {
             @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);

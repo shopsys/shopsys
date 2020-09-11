@@ -257,7 +257,10 @@ class FileUpload
         $uploadedFiles = $this->filesystem->listContents($this->getTemporaryDirectory());
 
         foreach ($uploadedFiles as $uploadedFile) {
-            if ($uploadedFile['type'] === 'file' && $currentTimestamp - $uploadedFile['timestamp'] >= static::DELETE_OLD_FILES_SECONDS) {
+            if (
+                $uploadedFile['type'] === 'file'
+                && $currentTimestamp - $uploadedFile['timestamp'] >= static::DELETE_OLD_FILES_SECONDS
+            ) {
                 $this->filesystem->delete($uploadedFile['path']);
                 $deletedCounter++;
             }

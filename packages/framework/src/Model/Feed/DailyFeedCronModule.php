@@ -135,7 +135,10 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
         $domainIdToContinue = $this->setting->get(Setting::FEED_DOMAIN_ID_TO_CONTINUE);
         if ($feedNameToContinue !== null && $domainIdToContinue !== null) {
             $queue = $this->getFeedExportCreationDataQueue();
-            while ($feedNameToContinue !== $queue->getCurrentFeedName() || $domainIdToContinue !== $queue->getCurrentDomain()->getId()) {
+            while (
+                $feedNameToContinue !== $queue->getCurrentFeedName()
+                || $domainIdToContinue !== $queue->getCurrentDomain()->getId()
+            ) {
                 $queue->next();
             }
         }

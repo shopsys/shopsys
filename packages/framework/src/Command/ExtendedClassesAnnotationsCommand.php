@@ -205,7 +205,10 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $this->annotationsAdder->addAnnotationToClass($projectClassBetterReflection, $projectClassNecessaryPropertyAnnotationsLines . $projectClassNecessaryMethodAnnotationsLines);
             }
 
-            if ($projectClassNecessaryPropertyAnnotationsLines !== '' || $projectClassNecessaryMethodAnnotationsLines !== '') {
+            if (
+                $projectClassNecessaryPropertyAnnotationsLines !== ''
+                || $projectClassNecessaryMethodAnnotationsLines !== ''
+            ) {
                 $filesForAddingPropertyOrMethodAnnotations[] = $projectClassBetterReflection->getFileName();
             }
         }

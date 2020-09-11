@@ -70,7 +70,10 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
      */
     public function setFrontendApiProductFacade(FrontendApiProductFacade $frontendApiProductFacade): void
     {
-        if ($this->frontendApiProductFacade !== null && $this->frontendApiProductFacade !== $frontendApiProductFacade) {
+        if (
+            $this->frontendApiProductFacade !== null
+            && $this->frontendApiProductFacade !== $frontendApiProductFacade
+        ) {
             throw new BadMethodCallException(sprintf(
                 'Method "%s" has been already called and cannot be called multiple times.',
                 __METHOD__

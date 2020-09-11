@@ -314,7 +314,10 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
     private function resolveOffset(Token $docToken, array $newLines): int
     {
         foreach ($newLines as $newLine) {
-            if (Strings::contains($newLine->getContent(), '@param') && Strings::contains($docToken->getContent(), '@param')) {
+            if (
+                Strings::contains($newLine->getContent(), '@param')
+                && Strings::contains($docToken->getContent(), '@param')
+            ) {
                 return $this->getLastParamLinePosition($docToken);
             }
         }

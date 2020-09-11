@@ -70,7 +70,10 @@ class LogoutExceptionSubscriber implements EventSubscriberInterface
      */
     public function onKernelException(ExceptionEvent $event): void
     {
-        if ($event->getThrowable() instanceof LogoutException || $event->getThrowable()->getPrevious() instanceof LogoutException) {
+        if (
+            $event->getThrowable() instanceof LogoutException
+            || $event->getThrowable()->getPrevious() instanceof LogoutException
+        ) {
             if ($this->currentCustomerUser->findCurrentCustomerUser() !== null) {
                 $domainId = $this->currentCustomerUser->findCurrentCustomerUser()->getDomainId();
                 $locale = $this->domain->getDomainConfigById($domainId)->getLocale();

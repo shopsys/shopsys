@@ -216,7 +216,10 @@ EOF
         }
 
         foreach ($this->getDirectoryIterator($fileOrDirectory) as $file) {
-            if (!\in_array($file->getExtension(), ['yml', 'yaml'], true) || $this->isFileInExcludePath($file->getPathname(), $excludeRegex) === true) {
+            if (
+                !\in_array($file->getExtension(), ['yml', 'yaml'], true)
+                || $this->isFileInExcludePath($file->getPathname(), $excludeRegex) === true
+            ) {
                 continue;
             }
             yield $file;

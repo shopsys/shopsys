@@ -205,7 +205,13 @@ class ResizeFormListener implements EventSubscriberInterface
         if ($previousViewData === null) {
             $previousViewData = [];
         }
-        if (!is_array($previousViewData) && !($previousViewData instanceof Traversable && $previousViewData instanceof ArrayAccess)) {
+        if (
+            !is_array($previousViewData)
+            && !(
+                $previousViewData instanceof Traversable
+                && $previousViewData instanceof ArrayAccess
+            )
+        ) {
             throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
                 $previousViewData,
                 'array or (\Traversable and \ArrayAccess)'

@@ -142,7 +142,10 @@ class ProductPriceCalculation
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null $minimumPrice */
         $minimumPrice = null;
         foreach ($prices as $price) {
-            if ($minimumPrice === null || $price->getPriceWithoutVat()->isLessThan($minimumPrice->getPriceWithoutVat())) {
+            if (
+                $minimumPrice === null
+                || $price->getPriceWithoutVat()->isLessThan($minimumPrice->getPriceWithoutVat())
+            ) {
                 $minimumPrice = $price;
             }
         }

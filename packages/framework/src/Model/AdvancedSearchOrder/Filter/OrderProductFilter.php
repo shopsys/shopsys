@@ -53,7 +53,10 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
     public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
     {
         foreach ($rulesData as $index => $ruleData) {
-            if ($ruleData->operator === self::OPERATOR_CONTAINS || $ruleData->operator === self::OPERATOR_NOT_CONTAINS) {
+            if (
+                $ruleData->operator === self::OPERATOR_CONTAINS
+                || $ruleData->operator === self::OPERATOR_NOT_CONTAINS
+            ) {
                 /** @var \Shopsys\FrameworkBundle\Model\Product\Product|null $searchValue */
                 $searchValue = $ruleData->value;
                 if ($searchValue === null) {

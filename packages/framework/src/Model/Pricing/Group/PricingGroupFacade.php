@@ -166,7 +166,10 @@ class PricingGroupFacade
             $newPricingGroup = null;
         }
 
-        if ($newPricingGroup !== null && $this->pricingGroupSettingFacade->isPricingGroupDefaultOnSelectedDomain($oldPricingGroup)) {
+        if (
+            $newPricingGroup !== null
+            && $this->pricingGroupSettingFacade->isPricingGroupDefaultOnSelectedDomain($oldPricingGroup)
+        ) {
             $this->pricingGroupSettingFacade->setDefaultPricingGroupForSelectedDomain($newPricingGroup);
         }
 

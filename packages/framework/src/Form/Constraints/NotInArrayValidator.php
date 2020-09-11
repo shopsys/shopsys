@@ -19,8 +19,12 @@ class NotInArrayValidator extends ConstraintValidator
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, NotInArray::class);
         }
 
-        if (!is_array($constraint->array)
-            && !($constraint->array instanceof Traversable && $constraint->array instanceof ArrayAccess)
+        if (
+            !is_array($constraint->array)
+            && !(
+                $constraint->array instanceof Traversable
+                && $constraint->array instanceof ArrayAccess
+            )
         ) {
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException(
                 $constraint->array,

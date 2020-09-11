@@ -63,7 +63,10 @@ class CurrentCustomerUser
 
         $user = $token->getUser();
 
-        if (class_exists('\Shopsys\FrontendApiBundle\Model\User\FrontendApiUser') && $user instanceof FrontendApiUser) {
+        if (
+            class_exists('\Shopsys\FrontendApiBundle\Model\User\FrontendApiUser')
+            && $user instanceof FrontendApiUser
+        ) {
             return $this->customerUserFacade->getByUuid($user->getUuid());
         }
 

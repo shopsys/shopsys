@@ -171,7 +171,10 @@ class CustomerUserFacade
     {
         $customer = $this->createCustomerWithBillingAddress($customerUserUpdateData->customerUserData->domainId, $customerUserUpdateData->billingAddressData);
 
-        if ($customerUserUpdateData->deliveryAddressData && $customerUserUpdateData->deliveryAddressData->addressFilled) {
+        if (
+            $customerUserUpdateData->deliveryAddressData
+            && $customerUserUpdateData->deliveryAddressData->addressFilled
+        ) {
             $customerUserUpdateData->deliveryAddressData->customer = $customer;
             $deliveryAddress = $this->deliveryAddressFacade->create($customerUserUpdateData->deliveryAddressData);
 
@@ -224,7 +227,10 @@ class CustomerUserFacade
         $customerUser = $this->getCustomerUserById($customerUserId);
         $customerUserUpdateData->deliveryAddressData->customer = $customerUser->getCustomer();
 
-        if ($customerUserUpdateData->deliveryAddressData && $customerUserUpdateData->deliveryAddressData->addressFilled) {
+        if (
+            $customerUserUpdateData->deliveryAddressData
+            && $customerUserUpdateData->deliveryAddressData->addressFilled
+        ) {
             $deliveryAddress = $this->deliveryAddressFacade->create($customerUserUpdateData->deliveryAddressData);
             $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
         }
@@ -314,7 +320,10 @@ class CustomerUserFacade
             $customerUser->getDomainId()
         );
 
-        if ($customerUserByEmailAndDomain !== null && $customerUser->getId() !== $customerUserByEmailAndDomain->getId()) {
+        if (
+            $customerUserByEmailAndDomain !== null
+            && $customerUser->getId() !== $customerUserByEmailAndDomain->getId()
+        ) {
             throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException($email);
         }
 

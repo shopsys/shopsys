@@ -91,7 +91,11 @@ class CartMigrationFacade
         $session = $filterControllerEvent->getRequest()->getSession();
 
         $previousCartIdentifier = $session->get(static::SESSION_PREVIOUS_CART_IDENTIFIER);
-        if ($previousCartIdentifier !== null && $previousCartIdentifier !== '' && $previousCartIdentifier !== $session->getId()) {
+        if (
+            $previousCartIdentifier !== null
+            && $previousCartIdentifier !== ''
+            && $previousCartIdentifier !== $session->getId()
+        ) {
             $previousCustomerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
             $cart = $this->cartFacade->findCartByCustomerUserIdentifier($previousCustomerUserIdentifier);
 
