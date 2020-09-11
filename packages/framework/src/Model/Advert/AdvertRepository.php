@@ -68,7 +68,7 @@ class AdvertRepository
         }
 
         return $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
-            ->setFirstResult(rand(0, $count - 1))
+            ->setFirstResult(random_int(0, $count - 1))
             ->setMaxResults(1)
             ->getQuery()->getSingleResult();
     }

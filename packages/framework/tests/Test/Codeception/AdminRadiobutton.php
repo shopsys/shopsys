@@ -81,7 +81,7 @@ class AdminRadiobutton
      */
     protected function getImageElementClassByValue(string $radioValue): string
     {
-        $imageElementClass = 'js-radio-image-' . rand();
+        $imageElementClass = 'js-radio-image-' . random_int(0, getrandmax());
 
         $selector = json_encode($this->cssSelector);
         $valueSelector = json_encode(sprintf('input[value="%s"]', $radioValue));
