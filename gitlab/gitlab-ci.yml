@@ -157,17 +157,8 @@ deploy:production:
         - master
         - /^master-.*$/
     environment:
-        name: production2
+        name: production
         url: https://prod.scontodev.cz
-
-deploy:beta:
-    <<: *deploy
-    resource_group: deploy_beta
-    only:
-        - beta
-    environment:
-        name: beta
-        url: https://beta.eshop.scontodev.cz
 
 deploy:devel:
     <<: *deploy
