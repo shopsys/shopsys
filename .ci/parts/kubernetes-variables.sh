@@ -3,8 +3,8 @@
 echo "Start of kubernetes-variables.sh"
 
 assertVariable "RUNNING_PRODUCTION"
-assertVariable "HTT_AUTHENTICATE_DOMAIN_0"
-assertVariable "HTT_AUTHENTICATE_DOMAIN_1"
+assertVariable "HTTP_AUTHENTICATE_DOMAIN_0"
+assertVariable "HTTP_AUTHENTICATE_DOMAIN_1"
 assertVariable "CONFIGURATION_TARGET_PATH"
 
 FILES=$( find $CONFIGURATION_TARGET_PATH -type f )
@@ -19,13 +19,14 @@ unset VARS
 
 if [ ${RUNNING_PRODUCTION} -eq "1" ]; then
     yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/from-to-www-redirect\"" "\"true\""
-done
+fi
 
 domain_iterator=0
 for DOMAIN in ${DOMAINS[@]}; do
-  variable=$"HTTP_AUTHENTICATE_DOMAIN_${iterator}"
+  variable=$"HTTP_AUTHENTICATE_DOMAIN_${domain_iterator}"
   eval HTTP_AUTHENTICATE='$'${variable}
-  if [ ${HTTP_AUTHENTICATE} -eq "1" ] then
+
+  if [ ${HTTP_AUTHENTICATE} -eq "1" ]; then
     yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-type\"" basic
     yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-secret\"" http-auth
     yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/auth-realm\"" "Authentication Required - ok"
