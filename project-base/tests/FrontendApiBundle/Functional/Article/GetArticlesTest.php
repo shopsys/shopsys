@@ -13,7 +13,7 @@ class GetArticlesTest extends GraphQlTestCase
     public function testGetArticles(): void
     {
         foreach ($this->getArticlesDataProvider() as $dataSet) {
-            list($query, $expectedArticlesData) = $dataSet;
+            [$query, $expectedArticlesData] = $dataSet;
 
             $graphQlType = 'articles';
             $response = $this->getResponseContentForQuery($query);

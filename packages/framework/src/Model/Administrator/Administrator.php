@@ -330,14 +330,15 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
      */
     public function unserialize($serialized)
     {
-        list(
+        [
             $this->id,
             $this->username,
             $this->password,
             $this->realName,
             $this->loginToken,
             $timestamp,
-            $this->rolesChangedAt) = unserialize($serialized);
+            $this->rolesChangedAt
+        ] = unserialize($serialized);
         $this->lastActivity = new DateTime();
         $this->lastActivity->setTimestamp($timestamp);
     }

@@ -17,7 +17,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
     public function testGetOrder(): void
     {
         foreach ($this->getOrderDataProvider() as $dataSet) {
-            list($urlHash, $expectedOrderData) = $dataSet;
+            [$urlHash, $expectedOrderData] = $dataSet;
 
             $graphQlType = 'order';
             $response = $this->getResponseContentForQuery($this->getOrderQuery($urlHash));
@@ -36,7 +36,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
     public function testGetOrderReturnsError(): void
     {
         foreach ($this->getIncorrectOrderDataProvider() as $dataSet) {
-            list($urlHash, $expectedErrorMessage) = $dataSet;
+            [$urlHash, $expectedErrorMessage] = $dataSet;
 
             $response = $this->getResponseContentForQuery($this->getOrderQuery($urlHash));
             $this->assertResponseContainsArrayOfErrors($response);

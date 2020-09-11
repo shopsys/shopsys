@@ -19,7 +19,7 @@ class GetArticleTest extends GraphQlTestCase
     public function testGetArticle(): void
     {
         foreach ($this->getArticleDataProvider() as $dataSet) {
-            list($uuid, $expectedArticleData) = $dataSet;
+            [$uuid, $expectedArticleData] = $dataSet;
 
             $graphQlType = 'article';
             $response = $this->getResponseContentForQuery($this->getArticleQuery($uuid));
@@ -51,7 +51,7 @@ class GetArticleTest extends GraphQlTestCase
     public function testGetSpecialArticle(): void
     {
         foreach ($this->getSpecialArticleDataProvider() as $dataSet) {
-            list($graphQlType, $expectedData) = $dataSet;
+            [$graphQlType, $expectedData] = $dataSet;
 
             $response = $this->getResponseContentForQuery($this->getSpecialArticleQuery($graphQlType));
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);

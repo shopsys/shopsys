@@ -71,7 +71,7 @@ class DatabaseDumpCommand extends Command
             $pipes
         );
 
-        list($stdin, $stdout, $stderr) = $pipes;
+        [$stdin, $stdout, $stderr] = $pipes;
 
         $outputFile = $input->getArgument(self::ARG_OUTPUT_FILE);
         $outputFileHandle = fopen($outputFile, 'w');

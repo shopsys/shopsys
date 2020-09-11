@@ -47,7 +47,7 @@ class VolumeDriver extends Driver
             $res = (string)$stat['tmb'] === '1' ? $this->createTmb($thumbnailPath, $stat) : $stat['tmb'];
 
             if (!$res) {
-                list($type) = explode('/', $stat['mime']);
+                [$type] = explode('/', $stat['mime']);
                 $fallback = $this->options['resourcePath'] . DIRECTORY_SEPARATOR . strtolower($type) . '.png';
                 if (is_file($fallback)) {
                     $res = $this->tmbname($stat);

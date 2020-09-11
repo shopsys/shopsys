@@ -11,7 +11,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     public function testGetAllCustomerUserOrders(): void
     {
         foreach ($this->getOrdersDataProvider() as $dataSet) {
-            list($query, $expectedOrdersData) = $dataSet;
+            [$query, $expectedOrdersData] = $dataSet;
 
             $graphQlType = 'orders';
             $response = $this->getResponseContentForQuery($query);
