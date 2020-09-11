@@ -108,50 +108,36 @@ export default class Gtm {
         const addedValues = $.isEmptyObject(originalValues) ? serializedData : serializedData.filter(Gtm.compare(originalValues));
         const removedValues = $.isEmptyObject(originalValues) ? [] : originalValues.filter(Gtm.compare(serializedData));
 
-        addedValues.forEach(item => {
+        const pushFunction = (item, category) => {
             if (item.name !== 'q') {
                 const section = $(`*[name="${item.name}"]`).closest('.js-product-filter-box').children('.js-product-filter-box-label').text().trim();
-                const valueEl = $(`*[name="${item.name}"][value="${item.value}"]`).siblings('label').children('a');
+                const label = $(`*[name="${item.name}"][value="${item.value}"]`).siblings('label');
+                const valueEl = label.children('a');
+
                 valueEl.find('span').remove();
-                const value = valueEl.text().trim();
+                const value = valueEl.text().trim() || label.attr('title');
 
                 const data = {
                     'event': EVENT_NAME_CATEGORY_FILTER,
                     'eventData': {
-                        'category': 'Filtrace on',
+                        'category': category,
                         'action': section,
                         'label': value
                     }
                 };
                 Gtm.pushEvent(data);
             }
-        });
+        };
 
-        removedValues.forEach(item => {
-            if (item.name !== 'q') {
-                const section = $(`*[name="${item.name}"]`).closest('.js-product-filter-box').children('.js-product-filter-box-label').text().trim();
-                const valueEl = $(`*[name="${item.name}"][value="${item.value}"]`).siblings('label').children('a');
-                valueEl.find('span').remove();
-                const value = valueEl.text().trim();
-
-                const data = {
-                    'event': EVENT_NAME_CATEGORY_FILTER,
-                    'eventData': {
-                        'category': 'Filtrace off',
-                        'action': section,
-                        'label': value
-                    }
-                };
-                Gtm.pushEvent(data);
-            }
-        });
+        addedValues.forEach(item => pushFunction(item, 'Filtrace on'));
+        removedValues.forEach(item => pushFunction(item, 'Filtrace off'));
     }
 
     static pushSortData (text) {
         const data = {
             'event': EVENT_NAME_CATEGORY_FILTER,
             'eventData': {
-                'category': 'Filtrace',
+                'category': 'Filtrace on',
                 'action': 'Řazení',
                 'label': text.trim()
             }
@@ -179,7 +165,7 @@ export default class Gtm {
                 Gtm.initScrollerPush(scroller);
             }
 
-            $('.js-transport_and_payment_form_save').click(function (e) {
+            $container.find('.js-transport_and_payment_form_save').click(function (e) {
                 Gtm.pushTransportAndPayment($(this.closest('form')), e);
             });
         }
