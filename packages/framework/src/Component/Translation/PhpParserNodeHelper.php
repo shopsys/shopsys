@@ -22,7 +22,10 @@ class PhpParserNodeHelper
         }
 
         if ($node instanceof Concat) {
-            return self::getConcatenatedStringValue($node->left, $fileInfo) . self::getConcatenatedStringValue($node->right, $fileInfo);
+            return self::getConcatenatedStringValue($node->left, $fileInfo) . self::getConcatenatedStringValue(
+                $node->right,
+                $fileInfo
+            );
         }
 
         throw new StringValueUnextractableException(

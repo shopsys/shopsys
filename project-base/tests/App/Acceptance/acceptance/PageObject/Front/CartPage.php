@@ -29,7 +29,9 @@ class CartPage extends AbstractPage
     public function assertProductPriceRoundedByCurrency($productName, $price)
     {
         $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
-        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(Money::create($convertedPrice));
+        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(
+            Money::create($convertedPrice)
+        );
         $productPriceCell = $this->getProductTotalPriceCellByName($productName);
         $this->tester->seeInElement($formattedPriceWithCurrency, $productPriceCell);
     }
@@ -39,7 +41,9 @@ class CartPage extends AbstractPage
      */
     public function assertTotalPriceWithVatRoundedByCurrency($price)
     {
-        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(Money::create($price));
+        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(
+            Money::create($price)
+        );
         $orderPriceCell = $this->getTotalProductsPriceCell();
         $message = t('Total price including VAT', [], 'messages', $this->tester->getFrontendLocale());
         $this->tester->seeInElement($message . ': ' . $formattedPriceWithCurrency, $orderPriceCell);
@@ -117,7 +121,11 @@ class CartPage extends AbstractPage
             }
         }
 
-        $message = sprintf('Unable to find row containing product "%s" (translated to "%s") in cart.', $productName, $translatedProductName);
+        $message = sprintf(
+            'Unable to find row containing product "%s" (translated to "%s") in cart.',
+            $productName,
+            $translatedProductName
+        );
         throw new NoSuchElementException($message);
     }
 
@@ -164,7 +172,9 @@ class CartPage extends AbstractPage
 
     public function removePromoCode()
     {
-        $removePromoCodeButton = $this->webDriver->findElement(WebDriverBy::cssSelector('#js-promo-code-remove-button'));
+        $removePromoCodeButton = $this->webDriver->findElement(
+            WebDriverBy::cssSelector('#js-promo-code-remove-button')
+        );
         $this->tester->clickByElement($removePromoCodeButton);
         $this->tester->waitForAjax();
     }
@@ -216,11 +226,19 @@ class CartPage extends AbstractPage
 
         $productPriceWithoutCurrencySymbol = preg_replace('/[^0-9.,]/', '', $productPriceCell->getText());
 
-        return $this->tester->getNumberFromLocalizedFormat($productPriceWithoutCurrencySymbol, $this->tester->getFrontendLocale());
+        return $this->tester->getNumberFromLocalizedFormat(
+            $productPriceWithoutCurrencySymbol,
+            $this->tester->getFrontendLocale()
+        );
     }
 
     public function clickGoToCartInPopUpWindow(): void
     {
-        $this->tester->clickByTranslationFrontend('Go to cart', 'messages', [], WebDriverBy::cssSelector('#window-main-container'));
+        $this->tester->clickByTranslationFrontend(
+            'Go to cart',
+            'messages',
+            [],
+            WebDriverBy::cssSelector('#window-main-container')
+        );
     }
 }

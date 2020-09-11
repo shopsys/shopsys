@@ -42,7 +42,11 @@ class UploadedFileController
         $uploadedFileSlug = pathinfo($uploadedFilename, PATHINFO_FILENAME);
         $uploadedFileExtension = pathinfo($uploadedFilename, PATHINFO_EXTENSION);
 
-        $uploadedFile = $this->uploadedFileFacade->getByIdSlugAndExtension($uploadedFileId, $uploadedFileSlug, $uploadedFileExtension);
+        $uploadedFile = $this->uploadedFileFacade->getByIdSlugAndExtension(
+            $uploadedFileId,
+            $uploadedFileSlug,
+            $uploadedFileExtension
+        );
         $filePath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
 
         return new DownloadFileResponse(

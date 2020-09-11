@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as FrameworkProductRepository;
 
@@ -38,7 +39,9 @@ class ProductRepository
         $product = $qb->getQuery()->getOneOrNullResult();
 
         if ($product === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException(sprintf('Product with UUID "%s" does not exist.', $uuid));
+            throw new ProductNotFoundException(
+                sprintf('Product with UUID "%s" does not exist.', $uuid)
+            );
         }
 
         return $product;

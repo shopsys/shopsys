@@ -117,7 +117,13 @@ class PaymentPriceCalculationTest extends TestCase
         ];
         $payment = new Payment($paymentData);
         $payment->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID);
-        $payment->addPrice((new PaymentPriceFactory(new EntityNameResolver([])))->create($payment, $inputPrice, Domain::FIRST_DOMAIN_ID));
+        $payment->addPrice(
+            (new PaymentPriceFactory(new EntityNameResolver([])))->create(
+                $payment,
+                $inputPrice,
+                Domain::FIRST_DOMAIN_ID
+            )
+        );
 
         $price = $paymentPriceCalculation->calculateIndependentPrice($payment, $currency, Domain::FIRST_DOMAIN_ID);
 
@@ -183,9 +189,20 @@ class PaymentPriceCalculationTest extends TestCase
         ];
         $payment = new Payment($paymentData);
         $payment->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID);
-        $payment->addPrice((new PaymentPriceFactory(new EntityNameResolver([])))->create($payment, $inputPrice, Domain::FIRST_DOMAIN_ID));
+        $payment->addPrice(
+            (new PaymentPriceFactory(new EntityNameResolver([])))->create(
+                $payment,
+                $inputPrice,
+                Domain::FIRST_DOMAIN_ID
+            )
+        );
 
-        $price = $paymentPriceCalculation->calculatePrice($payment, $currency, $productsPrice, Domain::FIRST_DOMAIN_ID);
+        $price = $paymentPriceCalculation->calculatePrice(
+            $payment,
+            $currency,
+            $productsPrice,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         if ($productsPrice->getPriceWithVat()->isGreaterThan($priceLimit)) {
             $this->assertThat($price->getPriceWithoutVat(), new IsMoneyEqual(Money::zero()));

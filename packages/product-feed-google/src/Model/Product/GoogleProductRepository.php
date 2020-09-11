@@ -35,7 +35,10 @@ class GoogleProductRepository
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->leftJoin(GoogleProductDomain::class, 'gpd', Join::WITH, 'gpd.product = p AND gpd.domainId = :domainId')
-            ->andWhere('p.variantType != :variantTypeMain')->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
+            ->andWhere('p.variantType != :variantTypeMain')->setParameter(
+                'variantTypeMain',
+                Product::VARIANT_TYPE_MAIN
+            )
             ->andWhere('gpd IS NULL OR gpd.show = TRUE')
             ->orderBy('p.id', 'asc')
             ->setMaxResults($maxResults);

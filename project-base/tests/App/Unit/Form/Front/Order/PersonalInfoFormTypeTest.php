@@ -107,7 +107,15 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     {
         return [
             new ValidatorExtension(Validation::createValidator()),
-            new PreloadedExtension([new PersonalInfoFormType($this->countryFacade, $this->heurekaFacade, $this->domain, $this->currentCustomerUser)], []),
+            new PreloadedExtension(
+                [new PersonalInfoFormType(
+                    $this->countryFacade,
+                    $this->heurekaFacade,
+                    $this->domain,
+                    $this->currentCustomerUser
+                )],
+                []
+            ),
         ];
     }
 

@@ -269,7 +269,10 @@ class ProductFacade
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
         // @see https://github.com/doctrine/doctrine2/issues/4869
-        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
+        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
+            $product,
+            $productData->categoriesByDomainId
+        );
         $product->setProductCategoryDomains($productCategoryDomains);
         $this->em->flush($product);
 
@@ -298,7 +301,10 @@ class ProductFacade
         $product = $this->productRepository->getById($productId);
         $originalNames = $product->getNames();
 
-        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
+        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
+            $product,
+            $productData->categoriesByDomainId
+        );
         $product->edit($productCategoryDomains, $productData);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
@@ -337,9 +343,13 @@ class ProductFacade
         $productDeleteResult = $product->getProductDeleteResult();
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
         foreach ($productsForRecalculations as $productForRecalculations) {
-            $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
+            $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation(
+                $productForRecalculations
+            );
             $productForRecalculations->markForVisibilityRecalculation();
-            $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
+            $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation(
+                $productForRecalculations
+            );
             $this->productExportScheduler->scheduleRowIdForImmediateExport($productForRecalculations->getId());
         }
 
@@ -429,7 +439,11 @@ class ProductFacade
     protected function refreshProductManualInputPrices(Product $product, array $manualInputPrices)
     {
         foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
-            $this->productManualInputPriceFacade->refresh($product, $pricingGroup, $manualInputPrices[$pricingGroup->getId()]);
+            $this->productManualInputPriceFacade->refresh(
+                $product,
+                $pricingGroup,
+                $manualInputPrices[$pricingGroup->getId()]
+            );
         }
     }
 

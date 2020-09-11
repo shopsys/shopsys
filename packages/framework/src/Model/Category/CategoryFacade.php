@@ -220,7 +220,13 @@ class CategoryFacade
      */
     public function getTranslatedAll(DomainConfig $domainConfig)
     {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
 
         return $this->categoryRepository->getTranslatedAll($domainConfig);
     }
@@ -270,7 +276,10 @@ class CategoryFacade
      */
     public function getVisibleCategoriesWithPreloadedChildrenForDomain($domainId, $locale)
     {
-        $categories = $this->categoryRepository->getPreOrderTreeTraversalForVisibleCategoriesByDomain($domainId, $locale);
+        $categories = $this->categoryRepository->getPreOrderTreeTraversalForVisibleCategoriesByDomain(
+            $domainId,
+            $locale
+        );
 
         return $this->categoryWithPreloadedChildrenFactory->createCategoriesWithPreloadedChildren($categories);
     }
@@ -292,7 +301,10 @@ class CategoryFacade
      */
     public function getCategoriesWithLazyLoadedVisibleChildrenForParent(Category $parentCategory, DomainConfig $domainConfig)
     {
-        $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain($parentCategory, $domainConfig);
+        $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
+            $parentCategory,
+            $domainConfig
+        );
 
         return $this->categoryWithLazyLoadedVisibleChildrenFactory
             ->createCategoriesWithLazyLoadedVisibleChildren($categories, $domainConfig);
@@ -331,7 +343,13 @@ class CategoryFacade
      */
     public function getTranslatedAllWithoutBranch(Category $category, DomainConfig $domainConfig)
     {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
 
         return $this->categoryRepository->getTranslatedAllWithoutBranch($category, $domainConfig);
     }
@@ -408,7 +426,10 @@ class CategoryFacade
      */
     public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(Product $product, DomainConfig $domainConfig)
     {
-        return $this->categoryRepository->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain($product, $domainConfig);
+        return $this->categoryRepository->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
+            $product,
+            $domainConfig
+        );
     }
 
     /**

@@ -96,7 +96,9 @@ class CartMigrationFacade
             && $previousCartIdentifier !== ''
             && $previousCartIdentifier !== $session->getId()
         ) {
-            $previousCustomerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
+            $previousCustomerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier(
+                $previousCartIdentifier
+            );
             $cart = $this->cartFacade->findCartByCustomerUserIdentifier($previousCustomerUserIdentifier);
 
             if ($cart !== null) {

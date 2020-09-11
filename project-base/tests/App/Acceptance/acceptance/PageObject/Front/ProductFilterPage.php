@@ -100,7 +100,11 @@ class ProductFilterPage extends AbstractPage
             }
         }
 
-        $message = sprintf('Unable to find parameter with label "%s" (translated to "%s") in product filter.', $parameterLabel, $translatedParameterLabel);
+        $message = sprintf(
+            'Unable to find parameter with label "%s" (translated to "%s") in product filter.',
+            $parameterLabel,
+            $translatedParameterLabel
+        );
         throw new NoSuchElementException($message);
     }
 
@@ -112,7 +116,9 @@ class ProductFilterPage extends AbstractPage
     private function getLabelElementByParameterValueText($parameterElement, $parameterValueText)
     {
         $translatedParameterValueText = t($parameterValueText, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $labelElements = $parameterElement->findElements(WebDriverBy::cssSelector('.js-product-filter-parameter-value'));
+        $labelElements = $parameterElement->findElements(
+            WebDriverBy::cssSelector('.js-product-filter-parameter-value')
+        );
 
         foreach ($labelElements as $labelElement) {
             try {
@@ -124,7 +130,11 @@ class ProductFilterPage extends AbstractPage
             }
         }
 
-        $message = sprintf('Unable to find parameter value with label "%s" (translated to %s) in product filter.', $parameterValueText, $translatedParameterValueText);
+        $message = sprintf(
+            'Unable to find parameter value with label "%s" (translated to %s) in product filter.',
+            $parameterValueText,
+            $translatedParameterValueText
+        );
         throw new NoSuchElementException($message);
     }
 }

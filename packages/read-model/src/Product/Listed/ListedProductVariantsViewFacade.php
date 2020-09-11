@@ -42,6 +42,8 @@ class ListedProductVariantsViewFacade implements ListedProductVariantsViewFacade
             return [];
         }
 
-        return $this->listedProductViewFactory->createFromProducts($this->productOnCurrentDomainFacade->getVariantsForProduct($product));
+        return $this->listedProductViewFactory->createFromProducts(
+            $this->productOnCurrentDomainFacade->getVariantsForProduct($product)
+        );
     }
 }

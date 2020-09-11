@@ -55,7 +55,10 @@ class BrandViewFacade implements BrandViewFacadeInterface
 
         return $this->brandViewFactory->createFromBrand(
             $brand,
-            $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain('front_brand_detail', $brand->getId())
+            $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain(
+                'front_brand_detail',
+                $brand->getId()
+            )
         );
     }
 }

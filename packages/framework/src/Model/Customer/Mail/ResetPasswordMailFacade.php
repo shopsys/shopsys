@@ -53,7 +53,10 @@ class ResetPasswordMailFacade
      */
     public function sendMail(CustomerUser $customerUser)
     {
-        $mailTemplate = $this->mailTemplateFacade->get(MailTemplate::RESET_PASSWORD_NAME, $customerUser->getDomainId());
+        $mailTemplate = $this->mailTemplateFacade->get(
+            MailTemplate::RESET_PASSWORD_NAME,
+            $customerUser->getDomainId()
+        );
         $messageData = $this->resetPasswordMail->createMessage($mailTemplate, $customerUser);
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
         $this->mailer->send($messageData);

@@ -119,7 +119,10 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
             throw new MessageIdArgumentNotPresent();
         }
 
-        return PhpParserNodeHelper::getConcatenatedStringValue($node->args[$messageIdArgumentIndex]->value, $this->file);
+        return PhpParserNodeHelper::getConcatenatedStringValue(
+            $node->args[$messageIdArgumentIndex]->value,
+            $this->file
+        );
     }
 
     /**
@@ -132,7 +135,10 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $domainArgumentIndex = $this->transMethodSpecifications[$methodName]->getDomainArgumentIndex();
 
         if ($domainArgumentIndex !== null && isset($node->args[$domainArgumentIndex])) {
-            return PhpParserNodeHelper::getConcatenatedStringValue($node->args[$domainArgumentIndex]->value, $this->file);
+            return PhpParserNodeHelper::getConcatenatedStringValue(
+                $node->args[$domainArgumentIndex]->value,
+                $this->file
+            );
         }
         return static::DEFAULT_MESSAGE_DOMAIN;
     }
@@ -182,7 +188,10 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $docComment = $this->getDocComment($node);
 
         if ($docComment !== null) {
-            return $this->docParser->parse($docComment->getText(), 'file ' . $this->file . ' near line ' . $node->getLine());
+            return $this->docParser->parse(
+                $docComment->getText(),
+                'file ' . $this->file . ' near line ' . $node->getLine()
+            );
         }
 
         return [];

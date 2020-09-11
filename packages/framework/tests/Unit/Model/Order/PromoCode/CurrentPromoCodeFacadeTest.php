@@ -31,7 +31,11 @@ class CurrentPromoCodeFacadeTest extends TestCase
             ->getMock();
         $promoCodeRepositoryMock->expects($this->atLeastOnce())->method('findByCode')->willReturn($validPromoCode);
 
-        $promoCodeFacade = new PromoCodeFacade($emMock, $promoCodeRepositoryMock, new PromoCodeFactory(new EntityNameResolver([])));
+        $promoCodeFacade = new PromoCodeFacade(
+            $emMock,
+            $promoCodeRepositoryMock,
+            new PromoCodeFactory(new EntityNameResolver([]))
+        );
         $currentPromoCodeFacade = new CurrentPromoCodeFacade($promoCodeFacade, $sessionMock);
 
         $this->assertSame($validPromoCode, $currentPromoCodeFacade->getValidEnteredPromoCodeOrNull());
@@ -52,7 +56,11 @@ class CurrentPromoCodeFacadeTest extends TestCase
             ->getMock();
         $promoCodeRepositoryMock->expects($this->atLeastOnce())->method('findByCode')->willReturn(null);
 
-        $promoCodeFacade = new PromoCodeFacade($emMock, $promoCodeRepositoryMock, new PromoCodeFactory(new EntityNameResolver([])));
+        $promoCodeFacade = new PromoCodeFacade(
+            $emMock,
+            $promoCodeRepositoryMock,
+            new PromoCodeFactory(new EntityNameResolver([]))
+        );
         $currentPromoCodeFacade = new CurrentPromoCodeFacade($promoCodeFacade, $sessionMock);
 
         $this->assertNull($currentPromoCodeFacade->getValidEnteredPromoCodeOrNull());
@@ -78,7 +86,11 @@ class CurrentPromoCodeFacadeTest extends TestCase
             ->getMock();
         $promoCodeRepositoryMock->expects($this->atLeastOnce())->method('findByCode')->willReturn($validPromoCode);
 
-        $promoCodeFacade = new PromoCodeFacade($emMock, $promoCodeRepositoryMock, new PromoCodeFactory(new EntityNameResolver([])));
+        $promoCodeFacade = new PromoCodeFacade(
+            $emMock,
+            $promoCodeRepositoryMock,
+            new PromoCodeFactory(new EntityNameResolver([]))
+        );
         $currentPromoCodeFacade = new CurrentPromoCodeFacade($promoCodeFacade, $sessionMock);
         $currentPromoCodeFacade->setEnteredPromoCode($enteredCode);
     }
@@ -96,7 +108,11 @@ class CurrentPromoCodeFacadeTest extends TestCase
             ->getMock();
         $promoCodeRepositoryMock->expects($this->atLeastOnce())->method('findByCode')->willReturn(null);
 
-        $promoCodeFacade = new PromoCodeFacade($emMock, $promoCodeRepositoryMock, new PromoCodeFactory(new EntityNameResolver([])));
+        $promoCodeFacade = new PromoCodeFacade(
+            $emMock,
+            $promoCodeRepositoryMock,
+            new PromoCodeFactory(new EntityNameResolver([]))
+        );
         $currentPromoCodeFacade = new CurrentPromoCodeFacade($promoCodeFacade, $sessionMock);
         $this->expectException(InvalidPromoCodeException::class);
         $currentPromoCodeFacade->setEnteredPromoCode($enteredCode);

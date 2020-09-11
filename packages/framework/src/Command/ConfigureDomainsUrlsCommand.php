@@ -54,7 +54,9 @@ class ConfigureDomainsUrlsCommand extends Command
         } else {
             $output->writeln('URLs for domains were not configured yet.');
             $this->localFilesystem->copy($this->configFilepath . '.dist', $this->configFilepath);
-            $output->writeln(sprintf('<fg=green>Copied the default configuration into "%s".</fg=green>', $this->configFilepath));
+            $output->writeln(
+                sprintf('<fg=green>Copied the default configuration into "%s".</fg=green>', $this->configFilepath)
+            );
         }
 
         return CommandResultCodes::RESULT_OK;

@@ -78,7 +78,15 @@ class LogoutExceptionSubscriber implements EventSubscriberInterface
                 $domainId = $this->currentCustomerUser->findCurrentCustomerUser()->getDomainId();
                 $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
-                $this->flashBag->add(FlashMessage::KEY_ERROR, t('There was an error during logout attempt. If you really want to sign out, please try it again.', [], 'messages', $locale));
+                $this->flashBag->add(
+                    FlashMessage::KEY_ERROR,
+                    t(
+                        'There was an error during logout attempt. If you really want to sign out, please try it again.',
+                        [],
+                        'messages',
+                        $locale
+                    )
+                );
             }
 
             $redirectUrl = $this->getSafeUrlToRedirect($event->getRequest()->headers->get('referer'));

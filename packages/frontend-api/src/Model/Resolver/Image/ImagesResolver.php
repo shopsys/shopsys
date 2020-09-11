@@ -204,7 +204,12 @@ class ImagesResolver implements ResolverInterface
                     'width' => $sizeConfig->getWidth(),
                     'height' => $sizeConfig->getHeight(),
                     'size' => $sizeConfig->getName() === null ? ImageConfig::DEFAULT_SIZE_NAME : $sizeConfig->getName(),
-                    'url' => $this->imageFacade->getImageUrl($this->domain->getCurrentDomainConfig(), $image, $sizeConfig->getName(), $image->getType()),
+                    'url' => $this->imageFacade->getImageUrl(
+                        $this->domain->getCurrentDomainConfig(),
+                        $image,
+                        $sizeConfig->getName(),
+                        $image->getType()
+                    ),
                 ];
             }
         }

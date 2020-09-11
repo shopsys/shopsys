@@ -26,14 +26,20 @@ class CategoryWithLazyLoadedVisibleChildrenFactory
      */
     public function createCategoriesWithLazyLoadedVisibleChildren($categories, DomainConfig $domainConfig)
     {
-        $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren($categories, $domainConfig->getId());
+        $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren(
+            $categories,
+            $domainConfig->getId()
+        );
 
         $categoriesWithLazyLoadedVisibleChildren = [];
         foreach ($categories as $category) {
             $hasChildren = in_array($category, $categoriesWithVisibleChildren, true);
             $categoriesWithLazyLoadedVisibleChildren[] = new CategoryWithLazyLoadedVisibleChildren(
                 function () use ($category, $domainConfig) {
-                    $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain($category, $domainConfig);
+                    $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
+                        $category,
+                        $domainConfig
+                    );
 
                     return $this->createCategoriesWithLazyLoadedVisibleChildren($categories, $domainConfig);
                 },

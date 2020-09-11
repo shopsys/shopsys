@@ -45,18 +45,24 @@ class Version20191108140919 extends AbstractMigration
                 $newVatId = $currentProductIdWithVat['vat_id'];
                 if ($domainId > 1) {
                     $newVatId = $this
-                        ->sql('SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId', [
-                            'tmpOriginalId' => $currentProductIdWithVat['vat_id'],
-                            'domainId' => $domainId,
-                        ])
+                        ->sql(
+                            'SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId',
+                            [
+                                'tmpOriginalId' => $currentProductIdWithVat['vat_id'],
+                                'domainId' => $domainId,
+                            ]
+                        )
                         ->fetchColumn(0);
                 }
 
-                $this->sql('UPDATE product_domains SET vat_id = :vatId WHERE product_id = :productId and domain_id = :domainId', [
-                    'vatId' => $newVatId,
-                    'productId' => $currentProductIdWithVat['id'],
-                    'domainId' => $domainId,
-                ]);
+                $this->sql(
+                    'UPDATE product_domains SET vat_id = :vatId WHERE product_id = :productId and domain_id = :domainId',
+                    [
+                        'vatId' => $newVatId,
+                        'productId' => $currentProductIdWithVat['id'],
+                        'domainId' => $domainId,
+                    ]
+                );
             }
         }
     }

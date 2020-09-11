@@ -257,7 +257,9 @@ class CartFacadeTest extends TransactionFunctionalTestCase
      */
     private function getCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
-        return $this->cartFacadeFromContainer->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
+        return $this->cartFacadeFromContainer->getCartByCustomerUserIdentifierCreateIfNotExists(
+            $customerUserIdentifier
+        );
     }
 
     /**

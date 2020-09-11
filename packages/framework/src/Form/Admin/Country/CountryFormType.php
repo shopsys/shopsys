@@ -59,7 +59,9 @@ class CountryFormType extends AbstractType
                     'required' => true,
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter country name']),
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Country name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 255, 'maxMessage' => 'Country name cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
                 'label' => t('Name'),
@@ -68,7 +70,9 @@ class CountryFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter country code']),
-                    new Constraints\Length(['max' => 2, 'maxMessage' => 'Country code cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 2, 'maxMessage' => 'Country code cannot be longer than {{ limit }} characters']
+                    ),
                     new NotInArray([
                         'array' => $this->getOtherCountryCodes(),
                         'message' => 'Country code with this code already exists',
@@ -89,7 +93,9 @@ class CountryFormType extends AbstractType
                 'entry_options' => [
                     'attr' => [
                         'icon' => true,
-                        'iconTitle' => t('The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically.'),
+                        'iconTitle' => t(
+                            'The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically.'
+                        ),
                     ],
                     'required' => false,
                     'constraints' => [

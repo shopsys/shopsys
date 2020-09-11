@@ -40,8 +40,16 @@ class AnnotationsAdder
                 "/**\n" . $propertyAndMethodAnnotationsLines . " */\n" . $classKeywordWithName
             );
         } else {
-            $replacedClassDocBlock = str_replace(' */', $propertyAndMethodAnnotationsLines . ' */', $projectClassDocComment);
-            $this->fileContentReplacer->replaceInFile($projectClassFileName, $projectClassDocComment, $replacedClassDocBlock);
+            $replacedClassDocBlock = str_replace(
+                ' */',
+                $propertyAndMethodAnnotationsLines . ' */',
+                $projectClassDocComment
+            );
+            $this->fileContentReplacer->replaceInFile(
+                $projectClassFileName,
+                $projectClassDocComment,
+                $replacedClassDocBlock
+            );
         }
     }
 }

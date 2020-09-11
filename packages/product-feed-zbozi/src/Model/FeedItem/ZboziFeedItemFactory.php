@@ -114,6 +114,9 @@ class ZboziFeedItemFactory
      */
     protected function getPathToMainCategory(Product $product, DomainConfig $domainConfig): array
     {
-        return $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain($product, $domainConfig);
+        return $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
+            $product,
+            $domainConfig
+        );
     }
 }

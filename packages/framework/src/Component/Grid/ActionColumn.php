@@ -174,7 +174,9 @@ class ActionColumn
         }
 
         if ($this->type === self::TYPE_DELETE) {
-            $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->routeCsrfProtector->getCsrfTokenByRoute($this->route);
+            $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->routeCsrfProtector->getCsrfTokenByRoute(
+                $this->route
+            );
         }
 
         return $this->router->generate($this->route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);

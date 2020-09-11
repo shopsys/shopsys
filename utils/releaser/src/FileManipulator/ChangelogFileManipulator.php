@@ -74,7 +74,9 @@ final class ChangelogFileManipulator
      */
     private function changeUnreleasedHeadlineToVersionAndDate(Version $version, Version $mostRecentVersion, string $changelogContent): string
     {
-        $newHeadline = '## ' . $this->createLink($version, $mostRecentVersion) . ' - ' . (new DateTime())->format('Y-m-d');
+        $newHeadline = '## ' . $this->createLink($version, $mostRecentVersion) . ' - ' . (new DateTime())->format(
+            'Y-m-d'
+        );
 
         return Strings::replace($changelogContent, '#\#\# Unreleased#', $newHeadline);
     }

@@ -23,7 +23,10 @@ class ProductFactoryTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->productFactory = new ProductFactory(new EntityNameResolver([]), $this->getProductAvailabilityCalculationMock());
+        $this->productFactory = new ProductFactory(
+            new EntityNameResolver([]),
+            $this->getProductAvailabilityCalculationMock()
+        );
 
         parent::setUp();
     }

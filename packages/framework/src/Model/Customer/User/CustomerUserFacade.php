@@ -156,7 +156,10 @@ class CustomerUserFacade
      */
     public function register(CustomerUserData $customerUserData)
     {
-        $customer = $this->createCustomerWithBillingAddress($customerUserData->domainId, $this->billingAddressDataFactory->create());
+        $customer = $this->createCustomerWithBillingAddress(
+            $customerUserData->domainId,
+            $this->billingAddressDataFactory->create()
+        );
 
         $customerUser = $this->createCustomerUser($customer, $customerUserData);
 
@@ -171,7 +174,10 @@ class CustomerUserFacade
      */
     public function create(CustomerUserUpdateData $customerUserUpdateData)
     {
-        $customer = $this->createCustomerWithBillingAddress($customerUserUpdateData->customerUserData->domainId, $customerUserUpdateData->billingAddressData);
+        $customer = $this->createCustomerWithBillingAddress(
+            $customerUserUpdateData->customerUserData->domainId,
+            $customerUserUpdateData->billingAddressData
+        );
 
         if (
             $customerUserUpdateData->deliveryAddressData
@@ -244,10 +250,16 @@ class CustomerUserFacade
         $customerUser->edit($customerUserUpdateData->customerUserData);
 
         if ($customerUserUpdateData->customerUserData->password !== null) {
-            $this->customerUserPasswordFacade->changePassword($customerUser, $customerUserUpdateData->customerUserData->password);
+            $this->customerUserPasswordFacade->changePassword(
+                $customerUser,
+                $customerUserUpdateData->customerUserData->password
+            );
         }
 
-        $this->billingAddressFacade->edit($customerUser->getCustomer()->getBillingAddress()->getId(), $customerUserUpdateData->billingAddressData);
+        $this->billingAddressFacade->edit(
+            $customerUser->getCustomer()->getBillingAddress()->getId(),
+            $customerUserUpdateData->billingAddressData
+        );
 
         return $customerUser;
     }
@@ -359,7 +371,12 @@ class CustomerUserFacade
      */
     public function addRefreshTokenChain(CustomerUser $customerUser, string $refreshTokenChain, string $deviceId, DateTime $tokenExpiration): void
     {
-        $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain($customerUser, $refreshTokenChain, $deviceId, $tokenExpiration);
+        $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain(
+            $customerUser,
+            $refreshTokenChain,
+            $deviceId,
+            $tokenExpiration
+        );
         $customerUser->addRefreshTokenChain($refreshTokenChain);
         $this->em->flush();
     }

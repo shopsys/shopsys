@@ -188,7 +188,9 @@ class ArticleFormType extends AbstractType
 
         $descriptionsMainPageByDomainIds = $this->seoSettingFacade
             ->getDescriptionsMainPageIndexedByDomainIds($this->domain->getAll());
-        $seoMetaDescriptionAttributes['placeholder'] = $this->seoSettingFacade->getDescriptionMainPage($options['domain_id']);
+        $seoMetaDescriptionAttributes['placeholder'] = $this->seoSettingFacade->getDescriptionMainPage(
+            $options['domain_id']
+        );
 
         foreach ($descriptionsMainPageByDomainIds as $domainId => $description) {
             $seoMetaDescriptionAttributes['data-placeholder-domain' . $domainId] = $description;

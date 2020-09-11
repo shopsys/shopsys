@@ -137,7 +137,9 @@ class BrandController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_brand_edit', ['id' => 'b.id']);
         $grid->addDeleteActionColumn('admin_brand_delete', ['id' => 'b.id'])
-            ->setConfirmMessage(t('Do you really want to remove this brand? If it is used anywhere it will be unset.'));
+            ->setConfirmMessage(
+                t('Do you really want to remove this brand? If it is used anywhere it will be unset.')
+            );
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Brand/listGrid.html.twig');
 

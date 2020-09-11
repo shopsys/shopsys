@@ -149,7 +149,11 @@ class PricingGroupController extends AdminBaseController
                 'Do you really want to remove pricing group "%name%" permanently? It is not used anywhere.',
                 ['%name%' => $pricingGroup->getName()]
             );
-            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_pricinggroup_delete', $id);
+            return $this->confirmDeleteResponseFactory->createDeleteResponse(
+                $message,
+                'admin_pricinggroup_delete',
+                $id
+            );
         } catch (PricingGroupNotFoundException $ex) {
             return new Response(t('Selected pricing group doesn\'t exist.'));
         }
@@ -173,7 +177,9 @@ class PricingGroupController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $pricingGroupSettingsFormData = $form->getData();
 
-            $this->pricingGroupSettingFacade->setDefaultPricingGroupForSelectedDomain($pricingGroupSettingsFormData['defaultPricingGroup']);
+            $this->pricingGroupSettingFacade->setDefaultPricingGroupForSelectedDomain(
+                $pricingGroupSettingsFormData['defaultPricingGroup']
+            );
 
             $this->addSuccessFlash(t('Default pricing group settings modified'));
 

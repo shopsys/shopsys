@@ -114,7 +114,9 @@ class GridView
             }
         }
 
-        throw new InvalidArgumentException(sprintf('Block "%s" doesn\'t exist in grid template "%s".', $name, $this->theme));
+        throw new InvalidArgumentException(
+            sprintf('Block "%s" doesn\'t exist in grid template "%s".', $name, $this->theme)
+        );
     }
 
     /**

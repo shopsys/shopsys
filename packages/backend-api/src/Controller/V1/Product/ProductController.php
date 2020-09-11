@@ -220,7 +220,9 @@ class ProductController extends AbstractFOSRestController
     protected function assertProductIsNotVariantType(Product $product): void
     {
         if ($product->isVariant() || $product->isMainVariant()) {
-            throw new BadRequestHttpException('cannot update/delete variant/main variant, this functionality is not supported yet');
+            throw new BadRequestHttpException(
+                'cannot update/delete variant/main variant, this functionality is not supported yet'
+            );
         }
     }
 

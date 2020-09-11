@@ -31,13 +31,18 @@ class Version20191205145631 extends AbstractMigration
         $this->sql('CREATE INDEX IDX_1483A5E99395C3F3 ON users (customer_id)');
 
         $this->sql('INSERT INTO customers (id) SELECT id FROM users');
-        $this->sql('SELECT SETVAL(pg_get_serial_sequence(\'customers\', \'id\'), COALESCE((SELECT MAX(id) FROM users) + 1, 1), false)');
+        $this->sql(
+            'SELECT SETVAL(pg_get_serial_sequence(\'customers\', \'id\'), COALESCE((SELECT MAX(id) FROM users) + 1, 1), false)'
+        );
 
         $this->sql('UPDATE users SET customer_id=id');
 
         $users = $this->sql('SELECT id, billing_address_id FROM users')->fetchAll();
         foreach ($users as $user) {
-            $this->sql('UPDATE billing_addresses SET customer_id=? WHERE id=?', [$user['id'], $user['billing_address_id']]);
+            $this->sql(
+                'UPDATE billing_addresses SET customer_id=? WHERE id=?',
+                [$user['id'], $user['billing_address_id']]
+            );
         }
 
         $this->sql('ALTER TABLE users ALTER customer_id SET NOT NULL');

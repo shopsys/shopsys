@@ -75,7 +75,9 @@ class CustomerUserRefreshTokenChainFacade
     public function findCustomersTokenChainByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): ?CustomerUserRefreshTokenChain
     {
         $encoder = $this->encoderFactory->getEncoder($customerUser);
-        $customersTokenChains = $this->customerUserRefreshTokenChainRepository->findCustomersTokenChains($customerUser);
+        $customersTokenChains = $this->customerUserRefreshTokenChainRepository->findCustomersTokenChains(
+            $customerUser
+        );
 
         foreach ($customersTokenChains as $customersTokenChain) {
             if ($encoder->isPasswordValid($customersTokenChain->getTokenChain(), $secretChain, null)) {

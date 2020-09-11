@@ -30,7 +30,9 @@ class CartFormType extends AbstractType
                     new Constraints\All([
                         'constraints' => [
                             new Constraints\NotBlank(['message' => 'Please enter quantity']),
-                            new Constraints\GreaterThan(['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}']),
+                            new Constraints\GreaterThan(
+                                ['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}']
+                            ),
                             new Constraints\LessThanOrEqual([
                                 'value' => ConstraintValue::INTEGER_MAX_VALUE,
                                 'message' => 'Please enter valid quantity',

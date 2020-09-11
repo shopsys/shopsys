@@ -69,7 +69,12 @@ class Authenticator
      */
     public function loginUser(CustomerUser $customerUser, Request $request)
     {
-        $token = new UsernamePasswordToken($customerUser, $customerUser->getPassword(), 'frontend', $customerUser->getRoles());
+        $token = new UsernamePasswordToken(
+            $customerUser,
+            $customerUser->getPassword(),
+            'frontend',
+            $customerUser->getRoles()
+        );
         $this->tokenStorage->setToken($token);
 
         // dispatch the login event

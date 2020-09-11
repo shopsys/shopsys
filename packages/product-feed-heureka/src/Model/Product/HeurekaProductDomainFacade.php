@@ -131,7 +131,10 @@ class HeurekaProductDomainFacade
         }
 
         foreach ($existingHeurekaProductDomains as $existingHeurekaProductDomain) {
-            if (!array_key_exists($existingHeurekaProductDomain->getDomainId(), $domainsIdsWithNewHeurekaProductDomains)) {
+            if (!array_key_exists(
+                $existingHeurekaProductDomain->getDomainId(),
+                $domainsIdsWithNewHeurekaProductDomains
+            )) {
                 $this->em->remove($existingHeurekaProductDomain);
             }
         }

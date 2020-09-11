@@ -178,8 +178,15 @@ class SettingValue
             return static::TYPE_MONEY;
         }
 
-        $message = sprintf('Setting value type of "%s" is unsupported.', is_object($value) ? get_class($value) : gettype($value))
-            . sprintf(' Supported is "%s", "%s", string, integer, float, boolean or null.', DateTime::class, Money::class);
+        $message = sprintf(
+            'Setting value type of "%s" is unsupported.',
+            is_object($value) ? get_class($value) : gettype($value)
+        )
+            . sprintf(
+                ' Supported is "%s", "%s", string, integer, float, boolean or null.',
+                DateTime::class,
+                Money::class
+            );
         throw new InvalidArgumentException($message);
     }
 }

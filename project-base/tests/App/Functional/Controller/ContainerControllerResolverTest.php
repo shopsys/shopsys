@@ -18,7 +18,10 @@ class ContainerControllerResolverTest extends FunctionalTestCase
 
         $request = Request::create('/');
 
-        $request->attributes->set('_controller', 'Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController:redirectAction');
+        $request->attributes->set(
+            '_controller',
+            'Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController:redirectAction'
+        );
 
         $controller = $containerControllerResolver->getController($request);
 

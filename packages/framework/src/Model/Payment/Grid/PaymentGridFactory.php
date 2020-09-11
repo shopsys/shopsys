@@ -110,7 +110,9 @@ class PaymentGridFactory implements GridFactoryInterface
      */
     protected function getDisplayPrice(Payment $payment)
     {
-        $transportBasePricesIndexedByDomainId = $this->paymentFacade->getIndependentBasePricesIndexedByDomainId($payment);
+        $transportBasePricesIndexedByDomainId = $this->paymentFacade->getIndependentBasePricesIndexedByDomainId(
+            $payment
+        );
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
         return $transportBasePricesIndexedByDomainId[$domainId]->getPriceWithVat();

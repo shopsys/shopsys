@@ -173,7 +173,10 @@ class BackendApiCreateProductTest extends OauthTestCase
             'code' => 400,
             'message' => 'Provided data did not pass validation',
             'errors' => [
-                sprintf('name.%s', $firstDomainLocale) => 'The value "name longer than 255 letters Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis erat turpis, ac ullamcorper tellus tempor a. Sed dapibus posuere dui sed iaculis. Phasellus non magna et urna aliquam fringilla et sit amet diam. Suspendisse suscipit lacus quis nisi sed." cannot be longer then 255 characters',
+                sprintf(
+                    'name.%s',
+                    $firstDomainLocale
+                ) => 'The value "name longer than 255 letters Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis erat turpis, ac ullamcorper tellus tempor a. Sed dapibus posuere dui sed iaculis. Phasellus non magna et urna aliquam fringilla et sit amet diam. Suspendisse suscipit lacus quis nisi sed." cannot be longer then 255 characters',
                 'name.xx' => 'This field was not expected.',
                 'hidden' => 'The value "false" is not a valid bool.',
                 'sellingDenied' => 'The value "false" is not a valid bool.',

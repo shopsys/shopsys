@@ -60,7 +60,10 @@ class GridController extends AdminBaseController
             $rowId = $this->inlineEditFacade->saveFormData($request->get('serviceName'), $request, $rowId);
 
             $responseData['success'] = true;
-            $responseData['rowHtml'] = $this->inlineEditFacade->getRenderedRowHtml($request->get('serviceName'), $rowId);
+            $responseData['rowHtml'] = $this->inlineEditFacade->getRenderedRowHtml(
+                $request->get('serviceName'),
+                $rowId
+            );
         } catch (InvalidFormDataException $e) {
             $responseData['success'] = false;
             // reset array keys for array representation in JSON, otherwise it could be treated as an object

@@ -70,7 +70,12 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 
         $queryBuilderDataSource = new QueryBuilderDataSource($qb, 'p.id');
 
-        $rows = $queryBuilderDataSource->getPaginatedRows(null, 1, 'p.id', QueryBuilderDataSource::ORDER_ASC)->getResults();
+        $rows = $queryBuilderDataSource->getPaginatedRows(
+            null,
+            1,
+            'p.id',
+            QueryBuilderDataSource::ORDER_ASC
+        )->getResults();
         $this->assertCount(10, $rows);
 
         $lastId = null;
@@ -92,7 +97,12 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 
         $queryBuilderDataSource = new QueryBuilderDataSource($qb, 'p.id');
 
-        $rows = $queryBuilderDataSource->getPaginatedRows(null, 1, 'p.id', QueryBuilderDataSource::ORDER_DESC)->getResults();
+        $rows = $queryBuilderDataSource->getPaginatedRows(
+            null,
+            1,
+            'p.id',
+            QueryBuilderDataSource::ORDER_DESC
+        )->getResults();
         $this->assertCount(10, $rows);
 
         $lastId = null;

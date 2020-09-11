@@ -73,13 +73,31 @@ class SitemapListener implements EventSubscriberInterface
         $this->addHomepageUrl($generator, $domainConfig, $section, static::PRIORITY_HOMEPAGE);
 
         $productSitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleProducts($domainConfig);
-        $this->addUrlsBySitemapItems($productSitemapItems, $generator, $domainConfig, $section, static::PRIORITY_PRODUCTS);
+        $this->addUrlsBySitemapItems(
+            $productSitemapItems,
+            $generator,
+            $domainConfig,
+            $section,
+            static::PRIORITY_PRODUCTS
+        );
 
         $categorySitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleCategories($domainConfig);
-        $this->addUrlsBySitemapItems($categorySitemapItems, $generator, $domainConfig, $section, static::PRIORITY_CATEGORIES);
+        $this->addUrlsBySitemapItems(
+            $categorySitemapItems,
+            $generator,
+            $domainConfig,
+            $section,
+            static::PRIORITY_CATEGORIES
+        );
 
         $articleSitemapItems = $this->sitemapFacade->getSitemapItemsForArticlesOnDomain($domainConfig);
-        $this->addUrlsBySitemapItems($articleSitemapItems, $generator, $domainConfig, $section, static::PRIORITY_ARTICLES);
+        $this->addUrlsBySitemapItems(
+            $articleSitemapItems,
+            $generator,
+            $domainConfig,
+            $section,
+            static::PRIORITY_ARTICLES
+        );
     }
 
     /**

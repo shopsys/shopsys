@@ -94,8 +94,14 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             return;
         }
 
-        $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory . '/');
-        $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory, $this->targetImagesDirectory);
+        $this->moveFilesFromLocalFilesystemToFilesystem(
+            $this->dataFixturesImagesDirectory . 'domain/',
+            $this->targetDomainImagesDirectory . '/'
+        );
+        $this->moveFilesFromLocalFilesystemToFilesystem(
+            $this->dataFixturesImagesDirectory,
+            $this->targetImagesDirectory
+        );
         $this->processDbImagesChanges();
     }
 
@@ -296,7 +302,10 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     private function restartImagesIdsDbSequence()
     {
-        $this->em->createNativeQuery('SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)', new ResultSetMapping())->execute();
+        $this->em->createNativeQuery(
+            'SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)',
+            new ResultSetMapping()
+        )->execute();
     }
 
     /**

@@ -58,10 +58,19 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
     public function work(Version $version): void
     {
         $this->symfonyStyle->note('It is necessary to set Github token before the changelog content is generated');
-        $githubToken = $this->symfonyStyle->ask('Please enter no-scope Github token (https://github.com/settings/tokens/new)');
+        $githubToken = $this->symfonyStyle->ask(
+            'Please enter no-scope Github token (https://github.com/settings/tokens/new)'
+        );
 
         $this->symfonyStyle->note('Dumping new items to CHANGELOG.md, this might take ~10 seconds');
-        $this->processRunner->run(sprintf('GITHUB_TOKEN=%s vendor/bin/changelog-linker dump-merges --in-packages --in-categories --base-branch=%s', $githubToken, $this->initialBranchName), true);
+        $this->processRunner->run(
+            sprintf(
+                'GITHUB_TOKEN=%s vendor/bin/changelog-linker dump-merges --in-packages --in-categories --base-branch=%s',
+                $githubToken,
+                $this->initialBranchName
+            ),
+            true
+        );
 
         // load
         $changelogFilePath = getcwd() . '/CHANGELOG.md';
@@ -69,13 +78,24 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
 
         // change
         $mostRecentVersion = new Version($this->gitManager->getMostRecentTag(getcwd()));
-        $newChangelogContent = $this->changelogFileManipulator->processFileToString($changelogFileInfo, $version, $mostRecentVersion);
+        $newChangelogContent = $this->changelogFileManipulator->processFileToString(
+            $changelogFileInfo,
+            $version,
+            $mostRecentVersion
+        );
 
         // save
         FileSystem::write($changelogFilePath, $newChangelogContent);
 
-        $this->symfonyStyle->note(sprintf('You need to review the file, resolve unclassified entries, remove uninteresting entries, and commit the changes manually with "changelog is now updated for %s release"', $version->getVersionString()));
-        $this->symfonyStyle->note('Beware, there might be some entries dumped in duplicate in the changelog - you need to decide whether to keep or remove the duplicates (e.g. when a bugfix is merged to multiple branches, the duplicate entry in changelog is justified)');
+        $this->symfonyStyle->note(
+            sprintf(
+                'You need to review the file, resolve unclassified entries, remove uninteresting entries, and commit the changes manually with "changelog is now updated for %s release"',
+                $version->getVersionString()
+            )
+        );
+        $this->symfonyStyle->note(
+            'Beware, there might be some entries dumped in duplicate in the changelog - you need to decide whether to keep or remove the duplicates (e.g. when a bugfix is merged to multiple branches, the duplicate entry in changelog is justified)'
+        );
 
         $this->confirm('Confirm you have checked CHANGELOG.md and the changes are committed.');
     }

@@ -98,14 +98,21 @@ class IndexFacade
 
         $indexAlias = $indexDefinition->getIndexAlias();
         $domainId = $indexDefinition->getDomainId();
-        $progressBar = $this->progressBarFactory->create($output, $index->getTotalCount($indexDefinition->getDomainId()));
+        $progressBar = $this->progressBarFactory->create(
+            $output,
+            $index->getTotalCount($indexDefinition->getDomainId())
+        );
 
         $exportedIds = [];
         $lastProcessedId = 0;
         do {
             // detach objects from manager to prevent memory leaks
             $this->entityManager->clear();
-            $currentBatchData = $index->getExportDataForBatch($domainId, $lastProcessedId, $index->getExportBatchSize());
+            $currentBatchData = $index->getExportDataForBatch(
+                $domainId,
+                $lastProcessedId,
+                $index->getExportBatchSize()
+            );
             $currentBatchSize = count($currentBatchData);
 
             if ($currentBatchSize === 0) {
@@ -135,7 +142,12 @@ class IndexFacade
     public function exportChanged(AbstractIndex $index, IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         if (!$index instanceof IndexSupportChangesOnlyInterface) {
-            $output->writeln(sprintf('Index "%s" does not support export of only changed rows. Skipping.', $indexDefinition->getIndexName()));
+            $output->writeln(
+                sprintf(
+                    'Index "%s" does not support export of only changed rows. Skipping.',
+                    $indexDefinition->getIndexName()
+                )
+            );
 
             return;
         }
@@ -146,10 +158,17 @@ class IndexFacade
             $indexDefinition->getDomainId()
         ));
 
-        $progressBar = $this->progressBarFactory->create($output, $index->getChangedCount($indexDefinition->getDomainId()));
+        $progressBar = $this->progressBarFactory->create(
+            $output,
+            $index->getChangedCount($indexDefinition->getDomainId())
+        );
 
         $lastProcessedId = 0;
-        while (($changedIdsBatch = $index->getChangedIdsForBatch($indexDefinition->getDomainId(), $lastProcessedId, $index->getExportBatchSize())) !== []) {
+        while (($changedIdsBatch = $index->getChangedIdsForBatch(
+            $indexDefinition->getDomainId(),
+            $lastProcessedId,
+            $index->getExportBatchSize()
+        )) !== []) {
             $this->exportIds($index, $indexDefinition, $changedIdsBatch);
 
             $progressBar->advance(count($changedIdsBatch));
@@ -170,9 +189,13 @@ class IndexFacade
         $domainId = $indexDefinition->getDomainId();
 
         try {
-            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias(
+                $indexDefinition->getIndexAlias()
+            );
         } catch (ElasticsearchNoAliasException $exception) {
-            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getLegacyIndexAlias());
+            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias(
+                $indexDefinition->getLegacyIndexAlias()
+            );
         }
 
         if ($existingIndexName === $indexDefinition->getVersionedIndexName()) {

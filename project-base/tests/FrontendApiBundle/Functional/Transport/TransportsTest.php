@@ -73,7 +73,12 @@ class TransportsTest extends GraphQlTestCase
                     ],
                     [
                         'name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
-                        'description' => t('You will be welcomed by friendly staff!', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'description' => t(
+                            'You will be welcomed by friendly staff!',
+                            [],
+                            'dataFixtures',
+                            $this->getLocaleForFirstDomain()
+                        ),
                         'instruction' => null,
                         'position' => 2,
                         'price' => [

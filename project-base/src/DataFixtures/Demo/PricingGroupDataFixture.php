@@ -106,10 +106,16 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
      */
     private function editDefaultPricingGroupOnDomain(DomainConfig $domainConfig): void
     {
-        $defaultPricingGroupOnDomain = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());
+        $defaultPricingGroupOnDomain = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
+            $domainConfig->getId()
+        );
         $pricingGroupData = $this->pricingGroupDataFactory->createFromPricingGroup($defaultPricingGroupOnDomain);
         $pricingGroupData->name = t('Ordinary customer', [], 'dataFixtures', $domainConfig->getLocale());
         $this->pricingGroupFacade->edit($defaultPricingGroupOnDomain->getId(), $pricingGroupData);
-        $this->addReferenceForDomain(self::PRICING_GROUP_ORDINARY, $defaultPricingGroupOnDomain, $domainConfig->getId());
+        $this->addReferenceForDomain(
+            self::PRICING_GROUP_ORDINARY,
+            $defaultPricingGroupOnDomain,
+            $domainConfig->getId()
+        );
     }
 }

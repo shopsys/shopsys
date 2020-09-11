@@ -166,7 +166,13 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function getTranslatedAllWithoutBranch(Category $categoryBranch, DomainConfig $domainConfig)
     {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
 
         $queryBuilder = $this->getAllQueryBuilder();
         $this->addTranslation($queryBuilder, $domainConfig->getLocale());
@@ -500,7 +506,13 @@ class CategoryRepository extends NestedTreeRepository
     {
         $productMainCategory = $this->findProductMainCategoryOnDomain($product, $domainId);
         if ($productMainCategory === null) {
-            throw new CategoryNotFoundException(sprintf('Main category for product id `%d` and domain id `%d` was not found', $product->getId(), $domainId));
+            throw new CategoryNotFoundException(
+                sprintf(
+                    'Main category for product id `%d` and domain id `%d` was not found',
+                    $product->getId(),
+                    $domainId
+                )
+            );
         }
 
         return $productMainCategory;
@@ -585,7 +597,13 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function getTranslatedAll(DomainConfig $domainConfig)
     {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
 
         $queryBuilder = $this->getAllQueryBuilder();
         $this->addTranslation($queryBuilder, $domainConfig->getLocale());

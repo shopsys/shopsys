@@ -39,14 +39,19 @@ class ConfirmDeleteResponseFactory
      */
     public function createDeleteResponse($message, $route, $entityId)
     {
-        $renderedTemplate = $this->twigEnvironment->render('@ShopsysFramework/Components/ConfirmDelete/directDelete.html.twig', [
-            'message' => $message,
-            'route' => $route,
-            'routeParams' => [
-                'id' => $entityId,
-                RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute($route),
-            ],
-        ]);
+        $renderedTemplate = $this->twigEnvironment->render(
+            '@ShopsysFramework/Components/ConfirmDelete/directDelete.html.twig',
+            [
+                'message' => $message,
+                'route' => $route,
+                'routeParams' => [
+                    'id' => $entityId,
+                    RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute(
+                        $route
+                    ),
+                ],
+            ]
+        );
 
         return new Response($renderedTemplate);
     }
@@ -68,14 +73,17 @@ class ConfirmDeleteResponseFactory
             }
         }
 
-        $renderedResponse = $this->twigEnvironment->render('@ShopsysFramework/Components/ConfirmDelete/setNewAndDelete.html.twig', [
-            'message' => $message,
-            'route' => $route,
-            'entityId' => $entityId,
-            'routeCsrfToken' => $this->routeCsrfProtector->getCsrfTokenByRoute($route),
-            'possibleReplacements' => $possibleReplacements,
-            'CSRF_TOKEN_REQUEST_PARAMETER' => RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER,
-        ]);
+        $renderedResponse = $this->twigEnvironment->render(
+            '@ShopsysFramework/Components/ConfirmDelete/setNewAndDelete.html.twig',
+            [
+                'message' => $message,
+                'route' => $route,
+                'entityId' => $entityId,
+                'routeCsrfToken' => $this->routeCsrfProtector->getCsrfTokenByRoute($route),
+                'possibleReplacements' => $possibleReplacements,
+                'CSRF_TOKEN_REQUEST_PARAMETER' => RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER,
+            ]
+        );
 
         return new Response($renderedResponse);
     }

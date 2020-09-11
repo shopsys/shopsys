@@ -105,7 +105,9 @@ class HeurekaFacade
      */
     protected function logError(Exception $ex, Order $order)
     {
-        $message = 'Sending order (ID = "' . $order->getId() . '") to Heureka failed - ' . get_class($ex) . ': ' . $ex->getMessage();
+        $message = 'Sending order (ID = "' . $order->getId() . '") to Heureka failed - ' . get_class(
+            $ex
+        ) . ': ' . $ex->getMessage();
         $this->logger->error($message, ['exceptionFullInfo' => (string)$ex]);
     }
 }

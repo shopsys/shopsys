@@ -131,7 +131,11 @@ class AvailabilityController extends AdminBaseController
                 ['%name%' => $availability->getName()]
             );
 
-            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_availability_delete', $id);
+            return $this->confirmDeleteResponseFactory->createDeleteResponse(
+                $message,
+                'admin_availability_delete',
+                $id
+            );
         } catch (AvailabilityNotFoundException $ex) {
             return new Response(t('Selected availability doesn\'t exist'));
         }
@@ -156,7 +160,9 @@ class AvailabilityController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $availabilitySettingsFormData = $form->getData();
 
-            $this->availabilityFacade->setDefaultInStockAvailability($availabilitySettingsFormData['defaultInStockAvailability']);
+            $this->availabilityFacade->setDefaultInStockAvailability(
+                $availabilitySettingsFormData['defaultInStockAvailability']
+            );
 
             $this->addSuccessFlash(t('Default availability for the stock settings modified'));
 

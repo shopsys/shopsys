@@ -174,7 +174,10 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
      */
     protected function resolveIndent(Tokens $tokens, int $index): string
     {
-        return str_repeat($this->whitespacesFixerConfig->getIndent(), $this->indentDetector->detectOnPosition($tokens, $index));
+        return str_repeat(
+            $this->whitespacesFixerConfig->getIndent(),
+            $this->indentDetector->detectOnPosition($tokens, $index)
+        );
     }
 
     /**
@@ -186,7 +189,9 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
     {
         do {
             $index = $tokens->getPrevNonWhitespace($index);
-        } while ($tokens[$index]->isGivenKind([T_STATIC, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_COMMENT]));
+        } while ($tokens[$index]->isGivenKind(
+            [T_STATIC, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_COMMENT]
+        ));
 
         return $index;
     }

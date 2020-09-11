@@ -68,9 +68,19 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
 
         if ($resolvedLocale === self::SOURCE_LOCALE) {
             if ($catalogue->defines($normalizedId, $resolvedDomain)) {
-                $message = $this->originalTranslator->trans($normalizedId, $parameters, $resolvedDomain, $resolvedLocale);
+                $message = $this->originalTranslator->trans(
+                    $normalizedId,
+                    $parameters,
+                    $resolvedDomain,
+                    $resolvedLocale
+                );
             } else {
-                $message = $this->identityTranslator->trans($normalizedId, $parameters, $resolvedDomain, $resolvedLocale);
+                $message = $this->identityTranslator->trans(
+                    $normalizedId,
+                    $parameters,
+                    $resolvedDomain,
+                    $resolvedLocale
+                );
             }
         } else {
             $message = $this->originalTranslator->trans($normalizedId, $parameters, $resolvedDomain, $resolvedLocale);
@@ -93,12 +103,30 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
 
         if ($resolvedLocale === self::SOURCE_LOCALE) {
             if ($catalogue->defines($normalizedId, $resolvedDomain)) {
-                $message = $this->originalTranslator->transChoice($normalizedId, $number, $parameters, $resolvedDomain, $resolvedLocale);
+                $message = $this->originalTranslator->transChoice(
+                    $normalizedId,
+                    $number,
+                    $parameters,
+                    $resolvedDomain,
+                    $resolvedLocale
+                );
             } else {
-                $message = $this->identityTranslator->transChoice($normalizedId, $number, $parameters, $resolvedDomain, $resolvedLocale);
+                $message = $this->identityTranslator->transChoice(
+                    $normalizedId,
+                    $number,
+                    $parameters,
+                    $resolvedDomain,
+                    $resolvedLocale
+                );
             }
         } else {
-            $message = $this->originalTranslator->transChoice($normalizedId, $number, $parameters, $resolvedDomain, $resolvedLocale);
+            $message = $this->originalTranslator->transChoice(
+                $normalizedId,
+                $number,
+                $parameters,
+                $resolvedDomain,
+                $resolvedLocale
+            );
         }
 
         return $message;

@@ -36,7 +36,9 @@ class HeurekaShopCertificationFormType extends AbstractType
                 'label' => t('Code of service Heureka - Verified by Customer'),
                 'attr' => [
                     'icon' => true,
-                    'iconTitle' => t('Enter 32-digit code which will be sent to server') . ' ' . $options['server_name'],
+                    'iconTitle' => t(
+                        'Enter 32-digit code which will be sent to server'
+                    ) . ' ' . $options['server_name'],
                 ],
             ])
             ->add('heurekaWidgetCode', TextareaType::class, [

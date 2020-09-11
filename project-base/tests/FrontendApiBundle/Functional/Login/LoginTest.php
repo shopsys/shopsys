@@ -69,7 +69,11 @@ class LoginTest extends GraphQlTestCase
             ],
         ];
 
-        $response = $this->getResponseContentForQuery($this->getLoginQuery(), [], ['HTTP_Authorization' => 'Bearer 123']);
+        $response = $this->getResponseContentForQuery(
+            $this->getLoginQuery(),
+            [],
+            ['HTTP_Authorization' => 'Bearer 123']
+        );
         $this->assertSame($expectedError, $response);
     }
 

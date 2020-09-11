@@ -274,7 +274,12 @@ class ProductRepository
      */
     protected function filterByCategory(QueryBuilder $queryBuilder, Category $category, $domainId)
     {
-        $queryBuilder->join('p.productCategoryDomains', 'pcd', Join::WITH, 'pcd.category = :category AND pcd.domainId = :domainId');
+        $queryBuilder->join(
+            'p.productCategoryDomains',
+            'pcd',
+            Join::WITH,
+            'pcd.category = :category AND pcd.domainId = :domainId'
+        );
         $queryBuilder->setParameter('category', $category);
         $queryBuilder->setParameter('domainId', $domainId);
     }
@@ -772,7 +777,10 @@ class ProductRepository
             ->from(Product::class, 'p')
             ->andWhere('p.calculatedVisibility = TRUE')
             ->andWhere('p.calculatedSellingDenied = FALSE')
-            ->andWhere('p.variantType = :variantTypeVariant')->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT)
+            ->andWhere('p.variantType = :variantTypeVariant')->setParameter(
+                'variantTypeVariant',
+                Product::VARIANT_TYPE_VARIANT
+            )
             ->andWhere('p.mainVariant = :mainVariant')->setParameter('mainVariant', $mainVariant);
 
         return $queryBuilder->getQuery()->execute();

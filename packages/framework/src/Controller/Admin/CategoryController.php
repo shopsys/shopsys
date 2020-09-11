@@ -98,7 +98,9 @@ class CategoryController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing category - %name%', ['%name%' => $category->getName()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing category - %name%', ['%name%' => $category->getName()])
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/edit.html.twig', [
             'form' => $form->createView(),
@@ -170,9 +172,14 @@ class CategoryController extends AdminBaseController
         $this->session->set('categories_selected_domain_id', $domainId);
 
         if ($domainId === static::ALL_DOMAINS) {
-            $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren($request->getLocale());
+            $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren(
+                $request->getLocale()
+            );
         } else {
-            $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain($domainId, $request->getLocale());
+            $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
+                $domainId,
+                $request->getLocale()
+            );
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/list.html.twig', [

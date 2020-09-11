@@ -32,7 +32,10 @@ class ProductParametersBatchLoader
      */
     public function loadForProducts(array $products, DomainConfig $domainConfig): void
     {
-        $parametersByProductIdAndName = $this->productCollectionFacade->getProductParameterValuesIndexedByProductIdAndParameterName($products, $domainConfig);
+        $parametersByProductIdAndName = $this->productCollectionFacade->getProductParameterValuesIndexedByProductIdAndParameterName(
+            $products,
+            $domainConfig
+        );
 
         foreach ($products as $product) {
             $key = $this->getKey($product, $domainConfig);

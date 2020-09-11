@@ -91,7 +91,10 @@ class ArticleRepository
      */
     public function getVisibleArticlesForPlacement($domainId, $placement)
     {
-        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder($domainId, $placement);
+        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
+            $domainId,
+            $placement
+        );
 
         return $queryBuilder->getQuery()->execute();
     }

@@ -58,7 +58,9 @@ class CurrencyFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name']),
-                    new Constraints\Length(['max' => 50, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 50, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ])
             ->add('code', TextType::class, [

@@ -129,8 +129,18 @@ class DomainDataCreatorTest extends TestCase
 
     public function testCreateNewDomainsDataNewLocale()
     {
-        $domainConfigWithDataCreated = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs');
-        $domainConfigWithNewLocale = new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com:8080', 'example', 'en');
+        $domainConfigWithDataCreated = new DomainConfig(
+            Domain::FIRST_DOMAIN_ID,
+            'http://example.com:8080',
+            'example',
+            'cs'
+        );
+        $domainConfigWithNewLocale = new DomainConfig(
+            Domain::SECOND_DOMAIN_ID,
+            'http://example.com:8080',
+            'example',
+            'en'
+        );
         $domainConfigs = [
             $domainConfigWithDataCreated,
             $domainConfigWithNewLocale,

@@ -32,7 +32,10 @@ class DomainsConfigLoader
     public function loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath)
     {
         $processedConfig = $this->getProcessedConfig($domainsConfigFilepath, $this->getDomainsConfigDefinition());
-        $processedUrlsConfig = $this->getProcessedConfig($domainsUrlsConfigFilepath, $this->getDomainsUrlsConfigDefinition());
+        $processedUrlsConfig = $this->getProcessedConfig(
+            $domainsUrlsConfigFilepath,
+            $this->getDomainsUrlsConfigDefinition()
+        );
         $domainConfigsByDomainId = $processedConfig[DomainsConfigDefinition::CONFIG_DOMAINS];
         $domainUrlsConfigsByDomainId = $processedUrlsConfig[DomainsUrlsConfigDefinition::CONFIG_DOMAINS_URLS];
 
@@ -41,7 +44,10 @@ class DomainsConfigLoader
                 'File ' . $domainsUrlsConfigFilepath . ' does not contain urls for all domains listed in ' . $domainsConfigFilepath;
             throw new DomainConfigsDoNotMatchException($message);
         }
-        $processedConfigsWithUrlsByDomainId = $this->addUrlsToProcessedConfig($domainConfigsByDomainId, $domainUrlsConfigsByDomainId);
+        $processedConfigsWithUrlsByDomainId = $this->addUrlsToProcessedConfig(
+            $domainConfigsByDomainId,
+            $domainUrlsConfigsByDomainId
+        );
 
         return $this->loadDomainConfigsFromArray($processedConfigsWithUrlsByDomainId);
     }

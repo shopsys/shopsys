@@ -104,7 +104,9 @@ class Mailer
         $message->addPart($body, 'text/html');
 
         foreach ($messageData->attachments as $attachment) {
-            $swiftAttachment = Swift_Attachment::fromPath($this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment));
+            $swiftAttachment = Swift_Attachment::fromPath(
+                $this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment)
+            );
             $swiftAttachment->setFilename($attachment->getNameWithExtension());
             $message->attach($swiftAttachment);
         }

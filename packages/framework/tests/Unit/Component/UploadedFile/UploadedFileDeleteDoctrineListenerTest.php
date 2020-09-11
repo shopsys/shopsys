@@ -23,7 +23,9 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
             ->setMethods(['deleteFileFromFilesystem'])
             ->disableOriginalConstructor()
             ->getMock();
-        $uploadedFileFacadeMock->expects($this->once())->method('deleteFileFromFilesystem')->with($this->equalTo($uploadedFile));
+        $uploadedFileFacadeMock->expects($this->once())->method('deleteFileFromFilesystem')->with(
+            $this->equalTo($uploadedFile)
+        );
 
         $args = $this->getMockBuilder(LifecycleEventArgs::class)
             ->setMethods(['getEntity'])
@@ -42,7 +44,11 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
 
         $uploadedFileTypeConfig = new UploadedFileTypeConfig('default', false);
 
-        $uploadedFileEntityConfig = new UploadedFileEntityConfig('entityName', Dummy::class, ['default' => $uploadedFileTypeConfig]);
+        $uploadedFileEntityConfig = new UploadedFileEntityConfig(
+            'entityName',
+            Dummy::class,
+            ['default' => $uploadedFileTypeConfig]
+        );
         $uploadedFileConfig = new UploadedFileConfig([
             Dummy::class => $uploadedFileEntityConfig,
         ]);

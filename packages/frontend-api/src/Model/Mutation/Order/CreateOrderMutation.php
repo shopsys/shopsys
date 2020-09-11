@@ -89,7 +89,10 @@ class CreateOrderMutation implements MutationInterface, AliasedInterface
      */
     protected function sendEmail(Order $order)
     {
-        $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
+        $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId(
+            $order->getStatus(),
+            $order->getDomainId()
+        );
         if ($mailTemplate->isSendMail()) {
             $this->orderMailFacade->sendEmail($order);
         }

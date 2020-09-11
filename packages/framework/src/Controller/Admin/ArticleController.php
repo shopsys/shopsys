@@ -141,7 +141,9 @@ class ArticleController extends AdminBaseController
         $gridTop = $this->getGrid(Article::PLACEMENT_TOP_MENU);
         $gridFooter = $this->getGrid(Article::PLACEMENT_FOOTER);
         $gridNone = $this->getGrid(Article::PLACEMENT_NONE);
-        $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
+        $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId(
+            $this->adminDomainTabsFacade->getSelectedDomainId()
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Article/list.html.twig', [
             'gridViewTop' => $gridTop->createView(),

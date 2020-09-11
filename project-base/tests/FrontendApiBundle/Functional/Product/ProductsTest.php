@@ -109,7 +109,12 @@ class ProductsTest extends GraphQlTestCase
         return [
             [
                 'name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
-                'shortDescription' => t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768', [], 'dataFixtures', $firstDomainLocale),
+                'shortDescription' => t(
+                    'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
                 'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 77]),
                 'unit' => [
                     'name' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
@@ -164,7 +169,12 @@ class ProductsTest extends GraphQlTestCase
             "edges": [
                 {
                     "node": {
-                        "name": "' . t('ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue', [], 'dataFixtures', $firstDomainLocale) . '"
+                        "name": "' . t(
+            'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
+            [],
+            'dataFixtures',
+            $firstDomainLocale
+        ) . '"
                     }
                 }
             ]

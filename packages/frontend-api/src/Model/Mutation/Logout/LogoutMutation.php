@@ -35,7 +35,9 @@ class LogoutMutation extends BaseTokenMutation implements MutationInterface, Ali
     {
         $user = $this->runCheckUserIsLogged();
 
-        $this->customerUserRefreshTokenChainFacade->removeCustomerUserRefreshTokenChainsByDeviceId($user->getDeviceId());
+        $this->customerUserRefreshTokenChainFacade->removeCustomerUserRefreshTokenChainsByDeviceId(
+            $user->getDeviceId()
+        );
 
         return [
             true,

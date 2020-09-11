@@ -63,11 +63,15 @@ class CartCest
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
         $productListPage->addProductToCartByName('Defender 2.0 SPK-480', 1);
-        $me->seeTranslationFrontend('Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart', 'messages', [
-            '{{ name }}' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $me->getFrontendLocale()),
-            '{{ quantity|formatNumber }}' => 1,
-            '{{ unitName }}' => $me->getDefaultUnitName(),
-        ]);
+        $me->seeTranslationFrontend(
+            'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
+            'messages',
+            [
+                '{{ name }}' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $me->getFrontendLocale()),
+                '{{ quantity|formatNumber }}' => 1,
+                '{{ unitName }}' => $me->getDefaultUnitName(),
+            ]
+        );
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '119');
         $me->amOnLocalizedRoute('front_cart');
@@ -91,11 +95,15 @@ class CartCest
         $me->wantTo('add product to cart from homepage');
         $me->amOnPage('/');
         $homepagePage->addTopProductToCartByName('22" Sencor SLE 22F46DM4 HELLO KITTY', 1);
-        $me->seeTranslationFrontend('Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart', 'messages', [
-            '{{ name }}' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $me->getFrontendLocale()),
-            '{{ quantity|formatNumber }}' => 1,
-            '{{ unitName }}' => $me->getDefaultUnitName(),
-        ]);
+        $me->seeTranslationFrontend(
+            'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
+            'messages',
+            [
+                '{{ name }}' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $me->getFrontendLocale()),
+                '{{ quantity|formatNumber }}' => 1,
+                '{{ unitName }}' => $me->getDefaultUnitName(),
+            ]
+        );
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '3499');
         $me->amOnLocalizedRoute('front_cart');
@@ -119,11 +127,15 @@ class CartCest
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 1]);
         $me->seeTranslationFrontend('Add to cart');
         $productDetailPage->addProductIntoCart(3);
-        $me->seeTranslationFrontend('Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart', 'messages', [
-            '{{ name }}' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $me->getFrontendLocale()),
-            '{{ quantity|formatNumber }}' => 3,
-            '{{ unitName }}' => $me->getDefaultUnitName(),
-        ]);
+        $me->seeTranslationFrontend(
+            'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
+            'messages',
+            [
+                '{{ name }}' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $me->getFrontendLocale()),
+                '{{ quantity|formatNumber }}' => 3,
+                '{{ unitName }}' => $me->getDefaultUnitName(),
+            ]
+        );
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '10497');
         $me->amOnLocalizedRoute('front_cart');
@@ -184,9 +196,13 @@ class CartCest
         $cartPage->assertProductIsNotInCartByName('JURA Impressa J9 TFT Carbon');
 
         $cartPage->removeProductFromCart('PANASONIC DMC FT5EP');
-        $me->seeTranslationFrontend('Your cart is unfortunately empty. To create order, you have to <a href="%url%">choose</a> some product first', 'messages', [
-            '%url%' => '',
-        ]);
+        $me->seeTranslationFrontend(
+            'Your cart is unfortunately empty. To create order, you have to <a href="%url%">choose</a> some product first',
+            'messages',
+            [
+                '%url%' => '',
+            ]
+        );
     }
 
     /**

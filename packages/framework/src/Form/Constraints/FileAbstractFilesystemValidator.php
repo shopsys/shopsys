@@ -59,7 +59,9 @@ class FileAbstractFilesystemValidator extends FileValidator
 
             $this->mountManager->delete('local://' . $localPath);
         } else {
-            $this->context->buildViolation('This file could not be found. Please remove it and try to upload it again.')
+            $this->context->buildViolation(
+                'This file could not be found. Please remove it and try to upload it again.'
+            )
                 ->setCode((string)UPLOAD_ERR_NO_FILE)
                 ->addViolation();
         }

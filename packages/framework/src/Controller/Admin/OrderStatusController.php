@@ -129,7 +129,11 @@ class OrderStatusController extends AdminBaseController
                 ['%name%' => $orderStatus->getName()]
             );
 
-            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_orderstatus_delete', $id);
+            return $this->confirmDeleteResponseFactory->createDeleteResponse(
+                $message,
+                'admin_orderstatus_delete',
+                $id
+            );
         } catch (OrderStatusNotFoundException $ex) {
             return new Response(t('Selected order status doesn\'t exist.'));
         }

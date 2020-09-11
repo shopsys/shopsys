@@ -225,7 +225,9 @@ class OrderItem
      */
     public function getTotalPriceWithVat(): Money
     {
-        return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply($this->quantity);
+        return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply(
+            $this->quantity
+        );
     }
 
     /**

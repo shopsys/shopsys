@@ -157,7 +157,10 @@ class ImageConfigLoader
         foreach ($sizesConfig as $sizeConfig) {
             $sizeName = $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_NAME];
             $key = Utils::ifNull($sizeName, ImageEntityConfig::WITHOUT_NAME_KEY);
-            $additionalSizes = $this->prepareAdditionalSizes($sizeName ?: '~', $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_ADDITIONAL_SIZES]);
+            $additionalSizes = $this->prepareAdditionalSizes(
+                $sizeName ?: '~',
+                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_ADDITIONAL_SIZES]
+            );
             if (array_key_exists($key, $result)) {
                 throw new DuplicateSizeNameException($sizeName);
             }
@@ -172,7 +175,14 @@ class ImageConfigLoader
             );
         }
         if (!array_key_exists(ImageConfig::ORIGINAL_SIZE_NAME, $result)) {
-            $result[ImageConfig::ORIGINAL_SIZE_NAME] = new ImageSizeConfig(ImageConfig::ORIGINAL_SIZE_NAME, null, null, false, null, []);
+            $result[ImageConfig::ORIGINAL_SIZE_NAME] = new ImageSizeConfig(
+                ImageConfig::ORIGINAL_SIZE_NAME,
+                null,
+                null,
+                false,
+                null,
+                []
+            );
         }
 
         return $result;

@@ -136,7 +136,11 @@ class ProductPriceRecalculator
     {
         foreach ($this->getAllPricingGroups() as $pricingGroup) {
             try {
-                $price = $this->productPriceCalculation->calculatePrice($product, $pricingGroup->getDomainId(), $pricingGroup);
+                $price = $this->productPriceCalculation->calculatePrice(
+                    $product,
+                    $pricingGroup->getDomainId(),
+                    $pricingGroup
+                );
                 $priceWithVat = $price->getPriceWithVat();
             } catch (MainVariantPriceCalculationException $e) {
                 $priceWithVat = null;

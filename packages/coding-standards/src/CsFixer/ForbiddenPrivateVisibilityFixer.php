@@ -42,7 +42,10 @@ final class ForbiddenPrivateVisibilityFixer implements DefinedFixerInterface, Co
         }
 
         if (!is_array($configuration[self::OPTION_ANALYZED_NAMESPACE])) {
-            throw new InvalidFixerConfigurationException($this->getName(), 'Namespace configuration has to be an array');
+            throw new InvalidFixerConfigurationException(
+                $this->getName(),
+                'Namespace configuration has to be an array'
+            );
         }
 
         return $configuration[self::OPTION_ANALYZED_NAMESPACE];

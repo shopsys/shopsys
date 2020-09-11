@@ -26,7 +26,9 @@ class FileAllowedExtensionValidator extends ConstraintValidator
         }
 
         if (!is_array($constraint->extensions)) {
-            throw new ConstraintDefinitionException('Extensions parameter of FileAllowedExtensionsValidator must be array.');
+            throw new ConstraintDefinitionException(
+                'Extensions parameter of FileAllowedExtensionsValidator must be array.'
+            );
         }
 
         if (!in_array(strtolower($value->getExtension()), $constraint->extensions, true)) {

@@ -55,9 +55,23 @@ class DomainInfoCommand extends Command
         $this
             ->setDescription('Loads and displays domain info.')
             ->addArgument(static::ARG_PROPERTY_NAME, InputArgument::OPTIONAL, 'Property that should be loaded', 'id')
-            ->addArgument(static::ARG_ID, InputArgument::OPTIONAL, 'Domain ID (if omitted, the command will output all values)')
-            ->addOption(static::OPTION_DEDUPLICATE, 'd', InputOption::VALUE_NONE, 'Return only unique property values (sorted alphabetically)')
-            ->addOption(static::OPTION_ONELINE, 'o', InputOption::VALUE_NONE, 'Return property values on one line separated by tabs');
+            ->addArgument(
+                static::ARG_ID,
+                InputArgument::OPTIONAL,
+                'Domain ID (if omitted, the command will output all values)'
+            )
+            ->addOption(
+                static::OPTION_DEDUPLICATE,
+                'd',
+                InputOption::VALUE_NONE,
+                'Return only unique property values (sorted alphabetically)'
+            )
+            ->addOption(
+                static::OPTION_ONELINE,
+                'o',
+                InputOption::VALUE_NONE,
+                'Return property values on one line separated by tabs'
+            );
     }
 
     /**

@@ -74,7 +74,10 @@ class Configuration extends DoctrineConfiguration
                 if (array_key_exists($skippedMigrationClass, $foundMigrationVersionsByClass)) {
                     unset($foundMigrationVersionsByClass[$skippedMigrationClass]);
                 } else {
-                    $message = sprintf('WARNING: Migration version "%s" marked as skipped in migration lock file was not found!', $skippedMigrationClass);
+                    $message = sprintf(
+                        'WARNING: Migration version "%s" marked as skipped in migration lock file was not found!',
+                        $skippedMigrationClass
+                    );
                     $this->outputWriter->write($message);
                 }
             }
@@ -85,7 +88,10 @@ class Configuration extends DoctrineConfiguration
                     $this->migrationVersions[$installedMigrationVersion->getVersion()] = $installedMigrationVersion;
                     unset($migrationVersion);
                 } else {
-                    $message = sprintf('WARNING: Migration version "%s" marked as installed in migration lock file was not found!', $installedMigrationClass);
+                    $message = sprintf(
+                        'WARNING: Migration version "%s" marked as installed in migration lock file was not found!',
+                        $installedMigrationClass
+                    );
                     $this->outputWriter->write($message);
                 }
             }

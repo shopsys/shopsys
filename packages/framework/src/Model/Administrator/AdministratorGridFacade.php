@@ -57,7 +57,11 @@ class AdministratorGridFacade
 
         $gridLimit = $administrator->getGridLimit($grid->getId());
         if ($gridLimit === null) {
-            $gridLimit = $this->administratorGridLimitFactory->create($administrator, $grid->getId(), $grid->getLimit());
+            $gridLimit = $this->administratorGridLimitFactory->create(
+                $administrator,
+                $grid->getId(),
+                $grid->getLimit()
+            );
             $administrator->addGridLimit($gridLimit);
         } else {
             $gridLimit->setLimit($grid->getLimit());

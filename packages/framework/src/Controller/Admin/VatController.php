@@ -144,7 +144,9 @@ class VatController extends AdminBaseController
     public function settingsAction(Request $request)
     {
         $vatSettingsFormData = [
-            'defaultVat' => $this->vatFacade->getDefaultVatForDomain($this->adminDomainTabsFacade->getSelectedDomainId()),
+            'defaultVat' => $this->vatFacade->getDefaultVatForDomain(
+                $this->adminDomainTabsFacade->getSelectedDomainId()
+            ),
         ];
 
         $form = $this->createForm(VatSettingsFormType::class, $vatSettingsFormData);
@@ -153,7 +155,10 @@ class VatController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $vatSettingsFormData = $form->getData();
 
-            $this->vatFacade->setDefaultVatForDomain($vatSettingsFormData['defaultVat'], $this->adminDomainTabsFacade->getSelectedDomainId());
+            $this->vatFacade->setDefaultVatForDomain(
+                $vatSettingsFormData['defaultVat'],
+                $this->adminDomainTabsFacade->getSelectedDomainId()
+            );
 
             $this->addSuccessFlash(t('VAT settings modified'));
 

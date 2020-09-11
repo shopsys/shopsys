@@ -41,7 +41,10 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), Domain::FIRST_DOMAIN_ID);
+        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+            Money::create(1000),
+            Domain::FIRST_DOMAIN_ID
+        );
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
         $this->assertCount(22, $paginationResult->getResults());
@@ -52,7 +55,10 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(10000), Domain::FIRST_DOMAIN_ID);
+        $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+            Money::create(10000),
+            Domain::FIRST_DOMAIN_ID
+        );
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
         $this->assertCount(22, $paginationResult->getResults());
@@ -250,7 +256,10 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), Domain::FIRST_DOMAIN_ID);
+        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+            Money::create(1000),
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $paginationResult = $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 1, 10);
         $this->assertCount(10, $paginationResult->getResults());

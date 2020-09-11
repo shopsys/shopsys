@@ -33,7 +33,9 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
      */
     public function work(Version $version): void
     {
-        $this->symfonyStyle->note('Removing vendor/, node_modules/, composer.lock, migrations-lock.yml, and package-lock.json');
+        $this->symfonyStyle->note(
+            'Removing vendor/, node_modules/, composer.lock, migrations-lock.yml, and package-lock.json'
+        );
         $this->processRunner->run('rm -rf project-base/vendor');
         $this->processRunner->run('rm -rf project-base/node_modules');
         $this->processRunner->run('rm -f project-base/composer.lock');
@@ -54,7 +56,12 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
         $this->commit($message);
 
         $this->symfonyStyle->note('push last commit with composer, package, and migration locks');
-        $this->symfonyStyle->confirm(sprintf('confirm that composer.lock, package-lock.json, and migrations-lock.yml are pushed to "%s" branch', $this->initialBranchName));
+        $this->symfonyStyle->confirm(
+            sprintf(
+                'confirm that composer.lock, package-lock.json, and migrations-lock.yml are pushed to "%s" branch',
+                $this->initialBranchName
+            )
+        );
     }
 
     /**

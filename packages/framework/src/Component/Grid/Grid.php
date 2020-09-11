@@ -252,7 +252,13 @@ class Grid
      */
     public function addEditActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
     {
-        return $this->addActionColumn(ActionColumn::TYPE_EDIT, t('Edit'), $route, $bindingRouteParams, $additionalRouteParams);
+        return $this->addActionColumn(
+            ActionColumn::TYPE_EDIT,
+            t('Edit'),
+            $route,
+            $bindingRouteParams,
+            $additionalRouteParams
+        );
     }
 
     /**
@@ -263,7 +269,13 @@ class Grid
      */
     public function addDeleteActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
     {
-        return $this->addActionColumn(ActionColumn::TYPE_DELETE, t('Delete'), $route, $bindingRouteParams, $additionalRouteParams);
+        return $this->addActionColumn(
+            ActionColumn::TYPE_DELETE,
+            t('Delete'),
+            $route,
+            $bindingRouteParams,
+            $additionalRouteParams
+        );
     }
 
     /**

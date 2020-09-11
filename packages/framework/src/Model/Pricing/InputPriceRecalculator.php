@@ -121,7 +121,9 @@ class InputPriceRecalculator
 
         $this->batchProcessQuery($query, function (Transport $transport) use ($toInputPriceType) {
             foreach ($transport->getPrices() as $transportInputPrice) {
-                $defaultCurrencyForDomain = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($transportInputPrice->getDomainId());
+                $defaultCurrencyForDomain = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(
+                    $transportInputPrice->getDomainId()
+                );
                 $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
                     $transport,
                     $defaultCurrencyForDomain,

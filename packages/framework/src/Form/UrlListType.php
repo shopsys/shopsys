@@ -72,7 +72,10 @@ class UrlListType extends AbstractType
             ],
         ]);
 
-        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain($options['route_name'], (int)$options['entity_id']);
+        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain(
+            $options['route_name'],
+            (int)$options['entity_id']
+        );
 
         foreach ($friendlyUrlsByDomain as $domainId => $friendlyUrls) {
             $builder->get('toDelete')->add($domainId, ChoiceType::class, [

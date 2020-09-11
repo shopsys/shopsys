@@ -12,3 +12,5 @@ parameters:
     skip:
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
+        ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
+            - '*/tests/Unit/Component/Doctrine/SchemaDiffFilterTest.php'

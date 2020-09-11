@@ -49,8 +49,12 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
                 $this->commit('dump translations');
                 $this->symfonyStyle->success('Translations were dumped and only deleted were found and committed');
             } else {
-                $this->symfonyStyle->note('There are new translations, check the changed files (you can use "git status") command, fill in the missing translations and commit the changes');
-                $this->confirm('Confirm files are checked, missing translations completed and the changes are committed');
+                $this->symfonyStyle->note(
+                    'There are new translations, check the changed files (you can use "git status") command, fill in the missing translations and commit the changes'
+                );
+                $this->confirm(
+                    'Confirm files are checked, missing translations completed and the changes are committed'
+                );
             }
         } else {
             $this->symfonyStyle->success('There are no new translations');

@@ -78,7 +78,10 @@ class ZboziFeedItemFacade
         $this->productUrlsBatchLoader->loadForProducts($products, $domainConfig);
         $this->productParametersBatchLoader->loadForProducts($products, $domainConfig);
 
-        $zboziProductDomains = $this->zboziProductDomainFacade->getZboziProductDomainsByProductsAndDomainIndexedByProductId($products, $domainConfig);
+        $zboziProductDomains = $this->zboziProductDomainFacade->getZboziProductDomainsByProductsAndDomainIndexedByProductId(
+            $products,
+            $domainConfig
+        );
 
         foreach ($products as $product) {
             $zboziProductDomain = $zboziProductDomains[$product->getId()] ?? null;

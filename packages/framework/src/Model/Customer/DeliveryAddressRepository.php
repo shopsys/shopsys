@@ -38,7 +38,9 @@ class DeliveryAddressRepository
         $deliveryAddress = $this->getDeliveryAddressRepository()->find($deliveryAddressId);
 
         if ($deliveryAddress === null) {
-            throw new DeliveryAddressNotFoundException('Delivery address with ID ' . $deliveryAddressId . ' not found.');
+            throw new DeliveryAddressNotFoundException(
+                'Delivery address with ID ' . $deliveryAddressId . ' not found.'
+            );
         }
 
         return $deliveryAddress;

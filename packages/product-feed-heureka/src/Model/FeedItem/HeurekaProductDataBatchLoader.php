@@ -58,7 +58,10 @@ class HeurekaProductDataBatchLoader
         $this->productUrlsBatchLoader->loadForProducts($products, $domainConfig);
         $this->productParametersBatchLoader->loadForProducts($products, $domainConfig);
 
-        $heurekaProductDomainByProductId = $this->heurekaProductDomainFacade->getHeurekaProductDomainsByProductsAndDomainIndexedByProductId($products, $domainConfig);
+        $heurekaProductDomainByProductId = $this->heurekaProductDomainFacade->getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(
+            $products,
+            $domainConfig
+        );
 
         foreach ($products as $product) {
             $key = $this->getKey($product, $domainConfig);

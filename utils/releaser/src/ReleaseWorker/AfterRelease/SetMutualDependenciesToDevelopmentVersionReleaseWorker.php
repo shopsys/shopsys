@@ -46,7 +46,10 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
      */
     public function getDescription(Version $version): string
     {
-        return sprintf('Set mutual package dependencies to "%s" version', $this->getDevelopmentVersionString($version));
+        return sprintf(
+            'Set mutual package dependencies to "%s" version',
+            $this->getDevelopmentVersionString($version)
+        );
     }
 
     /**
@@ -70,8 +73,15 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
             $developmentVersion
         );
 
-        $this->commit(sprintf('composer.json in all packages now require other shopsys packages in "%s" version', $developmentVersion));
-        $this->confirm(sprintf('Confirm you have pushed the new commit into the "%s" branch', $this->initialBranchName));
+        $this->commit(
+            sprintf(
+                'composer.json in all packages now require other shopsys packages in "%s" version',
+                $developmentVersion
+            )
+        );
+        $this->confirm(
+            sprintf('Confirm you have pushed the new commit into the "%s" branch', $this->initialBranchName)
+        );
     }
 
     /**

@@ -45,7 +45,10 @@ class ArticleRepository
         int $limit,
         int $offset
     ): array {
-        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder($domainId, $placement)
+        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
+            $domainId,
+            $placement
+        )
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 
@@ -70,10 +73,9 @@ class ArticleRepository
             E_USER_DEPRECATED
         );
 
-        $queryBuilder = $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
+        return $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
             ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
             ->orderBy('a.position, a.id');
-        return $queryBuilder;
     }
 
     /**

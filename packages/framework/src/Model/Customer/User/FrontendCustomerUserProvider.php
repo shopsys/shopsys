@@ -40,7 +40,10 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($email)
     {
-        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(mb_strtolower($email), $this->domain->getId());
+        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
+            mb_strtolower($email),
+            $this->domain->getId()
+        );
 
         if ($customerUser === null) {
             $message = sprintf(
@@ -77,7 +80,10 @@ class FrontendCustomerUserProvider implements UserProviderInterface
         }
 
         if ($customerUser instanceof UniqueLoginInterface) {
-            $freshCustomerUser = $this->customerUserRepository->findByIdAndLoginToken($customerUser->getId(), $customerUser->getLoginToken());
+            $freshCustomerUser = $this->customerUserRepository->findByIdAndLoginToken(
+                $customerUser->getId(),
+                $customerUser->getLoginToken()
+            );
         } else {
             $freshCustomerUser = $this->customerUserRepository->findById($customerUser->getId());
         }

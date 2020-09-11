@@ -42,7 +42,13 @@ class DirectoryStructureCreatorTest extends TestCase
                 ['imageDir/entityName2/type/sizeName2_1/']
             );
         $imageLocator = new ImageLocator($imageDir, $imageConfig, $filesystemMock);
-        $creator = new DirectoryStructureCreator($imageDir, $domainImageDir, $imageConfig, $imageLocator, $filesystemMock);
+        $creator = new DirectoryStructureCreator(
+            $imageDir,
+            $domainImageDir,
+            $imageConfig,
+            $imageLocator,
+            $filesystemMock
+        );
         $creator->makeImageDirectories();
     }
 }

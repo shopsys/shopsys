@@ -52,7 +52,9 @@ class FileUploadController extends AdminBaseController
         if ($file instanceof UploadedFile) {
             try {
                 $temporaryFilename = $this->fileUpload->upload($file);
-                $fileThumbnailInfo = $this->fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename($temporaryFilename);
+                $fileThumbnailInfo = $this->fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename(
+                    $temporaryFilename
+                );
 
                 $actionResult = [
                     'status' => 'success',

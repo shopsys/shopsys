@@ -46,7 +46,9 @@ class PerformanceTestSummaryPrinter
                 $consoleOutput->write('<' . $resultTag . '>Test passed</' . $resultTag . '>');
                 return;
             case PerformanceTestSampleQualifier::STATUS_WARNING:
-                $consoleOutput->write('<' . $resultTag . '>Test passed, but contains some warnings</' . $resultTag . '>');
+                $consoleOutput->write(
+                    '<' . $resultTag . '>Test passed, but contains some warnings</' . $resultTag . '>'
+                );
                 return;
             case PerformanceTestSampleQualifier::STATUS_CRITICAL:
             default:

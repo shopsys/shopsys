@@ -137,13 +137,21 @@ class ProductDataFactory implements ProductDataFactoryInterface
     public function setAvailabilityFacade(AvailabilityFacade $availabilityFacade)
     {
         if ($this->availabilityFacade !== null && $this->availabilityFacade !== $availabilityFacade) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
         }
         if ($this->availabilityFacade !== null) {
             return;
         }
 
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
         $this->availabilityFacade = $availabilityFacade;
     }
 
@@ -258,7 +266,9 @@ class ProductDataFactory implements ProductDataFactoryInterface
 
         $productData->parameters = $this->getParametersData($product);
         try {
-            $productData->manualInputPricesByPricingGroupId = $this->productInputPriceFacade->getManualInputPricesDataIndexedByPricingGroupId($product);
+            $productData->manualInputPricesByPricingGroupId = $this->productInputPriceFacade->getManualInputPricesDataIndexedByPricingGroupId(
+                $product
+            );
         } catch (MainVariantPriceCalculationException $ex) {
             $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
         }
@@ -291,7 +301,9 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productParameterValuesData = [];
         $productParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);
         foreach ($productParameterValues as $productParameterValue) {
-            $productParameterValuesData[] = $this->productParameterValueDataFactory->createFromProductParameterValue($productParameterValue);
+            $productParameterValuesData[] = $this->productParameterValueDataFactory->createFromProductParameterValue(
+                $productParameterValue
+            );
         }
 
         return $productParameterValuesData;

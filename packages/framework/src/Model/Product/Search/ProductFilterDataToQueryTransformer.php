@@ -123,6 +123,10 @@ class ProductFilterDataToQueryTransformer
             return $filterQuery;
         }
 
-        return $filterQuery->filterByPrices($pricingGroup, $productFilterData->minimalPrice, $productFilterData->maximalPrice);
+        return $filterQuery->filterByPrices(
+            $pricingGroup,
+            $productFilterData->minimalPrice,
+            $productFilterData->maximalPrice
+        );
     }
 }

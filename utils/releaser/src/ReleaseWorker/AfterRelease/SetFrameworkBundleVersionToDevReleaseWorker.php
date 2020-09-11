@@ -77,7 +77,10 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
         $upgradeFilePath = getcwd() . FrameworkBundleVersionFileManipulator::FRAMEWORK_BUNDLE_VERSION_FILE_PATH;
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
-        $newUpgradeContent = $this->frameworkBundleVersionFileManipulator->updateFrameworkBundleVersion($upgradeFileInfo, $version);
+        $newUpgradeContent = $this->frameworkBundleVersionFileManipulator->updateFrameworkBundleVersion(
+            $upgradeFileInfo,
+            $version
+        );
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
     }

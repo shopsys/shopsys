@@ -28,7 +28,9 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
-        $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(new FriendlyUrlFactory($domain, new EntityNameResolver([])));
+        $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]))
+        );
 
         $attempt = 1;
         $friendlyUrl = new FriendlyUrl('route_name', 7, Domain::FIRST_DOMAIN_ID, 'name');
@@ -49,7 +51,9 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
-        $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(new FriendlyUrlFactory($domain, new EntityNameResolver([])));
+        $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]))
+        );
 
         $attempt = 1;
         $friendlyUrl = new FriendlyUrl('route_name', 7, Domain::FIRST_DOMAIN_ID, 'name');
@@ -73,7 +77,9 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
-        $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(new FriendlyUrlFactory($domain, new EntityNameResolver([])));
+        $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]))
+        );
 
         $attempt = 3;
         $friendlyUrl = new FriendlyUrl('route_name', 7, Domain::FIRST_DOMAIN_ID, 'name');

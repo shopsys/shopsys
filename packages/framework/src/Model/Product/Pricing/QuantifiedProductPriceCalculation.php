@@ -103,7 +103,11 @@ class QuantifiedProductPriceCalculation
     {
         $quantifiedItemsPrices = [];
         foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
-            $quantifiedItemsPrices[$quantifiedItemIndex] = $this->calculatePrice($quantifiedProduct, $domainId, $customerUser);
+            $quantifiedItemsPrices[$quantifiedItemIndex] = $this->calculatePrice(
+                $quantifiedProduct,
+                $domainId,
+                $customerUser
+            );
         }
 
         return $quantifiedItemsPrices;

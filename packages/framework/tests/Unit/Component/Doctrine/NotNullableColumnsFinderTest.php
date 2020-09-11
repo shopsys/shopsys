@@ -47,7 +47,9 @@ class NotNullableColumnsFinderTest extends TestCase
         ];
 
         $notNullableColumnsFinder = new NotNullableColumnsFinder();
-        $actualResult = $notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName([$classMetadataInfoMock]);
+        $actualResult = $notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName(
+            [$classMetadataInfoMock]
+        );
 
         $this->assertSame($expectedResult, $actualResult);
     }

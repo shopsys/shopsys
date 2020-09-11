@@ -111,7 +111,9 @@ class TokenFacade
      */
     public function getPrivateKey(): Key
     {
-        return new Key(sprintf('file://%s/private.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath')));
+        return new Key(
+            sprintf('file://%s/private.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath'))
+        );
     }
 
     /**
@@ -119,7 +121,9 @@ class TokenFacade
      */
     public function getPublicKey(): Key
     {
-        return new Key(sprintf('file://%s/public.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath')));
+        return new Key(
+            sprintf('file://%s/public.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath'))
+        );
     }
 
     /**

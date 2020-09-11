@@ -87,7 +87,12 @@ class ProductFilterConfigFactory
             ->getFlagFilterChoicesForSearch($domainId, $pricingGroup, $locale, $searchText);
         $brandFilterChoices = $this->brandFilterChoiceRepository
             ->getBrandFilterChoicesForSearch($domainId, $pricingGroup, $locale, $searchText);
-        $priceRange = $this->priceRangeRepository->getPriceRangeForSearch($domainId, $pricingGroup, $locale, $searchText);
+        $priceRange = $this->priceRangeRepository->getPriceRangeForSearch(
+            $domainId,
+            $pricingGroup,
+            $locale,
+            $searchText
+        );
 
         return new ProductFilterConfig($parameterFilterChoices, $flagFilterChoices, $brandFilterChoices, $priceRange);
     }

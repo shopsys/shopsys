@@ -39,7 +39,10 @@ class ProductUrlsBatchLoader
     public function loadForProducts(array $products, DomainConfig $domainConfig): void
     {
         $productUrlsById = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId($products, $domainConfig);
-        $productImageUrlsById = $this->productCollectionFacade->getImagesUrlsIndexedByProductId($products, $domainConfig);
+        $productImageUrlsById = $this->productCollectionFacade->getImagesUrlsIndexedByProductId(
+            $products,
+            $domainConfig
+        );
 
         foreach ($products as $product) {
             $key = $this->getKey($product, $domainConfig);

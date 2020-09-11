@@ -42,7 +42,10 @@ class DomainFactoryOverwritingDomainUrl
      */
     public function create($domainsConfigFilepath, $domainsUrlsConfigFilepath)
     {
-        $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath);
+        $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(
+            $domainsConfigFilepath,
+            $domainsUrlsConfigFilepath
+        );
         if ($this->overwriteDomainUrl !== null) {
             $domainConfigs = $this->overwriteDomainUrl($domainConfigs);
         }

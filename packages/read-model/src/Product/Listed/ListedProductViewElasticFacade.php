@@ -183,7 +183,13 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function getFilteredPaginatedInCategory(int $categoryId, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult
     {
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInCategory($filterData, $orderingModeId, $page, $limit, $categoryId);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInCategory(
+            $filterData,
+            $orderingModeId,
+            $page,
+            $limit,
+            $categoryId
+        );
 
         return $this->createPaginationResultWithArray($paginationResult);
     }
@@ -198,7 +204,13 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function getFilteredPaginatedForSearch(string $searchText, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult
     {
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForSearch($searchText, $filterData, $orderingModeId, $page, $limit);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForSearch(
+            $searchText,
+            $filterData,
+            $orderingModeId,
+            $page,
+            $limit
+        );
 
         return $this->createPaginationResultWithArray($paginationResult);
     }
@@ -212,7 +224,12 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function getPaginatedForBrand(int $brandId, string $orderingModeId, int $page, int $limit): PaginationResult
     {
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForBrand($orderingModeId, $page, $limit, $brandId);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForBrand(
+            $orderingModeId,
+            $page,
+            $limit,
+            $brandId
+        );
 
         return $this->createPaginationResultWithArray($paginationResult);
     }
@@ -237,7 +254,10 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     protected function createFromArray(array $productsArray): array
     {
-        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, array_column($productsArray, 'id'));
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(
+            Product::class,
+            array_column($productsArray, 'id')
+        );
 
         $listedProductViews = [];
         foreach ($productsArray as $productArray) {

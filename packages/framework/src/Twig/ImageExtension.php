@@ -110,7 +110,12 @@ class ImageExtension extends AbstractExtension
     public function getImageUrl($imageOrEntity, $sizeName = null, $type = null)
     {
         try {
-            return $this->imageFacade->getImageUrl($this->domain->getCurrentDomainConfig(), $imageOrEntity, $sizeName, $type);
+            return $this->imageFacade->getImageUrl(
+                $this->domain->getCurrentDomainConfig(),
+                $imageOrEntity,
+                $sizeName,
+                $type
+            );
         } catch (ImageNotFoundException $e) {
             return $this->getEmptyImageUrl();
         }
@@ -139,7 +144,12 @@ class ImageExtension extends AbstractExtension
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
             $entityName = $image->getEntityName();
             $attributes['src'] = $this->getImageUrl($image, $attributes['size'], $attributes['type']);
-            $additionalImagesData = $this->imageFacade->getAdditionalImagesData($this->domain->getCurrentDomainConfig(), $image, $attributes['size'], $attributes['type']);
+            $additionalImagesData = $this->imageFacade->getAdditionalImagesData(
+                $this->domain->getCurrentDomainConfig(),
+                $image,
+                $attributes['size'],
+                $attributes['type']
+            );
 
             return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
         } catch (ImageNotFoundException $e) {

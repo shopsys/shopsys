@@ -95,9 +95,11 @@ class LoginController extends AdminBaseController
             $this->authenticator->checkLoginProcess($request);
         } catch (LoginFailedException $e) {
             if ($e->getPrevious() instanceof LoginWithDefaultPasswordException) {
-                $error = t('Oh, you just tried to log in using default credentials. We do not allow that on production'
-                    . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
-                    . ' please use another account or contact developers and change password during deployment.');
+                $error = t(
+                    'Oh, you just tried to log in using default credentials. We do not allow that on production'
+                        . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
+                        . ' please use another account or contact developers and change password during deployment.'
+                );
             } else {
                 $error = t('Log in failed.');
             }
@@ -118,7 +120,9 @@ class LoginController extends AdminBaseController
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
-        $multidomainToken = $this->administratorLoginFacade->generateMultidomainLoginTokenWithExpiration($administrator);
+        $multidomainToken = $this->administratorLoginFacade->generateMultidomainLoginTokenWithExpiration(
+            $administrator
+        );
         $originalDomainRouter = $this->domainRouterFactory->getRouter((int)$originalDomainId);
         $redirectTo = $originalDomainRouter->generate(
             'admin_login_authorization',

@@ -50,9 +50,14 @@ class MoneyTypeExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['money_pattern'] = $this->getPattern();
-        if ($options['currency']) {
-            $view->vars['symbolAfterInput'] = $this->intlCurrencyRepository->get($options['currency'], $this->localization->getLocale());
+        if (!$options['currency']) {
+            return;
         }
+
+        $view->vars['symbolAfterInput'] = $this->intlCurrencyRepository->get(
+            $options['currency'],
+            $this->localization->getLocale()
+        );
     }
 
     /**

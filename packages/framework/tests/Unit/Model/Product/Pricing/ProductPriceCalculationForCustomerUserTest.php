@@ -39,7 +39,9 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             ->setMethods(['calculatePrice'])
             ->disableOriginalConstructor()
             ->getMock();
-        $productPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn($expectedProductPrice);
+        $productPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn(
+            $expectedProductPrice
+        );
 
         $domainMock = $this->createMock(Domain::class);
 
@@ -50,7 +52,11 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $domainMock
         );
 
-        $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId($product, Domain::FIRST_DOMAIN_ID, $customerUser);
+        $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
+            $product,
+            Domain::FIRST_DOMAIN_ID,
+            $customerUser
+        );
         $this->assertSame($expectedProductPrice, $productPrice);
     }
 
@@ -79,7 +85,9 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             ->setMethods(['calculatePrice'])
             ->disableOriginalConstructor()
             ->getMock();
-        $productPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn($expectedProductPrice);
+        $productPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn(
+            $expectedProductPrice
+        );
 
         $domainMock = $this->createMock(Domain::class);
 
@@ -90,7 +98,11 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $domainMock
         );
 
-        $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId($product, $domainId, null);
+        $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
+            $product,
+            $domainId,
+            null
+        );
         $this->assertSame($expectedProductPrice, $productPrice);
     }
 }

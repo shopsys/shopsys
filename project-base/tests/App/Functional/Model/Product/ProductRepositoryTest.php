@@ -64,7 +64,10 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     private function getAllListableQueryBuilderTest($productReferenceId, $isExpectedInResult)
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId);
@@ -105,7 +108,10 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     private function getAllSellableQueryBuilderTest($productReferenceId, $isExpectedInResult)
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId);
@@ -146,7 +152,10 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     private function getAllOfferedQueryBuilderTest($productReferenceId, $isExpectedInResult)
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId);
@@ -203,7 +212,10 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     public function testGetSortedProductsByIds()
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         /** @var \App\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
@@ -251,7 +263,10 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     private function getProductsForSearchOrderedByPriority($searchText)
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $paginationResult = $this->productRepository->getPaginationResultForSearchListable(
             $searchText,
@@ -274,7 +289,10 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     private function getProductsInCategoryOrderedByPriority(Category $category)
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $paginationResult = $this->productRepository->getPaginationResultForListableInCategory(
             $category,

@@ -59,7 +59,10 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
      */
     protected function createEntityAndGetId($pricingGroupData)
     {
-        $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $this->adminDomainTabsFacade->getSelectedDomainId());
+        $pricingGroup = $this->pricingGroupFacade->create(
+            $pricingGroupData,
+            $this->adminDomainTabsFacade->getSelectedDomainId()
+        );
 
         return $pricingGroup->getId();
     }

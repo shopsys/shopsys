@@ -178,7 +178,9 @@ class CustomerController extends FrontBaseController
             $order = $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
         }
 
-        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById($order->getItems());
+        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
+            $order->getItems()
+        );
 
         return $this->render('Front/Content/Customer/orderDetail.html.twig', [
             'order' => $order,

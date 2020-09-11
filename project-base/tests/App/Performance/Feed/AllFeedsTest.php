@@ -50,7 +50,9 @@ class AllFeedsTest extends KernelTestCase
             ->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
         $this->maxDuration = $container->getParameter('shopsys.performance_test.feed.max_duration_seconds');
-        $this->deliveryMaxDuration = $container->getParameter('shopsys.performance_test.feed.delivery.max_duration_seconds');
+        $this->deliveryMaxDuration = $container->getParameter(
+            'shopsys.performance_test.feed.delivery.max_duration_seconds'
+        );
         $this->minDuration = $container->getParameter('shopsys.performance_test.feed.min_duration_seconds');
     }
 
@@ -104,7 +106,11 @@ class AllFeedsTest extends KernelTestCase
     private function doTestFeedGeneration(FeedInfoInterface $feedInfo, DomainConfig $domainConfig, $maxDuration)
     {
         $performanceTestSample = $this->generateFeed($feedInfo, $domainConfig);
-        $this->setPerformanceTestSampleMessage($performanceTestSample, $maxDuration, $performanceTestSample->getDuration());
+        $this->setPerformanceTestSampleMessage(
+            $performanceTestSample,
+            $maxDuration,
+            $performanceTestSample->getDuration()
+        );
 
         return $performanceTestSample;
     }
@@ -160,13 +166,23 @@ class AllFeedsTest extends KernelTestCase
         $minDuration = $this->minDuration;
 
         if ($realDuration < $minDuration) {
-            $message = sprintf('<fg=yellow>Feed generated in %.2F s, which is suspiciously fast.</fg=yellow>', $realDuration);
-            $failMessage = sprintf('Feed was generated faster than in %d s, which is suspicious and should be checked.', $minDuration);
+            $message = sprintf(
+                '<fg=yellow>Feed generated in %.2F s, which is suspiciously fast.</fg=yellow>',
+                $realDuration
+            );
+            $failMessage = sprintf(
+                'Feed was generated faster than in %d s, which is suspicious and should be checked.',
+                $minDuration
+            );
             $performanceTestSample->addFailMessage($failMessage);
         } elseif ($realDuration <= $maxDuration) {
             $message = sprintf('<fg=green>Feed generated in %.2F s.</fg=green>', $realDuration);
         } else {
-            $message = sprintf('<fg=red>Feed generated in %.2F s, exceeding limit of %d s.</fg=red>', $realDuration, $maxDuration);
+            $message = sprintf(
+                '<fg=red>Feed generated in %.2F s, exceeding limit of %d s.</fg=red>',
+                $realDuration,
+                $maxDuration
+            );
             $failMessage = sprintf('Feed generation exceeded limit of %d s.', $maxDuration);
             $performanceTestSample->addFailMessage($failMessage);
         }
@@ -213,7 +229,12 @@ class AllFeedsTest extends KernelTestCase
 
         $expectedStatusCode = 302;
         if ($statusCode !== $expectedStatusCode) {
-            $failMessage = sprintf('Admin request on %s ended with status code %d, expected %d.', $uri, $statusCode, $expectedStatusCode);
+            $failMessage = sprintf(
+                'Admin request on %s ended with status code %d, expected %d.',
+                $uri,
+                $statusCode,
+                $expectedStatusCode
+            );
             $performanceTestSample->addFailMessage($failMessage);
         }
 

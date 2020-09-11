@@ -172,7 +172,9 @@ class PromoCodeController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing promo code - %code%', ['%code%' => $promoCode->getCode()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing promo code - %code%', ['%code%' => $promoCode->getCode()])
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/PromoCode/edit.html.twig', [
             'form' => $form->createView(),

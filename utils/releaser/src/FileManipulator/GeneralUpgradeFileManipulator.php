@@ -20,7 +20,11 @@ class GeneralUpgradeFileManipulator
      */
     public function updateLinks(SplFileInfo $splFileInfo, Version $version, string $nextDevelopmentVersionString): string
     {
-        $newLink = sprintf('* ### [From %s to %2$s](./upgrade/UPGRADE-%2$s.md)' . PHP_EOL, $version->getVersionString(), $nextDevelopmentVersionString);
+        $newLink = sprintf(
+            '* ### [From %s to %2$s](./upgrade/UPGRADE-%2$s.md)' . PHP_EOL,
+            $version->getVersionString(),
+            $nextDevelopmentVersionString
+        );
         $versionString = $version->getVersionString();
         return Strings::replace(
             $splFileInfo->getContents(),

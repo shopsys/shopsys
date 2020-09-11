@@ -103,7 +103,9 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
                 'entry_type' => HiddenType::class,
                 'allow_add' => true,
                 'constraints' => [
-                    new Constraints\Callback(['callback' => [$this, 'validateUploadedFiles'], 'payload' => $fileConstraints]),
+                    new Constraints\Callback(
+                        ['callback' => [$this, 'validateUploadedFiles'], 'payload' => $fileConstraints]
+                    ),
                 ],
             ])
             ->add('uploadedFilenames', CollectionType::class, [
@@ -112,7 +114,9 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter the filename']),
-                        new Constraints\Length(['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
             ]);

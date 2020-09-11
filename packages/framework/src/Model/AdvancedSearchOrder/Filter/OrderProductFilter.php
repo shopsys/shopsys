@@ -65,8 +65,10 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
                 $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
                 $parameterName = 'orderProduct_' . $index;
                 $tableAlias = 'oi_' . $index;
-                $queryBuilder->andWhere($dqlOperator . ' (SELECT 1 FROM ' . OrderItem::class . ' ' . $tableAlias . ' ' .
-                    'WHERE ' . $tableAlias . '.order = o AND ' . $tableAlias . '.product = :' . $parameterName . ')');
+                $queryBuilder->andWhere(
+                    $dqlOperator . ' (SELECT 1 FROM ' . OrderItem::class . ' ' . $tableAlias . ' ' .
+                        'WHERE ' . $tableAlias . '.order = o AND ' . $tableAlias . '.product = :' . $parameterName . ')'
+                );
                 $queryBuilder->setParameter($parameterName, $searchValue);
             }
         }

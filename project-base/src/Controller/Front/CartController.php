@@ -156,7 +156,10 @@ class CartController extends FrontBaseController
             'cartItemPrices' => $orderPreview->getQuantifiedItemsPrices(),
             'form' => $form->createView(),
             'isFreeTransportAndPaymentActive' => $this->freeTransportAndPaymentFacade->isActive($domainId),
-            'isPaymentAndTransportFree' => $this->freeTransportAndPaymentFacade->isFree($productsPrice->getPriceWithVat(), $domainId),
+            'isPaymentAndTransportFree' => $this->freeTransportAndPaymentFacade->isFree(
+                $productsPrice->getPriceWithVat(),
+                $domainId
+            ),
             'remainingPriceWithVat' => $remainingPriceWithVat,
             'cartItemDiscounts' => $orderPreview->getQuantifiedItemsDiscounts(),
             'productsPrice' => $productsPrice,
@@ -242,7 +245,10 @@ class CartController extends FrontBaseController
             try {
                 $formData = $form->getData();
 
-                $addProductResult = $this->cartFacade->addProductToCart($formData['productId'], (int)$formData['quantity']);
+                $addProductResult = $this->cartFacade->addProductToCart(
+                    $formData['productId'],
+                    (int)$formData['quantity']
+                );
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
             } catch (ProductNotFoundException $ex) {
@@ -285,7 +291,10 @@ class CartController extends FrontBaseController
             try {
                 $formData = $form->getData();
 
-                $addProductResult = $this->cartFacade->addProductToCart($formData['productId'], (int)$formData['quantity']);
+                $addProductResult = $this->cartFacade->addProductToCart(
+                    $formData['productId'],
+                    (int)$formData['quantity']
+                );
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
 
@@ -392,7 +401,9 @@ class CartController extends FrontBaseController
         if (!$this->isCsrfTokenValid('front_cart_delete_' . $cartItemId, $token)) {
             return $this->json([
                 'success' => false,
-                'errorMessage' => t('Unable to remove item from cart. The link for removing it probably expired, try it again.'),
+                'errorMessage' => t(
+                    'Unable to remove item from cart. The link for removing it probably expired, try it again.'
+                ),
             ]);
         }
 
@@ -431,13 +442,21 @@ class CartController extends FrontBaseController
     public function setModuleFacade(ModuleFacade $moduleFacade): void
     {
         if ($this->moduleFacade !== null && $this->moduleFacade !== $moduleFacade) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
         }
         if ($this->moduleFacade !== null) {
             return;
         }
 
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
         $this->moduleFacade = $moduleFacade;
     }
 }

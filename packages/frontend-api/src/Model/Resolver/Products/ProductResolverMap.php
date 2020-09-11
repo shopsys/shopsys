@@ -85,14 +85,18 @@ class ProductResolverMap extends ResolverMap
     {
         return [
             'shortDescription' => function ($data) {
-                return $data instanceof Product ? $data->getShortDescription($this->domain->getId()) : $data['short_description'];
+                return $data instanceof Product ? $data->getShortDescription(
+                    $this->domain->getId()
+                ) : $data['short_description'];
             },
             'link' => function ($data) {
                 $productId = $data instanceof Product ? $data->getId() : $data['id'];
                 return $this->getProductLink($productId);
             },
             'categories' => function ($data) {
-                return $data instanceof Product ? $data->getCategoriesIndexedByDomainId()[$this->domain->getId()] : $this->getCategoriesForData($data);
+                return $data instanceof Product ? $data->getCategoriesIndexedByDomainId()[$this->domain->getId()] : $this->getCategoriesForData(
+                    $data
+                );
             },
             'flags' => function ($data) {
                 return $this->getFlagsForData($data);
@@ -118,7 +122,10 @@ class ProductResolverMap extends ResolverMap
      */
     protected function getProductLink(int $productId): string
     {
-        $absoluteUrlsIndexedByProductId = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId([$productId], $this->domain->getCurrentDomainConfig());
+        $absoluteUrlsIndexedByProductId = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId(
+            [$productId],
+            $this->domain->getCurrentDomainConfig()
+        );
 
         return $absoluteUrlsIndexedByProductId[$productId];
     }

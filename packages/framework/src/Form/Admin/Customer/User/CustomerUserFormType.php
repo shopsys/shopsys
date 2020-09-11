@@ -192,7 +192,11 @@ class CustomerUserFormType extends AbstractType
 
             $builderRegisteredCustomerGroup->add('lastLogin', DisplayOnlyType::class, [
                 'label' => t('Last login'),
-                'data' => $this->customerUser->getLastLogin() !== null ? $this->dateTimeFormatterExtension->formatDateTime($this->customerUser->getLastLogin()) : t('never'),
+                'data' => $this->customerUser->getLastLogin() !== null ? $this->dateTimeFormatterExtension->formatDateTime(
+                    $this->customerUser->getLastLogin()
+                ) : t(
+                    'never'
+                ),
             ]);
         }
 
@@ -226,7 +230,9 @@ class CustomerUserFormType extends AbstractType
     private function getFirstPasswordConstraints($isCreatingNewUser)
     {
         $constraints = [
-            new Constraints\Length(['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']),
+            new Constraints\Length(
+                ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']
+            ),
         ];
 
         if ($isCreatingNewUser) {

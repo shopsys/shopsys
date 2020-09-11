@@ -111,7 +111,10 @@ class ProductPriceCalculation
      */
     protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup)
     {
-        $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup($product, $pricingGroup);
+        $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
+            $product,
+            $pricingGroup
+        );
         if ($manualInputPrice !== null) {
             $inputPrice = $manualInputPrice->getInputPrice() ?? Money::zero();
         } else {

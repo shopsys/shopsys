@@ -62,10 +62,18 @@ class PropertyAnnotationsFactory
         ReflectionClass $projectClassBetterReflection
     ): string {
         foreach ($this->annotationsReplacementsMap->getPatterns() as $frameworkClassPattern) {
-            if (!$this->isPropertyDeclaredInClass($reflectionPropertyFromFrameworkClass->getName(), $projectClassBetterReflection)
-                && $this->isPropertyOfTypeThatIsExtendedInProject($reflectionPropertyFromFrameworkClass, $frameworkClassPattern)
+            if (!$this->isPropertyDeclaredInClass(
+                $reflectionPropertyFromFrameworkClass->getName(),
+                $projectClassBetterReflection
+            )
+                && $this->isPropertyOfTypeThatIsExtendedInProject(
+                    $reflectionPropertyFromFrameworkClass,
+                    $frameworkClassPattern
+                )
             ) {
-                $replacedTypeForProperty = $this->annotationsReplacer->replaceInPropertyType($reflectionPropertyFromFrameworkClass);
+                $replacedTypeForProperty = $this->annotationsReplacer->replaceInPropertyType(
+                    $reflectionPropertyFromFrameworkClass
+                );
 
                 return sprintf(
                     " * @property %s%s $%s\n",

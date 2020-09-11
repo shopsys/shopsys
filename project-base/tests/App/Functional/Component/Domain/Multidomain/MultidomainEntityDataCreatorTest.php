@@ -40,7 +40,11 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 
         $sqlQuoter = new SqlQuoter($this->em);
 
-        $multidomainEntityDataCreator = new MultidomainEntityDataCreator($multidomainEntityClassFinderFacadeMock, $this->em, $sqlQuoter);
+        $multidomainEntityDataCreator = new MultidomainEntityDataCreator(
+            $multidomainEntityClassFinderFacadeMock,
+            $this->em,
+            $sqlQuoter
+        );
 
         $multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(1, 2);
 
@@ -93,7 +97,11 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 
         $sqlQuoter = new SqlQuoter($this->em);
 
-        $multidomainEntityDataCreator = new MultidomainEntityDataCreator($multidomainEntityClassFinderFacadeMock, $this->em, $sqlQuoter);
+        $multidomainEntityDataCreator = new MultidomainEntityDataCreator(
+            $multidomainEntityClassFinderFacadeMock,
+            $this->em,
+            $sqlQuoter
+        );
 
         try {
             $multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(1, 2);

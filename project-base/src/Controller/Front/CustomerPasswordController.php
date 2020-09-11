@@ -106,7 +106,12 @@ class CustomerPasswordController extends FrontBaseController
             $newPassword = $formData['newPassword'];
 
             try {
-                $customerUser = $this->customerUserPasswordFacade->setNewPassword($email, $this->domain->getId(), $hash, $newPassword);
+                $customerUser = $this->customerUserPasswordFacade->setNewPassword(
+                    $email,
+                    $this->domain->getId(),
+                    $hash,
+                    $newPassword
+                );
 
                 $this->authenticator->loginUser($customerUser, $request);
             } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {

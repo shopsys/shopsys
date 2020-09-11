@@ -72,7 +72,9 @@ class TransportFormType extends AbstractType
                 'entry_options' => [
                     'required' => false,
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
                 'label' => t('Name'),

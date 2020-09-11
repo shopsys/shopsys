@@ -54,7 +54,10 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
@@ -63,7 +66,11 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
 
         $productManualInputPrice = new ProductManualInputPrice($product, $pricingGroup, Money::create(1000));
         $inputPriceType = $this->pricingSetting->getInputPriceType();
-        $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent($productManualInputPrice, $inputPriceType, '15');
+        $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent(
+            $productManualInputPrice,
+            $inputPriceType,
+            '15'
+        );
 
         $this->assertThat($productManualInputPrice->getInputPrice(), new IsMoneyEqual(Money::create('1052.173913')));
     }
@@ -73,7 +80,10 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
@@ -83,7 +93,11 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         $productManualInputPrice = new ProductManualInputPrice($product, $pricingGroup, Money::create(1000));
 
         $inputPriceType = $this->pricingSetting->getInputPriceType();
-        $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent($productManualInputPrice, $inputPriceType, '15');
+        $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent(
+            $productManualInputPrice,
+            $inputPriceType,
+            '15'
+        );
 
         $this->assertThat($productManualInputPrice->getInputPrice(), new IsMoneyEqual(Money::create(1000)));
     }

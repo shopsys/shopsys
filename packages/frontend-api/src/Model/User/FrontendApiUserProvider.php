@@ -37,7 +37,9 @@ class FrontendApiUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        throw new NotImplementedException('Method "loadUserByUsername" is not implement. Use method  "loadUserByToken"');
+        throw new NotImplementedException(
+            'Method "loadUserByUsername" is not implement. Use method  "loadUserByToken"'
+        );
     }
 
     /**

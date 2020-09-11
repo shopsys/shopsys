@@ -28,7 +28,9 @@ class AdvancedSearchProductFilterTranslationTest extends FunctionalTestCase
     public function testTranslateFilterName()
     {
         foreach ($this->advancedSearchConfig->getAllFilters() as $filter) {
-            $this->assertNotEmpty($this->advancedSearchProductFilterTranslation->translateFilterName($filter->getName()));
+            $this->assertNotEmpty(
+                $this->advancedSearchProductFilterTranslation->translateFilterName($filter->getName())
+            );
         }
     }
 

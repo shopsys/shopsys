@@ -210,7 +210,10 @@ class ProductController extends FrontBaseController
             'category' => $category,
             'filterForm' => $filterForm->createView(),
             'filterFormSubmitted' => $filterForm->isSubmitted(),
-            'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId()),
+            'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId(
+                $category,
+                $this->domain->getId()
+            ),
             'priceRange' => $productFilterConfig->getPriceRange(),
         ];
 

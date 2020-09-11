@@ -88,7 +88,17 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $this->apiDataSetter->setValueIfExists('ean', $productApiData, $productData);
         $this->apiDataSetter->setValueIfExists('partno', $productApiData, $productData);
         $this->apiDataSetter->setMultilanguageValueIfExists('name', $productApiData, $productData);
-        $this->apiDataSetter->setMultidomainValueIfExists('shortDescription', $productApiData, $productData, 'shortDescriptions');
-        $this->apiDataSetter->setMultidomainValueIfExists('longDescription', $productApiData, $productData, 'descriptions');
+        $this->apiDataSetter->setMultidomainValueIfExists(
+            'shortDescription',
+            $productApiData,
+            $productData,
+            'shortDescriptions'
+        );
+        $this->apiDataSetter->setMultidomainValueIfExists(
+            'longDescription',
+            $productApiData,
+            $productData,
+            'descriptions'
+        );
     }
 }

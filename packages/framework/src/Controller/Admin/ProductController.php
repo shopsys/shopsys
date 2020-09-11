@@ -185,7 +185,9 @@ class ProductController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)])
+        );
 
         $viewParameters = [
             'form' => $form->createView(),
@@ -260,7 +262,9 @@ class ProductController extends AdminBaseController
 
         $isAdvancedSearchFormSubmitted = $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted($request);
         if ($isAdvancedSearchFormSubmitted) {
-            $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData($advancedSearchData);
+            $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData(
+                $advancedSearchData
+            );
         } else {
             $queryBuilder = $this->productListAdminFacade->getQueryBuilderByQuickSearchData($quickSearchData);
         }
@@ -291,7 +295,9 @@ class ProductController extends AdminBaseController
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
             'massActionForm' => $massActionForm->createView(),
-            'isAdvancedSearchFormSubmitted' => $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted($request),
+            'isAdvancedSearchFormSubmitted' => $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted(
+                $request
+            ),
             'productCanBeCreated' => $productCanBeCreated,
         ]);
     }
@@ -327,7 +333,10 @@ class ProductController extends AdminBaseController
      */
     public function getRuleFormAction(Request $request)
     {
-        $ruleForm = $this->advancedSearchProductFacade->createRuleForm($request->get('filterName'), $request->get('newIndex'));
+        $ruleForm = $this->advancedSearchProductFacade->createRuleForm(
+            $request->get('filterName'),
+            $request->get('newIndex')
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Product/AdvancedSearch/ruleForm.html.twig', [
             'rulesForm' => $ruleForm->createView(),
@@ -347,7 +356,10 @@ class ProductController extends AdminBaseController
             $formData = $form->getData();
             $mainVariant = $formData[VariantFormType::MAIN_VARIANT];
             try {
-                $newMainVariant = $this->productVariantFacade->createVariant($mainVariant, $formData[VariantFormType::VARIANTS]);
+                $newMainVariant = $this->productVariantFacade->createVariant(
+                    $mainVariant,
+                    $formData[VariantFormType::VARIANTS]
+                );
 
                 $this->addSuccessFlashTwig(
                     t('Variant <strong><a href="{{ url }}">{{ productVariant|productDisplayName }}</a></strong> successfully created.'),

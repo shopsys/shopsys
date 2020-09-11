@@ -146,7 +146,12 @@ class ImageProcessor
      */
     public function resizeByAdditionalSizeConfig(Image $image, ImageSizeConfig $sizeConfig, ImageAdditionalSizeConfig $additionalSizeConfig)
     {
-        $this->resize($image, $additionalSizeConfig->getWidth(), $additionalSizeConfig->getHeight(), $sizeConfig->getCrop());
+        $this->resize(
+            $image,
+            $additionalSizeConfig->getWidth(),
+            $additionalSizeConfig->getHeight(),
+            $sizeConfig->getCrop()
+        );
     }
 
     /**

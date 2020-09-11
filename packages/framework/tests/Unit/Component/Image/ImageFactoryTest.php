@@ -67,7 +67,9 @@ class ImageFactoryTest extends TestCase
             ->disableOriginalConstructor()
             ->setMethods(['convertToShopFormatAndGetNewFilename'])
             ->getMock();
-        $imageProcessorMock->expects($this->any())->method('convertToShopFormatAndGetNewFilename')->willReturn($filename);
+        $imageProcessorMock->expects($this->any())->method('convertToShopFormatAndGetNewFilename')->willReturn(
+            $filename
+        );
 
         $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
         $image = $imageFactory->create($imageEntityConfig->getEntityName(), 1, 'type', $filename);
@@ -86,6 +88,13 @@ class ImageFactoryTest extends TestCase
         $mountManager = new MountManager();
         $abstractFilesystem = $this->createMock(FilesystemInterface::class);
 
-        return new FileUpload('temporaryDir', 'uploadedFileDir', 'imageDir', $fileNamingConvention, $mountManager, $abstractFilesystem);
+        return new FileUpload(
+            'temporaryDir',
+            'uploadedFileDir',
+            'imageDir',
+            $fileNamingConvention,
+            $mountManager,
+            $abstractFilesystem
+        );
     }
 }

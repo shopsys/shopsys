@@ -51,7 +51,9 @@ class OrderMailTest extends FunctionalTestCase
 
     public function testGetMessageByOrder()
     {
-        $routerMock = $this->getMockBuilder(RouterInterface::class)->setMethods(['generate'])->getMockForAbstractClass();
+        $routerMock = $this->getMockBuilder(RouterInterface::class)->setMethods(
+            ['generate']
+        )->getMockForAbstractClass();
         $routerMock->expects($this->any())->method('generate')->willReturn('generatedUrl');
 
         $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)
@@ -61,11 +63,17 @@ class OrderMailTest extends FunctionalTestCase
         $domainRouterFactoryMock->expects($this->any())->method('getRouter')->willReturn($routerMock);
 
         $twigMock = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
-        $orderItemPriceCalculationMock = $this->getMockBuilder(OrderItemPriceCalculation::class)->disableOriginalConstructor()->getMock();
+        $orderItemPriceCalculationMock = $this->getMockBuilder(
+            OrderItemPriceCalculation::class
+        )->disableOriginalConstructor()->getMock();
         $settingMock = $this->getMockBuilder(Setting::class)->disableOriginalConstructor()->getMock();
         $priceExtensionMock = $this->getMockBuilder(PriceExtension::class)->disableOriginalConstructor()->getMock();
-        $dateTimeFormatterExtensionMock = $this->getMockBuilder(DateTimeFormatterExtension::class)->disableOriginalConstructor()->getMock();
-        $orderUrlGeneratorMock = $this->getMockBuilder(OrderUrlGenerator::class)->disableOriginalConstructor()->getMock();
+        $dateTimeFormatterExtensionMock = $this->getMockBuilder(
+            DateTimeFormatterExtension::class
+        )->disableOriginalConstructor()->getMock();
+        $orderUrlGeneratorMock = $this->getMockBuilder(
+            OrderUrlGenerator::class
+        )->disableOriginalConstructor()->getMock();
 
         $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs');
         $domain = new Domain([$domainConfig], $settingMock);

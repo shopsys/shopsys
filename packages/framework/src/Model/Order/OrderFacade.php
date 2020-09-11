@@ -689,9 +689,13 @@ class OrderFacade
                 $newOrderItemData->unitName,
                 $newOrderItemData->catnum
             );
-            if (!$newOrderItemData->usePriceCalculation) {
-                $newOrderItem->setTotalPrice(new Price($newOrderItemData->totalPriceWithoutVat, $newOrderItemData->totalPriceWithVat));
+            if ($newOrderItemData->usePriceCalculation) {
+                continue;
             }
+
+            $newOrderItem->setTotalPrice(
+                new Price($newOrderItemData->totalPriceWithoutVat, $newOrderItemData->totalPriceWithVat)
+            );
         }
     }
 
@@ -702,7 +706,10 @@ class OrderFacade
     protected function calculateOrderItemDataPrices(OrderItemData $orderItemData, int $domainId): void
     {
         if ($orderItemData->usePriceCalculation) {
-            $orderItemData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat($orderItemData, $domainId);
+            $orderItemData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat(
+                $orderItemData,
+                $domainId
+            );
             $orderItemData->totalPriceWithVat = null;
             $orderItemData->totalPriceWithoutVat = null;
         } else {

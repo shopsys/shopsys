@@ -83,7 +83,9 @@ class MailTemplateGridFactory implements GridFactoryInterface
      */
     protected function createDataSource(): DataSourceInterface
     {
-        $queryBuilder = $this->mailTemplateRepository->createQueryBuilder($this->adminDomainTabsFacade->getSelectedDomainId());
+        $queryBuilder = $this->mailTemplateRepository->createQueryBuilder(
+            $this->adminDomainTabsFacade->getSelectedDomainId()
+        );
 
         return new QueryBuilderDataSource($queryBuilder, 'mt.id');
     }

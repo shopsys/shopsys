@@ -142,7 +142,9 @@ class OrderController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()])
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/edit.html.twig', [
             'form' => $form->createView(),
@@ -166,7 +168,9 @@ class OrderController extends AdminBaseController
 
         $form = $this->createForm(OrderFormType::class, $orderData, ['order' => $order]);
 
-        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById($order->getItems());
+        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
+            $order->getItems()
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/addProduct.html.twig', [
             'form' => $form->createView(),
@@ -190,9 +194,13 @@ class OrderController extends AdminBaseController
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $isAdvancedSearchFormSubmitted = $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted($request);
+        $isAdvancedSearchFormSubmitted = $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
+            $request
+        );
         if ($isAdvancedSearchFormSubmitted) {
-            $queryBuilder = $this->advancedSearchOrderFacade->getQueryBuilderByAdvancedSearchOrderData($advancedSearchData);
+            $queryBuilder = $this->advancedSearchOrderFacade->getQueryBuilderByAdvancedSearchOrderData(
+                $advancedSearchData
+            );
         } else {
             $queryBuilder = $this->orderFacade->getOrderListQueryBuilderByQuickSearchData($quickSearchForm->getData());
         }
@@ -233,7 +241,9 @@ class OrderController extends AdminBaseController
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
-            'isAdvancedSearchFormSubmitted' => $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted($request),
+            'isAdvancedSearchFormSubmitted' => $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
+                $request
+            ),
         ]);
     }
 
@@ -280,7 +290,10 @@ class OrderController extends AdminBaseController
      */
     public function getRuleFormAction(Request $request)
     {
-        $ruleForm = $this->advancedSearchOrderFacade->createRuleForm($request->get('filterName'), $request->get('newIndex'));
+        $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
+            $request->get('filterName'),
+            $request->get('newIndex')
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/AdvancedSearch/ruleForm.html.twig', [
             'rulesForm' => $ruleForm->createView(),

@@ -78,7 +78,12 @@ class ProductAvailabilityFilter implements AdvancedSearchFilterInterface
             if ($ruleData->operator === self::OPERATOR_IS) {
                 $tableAlias = 'a' . $index;
                 $availabilityParameter = 'availability' . $index;
-                $queryBuilder->join('p.calculatedAvailability', $tableAlias, Join::WITH, $tableAlias . '.id = :' . $availabilityParameter);
+                $queryBuilder->join(
+                    'p.calculatedAvailability',
+                    $tableAlias,
+                    Join::WITH,
+                    $tableAlias . '.id = :' . $availabilityParameter
+                );
                 $queryBuilder->setParameter($availabilityParameter, $ruleData->value);
             } elseif ($ruleData->operator === self::OPERATOR_IS_NOT) {
                 $isNotAvailabilities[] = $ruleData->value;

@@ -42,7 +42,9 @@ class Version20190611114955 extends AbstractMigration
     protected function calculateOrderItemTotalPrices(): void
     {
         $this->sql('UPDATE order_items SET total_price_with_vat = price_with_vat * quantity');
-        $this->sql('UPDATE order_items SET total_price_without_vat = total_price_with_vat - ROUND(total_price_with_vat * ROUND(vat_percent / (100 + vat_percent), 4), 2)');
+        $this->sql(
+            'UPDATE order_items SET total_price_without_vat = total_price_with_vat - ROUND(total_price_with_vat * ROUND(vat_percent / (100 + vat_percent), 4), 2)'
+        );
     }
 
     /**
@@ -67,12 +69,18 @@ class Version20190611114955 extends AbstractMigration
             return;
         }
 
-        $message = sprintf('There are %d orders in your DB where the order item total prices do not add up to the total price of the order:', $incorrectOrderCount);
+        $message = sprintf(
+            'There are %d orders in your DB where the order item total prices do not add up to the total price of the order:',
+            $incorrectOrderCount
+        );
 
         for ($i = 0; $i < min($incorrectOrderCount, static::MAX_LISTED_ORDERS); $i++) {
             $incorrectOrder = $statement->fetch(PDO::FETCH_NUM);
 
-            $message .= sprintf("\n  - ID %d: order total %s, sum %s (with VAT); order total %s, sum %s (without VAT)", ...$incorrectOrder);
+            $message .= sprintf(
+                "\n  - ID %d: order total %s, sum %s (with VAT); order total %s, sum %s (without VAT)",
+                ...$incorrectOrder
+            );
         }
 
         if ($incorrectOrderCount > static::MAX_LISTED_ORDERS) {

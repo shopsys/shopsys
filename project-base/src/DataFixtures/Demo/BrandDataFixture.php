@@ -75,7 +75,12 @@ class BrandDataFixture extends AbstractReferenceFixture
             $brandData->name = $brandName;
 
             foreach ($this->domain->getAllLocales() as $locale) {
-                $brandData->descriptions[$locale] = t('This is description of brand %brandName%.', ['%brandName%' => $brandData->name], 'dataFixtures', $locale);
+                $brandData->descriptions[$locale] = t(
+                    'This is description of brand %brandName%.',
+                    ['%brandName%' => $brandData->name],
+                    'dataFixtures',
+                    $locale
+                );
             }
 
             $brand = $this->brandFacade->create($brandData);

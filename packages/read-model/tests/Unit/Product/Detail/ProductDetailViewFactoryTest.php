@@ -485,7 +485,9 @@ class ProductDetailViewFactoryTest extends TestCase
     {
         $productCachedAttributesFacadeMock = $this->createMock(ProductCachedAttributesFacade::class);
         $getProductSellingPriceMethod = $productCachedAttributesFacadeMock->method('getProductSellingPrice');
-        $getProductSellingPriceMethod->willReturn($priceAmount === null ? null : $this->createProductPrice($priceAmount));
+        $getProductSellingPriceMethod->willReturn(
+            $priceAmount === null ? null : $this->createProductPrice($priceAmount)
+        );
 
         return $productCachedAttributesFacadeMock;
     }

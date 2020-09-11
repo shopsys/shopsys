@@ -88,13 +88,21 @@ class FileUpload
     public function setEventDispatcher(ParameterBagInterface $parameterBag): void
     {
         if ($this->parameterBag !== null && $this->parameterBag !== $parameterBag) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
         }
         if ($this->parameterBag !== null) {
             return;
         }
 
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
         $this->parameterBag = $parameterBag;
     }
 
@@ -109,7 +117,10 @@ class FileUpload
         }
 
         $temporaryFilename = $this->getTemporaryFilename($file->getClientOriginalName());
-        $this->mountManager->move('local://' . $file->getRealPath(), 'main://' . $this->getTemporaryDirectory() . '/' . $temporaryFilename);
+        $this->mountManager->move(
+            'local://' . $file->getRealPath(),
+            'main://' . $this->getTemporaryDirectory() . '/' . $temporaryFilename
+        );
 
         return $temporaryFilename;
     }
@@ -155,7 +166,11 @@ class FileUpload
      */
     public function getAbsoluteTemporaryFilepath($temporaryFilename)
     {
-        return $this->parameterBag->get('kernel.root_dir') . $this->getTemporaryDirectory() . '/' . TransformString::safeFilename($temporaryFilename);
+        return $this->parameterBag->get(
+            'kernel.root_dir'
+        ) . $this->getTemporaryDirectory() . '/' . TransformString::safeFilename(
+            $temporaryFilename
+        );
     }
 
     /**
@@ -225,7 +240,9 @@ class FileUpload
 
         /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
         foreach ($filesForUpload as $fileForUpload) {
-            $sourceFilepath = TransformString::removeDriveLetterFromPath($this->getTemporaryFilepath($fileForUpload->getTemporaryFilename()));
+            $sourceFilepath = TransformString::removeDriveLetterFromPath(
+                $this->getTemporaryFilepath($fileForUpload->getTemporaryFilename())
+            );
             $originalFilename = $this->fileNamingConvention->getFilenameByNamingConvention(
                 $fileForUpload->getNameConventionType(),
                 $fileForUpload->getTemporaryFilename(),

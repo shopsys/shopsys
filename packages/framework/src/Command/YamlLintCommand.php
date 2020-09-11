@@ -182,7 +182,13 @@ EOF
         if ($erroredFiles === 0) {
             $io->success(sprintf('All %d YAML files contain valid syntax.', $countFiles));
         } else {
-            $io->warning(sprintf('%d YAML files have valid syntax and %d contain errors.', $countFiles - $erroredFiles, $erroredFiles));
+            $io->warning(
+                sprintf(
+                    '%d YAML files have valid syntax and %d contain errors.',
+                    $countFiles - $erroredFiles,
+                    $erroredFiles
+                )
+            );
         }
 
         return min($erroredFiles, 1);
@@ -284,7 +290,10 @@ EOF
     {
         $default = function (string $directory) {
             return new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS),
+                new RecursiveDirectoryIterator(
+                    $directory,
+                    FilesystemIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS
+                ),
                 RecursiveIteratorIterator::LEAVES_ONLY
             );
         };

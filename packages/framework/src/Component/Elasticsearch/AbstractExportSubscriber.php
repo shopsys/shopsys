@@ -78,7 +78,10 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
             $productIds = $this->exportScheduler->getRowIdsForImmediateExport();
 
             foreach ($this->domain->getAllIds() as $domainId) {
-                $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index::getName(), $domainId);
+                $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(
+                    $this->index::getName(),
+                    $domainId
+                );
                 $this->indexFacade->exportIds($this->index, $indexDefinition, $productIds);
             }
         }

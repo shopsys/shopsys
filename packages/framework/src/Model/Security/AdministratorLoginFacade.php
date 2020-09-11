@@ -72,8 +72,13 @@ class AdministratorLoginFacade
     public function generateMultidomainLoginTokenWithExpiration(Administrator $administrator)
     {
         $multidomainLoginToken = $this->hashGenerator->generateHash(static::MULTIDOMAIN_LOGIN_TOKEN_LENGTH);
-        $multidomainLoginTokenExpirationDateTime = new DateTime('+' . static::MULTIDOMAIN_LOGIN_TOKEN_VALID_SECONDS . 'seconds');
-        $administrator->setMultidomainLoginTokenWithExpiration($multidomainLoginToken, $multidomainLoginTokenExpirationDateTime);
+        $multidomainLoginTokenExpirationDateTime = new DateTime(
+            '+' . static::MULTIDOMAIN_LOGIN_TOKEN_VALID_SECONDS . 'seconds'
+        );
+        $administrator->setMultidomainLoginTokenWithExpiration(
+            $multidomainLoginToken,
+            $multidomainLoginTokenExpirationDateTime
+        );
         $this->em->flush();
 
         return $multidomainLoginToken;

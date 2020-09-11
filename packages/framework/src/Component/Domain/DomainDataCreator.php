@@ -115,7 +115,10 @@ class DomainDataCreator
                 $this->processDefaultPricingGroupForNewDomain($domainId);
                 $this->processDefaultVatForNewDomain($domainId);
 
-                $this->multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(self::TEMPLATE_DOMAIN_ID, $domainId);
+                $this->multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(
+                    self::TEMPLATE_DOMAIN_ID,
+                    $domainId
+                );
                 if ($isNewLocale) {
                     $this->translatableEntityDataCreator->copyAllTranslatableDataForNewLocale(
                         $this->getTemplateLocale(),

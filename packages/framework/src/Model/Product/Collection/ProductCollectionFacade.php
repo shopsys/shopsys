@@ -100,7 +100,11 @@ class ProductCollectionFacade
                 $imagesUrlsByProductId[$productId] = null;
             } else {
                 try {
-                    $imagesUrlsByProductId[$productId] = $this->imageFacade->getImageUrl($domainConfig, $image, $sizeName);
+                    $imagesUrlsByProductId[$productId] = $this->imageFacade->getImageUrl(
+                        $domainConfig,
+                        $image,
+                        $sizeName
+                    );
                 } catch (ImageNotFoundException $e) {
                     $imagesUrlsByProductId[$productId] = null;
                 }
@@ -117,7 +121,10 @@ class ProductCollectionFacade
     protected function getMainImagesIndexedByProductId(array $products)
     {
         $productEntityName = $this->imageConfig->getImageEntityConfigByClass(Product::class)->getEntityName();
-        $imagesByProductId = $this->imageRepository->getMainImagesByEntitiesIndexedByEntityId($products, $productEntityName);
+        $imagesByProductId = $this->imageRepository->getMainImagesByEntitiesIndexedByEntityId(
+            $products,
+            $productEntityName
+        );
 
         $imagesOrNullByProductId = [];
 
@@ -162,6 +169,9 @@ class ProductCollectionFacade
     {
         $locale = $domainConfig->getLocale();
 
-        return $this->parameterRepository->getParameterValuesIndexedByProductIdAndParameterNameForProducts($products, $locale);
+        return $this->parameterRepository->getParameterValuesIndexedByProductIdAndParameterNameForProducts(
+            $products,
+            $locale
+        );
     }
 }

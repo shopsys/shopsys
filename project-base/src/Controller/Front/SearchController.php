@@ -41,7 +41,10 @@ class SearchController extends FrontBaseController
     public function autocompleteAction(Request $request)
     {
         $searchText = $request->get('searchText');
-        $searchUrl = $this->generateUrl('front_product_search', [ProductController::SEARCH_TEXT_PARAMETER => $searchText]);
+        $searchUrl = $this->generateUrl(
+            'front_product_search',
+            [ProductController::SEARCH_TEXT_PARAMETER => $searchText]
+        );
 
         $categoriesPaginationResult = $this->categoryFacade
             ->getSearchAutocompleteCategories($searchText, self::AUTOCOMPLETE_CATEGORY_LIMIT);

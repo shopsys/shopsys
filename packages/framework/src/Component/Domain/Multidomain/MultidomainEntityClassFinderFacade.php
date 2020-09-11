@@ -77,6 +77,8 @@ class MultidomainEntityClassFinderFacade
             $multidomainClassesMetadata[] = $this->em->getMetadataFactory()->getMetadataFor($resolvedClassName);
         }
 
-        return $this->notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName($multidomainClassesMetadata);
+        return $this->notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName(
+            $multidomainClassesMetadata
+        );
     }
 }

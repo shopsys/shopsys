@@ -180,7 +180,9 @@ class ProductFormType extends AbstractType
             'required' => false,
             'entry_options' => [
                 'constraints' => [
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Product name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 255, 'maxMessage' => 'Product name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ],
             'label' => t('Name'),
@@ -249,7 +251,9 @@ class ProductFormType extends AbstractType
         $builderBasicInformationGroup->add('catnum', TextType::class, [
             'required' => false,
             'constraints' => [
-                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']),
+                new Constraints\Length(
+                    ['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']
+                ),
             ],
             'disabled' => $this->isProductMainVariant($product),
             'attr' => $disabledItemInMainVariantAttr,
@@ -258,7 +262,9 @@ class ProductFormType extends AbstractType
             ->add('partno', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Part number cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'Part number cannot be longer than {{ limit }} characters']
+                    ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
                 'attr' => $disabledItemInMainVariantAttr,
@@ -267,7 +273,9 @@ class ProductFormType extends AbstractType
             ->add('ean', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'EAN cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'EAN cannot be longer than {{ limit }} characters']
+                    ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
                 'attr' => $disabledItemInMainVariantAttr,
@@ -384,7 +392,9 @@ class ProductFormType extends AbstractType
     {
         $productMainCategoriesIndexedByDomainId = [];
         if ($product !== null) {
-            $productMainCategoriesIndexedByDomainId = $this->categoryFacade->getProductMainCategoriesIndexedByDomainId($product);
+            $productMainCategoriesIndexedByDomainId = $this->categoryFacade->getProductMainCategoriesIndexedByDomainId(
+                $product
+            );
         }
 
         $mainCategoriesOptionsByDomainId = [];
@@ -401,7 +411,11 @@ class ProductFormType extends AbstractType
                     'readonly' => 'readonly',
                     'show_label' => true,
                 ],
-                'label' => count($productMainCategoriesIndexedByDomainId) > 1 ? $this->domain->getDomainConfigById($domainId)->getName() : t('Main category'),
+                'label' => count($productMainCategoriesIndexedByDomainId) > 1 ? $this->domain->getDomainConfigById(
+                    $domainId
+                )->getName() : t(
+                    'Main category'
+                ),
                 'data' => $productMainCategory === null ? '-' : $productMainCategory->getName(),
             ];
         }
@@ -457,7 +471,9 @@ class ProductFormType extends AbstractType
                 'label' => t('Exclude from sale'),
                 'attr' => [
                     'icon' => true,
-                    'iconTitle' => t('Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.'),
+                    'iconTitle' => t(
+                        'Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.'
+                    ),
                 ],
             ]);
 
@@ -628,11 +644,15 @@ class ProductFormType extends AbstractType
             'label' => t('Prices'),
         ]);
 
-        $productCalculatedPricesGroup = $builder->create('productCalculatedPricesGroup', ProductCalculatedPricesType::class, [
-            'product' => $product,
-            'inherit_data' => true,
-            'render_form_row' => false,
-        ]);
+        $productCalculatedPricesGroup = $builder->create(
+            'productCalculatedPricesGroup',
+            ProductCalculatedPricesType::class,
+            [
+                'product' => $product,
+                'inherit_data' => true,
+                'render_form_row' => false,
+            ]
+        );
 
         $builderPricesGroup->add($productCalculatedPricesGroup);
         $manualInputPricesByPricingGroup = $builder->create('manualInputPricesByPricingGroupId', FormType::class, [
@@ -792,7 +812,9 @@ class ProductFormType extends AbstractType
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Variant alias cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 255, 'maxMessage' => 'Variant alias cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
                 'label' => t('Variant alias'),

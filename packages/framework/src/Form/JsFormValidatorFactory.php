@@ -116,7 +116,9 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
         if (isset($model->data['form']['constraints'])) {
             foreach ($model->data['form']['constraints'] as $constraintName => $constraintSet) {
                 foreach ($constraintSet as $key => $constraint) {
-                    $model->data['form']['constraints'][$constraintName][$key] = $this->jsonSerializeConstraintValues($constraint);
+                    $model->data['form']['constraints'][$constraintName][$key] = $this->jsonSerializeConstraintValues(
+                        $constraint
+                    );
                 }
             }
         }

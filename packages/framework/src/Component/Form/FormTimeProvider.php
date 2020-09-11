@@ -46,7 +46,9 @@ class FormTimeProvider
         }
 
         if ($options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS] !== null) {
-            return new DateTime('-' . $options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS] . ' second') >= $startTime;
+            return new DateTime(
+                '-' . $options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS] . ' second'
+            ) >= $startTime;
         }
 
         return true;

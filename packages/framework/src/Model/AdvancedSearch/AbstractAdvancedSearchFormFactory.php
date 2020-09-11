@@ -117,7 +117,9 @@ abstract class AbstractAdvancedSearchFormFactory
     {
         $choices = [];
         foreach ($this->advancedSearchConfig->getAllFilters() as $filter) {
-            $choices[$this->advancedSearchFilterTranslation->translateFilterName($filter->getName())] = $filter->getName();
+            $choices[$this->advancedSearchFilterTranslation->translateFilterName(
+                $filter->getName()
+            )] = $filter->getName();
         }
 
         return $choices;

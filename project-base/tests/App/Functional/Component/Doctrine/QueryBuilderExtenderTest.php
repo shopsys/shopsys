@@ -37,7 +37,10 @@ class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
         $this->queryBuilderExtender->addOrExtendJoin($queryBuilder, $secondJoinedEntity, 'p', '1 = 1');
 
         $dql = $queryBuilder->getDQL();
-        $this->assertSame('SELECT c FROM ' . Category::class . ' c INNER JOIN ' . $expectedJoinedEntity . ' p WITH 0 = 0 WHERE 1 = 1', $dql);
+        $this->assertSame(
+            'SELECT c FROM ' . Category::class . ' c INNER JOIN ' . $expectedJoinedEntity . ' p WITH 0 = 0 WHERE 1 = 1',
+            $dql
+        );
     }
 
     /**

@@ -68,8 +68,15 @@ class ExtendedClassesAnnotationsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Fixes and adds annotations (or just checks them in dry-run mode) in project classes to improve static analysis and DX with extended classes. See "help" for more information')
-            ->addOption(static::DRY_RUN, null, InputOption::VALUE_NONE, 'By default, the command fixes and adds all the relevant annotations for extended classes. When using this option, it just reports files that need to be fixed.')
+            ->setDescription(
+                'Fixes and adds annotations (or just checks them in dry-run mode) in project classes to improve static analysis and DX with extended classes. See "help" for more information'
+            )
+            ->addOption(
+                static::DRY_RUN,
+                null,
+                InputOption::VALUE_NONE,
+                'By default, the command fixes and adds all the relevant annotations for extended classes. When using this option, it just reports files that need to be fixed.'
+            )
             ->setHelp('What does the command do exactly?
 - Replaces the framework with the project annotations in all project files when there exists a project extension of a given framework class.
 - Adds @property annotations to project classes when there exists a property in parent class that is extended in the project.
@@ -118,7 +125,9 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $symfonyStyle->error('Following files need fixing annotations:');
                 $symfonyStyle->listing($filesForReplacingAnnotations);
             } else {
-                $symfonyStyle->note(['Annotations were fixed in the following files:'] + $filesForReplacingAnnotations);
+                $symfonyStyle->note(
+                    ['Annotations were fixed in the following files:'] + $filesForReplacingAnnotations
+                );
             }
         }
         $filesForAddingPropertyOrMethodAnnotations = $this->addPropertyAndMethodAnnotationsToProjectClasses($isDryRun);
@@ -127,7 +136,9 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $symfonyStyle->error('@method or @property annotations need to be added to the following files:');
                 $symfonyStyle->listing($filesForAddingPropertyOrMethodAnnotations);
             } else {
-                $symfonyStyle->note(['@method or @property annotations were added to the following files:'] + $filesForAddingPropertyOrMethodAnnotations);
+                $symfonyStyle->note(
+                    ['@method or @property annotations were added to the following files:'] + $filesForAddingPropertyOrMethodAnnotations
+                );
             }
         }
         if (count($filesForReplacingAnnotations) === 0 && count($filesForAddingPropertyOrMethodAnnotations) === 0) {
@@ -202,7 +213,10 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $projectClassBetterReflection
             );
             if (!$isDryRun) {
-                $this->annotationsAdder->addAnnotationToClass($projectClassBetterReflection, $projectClassNecessaryPropertyAnnotationsLines . $projectClassNecessaryMethodAnnotationsLines);
+                $this->annotationsAdder->addAnnotationToClass(
+                    $projectClassBetterReflection,
+                    $projectClassNecessaryPropertyAnnotationsLines . $projectClassNecessaryMethodAnnotationsLines
+                );
             }
 
             if (

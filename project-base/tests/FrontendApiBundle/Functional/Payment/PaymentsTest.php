@@ -37,7 +37,12 @@ class PaymentsTest extends GraphQlTestCase
                 'payments' => [
                     [
                         'name' => t('Credit card', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
-                        'description' => t('Quick, cheap and reliable!', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'description' => t(
+                            'Quick, cheap and reliable!',
+                            [],
+                            'dataFixtures',
+                            $this->getLocaleForFirstDomain()
+                        ),
                         'instruction' => null,
                         'position' => 0,
                         'price' => [

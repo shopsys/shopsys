@@ -52,7 +52,10 @@ class AdministratorActivityRepository
      */
     public function getCurrent(Administrator $administrator)
     {
-        $currentAdministratorActivity = $this->getLastActivitiesQueryBuilder($administrator, 1)->getQuery()->getSingleResult();
+        $currentAdministratorActivity = $this->getLastActivitiesQueryBuilder(
+            $administrator,
+            1
+        )->getQuery()->getSingleResult();
         if ($currentAdministratorActivity === null) {
             throw new CurrentAdministratorActivityNotFoundException();
         }

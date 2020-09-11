@@ -53,7 +53,9 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             ->setMethods(['calculateDiscountsRoundedByCurrency', '__construct'])
             ->disableOriginalConstructor()
             ->getMock();
-        $quantifiedProductDiscountCalculationMock->expects($this->once())->method('calculateDiscountsRoundedByCurrency')
+        $quantifiedProductDiscountCalculationMock->expects($this->once())->method(
+            'calculateDiscountsRoundedByCurrency'
+        )
             ->willReturn($quantifiedProductsDiscounts);
 
         $paymentPriceCalculationMock = $this->getMockBuilder(PaymentPriceCalculation::class)
@@ -104,9 +106,18 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $this->assertSame($quantifiedItemsPrices, $orderPreview->getQuantifiedItemsPrices());
         $this->assertSame($payment, $orderPreview->getPayment());
         $this->assertSame($paymentPrice, $orderPreview->getPaymentPrice());
-        $this->assertThat($orderPreview->getTotalPrice()->getVatAmount(), new IsMoneyEqual(Money::create(2 + 20 + 400 * 2)));
-        $this->assertThat($orderPreview->getTotalPrice()->getPriceWithVat(), new IsMoneyEqual(Money::create(12 + 120 + 2400 * 2)));
-        $this->assertThat($orderPreview->getTotalPrice()->getPriceWithoutVat(), new IsMoneyEqual(Money::create(10 + 100 + 2000 * 2)));
+        $this->assertThat(
+            $orderPreview->getTotalPrice()->getVatAmount(),
+            new IsMoneyEqual(Money::create(2 + 20 + 400 * 2))
+        );
+        $this->assertThat(
+            $orderPreview->getTotalPrice()->getPriceWithVat(),
+            new IsMoneyEqual(Money::create(12 + 120 + 2400 * 2))
+        );
+        $this->assertThat(
+            $orderPreview->getTotalPrice()->getPriceWithoutVat(),
+            new IsMoneyEqual(Money::create(10 + 100 + 2000 * 2))
+        );
         $this->assertSame($transport, $orderPreview->getTransport());
         $this->assertSame($transportPrice, $orderPreview->getTransportPrice());
     }
@@ -136,7 +147,9 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             ->setMethods(['calculateDiscountsRoundedByCurrency', '__construct'])
             ->disableOriginalConstructor()
             ->getMock();
-        $quantifiedProductDiscountCalculationMock->expects($this->once())->method('calculateDiscountsRoundedByCurrency')
+        $quantifiedProductDiscountCalculationMock->expects($this->once())->method(
+            'calculateDiscountsRoundedByCurrency'
+        )
             ->willReturn($quantifiedProductsDiscounts);
 
         $paymentPriceCalculationMock = $this->getMockBuilder(PaymentPriceCalculation::class)
@@ -181,8 +194,14 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $this->assertNull($orderPreview->getPayment());
         $this->assertNull($orderPreview->getPaymentPrice());
         $this->assertThat($orderPreview->getTotalPrice()->getVatAmount(), new IsMoneyEqual(Money::create(400 * 2)));
-        $this->assertThat($orderPreview->getTotalPrice()->getPriceWithVat(), new IsMoneyEqual(Money::create(2400 * 2)));
-        $this->assertThat($orderPreview->getTotalPrice()->getPriceWithoutVat(), new IsMoneyEqual(Money::create(2000 * 2)));
+        $this->assertThat(
+            $orderPreview->getTotalPrice()->getPriceWithVat(),
+            new IsMoneyEqual(Money::create(2400 * 2))
+        );
+        $this->assertThat(
+            $orderPreview->getTotalPrice()->getPriceWithoutVat(),
+            new IsMoneyEqual(Money::create(2000 * 2))
+        );
         $this->assertNull($orderPreview->getTransport());
         $this->assertNull($orderPreview->getTransportPrice());
     }

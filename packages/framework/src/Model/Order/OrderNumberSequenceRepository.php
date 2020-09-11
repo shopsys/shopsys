@@ -42,8 +42,11 @@ class OrderNumberSequenceRepository
 
             $requestedNumber = time();
 
-            $orderNumberSequence = $this->getOrderNumberSequenceRepository()->find(static::ID, LockMode::PESSIMISTIC_WRITE);
             /** @var \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequence|null $orderNumberSequence */
+            $orderNumberSequence = $this->getOrderNumberSequenceRepository()->find(
+                static::ID,
+                LockMode::PESSIMISTIC_WRITE
+            );
             if ($orderNumberSequence === null) {
                 throw new OrderNumberSequenceNotFoundException(
                     'Order number sequence ID ' . static::ID . ' not found.'

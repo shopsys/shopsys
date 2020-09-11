@@ -74,7 +74,11 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
                 throw new PaymentNotFoundException('Payment is disabled on domain');
             }
         } catch (PaymentNotFoundException $exception) {
-            $this->addViolationWithCodeToContext($constraint->paymentNotFoundMessage, PaymentCanBeUsed::PAYMENT_NOT_FOUND_ERROR, $uuid);
+            $this->addViolationWithCodeToContext(
+                $constraint->paymentNotFoundMessage,
+                PaymentCanBeUsed::PAYMENT_NOT_FOUND_ERROR,
+                $uuid
+            );
             return;
         }
 
@@ -84,12 +88,18 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
             $this->domain->getId()
         );
 
-        if (!$paymentPrice->getPriceWithoutVat()->equals($priceWithoutVat) ||
-            !$paymentPrice->getPriceWithVat()->equals($priceWithVat) ||
-            !$paymentPrice->getVatAmount()->equals($vatAmount)
+        if ($paymentPrice->getPriceWithoutVat()->equals($priceWithoutVat) &&
+            $paymentPrice->getPriceWithVat()->equals($priceWithVat) &&
+            $paymentPrice->getVatAmount()->equals($vatAmount)
         ) {
-            $this->addViolationWithCodeToContext($constraint->pricesDoesNotMatchMessage, PaymentCanBeUsed::PRICES_DOES_NOT_MATCH_ERROR, $uuid);
+            return;
         }
+
+        $this->addViolationWithCodeToContext(
+            $constraint->pricesDoesNotMatchMessage,
+            PaymentCanBeUsed::PRICES_DOES_NOT_MATCH_ERROR,
+            $uuid
+        );
     }
 
     /**

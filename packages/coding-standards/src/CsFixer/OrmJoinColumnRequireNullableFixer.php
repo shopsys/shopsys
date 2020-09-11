@@ -167,7 +167,9 @@ SAMPLE
             $matches = null;
             preg_match_all('~\\s*\*~', $joinColumnAnnotation->getContent(), $matches);
             $newText = "\n" . $matches[0][0] . '     nullable=false,';
-            $firstLine->setContent(preg_replace('~(@ORM\\\JoinColumn\\()~', '$1' . $newText, $firstLine->getContent()));
+            $firstLine->setContent(
+                preg_replace('~(@ORM\\\JoinColumn\\()~', '$1' . $newText, $firstLine->getContent())
+            );
         }
     }
 }

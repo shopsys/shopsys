@@ -644,7 +644,10 @@ class Product extends AbstractTranslatableEntity
             }
         }
         foreach ($productCategoryDomains as $productCategoryDomain) {
-            if ($this->isProductCategoryDomainInArray($productCategoryDomain, $this->productCategoryDomains->toArray()) === false) {
+            if ($this->isProductCategoryDomainInArray(
+                $productCategoryDomain,
+                $this->productCategoryDomains->toArray()
+            ) === false) {
                 $this->productCategoryDomains->add($productCategoryDomain);
             }
         }

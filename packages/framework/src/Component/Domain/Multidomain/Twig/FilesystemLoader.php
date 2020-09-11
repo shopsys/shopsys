@@ -67,12 +67,19 @@ class FilesystemLoader extends BaseFilesystemLoader
         try {
             $designId = $this->domain->getDesignId();
             if ($designId !== null) {
-                $multidesignTemplateName = preg_replace('/^(.*)(\.[^\.]*\.twig)$/', '$1.' . $designId . '$2', $templateName);
+                $multidesignTemplateName = preg_replace(
+                    '/^(.*)(\.[^\.]*\.twig)$/',
+                    '$1.' . $designId . '$2',
+                    $templateName
+                );
                 try {
                     return parent::findTemplate($multidesignTemplateName);
                 } catch (LoaderError $loaderException) {
                     if (strpos($loaderException->getMessage(), 'Unable to find template') !== 0) {
-                        $message = sprintf('Unexpected exception when trying to load multidesign template `%s`', $multidesignTemplateName);
+                        $message = sprintf(
+                            'Unexpected exception when trying to load multidesign template `%s`',
+                            $multidesignTemplateName
+                        );
                         throw new LoaderError($message, -1, null, $loaderException);
                     }
                 }

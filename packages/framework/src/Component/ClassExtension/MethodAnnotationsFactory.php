@@ -68,11 +68,23 @@ class MethodAnnotationsFactory
                 continue;
             }
 
-            if ($this->methodReturningTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes())
-                || $this->methodParameterTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getParameters())) {
+            if ($this->methodReturningTypeIsExtendedInProject(
+                $frameworkClassPattern,
+                $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes()
+            )
+                || $this->methodParameterTypeIsExtendedInProject(
+                    $frameworkClassPattern,
+                    $reflectionMethodFromFrameworkClass->getParameters()
+                )) {
                 $optionalStaticKeyword = $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '';
-                $returnType = $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) !== '' ? $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) . ' ' : '';
-                $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes($reflectionMethodFromFrameworkClass);
+                $returnType = $this->annotationsReplacer->replaceInMethodReturnType(
+                    $reflectionMethodFromFrameworkClass
+                ) !== '' ? $this->annotationsReplacer->replaceInMethodReturnType(
+                    $reflectionMethodFromFrameworkClass
+                ) . ' ' : '';
+                $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes(
+                    $reflectionMethodFromFrameworkClass
+                );
 
                 return sprintf(
                     " * @method %s%s%s(%s)\n",

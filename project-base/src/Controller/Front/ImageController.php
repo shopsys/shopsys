@@ -46,7 +46,12 @@ class ImageController extends FrontBaseController
         }
 
         try {
-            $imageFilepath = $this->imageGeneratorFacade->generateImageAndGetFilepath($entityName, $imageId, $type, $sizeName);
+            $imageFilepath = $this->imageGeneratorFacade->generateImageAndGetFilepath(
+                $entityName,
+                $imageId,
+                $type,
+                $sizeName
+            );
         } catch (ImageException $e) {
             $message = sprintf(
                 'Generate image for entity "%s" (type=%s, size=%s, imageId=%s) failed',
@@ -75,7 +80,13 @@ class ImageController extends FrontBaseController
         }
 
         try {
-            $imageFilepath = $this->imageGeneratorFacade->generateAdditionalImageAndGetFilepath($entityName, $imageId, $additionalIndex, $type, $sizeName);
+            $imageFilepath = $this->imageGeneratorFacade->generateAdditionalImageAndGetFilepath(
+                $entityName,
+                $imageId,
+                $additionalIndex,
+                $type,
+                $sizeName
+            );
         } catch (ImageException $e) {
             $message = sprintf(
                 'Generate image for entity "%s" (type=%s, size=%s, imageId=%s, additionalIndex=%s) failed',

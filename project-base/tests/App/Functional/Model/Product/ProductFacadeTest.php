@@ -159,7 +159,10 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
         $this->productFacade->edit($productId, $productData);
 
-        $this->assertArrayHasKey($productId, $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation());
+        $this->assertArrayHasKey(
+            $productId,
+            $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation()
+        );
     }
 
     /**

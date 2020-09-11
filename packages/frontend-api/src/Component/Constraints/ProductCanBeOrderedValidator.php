@@ -116,23 +116,37 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
                 $this->currentCustomerUser->getPricingGroup()
             );
         } catch (ProductNotFoundException $exception) {
-            $this->addViolationWithCodeToContext($constraint->productNotFoundMessage, ProductCanBeOrdered::PRODUCT_NOT_FOUND_ERROR, $uuid);
+            $this->addViolationWithCodeToContext(
+                $constraint->productNotFoundMessage,
+                ProductCanBeOrdered::PRODUCT_NOT_FOUND_ERROR,
+                $uuid
+            );
             return;
         }
 
         $sellingPrice = $this->productCachedAttributesFacade->getProductSellingPrice($productEntity);
 
         if ($sellingPrice === null) {
-            $this->addViolationWithCodeToContext($constraint->noSellingPriceMessage, ProductCanBeOrdered::NO_SELLING_PRICE_ERROR, $uuid);
+            $this->addViolationWithCodeToContext(
+                $constraint->noSellingPriceMessage,
+                ProductCanBeOrdered::NO_SELLING_PRICE_ERROR,
+                $uuid
+            );
             return;
         }
 
-        if (!$sellingPrice->getPriceWithoutVat()->equals($priceWithoutVat) ||
-            !$sellingPrice->getPriceWithVat()->equals($priceWithVat) ||
-            !$sellingPrice->getVatAmount()->equals($vatAmount)
+        if ($sellingPrice->getPriceWithoutVat()->equals($priceWithoutVat) &&
+            $sellingPrice->getPriceWithVat()->equals($priceWithVat) &&
+            $sellingPrice->getVatAmount()->equals($vatAmount)
         ) {
-            $this->addViolationWithCodeToContext($constraint->pricesDoesNotMatchMessage, ProductCanBeOrdered::PRICES_DOES_NOT_MATCH_ERROR, $uuid);
+            return;
         }
+
+        $this->addViolationWithCodeToContext(
+            $constraint->pricesDoesNotMatchMessage,
+            ProductCanBeOrdered::PRICES_DOES_NOT_MATCH_ERROR,
+            $uuid
+        );
     }
 
     /**

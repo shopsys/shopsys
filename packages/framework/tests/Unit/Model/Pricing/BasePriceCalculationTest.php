@@ -72,7 +72,12 @@ class BasePriceCalculationTest extends TestCase
         $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
         $currency = new Currency($currencyData);
 
-        $basePrice = $basePriceCalculation->calculateBasePriceRoundedByCurrency($inputPrice, $inputPriceType, $vat, $currency);
+        $basePrice = $basePriceCalculation->calculateBasePriceRoundedByCurrency(
+            $inputPrice,
+            $inputPriceType,
+            $vat,
+            $currency
+        );
 
         $this->assertThat($basePrice->getPriceWithoutVat(), new IsMoneyEqual($basePriceWithoutVat));
         $this->assertThat($basePrice->getPriceWithVat(), new IsMoneyEqual($basePriceWithVat));

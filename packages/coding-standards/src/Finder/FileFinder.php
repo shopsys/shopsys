@@ -23,7 +23,11 @@ final class FileFinder
         foreach ($source as $singleSource) {
             if (is_file($singleSource)) {
                 $fileInfo = new SplFileInfo($singleSource);
-                $files[$fileInfo->getPath()] = new SymfonySplFileInfo($singleSource, $fileInfo->getPath(), $fileInfo->getPathname());
+                $files[$fileInfo->getPath()] = new SymfonySplFileInfo(
+                    $singleSource,
+                    $fileInfo->getPath(),
+                    $fileInfo->getPathname()
+                );
             } else {
                 $directories[] = $singleSource;
             }

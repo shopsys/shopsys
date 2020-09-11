@@ -58,7 +58,9 @@ class ChangeEnvironmentCommand extends Command
         }
 
         if ($targetEnvironment === null) {
-            throw new Exception('The target environment cannot be empty. Please run this command in interactive mode or set it via an argument.');
+            throw new Exception(
+                'The target environment cannot be empty. Please run this command in interactive mode or set it via an argument.'
+            );
         }
 
         if (!in_array($targetEnvironment, EnvironmentType::ALL, true)) {
