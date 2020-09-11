@@ -16,13 +16,13 @@ domain_iterator=0
 smtp_other_hostnames=""
 
 for DOMAIN in ${DOMAINS[@]}; do
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" spec.rules[${domain_iterator}].host ${!DOMAIN}
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" spec.tls[0].hosts[+] ${!DOMAIN}
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" spec.rules[0].host ${!DOMAIN}
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" spec.tls[0].hosts[+] ${!DOMAIN}
     yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/webserver-php-fpm.yaml" spec.template.spec.hostAliases[0].hostnames[+] ${!DOMAIN}
     yq write --inplace $domains_urls_filepath domains_urls[${domain_iterator}].url https://${!DOMAIN}
 
     if [ ${RUNNING_PRODUCTION} -eq "1" ]; then
-        yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" spec.tls[0].hosts[+] www.${!DOMAIN}
+        yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" spec.tls[0].hosts[+] www.${!DOMAIN}
     fi
 
     if [ ${domain_iterator} -gt "0" ]; then

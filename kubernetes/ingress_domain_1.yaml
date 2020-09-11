@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: eshop
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: 32m
+spec:
+  tls:
+    -   hosts: ~
+        secretName: tls-certificate
+  rules:
+    -   host: ~
+        http:
+          paths:
+            -   path: /
+                backend:
+                  serviceName: webserver-php-fpm
+                  servicePort: 8080

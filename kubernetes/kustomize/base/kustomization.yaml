@@ -3,7 +3,8 @@ resources:
     - ../../deployments/webserver-php-fpm.yaml
     - ../../services/redis.yaml
     - ../../services/webserver-php-fpm.yaml
-    - ../../ingress.yaml
+    - ../../ingress_domain_0.yaml
+    - ../../ingress_domain_1.yaml
     - ../../namespace.yaml
     - ../../configmap/nginx.yaml
     - ../../configmap/redis-health.yaml
