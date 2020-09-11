@@ -149,7 +149,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productArray['main_category_path'],
             $countColorsInVariants,
             $countDifferentVariants,
-            $productArray['has_sconto_flag']
+            array_key_exists('has_sconto_flag', $productArray) ? $productArray['has_sconto_flag'] : false,
         );
     }
 
