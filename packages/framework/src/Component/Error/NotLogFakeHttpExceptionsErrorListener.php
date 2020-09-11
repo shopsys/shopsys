@@ -23,6 +23,7 @@ class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
     public function __construct($controller, ErrorIdProvider $errorIdProvider, ?LoggerInterface $logger = null, bool $debug = false)
     {
         parent::__construct($controller, $logger, $debug);
+
         $this->errorIdProvider = $errorIdProvider;
     }
 
@@ -33,6 +34,7 @@ class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
     {
         if (!$exception instanceof \Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException) {
             $message .= sprintf(' Error ID: %s', $this->errorIdProvider->getErrorId());
+
             parent::logException($exception, $message);
         }
     }

@@ -16,6 +16,7 @@ class ReachMaxUrlUniqueResolveAttemptException extends Exception implements Frie
     {
         $message = 'Route "' . $friendlyUrl->getRouteName() . '" (param id = "' . $friendlyUrl->getEntityId() . '")'
             . ' reach max attempt (' . $attempt . ') for unique resolving.';
+
         parent::__construct($message, 0, $previous);
     }
 }

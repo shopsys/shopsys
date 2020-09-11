@@ -22,6 +22,7 @@ class AdminLocaleNotFoundException extends RuntimeException implements Localizat
             $adminLocale,
             implode('","', $possibleLocales)
         );
+
         parent::__construct($message, 0, $previous);
     }
 }

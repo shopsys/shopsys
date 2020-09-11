@@ -65,6 +65,7 @@ class GenerateMigrationCommand extends AbstractCommand
         $this->migrationsLocator = $migrationsLocator;
         $this->kernel = $kernel;
         $this->vendorDirectoryPath = $vendorDirectoryPath;
+
         parent::__construct();
     }
 

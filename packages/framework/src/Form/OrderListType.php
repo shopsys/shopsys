@@ -45,6 +45,7 @@ class OrderListType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
+
         $view->vars['orders'] = $this->orderFacade->getCustomerUserOrderList($options['customerUser']);
     }
 

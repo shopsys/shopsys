@@ -35,6 +35,7 @@ class TestTranslatableListener extends TranslatableListener
     public function __construct(MetadataFactory $factory, Domain $domain, AdministrationFacade $administrationFacade, string $adminLocale)
     {
         parent::__construct($factory);
+
         $this->domain = $domain;
         $this->administrationFacade = $administrationFacade;
         $this->adminLocale = $adminLocale;

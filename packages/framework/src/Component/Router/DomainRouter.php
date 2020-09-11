@@ -36,6 +36,7 @@ class DomainRouter extends ChainRouter
         ?LoggerInterface $logger = null
     ) {
         parent::__construct($logger);
+
         $this->setContext($context);
         $this->freeze = true;
         $this->friendlyUrlRouter = $friendlyUrlRouter;

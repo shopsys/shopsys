@@ -62,6 +62,7 @@ docker rmi --force $(docker images -q)
             $branchName,
             $versionStringWithoutPrefix
         ));
+
         parent::work($version);
     }
 }

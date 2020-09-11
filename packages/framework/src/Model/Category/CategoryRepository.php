@@ -45,6 +45,7 @@ class CategoryRepository extends NestedTreeRepository
 
         $resolvedClassName = $entityNameResolver->resolve(Category::class);
         $classMetadata = $this->em->getClassMetadata($resolvedClassName);
+
         parent::__construct($this->em, $classMetadata);
     }
 

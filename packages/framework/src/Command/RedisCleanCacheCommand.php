@@ -26,6 +26,7 @@ class RedisCleanCacheCommand extends Command
     public function __construct(RedisFacade $redisFacade)
     {
         $this->redisFacade = $redisFacade;
+
         parent::__construct();
     }
 

@@ -46,6 +46,7 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
         PricingGroupDataFactoryInterface $pricingGroupDataFactory
     ) {
         parent::__construct($pricingGroupGridFactory);
+
         $this->pricingGroupFacade = $pricingGroupFacade;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
         $this->formFactory = $formFactory;

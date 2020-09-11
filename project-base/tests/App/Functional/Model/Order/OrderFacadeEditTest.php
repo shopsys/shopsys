@@ -48,6 +48,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->setOrderForTests();
     }
 

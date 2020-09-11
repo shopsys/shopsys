@@ -119,6 +119,7 @@ class OrderFlow extends FormFlow
         }
 
         $this->changeRequestToStep($firstInvalidStep);
+
         parent::bind($formData); // load changed step
     }
 

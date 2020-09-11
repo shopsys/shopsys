@@ -61,6 +61,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->registerTestEntities();
 
         $entityExtensionMap = [

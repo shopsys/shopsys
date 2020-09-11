@@ -18,6 +18,7 @@ class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
+
         $view->vars['empty_message'] = $options['empty_message'];
     }
 

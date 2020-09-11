@@ -20,6 +20,7 @@ class ProductUrlNotLoadedException extends Exception implements ProductCollectio
             $product->getId(),
             $domainConfig->getName()
         );
+
         parent::__construct($message, 0, $previous);
     }
 }

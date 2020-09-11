@@ -95,6 +95,7 @@ class ExtendedClassesAnnotationsCommand extends Command
         AnnotationsAdder $annotationsAdder
     ) {
         parent::__construct();
+
         $this->projectRootDirectory = $projectRootDirectory;
         $this->classExtensionRegistry = $classExtensionRegistry;
         $this->annotationsReplacer = $annotationsReplacer;

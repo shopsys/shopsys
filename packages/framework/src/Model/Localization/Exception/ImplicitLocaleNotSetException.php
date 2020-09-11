@@ -25,6 +25,7 @@ class ImplicitLocaleNotSetException extends Exception implements LocalizationExc
             LocaleListener::class,
             TranslatableListener::class
         );
+
         parent::__construct($message, 0, $previous);
     }
 }

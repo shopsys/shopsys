@@ -125,6 +125,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $this->currentCustomerUser = $this->createMock(CurrentCustomerUser::class);
 
         $this->heurekaFacade = $this->createMock(HeurekaFacade::class);
+
         parent::setUp();
     }
 

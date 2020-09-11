@@ -15,6 +15,7 @@ class ImageAdditionalSizeNotFoundException extends Exception implements ImageCon
     {
         $sizeName = $sizeName ?: '~';
         $message = sprintf('Image size "%s" does not contain additional size on index "%s".', $sizeName, $additionalIndex);
+
         parent::__construct($message, 0, $previous);
     }
 }

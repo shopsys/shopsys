@@ -44,6 +44,7 @@ class Article extends BaseArticle
     protected function setData(BaseArticleData $articleData): void
     {
         parent::setData($articleData);
+
         $this->createdAt = $articleData->createdAt ?? new DateTime();
     }
 

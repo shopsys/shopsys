@@ -30,6 +30,7 @@ class NewsletterFacadeTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->em = $this->createMock(EntityManager::class);
         $this->newsletterRepository = $this->createMock(NewsletterRepository::class);
         $this->newsletterFacade = new NewsletterFacade(

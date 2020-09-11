@@ -47,6 +47,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->productOnCurrentDomainFacade = $this->getProductOnCurrentDomainFacade();
     }
 

@@ -131,6 +131,7 @@ class ExtendedProduct extends Product
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
+
         $this->oneToManyBidirectionalEntities = new ArrayCollection();
         $this->oneToManyUnidirectionalWithJoinTableEntities = new ArrayCollection();
         $this->oneToManySelfReferencingEntities = new ArrayCollection();

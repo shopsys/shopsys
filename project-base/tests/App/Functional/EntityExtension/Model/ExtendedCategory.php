@@ -130,6 +130,7 @@ class ExtendedCategory extends Category
     public function __construct(CategoryData $categoryData)
     {
         parent::__construct($categoryData);
+
         $this->oneToManyBidirectionalEntities = new ArrayCollection();
         $this->oneToManyUnidirectionalWithJoinTableEntities = new ArrayCollection();
         $this->oneToManySelfReferencingEntities = new ArrayCollection();

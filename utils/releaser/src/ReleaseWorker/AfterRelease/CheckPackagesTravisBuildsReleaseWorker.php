@@ -46,6 +46,7 @@ final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackages
     public function work(Version $version): void
     {
         $this->releasingBranchName = $version->getVersionString();
+
         parent::work($version);
     }
 }

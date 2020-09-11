@@ -49,6 +49,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->setUpDomain();
     }
 

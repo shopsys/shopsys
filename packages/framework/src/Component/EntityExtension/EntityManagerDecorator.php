@@ -29,8 +29,8 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
         EntityNameResolver $entityNameResolver
     ) {
         parent::__construct($em);
-        $this->entityNameResolver = $entityNameResolver;
 
+        $this->entityNameResolver = $entityNameResolver;
         $this->repositoryFactory = $config->getRepositoryFactory();
     }
 

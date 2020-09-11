@@ -333,6 +333,7 @@ class StrictWebDriver extends WebDriver
             './/*[self::input[@type="checkbox"]][./@id = //label[contains(normalize-space(string(.)), "' . $label . '")]/@for]',
             './/label[contains(normalize-space(string(.)), "' . $label . '")]//.//*[self::input[@type="checkbox"]]'
         );
+
         parent::checkOption(['xpath' => $xpath]);
     }
 
@@ -440,6 +441,7 @@ class StrictWebDriver extends WebDriver
     protected function assertNodesContain($text, $nodes, $selector = null)
     {
         $message = Locator::humanReadableString($selector);
+
         parent::assertNodesContain($text, $nodes, $message);
     }
 
@@ -451,6 +453,7 @@ class StrictWebDriver extends WebDriver
     protected function assertNodesNotContain($text, $nodes, $selector = null)
     {
         $message = Locator::humanReadableString($selector);
+
         parent::assertNodesNotContain($text, $nodes, $message);
     }
 }
