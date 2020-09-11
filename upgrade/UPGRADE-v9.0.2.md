@@ -49,3 +49,6 @@ There you can find links to upgrade notes for other versions too.
 
 - add acceptance test for testing sending order as logged customer ([#2011](https://github.com/shopsys/shopsys/pull/2011))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/09340a81e0223f3922d0964e0632711113163f06) to update your project
+
+- fix ImageConfig does not accept extended entities ([#1777](https://github.com/shopsys/shopsys/pull/1777))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/0d1ed01dc743fc2e5c1acd0d8f3434743f4dd890) to update your project
