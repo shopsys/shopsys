@@ -34,9 +34,9 @@
 
                         <div class="form-choice box-filter__choice__input">
                             {{ form_widget(flagForm, { attr: { class: "css-checkbox" } }) }}
-                            <label class="css-checkbox__image form-choice__label {{ getFlagIconClass(flagId) }}" for="{{ flagForm.vars.id }}">
+                            <label class="css-checkbox__image form-choice__label form-choice__label--flag" for="{{ flagForm.vars.id }}">
                                 <a href="{{ getUrlByFlagValue(productFilterSetup, flagId, flagChecked) }}"
-                                   class="js-product-filter-links"
+                                   class="flag-icon {{ getFlagIconClass(flagId) }} js-product-filter-links"
                                    data-link-id="flag-{{ flagId }}"
                                 >
                                 {{ flagForm.vars.label }}
@@ -62,12 +62,12 @@
                             {% set inStockChecked = filterForm.inStock.vars.checked %}
                             {% set stockId = filterForm.inStock.vars.value %}
 
-                            <label class="css-checkbox__image form-choice__label flag-icon_transport" for="{{ filterForm.inStock.vars.id }}">
+                            <label class="css-checkbox__image form-choice__label form-choice__label--flag" for="{{ filterForm.inStock.vars.id }}">
                                 <a href="{{ getUrlByAvailabilityValue(productFilterSetup, inStockChecked) }}"
-                                    class="js-product-filter-links"
+                                    class="flag-icon flag-icon--stock js-product-filter-links"
                                     data-link-id="inStock-{{ stockId }}"
                                 >
-                                    {{ 'Products in stock only'|trans }}
+                                    {{ 'Skladem'|trans }}
 
                                     <span
                                         class="js-product-filter-count"

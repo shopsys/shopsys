@@ -53,6 +53,17 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
         }
     }
 
+    & + .form-choice__label--flag {
+        padding-left: 25px;
+
+        font-size: 14px;
+        color: @color-primary-light;
+
+        &::before {
+            top: 1px;
+        }
+    }
+
     &:focus, &:active {
         & + .css-checkbox__image, & + .css-radio__image {
             &:before {
