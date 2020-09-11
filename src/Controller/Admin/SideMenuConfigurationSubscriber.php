@@ -4,11 +4,23 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+     */
+    private AuthorizationCheckerInterface $authorizationChecker;
+
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+    }
+
     /**
      * @return array
      */
@@ -20,7 +32,24 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             ConfigureMenuEvent::SIDE_MENU_PRODUCTS => 'configureProductMenu',
             ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
             ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'configureSettingsMenu',
+            ConfigureMenuEvent::SIDE_MENU_ROOT => 'configureRootMenu',
         ];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
+     */
+    public function configureRootMenu(ConfigureMenuEvent $event)
+    {
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_CUSTOMER_CARE)) {
+            $rootMenu = $event->getMenu();
+            $rootMenu->removeChild('customers');
+            $rootMenu->removeChild('products');
+            $rootMenu->removeChild('pricing');
+            $rootMenu->removeChild('marketing');
+            $rootMenu->removeChild('administrators');
+            $rootMenu->removeChild('settings');
+        }
     }
 
     /**
