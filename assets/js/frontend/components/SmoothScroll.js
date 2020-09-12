@@ -14,7 +14,7 @@ export default class SmoothScroll {
             if (target.length) {
                 $('html, body').animate({
                     scrollTop: target.offset().top - 50
-                }, 500);
+                }, 600);
             }
         });
     }

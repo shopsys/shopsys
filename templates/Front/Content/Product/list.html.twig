@@ -33,13 +33,15 @@
                 {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
                 {% if paginationResult.page == 1 and shortDescription is not null %}
                     <div class="box-list__description__text box-list__description__text--top">
-                        <div class="js-ready-category-seo-mix-product-list-short-description">{{ shortDescription|raw }}</div>
-                        {% if description is not null %}
-                            <a class="btn btn--next btn-no-style" href="#description">
-                                {{ 'Číst dál'|trans }}
-                                <i class="btn__icon svg svg-long-arrow-right"></i>
-                            </a>
-                        {% endif %}
+                        <div class="js-ready-category-seo-mix-product-list-short-description">
+                            {{ shortDescription|raw }}
+                            {% if description is not null %}
+                                <a class="btn btn--next btn-no-style js-smooth-scroll-anchor" href="#description">
+                                    {{ 'Číst dál'|trans }}
+                                    <i class="btn__icon svg svg-chevron svg-fw-bold"></i>
+                                </a>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endif %}
             </div>
