@@ -16,7 +16,7 @@
     border-radius: @radius;
     background-color: @box-slider-bg-color;
 
-    @media @query-lg {
+    @media @query-xl {
         min-height: 288px;
     }
 
@@ -86,12 +86,16 @@
         border-bottom-left-radius: @radius;
 
         @media @query-md {
+            padding: 1.25rem 1.5rem 1rem;
+        }
+
+        @media @query-xl {
             padding: 1.7rem 1.5rem 1rem;
         }
 
         @media @query-box-slider {
-            min-width: 345px;
-            max-width: 345px;
+            min-width: 385px;
+            max-width: 385px;
 
             border: 2px solid @color-border-lighter;
             border-left: 0;
@@ -118,6 +122,14 @@
             background: transparent;
             text-align: left;
             cursor: pointer;
+
+            @media @query-lg {
+                font-size: 14px;
+            }
+
+            @media @query-xl {
+                font-size: 15px;
+            }
 
             &:first-child {
                 padding-top: 0;
