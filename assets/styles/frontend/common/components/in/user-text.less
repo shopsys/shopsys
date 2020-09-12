@@ -1,6 +1,6 @@
 @in-user-text-ul-point-size: 5px;
 @in-user-text-heading-font-size: 18px;
-@in-user-text-heading-margin-bottom: 0.6rem;
+@in-user-text-heading-margin-bottom: 0.4rem;
 @in-user-text-paragraph-margin: 0 0 1.75rem;
 @in-user-text-component-margin: @in-user-text-paragraph-margin;
 @in-user-text-font-size: 15px;
@@ -10,6 +10,7 @@
 .in-user-text {
     font-size: @in-user-text-font-size;
     line-height: @in-user-text-line-height;
+    color: @in-user-text-font-color;
     -webkit-font-smoothing: antialiased;
 
     &__perex {
@@ -34,7 +35,9 @@
     }
 
     h2,
-    h3 {
+    h3,
+    h4,
+    h5 {
         margin-bottom: @in-user-text-heading-margin-bottom;
 
         font-size: @in-user-text-heading-font-size;
@@ -48,6 +51,13 @@
         &:last-of-type {
             margin-bottom: 0;
         }
+    }
+
+    strong,
+    b {
+        font-family: @font-quartenary;
+        color: @color-primary;
+        font-weight: 400;
     }
 
     a {
@@ -94,6 +104,23 @@
     }
 
     &--blog {
+        h2 {
+            font-size: 20px;
+            line-height: 1.5;
+        }
+
+        h3 {
+            margin-bottom: 0.25rem;
+
+            font-size: 18px;
+        }
+
+        h4, h5, h6 {
+            margin-bottom: 0.25rem;
+
+            font-size: 16px;
+        }
+
         img {
             width: 100%;
             height: auto !important;
@@ -105,15 +132,16 @@
         blockquote {
             position: relative;
             padding: 3rem 1.25rem 1.25rem;
-            margin: @in-user-text-component-margin;
+            margin: 2.25rem 0 2.25rem;
 
             font-style: italic;
             border-radius: @radius * 2;
-            border: 1px solid @color-border;
+            border: 1px solid @color-border-tertiary;
 
             @media @query-lg {
                 padding: 2rem 2rem 2rem 8.5rem;
                 min-height: 116px;
+                margin-top: 0;
             }
 
             &::before {
@@ -137,5 +165,10 @@
                 margin-bottom: 0;
             }
         }
+    }
+
+    &--static-page {
+        font-size: 16px;
+        line-height: 1.8;
     }
 }
