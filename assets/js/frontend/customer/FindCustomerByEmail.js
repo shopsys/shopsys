@@ -26,8 +26,12 @@ export default class FindCustomerByEmail {
         if (inputText.match(mailFormat)) {
             return true;
         } else {
-            $emailInput.siblings('.js-check-existing-email-error').show();
-            $emailInput.focus();
+            $emailInput
+                .siblings('.js-check-existing-email-error')
+                .removeClass('display-none');
+            $emailInput
+                .addClass('form-input-error')
+                .focus();
             return false;
         }
     }

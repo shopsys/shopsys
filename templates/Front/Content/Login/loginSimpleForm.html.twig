@@ -18,14 +18,21 @@
                                     <label for="js-check-existing-email">{{ 'Váš e-mail'|trans }}</label>
                                 </dt>
                                 <dd>
-                                    <ul class="js-check-existing-email-error" style="display: none">
-                                        <li>{{ 'Toto pole je povinné a musí obsahovat e-mailovou adresu.'|trans }}</li>
-                                    </ul>
                                     <input
                                         type="text"
                                         id="js-check-existing-email"
                                         class="input"
                                         value="">
+                                    <div
+                                        class="form-error form-error--line display-none js-check-existing-email-error"
+                                    >
+                                        <span class="form-error__icon">
+                                            <i class="svg svg-warning"></i>
+                                        </span>
+                                        <ul class="form-error__list">
+                                            <li>{{ 'Toto pole je povinné a musí obsahovat e-mailovou adresu.'|trans }}</li>
+                                        </ul>
+                                    </div>
                                 </dd>
                             </dl>
                         </div>
