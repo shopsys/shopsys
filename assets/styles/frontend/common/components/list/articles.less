@@ -82,8 +82,10 @@
     &--hp {
         display: flex;
         flex-wrap: nowrap;
+        position: relative;
         overflow-x: auto;
         overflow-y: hidden;
+        z-index: 1;
 
         @media @query-md {
             overflow-x: visible;
