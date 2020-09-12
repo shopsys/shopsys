@@ -1,6 +1,6 @@
 @in-flag-position-top: 30px;
 @in-flag-position-left: 0;
-@in-flag-in-list-position-top: @list-products-item-padding / 2;
+@in-flag-in-list-position-top: 0;
 @in-flag-in-list-position-left: 0;
 
 .in-flag {
@@ -15,15 +15,110 @@
     }
 
     &__item {
+        display: inline-flex;
+        align-items: center;
         float: left;
         clear: left;
-        padding: 3px 12px 3px 6px;
         margin-bottom: 9px;
-        margin-left: -@list-products-item-padding / 2;
+        padding: 0 10px 0 2px;
+        height: 24px;
+        overflow: hidden;
 
         font-size: 13px;
-        border: 1px solid @color-border-lighter;
-        border-top-right-radius: 2em;
-        border-bottom-right-radius: 2em;
+        line-height: 1;
+        border-radius: 3px;
+        font-family: @font-quartenary;
+
+        &::before {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 4px;
+            width: 24px;
+            height: 24px;
+            top: 0;
+            content: '';
+
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        &__name {
+            position: relative;
+            top: 1px;
+        }
+
+        &.flag__product_action {
+            background: linear-gradient(to top, #ff3400, #e02020);
+            color: @color-f;
+
+            &::before {
+                background-image: url('@{path-design}/labels/flag-action.svg');
+            }
+        }
+
+        &.flag__product_new {
+            background-color: #7f00ff;
+            color: @color-f;
+
+            &::before {
+                background-image: url('@{path-design}/labels/flag-new.svg');
+            }
+        }
+
+        &.flag__product_sale {
+            background-color: #ff7a00;
+            color: @color-f;
+
+            &::before {
+                background-image: url('@{path-design}/labels/flag-sale.svg');
+            }
+        }
+
+        &.flag__product_hit,
+        &.flag__product_sconto {
+            background-color: #ffe500;
+            color: #f10000;
+
+            &::before {
+                background-image: url('@{path-design}/labels/flag-price.svg');
+            }
+        }
+
+        &.flag__product_made_in_cz,
+        &.flag__product_made_in_sk,
+        &.flag__product_made_in_de {
+            padding: 0 6px;
+
+            border: 1px solid @color-border-lighter;
+            font-family: @font-base;
+            background-color: @color-f;
+
+            &::before {
+                width: 13px;
+                height: 13px;
+                order: 1;
+                margin: 0 0 0 5px;
+            }
+        }
+
+        &.flag__product_made_in_cz {
+            &::before {
+                background-image: url('@{path-design}/flags/cz.svg');
+            }
+        }
+
+        &.flag__product_made_in_sk {
+            &::before {
+                background-image: url('@{path-design}/flags/sk.svg');
+            }
+        }
+
+        &.flag__product_made_in_de {
+            &::before {
+                background-image: url('@{path-design}/flags/de.svg');
+            }
+        }
     }
 }
