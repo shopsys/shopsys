@@ -313,7 +313,11 @@
             &--color {
                 display: flex;
                 flex-wrap: wrap;
-                margin: 0 -17px;
+                margin: 0 -15px;
+
+                @media @query-xl {
+                    margin: 0 -17px;
+                }
 
                 .form-choice--color {
                     position: relative;
