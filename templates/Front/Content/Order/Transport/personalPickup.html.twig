@@ -2,6 +2,15 @@
     <h2 class="window-popup__heading window-popup__heading--personal-pickup">{{ 'Vyberte prodejnu kde si vyzvednete zásilku'|trans }}</h2>
     <div class="box-chooser box-chooser--personal-pickup box-chooser--in-popup">
         {% for stock in stocks %}
+            {% set stockAvailabilityText = '' %}
+            {% set stockAvailabilityNumber = stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks %}
+            {% if stockAvailabilityNumber == 0 %}
+                {% set stockAvailabilityText = 'Můžete mít <strong>ihned</strong>'|transHtml %}
+            {% elseif stockAvailabilityNumber == 1 %}
+                {% set stockAvailabilityText = 'K dispozici do <strong>týdne</strong>'|transHtml %}
+            {% else %}
+                {% set stockAvailabilityText = "K dispozici do <strong>#{stockAvailabilityNumber}</strong> týdnů"|transHtml %}
+            {% endif %}
             <label class="box-chooser__item">
                 <span class="box-chooser__item__check">
                     <input type="radio"
@@ -10,7 +19,8 @@
                         class="css-checkbox personal-pickup-stock"
                         data-stock-name="{{ stock.name }}"
                         data-stock-street="{{ stock.street }}"
-                        data-stock-city="{{ stock.city }}"
+                        data-stock-opening-hours="{{ stock.openingHours }}"
+                        data-stock-availability="{{ stockAvailabilityText|raw }}"
                     />
                     <span class="css-checkbox__image"></span>
                 </span>
