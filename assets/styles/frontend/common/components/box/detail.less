@@ -10,6 +10,10 @@
     &--primary {
         position: relative;
 
+        @media @query-mobile {
+            overflow-x: hidden;
+        }
+
         @media @query-lg-up {
             padding-left: calc(45% + 20px);
             min-height: 850px;
