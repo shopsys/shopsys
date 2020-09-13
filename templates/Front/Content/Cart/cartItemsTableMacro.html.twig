@@ -109,16 +109,23 @@
                     {% else %}
                         <strong class="cart-price cart-price--primary">{{ cartItemPrice.totalPrice.priceWithVat|price }} {{ renderAsterisk(product.getFlagsIdsForDomain(getDomain().id), 'sellingPrice') }}</strong>
                     {% endif %}
-
-                    {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
-                        <div class="flag-badge flag-badge-action">{{ "Akce"|trans }}</div>
-                    {% endif %}
-                    {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_SALE'), getDomain().id)) %}
-                        <div class="flag-badge flag-badge-sale">{{ "Výprodej"|trans }}</div>
-                    {% endif %}
-                    {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_HIT'), getDomain().id)) %}
-                        <div class="flag-badge flag-badge-hit">{{ "Cenový hit"|trans }}</div>
-                    {% endif %}
+                    <div class="in-flag in-flag--in-checkout">
+                        {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
+                            <div class="in-flag__item in-flag__item--small flag__product_action">
+                                <span class="in-flag__item__name">{{ "Akční cena"|trans }}</span>
+                            </div>
+                        {% endif %}
+                        {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_SALE'), getDomain().id)) %}
+                            <div class="in-flag__item in-flag__item--small flag__product_sale">
+                                <span class="in-flag__item__name">{{ "Výprodej"|trans }}</span>
+                            </div>
+                        {% endif %}
+                        {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_HIT'), getDomain().id)) %}
+                            <div class="in-flag__item in-flag__item--small flag__product_hit">
+                                <span class="in-flag__item__name">{{ "Cenový hit"|trans }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--action">

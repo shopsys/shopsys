@@ -14,6 +14,10 @@
         left: @in-flag-in-list-position-left;
     }
 
+    &--in-checkout {
+        position: static;
+    }
+
     &__item {
         display: inline-flex;
         align-items: center;
@@ -23,6 +27,7 @@
         padding: 0 10px 0 2px;
         height: 24px;
         overflow: hidden;
+        white-space: nowrap;
 
         font-size: 13px;
         line-height: 1;
@@ -42,6 +47,27 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center center;
+        }
+
+        &--small {
+            height: 19px;
+            margin-bottom: 5px;
+            padding-right: 6px;
+
+            @media @query-lg {
+                float: right;
+                clear: right;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &::before {
+                width: 18px;
+                height: 18px;
+                margin-right: 2px;
+            }
         }
 
         &__name {
