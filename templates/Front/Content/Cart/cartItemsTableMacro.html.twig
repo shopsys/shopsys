@@ -30,6 +30,14 @@
             {% if product.id in maximumOrderQuantity|keys %}
                 {% set dataSpinboxMax = maximumOrderQuantity[product.id] %}
             {% endif %}
+            {% set priceFlag = null %}
+            {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_SALE'), getDomain().id)) %}
+                {% set priceFlag = 'cart-price--sale' %}
+            {% else %}
+                {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
+                    {% set priceFlag = 'cart-price--action' %}
+                {% endif %}
+            {% endif %}
             <tr class="table-cart__row table-cart__row--content js-cart-item">
                 <td class="table-cart__cell table-cart__cell--image">
                     <a href="{{ url('front_product_detail', {id: product.id}) }}" title="{{ product.fullname }}" class="table-cart__cell__image">
@@ -72,7 +80,9 @@
                             </span>
                         {% endif %}
                     {% endif %}
-                    <strong class="cart-price cart-price--secondary">{{ cartItemPrice.unitPrice.priceWithVat|price }} {{ renderAsterisk(product.getFlagsIdsForDomain(getDomain().id), 'sellingPrice') }}</strong>
+                    <strong class="cart-price cart-price--secondary {{ priceFlag }}">
+                        {{ cartItemPrice.unitPrice.priceWithVat|price }} {{ renderAsterisk(product.getFlagsIdsForDomain(getDomain().id), 'sellingPrice') }}
+                    </strong>
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--amount">
@@ -107,7 +117,9 @@
                         <strong class="cart-price cart-price--primary cart-price--promo">{{ cartItemDiscountPrice.priceWithVat|price }}</strong>
                         <strong class="cart-tag cart-tag--promo">{{ orderPreview.promoCodeCode }}</strong>
                     {% else %}
-                        <strong class="cart-price cart-price--primary">{{ cartItemPrice.totalPrice.priceWithVat|price }} {{ renderAsterisk(product.getFlagsIdsForDomain(getDomain().id), 'sellingPrice') }}</strong>
+                        <strong class="cart-price cart-price--primary {{ priceFlag }}">
+                            {{ cartItemPrice.totalPrice.priceWithVat|price }} {{ renderAsterisk(product.getFlagsIdsForDomain(getDomain().id), 'sellingPrice') }}
+                        </strong>
                     {% endif %}
                     <div class="in-flag in-flag--in-checkout">
                         {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
