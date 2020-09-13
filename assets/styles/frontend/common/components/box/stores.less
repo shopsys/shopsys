@@ -301,6 +301,7 @@
 
                 border-radius: @radius;
                 border: 1px solid @color-border-lighter;
+                transition: all @transition;
 
                 @media @query-md {
                     padding: 1rem 1rem 1rem 1.5rem;
@@ -308,7 +309,11 @@
 
                 &:hover {
                     text-decoration: none;
-                    border-color: darken(@color-border, 5%);
+
+                    @media @query-vl {
+                        transform: translateY(-4px);
+                        box-shadow: 0 10px 20px 5px @color-border-lighter;
+                    }
                 }
             }
 
@@ -370,6 +375,39 @@
 
             &--detail {
                 width: 100%;
+            }
+        }
+
+        &--big {
+            margin-bottom: 1rem;
+
+            .box-stores-list__item__link {
+                border-width: 2px;
+
+                @media @query-xl {
+                    padding: 0 1rem 0 2rem;
+                    height: 90px;
+                }
+            }
+
+            .box-stores-list__item__name {
+                @media @query-md {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+
+                @media @query-xl {
+                    font-size: 20px;
+                }
+            }
+
+            .box-stores-list__item__icon {
+                @media @query-xl {
+                    margin-right: 1.25rem;
+
+                    font-size: 33px;
+                }
             }
         }
     }
