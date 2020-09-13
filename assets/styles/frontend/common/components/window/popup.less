@@ -106,14 +106,43 @@
     }
 
     &--personal-pickup {
-        @media @query-lg {
+        @media @query-md {
+            width: 100%;
+            margin-left: 0;
+            left: 0;
+        }
+
+        @media @query-mobile {
+            padding-bottom: 0;
+        }
+
+        @media screen and (min-width: 900px) {
             width: @window-popup-personal-pickup-width;
             margin-left: -@window-popup-personal-pickup-width / 2;
+            left: 50%;
+        }
+
+        .window-popup__heading {
+            @media @query-mobile {
+                margin-bottom: 1rem;
+
+                font-size: 18px;
+            }
+        }
+
+        .window-popup__in {
+            @media @query-mobile {
+                max-height: calc(100vh - 170px);
+            }
         }
 
         .window-popup__actions--multiple-buttons {
             padding-top: 20px;
             justify-content: flex-end;
+
+            @media @query-mobile {
+                padding: 1rem 1rem 0;
+            }
         }
 
         .window-popup__actions__btn--continue {
