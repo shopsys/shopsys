@@ -37,17 +37,13 @@
         &__image {
             display: flex;
             align-items: flex-end;
-            justify-content: flex-end;
+            margin-top: 1.25rem;
             order: 1;
-
-            @media @query-mobile {
-                margin-top: 1.25rem;
-            }
 
             @media @query-vl {
                 width: 50%;
-                justify-content: flex-start;
                 order: 0;
+                margin-top: 0;
             }
 
             @media @query-xl {
