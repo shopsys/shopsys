@@ -1,10 +1,7 @@
-import 'framework/common/components';
-import Register from 'framework/common/utils/Register';
-
 export default class InMessage {
 
     detachMessage () {
-        $(document).on('click', $('.in-message'), function () {
+        $(document).on('click', '.in-message', function () {
             $('.in-message').detach();
         });
     }
@@ -15,4 +12,6 @@ export default class InMessage {
     }
 }
 
-(new Register()).registerCallback(InMessage.init);
+$(document).ready(function () {
+    InMessage.init();
+});
