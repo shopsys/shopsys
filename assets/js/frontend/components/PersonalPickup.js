@@ -91,7 +91,7 @@ export default class PersonalPickup {
                 <span class="box-chooser__item__title__description__street">${stockStreet}</span>
             </span>
             <span class="box-chooser__item__title__description__hours">
-                <strong>Otevřeno</strong>
+                <strong>${Translator.trans('Otevřeno')}</strong>
                 ${stockOpeningHours}
             </span>
             <span class="box-chooser__item__title__description__availability">
