@@ -2,12 +2,12 @@ import 'framework/common/components';
 import Ajax from 'framework/common/utils/Ajax';
 import { KeyCodes } from 'framework/common/utils/KeyCodes';
 import Register from 'framework/common/utils/Register';
+import SymfonyComponentValidatorConstraintsEmail from '../../bundles/fpjsformvalidator/js/constraints/Email';
 
 export default class FindCustomerByEmail {
     ajaxSubmit () {
 
         const $emailInput = $('#js-check-existing-email');
-
         if (FindCustomerByEmail.validateEmail($emailInput)) {
             Ajax.ajax({
                 url: '/customer/find-customer-by-email/',
@@ -22,8 +22,9 @@ export default class FindCustomerByEmail {
 
     static validateEmail ($emailInput) {
         const inputText = $emailInput.val();
-        const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-        if (inputText.match(mailFormat)) {
+        const EmailValidator = new SymfonyComponentValidatorConstraintsEmail();
+        const errors = EmailValidator.validate(inputText);
+        if (inputText.length > 0 && Array.isArray(errors) && errors.length === 0) {
             return true;
         } else {
             $emailInput
