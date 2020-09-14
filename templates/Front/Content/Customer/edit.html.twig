@@ -26,28 +26,7 @@
                             <p class="form-line-block-desc">
                                 {{ 'To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us.'|trans }}
                             </p>
-                            <div class="form-line-block-wrap form-line-block-wrap--phone js-form-phone-drop js-not-implemented-yet">
-                                <div class="input-drop">
-                                    <button class="input-drop__btn" type="button">
-                                        <img
-                                            class="input-drop__img"
-                                            loading="lazy"
-                                            data-src="{{ asset('public/frontend/images/flags/cz.svg') }}"
-                                            alt="{{ 'Česká republika'|trans }}"
-                                        >
-                                        <i class="input-drop__arrow svg svg-arrow"></i>
-                                    </button>
-                                    <ul class="input-drop__list">
-                                        <li class="input-drop__list__item">
-                                            <img
-                                                class="input-drop__img"
-                                                loading="lazy"
-                                                data-src="{{ asset('public/frontend/images/flags/sk.svg') }}"
-                                                alt="{{ 'Slovensko'|trans }}"
-                                            >
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="form-line-block-wrap">
                                 {{ form_row(form.customerUserData.telephone, {
                                     label: 'Telephone'|trans,
                                     rowClass: 'form-line-block js-form-field'
@@ -161,28 +140,7 @@
                                     label: 'Last name'|trans,
                                     rowClass: 'form-line-block js-form-field'
                                 }) }}
-                                <div class="form-line-block-wrap form-line-block-wrap--phone js-form-phone-drop js-not-implemented-yet">
-                                    <div class="input-drop">
-                                        <button class="input-drop__btn" type="button">
-                                            <img
-                                                class="input-drop__img"
-                                                loading="lazy"
-                                                data-src="{{ asset('public/frontend/images/flags/cz.svg') }}"
-                                                alt="{{ 'Česká republika'|trans }}"
-                                            >
-                                            <i class="input-drop__arrow svg svg-arrow"></i>
-                                        </button>
-                                        <ul class="input-drop__list">
-                                            <li class="input-drop__list__item">
-                                                <img
-                                                    class="input-drop__img"
-                                                    loading="lazy"
-                                                    data-src="{{ asset('public/frontend/images/flags/sk.svg') }}"
-                                                    alt="{{ 'Slovensko'|trans }}"
-                                                >
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <div class="form-line-block-wrap">
                                     {{ form_row(form.deliveryAddressData.telephone, {
                                         label: 'Telephone'|trans,
                                         rowClass: 'form-line-block js-form-field'
