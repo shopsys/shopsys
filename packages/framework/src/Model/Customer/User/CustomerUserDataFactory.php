@@ -38,7 +38,6 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
      */
     public function createForCustomer(Customer $customer): CustomerUserData
@@ -50,7 +49,6 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
 
     /**
      * @param int $domainId
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
      */
     public function createForDomainId(int $domainId): CustomerUserData
@@ -75,7 +73,6 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
      */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserData

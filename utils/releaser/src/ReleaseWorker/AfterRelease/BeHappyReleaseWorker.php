@@ -21,6 +21,7 @@ final class BeHappyReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

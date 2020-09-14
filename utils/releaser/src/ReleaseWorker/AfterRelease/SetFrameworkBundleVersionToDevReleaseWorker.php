@@ -37,6 +37,7 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

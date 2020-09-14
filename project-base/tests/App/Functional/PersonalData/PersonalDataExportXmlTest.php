@@ -129,7 +129,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     *
      * @return \App\Model\Customer\User\CustomerUser
      */
     private function createCustomerUser(Customer $customer)

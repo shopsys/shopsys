@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 /**
  * @ORM\Table(name="payments")
  * @ORM\Entity
- *
  * @method \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation translation(?string $locale = null)
  */
 class Payment extends AbstractTranslatableEntity implements OrderableEntityInterface
@@ -26,7 +25,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -35,21 +33,18 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation")
      */
     protected $translations;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Payment\PaymentPrice", mappedBy="payment", cascade={"persist"})
      */
     protected $prices;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport", inversedBy="payments", cascade={"persist"})
      * @ORM\JoinTable(name="payments_transports")
      */
@@ -57,21 +52,18 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
 
     /**
      * @var int|null
-     *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer", nullable=false)
      */
@@ -79,21 +71,18 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $czkRounding;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDomain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Payment\PaymentDomain", mappedBy="payment", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="guid", unique=true)
      */
     protected $uuid;

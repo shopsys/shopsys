@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Domain\Multidomain;
 
 /**
  * The class ensures proper functionality after the component is separated into standalone package independent of framework.
+ *
  * @see \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade.
  *
  * Now, in framework, yet another implementation is used. *

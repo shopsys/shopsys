@@ -29,7 +29,6 @@ class IndexDefinitionLoader
     /**
      * @param string $indexName
      * @param int $domainId
-     *
      * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition
      */
     public function getIndexDefinition(string $indexName, int $domainId): IndexDefinition

@@ -9,6 +9,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Inspired by
+ *
  * @see https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/blob/master/WordPress/Sniffs/VIP/SuperGlobalInputUsageSniff.php
  */
 final class ForbiddenSuperGlobalSniff implements Sniff

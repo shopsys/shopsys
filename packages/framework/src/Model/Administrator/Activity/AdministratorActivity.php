@@ -14,7 +14,6 @@ class AdministratorActivity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -23,7 +22,6 @@ class AdministratorActivity
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\Administrator")
      * @ORM\JoinColumn(nullable=false, name="administrator_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -31,21 +29,18 @@ class AdministratorActivity
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=45)
      */
     protected $ipAddress;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $loginTime;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $lastActionTime;

@@ -36,6 +36,7 @@ class Version20190611114955 extends AbstractMigration
 
     /**
      * Calculates the total prices of order items using via old price calculation (using VAT coefficients)
+     *
      * @see https://github.com/shopsys/shopsys/blob/v7.2.1/packages/framework/src/Model/Order/Item/OrderItemPriceCalculation.php#L60-L76
      * @see https://github.com/shopsys/shopsys/blob/v7.2.1/packages/framework/src/Model/Pricing/PriceCalculation.php#L25-L46
      */

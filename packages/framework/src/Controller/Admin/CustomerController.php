@@ -303,7 +303,6 @@ class CustomerController extends AdminBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return string
      */
     protected function getSsoLoginAsCustomerUserUrl(CustomerUser $customerUser)

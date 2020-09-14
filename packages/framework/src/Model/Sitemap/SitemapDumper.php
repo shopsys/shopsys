@@ -49,7 +49,6 @@ class SitemapDumper extends Dumper
      * Moves sitemaps created in a temporary folder to their real location
      *
      * @param string $targetDir Directory to move created sitemaps to
-     *
      * @throws \RuntimeException
      */
     protected function activate($targetDir)

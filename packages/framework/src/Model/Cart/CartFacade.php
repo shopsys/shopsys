@@ -236,7 +236,6 @@ class CartFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
     public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
@@ -278,7 +277,6 @@ class CartFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
     public function getCartByCustomerUserIdentifierCreateIfNotExists(CustomerUserIdentifier $customerUserIdentifier)

@@ -35,7 +35,6 @@ class SettingValue
 
     /**
      * @var string
-     *
      * @ORM\Id
      * @ORM\Column(type="string", length=255)
      */
@@ -43,7 +42,6 @@ class SettingValue
 
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
@@ -51,14 +49,12 @@ class SettingValue
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $value;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=8)
      */
     protected $type;

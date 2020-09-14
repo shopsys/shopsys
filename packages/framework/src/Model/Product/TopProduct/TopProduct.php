@@ -13,7 +13,6 @@ class TopProduct
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\Id
@@ -22,7 +21,6 @@ class TopProduct
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      */
@@ -30,7 +28,6 @@ class TopProduct
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $position;

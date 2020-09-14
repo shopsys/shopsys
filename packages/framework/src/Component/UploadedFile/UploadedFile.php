@@ -23,7 +23,6 @@ class UploadedFile implements EntityFileUploadInterface
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -32,49 +31,42 @@ class UploadedFile implements EntityFileUploadInterface
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $slug;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $entityName;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $entityId;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=5)
      */
     protected $extension;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $modifiedAt;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $type;
@@ -86,7 +78,6 @@ class UploadedFile implements EntityFileUploadInterface
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $position;

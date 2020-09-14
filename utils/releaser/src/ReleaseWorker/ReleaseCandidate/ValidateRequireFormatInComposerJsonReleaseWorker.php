@@ -62,6 +62,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

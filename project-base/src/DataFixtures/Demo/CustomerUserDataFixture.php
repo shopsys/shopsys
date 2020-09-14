@@ -138,7 +138,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param int $domainId
      * @param array $data
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     private function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData

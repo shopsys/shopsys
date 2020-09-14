@@ -56,6 +56,7 @@ final class FqnNameResolver
      *
      * use SomeNamespace\AnotherClass;
      * use SomeNamespace\SomeClass;
+     *
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @param string $className
      * @return string|null

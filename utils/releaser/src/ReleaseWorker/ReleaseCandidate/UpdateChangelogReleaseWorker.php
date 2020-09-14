@@ -45,6 +45,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

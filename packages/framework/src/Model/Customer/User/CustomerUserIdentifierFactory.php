@@ -44,7 +44,6 @@ class CustomerUserIdentifierFactory
 
     /**
      * @param string $cartIdentifier
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
      */
     public function getOnlyWithCartIdentifier($cartIdentifier)

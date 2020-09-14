@@ -120,6 +120,7 @@ SAMPLE
 
     /**
      * Needs to run after @see MissingParamAnnotationsFixer
+     *
      * @return int
      */
     public function getPriority(): int

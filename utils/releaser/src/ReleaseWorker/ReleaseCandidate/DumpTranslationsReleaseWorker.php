@@ -30,6 +30,7 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

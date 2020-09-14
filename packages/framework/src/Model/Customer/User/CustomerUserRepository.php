@@ -37,7 +37,6 @@ class CustomerUserRepository
     /**
      * @param string $email
      * @param int $domainId
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function findCustomerUserByEmailAndDomain($email, $domainId)
@@ -51,7 +50,6 @@ class CustomerUserRepository
     /**
      * @param string $email
      * @param int $domainId
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function getCustomerUserByEmailAndDomain($email, $domainId)
@@ -70,7 +68,6 @@ class CustomerUserRepository
 
     /**
      * @param int $id
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function getCustomerUserById($id)
@@ -84,7 +81,6 @@ class CustomerUserRepository
 
     /**
      * @param int $id
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function findById($id)
@@ -95,7 +91,6 @@ class CustomerUserRepository
     /**
      * @param int $id
      * @param string $loginToken
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function findByIdAndLoginToken($id, $loginToken)

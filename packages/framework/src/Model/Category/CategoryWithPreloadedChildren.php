@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Category;
  * Purpose of this class is to prevent multiple SQL queries that would be triggered
  * during the rendering of the tree using standard Doctrine entities
  * when accessing "category.children" (i.e. Category::getChildren()) in the template.
+ *
  * @see \Shopsys\FrameworkBundle\Model\Category\Category
  */
 class CategoryWithPreloadedChildren

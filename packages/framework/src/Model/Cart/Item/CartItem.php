@@ -21,7 +21,6 @@ class CartItem
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,7 +29,6 @@ class CartItem
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Cart
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Cart\Cart", inversedBy="items", cascade={"persist"})
      * @ORM\JoinColumn(name="cart_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
@@ -38,7 +36,6 @@ class CartItem
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(nullable=true, name="product_id", referencedColumnName="id", onDelete="SET NULL")
      */
@@ -46,21 +43,18 @@ class CartItem
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $quantity;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     protected $watchedPrice;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $addedAt;

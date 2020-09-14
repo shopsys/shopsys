@@ -15,7 +15,6 @@ class DeliveryAddress
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,7 +23,6 @@ class DeliveryAddress
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer", inversedBy="deliveryAddresses")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -32,49 +30,42 @@ class DeliveryAddress
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $companyName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $firstName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $lastName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $street;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $city;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $postcode;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $telephone;

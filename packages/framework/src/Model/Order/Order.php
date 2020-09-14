@@ -21,7 +21,6 @@ class Order
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,21 +29,18 @@ class Order
 
     /**
      * @var string
-     *
      * @ORM\Column(type="guid", unique=true)
      */
     protected $uuid;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=30, unique=true, nullable=false)
      */
     protected $number;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
      * @ORM\JoinColumn(nullable=true, name="customer_user_id", referencedColumnName="id", onDelete="SET NULL")
      */
@@ -52,14 +48,12 @@ class Order
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Order\Item\OrderItem",
      *     mappedBy="order",
@@ -72,7 +66,6 @@ class Order
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -80,7 +73,6 @@ class Order
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -88,7 +80,6 @@ class Order
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -96,91 +87,78 @@ class Order
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     *
      * @ORM\Column(type="money", precision=20, scale=6)
      */
     protected $totalPriceWithVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     *
      * @ORM\Column(type="money", precision=20, scale=6)
      */
     protected $totalPriceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     *
      * @ORM\Column(type="money", precision=20, scale=6)
      */
     protected $totalProductPriceWithVat;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $firstName;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $lastName;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $email;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=30)
      */
     protected $telephone;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $companyName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $companyNumber;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $companyTaxNumber;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $street;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $city;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=30)
      */
     protected $postcode;
@@ -194,56 +172,48 @@ class Order
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $deliveryAddressSameAsBillingAddress;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $deliveryFirstName;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $deliveryLastName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $deliveryCompanyName;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $deliveryTelephone;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $deliveryStreet;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $deliveryCity;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=30)
      */
     protected $deliveryPostcode;
@@ -257,35 +227,30 @@ class Order
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $note;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=50, unique=true)
      */
     protected $urlHash;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -293,7 +258,6 @@ class Order
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\Administrator")
      * @ORM\JoinColumn(nullable=true, name="administrator_id", referencedColumnName="id", onDelete="SET NULL")
      */
@@ -301,14 +265,12 @@ class Order
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $createdAsAdministratorName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     protected $origin;

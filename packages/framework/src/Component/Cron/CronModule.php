@@ -19,7 +19,6 @@ class CronModule
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      * @ORM\Id
      */
@@ -27,49 +26,42 @@ class CronModule
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $scheduled;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $suspended;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $enabled;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $status;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastStartedAt;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastFinishedAt;
 
     /**
      * @var int|null
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $lastDuration;

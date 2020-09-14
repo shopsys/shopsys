@@ -224,7 +224,6 @@ class PricingGroupFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $eventType
-     *
      * @see \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent class
      */
     protected function dispatchPricingGroupEvent(PricingGroup $pricingGroup, string $eventType): void

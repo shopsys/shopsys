@@ -257,7 +257,6 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function createOrder(OrderData $orderData, OrderPreview $orderPreview, ?CustomerUser $customerUser = null)
@@ -420,7 +419,6 @@ class OrderFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerUserOrderList(CustomerUser $customerUser)
@@ -460,7 +458,6 @@ class OrderFacade
     /**
      * @param string $orderNumber
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function getByOrderNumberAndUser($orderNumber, CustomerUser $customerUser)

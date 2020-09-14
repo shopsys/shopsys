@@ -199,6 +199,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
 
     /**
      * {@inheritDoc}
+     *
      * @return \CommerceGuys\Intl\Currency\Currency[]
      */
     public function getAll($locale = null)

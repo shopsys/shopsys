@@ -64,8 +64,8 @@ class ProductFactory implements ProductFactoryInterface
     /**
      * When creating new product, ProductData::$availability is set to Product::$calculatedAvailability property as well.
      * This is a problem when ProductData::$availability === null as $calculatedAvailability is not nullable (unlike $availability).
-     * @see \Shopsys\FrameworkBundle\Model\Product\Product::__construct()
      *
+     * @see \Shopsys\FrameworkBundle\Model\Product\Product::__construct()
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
     protected function setCalculatedAvailabilityIfMissing(Product $product)

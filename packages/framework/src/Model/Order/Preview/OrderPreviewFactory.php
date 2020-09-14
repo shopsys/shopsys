@@ -101,7 +101,6 @@ class OrderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
      */
     public function create(

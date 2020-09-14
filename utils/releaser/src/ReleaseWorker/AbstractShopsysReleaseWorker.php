@@ -55,6 +55,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
 
     /**
      * Question helper modifications that only waits for "enter"
+     *
      * @param string $message
      */
     protected function confirm(string $message): void
@@ -68,6 +69,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
 
     /**
      * Check if there are some changes and if so, add them and commit them
+     *
      * @param string $message
      */
     protected function commit(string $message): void
@@ -178,6 +180,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
 
     /**
      * Return new development version (e.g. from 7.1.0 to 7.2.0-dev)
+     *
      * @param \PharIo\Version\Version $version
      * @param bool $suggestWithVprefix
      * @return \PharIo\Version\Version

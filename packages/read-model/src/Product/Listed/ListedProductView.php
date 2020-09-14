@@ -53,6 +53,7 @@ class ListedProductView
 
     /**
      * ListedProductView constructor.
+     *
      * @param int $id
      * @param string $name
      * @param string|null $shortDescription

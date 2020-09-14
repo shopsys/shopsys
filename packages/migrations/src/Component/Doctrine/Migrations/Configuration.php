@@ -110,7 +110,6 @@ class Configuration extends DoctrineConfiguration
      *
      * @param string $direction the direction we are migrating (DOWN is not allowed)
      * @param string $to the version to migrate to (partial migrations are not allowed)
-     *
      * @throws \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException
      * @return \Doctrine\DBAL\Migrations\Version[] $migrations the array of migrations we can execute
      */

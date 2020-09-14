@@ -63,7 +63,6 @@ class CartWatcher
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
     public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomerUser)

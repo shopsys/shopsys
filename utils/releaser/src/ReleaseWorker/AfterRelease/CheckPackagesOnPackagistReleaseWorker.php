@@ -27,6 +27,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

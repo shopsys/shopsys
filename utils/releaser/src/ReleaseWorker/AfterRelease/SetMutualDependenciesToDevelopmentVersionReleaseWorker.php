@@ -54,6 +54,7 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -94,6 +95,7 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
 
     /**
      * Return new development version (e.g. from 7.3.1 to 7.3.x-dev)
+     *
      * @param \PharIo\Version\Version $version
      * @return string
      */

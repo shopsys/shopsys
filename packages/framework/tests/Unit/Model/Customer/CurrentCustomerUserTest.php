@@ -79,7 +79,6 @@ class CurrentCustomerUserTest extends TestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     private function getCustomerUserWithPricingGroup(PricingGroup $pricingGroup)
@@ -94,7 +93,6 @@ class CurrentCustomerUserTest extends TestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
      */
     private function getTokenStorageMockForCustomerUser(CustomerUser $customerUser)

@@ -12,7 +12,6 @@ class BillingAddress
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,7 +20,6 @@ class BillingAddress
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer", inversedBy="billingAddresses")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -29,49 +27,42 @@ class BillingAddress
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     protected $companyCustomer;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $companyName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $companyNumber;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $companyTaxNumber;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $street;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $city;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $postcode;

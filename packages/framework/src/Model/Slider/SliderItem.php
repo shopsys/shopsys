@@ -23,35 +23,30 @@ class SliderItem implements OrderableEntityInterface
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $link;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var int|null
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $position;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;

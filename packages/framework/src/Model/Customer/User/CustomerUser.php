@@ -36,7 +36,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -106,7 +105,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $telephone;
@@ -120,14 +118,12 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
 
     /**
      * @var string
-     *
      * @ORM\Column(type="guid", unique=true)
      */
     protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="CustomerUserRefreshTokenChain", mappedBy="customerUser", cascade={"persist"})
      */
     protected $refreshTokenChain;

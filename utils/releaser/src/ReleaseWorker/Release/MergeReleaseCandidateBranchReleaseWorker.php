@@ -25,6 +25,7 @@ final class MergeReleaseCandidateBranchReleaseWorker extends AbstractShopsysRele
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

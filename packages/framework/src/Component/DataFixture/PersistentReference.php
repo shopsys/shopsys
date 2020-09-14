@@ -14,7 +14,6 @@ class PersistentReference
 {
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      * @ORM\Id
      */
@@ -22,14 +21,12 @@ class PersistentReference
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $entityName;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $entityId;

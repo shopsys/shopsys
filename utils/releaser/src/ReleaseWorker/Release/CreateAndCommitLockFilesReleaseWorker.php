@@ -21,6 +21,7 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

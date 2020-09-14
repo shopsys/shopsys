@@ -62,6 +62,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     {
         /**
          * Root category is created in database migration.
+         *
          * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135345
          * @var \App\Model\Category\Category
          */

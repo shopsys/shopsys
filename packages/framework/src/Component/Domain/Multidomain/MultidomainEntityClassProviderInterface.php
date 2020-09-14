@@ -8,6 +8,7 @@ namespace Shopsys\FrameworkBundle\Component\Domain\Multidomain;
  *
  * This interface adds option to ignore some of these or manually add entities
  * that do not match the condition when multidomain data are created.
+ *
  * @see \Shopsys\FrameworkBundle\Command\CreateDomainsDataCommand
  */
 interface MultidomainEntityClassProviderInterface

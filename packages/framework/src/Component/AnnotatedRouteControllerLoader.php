@@ -16,7 +16,6 @@ class AnnotatedRouteControllerLoader extends BaseAnnotatedRouteControllerLoader
      *
      * @param \ReflectionClass $class
      * @param \ReflectionMethod $method
-     *
      * @return string The default route name
      */
     protected function getDefaultRouteName(ReflectionClass $class, ReflectionMethod $method)

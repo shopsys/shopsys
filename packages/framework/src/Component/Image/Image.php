@@ -23,7 +23,6 @@ class Image implements EntityFileUploadInterface
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -32,42 +31,36 @@ class Image implements EntityFileUploadInterface
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $entityName;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $entityId;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $type;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=5)
      */
     protected $extension;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $position;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $modifiedAt;

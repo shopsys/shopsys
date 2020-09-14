@@ -18,7 +18,6 @@ class PaymentDomain
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -27,7 +26,6 @@ class PaymentDomain
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment", inversedBy="domains")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -35,21 +33,18 @@ class PaymentDomain
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $enabled;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
      * @ORM\JoinColumn(nullable=false)
      */

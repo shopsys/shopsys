@@ -19,21 +19,18 @@ class PaymentTranslation extends AbstractTranslation
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $instructions;

@@ -16,14 +16,12 @@ class CountryTranslation extends AbstractTranslation
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country
-     *
      * @Prezent\Translatable(targetEntity="\Shopsys\FrameworkBundle\Model\Country\Country")
      */
     protected $translatable;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $name;

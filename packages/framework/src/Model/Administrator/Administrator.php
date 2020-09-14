@@ -63,7 +63,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit",
      *     mappedBy="administrator",
@@ -75,7 +74,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(
      *     targetEntity="\Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole",
      *     mappedBy="administrator",
@@ -92,21 +90,18 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
-     *
      * @var string
      */
     protected $multidomainLoginToken;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $multidomainLoginTokenExpiration;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $rolesChangedAt;

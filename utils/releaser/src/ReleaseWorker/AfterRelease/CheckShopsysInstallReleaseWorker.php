@@ -11,6 +11,7 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
 {
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

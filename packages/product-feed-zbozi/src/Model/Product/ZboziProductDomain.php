@@ -15,7 +15,6 @@ class ZboziProductDomain
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,7 +23,6 @@ class ZboziProductDomain
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
@@ -32,21 +30,18 @@ class ZboziProductDomain
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $show;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     protected $cpc;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     protected $cpcSearch;

@@ -13,7 +13,6 @@ class ProductVisibility
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id", onDelete="CASCADE")
@@ -22,7 +21,6 @@ class ProductVisibility
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup")
      * @ORM\JoinColumn(nullable=false, name="pricing_group_id", referencedColumnName="id", onDelete="CASCADE")
@@ -31,7 +29,6 @@ class ProductVisibility
 
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
@@ -39,7 +36,6 @@ class ProductVisibility
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $visible;

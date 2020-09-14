@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * In our menu there are defined non-displayable items without specified mandatory parameters such as "New customer"
  * They are still important for resolving the correct current item and rendering the breadcrumb navigation
  * Having them rendered as a link is not important as they typically represent a number of pages (eg. editing ANY product)
+ *
  * @see \Knp\Menu\Integration\Symfony\RoutingExtension
  */
 class RoutingExtension implements ExtensionInterface

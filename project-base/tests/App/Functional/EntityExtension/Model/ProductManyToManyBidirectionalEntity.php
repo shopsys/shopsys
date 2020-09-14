@@ -14,7 +14,6 @@ class ProductManyToManyBidirectionalEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -23,14 +22,12 @@ class ProductManyToManyBidirectionalEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
-     *
      * @ORM\ManyToMany(targetEntity="ExtendedProduct", mappedBy="manyToManyBidirectionalEntities")
      */
     protected $products;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $name;

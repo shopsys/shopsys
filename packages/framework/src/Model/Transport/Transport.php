@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundExc
 /**
  * @ORM\Table(name="transports")
  * @ORM\Entity
- *
  * @method \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation translation(?string $locale = null)
  */
 class Transport extends AbstractTranslatableEntity implements OrderableEntityInterface
@@ -27,7 +26,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -36,42 +34,36 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Transport\TransportTranslation")
      */
     protected $translations;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDomain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\TransportDomain", mappedBy="transport", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPrice[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\TransportPrice", mappedBy="transport", cascade={"persist"})
      */
     protected $prices;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
 
     /**
      * @var int|null
-     *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer", nullable=false)
      */
@@ -85,7 +77,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var string
-     *
      * @ORM\Column(type="guid", unique=true)
      */
     protected $uuid;

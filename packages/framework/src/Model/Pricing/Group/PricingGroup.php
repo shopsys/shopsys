@@ -12,7 +12,6 @@ class PricingGroup
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,14 +20,12 @@ class PricingGroup
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $name;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;

@@ -45,6 +45,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

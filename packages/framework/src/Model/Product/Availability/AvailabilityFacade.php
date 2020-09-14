@@ -185,7 +185,6 @@ class AvailabilityFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
      * @param string $eventType
-     *
      * @see \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityEvent class
      */
     protected function dispatchAvailabilityEvent(Availability $availability, string $eventType): void

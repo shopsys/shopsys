@@ -21,6 +21,7 @@ final class CreateAndPushGitTagReleaseWorker extends AbstractShopsysReleaseWorke
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

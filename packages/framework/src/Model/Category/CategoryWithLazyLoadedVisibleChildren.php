@@ -8,6 +8,7 @@ use Closure;
  * The class encapsulates Category along with it's visible children
  * that are lazy loaded to prevent unnecessary SQL queries.
  * It is used for rendering front-end category tree.
+ *
  * @see \Shopsys\FrameworkBundle\Model\Category\Category
  */
 class CategoryWithLazyLoadedVisibleChildren

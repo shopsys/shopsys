@@ -148,7 +148,6 @@ class CustomerUserDataFixture
     /**
      * @param int $domainId
      * @param int $userNumber
-     *
      * @return \App\Model\Customer\User\CustomerUser
      */
     private function createCustomerUserOnDomain($domainId, $userNumber)

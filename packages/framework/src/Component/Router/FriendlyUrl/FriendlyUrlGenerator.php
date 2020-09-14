@@ -108,6 +108,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
     /**
      * Not supported method
+     *
      * @param mixed $routeName
      * @param mixed $parameters
      * @param mixed $referenceType

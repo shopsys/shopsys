@@ -138,6 +138,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
 
     /**
      * We can use the shorthand here as $this->domain->switchDomainById(1) is called in setUp()
+     *
      * @return string
      */
     protected function getFirstDomainLocale(): string

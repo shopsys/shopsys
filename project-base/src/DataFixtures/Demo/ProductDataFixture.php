@@ -9445,7 +9445,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param array $productCatnumsByMainVariantCatnum
-     *
      * @return string[]
      */
     private function getAllVariantCatnumsFromAssociativeArray(array $productCatnumsByMainVariantCatnum): array

@@ -23,6 +23,7 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

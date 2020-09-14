@@ -37,7 +37,6 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $viewTransformers
-     *
      * @return array
      */
     protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers)

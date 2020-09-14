@@ -29,6 +29,7 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

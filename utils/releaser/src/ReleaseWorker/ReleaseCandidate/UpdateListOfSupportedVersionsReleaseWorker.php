@@ -21,6 +21,7 @@ final class UpdateListOfSupportedVersionsReleaseWorker extends AbstractShopsysRe
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

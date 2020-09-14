@@ -58,7 +58,6 @@ class OrderRepository
 
     /**
      * @param int $customerUserId
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getOrdersByCustomerUserId($customerUserId)
@@ -70,7 +69,6 @@ class OrderRepository
 
     /**
      * @param int $customerUserId
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
     public function findLastByCustomerUserId($customerUserId)
@@ -161,7 +159,6 @@ class OrderRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerUserOrderList(CustomerUser $customerUser)
@@ -220,7 +217,6 @@ class OrderRepository
     /**
      * @param string $orderNumber
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function getByOrderNumberAndCustomerUser($orderNumber, CustomerUser $customerUser)

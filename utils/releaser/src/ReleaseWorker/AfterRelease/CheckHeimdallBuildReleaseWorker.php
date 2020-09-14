@@ -12,6 +12,7 @@ final class CheckHeimdallBuildReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

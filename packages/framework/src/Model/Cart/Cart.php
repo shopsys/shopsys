@@ -18,7 +18,6 @@ class Cart
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -27,14 +26,12 @@ class Cart
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=127)
      */
     protected $cartIdentifier;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
      * @ORM\JoinColumn(name="customer_user_id", referencedColumnName="id", nullable = true, onDelete="CASCADE")
      */
@@ -42,7 +39,6 @@ class Cart
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Cart\Item\CartItem",
      *     mappedBy="cart"
@@ -53,7 +49,6 @@ class Cart
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $modifiedAt;

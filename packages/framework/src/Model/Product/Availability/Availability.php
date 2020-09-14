@@ -10,14 +10,12 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * @ORM\Table(name="availabilities")
  * @ORM\Entity
- *
  * @method \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation translation(?string $locale = null)
  */
 class Availability extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -26,14 +24,12 @@ class Availability extends AbstractTranslatableEntity
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation")
      */
     protected $translations;
 
     /**
      * @var int|null
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $dispatchTime;

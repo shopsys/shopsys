@@ -81,6 +81,7 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * Retrieves Product resource
+     *
      * @Get("/products/{uuid}")
      * @param string $uuid
      * @return \Symfony\Component\HttpFoundation\Response
@@ -100,6 +101,7 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * Retrieves multiple Product resources
+     *
      * @Get("/products")
      * @QueryParam(name="page", requirements="-?\d+", default=1)
      * @QueryParam(name="uuids", map=true, allowBlank=false)
@@ -140,6 +142,7 @@ class ProductController extends AbstractFOSRestController
     /**
      * Create a Product resource
      * If UUID ins't specified, generates it's own
+     *
      * @Post("/products")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -169,6 +172,7 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * Delete a Product resource
+     *
      * @Delete("/products/{uuid}")
      * @param string $uuid
      * @return \Symfony\Component\HttpFoundation\Response
@@ -228,6 +232,7 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * Partially update a Product resource
+     *
      * @Patch("/products/{uuid}")
      * @param string $uuid
      * @param \Symfony\Component\HttpFoundation\Request $request

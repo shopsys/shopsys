@@ -424,8 +424,8 @@ class StrictWebDriver extends WebDriver
      * $I->pressKeysByElement($element, [[\Facebook\WebDriver\WebDriverKeys, 'day'], 1]); // DAY1
      *
      * For available keys:
-     * @see \Facebook\WebDriver\WebDriverKeys
      *
+     * @see \Facebook\WebDriver\WebDriverKeys
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param string|string[] $keys
      */

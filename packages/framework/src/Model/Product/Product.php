@@ -26,7 +26,6 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainV
  *     }
  * )
  * @ORM\Entity
- *
  * @method \Shopsys\FrameworkBundle\Model\Product\ProductTranslation translation(?string $locale = null)
  */
 class Product extends AbstractTranslatableEntity
@@ -40,7 +39,6 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -49,105 +47,90 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductTranslation")
      */
     protected $translations;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $catnum;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="tsvector", nullable=false)
      */
     protected $catnumTsvector;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $partno;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="tsvector", nullable=false)
      */
     protected $partnoTsvector;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $ean;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $sellingFrom;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $sellingTo;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $sellingDenied;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $calculatedSellingDenied;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $calculatedHidden;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $usingStock;
 
     /**
      * @var int|null
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $stockQuantity;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Unit\Unit")
      * @ORM\JoinColumn(name="unit_id", referencedColumnName="id", nullable=false)
      */
@@ -155,7 +138,6 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $outOfStockAction;
@@ -183,21 +165,18 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $recalculateAvailability;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $calculatedVisibility;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(
      *   targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain",
      *   mappedBy="product",
@@ -209,7 +188,6 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\Flag")
      * @ORM\JoinTable(name="product_flags")
      */
@@ -217,21 +195,18 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $recalculatePrice;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $recalculateVisibility;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\Brand")
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
      */
@@ -239,14 +214,12 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product", mappedBy="mainVariant", cascade={"persist"})
      */
     protected $variants;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product", inversedBy="variants", cascade={"persist"})
      * @ORM\JoinColumn(name="main_variant_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
@@ -254,35 +227,30 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=32, nullable=false)
      */
     protected $variantType;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $orderingPriority;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductDomain", mappedBy="product", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="guid", unique=true)
      */
     protected $uuid;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $exportProduct;

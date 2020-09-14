@@ -13,6 +13,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 {
     /**
      * Packages that are not released - old packages or forks
+     *
      * @var string[]
      */
     private const EXCLUDED_PACKAGES = [
@@ -61,6 +62,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

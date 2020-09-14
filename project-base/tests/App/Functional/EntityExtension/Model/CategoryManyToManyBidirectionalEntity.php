@@ -14,7 +14,6 @@ class CategoryManyToManyBidirectionalEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -23,14 +22,12 @@ class CategoryManyToManyBidirectionalEntity
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
-     *
      * @ORM\ManyToMany(targetEntity="ExtendedCategory", mappedBy="manyToManyBidirectionalEntities")
      */
     protected $categories;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $name;

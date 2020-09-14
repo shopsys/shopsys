@@ -19,7 +19,6 @@ class CountryDomain
 {
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -28,7 +27,6 @@ class CountryDomain
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Country\Country", inversedBy="domains")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -36,21 +34,18 @@ class CountryDomain
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $enabled = false;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $priority;

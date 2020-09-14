@@ -44,6 +44,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
     {
         /**
          * The "CZK" and "EUR" currencies are created in database migrations.
+         *
          * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135342
          */
         $currencyCzk = $this->currencyFacade->getById(1);

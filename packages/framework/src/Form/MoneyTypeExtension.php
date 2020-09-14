@@ -81,6 +81,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
     /**
      * Returns the pattern for this locale. Always places currency symbol after widget.
      * The pattern contains the placeholder "{{ widget }}" where the HTML tag should be inserted
+     *
      * @return string
      * @see \Symfony\Component\Form\Extension\Core\Type\MoneyType::getPattern()
      */
