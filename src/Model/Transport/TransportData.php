@@ -42,9 +42,20 @@ class TransportData extends BaseTransportData
     public int $externalId;
 
     /**
+<<<<<<< HEAD
      * @var int|null
      */
     public ?int $daysUntilDelivery;
+=======
+     * @var string
+     */
+    public string $deliveryCode;
+
+    /**
+     * @var int
+     */
+    public int $typeOfDeliveryKey;
+>>>>>>> 1a070ef34... SD-1633 moewe transport sync data
 
     public function __construct()
     {

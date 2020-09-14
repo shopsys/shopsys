@@ -22,6 +22,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TransportFormTypeExtension extends AbstractTypeExtension
@@ -94,6 +97,7 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                     ])
                 ]
             ])
+<<<<<<< HEAD
             ->add('daysUntilDelivery', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -107,6 +111,23 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Dnů do doručení'),
             ])
         ;
+=======
+            ->add('deliveryCode', TextType::class, [
+                'label' => t('Moewe - DeliveryCode'),
+                'constraints' => [
+                    new Length([
+                        'max' => 10
+                    ])
+                ]
+            ])
+            ->add('typeOfDeliveryKey', IntegerType::class, [
+                'label' => t('Moewe - TypeOfDeliveryKey'),
+                'constraints' => [
+                    new GreaterThan(0),
+                    new LessThanOrEqual(99)
+                ]
+            ]);
+>>>>>>> 1a070ef34... SD-1633 moewe transport sync data
 
         $builder->add($this->createTransportPackages($builder));
     }

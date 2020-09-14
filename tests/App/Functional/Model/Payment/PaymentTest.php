@@ -39,6 +39,8 @@ class PaymentTest extends TransactionFunctionalTestCase
         $transportData = $this->transportDataFactory->create();
         $transportData->name['cs'] = 'name';
         $transportData->externalId = $this->getNextTransportExternalId();
+        $transportData->deliveryCode = 'A';
+        $transportData->typeOfDeliveryKey = 1;
         $transport = new Transport($transportData);
 
         /** @var PaymentData $paymentData */

@@ -59,10 +59,23 @@ class Transport extends BaseTransport
     private int $externalId;
 
     /**
+<<<<<<< HEAD
      * @var int
      * @ORM\Column(type="integer")
      */
     private int $daysUntilDelivery;
+=======
+     * @var string
+     * @ORM\Column(type="string", length=10)
+     */
+    private string $deliveryCode;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private int $typeOfDeliveryKey;
+>>>>>>> 1a070ef34... SD-1633 moewe transport sync data
 
     /**
      * @param \App\Model\Transport\TransportData $transportData
@@ -75,7 +88,12 @@ class Transport extends BaseTransport
         $this->type = $transportData->type;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
         $this->externalId = $transportData->externalId;
+<<<<<<< HEAD
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
+=======
+        $this->deliveryCode = $transportData->deliveryCode;
+        $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
+>>>>>>> 1a070ef34... SD-1633 moewe transport sync data
     }
 
     /**
@@ -89,7 +107,12 @@ class Transport extends BaseTransport
         $this->type = $transportData->type;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
         $this->externalId = $transportData->externalId;
+<<<<<<< HEAD
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
+=======
+        $this->deliveryCode = $transportData->deliveryCode;
+        $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
+>>>>>>> 1a070ef34... SD-1633 moewe transport sync data
     }
 
     /**
@@ -161,10 +184,26 @@ class Transport extends BaseTransport
     }
 
     /**
+<<<<<<< HEAD
      * @return int
      */
     public function getDaysUntilDelivery(): int
     {
         return $this->daysUntilDelivery;
+=======
+     * @return string
+     */
+    public function getDeliveryCode(): string
+    {
+        return $this->deliveryCode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTypeOfDeliveryKey(): int
+    {
+        return $this->typeOfDeliveryKey;
+>>>>>>> 1a070ef34... SD-1633 moewe transport sync data
     }
 }

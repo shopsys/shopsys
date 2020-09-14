@@ -62,6 +62,8 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
             Domain::SECOND_DOMAIN_ID => false,
         ]);
         $transportData->externalId = $this->getNextTransportExternalId();
+        $transportData->deliveryCode = 'A';
+        $transportData->typeOfDeliveryKey = 1;
 
         $transport = new Transport($transportData);
 
@@ -119,6 +121,8 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $transportData->hidden = $hidden;
         $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
         $transportData->externalId = $this->getNextTransportExternalId();
+        $transportData->deliveryCode = 'A';
+        $transportData->typeOfDeliveryKey = 1;
 
         return new Transport($transportData);
     }
