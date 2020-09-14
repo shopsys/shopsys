@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Payment;
 
 use App\Model\Payment\Payment;
+use App\Model\Payment\PaymentData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -49,6 +50,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
 
     public function testIsIndependentlyVisibleEmptyName()
     {
+        /** @var PaymentData $paymentData */
         $paymentData = $this->paymentDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
@@ -60,6 +62,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
             self::FIRST_DOMAIN_ID => true,
             self::SECOND_DOMAIN_ID => false,
         ]);
+        $paymentData->externalId = $this->getNextPaymentExternalId();
 
         $payment = new Payment($paymentData);
 
@@ -104,6 +107,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
      */
     public function getDefaultPayment($enabledForDomains, $hidden)
     {
+        /** @var PaymentData $paymentData */
         $paymentData = $this->paymentDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
@@ -112,6 +116,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $paymentData->name = $names;
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
+        $paymentData->externalId = $this->getNextPaymentExternalId();
 
         return new Payment($paymentData);
     }

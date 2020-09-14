@@ -53,6 +53,12 @@ class Transport extends BaseTransport
     private $isOverLimitTransport;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer", unique=true)
+     */
+    private int $externalId;
+
+    /**
      * @param \App\Model\Transport\TransportData $transportData
      */
     public function __construct(BaseTransportData $transportData)
@@ -62,6 +68,7 @@ class Transport extends BaseTransport
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
+        $this->externalId = $transportData->externalId;
     }
 
     /**
@@ -74,6 +81,7 @@ class Transport extends BaseTransport
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
+        $this->externalId = $transportData->externalId;
     }
 
     /**
@@ -134,5 +142,13 @@ class Transport extends BaseTransport
     public function isOverLimitTransport(): bool
     {
         return $this->isOverLimitTransport;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExternalId(): int
+    {
+        return $this->externalId;
     }
 }

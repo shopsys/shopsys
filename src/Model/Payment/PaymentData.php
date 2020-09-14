@@ -31,6 +31,11 @@ class PaymentData extends BasePaymentData
      */
     public $isOverLimitPayment;
 
+    /**
+     * @var int
+     */
+    public $externalId;
+
     public function __construct()
     {
         parent::__construct();

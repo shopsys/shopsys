@@ -181,4 +181,12 @@ class OrderItem extends BaseOrderItem
     {
         return str_replace(' - ' . $this->getRelatedProduct()->getName(), '', $this->name);
     }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
 }

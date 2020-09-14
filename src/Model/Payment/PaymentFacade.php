@@ -35,6 +35,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
  * @method \App\Model\Payment\Payment getByUuid(string $uuid)
  * @property \App\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
+ * @property \App\Model\Transport\TransportRepository $transportRepository
  */
 class PaymentFacade extends BasePaymentFacade
 {
@@ -128,5 +129,14 @@ class PaymentFacade extends BasePaymentFacade
         }
 
         return $allowedPayments;
+    }
+
+    /**
+     * @param int $id
+     * @return Payment|null
+     */
+    public function findByExternalId(int $id): ?Payment
+    {
+        return $this->paymentRepository->findByExternalId($id);
     }
 }

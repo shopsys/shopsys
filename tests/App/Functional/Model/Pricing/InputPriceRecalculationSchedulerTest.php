@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Pricing;
 
+use App\Model\Payment\PaymentData;
+use App\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler;
@@ -138,7 +140,9 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
      */
     private function doTestOnKernelResponseRecalculateInputPrices(Money $inputPrice, Money $expectedPrice, $vatPercent, string $scheduleSetInputPricesMethod): void
     {
+        /** @var PaymentData $paymentData */
         $paymentData = $this->paymentDataFactory->create();
+        /** @var TransportData $transportData */
         $transportData = $this->transportDataFactory->create();
 
         $paymentData->pricesIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $inputPrice;
@@ -155,12 +159,14 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $this->em->persist($availability);
 
         $paymentData->name = ['cs' => 'name'];
+        $paymentData->externalId = $this->getNextPaymentExternalId();
 
         /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentFacade->create($paymentData);
 
         $transportData->name = ['cs' => 'name'];
         $transportData->description = ['cs' => 'desc'];
+        $transportData->externalId = $this->getNextTransportExternalId();
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportFacade->create($transportData);
 

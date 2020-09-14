@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Transport;
 
 use App\Model\Transport\Transport;
+use App\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -48,6 +49,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
 
     public function testIsIndependentlyVisibleEmptyName()
     {
+        /** @var TransportData $transportData */
         $transportData = $this->transportDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
@@ -59,6 +61,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
             Domain::FIRST_DOMAIN_ID => true,
             Domain::SECOND_DOMAIN_ID => false,
         ]);
+        $transportData->externalId = $this->getNextTransportExternalId();
 
         $transport = new Transport($transportData);
 
@@ -105,6 +108,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
      */
     public function getDefaultTransport($enabledForDomains, $hidden)
     {
+        /** @var TransportData $transportData */
         $transportData = $this->transportDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
@@ -114,6 +118,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
 
         $transportData->hidden = $hidden;
         $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
+        $transportData->externalId = $this->getNextTransportExternalId();
 
         return new Transport($transportData);
     }

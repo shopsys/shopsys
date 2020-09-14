@@ -36,6 +36,11 @@ class TransportData extends BaseTransportData
      */
     public $isOverLimitTransport;
 
+    /**
+     * @var int
+     */
+    public int $externalId;
+
     public function __construct()
     {
         parent::__construct();

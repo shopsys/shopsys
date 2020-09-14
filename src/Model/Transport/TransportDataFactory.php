@@ -94,6 +94,8 @@ class TransportDataFactory extends BaseTransportDataFactory
         }
         $transportData->isOverLimitTransport = $transport->isOverLimitTransport();
 
+        $transportData->externalId = $transport->getExternalId();
+
         return $transportData;
     }
 }

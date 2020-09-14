@@ -32,6 +32,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getIndependentBasePricesIndexedByDomainId(\App\Model\Transport\Transport $transport)
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getPricesIndexedByDomainId(\App\Model\Transport\Transport|null $transport)
  * @method \App\Model\Transport\Transport getByUuid(string $uuid)
+ * @property \App\Model\Transport\TransportRepository $transportRepository
  */
 class TransportFacade extends BaseTransportFacade
 {
@@ -42,7 +43,7 @@ class TransportFacade extends BaseTransportFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository
+     * @param \App\Model\Transport\TransportRepository $transportRepository
      * @param \App\Model\Payment\PaymentRepository $paymentRepository
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation
      * @param \App\Component\Domain\Domain $domain
@@ -102,5 +103,10 @@ class TransportFacade extends BaseTransportFacade
     {
         parent::edit($transport, $transportData);
         $this->transportPackageFacade->updateTransportPackages($transport, $transportData);
+    }
+
+    public function findByExternalId(int $id): ?Transport
+    {
+        return $this->transportRepository->findByExternalId($id);
     }
 }

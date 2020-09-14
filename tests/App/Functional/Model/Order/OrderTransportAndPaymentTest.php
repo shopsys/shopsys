@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Order;
 
 use App\Model\Payment\Payment;
+use App\Model\Payment\PaymentData;
 use App\Model\Transport\Transport;
+use App\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -37,6 +39,11 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
      * @inject
      */
     private $transportDataFactory;
+
+    /**
+     * @var int
+     */
+    private static $externalId = 0;
 
     public function testVisibleTransport()
     {
@@ -306,6 +313,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     {
         $paymentDataFactory = $this->paymentDataFactory;
 
+        /** @var PaymentData $paymentData */
         $paymentData = $paymentDataFactory->create();
         $names = [];
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -314,6 +322,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $paymentData->name = $names;
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
+        $paymentData->externalId = $this->getNextPaymentExternalId();
 
         return new Payment($paymentData);
     }
@@ -327,6 +336,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     {
         $transportDataFactory = $this->transportDataFactory;
 
+        /** @var TransportData $transportData */
         $transportData = $transportDataFactory->create();
         $names = [];
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -336,6 +346,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $transportData->hidden = $hidden;
         $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
+        $transportData->externalId = $this->getNextTransportExternalId();
 
         return new Transport($transportData);
     }
