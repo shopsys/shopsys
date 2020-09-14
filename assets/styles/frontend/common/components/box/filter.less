@@ -372,3 +372,71 @@
         display: none;
     }
 }
+
+.flag-icon {
+    &::before {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 4px;
+        width: 24px;
+        height: 24px;
+        top: -2px;
+        content: '';
+
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    &--action {
+        &::before {
+            background-image: url('@{path-design}/labels/flag-action.svg');
+        }
+    }
+
+    &--new {
+        &::before {
+            background-image: url('@{path-design}/labels/flag-new.svg');
+        }
+    }
+
+    &--sale {
+        &::before {
+            background-image: url('@{path-design}/labels/flag-sale.svg');
+        }
+    }
+
+    &--sconto {
+        &::before {
+            background-image: url('@{path-design}/labels/flag-price.svg');
+        }
+    }
+
+    &--made-in-cz {
+        &::before {
+            background-size: 20px 20px;
+            background-image: url('@{path-design}/flags/cz.svg');
+        }
+    }
+
+    &--made-in-sk {
+        &::before {
+            background-size: 20px 20px;
+            background-image: url('@{path-design}/flags/sk.svg');
+        }
+    }
+
+    &--made-in-de {
+        &::before {
+            background-size: 20px 20px;
+            background-image: url('@{path-design}/flags/de.svg');
+        }
+    }
+
+    &--stock {
+        &::before {
+            background-image: url('@{path-design}/package-in-stock.png');
+        }
+    }
+}

@@ -122,28 +122,28 @@ class ProductFilterExtension extends AbstractExtension
         $flag = $this->flagFacade->getById($flagId);
         switch ($flag->getAkeneoCode()) {
             case Flag::AKENEO_CODE_NEW:
-                $class = 'flag-icon_new';
+                $class = 'flag-icon--new';
                 break;
             case Flag::AKENEO_CODE_SCONTO:
-                $class = 'flag-icon_sconto';
+                $class = 'flag-icon--sconto';
                 break;
             case Flag::AKENEO_CODE_ACTION:
-                $class = 'flag-icon_action';
+                $class = 'flag-icon--action';
                 break;
             case Flag::AKENEO_CODE_HIT:
-                $class = 'flag-icon_hit';
+                $class = 'flag-icon--hit';
                 break;
             case Flag::AKENEO_CODE_SALE:
-                $class = 'flag-icon_sale';
+                $class = 'flag-icon--sale';
                 break;
             case Flag::AKENEO_CODE_MADE_IN_CZ:
-                $class = 'flag-icon_made-in-cz';
+                $class = 'flag-icon--made-in-cz';
                 break;
             case Flag::AKENEO_CODE_MADE_IN_DE:
-                $class = 'flag-icon_made-in-de';
+                $class = 'flag-icon--made-in-de';
                 break;
             case Flag::AKENEO_CODE_MADE_IN_SK:
-                $class = 'flag-icon_made-in-sk';
+                $class = 'flag-icon--made-in-sk';
                 break;
             default:
                 $class = '';
