@@ -89,13 +89,8 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
         $deletedFilesStatus = $this->getProcessResult(['git', 'ls-files', '-d']);
         $deletedFilesCount = $this->countFilesInStatus($deletedFilesStatus);
 
-        // has only deleted files
-        if ($deletedFilesCount === $allFilesCount) {
-            return true;
-        }
-
-        // has also some modified or added files
-        return false;
+        // has only deleted files or has also some modified/added files
+        return $deletedFilesCount === $allFilesCount;
     }
 
     /**

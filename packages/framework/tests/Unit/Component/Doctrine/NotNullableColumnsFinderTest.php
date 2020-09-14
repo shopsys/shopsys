@@ -22,10 +22,7 @@ class NotNullableColumnsFinderTest extends TestCase
         $classMetadataInfoMock
             ->method('isNullable')
             ->willReturnCallback(function ($fieldName) {
-                if ($fieldName === 'nullableField') {
-                    return true;
-                }
-                return false;
+                return $fieldName === 'nullableField';
             });
         $classMetadataInfoMock
             ->method('getColumnName')

@@ -56,10 +56,6 @@ class DateTimeFormatPatternRepository
             return false;
         }
 
-        if ($dateTimePattern->getTimeType() !== null && $dateTimePattern->getTimeType() !== $timeType) {
-            return false;
-        }
-
-        return true;
+        return $dateTimePattern->getTimeType() === null || $dateTimePattern->getTimeType() === $timeType;
     }
 }

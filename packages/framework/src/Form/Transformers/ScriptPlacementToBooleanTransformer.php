@@ -14,15 +14,7 @@ class ScriptPlacementToBooleanTransformer implements DataTransformerInterface
      */
     public function transform($scriptPlacement)
     {
-        if ($scriptPlacement === Script::PLACEMENT_ORDER_SENT_PAGE) {
-            return true;
-        }
-
-        if ($scriptPlacement === Script::PLACEMENT_ALL_PAGES) {
-            return false;
-        }
-
-        return false;
+        return $scriptPlacement === Script::PLACEMENT_ORDER_SENT_PAGE;
     }
 
     /**
