@@ -15,16 +15,16 @@ sed -i "s/S3_BUCKET_NAME/${S3_API_BUCKET_NAME}/g" "${BASE_PATH}/docker/nginx/s3/
 S3_API_HOST_ESCAPED="$(echo "${S3_API_HOST}" | sed 's/[.[\*^$/]/\\&/g')"
 sed -i "s/S3_API_HOST/${S3_API_HOST_ESCAPED}/g" "${BASE_PATH}/docker/nginx/s3/nginx.conf"
 
-echo "Try create namespace if not exists"
+echo "Try create namespace if not exists: "
 kubectl create namespace ${PROJECT_NAME} || echo "${PROJECT_NAME} namespace already existing"
 
-echo "Delete secret for docker registry if exists"
+echo "Delete secret for docker registry if exists: "
 kubectl delete secret dockerregistry -n ${PROJECT_NAME} || echo "Secret for docker registry does not exist"
-echo "Create secret for docker registry"
+echo "Create secret for docker registry: "
 kubectl create secret docker-registry dockerregistry --docker-server=$CI_REGISTRY --docker-username=$DEPLOY_REGISTER_USER --docker-password=$DEPLOY_REGISTER_PASSWORD -n ${PROJECT_NAME}
 
 if [ ${RUNNING_PRODUCTION} -eq "0" ]; then
-    echo "Create secret for http auth"
+    echo "Create secret for http auth: "
     kubectl create secret generic http-auth --from-file=auth=${CONFIGURATION_TARGET_PATH}/basicHttpAuth -n ${PROJECT_NAME} || echo "Secret for http auth already exists"
 fi
 
@@ -46,6 +46,15 @@ yq write --inplace "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/continuous-d
 yq write --inplace "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/first-deploy/kustomization.yaml" "patchesJson6902[0].target.name" $NEW_APP_NAME
 yq write --inplace "${CONFIGURATION_TARGET_PATH}/horizontalPodAutoscaler/webserver-php-fpm.yaml" "metadata.name" $NEW_APP_NAME
 yq write --inplace "${CONFIGURATION_TARGET_PATH}/horizontalPodAutoscaler/webserver-php-fpm.yaml" "spec.scaleTargetRef.name" $NEW_APP_NAME
+
+# cron pod
+DEPLOYED_CRON_POD=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l app=cron -o=jsonpath='{.items[0].metadata.name}') || true
+
+if [[ -n ${DEPLOYED_CRON_POD} ]]; then
+  echo "Waits until cron instances are not running and disable crons for deploy"
+  kubectl exec -t --namespace=${PROJECT_NAME} ${DEPLOYED_CRON_POD} -- bash -c "./phing -S cron-lock > /dev/null 2>&1 & disown"
+  kubectl exec --namespace=${PROJECT_NAME} ${DEPLOYED_CRON_POD} -- ./phing -S cron-watch
+fi
 
 echo "Apply kubernetes configuration"
 if [ $FIRST_DEPLOY -eq "0" ]; then
@@ -102,11 +111,13 @@ if [ $EXIT_CODE -eq "0" ]; then
         kubectl delete hpa $OLD_APP_NAME --namespace=${PROJECT_NAME}
     fi
     DEPLOYED_WEBSERVER_PHP_FPM_PODS_STRING=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l version=${NEW_APP_VERSION} -o=jsonpath='{.items[*].metadata.name}')
+    kustomize build "${CONFIGURATION_TARGET_PATH}/kustomize/overlays/cron" | kubectl apply -f -
 else
     echo "Deploy failed"
     DEPLOYED_WEBSERVER_PHP_FPM_PODS_STRING=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=!Running -l version=${NEW_APP_VERSION} -o=jsonpath='{.items[*].metadata.name}')
     kubectl delete deployment $NEW_APP_NAME --namespace=${PROJECT_NAME}
     kubectl delete hpa $NEW_APP_NAME --namespace=${PROJECT_NAME}
+    kubectl delete pod --namespace=${PROJECT_NAME} ${DEPLOYED_CRON_POD} || true
 fi
 
 read -r -a DEPLOYED_WEBSERVER_PHP_FPM_PODS <<< $DEPLOYED_WEBSERVER_PHP_FPM_PODS_STRING

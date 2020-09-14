@@ -59,6 +59,16 @@ declare -A CAST_PARAMETERS=(
     ["parameters.gopay_config.sk.clientId"]=${GOPAY_SK_CLIENTID}
 )
 
+declare -A CRON_INSTANCES=(
+    ["cron-service"]='*/5 * * * *'
+    ["cron-export"]='*/5 * * * *'
+    ["cron-import-akeneo-product"]='*/5 * * * *'
+    ["cron-import-im"]='*/5 * * * *'
+    ["cron-import-akeneo-other"]='*/5 * * * *'
+    ["cron-gopay"]='*/5 * * * *'
+)
+
+
 VARS=(
     POSTGRES_DATABASE_IP_ADDRESS
     ELASTICSEARCH_IP_ADDRESS_HOST
@@ -89,4 +99,5 @@ source "${__DIR__}/functions.sh"
 source "${__DIR__}/parts/parameters.sh"
 source "${__DIR__}/parts/domains.sh"
 source "${__DIR__}/parts/kubernetes-variables.sh"
+source "${__DIR__}/parts/cron.sh"
 source "${__DIR__}/parts/deploy.sh"

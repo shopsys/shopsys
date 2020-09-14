@@ -706,11 +706,6 @@ services:
             $s3ApiPassword: '%env(S3_API_PASSWORD)%'
             $s3ApiBucketName: '%env(S3_API_BUCKET_NAME)%'
 
-    App\Component\NinjaMutex\Lock\NullLock: ~
-
-    NinjaMutex\Lock\LockInterface:
-        class: App\Component\NinjaMutex\Lock\NullLock
-
     App\Model\Svg\SvgProvider:
         arguments:
             $svgDirectoryPath: "%svg_icon_path%"
@@ -856,6 +851,12 @@ services:
     App\Command\ElFinderPostInstallCommand: ~
 
     App\Command\SingleImportPromoCodesCommand: ~
+
+    App\Command\CronLockCommand: ~
+
+    App\Command\CronWatcherCommand: ~
+
+    App\Component\Cron\CronLockEventListener: ~
 
     App\Model\Gtm\GtmContainer:
         arguments:
