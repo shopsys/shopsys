@@ -117,6 +117,8 @@ class IndexDefinition
      */
     public function getLegacyIndexAlias(): string
     {
+        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major.', __METHOD__), E_USER_DEPRECATED);
+
         return $this->indexPrefix . $this->getIndexName() . $this->getDomainId();
     }
 

@@ -219,6 +219,8 @@ class CategoryFacade
      */
     public function getTranslatedAll(DomainConfig $domainConfig)
     {
+        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.', __METHOD__), E_USER_DEPRECATED);
+
         return $this->categoryRepository->getTranslatedAll($domainConfig);
     }
 
@@ -338,6 +340,8 @@ class CategoryFacade
      */
     public function getTranslatedAllWithoutBranch(Category $category, DomainConfig $domainConfig)
     {
+        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.', __METHOD__), E_USER_DEPRECATED);
+
         return $this->categoryRepository->getTranslatedAllWithoutBranch($category, $domainConfig);
     }
 
