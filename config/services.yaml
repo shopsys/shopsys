@@ -863,6 +863,8 @@ services:
 
     App\Command\SingleImportPromoCodesCommand: ~
 
+    App\Command\SingleImportUrlRedirectTableCommand: ~
+
     App\Command\CronLockCommand: ~
 
     App\Command\CronWatcherCommand: ~
