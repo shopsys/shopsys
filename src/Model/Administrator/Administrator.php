@@ -67,4 +67,8 @@ class Administrator extends BaseAdministrator
     {
         $this->transferIssuesLastSeenDateTime = $transferIssuesLastSeenDateTime;
     }
+
+    protected function checkRolesContainAdminRole(): void
+    {
+    }
 }

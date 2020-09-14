@@ -1,0 +1,54 @@
+<ul class="js-toggle-menu navig navig--side">
+    <li class="js-toggle-menu-item navig__item">
+        <div class="box-dropdown">
+            <div
+                    class="box-dropdown__select box-dropdown__select--menu"
+                    title="{{ 'Frontend'|trans }}"
+            >
+                <i class="svg svg-forward-page"></i>
+                <span class="box-dropdown__select__text">
+                    {{ 'Go to Frontend'|trans }}
+                </span>
+                <i class="box-dropdown__select__arrow box-dropdown__select__arrow--up"></i>
+                <i class="box-dropdown__select__arrow box-dropdown__select__arrow--down"></i>
+            </div>
+            <ul class="js-toggle-menu-submenu box-dropdown__options">
+                {% for domainConfig in domainConfigs %}
+                    <li class="box-dropdown__options__item">
+                        <a href="{{ domainConfig.url }}" target="_blank" class="box-dropdown__options__item__link" title="{{ domainConfig.name }}">{{ domainConfig.url }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </li>
+
+    <li class="js-toggle-menu-item navig__item">
+        <div class="box-dropdown">
+            <div
+                    class="box-dropdown__select"
+                    title="{{ 'Account'|trans }}"
+            >
+                <i class="svg svg-person-man"></i>
+                <span class="box-dropdown__select__text">
+                    {{ app.user.realName }}
+                </span>
+                <i class="box-dropdown__select__arrow box-dropdown__select__arrow--up"></i>
+                <i class="box-dropdown__select__arrow box-dropdown__select__arrow--down"></i>
+            </div>
+            <ul class="js-toggle-menu-submenu box-dropdown__options">
+                {% if is_granted(constant('App\\Model\\Security\\Roles::ROLE_CUSTOMER_CARE')) == false %}
+                    <li class="box-dropdown__options__item">
+                        <a href="{{ url('admin_administrator_myaccount') }}" class="box-dropdown__options__item__link" title="{{ 'My account'|trans }}">
+                            {{ 'My account'|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="box-dropdown__options__item">
+                    <a href="{{ url('admin_logout', { _csrf_token: csrf_token('admin_logout')}) }}" class="box-dropdown__options__item__link" title="{{ 'Log out'|trans }}">
+                        {{ 'Log out'|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>

@@ -82,6 +82,10 @@ security:
         - { path: ^/%admin_url%/cron/*, roles: ROLE_SUPER_ADMIN }
         - { path: ^/%admin_url%/currency/, roles: ROLE_SUPER_ADMIN }
         - { path: ^/%admin_url%/translation/list/$, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/%admin_url%/dashboard/, roles: [ROLE_CUSTOMER_CARE,ROLE_ADMIN,ROLE_SUPER_ADMIN] }
+        - { path: ^/%admin_url%/order/*, roles: [ROLE_CUSTOMER_CARE,ROLE_ADMIN,ROLE_SUPER_ADMIN] }
+        - { path: ^/%admin_url%/product-picker/*, roles: [ROLE_CUSTOMER_CARE,ROLE_ADMIN,ROLE_SUPER_ADMIN] }
+        - { path: ^/%admin_url%/product/get-advanced-search-rule-form/, roles: [ROLE_CUSTOMER_CARE,ROLE_ADMIN,ROLE_SUPER_ADMIN] }
         - { path: ^/%admin_url%/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%admin_url%/authorization/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%admin_url%/, roles: ROLE_ADMIN }
