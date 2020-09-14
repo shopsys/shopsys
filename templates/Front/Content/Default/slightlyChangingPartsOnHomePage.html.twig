@@ -32,6 +32,7 @@
                                                 {% endif %}
                                         >
                                         <img
+                                            loading="lazy"
                                             {% if slidersCount > 1 %}
                                                 src="{{ imgLazyloadPlaceholder }}"
                                                 data-src="{{ imageUrl(item, null, 'web') }}"
