@@ -107,3 +107,11 @@ parameters:
 
         SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff.IncorrectLinesCountBeforeControlStructure:
             - '*/src/Component/Filesystem/Flysystem/VolumeDriver.php'
+
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff.DisallowedEmpty:
+            - '*/src/Component/Filesystem/Flysystem/VolumeDriver.php'
+            - '*/src/Model/AdminNavigation/RoutingExtension.php'
+
+        SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff:
+            # FormInterface is used as an argument to foreach with unused iterated value
+            - 'packages/framework/src/Component/Form/ResizeFormListener.php'

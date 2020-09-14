@@ -19,3 +19,5 @@ parameters:
     skip:
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
+        ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
+            - '*/tests/FrontendApiBundle/Functional/Article/GetArticlesTest.php'

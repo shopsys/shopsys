@@ -1,13 +1,44 @@
 imports:
-    - { resource: 'packages/coding-standards/easy-coding-standard.yml' }
     - { resource: 'packages/*/easy-coding-standard.yml' }
     - { resource: 'project-base/easy-coding-standard.yml' }
 
+services:
+    PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff: ~
+    PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer: ~
+    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff: ~
+    SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff: ~
+    SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff:
+        ignoreStandaloneIfInScope: true
+        ignoreOneLineTrailingIf: true
+        ignoreTrailingIfWithOneInstruction: true
+    SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff:
+        linesCountBeforeParentCall: 1
+        linesCountAfterParentCall: 1
+    SlevomatCodingStandard\Sniffs\ControlStructures\RequireMultiLineConditionSniff:
+        minLineLength: 120
+        alwaysSplitAllConditionParts: true
+    SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff:
+        allowPartialUses: true
+    SlevomatCodingStandard\Sniffs\Functions\RequireMultiLineCallSniff:
+        minLineLength: 120
+    SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff: ~
+    SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff:
+        linesCountBetweenDifferentAnnotationsTypes: 0
+    SlevomatCodingStandard\Sniffs\ControlStructures\UselessIfConditionWithReturnSniff: ~
+
 parameters:
     sets:
+        - 'php70'
+        - 'php71'
         - 'psr12'
         - 'dead-code'
         - 'clean-code'
+        - 'array'
+        - 'comments'
+        - 'control-structures'
+        - 'docblock'
+        - 'namespaces'
+        - 'strict'
     skip:
         PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer:
             - 'packages/*'
@@ -20,3 +51,6 @@ parameters:
         Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff:
             - '*/src/*'
             - '*/tests/App/*'
+
+        ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
+            - 'utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php'

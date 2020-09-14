@@ -5,10 +5,54 @@ services:
     PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer: ~
     # @deprecated This will be moved from project-base to coding-standards package in next major version
     SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff:
+        ignoreStandaloneIfInScope: true
+        ignoreOneLineTrailingIf: true
+        ignoreTrailingIfWithOneInstruction: true
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff:
+        linesCountBeforeParentCall: 1
+        linesCountAfterParentCall: 1
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\ControlStructures\RequireMultiLineConditionSniff:
+        minLineLength: 120
+        alwaysSplitAllConditionParts: true
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff:
+        allowPartialUses: true
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Functions\RequireMultiLineCallSniff:
+        minLineLength: 120
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff:
+        linesCountBetweenDifferentAnnotationsTypes: 0
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\ControlStructures\UselessIfConditionWithReturnSniff: ~
 
 parameters:
     sets:
+        - 'php70'
+        - 'php71'
         - 'psr12'
+        - 'dead-code'
+        - 'clean-code'
+        - 'array'
+        - 'comments'
+        - 'control-structures'
+        - 'docblock'
+        - 'namespaces'
+        - 'strict'
     exclude_files:
         - '*/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php'
         - '*/var/cache/*'
@@ -68,3 +112,34 @@ parameters:
             - '*/tests/App/Test/Codeception/Helper/NumberFormatHelper.php'
             - '*/tests/App/Test/Codeception/Helper/SymfonyHelper.php'
             - '*/tests/App/Test/Codeception/Module/Db.php'
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `clean-code` set but we do not want to use it for now
+        # some variables exist just because of the right annotation
+        PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `control-structures` set but we do not want to use it for now
+        PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `docblock` set but we do not want to use it for now
+        # remove variable name from @var and @type annotations
+        PhpCsFixer\Fixer\Phpdoc\PhpdocVarWithoutNameFixer: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `docblock` set but we do not want to use it for now
+        #remove inheritdoc
+        PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `php70` set but we cannot use it until next major because of possible BC breaks
+        SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `php71` set but we cannot use it until next major because of possible BC breaks
+        PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer: ~
+
+        # @deprecated File is excluded as the comments are already missing and deprecated methods will not be in next major
+        SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff:
+            - '*/tests/App/Test/Codeception/Module/StrictWebDriver.php'
