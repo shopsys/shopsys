@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use App\Model\Product\Exception\DeleteDefaultVariantException;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
@@ -13,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
@@ -83,6 +85,10 @@ class ProductFacade extends BaseProductFacade
      * @var string
      */
     private $productFilesUrlPrefix;
+    /**
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlRepository
+     */
+    private FriendlyUrlRepository $friendlyUrlRepository;
 
     /**
      * @param string $productFilesUrlPrefix
@@ -138,7 +144,8 @@ class ProductFacade extends BaseProductFacade
         ProductPriceCalculation $productPriceCalculation,
         ProductExportScheduler $productExportScheduler,
         ProductStockFacade $productStockFacade,
-        StockFacade $stockFacade
+        StockFacade $stockFacade,
+        FriendlyUrlRepository $friendlyUrlRepository
     ) {
         parent::__construct(
             $em,
@@ -168,6 +175,7 @@ class ProductFacade extends BaseProductFacade
         $this->stockFacade = $stockFacade;
         $this->productStockFacade = $productStockFacade;
         $this->productFilesUrlPrefix = $productFilesUrlPrefix;
+        $this->friendlyUrlRepository = $friendlyUrlRepository;
     }
 
     /**
@@ -229,6 +237,7 @@ class ProductFacade extends BaseProductFacade
         $this->em->flush();
         $this->imageFacade->manageImages($product, $productData->images);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
+        $this->generateOldEshopUrlForProduct($product, $productData);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->storeUrls($product);
 
@@ -249,6 +258,25 @@ class ProductFacade extends BaseProductFacade
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
         return $product;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function generateOldEshopUrlForProduct(Product $product, ProductData $productData): void
+    {
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $path = 'article/' . $product->getCatnum();
+            $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainConfig->getId(), $path);
+
+            if ($friendlyUrl === null) {
+                $productData->urls->newUrls[] = [
+                    UrlListData::FIELD_DOMAIN => $domainConfig->getId(),
+                    UrlListData::FIELD_SLUG => $path,
+                ];
+            }
+        }
     }
 
     /**
@@ -314,6 +342,8 @@ class ProductFacade extends BaseProductFacade
         $this->imageFacade->manageImages($product, $productData->images);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
 
+        $this->generateOldEshopUrlForProduct($product, $productData);
+        $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->storeUrls($product);
 
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);

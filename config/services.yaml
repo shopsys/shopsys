@@ -187,6 +187,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
+    App\Component\Router\FriendlyUrl\OldEshopUrlListener:
+        public: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlFacade
 
