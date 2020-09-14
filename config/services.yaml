@@ -892,3 +892,6 @@ services:
 
     App\Component\Router\DomainRouterFactory:
         arguments: ['%router.resource%']
+
+    Shopsys\FrameworkBundle\Model\Feed\FeedFacade:
+        alias: App\Model\Feed\FeedFacade
