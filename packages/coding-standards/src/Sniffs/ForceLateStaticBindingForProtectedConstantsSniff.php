@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
-use function in_array;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\AnnotationHelper;
 use SlevomatCodingStandard\Helpers\ConstantHelper;
 use SlevomatCodingStandard\Helpers\TokenHelper;
+use function in_array;
 use const T_CLASS;
 use const T_CONST;
 use const T_PROTECTED;

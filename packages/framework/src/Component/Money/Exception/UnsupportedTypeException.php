@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Money\Exception;
 
+use InvalidArgumentException;
+use Throwable;
 use function get_class;
 use function gettype;
-use InvalidArgumentException;
 use function is_object;
-use Throwable;
 
 class UnsupportedTypeException extends InvalidArgumentException implements MoneyException
 {

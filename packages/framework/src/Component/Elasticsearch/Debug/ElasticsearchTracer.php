@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Debug;
 
-use function GuzzleHttp\json_decode;
-use function GuzzleHttp\json_encode;
 use InvalidArgumentException;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\Exception\NotSupportedException;
+use function GuzzleHttp\json_decode;
+use function GuzzleHttp\json_encode;
 
 /**
  * Implementation of this class is close related to used hardcoded strings/keys in \Elasticsearch\Connections\Connection

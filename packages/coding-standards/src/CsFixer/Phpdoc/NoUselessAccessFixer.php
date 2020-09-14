@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\CsFixer\Phpdoc;
 
-use function array_map;
-use function in_array;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
@@ -13,8 +11,10 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use function preg_match;
 use SplFileInfo;
+use function array_map;
+use function in_array;
+use function preg_match;
 use const T_DOC_COMMENT;
 use const T_PRIVATE;
 use const T_PROTECTED;

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
-use function array_reverse;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
+use function array_reverse;
 use function preg_match;
 use const T_CLASS;
 use const T_CLOSE_CURLY_BRACKET;

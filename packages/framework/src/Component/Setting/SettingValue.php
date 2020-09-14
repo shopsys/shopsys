@@ -4,13 +4,13 @@ namespace Shopsys\FrameworkBundle\Component\Setting;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use function get_class;
-use function gettype;
-use function is_object;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueTypeNotMatchValueException;
+use function get_class;
+use function gettype;
+use function is_object;
 
 /**
  * @ORM\Table(name="setting_values")

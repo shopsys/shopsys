@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use function count;
 use FilesystemIterator;
-use function in_array;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -21,6 +19,8 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
 use Traversable;
+use function count;
+use function in_array;
 
 class YamlLintCommand extends Command
 {

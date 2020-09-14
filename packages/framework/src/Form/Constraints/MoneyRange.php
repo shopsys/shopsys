@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
-use function get_class;
-use function gettype;
-use function is_object;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\MissingOptionsException;
+use function get_class;
+use function gettype;
+use function is_object;
 
 /**
  * @Annotation

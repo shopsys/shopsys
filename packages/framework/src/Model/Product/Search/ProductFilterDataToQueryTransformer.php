@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
-use function array_map;
-use function count;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use function array_map;
+use function count;
 
 class ProductFilterDataToQueryTransformer
 {

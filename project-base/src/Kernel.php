@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use function dirname;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -13,6 +12,7 @@ use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use function dirname;
 
 class Kernel extends BaseKernel
 {
