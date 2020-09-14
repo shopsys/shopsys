@@ -20,7 +20,9 @@
                 {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : null } %}
             </div>
         </div>
+        {% include 'Front/Content/Disclaimer/disclaimer.html.twig' with { 'inCart' : false } %}
     {% endif %}
+
     {% if getRoute() != 'front_order_index' %}
         <div class="web__line web__line--grey web__line--grey-bottom-border clearfix dont-print">
             <div class="web__container footer__wrap">
@@ -104,6 +106,7 @@
     {% set copyrightCssClass = null %}
     {% if getRoute() == 'front_order_index' or getRoute() == 'front_cart' %}
         {% set copyrightCssClass = 'footer__bottom--checkout' %}
+        {% include 'Front/Content/Disclaimer/disclaimer.html.twig' with { 'inCart' : true } %}
     {% endif %}
     {% include 'Front/Layout/copyright.html.twig' with { 'cssClass' : copyrightCssClass } %}
 </div>
