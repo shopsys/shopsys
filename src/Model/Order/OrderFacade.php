@@ -258,7 +258,6 @@ class OrderFacade extends BaseOrderFacade
         $this->gtmHelper->amendGtmCouponToOrderData($orderData, $promoCode);
 
         $order = $this->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, $customerUser);
-        $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
         $this->cartFacade->deleteCartOfCurrentCustomerUser();
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
