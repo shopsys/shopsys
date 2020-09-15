@@ -186,4 +186,16 @@
             <arg line="${domains-info.locales}"/>
         </exec>
     </target>
+
+    <target name="translations-import" description="Import translatable messages from front-end source files in your project.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="translation:import"/>
+            <arg value="${path.root}/translations-update/"/>
+            <arg value="${path.root}/translations/"/>
+            <arg value="messages" />
+            <arg value="validators" />
+        </exec>
+    </target>
+
 </project>
