@@ -91,10 +91,6 @@
                                 {% if productView.productCountExposedInStores is not empty %}
                                     <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary">{{ productView.productCountExposedInStores|raw }}</span>
                                 {% endif %}
-                                <strong class="list-products__item__info__detail">
-                                    {{ 'Detail produktu'|trans }}
-                                    <i class="list-products__item__info__detail__icon svg svg-chevron"></i>
-                                </strong>
                             </div>
                             {% if productView.sellingPrice is not null %}
                                 <div class="list-products__item__info__price">
