@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 class FilterQueryFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
-     */
-    protected $filterQueryFactory;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer
      */
     protected $productFilterDataToQueryTransformer;
@@ -38,20 +33,17 @@ class FilterQueryFactory
     protected $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        FilterQueryFactory $filterQueryFactory,
         ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         CurrentCustomerUser $currentCustomerUser,
         IndexDefinitionLoader $indexDefinitionLoader,
         Domain $domain
     ) {
-        $this->filterQueryFactory = $filterQueryFactory;
         $this->productFilterDataToQueryTransformer = $productFilterDataToQueryTransformer;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->indexDefinitionLoader = $indexDefinitionLoader;
@@ -169,7 +161,7 @@ class FilterQueryFactory
      */
     public function createSellableAndVisibleFilterQuery(): FilterQuery
     {
-        return $this->filterQueryFactory->create($this->getIndexName())
+        return $this->create($this->getIndexName())
             ->filterOnlySellable()
             ->filterOnlyVisible($this->currentCustomerUser->getPricingGroup());
     }
