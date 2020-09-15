@@ -7,7 +7,7 @@ namespace App\Model\Stock;
 use App\Component\Image\ImageFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class StockFacade
 {
@@ -27,18 +27,26 @@ class StockFacade
     private $imageFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     */
+    private FriendlyUrlFacade $friendlyUrlFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         StockRepository $stockRepository,
-        ImageFacade $imageFacade
+        ImageFacade $imageFacade,
+        FriendlyUrlFacade $friendlyUrlFacade
     ) {
         $this->stockRepository = $stockRepository;
         $this->em = $em;
         $this->imageFacade = $imageFacade;
+        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -51,6 +59,12 @@ class StockFacade
         $this->em->persist($stock);
         $this->em->flush();
 
+        $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+            'front_stores_detail',
+            $stock->getId(),
+            $stock->getCity(),
+            $stock->getDomainId()
+        );
         $this->imageFacade->manageImages($stock, $stockData->image, 'main');
         $this->imageFacade->manageImages($stock, $stockData->imageGallery, 'gallery');
 
@@ -67,6 +81,8 @@ class StockFacade
         $stock = $this->getById($stockId);
         $stock->edit($stockData);
         $this->em->flush();
+
+        $this->friendlyUrlFacade->saveUrlListFormData('front_stores_detail', $stock->getId(), $stockData->urls);
 
         $this->imageFacade->manageImages($stock, $stockData->image, 'main');
         $this->imageFacade->manageImages($stock, $stockData->imageGallery, 'gallery');

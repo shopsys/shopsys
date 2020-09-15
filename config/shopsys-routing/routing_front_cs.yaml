@@ -96,12 +96,8 @@ front_productseries_list:
     defaults: { _controller: App\Controller\Front\ProductSeriesController:listAction }
 
 front_stores:
-    path: /prodejny
+    path: /obchodni-domy
     defaults: { _controller: App\Controller\Front\StoreController:indexAction }
-
-front_stores_detail:
-    path: /prodejna/{id}
-    defaults: { _controller: App\Controller\Front\StoreController:detailAction }
 
 front_kitchen:
     path: /kuchyne

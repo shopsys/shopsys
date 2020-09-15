@@ -1300,7 +1300,7 @@ msgstr ""
 msgid "Problém v přenosu byl označen jako vyřešený"
 msgstr ""
 
-msgid "Prodejny"
+msgid "Obchodní domy"
 msgstr ""
 
 msgid "Prodejny Sconto"
@@ -2424,4 +2424,3 @@ msgstr ""
 
 msgid "Žádný typ produktů zatím neexistuje, prosím vytvořte nějaký."
 msgstr ""
-

@@ -12,6 +12,7 @@ use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Form\UrlListType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -204,6 +205,18 @@ class StockFormType extends AbstractType
                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]
         );
+
+        if ($this->stock !== null) {
+            $stockDataBuilder->add(
+                'urls',
+                UrlListType::class,
+                [
+                    'route_name' => 'front_stores_detail',
+                    'entity_id' => $this->stock->getId(),
+                    'label' => t('URL settings'),
+                ]
+            );
+        }
 
         $builder->add($stockDataBuilder);
         $builder->add('save', SubmitType::class);

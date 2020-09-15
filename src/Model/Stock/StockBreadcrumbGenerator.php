@@ -31,7 +31,7 @@ class StockBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $breadcrumbItems[] = new BreadcrumbItem(
-            t('Prodejny'),
+            t('Obchodní domy'),
             'front_stores'
         );
 

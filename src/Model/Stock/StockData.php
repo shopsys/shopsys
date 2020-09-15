@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Stock;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
 class StockData
 {
@@ -83,10 +84,16 @@ class StockData
      */
     public $imageGallery;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
+     */
+    public UrlListData $urls;
+
     public function __construct()
     {
         $this->centralStock = false;
         $this->image = new ImageUploadData();
         $this->imageGallery = new ImageUploadData();
+        $this->urls = new UrlListData();
     }
 }
