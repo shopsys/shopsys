@@ -1,4 +1,5 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+{% from 'Front/Macros/pagination.html.twig' import pagination as pagination %}
 
 {% block breadcrumb %}
 {% endblock %}
@@ -43,6 +44,13 @@
             </div>
             {# Grid #}
             {% include 'Front/Content/Kitchen/components/classicKitchen.html.twig' with { 'inDetail': true } %}
+            {# Pagination #}
+            {{ pagination(
+                'front_kitchen_list_rustical',
+                'front_kitchen_list_modern',
+                'Rustikální',
+                'Moderní'
+            ) }}
             {# USP #}
             {% include 'Front/Content/Kitchen/components/usp.html.twig' %}
             {# Offers #}

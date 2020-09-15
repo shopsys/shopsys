@@ -1,0 +1,22 @@
+{% macro pagination(urlPrev, urlNext, textPrev, textNext) %}
+    <div class="box-furniture-pagination">
+        <a
+            class="box-furniture-pagination__item"
+            href="{{ url("#{urlPrev}") }}"
+        >
+            <i class="svg svg-chevron box-furniture-pagination__item__icon box-furniture-pagination__item__icon--previous theme-kitchen-color"></i>
+            <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
+                {{ "#{textPrev}"|trans }}
+            </span>
+        </a>
+        <a
+            class="box-furniture-pagination__item box-furniture-pagination__item--next"
+            href="{{ url("#{urlNext}") }}"
+        >
+            <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
+                {{ "#{textNext}"|trans }}
+            </span>
+            <i class="svg svg-chevron box-furniture-pagination__item__icon theme-kitchen-color"></i>
+        </a>
+    </div>
+{% endmacro pagination %}
