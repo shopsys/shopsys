@@ -149,6 +149,7 @@
 
 {% block footer %}
     {% if cart is not null %}
+        {% include 'Front/Content/Disclaimer/disclaimer.html.twig' with { 'inCart' : true } %}
         {% include 'Front/Layout/copyright.html.twig' with { 'cssClass' : 'footer__bottom--cart' } %}
     {% else %}
         {% embed 'Front/Layout/footer.html.twig' with { 'showNewsletter' : true } %}{% endembed %}
