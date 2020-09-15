@@ -3,3 +3,10 @@ resources:
     - ../../../namespace.yaml
     - ../../../configmap/cron-list.yaml
 namespace: "{{PROJECT_NAME}}"
+configMapGenerator:
+    -   name: domains-urls
+        files:
+            - ../../../../config/domains_urls.yaml
+    -   name: parameters
+        files:
+            - ../../../../config/parameters.yaml
