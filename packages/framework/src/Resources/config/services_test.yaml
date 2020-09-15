@@ -24,6 +24,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: ~
 
+    # @deprecated Registering this service is necessary to avoid BC break. It will be removed in next major version.
+    Shopsys\FrameworkBundle\Model\Localization\TranslatableListener:
+        class: Tests\FrameworkBundle\Test\TestTranslatableListener
+
     prezent_doctrine_translatable.listener:
         class: Tests\FrameworkBundle\Test\TestTranslatableListener
         tags:

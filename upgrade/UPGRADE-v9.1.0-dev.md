@@ -68,3 +68,8 @@ There you can find links to upgrade notes for other versions too.
 
 - fix displaying '+' sign in product filter ([#2023](https://github.com/shopsys/shopsys/pull/2023))
     - see #project-base-diff to update your project
+
+- remove setting domain locale in `CartFacadeTest` ([#2037](https://github.com/shopsys/shopsys/pull/2037))
+    - in tests is used extended class of `Shopsys\FrameworkBundle\Model\Localization\TranslatableListener`
+    - removed `config/packages/test/prezent_doctrine_translatable.yaml`
+    - see #project-base-diff to update your project
