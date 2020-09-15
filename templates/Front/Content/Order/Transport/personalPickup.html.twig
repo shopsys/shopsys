@@ -28,10 +28,10 @@
                     {% endif %}
                 </span>
                 <span class="box-chooser__item__avail">
-                    {% transchoice stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks with {'%daysAvailability%': stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks} %}
+                    {% transchoice stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks with {'%weeksAvailability%': stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks} %}
                         {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít <span class="box-chooser__item__avail__time box-chooser__item__avail__time--now">ihned</span></span>
                         | {1} <span class="box-chooser__item__avail__text">K dispozici do <span class="box-chooser__item__avail__time">1 týdne</span></span>
-                        | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do <span class="box-chooser__item__avail__time">%daysAvailability% týdnů</span></span>
+                        | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do <span class="box-chooser__item__avail__time">%weeksAvailability% týdnů</span></span>
                     {% endtranschoice %}
                 </span>
             </label>

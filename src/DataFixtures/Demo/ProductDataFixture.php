@@ -2049,9 +2049,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $product = $this->createProduct($productData);
-        $this->setFutureProductStock($product, '702', 2, (new DateTime())->modify('+5 weeks'));
-        $this->setFutureProductStock($product, '704', 1, (new DateTime())->modify('+4 weeks'));
-        $this->setFutureProductStock($product, '706', 1, (new DateTime())->modify('+2 weeks'));
+        $this->setFutureProductStock($product, '800-cz', 2, (new DateTime())->modify('+5 weeks'));
+        $this->setFutureProductStock($product, '704-cz', 1, (new DateTime())->modify('+4 weeks'));
+        $this->setFutureProductStock($product, '701-cz', 1, (new DateTime())->modify('+2 weeks'));
 
         $productData = $this->productDataFactory->create();
 
@@ -2470,9 +2470,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $product = $this->createProduct($productData);
-        $this->setFutureProductStock($product, '702', 2, (new DateTime())->modify('+3 weeks'));
-        $this->setFutureProductStock($product, '704', 1, (new DateTime())->modify('+2 weeks'));
-        $this->setFutureProductStock($product, '706', 1, (new DateTime())->modify('+1 weeks'));
+        $this->setFutureProductStock($product, '800-cz', 2, (new DateTime())->modify('+3 weeks'));
+        $this->setFutureProductStock($product, '704-cz', 1, (new DateTime())->modify('+2 weeks'));
+        $this->setFutureProductStock($product, '706-cz', 1, (new DateTime())->modify('+1 weeks'));
 
         $productData = $this->productDataFactory->create();
 

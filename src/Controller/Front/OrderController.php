@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Login\LoginFormType;
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
+use App\Form\Front\Order\OrderFlow;
 use App\Form\Front\Order\PaymentFormType;
 use App\Model\GoPay\BankSwift\GoPayBankSwift;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
@@ -23,6 +24,7 @@ use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Order\Preview\SplitOrderPreview;
 use App\Model\Order\Watcher\SplitTransportAndPaymentWatcher;
 use App\Model\Payment\Payment;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Stock\StockFacade;
 use App\Model\Transport\Logistic\TransportLogisticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -157,6 +159,11 @@ class OrderController extends FrontBaseController
     private TransportLogisticFacade $transportLogisticFacade;
 
     /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
+    private ProductAvailabilityFacade $productAvailabilityFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
@@ -200,7 +207,8 @@ class OrderController extends FrontBaseController
         StockFacade $stockFacade,
         GtmFacade $gtmFacade,
         Authenticator $authenticator,
-        TransportLogisticFacade $transportLogisticFacade
+        TransportLogisticFacade $transportLogisticFacade,
+        ProductAvailabilityFacade $productAvailabilityFacade
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
@@ -223,6 +231,7 @@ class OrderController extends FrontBaseController
         $this->gtmFacade = $gtmFacade;
         $this->authenticator = $authenticator;
         $this->transportLogisticFacade = $transportLogisticFacade;
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
     /**
@@ -333,7 +342,7 @@ class OrderController extends FrontBaseController
 
         $this->gtmFacade->onOrderPages($splitOrderPreview, $orderFlow->getCurrentStepNumber());
 
-        if ($orderFlow->getCurrentStepNumber() === 3 && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) {
+        if ($orderFlow->getCurrentStepNumber() === OrderFlow::STEP_THIRST && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) {
             $customerEmailExists = $this->session->get(self::SESSION_CUSTOMER_EMAIL_EXISTS, null);
             $this->session->remove(self::SESSION_CUSTOMER_EMAIL_EXISTS);
             if ($customerEmailExists !== false) {
@@ -347,6 +356,16 @@ class OrderController extends FrontBaseController
                     'prefilledCustomerEmail' => $prefilledCustomerEmail,
                 ]);
             }
+        }
+
+        $minimalDaysAvailabilityIndexedByTransportIds = [];
+        if ($orderFlow->getCurrentStepNumber() === OrderFlow::STEP_SECOND) {
+            $minimalDaysAvailabilityIndexedByTransportIds = $this->productAvailabilityFacade->getMinimalDaysAvailabilityIndexedByTransportIds(
+                $domainId,
+                $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId),
+                $cart->getQuantifiedProducts(),
+                $transports
+            );
         }
 
         return $this->render('Front/Content/Order/index.html.twig', [
@@ -365,6 +384,7 @@ class OrderController extends FrontBaseController
             'isCompanyCustomer' => $isCompanyCustomer,
             'displayFormType' => 'order_flow',
             'prefilledCustomerEmail' => ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) ? $prefilledCustomerEmail : null,
+            'minimalDaysAvailabilityIndexedByTransportIds' => $minimalDaysAvailabilityIndexedByTransportIds,
         ]);
     }
 
