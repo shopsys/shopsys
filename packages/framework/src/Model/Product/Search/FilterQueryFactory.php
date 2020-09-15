@@ -67,14 +67,14 @@ class FilterQueryFactory
      * @param int $categoryId
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsInCategoryFilterQuery(
+    public function createListableProductsInCategory(
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
         int $limit,
         int $categoryId
     ): FilterQuery {
-        return $this->createFilterQueryWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
+        return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
             ->filterByCategory([$categoryId]);
     }
 
@@ -85,13 +85,13 @@ class FilterQueryFactory
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createFilterQueryWithProductFilterData(
+    public function createWithProductFilterData(
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
         int $limit
     ): FilterQuery {
-        $filterQuery = $this->createSellableAndVisibleFilterQuery()
+        $filterQuery = $this->createSellableAndVisible()
             ->setPage($page)
             ->setLimit($limit)
             ->applyOrdering($orderingModeId, $this->currentCustomerUser->getPricingGroup());
@@ -113,14 +113,14 @@ class FilterQueryFactory
      * @param int $brandId
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsForBrandFilterQuery(
+    public function createListableProductsForBrand(
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
         int $limit,
         int $brandId
     ): FilterQuery {
-        return $this->createFilterQueryWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
+        return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
             ->filterByBrands([$brandId]);
     }
 
@@ -132,7 +132,7 @@ class FilterQueryFactory
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsForSearchTextFilterQuery(
+    public function createListableProductsForSearchText(
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
@@ -141,7 +141,7 @@ class FilterQueryFactory
     ): FilterQuery {
         $searchText = $searchText ?? '';
 
-        return $this->createFilterQueryWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
+        return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
             ->search($searchText);
     }
 
@@ -159,7 +159,7 @@ class FilterQueryFactory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createSellableAndVisibleFilterQuery(): FilterQuery
+    public function createSellableAndVisible(): FilterQuery
     {
         return $this->create($this->getIndexName())
             ->filterOnlySellable()
@@ -171,9 +171,9 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createProductFilterCountFilterQuery(int $categoryId, ProductFilterData $productFilterData): FilterQuery
+    public function createProductFilterCount(int $categoryId, ProductFilterData $productFilterData): FilterQuery
     {
-        $filterQuery = $this->createSellableAndVisibleFilterQuery();
+        $filterQuery = $this->createSellableAndVisible();
         $filterQuery->filterByCategory([$categoryId]);
         $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
 
@@ -185,9 +185,9 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createProductSearchCountFilterQuery(string $searchText, ProductFilterData $productFilterData): FilterQuery
+    public function createProductSearchCount(string $searchText, ProductFilterData $productFilterData): FilterQuery
     {
-        $filterQuery = $this->createSellableAndVisibleFilterQuery();
+        $filterQuery = $this->createSellableAndVisible();
         $filterQuery->search($searchText);
         $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
 

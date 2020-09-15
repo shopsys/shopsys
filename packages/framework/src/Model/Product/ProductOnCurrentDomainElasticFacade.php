@@ -54,7 +54,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer
-     * @deprecated This property will be removed in next major version.
+     * @deprecated this property will be removed in next major version
      */
     protected $productFilterDataToQueryTransformer;
 
@@ -65,7 +65,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
-     * @deprecated This property will be removed in next major version.
+     * @deprecated this property will be removed in next major version
      */
     protected $indexDefinitionLoader;
 
@@ -148,7 +148,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         int $limit,
         int $categoryId
     ): PaginationResult {
-        $filterQuery = $this->filterQueryFactory->createListableProductsInCategoryFilterQuery($productFilterData, $orderingModeId, $page, $limit, $categoryId);
+        $filterQuery = $this->filterQueryFactory->createListableProductsInCategory($productFilterData, $orderingModeId, $page, $limit, $categoryId);
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
 
@@ -162,7 +162,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     {
         $emptyProductFilterData = new ProductFilterData();
 
-        $filterQuery = $this->filterQueryFactory->createListableProductsForBrandFilterQuery($emptyProductFilterData, $orderingModeId, $page, $limit, $brandId);
+        $filterQuery = $this->filterQueryFactory->createListableProductsForBrand($emptyProductFilterData, $orderingModeId, $page, $limit, $brandId);
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
 
@@ -179,7 +179,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         int $page,
         int $limit
     ): PaginationResult {
-        $filterQuery = $this->filterQueryFactory->createListableProductsForSearchTextFilterQuery($productFilterData, $orderingModeId, $page, $limit, $searchText);
+        $filterQuery = $this->filterQueryFactory->createListableProductsForSearchText($productFilterData, $orderingModeId, $page, $limit, $searchText);
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
 
@@ -194,7 +194,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         $emptyProductFilterData = new ProductFilterData();
         $page = 1;
 
-        $filterQuery = $this->filterQueryFactory->createListableProductsForSearchTextFilterQuery($emptyProductFilterData, ProductListOrderingConfig::ORDER_BY_RELEVANCE, $page, $limit, $searchText);
+        $filterQuery = $this->filterQueryFactory->createListableProductsForSearchText($emptyProductFilterData, ProductListOrderingConfig::ORDER_BY_RELEVANCE, $page, $limit, $searchText);
 
         $productIds = $this->productElasticsearchRepository->getSortedProductIdsByFilterQuery($filterQuery);
 
@@ -213,7 +213,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     ): ProductFilterCountData {
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
-            $this->filterQueryFactory->createProductFilterCountFilterQuery($categoryId, $productFilterData)
+            $this->filterQueryFactory->createProductFilterCount($categoryId, $productFilterData)
         );
     }
 
@@ -229,7 +229,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
 
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInSearch(
             $productFilterData,
-            $this->filterQueryFactory->createProductSearchCountFilterQuery($searchText, $productFilterData)
+            $this->filterQueryFactory->createProductSearchCount($searchText, $productFilterData)
         );
     }
 
@@ -242,7 +242,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
     {
         $emptyProductFilterData = new ProductFilterData();
-        $filterQuery = $this->filterQueryFactory->createFilterQueryWithProductFilterData(
+        $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
             $emptyProductFilterData,
             $orderingModeId,
             1,
@@ -258,7 +258,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      */
     public function getProductsCountOnCurrentDomain(): int
     {
-        $filterQuery = $this->filterQueryFactory->createSellableAndVisibleFilterQuery();
+        $filterQuery = $this->filterQueryFactory->createSellableAndVisible();
 
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
     }
@@ -273,7 +273,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
     {
         $emptyProductFilterData = new ProductFilterData();
-        $filterQuery = $this->filterQueryFactory->createListableProductsInCategoryFilterQuery(
+        $filterQuery = $this->filterQueryFactory->createListableProductsInCategory(
             $emptyProductFilterData,
             $orderingModeId,
             1,
@@ -292,7 +292,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param int $limit
      * @param int $categoryId
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createListableProductsInCategoryFilterQuery() instead.
+     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createListableProductsInCategory() instead.
      */
     protected function createListableProductsInCategoryFilterQuery(
         ProductFilterData $productFilterData,
@@ -301,7 +301,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         int $limit,
         int $categoryId
     ): FilterQuery {
-        return $this->filterQueryFactory->createListableProductsInCategoryFilterQuery($productFilterData, $orderingModeId, $page, $limit, $categoryId);
+        return $this->filterQueryFactory->createListableProductsInCategory($productFilterData, $orderingModeId, $page, $limit, $categoryId);
     }
 
     /**
@@ -311,7 +311,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param int $limit
      * @param int $brandId
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createListableProductsForBrandFilterQuery() instead.
+     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createListableProductsForBrand() instead.
      */
     protected function createListableProductsForBrandFilterQuery(
         ProductFilterData $productFilterData,
@@ -320,7 +320,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         int $limit,
         int $brandId
     ): FilterQuery {
-        return $this->filterQueryFactory->createListableProductsForBrandFilterQuery($productFilterData, $orderingModeId, $page, $limit, $brandId);
+        return $this->filterQueryFactory->createListableProductsForBrand($productFilterData, $orderingModeId, $page, $limit, $brandId);
     }
 
     /**
@@ -330,7 +330,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param int $limit
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createListableProductsForSearchTextFilterQuery() instead.
+     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createListableProductsForSearchText() instead.
      */
     protected function createListableProductsForSearchTextFilterQuery(
         ProductFilterData $productFilterData,
@@ -339,7 +339,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         int $limit,
         ?string $searchText
     ): FilterQuery {
-        return $this->filterQueryFactory->createListableProductsForSearchTextFilterQuery($productFilterData, $orderingModeId, $page, $limit, $searchText);
+        return $this->filterQueryFactory->createListableProductsForSearchText($productFilterData, $orderingModeId, $page, $limit, $searchText);
     }
 
     /**
@@ -348,7 +348,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param int $page
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createFilterQueryWithProductFilterData() instead.
+     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createWithProductFilterData() instead.
      */
     protected function createFilterQueryWithProductFilterData(
         ProductFilterData $productFilterData,
@@ -356,7 +356,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         int $page,
         int $limit
     ): FilterQuery {
-        return $this->filterQueryFactory->createFilterQueryWithProductFilterData($productFilterData, $orderingModeId, $page, $limit);
+        return $this->filterQueryFactory->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit);
     }
 
     /**
