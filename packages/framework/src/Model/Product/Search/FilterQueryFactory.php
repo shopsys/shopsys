@@ -181,11 +181,11 @@ class FilterQueryFactory
     }
 
     /**
-     * @param string|null $searchText
+     * @param string $searchText
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createProductSearchCountFilterQuery(?string $searchText, ProductFilterData $productFilterData): FilterQuery
+    public function createProductSearchCountFilterQuery(string $searchText, ProductFilterData $productFilterData): FilterQuery
     {
         $filterQuery = $this->createSellableAndVisibleFilterQuery();
         $filterQuery->search($searchText);
