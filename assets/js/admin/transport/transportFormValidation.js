@@ -16,9 +16,16 @@ export default function transportFormValidation ($container) {
         'callbacks': {
             'validateLeastOnePackageOnEachAllowedDomain': function () {
                 // JS validation is not implemented yet. Too expensive, not much time to lunch production...
-            },
+            }
+        }
+    });
+
+    const $externalIdField = $transportForm.find('#transport_form_basicInformation_externalId');
+    console.log($externalIdField);
+    $externalIdField.jsFormValidator({
+        'callbacks': {
             'validateUniqueExternalId': function () {
-                // JS validation is not necessary
+                // JS validation is not necesssary
             }
         }
     });

@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TransportFormTypeExtension extends AbstractTypeExtension
@@ -91,7 +92,9 @@ class TransportFormTypeExtension extends AbstractTypeExtension
             ])
             ->add('externalId', IntegerType::class, [
                 'label' => t('Párovací ID můstku'),
+                'required' => true,
                 'constraints' => [
+                    new NotBlank(),
                     new Callback([
                         'callback' => [$this, 'validateUniqueExternalId']
                     ])
@@ -114,7 +117,9 @@ class TransportFormTypeExtension extends AbstractTypeExtension
 =======
             ->add('deliveryCode', TextType::class, [
                 'label' => t('Moewe - DeliveryCode'),
+                'required' => true,
                 'constraints' => [
+                    new NotBlank(),
                     new Length([
                         'max' => 10
                     ])
@@ -122,7 +127,9 @@ class TransportFormTypeExtension extends AbstractTypeExtension
             ])
             ->add('typeOfDeliveryKey', IntegerType::class, [
                 'label' => t('Moewe - TypeOfDeliveryKey'),
+                'required' => true,
                 'constraints' => [
+                    new NotBlank(),
                     new GreaterThan(0),
                     new LessThanOrEqual(99)
                 ]
@@ -215,11 +222,15 @@ class TransportFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @param ExecutionContextInterface $context
      */
-    public function validateUniqueExternalId(int $id, ExecutionContextInterface $context): void
+    public function validateUniqueExternalId(?int $id, ExecutionContextInterface $context): void
     {
+        if ($id === null) {
+            return;
+        }
+
         $existingTransport = $this->transportFacade->findByExternalId($id);
         if ($existingTransport !== null) {
             if ($this->transport === null || $existingTransport->getId() !== $this->transport->getId()) {

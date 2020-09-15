@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PaymentFormTypeExtension extends AbstractTypeExtension
@@ -83,7 +84,9 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
             ])
             ->add('externalId', IntegerType::class, [
                 'label' => t('Párovací ID můstku'),
+                'required' => true,
                 'constraints' => [
+                    new NotBlank(),
                     new Callback([
                         'callback' => [$this, 'validateUniqueExternalId']
                     ])
