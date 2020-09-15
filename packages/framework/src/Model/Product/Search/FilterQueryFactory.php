@@ -173,8 +173,8 @@ class FilterQueryFactory
      */
     public function createProductFilterCount(int $categoryId, ProductFilterData $productFilterData): FilterQuery
     {
-        $filterQuery = $this->createSellableAndVisible();
-        $filterQuery->filterByCategory([$categoryId]);
+        $filterQuery = $this->createSellableAndVisible()
+            ->filterByCategory([$categoryId]);
         $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
 
         return $filterQuery;
@@ -187,8 +187,8 @@ class FilterQueryFactory
      */
     public function createProductSearchCount(string $searchText, ProductFilterData $productFilterData): FilterQuery
     {
-        $filterQuery = $this->createSellableAndVisible();
-        $filterQuery->search($searchText);
+        $filterQuery = $this->createSellableAndVisible()
+            ->search($searchText);
         $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
 
         return $filterQuery;
