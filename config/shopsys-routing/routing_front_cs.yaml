@@ -107,9 +107,17 @@ front_kitchen_list:
     path: /kuchyne-na-miru
     defaults: { _controller: App\Controller\Front\KitchenController:listAction }
 
-front_kitchen_list_sub:
+front_kitchen_list_modern:
     path: /moderni-kuchyne
-    defaults: { _controller: App\Controller\Front\KitchenController:listSubAction }
+    defaults: { _controller: App\Controller\Front\KitchenController:listModernKitchenAction }
+
+front_kitchen_list_rustical:
+    path: /rustikalni-kuchyne
+    defaults: { _controller: App\Controller\Front\KitchenController:listRusticalKitchenAction }
+
+front_kitchen_list_classic:
+    path: /klasicke-kuchyne
+    defaults: { _controller: App\Controller\Front\KitchenController:listClassicKitchenAction }
 
 front_kitchen_detail:
     path: /detail-kuchyne

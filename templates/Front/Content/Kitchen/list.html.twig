@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block main_content %}
+    {% from 'Front/Macros/picture.html.twig' import picture as picture %}
     <div class="web__line web__line--spacing--big">
         <div class="web__container">
             {# Heading, breadcrumb, description #}
@@ -43,84 +44,27 @@
             <div class="box-furniture-cat-wrap">
                 <div class="box-furniture-cat">
                     <div class="box-furniture-cat__image js-furniture-cats-carousel">
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Moderní kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Moderní kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Moderní kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Moderní kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Moderní kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Moderní kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Moderní kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Moderní kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Moderní kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Moderní kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
+                        {{ picture(
+                            'kitchen/category/moderni_kuchyne_2x.jpg',
+                            'kitchen/category/moderni_kuchyne.jpg',
+                            'Moderní kuchyně',
+                            'box-furniture-cat__image'
+                        ) }}
+                        {{ picture(
+                            'kitchen/category/moderni_kuchyne_2x.jpg',
+                            'kitchen/category/moderni_kuchyne.jpg',
+                            'Moderní kuchyně',
+                            'box-furniture-cat__image'
+                        ) }}
+                        {{ picture(
+                            'kitchen/category/moderni_kuchyne_2x.jpg',
+                            'kitchen/category/moderni_kuchyne.jpg',
+                            'Moderní kuchyně',
+                            'box-furniture-cat__image'
+                        ) }}
                     </div>
                     <div class="box-furniture-cat__content">
-                        <a class="box-furniture-cat__link" href="{{ url('front_kitchen_list_sub') }}">
+                        <a class="box-furniture-cat__link" href="{{ url('front_kitchen_list_modern') }}">
                             <h2 class="box-furniture-cat__title theme-kitchen-color-secondary">{{ 'Moderní kuchyně' }}</h2>
                             <p class="box-furniture-cat__desc theme-kitchen-color">
                                 {{ 'Hledáte kuchyni, která odpovídá aktuálním moderním trendům,
@@ -137,54 +81,27 @@
                 </div>
                 <div class="box-furniture-cat box-furniture-cat--reverse">
                     <div class="box-furniture-cat__image js-furniture-cats-carousel">
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Rustikální kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Rustikální kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Rustikální kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Rustikální kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Rustikální kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Rustikální kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
+                        {{ picture(
+                            'kitchen/category/rustikalni_kuchyne_2x.jpg',
+                            'kitchen/category/rustikalni_kuchyne.jpg',
+                            'Rustikální kuchyně',
+                            'box-furniture-cat__image'
+                        ) }}
+                        {{ picture(
+                            'kitchen/category/rustikalni_kuchyne_2x.jpg',
+                            'kitchen/category/rustikalni_kuchyne.jpg',
+                            'Rustikální kuchyně',
+                            'box-furniture-cat__image'
+                        ) }}
+                        {{ picture(
+                            'kitchen/category/rustikalni_kuchyne_2x.jpg',
+                            'kitchen/category/rustikalni_kuchyne.jpg',
+                            'Rustikální kuchyně',
+                            'box-furniture-cat__image'
+                        ) }}
                     </div>
                     <div class="box-furniture-cat__content">
-                        <a class="box-furniture-cat__link js-not-implemented-yet" href="#">
+                        <a class="box-furniture-cat__link" href="{{ url('front_kitchen_list_rustical') }}">
                             <h2 class="box-furniture-cat__title theme-kitchen-color-secondary">{{ 'Rustikální kuchyně' }}</h2>
                             <p class="box-furniture-cat__desc theme-kitchen-color">
                                 {{ 'Lehce noblesní a s nádechem minulosti. V kombinaci se dřevem, kamenem nebo cihlami
@@ -200,84 +117,27 @@
                 </div>
                 <div class="box-furniture-cat">
                     <div class="box-furniture-cat__image js-furniture-cats-carousel">
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Klasické kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Klasické kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Klasické kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Klasické kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Klasické kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Klasické kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/rustikalni_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Klasické kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Klasické kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/klasicke_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
-                        <picture>
-                            <source
-                                srcset="
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne_2x.jpg') }} 2x,
-                                {{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }} 1x"
-                            >
-                            <img
-                                alt="{{ 'Klasické kuchyně'|trans }}"
-                                class="box-furniture-cat__image"
-                                title="{{ 'Klasické kuchyně'|trans }}"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/kitchen/category/moderni_kuchyne.jpg') }}"
-                                itemprop="image"
-                            >
-                        </picture>
+                        {{ picture(
+                            'kitchen/category/klasicke_kuchyne_2x.jpg',
+                            'kitchen/category/klasicke_kuchyne.jpg',
+                            'Klasické kuchyně',
+                            'box-furniture-cat__image'
+                        ) }}
+                        {{ picture(
+                            'kitchen/category/klasicke_kuchyne_2x.jpg',
+                            'kitchen/category/klasicke_kuchyne.jpg',
+                            'Klasické kuchyně',
+                            'box-furniture-cat__image'
+                        ) }}
+                        {{ picture(
+                            'kitchen/category/klasicke_kuchyne_2x.jpg',
+                            'kitchen/category/klasicke_kuchyne.jpg',
+                            'Klasické kuchyně',
+                            'box-furniture-cat__image'
+                        ) }}
                     </div>
                     <div class="box-furniture-cat__content">
-                        <a class="box-furniture-cat__link js-not-implemented-yet" href="#">
+                        <a class="box-furniture-cat__link" href="{{ url('front_kitchen_list_classic') }}">
                             <h2 class="box-furniture-cat__title theme-kitchen-color-secondary">{{ 'Klasické kuchyně' }}</h2>
                             <p class="box-furniture-cat__desc theme-kitchen-color">
                                 {{ 'Klasické kuchyně se vyznačují přizpůsobivostí.
@@ -314,21 +174,12 @@
                     </a>
                 </div>
                 <div class="box-furniture-banner__image">
-                    <picture>
-                        <source
-                            srcset="
-                            {{ asset('public/frontend/images/kitchen/nobilia_bg_2x.jpg') }} 2x,
-                            {{ asset('public/frontend/images/kitchen/nobilia_bg.jpg') }} 1x"
-                        >
-                        <img
-                            alt="{{ 'Kuchyně na míru'|trans }}"
-                            class="box-furniture-banner__img"
-                            title="{{ 'Kuchyně na míru'|trans }}"
-                            loading="lazy"
-                            data-src="{{ asset('public/frontend/images/kitchen/nobilia_bg.jpg') }}"
-                            itemprop="image"
-                        >
-                    </picture>
+                    {{ picture(
+                        'kitchen/nobilia_bg_2x.jpg',
+                        'kitchen/nobilia_bg.jpg',
+                        'Nobilia kuchyně',
+                        'box-furniture-banner__img'
+                    ) }}
                 </div>
             </div>
             {# USP #}

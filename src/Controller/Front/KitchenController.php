@@ -41,9 +41,25 @@ class KitchenController extends FrontBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listSubAction(): Response
+    public function listModernKitchenAction(): Response
     {
-        return $this->render('Front/Content/Kitchen/listSub.html.twig');
+        return $this->render('Front/Content/Kitchen/variants/modernKitchen.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listRusticalKitchenAction(): Response
+    {
+        return $this->render('Front/Content/Kitchen/variants/rusticalKitchen.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listClassicKitchenAction(): Response
+    {
+        return $this->render('Front/Content/Kitchen/variants/classicKitchen.html.twig');
     }
 
     /**
