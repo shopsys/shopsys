@@ -33,15 +33,16 @@
                 </div>
                 {# Short description #}
                 <p class="box-list__description__text box-list__description__text--centered box-list__description__text--top box-list__description__text--wider theme-kitchen-color">
-                    {{ 'Povězte nám, jak má vaše vysněná kuchyně vypadat a my zařídíme vše ostatní.
-                    Sestavíme kuchyni tak, aby odpovídala vašim přáním a potřebám.
-                    V závislosti na prostoru plánujeme kuchyně různých tvarů a velikostí.
-                    Mezi nejoblíbenější tvary patří rohová kuchyně, kuchyně do U nebo kuchyně s ostrůvkem.
-                    Pohodlí a dlouhou výdrž pak zajistí kvalitní materiál a nejmodernější technologie.'|trans }}
+                    {{ 'Klasické, ale nestárnoucí. Přesně takové jsou naše kuchyně, které jsou určeny
+                    zákazníkům preferujících klasiku před moderním designem.
+                    Při výrobě klasické kuchyně se snažíme využít osobní zvyky a zkušenosti našich zákazníků,
+                    abychom vám nabídli kuchyni nejen praktickou, ale také půvabnou.
+                    Vybírat si můžete ze široké nabídky barev i materiálů, a najít takovou kombinaci,
+                    která skvěle zapadne do konceptu vaší domácnosti.'|trans }}
                 </p>
             </div>
             {# Grid #}
-            {% include 'Front/Content/Kitchen/components/modernKitchen.html.twig' with { 'inDetail': true } %}
+            {% include 'Front/Content/Kitchen/components/classicKitchen.html.twig' with { 'inDetail': true } %}
             {# USP #}
             {% include 'Front/Content/Kitchen/components/usp.html.twig' %}
             {# Offers #}
