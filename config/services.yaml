@@ -485,8 +485,17 @@ services:
     Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory:
         alias: App\Model\Product\Action\ProductActionViewFactory
 
+    Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory:
+        alias: App\Model\Mail\Grid\MailTemplateGridFactory
+
+    Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration:
+        class: App\Model\Mail\MailTemplateConfiguration
+
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory:
         alias: App\Model\Mail\MailTemplateDataFactory
+
+    Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository:
+        alias: App\Model\Mail\MailTemplateRepository
 
     Shopsys\FrameworkBundle\Model\Order\OrderFacade:
         alias: App\Model\Order\OrderFacade

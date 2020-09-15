@@ -1,0 +1,5 @@
+{% extends '@!ShopsysFramework/Admin/Content/Mail/listGrid.html.twig' %}
+
+{% block grid_value_cell_id_orderStockStatus %}
+    {{ orderStockStatusesTranslations[value]|default(value) }}
+{% endblock %}

@@ -298,4 +298,17 @@ class Order extends BaseOrder
     {
         $this->scontoBridgeStatus = $status->getValue();
     }
+
+    /**
+     * @return string[]
+     */
+    public static function getAllStockStatusesTranslations(): array
+    {
+        return [
+            self::STOCK_STATUS_IN_STOCK => t('skladem'),
+            self::STOCK_STATUS_NOT_IN_STOCK => t('není skladem'),
+            self::STOCK_STATUS_PARTIALLY_IN_STOCK => t('částečně skladem'),
+            self::STOCK_STATUS_IN_FUTURE => t('budoucí sklad stavů'),
+        ];
+    }
 }
