@@ -24,7 +24,13 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Localization\TranslatableListener: ~
+    prezent_doctrine_translatable.listener:
+        class: Tests\FrameworkBundle\Test\TestTranslatableListener
+        tags:
+            - 'doctrine.event_subscriber'
+        arguments:
+            - '@prezent_doctrine_translatable.metadata_factory'
+            - '@Shopsys\FrameworkBundle\Component\Domain\Domain'
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber:
         autoconfigure: false
