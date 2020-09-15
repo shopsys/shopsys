@@ -108,11 +108,15 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @param ExecutionContextInterface $context
      */
-    public function validateUniqueExternalId(int $id, ExecutionContextInterface $context): void
+    public function validateUniqueExternalId(?int $id, ExecutionContextInterface $context): void
     {
+        if ($id === null) {
+            return;
+        }
+
         $existingPayment = $this->paymentFacade->findByExternalId($id);
         if ($existingPayment !== null) {
             if ($this->payment === null || $existingPayment->getId() !== $this->payment->getId()) {

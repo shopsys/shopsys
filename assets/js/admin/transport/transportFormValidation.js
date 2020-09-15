@@ -16,6 +16,9 @@ export default function transportFormValidation ($container) {
         'callbacks': {
             'validateLeastOnePackageOnEachAllowedDomain': function () {
                 // JS validation is not implemented yet. Too expensive, not much time to lunch production...
+            },
+            'validateUniqueExternalId': function () {
+                // JS validation is not necessary
             }
         }
     });
