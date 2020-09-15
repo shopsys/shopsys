@@ -30,7 +30,7 @@ class ProductTransferAkeneoMapper
 {
     public const PRODUCT_PACKAGE_MINIMAL_INDEX = 1;
     public const PRODUCT_PACKAGE_MAXIMAL_INDEX = 9;
-    private const PARAMETER_TEXT_MAX_LENGTH = 100;
+    private const PARAMETER_TEXT_MAX_LENGTH = 300;
 
     /**
      * @var \App\Model\Product\ProductDataFactory
