@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Router\Import;
 
 use Akeneo\Pim\ApiClient\Exception\RuntimeException;
+use App\Component\Domain\Domain;
 use App\Model\Transfer\TransferIdentificationInterface;
 use App\Model\Transfer\TransferLoggerFactory;
 use App\Model\Transfer\TransferLoggerInterface;
@@ -20,14 +21,19 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterface
 {
     private const DOMAINS = [
-        'sconto_cz' => 1,
-        'sconto_sk' => 2,
+        'cz' => 1,
+        'sk' => 2,
     ];
 
     /**
-     * @var array
+     * @var string
      */
-    private array $commandConfig;
+    private string $file;
+
+    /**
+     * @var int
+     */
+    private int $domainId;
 
     /**
      * @var \League\Flysystem\FilesystemInterface
@@ -105,20 +111,29 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
     }
 
     /**
-     * @param array $options
+     * @param string $file
+     * @param string $domain
      */
-    public function runTransfer(string $file)
+    public function runTransfer(string $file, string $domain)
     {
         try {
             $this->sqlLoggerFacade->temporarilyDisableLogging();
-            $this->singleImportUrlRedirectTableValidator->validateFile($options);
-            $this->commandConfig = $options;
+            $this->singleImportUrlRedirectTableValidator->validateFile($file);
+            $this->file = $file;
+            $this->domainId = self::DOMAINS[strtolower($domain)] ?? Domain::FIRST_DOMAIN_ID;
 
             $this->doBeforeTransfer();
 
-            foreach ($this->getData() as $item) {
-                $this->handleExceptionsOnProcessingItem($item);
+            if (strpos($this->file, '.csv')) {
+                foreach ($this->getDataFromCSV() as $item) {
+                    $this->handleExceptionsOnProcessingItem($item);
+                }
+            } else {
+                foreach ($this->getData() as $item) {
+                    $this->handleExceptionsOnProcessingItem($item);
+                }
             }
+
 
             $this->sqlLoggerFacade->reenableLogging();
         } catch (RuntimeException $exception) {
@@ -142,6 +157,19 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
             $this->em->beginTransaction();
             $this->processItem($item);
             $this->em->commit();
+        } catch (SingleImportIrresolvableStringException $exception) {
+            $this->logger->addError(
+                sprintf(
+                    'Import redirect url skipped. Reason of this: %s',
+                    $exception->getMessage()
+                )
+            );
+
+            if ($this->em->isOpen()) {
+                $this->em->rollback();
+            }
+
+            $this->logger->persistAllLoggedTransferIssues();
         } catch (Exception $exception) {
             $this->logger->addError(
                 sprintf(
@@ -176,25 +204,50 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
      */
     protected function processItem($data): void
     {
-        $this->singleImportUrlRedirectTableValidator->validate($data);
+        if (is_array($data)) {
+            $this->singleImportUrlRedirectTableValidator->validate($data);
+        } else {
+            $data = $this->resolveRedirectString($data);
+        }
 
-        $urlRedirect = $this->urlRedirectFacade->findByOldUrl($data['from']);
+        $urlRedirect = $this->urlRedirectFacade->findByOldUrlAndDomainId(ltrim($data['from'], '/'), $this->domainId);
         if ($urlRedirect === null) {
             $urlRedirectData = $this->urlRedirectDataFactory->create();
-            $urlRedirectData->oldUrl = ltrim($data['from']);
-            $urlRedirectData->newUrl = ltrim($data['to']);
+            $urlRedirectData->oldUrl = ltrim($data['from'], '/');
+            $urlRedirectData->newUrl = ltrim($data['to'], '/');
+            $urlRedirectData->domainId = $this->domainId;
             $this->urlRedirectFacade->create($urlRedirectData);
-
-            $this->logger->addInfo('Redirect record was successfully created.');
         } else {
-            $this->logger->addInfo(sprintf('Redirect record with old url "%s" already exists.', $data['from']));
+            $this->logger->addInfo(sprintf('Redirect record with old url "%s" already exists.', ltrim($data['from'], '/')));
         }
+    }
+
+    /**
+     * @param string $redirectString
+     * @return string[]
+     */
+    private function resolveRedirectString(string $redirectString): array
+    {
+        $redirectString = trim($redirectString);
+        $matches = [];
+        if (strpos($this->file, '.erb')) {
+            $pattern = '/^rewrite \^(?P<from>[^\(\$]*)(\(\\\\\/\)\?)?(\$)? https:\/\/<%= node\[\'krieger\'\]\[\'baseurl\'\] %>(?P<to>.*) \S+;$/m';
+        } else {
+            throw new Exception('Unexpected file type');
+        }
+
+        $results = preg_match_all($pattern, $redirectString, $matches, PREG_SET_ORDER, 0);
+        if ($results !== false && $results > 0) {
+            return $matches[0];
+        }
+
+        throw new SingleImportIrresolvableStringException($redirectString);
     }
 
     protected function doBeforeTransfer(): void
     {
         $this->logger->addInfo('Import promo codes from file.');
-        $this->handler = $this->localFilesystem->readStream($this->commandConfig['file']);
+        $this->handler = $this->localFilesystem->readStream($this->file);
     }
 
     protected function doAfterTransfer(): void
@@ -206,6 +259,13 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
      * @return \Generator
      */
     protected function getData(): \Generator
+    {
+        while (($data = fgets($this->handler)) !== false) {
+            yield $data;
+        }
+    }
+
+    private function getDataFromCSV(): \Generator
     {
         $keys = [];
         $isFirstLine = true;

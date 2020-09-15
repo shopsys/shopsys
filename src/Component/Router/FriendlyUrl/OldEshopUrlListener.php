@@ -68,8 +68,9 @@ class OldEshopUrlListener
     {
         if ($event->getThrowable() instanceof NotFoundHttpException) {
             $pathInfo = $event->getRequest()->getPathInfo();
-            $this->resolveProductOldUrlByPatch($pathInfo, $event);
-            $this->resolveUrlRedirect($pathInfo, $event);
+            $this->resolveProductOldUrlByPath($pathInfo, $event);
+            $this->resolveUrlRedirectByMatchingTable($pathInfo, $event);
+            $this->resolveUrlRedirectByPattern($pathInfo, $event);
         }
     }
 
@@ -77,10 +78,24 @@ class OldEshopUrlListener
      * @param string $pathInfo
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    private function resolveUrlRedirect(string $pathInfo, ExceptionEvent $event): void
+    private function resolveUrlRedirectByPattern(string $pathInfo, ExceptionEvent $event): void
     {
-        $pathInfo = ltrim($pathInfo, '/');
-        $urlRedirect = $this->urlRedirectFacade->findByOldUrl($pathInfo);
+        $matches = [];
+        $pattern = '/^\/(?P<path>[^\.]+)\.html$/m';
+        $results = preg_match_all($pattern, $pathInfo, $matches, PREG_SET_ORDER, 0);
+        if ($results !== false && $results > 0) {
+            $fullUrl = $this->domain->getUrl() . '/' . $matches[0]['path'];
+            $event->setResponse(new RedirectResponse($fullUrl, 301));
+        }
+    }
+
+    /**
+     * @param string $pathInfo
+     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
+     */
+    private function resolveUrlRedirectByMatchingTable(string $pathInfo, ExceptionEvent $event): void
+    {
+        $urlRedirect = $this->urlRedirectFacade->findByOldUrlAndDomainId(ltrim($pathInfo, '/'), $this->domain->getId());
         if ($urlRedirect !== null) {
             $fullUrl = $this->domain->getUrl() . '/' . $urlRedirect->getNewUrl();
             $event->setResponse(new RedirectResponse($fullUrl, 301));
@@ -91,9 +106,9 @@ class OldEshopUrlListener
      * @param string $pathInfo
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    private function resolveProductOldUrlByPatch(string $pathInfo, ExceptionEvent $event): void
+    private function resolveProductOldUrlByPath(string $pathInfo, ExceptionEvent $event): void
     {
-        if (strpos($pathInfo, 'article') === false) {
+        if (strpos($pathInfo, 'artikel') === false) {
             return;
         }
 

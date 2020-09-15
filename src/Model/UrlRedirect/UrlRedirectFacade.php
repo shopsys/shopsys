@@ -47,10 +47,11 @@ class UrlRedirectFacade
 
     /**
      * @param string $oldUrl
+     * @param int $domainId
      * @return \App\Model\UrlRedirect\UrlRedirect|null
      */
-    public function findByOldUrl(string $oldUrl): ?UrlRedirect
+    public function findByOldUrlAndDomainId(string $oldUrl, int $domainId): ?UrlRedirect
     {
-        return $this->urlRedirectRepository->findByOldUrl($oldUrl);
+        return $this->urlRedirectRepository->findByOldUrlAndDomainId($oldUrl, $domainId);
     }
 }

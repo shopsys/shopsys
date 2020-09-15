@@ -8,23 +8,30 @@ namespace App\Model\UrlRedirect;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="url_redirect")
+ * @ORM\Table(name="url_redirects")
  * @ORM\Entity
  */
 class UrlRedirect
 {
     /**
-     * @ORM\Column(type="text", unique=true)
+     * @ORM\Column(type="text")
      * @ORM\Id
      * @var string
      */
     private string $oldUrl;
 
     /**
-     * @ORM\Column(type="text", unique=true)
+     * @ORM\Column(type="text")
      * @var string
      */
     private string $newUrl;
+
+    /**
+     * @var int
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     */
+    protected int $domainId;
 
     /**
      * @param \App\Model\UrlRedirect\UrlRedirectData $urlRedirectData
@@ -33,6 +40,15 @@ class UrlRedirect
     {
         $this->oldUrl = $urlRedirectData->oldUrl;
         $this->newUrl = $urlRedirectData->newUrl;
+        $this->domainId = $urlRedirectData->domainId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId(): int
+    {
+        return $this->domainId;
     }
 
     /**

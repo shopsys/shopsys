@@ -14,8 +14,7 @@ class Version20200914092721 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('CREATE TABLE url_redirect (old_url TEXT NOT NULL, new_url TEXT NOT NULL, PRIMARY KEY(old_url))');
-        $this->sql('CREATE UNIQUE INDEX UNIQ_A16CF0A2CD77C9B8 ON url_redirect (new_url)');
+        $this->sql('CREATE TABLE url_redirects (old_url TEXT NOT NULL, new_url TEXT NOT NULL, domain_id INT NOT NULL, PRIMARY KEY (old_url, domain_id))');
     }
 
     /**

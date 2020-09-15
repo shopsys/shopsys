@@ -34,10 +34,11 @@ class UrlRedirectRepository
 
     /**
      * @param string $oldUrl
+     * @param int $domainId
      * @return \App\Model\UrlRedirect\UrlRedirect|null
      */
-    public function findByOldUrl(string $oldUrl): ?UrlRedirect
+    public function findByOldUrlAndDomainId(string $oldUrl, int $domainId): ?UrlRedirect
     {
-        return $this->getRepository()->findOneBy(['oldUrl' => $oldUrl]);
+        return $this->getRepository()->findOneBy(['oldUrl' => $oldUrl, 'domainId' => $domainId]);
     }
 }
