@@ -1,6 +1,7 @@
 resources:
     - ../../deployments/redis.yaml
     - ../../deployments/webserver-php-fpm.yaml
+    - ../../deployments/cron.yaml
     - ../../services/redis.yaml
     - ../../services/webserver-php-fpm.yaml
     - ../../ingress_domain_0.yaml
