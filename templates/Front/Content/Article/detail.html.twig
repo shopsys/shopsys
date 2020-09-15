@@ -8,21 +8,28 @@
     {{- article.seoMetaDescription|default(getSeoMetaDescription()) -}}
 {% endblock %}
 
+{% block breadcrumb %}
+{% endblock %}
+
 {% block main_content %}
     <div class="web__line">
         <div class="web__container">
-            <h1>
-                {% if article.seoH1 is not null %}
-                    {{ article.seoH1 }}
-                {% else %}
-                    {{ article.name }}
-                {% endif %}
-            </h1>
-
-            <p>{{ article.createdAt|formatDate }}</p>
-
-            <div class="in-user-text">
-                {{ article.text|raw }}
+            <div class="box-blog box-blog--detail box-blog--static-page">
+                <h1 class="box-blog__title">
+                    {% if article.seoH1 is not null %}
+                        {{ article.seoH1 }}
+                    {% else %}
+                        {{ article.name }}
+                    {% endif %}
+                </h1>
+                <div class="box-blog__breadcrumb">
+                    {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+                </div>
+                <div class="box-blog__content__wrap">
+                    <div class="in-user-text in-user-text--blog in-user-text--static-page">
+                        {{ article.text|raw }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
