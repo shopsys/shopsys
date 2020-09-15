@@ -1,0 +1,95 @@
+{% from 'Front/Macros/picture.html.twig' import picture as picture %}
+
+<div class="box-furniture-grid-wrap{{ inDetail ? ' box-furniture-grid-wrap--in-detail' }}">
+    {% if not inDetail %}
+        <h2 class="box-furniture-grid__heading theme-kitchen-color-secondary">
+            {{ 'Vybrané modely kuchyní na míru'|trans }}
+        </h2>
+    {% endif %}
+    <div class="box-furniture-grid">
+        <div class="box-furniture-grid__row">
+            <div class="box-furniture-grid__item box-furniture-grid__item--wide">
+                <a class="box-furniture-grid__item__link js-not-implemented-yet" href="{{ url('front_kitchen_detail') }}">
+                    {{ picture(
+                        'kitchen/models/cascada_2x.jpg',
+                        'kitchen/models/cascada.jpg',
+                        'Cascada',
+                        'box-furniture-grid__item__img'
+                    ) }}
+                    <span class="box-furniture-grid__item__btn">
+                        {{ 'Cascada'|trans }}
+                        <i class="svg svg-chevron box-furniture-grid__item__btn__icon"></i>
+                    </span>
+                </a>
+            </div>
+            <div class="box-furniture-grid__item box-furniture-grid__item--vertical">
+                <a class="box-furniture-grid__item__link js-not-implemented-yet" href="{{ url('front_kitchen_detail') }}">
+                    {{ picture(
+                        'kitchen/models/castello_2x.jpg',
+                        'kitchen/models/castello.jpg',
+                        'Castello',
+                        'box-furniture-grid__item__img'
+                    ) }}
+                    <span class="box-furniture-grid__item__btn">
+                        {{ 'Castello'|trans }}
+                        <i class="svg svg-chevron box-furniture-grid__item__btn__icon"></i>
+                    </span>
+                </a>
+                <a class="box-furniture-grid__item__link js-not-implemented-yet" href="{{ url('front_kitchen_detail') }}">
+                    {{ picture(
+                        'kitchen/models/chalet_2x.jpg',
+                        'kitchen/models/chalet.jpg',
+                        'Chalet',
+                        'box-furniture-grid__item__img'
+                    ) }}
+                    <span class="box-furniture-grid__item__btn">
+                        {{ 'Chalet'|trans }}
+                        <i class="svg svg-chevron box-furniture-grid__item__btn__icon"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="box-furniture-grid__row">
+            <div class="box-furniture-grid__item box-furniture-grid__item--vertical">
+                <a class="box-furniture-grid__item__link js-not-implemented-yet" href="{{ url('front_kitchen_detail') }}">
+                    {{ picture(
+                        'kitchen/models/gent_2x.jpg',
+                        'kitchen/models/gent.jpg',
+                        'Gent',
+                        'box-furniture-grid__item__img'
+                    ) }}
+                    <span class="box-furniture-grid__item__btn">
+                        {{ 'Gent'|trans }}
+                        <i class="svg svg-chevron box-furniture-grid__item__btn__icon"></i>
+                    </span>
+                </a>
+                <a class="box-furniture-grid__item__link js-not-implemented-yet" href="{{ url('front_kitchen_detail') }}">
+                    {{ picture(
+                        'kitchen/models/york_2x.jpg',
+                        'kitchen/models/york.jpg',
+                        'York',
+                        'box-furniture-grid__item__img'
+                    ) }}
+                    <span class="box-furniture-grid__item__btn">
+                        {{ 'York'|trans }}
+                        <i class="svg svg-chevron box-furniture-grid__item__btn__icon"></i>
+                    </span>
+                </a>
+            </div>
+            <div class="box-furniture-grid__item box-furniture-grid__item--wide">
+                <a class="box-furniture-grid__item__link js-not-implemented-yet" href="{{ url('front_kitchen_detail') }}">
+                    {{ picture(
+                        'kitchen/models/sylt_2x.jpg',
+                        'kitchen/models/sylt.jpg',
+                        'Sylt',
+                        'box-furniture-grid__item__img'
+                    ) }}
+                    <span class="box-furniture-grid__item__btn">
+                        {{ 'Sylt'|trans }}
+                        <i class="svg svg-chevron box-furniture-grid__item__btn__icon"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
