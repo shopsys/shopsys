@@ -54,6 +54,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer
+     * @deprecated This property will be removed in next major version.
      */
     protected $productFilterDataToQueryTransformer;
 
@@ -63,7 +64,8 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     protected $filterQueryFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader|null
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
+     * @deprecated This property will be removed in next major version.
      */
     protected $indexDefinitionLoader;
 
@@ -74,9 +76,9 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer|null $productFilterDataToQueryTransformer
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader|null $indexDefinitionLoader
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      */
     public function __construct(
         ProductRepository $productRepository,
@@ -85,9 +87,9 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         ProductAccessoryRepository $productAccessoryRepository,
         ProductElasticsearchRepository $productElasticsearchRepository,
         ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
-        ?ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
+        ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         FilterQueryFactory $filterQueryFactory,
-        ?IndexDefinitionLoader $indexDefinitionLoader = null
+        IndexDefinitionLoader $indexDefinitionLoader
     ) {
         $this->productRepository = $productRepository;
         $this->domain = $domain;
