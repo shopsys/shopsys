@@ -31,7 +31,8 @@ class UrlRedirect
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
-    protected int $domainId;
+    private int $domainId;
+
 
     /**
      * @param \App\Model\UrlRedirect\UrlRedirectData $urlRedirectData

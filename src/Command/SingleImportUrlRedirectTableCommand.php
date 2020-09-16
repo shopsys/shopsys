@@ -37,6 +37,7 @@ class SingleImportUrlRedirectTableCommand extends Command
         $this->setDescription('Single import url redirect table, ec: php bin/console sconto:import:redirecttable -f /web/public/importFiles/ScontoRedirectUrlTable.csv');
         $this->addOption('file', 'f', InputOption::VALUE_REQUIRED, 'FilePath to url redirect url CSV file. (exam: /web/public/importFiles/ScontoRedirectUrlTable.csv)');
         $this->addOption('domain', 'd', InputOption::VALUE_REQUIRED, 'Available values are cz/sk', 'cz');
+        $this->addOption('regular', 'r', InputOption::VALUE_OPTIONAL, 'Available values are true/false', false);
     }
 
     /**
@@ -46,7 +47,11 @@ class SingleImportUrlRedirectTableCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->singleImportUrlRedirectTableFacade->runTransfer($input->getOption('file'), $input->getOption('domain'));
+        $this->singleImportUrlRedirectTableFacade->runTransfer(
+            $input->getOption('file'),
+            $input->getOption('domain'),
+            $input->getOption('regular') !== false ? true : false
+        );
 
         return 0;
     }

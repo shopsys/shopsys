@@ -11,6 +11,7 @@ use App\Model\Transfer\TransferLoggerFactory;
 use App\Model\Transfer\TransferLoggerInterface;
 use App\Model\UrlRedirect\UrlRedirectDataFactory;
 use App\Model\UrlRedirect\UrlRedirectFacade;
+use App\Model\UrlRedirect\UrlRegularFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use League\Flysystem\FilesystemInterface;
@@ -81,6 +82,15 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
     private UrlRedirectFacade $urlRedirectFacade;
 
     /**
+     * @var bool
+     */
+    private bool $isRegular;
+    /**
+     * @var \App\Model\UrlRedirect\UrlRegularFacade
+     */
+    private UrlRegularFacade $urlRegularFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
@@ -98,7 +108,8 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
         FilesystemInterface $localFilesystem,
         SingleImportUrlRedirectTableValidator $singleImportUrlRedirectTableValidator,
         UrlRedirectDataFactory $urlRedirectDataFactory,
-        UrlRedirectFacade $urlRedirectFacade
+        UrlRedirectFacade $urlRedirectFacade,
+        UrlRegularFacade $urlRegularFacade
     ) {
         $this->localFilesystem = $localFilesystem;
         $this->sqlLoggerFacade = $sqlLoggerFacade;
@@ -108,19 +119,18 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
         $this->singleImportUrlRedirectTableValidator = $singleImportUrlRedirectTableValidator;
         $this->urlRedirectDataFactory = $urlRedirectDataFactory;
         $this->urlRedirectFacade = $urlRedirectFacade;
+        $this->urlRegularFacade = $urlRegularFacade;
     }
 
-    /**
-     * @param string $file
-     * @param string $domain
-     */
-    public function runTransfer(string $file, string $domain)
+
+    public function runTransfer(string $file, string $domain, bool $isRegular)
     {
         try {
             $this->sqlLoggerFacade->temporarilyDisableLogging();
             $this->singleImportUrlRedirectTableValidator->validateFile($file);
             $this->file = $file;
             $this->domainId = self::DOMAINS[strtolower($domain)] ?? Domain::FIRST_DOMAIN_ID;
+            $this->isRegular = $isRegular;
 
             $this->doBeforeTransfer();
 
@@ -210,15 +220,26 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
             $data = $this->resolveRedirectString($data);
         }
 
-        $urlRedirect = $this->urlRedirectFacade->findByOldUrlAndDomainId(ltrim($data['from'], '/'), $this->domainId);
-        if ($urlRedirect === null) {
-            $urlRedirectData = $this->urlRedirectDataFactory->create();
-            $urlRedirectData->oldUrl = ltrim($data['from'], '/');
-            $urlRedirectData->newUrl = ltrim($data['to'], '/');
-            $urlRedirectData->domainId = $this->domainId;
-            $this->urlRedirectFacade->create($urlRedirectData);
+        if ($this->isRegular) {
+            $form = str_replace('/', '\/', $data['from']);
+            $urlRegular = $this->urlRegularFacade->findByRegularAndDomainId($form, $this->domainId);
+            if ($urlRegular === null) {
+                $this->urlRegularFacade->create($form, $data['to'], $this->domainId);
+            } else {
+                $this->logger->addInfo(sprintf('Redirect record with regular "%s" already exists.', $form));
+            }
         } else {
-            $this->logger->addInfo(sprintf('Redirect record with old url "%s" already exists.', ltrim($data['from'], '/')));
+            $from = ltrim($data['from'], '/');
+            $urlRedirect = $this->urlRedirectFacade->findByOldUrlAndDomainId($from, $this->domainId);
+            if ($urlRedirect === null) {
+                $urlRedirectData = $this->urlRedirectDataFactory->create();
+                $urlRedirectData->oldUrl = $from;
+                $urlRedirectData->newUrl = ltrim($data['to'], '/');
+                $urlRedirectData->domainId = $this->domainId;
+                $this->urlRedirectFacade->create($urlRedirectData);
+            } else {
+                $this->logger->addInfo(sprintf('Redirect record with old url "%s" already exists.', $from));
+            }
         }
     }
 
