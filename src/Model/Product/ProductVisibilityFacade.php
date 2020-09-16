@@ -20,7 +20,7 @@ class ProductVisibilityFacade extends BaseProductVisibilityFacade
 
         $routeName = $event->getRequest()->attributes->get('_route');
 
-        if (strpos($routeName, 'admin_') === 0) {
+        if ($routeName !== null && strpos($routeName, 'admin_') === 0) {
             parent::onKernelResponse($event);
         }
     }
