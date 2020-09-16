@@ -1,0 +1,14 @@
+{% extends '@!ShopsysFramework/Admin/Content/Mail/list.html.twig' %}
+
+{% block main_content %}
+    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+
+    <div class="wrap-bar">
+        <a href="{{ url('admin_mail_createtemplate') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Vytvoři novou šablonu pro emaily objednávek dle skladovosti'|trans }}
+        </a>
+    </div>
+    {{ gridView.render() }}
+{% endblock %}
+

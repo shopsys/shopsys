@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Mail;
 
+use App\Model\Payment\Payment;
+use App\Model\Transport\Transport;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository as BaseMailTemplateRepository;
@@ -32,5 +34,30 @@ class MailTemplateRepository extends BaseMailTemplateRepository
             ->setParameter('locale', 'cs');
 
         return $queryBuilder;
+    }
+
+    /**
+     * @param int $domainId
+     * @param \App\Model\Transport\Transport $transport
+     * @param \App\Model\Payment\Payment $payment
+     * @param string $orderStockStatus
+     * @return \App\Model\Mail\MailTemplate|null
+     */
+    public function findOrderStockStatusMailTemplate(
+        int $domainId,
+        Transport $transport,
+        Payment $payment,
+        string $orderStockStatus
+    ): ?MailTemplate {
+        /** @var \App\Model\Mail\MailTemplate $mailTemplate */
+        $mailTemplate = $this->getMailTemplateRepository()->findOneBy([
+            'name' => MailTemplate::ORDER_STOCK_STATUS_NAME,
+            'domainId' => $domainId,
+            'transport' => $transport,
+            'payment' => $payment,
+            'orderStockStatus' => $orderStockStatus,
+        ]);
+
+        return $mailTemplate;
     }
 }

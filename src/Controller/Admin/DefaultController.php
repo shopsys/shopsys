@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @property \App\Component\Setting\Setting $setting
  * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+ * @property \App\Model\Mail\MailTemplateFacade $mailTemplateFacade
  */
 class DefaultController extends BaseDefaultController
 {
@@ -35,7 +36,7 @@ class DefaultController extends BaseDefaultController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade $statisticsFacade
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade $statisticsProcessingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
+     * @param \App\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade

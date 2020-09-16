@@ -24,4 +24,11 @@ class MailTemplateData extends MailTemplateDataBase
      * @var string|null
      */
     public ?string $orderStockStatus = null;
+
+    /**
+     * It's used only for creating by administrator, not for editing!
+     *
+     * @var int
+     */
+    public int $domainId;
 }

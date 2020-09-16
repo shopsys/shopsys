@@ -494,6 +494,9 @@ services:
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory:
         alias: App\Model\Mail\MailTemplateDataFactory
 
+    Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade:
+        alias: App\Model\Mail\MailTemplateFacade
+
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository:
         alias: App\Model\Mail\MailTemplateRepository
 
