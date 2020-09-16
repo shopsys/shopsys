@@ -76,3 +76,47 @@ There you can find links to upgrade notes for other versions too.
 
 - fix frontend-api tests when domain locales are changed ([#2019](https://github.com/shopsys/shopsys/pull/2019))
     - see #project-base-diff to update your project
+
+- introduce read model layer into product detail ([#1999](https://github.com/shopsys/shopsys/pull/1999))
+    - following methods has changed their interface:
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade::__construct()`
+            ```diff
+                public function __construct(
+                    ProductFacade $productFacade,
+                    ProductAccessoryFacade $productAccessoryFacade,
+                    Domain $domain,
+                    CurrentCustomerUser $currentCustomerUser,
+                    TopProductFacade $topProductFacade,
+                    ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+                    ListedProductViewFactory $listedProductViewFactory,
+                    ProductActionViewFacade $productActionViewFacade,
+            -       ImageViewFacade $imageViewFacade
+            +       ImageViewFacadeInterface $imageViewFacade,
+            +       ?ProductActionViewFactory $productActionViewFactory = null
+                )
+            ```
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::__construct()`
+            ```diff
+                public function __construct(
+                    Domain $domain,
+            -       ProductCachedAttributesFacade $productCachedAttributesFacade
+            +       ProductCachedAttributesFacade $productCachedAttributesFacade,
+            +       ?ImageViewFacadeInterface $imageViewFacade = null,
+            +       ?ProductActionViewFacadeInterface $productActionViewFacade = null
+                )
+            ```
+    - following methods and properties were deprecated and will be removed in the next major version:
+        - `Shopsys\ReadModelBundle\Image\ImageViewFacade::getForEntityIds()` use `getMainImagesByEntityIds()` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade::$productActionViewFacade` 
+            use `Shopsys\ReadModelBundle\Product\Listed\ProductActionViewFactory` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade::createFromProducts()`
+            use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::createFromProducts()` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade::getIdsForProducts()`
+            use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::getIdsForProducts()` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade::$imageViewFacade`
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade::$productActionViewFacade`
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade::createFromProducts()`
+            use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::createFromProducts()` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade::getIdsForProducts()`
+            use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::getIdsForProducts()` instead
+    - see #project-base-diff to update your project
