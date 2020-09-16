@@ -11,13 +11,10 @@
     {% from 'Front/Macros/picture.html.twig' import picture as picture %}
     <div class="web__line web__line--spacing--big">
         <div class="web__container">
-            {# Heading, breadcrumb, description #}
             <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
-                {# Heading #}
                 <h1 class="box-list__description__heading theme-kitchen-color-secondary">
                     {{ "Kuchyně na míru"|trans }}
                 </h1>
-                {# Breadcrumb - not implemented yet #}
                 <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing js-not-implemented-yet">
                     <div class="box-breadcrumb">
                         <div class="box-breadcrumb">
@@ -32,7 +29,6 @@
                         </div>
                     </div>
                 </div>
-                {# Short description #}
                 <p class="box-list__description__text box-list__description__text--centered box-list__description__text--top box-list__description__text--wider theme-kitchen-color">
                     {{ 'Povězte nám, jak má vaše vysněná kuchyně vypadat a my zařídíme vše ostatní.
                     Sestavíme kuchyni tak, aby odpovídala vašim přáním a potřebám.
@@ -40,26 +36,25 @@
                     kuchyně do U nebo kuchyně s ostrůvkem. Pohodlí a dlouhou výdrž pak zajistí kvalitní materiál a nejmodernější technologie.'|trans }}
                 </p>
             </div>
-            {# Categories #}
             <div class="box-furniture-cat-wrap">
                 <div class="box-furniture-cat">
                     <div class="box-furniture-cat__image js-furniture-cats-carousel">
                         {{ picture(
                             'kitchen/category/moderni_kuchyne_2x.jpg',
                             'kitchen/category/moderni_kuchyne.jpg',
-                            'Moderní kuchyně',
+                            'Moderní kuchyně'|trans,
                             'box-furniture-cat__image'
                         ) }}
                         {{ picture(
                             'kitchen/category/moderni_kuchyne_2x.jpg',
                             'kitchen/category/moderni_kuchyne.jpg',
-                            'Moderní kuchyně',
+                            'Moderní kuchyně'|trans,
                             'box-furniture-cat__image'
                         ) }}
                         {{ picture(
                             'kitchen/category/moderni_kuchyne_2x.jpg',
                             'kitchen/category/moderni_kuchyne.jpg',
-                            'Moderní kuchyně',
+                            'Moderní kuchyně'|trans,
                             'box-furniture-cat__image'
                         ) }}
                     </div>
@@ -84,19 +79,19 @@
                         {{ picture(
                             'kitchen/category/rustikalni_kuchyne_2x.jpg',
                             'kitchen/category/rustikalni_kuchyne.jpg',
-                            'Rustikální kuchyně',
+                            'Rustikální kuchyně'|trans,
                             'box-furniture-cat__image'
                         ) }}
                         {{ picture(
                             'kitchen/category/rustikalni_kuchyne_2x.jpg',
                             'kitchen/category/rustikalni_kuchyne.jpg',
-                            'Rustikální kuchyně',
+                            'Rustikální kuchyně'|trans,
                             'box-furniture-cat__image'
                         ) }}
                         {{ picture(
                             'kitchen/category/rustikalni_kuchyne_2x.jpg',
                             'kitchen/category/rustikalni_kuchyne.jpg',
-                            'Rustikální kuchyně',
+                            'Rustikální kuchyně'|trans,
                             'box-furniture-cat__image'
                         ) }}
                     </div>
@@ -120,19 +115,19 @@
                         {{ picture(
                             'kitchen/category/klasicke_kuchyne_2x.jpg',
                             'kitchen/category/klasicke_kuchyne.jpg',
-                            'Klasické kuchyně',
+                            'Klasické kuchyně'|trans,
                             'box-furniture-cat__image'
                         ) }}
                         {{ picture(
                             'kitchen/category/klasicke_kuchyne_2x.jpg',
                             'kitchen/category/klasicke_kuchyne.jpg',
-                            'Klasické kuchyně',
+                            'Klasické kuchyně'|trans,
                             'box-furniture-cat__image'
                         ) }}
                         {{ picture(
                             'kitchen/category/klasicke_kuchyne_2x.jpg',
                             'kitchen/category/klasicke_kuchyne.jpg',
-                            'Klasické kuchyně',
+                            'Klasické kuchyně'|trans,
                             'box-furniture-cat__image'
                         ) }}
                     </div>
@@ -152,7 +147,6 @@
                     </div>
                 </div>
             </div>
-            {# Banner #}
             <div class="box-furniture-banner box-furniture-banner--brand theme-kitchen-bg">
                 <div class="box-furniture-banner__content">
                     <span class="box-furniture-tag">
@@ -177,16 +171,13 @@
                     {{ picture(
                         'kitchen/nobilia_bg_2x.jpg',
                         'kitchen/nobilia_bg.jpg',
-                        'Nobilia kuchyně',
+                        'Nobilia kuchyně'|trans,
                         'box-furniture-banner__img'
                     ) }}
                 </div>
             </div>
-            {# USP #}
             {% include 'Front/Content/Kitchen/components/usp.html.twig' %}
-            {# Offers #}
             {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
-            {# Grid #}
             {% include 'Front/Content/Kitchen/components/modernKitchen.html.twig' with { 'inDetail': false } %}
         </div>
     </div>

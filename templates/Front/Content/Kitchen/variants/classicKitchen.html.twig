@@ -11,13 +11,10 @@
 {% block main_content %}
     <div class="web__line web__line--spacing--big">
         <div class="web__container">
-            {# Heading, breadcrumb, description #}
             <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
-                {# Heading #}
                 <h1 class="box-list__description__heading theme-kitchen-color-secondary">
                     {{ "Klasické kuchyně"|trans }}
                 </h1>
-                {# Breadcrumb - not implemented yet #}
                 <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing js-not-implemented-yet">
                     <div class="box-breadcrumb">
                         <div class="box-breadcrumb">
@@ -32,7 +29,6 @@
                         </div>
                     </div>
                 </div>
-                {# Short description #}
                 <p class="box-list__description__text box-list__description__text--centered box-list__description__text--top box-list__description__text--wider theme-kitchen-color">
                     {{ 'Klasické, ale nestárnoucí. Přesně takové jsou naše kuchyně, které jsou určeny
                     zákazníkům preferujících klasiku před moderním designem.
@@ -42,18 +38,14 @@
                     která skvěle zapadne do konceptu vaší domácnosti.'|trans }}
                 </p>
             </div>
-            {# Grid #}
             {% include 'Front/Content/Kitchen/components/classicKitchen.html.twig' with { 'inDetail': true } %}
-            {# Pagination #}
             {{ pagination(
                 'front_kitchen_list_rustical',
                 'front_kitchen_list_modern',
                 'Rustikální',
                 'Moderní'
             ) }}
-            {# USP #}
             {% include 'Front/Content/Kitchen/components/usp.html.twig' %}
-            {# Offers #}
             {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
         </div>
     </div>
