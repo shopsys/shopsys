@@ -40,6 +40,11 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  */
 class Order extends BaseOrder
 {
+    public const STOCK_STATUS_IN_STOCK = 'inStock';
+    public const STOCK_STATUS_NOT_IN_STOCK = 'notInStock';
+    public const STOCK_STATUS_PARTIALLY_IN_STOCK = 'partiallyInStock';
+    public const STOCK_STATUS_IN_FUTURE = 'inFuture';
+
     /**
      * @var \App\Model\GoPay\GoPayTransaction[]|\Doctrine\Common\Collections\ArrayCollection
      *
