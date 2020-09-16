@@ -26,6 +26,7 @@ class MailTemplateGridFactory extends BaseMailTemplateGridFactory
         $grid->addColumn('transport', 'transportName', t('Doprava'), true);
         $grid->addColumn('payment', 'paymentName', t('Platba'), true);
         $grid->addColumn('orderStockStatus', 'mt.orderStockStatus', t('Skladovost'), true);
+        $grid->addDeleteActionColumn('admin_mail_deletetemplate', ['id' => 'mt.id']);
 
         $grid->setTheme(
             '@ShopsysFramework/Admin/Content/Mail/listGrid.html.twig',

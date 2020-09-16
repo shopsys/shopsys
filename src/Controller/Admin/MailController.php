@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Model\Mail\Exception\DeleteMailTemplateException;
 use App\Model\Mail\Exception\MailTemplateAlreadyExistsException;
 use App\Model\Mail\MailTemplate;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\MailController as baseMailController;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,5 +84,33 @@ class MailController extends baseMailController
             'requiredSubjectVariables' => $mailTemplateVariables->getRequiredSubjectVariables(),
             'labeledVariables' => $mailTemplateVariables->getLabeledVariables(),
         ]);
+    }
+
+    /**
+     * @Route("/mail/delete/{id}", requirements={"id" = "\d+"})
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteTemplateAction(int $id): Response
+    {
+        try {
+            $mailTemplate = $this->mailTemplateFacade->getById($id);
+
+            $this->mailTemplateFacade->delete($mailTemplate);
+
+            $this->addSuccessFlashTwig(
+                t('Šablona s předmětem <strong>{{ subject }}</strong> byla smazána'),
+                [
+                    'subject' => $mailTemplate->getSubject(),
+                ]
+            );
+        } catch (MailTemplateNotFoundException $ex) {
+            $this->addErrorFlash(t('Požadovaná šablona neexistuje.'));
+        } catch (DeleteMailTemplateException $ex) {
+            $this->addErrorFlash(t('Tento typ šablony nemůže být odstraněn.'));
+        }
+
+        return $this->redirectToRoute('admin_mail_template');
     }
 }

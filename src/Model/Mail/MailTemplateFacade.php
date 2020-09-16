@@ -47,4 +47,17 @@ class MailTemplateFacade extends BaseMailTemplateFacade
 
         return $mailTemplate;
     }
+
+    /**
+     * @param \App\Model\Mail\MailTemplate $mailTemplate
+     */
+    public function delete(MailTemplate $mailTemplate): void
+    {
+        if ($mailTemplate->getName() !== MailTemplate::ORDER_STOCK_STATUS_NAME) {
+            throw new Exception\DeleteMailTemplateException();
+        }
+
+        $this->em->remove($mailTemplate);
+        $this->em->flush();
+    }
 }

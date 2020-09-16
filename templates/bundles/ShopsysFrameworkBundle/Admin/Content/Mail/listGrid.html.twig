@@ -1,5 +1,11 @@
 {% extends '@!ShopsysFramework/Admin/Content/Mail/listGrid.html.twig' %}
 
+{% block grid_action_cell_type_delete %}
+    {% if row.mt.name == constant('App\\Model\\Mail\\MailTemplate::ORDER_STOCK_STATUS_NAME') %}
+        {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}
+
 {% block grid_value_cell_id_orderStockStatus %}
     {{ orderStockStatusesTranslations[value]|default(value) }}
 {% endblock %}
