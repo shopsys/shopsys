@@ -70,10 +70,6 @@ class GoPayTransactionFacade
      */
     public function updateOrderTransactions(Order $order): void
     {
-        if ($order->isGoPayPaid()) {
-            return;
-        }
-
         $goPayTransactions = $this->goPayTransactionRepository->findAllByOrder($order);
         $goPayResponsesData = $this->goPayFacadeOnCurrentDomain->getPaymentStatusesResponseDataByGoPayTransactionAndDomainId(
             $goPayTransactions,
