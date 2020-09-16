@@ -100,7 +100,6 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                     ])
                 ]
             ])
-<<<<<<< HEAD
             ->add('daysUntilDelivery', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -113,8 +112,6 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                 ],
                 'label' => t('Dnů do doručení'),
             ])
-        ;
-=======
             ->add('deliveryCode', TextType::class, [
                 'label' => t('Moewe - DeliveryCode'),
                 'required' => true,
@@ -134,7 +131,6 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                     new LessThanOrEqual(99)
                 ]
             ]);
->>>>>>> 1a070ef34... SD-1633 moewe transport sync data
 
         $builder->add($this->createTransportPackages($builder));
     }

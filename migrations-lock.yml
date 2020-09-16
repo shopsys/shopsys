@@ -775,7 +775,6 @@
 20200828110816:
     class: App\Migrations\Version20200828110816
     skip: false
-<<<<<<< HEAD
 20200909105747:
     class: App\Migrations\Version20200909105747
     skip: false
@@ -784,8 +783,7 @@
     skip: false
 20200910092545:
     class: App\Migrations\Version20200910092545
-=======
+    skip: false
 20200914130309:
     class: App\Migrations\Version20200914130309
->>>>>>> 1a070ef34... SD-1633 moewe transport sync data
     skip: false
