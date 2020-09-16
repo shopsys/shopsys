@@ -27,14 +27,18 @@ services:
     # @deprecated Registering this service is necessary to avoid BC break. It will be removed in next major version.
     Shopsys\FrameworkBundle\Model\Localization\TranslatableListener:
         class: Tests\FrameworkBundle\Test\TestTranslatableListener
+        arguments:
+            $adminLocale: '%shopsys.admin_locale%'
 
     prezent_doctrine_translatable.listener:
         class: Tests\FrameworkBundle\Test\TestTranslatableListener
         tags:
             - 'doctrine.event_subscriber'
         arguments:
-            - '@prezent_doctrine_translatable.metadata_factory'
-            - '@Shopsys\FrameworkBundle\Component\Domain\Domain'
+            $factory: '@prezent_doctrine_translatable.metadata_factory'
+            $domain: '@Shopsys\FrameworkBundle\Component\Domain\Domain'
+            $administrationFacade: '@Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade'
+            $adminLocale: '%shopsys.admin_locale%'
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber:
         autoconfigure: false
