@@ -16,9 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\ReadModelBundle\Image\ImageViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 
-/**
- * @experimental
- */
 class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
 {
     /**

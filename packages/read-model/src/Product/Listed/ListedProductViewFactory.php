@@ -14,9 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 
-/**
- * @experimental
- */
 class ListedProductViewFactory
 {
     /**

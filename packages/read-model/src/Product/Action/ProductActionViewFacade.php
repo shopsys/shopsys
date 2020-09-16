@@ -7,9 +7,6 @@ namespace Shopsys\ReadModelBundle\Product\Action;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 
-/**
- * @experimental
- */
 class ProductActionViewFacade
 {
     /**

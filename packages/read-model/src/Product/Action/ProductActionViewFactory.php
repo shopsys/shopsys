@@ -6,9 +6,6 @@ namespace Shopsys\ReadModelBundle\Product\Action;
 
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
-/**
- * @experimental
- */
 class ProductActionViewFactory
 {
     /**

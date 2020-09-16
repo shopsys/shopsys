@@ -7,9 +7,6 @@ namespace Shopsys\ReadModelBundle\Image;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
-/**
- * @experimental
- */
 class ImageViewFacade
 {
     /**
