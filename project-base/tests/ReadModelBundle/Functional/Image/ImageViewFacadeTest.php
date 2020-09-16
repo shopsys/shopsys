@@ -23,7 +23,7 @@ class ImageViewFacadeTest extends FunctionalTestCase
     private const INVALID_PRODUCT_ID = 99999;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacade
+     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface
      * @inject
      */
     private $imageViewFacade;

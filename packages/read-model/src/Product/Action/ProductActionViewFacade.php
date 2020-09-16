@@ -6,8 +6,9 @@ namespace Shopsys\ReadModelBundle\Product\Action;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
-class ProductActionViewFacade
+class ProductActionViewFacade implements ProductActionViewFacadeInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade
@@ -58,8 +59,18 @@ class ProductActionViewFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\ReadModelBundle\Product\Action\ProductActionView
+     */
+    public function getForProduct(Product $product): ProductActionView
+    {
+        return $this->getForProducts([$product])[$product->getId()];
+    }
+
+    /**
      * @param array $productArray
      * @return \Shopsys\ReadModelBundle\Product\Action\ProductActionView
+     * @deprecated use ProductActionViewFactory instead
      */
     public function getForArray(array $productArray): ProductActionView
     {

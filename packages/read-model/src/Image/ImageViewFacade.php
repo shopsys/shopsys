@@ -7,7 +7,7 @@ namespace Shopsys\ReadModelBundle\Image;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
-class ImageViewFacade
+class ImageViewFacade implements ImageViewFacadeInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
@@ -60,6 +60,23 @@ class ImageViewFacade
         }
 
         return $imageViewsOrNullsIndexedByEntityIds;
+    }
+
+    /**
+     * @param string $entityClass
+     * @param int $entityId
+     * @return \Shopsys\ReadModelBundle\Image\ImageView[]
+     */
+    public function getAllImagesByEntityId(string $entityClass, int $entityId): array
+    {
+        $images = $this->imageFacade->getImagesByEntityId($entityId, $entityClass);
+
+        $imageViews = [];
+        foreach ($images as $image) {
+            $imageViews[] = $this->createImageViewOrNullFromImage($image);
+        }
+
+        return $imageViews;
     }
 
     /**
