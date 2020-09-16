@@ -170,7 +170,7 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsByCategoryWithPriceAndStockFilter(int $categoryId, ProductFilterData $productFilterData): FilterQuery
+    public function createListableProductsByCategoryIdWithPriceAndStockFilter(int $categoryId, ProductFilterData $productFilterData): FilterQuery
     {
         $filterQuery = $this->createListable()
             ->filterByCategory([$categoryId]);
