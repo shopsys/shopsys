@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Mail;
 
 use App\Model\Mail\Exception\MailTemplateAlreadyExistsException;
+use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade as BaseMailTemplateFacade;
 
 /**
@@ -59,5 +60,28 @@ class MailTemplateFacade extends BaseMailTemplateFacade
 
         $this->em->remove($mailTemplate);
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @return \App\Model\Mail\MailTemplate[]
+     */
+    public function getOrderStockStatusTemplatesByOrder(Order $order): array
+    {
+        if ($order->getStockStatus() === null) {
+            return [];
+        }
+
+        $mailTemplates = [];
+        foreach ($order->getTransports() as $transport) {
+            $mailTemplates[] = $this->mailTemplateRepository->findOrderStockStatusMailTemplate(
+                $order->getDomainId(),
+                $transport,
+                $order->getPayment(),
+                $order->getStockStatus()
+            );
+        }
+
+        return $mailTemplates;
     }
 }

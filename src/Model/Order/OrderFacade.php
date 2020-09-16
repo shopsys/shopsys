@@ -56,7 +56,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Component\Setting\Setting $setting
  * @method \App\Model\Order\Order createOrder(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, \App\Model\Customer\User\CustomerUser|null $customerUser)
  * @method sendHeurekaOrderInfo(\App\Model\Order\Order $order, bool $disallowHeurekaVerifiedByCustomers)
- * @method \App\Model\Order\Order edit(int $orderId, \App\Model\Order\OrderData $orderData)
  * @method prefillFrontOrderData(\App\Model\Order\FrontOrderData $orderData, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order[] getCustomerUserOrderList(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order[] getOrderListForEmailByDomainId(string $email, int $domainId)
@@ -87,6 +86,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method \App\Model\Order\Order getByUuidAndCustomerUser(string $uuid, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order getByUuidAndUrlHash(string $uuid, string $urlHash)
  * @method updateTransportAndPaymentNamesInOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
+ * @property \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -131,7 +131,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
+     * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
@@ -264,6 +264,25 @@ class OrderFacade extends BaseOrderFacade
 
         if ($customerUser instanceof CustomerUser) {
             $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
+        }
+
+        return $order;
+    }
+
+    /**
+     * @param int $orderId
+     * @param \App\Model\Order\OrderData $orderData
+     * @return \App\Model\Order\Order
+     */
+    public function edit($orderId, OrderData $orderData)
+    {
+        $order = $this->orderRepository->getById($orderId);
+        $oldOrderStockStatus = $order->getStockStatus();
+
+        parent::edit($orderId, $orderData);
+
+        if ($oldOrderStockStatus !== $order->getStockStatus()) {
+            $this->orderMailFacade->sendOrderStockStatusMailByOrder($order);
         }
 
         return $order;

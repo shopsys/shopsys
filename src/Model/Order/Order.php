@@ -110,6 +110,13 @@ class Order extends BaseOrder
     protected $scontoBridgeStatus;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    private ?string $stockStatus;
+
+    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -126,6 +133,7 @@ class Order extends BaseOrder
         $this->goPayTransactions = new ArrayCollection();
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->scontoBridgeStatus = $orderData->scontoBridgeStatus;
+        $this->stockStatus = $orderData->stockStatus;
     }
 
     /**
@@ -147,6 +155,7 @@ class Order extends BaseOrder
         parent::editData($orderData);
 
         $this->gtmCoupon = $orderData->gtmCoupon;
+        $this->stockStatus = $orderData->stockStatus;
     }
 
     /**
@@ -310,5 +319,13 @@ class Order extends BaseOrder
             self::STOCK_STATUS_PARTIALLY_IN_STOCK => t('částečně skladem'),
             self::STOCK_STATUS_IN_FUTURE => t('budoucí sklad stavů'),
         ];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStockStatus(): ?string
+    {
+        return $this->stockStatus;
     }
 }

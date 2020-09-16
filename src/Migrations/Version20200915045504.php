@@ -27,6 +27,7 @@ class Version20200915045504 extends AbstractMigration
         $this->sql('CREATE UNIQUE INDEX name_domain ON mail_templates (
                 name, domain_id, transport_id, payment_id, order_stock_status
             )');
+        $this->sql('ALTER TABLE orders ADD stock_status VARCHAR(32) DEFAULT NULL');
     }
 
     /**

@@ -129,7 +129,7 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
-                if (preg_match('~_delete$~', $info->getRouteName())) {
+                if (preg_match('~(_delete$)|(^admin_mail_deletetemplate$)~', $info->getRouteName())) {
                     $debugNote = 'Add CSRF token for any delete action during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
@@ -311,6 +311,11 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_availability_deleteconfirm', function (RouteConfig $config) {
                 $config->skipRoute('Deleting Availability is no longer available.');
+            })
+            ->customizeByRouteName('admin_mail_deletetemplate', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('MailTemplate can be deleted only if it is OrderStockStatus type')
+                    ->setParameter('id', 17)
+                    ->setExpectedStatusCode(302);
             });
     }
 

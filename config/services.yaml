@@ -529,6 +529,9 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail:
         alias: App\Model\Order\Mail\OrderMail
 
+    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade:
+        alias: App\Model\Order\Mail\OrderMailFacade
+
     Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation:
         alias: App\Model\Order\Preview\OrderPreviewCalculation
 

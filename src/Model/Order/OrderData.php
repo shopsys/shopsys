@@ -62,6 +62,11 @@ class OrderData extends BaseOrderData
      */
     public $scontoBridgeStatus;
 
+    /**
+     * @var string|null
+     */
+    public $stockStatus;
+
     public function __construct()
     {
         parent::__construct();
