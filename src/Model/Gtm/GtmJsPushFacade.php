@@ -112,9 +112,10 @@ class GtmJsPushFacade
     /**
      * @param \App\Model\Product\Listed\ListedProductView[] $listedProductViews
      * @param string $list
+     * @param int $nextIndex
      * @return array
      */
-    public function getListedProductViewsScrollData(array $listedProductViews, string $list): array
+    public function getListedProductViewsScrollData(array $listedProductViews, string $list, int $nextIndex = 1): array
     {
         if (!$this->gtmContainer->isEnabled()) {
             return [];
@@ -126,7 +127,7 @@ class GtmJsPushFacade
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
                 'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews(
                     $listedProductViews,
-                    1,
+                    $nextIndex,
                     null,
                     $list
                 ),

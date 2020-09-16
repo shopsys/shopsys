@@ -5,6 +5,7 @@
 import 'slick-carousel';
 import Register from 'framework/common/utils/Register';
 import Ajax from 'framework/common/utils/Ajax';
+import Gtm from '../../gtm';
 
 export default class SaleProductsCarousel {
 
@@ -83,6 +84,7 @@ export default class SaleProductsCarousel {
                     (new Register()).registerNewContent($(element));
                     $productsCarousel.slick('slickAdd', element);
                 });
+                Gtm.pushEvent($response.find('.gtm-scroll').data('gtm-event'));
             }
         });
     }

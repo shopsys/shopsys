@@ -5,6 +5,7 @@
 import 'slick-carousel';
 import Register from 'framework/common/utils/Register';
 import Ajax from 'framework/common/utils/Ajax';
+import Gtm from '../../gtm';
 
 export default class SimilarProductsCarousel {
 
@@ -79,11 +80,12 @@ export default class SimilarProductsCarousel {
             url: url,
             data: requestData,
             success: function (data) {
-                const $response = $($.parseHTML(data));
-                $response.find('.js-list-products-item').each((index, element) => {
+                const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
+                $wrappedData.find('.js-list-products-item').each((index, element) => {
                     (new Register()).registerNewContent($(element));
                     $productsCarousel.slick('slickAdd', element);
                 });
+                Gtm.pushEvent($wrappedData.find('.gtm-scroll').data('gtm-event'));
             }
         });
     }

@@ -406,7 +406,8 @@ class ProductController extends FrontBaseController
                 'paginationResult' => $paginatedSimilarProducts,
                 'gtmSimilarProductsScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
                     $paginatedSimilarProducts->getResults(),
-                    DataLayer::LIST_NAME_PRODUCT_SIMILAR_PRODUCTS
+                    DataLayer::LIST_NAME_PRODUCT_SIMILAR_PRODUCTS,
+                    ($page - 1) * self::SIMILAR_PRODUCTS_PER_PAGE + 1
                 ),
                 'gtmList' => DataLayer::LIST_NAME_PRODUCT_SIMILAR_PRODUCTS
             ]
@@ -993,7 +994,8 @@ class ProductController extends FrontBaseController
                 'paginationResult' => $paginatedSaleProducts,
                 'gtmSaleProductsScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
                     $paginatedSaleProducts->getResults(),
-                    DataLayer::LIST_NAME_HOME_SALE_PRODUCTS
+                    DataLayer::LIST_NAME_HOME_SALE_PRODUCTS,
+                    ($page - 1) * self::SALE_PRODUCTS_PER_PAGE + 1
                 ),
                 'gtmList' => DataLayer::LIST_NAME_HOME_SALE_PRODUCTS,
                 'pageItemsCount' => self::SALE_PRODUCTS_PER_PAGE
