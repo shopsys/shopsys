@@ -38,7 +38,7 @@ spec:
                     imagePullPolicy: Always
                     workingDir: /var/www/html
                     command: ["/bin/sh","-c"]
-                    args: ["mkfifo /tmp/log-pipe && chmod 666 /tmp/log-pipe && cron && tail -n +1 -f /tmp/log-pipe"]
+                    args: ["printenv | sed \'s/^\\(.[^=]*\\)=\\(.*\\)$/export \\1=\"\\2\"/gm;\' > /root/project_env.sh && cd /var/www/html && ./phing warmup && mkfifo /tmp/log-pipe && chmod 666 /tmp/log-pipe && cron && tail -n +1 -f /tmp/log-pipe"]
                     lifecycle:
                         preStop:
                             exec:

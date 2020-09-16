@@ -6,6 +6,7 @@
         - ./config/domains_urls.yaml
         - ./config/oauth2/parameters_oauth.yaml.dist
         - ./kubernetes/horizontalPodAutoscaler/webserver-php-fpm.yaml
+        - ./kubernetes/deployments/cron.yaml
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:

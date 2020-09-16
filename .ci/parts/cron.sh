@@ -7,7 +7,7 @@ assertVariable "CONFIGURATION_TARGET_PATH"
 
 for key in ${!CRON_INSTANCES[@]}; do
 
-    CRONTAB_LINE="        ${CRON_INSTANCES[${key}]} root cd /var/www/html && ./phing ${key} > /dev/null 2>&1"
+    CRONTAB_LINE="        ${CRON_INSTANCES[${key}]} root . /root/project_env.sh; cd /var/www/html && ./phing ${key} > /dev/null 2>&1"
     echo "${CRONTAB_LINE}" >> "${CONFIGURATION_TARGET_PATH}/configmap/cron-list.yaml"
 
 done
