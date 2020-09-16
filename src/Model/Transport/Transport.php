@@ -65,6 +65,18 @@ class Transport extends BaseTransport
     private int $daysUntilDelivery;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=10)
+     */
+    private string $deliveryCode;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private int $typeOfDeliveryKey;
+
+    /**
      * @param \App\Model\Transport\TransportData $transportData
      */
     public function __construct(BaseTransportData $transportData)
@@ -76,6 +88,8 @@ class Transport extends BaseTransport
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
         $this->externalId = $transportData->externalId;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
+        $this->deliveryCode = $transportData->deliveryCode;
+        $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
     }
 
     /**
@@ -90,6 +104,8 @@ class Transport extends BaseTransport
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
         $this->externalId = $transportData->externalId;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
+        $this->deliveryCode = $transportData->deliveryCode;
+        $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
     }
 
     /**
@@ -166,5 +182,21 @@ class Transport extends BaseTransport
     public function getDaysUntilDelivery(): int
     {
         return $this->daysUntilDelivery;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliveryCode(): string
+    {
+        return $this->deliveryCode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTypeOfDeliveryKey(): int
+    {
+        return $this->typeOfDeliveryKey;
     }
 }

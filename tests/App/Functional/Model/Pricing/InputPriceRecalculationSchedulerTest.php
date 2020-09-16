@@ -167,6 +167,8 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $transportData->name = ['cs' => 'name'];
         $transportData->description = ['cs' => 'desc'];
         $transportData->externalId = $this->getNextTransportExternalId();
+        $transportData->deliveryCode = 'A';
+        $transportData->typeOfDeliveryKey = 1;
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportFacade->create($transportData);
 

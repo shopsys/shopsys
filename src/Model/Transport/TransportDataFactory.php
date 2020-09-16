@@ -97,6 +97,8 @@ class TransportDataFactory extends BaseTransportDataFactory
         $transportData->daysUntilDelivery = $transport->getDaysUntilDelivery();
 
         $transportData->externalId = $transport->getExternalId();
+        $transportData->deliveryCode = $transport->getDeliveryCode();
+        $transportData->typeOfDeliveryKey = $transport->getTypeOfDeliveryKey();
 
         return $transportData;
     }
