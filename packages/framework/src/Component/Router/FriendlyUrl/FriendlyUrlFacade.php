@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 
 class FriendlyUrlFacade
 {
@@ -152,6 +153,33 @@ class FriendlyUrlFacade
     public function findMainFriendlyUrl($domainId, $routeName, $entityId)
     {
         return $this->friendlyUrlRepository->findMainFriendlyUrl($domainId, $routeName, $entityId);
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return string
+     */
+    public function getAbsoluteUrlByRouteNameAndEntityId(int $domainId, string $routeName, int $entityId): string
+    {
+        $mainFriendlyUrl = $this->findMainFriendlyUrl($domainId, $routeName, $entityId);
+
+        if ($mainFriendlyUrl === null) {
+            throw new FriendlyUrlNotFoundException();
+        }
+
+        return $this->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl);
+    }
+
+    /**
+     * @param string $routeName
+     * @param int $entityId
+     * @return string
+     */
+    public function getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain(string $routeName, int $entityId): string
+    {
+        return $this->getAbsoluteUrlByRouteNameAndEntityId($this->domain->getId(), $routeName, $entityId);
     }
 
     /**

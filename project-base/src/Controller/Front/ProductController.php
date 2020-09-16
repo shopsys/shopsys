@@ -18,6 +18,8 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForList
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Twig\RequestExtension;
+use Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface;
+use Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -83,6 +85,16 @@ class ProductController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
+     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface
+     */
+    protected $listedProductVariantsViewFacade;
+
+    /**
+     * @var \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface
+     */
+    protected $productDetailViewFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -94,6 +106,8 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface $productDetailViewFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -106,7 +120,9 @@ class ProductController extends FrontBaseController
         ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade,
         ModuleFacade $moduleFacade,
         BrandFacade $brandFacade,
-        ListedProductViewFacadeInterface $listedProductViewFacade
+        ListedProductViewFacadeInterface $listedProductViewFacade,
+        ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade,
+        ProductDetailViewFacadeInterface $productDetailViewFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->categoryFacade = $categoryFacade;
@@ -119,6 +135,8 @@ class ProductController extends FrontBaseController
         $this->moduleFacade = $moduleFacade;
         $this->brandFacade = $brandFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
+        $this->listedProductVariantsViewFacade = $listedProductVariantsViewFacade;
+        $this->productDetailViewFacade = $productDetailViewFacade;
     }
 
     /**
@@ -126,21 +144,19 @@ class ProductController extends FrontBaseController
      */
     public function detailAction($id)
     {
-        $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
+        $productDetailView = $this->productDetailViewFacade->getVisibleProductDetail($id);
 
-        if ($product->isVariant()) {
-            return $this->redirectToRoute('front_product_detail', ['id' => $product->getMainVariant()->getId()]);
+        if ($productDetailView->getMainVariantId() !== null) {
+            return $this->redirectToRoute('front_product_detail', ['id' => $productDetailView->getMainVariantId()]);
         }
 
-        $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
-        $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
-        $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
+        $accessories = $this->listedProductViewFacade->getAllAccessories($id);
+        $variants = $this->listedProductVariantsViewFacade->getAllVariants($id);
 
         return $this->render('Front/Content/Product/detail.html.twig', [
-            'product' => $product,
+            'productView' => $productDetailView,
             'accessories' => $accessories,
             'variants' => $variants,
-            'productMainCategory' => $productMainCategory,
         ]);
     }
 

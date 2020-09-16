@@ -48,4 +48,28 @@ class ImageExtension extends BaseImageExtension
 
         return parent::getImageHtml($imageView, $attributes);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|Object $imageView
+     * @param string|null $sizeName
+     * @param string|null $type
+     * @return string
+     */
+    public function getImageUrl($imageView, $sizeName = null, $type = null)
+    {
+        if ($imageView instanceof ImageView) {
+            $entityName = $imageView->getEntityName();
+
+            return $this->imageFacade->getImageUrlFromAttributes(
+                $this->domain->getCurrentDomainConfig(),
+                $imageView->getId(),
+                $imageView->getExtension(),
+                $entityName,
+                $type,
+                $sizeName
+            );
+        }
+
+        return parent::getImageUrl($imageView, $sizeName, $type);
+    }
 }

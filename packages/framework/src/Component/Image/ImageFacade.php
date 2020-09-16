@@ -477,4 +477,16 @@ class ImageFacade
 
         return $this->imageRepository->getMainImagesByEntitiesIndexedByEntityId($entityIds, $entityName);
     }
+
+    /**
+     * @param int $id
+     * @param string $entityClass
+     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
+     */
+    public function getImagesByEntityId(int $id, string $entityClass): array
+    {
+        $entityName = $this->imageConfig->getImageEntityConfigByClass($entityClass)->getEntityName();
+
+        return $this->getImagesByEntityIdAndNameIndexedById($id, $entityName, null);
+    }
 }

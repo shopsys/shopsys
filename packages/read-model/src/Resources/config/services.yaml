@@ -7,14 +7,26 @@ services:
     Shopsys\ReadModelBundle\:
         resource: '../../**/*{Facade,Factory,Provider,Repository}.php'
 
+    Shopsys\ReadModelBundle\Brand\BrandViewFacadeInterface:
+        class: Shopsys\ReadModelBundle\Brand\BrandViewFacade
+
     Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface:
         class: Shopsys\ReadModelBundle\Image\ImageViewFacade
 
     Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface:
         class: Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade
 
+    Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface:
+        class: Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacade
+
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface:
+        class: Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacade
+
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface:
         alias: Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade
+
+    Shopsys\ReadModelBundle\Parameter\ParameterViewFacadeInterface:
+        class: Shopsys\ReadModelBundle\Parameter\ParameterViewFacade
 
     Shopsys\FrameworkBundle\Twig\ImageExtension:
         class: Shopsys\ReadModelBundle\Twig\ImageExtension
