@@ -36,6 +36,7 @@ class TransportFormTypeExtension extends AbstractTypeExtension
      * @var \App\Model\Product\Type\ProductTypeFacade
      */
     private $productTypeFacade;
+
     /**
      * @var TransportFacade
      */

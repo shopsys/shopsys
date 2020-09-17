@@ -68,7 +68,7 @@ class OrderTransferScontoBridgeMapper
         $erpOrder->setPriceCurrency($order->getCurrency()->getCode());
 
         $this->fillCustomerDetails($erpOrder, $order, $customerUser);
-        $this->fillInvoiceDetails($erpOrder, $order);
+        $this->fillInvoiceAddress($erpOrder, $order);
         $this->fillDeliveryAddress($erpOrder, $order);
 
         $erpOrder->setPaymentMethodId($order->getPayment()->getExternalId());
@@ -117,7 +117,7 @@ class OrderTransferScontoBridgeMapper
      * @param ScontoBridgeErpOrder $erpOrder
      * @param Order $order
      */
-    private function fillInvoiceDetails(ScontoBridgeErpOrder $erpOrder, Order $order): void
+    private function fillInvoiceAddress(ScontoBridgeErpOrder $erpOrder, Order $order): void
     {
         $erpOrder->setInvoiceAddressStreet($order->getStreet());
         $erpOrder->setInvoiceAddressCountryISO($order->getCountry()->getCode());

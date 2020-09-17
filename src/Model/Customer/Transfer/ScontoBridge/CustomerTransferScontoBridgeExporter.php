@@ -7,6 +7,7 @@ namespace App\Model\Customer\Transfer\ScontoBridge;
 use App\Component\ScontoBridge\ScontoBridgeClient;
 use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeExporter;
 use App\Model\Customer\User\CustomerUser;
+use App\Model\Order\Order;
 
 class CustomerTransferScontoBridgeExporter extends AbstractScontoBridgeExporter
 {
@@ -23,7 +24,6 @@ class CustomerTransferScontoBridgeExporter extends AbstractScontoBridgeExporter
     private ScontoBridgeClient $scontoBridgeClient;
 
     /**
-     * CustomerTransferScontoBridgetExporter constructor.
      * @param CustomerTransferScontoBridgeMapper $customerTransferScontoBridgeMapper
      * @param ScontoBridgeClient $scontoBridgeClient
      */
@@ -37,10 +37,11 @@ class CustomerTransferScontoBridgeExporter extends AbstractScontoBridgeExporter
 
     /**
      * @param CustomerUser $customerUser
+     * @param Order $order
      */
-    public function exportCustomerUser(CustomerUser $customerUser): void
+    public function exportCustomerUser(CustomerUser $customerUser, Order $order): void
     {
-        $erpUser = $this->customerTransferScontoBridgeMapper->mapCustomerUserToScontoBridgeCustomerData($customerUser);
+        $erpUser = $this->customerTransferScontoBridgeMapper->mapCustomerUserToScontoBridgeCustomerData($customerUser, $order);
 
         $uri = self::URI_ERP_CUSTOMER;
         $response = $this->scontoBridgeClient->post($uri, $erpUser);

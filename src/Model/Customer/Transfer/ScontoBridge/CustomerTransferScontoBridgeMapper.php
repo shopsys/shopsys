@@ -174,9 +174,7 @@ class CustomerTransferScontoBridgeMapper
         $erpUser->setPhonePrefix($this->getPhonePrefixByCountry($country));
         $erpUser->setPhoneNumber($customerUser->getTelephone());
 
-        if ($customerUser->getDefaultDeliveryAddress() !== null) {
-            $erpUser->setPrimaryAddress($this->mapPrimaryAddress($customerUser));
-        }
+        $erpUser->setPrimaryAddress($this->mapPrimaryAddress($customerUser));
 
         if ($billingAddress->isCompanyCustomer()) {
             $erpUser->setCompany($this->mapCompany($customerUser));
@@ -230,19 +228,16 @@ class CustomerTransferScontoBridgeMapper
      */
     private function mapPrimaryAddress(CustomerUser $customerUser): ?ScontoBridgePrimaryAddress
     {
-        $userDefaultAddress = $customerUser->getDefaultDeliveryAddress();
-        if ($userDefaultAddress === null) {
-            return null;
-        }
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
 
         $erpAddress = new ScontoBridgePrimaryAddress();
-        $erpAddress->setStreet($userDefaultAddress->getStreet());
-        $erpAddress->setCity($userDefaultAddress->getCity());
-        $country = $userDefaultAddress->getCountry();
+        $erpAddress->setStreet($billingAddress->getStreet());
+        $erpAddress->setCity($billingAddress->getCity());
+        $country = $billingAddress->getCountry();
         if ($country !== null) {
             $erpAddress->setCountry($country->getCode());
         }
-        $erpAddress->setZipCode($userDefaultAddress->getPostcode());
+        $erpAddress->setZipCode($billingAddress->getPostcode());
 
         return $erpAddress;
     }

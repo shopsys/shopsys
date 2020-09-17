@@ -13,6 +13,7 @@ use App\Model\Order\OrderScontoBridgeStatusEnum;
 use App\Model\Transfer\TransferIdentificationInterface;
 use App\Model\Transfer\TransferLoggerInterface;
 use Exception;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
 
 class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
@@ -59,12 +60,12 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     {
         foreach ($this->getData() as $order) {
             $error = true;
-            $this->markOrderScontoBridgeStatusProcessing($order);
+            //$this->markOrderScontoBridgeStatusProcessing($order);
             try {
                 $this->logger->addDebug(sprintf('START export order id \'%d\'', $order->getId()));
 
                 $this->processItem($order);
-                $this->markOrderScontoBridgeStatusDone($order);
+                //$this->markOrderScontoBridgeStatusDone($order);
                 $error = false;
 
                 $this->logger->addDebug(sprintf('DONE export order id \'%d\'', $order->getId()));
@@ -82,8 +83,15 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
                     'httpStatus' => $e->getHttpCode(),
                 ]);
             } catch (GuzzleException $e) {
+                $response = $request = null;
+                if ($e instanceof BadResponseException) {
+                    $response = $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null;
+                    $request = (string)$e->getRequest()->getBody();
+                }
                 $this->logger->addCritical('Error occured during http transfer', [
-                    'exception' => $e->getMessage()
+                    'exception' => $e->getMessage(),
+                    'response' => $response,
+                    'request' => $request
                 ]);
             } catch (Exception $e) {
                 $this->logger->addCritical('Fatal error', [
@@ -92,7 +100,7 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
             }
 
             if ($error === true) {
-                $this->markOrderScontoBridgeStatusError($order);
+                //$this->markOrderScontoBridgeStatusError($order);
             }
         }
     }
@@ -105,14 +113,14 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
         $customerUser = $order->getCustomerUser();
         if ($customerUser !== null) {
             $this->logger->addDebug(sprintf('Exporting customer user id \'%d\'', $customerUser->getId()));
-            $this->customerTransferScontoBridgetExporter->exportCustomerUser($customerUser);
+            $this->customerTransferScontoBridgetExporter->exportCustomerUser($customerUser, $order);
             $this->logger->addDebug('Customer export done.');
         } else {
             $this->logger->addDebug('Customer export skipped - empty customer.');
         }
 
         $this->logger->addDebug('Exporting order data');
-        $this->orderTransferScontoBridgeExporter->exportCustomerToScontoBridge($order);
+        $this->orderTransferScontoBridgeExporter->exportOrderToScontoBridge($order);
         $this->logger->addDebug('Export order data done');
     }
 
