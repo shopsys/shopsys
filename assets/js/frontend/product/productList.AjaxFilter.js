@@ -129,6 +129,7 @@ export default class ProductListAjaxFilter {
             .replace(/(&?|^)product_filter_form%5Bparameters%5D%5B(\d+)%5D%5Bmin%5D=(&|$)/g, '$3')
             .replace(/(&?|^)product_filter_form%5Bparameters%5D%5B(\d+)%5D%5Bmax%5D=(&|$)/g, '$3')
         ;
+        let query = data;
 
         Gtm.pushFilterData(productListAjaxFilter.$productFilterForm.serializeArray());
 
@@ -144,6 +145,12 @@ export default class ProductListAjaxFilter {
                 productListAjaxFilter.updateFilterLinks($wrappedData);
                 productListAjaxFilter.updateBoxFilterOpener($wrappedData);
                 productListAjaxFilter.updateFiltersDisabled();
+
+                // if .js-ready-category-seo-mix-values has been found, ProductListReadyCategorySeoMix.js will take care about changing URL
+                const seoMixFound = $wrappedData.filterAllNodes('.js-ready-category-seo-mix-values').length > 0;
+                if (!seoMixFound) {
+                    pushReloadState('?' + query);
+                }
 
                 Gtm.pushEvent($wrappedData.find('.gtm-info').data('gtm-event'));
             }
