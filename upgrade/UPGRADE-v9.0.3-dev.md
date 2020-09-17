@@ -23,3 +23,4 @@ There you can find links to upgrade notes for other versions too.
         - `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface::getProductFilterCountDataForSearch()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductFilterCountDataForSearch()` instead
         - `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface::getProductsOnCurrentDomain()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsOnCurrentDomain()` instead
         - `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface::getProductsByCategory()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsByCategory()` instead
+        - `Shopsys\FrameworkBundle\Component\Image\ImageFacade::getImagesByEntityIdAndNameIndexedById()` use `Shopsys\FrontendApiBundle\Component\Image\ImageFacade::getImagesByEntityIdAndNameIndexedById()` instead
