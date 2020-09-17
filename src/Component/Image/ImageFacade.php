@@ -27,7 +27,6 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
  * @property \App\Component\Image\ImageRepository $imageRepository
- * @method saveImageOrdering(\App\Component\Image\Image[] $orderedImages)
  * @method \App\Component\Image\Image[] getAllImagesByEntity(object $entity)
  * @method deleteImageFiles(\App\Component\Image\Image $image)
  * @method \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] getAdditionalImagesData(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, \App\Component\Image\Image $imageOrEntity, string|null $sizeName, string|null $type)
@@ -575,5 +574,22 @@ class ImageFacade extends BaseImageFacade
                 }
             }
         }
+    }
+
+    /**
+     * @param \App\Component\Image\Image[] $orderedImages
+     */
+    protected function saveImageOrdering($orderedImages): void
+    {
+        // Image entity can be cached and It caused no persisted entity -> fatal on flush
+        $persistedImages = [];
+        foreach ($orderedImages as $image) {
+            if ($this->em->getUnitOfWork()->isInIdentityMap($image) === true) {
+                $persistedImages[] = $image;
+            } else {
+                $persistedImages[] = $this->getById($image->getId());
+            }
+        }
+        parent::saveImageOrdering($persistedImages);
     }
 }
