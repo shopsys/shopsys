@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Test;
 
-use Exception;
 use Metadata\MetadataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
@@ -46,12 +45,8 @@ class TestTranslatableListener extends TranslatableListener
      */
     public function getCurrentLocale()
     {
-        try {
-            if ($this->administrationFacade->isInAdmin()) {
-                return $this->adminLocale;
-            }
-        } catch (Exception $exception) {
-            return $this->getFirstDomainLocale();
+        if ($this->administrationFacade->isInAdmin()) {
+            return $this->adminLocale;
         }
 
         return $this->getFirstDomainLocale();
