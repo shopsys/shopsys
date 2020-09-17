@@ -6,11 +6,9 @@ namespace App\Component\ScontoBridge;
 
 use DateTime;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use JsonSerializable;
 use Psr\Http\Message\ResponseInterface;
-use function GuzzleHttp\Psr7\stream_for;
 
 class ScontoBridgeClient
 {
