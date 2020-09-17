@@ -41,7 +41,7 @@ class CustomerTransferScontoBridgeExporter extends AbstractScontoBridgeExporter
      */
     public function exportCustomerUser(CustomerUser $customerUser, Order $order): void
     {
-        $erpUser = $this->customerTransferScontoBridgeMapper->mapCustomerUserToScontoBridgeCustomerData($customerUser, $order);
+        $erpUser = $this->customerTransferScontoBridgeMapper->mapCustomerUserToScontoBridgeCustomerData($customerUser);
 
         $uri = self::URI_ERP_CUSTOMER;
         $response = $this->scontoBridgeClient->post($uri, $erpUser);
