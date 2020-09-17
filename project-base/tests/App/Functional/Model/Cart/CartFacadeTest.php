@@ -17,12 +17,6 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\TranslatableListener
-     * @inject
-     */
-    private $translatableListener;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\CartFactory
      * @inject
      */
@@ -175,10 +169,6 @@ class CartFacadeTest extends TransactionFunctionalTestCase
 
     public function testCanDeleteCartItem()
     {
-        // Set currentLocale in TranslatableListener as it done in real request
-        // because CartWatcherFacade works with entity translations.
-        $this->translatableListener->setCurrentLocale('cs');
-
         $customerUserIdentifier = new CustomerUserIdentifier('secretSessionHash');
 
         /** @var \App\Model\Product\Product $product1 */
