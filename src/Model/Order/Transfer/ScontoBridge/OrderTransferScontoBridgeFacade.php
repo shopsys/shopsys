@@ -113,7 +113,7 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
         $customerUser = $order->getCustomerUser();
         if ($customerUser !== null) {
             $this->logger->addDebug(sprintf('Exporting customer user id \'%d\'', $customerUser->getId()));
-            $this->customerTransferScontoBridgetExporter->exportCustomerUser($customerUser, $order);
+            $this->customerTransferScontoBridgetExporter->exportCustomerUser($customerUser);
             $this->logger->addDebug('Customer export done.');
         } else {
             $this->logger->addDebug('Customer export skipped - empty customer.');

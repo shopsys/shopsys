@@ -7,7 +7,6 @@ namespace App\Model\Customer\Transfer\ScontoBridge;
 use App\Component\ScontoBridge\ScontoBridgeClient;
 use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeExporter;
 use App\Model\Customer\User\CustomerUser;
-use App\Model\Order\Order;
 
 class CustomerTransferScontoBridgeExporter extends AbstractScontoBridgeExporter
 {
