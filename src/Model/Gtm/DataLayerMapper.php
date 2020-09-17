@@ -40,6 +40,8 @@ class DataLayerMapper
         'front_order_sent' => DataLayerPage::TYPE_PURCHASE,
         'front_product_search' => DataLayerPage::TYPE_SEARCH,
         'front_product_list' => DataLayerPage::TYPE_CATEGORY,
+        'front_stores' => DataLayerPage::TYPE_STORES,
+        'front_stores_detail' => DataLayerPage::TYPE_STORES,
         'front_error' => DataLayerPage::TYPE_ERROR,
     ];
 

@@ -23,7 +23,7 @@ class DataLayerPage implements JsonSerializable
     public const TYPE_PURCHASE = 'purchase';
     public const TYPE_PURCHASE_FAIL = 'purchase fail';
     public const TYPE_SEARCH = 'search';
-    public const TYPE_STORES = 'stores'; // TODO tato stránka zatím neexistuje
+    public const TYPE_STORES = 'stores';
     public const TYPE_ERROR = 'error';
     public const TYPE_ERROR_404 = '404';
 
