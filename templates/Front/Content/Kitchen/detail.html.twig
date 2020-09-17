@@ -10,9 +10,7 @@
 {% block main_content %}
     <div class="web__line web__line--spacing--big">
         <div class="web__container">
-            {# Heading, breadcrumb, description #}
             <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
-                {# Breadcrumb - not implemented yet #}
                 <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing js-not-implemented-yet">
                     <div class="box-breadcrumb">
                         <div class="box-breadcrumb">
@@ -21,14 +19,13 @@
                                 <span>{{ 'Domů'|trans }}</span>
                             </a>
                             <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
-                            <a href="{{ url('front_kitchen_list_sub') }}" class="box-breadcrumb__item">{{ 'Moderní kuchyně'|trans }}</a>
+                            <a href="{{ url('front_kitchen_list_modern') }}" class="box-breadcrumb__item">{{ 'Moderní kuchyně'|trans }}</a>
                             <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
                             <a href="{{ url('front_kitchen_detail') }}" class="box-breadcrumb__item">{{ 'RIVA'|trans }}</a>
                         </div>
                     </div>
                 </div>
             </div>
-            {# Banner #}
             <div class="box-furniture-banner box-furniture-banner--detail theme-kitchen-bg">
                 <div class="box-furniture-banner__content">
                     <span class="box-furniture-tag box-furniture-tag--simple">
@@ -49,7 +46,6 @@
                     </picture>
                 </div>
             </div>
-            {# Carousel #}
             <div class="box-furniture-carousel-wrap">
                 <span class="box-furniture-tag box-furniture-carousel-wrap__tag">
                     <img
@@ -137,7 +133,6 @@
                     </picture>
                 </div>
             </div>
-            {# Description #}
             <div class="box-furniture-detail-desc">
                 <p class="theme-kitchen-color">
                     {{ 'Jednoduché čisté linie a široká nabídka dekorů včetně dřeva a betonu dělají z kuchyně RIVA
@@ -147,7 +142,6 @@
                 </p>
             </div>
             <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
-            {# Color variants #}
             <div class="box-furniture-detail-variants">
                 <h2 class="box-furniture-detail-variants__title theme-kitchen-color-secondary">
                     {{ 'Barevné varianty dvířek'|trans }}
@@ -271,7 +265,6 @@
                 </div>
             </div>
             <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
-            {# Model kitchen #}
             <div class="box-furniture-detail-models">
                 <h2 class="box-furniture-detail-models__title theme-kitchen-color-secondary">
                     {{ 'Modelové kuchyně'|trans }}
@@ -373,10 +366,8 @@
                     </div>
                 </div>
             </div>
-            {# Offers #}
             {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
             <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
-            {# Desks #}
             <div class="box-furniture-detail-desks">
                 <h2 class="box-furniture-detail-desks__title theme-kitchen-color-secondary">
                     {{ 'Pracovní desky'|trans }}
@@ -484,7 +475,6 @@
                 </div>
             </div>
             <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
-            {# Grips #}
             <div class="box-furniture-detail-grips">
                 <h2 class="box-furniture-detail-grips__title theme-kitchen-color-secondary">
                     {{ 'Úchyty'|trans }}
@@ -551,7 +541,6 @@
                 </div>
             </div>
             <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
-            {# Details #}
             <div class="box-furniture-detail-details">
                 <h2 class="box-furniture-detail-details__title theme-kitchen-color-secondary">
                     {{ 'Detaily'|trans }}
@@ -631,7 +620,6 @@
                 </div>
             </div>
             <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
-            {# Carousel #}
             <div class="box-furniture-carousel-wrap">
                 <h2 class="box-furniture-carousel-wrap__title theme-kitchen-color-secondary">
                     {{ 'Více než kuchyň'|trans }}
@@ -722,7 +710,6 @@
                     </picture>
                 </div>
             </div>
-            {# Pagination #}
             <div class="box-furniture-pagination">
                 <a class="box-furniture-pagination__item js-not-implemented-yet" href="#">
                     <i class="svg svg-chevron box-furniture-pagination__item__icon box-furniture-pagination__item__icon--previous theme-kitchen-color"></i>

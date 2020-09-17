@@ -1,3 +1,5 @@
+{% from 'Front/Macros/picture.html.twig' import picture as picture %}
+
 <div class="box-furniture-offer-wrap">
     <div class="box-furniture-offer box-furniture-offer--meeting theme-kitchen-bg-darker">
         <div class="box-furniture-offer__content">
@@ -10,21 +12,12 @@
             </a>
         </div>
         <div class="box-furniture-offer__image">
-            <picture>
-                <source
-                    srcset="
-                    {{ asset('public/frontend/images/kitchen/usp_banner_1_2x.png') }} 2x,
-                    {{ asset('public/frontend/images/kitchen/usp_banner_1.png') }} 1x"
-                >
-                <img
-                    alt="{{ 'Domluvte si schůzku'|trans }}"
-                    class="box-furniture-offer__img"
-                    title="{{ 'Domluvte si schůzku'|trans }}"
-                    loading="lazy"
-                    data-src="{{ asset('public/frontend/images/kitchen/usp_banner_1.png') }}"
-                    itemprop="image"
-                >
-            </picture>
+            {{ picture(
+                'kitchen/usp_banner_1_2x.png',
+                'kitchen/usp_banner_1.png',
+                'Domluvte si schůzku'|trans,
+                'box-furniture-offer__img'
+            ) }}
         </div>
     </div>
     <div class="box-furniture-offer box-furniture-offer--plan theme-kitchen-bg-very-dark">
@@ -38,21 +31,12 @@
             </a>
         </div>
         <div class="box-furniture-offer__image">
-            <picture>
-                <source
-                    srcset="
-                    {{ asset('public/frontend/images/kitchen/usp_banner_2_2x.png') }} 2x,
-                    {{ asset('public/frontend/images/kitchen/usp_banner_2.png') }} 1x"
-                >
-                <img
-                    alt="{{ 'Plánování kuchyně'|trans }}"
-                    class="box-furniture-offer__img"
-                    title="{{ 'Plánování kuchyně'|trans }}"
-                    loading="lazy"
-                    data-src="{{ asset('public/frontend/images/kitchen/usp_banner_2.png') }}"
-                    itemprop="image"
-                >
-            </picture>
+            {{ picture(
+                'kitchen/usp_banner_2_2x.png',
+                'kitchen/usp_banner_2.png',
+                'Plánování kuchyně'|trans,
+                'box-furniture-offer__img'
+            ) }}
         </div>
     </div>
 </div>

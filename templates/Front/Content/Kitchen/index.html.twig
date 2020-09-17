@@ -10,13 +10,10 @@
 {% block main_content %}
     <div class="web__line web__line--spacing--big">
         <div class="web__container">
-            {# Heading, breadcrumb, description #}
             <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
-                {# Heading #}
                 <h1 class="box-list__description__heading theme-kitchen-color-secondary">
                     {{ "Když pro kuchyni, tak do Sconta"|trans }}
                 </h1>
-                {# Breadcrumb - not implemented yet #}
                 <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing js-not-implemented-yet">
                     <div class="box-breadcrumb">
                         <div class="box-breadcrumb">
@@ -29,13 +26,11 @@
                         </div>
                     </div>
                 </div>
-                {# Short description #}
                 <p class="box-list__description__text box-list__description__text--centered box-list__description__text--top theme-kitchen-color">
                     {{ 'V každém z 8 kuchyňských studií si můžete vybrat z více než 40 vystavených kuchyní různých stylů a barevných provedení.
                     Naši pečlivě proškolení odborníci vám pomohou přeměnit sny ve skutečnost.'|trans }}
                 </p>
             </div>
-            {# Category list #}
             <div class="list-categories-wrap list-categories-wrap--centered">
                 <ul class="list-categories box-furniture-categories">
                     <li class="list-categories__item list-categories__item--special">
@@ -151,7 +146,6 @@
                 </ul>
             </div>
             <hr class="box-furniture-sep" />
-            {# Banner #}
             <div class="box-furniture-banner theme-kitchen-bg">
                 <div class="box-furniture-banner__image">
                     <picture>
@@ -184,7 +178,6 @@
                     </a>
                 </div>
             </div>
-            {# Gallery #}
             <div class="box-furniture-grid-gallery">
                 <div class="box-furniture-grid-gallery__item box-furniture-grid-gallery__item--wide">
                     <picture>
@@ -253,15 +246,12 @@
                     </picture>
                 </div>
             </div>
-            {# Offers #}
             {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
             <hr class="box-furniture-sep box-furniture-sep--smaller-spacing box-furniture-sep--top-spacing"/>
-            {# Articles #}
             <div class="box-furniture-blog">
                 {{ render(controller('App\\Controller\\Front\\BlogArticleController:homepageArticlesAction')) }}
             </div>
             <hr class="box-furniture-sep box-furniture-sep--smaller-spacing"/>
-            {# Description #}
             <div class="box-blog__desc box-blog__desc--bottom box-furniture-desc">
                 <h2 class="theme-kitchen-color-secondary">{{ 'Na co je dobré při nákupu kuchyně nezapomínat?'|trans }}</h2>
                 <p class="theme-kitchen-color">{{ 'Kuchyň je středobodem každého domova. Představuje místo, kde společně jíme, mluvíme, žijeme, diskutujeme, ale také odpočíváme.

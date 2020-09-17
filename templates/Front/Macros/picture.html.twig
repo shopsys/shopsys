@@ -1,0 +1,15 @@
+{% macro picture(src2x, src, alt, cssClass) %}
+    <picture>
+        <source
+            srcset="
+            {{ asset("public/frontend/images/#{src2x}") }} 2x,
+            {{ asset("public/frontend/images/#{src}") }} 1x"
+        >
+        <img
+            alt="{{ alt }}"
+            class="{{ cssClass }}"
+            loading="lazy"
+            data-src="{{ asset("public/frontend/images/#{src}") }}"
+        >
+    </picture>
+{% endmacro picture %}

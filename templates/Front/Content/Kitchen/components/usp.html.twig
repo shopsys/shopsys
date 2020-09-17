@@ -1,24 +1,17 @@
+{% from 'Front/Macros/picture.html.twig' import picture as picture %}
+
 <div class="box-furniture-usp-wrap">
     <h2 class="box-furniture-usp__heading theme-kitchen-color-secondary">{{ 'Pomůžeme vám'|trans }}</h2>
     <div class="box-furniture-usp-list">
         <div class="box-furniture-usp">
             <div class="box-furniture-usp__image">
                 <span class="box-furniture-label">{{ 'Zdarma'|trans }}</span>
-                <picture>
-                    <source
-                        srcset="
-                        {{ asset('public/frontend/images/kitchen/usp/vizualizace_2x.jpg') }} 2x,
-                        {{ asset('public/frontend/images/kitchen/usp/vizualizace.jpg') }} 1x"
-                    >
-                    <img
-                        alt="{{ 'Vizualizace'|trans }}"
-                        class="box-furniture-usp__img"
-                        title="{{ 'Vizualizace'|trans }}"
-                        loading="lazy"
-                        data-src="{{ asset('public/frontend/images/kitchen/usp/vizualizace.jpg') }}"
-                        itemprop="image"
-                    >
-                </picture>
+                    {{ picture(
+                        'kitchen/usp/vizualizace_2x.jpg',
+                        'kitchen/usp/vizualizace.jpg',
+                        'Vizualizace'|trans,
+                        'box-furniture-usp__img'
+                    ) }}
             </div>
             <div class="box-furniture-usp__content">
                 <strong class="box-furniture-usp__title theme-kitchen-color-secondary">
@@ -32,21 +25,12 @@
         <div class="box-furniture-usp">
             <div class="box-furniture-usp__image">
                 <span class="box-furniture-label">{{ 'Zdarma'|trans }}</span>
-                <picture>
-                    <source
-                        srcset="
-                        {{ asset('public/frontend/images/kitchen/usp/mereni_2x.jpg') }} 2x,
-                        {{ asset('public/frontend/images/kitchen/usp/mereni.jpg') }} 1x"
-                    >
-                    <img
-                        alt="{{ 'Měření'|trans }}"
-                        class="box-furniture-usp__img"
-                        title="{{ 'Měření'|trans }}"
-                        loading="lazy"
-                        data-src="{{ asset('public/frontend/images/kitchen/usp/mereni.jpg') }}"
-                        itemprop="image"
-                    >
-                </picture>
+                {{ picture(
+                    'kitchen/usp/mereni_2x.jpg',
+                    'kitchen/usp/mereni.jpg',
+                    'Měření'|trans,
+                    'box-furniture-usp__img'
+                ) }}
             </div>
             <div class="box-furniture-usp__content">
                 <strong class="box-furniture-usp__title theme-kitchen-color-secondary">
@@ -60,21 +44,12 @@
         <div class="box-furniture-usp">
             <div class="box-furniture-usp__image">
                 <span class="box-furniture-label">{{ 'Zdarma'|trans }}</span>
-                <picture>
-                    <source
-                        srcset="
-                        {{ asset('public/frontend/images/kitchen/usp/instalace_2x.jpg') }} 2x,
-                        {{ asset('public/frontend/images/kitchen/usp/instalace.jpg') }} 1x"
-                    >
-                    <img
-                        alt="{{ 'Instalace'|trans }}"
-                        class="box-furniture-usp__img"
-                        title="{{ 'Instalace'|trans }}"
-                        loading="lazy"
-                        data-src="{{ asset('public/frontend/images/kitchen/usp/instalace.jpg') }}"
-                        itemprop="image"
-                    >
-                </picture>
+                {{ picture(
+                    'kitchen/usp/instalace_2x.jpg',
+                    'kitchen/usp/instalace.jpg',
+                    'Instalace'|trans,
+                    'box-furniture-usp__img'
+                ) }}
             </div>
             <div class="box-furniture-usp__content">
                 <strong class="box-furniture-usp__title theme-kitchen-color-secondary">
@@ -87,21 +62,12 @@
         </div>
         <div class="box-furniture-usp">
             <div class="box-furniture-usp__image">
-                <picture>
-                    <source
-                        srcset="
-                        {{ asset('public/frontend/images/kitchen/usp/doprava_2x.jpg') }} 2x,
-                        {{ asset('public/frontend/images/kitchen/usp/doprava.jpg') }} 1x"
-                    >
-                    <img
-                        alt="{{ 'Doprava'|trans }}"
-                        class="box-furniture-usp__img"
-                        title="{{ 'Doprava'|trans }}"
-                        loading="lazy"
-                        data-src="{{ asset('public/frontend/images/kitchen/usp/doprava.jpg') }}"
-                        itemprop="image"
-                    >
-                </picture>
+                {{ picture(
+                    'kitchen/usp/doprava_2x.jpg',
+                    'kitchen/usp/doprava.jpg',
+                    'Doprava'|trans,
+                    'box-furniture-usp__img'
+                ) }}
             </div>
             <div class="box-furniture-usp__content">
                 <strong class="box-furniture-usp__title theme-kitchen-color-secondary">
@@ -114,21 +80,12 @@
         </div>
         <div class="box-furniture-usp">
             <div class="box-furniture-usp__image">
-                <picture>
-                    <source
-                        srcset="
-                        {{ asset('public/frontend/images/kitchen/usp/montaz_2x.jpg') }} 2x,
-                        {{ asset('public/frontend/images/kitchen/usp/montaz.jpg') }} 1x"
-                    >
-                    <img
-                        alt="{{ 'Montáž'|trans }}"
-                        class="box-furniture-usp__img"
-                        title="{{ 'Montáž'|trans }}"
-                        loading="lazy"
-                        data-src="{{ asset('public/frontend/images/kitchen/usp/montaz.jpg') }}"
-                        itemprop="image"
-                    >
-                </picture>
+                {{ picture(
+                    'kitchen/usp/montaz_2x.jpg',
+                    'kitchen/usp/montaz.jpg',
+                    'Montáž'|trans,
+                    'box-furniture-usp__img'
+                ) }}
             </div>
             <div class="box-furniture-usp__content">
                 <strong class="box-furniture-usp__title theme-kitchen-color-secondary">
@@ -141,21 +98,12 @@
         </div>
         <div class="box-furniture-usp">
             <div class="box-furniture-usp__image">
-                <picture>
-                    <source
-                        srcset="
-                        {{ asset('public/frontend/images/kitchen/usp/vizualizace_2x.jpg') }} 2x,
-                        {{ asset('public/frontend/images/kitchen/usp/vizualizace.jpg') }} 1x"
-                    >
-                    <img
-                        alt="{{ 'Funkce'|trans }}"
-                        class="box-furniture-usp__img"
-                        title="{{ 'Funkce'|trans }}"
-                        loading="lazy"
-                        data-src="{{ asset('public/frontend/images/kitchen/usp/vizualizace.jpg') }}"
-                        itemprop="image"
-                    >
-                </picture>
+                {{ picture(
+                    'kitchen/usp/vizualizace_2x.jpg',
+                    'kitchen/usp/vizualizace.jpg',
+                    'Funkce'|trans,
+                    'box-furniture-usp__img'
+                ) }}
             </div>
             <div class="box-furniture-usp__content">
                 <strong class="box-furniture-usp__title theme-kitchen-color-secondary">
