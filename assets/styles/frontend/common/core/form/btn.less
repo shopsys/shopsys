@@ -41,7 +41,7 @@
 //// Modifications - color
 .btn {
     // call to action button
-    @btn-success-color: @color-f;
+    @btn-success-color: @color-primary;
     @btn-success-color-hover: @color-primary;
     @btn-success-bg: linear-gradient(to bottom, #fcd80B, #fcc308);
     @btn-success-bg-hover: linear-gradient(to bottom, #fcd80B, #fcc308);
@@ -471,6 +471,16 @@
             content: '';
 
             box-shadow: 0 3px 7px 0 rgba(#fcc308, 0.9);
+        }
+
+        &.btn--success {
+            color: @color-primary;
+
+            transition: all @transition;
+
+            &:hover {
+                box-shadow: 0 0 30px 0 rgba(#fcc308, .9);
+            }
         }
     }
 

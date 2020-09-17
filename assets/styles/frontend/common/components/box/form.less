@@ -1,5 +1,6 @@
 @box-form-bg-color: @color-f;
 @box-form-width: 960px;
+@box-form-small-width: 690px;
 @box-form-radius: @radius;
 
 .box-form {
@@ -24,12 +25,24 @@
         padding: 3rem 12.5rem;
     }
 
+    &--small {
+        margin-bottom: 0;
+        width: @box-form-small-width;
+
+        @media @query-lg {
+            padding: 40px 60px 30px;
+        }
+    }
+
     &--no-bottom-spacing {
         margin-bottom: 0;
     }
 
     &--registration {
         margin-top: 2rem;
+
+        border-radius: @radius * 2;
+        border: 3px solid @color-border-lighter;
     }
 
     &--forgot-pswd {
@@ -97,6 +110,12 @@
         @media @query-vl {
             margin: 2rem -12.5rem 0;
         }
+    }
+
+    &__submit {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
     }
 
     &-buttons {

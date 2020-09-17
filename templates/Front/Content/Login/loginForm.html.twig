@@ -8,32 +8,39 @@
     {{ 'Login'|trans }}
 {% endblock %}
 
+{% block breadcrumb %}
+{% endblock %}
+
 {% block main_content %}
-    <div class="web__line">
+
+    <div class="web__line web__line--spacing--big web__line--margin-bottom-up-big">
         <div class="web__container">
-            <h1>{{ 'Login'|trans }}</h1>
+            <h1 class="heading heading--primary heading--primary-subpage">{{ 'Login'|trans }}</h1>
+            {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
 
             {{ form_start(form, {attr: {'multipleForm': true}}) }}
             {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
-                <dl class="form-line">
-                    <dt>
-                        {{ form_label(form.email) }}
-                    </dt>
-                    <dd>
-                        {{ form_widget(form.email) }}
-                    </dd>
-                </dl>
+            <div class="box-form box-form--registration box-form--small">
 
-                <dl class="form-line">
-                    <dt>
-                        {{ form_label(form.password) }}
-                    </dt>
-                    <dd>
-                        {{ form_widget(form.password) }}
-                    </dd>
-                </dl>
+                {{ form_row(form.email, {
+                    label: 'Váš e-mail'|trans,
+                    rowClass: 'form-line-block js-form-field'
+                }) }}
 
-                <dl class="form-line">
+                {{ form_row(form.password, {
+                    label: 'Váše heslo'|trans,
+                    rowClass: 'form-line-block js-form-field',
+                    attr: { autocomplete: 'new-password' }
+                }) }}
+
+                <div class="box-login__alert">
+                    <img class="box-login__alert__icon" src="{{ asset('public/frontend/images/warning.svg') }}" alt="{{ 'Forgot your password?'|trans }}">
+                    <span class="box-login__alert__text">{{ 'Forgot your password?'|trans }}</span>
+                    <a class="box-login__alert__link box-login__alert__link--secondary" href="{{ url('front_registration_reset_password') }}">{{ 'Zapomněli jste heslo?'|trans }}</a>
+                    <a class="box-login__alert__link box-login__alert__link--primary" href="{{ url('front_registration_reset_password') }}">{{ 'Obnovte si ho'|trans }}</a>
+                </div>
+
+                <dl class="form-line display-none">
                     <dt></dt>
                     <dd>
                         <div class="form-choice">
@@ -50,19 +57,14 @@
                     </dd>
                 </dl>
 
-                <dl class="form-line">
-                    <dt></dt>
-                    <dd>
-                        {{ form_widget(form.login, {label: 'Log in'|trans}) }}
-                    </dd>
-                </dl>
-                <dl class="form-line">
-                    <dt></dt>
-                    <dd>
-                        <a href="{{ url('front_registration_reset_password') }}">{{ 'Forgot your password?'|trans }}</a>
-                    </dd>
-                </dl>
-
+                <div class="box-form__submit">
+                    {{ form_widget(form.login, {
+                        label: 'Log in'|trans,
+                        attr: {'class' : 'btn--success btn--submit-next'}
+                        })
+                    }}
+                </div>
+            </div>
             {{ form_end(form) }}
         </div>
     </div>
