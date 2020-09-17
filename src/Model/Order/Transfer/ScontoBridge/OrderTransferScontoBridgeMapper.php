@@ -72,7 +72,11 @@ class OrderTransferScontoBridgeMapper
         $this->fillDeliveryAddress($erpOrder, $order);
 
         $erpOrder->setPaymentMethodId($order->getPayment()->getExternalId());
-        $erpOrder->setDeliveryMethodId($order->getTransport()->getExternalId());
+
+        $transport = $order->getTransport();
+        $erpOrder->setDeliveryMethodId($transport->getExternalId());
+        $erpOrder->setDeliveryCode($transport->getDeliveryCode());
+        $erpOrder->setTypeOfDeliveryKey($transport->getTypeOfDeliveryKey());
 
         $this->fillOrderItems($erpOrder, $order);
 
@@ -103,9 +107,9 @@ class OrderTransferScontoBridgeMapper
         if ($title !== null) {
             $erpOrder->setTitle($title);
         }
-        $erpOrder->setFirstName($order->getFirstName());
-        $erpOrder->setLastName($order->getLastName());
-        $erpOrder->setPhone($order->getTelephone());
+        $erpOrder->setInvoiceAddressFirstName($order->getFirstName());
+        $erpOrder->setInvoiceAddressLastName($order->getLastName());
+        $erpOrder->setInvoiceAddressPhone($order->getTelephone());
         $erpOrder->setEmail($order->getEmail());
     }
 

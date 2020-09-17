@@ -10,6 +10,7 @@ use App\Component\ScontoBridge\Transfer\ScontoBridgeDistributionChannelResolver;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeTitleResolver;
 use App\Model\Country\CountryDataInvalidException;
 use App\Model\Country\CountryFacade;
+use App\Model\Customer\BillingAddress;
 use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser;
 use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser\ScontoBridgeCompany;
 use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser\ScontoBridgeIndividual;
@@ -207,6 +208,7 @@ class CustomerTransferScontoBridgeMapper
      */
     private function mapCompany(CustomerUser $customer): ScontoBridgeCompany
     {
+        /** @var BillingAddress $billingAddress */
         $billingAddress = $customer->getCustomer()->getBillingAddress();
 
         $erpCompany = new ScontoBridgeCompany();
@@ -214,9 +216,9 @@ class CustomerTransferScontoBridgeMapper
         $erpCompany->setName($billingAddress->getCompanyName());
         $erpCompany->setVatNumber($billingAddress->getCompanyTaxNumber());
 
-        $country = $billingAddress->getCountry();
-        if ($country !== null && $this->getDomainIdByCountryCode($country->getCode()) === Domain::SECOND_DOMAIN_ID) {
-            $erpCompany->setTaxNumber($billingAddress->getCompanyTaxNumber());
+        $companyNumberWithVat = $billingAddress->getCompanyNumberWithVat();
+        if ($companyNumberWithVat !== null) {
+            $erpCompany->setTaxNumber($companyNumberWithVat);
         }
 
         return $erpCompany;

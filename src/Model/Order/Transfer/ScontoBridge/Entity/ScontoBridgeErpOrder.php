@@ -52,12 +52,12 @@ class ScontoBridgeErpOrder implements JsonSerializable
     /**
      * @var string
      */
-    private string $lastName;
+    private string $invoiceAddressLastName;
 
     /**
      * @var string
      */
-    private string $firstName;
+    private string $invoiceAddressFirstName;
 
     /**
      * @var string
@@ -82,7 +82,7 @@ class ScontoBridgeErpOrder implements JsonSerializable
     /**
      * @var string
      */
-    private string $phone;
+    private string $invoiceAddressPhone;
 
     /**
      * @var string
@@ -143,6 +143,16 @@ class ScontoBridgeErpOrder implements JsonSerializable
      * @var ScontoBridgeOrderItem[]
      */
     private array $orderItems = [];
+
+    /**
+     * @var int
+     */
+    private int $typeOfDeliveryKey;
+
+    /**
+     * @var int
+     */
+    private string $deliveryCode;
 
     public function __construct()
     {
@@ -216,19 +226,19 @@ class ScontoBridgeErpOrder implements JsonSerializable
     }
 
     /**
-     * @param string $lastName
+     * @param string $invoiceAddressLastName
      */
-    public function setLastName(string $lastName): void
+    public function setInvoiceAddressLastName(string $invoiceAddressLastName): void
     {
-        $this->lastName = $lastName;
+        $this->invoiceAddressLastName = $invoiceAddressLastName;
     }
 
     /**
-     * @param string $firstName
+     * @param string $invoiceAddressFirstName
      */
-    public function setFirstName(string $firstName): void
+    public function setInvoiceAddressFirstName(string $invoiceAddressFirstName): void
     {
-        $this->firstName = $firstName;
+        $this->invoiceAddressFirstName = $invoiceAddressFirstName;
     }
 
     /**
@@ -264,11 +274,11 @@ class ScontoBridgeErpOrder implements JsonSerializable
     }
 
     /**
-     * @param string $phone
+     * @param string $invoiceAddressPhone
      */
-    public function setPhone(string $phone): void
+    public function setInvoiceAddressPhone(string $invoiceAddressPhone): void
     {
-        $this->phone = $phone;
+        $this->invoiceAddressPhone = $invoiceAddressPhone;
     }
 
     /**
@@ -368,6 +378,22 @@ class ScontoBridgeErpOrder implements JsonSerializable
     }
 
     /**
+     * @param int $typeOfDeliveryKey
+     */
+    public function setTypeOfDeliveryKey(int $typeOfDeliveryKey): void
+    {
+        $this->typeOfDeliveryKey = $typeOfDeliveryKey;
+    }
+
+    /**
+     * @param string $deliveryCode
+     */
+    public function setDeliveryCode(string $deliveryCode): void
+    {
+        $this->deliveryCode = $deliveryCode;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -381,13 +407,13 @@ class ScontoBridgeErpOrder implements JsonSerializable
             'priceWithVat' => $this->priceWithVat,
             'priceCurrency' => $this->priceCurrency,
             'title' => $this->title,
-            'lastName' => $this->lastName,
-            'firstName' => $this->firstName,
+            'invoiceAddressLastName' => $this->invoiceAddressLastName,
+            'invoiceAddressFirstName' => $this->invoiceAddressFirstName,
             'invoiceAddressStreet' => $this->invoiceAddressStreet,
             'invoiceAddressCountryISO' => $this->invoiceAddressCountryISO,
             'invoiceAddressZipCode' => $this->invoiceAddressZipCode,
             'invoiceAddressCity' => $this->invoiceAddressCity,
-            'phone' => $this->phone,
+            'invoiceAddressPhone' => $this->invoiceAddressPhone,
             'email' => $this->email,
             'paymentMethodId' => $this->paymentMethodId,
             'deliveryMethodId' => $this->deliveryMethodId,
@@ -400,6 +426,8 @@ class ScontoBridgeErpOrder implements JsonSerializable
             'deliveryAddressCity' => $this->deliveryAddressCity,
             'deliveryAddressPhone' => $this->deliveryAddressPhone,
             'orderItems' => $this->orderItems,
+            'typeOfDeliveryKey' => $this->typeOfDeliveryKey,
+            'deliveryCode' => $this->deliveryCode,
         ];
     }
 }
