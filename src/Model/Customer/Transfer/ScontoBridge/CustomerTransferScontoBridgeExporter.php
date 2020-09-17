@@ -37,9 +37,8 @@ class CustomerTransferScontoBridgeExporter extends AbstractScontoBridgeExporter
 
     /**
      * @param CustomerUser $customerUser
-     * @param Order $order
      */
-    public function exportCustomerUser(CustomerUser $customerUser, Order $order): void
+    public function exportCustomerUser(CustomerUser $customerUser): void
     {
         $erpUser = $this->customerTransferScontoBridgeMapper->mapCustomerUserToScontoBridgeCustomerData($customerUser);
 
