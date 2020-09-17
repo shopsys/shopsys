@@ -150,7 +150,7 @@ class ScontoBridgeErpOrder implements JsonSerializable
     private int $typeOfDeliveryKey;
 
     /**
-     * @var int
+     * @var string
      */
     private string $deliveryCode;
 

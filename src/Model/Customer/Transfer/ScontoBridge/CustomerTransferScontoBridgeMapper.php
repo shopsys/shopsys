@@ -224,9 +224,9 @@ class CustomerTransferScontoBridgeMapper
 
     /**
      * @param CustomerUser $customerUser
-     * @return ScontoBridgePrimaryAddress|null
+     * @return ScontoBridgePrimaryAddress
      */
-    private function mapPrimaryAddress(CustomerUser $customerUser): ?ScontoBridgePrimaryAddress
+    private function mapPrimaryAddress(CustomerUser $customerUser): ScontoBridgePrimaryAddress
     {
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
 
