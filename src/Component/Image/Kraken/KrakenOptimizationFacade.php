@@ -9,6 +9,7 @@ use App\Component\Image\ImageFacade;
 use App\Component\Image\Processing\ImageGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Symfony\Bridge\Monolog\Logger;
 
 class KrakenOptimizationFacade
@@ -121,7 +122,14 @@ class KrakenOptimizationFacade
      */
     private function optimizationImageForSizes(Image $image, array $sizeConfigs): bool
     {
-        $this->logger->addInfo(sprintf('Optimize image for entity %s with id: %s', $image->getEntityName(), $image->getId()));
-        return $this->imageGenerator->processImageSizesInKraken($image, $sizeConfigs);
+        try {
+            $result = $this->imageGenerator->processImageSizesInKraken($image, $sizeConfigs);
+            $this->logger->addInfo(sprintf('Optimize image for entity %s with id: %s', $image->getEntityName(), $image->getId()));
+        } catch (ImageNotFoundException $exception) {
+            $this->logger->addError(sprintf('Original Image %s, for entity %s with id: %s', $exception->getMessage(), $image->getEntityName(), $image->getId()));
+            $result = false;
+        }
+
+        return $result;
     }
 }
