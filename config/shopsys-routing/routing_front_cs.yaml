@@ -99,6 +99,10 @@ front_stores:
     path: /obchodni-domy
     defaults: { _controller: App\Controller\Front\StoreController:indexAction }
 
+front_contacts:
+    path: /kontakty
+    defaults: { _controller: App\Controller\Front\ContactController:indexAction }
+
 front_kitchen:
     path: /kuchyne
     defaults: { _controller: App\Controller\Front\KitchenController:indexAction }
@@ -123,6 +127,102 @@ front_kitchen_detail:
     path: /detail-kuchyne
     defaults: { _controller: App\Controller\Front\KitchenController:detailAction }
 
-front_contacts:
-    path: /kontakty
-    defaults: { _controller: App\Controller\Front\ContactController:indexAction }
+# All next routes are only temporary for static templates content
+# Currently we don't have administration for kitchen module.
+# TODO: Create single detailAction (front_kitchen_detail) with parameter (ID) for dynamic routing
+
+front_kitchen_detail_flash:
+    path: /kuchyne/nobilia-flash
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionFlash }
+
+front_kitchen_detail_touch:
+    path: /kuchyne/nobilia-touch
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionTouch }
+
+front_kitchen_detail_speed:
+    path: /kuchyne/nobilia-speed
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionSpeed }
+
+front_kitchen_detail_lux:
+    path: /kuchyne/nobilia-lux
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionLux }
+
+front_kitchen_detail_stoneart:
+    path: /kuchyne/nobilia-stoneart
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionStoneart }
+
+front_kitchen_detail_riva:
+    path: /kuchyne/nobilia-riva
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionRiva }
+
+front_kitchen_detail_structura:
+    path: /kuchyne/nobilia-structura
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionStructura }
+
+front_kitchen_detail_easytouch:
+    path: /kuchyne/nobilia-easytouch
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionEasytouch }
+
+front_kitchen_detail_fashion:
+    path: /kuchyne/nobilia-fashion
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionFashion }
+
+front_kitchen_detail_inline:
+    path: /kuchyne/nobilia-inline
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionInline }
+
+front_kitchen_detail_inox:
+    path: /kuchyne/nobilia-inox
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionInox }
+
+front_kitchen_detail_laser:
+    path: /kuchyne/nobilia-laser
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionLaser }
+
+front_kitchen_detail_rio:
+    path: /kuchyne/nobilia-rio
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionRio }
+
+front_kitchen_detail_pura:
+    path: /kuchyne/nobilia-pura
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionPura }
+
+front_kitchen_detail_focus:
+    path: /kuchyne/nobilia-focus
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionFocus }
+
+front_kitchen_detail_cemento:
+    path: /kuchyne/nobilia-cemento
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionCemento }
+
+front_kitchen_detail_cascada:
+    path: /kuchyne/nobilia-cascada
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionCascada }
+
+front_kitchen_detail_castello:
+    path: /kuchyne/nobilia-castello
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionCastello }
+
+front_kitchen_detail_chalet:
+    path: /kuchyne/nobilia-chalet
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionChalet }
+
+front_kitchen_detail_gent:
+    path: /kuchyne/nobilia-gent
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionGent }
+
+front_kitchen_detail_york:
+    path: /kuchyne/nobilia-york
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionYork }
+
+front_kitchen_detail_sylt:
+    path: /kuchyne/nobilia-sylt
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionSylt }
+
+front_kitchen_detail_kansas:
+    path: /kuchyne/nobilia-kansas
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionKansas }
+
+front_kitchen_detail_credo:
+    path: /kuchyne/nobilia-credo
+    defaults: { _controller: App\Controller\Front\KitchenController:detailActionCredo }

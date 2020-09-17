@@ -69,4 +69,196 @@ class KitchenController extends FrontBaseController
     {
         return $this->render('Front/Content/Kitchen/detail.html.twig');
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionFlash(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/flash.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionTouch(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/touch.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionSpeed(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/speed.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionLux(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/lux.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionStoneart(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/stoneart.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionRiva(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/riva.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionStructura(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/structura.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionEasytouch(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/easytouch.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionFashion(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/fashion.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionInline(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/inline.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionInox(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/inox.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionLaser(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/laser.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionRio(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/rio.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionPura(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/pura.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionFocus(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/focus.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionCemento(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/cemento.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionCascada(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/cascada.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionCastello(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/castello.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionChalet(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/chalet.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionGent(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/gent.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionYork(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/york.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionSylt(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/sylt.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionKansas(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/kansas.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailActionCredo(): Response
+    {
+        return $this->render('Front/Content/Kitchen/detail/credo.html.twig');
+    }
 }
