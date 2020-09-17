@@ -8,6 +8,7 @@ use App\Component\Image\ImageFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
@@ -134,7 +135,10 @@ class MergadoFeedItemFactory
         $images = $this->imageFacade->getImagesByEntityIndexedById($product, null);
         array_shift($images);
         foreach ($images as $image) {
-            $imageUrls[] = $this->imageFacade->getImageUrl($domainConfig, $image, 'original');
+            try {
+                $imageUrls[] = $this->imageFacade->getImageUrl($domainConfig, $image, 'original');
+            } catch (ImageNotFoundException $exception) {
+            }
         }
 
         return $imageUrls;
