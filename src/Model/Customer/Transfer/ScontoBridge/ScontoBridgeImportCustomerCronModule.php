@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\Transfer\ScontoBridge;
 
-use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
+use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
 
-class ScontoBridgeImportCustomerCronModule implements IteratedCronModuleInterface
+class ScontoBridgeImportCustomerCronModule implements SimpleCronModuleInterface
 {
     /**
      * @var \App\Model\Customer\Transfer\ScontoBridge\ScontoBridgeImportCustomerFacade
@@ -29,28 +29,8 @@ class ScontoBridgeImportCustomerCronModule implements IteratedCronModuleInterfac
     {
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function wakeUp()
+    public function run(): bool
     {
-        $this->scontoBridgeImportCustomerFacade->cronWakeUp();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function iterate()
-    {
-        $this->scontoBridgeImportCustomerFacade->cronBatchSize = ScontoBridgeImportCustomerFacade::PAGE_SIZE_LIMIT * 5;
         return $this->scontoBridgeImportCustomerFacade->runTransfer();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function sleep()
-    {
-        $this->scontoBridgeImportCustomerFacade->cronSleep();
     }
 }

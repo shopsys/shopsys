@@ -165,27 +165,6 @@ class ScontoBridgeImportExposedProductFacade extends AbstractScontoBridgeImportT
     }
 
     /**
-     * @inheritDoc
-     */
-    public function cronSleep(): void
-    {
-        $this->logger->addInfo(
-            sprintf('Sleeping cron for last modified : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
-        );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function cronWakeUp(): void
-    {
-        $this->lastModificationAtFromScontoBridge = new DateTime($this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_EXPOSED_PRODUCT_LAST_UPDATED_DATETIME));
-        $this->logger->addInfo(
-            sprintf('Wake up cron for last modified : %s', $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT))
-        );
-    }
-
-    /**
      * @return string
      */
     public function getTransferName(): string
