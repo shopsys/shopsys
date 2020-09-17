@@ -236,58 +236,6 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     }
 
     /**
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     */
-    public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
-    {
-        $emptyProductFilterData = new ProductFilterData();
-        $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
-            $emptyProductFilterData,
-            $orderingModeId,
-            1,
-            $limit
-        )->setFrom($offset);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-        return $productsResult->getHits();
-    }
-
-    /**
-     * @return int
-     */
-    public function getProductsCountOnCurrentDomain(): int
-    {
-        $filterQuery = $this->filterQueryFactory->createListable();
-
-        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     */
-    public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
-    {
-        $emptyProductFilterData = new ProductFilterData();
-        $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
-            $emptyProductFilterData,
-            $orderingModeId,
-            1,
-            $limit,
-            $category->getId()
-        )->setFrom($offset);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-        return $productsResult->getHits();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingModeId
      * @param int $page
@@ -370,5 +318,60 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     protected function getIndexName(): string
     {
         return $this->filterQueryFactory->getIndexName();
+    }
+
+    /**
+     * @return int
+     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsCountOnCurrentDomain()
+     */
+    public function getProductsCountOnCurrentDomain(): int
+    {
+        $filterQuery = $this->filterQueryFactory->createListable();
+
+        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
+    }
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @param string $orderingModeId
+     * @return array
+     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsOnCurrentDomain()
+     */
+    public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
+    {
+        $emptyProductFilterData = new ProductFilterData();
+        $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
+            $emptyProductFilterData,
+            $orderingModeId,
+            1,
+            $limit
+        )->setFrom($offset);
+
+        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
+        return $productsResult->getHits();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param int $limit
+     * @param int $offset
+     * @param string $orderingModeId
+     * @return array
+     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsByCategory()
+     */
+    public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
+    {
+        $emptyProductFilterData = new ProductFilterData();
+        $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
+            $emptyProductFilterData,
+            $orderingModeId,
+            1,
+            $limit,
+            $category->getId()
+        )->setFrom($offset);
+
+        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
+        return $productsResult->getHits();
     }
 }

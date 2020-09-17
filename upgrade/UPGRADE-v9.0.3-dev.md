@@ -20,3 +20,6 @@ There you can find links to upgrade notes for other versions too.
     - this methods has been marked as deprecated and will be removed in next major version:
         - `Shopsys\FrameworkBundle\Model\Product\ProductFacade::getSellableByUuid()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getSellableByUuid()` instead
         - `Shopsys\FrameworkBundle\Model\Product\ProductRepository::getSellableByUuid()` use `Shopsys\FrontendApiBundle\Model\Product\ProductRepository::getSellableByUuid()` instead
+        - `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface::getProductFilterCountDataForSearch()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductFilterCountDataForSearch()` instead
+        - `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface::getProductsOnCurrentDomain()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsOnCurrentDomain()` instead
+        - `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface::getProductsByCategory()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsByCategory()` instead

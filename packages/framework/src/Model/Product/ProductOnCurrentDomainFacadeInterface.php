@@ -113,6 +113,7 @@ interface ProductOnCurrentDomainFacadeInterface
      * @param int $offset
      * @param string $orderingModeId
      * @return array
+     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsByCategory()
      */
     public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array;
 
@@ -121,11 +122,13 @@ interface ProductOnCurrentDomainFacadeInterface
      * @param int $offset
      * @param string $orderingModeId
      * @return array
+     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsOnCurrentDomain()
      */
     public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array;
 
     /**
      * @return int
+     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsCountOnCurrentDomain()
      */
     public function getProductsCountOnCurrentDomain(): int;
 }
