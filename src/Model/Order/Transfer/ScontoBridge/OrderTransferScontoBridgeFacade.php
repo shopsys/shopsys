@@ -60,12 +60,12 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     {
         foreach ($this->getData() as $order) {
             $error = true;
-            //$this->markOrderScontoBridgeStatusProcessing($order);
+            $this->markOrderScontoBridgeStatusProcessing($order);
             try {
                 $this->logger->addDebug(sprintf('START export order id \'%d\'', $order->getId()));
 
                 $this->processItem($order);
-                //$this->markOrderScontoBridgeStatusDone($order);
+                $this->markOrderScontoBridgeStatusDone($order);
                 $error = false;
 
                 $this->logger->addDebug(sprintf('DONE export order id \'%d\'', $order->getId()));
@@ -100,7 +100,7 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
             }
 
             if ($error === true) {
-                //$this->markOrderScontoBridgeStatusError($order);
+                $this->markOrderScontoBridgeStatusError($order);
             }
         }
     }
