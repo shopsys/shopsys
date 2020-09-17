@@ -83,10 +83,11 @@ mutation {
     }
 }';
 
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedViolationMessages = [
-            0 => 'First name cannot be longer than 100 characters',
-            1 => 'Last name cannot be longer than 100 characters',
-            2 => 'Telephone number cannot be longer than 30 characters',
+            0 => t('First name cannot be longer than {{ limit }} characters', ['{{ limit }}' => 100], 'validators', $firstDomainLocale),
+            1 => t('Last name cannot be longer than {{ limit }} characters', ['{{ limit }}' => 100], 'validators', $firstDomainLocale),
+            2 => t('Telephone number cannot be longer than {{ limit }} characters', ['{{ limit }}' => 30], 'validators', $firstDomainLocale),
         ];
 
         $response = $this->getResponseContentForQuery($query);
