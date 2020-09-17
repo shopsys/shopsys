@@ -68,3 +68,7 @@ There you can find links to upgrade notes for other versions too.
 
 - fix displaying '+' sign in product filter ([#2023](https://github.com/shopsys/shopsys/pull/2023))
     - see #project-base-diff to update your project
+
+- remove unnecessary default values for ENV variables ([#2040](https://github.com/shopsys/shopsys/pull/2040))
+    - these parameters should be configured via ENV variables if set
+    - see #project-base-diff to update your project
