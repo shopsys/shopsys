@@ -4,14 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Action;
 
-/**
- * @experimental
- *
- * Class representing products actions in lists in frontend
- *
- * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductView
- * @see https://docs.shopsys.com/en/latest/model/introduction-to-read-model/
- */
 class ProductActionView
 {
     /**

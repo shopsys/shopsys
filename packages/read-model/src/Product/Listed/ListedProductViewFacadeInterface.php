@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
@@ -34,7 +36,7 @@ interface ListedProductViewFacadeInterface
     /**
      * @param int $categoryId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData
-     * @param string $orderingModeId {@see Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig}
+     * @param string $orderingModeId {@see \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig}
      * @param int $page Page number (starting with 1)
      * @param int $limit Number of products per page (must be greater than 0)
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
@@ -44,7 +46,7 @@ interface ListedProductViewFacadeInterface
     /**
      * @param string $searchText
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData
-     * @param string $orderingModeId {@see Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig}
+     * @param string $orderingModeId {@see \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig}
      * @param int $page Page number (starting with 1)
      * @param int $limit Number of products per page (must be greater than 0)
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
@@ -53,7 +55,7 @@ interface ListedProductViewFacadeInterface
 
     /**
      * @param int $brandId
-     * @param string $orderingModeId {@see Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig}
+     * @param string $orderingModeId {@see \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig}
      * @param int $page Page number (starting with 1)
      * @param int $limit Number of products per page (must be greater than 0)
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult

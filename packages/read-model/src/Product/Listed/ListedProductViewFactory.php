@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -12,11 +13,10 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
+use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
+use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface;
 
-/**
- * @experimental
- */
 class ListedProductViewFactory
 {
     /**
@@ -30,15 +30,31 @@ class ListedProductViewFactory
     protected $productCachedAttributesFacade;
 
     /**
+     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface
+     */
+    protected $imageViewFacade;
+
+    /**
+     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface
+     */
+    protected $productActionViewFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface|null $imageViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface|null $productActionViewFacade
      */
     public function __construct(
         Domain $domain,
-        ProductCachedAttributesFacade $productCachedAttributesFacade
+        ProductCachedAttributesFacade $productCachedAttributesFacade,
+        ?ImageViewFacadeInterface $imageViewFacade = null,
+        ?ProductActionViewFacadeInterface $productActionViewFacade = null
     ) {
         $this->domain = $domain;
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
+        $this->imageViewFacade = $imageViewFacade;
+        $this->productActionViewFacade = $productActionViewFacade;
     }
 
     /**
@@ -75,7 +91,7 @@ class ListedProductViewFactory
     {
         return $this->create(
             $product->getId(),
-            $product->getName(),
+            $product->isVariant() && $product->getVariantAlias() ? $product->getVariantAlias() : $product->getName(),
             $product->getShortDescription($this->domain->getId()),
             $product->getCalculatedAvailability()->getName(),
             $this->productCachedAttributesFacade->getProductSellingPrice($product),
@@ -104,6 +120,35 @@ class ListedProductViewFactory
             $productActionView,
             $imageView
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    public function createFromProducts(array $products): array
+    {
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, $this->getIdsForProducts($products));
+        $productActionViews = $this->productActionViewFacade->getForProducts($products);
+
+        $listedProductViews = [];
+        foreach ($products as $product) {
+            $productId = $product->getId();
+            $listedProductViews[$productId] = $this->createFromProduct($product, $imageViews[$productId], $productActionViews[$productId]);
+        }
+
+        return $listedProductViews;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return int[]
+     */
+    protected function getIdsForProducts(array $products): array
+    {
+        return array_map(static function (Product $product): int {
+            return $product->getId();
+        }, $products);
     }
 
     /**
@@ -137,5 +182,37 @@ class ListedProductViewFactory
         }
 
         return $flagIds;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setImageViewFacade(ImageViewFacadeInterface $imageViewFacade): void
+    {
+        if ($this->imageViewFacade !== null && $this->imageViewFacade !== $imageViewFacade) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->imageViewFacade === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->imageViewFacade = $imageViewFacade;
+        }
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface $productActionViewFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductActionViewFacade(ProductActionViewFacadeInterface $productActionViewFacade): void
+    {
+        if ($this->productActionViewFacade !== null && $this->productActionViewFacade !== $productActionViewFacade) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->productActionViewFacade === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->productActionViewFacade = $productActionViewFacade;
+        }
     }
 }

@@ -6,9 +6,6 @@ namespace Shopsys\ReadModelBundle\Image;
 
 use Shopsys\FrameworkBundle\Component\Image\Image;
 
-/**
- * @experimental
- */
 class ImageViewFactory
 {
     /**

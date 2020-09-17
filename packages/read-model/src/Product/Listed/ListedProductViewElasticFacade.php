@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -13,12 +14,10 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
-use Shopsys\ReadModelBundle\Image\ImageViewFacade;
+use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
+use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 
-/**
- * @experimental
- */
 class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
 {
     /**
@@ -57,14 +56,20 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     protected $listedProductViewFactory;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacade
+     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface
      */
     protected $imageViewFacade;
 
     /**
      * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade
+     * @deprecated use ProductActionViewFactory instead
      */
     protected $productActionViewFacade;
+
+    /**
+     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory
+     */
+    protected $productActionViewFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
@@ -75,7 +80,8 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
-     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
+     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory|null $productActionViewFactory
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -86,7 +92,8 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         ListedProductViewFactory $listedProductViewFactory,
         ProductActionViewFacade $productActionViewFacade,
-        ImageViewFacade $imageViewFacade
+        ImageViewFacadeInterface $imageViewFacade,
+        ?ProductActionViewFactory $productActionViewFactory = null
     ) {
         $this->productFacade = $productFacade;
         $this->productAccessoryFacade = $productAccessoryFacade;
@@ -97,6 +104,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         $this->listedProductViewFactory = $listedProductViewFactory;
         $this->productActionViewFacade = $productActionViewFacade;
         $this->imageViewFacade = $imageViewFacade;
+        $this->productActionViewFactory = $productActionViewFactory;
     }
 
     /**
@@ -229,7 +237,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     protected function createFromArray(array $productsArray): array
     {
-        $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, array_column($productsArray, 'id'));
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, array_column($productsArray, 'id'));
 
         $listedProductViews = [];
         foreach ($productsArray as $productArray) {
@@ -237,7 +245,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
             $listedProductViews[$productId] = $this->listedProductViewFactory->createFromArray(
                 $productArray,
                 $imageViews[$productId],
-                $this->productActionViewFacade->getForArray($productArray),
+                $this->productActionViewFactory->createFromArray($productArray),
                 $this->currentCustomerUser->getPricingGroup()
             );
         }
@@ -248,29 +256,46 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     * @deprecated since Shopsys Framework 9.1
+     * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory class instead
      */
     protected function createFromProducts(array $products): array
     {
-        $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, $this->getIdsForProducts($products));
-        $productActionViews = $this->productActionViewFacade->getForProducts($products);
+        $message = 'The %s() method is deprecated since Shopsys Framework 9.1. Use ListedProductViewFactory::createFromProducts() instead.';
+        @trigger_error(sprintf($message, __METHOD__), E_USER_DEPRECATED);
 
-        $listedProductViews = [];
-        foreach ($products as $product) {
-            $productId = $product->getId();
-            $listedProductViews[$productId] = $this->listedProductViewFactory->createFromProduct($product, $imageViews[$productId], $productActionViews[$productId]);
-        }
-
-        return $listedProductViews;
+        return $this->listedProductViewFactory->createFromProducts($products);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return int[]
+     * @deprecated since Shopsys Framework 9.1
+     * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory class instead
      */
     protected function getIdsForProducts(array $products): array
     {
+        $message = 'The %s() method is deprecated since Shopsys Framework 9.1. Use ListedProductViewFactory::getIdsForProducts() instead.';
+        @trigger_error(sprintf($message, __METHOD__), E_USER_DEPRECATED);
+
         return array_map(static function (Product $product): int {
             return $product->getId();
         }, $products);
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductActionViewFactory(ProductActionViewFactory $productActionViewFactory): void
+    {
+        if ($this->productActionViewFactory !== null && $this->productActionViewFactory !== $productActionViewFactory) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->productActionViewFactory === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->productActionViewFactory = $productActionViewFactory;
+        }
     }
 }
