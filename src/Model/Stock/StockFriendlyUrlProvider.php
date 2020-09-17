@@ -45,8 +45,8 @@ class StockFriendlyUrlProvider implements FriendlyUrlDataProviderInterface
             ->select('s.id, s.name')
             ->distinct()
             ->from(Stock::class, 's')
-            ->leftJoin(FriendlyUrl::class, 'f', Join::WITH, 's.id = f.entityId AND f.routeName = :routeName')
-            ->where('f.entityId IS NULL AND f.domainId = :domainId')
+            ->leftJoin(FriendlyUrl::class, 'f', Join::WITH, 's.id = f.entityId AND f.routeName = :routeName AND f.domainId = :domainId')
+            ->where('f.entityId IS NULL')
             ->setParameter('routeName', static::ROUTE_NAME)
             ->setParameter('domainId', $domainConfig->getId());
         $scalarData = $queryBuilder->getQuery()->getScalarResult();
