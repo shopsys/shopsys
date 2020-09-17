@@ -914,3 +914,6 @@ services:
     App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeExporter: ~
 
     App\Model\Order\Transfer\ScontoBridge\OrderTransferScontoBridgeExporter: ~
+
+    Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
+        alias: App\Model\Feed\FeedExportFactory
