@@ -7,11 +7,6 @@ namespace App\Model\Stock;
 use App\Component\Domain\Domain;
 use App\Component\Image\ImageFacade;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
-use Shopsys\FrameworkBundle\Component\Image\Exception\EntityIdentifierException;
-use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
-use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueTypeNotMatchValueException;
-use RuntimeException;
 
 class StockDataFactory
 {
