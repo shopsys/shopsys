@@ -52,6 +52,11 @@ class ScontoBridgeErpOrder implements JsonSerializable
     /**
      * @var string|null
      */
+    private ?string $invoiceAddressCompanyName;
+
+    /**
+     * @var string|null
+     */
     private ?string $invoiceAddressLastName;
 
     /**
@@ -107,6 +112,11 @@ class ScontoBridgeErpOrder implements JsonSerializable
     /**
      * @var string|null
      */
+    private ?string $deliveryAddressCompanyName;
+
+    /**
+     * @var string|null
+     */
     private ?string $deliveryAddressLastName;
 
     /**
@@ -154,15 +164,23 @@ class ScontoBridgeErpOrder implements JsonSerializable
      */
     private string $deliveryCode;
 
+    /**
+     * @var bool
+     */
+    private bool $isPaid;
+
     public function __construct()
     {
         $this->title = null;
+        $this->invoiceAddressCompanyName = null;
         $this->invoiceAddressFirstName = null;
         $this->invoiceAddressLastName = null;
+        $this->deliveryAddressCompanyName = null;
         $this->deliveryAddressFirstName = null;
         $this->deliveryAddressLastName = null;
         $this->collectionStoreCode = null;
         $this->deliveryAddressCountryISO = null;
+        $this->isPaid = false;
     }
 
     /**
@@ -227,6 +245,14 @@ class ScontoBridgeErpOrder implements JsonSerializable
     public function setTitle(int $title): void
     {
         $this->title = $title;
+    }
+
+    /**
+     * @param string|null $invoiceAddressCompanyName
+     */
+    public function setInvoiceAddressCompanyName(?string $invoiceAddressCompanyName): void
+    {
+        $this->invoiceAddressCompanyName = $invoiceAddressCompanyName;
     }
 
     /**
@@ -318,6 +344,14 @@ class ScontoBridgeErpOrder implements JsonSerializable
     }
 
     /**
+     * @param string|null $deliveryAddressCompanyName
+     */
+    public function setDeliveryAddressCompanyName(?string $deliveryAddressCompanyName): void
+    {
+        $this->deliveryAddressCompanyName = $deliveryAddressCompanyName;
+    }
+
+    /**
      * @param string $deliveryAddressLastName
      */
     public function setDeliveryAddressLastName(string $deliveryAddressLastName): void
@@ -398,6 +432,14 @@ class ScontoBridgeErpOrder implements JsonSerializable
     }
 
     /**
+     * @param bool $isPaid
+     */
+    public function setIsPaid(bool $isPaid): void
+    {
+        $this->isPaid = $isPaid;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -411,6 +453,7 @@ class ScontoBridgeErpOrder implements JsonSerializable
             'priceWithVat' => $this->priceWithVat,
             'priceCurrency' => $this->priceCurrency,
             'title' => $this->title,
+            'inviceAddresCompanyName' => $this->invoiceAddressCompanyName,
             'invoiceAddressLastName' => $this->invoiceAddressLastName,
             'invoiceAddressFirstName' => $this->invoiceAddressFirstName,
             'invoiceAddressStreet' => $this->invoiceAddressStreet,
@@ -422,6 +465,7 @@ class ScontoBridgeErpOrder implements JsonSerializable
             'paymentMethodId' => $this->paymentMethodId,
             'deliveryMethodId' => $this->deliveryMethodId,
             'collectionStoreCode' => $this->collectionStoreCode,
+            'deliveryAddressCompanyName' => $this->deliveryAddressCompanyName,
             'deliveryAddressLastName' => $this->deliveryAddressLastName,
             'deliveryAddressFirstName' => $this->deliveryAddressFirstName,
             'deliveryAddressStreet' => $this->deliveryAddressStreet,
@@ -432,6 +476,7 @@ class ScontoBridgeErpOrder implements JsonSerializable
             'orderItems' => $this->orderItems,
             'typeOfDeliveryKey' => $this->typeOfDeliveryKey,
             'deliveryCode' => $this->deliveryCode,
+            'isPaid' => $this->isPaid,
         ];
     }
 }
