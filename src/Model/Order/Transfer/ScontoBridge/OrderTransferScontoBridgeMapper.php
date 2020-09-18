@@ -103,12 +103,15 @@ class OrderTransferScontoBridgeMapper
      */
     private function fillCustomerDetails(ScontoBridgeErpOrder $erpOrder, Order $order, CustomerUser $customerUser): void
     {
-        $title = $this->scontoBridgeTitleResolver->getIndividualTitleByGender($customerUser->getGender());
-        if ($title !== null) {
-            $erpOrder->setTitle($title);
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+        if ($billingAddress->isCompanyCustomer() === false) {
+            $title = $this->scontoBridgeTitleResolver->getIndividualTitleByGender($customerUser->getGender());
+            if ($title !== null) {
+                $erpOrder->setTitle($title);
+            }
+            $erpOrder->setInvoiceAddressFirstName($order->getFirstName());
+            $erpOrder->setInvoiceAddressLastName($order->getLastName());
         }
-        $erpOrder->setInvoiceAddressFirstName($order->getFirstName());
-        $erpOrder->setInvoiceAddressLastName($order->getLastName());
         $erpOrder->setInvoiceAddressPhone($order->getTelephone());
         $erpOrder->setEmail($order->getEmail());
     }
@@ -183,6 +186,10 @@ class OrderTransferScontoBridgeMapper
         $sku = $orderItem->getCatnum();
         if ($sku !== null && $orderItem->isTypeProduct()) {
             $erpOrderItem->setSku($sku);
+        } elseif ($orderItem->isTypePayment()) {
+            $erpOrderItem->setSku((string)$orderItem->getPayment()->getExternalId());
+        } elseif ($orderItem->isTypeTransport()) {
+            $erpOrderItem->setSku((string)$orderItem->getTransport()->getExternalId());
         }
 
         return $erpOrderItem;
