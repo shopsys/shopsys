@@ -5,7 +5,7 @@ services:
         public: false
 
     Shopsys\FrontendApiBundle\:
-        resource: '../../**/*{Facade,Factory,Mutation,Resolver,Validator}.php'
+        resource: '../../**/*{Facade,Factory,Mutation,Repository,Resolver,Validator}.php'
 
     resolverMaps:
         namespace: Shopsys\FrontendApiBundle\

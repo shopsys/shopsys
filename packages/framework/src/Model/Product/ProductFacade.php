@@ -499,9 +499,18 @@ class ProductFacade
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getSellableByUuid()
      */
     public function getSellableByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getSellableByUuid().',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         return $this->productRepository->getSellableByUuid($uuid, $domainId, $pricingGroup);
     }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
+use BadMethodCallException;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFacade;
 
 class ImagesResolver implements ResolverInterface
 {
@@ -38,18 +40,52 @@ class ImagesResolver implements ResolverInterface
     protected $domain;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Component\Image\ImageFacade|null
+     */
+    protected $frontendApiImageFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageFacade|null $frontendApiImageFacade
      */
     public function __construct(
         ImageFacade $imageFacade,
         ImageConfig $imageConfig,
-        Domain $domain
+        Domain $domain,
+        ?FrontendApiImageFacade $frontendApiImageFacade = null
     ) {
         $this->imageFacade = $imageFacade;
         $this->imageConfig = $imageConfig;
         $this->domain = $domain;
+        $this->frontendApiImageFacade = $frontendApiImageFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageFacade $frontendApiImageFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setFrontendApiImageFacade(FrontendApiImageFacade $frontendApiImageFacade): void
+    {
+        if ($this->frontendApiImageFacade !== null && $this->frontendApiImageFacade !== $frontendApiImageFacade) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->frontendApiImageFacade === null) {
+            @trigger_error(
+                sprintf(
+                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+
+            $this->frontendApiImageFacade = $frontendApiImageFacade;
+        }
     }
 
     /**
@@ -107,7 +143,7 @@ class ImagesResolver implements ResolverInterface
     protected function resolveByEntityId(int $entityId, string $entityName, ?string $type, ?string $size): array
     {
         $sizeConfigs = $this->getSizeConfigs($type, $size, $entityName);
-        $images = $this->imageFacade->getImagesByEntityIdAndNameIndexedById($entityId, $entityName, $type);
+        $images = $this->frontendApiImageFacade->getImagesByEntityIdAndNameIndexedById($entityId, $entityName, $type);
 
         return $this->getResolvedImages($images, $sizeConfigs);
     }
