@@ -57,7 +57,7 @@ class ScontoBridgeExportCustomerFacade implements TransferIdentificationInterfac
     public function exportCustomers(): void
     {
         foreach ($this->getData() as $customerUser) {
-            $this->logger->addDebug(sprintf('Exporting customer user id \'%d\'', $customerUser->getCustomer()->getId()));
+            $this->logger->addInfo(sprintf('Exporting customer user id \'%d\'', $customerUser->getCustomer()->getId()));
             $this->markCustomerUserProcessing($customerUser);
             $error = true;
 
