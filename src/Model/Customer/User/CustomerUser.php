@@ -57,6 +57,13 @@ class CustomerUser extends BaseUser
     protected $lastName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $scontoBridgeStatus;
+
+    /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function __construct(
@@ -66,6 +73,7 @@ class CustomerUser extends BaseUser
         $this->gender = $customerUserData->gender;
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
         $this->erpCustomerNumber = $customerUserData->erpCustomerNumber;
+        $this->scontoBridgeStatus = $customerUserData->scontoBridgeStatus;
     }
 
     /**
@@ -76,6 +84,7 @@ class CustomerUser extends BaseUser
         parent::edit($customerUserData);
         $this->gender = $customerUserData->gender;
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
+        $this->scontoBridgeStatus = $customerUserData->scontoBridgeStatus;
     }
 
     /**
@@ -127,6 +136,14 @@ class CustomerUser extends BaseUser
     public function getFullName(): ?string
     {
         return parent::getFullName();
+    }
+
+    /**
+     * @param CustomerUserScontoBridgeStatusEnum $enum
+     */
+    public function setScontoBridgeStatus(CustomerUserScontoBridgeStatusEnum $enum): void
+    {
+        $this->scontoBridgeStatus = $enum->getValue();
     }
 
     /**

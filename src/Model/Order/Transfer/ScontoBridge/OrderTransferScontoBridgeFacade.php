@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Transfer\ScontoBridge;
 
+use App\Component\ScontoBridge\Transfer\Exception\ScontoBridgeTransferException;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeExporter;
 use App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeMapperException;
@@ -13,6 +14,7 @@ use App\Model\Order\OrderScontoBridgeStatusEnum;
 use App\Model\Transfer\TransferIdentificationInterface;
 use App\Model\Transfer\TransferLoggerInterface;
 use Exception;
+use Generator;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -77,7 +79,7 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
                 $this->logger->addError('Cannot map sconto order data to bridge format', [
                     'exception' => $e->getMessage()
                 ]);
-            } catch (OrderTransferScontoBridgeTransferException $e) {
+            } catch (ScontoBridgeTransferException $e) {
                 $this->logger->addError('Order transfer API error occured', [
                     'response' => $e->getResponseContent(),
                     'httpStatus' => $e->getHttpCode(),
@@ -125,9 +127,9 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     }
 
     /**
-     * @return \Generator
+     * @return Generator
      */
-    protected function getData(): \Generator
+    protected function getData(): Generator
     {
         foreach ($this->orderRepository->getAllOrdersNotSentToScontoBridge() as $order) {
             yield $order;
@@ -192,7 +194,7 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
      */
     public function getTransferIdentifier(): string
     {
-        return 'ProductExportTransfer';
+        return 'OrderExportTransfer';
     }
 
     /**

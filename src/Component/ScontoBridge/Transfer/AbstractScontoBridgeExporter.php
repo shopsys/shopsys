@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Component\ScontoBridge\Transfer;
 
-use App\Model\Order\Transfer\ScontoBridge\OrderTransferScontoBridgeTransferException;
+use App\Component\ScontoBridge\Transfer\Exception\ScontoBridgeTransferException;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,13 +26,13 @@ class AbstractScontoBridgeExporter
 
     /**
      * @param ResponseInterface $response
-     * @return OrderTransferScontoBridgeTransferException
+     * @return ScontoBridgeTransferException
      */
-    protected function createTransferException(ResponseInterface $response): OrderTransferScontoBridgeTransferException
+    protected function createTransferException(ResponseInterface $response): ScontoBridgeTransferException
     {
-        return new OrderTransferScontoBridgeTransferException(
+        return new ScontoBridgeTransferException(
             $response->getStatusCode(),
-            $response->getBody()->getContents()
+            $response->getBody()->rewind()->getContents()
         );
     }
 }
