@@ -66,11 +66,11 @@ services:
 
     App\Model\Product\Elasticsearch\ProductExportCronModule:
         tags:
-            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: service, readableName: "Export products to Elasticsearch" }
+            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: importAkeneoProduct, readableName: "Export products to Elasticsearch" }
 
     App\Model\Product\Elasticsearch\ProductExportChangedCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: service, readableName: "Export changed products to Elasticsearch" }
+            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: importAkeneoProduct, readableName: "Export changed products to Elasticsearch" }
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesCronModule:
         tags:
