@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\ProductFeed\Mergado;
 
+use App\Model\ProductFeed\Mergado\Exception\MissingRequiredInformationException;
 use App\Model\ProductFeed\Mergado\FeedItem\MergadoFeedItemFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -73,7 +74,11 @@ class MergadoFeedItemFacade
         $this->productParametersBatchLoader->loadForProducts($products, $domainConfig);
 
         foreach ($products as $product) {
-            yield $this->mergadoFeedItemFactory->createForProduct($product, $domainConfig);
+            try {
+                yield $this->mergadoFeedItemFactory->createForProduct($product, $domainConfig);
+            } catch (MissingRequiredInformationException $exception) {
+                //skip single item
+            }
         }
     }
 }

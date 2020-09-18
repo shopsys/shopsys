@@ -483,4 +483,25 @@ class ParameterRepository extends BaseParameterRepository
 
         return $queryBuilder->getQuery()->execute();
     }
+
+    /**
+     * @param array $productIdsAndParameterNamesAndValues
+     * @return string[][]
+     */
+    protected function getParameterValuesIndexedByProductIdAndParameterName(array $productIdsAndParameterNamesAndValues)
+    {
+        $productParameterValuesIndexedByProductIdAndParameterName = [];
+        foreach ($productIdsAndParameterNamesAndValues as $productIdAndParameterNameAndValue) {
+            $parameterName = $productIdAndParameterNameAndValue['name'];
+            $productId = $productIdAndParameterNameAndValue['productId'];
+            $parameterValue = $productIdAndParameterNameAndValue['text'];
+            if ($productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] ?? false) {
+                $productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] .= '/' . $parameterValue;
+            } else {
+                $productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] = $parameterValue;
+            }
+        }
+
+        return $productParameterValuesIndexedByProductIdAndParameterName;
+    }
 }

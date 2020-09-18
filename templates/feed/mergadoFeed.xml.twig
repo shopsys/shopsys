@@ -29,7 +29,10 @@
             <BRAND>{{ item.brand.name }}</BRAND>
         {% endif %}
         <URL>{{ item.url }}</URL>
-        <PRICE_VAT>{{ item.price.priceWithVat|moneyFormat(2, ',') }}</PRICE_VAT>
+        <PRICE>{{ item.highProductPrice.priceWithoutVat|moneyFormat(2, '.') }}</PRICE>
+        <PRICE_VAT>{{ item.highProductPrice.priceWithVat|moneyFormat(2, '.') }}</PRICE_VAT>
+        <PRICE_RETAIL>{{ item.lowProductPrice.priceWithoutVat|moneyFormat(2, '.') }}</PRICE_RETAIL>
+        <PRICE_RETAIL_VAT>{{ item.lowProductPrice.priceWithVat|moneyFormat(2, '.') }}</PRICE_RETAIL_VAT>
         {% for parameterName, parameterValue in item.parameters %}
             <PARAM>
                 <NAME>{{ parameterName }}</NAME>
@@ -39,6 +42,17 @@
         {% if item.mainVariantId is not null %}
             <ITEMGROUP_ID>{{ item.mainVariantId }}</ITEMGROUP_ID>
         {% endif %}
+        {% if item.availability is not null %}
+            <AVAILABILITY>{{ item.availability }}</AVAILABILITY>
+        {% else %}
+            <AVAILABILITY>out of stock</AVAILABILITY>
+        {% endif %}
+        <CONDITION>new</CONDITION>
+        {% for flagOrder, flagDescription in item.flags %}
+            <CUSTOM_LABEL_{{ flagOrder }}>
+                {{ flagDescription }}
+            </CUSTOM_LABEL_{{ flagOrder }}>
+        {% endfor %}
     </ITEM>
 {% endblock %}
 

@@ -86,18 +86,54 @@ class ProductAvailabilityFacade
     }
 
     /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return int|null
+     */
+    public function getProductAvailabilityDaysByDomainId(Product $product, int $domainId): ?int
+    {
+        if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
+            return 0;
+        }
+
+        $productStocks = $this->productStockRepository->getProductStocksByProductAndDomainId($product, $domainId);
+        $closestFutureProductStock = $this->getClosestFutureProductStockByDomainId($productStocks);
+        if ($closestFutureProductStock !== null) {
+            return $this->getFutureDaysByClosestFutureProductStockAndDomainId($closestFutureProductStock, $domainId);
+        }
+
+        if ($product->hasPreorder() === false) {
+            return null;
+        }
+
+        return $this->getDeliveryDaysByDomainId($product, $domainId);
+    }
+
+    /**
      * @param \App\Model\Stock\ProductStock $closestFutureProductStock
      * @param int $domainId
      * @return string
      */
     private function getFutureWeeksAvailabilityByClosestFutureProductStockAndDomainId(ProductStock $closestFutureProductStock, int $domainId): string
     {
+        $futureStockAvailabilityDays = $this->getFutureDaysByClosestFutureProductStockAndDomainId($closestFutureProductStock, $domainId);
+
+        return $this->getWeeksAvailabilityMessageByDays($futureStockAvailabilityDays);
+    }
+
+    /**
+     * @param \App\Model\Stock\ProductStock $closestFutureProductStock
+     * @param int $domainId
+     * @return int
+     */
+    private function getFutureDaysByClosestFutureProductStockAndDomainId(ProductStock $closestFutureProductStock, int $domainId): int
+    {
         $futureStockAvailabilityDays = $this->getFutureStockAvailabilityDaysByDomainId($closestFutureProductStock, $domainId);
         if ($closestFutureProductStock->getStock()->isCentralStock()) {
             $futureStockAvailabilityDays += $this->getTransferDaysByDomainId($domainId);
         }
 
-        return $this->getWeeksAvailabilityMessageByDays($futureStockAvailabilityDays);
+        return $futureStockAvailabilityDays;
     }
 
     /**

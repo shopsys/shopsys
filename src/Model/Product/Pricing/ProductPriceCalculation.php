@@ -7,6 +7,7 @@ namespace App\Model\Product\Pricing;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation as BaseProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -34,6 +35,26 @@ class ProductPriceCalculation extends BaseProductPriceCalculation
             $inputPrice,
             $this->pricingSetting->getInputPriceType(),
             $product->getVatForDomain($domainId),
+            $defaultCurrency
+        );
+
+        return new ProductPrice($basePrice, false);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     */
+    public function getProductPrice(Money $inputPrice, Vat $vat, int $domainId): ProductPrice
+    {
+        $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+        $basePrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+            $inputPrice,
+            $this->pricingSetting->getInputPriceType(),
+            $vat,
             $defaultCurrency
         );
 

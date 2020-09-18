@@ -12,6 +12,16 @@ class MergadoFeedItem implements FeedItemInterface
 {
     private const CATEGORY_PATH_SEPARATOR = ' > ';
     private const SHORT_DESCRIPTION_SEPARATOR = '. ';
+    public const FLAGS_MAP = [
+        1 => 'Akce',
+        2 => 'Cenový HIT',
+        3 => 'Novinka',
+        4 => 'SCONTO cena',
+        5 => 'Výprodej',
+        6 => 'Vyrobeno v CZ',
+        7 => 'Vyrobeno v DE',
+        8 => 'Vyrobeno v SK',
+    ];
 
     /**
      * @var int
@@ -89,6 +99,26 @@ class MergadoFeedItem implements FeedItemInterface
     private $currencyCode;
 
     /**
+     * @var ProductPrice
+     */
+    private ProductPrice $highProductPrice;
+
+    /**
+     * @var ProductPrice
+     */
+    private ProductPrice $lowProductPrice;
+
+    /**
+     * @var string[]
+     */
+    private array $flags;
+
+    /**
+     * @var int|null
+     */
+    private ?int $availability;
+
+    /**
      * @param int $id
      * @param string $productNo
      * @param string $name
@@ -104,6 +134,10 @@ class MergadoFeedItem implements FeedItemInterface
      * @param \App\Model\Product\Brand\Brand|null $brand
      * @param string|null $imageUrl
      * @param int|null $mainVariantId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $highProductPrice
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $lowProductPrice
+     * @param string[] $flags
+     * @param int|null $availability
      */
     public function __construct(
         int $id,
@@ -120,7 +154,11 @@ class MergadoFeedItem implements FeedItemInterface
         ?string $description,
         ?Brand $brand,
         ?string $imageUrl,
-        ?int $mainVariantId = null
+        ?int $mainVariantId,
+        ProductPrice $highProductPrice,
+        ProductPrice $lowProductPrice,
+        array $flags,
+        ?int $availability
     ) {
         $this->id = $id;
         $this->productNo = $productNo;
@@ -137,6 +175,10 @@ class MergadoFeedItem implements FeedItemInterface
         $this->parameters = $parameters;
         $this->currencyCode = $currencyCode;
         $this->mainVariantId = $mainVariantId;
+        $this->highProductPrice = $highProductPrice;
+        $this->lowProductPrice = $lowProductPrice;
+        $this->flags = $flags;
+        $this->availability = $availability;
     }
 
     /**
@@ -265,5 +307,37 @@ class MergadoFeedItem implements FeedItemInterface
     public function getMainVariantId(): ?int
     {
         return $this->mainVariantId;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     */
+    public function getHighProductPrice(): ProductPrice
+    {
+        return $this->highProductPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     */
+    public function getLowProductPrice(): ProductPrice
+    {
+        return $this->lowProductPrice;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFlags(): array
+    {
+        return $this->flags;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getAvailability(): ?int
+    {
+        return $this->availability;
     }
 }

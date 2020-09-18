@@ -6,7 +6,10 @@ namespace App\Model\ProductFeed\Mergado\FeedItem;
 
 use App\Component\Image\ImageFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Flag\Flag;
+use App\Model\Product\Pricing\ProductPriceCalculation;
 use App\Model\Product\Product;
+use App\Model\ProductFeed\Mergado\Exception\MissingRequiredInformationException;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -14,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use function GuzzleHttp\Psr7\_parse_request_uri;
 
 class MergadoFeedItemFactory
 {
@@ -51,6 +55,10 @@ class MergadoFeedItemFactory
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
     private $currencyFacade;
+    /**
+     * @var \App\Model\Product\Pricing\ProductPriceCalculation
+     */
+    private ProductPriceCalculation $productPriceCalculation;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
@@ -68,7 +76,8 @@ class MergadoFeedItemFactory
         ProductAvailabilityFacade $availabilityFacade,
         ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         ImageFacade $imageFacade,
-        CurrencyFacade $currencyFacade
+        CurrencyFacade $currencyFacade,
+        ProductPriceCalculation $productPriceCalculation
     ) {
         $this->productUrlsBatchLoader = $productUrlsBatchLoader;
         $this->productParametersBatchLoader = $productParametersBatchLoader;
@@ -77,6 +86,7 @@ class MergadoFeedItemFactory
         $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
         $this->imageFacade = $imageFacade;
         $this->currencyFacade = $currencyFacade;
+        $this->productPriceCalculation = $productPriceCalculation;
     }
 
     /**
@@ -88,6 +98,17 @@ class MergadoFeedItemFactory
     {
         $domainId = $domainConfig->getId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        if ($product->getHighPriceWithVat($domainId) === null) {
+            throw new MissingRequiredInformationException('Product high price isn\'t set');
+        }
+        $highProductPrice = $this->productPriceCalculation->getProductPrice($product->getHighPriceWithVat($domainId), $product->getVatForDomain($domainId), $domainId);
+        if ($product->getLowPriceWithVat($domainId) === null) {
+            throw new MissingRequiredInformationException('Product low price isn\'t set');
+        }
+        $lowProductPrice = $this->productPriceCalculation->getProductPrice($product->getLowPriceWithVat($domainId), $product->getVatForDomain($domainId), $domainId);
+
+        $availability = $this->availabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId);
+        $flags = $this->extractProductFlags($product, $domainId);
 
         return new MergadoFeedItem(
             $product->getId(),
@@ -104,8 +125,48 @@ class MergadoFeedItemFactory
             $product->getDescription($domainId),
             $product->getBrand(),
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
-            $product->isVariant() ? $product->getMainVariant()->getId() : null
+            $product->isVariant() ? $product->getMainVariant()->getId() : null,
+            $highProductPrice,
+            $lowProductPrice,
+            $flags,
+            $availability
         );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return string[]
+     */
+    private function extractProductFlags(product $product, int $domainId): array
+    {
+        $flags = MergadoFeedItem::FLAGS_MAP;
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_ACTION, $domainId) === false) {
+            unset($flags[1]);
+        }
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_HIT, $domainId) === false) {
+            unset($flags[2]);
+        }
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_NEW, $domainId) === false) {
+            unset($flags[3]);
+        }
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId) === false) {
+            unset($flags[4]);
+        }
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $domainId) === false) {
+            unset($flags[5]);
+        }
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_CZ, $domainId) === false) {
+            unset($flags[6]);
+        }
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_DE, $domainId) === false) {
+            unset($flags[7]);
+        }
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_SK, $domainId) === false) {
+            unset($flags[8]);
+        }
+
+        return $flags;
     }
 
     /**
