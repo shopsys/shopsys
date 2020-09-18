@@ -159,7 +159,13 @@ class OrderTransferScontoBridgeMapper
                 }
             }
 
-            $erpOrder->addItem($this->mapOrderItem($orderItem));
+            $orderItemPriceIsNonzero = $orderItem->getTotalPriceWithVat()->getAmount() > 0;
+            $orderItemIsTransportOrPaymentWithNonzeroPrice = $orderItemPriceIsNonzero &&
+                ($orderItem->isTypeTransport() || $orderItem->isTypePayment());
+
+            if ($orderItemIsTransportOrPaymentWithNonzeroPrice || $orderItem->isTypeProduct()) {
+                $erpOrder->addItem($this->mapOrderItem($orderItem));
+            }
         }
     }
 
