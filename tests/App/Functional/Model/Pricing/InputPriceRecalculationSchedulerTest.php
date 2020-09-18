@@ -160,6 +160,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
 
         $paymentData->name = ['cs' => 'name'];
         $paymentData->externalId = $this->getNextPaymentExternalId();
+        $paymentData->meanOfPayment = 'A';
 
         /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentFacade->create($paymentData);

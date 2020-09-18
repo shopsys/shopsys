@@ -100,6 +100,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
         $paymentData = $this->paymentDataFactory->create();
 
         $paymentData->externalId = $this->getNextPaymentExternalId();
+        $paymentData->meanOfPayment = 'A';
 
         return $paymentData;
     }

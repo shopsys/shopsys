@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -90,6 +91,13 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
                     new Callback([
                         'callback' => [$this, 'validateUniqueExternalId']
                     ])
+                ]
+            ])
+            ->add('meanOfPayment', TextType::class, [
+                'label' => t('Moeve - MeanOfPayment'),
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
                 ]
             ]);
 

@@ -169,6 +169,11 @@ class ScontoBridgeErpOrder implements JsonSerializable
      */
     private bool $isPaid;
 
+    /**
+     * @var string
+     */
+    private string $meanOfPayment;
+
     public function __construct()
     {
         $this->title = null;
@@ -440,6 +445,14 @@ class ScontoBridgeErpOrder implements JsonSerializable
     }
 
     /**
+     * @param string $meanOfPayment
+     */
+    public function setMeanOfPayment(string $meanOfPayment): void
+    {
+        $this->meanOfPayment = $meanOfPayment;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -477,6 +490,7 @@ class ScontoBridgeErpOrder implements JsonSerializable
             'typeOfDeliveryKey' => $this->typeOfDeliveryKey,
             'deliveryCode' => $this->deliveryCode,
             'isPaid' => $this->isPaid,
+            'meanOfPayment' => $this->meanOfPayment,
         ];
     }
 }
