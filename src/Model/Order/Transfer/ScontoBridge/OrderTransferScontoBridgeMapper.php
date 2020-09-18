@@ -71,7 +71,9 @@ class OrderTransferScontoBridgeMapper
         $this->fillInvoiceAddress($erpOrder, $order);
         $this->fillDeliveryAddress($erpOrder, $order);
 
-        $erpOrder->setPaymentMethodId($order->getPayment()->getExternalId());
+        $payment = $order->getPayment();
+        $erpOrder->setPaymentMethodId($payment->getExternalId());
+        $erpOrder->setMeanOfPayment($payment->getMeanOfPayment());
 
         $transport = $order->getTransport();
         $erpOrder->setDeliveryMethodId($transport->getExternalId());

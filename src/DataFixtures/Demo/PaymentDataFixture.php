@@ -65,6 +65,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->externalId = 1;
+        $paymentData->meanOfPayment = 'a';
         $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -84,6 +85,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->externalId = 2;
+        $paymentData->meanOfPayment = 'b';
         $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -95,6 +97,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->externalId = 3;
+        $paymentData->meanOfPayment = 'c';
         $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -108,6 +111,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->externalId = 4;
+        $paymentData->meanOfPayment = 'd';
         $paymentData->type = Payment::TYPE_GOPAY;
         $paymentData->name = [
             'cs' => 'GoPay - Platba kartou',

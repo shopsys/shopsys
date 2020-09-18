@@ -318,6 +318,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
         $paymentData->externalId = $this->getNextPaymentExternalId();
+        $paymentData->meanOfPayment = 'a';
 
         return new Payment($paymentData);
     }

@@ -790,3 +790,6 @@
 20200918114212:
     class: App\Migrations\Version20200918114212
     skip: false
+20200918183416:
+    class: App\Migrations\Version20200918183416
+    skip: false
