@@ -105,14 +105,14 @@ class ScontoBridgeErpOrder implements JsonSerializable
     private ?string $collectionStoreCode;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private string $deliveryAddressLastName;
+    private ?string $deliveryAddressLastName;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private string $deliveryAddressFirstName;
+    private ?string $deliveryAddressFirstName;
 
     /**
      * @var string
@@ -159,6 +159,8 @@ class ScontoBridgeErpOrder implements JsonSerializable
         $this->title = null;
         $this->invoiceAddressFirstName = null;
         $this->invoiceAddressLastName = null;
+        $this->deliveryAddressFirstName = null;
+        $this->deliveryAddressLastName = null;
         $this->collectionStoreCode = null;
         $this->deliveryAddressCountryISO = null;
     }

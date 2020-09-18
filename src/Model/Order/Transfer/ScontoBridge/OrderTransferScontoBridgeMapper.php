@@ -134,8 +134,12 @@ class OrderTransferScontoBridgeMapper
      */
     private function fillDeliveryAddress(ScontoBridgeErpOrder $erpOrder, Order $order): void
     {
-        $erpOrder->setDeliveryAddressFirstName($order->getDeliveryFirstName());
-        $erpOrder->setDeliveryAddressLastName($order->getDeliveryLastName());
+        /** @var string|null $deliveryCompanyName */
+        $deliveryCompanyName = $order->getDeliveryCompanyName();
+        if ($deliveryCompanyName === null) {
+            $erpOrder->setDeliveryAddressFirstName($order->getDeliveryFirstName());
+            $erpOrder->setDeliveryAddressLastName($order->getDeliveryLastName());
+        }
         $erpOrder->setDeliveryAddressStreet($order->getDeliveryStreet());
         $erpOrder->setDeliveryAddressCity($order->getDeliveryCity());
         $country = $order->getDeliveryCountry();

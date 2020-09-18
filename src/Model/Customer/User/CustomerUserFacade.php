@@ -106,6 +106,10 @@ class CustomerUserFacade extends BaseCustomerUserFacade
             $this->newsletterFacade->deleteById($newsletterSubscriber->getId());
         }
 
+        $customerUser->setScontoBridgeStatus(
+            CustomerUserScontoBridgeStatusEnum::create(CustomerUserScontoBridgeStatusEnum::STATUS_SCHEDULED)
+        );
+
         return $customerUser;
     }
 

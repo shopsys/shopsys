@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Order\Transfer\ScontoBridge;
+namespace App\Component\ScontoBridge\Transfer\Exception;
 
-use App\Component\ScontoBridge\Transfer\Exception\TransferException;
-
-class OrderTransferScontoBridgeTransferException extends TransferException
+class ScontoBridgeTransferException extends TransferException
 {
     /**
      * @var int

@@ -19,6 +19,11 @@ class CustomerUserData extends BaseUserData
     public $newsletterSubscription = false;
 
     /**
+     * @var string
+     */
+    public string $scontoBridgeStatus;
+
+    /**
      * @var int|null
      */
     public $erpCustomerNumber;
@@ -26,5 +31,7 @@ class CustomerUserData extends BaseUserData
     public function __construct()
     {
         parent::__construct();
+
+        $this->scontoBridgeStatus = CustomerUserScontoBridgeStatusEnum::STATUS_NEW;
     }
 }
