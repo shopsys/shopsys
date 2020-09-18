@@ -57,7 +57,7 @@ class Payment extends BasePayment
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="integer", unique=false)
      */
     private int $externalId;
 

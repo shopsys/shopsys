@@ -87,10 +87,7 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Párovací ID můstku'),
                 'required' => true,
                 'constraints' => [
-                    new NotBlank(),
-                    new Callback([
-                        'callback' => [$this, 'validateUniqueExternalId']
-                    ])
+                    new NotBlank()
                 ]
             ])
             ->add('meanOfPayment', TextType::class, [
@@ -114,29 +111,6 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
                         'iconTitle' => t('Tento způsob platby je skrytý systémem GoPay.'),
                     ],
                 ]);
-            }
-        }
-    }
-
-    /**
-     * @param int|null $id
-     * @param ExecutionContextInterface $context
-     */
-    public function validateUniqueExternalId(?int $id, ExecutionContextInterface $context): void
-    {
-        if ($id === null) {
-            return;
-        }
-
-        $existingPayment = $this->paymentFacade->findByExternalId($id);
-        if ($existingPayment !== null) {
-            if ($this->payment === null || $existingPayment->getId() !== $this->payment->getId()) {
-                $context->buildViolation(sprintf(
-                    t('Zadané párovací ID můstku je již použito u jiné platby (%s)'),
-                    $existingPayment->getName()
-                ))
-                    ->atPath('externalId')
-                    ->addViolation();
             }
         }
     }

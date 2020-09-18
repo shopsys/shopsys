@@ -17,11 +17,9 @@ class Version20200828110816 extends AbstractMigration
         $this->sql('ALTER TABLE payments ADD external_id INT');
         $this->sql('UPDATE payments SET external_id = id');
         $this->sql('ALTER TABLE payments ALTER COLUMN external_id SET NOT NULL');
-        $this->sql('CREATE UNIQUE INDEX UNIQ_65D29B329F75D7B0 ON payments (external_id)');
         $this->sql('ALTER TABLE transports ADD external_id INT');
         $this->sql('UPDATE transports SET external_id = id');
         $this->sql('ALTER TABLE transports ALTER COLUMN external_id SET NOT NULL');
-        $this->sql('CREATE UNIQUE INDEX UNIQ_C7BE69E59F75D7B0 ON transports (external_id)');
     }
 
     /**

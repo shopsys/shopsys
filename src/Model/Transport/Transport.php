@@ -54,7 +54,7 @@ class Transport extends BaseTransport
 
     /**
      * @var int
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="integer", unique=false)
      */
     private int $externalId;
 

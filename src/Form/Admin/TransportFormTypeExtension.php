@@ -95,10 +95,7 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Párovací ID můstku'),
                 'required' => true,
                 'constraints' => [
-                    new NotBlank(),
-                    new Callback([
-                        'callback' => [$this, 'validateUniqueExternalId']
-                    ])
+                    new NotBlank()
                 ]
             ])
             ->add('daysUntilDelivery', TextType::class, [
@@ -214,29 +211,6 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                         ->atPath('type') // I can not set to `transportPackages` and I do not know how to solve it :(
                         ->addViolation();
                 }
-            }
-        }
-    }
-
-    /**
-     * @param int|null $id
-     * @param ExecutionContextInterface $context
-     */
-    public function validateUniqueExternalId(?int $id, ExecutionContextInterface $context): void
-    {
-        if ($id === null) {
-            return;
-        }
-
-        $existingTransport = $this->transportFacade->findByExternalId($id);
-        if ($existingTransport !== null) {
-            if ($this->transport === null || $existingTransport->getId() !== $this->transport->getId()) {
-                $context->buildViolation(sprintf(
-                    t('Zadané párovací ID můstku je již použito u jiné dopravy (%s)'),
-                    $existingTransport->getName()
-                ))
-                    ->atPath('externalId')
-                    ->addViolation();
             }
         }
     }
