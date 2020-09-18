@@ -140,10 +140,10 @@ class OrderTransferScontoBridgeMapper
     {
         /** @var string|null $deliveryCompanyName */
         $deliveryCompanyName = $order->getDeliveryCompanyName();
-        if ($deliveryCompanyName === null) {
-            $erpOrder->setDeliveryAddressFirstName($order->getDeliveryFirstName());
-            $erpOrder->setDeliveryAddressLastName($order->getDeliveryLastName());
-        } else {
+
+        $erpOrder->setDeliveryAddressFirstName($order->getDeliveryFirstName());
+        $erpOrder->setDeliveryAddressLastName($order->getDeliveryLastName());
+        if ($deliveryCompanyName !== null) {
             $erpOrder->setDeliveryAddressCompanyName($deliveryCompanyName);
         }
         $erpOrder->setDeliveryAddressStreet($order->getDeliveryStreet());
