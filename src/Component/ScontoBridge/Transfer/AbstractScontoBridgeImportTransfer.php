@@ -178,10 +178,6 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
 
     abstract protected function doAfterTransfer(): void;
 
-    abstract public function cronSleep(): void;
-
-    abstract public function cronWakeUp(): void;
-
     /**
      * @return \Generator
      */
