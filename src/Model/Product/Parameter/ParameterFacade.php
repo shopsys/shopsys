@@ -7,6 +7,7 @@ namespace App\Model\Product\Parameter;
 use App\Component\Image\Image;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
@@ -19,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParam
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -74,6 +76,16 @@ class ParameterFacade extends BaseParameterFacade
     private $colorPickerParameters;
 
     /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     */
+    private $productAvailabilityFacade;
+
+    /**
+     * @var \App\Model\Product\ProductOnCurrentDomainElasticFacade
+     */
+    private $productOnCurrentDomainFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
@@ -85,6 +97,7 @@ class ParameterFacade extends BaseParameterFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -97,7 +110,9 @@ class ParameterFacade extends BaseParameterFacade
         UploadedFileFacade $uploadedFileFacade,
         ImageFacade $imageFacade,
         FriendlyUrlRepository $friendlyUrlRepository,
-        FriendlyUrlFacade $friendlyUrlFacade
+        FriendlyUrlFacade $friendlyUrlFacade,
+        ProductAvailabilityFacade $productAvailabilityFacade,
+        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
     ) {
         parent::__construct(
             $em,
@@ -113,6 +128,8 @@ class ParameterFacade extends BaseParameterFacade
         $this->friendlyUrlRepository = $friendlyUrlRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->colorPickerParameters = null;
+        $this->productAvailabilityFacade = $productAvailabilityFacade;
+        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
     }
 
     /**
@@ -339,7 +356,6 @@ class ParameterFacade extends BaseParameterFacade
 
         $variantSetup = $this->transformParameterValuesDataToSetupArray($variantProductParameterValuesData);
         $variantExtendedSetup = $this->transformParameterValuesDataToSetupArray($variantProductExtendedParameterValuesData);
-
         $entityIds = array_unique(array_merge(array_keys($variantSetup), array_keys($variantExtendedSetup)));
         /** @var \App\Component\Image\Image[] $imagesIndexedByEntityIds */
         $imagesIndexedByEntityIds = $this->imageFacade->getImagesByEntitiesIndexedByEntityId($entityIds, Product::class);
@@ -370,6 +386,8 @@ class ParameterFacade extends BaseParameterFacade
                 $variantParametersSetup['is_default_variant'] = true;
             }
 
+            $variantParametersSetup = $this->addVariantAvailabilityInfo($variantParametersSetup, $variantId, $domainId);
+
             $variantsSetupForElastic[] = $variantParametersSetup;
             $indexVariantIdPairing[$variantId] = $index++;
         }
@@ -390,6 +408,8 @@ class ParameterFacade extends BaseParameterFacade
                     } catch (ImageNotFoundException $imageNotFoundException) {
                     }
                 }
+
+                $variantParametersSetup = $this->addVariantAvailabilityInfo($variantParametersSetup, $variantId, $domainId);
 
                 $variantsSetupForElastic[] = $variantParametersSetup;
             }
@@ -445,5 +465,24 @@ class ParameterFacade extends BaseParameterFacade
         }
 
         return $setupArray;
+    }
+
+    /**
+     * @param array $variantParametersSetup
+     * @param int $variantId
+     * @param int $domainId
+     * @return array
+     */
+    private function addVariantAvailabilityInfo(array $variantParametersSetup, int $variantId, int $domainId): array
+    {
+        /** @var \App\Model\Product\Product $productVariant */
+        $productVariant = $this->productOnCurrentDomainFacade->getProductById($variantId);
+        $productAvailableStocksCountInformation = $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($productVariant, $domainId);
+        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($productVariant, $domainId);
+
+        $variantParametersSetup['variant_availability_info']['product_availability_information'] = $productAvailabilityInformation;
+        $variantParametersSetup['variant_availability_info']['product_available_stocks_count_information'] = $productAvailableStocksCountInformation;
+
+        return $variantParametersSetup;
     }
 }

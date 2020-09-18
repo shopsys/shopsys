@@ -252,4 +252,20 @@ class ListedProductView extends BaseListedProductView
     {
         return $this->hasScontoFlag;
     }
+
+    /**
+     * @param string|null $productAvailableStocksCountInformation
+     */
+    public function setProductAvailableStocksCountInformation(?string $productAvailableStocksCountInformation): void
+    {
+        $this->productAvailableStocksCountInformation = $productAvailableStocksCountInformation;
+    }
+
+    /**
+     * @param string $availability
+     */
+    public function setAvailability(string $availability): void
+    {
+        $this->availability = $availability;
+    }
 }

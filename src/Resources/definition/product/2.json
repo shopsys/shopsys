@@ -355,6 +355,17 @@
                 "type": "integer"
               }
             }
+          },
+          "variant_availability_info": {
+            "type": "nested",
+            "properties": {
+              "product_availability_information": {
+                "type": "text"
+              },
+              "product_available_stocks_count_information": {
+                "type": "text"
+              }
+            }
           }
         }
       },

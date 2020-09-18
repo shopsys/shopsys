@@ -48,6 +48,7 @@ class ProductVariantFilterFacade
     {
         $highestRank = 0;
         $mostValuableVariantId = null;
+
         foreach ($listedProductView->getVariantsParametersSetup() ?? [] as $variantId => $variantParameterSetup) {
             if ($mostValuableVariantId === null) {
                 $mostValuableVariantId = $variantId;
@@ -76,6 +77,10 @@ class ProductVariantFilterFacade
                 } else {
                     $listedProductView->setVariantUrl($variantParameterSetup['variant_url'] ?? null);
                     $listedProductView->setVariantImageUrl($variantParameterSetup['image_url'] ?? null);
+                    $listedProductView->setAvailability($variantParameterSetup['variant_availability_info']['product_availability_information'] ?? null);
+                    $listedProductView->setProductAvailableStocksCountInformation(
+                        $variantParameterSetup['variant_availability_info']['product_available_stocks_count_information'] ?? null
+                    );
                 }
             }
         }
