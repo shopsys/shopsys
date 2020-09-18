@@ -12,6 +12,7 @@ use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
+use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 
 class ProductsResolver implements ResolverInterface, AliasedInterface
 {
@@ -23,6 +24,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
+     * @deprecated This property will be removed in next major version
      */
     protected $productOnCurrentDomainFacade;
 
@@ -32,13 +34,21 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     protected $connectionBuilder;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\Product\ProductFacade
+     */
+    protected $productFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+        ProductFacade $productFacade
     ) {
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->connectionBuilder = new ConnectionBuilder();
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -50,14 +60,14 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $paginator = new Paginator(function ($offset, $limit) {
-            return $this->productOnCurrentDomainFacade->getProductsOnCurrentDomain(
+            return $this->productFacade->getProductsOnCurrentDomain(
                 $limit,
                 $offset,
                 ProductListOrderingConfig::ORDER_BY_PRIORITY
             );
         });
 
-        return $paginator->auto($argument, $this->productOnCurrentDomainFacade->getProductsCountOnCurrentDomain());
+        return $paginator->auto($argument, $this->productFacade->getProductsCountOnCurrentDomain());
     }
 
     /**
@@ -70,7 +80,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $paginator = new Paginator(function ($offset, $limit) use ($category) {
-            return $this->productOnCurrentDomainFacade->getProductsByCategory(
+            return $this->productFacade->getProductsByCategory(
                 $category,
                 $limit,
                 $offset,
@@ -78,7 +88,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             );
         });
 
-        return $paginator->auto($argument, $this->productOnCurrentDomainFacade->getProductsCountOnCurrentDomain());
+        return $paginator->auto($argument, $this->productFacade->getProductsCountOnCurrentDomain());
     }
 
     /**
