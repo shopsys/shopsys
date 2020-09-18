@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -39,6 +41,14 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
             ],
             'invalid_message' => 'Passwords do not match',
             'label' => t('Password'),
+        ]);
+
+        $builderSettingsGroup->add('roles', ChoiceType::class, [
+            'required' => false,
+            'choices' => Roles::AVAILABLE_ADMINISTRATOR_ROLES,
+            'placeholder' => t('-- Vyber roli --'),
+            'multiple' => true,
+            'label' => t('Role'),
         ]);
     }
 

@@ -917,3 +917,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
         alias: App\Model\Feed\FeedExportFactory
+
+    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
+        alias: App\Model\Administrator\Role\AdministratorRoleFacade
+
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository:
+        alias: App\Model\Administrator\AdministratorRepository
