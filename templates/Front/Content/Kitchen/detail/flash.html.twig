@@ -186,7 +186,7 @@
                 </div>
             </div>
             <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
-            <div class="box-furniture-detail-models js-not-implemented-yet">
+            <div class="box-furniture-detail-models">
                 <h2 class="box-furniture-detail-models__title theme-kitchen-color-secondary">
                     {{ 'Modelové kuchyně'|trans }}
                 </h2>
@@ -205,11 +205,11 @@
                                     </span>
                                     <span
                                         class="box-furniture-detail-model__price box-furniture-detail-model__price--secondary theme-kitchen-color">
-                                        {{ '47 506 Kč'|trans }}
+                                        {{ '41 027 Kč'|trans }}
                                     </span>
                                     <strong
                                         class="box-furniture-detail-model__price box-furniture-detail-model__price--primary theme-kitchen-color-secondary">
-                                        {{ '23 753 <small>Kč*</small>'|transHtml }}
+                                        {{ '20 514 <small>Kč*</small>'|transHtml }}
                                     </strong>
                                 </div>
                             </div>
@@ -240,11 +240,11 @@
                                     </span>
                                     <span
                                         class="box-furniture-detail-model__price box-furniture-detail-model__price--secondary theme-kitchen-color">
-                                        {{ '73 059 Kč'|trans }}
+                                        {{ '63 784 Kč'|trans }}
                                     </span>
                                     <strong
                                         class="box-furniture-detail-model__price box-furniture-detail-model__price--primary theme-kitchen-color-secondary">
-                                        {{ '36 530 <small>Kč*</small>'|transHtml }}
+                                        {{ '31 892 <small>Kč*</small>'|transHtml }}
                                     </strong>
                                 </div>
                             </div>
@@ -418,13 +418,19 @@
                 </div>
             </div>
             <div class="box-furniture-pagination">
-                <a class="box-furniture-pagination__item js-not-implemented-yet" href="#">
+                <a
+                    class="box-furniture-pagination__item"
+                    href="{{ url('front_kitchen_detail_cemento') }}"
+                >
                     <i class="svg svg-chevron box-furniture-pagination__item__icon box-furniture-pagination__item__icon--previous theme-kitchen-color"></i>
                     <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
                         {{ 'Předešlá kuchyň'|trans }}
                     </span>
                 </a>
-                <a class="box-furniture-pagination__item box-furniture-pagination__item--next js-not-implemented-yet" href="#">
+                <a
+                    class="box-furniture-pagination__item box-furniture-pagination__item--next"
+                    href="{{ url('front_kitchen_detail_touch') }}"
+                >
                     <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
                         {{ 'Následující kuchyň'|trans }}
                     </span>

@@ -88,10 +88,11 @@
             </div>
             <div class="box-furniture-detail-desc js-not-implemented-yet">
                 <p class="theme-kitchen-color">
-                    {{ 'Kuchyň <strong>STRUCTURA</strong> vyniká povrchovou úpravou s působivou imitací dubového dřeva.
-                    Vybrat si můžete z několika různých dekorů od světlé po černou. Široká nabídka úchytek a dekorů
-                    pracovní desky vám umožní vybrat si přesně takovou kuchyni, o které sníte.
-                    Potřebujete-li více úložného prostoru, můžete si zvolit korpusy generace XL.'|transHtml }}
+                    {{ 'Čistý design kuchyně <strong>EASYTOUCH</strong> je ideální pro moderní a minimalistické interiéry.
+                    Nejvýraznějším prvkem je její ultra matná povrchová úprava, kterou lze zvolit v provedení
+                    rezavá červená nebo grafitová černá. Přední plochy jsou opatřeny inovativní technologií <strong>ANTIFINGERPRINT</strong>,
+                    díky které se stanou otisky prstů minulostí. Na výběr máte z široké nabídky možných provedení
+                    pracovních desek a úchytů, nebo můžete zvolit bezúchytkové řešení LINE N pro ještě čistší vzhled.'|transHtml }}
                 </p>
             </div>
             <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
@@ -327,13 +328,19 @@
                 </div>
             </div>
             <div class="box-furniture-pagination">
-                <a class="box-furniture-pagination__item js-not-implemented-yet" href="#">
+                <a
+                    class="box-furniture-pagination__item"
+                    href="{{ url('front_kitchen_detail_structura') }}"
+                >
                     <i class="svg svg-chevron box-furniture-pagination__item__icon box-furniture-pagination__item__icon--previous theme-kitchen-color"></i>
                     <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
                         {{ 'Předešlá kuchyň'|trans }}
                     </span>
                 </a>
-                <a class="box-furniture-pagination__item box-furniture-pagination__item--next js-not-implemented-yet" href="#">
+                <a
+                    class="box-furniture-pagination__item box-furniture-pagination__item--next"
+                    href="{{ url('front_kitchen_detail_fashion') }}"
+                >
                     <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
                         {{ 'Následující kuchyň'|trans }}
                     </span>

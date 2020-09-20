@@ -368,13 +368,19 @@
                 </div>
             </div>
             <div class="box-furniture-pagination">
-                <a class="box-furniture-pagination__item js-not-implemented-yet" href="#">
+                <a
+                    class="box-furniture-pagination__item"
+                    href="{{ url('front_kitchen_detail_pura') }}"
+                >
                     <i class="svg svg-chevron box-furniture-pagination__item__icon box-furniture-pagination__item__icon--previous theme-kitchen-color"></i>
                     <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
                         {{ 'Předešlá kuchyň'|trans }}
                     </span>
                 </a>
-                <a class="box-furniture-pagination__item box-furniture-pagination__item--next js-not-implemented-yet" href="#">
+                <a
+                    class="box-furniture-pagination__item box-furniture-pagination__item--next"
+                    href="{{ url('front_kitchen_detail_cemento') }}"
+                >
                     <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
                         {{ 'Následující kuchyň'|trans }}
                     </span>

@@ -480,7 +480,32 @@
         @media @query-xl {
             height: 650px;
 
-            background-color: @color-f;
+            img {
+                opacity: 0;
+            }
+
+            &::after {
+                position: absolute;
+                left: 50%;
+                top: 0;
+                width: 1270px;
+                height: 100%;
+                transform: translateX(-50%);
+                content: '';
+
+                background-color: @color-light;
+                border-radius: @radius;
+            }
+        }
+
+        &.slick-initialized {
+            &::after {
+                display: none;
+            }
+
+            img {
+                opacity: 1;
+            }
         }
 
         &-wrap {
