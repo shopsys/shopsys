@@ -8,13 +8,14 @@
 {% endblock %}
 
 {% block main_content %}
+    {% set domain = getDomain() %}
     <div class="web__line web__line--spacing--big">
         <div class="web__container">
             <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
                 <h1 class="box-list__description__heading theme-kitchen-color-secondary">
                     {{ "Když pro kuchyni, tak do Sconta"|trans }}
                 </h1>
-                <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing js-not-implemented-yet">
+                <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing">
                     <div class="box-breadcrumb">
                         <div class="box-breadcrumb">
                             <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
@@ -55,8 +56,11 @@
                             <h3 class="list-categories__item__title">{{ 'Kuchyně na míru'|trans }}</h3>
                         </a>
                     </li>
-                    <li class="list-categories__item js-not-implemented-yet">
-                        <a href="#" class="list-categories__item__block">
+                    <li class="list-categories__item">
+                        <a
+                            href="/kuchynske-linky"
+                            class="list-categories__item__block"
+                        >
                             <span class="list-categories__item__image__wrap">
                                 <picture>
                                     <source
@@ -77,8 +81,11 @@
                             <h3 class="list-categories__item__title">{{ 'Kuchyňské linky'|trans }}</h3>
                         </a>
                     </li>
-                    <li class="list-categories__item js-not-implemented-yet">
-                        <a href="#" class="list-categories__item__block">
+                    <li class="list-categories__item">
+                        <a
+                            href="{{ domain.id == 1 ? '/jidelni-zidle' : '/jedalenske-stolicky' }}"
+                            class="list-categories__item__block"
+                        >
                             <span class="list-categories__item__image__wrap">
                                 <picture>
                                     <source
@@ -99,8 +106,11 @@
                             <h3 class="list-categories__item__title">{{ 'Jídelní židle'|trans }}</h3>
                         </a>
                     </li>
-                    <li class="list-categories__item js-not-implemented-yet">
-                        <a href="#" class="list-categories__item__block">
+                    <li class="list-categories__item">
+                        <a
+                            href="{{ domain.id == 1 ? '/jidelni-stoly' : '/jedalenske-stoly' }}"
+                            class="list-categories__item__block"
+                        >
                             <span class="list-categories__item__image__wrap">
                                 <picture>
                                     <source
@@ -121,8 +131,11 @@
                             <h3 class="list-categories__item__title">{{ 'Jídelní stoly'|trans }}</h3>
                         </a>
                     </li>
-                    <li class="list-categories__item js-not-implemented-yet">
-                        <a href="#" class="list-categories__item__block">
+                    <li class="list-categories__item">
+                        <a
+                            href="{{ domain.id == 1 ? '/jidelni-sety-zidle-a-stul' : '/jedalenske-zostavy-stolicky-a-stol' }}"
+                            class="list-categories__item__block"
+                        >
                             <span class="list-categories__item__image__wrap">
                                 <picture>
                                     <source
@@ -173,7 +186,10 @@
                     Mezi nejoblíbenější tvary patří rohová kuchyně, kuchyně do U nebo kuchyně s ostrůvkem.
                     Pohodlí a dlouhou výdrž pak zajistí kvalitní materiál a nejmodernější technologie.'|trans }}
                     </p>
-                    <a class="box-furniture-banner__btn btn btn--ghost js-not-implemented-yet" href="#">
+                    <a
+                        class="box-furniture-banner__btn btn btn--ghost"
+                        href="{{ domain.id == 1 ? '/kuchyne-na-miru' : '/kuchyne-na-mieru-nobilia' }}"
+                    >
                         {{ 'Víc informací'|trans }}
                     </a>
                 </div>
