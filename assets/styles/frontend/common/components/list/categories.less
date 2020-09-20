@@ -64,23 +64,6 @@
             width: 25%;
         }
 
-        &--special {
-            .list-categories__item__image {
-                display: block;
-                bottom: 0;
-                max-width: 90%;
-                max-height: none;
-
-                @media @query-vl {
-                    max-width: none;
-                }
-
-                &__wrap::before {
-                    background-color: #eef9f5;
-                }
-            }
-        }
-
         &__block {
             display: flex;
             align-items: center;
@@ -120,11 +103,8 @@
             display: block;
             position: relative;
             max-width: 100%;
+            max-height: 80px;
             z-index: 2;
-
-            &.image-noimage {
-                max-height: 120px;
-            }
         }
 
         &__title {
