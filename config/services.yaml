@@ -925,3 +925,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository:
         alias: App\Model\Administrator\AdministratorRepository
+
+    Shopsys\FrameworkBundle\Model\Security\CustomerLoginHandler:
+        alias: App\Model\Security\CustomerLoginHandler

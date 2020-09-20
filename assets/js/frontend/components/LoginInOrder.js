@@ -1,7 +1,6 @@
 import Ajax from 'framework/common/utils/Ajax';
 import Register from 'framework/common/utils/Register';
 import Window from '../utils/Window';
-import Translator from 'bazinga-translator';
 
 export default class LoginInOrder {
 
@@ -24,13 +23,13 @@ export default class LoginInOrder {
         event.preventDefault();
     }
 
-    static onLoginResponse (loginSuccess) {
-        if (loginSuccess === false) {
+    static onLoginResponse (data) {
+        if (data.success === false) {
             const html = '<div>'
             + '<h2 class="window-popup__heading">'
-            + Translator.trans('Špatné přihlašovací údaje')
+            + data.errorHeader
             + '</h2>'
-            + Translator.trans('Zadali jste špatné uživatelské jméno nebo heslo.')
+            + data.errorMessage
             + '</div>';
             // eslint-disable-next-line no-new
             new Window({
