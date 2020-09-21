@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Category;
 
+use App\Component\Domain\Domain;
 use App\Component\Image\ImageFacade;
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
+use App\Model\Product\Series\ProductSeries;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogCategoryFacade
 {
+    public const BASE_FRIENDY_URL_BY_DOMAIN_ID = [
+        1 => 'magazin',
+        2 => 'magazin', //same as in czech language :-)
+    ];
+
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -47,6 +54,10 @@ class BlogCategoryFacade
      * @var \App\Model\Blog\BlogVisibilityRecalculationScheduler
      */
     private $blogVisibilityRecalculationScheduler;
+    /**
+     * @var \App\Component\Domain\Domain
+     */
+    private Domain $domain;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -64,7 +75,8 @@ class BlogCategoryFacade
         ImageFacade $imageFacade,
         BlogCategoryFactory $blogCategoryFactory,
         BlogCategoryWithPreloadedChildrenFactory $blogCategoryWithPreloadedChildrenFactory,
-        BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
+        BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
+        Domain $domain
     ) {
         $this->em = $em;
         $this->blogCategoryRepository = $blogCategoryRepository;
@@ -73,6 +85,7 @@ class BlogCategoryFacade
         $this->blogCategoryFactory = $blogCategoryFactory;
         $this->blogCategoryWithPreloadedChildrenFactory = $blogCategoryWithPreloadedChildrenFactory;
         $this->blogVisibilityRecalculationScheduler = $blogVisibilityRecalculationScheduler;
+        $this->domain = $domain;
     }
 
     /**
@@ -98,13 +111,45 @@ class BlogCategoryFacade
 
         $blogCategory->createDomains($blogCategoryData);
 
-        $this->friendlyUrlFacade->createFriendlyUrls('front_blogcategory_detail', $blogCategory->getId(), $blogCategory->getNames());
+        $this->storeFriendlyUrls($blogCategory);
         $this->imageFacade->uploadImage($blogCategory, $blogCategoryData->image->uploadedFiles, null);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
 
         $this->em->flush();
 
         return $blogCategory;
+    }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     */
+    private function storeFriendlyUrls(BlogCategory $blogCategory): void
+    {
+        $domains = $this->domain->getAll();
+        foreach ($domains as $domain) {
+
+            /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade */
+            $friendlyUrlFacade = $this->friendlyUrlFacade;
+            $friendlyUrlFacade->createFriendlyUrlForDomain(
+                'front_blogcategory_detail',
+                $blogCategory->getId(),
+                $blogCategory->getName($domain->getLocale()),
+                $domain->getId(),
+                [$this->getBaseFriendlyUrlForDomain($domain)]
+            );
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
+     * @return string
+     */
+    public function getBaseFriendlyUrlForDomain(DomainConfig $domain)
+    {
+        if (!array_key_exists($domain->getId(), self::BASE_FRIENDY_URL_BY_DOMAIN_ID)) {
+            return self::BASE_FRIENDY_URL_BY_DOMAIN_ID[Domain::FIRST_DOMAIN_ID];
+        }
+        return self::BASE_FRIENDY_URL_BY_DOMAIN_ID[$domain->getId()];
     }
 
     /**
@@ -125,7 +170,8 @@ class BlogCategoryFacade
         $this->em->flush();
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_blogcategory_detail', $blogCategory->getId(), $blogCategoryData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_blogcategory_detail', $blogCategory->getId(), $blogCategory->getNames());
+        $this->storeFriendlyUrls($blogCategory);
+
         $this->imageFacade->uploadImage($blogCategory, $blogCategoryData->image->uploadedFiles, null);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
 

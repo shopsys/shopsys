@@ -156,7 +156,6 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @throws \App\Model\Product\Series\Exception\MissingBaseFriendlyUrlForDomainException
      * @return string
      */
     private function getBaseFriendlyUrlForDomain(DomainConfig $domain)
