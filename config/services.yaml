@@ -446,6 +446,9 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\ArticleController:
         class: 'App\Controller\Admin\ArticleController'
 
+    Shopsys\FrameworkBundle\Controller\Admin\CustomerController:
+        class: 'App\Controller\Admin\CustomerController'
+
     App\Controller\Front\ErrorController:
         arguments:
             $environment: '%kernel.environment%'

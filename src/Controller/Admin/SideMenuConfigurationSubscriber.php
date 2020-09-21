@@ -43,7 +43,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         if ($this->authorizationChecker->isGranted(Roles::ROLE_CUSTOMER_CARE)) {
             $rootMenu = $event->getMenu();
-            $rootMenu->removeChild('customers');
             $rootMenu->removeChild('products');
             $rootMenu->removeChild('pricing');
             $rootMenu->removeChild('marketing');
