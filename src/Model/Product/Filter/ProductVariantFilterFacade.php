@@ -77,7 +77,9 @@ class ProductVariantFilterFacade
                 } else {
                     $listedProductView->setVariantUrl($variantParameterSetup['variant_url'] ?? null);
                     $listedProductView->setVariantImageUrl($variantParameterSetup['image_url'] ?? null);
-                    $listedProductView->setAvailability($variantParameterSetup['variant_availability_info']['product_availability_information'] ?? null);
+                    if (isset($variantParameterSetup['variant_availability_info']['product_availability_information'])) {
+                        $listedProductView->setAvailability($variantParameterSetup['variant_availability_info']['product_availability_information']);
+                    }
                     $listedProductView->setProductAvailableStocksCountInformation(
                         $variantParameterSetup['variant_availability_info']['product_available_stocks_count_information'] ?? null
                     );
