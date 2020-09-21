@@ -12,6 +12,7 @@ use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrontendApiBundle\Model\Order\OrderFacade as FrontendApiOrderFacade;
 
 class OrdersResolver implements ResolverInterface, AliasedInterface
 {
@@ -33,14 +34,24 @@ class OrdersResolver implements ResolverInterface, AliasedInterface
     protected $connectionBuilder;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\Order\OrderFacade
+     */
+    protected $frontendApiOrderFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFacade $frontendApiOrderFacade
      */
-    public function __construct(CurrentCustomerUser $currentCustomerUser, OrderFacade $orderFacade)
-    {
+    public function __construct(
+        CurrentCustomerUser $currentCustomerUser,
+        OrderFacade $orderFacade,
+        FrontendApiOrderFacade $frontendApiOrderFacade
+    ) {
         $this->currentCustomerUser = $currentCustomerUser;
         $this->orderFacade = $orderFacade;
         $this->connectionBuilder = new ConnectionBuilder();
+        $this->frontendApiOrderFacade = $frontendApiOrderFacade;
     }
 
     /**
@@ -57,10 +68,10 @@ class OrdersResolver implements ResolverInterface, AliasedInterface
         }
 
         $paginator = new Paginator(function ($offset, $limit) use ($customerUser) {
-            return $this->orderFacade->getCustomerUserOrderLimitedList($customerUser, $limit, $offset);
+            return $this->frontendApiOrderFacade->getCustomerUserOrderLimitedList($customerUser, $limit, $offset);
         });
 
-        return $paginator->auto($argument, $this->orderFacade->getCustomerUserOrderCount($customerUser));
+        return $paginator->auto($argument, $this->frontendApiOrderFacade->getCustomerUserOrderCount($customerUser));
     }
 
     /**
