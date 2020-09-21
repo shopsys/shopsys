@@ -318,9 +318,17 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
                 sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
             );
         }
-        if ($this->productActionViewFactory === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->productActionViewFactory = $productActionViewFactory;
+        if ($this->productActionViewFactory !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->productActionViewFactory = $productActionViewFactory;
     }
 }

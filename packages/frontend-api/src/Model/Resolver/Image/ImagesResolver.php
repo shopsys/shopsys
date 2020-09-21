@@ -77,17 +77,19 @@ class ImagesResolver implements ResolverInterface
                 __METHOD__
             ));
         }
-        if ($this->frontendApiImageFacade === null) {
-            @trigger_error(
-                sprintf(
-                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                    __METHOD__
-                ),
-                E_USER_DEPRECATED
-            );
-
-            $this->frontendApiImageFacade = $frontendApiImageFacade;
+        if ($this->frontendApiImageFacade !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->frontendApiImageFacade = $frontendApiImageFacade;
     }
 
     /**
