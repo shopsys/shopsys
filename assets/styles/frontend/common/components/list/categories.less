@@ -1,25 +1,13 @@
-@list-categories-item-min-height: 85px;
+@list-categories-item-min-height: 84px;
 @list-categories-item-margin: 12px 10px;
 @list-categories-item-margin-md: 10px 15px;
 
 @list-cagegories-item-gap: 20px;
 @list-cagegories-item-gap-md: 31px;
 
-@list-categories-item-width: calc((100% / 2) - @list-cagegories-item-gap);
-@list-categories-item-width-md: calc((100% / 4) - @list-cagegories-item-gap-md);
-@list-categories-item-width-xl: calc((100% / 6) - @list-cagegories-item-gap-md);
-
 @list-categories-item-detail-width-mobile: calc((100% / 3) - @list-cagegories-item-gap);
 
-@list-categories-item-image-max-width: 120px;
-@list-categories-item-image-max-height: 100px;
-@list-categories-item-image-bottom-pos: 15px;
-@list-categories-item-detail-image-max-width-mobile: 80px;
-@list-categories-item-detail-image-max-height-mobile: 60px;
-
-@list-categories-item-image-wrap-min-height: 110px;
-@list-categories-item-image-wrap-min-height-lg: 160px;
-@list-categories-item-detailimage-wrap-min-height-mobile: 70px;
+@list-categories-item-image-max-width: 90px;
 
 @list-categories-item-name-font-size: 15px;
 @list-categories-item-name-spacing: 10px 0;
@@ -32,10 +20,14 @@
 .list-categories {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -15px @box-component-bottom-spacing;
+    margin: 1.5rem 0 2rem -10px;
     padding: 0;
 
     list-style: none;
+
+    @media @query-md {
+        margin-left: -25px;
+    }
 
     &-wrap {
         &--centered {
@@ -48,94 +40,71 @@
     }
 
     &__item {
-        width: @list-categories-item-width;
-        margin: @list-categories-item-margin;
-
+        margin: 0 0 10px 10px;
+        width: calc(50% - 10px);
         text-align: center;
+        border-radius: 6px;
+        border: 2px solid @color-border-lighter;
 
         @media @query-md {
-            margin: @list-categories-item-margin-md;
-            width: @list-categories-item-width-md;
+            margin: 0 0 25px 0;
+            padding-left: 25px;
+            text-align: left;
+            width: 50%;
+
+            border-radius: 0;
+            border: 0;
         }
 
-        @media @query-xl {
-            width: @list-categories-item-width-xl;
+        @media @query-vl {
+            width: calc(100% / 3);
         }
 
-        &:hover .list-categories__item__image__wrap::before {
-            transform: @list-categories-item-bg-hover-transform;
-            box-shadow: @hover-shadow;
-        }
-
-        &--special {
-            .list-categories__item__image {
-                display: block;
-                bottom: 0;
-                max-width: 90%;
-                max-height: none;
-
-                @media @query-vl {
-                    max-width: none;
-                }
-
-                &__wrap::before {
-                    background-color: #eef9f5;
-                }
-            }
+        @media screen and (min-width: 1280px) {
+            width: 25%;
         }
 
         &__block {
-            display: block;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
             width: 100%;
             min-height: @list-categories-item-min-height;
+            padding: 0 8px;
 
             text-decoration: none;
+
+            @media @query-md {
+                flex-direction: row;
+                border-radius: 6px;
+                border: 2px solid @color-border-lighter;
+                transition: box-shadow @transition;
+                padding: 0 12px 0 0;
+                height: @list-categories-item-min-height;
+
+                &:hover {
+                    box-shadow: 0 5px 10px 0 @color-border-lighter;
+                }
+            }
         }
 
         &__image__wrap {
             display: flex;
             justify-content: center;
-            align-items: flex-end;
+            align-items: center;
             position: relative;
-            min-height: @list-categories-item-image-wrap-min-height;
-            max-height: @list-categories-item-image-wrap-min-height;
-
-            @media @query-lg {
-                min-height: @list-categories-item-image-wrap-min-height-lg;
-                max-height: @list-categories-item-image-wrap-min-height-lg;
-            }
-
-            &::before {
-                position: absolute;
-                left: 0;
-                bottom: 0;
-                width: @list-categories-item-bg-width;
-                height: @list-categories-item-bg-height;
-                z-index: 1;
-                content: "";
-
-                border-radius: @radius;
-                transition: transform @transition, box-shadow @transition;
-                transform-origin: center bottom;
-                background-color: @color-light;
-            }
+            width: 105px;
+            min-width: 105px;
+            height: 80px;
+            min-height: 80px;
         }
 
         &__image {
+            display: block;
             position: relative;
-            bottom: @list-categories-item-image-bottom-pos;
-            max-height: @list-categories-item-image-max-height;
-            max-width: @list-categories-item-image-max-width;
+            max-width: 100%;
+            max-height: 80px;
             z-index: 2;
-
-            @media @query-lg {
-                max-height: 130px;
-                max-width: 100%;
-            }
-
-            &.image-noimage {
-                max-height: 120px;
-            }
         }
 
         &__title {
@@ -149,29 +118,14 @@
             @media @query-lg {
                 padding: @list-categories-item-name-spacing-lg;
             }
+
+            @media @query-xl {
+                margin: 0 0 0 1rem;
+            }
         }
     }
 
     &--detail {
         justify-content: center;
-
-        @media @query-mobile {
-            .list-categories__item {
-                width: @list-categories-item-detail-width-mobile;
-
-                &__image__wrap {
-                    min-height: @list-categories-item-detailimage-wrap-min-height-mobile;
-                }
-
-                &__image {
-                    max-height: @list-categories-item-detail-image-max-height-mobile;
-                    max-width: @list-categories-item-detail-image-max-width-mobile;
-
-                    &__wrap::before {
-                        height: @list-categories-item-bg-height / 2;
-                    }
-                }
-            }
-        }
     }
 }
