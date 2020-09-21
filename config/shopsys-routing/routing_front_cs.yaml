@@ -99,6 +99,10 @@ front_stores:
     path: /obchodni-domy
     defaults: { _controller: App\Controller\Front\StoreController:indexAction }
 
+front_leaflet:
+    path: /letak
+    defaults: { _controller: App\Controller\Front\LeafletController:indexAction }
+
 front_contacts:
     path: /kontakty
     defaults: { _controller: App\Controller\Front\ContactController:indexAction }
