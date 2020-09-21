@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
+use BadMethodCallException;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -12,6 +13,7 @@ use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
+use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 
 class ProductsResolver implements ResolverInterface, AliasedInterface
 {
@@ -23,6 +25,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
+     * @deprecated This property will be removed in next major version
      */
     protected $productOnCurrentDomainFacade;
 
@@ -32,13 +35,47 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     protected $connectionBuilder;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\Product\ProductFacade|null
+     */
+    protected $productFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade|null $productFacade
      */
     public function __construct(
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+        ?ProductFacade $productFacade = null
     ) {
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->connectionBuilder = new ConnectionBuilder();
+        $this->productFacade = $productFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductFacade(ProductFacade $productFacade): void
+    {
+        if ($this->productFacade !== null && $this->productFacade !== $productFacade) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->productFacade === null) {
+            @trigger_error(
+                sprintf(
+                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+
+            $this->productFacade = $productFacade;
+        }
     }
 
     /**
@@ -50,14 +87,14 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $paginator = new Paginator(function ($offset, $limit) {
-            return $this->productOnCurrentDomainFacade->getProductsOnCurrentDomain(
+            return $this->productFacade->getProductsOnCurrentDomain(
                 $limit,
                 $offset,
                 ProductListOrderingConfig::ORDER_BY_PRIORITY
             );
         });
 
-        return $paginator->auto($argument, $this->productOnCurrentDomainFacade->getProductsCountOnCurrentDomain());
+        return $paginator->auto($argument, $this->productFacade->getProductsCountOnCurrentDomain());
     }
 
     /**
@@ -70,7 +107,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $paginator = new Paginator(function ($offset, $limit) use ($category) {
-            return $this->productOnCurrentDomainFacade->getProductsByCategory(
+            return $this->productFacade->getProductsByCategory(
                 $category,
                 $limit,
                 $offset,
@@ -78,7 +115,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             );
         });
 
-        return $paginator->auto($argument, $this->productOnCurrentDomainFacade->getProductsCountOnCurrentDomain());
+        return $paginator->auto($argument, $this->productFacade->getProductsCountOnCurrentDomain());
     }
 
     /**
