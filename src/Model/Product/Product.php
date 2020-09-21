@@ -695,7 +695,14 @@ class Product extends BaseProduct
      */
     public function hasPreorder(): bool
     {
-        return $this->preorder;
+        $result = $this->preorder;
+        if ($this->isMainVariant()) {
+            foreach ($this->getVariants() as $variant) {
+                $result = $result || $variant->hasPreorder();
+            }
+        }
+
+        return $result;
     }
 
     /**

@@ -68,7 +68,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->inStock = true;
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(0, $paginationResult->getResults());
+        $this->assertCount(3, $paginationResult->getResults());
     }
 
     public function testFilterByFlag()
@@ -109,7 +109,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->brands = [$brandCanon];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(6, $paginationResult->getResults());
+        $this->assertCount(4, $paginationResult->getResults());
     }
 
     public function testFilterByBrandsReturnsProductsWithAnyOfUsedBrands()
@@ -124,7 +124,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->brands = [$brandCanon, $brandHp];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(8, $paginationResult->getResults());
+        $this->assertCount(5, $paginationResult->getResults());
     }
 
     public function testFilterByParameter()
@@ -142,7 +142,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(3, $paginationResult->getResults());
+        $this->assertCount(2, $paginationResult->getResults());
     }
 
     public function testFilterByParametersUsesOrWithinTheSameParameter()
@@ -161,7 +161,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->parameters = [$parameterFilterData];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(10, $paginationResult->getResults());
+        $this->assertCount(7, $paginationResult->getResults());
     }
 
     public function testFilterByParametersWithEmptyValue(): void
@@ -185,7 +185,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->parameters = [$parameterFilterData1, $parameterFilterData2];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(10, $paginationResult->getResults());
+        $this->assertCount(7, $paginationResult->getResults());
     }
 
     public function testFilterByParametersUsesAndWithinDistinctParameters()
@@ -285,7 +285,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
         $paginationResult = $this->getPaginatedProductsForBrand($brand);
 
-        $this->assertCount(10, $paginationResult->getResults());
+        $this->assertCount(8, $paginationResult->getResults());
     }
 
     /**

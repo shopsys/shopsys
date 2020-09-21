@@ -68,9 +68,11 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                         pd.domain_hidden = TRUE
                         OR 
                         (
-                            pd.sale_exclusion = TRUE
-                            AND                        
-                            p.preorder = FALSE  
+                            (
+                                pd.sale_exclusion = TRUE
+                                OR                        
+                                p.preorder = FALSE
+                            )  
                             AND
                             ( 
                                 p.variant_type != :variantTypeMain
