@@ -160,6 +160,24 @@
                 .center-image();
                 max-height: 70%;
             }
+
+            .box-detail-add__discount {
+                position: absolute;
+                bottom: 10px;
+                left: 5px;
+
+                @media @query-mobile {
+                    width: 50px;
+                    height: 50px;
+                    bottom: 5px;
+
+                    font-size: 14px;
+                }
+
+                .box-products-carousel & {
+                    left: 0;
+                }
+            }
         }
 
         &__detail,

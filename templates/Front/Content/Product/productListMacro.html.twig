@@ -29,11 +29,10 @@
                                 </picture>
                             {% endif %}
                             {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
+                            {% if productView.nonSellingPrice.priceWithVat.isPositive and not productView.hasScontoFlag %}
+                                {{ discount.circle(productView.sellingPrice.priceWithVat, productView.nonSellingPrice.priceWithVat) }}
+                            {% endif %}
                         </div>
-
-                        {% if productView.nonSellingPrice.priceWithVat.isPositive and not productView.hasScontoFlag %}
-                            {{ discount.circle(productView.sellingPrice.priceWithVat, productView.nonSellingPrice.priceWithVat) }}
-                        {% endif %}
 
                         <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
                             {% if productView.namePrefix is not empty %}
