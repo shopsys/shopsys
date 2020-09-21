@@ -1,0 +1,323 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+{% from 'Front/Macros/picture.html.twig' import picture as picture %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block title %}
+    {{- 'CHALET'|trans -}}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line web__line--spacing--big">
+        <div class="web__container">
+            <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
+                <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing">
+                    <div class="box-breadcrumb">
+                        <div class="box-breadcrumb">
+                            <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
+                                <i class="box-breadcrumb__item__icon svg svg-home"></i>
+                                <span>{{ 'Domů'|trans }}</span>
+                            </a>
+                            <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                            <a href="{{ url('front_kitchen_list_rustical') }}" class="box-breadcrumb__item">{{ 'Rustikální kuchyně'|trans }}</a>
+                            <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                            <span class="box-breadcrumb__item">{{ 'CHALET'|trans }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-furniture-banner box-furniture-banner--detail theme-kitchen-bg">
+                <div class="box-furniture-banner__content">
+                    <span class="box-furniture-tag box-furniture-tag--simple">
+                        <span class="box-furniture-tag__text theme-kitchen-color">{{ 'Designová kuchyně'|trans }}</span>
+                    </span>
+                    <h1 class="box-furniture-banner__title theme-kitchen-color-secondary">{{ 'CHALET'|trans }}</h1>
+                </div>
+                <div class="box-furniture-banner__image">
+                    <img
+                        alt="{{ 'Nobilia'|trans }}"
+                        class="box-furniture-banner__img"
+                        title="{{ 'Nobilia'|trans }}"
+                        loading="lazy"
+                        data-src="{{ asset('public/frontend/images/kitchen/brand/nobilia.svg') }}"
+                    >
+                </div>
+            </div>
+            <div class="box-furniture-carousel-wrap">
+                <span class="box-furniture-tag box-furniture-carousel-wrap__tag">
+                    <img
+                        class="box-furniture-tag__img"
+                        loading="lazy"
+                        data-src="{{ asset('public/frontend/images/flags/de.svg') }}"
+                        alt="{{ 'Německá kvalita' }}">
+                    <span class="box-furniture-tag__text">{{ 'Německá kvalita'|trans }}</span>
+                </span>
+                <div class="box-furniture-carousel js-furniture-cats-carousel">
+                    {{ picture(
+                        'kitchen/chalet/carousel/chalet_Carousel_@2x.jpg',
+                        'kitchen/chalet/carousel/chalet_Carousel.jpg',
+                        'Chalet',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/chalet/carousel/chalet_Carousel_01_@2x.jpg',
+                        'kitchen/chalet/carousel/chalet_Carousel_01.jpg',
+                        'Chalet',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/chalet/carousel/chalet_Carousel_02_@2x.jpg',
+                        'kitchen/chalet/carousel/chalet_Carousel_02.jpg',
+                        'Chalet',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/chalet/carousel/chalet_Carousel_03_@2x.jpg',
+                        'kitchen/chalet/carousel/chalet_Carousel_03.jpg',
+                        'Chalet',
+                        'box-furniture-carousel__img'
+                    ) }}
+                </div>
+            </div>
+            <div class="box-furniture-detail-desc">
+                <p class="theme-kitchen-color">
+                    {{ 'Kuchyně <strong>CHALET</strong> vyzařuje příjemnou rodinnou atmosféru a teplo domova.
+                    Zdobí ji římsy a pilastry a své nejkrásnější nádobí můžete vystavit za prosklenými dvířky.
+                    Venkovský vzhled harmonicky doplňuje moderní vybavení.
+                    Matné přední plochy ve formě dvířek a zásuvek jsou k dispozici v několika barevných odstínech.
+                    Skombinovat je můžete s úchytkami a pracovní deskou z naší široké nabídky tak,
+                    aby kuchyně dokonale ladila se zbytkem interiéru.'|transHtml }}
+                </p>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
+            <div class="box-furniture-detail-variants">
+                <h2 class="box-furniture-detail-variants__title theme-kitchen-color-secondary">
+                    {{ 'Barevné varianty dvířek'|trans }}
+                </h2>
+                <div class="box-furniture-detail-variants__list">
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/chalet/doors/bila_2x.png',
+                            'kitchen/chalet/doors/bila.png',
+                            'Bílá',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Bílá'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Matná'|trans }}
+                        </span>
+                    </div>
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/chalet/doors/magnolia_2x.png',
+                            'kitchen/chalet/doors/magnolia.png',
+                            'Magnolia',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Magnolia'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Matná'|trans }}
+                        </span>
+                    </div>
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/chalet/doors/piskova_2x.png',
+                            'kitchen/chalet/doors/piskova.png',
+                            'Písková',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Písková'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Matná'|trans }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
+            <div class="box-furniture-detail-models">
+                <h2 class="box-furniture-detail-models__title theme-kitchen-color-secondary">
+                    {{ 'Modelové kuchyně'|trans }}
+                </h2>
+                <div class="box-furniture-detail-models__list">
+                    <div class="box-furniture-detail-models__list__item">
+                        <div class="box-furniture-detail-model">
+                            <div class="box-furniture-detail-model__content">
+                                <div class="box-furniture-detail-model__content__top">
+                                    <strong class="box-furniture-detail-model__name theme-kitchen-color-secondary">
+                                        {{ 'Rovná kuchyň CHALET'|trans }}
+                                    </strong>
+                                </div>
+                                <div class="box-furniture-detail-model__content__bottom">
+                                    <span class="box-furniture-detail-model__desc theme-kitchen-color">
+                                        {{ 'Tuto kuchyň můžete mít již od:' }}
+                                    </span>
+                                    <span
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--secondary theme-kitchen-color">
+                                        {{ '55 658 Kč'|trans }}
+                                    </span>
+                                    <strong
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--primary theme-kitchen-color-secondary">
+                                        {{ '27 829 <small>Kč*</small>'|transHtml }}
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="box-furniture-detail-model__image">
+                                {{ picture(
+                                    'kitchen/models/wireframe_rust_rovna_2x.jpg',
+                                    'kitchen/models/wireframe_rust_rovna.jpg',
+                                    'CHALET',
+                                    'box-furniture-detail-model__img'
+                                ) }}
+                                <span class="box-furniture-detail-model__small theme-kitchen-color">
+                                    {{ '*akční cena s 15% DPH, bez elektrospotřebičů a příslušenství'|trans }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-furniture-detail-models__list__item">
+                        <div class="box-furniture-detail-model box-furniture-detail-model--reverse">
+                            <div class="box-furniture-detail-model__content">
+                                <div class="box-furniture-detail-model__content__top">
+                                    <strong class="box-furniture-detail-model__name theme-kitchen-color-secondary">
+                                        {{ 'Rohová kuchyň CHALET'|trans }}
+                                    </strong>
+                                </div>
+                                <div class="box-furniture-detail-model__content__bottom">
+                                    <span class="box-furniture-detail-model__desc theme-kitchen-color">
+                                        {{ 'Tuto kuchyň můžete mít již od:' }}
+                                    </span>
+                                    <span
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--secondary theme-kitchen-color">
+                                        {{ '85 419 Kč'|trans }}
+                                    </span>
+                                    <strong
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--primary theme-kitchen-color-secondary">
+                                        {{ '42 710 <small>Kč*</small>'|transHtml }}
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="box-furniture-detail-model__image">
+                                {{ picture(
+                                    'kitchen/models/wireframe_rust_rohova_2x.jpg',
+                                    'kitchen/models/wireframe_rust_rohova.jpg',
+                                    'CHALET',
+                                    'box-furniture-detail-model__img'
+                                ) }}
+                                <span class="box-furniture-detail-model__small box-furniture-detail-model__small--reverse theme-kitchen-color">
+                                    {{ '*akční cena s 15% DPH, bez elektrospotřebičů a příslušenství'|trans }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
+            <div class="box-furniture-detail-desks">
+                <h2 class="box-furniture-detail-desks__title theme-kitchen-color-secondary">
+                    {{ 'Pracovní desky'|trans }}
+                </h2>
+                <p class="box-furniture-detail-desc box-furniture-detail-desc--no-spacing theme-kitchen-color">
+                    {{ 'Vzhled betonu, dřeva nebo jednobarevné?
+                     V úplném kontrastu nebo tón v tónu s dvířky?
+                     Široký výběr pracovních desek nabízí mnoho možností.
+                     Díky přiřazeným barevným koncepcím určitě najdete tu svou oblíbenou.'|trans }}
+                </p>
+                <div class="box-furniture-detail-desks__list">
+                    {{ picture(
+                        '/kitchen/chalet/desks/desk1_2x.png',
+                        '/kitchen/chalet/desks/desk1.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/chalet/desks/desk2_2x.png',
+                        '/kitchen/chalet/desks/desk2.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/chalet/desks/desk3_2x.png',
+                        '/kitchen/chalet/desks/desk3.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/chalet/desks/desk4_2x.png',
+                        '/kitchen/chalet/desks/desk4.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/chalet/desks/desk5_2x.png',
+                        '/kitchen/chalet/desks/desk5.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/chalet/desks/desk6_2x.png',
+                        '/kitchen/chalet/desks/desk6.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    <span class="box-furniture-outline-btn box-furniture-detail-desks__btn theme-kitchen-color">
+                        {{ 'a mnoho dalších...' }}
+                    </span>
+                </div>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
+            <div class="box-furniture-detail-grips">
+                <h2 class="box-furniture-detail-grips__title theme-kitchen-color-secondary">
+                    {{ 'Úchyty'|trans }}
+                </h2>
+                <div class="box-furniture-detail-grips__list">
+                    <div class="box-furniture-detail-grips__list__item">
+                        <strong class="box-furniture-detail-grips__name theme-kitchen-color-secondary">
+                            {{ 'Úchyty v moderním designu'|trans }}
+                        </strong>
+                        <p class="box-furniture-detail-grips__desc theme-kitchen-color">
+                            {{ 'Při použití úchytů si můžete vybrat ze stovky různých provedení.
+                            Nabízíme takové minimalistické kovové úchytky, které jsou nenápadné a elegantní.'|trans }}
+                        </p>
+                        <div class="box-furniture-detail-grips__image">
+                            {{ picture(
+                                '/kitchen/chalet/grips/chalet_@2x.jpg',
+                                '/kitchen/chalet/grips/chalet.jpg',
+                                'Úchyty',
+                                'box-furniture-detail-grips__img'
+                            ) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
+            <div class="box-furniture-pagination">
+                <a
+                    class="box-furniture-pagination__item"
+                    href="{{ url('front_kitchen_detail_castello') }}"
+                >
+                    <i class="svg svg-chevron box-furniture-pagination__item__icon box-furniture-pagination__item__icon--previous theme-kitchen-color"></i>
+                    <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
+                        {{ 'Předešlá kuchyň'|trans }}
+                    </span>
+                </a>
+                <a
+                    class="box-furniture-pagination__item box-furniture-pagination__item--next"
+                    href="{{ url('front_kitchen_detail_gent') }}"
+                >
+                    <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
+                        {{ 'Následující kuchyň'|trans }}
+                    </span>
+                    <i class="svg svg-chevron box-furniture-pagination__item__icon theme-kitchen-color"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

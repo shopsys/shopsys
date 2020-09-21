@@ -1,0 +1,352 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+{% from 'Front/Macros/picture.html.twig' import picture as picture %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block title %}
+    {{- 'EASYTOUCH'|trans -}}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line web__line--spacing--big">
+        <div class="web__container">
+            <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
+                <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing">
+                    <div class="box-breadcrumb">
+                        <div class="box-breadcrumb">
+                            <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
+                                <i class="box-breadcrumb__item__icon svg svg-home"></i>
+                                <span>{{ 'Domů'|trans }}</span>
+                            </a>
+                            <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                            <a href="{{ url('front_kitchen_list_modern') }}" class="box-breadcrumb__item">{{ 'Moderní kuchyně'|trans }}</a>
+                            <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                            <span class="box-breadcrumb__item">{{ 'EASYTOUCH'|trans }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-furniture-banner box-furniture-banner--detail theme-kitchen-bg">
+                <div class="box-furniture-banner__content">
+                    <span class="box-furniture-tag box-furniture-tag--simple">
+                        <span class="box-furniture-tag__text theme-kitchen-color">{{ 'Designová kuchyně'|trans }}</span>
+                    </span>
+                    <h1 class="box-furniture-banner__title theme-kitchen-color-secondary">{{ 'EASYTOUCH'|trans }}</h1>
+                </div>
+                <div class="box-furniture-banner__image">
+                    <img
+                        alt="{{ 'Nobilia'|trans }}"
+                        class="box-furniture-banner__img"
+                        title="{{ 'Nobilia'|trans }}"
+                        loading="lazy"
+                        data-src="{{ asset('public/frontend/images/kitchen/brand/nobilia.svg') }}"
+                    >
+                </div>
+            </div>
+            <div class="box-furniture-carousel-wrap">
+                <span class="box-furniture-tag box-furniture-carousel-wrap__tag">
+                    <img
+                        class="box-furniture-tag__img"
+                        loading="lazy"
+                        data-src="{{ asset('public/frontend/images/flags/de.svg') }}"
+                        alt="{{ 'Německá kvalita' }}">
+                    <span class="box-furniture-tag__text">{{ 'Německá kvalita'|trans }}</span>
+                </span>
+                <div class="box-furniture-carousel js-furniture-cats-carousel">
+                    {{ picture(
+                        'kitchen/easytouch/carousel/easytouch_carousel_@2x.jpg',
+                        'kitchen/easytouch/carousel/easytouch_carousel.jpg',
+                        'Easytouch',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/easytouch/carousel/easytouch_carousel_02@2x.jpg',
+                        'kitchen/easytouch/carousel/easytouch_carousel_02.jpg',
+                        'Easytouch',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/easytouch/carousel/easytouch_carousel_03@2x.jpg',
+                        'kitchen/easytouch/carousel/easytouch_carousel_03.jpg',
+                        'Easytouch',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/easytouch/carousel/easytouch_carousel_04@2x.jpg',
+                        'kitchen/easytouch/carousel/easytouch_carousel_04.jpg',
+                        'Easytouch',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/easytouch/carousel/easytouch_carousel_05@2x.jpg',
+                        'kitchen/easytouch/carousel/easytouch_carousel_05.jpg',
+                        'Easytouch',
+                        'box-furniture-carousel__img'
+                    ) }}
+                </div>
+            </div>
+            <div class="box-furniture-detail-desc js-not-implemented-yet">
+                <p class="theme-kitchen-color">
+                    {{ 'Čistý design kuchyně <strong>EASYTOUCH</strong> je ideální pro moderní a minimalistické interiéry.
+                    Nejvýraznějším prvkem je její ultra matná povrchová úprava, kterou lze zvolit v provedení
+                    rezavá červená nebo grafitová černá. Přední plochy jsou opatřeny inovativní technologií <strong>ANTIFINGERPRINT</strong>,
+                    díky které se stanou otisky prstů minulostí. Na výběr máte z široké nabídky možných provedení
+                    pracovních desek a úchytů, nebo můžete zvolit bezúchytkové řešení LINE N pro ještě čistší vzhled.'|transHtml }}
+                </p>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
+            <div class="box-furniture-detail-variants">
+                <h2 class="box-furniture-detail-variants__title theme-kitchen-color-secondary">
+                    {{ 'Barevné varianty dvířek'|trans }}
+                </h2>
+                <div class="box-furniture-detail-variants__list">
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/easytouch/doors/grafitova_cerna_2x.png',
+                            'kitchen/easytouch/doors/grafitova_cerna.png',
+                            'Grafitová černá',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Grafitová černá'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Ultratmavá'|trans }}
+                        </span>
+                    </div>
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/easytouch/doors/rezave_cervena_2x.png',
+                            'kitchen/easytouch/doors/rezave_cervena.png',
+                            'Rezavě červená',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Rezavě červená'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Ultratmavá'|trans }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
+            <div class="box-furniture-detail-models">
+                <h2 class="box-furniture-detail-models__title theme-kitchen-color-secondary">
+                    {{ 'Modelové kuchyně'|trans }}
+                </h2>
+                <div class="box-furniture-detail-models__list">
+                    <div class="box-furniture-detail-models__list__item">
+                        <div class="box-furniture-detail-model">
+                            <div class="box-furniture-detail-model__content">
+                                <div class="box-furniture-detail-model__content__top">
+                                    <strong class="box-furniture-detail-model__name theme-kitchen-color-secondary">
+                                        {{ 'Rovná kuchyň EASYTOUCH'|trans }}
+                                    </strong>
+                                </div>
+                                <div class="box-furniture-detail-model__content__bottom">
+                                    <span class="box-furniture-detail-model__desc theme-kitchen-color">
+                                        {{ 'Tuto kuchyň můžete mít již od:' }}
+                                    </span>
+                                    <span
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--secondary theme-kitchen-color">
+                                        {{ '47 506 Kč'|trans }}
+                                    </span>
+                                    <strong
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--primary theme-kitchen-color-secondary">
+                                        {{ '23 753 <small>Kč*</small>'|transHtml }}
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="box-furniture-detail-model__image">
+                                {{ picture(
+                                    'kitchen/models/wireframe_rovna_2x.jpg',
+                                    'kitchen/models/wireframe_rovna.jpg',
+                                    'EASYTOUCH',
+                                    'box-furniture-detail-model__img'
+                                ) }}
+                                <span class="box-furniture-detail-model__small theme-kitchen-color">
+                                    {{ '*akční cena s 15% DPH, bez elektrospotřebičů a příslušenství'|trans }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-furniture-detail-models__list__item">
+                        <div class="box-furniture-detail-model box-furniture-detail-model--reverse">
+                            <div class="box-furniture-detail-model__content">
+                                <div class="box-furniture-detail-model__content__top">
+                                    <strong class="box-furniture-detail-model__name theme-kitchen-color-secondary">
+                                        {{ 'Rohová kuchyň EASYTOUCH'|trans }}
+                                    </strong>
+                                </div>
+                                <div class="box-furniture-detail-model__content__bottom">
+                                    <span class="box-furniture-detail-model__desc theme-kitchen-color">
+                                        {{ 'Tuto kuchyň můžete mít již od:' }}
+                                    </span>
+                                    <span
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--secondary theme-kitchen-color">
+                                        {{ '73 059 Kč'|trans }}
+                                    </span>
+                                    <strong
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--primary theme-kitchen-color-secondary">
+                                        {{ '36 530 <small>Kč*</small>'|transHtml }}
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="box-furniture-detail-model__image">
+                                {{ picture(
+                                    'kitchen/models/wireframe_roh_2x.jpg',
+                                    'kitchen/models/wireframe_roh.jpg',
+                                    'EASYTOUCH',
+                                    'box-furniture-detail-model__img'
+                                ) }}
+                                <span class="box-furniture-detail-model__small box-furniture-detail-model__small--reverse theme-kitchen-color">
+                                    {{ '*akční cena s 15% DPH, bez elektrospotřebičů a příslušenství'|trans }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
+            <div class="box-furniture-detail-desks">
+                <h2 class="box-furniture-detail-desks__title theme-kitchen-color-secondary">
+                    {{ 'Pracovní desky'|trans }}
+                </h2>
+                <p class="box-furniture-detail-desc box-furniture-detail-desc--no-spacing theme-kitchen-color">
+                    {{ 'Vzhled betonu, dřeva nebo jednobarevné?
+                     V úplném kontrastu nebo tón v tónu s dvířky?
+                     Široký výběr pracovních desek nabízí mnoho možností.
+                     Díky přiřazeným barevným koncepcím určitě najdete tu svou oblíbenou.'|trans }}
+                </p>
+                <div class="box-furniture-detail-desks__list">
+                    {{ picture(
+                        '/kitchen/easytouch/desks/desk1_2x.png',
+                        '/kitchen/easytouch/desks/desk1.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/easytouch/desks/desk2_2x.png',
+                        '/kitchen/easytouch/desks/desk2.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/easytouch/desks/desk3_2x.png',
+                        '/kitchen/easytouch/desks/desk3.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/easytouch/desks/desk4_2x.png',
+                        '/kitchen/easytouch/desks/desk4.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/easytouch/desks/desk5_2x.png',
+                        '/kitchen/easytouch/desks/desk5.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/easytouch/desks/desk6_2x.png',
+                        '/kitchen/easytouch/desks/desk6.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    <span class="box-furniture-outline-btn box-furniture-detail-desks__btn theme-kitchen-color">
+                        {{ 'a mnoho dalších...' }}
+                    </span>
+                </div>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
+            <div class="box-furniture-detail-grips">
+                <h2 class="box-furniture-detail-grips__title theme-kitchen-color-secondary">
+                    {{ 'Úchyty'|trans }}
+                </h2>
+                <div class="box-furniture-detail-grips__list">
+                    <div class="box-furniture-detail-grips__list__item">
+                        <strong class="box-furniture-detail-grips__name theme-kitchen-color-secondary">
+                            {{ 'Úchyty v moderním designu'|trans }}
+                        </strong>
+                        <p class="box-furniture-detail-grips__desc theme-kitchen-color">
+                            {{ 'Při použití úchytů si můžete vybrat ze stovky různých provedení.
+                            Nabízíme takové minimalistické kovové úchytky, které jsou nenápadné a elegantní.'|trans }}
+                        </p>
+                        <div class="box-furniture-detail-grips__image">
+                            {{ picture(
+                                '/kitchen/easytouch/grips/easytouch_@2x.jpg',
+                                '/kitchen/easytouch/grips/easytouch.jpg',
+                                'Úchyty',
+                                'box-furniture-detail-grips__img'
+                            ) }}
+                        </div>
+                    </div>
+                    <div class="box-furniture-detail-grips__list__item">
+                        <strong class="box-furniture-detail-grips__name theme-kitchen-color-secondary">
+                            {{ 'Bezúchytové řešení'|trans }}
+                        </strong>
+                        <p class="box-furniture-detail-grips__desc theme-kitchen-color">
+                            {{ 'Program LINE N mění jednoduchost v jedinečnost.
+                            Bezúchytkové řešení zvýrazní jemné linie a eleganci.'|trans }}
+                        </p>
+                        <div class="box-furniture-detail-grips__image">
+                            {{ picture(
+                                '/kitchen/detail/grips/bezuchytove_reseni_2x.jpg',
+                                '/kitchen/detail/grips/bezuchytove_reseni.jpg',
+                                'Úchyty',
+                                'box-furniture-detail-grips__img'
+                            ) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
+            <div class="box-furniture-carousel-wrap">
+                <h2 class="box-furniture-carousel-wrap__title theme-kitchen-color-secondary">
+                    {{ 'Více než kuchyň'|trans }}
+                </h2>
+                 <span class="box-furniture-tag box-furniture-carousel-wrap__tag box-furniture-carousel-wrap__tag--with-heading">
+                    <img
+                        class="box-furniture-tag__img"
+                        loading="lazy"
+                        data-src="{{ asset('public/frontend/images/flags/de.svg') }}"
+                        alt="{{ 'Německá kvalita' }}">
+                    <span class="box-furniture-tag__text">{{ 'Německá kvalita'|trans }}</span>
+                </span>
+                <div class="box-furniture-carousel js-furniture-cats-carousel">
+                    {{ picture(
+                        'kitchen/easytouch/carouselBottom/easytouch_morethan_@2x.jpg',
+                        'kitchen/easytouch/carouselBottom/easytouch_morethan.jpg',
+                        'Easytouch Morethan',
+                        'box-furniture-carousel__img'
+                    ) }}
+                </div>
+            </div>
+            <div class="box-furniture-pagination">
+                <a
+                    class="box-furniture-pagination__item"
+                    href="{{ url('front_kitchen_detail_structura') }}"
+                >
+                    <i class="svg svg-chevron box-furniture-pagination__item__icon box-furniture-pagination__item__icon--previous theme-kitchen-color"></i>
+                    <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
+                        {{ 'Předešlá kuchyň'|trans }}
+                    </span>
+                </a>
+                <a
+                    class="box-furniture-pagination__item box-furniture-pagination__item--next"
+                    href="{{ url('front_kitchen_detail_fashion') }}"
+                >
+                    <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
+                        {{ 'Následující kuchyň'|trans }}
+                    </span>
+                    <i class="svg svg-chevron box-furniture-pagination__item__icon theme-kitchen-color"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

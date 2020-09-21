@@ -1,0 +1,435 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+{% from 'Front/Macros/picture.html.twig' import picture as picture %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block title %}
+    {{- 'RIVA'|trans -}}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line web__line--spacing--big">
+        <div class="web__container">
+            <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
+                <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing">
+                    <div class="box-breadcrumb">
+                        <div class="box-breadcrumb">
+                            <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
+                                <i class="box-breadcrumb__item__icon svg svg-home"></i>
+                                <span>{{ 'Domů'|trans }}</span>
+                            </a>
+                            <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                            <a href="{{ url('front_kitchen_list_modern') }}" class="box-breadcrumb__item">{{ 'Moderní kuchyně'|trans }}</a>
+                            <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                            <span class="box-breadcrumb__item">{{ 'RIVA'|trans }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-furniture-banner box-furniture-banner--detail theme-kitchen-bg">
+                <div class="box-furniture-banner__content">
+                    <span class="box-furniture-tag box-furniture-tag--simple">
+                        <span class="box-furniture-tag__text theme-kitchen-color">{{ 'Designová kuchyně'|trans }}</span>
+                    </span>
+                    <h1 class="box-furniture-banner__title theme-kitchen-color-secondary">{{ 'RIVA'|trans }}</h1>
+                </div>
+                <div class="box-furniture-banner__image">
+                    <img
+                        alt="{{ 'Nobilia'|trans }}"
+                        class="box-furniture-banner__img"
+                        title="{{ 'Nobilia'|trans }}"
+                        loading="lazy"
+                        data-src="{{ asset('public/frontend/images/kitchen/brand/nobilia.svg') }}"
+                    >
+                </div>
+            </div>
+            <div class="box-furniture-carousel-wrap">
+                <span class="box-furniture-tag box-furniture-carousel-wrap__tag">
+                    <img
+                        class="box-furniture-tag__img"
+                        loading="lazy"
+                        data-src="{{ asset('public/frontend/images/flags/de.svg') }}"
+                        alt="{{ 'Německá kvalita' }}">
+                    <span class="box-furniture-tag__text">{{ 'Německá kvalita'|trans }}</span>
+                </span>
+                <div class="box-furniture-carousel js-furniture-cats-carousel">
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_01_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_01-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_02_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_02-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_03_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_03-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_04_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_04-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_05_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_05-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_06_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_06-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_07_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_07-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_08_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_08-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_09_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_09-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carousel/riva_Carousel_10_@2x-min.jpg',
+                        'kitchen/riva/carousel/riva_Carousel_10-min.jpg',
+                        'Riva',
+                        'box-furniture-carousel__img'
+                    ) }}
+                </div>
+            </div>
+            <div class="box-furniture-detail-desc">
+                <p class="theme-kitchen-color">
+                    {{ 'Jednoduché čisté linie a široká nabídka dekorů včetně dřeva a betonu dělají z kuchyně <strong>RIVA</strong>
+                     jednu z nejoblíbenějších v naší nabídce. Skvěle se svým designem hodí do moderních interiérů,
+                    které může dřevěnými dekory zároveň zútulnit. Vybrat si můžete také ze široké nabídky pracovních
+                    desek a úchytek, nebo podpořit čistý design kuchyně bezúchytkovým řešením LINE N.'|transHtml }}
+                </p>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
+            <div class="box-furniture-detail-variants">
+                <h2 class="box-furniture-detail-variants__title theme-kitchen-color-secondary">
+                    {{ 'Barevné varianty dvířek'|trans }}
+                </h2>
+                <div class="box-furniture-detail-variants__list">
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/riva/doors/bily_beton_2x-min.png',
+                            'kitchen/riva/doors/bily_beton-min.jpg',
+                            'Bílý beton',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Bílý beton'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Imitace'|trans }}
+                        </span>
+                    </div>
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/riva/doors/beton_sedy_2x-min.png',
+                            'kitchen/riva/doors/beton_sedy-min.jpg',
+                            'Bílý beton',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Beton šedý'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Imitace'|trans }}
+                        </span>
+                    </div>
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/riva/doors/dub_san_remo_2x-min.png',
+                            'kitchen/riva/doors/dub_san_remo-min.jpg',
+                            'Dub San Remo',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Dub San Remo'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Imitace'|trans }}
+                        </span>
+                    </div>
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/riva/doors/dub_somerset_2x-min.png',
+                            'kitchen/riva/doors/dub_somerset-min.jpg',
+                            'Dub Somerset',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Dub Somerset'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Imitace'|trans }}
+                        </span>
+                    </div>
+                    <div class="box-furniture-detail-variants__list__item">
+                        {{ picture(
+                            'kitchen/riva/doors/beton_bridlice_seda_2x-min.png',
+                            'kitchen/riva/doors/beton_bridlice_seda-min.jpg',
+                            'Beton břidlicově šedá',
+                            'box-furniture-detail-variants__img'
+                        ) }}
+                        <strong class="box-furniture-detail-variants__name">
+                            {{ 'Beton břidlicově šedá'|trans }}
+                        </strong>
+                        <span class="box-furniture-detail-variants__desc">
+                            {{ 'Imitace'|trans }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing" />
+            <div class="box-furniture-detail-models">
+                <h2 class="box-furniture-detail-models__title theme-kitchen-color-secondary">
+                    {{ 'Modelové kuchyně'|trans }}
+                </h2>
+                <div class="box-furniture-detail-models__list">
+                    <div class="box-furniture-detail-models__list__item">
+                        <div class="box-furniture-detail-model">
+                            <div class="box-furniture-detail-model__content">
+                                <div class="box-furniture-detail-model__content__top">
+                                    <strong class="box-furniture-detail-model__name theme-kitchen-color-secondary">
+                                        {{ 'Rovná kuchyň RIVA'|trans }}
+                                    </strong>
+                                </div>
+                                <div class="box-furniture-detail-model__content__bottom">
+                                    <span class="box-furniture-detail-model__desc theme-kitchen-color">
+                                        {{ 'Tuto kuchyň můžete mít již od:' }}
+                                    </span>
+                                    <span
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--secondary theme-kitchen-color">
+                                        {{ '38 692 Kč'|trans }}
+                                    </span>
+                                    <strong
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--primary theme-kitchen-color-secondary">
+                                        {{ '19 346 <small>Kč*</small>'|transHtml }}
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="box-furniture-detail-model__image">
+                                {{ picture(
+                                    'kitchen/models/wireframe_rovna_2x.jpg',
+                                    'kitchen/models/wireframe_rovna.jpg',
+                                    'RIVA',
+                                    'box-furniture-detail-model__img'
+                                ) }}
+                                <span class="box-furniture-detail-model__small theme-kitchen-color">
+                                    {{ '*akční cena s 15% DPH, bez elektrospotřebičů a příslušenství'|trans }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-furniture-detail-models__list__item">
+                        <div class="box-furniture-detail-model box-furniture-detail-model--reverse">
+                            <div class="box-furniture-detail-model__content">
+                                <div class="box-furniture-detail-model__content__top">
+                                    <strong class="box-furniture-detail-model__name theme-kitchen-color-secondary">
+                                        {{ 'Rohová kuchyň RIVA'|trans }}
+                                    </strong>
+                                </div>
+                                <div class="box-furniture-detail-model__content__bottom">
+                                    <span class="box-furniture-detail-model__desc theme-kitchen-color">
+                                        {{ 'Tuto kuchyň můžete mít již od:' }}
+                                    </span>
+                                    <span
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--secondary theme-kitchen-color">
+                                        {{ '60 341 Kč'|trans }}
+                                    </span>
+                                    <strong
+                                        class="box-furniture-detail-model__price box-furniture-detail-model__price--primary theme-kitchen-color-secondary">
+                                        {{ '30 171 <small>Kč*</small>'|transHtml }}
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="box-furniture-detail-model__image">
+                                {{ picture(
+                                    'kitchen/models/wireframe_roh_2x.jpg',
+                                    'kitchen/models/wireframe_roh.jpg',
+                                    'RIVA',
+                                    'box-furniture-detail-model__img'
+                                ) }}
+                                <span class="box-furniture-detail-model__small box-furniture-detail-model__small--reverse theme-kitchen-color">
+                                    {{ '*akční cena s 15% DPH, bez elektrospotřebičů a příslušenství'|trans }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'Front/Content/Kitchen/components/offers.html.twig' %}
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
+            <div class="box-furniture-detail-desks">
+                <h2 class="box-furniture-detail-desks__title theme-kitchen-color-secondary">
+                    {{ 'Pracovní desky'|trans }}
+                </h2>
+                <p class="box-furniture-detail-desc box-furniture-detail-desc--no-spacing theme-kitchen-color">
+                    {{ 'Vzhled betonu, dřeva nebo jednobarevné?
+                     V úplném kontrastu nebo tón v tónu s dvířky?
+                     Široký výběr pracovních desek nabízí mnoho možností.
+                     Díky přiřazeným barevným koncepcím určitě najdete tu svou oblíbenou.'|trans }}
+                </p>
+                <div class="box-furniture-detail-desks__list">
+                    {{ picture(
+                        '/kitchen/riva/desks/desk1_2x-min.png',
+                        '/kitchen/riva/desks/desk1-min.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/riva/desks/desk2_2x-min.png',
+                        '/kitchen/riva/desks/desk2-min.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/riva/desks/desk3_2x-min.png',
+                        '/kitchen/riva/desks/desk3-min.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/riva/desks/desk4_2x-min.png',
+                        '/kitchen/riva/desks/desk4-min.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/riva/desks/desk5_2x-min.png',
+                        '/kitchen/riva/desks/desk5-min.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    {{ picture(
+                        '/kitchen/riva/desks/desk6_2x-min.png',
+                        '/kitchen/riva/desks/desk6-min.png',
+                        'Deska',
+                        'box-furniture-detail-desks__img'
+                    ) }}
+                    <span class="box-furniture-outline-btn box-furniture-detail-desks__btn theme-kitchen-color">
+                        {{ 'a mnoho dalších...' }}
+                    </span>
+                </div>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
+            <div class="box-furniture-detail-grips">
+                <h2 class="box-furniture-detail-grips__title theme-kitchen-color-secondary">
+                    {{ 'Úchyty'|trans }}
+                </h2>
+                <div class="box-furniture-detail-grips__list">
+                    <div class="box-furniture-detail-grips__list__item">
+                        <strong class="box-furniture-detail-grips__name theme-kitchen-color-secondary">
+                            {{ 'Úchyty v moderním designu'|trans }}
+                        </strong>
+                        <p class="box-furniture-detail-grips__desc theme-kitchen-color">
+                            {{ 'Při použití úchytů si můžete vybrat ze stovky různých provedení.
+                            Nabízíme takové minimalistické kovové úchytky, které jsou nenápadné a elegantní.'|trans }}
+                        </p>
+                        <div class="box-furniture-detail-grips__image">
+                            {{ picture(
+                                '/kitchen/riva/grips/riva_@2x.jpg',
+                                '/kitchen/riva/grips/riva.jpg',
+                                'Úchyty',
+                                'box-furniture-detail-grips__img'
+                            ) }}
+                        </div>
+                    </div>
+                    <div class="box-furniture-detail-grips__list__item">
+                        <strong class="box-furniture-detail-grips__name theme-kitchen-color-secondary">
+                            {{ 'Bezúchytové řešení'|trans }}
+                        </strong>
+                        <p class="box-furniture-detail-grips__desc theme-kitchen-color">
+                            {{ 'Program LINE N mění jednoduchost v jedinečnost.
+                            Bezúchytkové řešení zvýrazní jemné linie a eleganci.'|trans }}
+                        </p>
+                        <div class="box-furniture-detail-grips__image">
+                            {{ picture(
+                                '/kitchen/detail/grips/bezuchytove_reseni_2x.jpg',
+                                '/kitchen/detail/grips/bezuchytove_reseni.jpg',
+                                'Úchyty',
+                                'box-furniture-detail-grips__img'
+                            ) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="box-furniture-sep box-furniture-sep--small-spacing box-furniture-sep--top-spacing-small" />
+            <div class="box-furniture-carousel-wrap">
+                <h2 class="box-furniture-carousel-wrap__title theme-kitchen-color-secondary">
+                    {{ 'Více než kuchyň'|trans }}
+                </h2>
+                 <span class="box-furniture-tag box-furniture-carousel-wrap__tag box-furniture-carousel-wrap__tag--with-heading">
+                    <img
+                        class="box-furniture-tag__img"
+                        loading="lazy"
+                        data-src="{{ asset('public/frontend/images/flags/de.svg') }}"
+                        alt="{{ 'Německá kvalita' }}">
+                    <span class="box-furniture-tag__text">{{ 'Německá kvalita'|trans }}</span>
+                </span>
+                <div class="box-furniture-carousel js-furniture-cats-carousel">
+                    {{ picture(
+                        'kitchen/riva/carouselBottom/riva_morethan_01_@2x-min.jpg',
+                        'kitchen/riva/carouselBottom/riva_morethan_01-min.jpg',
+                        'Riva Morethan',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carouselBottom/riva_morethan_02_@2x-min.jpg',
+                        'kitchen/riva/carouselBottom/riva_morethan_02-min.jpg',
+                        'Riva Morethan',
+                        'box-furniture-carousel__img'
+                    ) }}
+                    {{ picture(
+                        'kitchen/riva/carouselBottom/riva_morethan_03_@2x-min.jpg',
+                        'kitchen/riva/carouselBottom/riva_morethan_03-min.jpg',
+                        'Riva Morethan',
+                        'box-furniture-carousel__img'
+                    ) }}
+                </div>
+            </div>
+            <div class="box-furniture-pagination">
+                <a
+                    class="box-furniture-pagination__item"
+                    href="{{ url('front_kitchen_detail_stoneart') }}"
+                >
+                    <i class="svg svg-chevron box-furniture-pagination__item__icon box-furniture-pagination__item__icon--previous theme-kitchen-color"></i>
+                    <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
+                        {{ 'Předešlá kuchyň'|trans }}
+                    </span>
+                </a>
+                <a
+                    class="box-furniture-pagination__item box-furniture-pagination__item--next"
+                    href="{{ url('front_kitchen_detail_structura') }}"
+                >
+                    <span class="box-furniture-pagination__item__text theme-kitchen-color-secondary">
+                        {{ 'Následující kuchyň'|trans }}
+                    </span>
+                    <i class="svg svg-chevron box-furniture-pagination__item__icon theme-kitchen-color"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
