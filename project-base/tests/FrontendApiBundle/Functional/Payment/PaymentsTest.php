@@ -8,6 +8,18 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentsTest extends GraphQlTestCase
 {
+    /**
+     * @var mixed
+     */
+    private $webserverUrl;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->webserverUrl = $this->getContainer()->getParameter('overwrite_domain_url');
+    }
+
     public function testPayments(): void
     {
         $query = '
@@ -46,8 +58,8 @@ class PaymentsTest extends GraphQlTestCase
                             'vatAmount' => '0.00',
                         ],
                         'images' => [
-                            ['url' => 'http://webserver:8080/content-test/images/payment/default/53.jpg'],
-                            ['url' => 'http://webserver:8080/content-test/images/payment/original/53.jpg'],
+                            ['url' => $this->webserverUrl . '/content-test/images/payment/default/53.jpg'],
+                            ['url' => $this->webserverUrl . '/content-test/images/payment/original/53.jpg'],
                         ],
                         'transports' => [
                             ['name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
@@ -65,8 +77,8 @@ class PaymentsTest extends GraphQlTestCase
                             'vatAmount' => '0.00',
                         ],
                         'images' => [
-                            ['url' => 'http://webserver:8080/content-test/images/payment/default/55.jpg'],
-                            ['url' => 'http://webserver:8080/content-test/images/payment/original/55.jpg'],
+                            ['url' => $this->webserverUrl . '/content-test/images/payment/default/55.jpg'],
+                            ['url' => $this->webserverUrl . '/content-test/images/payment/original/55.jpg'],
                         ],
                         'transports' => [
                             ['name' => t('Czech post', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
@@ -83,8 +95,8 @@ class PaymentsTest extends GraphQlTestCase
                             'vatAmount' => '0.00',
                         ],
                         'images' => [
-                            ['url' => 'http://webserver:8080/content-test/images/payment/default/54.jpg'],
-                            ['url' => 'http://webserver:8080/content-test/images/payment/original/54.jpg'],
+                            ['url' => $this->webserverUrl . '/content-test/images/payment/default/54.jpg'],
+                            ['url' => $this->webserverUrl . '/content-test/images/payment/original/54.jpg'],
                         ],
                         'transports' => [
                             ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
