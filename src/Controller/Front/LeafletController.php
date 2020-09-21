@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Component\Domain\Domain;
-use Symfony\Component\HttpFoundation\Response;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
+use Symfony\Component\HttpFoundation\Response;
 
 class LeafletController extends FrontBaseController
 {
