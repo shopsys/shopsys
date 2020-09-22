@@ -1,8 +1,10 @@
+{% set domain = getDomain() %}
+
 {{ form_start(form, { attr: { 'data-on-submit': 'ajaxSubmit', 'data-success': success ? 'true' : 'false' }}) }}
     <div class="footer__newsletter">
         <div class="footer__newsletter__text">
             <h2 class="footer__newsletter__heading h3">
-                {{ 'Zaregistrujte se k odběru newsletteru a&nbsp;získejte slevu 30&nbsp;% na Váš první nákup!'|transHtml }}
+                {{ 'Zaregistrujte se k odběru newsletteru a získejte slevu 35&nbsp;% na nábytek na Váš první nákup*'|transHtml }}
             </h2>
         </div>
         <div class="footer__newsletter__form">
@@ -14,8 +16,16 @@
                 {{ form_widget(form.send, { label: 'Odeslat'|trans, attr: { class: "btn btn--primary btn--newsletter footer__newsletter__form__btn" }}) }}
             </div>
             {{ form_errors(form, { errors_attr: { class : 'in-message--alert' } }) }}
+            {% set descUrl = '/ochrana-osobnich-udaju' %}
+            {% if domain.id == 2 %}
+                {% set descUrl = '/ochrana-osobnych-udajov' %}
+            {% endif %}
             <div class="form-description">
-                {{ 'Of course, you can unsubscribe at any time. By submitting the data, you agree to the processing of personal data.'|trans }}
+                {{ '*Sconto Nábytek nakládá s osobními údaji v souladu s GDPR.
+                Více se dozvíte v potvrzovacím e-mailu nebo na <a href="%url%">našem webu</a>.
+                Slevy se počítají z původních cen a vztahují se pouze na zboží, u kterého jsou tyto ceny uvedeny.
+                Nevztahují se na zboží v aktuálním akčním letáku a označené jako výprodej nebo cenový hit.
+                Akce se vztahuje pouze na nově uzavřené kupní smlouvy. Slevy nelze sčítat.'|transHtml({'%url%': descUrl}) }}
             </div>
         </div>
         <picture>

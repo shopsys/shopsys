@@ -93,12 +93,14 @@
                                 data-src="{{ asset('public/frontend/images/letak.png') }}"
                                 alt="{{ 'Aktuální leták'|trans }}">
                     </picture>
-                    <p class="box-block__item__desc">{{ 'Tuny slev, lorem ipsum dolor sit amet,<br> consectur adispic elit.'|trans|raw }}</p>
+                    <p class="box-block__item__desc">
+                        {{ 'Prohlédněte si náš aktuální leták, ve kterém naleznete stylový nábytek pro svůj byt či dům za akční cenu.'|trans }}
+                    </p>
                     <a
                         class="btn btn--next btn-no-style"
                         href="/letak"
                     >
-                        {{ 'Číst dál'|trans }}
+                        {{ 'Prohlédnout leták'|trans }}
                         <i class="btn__icon svg svg-chevron"></i>
                     </a>
                 </div>
@@ -148,13 +150,13 @@
 {% endif %}
 <div class="web__line">
     <div class="web__container">
-        <h2>{{ 'Nakupujte podle kategorií'|trans }}</h2>
+        <h2>{{ 'Oblíbené kategorie'|trans }}</h2>
         {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories, showProductsCountByCategory: false})) }}
     </div>
 </div>
 <div class="web__line">
     <div class="web__container">
-        <h2>{{ 'Nakupujte podle místností'|trans }}</h2>
+        <h2>{{ 'Nábytek a doplňky, které přesně padnou do vašich pokojů'|trans }}</h2>
         <div class="list-grid">
             <div class="list-grid__row">
                 <div class="list-grid__item list-grid__item--long list-grid__item--sixth">

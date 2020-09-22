@@ -17,8 +17,10 @@
         <div class="web__container">
             <h1 class="heading heading--primary heading--primary-subpage">{{ "Programy"|trans }}</h1>
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
-            <div class="box-blog__desc js-not-implemented-yet">
-                {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit, magna quis condimentum molestie, nunc nunc imperdiet mauris, ut pharetra odio ex nec augue. Suspendisse porttitor augue vel dolor auctor, ac cursus tortor consectetur. Pellentesque rhoncus mi et massa vulputate, non vestibulum urna tincidunt. Donec et posuere erat....'|trans }}
+            <div class="box-blog__desc">
+                {{ 'Toužíte po celistvém designu, vysoké kvalitě a dokonalém zpracování každého detailu ve vaší domácnosti?
+                Dejte sbohem nejednotnému vzhledu a prohlédněte si naše nábytkové programy, díky kterým ušetříte nejen peníze, ale i starosti.
+                Navíc si můžete sestavit jednotlivé části tak, aby vyhovovaly vašemu prostoru.'|trans }}
             </div>
             <div class="box-blog__categories box-blog__categories--programs">
                 {% for seriesCategory in productSeriesCategories %}

@@ -432,7 +432,7 @@
                 {% if productStocksAvailabilitiesInformation|length > 0 %}
                     <div class="box-accordion box-accordion--opened-on-mobile is-opened js-accordion" id="stocks-availabilities">
                         <a class="box-accordion__header js-accordion-header" href="#">
-                            <strong class="box-accordion__heading">{{ 'Dostupnost'|trans }}</strong>
+                            <strong class="box-accordion__heading">{{ 'Dostupnost na prodejnách'|trans }}</strong>
                             <span class="box-accordion__header__toggle">
                                 <span
                                     class="box-accordion__header__toggle__text js-accordion-toggle-text"
@@ -505,7 +505,7 @@
 
                 {% if accessories|length > 0 %}
                     <div class="box-detail box-detail--accessories gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
-                        <h2 class="box-detail__title">{{ 'Accessories'|trans }}</h2>
+                        <h2 class="box-detail__title">{{ 'Můžete si dokoupit'|trans }}</h2>
                         <div class="box-products-accessories js-products-slick-carousel-cols">
                             {{ productList.list(accessories, null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
                         </div>
@@ -560,7 +560,7 @@
             <div class="web__line web__line--spacing--big">
                 <div class="web__container">
                     <div class="box-detail-cats">
-                        <h2 class="box-detail-cats__heading">{{ 'Podobné kategorie'|trans }}</h2>
+                        <h2 class="box-detail-cats__heading">{{ 'Zařazeno v kategoriích:'|trans }}</h2>
                         <div class="box-detail-cats__wrap">
                             {% for category in categoryList %}
                                 <a class="box-detail-cats__item" href="{{ url('front_product_list', { id: category.id }) }}">

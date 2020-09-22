@@ -375,7 +375,7 @@ class ProductAvailabilityFacade
                 continue;
             }
 
-            $availabilityInformation = t('Můžete mít <strong class="is-in-stock">ihned</strong>');
+            $availabilityInformation = t('<strong class="is-in-stock">Ihned</strong> k odběru');
             $availabilityStatus = self::AVAILABILITY_STATUS_IN_STOCK;
 
             if ($isOutOfStock) {
