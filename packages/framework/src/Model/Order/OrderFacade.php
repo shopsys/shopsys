@@ -428,29 +428,6 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $limit
-     * @param int $offset
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
-     */
-    public function getCustomerUserOrderLimitedList(
-        CustomerUser $customerUser,
-        int $limit,
-        int $offset
-    ): array {
-        return $this->orderRepository->getCustomerUserOrderLimitedList($customerUser, $limit, $offset);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return int
-     */
-    public function getCustomerUserOrderCount(CustomerUser $customerUser): int
-    {
-        return $this->orderRepository->getCustomerUserOrderCount($customerUser);
-    }
-
-    /**
      * @param string $email
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
@@ -467,26 +444,6 @@ class OrderFacade
     public function getById($orderId)
     {
         return $this->orderRepository->getById($orderId);
-    }
-
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    public function getByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser): Order
-    {
-        return $this->orderRepository->getByUuidAndCustomerUser($uuid, $customerUser);
-    }
-
-    /**
-     * @param string $uuid
-     * @param string $urlHash
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    public function getByUuidAndUrlHash(string $uuid, string $urlHash): Order
-    {
-        return $this->orderRepository->getByUuidAndUrlHash($uuid, $urlHash);
     }
 
     /**
