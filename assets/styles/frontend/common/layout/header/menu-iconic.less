@@ -70,10 +70,12 @@
             opacity: 0;
             transform: scaleY(0.5) scaleX(0.7);
             will-change: transform;
+            pointer-events: none;
 
             .menu-iconic__item:hover & {
                 opacity: 1;
                 transform: scale(1);
+                pointer-events: auto;
             }
 
             &__item {
