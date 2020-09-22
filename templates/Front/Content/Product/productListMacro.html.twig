@@ -29,7 +29,7 @@
                                 </picture>
                             {% endif %}
                             {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
-                            {% if productView.nonSellingPrice.priceWithVat.isPositive and not productView.hasScontoFlag %}
+                            {% if productView.nonSellingPrice.priceWithVat.isPositive and not productView.hasScontoFlag and not productView.sellingPrice.priceFrom %}
                                 {{ discount.circle(productView.sellingPrice.priceWithVat, productView.nonSellingPrice.priceWithVat) }}
                             {% endif %}
                         </div>

@@ -334,6 +334,9 @@
           "variant_id": {
             "type": "integer"
           },
+          "variant_has_sconto_flag": {
+            "type": "boolean"
+          },
           "parameter_values_setup": {
             "type": "nested",
             "properties": {

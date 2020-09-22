@@ -254,6 +254,14 @@ class ListedProductView extends BaseListedProductView
     }
 
     /**
+     * @param bool $hasScontoFlag
+     */
+    public function setHasScontoFlag(bool $hasScontoFlag): void
+    {
+        $this->hasScontoFlag = $hasScontoFlag;
+    }
+
+    /**
      * @param string|null $productAvailableStocksCountInformation
      */
     public function setProductAvailableStocksCountInformation(?string $productAvailableStocksCountInformation): void
@@ -267,5 +275,13 @@ class ListedProductView extends BaseListedProductView
     public function setAvailability(string $availability): void
     {
         $this->availability = $availability;
+    }
+
+    /**
+     * @param int[] $flagIds
+     */
+    public function setFlagIds(array $flagIds): void
+    {
+        $this->flagIds = $flagIds;
     }
 }

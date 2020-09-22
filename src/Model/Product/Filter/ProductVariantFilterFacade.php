@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Filter;
 
-use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Listed\ListedProductView;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
@@ -83,6 +82,8 @@ class ProductVariantFilterFacade
                     $listedProductView->setProductAvailableStocksCountInformation(
                         $variantParameterSetup['variant_availability_info']['product_available_stocks_count_information'] ?? null
                     );
+                    $listedProductView->setFlagIds($variantParameterSetup['variant_flags']);
+                    $listedProductView->setHasScontoFlag($variantParameterSetup['variant_has_sconto_flag']);
                 }
             }
         }

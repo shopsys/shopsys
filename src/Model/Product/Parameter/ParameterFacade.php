@@ -8,6 +8,7 @@ use App\Component\Image\Image;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
@@ -482,6 +483,8 @@ class ParameterFacade extends BaseParameterFacade
 
         $variantParametersSetup['variant_availability_info']['product_availability_information'] = $productAvailabilityInformation;
         $variantParametersSetup['variant_availability_info']['product_available_stocks_count_information'] = $productAvailableStocksCountInformation;
+        $variantParametersSetup['variant_flags'] = $productVariant->getFlagsIdsForDomain($domainId);
+        $variantParametersSetup['variant_has_sconto_flag'] = $productVariant->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId);
 
         return $variantParametersSetup;
     }
