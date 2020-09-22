@@ -949,3 +949,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Security\CustomerLoginHandler:
         alias: App\Model\Security\CustomerLoginHandler
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade:
+        alias: App\Model\Customer\User\CustomerUserPasswordFacade

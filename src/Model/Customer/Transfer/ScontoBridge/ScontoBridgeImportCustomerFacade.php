@@ -139,7 +139,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
         );
 
         if ($customerUser === null) {
-            $customerUserUpdateData->customerUserData->password = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
+            $customerUserUpdateData->customerUserData->password = '';
             $newCustomerUser = $this->customerUserFacade->create($customerUserUpdateData);
             $this->logger->addInfo(sprintf('Created customer with eshop ID: %s ', $newCustomerUser->getId()));
         } else {
