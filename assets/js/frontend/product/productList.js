@@ -50,9 +50,9 @@ export default class ProductList {
             queryData = $productFilterForm.serialize()
                 .replace(/(&|^)product_filter_form%5BminimalPrice%5D=(&|$)/g, '$2')
                 .replace(/(&|^)product_filter_form%5BmaximalPrice%5D=(&|$)/g, '$2')
-                .replace(/(&|^)product_filter_form%5Bparameters%5D%5B(\d+)%5D%5Bmin%5D=(&|$)/g, '$3')
-                .replace(/(&|^)product_filter_form%5Bparameters%5D%5B(\d+)%5D%5Bmax%5D=(&|$)/g, '$3')
-            ;
+                .replace(/(&?|^)product_filter_form%5Bparameters%5D%5B(\d+)%5D%5Bmin%5D=(&|$)/g, '$3')
+                .replace(/(&?|^)product_filter_form%5Bparameters%5D%5B(\d+)%5D%5Bmax%5D=(&|$)/g, '$3');
+
         } else {
             let urlObject = new URL(location.href);
             let params = new URLSearchParams(urlObject.search.slice(1));
