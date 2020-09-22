@@ -37,7 +37,7 @@ class LeafletController extends FrontBaseController
     public function indexAction(): Response
     {
         return $this->render('Front/Content/Leaflet/index.html.twig', [
-            'categories' => $this->topCategoryFacade->getVisibleCategoriesByDomainId($this->domain->getId())
+            'categories' => $this->topCategoryFacade->getVisibleCategoriesByDomainId($this->domain->getId()),
         ]);
     }
 }
