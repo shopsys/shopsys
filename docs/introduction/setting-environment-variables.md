@@ -1,6 +1,22 @@
 # Setting environment variables
 
-In this article describes how to set environments variable in different environment.
+This article describes how to set configure environment variables in different environment and even on some common used webservers.
+
+## Global configuration of environment variables
+
+Shopsys Framework as Symfony based application is using the same environment configuration as Symfony.
+
+We recommend using [`.env` files](https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-env-files) for configuring environment variables as it can be easily maintained. There is also advantage of different configuration through different application environments (suh as dev, test and prod).
+
+!!! note
+
+    You may also use [`.env.local` file](https://symfony.com/doc/4.4/configuration.html#overriding-environment-values-via-env-local) for your personal configuration. The `*.local` files should not be commited so they are ingored with `.gitignore` by default.
+
+For better understanding [visit the whole documentation here](https://symfony.com/doc/4.4/configuration.html#configuration-environments) where you can find more info about priority, [variables encrypting](https://symfony.com/doc/4.4/configuration.html#encrypting-environment-variables-secrets), [syntax](https://symfony.com/doc/4.4/configuration.html#env-file-syntax) and much more.
+
+## Overriding by real environment variable of webserver
+
+When `.env` files are not enough for your purpose you may override environment variables directly by webserver setting. These settings ignore any variables configured in `.env` files.
 
 The most common uses are: Kubernetes, Docker or native installation.
 
@@ -8,11 +24,7 @@ The most common uses are: Kubernetes, Docker or native installation.
     
     Bellow is descibed the easiest way. For better understanding we recomend to find out the documentation of the specific environment.
 
-!!! tip
-
-    You may want to tune your configuration via [`.env` file](https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-env-files).
-
-## Kubernetes
+### Kubernetes
 
 When you are using kubernetes on CI server change your configuration of:
 
@@ -40,7 +52,7 @@ configMapGenerator:
 +        value: 'my_awesome_app'
 ```
 
-## Docker
+### Docker
 
 When using docker containers without kubernetes add the environment variable to the `docker-compose.yml` file to `php-fpm` definition like in example below
 
@@ -65,7 +77,7 @@ When using docker containers without kubernetes add the environment variable to 
 ```
 
 
-## Native instalation
+### Native instalation
 
 Without containers you must set environment variable on the host machine, typically in unix like OS by executing
 
