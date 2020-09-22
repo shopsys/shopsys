@@ -166,6 +166,14 @@ class ListedProductView extends BaseListedProductView
     }
 
     /**
+     * @param string|null $productCountExposedInStores
+     */
+    public function setProductCountExposedInStores(?string $productCountExposedInStores): void
+    {
+        $this->productCountExposedInStores = $productCountExposedInStores;
+    }
+
+    /**
      * @return array|null
      */
     public function getVariantsParametersSetup(): ?array

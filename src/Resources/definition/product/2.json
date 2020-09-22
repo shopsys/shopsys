@@ -367,6 +367,9 @@
               },
               "product_available_stocks_count_information": {
                 "type": "text"
+              },
+              "product_count_exposed_in_stores_information": {
+                "type": "text"
               }
             }
           }

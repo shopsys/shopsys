@@ -480,11 +480,13 @@ class ParameterFacade extends BaseParameterFacade
         $productVariant = $this->productOnCurrentDomainFacade->getProductById($variantId);
         $productAvailableStocksCountInformation = $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($productVariant, $domainId);
         $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($productVariant, $domainId);
+        $productCountExposedInStores = $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($productVariant, $domainId);
 
         $variantParametersSetup['variant_availability_info']['product_availability_information'] = $productAvailabilityInformation;
         $variantParametersSetup['variant_availability_info']['product_available_stocks_count_information'] = $productAvailableStocksCountInformation;
         $variantParametersSetup['variant_flags'] = $productVariant->getFlagsIdsForDomain($domainId);
         $variantParametersSetup['variant_has_sconto_flag'] = $productVariant->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId);
+        $variantParametersSetup['variant_availability_info']['product_count_exposed_in_stores_information'] = $productCountExposedInStores;
 
         return $variantParametersSetup;
     }
