@@ -22,6 +22,7 @@ class LeafletController extends FrontBaseController
 
     /**
      * @param \App\Component\Domain\Domain $domain
+     * @param \App\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      */
     public function __construct(
         Domain $domain,
