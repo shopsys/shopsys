@@ -22,7 +22,7 @@ The most common uses are: Kubernetes, Docker or native installation.
 
 !!! note
     
-    Bellow is descibed the easiest way. For better understanding we recomend to find out the documentation of the specific environment.
+    Bellow is descibed the easiest way. For better understanding we recomend to find out the documentation of the specific platform.
 
 ### Kubernetes
 

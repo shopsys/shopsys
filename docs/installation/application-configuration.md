@@ -55,8 +55,8 @@ Composer will then prompt you to set parameters for testing environment (`config
 
 ## Configuration by environment variables
 
-Environment variables are really handy to configure the right setting in desired application environment.
-You may want to set some setting in different way (such as production, test or CI servers).
+Environment variables are really handy to configure the right setting in the desired application environment.
+You may want to set some settings in a different way (such as production, test, or CI servers).
 [Setting environment variables](/introduction/setting-environment-variables) depends on environment of your application.
 
 ### Application
