@@ -1,6 +1,6 @@
 # Application Configuration
 
-The application is configurable by [symfony configuration files](https://symfony.com/doc/4.4/configuration.html#configuration-parameters) or via environment variables which allows you to overwrite them.
+The application is configurable by [Symfony configuration files](https://symfony.com/doc/4.4/configuration.html#configuration-parameters) or via environment variables which allows you to overwrite them.
 
 - [Configuration by parameters](#configuration-by-parameters)
 - [Configuration by environment variables](#configuration-by-environment-variables)

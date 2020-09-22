@@ -6,7 +6,7 @@ This article describes how to set configure environment variables in different e
 
 Shopsys Framework as Symfony based application is using the same environment configuration as Symfony.
 
-We recommend using [`.env` files](https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-env-files) for configuring environment variables as it can be easily maintained. There is also advantage of different configuration through different application environments (suh as dev, test and prod).
+We recommend using [`.env` files](https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-env-files) for configuring environment variables as it can be easily maintained. There is also advantage of different configuration through different application environments (such as dev, test and prod).
 
 !!! note
 
@@ -16,13 +16,13 @@ For better understanding [visit the whole documentation here](https://symfony.co
 
 ## Overriding by real environment variable of webserver
 
-When `.env` files are not enough for your purpose you may override environment variables directly by webserver setting. These settings ignore any variables configured in `.env` files.
+When `.env` files are not enough for your purpose you may override environment variables directly by webserver setting. These settings override any variables configured in `.env` files.
 
 The most common uses are: Kubernetes, Docker or native installation.
 
 !!! note
     
-    Bellow is descibed the easiest way. For better understanding we recomend to find out the documentation of the specific platform.
+    Bellow is described the easiest way. For better understanding, we recommend finding out the documentation of the specific platform.
 
 ### Kubernetes
 
@@ -54,7 +54,7 @@ configMapGenerator:
 
 ### Docker
 
-When using docker containers without kubernetes add the environment variable to the `docker-compose.yml` file to `php-fpm` definition like in example below
+When using docker containers without kubernetes, add the environment variable to the `docker-compose.yml` file to `php-fpm` definition like in the example below
 
 ```diff
     php-fpm:
