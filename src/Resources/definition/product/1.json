@@ -329,6 +329,9 @@
           "variant_has_sconto_flag": {
             "type": "boolean"
           },
+          "variant_catnum": {
+            "type": "text"
+          },
           "parameter_values_setup": {
             "type": "nested",
             "properties": {

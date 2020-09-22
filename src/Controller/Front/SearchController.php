@@ -58,6 +58,7 @@ class SearchController extends FrontBaseController
             ->getSearchAutocompleteCategories($searchText, self::AUTOCOMPLETE_CATEGORY_LIMIT);
 
         $productFilterData = new ProductFilterData();
+        $productFilterData->setSearchText($searchText);
         $productsPaginationResult = $this->listedProductViewFacade->getFilteredPaginatedForSearch(
             $searchText,
             $productFilterData,

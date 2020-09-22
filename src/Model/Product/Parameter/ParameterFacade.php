@@ -487,6 +487,7 @@ class ParameterFacade extends BaseParameterFacade
         $variantParametersSetup['variant_flags'] = $productVariant->getFlagsIdsForDomain($domainId);
         $variantParametersSetup['variant_has_sconto_flag'] = $productVariant->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId);
         $variantParametersSetup['variant_availability_info']['product_count_exposed_in_stores_information'] = $productCountExposedInStores;
+        $variantParametersSetup['variant_catnum'] = $productVariant->getCatnum();
 
         return $variantParametersSetup;
     }

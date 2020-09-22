@@ -59,6 +59,7 @@ class ProductVariantFilterFacade
             }
 
             $rank = $this->evaluateParameterValuesSetup($variantParameterSetup['parameter_values_setup'], $productFilterData);
+            $rank += $this->evaluateByCatnumAndSearchText($variantParameterSetup['variant_catnum'], $productFilterData->getSearchText());
 
             if (isset($variantParameterSetup['extended_parameter_values_setup'])) {
                 $rank += $this->evaluateParameterValuesSetup($variantParameterSetup['extended_parameter_values_setup'], $productFilterData);
@@ -88,6 +89,21 @@ class ProductVariantFilterFacade
                 }
             }
         }
+    }
+
+    /**
+     * @param string $catnum
+     * @param string|null $searchText
+     * @return int
+     */
+    private function evaluateByCatnumAndSearchText(string $catnum, ?string $searchText): int
+    {
+        $rank = 0;
+        if ($catnum === $searchText) {
+            $rank = 100;
+        }
+
+        return $rank;
     }
 
     /**
