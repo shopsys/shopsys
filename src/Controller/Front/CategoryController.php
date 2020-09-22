@@ -76,8 +76,17 @@ class CategoryController extends FrontBaseController
             $this->domain->getCurrentDomainConfig()
         );
 
+        $filteredCategoriesWithLazyLoadedVisibleChildren = [];
+        foreach ($categoriesWithLazyLoadedVisibleChildren as $categoryWithLazyLoadedVisibleChildren) {
+            /** @var \App\Model\Category\Category $category */
+            $category = $categoryWithLazyLoadedVisibleChildren->getCategory();
+            if (!$category->isSaleCategory()) {
+                $filteredCategoriesWithLazyLoadedVisibleChildren[] = $categoryWithLazyLoadedVisibleChildren;
+            }
+        }
+
         return $this->render('Front/Content/Category/mobilePanelMenu.html.twig', [
-            'categoriesWithLazyLoadedVisibleChildren' => $categoriesWithLazyLoadedVisibleChildren,
+            'categoriesWithLazyLoadedVisibleChildren' => $filteredCategoriesWithLazyLoadedVisibleChildren,
             'isFirstLevel' => true,
             'saleCategory' => $this->categoryFacade->findSaleCategory(),
         ]);
