@@ -10,6 +10,12 @@
     </div>
     <picture class="box-error-page__picture">
         <source media="(max-width: 599px)" srcset="{{ asset('public/frontend/images/404_m.png') }}">
-        <img loading="lazy" class="box-error-page__image" data-src="{{ asset('public/frontend/images/404_desktop.jpg') }}" alt="{{ 'Předsíň'|trans }}">
+        <source srcset="{{ asset('public/frontend/images/404_desktop_2x.jpg') }} 2x, {{ asset('public/frontend/images/404_desktop.jpg') }} 1x">
+        <img
+            loading="lazy"
+            class="box-error-page__image"
+            data-src="{{ asset('public/frontend/images/404_desktop.jpg') }} 1x"
+            alt="{{ '404'|trans }}"
+        >
     </picture>
 {% endblock %}
