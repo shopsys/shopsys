@@ -24,7 +24,7 @@
                                 <span>{{ 'Domů'|trans }}</span>
                             </a>
                             <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
-                            <a href="{{ url('front_kitchen') }}" class="box-breadcrumb__item">{{ 'Aktuální leták'|trans }}</a>
+                            <span class="box-breadcrumb__item">{{ 'Aktuální leták'|trans }}</span>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     ) }}
                 </div>
             </div>
-            <h2>{{ 'Nakupujte podle kategorií'|trans }}</h2>
+            <h2>{{ 'Oblíbené kategorie'|trans }}</h2>
             {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories, showProductsCountByCategory: false})) }}
             {% include 'Front/Content/Rooms/list.html.twig' %}
         </div>
