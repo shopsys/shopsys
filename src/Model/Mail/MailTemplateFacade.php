@@ -74,12 +74,15 @@ class MailTemplateFacade extends BaseMailTemplateFacade
 
         $mailTemplates = [];
         foreach ($order->getTransports() as $transport) {
-            $mailTemplates[] = $this->mailTemplateRepository->findOrderStockStatusMailTemplate(
+            $mailTemplate = $this->mailTemplateRepository->findOrderStockStatusMailTemplate(
                 $order->getDomainId(),
                 $transport,
                 $order->getPayment(),
                 $order->getStockStatus()
             );
+            if ($mailTemplate !== null) {
+                $mailTemplates[] = $mailTemplate;
+            }
         }
 
         return $mailTemplates;
