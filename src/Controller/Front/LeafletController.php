@@ -18,7 +18,7 @@ class LeafletController extends FrontBaseController
     /**
      * @var \App\Model\Category\TopCategory\TopCategoryFacade
      */
-    private $topCategoryFacade;
+    private TopCategoryFacade $topCategoryFacade;
 
     /**
      * @param \App\Component\Domain\Domain $domain
