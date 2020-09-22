@@ -66,17 +66,16 @@
                                 </div>
                             {% endif %}
 
+                            <a
+                                class="btn btn--success box-stores__store__link"
+                                href="{{ url('front_stores_detail', {id: store.id}) }}"
+                            >
+                                {{ 'Detail prodejny'|trans }}
+                            </a>
+
                             {% if imageExists(store, 'main') %}
                                 {{ image(store, { itemprop: 'image', lazy: true, type: 'main', class: 'box-stores__store__img' }) }}
                             {% endif %}
-
-                            <a
-                                class="box-stores__store__link"
-                                href="{{ url('front_stores_detail', {id: store.id}) }}"
-                            >
-                                {{ 'Detail obchodního domu'|trans }}
-                                <i class="box-stores__store__link__icon svg svg-chevron"></i>
-                            </a>
                         </div>
                     {% endfor %}
                 </div>
@@ -85,7 +84,7 @@
                 {% for store in stores %}
                     <div class="box-stores-list__item">
                         <a class="box-stores-list__item__link" href="{{ url('front_stores_detail', {id: store.id}) }}">
-                            <i class="box-stores-list__item__icon svg svg-marker"></i>
+                            <i class="box-stores-list__item__icon svg svg-marker svg-fw-bold"></i>
                             <strong class="box-stores-list__item__name">{{ store.name }}</strong>
                             <span class="box-stores-list__item__to-detail">
                                 <span class="box-stores-list__item__to-detail__text">{{ 'Detail prodejny'|trans }}</span>

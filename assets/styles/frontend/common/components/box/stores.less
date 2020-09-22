@@ -265,14 +265,21 @@
 
         &__link {
             display: inline-block;
-            margin-top: 0.75rem;
+            margin: 0.75rem 0;
+            padding-left: 25px;
+            padding-right: 25px;
 
-            font-family: @font-quartenary;
+            font-family: @font-tertiary;
             font-weight: 400;
-            color: @color-primary;
+            letter-spacing: 0;
+            color: @color-f;
+            background: linear-gradient(to top, #ffad00, #ffd500);
+            transition: box-shadow @transition;
 
-            &__icon {
-                color: @color-add-secondary;
+            &:hover {
+                color: @color-f;
+                background: linear-gradient(to top, #ffad00, #ffd500);
+                box-shadow: 0 0 10px 0 rgba(#fcc308, .9);
             }
         }
     }
@@ -318,6 +325,8 @@
             }
 
             &__name {
+                position: relative;
+                top: 2px;
                 flex-grow: 1;
 
                 font-family: @font-quartenary;
@@ -328,16 +337,24 @@
                 @media @query-md {
                     font-size: 18px;
                 }
+
+                @media @query-xl {
+                    left: 6px;
+                }
             }
 
             &__icon {
                 margin-right: 0.75rem;
 
-                font-size: 24px;
+                font-size: 22px;
                 color: @color-add;
 
                 &--detail {
-                    font-size: 34px;
+                    font-size: 24px;
+
+                    @media @query-xl {
+                        margin-right: 20px;
+                    }
                 }
             }
 
