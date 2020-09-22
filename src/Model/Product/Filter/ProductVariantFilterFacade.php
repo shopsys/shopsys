@@ -83,8 +83,8 @@ class ProductVariantFilterFacade
                     $listedProductView->setProductAvailableStocksCountInformation(
                         $variantParameterSetup['variant_availability_info']['product_available_stocks_count_information'] ?? null
                     );
-                    $listedProductView->setFlagIds($variantParameterSetup['variant_flags']);
-                    $listedProductView->setHasScontoFlag($variantParameterSetup['variant_has_sconto_flag']);
+                    $listedProductView->setFlagIds($variantParameterSetup['variant_flags'] ?? []);
+                    $listedProductView->setHasScontoFlag($variantParameterSetup['variant_has_sconto_flag'] ?? false);
                     $listedProductView->setProductCountExposedInStores($variantParameterSetup['variant_availability_info']['product_count_exposed_in_stores_information'] ?? null);
                 }
             }
