@@ -1,0 +1,60 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+{% from 'Front/Macros/picture.html.twig' import picture as picture %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block title %}
+    {{- 'Aktuální leták'|trans -}}
+{% endblock %}
+
+{% block main_content %}
+    {% set domain = getDomain() %}
+    <div class="web__line web__line--spacing--big">
+        <div class="web__container">
+            <div class="box-list__description box-list__description--furniture box-list__description--top box-list__description--top--no-spacing">
+                <h1 class="box-list__description__heading">
+                    {{ "Aktuální leták"|trans }}
+                </h1>
+                <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing">
+                    <div class="box-breadcrumb">
+                        <div class="box-breadcrumb">
+                            <a href="{{ url('front_homepage') }}" class="box-breadcrumb__item box-breadcrumb__item--icon">
+                                <i class="box-breadcrumb__item__icon svg svg-home"></i>
+                                <span>{{ 'Domů'|trans }}</span>
+                            </a>
+                            <span class="box-breadcrumb__item box-breadcrumb__item--separator">/</span>
+                            <a href="{{ url('front_kitchen') }}" class="box-breadcrumb__item">{{ 'Aktuální leták'|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-leaflet">
+                <div class="box-leaflet__content">
+                    <p class="box-leaflet__desc">
+                        {{ 'Prohlédněte si náš aktuální leták a pořiďte si do svého domu
+                        či bytu stylový nábytek za skvělou cenu.'|transHtml }}
+                    </p>
+                    <a
+                        class="btn box-leaflet__btn"
+                        href="{{ domain.id == 1 ? 'https://letaky.sconto.cz/' : 'https://letaky.sconto.sk/' }}"
+                        target="_blank"
+                    >
+                        {{ 'Otevřít aktuální leták'|trans }}
+                    </a>
+                </div>
+                <div class="box-leaflet__image">
+                    {{ picture(
+                        'leaflet_2x.png',
+                        'leaflet.png',
+                        'Aktuální leták'|trans,
+                        'box-leaflet__img'
+                    ) }}
+                </div>
+            </div>
+            <h2>{{ 'Nakupujte podle kategorií'|trans }}</h2>
+            {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories, showProductsCountByCategory: false})) }}
+            {% include 'Front/Content/Rooms/list.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
