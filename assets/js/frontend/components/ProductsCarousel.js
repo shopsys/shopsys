@@ -136,7 +136,7 @@ export default class SlickCarousel {
                 speed: 500,
                 touchMove: false,
                 prevArrow: '<button type="button" data-role="none" class="slick-prev slick-arrow" aria-label="Předchozí" role="button"></button>',
-                nextArrow: '<button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Další" role="button"></button>',
+                nextArrow: '<button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Další" role="button"></button>'
             });
         }
 
