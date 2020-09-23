@@ -83,6 +83,27 @@ class BrandDataFixture extends AbstractReferenceFixture
                 );
             }
 
+            foreach ($this->domain->getAll() as $domain) {
+                $brandData->seoH1s[$domain->getId()] = t(
+                    '%brandName% SEO H1',
+                    ['%brandName%' => $brandData->name],
+                    'dataFixtures',
+                    $domain->getLocale()
+                );
+                $brandData->seoTitles[$domain->getId()] = t(
+                    '%brandName% SEO Title',
+                    ['%brandName%' => $brandData->name],
+                    'dataFixtures',
+                    $domain->getLocale()
+                );
+                $brandData->seoMetaDescriptions[$domain->getId()] = t(
+                    'This is SEO meta description of brand %brandName%.',
+                    ['%brandName%' => $brandData->name],
+                    'dataFixtures',
+                    $domain->getLocale()
+                );
+            }
+
             $brand = $this->brandFacade->create($brandData);
             $this->addReference($brandConstant, $brand);
         }
