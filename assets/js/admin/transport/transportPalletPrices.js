@@ -66,7 +66,7 @@ export default class TransportPalletPrices {
         let maxPriceTo = 0;
         this.$itemsContainer.find('.js-transport-pallet-prices-item:not(.js-transport-pallet-prices-last-item) .js-transport-pallet-prices-price-to-input').each(function () {
             const priceTo = parseNumberFixed($(this).val());
-            if (priceTo !== null && priceTo > maxPriceTo) {
+            if (priceTo !== null && priceTo >= maxPriceTo) {
                 maxPriceTo = priceTo + 1;
             }
         });

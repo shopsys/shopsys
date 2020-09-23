@@ -24,7 +24,7 @@
         {{ form_errors(form) }}
         {% for domainId, domainPrices in form %}
             {% set currencySymbol = currencySymbolByDomainId(domainId) %}
-            <div class="form-line__box js-transport-pallet-prices" id="{{ domainPrices.vars.id }}" data-prototype="{{ self.priceToAndPriceItemMacro(domainPrices.vars.prototype, '', currencySymbol)|e('html_attr') }}">
+            <div class="form-line__box js-transport-pallet-prices" id="{{ domainPrices.vars.id }}" data-prototype="{{ self.priceToAndPriceItemMacro(domainPrices.vars.prototype, '__name__', currencySymbol)|e('html_attr') }}">
                 <div class="form-line__box__title">
                     <span class="form-line__box__title__image">
                         <span class="in-image in-image--large">
