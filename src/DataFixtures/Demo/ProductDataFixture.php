@@ -3238,7 +3238,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
-        $this->setPriceForAllPricingGroups($productData, '10173.5');
+        $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
@@ -6058,7 +6058,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
-        $this->setPriceForAllPricingGroups($productData, '19173.5');
+        $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
@@ -6102,7 +6102,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
-        $this->setPriceForAllPricingGroups($productData, '50173.5');
+        $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
