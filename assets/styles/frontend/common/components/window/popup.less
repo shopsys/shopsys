@@ -122,9 +122,22 @@
             left: 50%;
         }
 
+        @media screen and (min-width: 800px) and (max-width: 1200px) {
+            position: absolute;
+            overflow: auto;
+            height: auto;
+            max-height: none;
+
+            .window-popup__in {
+                max-height: none;
+                height: auto;
+            }
+        }
+
         .window-popup__heading {
             @media @query-mobile {
                 margin-bottom: 1rem;
+                padding-right: 40px;
 
                 font-size: 18px;
             }
@@ -132,7 +145,7 @@
 
         .window-popup__in {
             @media @query-mobile {
-                max-height: calc(100vh - 170px);
+                max-height: 370px;
             }
         }
 
