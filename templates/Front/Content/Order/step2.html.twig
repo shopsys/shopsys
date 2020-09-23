@@ -215,18 +215,18 @@
                                             {% for goPayBankSwiftFormChild in goPayBankSwiftForm %}
                                                 {% set goPayBankSwiftFormChildChoice = goPayBankSwiftForm.vars.choices[goPayBankSwiftFormChild.vars.name] %}
                                                 {% set goPayBankSwift = goPayBankSwiftFormChildChoice.data %}
-                                                <label class="box-chooser__item">
+                                                <label class="box-chooser__item box-chooser__item--payment">
                                                     <span class="box-chooser__item__check">
                                                         {{ form_widget(goPayBankSwiftFormChild, { attr: { class: 'js-order-gopay-bank-swift-input css-checkbox', 'data-swift': goPayBankSwift.swift} }) }}
                                                         <label for="{{goPayBankSwiftFormChild.vars.id}}" class="css-label-checkbox"></label>
                                                     </span>
 
                                                     <span class="box-chooser__item__image">
-                                                        <img src="{{ goPayBankSwift.imageLargeUrl }}">
+                                                        <img class="box-chooser__item__img" src="{{ goPayBankSwift.imageLargeUrl }}">
                                                     </span>
 
                                                     <span class="box-chooser__item__title">
-                                                        <strong class="box-chooser__title__name">
+                                                        <strong class="box-chooser__item__title__name">
                                                             {{ goPayBankSwift.name }}
                                                         </strong>
                                                     </span>
