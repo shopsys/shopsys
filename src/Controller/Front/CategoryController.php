@@ -63,9 +63,52 @@ class CategoryController extends FrontBaseController
             $this->domain->getCurrentDomainConfig()
         );
 
+        $menuItems = [];
+        foreach ($topCategories as $category) {
+            if ($category->getAkeneoCode() === 'eshop__nabytek') {
+                $menuItems[0] = $this->buildSlidingMenuSetup('front_product_list', $category->getId(), $category->getName($this->domain->getCurrentDomainConfig()->getLocale()));
+
+                $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = $this->getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent($category);
+                $menuItems[2] = $this->buildSlidingMenuSetup(
+                    'front_product_list',
+                    $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent->getCategory()->getId(),
+                    $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent->getCategory()->getName($this->domain->getCurrentDomainConfig()->getLocale())
+                );
+            }
+        }
+        $menuItems[1] = $this->buildSlidingMenuSetup('front_kitchen', null, t('Kuchyně'));
+        $menuItems[3] = $this->buildSlidingMenuSetup('front_productseries_list', null, t('Nábytkové programy'));
+
+        $saleCategory = $this->categoryFacade->findSaleCategory();
+        if ($saleCategory !== null) {
+            $menuItems[4] = $this->buildSlidingMenuSetup(
+                'front_product_list',
+                $saleCategory->getId(),
+                $saleCategory->getName($this->domain->getCurrentDomainConfig()->getLocale())
+            );
+        }
+
+        ksort($menuItems);
+
+
         return $this->render('Front/Content/Category/mobileSlidingMenu.html.twig', [
-            'topCategories' => $topCategories,
+            'menuItems' => $menuItems
         ]);
+    }
+
+    /**
+     * @param string $route
+     * @param int|null $id
+     * @param string $name
+     * @return array
+     */
+    private function buildSlidingMenuSetup(string $route, ?int $id, string $name): array
+    {
+        return [
+            'route' => $route,
+            'id' => $id,
+            'name' => $name,
+        ];
     }
 
     /**
@@ -84,7 +127,7 @@ class CategoryController extends FrontBaseController
             /** @var \App\Model\Category\Category $category */
             $category = $categoryWithLazyLoadedVisibleChildren->getCategory();
 
-            if($category->getAkeneoCode() === 'eshop__nabytek'){
+            if ($category->getAkeneoCode() === 'eshop__nabytek') {
                 $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = $this->getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent($category);
                 $filteredCategoriesWithLazyLoadedVisibleChildren[] = $categoryWithLazyLoadedVisibleChildren;
             }
@@ -109,11 +152,11 @@ class CategoryController extends FrontBaseController
             $this->domain->getCurrentDomainConfig()
         );
 
-        foreach($categoriesWithLazyLoadedVisibleChildren as $categoryWithLazyLoadedVisibleChildren){
+        foreach ($categoriesWithLazyLoadedVisibleChildren as $categoryWithLazyLoadedVisibleChildren) {
             /** @var \App\Model\Category\Category $category */
             $category = $categoryWithLazyLoadedVisibleChildren->getCategory();
 
-            if($category->getAkeneoCode() === 'eshop__matrace_a_rosty'){
+            if ($category->getAkeneoCode() === 'eshop__matrace_a_rosty') {
                 return $categoryWithLazyLoadedVisibleChildren;
             }
         }
