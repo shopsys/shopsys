@@ -31,7 +31,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
     private $orderFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade
+     * @var \App\Model\Order\Mail\OrderMailFacade
      */
     private $orderMailFacade;
 
@@ -43,7 +43,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
+     * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \App\Model\GoPay\GoPayTransactionFacade $goPayTransactionFacade
      */
     public function __construct(

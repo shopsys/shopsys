@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Mail\MailTemplate;
+use App\Model\Mail\MailTemplateData;
+use App\Model\Mail\MailTemplateDataFactory;
+use App\Model\Order\Order;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
-use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData;
-use Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface;
 
-class MailTemplateDataFixture extends AbstractReferenceFixture
+class MailTemplateDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface
@@ -20,7 +22,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
     private $mailTemplateFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface
+     * @var \App\Model\Mail\MailTemplateDataFactory
      */
     private $mailTemplateDataFactory;
 
@@ -31,12 +33,12 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface $mailTemplateDataFactory
+     * @param \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
      * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         MailTemplateFactoryInterface $mailTemplateFactory,
-        MailTemplateDataFactoryInterface $mailTemplateDataFactory,
+        MailTemplateDataFactory $mailTemplateDataFactory,
         Domain $domain
     ) {
         $this->mailTemplateFactory = $mailTemplateFactory;
@@ -49,10 +51,10 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager)
     {
-        $mailTemplateData = $this->mailTemplateDataFactory->create();
-        $mailTemplateData->sendMail = true;
-
         foreach ($this->domain->getAll() as $domainConfig) {
+            $mailTemplateData = $this->mailTemplateDataFactory->create();
+            $mailTemplateData->sendMail = true;
+
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
             $mailTemplateData->subject = t('Thank you for your order no. {number} placed at {date}', [], 'dataFixtures', $locale);
@@ -135,18 +137,47 @@ team of {domain}
 ', [], 'dataFixtures', $locale);
 
             $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplateData, $domainId);
+
+            /** @var \App\Model\Transport\Transport $transportPallet */
+            $transportPallet = $this->getReference(TransportDataFixture::TRANSPORT_PALLET);
+            /** @var \App\Model\Payment\Payment $paymentGoPay */
+            $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
+            /** @var \App\Model\Payment\Payment $paymentCashOnDelivery */
+            $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+
+            $mailTemplateData->transport = $transportPallet;
+            $mailTemplateData->payment = $paymentGoPay;
+            $mailTemplateData->orderStockStatus = Order::STOCK_STATUS_IN_STOCK;
+            $mailTemplateData->subject = t('Vaši zásilku Vám posíláme', [], 'dataFixtures', $locale);
+            $mailTemplateData->body = t('Vážený zákazníku, <br/><br/>
+Vaše objednávka {number} je vyřízená, vše je zaplaceno a tak Vám objednávku dovezeme vlastní přepravou až ke dveřím
+', [], 'dataFixtures', $locale);
+            $this->createMailTemplate($manager, MailTemplate::ORDER_STOCK_STATUS_NAME, $mailTemplateData, $domainId);
+
+            $mailTemplateData->transport = $transportPallet;
+            $mailTemplateData->payment = $paymentCashOnDelivery;
+            $mailTemplateData->orderStockStatus = Order::STOCK_STATUS_IN_STOCK;
+            $mailTemplateData->subject = t('Vaši zásilku Vám posíláme', [], 'dataFixtures', $locale);
+            $mailTemplateData->body = t('Vážený zákazníku, <br/><br/>
+Vaše objednávka {number} je vyřízená. Objednávku Vám dovezeme vlastní přepravou až ke dveřím, nicméně připravte si částku {total_price} k zaplacení dobírky.
+', [], 'dataFixtures', $locale);
+            $this->createMailTemplate($manager, MailTemplate::ORDER_STOCK_STATUS_NAME, $mailTemplateData, $domainId);
+
+            $mailTemplateData->transport = null;
+            $mailTemplateData->payment = null;
+            $mailTemplateData->orderStockStatus = null;
         }
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
-     * @param mixed $name
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
+     * @param string $name
+     * @param \App\Model\Mail\MailTemplateData $mailTemplateData
      * @param int $domainId
      */
     private function createMailTemplate(
         ObjectManager $manager,
-        $name,
+        string $name,
         MailTemplateData $mailTemplateData,
         int $domainId
     ) {
@@ -155,6 +186,9 @@ team of {domain}
         $mailTemplate = $repository->findOneBy([
             'name' => $name,
             'domainId' => $domainId,
+            'transport' => $mailTemplateData->transport,
+            'payment' => $mailTemplateData->payment,
+            'orderStockStatus' => $mailTemplateData->orderStockStatus,
         ]);
 
         if ($mailTemplate === null) {
@@ -165,5 +199,16 @@ team of {domain}
 
         $manager->persist($mailTemplate);
         $manager->flush($mailTemplate);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getDependencies()
+    {
+        return [
+            TransportDataFixture::class,
+            PaymentDataFixture::class,
+        ];
     }
 }

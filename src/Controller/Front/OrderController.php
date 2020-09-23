@@ -69,7 +69,7 @@ class OrderController extends FrontBaseController
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade
+     * @var \App\Model\Order\Mail\OrderMailFacade
      */
     private $orderMailFacade;
 
@@ -174,7 +174,7 @@ class OrderController extends FrontBaseController
      * @param \App\Form\Front\Order\DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \App\Model\Order\Watcher\SplitTransportAndPaymentWatcher $splitTransportAndPaymentWatcher
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
+     * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
      * @param \App\Model\GoPay\GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain

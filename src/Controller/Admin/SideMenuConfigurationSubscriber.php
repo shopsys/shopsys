@@ -153,5 +153,9 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $parameterValueMenu->addChild('parameter_values_edit', ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editace hodnoty parametru typu barva')]);
 
         $listMenu->addChild('sale_category', ['route' => 'admin_set_sale_category', 'label' => t('Výběr výprodejové kategorie')]);
+
+        $communicationMenu = $settingsMenu->getChild('communication');
+        $mailTemplates = $communicationMenu->getChild('mail_templates');
+        $mailTemplates->addChild('new_template', ['route' => 'admin_mail_createtemplate', 'label' => t('Nová šablona emailu'), 'display' => false]);
     }
 }

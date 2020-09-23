@@ -48,5 +48,6 @@ class OrderDataFactory extends BaseOrderDataFactory
 
         $orderData->goPayTransactions = $order->getGoPayTransactions();
         $orderData->gtmCoupon = $order->getGtmCoupon();
+        $orderData->stockStatus = $order->getStockStatus();
     }
 }
