@@ -24,3 +24,6 @@ There you can find links to upgrade notes for other versions too.
         - `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface::getProductsOnCurrentDomain()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsOnCurrentDomain()` instead
         - `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface::getProductsByCategory()` use `Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsByCategory()` instead
         - `Shopsys\FrameworkBundle\Component\Image\ImageFacade::getImagesByEntityIdAndNameIndexedById()` use `Shopsys\FrontendApiBundle\Component\Image\ImageFacade::getImagesByEntityIdAndNameIndexedById()` instead
+
+- fix webserver URL in frontend API tests ([#2045](https://github.com/shopsys/shopsys/pull/2045))
+    - see #project-base-diff to update your project

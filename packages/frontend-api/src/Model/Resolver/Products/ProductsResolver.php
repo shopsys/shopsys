@@ -115,7 +115,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             );
         });
 
-        return $paginator->auto($argument, $this->productFacade->getProductsCountOnCurrentDomain());
+        return $paginator->auto($argument, $this->productFacade->getProductsByCategoryCount($category));
     }
 
     /**
