@@ -2,8 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain\Config;
 
+use Shopsys\FrameworkBundle\Component\Domain\Config\Exception\DomainConfigsDoNotMatchException;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
 
@@ -30,16 +32,22 @@ class DomainsConfigLoader
     public function loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath)
     {
         $processedConfig = $this->getProcessedConfig($domainsConfigFilepath, $this->getDomainsConfigDefinition());
-        $processedUrlsConfig = $this->getProcessedConfig($domainsUrlsConfigFilepath, $this->getDomainsUrlsConfigDefinition());
+        $processedUrlsConfig = $this->getProcessedConfig(
+            $domainsUrlsConfigFilepath,
+            $this->getDomainsUrlsConfigDefinition()
+        );
         $domainConfigsByDomainId = $processedConfig[DomainsConfigDefinition::CONFIG_DOMAINS];
         $domainUrlsConfigsByDomainId = $processedUrlsConfig[DomainsUrlsConfigDefinition::CONFIG_DOMAINS_URLS];
 
         if (!$this->isConfigMatchingUrlsConfig($domainConfigsByDomainId, $domainUrlsConfigsByDomainId)) {
             $message =
                 'File ' . $domainsUrlsConfigFilepath . ' does not contain urls for all domains listed in ' . $domainsConfigFilepath;
-            throw new \Shopsys\FrameworkBundle\Component\Domain\Config\Exception\DomainConfigsDoNotMatchException($message);
+            throw new DomainConfigsDoNotMatchException($message);
         }
-        $processedConfigsWithUrlsByDomainId = $this->addUrlsToProcessedConfig($domainConfigsByDomainId, $domainUrlsConfigsByDomainId);
+        $processedConfigsWithUrlsByDomainId = $this->addUrlsToProcessedConfig(
+            $domainConfigsByDomainId,
+            $domainUrlsConfigsByDomainId
+        );
 
         return $this->loadDomainConfigsFromArray($processedConfigsWithUrlsByDomainId);
     }
@@ -118,7 +126,7 @@ class DomainsConfigLoader
         $processor = new Processor();
 
         if (!$this->filesystem->exists($filepath)) {
-            throw new \Symfony\Component\Filesystem\Exception\FileNotFoundException(
+            throw new FileNotFoundException(
                 'File ' . $filepath . ' does not exist'
             );
         }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Form\Admin\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOrderFilterTranslation;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchTranslationNotFoundException;
 use Tests\App\Test\FunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -27,7 +28,9 @@ class AdvancedSearchOrderFilterTranslationTest extends FunctionalTestCase
     public function testTranslateFilterName()
     {
         foreach ($this->advancedSearchConfig->getAllFilters() as $filter) {
-            $this->assertNotEmpty($this->advancedSearchOrderFilterTranslation->translateFilterName($filter->getName()));
+            $this->assertNotEmpty(
+                $this->advancedSearchOrderFilterTranslation->translateFilterName($filter->getName())
+            );
         }
     }
 
@@ -35,7 +38,7 @@ class AdvancedSearchOrderFilterTranslationTest extends FunctionalTestCase
     {
         $advancedSearchTranslator = new AdvancedSearchOrderFilterTranslation();
 
-        $this->expectException(\Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchTranslationNotFoundException::class);
+        $this->expectException(AdvancedSearchTranslationNotFoundException::class);
         $advancedSearchTranslator->translateFilterName('nonexistingFilterName');
     }
 }

@@ -22,14 +22,23 @@ class OrderItemPriceCalculationTest extends TestCase
             ->setMethods(['getVatAmountByPriceWithVat'])
             ->disableOriginalConstructor()
             ->getMock();
-        $priceCalculationMock->expects($this->once())->method('getVatAmountByPriceWithVat')->willReturn(Money::create(100));
+        $priceCalculationMock->expects($this->once())->method('getVatAmountByPriceWithVat')->willReturn(
+            Money::create(100)
+        );
 
         $orderItemData = new OrderItemData();
         $orderItemData->priceWithVat = Money::create(1000);
         $orderItemData->vatPercent = '10';
 
-        $orderItemPriceCalculation = new OrderItemPriceCalculation($priceCalculationMock, new VatFactory(new EntityNameResolver([])), new VatDataFactory());
-        $priceWithoutVat = $orderItemPriceCalculation->calculatePriceWithoutVat($orderItemData, Domain::FIRST_DOMAIN_ID);
+        $orderItemPriceCalculation = new OrderItemPriceCalculation(
+            $priceCalculationMock,
+            new VatFactory(new EntityNameResolver([])),
+            new VatDataFactory()
+        );
+        $priceWithoutVat = $orderItemPriceCalculation->calculatePriceWithoutVat(
+            $orderItemData,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $this->assertThat($priceWithoutVat, new IsMoneyEqual(Money::create(900)));
     }
@@ -40,9 +49,15 @@ class OrderItemPriceCalculationTest extends TestCase
             ->setMethods(['getVatAmountByPriceWithVat'])
             ->disableOriginalConstructor()
             ->getMock();
-        $priceCalculationMock->expects($this->once())->method('getVatAmountByPriceWithVat')->willReturn(Money::create(10));
+        $priceCalculationMock->expects($this->once())->method('getVatAmountByPriceWithVat')->willReturn(
+            Money::create(10)
+        );
 
-        $orderItemPriceCalculation = new OrderItemPriceCalculation($priceCalculationMock, new VatFactory(new EntityNameResolver([])), new VatDataFactory());
+        $orderItemPriceCalculation = new OrderItemPriceCalculation(
+            $priceCalculationMock,
+            new VatFactory(new EntityNameResolver([])),
+            new VatDataFactory()
+        );
 
         $order = $this->getMockForAbstractClass(
             OrderItem::class,

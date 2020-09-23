@@ -2,6 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\Breadcrumb;
 
+use Exception;
+use Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\BreadcrumbGeneratorNotFoundException;
+use Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException;
 use Webmozart\Assert\Assert;
 
 class BreadcrumbResolver
@@ -40,15 +43,15 @@ class BreadcrumbResolver
     public function resolveBreadcrumbItems($routeName, array $routeParameters = [])
     {
         if (!$this->hasGeneratorForRoute($routeName)) {
-            throw new \Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\BreadcrumbGeneratorNotFoundException($routeName);
+            throw new BreadcrumbGeneratorNotFoundException($routeName);
         }
 
         $breadcrumbGenerator = $this->breadcrumbGeneratorsByRouteName[$routeName];
 
         try {
             return $breadcrumbGenerator->getBreadcrumbItems($routeName, $routeParameters);
-        } catch (\Exception $ex) {
-            throw new \Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException($ex);
+        } catch (Exception $ex) {
+            throw new UnableToGenerateBreadcrumbItemsException($ex);
         }
     }
 

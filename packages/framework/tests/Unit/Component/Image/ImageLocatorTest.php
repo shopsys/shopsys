@@ -5,6 +5,9 @@ namespace Tests\FrameworkBundle\Unit\Component\Image;
 use League\Flysystem\FilesystemInterface;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigDefinition;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader;
@@ -134,19 +137,19 @@ class ImageLocatorTest extends TestCase
                 'NonexistentName',
                 null,
                 null,
-                \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException::class,
+                ImageEntityConfigNotFoundException::class,
             ],
             [
                 'Name_1',
                 'NonexistentTypeName',
                 null,
-                \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException::class,
+                ImageTypeNotFoundException::class,
             ],
             [
                 'Name_1',
                 null,
                 'NonexistentSizeName',
-                \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException::class,
+                ImageSizeNotFoundException::class,
             ],
         ];
     }

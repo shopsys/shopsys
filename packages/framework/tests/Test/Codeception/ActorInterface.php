@@ -598,7 +598,7 @@ interface ActorInterface
     /**
      * @param string $table
      * @param array $data
-     * @return int $id
+     * @return int
      */
     public function haveInDatabase($table, $data);
 
@@ -628,8 +628,8 @@ interface ActorInterface
 
     /**
      * @param string $css
-     * @param null|int $offsetX
-     * @param null|int $offsetY
+     * @param int|null $offsetX
+     * @param int|null $offsetY
      */
     public function moveMouseOverByCss($css, $offsetX = null, $offsetY = null);
 

@@ -109,7 +109,11 @@ class PaymentFacade
         $payment = $this->paymentFactory->create($paymentData);
         $this->em->persist($payment);
         $this->em->flush();
-        $this->updatePaymentPrices($payment, $paymentData->pricesIndexedByDomainId, $paymentData->vatsIndexedByDomainId);
+        $this->updatePaymentPrices(
+            $payment,
+            $paymentData->pricesIndexedByDomainId,
+            $paymentData->vatsIndexedByDomainId
+        );
         $this->setAdditionalDataAndFlush($payment, $paymentData);
 
         return $payment;
@@ -122,7 +126,11 @@ class PaymentFacade
     public function edit(Payment $payment, PaymentData $paymentData)
     {
         $payment->edit($paymentData);
-        $this->updatePaymentPrices($payment, $paymentData->pricesIndexedByDomainId, $paymentData->vatsIndexedByDomainId);
+        $this->updatePaymentPrices(
+            $payment,
+            $paymentData->pricesIndexedByDomainId,
+            $paymentData->vatsIndexedByDomainId
+        );
         $this->setAdditionalDataAndFlush($payment, $paymentData);
     }
 
@@ -187,9 +195,13 @@ class PaymentFacade
             $existPriceForDomain = $payment->hasPriceForDomain($domainId);
             $payment->setPrice($pricesIndexedByDomainId[$domainId], $domainId);
 
-            if ($existPriceForDomain === false) {
-                $payment->addPrice($this->paymentPriceFactory->create($payment, $pricesIndexedByDomainId[$domainId], $domainId));
+            if ($existPriceForDomain !== false) {
+                continue;
             }
+
+            $payment->addPrice(
+                $this->paymentPriceFactory->create($payment, $pricesIndexedByDomainId[$domainId], $domainId)
+            );
         }
     }
 
@@ -227,7 +239,9 @@ class PaymentFacade
         $paymentVatPercentsByPaymentId = [];
         $payments = $this->getAllIncludingDeleted();
         foreach ($payments as $payment) {
-            $paymentVatPercentsByPaymentId[$payment->getId()] = $payment->getPaymentDomain($domainId)->getVat()->getPercent();
+            $paymentVatPercentsByPaymentId[$payment->getId()] = $payment->getPaymentDomain(
+                $domainId
+            )->getVat()->getPercent();
         }
 
         return $paymentVatPercentsByPaymentId;
@@ -251,7 +265,11 @@ class PaymentFacade
         foreach ($payment->getPrices() as $paymentInputPrice) {
             $domainId = $paymentInputPrice->getDomainId();
             $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-            $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $currency, $domainId);
+            $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice(
+                $payment,
+                $currency,
+                $domainId
+            );
         }
         return $prices;
     }
@@ -271,7 +289,11 @@ class PaymentFacade
                 continue;
             }
 
-            $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $currency, $domainId);
+            $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice(
+                $payment,
+                $currency,
+                $domainId
+            );
         }
 
         return $prices;

@@ -60,7 +60,12 @@ class ManualBestsellingProductFacade
 
         foreach ($productsIndexedByPosition as $position => $product) {
             if ($product !== null) {
-                $manualBestsellingProduct = $this->manualBestsellingProductFactory->create($domainId, $category, $product, $position);
+                $manualBestsellingProduct = $this->manualBestsellingProductFactory->create(
+                    $domainId,
+                    $category,
+                    $product,
+                    $position
+                );
                 $this->em->persist($manualBestsellingProduct);
             }
         }

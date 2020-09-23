@@ -42,7 +42,6 @@ class TransportAndPaymentController extends AdminBaseController
 
     /**
      * @Route("/transport-and-payment/free-transport-and-payment-limit/")
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function freeTransportAndPaymentLimitAction(Request $request)
@@ -50,7 +49,9 @@ class TransportAndPaymentController extends AdminBaseController
         $formData = [];
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
-            $freeTransportAndPaymentPriceLimit = $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);
+            $freeTransportAndPaymentPriceLimit = $this->pricingSetting->getFreeTransportAndPaymentPriceLimit(
+                $domainId
+            );
 
             $formData[FreeTransportAndPaymentPriceLimitsFormType::DOMAINS_SUBFORM_NAME][$domainId] = [
                 FreeTransportAndPaymentPriceLimitsFormType::FIELD_ENABLED => $freeTransportAndPaymentPriceLimit !== null,
@@ -86,9 +87,12 @@ class TransportAndPaymentController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysFramework/Admin/Content/TransportAndPayment/freeTransportAndPaymentLimitSetting.html.twig', [
-            'form' => $form->createView(),
-            'domain' => $this->domain,
-        ]);
+        return $this->render(
+            '@ShopsysFramework/Admin/Content/TransportAndPayment/freeTransportAndPaymentLimitSetting.html.twig',
+            [
+                'form' => $form->createView(),
+                'domain' => $this->domain,
+            ]
+        );
     }
 }

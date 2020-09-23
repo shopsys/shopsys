@@ -49,6 +49,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->setUpDomain();
     }
 
@@ -129,12 +130,15 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     protected function skipTestIfFirstDomainIsNotInEnglish()
     {
         if ($this->getFirstDomainLocale() !== 'en') {
-            $this->markTestSkipped('Tests for product searching are run only when the first domain has English locale');
+            $this->markTestSkipped(
+                'Tests for product searching are run only when the first domain has English locale'
+            );
         }
     }
 
     /**
      * We can use the shorthand here as $this->domain->switchDomainById(1) is called in setUp()
+     *
      * @return string
      */
     protected function getFirstDomainLocale(): string
@@ -161,7 +165,10 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected function getPriceWithVatConvertedToDomainDefaultCurrency(string $price): string
     {
-        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($price), Domain::FIRST_DOMAIN_ID);
+        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+            Money::create($price),
+            Domain::FIRST_DOMAIN_ID
+        );
 
         return $money->getAmount();
     }
@@ -172,7 +179,10 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected function getPriceWithoutVatConvertedToDomainDefaultCurrency(string $price): string
     {
-        $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money::create($price), Domain::FIRST_DOMAIN_ID);
+        $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+            Money::create($price),
+            Domain::FIRST_DOMAIN_ID
+        );
 
         return $money->getAmount();
     }

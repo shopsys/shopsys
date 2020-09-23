@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -57,7 +58,6 @@ class OrderRepository
 
     /**
      * @param int $customerUserId
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getOrdersByCustomerUserId($customerUserId)
@@ -69,7 +69,6 @@ class OrderRepository
 
     /**
      * @param int $customerUserId
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
     public function findLastByCustomerUserId($customerUserId)
@@ -94,34 +93,6 @@ class OrderRepository
     }
 
     /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
-     */
-    protected function findByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser)
-    {
-        return $this->createOrderQueryBuilder()
-            ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
-            ->andWhere('o.customerUser = :customerUser')->setParameter(':customerUser', $customerUser)
-            ->setMaxResults(1)
-            ->getQuery()->getOneOrNullResult();
-    }
-
-    /**
-     * @param string $uuid
-     * @param string $urlHash
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
-     */
-    protected function findByUuidAndUrlHash(string $uuid, string $urlHash)
-    {
-        return $this->createOrderQueryBuilder()
-            ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
-            ->andWhere('o.urlHash = :urlHash')->setParameter(':urlHash', $urlHash)
-            ->setMaxResults(1)
-            ->getQuery()->getOneOrNullResult();
-    }
-
-    /**
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
@@ -130,45 +101,7 @@ class OrderRepository
         $order = $this->findById($id);
 
         if ($order === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException('Order with ID ' . $id . ' not found.');
-        }
-
-        return $order;
-    }
-
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    public function getByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser): Order
-    {
-        $order = $this->findByUuidAndCustomerUser($uuid, $customerUser);
-
-        if ($order === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException(sprintf(
-                'Order with UUID \'%s\' not found.',
-                $uuid
-            ));
-        }
-
-        return $order;
-    }
-
-    /**
-     * @param string $uuid
-     * @param string $urlHash
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    public function getByUuidAndUrlHash(string $uuid, string $urlHash): Order
-    {
-        $order = $this->findByUuidAndUrlHash($uuid, $urlHash);
-
-        if ($order === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException(sprintf(
-                'Order with UUID \'%s\' not found.',
-                $uuid
-            ));
+            throw new OrderNotFoundException('Order with ID ' . $id . ' not found.');
         }
 
         return $order;
@@ -226,7 +159,6 @@ class OrderRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerUserOrderList(CustomerUser $customerUser)
@@ -241,40 +173,6 @@ class OrderRepository
             ->orderBy('o.createdAt', 'DESC')
             ->setParameter('customerUser', $customerUser)
             ->getQuery()->execute();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $limit
-     * @param int $offset
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
-     */
-    public function getCustomerUserOrderLimitedList(CustomerUser $customerUser, int $limit, int $offset): array
-    {
-        return $this->createOrderQueryBuilder()
-            ->andWhere('o.customerUser = :customerUser')
-            ->setParameter('customerUser', $customerUser)
-            ->orderBy('o.createdAt', 'DESC')
-            ->setFirstResult($offset)
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return int
-     */
-    public function getCustomerUserOrderCount(CustomerUser $customerUser): int
-    {
-        return $this->em->createQueryBuilder()
-            ->select('count(o.id)')
-            ->from(Order::class, 'o')
-            ->where('o.deleted = FALSE')
-            ->andWhere('o.customerUser = :customerUser')
-            ->setParameter('customerUser', $customerUser)
-            ->getQuery()
-            ->getSingleScalarResult();
     }
 
     /**
@@ -307,7 +205,7 @@ class OrderRepository
             ->getQuery()->getOneOrNullResult();
 
         if ($order === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException(sprintf(
+            throw new OrderNotFoundException(sprintf(
                 'Order with urlHash "%s" was not found.',
                 $urlHash
             ));
@@ -319,7 +217,6 @@ class OrderRepository
     /**
      * @param string $orderNumber
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function getByOrderNumberAndCustomerUser($orderNumber, CustomerUser $customerUser)
@@ -332,7 +229,7 @@ class OrderRepository
 
         if ($order === null) {
             $message = 'Order with number "' . $orderNumber . '" and customerUserId "' . $customerUser->getId() . '" not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException($message);
+            throw new OrderNotFoundException($message);
         }
 
         return $order;

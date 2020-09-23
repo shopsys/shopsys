@@ -50,7 +50,10 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
 
         $classData = $this->entityNameResolver->resolve(UploadedFile::class);
 
-        return new $classData($entityName, $entityId, $type, pathinfo($temporaryFilepath, PATHINFO_BASENAME), $uploadedFilename, $position);
+        return new $classData($entityName, $entityId, $type, pathinfo(
+            $temporaryFilepath,
+            PATHINFO_BASENAME
+        ), $uploadedFilename, $position);
     }
 
     /**
@@ -73,7 +76,14 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
         $files = [];
 
         foreach ($temporaryFilenames as $key => $temporaryFilename) {
-            $files[] = $this->create($entityName, $entityId, $type, $temporaryFilename, $uploadedFilenames[$key], $existingFilesCount++);
+            $files[] = $this->create(
+                $entityName,
+                $entityId,
+                $type,
+                $temporaryFilename,
+                $uploadedFilenames[$key],
+                $existingFilesCount++
+            );
         }
 
         return $files;

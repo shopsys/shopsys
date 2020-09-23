@@ -62,6 +62,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -131,11 +132,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
         }
 
         // skip shopsys packages mutual dependencies in monorepo
-        if (in_array($packageName, $this->packageNamesProvider->provide(), true)) {
-            return true;
-        }
-
-        return false;
+        return in_array($packageName, $this->packageNamesProvider->provide(), true);
     }
 
     /**

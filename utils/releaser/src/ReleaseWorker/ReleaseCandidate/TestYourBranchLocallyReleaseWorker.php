@@ -8,6 +8,7 @@ use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -22,6 +23,7 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -36,7 +38,7 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
     {
         try {
             $this->processRunner->run('php phing composer-dev standards tests', true);
-        } catch (\Symfony\Component\Process\Exception\ProcessFailedException $ex) {
+        } catch (ProcessFailedException $ex) {
             $this->symfonyStyle->caution($ex->getProcess()->getOutput());
             $this->symfonyStyle->note('A problem occurred, check the output and fix it please.');
             $runChecksAgain = $this->symfonyStyle->ask('Run the checks again?', 'yes');

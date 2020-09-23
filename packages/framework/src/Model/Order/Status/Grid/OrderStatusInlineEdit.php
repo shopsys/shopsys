@@ -38,6 +38,7 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
         OrderStatusDataFactoryInterface $orderStatusDataFactory
     ) {
         parent::__construct($orderStatusGridFactory);
+
         $this->orderStatusFacade = $orderStatusFacade;
         $this->formFactory = $formFactory;
         $this->orderStatusDataFactory = $orderStatusDataFactory;

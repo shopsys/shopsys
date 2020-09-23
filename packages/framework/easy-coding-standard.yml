@@ -1,5 +1,5 @@
 imports:
-    - { resource: '%vendor_dir%/shopsys/coding-standards/easy-coding-standard.yml', ignore_errors: true  }
+    - { resource: 'vendor/shopsys/coding-standards/easy-coding-standard.yml', ignore_errors: true  }
 
 services:
     # this package is meant to be extensible using class inheritance, so we want to avoid private visibilities in these namespaces
@@ -26,6 +26,7 @@ parameters:
         - 'psr12'
     skip:
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
+            - '*/src/Controller/Admin/DefaultController.php'
             - '*/src/Form/Admin/*/*FormType.php'
             - '*/src/Migrations/Version*.php'
             - '*/src/Model/AdminNavigation/SideMenuBuilder.php'
@@ -38,6 +39,7 @@ parameters:
             - '*/tests/Unit/Component/Image/ImageLocatorTest.php'
             - '*/tests/Unit/Component/Image/Config/ImageConfigLoaderTest.php'
             - '*/tests/Unit/Component/Image/Config/ImageConfigTest.php'
+            - '*/tests/Unit/Model/Payment/PaymentPriceCalculationTest.php'
             - '*/src/Form/Constraints/FileAbstractFilesystemValidator.php'
 
         ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff:
@@ -48,6 +50,7 @@ parameters:
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/src/Form/Admin/Product/ProductFormType.php'
+            - '*/src/Command/TranslationReplaceSourceCommand.php'
             - '*/src/Component/Grid/Grid.php'
             - '*/src/Model/Order/Order.php'
             - '*/src/Model/Order/OrderFacade.php'
@@ -97,3 +100,18 @@ parameters:
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff.MaxExceeded:
             - '*/src/Form/Constraints/FileAbstractFilesystemValidator.php'
+
+        # allow empty "catch (Exception $exception) { }"
+        PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedCatch:
+            - '*/src/Component/Elasticsearch/Debug/ElasticsearchTracer.php'
+
+        SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff.IncorrectLinesCountBeforeControlStructure:
+            - '*/src/Component/Filesystem/Flysystem/VolumeDriver.php'
+
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff.DisallowedEmpty:
+            - '*/src/Component/Filesystem/Flysystem/VolumeDriver.php'
+            - '*/src/Model/AdminNavigation/RoutingExtension.php'
+
+        SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff:
+            # FormInterface is used as an argument to foreach with unused iterated value
+            - 'packages/framework/src/Component/Form/ResizeFormListener.php'

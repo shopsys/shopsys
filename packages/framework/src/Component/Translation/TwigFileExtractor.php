@@ -6,6 +6,8 @@ use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor as OriginalTwigFileExtractor;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
 use ReflectionObject;
+use SplFileInfo;
+use Twig_Node;
 
 class TwigFileExtractor implements FileVisitorInterface
 {
@@ -42,7 +44,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue)
+    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
         $this->originalTwigFileExtractor->visitFile($file, $catalogue);
     }
@@ -50,7 +52,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visitPhpFile(\SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
         $this->originalTwigFileExtractor->visitPhpFile($file, $catalogue, $ast);
     }
@@ -58,7 +60,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Twig_Node $ast)
     {
         $this->originalTwigFileExtractor->visitTwigFile($file, $catalogue, $ast);
     }

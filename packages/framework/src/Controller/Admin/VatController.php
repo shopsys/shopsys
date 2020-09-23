@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Vat\VatSettingsFormType;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit;
 use Symfony\Component\HttpFoundation\Request;
@@ -86,15 +87,14 @@ class VatController extends AdminBaseController
                     $id,
                     $this->vatFacade->getAllForDomainExceptId($this->adminDomainTabsFacade->getSelectedDomainId(), $id)
                 );
-            } else {
-                $message = t(
-                    'Do you really want to remove rate "%name%" permanently? It is not used anywhere.',
-                    ['%name%' => $vat->getName()]
-                );
-
-                return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_vat_delete', $id);
             }
-        } catch (\Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException $ex) {
+            $message = t(
+                'Do you really want to remove rate "%name%" permanently? It is not used anywhere.',
+                ['%name%' => $vat->getName()]
+            );
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_vat_delete', $id);
+        } catch (VatNotFoundException $ex) {
             return new Response(t('Selected VAT doesn\'t exist'));
         }
     }
@@ -131,7 +131,7 @@ class VatController extends AdminBaseController
                     ]
                 );
             }
-        } catch (\Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException $ex) {
+        } catch (VatNotFoundException $ex) {
             $this->addErrorFlash(t('Selected VAT doesn\'t exist.'));
         }
 
@@ -144,7 +144,9 @@ class VatController extends AdminBaseController
     public function settingsAction(Request $request)
     {
         $vatSettingsFormData = [
-            'defaultVat' => $this->vatFacade->getDefaultVatForDomain($this->adminDomainTabsFacade->getSelectedDomainId()),
+            'defaultVat' => $this->vatFacade->getDefaultVatForDomain(
+                $this->adminDomainTabsFacade->getSelectedDomainId()
+            ),
         ];
 
         $form = $this->createForm(VatSettingsFormType::class, $vatSettingsFormData);
@@ -153,7 +155,10 @@ class VatController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $vatSettingsFormData = $form->getData();
 
-            $this->vatFacade->setDefaultVatForDomain($vatSettingsFormData['defaultVat'], $this->adminDomainTabsFacade->getSelectedDomainId());
+            $this->vatFacade->setDefaultVatForDomain(
+                $vatSettingsFormData['defaultVat'],
+                $this->adminDomainTabsFacade->getSelectedDomainId()
+            );
 
             $this->addSuccessFlash(t('VAT settings modified'));
 

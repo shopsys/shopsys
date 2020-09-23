@@ -42,7 +42,10 @@ final class ForbiddenPrivateVisibilityFixer implements DefinedFixerInterface, Co
         }
 
         if (!is_array($configuration[self::OPTION_ANALYZED_NAMESPACE])) {
-            throw new InvalidFixerConfigurationException($this->getName(), 'Namespace configuration has to be an array');
+            throw new InvalidFixerConfigurationException(
+                $this->getName(),
+                'Namespace configuration has to be an array'
+            );
         }
 
         return $configuration[self::OPTION_ANALYZED_NAMESPACE];
@@ -144,7 +147,7 @@ private function method()
      */
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
-        foreach ($tokens->findGivenKind(T_PRIVATE) as $index => $privateToken) {
+        foreach (array_keys($tokens->findGivenKind(T_PRIVATE)) as $index) {
             $tokens[$index] = new Token([T_PROTECTED, 'protected']);
         }
     }

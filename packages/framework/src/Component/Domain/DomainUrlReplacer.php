@@ -47,7 +47,12 @@ class DomainUrlReplacer
     {
         $stringColumnNames = $this->getAllStringColumnNamesIndexedByTableName();
         foreach ($stringColumnNames as $tableName => $columnNames) {
-            $urlReplacementSql = $this->getUrlReplacementSql($tableName, $columnNames, $domainSettingUrl, $domainConfigUrl);
+            $urlReplacementSql = $this->getUrlReplacementSql(
+                $tableName,
+                $columnNames,
+                $domainSettingUrl,
+                $domainConfigUrl
+            );
 
             $this->em->createNativeQuery($urlReplacementSql, new ResultSetMapping())->execute();
         }

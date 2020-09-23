@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
@@ -135,9 +136,13 @@ class ProductPriceRecalculator
     {
         foreach ($this->getAllPricingGroups() as $pricingGroup) {
             try {
-                $price = $this->productPriceCalculation->calculatePrice($product, $pricingGroup->getDomainId(), $pricingGroup);
+                $price = $this->productPriceCalculation->calculatePrice(
+                    $product,
+                    $pricingGroup->getDomainId(),
+                    $pricingGroup
+                );
                 $priceWithVat = $price->getPriceWithVat();
-            } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $e) {
+            } catch (MainVariantPriceCalculationException $e) {
                 $priceWithVat = null;
             }
             $this->productCalculatedPriceRepository->saveCalculatedPrice($product, $pricingGroup, $priceWithVat);

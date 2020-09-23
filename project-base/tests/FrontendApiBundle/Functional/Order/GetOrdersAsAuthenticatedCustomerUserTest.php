@@ -8,38 +8,37 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
-    /**
-     * @param string $query
-     * @param array $expectedOrdersData
-     * @dataProvider getOrdersDataProvider
-     */
-    public function testGetAllCustomerUserOrders(string $query, array $expectedOrdersData): void
+    public function testGetAllCustomerUserOrders(): void
     {
-        $graphQlType = 'orders';
-        $response = $this->getResponseContentForQuery($query);
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
-        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+        foreach ($this->getOrdersDataProvider() as $dataSet) {
+            [$query, $expectedOrdersData] = $dataSet;
 
-        $this->assertArrayHasKey('edges', $responseData);
-        $this->assertCount(count($expectedOrdersData), $responseData['edges']);
+            $graphQlType = 'orders';
+            $response = $this->getResponseContentForQuery($query);
+            $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
+            $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
-        foreach ($responseData['edges'] as $edge) {
-            $this->assertArrayHasKey('node', $edge);
+            $this->assertArrayHasKey('edges', $responseData);
+            $this->assertCount(count($expectedOrdersData), $responseData['edges']);
 
-            $expectedOrderData = array_shift($expectedOrdersData);
-            $this->assertArrayHasKey('status', $edge['node']);
-            $this->assertSame($expectedOrderData['status'], $edge['node']['status']);
+            foreach ($responseData['edges'] as $edge) {
+                $this->assertArrayHasKey('node', $edge);
 
-            $this->assertArrayHasKey('totalPrice', $edge['node']);
-            $this->assertArrayHasKey('priceWithVat', $edge['node']['totalPrice']);
-            $this->assertSame($expectedOrderData['priceWithVat'], $edge['node']['totalPrice']['priceWithVat']);
+                $expectedOrderData = array_shift($expectedOrdersData);
+                $this->assertArrayHasKey('status', $edge['node']);
+                $this->assertSame($expectedOrderData['status'], $edge['node']['status']);
+
+                $this->assertArrayHasKey('totalPrice', $edge['node']);
+                $this->assertArrayHasKey('priceWithVat', $edge['node']['totalPrice']);
+                $this->assertSame($expectedOrderData['priceWithVat'], $edge['node']['totalPrice']['priceWithVat']);
+            }
         }
     }
 
     /**
      * @return array
      */
-    public function getOrdersDataProvider(): array
+    private function getOrdersDataProvider(): array
     {
         return [
             [
@@ -135,29 +134,30 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
      */
     private function getExpectedUserOrders(): array
     {
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         return [
             [
-                'status' => 'In Progress',
+                'status' => t('In Progress', [], 'dataFixtures', $firstDomainLocale),
                 'priceWithVat' => '153.640000',
             ],
             [
-                'status' => 'Done',
+                'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
                 'priceWithVat' => '4308.320000',
             ],
             [
-                'status' => 'New',
+                'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
                 'priceWithVat' => '83.580000',
             ],
             [
-                'status' => 'Done',
+                'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
                 'priceWithVat' => '245.970000',
             ],
             [
-                'status' => 'New',
+                'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
                 'priceWithVat' => '76.580000',
             ],
             [
-                'status' => 'New',
+                'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
                 'priceWithVat' => '1012.420000',
             ],
         ];

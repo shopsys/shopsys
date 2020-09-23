@@ -78,7 +78,7 @@ class PaymentRepository
     {
         $payment = $this->findById($id);
         if ($payment === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException(
+            throw new PaymentNotFoundException(
                 'Payment with ID ' . $id . ' not found.'
             );
         }

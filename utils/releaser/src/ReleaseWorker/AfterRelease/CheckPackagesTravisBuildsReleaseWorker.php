@@ -10,11 +10,14 @@ use Shopsys\Releaser\Stage;
 
 final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackagesTravisBuildsReleaseWorker
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $releasingBranchName;
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -44,6 +47,7 @@ final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackages
     public function work(Version $version): void
     {
         $this->releasingBranchName = $version->getVersionString();
+
         parent::work($version);
     }
 }

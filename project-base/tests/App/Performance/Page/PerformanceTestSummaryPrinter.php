@@ -46,7 +46,9 @@ class PerformanceTestSummaryPrinter
                 $consoleOutput->write('<' . $resultTag . '>Test passed</' . $resultTag . '>');
                 return;
             case PerformanceTestSampleQualifier::STATUS_WARNING:
-                $consoleOutput->write('<' . $resultTag . '>Test passed, but contains some warnings</' . $resultTag . '>');
+                $consoleOutput->write(
+                    '<' . $resultTag . '>Test passed, but contains some warnings</' . $resultTag . '>'
+                );
                 return;
             case PerformanceTestSampleQualifier::STATUS_CRITICAL:
             default:
@@ -78,10 +80,12 @@ class PerformanceTestSummaryPrinter
             '<' . $tag . '>Max query count: ' . $performanceTestSample->getQueryCount() . '</' . $tag . '>'
         );
 
-        if (!$performanceTestSample->isSuccessful()) {
-            $tag = $this->getFormatterTagForError();
-            $consoleOutput->writeln('<' . $tag . '>Wrong response status code</' . $tag . '>');
+        if ($performanceTestSample->isSuccessful()) {
+            return;
         }
+
+        $tag = $this->getFormatterTagForError();
+        $consoleOutput->writeln('<' . $tag . '>Wrong response status code</' . $tag . '>');
     }
 
     /**

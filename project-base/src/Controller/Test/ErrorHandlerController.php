@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Test;
 
 use App\Controller\Front\FrontBaseController;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,7 +26,7 @@ class ErrorHandlerController extends FrontBaseController
      */
     public function exceptionAction()
     {
-        throw new \App\Controller\Test\ExpectedTestException('Expected exception');
+        throw new ExpectedTestException('Expected exception');
     }
 
     /**
@@ -33,6 +34,6 @@ class ErrorHandlerController extends FrontBaseController
      */
     public function unknownDomainAction()
     {
-        throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException('http://localhost:8000');
+        throw new UnableToResolveDomainException('http://localhost:8000');
     }
 }

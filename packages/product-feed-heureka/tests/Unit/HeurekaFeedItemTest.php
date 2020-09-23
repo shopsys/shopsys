@@ -60,7 +60,9 @@ class HeurekaFeedItemTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
+        $this->productPriceCalculationForCustomerUserMock = $this->createMock(
+            ProductPriceCalculationForCustomerUser::class
+        );
         $this->heurekaProductDataBatchLoaderMock = $this->createMock(HeurekaProductDataBatchLoader::class);
         $this->heurekaCategoryFacadeMock = $this->createMock(HeurekaCategoryFacade::class);
         $this->categoryFacadeMock = $this->createMock(CategoryFacade::class);

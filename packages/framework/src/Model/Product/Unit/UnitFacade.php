@@ -183,7 +183,6 @@ class UnitFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @param string $eventType
-     *
      * @see \Shopsys\FrameworkBundle\Model\Product\Unit\UnitEvent class
      */
     protected function dispatchUnitEvent(Unit $unit, string $eventType): void

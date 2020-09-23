@@ -44,7 +44,9 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $this->em->persist($payment);
         $this->em->flush();
 
-        $this->assertTrue($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
+        $this->assertTrue(
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+        );
     }
 
     public function testIsIndependentlyVisibleEmptyName()
@@ -66,7 +68,9 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $this->em->persist($payment);
         $this->em->flush();
 
-        $this->assertFalse($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
+        $this->assertFalse(
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+        );
     }
 
     public function testIsIndependentlyVisibleNotOnDomain()
@@ -80,7 +84,9 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $this->em->persist($payment);
         $this->em->flush();
 
-        $this->assertFalse($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
+        $this->assertFalse(
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+        );
     }
 
     public function testIsIndependentlyVisibleHidden()
@@ -94,7 +100,9 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $this->em->persist($payment);
         $this->em->flush();
 
-        $this->assertFalse($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
+        $this->assertFalse(
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+        );
     }
 
     /**

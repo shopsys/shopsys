@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 
 class FriendlyUrlRepository
 {
@@ -59,7 +60,7 @@ class FriendlyUrlRepository
         $friendlyUrl = $this->getFriendlyUrlRepository()->findOneBy($criteria);
 
         if ($friendlyUrl === null) {
-            throw new \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException();
+            throw new FriendlyUrlNotFoundException();
         }
 
         return $friendlyUrl;

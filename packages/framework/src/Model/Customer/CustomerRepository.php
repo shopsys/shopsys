@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerRepository
@@ -41,7 +42,7 @@ class CustomerRepository
         $customer = $this->getCustomerRepository()->find($customerId);
 
         if ($customer === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerNotFoundException('Customer with ID ' . $customerId . ' not found.');
+            throw new CustomerNotFoundException('Customer with ID ' . $customerId . ' not found.');
         }
 
         return $customer;

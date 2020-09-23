@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
+use Shopsys\FrameworkBundle\Model\Category\Exception\RootCategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
@@ -45,6 +46,7 @@ class CategoryRepository extends NestedTreeRepository
 
         $resolvedClassName = $entityNameResolver->resolve(Category::class);
         $classMetadata = $this->em->getClassMetadata($resolvedClassName);
+
         parent::__construct($this->em, $classMetadata);
     }
 
@@ -150,7 +152,7 @@ class CategoryRepository extends NestedTreeRepository
 
         if ($rootCategory === null) {
             $message = 'Root category not found';
-            throw new \Shopsys\FrameworkBundle\Model\Category\Exception\RootCategoryNotFoundException($message);
+            throw new RootCategoryNotFoundException($message);
         }
 
         return $rootCategory;
@@ -164,7 +166,13 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function getTranslatedAllWithoutBranch(Category $categoryBranch, DomainConfig $domainConfig)
     {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
 
         $queryBuilder = $this->getAllQueryBuilder();
         $this->addTranslation($queryBuilder, $domainConfig->getLocale());
@@ -220,7 +228,7 @@ class CategoryRepository extends NestedTreeRepository
 
         if ($category === null) {
             $message = 'Category with ID ' . $categoryId . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException($message);
+            throw new CategoryNotFoundException($message);
         }
 
         return $category;
@@ -498,7 +506,13 @@ class CategoryRepository extends NestedTreeRepository
     {
         $productMainCategory = $this->findProductMainCategoryOnDomain($product, $domainId);
         if ($productMainCategory === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException(sprintf('Main category for product id `%d` and domain id `%d` was not found', $product->getId(), $domainId));
+            throw new CategoryNotFoundException(
+                sprintf(
+                    'Main category for product id `%d` and domain id `%d` was not found',
+                    $product->getId(),
+                    $domainId
+                )
+            );
         }
 
         return $productMainCategory;
@@ -583,7 +597,13 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function getTranslatedAll(DomainConfig $domainConfig)
     {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
 
         $queryBuilder = $this->getAllQueryBuilder();
         $this->addTranslation($queryBuilder, $domainConfig->getLocale());

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductVisibilityNotFoundException;
 
 class ProductVisibilityRepository
 {
@@ -148,7 +149,7 @@ class ProductVisibilityRepository
             'domainId' => $domainId,
         ]);
         if ($productVisibility === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductVisibilityNotFoundException();
+            throw new ProductVisibilityNotFoundException();
         }
 
         return $productVisibility;

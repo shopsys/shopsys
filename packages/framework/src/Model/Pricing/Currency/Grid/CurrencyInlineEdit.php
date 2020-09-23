@@ -38,6 +38,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
         CurrencyDataFactoryInterface $currencyDataFactory
     ) {
         parent::__construct($currencyGridFactory);
+
         $this->currencyFacade = $currencyFacade;
         $this->formFactory = $formFactory;
         $this->currencyDataFactory = $currencyDataFactory;

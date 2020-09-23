@@ -15,7 +15,9 @@ class Version20200127085928 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE delivery_addresses ADD customer_id INT NOT NULL DEFAULT 0');
-        $this->sql('UPDATE delivery_addresses SET customer_id = (SELECT customer_id FROM customer_users WHERE delivery_address_id = delivery_addresses.id)');
+        $this->sql(
+            'UPDATE delivery_addresses SET customer_id = (SELECT customer_id FROM customer_users WHERE delivery_address_id = delivery_addresses.id)'
+        );
         $this->sql('
             ALTER TABLE
                 delivery_addresses

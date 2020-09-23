@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException;
 
 class PricingGroupRepository
 {
@@ -38,7 +39,7 @@ class PricingGroupRepository
         $pricingGroup = $this->getPricingGroupRepository()->find($pricingGroupId);
         if ($pricingGroup === null) {
             $message = 'Pricing group with ID ' . $pricingGroupId . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException($message);
+            throw new PricingGroupNotFoundException($message);
         }
         return $pricingGroup;
     }

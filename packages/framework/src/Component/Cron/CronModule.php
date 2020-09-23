@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +19,6 @@ class CronModule
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      * @ORM\Id
      */
@@ -26,49 +26,42 @@ class CronModule
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $scheduled;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $suspended;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $enabled;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $status;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastStartedAt;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastFinishedAt;
 
     /**
      * @var int|null
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $lastDuration;
@@ -160,18 +153,18 @@ class CronModule
 
     public function updateLastStartedAt(): void
     {
-        $this->lastStartedAt = new \DateTime();
+        $this->lastStartedAt = new DateTime();
     }
 
     public function updateLastFinishedAt(): void
     {
-        $this->lastFinishedAt = new \DateTime();
+        $this->lastFinishedAt = new DateTime();
     }
 
     /**
      * @return \DateTime|null
      */
-    public function getLastStartedAt(): ?\DateTime
+    public function getLastStartedAt(): ?DateTime
     {
         return $this->lastStartedAt;
     }
@@ -179,7 +172,7 @@ class CronModule
     /**
      * @return \DateTime|null
      */
-    public function getLastFinishedAt(): ?\DateTime
+    public function getLastFinishedAt(): ?DateTime
     {
         return $this->lastFinishedAt;
     }

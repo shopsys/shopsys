@@ -40,7 +40,11 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
      */
     protected function assertQueryWithExpectedJson(string $query, string $jsonExpected, $jsonVariables = '{}'): void
     {
-        $this->assertQueryWithExpectedArray($query, json_decode($jsonExpected, true), json_decode($jsonVariables, true));
+        $this->assertQueryWithExpectedArray(
+            $query,
+            json_decode($jsonExpected, true),
+            json_decode($jsonVariables, true)
+        );
     }
 
     /**
@@ -81,7 +85,10 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
     {
         $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
         $server = array_merge(
-            ['CONTENT_TYPE' => 'application/graphql', 'HTTP_Authorization' => sprintf('Bearer %s', $this->accessToken)],
+            ['CONTENT_TYPE' => 'application/graphql', 'HTTP_Authorization' => sprintf(
+                'Bearer %s',
+                $this->accessToken
+            )],
             $customServer
         );
 
@@ -103,7 +110,9 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
      */
     private function getAccessToken(?string $customerUserEmail = null, ?string $customerUserPassword = null): string
     {
-        $responseData = parent::getResponseContentForQuery($this->getLoginQuery($customerUserEmail, $customerUserPassword));
+        $responseData = parent::getResponseContentForQuery(
+            $this->getLoginQuery($customerUserEmail, $customerUserPassword)
+        );
 
         return $responseData['data']['Login']['accessToken'];
     }

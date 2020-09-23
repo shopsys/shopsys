@@ -21,6 +21,7 @@ final class UpdateListOfSupportedVersionsReleaseWorker extends AbstractShopsysRe
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -33,8 +34,12 @@ final class UpdateListOfSupportedVersionsReleaseWorker extends AbstractShopsysRe
      */
     public function work(Version $version): void
     {
-        $this->symfonyStyle->note('When releasing a new MINOR or MAJOR version, make sure the list of currently supported versions in BC promise (https://github.com/shopsys/shopsys/blob/master/docs/contributing/backward-compatibility-promise.md#current-release-plan) is up to date.');
-        $this->symfonyStyle->note('If necessary, update the list and commit the change with "backward-compatibility-promise.md: updated list of currently supported versions" commit message.');
+        $this->symfonyStyle->note(
+            'When releasing a new MINOR or MAJOR version, make sure the list of currently supported versions in BC promise (https://github.com/shopsys/shopsys/blob/master/docs/contributing/backward-compatibility-promise.md#current-release-plan) is up to date.'
+        );
+        $this->symfonyStyle->note(
+            'If necessary, update the list and commit the change with "backward-compatibility-promise.md: updated list of currently supported versions" commit message.'
+        );
 
         $this->confirm('Confirm the list is up to date');
     }

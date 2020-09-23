@@ -13,7 +13,6 @@ class UnidirectionalEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -22,7 +21,6 @@ class UnidirectionalEntity
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $name;

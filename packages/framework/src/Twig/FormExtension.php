@@ -20,6 +20,7 @@ class FormExtension extends AbstractExtension
 
     /**
      * Creates source id of FormError equally as it is created in JS function FpJsFormValidator.validate
+     *
      * @param \Symfony\Component\Form\FormError $formError
      * @return string
      */

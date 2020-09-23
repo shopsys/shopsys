@@ -6,6 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 
 use CommerceGuys\Intl\Currency\Currency;
 use CommerceGuys\Intl\Currency\CurrencyRepository as BaseCurrencyRepository;
+use CommerceGuys\Intl\Exception\UnknownCurrencyException;
+use Shopsys\FrameworkBundle\Model\Localization\Exception\UndefinedLegacyCurrencyException;
+use Shopsys\FrameworkBundle\Model\Localization\Exception\UnsupportedCurrencyException;
 
 class IntlCurrencyRepository extends BaseCurrencyRepository
 {
@@ -180,22 +183,23 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
     public function get($currencyCode, $locale = null)
     {
         if (!$this->isSupportedCurrency($currencyCode)) {
-            throw new \Shopsys\FrameworkBundle\Model\Localization\Exception\UnsupportedCurrencyException($currencyCode);
+            throw new UnsupportedCurrencyException($currencyCode);
         }
 
         try {
             return parent::get($currencyCode, $locale);
-        } catch (\CommerceGuys\Intl\Exception\UnknownCurrencyException $ex) {
+        } catch (UnknownCurrencyException $ex) {
             $legacyCurrencies = $this->getLegacyCurrenciesIndexedByCurrencyCodes();
             if (array_key_exists($currencyCode, $legacyCurrencies)) {
                 return $legacyCurrencies[$currencyCode];
             }
-            throw new \Shopsys\FrameworkBundle\Model\Localization\Exception\UndefinedLegacyCurrencyException($currencyCode);
+            throw new UndefinedLegacyCurrencyException($currencyCode);
         }
     }
 
     /**
      * {@inheritDoc}
+     *
      * @return \CommerceGuys\Intl\Currency\Currency[]
      */
     public function getAll($locale = null)

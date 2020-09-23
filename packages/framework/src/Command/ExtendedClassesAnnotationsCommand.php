@@ -68,8 +68,15 @@ class ExtendedClassesAnnotationsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Fixes and adds annotations (or just checks them in dry-run mode) in project classes to improve static analysis and DX with extended classes. See "help" for more information')
-            ->addOption(static::DRY_RUN, null, InputOption::VALUE_NONE, 'By default, the command fixes and adds all the relevant annotations for extended classes. When using this option, it just reports files that need to be fixed.')
+            ->setDescription(
+                'Fixes and adds annotations (or just checks them in dry-run mode) in project classes to improve static analysis and DX with extended classes. See "help" for more information'
+            )
+            ->addOption(
+                static::DRY_RUN,
+                null,
+                InputOption::VALUE_NONE,
+                'By default, the command fixes and adds all the relevant annotations for extended classes. When using this option, it just reports files that need to be fixed.'
+            )
             ->setHelp('What does the command do exactly?
 - Replaces the framework with the project annotations in all project files when there exists a project extension of a given framework class.
 - Adds @property annotations to project classes when there exists a property in parent class that is extended in the project.
@@ -95,6 +102,7 @@ class ExtendedClassesAnnotationsCommand extends Command
         AnnotationsAdder $annotationsAdder
     ) {
         parent::__construct();
+
         $this->projectRootDirectory = $projectRootDirectory;
         $this->classExtensionRegistry = $classExtensionRegistry;
         $this->annotationsReplacer = $annotationsReplacer;
@@ -112,27 +120,33 @@ class ExtendedClassesAnnotationsCommand extends Command
         $symfonyStyle = new SymfonyStyle($input, $output);
         $isDryRun = (bool)$input->getOption(static::DRY_RUN);
         $filesForReplacingAnnotations = $this->replaceFrameworkWithProjectAnnotations($isDryRun);
-        if (!empty($filesForReplacingAnnotations)) {
+        if (count($filesForReplacingAnnotations) > 0) {
             if ($isDryRun) {
                 $symfonyStyle->error('Following files need fixing annotations:');
                 $symfonyStyle->listing($filesForReplacingAnnotations);
             } else {
-                $symfonyStyle->note(['Annotations were fixed in the following files:'] + $filesForReplacingAnnotations);
+                $symfonyStyle->note(
+                    ['Annotations were fixed in the following files:'] + $filesForReplacingAnnotations
+                );
             }
         }
         $filesForAddingPropertyOrMethodAnnotations = $this->addPropertyAndMethodAnnotationsToProjectClasses($isDryRun);
-        if (!empty($filesForAddingPropertyOrMethodAnnotations)) {
+        if (count($filesForAddingPropertyOrMethodAnnotations) > 0) {
             if ($isDryRun) {
                 $symfonyStyle->error('@method or @property annotations need to be added to the following files:');
                 $symfonyStyle->listing($filesForAddingPropertyOrMethodAnnotations);
             } else {
-                $symfonyStyle->note(['@method or @property annotations were added to the following files:'] + $filesForAddingPropertyOrMethodAnnotations);
+                $symfonyStyle->note(
+                    ['@method or @property annotations were added to the following files:'] + $filesForAddingPropertyOrMethodAnnotations
+                );
             }
         }
-        if (empty($filesForReplacingAnnotations) && empty($filesForAddingPropertyOrMethodAnnotations)) {
+        if (count($filesForReplacingAnnotations) === 0 && count($filesForAddingPropertyOrMethodAnnotations) === 0) {
             $symfonyStyle->success('All good!');
             return CommandResultCodes::RESULT_OK;
-        } elseif ($isDryRun) {
+        }
+
+        if ($isDryRun) {
             $symfonyStyle->note('You can fix the annotations using "annotations-fix" phing command.');
             return CommandResultCodes::RESULT_FAIL;
         }
@@ -151,10 +165,12 @@ class ExtendedClassesAnnotationsCommand extends Command
         foreach ($finder as $file) {
             $pathname = $file->getPathname();
             $filesForReplacingAnnotations[] = $file->getRealPath();
-            if (!$isDryRun) {
-                $replacedContent = $this->annotationsReplacer->replaceIn(file_get_contents($pathname));
-                file_put_contents($pathname, $replacedContent);
+            if ($isDryRun) {
+                continue;
             }
+
+            $replacedContent = $this->annotationsReplacer->replaceIn(file_get_contents($pathname));
+            file_put_contents($pathname, $replacedContent);
         }
 
         return $filesForReplacingAnnotations;
@@ -165,7 +181,7 @@ class ExtendedClassesAnnotationsCommand extends Command
      */
     protected function getFinderForReplacingAnnotations(): Finder
     {
-        $finder = Finder::create()
+        return Finder::create()
             ->files()
             ->ignoreUnreadableDirs()
             ->in([
@@ -174,8 +190,6 @@ class ExtendedClassesAnnotationsCommand extends Command
             ])
             ->name('*.php')
             ->contains($this->annotationsReplacementsMap->getPatternForAny());
-
-        return $finder;
     }
 
     /**
@@ -199,10 +213,16 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $projectClassBetterReflection
             );
             if (!$isDryRun) {
-                $this->annotationsAdder->addAnnotationToClass($projectClassBetterReflection, $projectClassNecessaryPropertyAnnotationsLines . $projectClassNecessaryMethodAnnotationsLines);
+                $this->annotationsAdder->addAnnotationToClass(
+                    $projectClassBetterReflection,
+                    $projectClassNecessaryPropertyAnnotationsLines . $projectClassNecessaryMethodAnnotationsLines
+                );
             }
 
-            if (!empty($projectClassNecessaryPropertyAnnotationsLines) || !empty($projectClassNecessaryMethodAnnotationsLines)) {
+            if (
+                $projectClassNecessaryPropertyAnnotationsLines !== ''
+                || $projectClassNecessaryMethodAnnotationsLines !== ''
+            ) {
                 $filesForAddingPropertyOrMethodAnnotations[] = $projectClassBetterReflection->getFileName();
             }
         }

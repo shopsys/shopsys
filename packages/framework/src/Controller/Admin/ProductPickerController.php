@@ -128,7 +128,9 @@ class ProductPickerController extends AdminBaseController
 
         $isAdvancedSearchFormSubmitted = $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted($request);
         if ($isAdvancedSearchFormSubmitted) {
-            $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData($advancedSearchData);
+            $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData(
+                $advancedSearchData
+            );
         } else {
             $queryBuilder = $this->productListAdminFacade->getQueryBuilderByQuickSearchData($quickSearchData);
         }
@@ -162,7 +164,9 @@ class ProductPickerController extends AdminBaseController
         $viewParameters['gridView'] = $grid->createView();
         $viewParameters['quickSearchForm'] = $quickSearchForm->createView();
         $viewParameters['advancedSearchForm'] = $advancedSearchForm->createView();
-        $viewParameters['isAdvancedSearchFormSubmitted'] = $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted($request);
+        $viewParameters['isAdvancedSearchFormSubmitted'] = $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted(
+            $request
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/ProductPicker/list.html.twig', $viewParameters);
     }

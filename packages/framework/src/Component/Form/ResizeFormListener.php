@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Form;
 
 use ArrayAccess;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
@@ -88,8 +89,8 @@ class ResizeFormListener implements EventSubscriberInterface
             $data = [];
         }
 
-        if (!is_array($data) && !($data instanceof \Traversable && $data instanceof \ArrayAccess)) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+        if (!is_array($data) && !($data instanceof Traversable && $data instanceof ArrayAccess)) {
+            throw new UnexpectedTypeException(
                 $data,
                 'array or (\Traversable and \ArrayAccess)'
             );
@@ -112,7 +113,7 @@ class ResizeFormListener implements EventSubscriberInterface
         }
 
         if (!is_array($viewData) && !($viewData instanceof Traversable && $viewData instanceof ArrayAccess)) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+            throw new UnexpectedTypeException(
                 $viewData,
                 'array or (\Traversable and \ArrayAccess)'
             );
@@ -126,7 +127,7 @@ class ResizeFormListener implements EventSubscriberInterface
         $childOptions = $this->options;
 
         // Then add all rows again in the correct order
-        foreach ($viewData as $name => $value) {
+        foreach (array_keys($viewData) as $name) {
             $childOptions['property_path'] = '[' . $name . ']';
             $form->add($name, $this->type, $childOptions);
         }
@@ -147,7 +148,7 @@ class ResizeFormListener implements EventSubscriberInterface
         }
 
         if (!is_array($data) && !($data instanceof Traversable && $data instanceof ArrayAccess)) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+            throw new UnexpectedTypeException(
                 $data,
                 'array or (\Traversable and \ArrayAccess)'
             );
@@ -163,14 +164,16 @@ class ResizeFormListener implements EventSubscriberInterface
         }
 
         // Add all additional rows
-        if ($this->allowAdd) {
-            $childOptions = $this->options;
+        if (!$this->allowAdd) {
+            return;
+        }
 
-            foreach ($data as $name => $value) {
-                if (!$form->has($name)) {
-                    $childOptions['property_path'] = '[' . $name . ']';
-                    $form->add($name, $this->type, $childOptions);
-                }
+        $childOptions = $this->options;
+
+        foreach (array_keys($data) as $name) {
+            if (!$form->has($name)) {
+                $childOptions['property_path'] = '[' . $name . ']';
+                $form->add($name, $this->type, $childOptions);
             }
         }
     }
@@ -194,7 +197,7 @@ class ResizeFormListener implements EventSubscriberInterface
             $normData = [];
         }
         if (!is_array($normData) && !($normData instanceof Traversable && $normData instanceof ArrayAccess)) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+            throw new UnexpectedTypeException(
                 $normData,
                 'array or (\Traversable and \ArrayAccess)'
             );
@@ -203,8 +206,14 @@ class ResizeFormListener implements EventSubscriberInterface
         if ($previousViewData === null) {
             $previousViewData = [];
         }
-        if (!is_array($previousViewData) && !($previousViewData instanceof Traversable && $previousViewData instanceof ArrayAccess)) {
-            throw new \Symfony\Component\Form\Exception\UnexpectedTypeException(
+        if (
+            !is_array($previousViewData)
+            && !(
+                $previousViewData instanceof Traversable
+                && $previousViewData instanceof ArrayAccess
+            )
+        ) {
+            throw new UnexpectedTypeException(
                 $previousViewData,
                 'array or (\Traversable and \ArrayAccess)'
             );
@@ -240,10 +249,12 @@ class ResizeFormListener implements EventSubscriberInterface
 
             // $isNew can only be true if allowAdd is true, so we don't
             // need to check allowAdd again
-            if ($child->isEmpty() && ($isNew || $this->allowDelete)) {
-                unset($viewData[$name]);
-                $form->remove($name);
+            if (!$child->isEmpty() || (!$isNew && !$this->allowDelete)) {
+                continue;
             }
+
+            unset($viewData[$name]);
+            $form->remove($name);
         }
 
         return $viewData;
@@ -258,7 +269,7 @@ class ResizeFormListener implements EventSubscriberInterface
     {
         $toDelete = [];
 
-        foreach ($viewData as $name => $child) {
+        foreach (array_keys($viewData) as $name) {
             if (!$form->has($name)) {
                 $toDelete[] = $name;
             }

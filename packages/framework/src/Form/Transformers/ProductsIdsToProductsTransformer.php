@@ -2,8 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ProductsIdsToProductsTransformer implements DataTransformerInterface
 {
@@ -49,8 +51,8 @@ class ProductsIdsToProductsTransformer implements DataTransformerInterface
             foreach ($productsIds as $key => $productId) {
                 try {
                     $products[$key] = $this->productRepository->getById($productId);
-                } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Product not found', 0, $e);
+                } catch (ProductNotFoundException $e) {
+                    throw new TransformationFailedException('Product not found', 0, $e);
                 }
             }
         }

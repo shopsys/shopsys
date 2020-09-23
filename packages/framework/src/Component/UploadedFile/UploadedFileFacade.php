@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException;
 
 class UploadedFileFacade
 {
@@ -84,7 +85,14 @@ class UploadedFileFacade
         $this->updateFilenamesAndSlugs($uploadedFileData->currentFilenamesIndexedById);
 
         if ($uploadedFileTypeConfig->isMultiple()) {
-            $this->uploadFiles($entity, $uploadedFileEntityConfig->getEntityName(), $type, $uploadedFiles, $uploadedFilenames, count($orderedFiles));
+            $this->uploadFiles(
+                $entity,
+                $uploadedFileEntityConfig->getEntityName(),
+                $type,
+                $uploadedFiles,
+                $uploadedFilenames,
+                count($orderedFiles)
+            );
         } else {
             if (count($orderedFiles) > 1) {
                 array_shift($orderedFiles);
@@ -93,7 +101,13 @@ class UploadedFileFacade
 
             $this->deleteAllUploadedFilesByEntity($entity);
 
-            $this->uploadFile($entity, $uploadedFileEntityConfig->getEntityName(), $type, array_pop($uploadedFiles), array_pop($uploadedFilenames));
+            $this->uploadFile(
+                $entity,
+                $uploadedFileEntityConfig->getEntityName(),
+                $type,
+                array_pop($uploadedFiles),
+                array_pop($uploadedFilenames)
+            );
         }
 
         $this->deleteFiles($entity, $uploadedFileData->filesToDelete);
@@ -134,7 +148,14 @@ class UploadedFileFacade
     {
         if (count($temporaryFilenames) > 0) {
             $entityId = $this->getEntityId($entity);
-            $files = $this->uploadedFileFactory->createMultiple($entityName, $entityId, $type, $temporaryFilenames, $uploadedFilenames, $existingFilesCount);
+            $files = $this->uploadedFileFactory->createMultiple(
+                $entityName,
+                $entityId,
+                $type,
+                $temporaryFilenames,
+                $uploadedFilenames,
+                $existingFilesCount
+            );
 
             foreach ($files as $file) {
                 $this->em->persist($file);
@@ -216,7 +237,7 @@ class UploadedFileFacade
         }
 
         $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
-        throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException($message);
+        throw new EntityIdentifierException($message);
     }
 
     /**
@@ -282,6 +303,10 @@ class UploadedFileFacade
      */
     public function getByIdSlugAndExtension(int $uploadedFileId, string $uploadedFileSlug, string $uploadedFileExtension): UploadedFile
     {
-        return $this->uploadedFileRepository->getByIdSlugAndExtension($uploadedFileId, $uploadedFileSlug, $uploadedFileExtension);
+        return $this->uploadedFileRepository->getByIdSlugAndExtension(
+            $uploadedFileId,
+            $uploadedFileSlug,
+            $uploadedFileExtension
+        );
     }
 }

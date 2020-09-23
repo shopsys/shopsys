@@ -15,7 +15,6 @@ class Customer
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,14 +23,12 @@ class Customer
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddress[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Customer\BillingAddress", mappedBy="customer", cascade={"persist", "remove"})
      */
     protected $billingAddresses;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress", mappedBy="customer", cascade={"persist", "remove"})
      */
     protected $deliveryAddresses;
@@ -72,7 +69,7 @@ class Customer
         }
 
         foreach ($customerData->deliveryAddresses as $deliveryAddress) {
-            $this->addDeliveryAddress(($deliveryAddress));
+            $this->addDeliveryAddress($deliveryAddress);
         }
     }
 

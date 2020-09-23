@@ -16,7 +16,6 @@ class Script
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -25,21 +24,18 @@ class Script
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $code;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $placement;

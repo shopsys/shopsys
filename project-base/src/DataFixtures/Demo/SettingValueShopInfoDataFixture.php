@@ -40,9 +40,21 @@ class SettingValueShopInfoDataFixture extends AbstractReferenceFixture
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
-            $this->setting->setForDomain(ShopInfoSettingFacade::SHOP_INFO_PHONE_NUMBER, t('+1-234-567-8989', [], 'dataFixtures', $locale), $domainId);
-            $this->setting->setForDomain(ShopInfoSettingFacade::SHOP_INFO_PHONE_HOURS, t('(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)', [], 'dataFixtures', $locale), $domainId);
-            $this->setting->setForDomain(ShopInfoSettingFacade::SHOP_INFO_EMAIL, t('no-reply@shopsys.com', [], 'dataFixtures', $locale), $domainId);
+            $this->setting->setForDomain(
+                ShopInfoSettingFacade::SHOP_INFO_PHONE_NUMBER,
+                t('+1-234-567-8989', [], 'dataFixtures', $locale),
+                $domainId
+            );
+            $this->setting->setForDomain(
+                ShopInfoSettingFacade::SHOP_INFO_PHONE_HOURS,
+                t('(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)', [], 'dataFixtures', $locale),
+                $domainId
+            );
+            $this->setting->setForDomain(
+                ShopInfoSettingFacade::SHOP_INFO_EMAIL,
+                t('no-reply@shopsys.com', [], 'dataFixtures', $locale),
+                $domainId
+            );
         }
     }
 }

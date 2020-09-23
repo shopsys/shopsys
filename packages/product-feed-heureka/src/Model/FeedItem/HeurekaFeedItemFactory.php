@@ -116,9 +116,8 @@ class HeurekaFeedItemFactory
 
         if ($mainCategory !== null) {
             return $this->findHeurekaCategoryFullNameByCategoryIdUsingCache($mainCategory->getId());
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -128,7 +127,9 @@ class HeurekaFeedItemFactory
     protected function findHeurekaCategoryFullNameByCategoryIdUsingCache(int $categoryId): ?string
     {
         if (!array_key_exists($categoryId, $this->heurekaCategoryFullNamesCache)) {
-            $this->heurekaCategoryFullNamesCache[$categoryId] = $this->findHeurekaCategoryFullNameByCategoryId($categoryId);
+            $this->heurekaCategoryFullNamesCache[$categoryId] = $this->findHeurekaCategoryFullNameByCategoryId(
+                $categoryId
+            );
         }
 
         return $this->heurekaCategoryFullNamesCache[$categoryId];

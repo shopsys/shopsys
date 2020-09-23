@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Money;
 
+use InvalidArgumentException;
 use JsonSerializable;
 use Litipk\BigNumbers\Decimal;
+use Litipk\BigNumbers\Errors\BigNumbersError;
+use Shopsys\FrameworkBundle\Component\Money\Exception\InvalidNumericArgumentException;
 use Shopsys\FrameworkBundle\Component\Money\Exception\UnsupportedTypeException;
+use function substr;
 
 class Money implements JsonSerializable
 {
@@ -62,7 +66,7 @@ class Money implements JsonSerializable
     public function getAmount(): string
     {
         if ($this->decimal->isZero() && $this->decimal->isNegative()) {
-            return \substr((string)$this->decimal, 1);
+            return substr((string)$this->decimal, 1);
         }
 
         return (string)$this->decimal;
@@ -234,8 +238,8 @@ class Money implements JsonSerializable
         if (is_string($value)) {
             try {
                 return Decimal::fromString($value, $scale);
-            } catch (\Litipk\BigNumbers\Errors\BigNumbersError | \InvalidArgumentException $e) {
-                throw new \Shopsys\FrameworkBundle\Component\Money\Exception\InvalidNumericArgumentException($value, $e);
+            } catch (BigNumbersError | InvalidArgumentException $e) {
+                throw new InvalidNumericArgumentException($value, $e);
             }
         }
 

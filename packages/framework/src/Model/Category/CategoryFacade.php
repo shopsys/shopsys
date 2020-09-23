@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
@@ -219,7 +220,13 @@ class CategoryFacade
      */
     public function getTranslatedAll(DomainConfig $domainConfig)
     {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
 
         return $this->categoryRepository->getTranslatedAll($domainConfig);
     }
@@ -239,9 +246,7 @@ class CategoryFacade
      */
     public function getAllCategoriesOfCollapsedTree(array $selectedCategories)
     {
-        $categories = $this->categoryRepository->getAllCategoriesOfCollapsedTree($selectedCategories);
-
-        return $categories;
+        return $this->categoryRepository->getAllCategoriesOfCollapsedTree($selectedCategories);
     }
 
     /**
@@ -261,9 +266,7 @@ class CategoryFacade
     public function getAllCategoriesWithPreloadedChildren($locale)
     {
         $categories = $this->categoryRepository->getPreOrderTreeTraversalForAllCategories($locale);
-        $categoriesWithPreloadedChildren = $this->categoryWithPreloadedChildrenFactory->createCategoriesWithPreloadedChildren($categories);
-
-        return $categoriesWithPreloadedChildren;
+        return $this->categoryWithPreloadedChildrenFactory->createCategoriesWithPreloadedChildren($categories);
     }
 
     /**
@@ -273,11 +276,12 @@ class CategoryFacade
      */
     public function getVisibleCategoriesWithPreloadedChildrenForDomain($domainId, $locale)
     {
-        $categories = $this->categoryRepository->getPreOrderTreeTraversalForVisibleCategoriesByDomain($domainId, $locale);
+        $categories = $this->categoryRepository->getPreOrderTreeTraversalForVisibleCategoriesByDomain(
+            $domainId,
+            $locale
+        );
 
-        $categoriesWithPreloadedChildren = $this->categoryWithPreloadedChildrenFactory->createCategoriesWithPreloadedChildren($categories);
-
-        return $categoriesWithPreloadedChildren;
+        return $this->categoryWithPreloadedChildrenFactory->createCategoriesWithPreloadedChildren($categories);
     }
 
     /**
@@ -297,12 +301,13 @@ class CategoryFacade
      */
     public function getCategoriesWithLazyLoadedVisibleChildrenForParent(Category $parentCategory, DomainConfig $domainConfig)
     {
-        $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain($parentCategory, $domainConfig);
+        $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
+            $parentCategory,
+            $domainConfig
+        );
 
-        $categoriesWithLazyLoadedVisibleChildren = $this->categoryWithLazyLoadedVisibleChildrenFactory
+        return $this->categoryWithLazyLoadedVisibleChildrenFactory
             ->createCategoriesWithLazyLoadedVisibleChildren($categories, $domainConfig);
-
-        return $categoriesWithLazyLoadedVisibleChildren;
     }
 
     /**
@@ -313,13 +318,11 @@ class CategoryFacade
      */
     public function getVisibleByDomainAndSearchText($domainId, $locale, $searchText)
     {
-        $categories = $this->categoryRepository->getVisibleByDomainIdAndSearchText(
+        return $this->categoryRepository->getVisibleByDomainIdAndSearchText(
             $domainId,
             $locale,
             $searchText
         );
-
-        return $categories;
     }
 
     /**
@@ -340,7 +343,13 @@ class CategoryFacade
      */
     public function getTranslatedAllWithoutBranch(Category $category, DomainConfig $domainConfig)
     {
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
 
         return $this->categoryRepository->getTranslatedAllWithoutBranch($category, $domainConfig);
     }
@@ -364,15 +373,13 @@ class CategoryFacade
     {
         $page = 1;
 
-        $paginationResult = $this->categoryRepository->getPaginationResultForSearchVisible(
+        return $this->categoryRepository->getPaginationResultForSearchVisible(
             $searchText,
             $this->domain->getId(),
             $this->domain->getLocale(),
             $page,
             $limit
         );
-
-        return $paginationResult;
     }
 
     /**
@@ -419,7 +426,10 @@ class CategoryFacade
      */
     public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(Product $product, DomainConfig $domainConfig)
     {
-        return $this->categoryRepository->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain($product, $domainConfig);
+        return $this->categoryRepository->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
+            $product,
+            $domainConfig
+        );
     }
 
     /**
@@ -440,7 +450,7 @@ class CategoryFacade
         $category = $this->getById($categoryId);
         if (!$category->isVisible($domainId)) {
             $message = 'Category ID ' . $categoryId . ' is not visible on domain ID ' . $domainId;
-            throw new \Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException($message);
+            throw new CategoryNotFoundException($message);
         }
 
         return $category;
@@ -471,7 +481,7 @@ class CategoryFacade
     protected function createFriendlyUrlsWhenRenamed(Category $category, array $originalNames): void
     {
         $changedNames = $this->getChangedNamesByLocale($category, $originalNames);
-        if (empty($changedNames)) {
+        if (count($changedNames) === 0) {
             return;
         }
 
@@ -496,5 +506,14 @@ class CategoryFacade
             }
         }
         return $changedCategoryNames;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category
+     */
+    public function getProductMainCategoryOnCurrentDomain(Product $product): Category
+    {
+        return $this->getProductMainCategoryByDomainId($product, $this->domain->getId());
     }
 }

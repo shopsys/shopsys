@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use Shopsys\FrameworkBundle\Component\Grid\Exception\OrderingNotSupportedException;
+use Shopsys\FrameworkBundle\Component\Grid\Exception\PaginationNotSupportedException;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class ArrayDataSource implements DataSourceInterface
@@ -42,19 +44,18 @@ class ArrayDataSource implements DataSourceInterface
     {
         if ($this->rowIdSourceColumnName === null) {
             return $this->data[$rowId];
-        } else {
-            foreach ($this->data as $item) {
-                if ($item[$this->rowIdSourceColumnName] === $rowId) {
-                    return $item;
-                }
+        }
+        foreach ($this->data as $item) {
+            if ($item[$this->rowIdSourceColumnName] === $rowId) {
+                return $item;
             }
         }
     }
 
     /**
-     * @param null|int $limit
+     * @param int|null $limit
      * @param int $page
-     * @param null|string $orderSourceColumnName
+     * @param string|null $orderSourceColumnName
      * @param string $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
@@ -62,12 +63,12 @@ class ArrayDataSource implements DataSourceInterface
     {
         if ($limit !== null) {
             $message = 'Pagination not supported in ArrayDataSource';
-            throw new \Shopsys\FrameworkBundle\Component\Grid\Exception\PaginationNotSupportedException($message);
+            throw new PaginationNotSupportedException($message);
         }
 
         if ($orderSourceColumnName !== null) {
             $message = 'Ordering not supported in ArrayDataSource';
-            throw new \Shopsys\FrameworkBundle\Component\Grid\Exception\OrderingNotSupportedException($message);
+            throw new OrderingNotSupportedException($message);
         }
 
         return new PaginationResult(1, count($this->data), count($this->data), $this->data);

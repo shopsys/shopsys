@@ -7,9 +7,11 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 
 /**
  * @ORM\Table(name="uploaded_files", indexes={@ORM\Index(columns={"entity_name", "entity_id"})})
@@ -21,7 +23,6 @@ class UploadedFile implements EntityFileUploadInterface
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,49 +31,42 @@ class UploadedFile implements EntityFileUploadInterface
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $slug;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $entityName;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $entityId;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=5)
      */
     protected $extension;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $modifiedAt;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $type;
@@ -84,7 +78,6 @@ class UploadedFile implements EntityFileUploadInterface
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $position;
@@ -133,11 +126,11 @@ class UploadedFile implements EntityFileUploadInterface
      */
     public function setFileAsUploaded(string $key, string $originalFilename): void
     {
-        if ($key === static::UPLOAD_KEY) {
-            $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
-        } else {
-            throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException($key);
+        if ($key !== static::UPLOAD_KEY) {
+            throw new InvalidFileKeyException($key);
         }
+
+        $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
     }
 
     /**
@@ -261,7 +254,7 @@ class UploadedFile implements EntityFileUploadInterface
     public function checkForDelete(string $entityName, int $entityId): void
     {
         if ($this->entityName !== $entityName || $this->entityId !== $entityId) {
-            throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException(
+            throw new FileNotFoundException(
                 sprintf(
                     'Entity "%s" with ID "%s" does not own file with ID "%s"',
                     $entityName,

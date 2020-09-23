@@ -49,14 +49,18 @@ class AdministratorFormType extends AbstractType
             ->add('username', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter username']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Username cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'Username cannot be longer than {{ limit }} characters']
+                    ),
                 ],
                 'label' => t('Login name'),
             ])
             ->add('realName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter full name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Full name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'Full name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
                 'label' => t('Full name'),
             ])
@@ -65,7 +69,9 @@ class AdministratorFormType extends AbstractType
                 'constraints' => [
                     new Email(['message' => 'Please enter valid email']),
                     new Constraints\NotBlank(['message' => 'Please enter email']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']
+                    ),
                 ],
                 'label' => t('Email'),
             ])
@@ -80,7 +86,9 @@ class AdministratorFormType extends AbstractType
                     'constraints' => $this->getFirstPasswordConstraints($options['scenario']),
                     'attr' => [
                         'icon' => true,
-                        'iconTitle' => t('Password must be at least six characters and can\'t be the same as login name.'),
+                        'iconTitle' => t(
+                            'Password must be at least six characters and can\'t be the same as login name.'
+                        ),
                     ],
                 ],
                 'second_options' => [
@@ -102,7 +110,9 @@ class AdministratorFormType extends AbstractType
     private function getFirstPasswordConstraints($scenario)
     {
         $constraints = [
-            new Constraints\Length(['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']),
+            new Constraints\Length(
+                ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']
+            ),
         ];
 
         if ($scenario === self::SCENARIO_CREATE) {

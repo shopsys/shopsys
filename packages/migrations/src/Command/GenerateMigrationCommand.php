@@ -65,6 +65,7 @@ class GenerateMigrationCommand extends AbstractCommand
         $this->migrationsLocator = $migrationsLocator;
         $this->kernel = $kernel;
         $this->vendorDirectoryPath = $vendorDirectoryPath;
+
         parent::__construct();
     }
 
@@ -100,7 +101,9 @@ class GenerateMigrationCommand extends AbstractCommand
         );
 
         if ($generatorResult->hasError()) {
-            $output->writeln('<error>Migration file "' . $generatorResult->getMigrationFilePath() . '" could not be saved.</error>');
+            $output->writeln(
+                '<error>Migration file "' . $generatorResult->getMigrationFilePath() . '" could not be saved.</error>'
+            );
 
             return self::RETURN_CODE_ERROR;
         }

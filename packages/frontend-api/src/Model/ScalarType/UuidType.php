@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\ScalarType;
 
 use GraphQL\Language\AST\StringValueNode;
+use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 
 class UuidType
@@ -25,7 +26,7 @@ class UuidType
     public static function parseValue(string $value): string
     {
         if (!Uuid::isValid($value)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not valid UUID', $value));
+            throw new InvalidArgumentException(sprintf('"%s" is not valid UUID', $value));
         }
 
         return $value;
@@ -38,7 +39,7 @@ class UuidType
     public static function parseLiteral(StringValueNode $valueNode): string
     {
         if (!Uuid::isValid($valueNode->value)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not valid UUID', $valueNode->value));
+            throw new InvalidArgumentException(sprintf('"%s" is not valid UUID', $valueNode->value));
         }
 
         return $valueNode->value;

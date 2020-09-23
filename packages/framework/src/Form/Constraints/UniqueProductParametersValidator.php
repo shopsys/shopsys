@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueProductParametersValidator extends ConstraintValidator
 {
@@ -14,7 +15,7 @@ class UniqueProductParametersValidator extends ConstraintValidator
     public function validate($values, Constraint $constraint)
     {
         if (!$constraint instanceof UniqueProductParameters) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, UniqueCollection::class);
+            throw new UnexpectedTypeException($constraint, UniqueCollection::class);
         }
 
         // Dummy validator, because validator is implemented in JS and

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlRouteNotFoundException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
@@ -122,7 +123,7 @@ class FriendlyUrlRouter implements RouterInterface
         $route = $this->getRouteCollection()->get($routeName);
 
         if ($route === null) {
-            throw new \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlRouteNotFoundException(
+            throw new FriendlyUrlRouteNotFoundException(
                 $routeName,
                 $this->friendlyUrlRouterResourceFilepath
             );

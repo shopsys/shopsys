@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
+use PDO;
 
 class GroupedScalarHydrator extends AbstractHydrator
 {
@@ -15,7 +16,7 @@ class GroupedScalarHydrator extends AbstractHydrator
     {
         $result = [];
 
-        while ($data = $this->_stmt->fetch(\PDO::FETCH_ASSOC)) {
+        while ($data = $this->_stmt->fetch(PDO::FETCH_ASSOC)) {
             $this->hydrateRowData($data, $result);
         }
 

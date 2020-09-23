@@ -79,13 +79,23 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $this->skipTestIfFirstDomainIsNotInEnglish();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $filter = $this->createFilter()
             ->filterOnlyInStock()
             ->filterByCategory([9])
             ->filterByFlags([1])
-            ->filterByPrices($pricingGroup, null, $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20), Domain::FIRST_DOMAIN_ID));
+            ->filterByPrices(
+                $pricingGroup,
+                null,
+                $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+                    Money::create(20),
+                    Domain::FIRST_DOMAIN_ID
+                )
+            );
 
         $this->assertIdWithFilter($filter, [50]);
     }
@@ -94,7 +104,17 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     {
         $this->skipTestIfFirstDomainIsNotInEnglish();
 
-        $parameters = [51 => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain('paper')], 50 => [$this->getParameterValueIdForFirstDomain('55'), $this->getParameterValueIdForFirstDomain('48')], 10 => [$this->getParameterValueIdForFirstDomain('50 g')]];
+        $parameters = [51 => [$this->getParameterValueIdForFirstDomain(
+            'hardcover'
+        ), $this->getParameterValueIdForFirstDomain(
+            'paper'
+        )], 50 => [$this->getParameterValueIdForFirstDomain(
+            '55'
+        ), $this->getParameterValueIdForFirstDomain(
+            '48'
+        )], 10 => [$this->getParameterValueIdForFirstDomain(
+            '50 g'
+        )]];
 
         $filter = $this->createFilter()
             ->filterByParameters($parameters);
@@ -107,7 +127,10 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $this->skipTestIfFirstDomainIsNotInEnglish();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $filter = $this->createFilter()
             ->filterByCategory([9])
@@ -203,7 +226,10 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
      */
     protected function createFilter(): FilterQuery
     {
-        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), Domain::FIRST_DOMAIN_ID);
+        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(
+            ProductIndex::getName(),
+            Domain::FIRST_DOMAIN_ID
+        );
         $filter = $this->filterQueryFactory->create($indexDefinition->getIndexAlias());
 
         return $filter->filterOnlySellable();

@@ -9,6 +9,11 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\AnnotationHelper;
 use SlevomatCodingStandard\Helpers\ConstantHelper;
 use SlevomatCodingStandard\Helpers\TokenHelper;
+use function in_array;
+use const T_CLASS;
+use const T_CONST;
+use const T_PROTECTED;
+use const T_SELF;
 
 class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
 {
@@ -17,7 +22,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      */
     public function register(): array
     {
-        return [\T_CLASS];
+        return [T_CLASS];
     }
 
     /**
@@ -27,7 +32,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
     {
         $protectedConstants = $this->getAllProtectedConstantsInClass($file);
 
-        $selfPositions = TokenHelper::findNextAll($file, \T_SELF, $classPosition);
+        $selfPositions = TokenHelper::findNextAll($file, T_SELF, $classPosition);
 
         foreach ($selfPositions as $selfPosition) {
             $constantName = $this->findConstantNameFromSelfCall($file, $selfPosition);
@@ -36,17 +41,19 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
                 continue;
             }
 
-            if (\in_array($constantName, $protectedConstants, true)) {
-                $file->addFixableError(
-                    'For better extensibility use late static binding.',
-                    $selfPosition,
-                    self::class
-                );
-
-                $file->fixer->beginChangeset();
-                $file->fixer->replaceToken($selfPosition, 'static');
-                $file->fixer->endChangeset();
+            if (!in_array($constantName, $protectedConstants, true)) {
+                continue;
             }
+
+            $file->addFixableError(
+                'For better extensibility use late static binding.',
+                $selfPosition,
+                self::class
+            );
+
+            $file->fixer->beginChangeset();
+            $file->fixer->replaceToken($selfPosition, 'static');
+            $file->fixer->endChangeset();
         }
     }
 
@@ -87,7 +94,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      */
     private function getAllProtectedConstantsInClass(File $file): array
     {
-        $constPositions = TokenHelper::findNextAll($file, \T_CONST, 0);
+        $constPositions = TokenHelper::findNextAll($file, T_CONST, 0);
 
         $protectedConstants = [];
 
@@ -115,7 +122,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      */
     private function isProtectedVisibility(File $file, int $constPosition): bool
     {
-        $protectedModifierPosition = TokenHelper::findPreviousLocal($file, \T_PROTECTED, $constPosition);
+        $protectedModifierPosition = TokenHelper::findPreviousLocal($file, T_PROTECTED, $constPosition);
 
         return $protectedModifierPosition !== null;
     }

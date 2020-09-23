@@ -116,7 +116,9 @@ class PersonalDataController extends FrontBaseController
                 $this->domain->getId()
             );
             $this->personalDataAccessMailFacade->sendMail($personalData);
-            $this->addSuccessFlash(t('Email with a link to the page with your personal data was sent to your email address.'));
+            $this->addSuccessFlash(
+                t('Email with a link to the page with your personal data was sent to your email address.')
+            );
         }
 
         $content = $this->setting->getForDomain(Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT, $this->domain->getId());
@@ -146,7 +148,9 @@ class PersonalDataController extends FrontBaseController
                 $this->domain->getId()
             );
             $this->personalDataAccessMailFacade->sendMail($personalData);
-            $this->addSuccessFlash(t('Email with a link to the export of your personal data was sent to your email address.'));
+            $this->addSuccessFlash(
+                t('Email with a link to the export of your personal data was sent to your email address.')
+            );
         }
 
         $content = $this->setting->getForDomain(Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $this->domain->getId());
@@ -168,7 +172,10 @@ class PersonalDataController extends FrontBaseController
             $this->domain->getId()
         );
 
-        if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY) {
+        if (
+            $personalDataAccessRequest !== null
+            && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY
+        ) {
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
                 $this->domain->getId()
@@ -203,8 +210,14 @@ class PersonalDataController extends FrontBaseController
             $this->domain->getId()
         );
 
-        if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT) {
-            $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($personalDataAccessRequest->getEmail(), $this->domain->getId());
+        if (
+            $personalDataAccessRequest !== null
+            && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT
+        ) {
+            $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
+                $personalDataAccessRequest->getEmail(),
+                $this->domain->getId()
+            );
 
             $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
                 $personalDataAccessRequest->getEmail(),
@@ -239,7 +252,10 @@ class PersonalDataController extends FrontBaseController
             $this->domain->getId()
         );
 
-        if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT) {
+        if (
+            $personalDataAccessRequest !== null
+            && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT
+        ) {
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
                 $this->domain->getId()

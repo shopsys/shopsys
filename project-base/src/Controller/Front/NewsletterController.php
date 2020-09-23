@@ -56,7 +56,7 @@ class NewsletterController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response|NULL
+     * @return \Symfony\Component\HttpFoundation\Response|null
      */
     public function subscribeEmailAction(Request $request)
     {

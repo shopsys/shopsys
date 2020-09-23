@@ -28,7 +28,7 @@ class PaymentsResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(): array
     {
-        return $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        return $this->paymentFacade->getVisibleOnCurrentDomain();
     }
 
     /**

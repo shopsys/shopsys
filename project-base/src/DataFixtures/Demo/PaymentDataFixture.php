@@ -20,7 +20,9 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
 
-    /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade */
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
+     */
     private $paymentFacade;
 
     /**
@@ -66,7 +68,12 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domain->getAllLocales() as $locale) {
             $paymentData->name[$locale] = t('Credit card', [], 'dataFixtures', $locale);
             $paymentData->description[$locale] = t('Quick, cheap and reliable!', [], 'dataFixtures', $locale);
-            $paymentData->instructions[$locale] = t('<b>You have chosen payment by credit card. Please finish it in two business days.</b>', [], 'dataFixtures', $locale);
+            $paymentData->instructions[$locale] = t(
+                '<b>You have chosen payment by credit card. Please finish it in two business days.</b>',
+                [],
+                'dataFixtures',
+                $locale
+            );
         }
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('99.95'));
@@ -83,7 +90,11 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         }
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('49.90'));
-        $this->createPayment(self::PAYMENT_CASH_ON_DELIVERY, $paymentData, [TransportDataFixture::TRANSPORT_CZECH_POST]);
+        $this->createPayment(
+            self::PAYMENT_CASH_ON_DELIVERY,
+            $paymentData,
+            [TransportDataFixture::TRANSPORT_CZECH_POST]
+        );
 
         $paymentData = $this->paymentDataFactory->create();
 
@@ -138,7 +149,10 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     private function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());
+            $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+                $price,
+                $domain->getId()
+            );
 
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domain->getId());

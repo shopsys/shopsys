@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInt
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ProductParameterValueToProductParameterValuesLocalizedTransformer implements DataTransformerInterface
 {
@@ -42,7 +43,7 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
         }
 
         if (!is_array($normData)) {
-            throw new \Symfony\Component\Form\Exception\TransformationFailedException('Invalid value');
+            throw new TransformationFailedException('Invalid value');
         }
 
         $normValue = [];
@@ -58,7 +59,7 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
             }
 
             if (array_key_exists($locale, $normValue[$parameterId]->valueTextsByLocale)) {
-                throw new \Symfony\Component\Form\Exception\TransformationFailedException('Duplicate parameter');
+                throw new TransformationFailedException('Duplicate parameter');
             }
 
             $normValue[$parameterId]->valueTextsByLocale[$locale] = $productParameterValueData->parameterValueData->text;
@@ -95,6 +96,6 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
             return $normData;
         }
 
-        throw new \Symfony\Component\Form\Exception\TransformationFailedException('Invalid value');
+        throw new TransformationFailedException('Invalid value');
     }
 }

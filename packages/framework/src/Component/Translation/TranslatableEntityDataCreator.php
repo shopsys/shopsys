@@ -54,7 +54,12 @@ class TranslatableEntityDataCreator
                 return $columnName !== 'id' && $columnName !== 'locale';
             });
 
-            $this->copyTranslatableDataForNewLocale($templateLocale, $newLocale, $tableName, $columnNamesExcludingIdAndLocale);
+            $this->copyTranslatableDataForNewLocale(
+                $templateLocale,
+                $newLocale,
+                $tableName,
+                $columnNamesExcludingIdAndLocale
+            );
         }
     }
 

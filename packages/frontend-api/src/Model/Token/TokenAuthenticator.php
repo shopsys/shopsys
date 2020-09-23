@@ -42,7 +42,10 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request): bool
     {
-        return $request->headers->has(static::HEADER_AUTHORIZATION) && strpos($request->headers->get('Authorization'), static::BEARER) === 0;
+        return $request->headers->has(static::HEADER_AUTHORIZATION) && strpos(
+            $request->headers->get('Authorization'),
+            static::BEARER
+        ) === 0;
     }
 
     /**

@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -79,8 +80,8 @@ class TransportController extends AdminBaseController
             $this->addSuccessFlashTwig(
                 t('Shipping <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                 [
-                'name' => $transport->getName(),
-                'url' => $this->generateUrl('admin_transport_edit', ['id' => $transport->getId()]),
+                    'name' => $transport->getName(),
+                    'url' => $this->generateUrl('admin_transport_edit', ['id' => $transport->getId()]),
                 ]
             );
             return $this->redirectToRoute('admin_transportandpayment_list');
@@ -128,7 +129,9 @@ class TransportController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing shipping - %name%', ['%name%' => $transport->getName()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing shipping - %name%', ['%name%' => $transport->getName()])
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Transport/edit.html.twig', [
             'form' => $form->createView(),
@@ -155,7 +158,7 @@ class TransportController extends AdminBaseController
                     'name' => $transportName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException $ex) {
+        } catch (TransportNotFoundException $ex) {
             $this->addErrorFlash(t('Selected shipping doesn\'t exist.'));
         }
 

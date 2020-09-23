@@ -82,7 +82,11 @@ class ImageGenerator
         $this->checkSizeNameIsNotOriginal($image, $sizeName);
 
         $sourceImageFilepath = $this->imageLocator->getAbsoluteImageFilepath($image, ImageConfig::ORIGINAL_SIZE_NAME);
-        $targetImageFilepath = $this->imageLocator->getAbsoluteAdditionalImageFilepath($image, $additionalIndex, $sizeName);
+        $targetImageFilepath = $this->imageLocator->getAbsoluteAdditionalImageFilepath(
+            $image,
+            $additionalIndex,
+            $sizeName
+        );
         $sizeConfig = $this->imageConfig->getImageSizeConfigByImage($image, $sizeName);
         $additionalSizeConfig = $sizeConfig->getAdditionalSize($additionalIndex);
 

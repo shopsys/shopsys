@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrontendApiBundle\Model\Order\OrderFacade as FrontendApiOrderFacade;
 
 class OrderResolver implements ResolverInterface, AliasedInterface
 {
@@ -33,18 +34,26 @@ class OrderResolver implements ResolverInterface, AliasedInterface
     protected $domain;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\Order\OrderFacade
+     */
+    protected $frontendApiOrderFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFacade $frontendApiOrderFacade
      */
     public function __construct(
         CurrentCustomerUser $currentCustomerUser,
         OrderFacade $orderFacade,
-        Domain $domain
+        Domain $domain,
+        FrontendApiOrderFacade $frontendApiOrderFacade
     ) {
         $this->orderFacade = $orderFacade;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->domain = $domain;
+        $this->frontendApiOrderFacade = $frontendApiOrderFacade;
     }
 
     /**
@@ -59,7 +68,9 @@ class OrderResolver implements ResolverInterface, AliasedInterface
         try {
             if ($uuid !== null && $customerUser !== null) {
                 return $this->getOrderForCustomerUserByUuid($customerUser, $uuid);
-            } elseif ($urlHash !== null) {
+            }
+
+            if ($urlHash !== null) {
                 return $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
             }
         } catch (OrderNotFoundException $orderNotFoundException) {
@@ -92,6 +103,6 @@ class OrderResolver implements ResolverInterface, AliasedInterface
             throw new UserError('Provided argument \'uuid\' is not valid.');
         }
 
-        return $this->orderFacade->getByUuidAndCustomerUser($uuid, $customerUser);
+        return $this->frontendApiOrderFacade->getByUuidAndCustomerUser($uuid, $customerUser);
     }
 }

@@ -25,7 +25,6 @@ class OrderFactory implements OrderFactoryInterface
      * @param string $orderNumber
      * @param string $urlHash
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function create(

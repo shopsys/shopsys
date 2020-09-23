@@ -37,7 +37,6 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $viewTransformers
-     *
      * @return array
      */
     protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers)
@@ -116,7 +115,9 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
         if (isset($model->data['form']['constraints'])) {
             foreach ($model->data['form']['constraints'] as $constraintName => $constraintSet) {
                 foreach ($constraintSet as $key => $constraint) {
-                    $model->data['form']['constraints'][$constraintName][$key] = $this->jsonSerializeConstraintValues($constraint);
+                    $model->data['form']['constraints'][$constraintName][$key] = $this->jsonSerializeConstraintValues(
+                        $constraint
+                    );
                 }
             }
         }
@@ -132,7 +133,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
 
         foreach ($constraint as $name => $value) {
             if ($value instanceof JsonSerializable) {
-                $constraint->$name = $value->jsonSerialize();
+                $constraint->{$name} = $value->jsonSerialize();
             }
         }
 

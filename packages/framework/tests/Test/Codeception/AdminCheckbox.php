@@ -28,9 +28,13 @@ class AdminCheckbox extends AbstractCheckbox
      */
     protected function getImageElementClass(): string
     {
-        $imageElementClass = 'js-checkbox-image-' . rand();
+        $imageElementClass = 'js-checkbox-image-' . random_int(0, getrandmax());
 
-        $script = sprintf('$("%s").next(".css-checkbox__image").addClass("%s")', $this->cssSelector, $imageElementClass);
+        $script = sprintf(
+            '$("%s").next(".css-checkbox__image").addClass("%s")',
+            $this->cssSelector,
+            $imageElementClass
+        );
         $this->tester->executeJS($script);
 
         return $imageElementClass;

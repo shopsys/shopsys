@@ -10,14 +10,14 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
+use Shopsys\FrontendApiBundle\Model\Article\ArticleFacade;
 
 class ArticlesResolver implements ResolverInterface, AliasedInterface
 {
     protected const DEFAULT_FIRST_LIMIT = 10;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
+     * @var \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade
      */
     protected $articleFacade;
 
@@ -32,7 +32,7 @@ class ArticlesResolver implements ResolverInterface, AliasedInterface
     protected $connectionBuilder;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(ArticleFacade $articleFacade, Domain $domain)

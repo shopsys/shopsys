@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityDataCreator;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
@@ -104,7 +105,7 @@ class DomainDataCreator
             $domainId = $domainConfig->getId();
             try {
                 $this->setting->getForDomain(Setting::DOMAIN_DATA_CREATED, $domainId);
-            } catch (\Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException $ex) {
+            } catch (SettingValueNotFoundException $ex) {
                 $locale = $domainConfig->getLocale();
                 $isNewLocale = $this->isNewLocale($locale);
                 $this->settingValueRepository->copyAllMultidomainSettings(self::TEMPLATE_DOMAIN_ID, $domainId);
@@ -114,7 +115,10 @@ class DomainDataCreator
                 $this->processDefaultPricingGroupForNewDomain($domainId);
                 $this->processDefaultVatForNewDomain($domainId);
 
-                $this->multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(self::TEMPLATE_DOMAIN_ID, $domainId);
+                $this->multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(
+                    self::TEMPLATE_DOMAIN_ID,
+                    $domainId
+                );
                 if ($isNewLocale) {
                     $this->translatableEntityDataCreator->copyAllTranslatableDataForNewLocale(
                         $this->getTemplateLocale(),

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Finder;
 
+use ArrayIterator;
 use IteratorAggregate;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
@@ -22,7 +23,11 @@ final class FileFinder
         foreach ($source as $singleSource) {
             if (is_file($singleSource)) {
                 $fileInfo = new SplFileInfo($singleSource);
-                $files[$fileInfo->getPath()] = new SymfonySplFileInfo($singleSource, $fileInfo->getPath(), $fileInfo->getPathname());
+                $files[$fileInfo->getPath()] = new SymfonySplFileInfo(
+                    $singleSource,
+                    $fileInfo->getPath(),
+                    $fileInfo->getPathname()
+                );
             } else {
                 $directories[] = $singleSource;
             }
@@ -33,7 +38,7 @@ final class FileFinder
             ->in($directories);
 
         // ArrayIterator will be fixed in new release
-        $finder->append(new \ArrayIterator($files));
+        $finder->append(new ArrayIterator($files));
 
         return $finder;
     }

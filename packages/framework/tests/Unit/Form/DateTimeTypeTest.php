@@ -2,6 +2,7 @@
 
 namespace Tests\FrameworkBundle\Unit\Form;
 
+use DateTime;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Symfony\Component\Form\PreloadedExtension;
@@ -37,7 +38,7 @@ class DateTimeTypeTest extends TypeTestCase
 
         $form->submit($input);
 
-        $this->assertEquals(new \DateTime($expected), $form->getData());
+        $this->assertEquals(new DateTime($expected), $form->getData());
     }
 
     /**

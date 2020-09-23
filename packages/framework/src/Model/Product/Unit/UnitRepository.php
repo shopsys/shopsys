@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
 
 class UnitRepository
 {
@@ -47,7 +48,7 @@ class UnitRepository
         $unit = $this->findById($unitId);
 
         if ($unit === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException('Unit with ID ' . $unitId . ' not found.');
+            throw new UnitNotFoundException('Unit with ID ' . $unitId . ' not found.');
         }
 
         return $unit;

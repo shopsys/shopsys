@@ -68,7 +68,10 @@ class CategoryController extends FrontBaseController
             $this->categoryFacade->getRootCategory(),
             $this->domain->getCurrentDomainConfig()
         );
-        $currentCategory = $this->currentCategoryResolver->findCurrentCategoryByRequest($request, $this->domain->getId());
+        $currentCategory = $this->currentCategoryResolver->findCurrentCategoryByRequest(
+            $request,
+            $this->domain->getId()
+        );
 
         if ($currentCategory !== null) {
             $openCategories = $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain(

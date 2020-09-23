@@ -39,7 +39,9 @@ class ProductListAdminFacade
          * temporary solution -
          * when product price type calculation is set to manual, price for first domain is shown in admin product list
          */
-        $defaultPricingGroupId = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(Domain::FIRST_DOMAIN_ID)->getId();
+        $defaultPricingGroupId = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
+            Domain::FIRST_DOMAIN_ID
+        )->getId();
 
         return $this->productListAdminRepository->getProductListQueryBuilder($defaultPricingGroupId);
     }

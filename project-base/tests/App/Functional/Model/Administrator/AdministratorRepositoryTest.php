@@ -27,10 +27,15 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
-        $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
+        $administrator->setMultidomainLoginTokenWithExpiration(
+            $validMultidomainLoginToken,
+            $multidomainLoginTokenExpiration
+        );
         $this->em->flush($administrator);
 
-        $administratorFromDb = $this->administratorRepository->getByValidMultidomainLoginToken($validMultidomainLoginToken);
+        $administratorFromDb = $this->administratorRepository->getByValidMultidomainLoginToken(
+            $validMultidomainLoginToken
+        );
 
         $this->assertSame($administrator, $administratorFromDb);
     }
@@ -44,10 +49,15 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
-        $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
+        $administrator->setMultidomainLoginTokenWithExpiration(
+            $validMultidomainLoginToken,
+            $multidomainLoginTokenExpiration
+        );
         $this->em->flush($administrator);
 
-        $this->expectException('\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException');
+        $this->expectException(
+            '\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException'
+        );
 
         $this->administratorRepository->getByValidMultidomainLoginToken($invalidMultidomainLoginToken);
     }
@@ -60,10 +70,15 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
-        $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
+        $administrator->setMultidomainLoginTokenWithExpiration(
+            $validMultidomainLoginToken,
+            $multidomainLoginTokenExpiration
+        );
         $this->em->flush($administrator);
 
-        $this->expectException('\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException');
+        $this->expectException(
+            '\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException'
+        );
 
         $this->administratorRepository->getByValidMultidomainLoginToken($validMultidomainLoginToken);
     }

@@ -40,7 +40,7 @@ class CurrencyFormatterFactory
      */
     public function createByLocaleAndCurrency(string $locale, Currency $currency): CurrencyFormatter
     {
-        $currencyFormatter = new CurrencyFormatter(
+        return new CurrencyFormatter(
             $this->numberFormatRepository,
             $this->intlCurrencyRepository,
             [
@@ -50,7 +50,5 @@ class CurrencyFormatterFactory
                 'maximum_fraction_digits' => static::MAXIMUM_FRACTION_DIGITS,
             ]
         );
-
-        return $currencyFormatter;
     }
 }

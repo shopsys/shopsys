@@ -36,6 +36,7 @@ class AvailabilityInlineEdit extends AbstractGridInlineEdit
         AvailabilityDataFactoryInterface $availabilityDataFactory
     ) {
         parent::__construct($availabilityGridFactory);
+
         $this->availabilityFacade = $availabilityFacade;
         $this->formFactory = $formFactory;
         $this->availabilityDataFactory = $availabilityDataFactory;

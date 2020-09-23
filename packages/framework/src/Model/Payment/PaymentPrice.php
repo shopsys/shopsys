@@ -15,7 +15,6 @@ class PaymentPrice
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment", inversedBy="prices")
      * @ORM\JoinColumn(nullable=false)
@@ -24,14 +23,12 @@ class PaymentPrice
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     *
      * @ORM\Column(type="money", precision=20, scale=6)
      */
     protected $price;
 
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */

@@ -16,9 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\ReadModelBundle\Image\ImageViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 
-/**
- * @experimental
- */
 class ListedProductViewFacade implements ListedProductViewFacadeInterface
 {
     /**
@@ -58,11 +55,15 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
 
     /**
      * @var \Shopsys\ReadModelBundle\Image\ImageViewFacade
+     * @deprecated since Shopsys Framework 9.1
+     * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory class instead
      */
     protected $imageViewFacade;
 
     /**
      * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade
+     * @deprecated since Shopsys Framework 9.1
+     * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory class instead
      */
     protected $productActionViewFacade;
 
@@ -175,7 +176,13 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
      */
     public function getFilteredPaginatedInCategory(int $categoryId, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult
     {
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInCategory($filterData, $orderingModeId, $page, $limit, $categoryId);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInCategory(
+            $filterData,
+            $orderingModeId,
+            $page,
+            $limit,
+            $categoryId
+        );
         return $this->createPaginationResultWithData($paginationResult);
     }
 
@@ -189,7 +196,13 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
      */
     public function getFilteredPaginatedForSearch(string $searchText, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult
     {
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForSearch($searchText, $filterData, $orderingModeId, $page, $limit);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForSearch(
+            $searchText,
+            $filterData,
+            $orderingModeId,
+            $page,
+            $limit
+        );
         return $this->createPaginationResultWithData($paginationResult);
     }
 
@@ -202,7 +215,12 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
      */
     public function getPaginatedForBrand(int $brandId, string $orderingModeId, int $page, int $limit): PaginationResult
     {
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForBrand($orderingModeId, $page, $limit, $brandId);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForBrand(
+            $orderingModeId,
+            $page,
+            $limit,
+            $brandId
+        );
         return $this->createPaginationResultWithData($paginationResult);
     }
 
@@ -223,27 +241,26 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     * @deprecated since Shopsys Framework 9.1, use ListedProductViewFactory::createFromProducts() instead
      */
     protected function createFromProducts(array $products): array
     {
-        $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, $this->getIdsForProducts($products));
-        $productActionViews = $this->productActionViewFacade->getForProducts($products);
+        $message = 'The %s() method is deprecated since Shopsys Framework 9.1. Use ListedProductViewFactory::createFromProducts() instead.';
+        @trigger_error(sprintf($message, __METHOD__), E_USER_DEPRECATED);
 
-        $listedProductViews = [];
-        foreach ($products as $product) {
-            $productId = $product->getId();
-            $listedProductViews[$productId] = $this->listedProductViewFactory->createFromProduct($product, $imageViews[$productId], $productActionViews[$productId]);
-        }
-
-        return $listedProductViews;
+        return $this->listedProductViewFactory->createFromProducts($products);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return int[]
+     * @deprecated since Shopsys Framework 9.1, use ListedProductViewFactory::getIdsForProducts() class instead
      */
     protected function getIdsForProducts(array $products): array
     {
+        $message = 'The %s() method is deprecated since Shopsys Framework 9.1. Use ListedProductViewFactory::getIdsForProducts() instead.';
+        @trigger_error(sprintf($message, __METHOD__), E_USER_DEPRECATED);
+
         return array_map(static function (Product $product): int {
             return $product->getId();
         }, $products);

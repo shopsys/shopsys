@@ -7,9 +7,11 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 
 /**
  * @ORM\Table(name="images", indexes={@ORM\Index(columns={"entity_name", "entity_id", "type"})})
@@ -21,7 +23,6 @@ class Image implements EntityFileUploadInterface
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,42 +31,36 @@ class Image implements EntityFileUploadInterface
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $entityName;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $entityId;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $type;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=5)
      */
     protected $extension;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $position;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $modifiedAt;
@@ -113,11 +108,11 @@ class Image implements EntityFileUploadInterface
      */
     public function setFileAsUploaded(string $key, string $originalFilename): void
     {
-        if ($key === static::UPLOAD_KEY) {
-            $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
-        } else {
-            throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException($key);
+        if ($key !== static::UPLOAD_KEY) {
+            throw new InvalidFileKeyException($key);
         }
+
+        $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
     }
 
     /**
@@ -209,7 +204,7 @@ class Image implements EntityFileUploadInterface
     public function checkForDelete(string $entityName, int $entityId): void
     {
         if ($this->entityName !== $entityName || $this->entityId !== $entityId) {
-            throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException(
+            throw new ImageNotFoundException(
                 sprintf(
                     'Entity %s with ID %s does not own image with ID %s',
                     $entityName,

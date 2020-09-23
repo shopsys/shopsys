@@ -134,9 +134,9 @@ class CountryFormTypeTest extends TypeTestCase
         $this->domain = $this->createMock(Domain::class);
         $this->domain->method('getAll')
             ->willReturn([
-                    new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs'),
-                    new DomainConfig(Domain::SECOND_DOMAIN_ID, '', '', 'en'),
-                ]);
+                new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs'),
+                new DomainConfig(Domain::SECOND_DOMAIN_ID, '', '', 'en'),
+            ]);
         $this->domain->method('getAllIds')->willReturn([1, 2]);
 
         $countryData = new CountryData();
@@ -168,10 +168,10 @@ class CountryFormTypeTest extends TypeTestCase
             new ValidatorExtension(Validation::createValidator()),
             new PreloadedExtension(
                 [
-                new CountryFormType($this->countryFacade),
-                new LocalizedType($this->localization),
-                new DomainsType($this->domain),
-                new MultidomainType($this->domain),
+                    new CountryFormType($this->countryFacade),
+                    new LocalizedType($this->localization),
+                    new DomainsType($this->domain),
+                    new MultidomainType($this->domain),
                 ],
                 []
             ),

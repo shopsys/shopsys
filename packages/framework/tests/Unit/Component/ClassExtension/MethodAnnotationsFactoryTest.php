@@ -37,7 +37,10 @@ class MethodAnnotationsFactoryTest extends TestCase
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass4' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass4',
         ]);
 
-        $this->methodAnnotationsFactory = new MethodAnnotationsFactory($replacementMap, new AnnotationsReplacer($replacementMap));
+        $this->methodAnnotationsFactory = new MethodAnnotationsFactory(
+            $replacementMap,
+            new AnnotationsReplacer($replacementMap)
+        );
     }
 
     /**
@@ -46,9 +49,21 @@ class MethodAnnotationsFactoryTest extends TestCase
     public function testGetProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
-            'method redeclared in the child using annotation' => [ReflectionObject::createFromName(BaseClass::class), ReflectionObject::createFromName(ChildClass::class)],
-            'method not included in the extension map' => [ReflectionObject::createFromName(BaseClass2::class), ReflectionObject::createFromName(ChildClass2::class)],
-            'method redeclared in the child\'s source code' => [ReflectionObject::createFromName(BaseClass3::class), ReflectionObject::createFromName(ChildClass3::class)],
+            'method redeclared in the child using annotation' => [ReflectionObject::createFromName(
+                BaseClass::class
+            ), ReflectionObject::createFromName(
+                ChildClass::class
+            )],
+            'method not included in the extension map' => [ReflectionObject::createFromName(
+                BaseClass2::class
+            ), ReflectionObject::createFromName(
+                ChildClass2::class
+            )],
+            'method redeclared in the child\'s source code' => [ReflectionObject::createFromName(
+                BaseClass3::class
+            ), ReflectionObject::createFromName(
+                ChildClass3::class
+            )],
         ];
     }
 
@@ -76,7 +91,13 @@ class MethodAnnotationsFactoryTest extends TestCase
             ReflectionObject::createFromName(ChildClass4::class)
         );
 
-        $this->assertStringContainsString('@method \App\Model\Category\CategoryFacade getCategoryFacade()', $annotationLines);
-        $this->assertStringContainsString('@method setCategory(\App\Model\Category\Category $category)', $annotationLines);
+        $this->assertStringContainsString(
+            '@method \App\Model\Category\CategoryFacade getCategoryFacade()',
+            $annotationLines
+        );
+        $this->assertStringContainsString(
+            '@method setCategory(\App\Model\Category\Category $category)',
+            $annotationLines
+        );
     }
 }

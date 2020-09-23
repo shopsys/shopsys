@@ -5,6 +5,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ParameterRepository
@@ -82,7 +84,7 @@ class ParameterRepository
 
         if ($parameter === null) {
             $message = 'Parameter with ID ' . $parameterId . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException($message);
+            throw new ParameterNotFoundException($message);
         }
 
         return $parameter;
@@ -136,7 +138,7 @@ class ParameterRepository
         ]);
 
         if ($parameterValue === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException();
+            throw new ParameterValueNotFoundException();
         }
 
         return $parameterValue;
@@ -148,13 +150,11 @@ class ParameterRepository
      */
     protected function getProductParameterValuesByProductQueryBuilder(Product $product)
     {
-        $queryBuilder = $this->em->createQueryBuilder()
+        return $this->em->createQueryBuilder()
             ->select('ppv')
             ->from(ProductParameterValue::class, 'ppv')
             ->where('ppv.product = :product_id')
             ->setParameter('product_id', $product->getId());
-
-        return $queryBuilder;
     }
 
     /**
@@ -164,7 +164,7 @@ class ParameterRepository
      */
     protected function getProductParameterValuesByProductSortedByNameQueryBuilder(Product $product, $locale)
     {
-        $queryBuilder = $this->em->createQueryBuilder()
+        return $this->em->createQueryBuilder()
             ->select('ppv')
             ->from(ProductParameterValue::class, 'ppv')
             ->join('ppv.parameter', 'p')
@@ -176,8 +176,6 @@ class ParameterRepository
                 'locale' => $locale,
             ])
             ->orderBy('pt.name');
-
-        return $queryBuilder;
     }
 
     /**

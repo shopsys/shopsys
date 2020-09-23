@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductsTest extends GraphQlTestCase
 {
     public function testFirstFiveProductsWithName(): void
     {
-        $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         $query = '
             query {
                 products (first: 5) {
@@ -48,11 +47,11 @@ class ProductsTest extends GraphQlTestCase
         $this->assertEquals($productsExpected, $queryResult, json_encode($queryResult));
     }
 
-    public function testNineteenthProductWithAllAttributes(): void
+    public function testFifthProductWithAllAttributes(): void
     {
         $query = '
             query {
-                products (first: 1, after: "YXJyYXljb25uZWN0aW9uOjE3") {
+                products (first: 1, after: "YXJyYXljb25uZWN0aW9uOjM=") {
                     edges {
                         node {
                             name
@@ -83,7 +82,7 @@ class ProductsTest extends GraphQlTestCase
             }
         ';
 
-        $arrayExpected = $this->getExpectedDataForNineteenthProduct();
+        $arrayExpected = $this->getExpectedDataForFifthProduct();
 
         $graphQlType = 'products';
         $response = $this->getResponseContentForQuery($query);
@@ -104,14 +103,19 @@ class ProductsTest extends GraphQlTestCase
     /**
      * @return array
      */
-    private function getExpectedDataForNineteenthProduct(): array
+    private function getExpectedDataForFifthProduct(): array
     {
-        $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
-        $arrayExpected = [
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
+        return [
             [
-                'name' => t('Canon EOS 700D', [], 'dataFixtures', $firstDomainLocale),
-                'shortDescription' => t('Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Quality digital camera with CMOS sensor with a resolution of 18 megapixels, which is to take the top photo in a professional style. Innovative DIGIC 5 image processing delivers powerful in any situation. A high sensitivity range up to ISO 12800 lets you capture great images even in dim light', [], 'dataFixtures', $firstDomainLocale),
-                'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 8]),
+                'name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
+                'shortDescription' => t(
+                    'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 77]),
                 'unit' => [
                     'name' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
                 ],
@@ -121,19 +125,17 @@ class ProductsTest extends GraphQlTestCase
                 'stockQuantity' => 100,
                 'categories' => [
                     [
-                        'name' => t('Cameras & Photo', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('TV, audio', [], 'dataFixtures', $firstDomainLocale),
                     ],
                 ],
                 'flags' => [],
                 'price' => [
-                    'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('24990'),
-                    'priceWithoutVat' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('24990'),
-                    'vatAmount' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('0.00'),
+                    'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('4838.75'),
+                    'priceWithoutVat' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('3999'),
+                    'vatAmount' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('839.75'),
                 ],
             ],
         ];
-
-        return $arrayExpected;
     }
 
     public function testLastProduct(): void
@@ -160,13 +162,19 @@ class ProductsTest extends GraphQlTestCase
      */
     private function getExpectedDataForLastProduct(): string
     {
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         return '{
     "data": {
         "products": {
             "edges": [
                 {
                     "node": {
-                        "name": "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
+                        "name": "' . t(
+            'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
+            [],
+            'dataFixtures',
+            $firstDomainLocale
+        ) . '"
                     }
                 }
             ]

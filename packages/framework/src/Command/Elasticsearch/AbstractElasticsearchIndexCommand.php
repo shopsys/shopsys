@@ -57,6 +57,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
         $this->indexFacade = $indexFacade;
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->domain = $domain;
+
         parent::__construct();
     }
 

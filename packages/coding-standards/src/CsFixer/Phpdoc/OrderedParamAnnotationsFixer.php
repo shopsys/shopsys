@@ -120,6 +120,7 @@ SAMPLE
 
     /**
      * Needs to run after @see MissingParamAnnotationsFixer
+     *
      * @return int
      */
     public function getPriority(): int
@@ -166,10 +167,12 @@ SAMPLE
 
         foreach ($lines as $key => $line) {
             $paramName = $this->getParamNameFromLine($line);
-            if ($paramName !== null && isset($argumentAnalyses[$paramName])) {
-                // use argument name as key, for sorting
-                $docParamNamesToKeys[$paramName] = $key;
+            if ($paramName === null || !isset($argumentAnalyses[$paramName])) {
+                continue;
             }
+
+            // use argument name as key, for sorting
+            $docParamNamesToKeys[$paramName] = $key;
         }
 
         if (count($docParamNamesToKeys) === 0) {
@@ -202,7 +205,7 @@ SAMPLE
     private function getParamNameFromLine(Line $line): ?string
     {
         $matches = Strings::match($line->getContent(), PhpdocRegex::ARGUMENT_NAME_PATTERN);
-        if (isset($matches[1]) && !empty($matches[1])) {
+        if (isset($matches[1]) && $matches[1] !== '') {
             return $matches[1];
         }
 

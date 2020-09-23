@@ -66,6 +66,7 @@ class VatDataFixture extends AbstractReferenceFixture
 
         /**
          * Vat with zero rate is created in database migration.
+         *
          * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135343
          */
         $vatZeroRate = $this->vatFacade->getById(1);

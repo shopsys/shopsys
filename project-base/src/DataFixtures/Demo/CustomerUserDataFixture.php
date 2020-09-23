@@ -125,10 +125,12 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
                 /** @var \App\Model\Customer\User\CustomerUser $customerUser */
                 $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
-                if ($customerUser->getId() === 1) {
-                    $this->resetPassword($customerUser);
-                    $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customerUser);
+                if ($customerUser->getId() !== 1) {
+                    continue;
                 }
+
+                $this->resetPassword($customerUser);
+                $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customerUser);
             }
         }
     }
@@ -136,7 +138,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param int $domainId
      * @param array $data
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     private function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
@@ -435,7 +436,9 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      */
     private function resetPassword(CustomerUser $customer)
     {
-        $resetPasswordHash = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
+        $resetPasswordHash = $this->hashGenerator->generateHash(
+            CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH
+        );
         $customer->setResetPasswordHash($resetPasswordHash);
         $this->em->flush($customer);
     }

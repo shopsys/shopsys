@@ -11,14 +11,12 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandDomainNotFoundExc
 /**
  * @ORM\Table(name="brands")
  * @ORM\Entity
- *
  * @method \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation translation(?string $locale = null)
  */
 class Brand extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -27,21 +25,18 @@ class Brand extends AbstractTranslatableEntity
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $name;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation")
      */
     protected $translations;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDomain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\BrandDomain", mappedBy="brand", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;

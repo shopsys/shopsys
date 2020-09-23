@@ -270,9 +270,7 @@ class AllPagesTest extends KernelTestCase
     private function getRouterAdapter()
     {
         $router = static::$container->get('router');
-        $routerAdapter = new SymfonyRouterAdapter($router);
-
-        return $routerAdapter;
+        return new SymfonyRouterAdapter($router);
     }
 
     /**

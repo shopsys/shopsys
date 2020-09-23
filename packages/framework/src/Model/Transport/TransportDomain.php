@@ -18,7 +18,6 @@ class TransportDomain
 {
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -27,7 +26,6 @@ class TransportDomain
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport", inversedBy="domains")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -35,21 +33,18 @@ class TransportDomain
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $enabled = false;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
      * @ORM\JoinColumn(nullable=false)
      */

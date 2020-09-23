@@ -112,7 +112,6 @@ class FlagFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      * @param string $eventType
-     *
      * @see \Shopsys\FrameworkBundle\Model\Product\Flag\FlagEvent class
      */
     protected function dispatchFlagEvent(Flag $flag, string $eventType): void

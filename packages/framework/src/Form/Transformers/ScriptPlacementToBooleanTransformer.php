@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Form\Transformers;
 
 use Shopsys\FrameworkBundle\Model\Script\Script;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ScriptPlacementToBooleanTransformer implements DataTransformerInterface
 {
@@ -13,13 +14,7 @@ class ScriptPlacementToBooleanTransformer implements DataTransformerInterface
      */
     public function transform($scriptPlacement)
     {
-        if ($scriptPlacement === Script::PLACEMENT_ORDER_SENT_PAGE) {
-            return true;
-        } elseif ($scriptPlacement === Script::PLACEMENT_ALL_PAGES) {
-            return false;
-        }
-
-        return false;
+        return $scriptPlacement === Script::PLACEMENT_ORDER_SENT_PAGE;
     }
 
     /**
@@ -30,8 +25,10 @@ class ScriptPlacementToBooleanTransformer implements DataTransformerInterface
     {
         if (!is_bool($scriptHasOrderPlacement)) {
             $message = 'Expected boolean, got "' . gettype($scriptHasOrderPlacement) . '".';
-            throw new \Symfony\Component\Form\Exception\TransformationFailedException($message);
-        } elseif ($scriptHasOrderPlacement) {
+            throw new TransformationFailedException($message);
+        }
+
+        if ($scriptHasOrderPlacement) {
             return Script::PLACEMENT_ORDER_SENT_PAGE;
         }
 

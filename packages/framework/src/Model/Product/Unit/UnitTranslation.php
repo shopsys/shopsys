@@ -19,7 +19,6 @@ class UnitTranslation extends AbstractTranslation
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=10)
      */
     protected $name;

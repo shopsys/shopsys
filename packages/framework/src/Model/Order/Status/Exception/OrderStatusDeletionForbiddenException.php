@@ -19,6 +19,7 @@ class OrderStatusDeletionForbiddenException extends Exception implements OrderSt
     public function __construct(OrderStatus $orderStatus, ?Exception $previous = null)
     {
         $this->orderStatus = $orderStatus;
+
         parent::__construct('Deletion of order status ID = ' . $orderStatus->getId() . ' is forbidden', 0, $previous);
     }
 

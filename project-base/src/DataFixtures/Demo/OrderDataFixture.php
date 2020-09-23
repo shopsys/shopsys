@@ -107,7 +107,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain('no-reply@shopsys.com', $domainId);
+        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
+            'no-reply@shopsys.com',
+            $domainId
+        );
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH);
@@ -559,7 +562,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain('vitek@shopsys.com', $domainId);
+        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
+            'vitek@shopsys.com',
+            $domainId
+        );
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
@@ -631,7 +637,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain('no-reply.2@shopsys.com', $domainId);
+        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
+            'no-reply.2@shopsys.com',
+            $domainId
+        );
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH);
@@ -670,7 +679,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain('no-reply.7@shopsys.com', $domainId);
+        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
+            'no-reply.7@shopsys.com',
+            $domainId
+        );
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);

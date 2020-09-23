@@ -98,7 +98,9 @@ class BrandFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
                 'label' => t('Name'),
             ])

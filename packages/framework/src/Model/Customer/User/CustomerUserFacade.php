@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
@@ -154,7 +156,10 @@ class CustomerUserFacade
      */
     public function register(CustomerUserData $customerUserData)
     {
-        $customer = $this->createCustomerWithBillingAddress($customerUserData->domainId, $this->billingAddressDataFactory->create());
+        $customer = $this->createCustomerWithBillingAddress(
+            $customerUserData->domainId,
+            $this->billingAddressDataFactory->create()
+        );
 
         $customerUser = $this->createCustomerUser($customer, $customerUserData);
 
@@ -169,9 +174,15 @@ class CustomerUserFacade
      */
     public function create(CustomerUserUpdateData $customerUserUpdateData)
     {
-        $customer = $this->createCustomerWithBillingAddress($customerUserUpdateData->customerUserData->domainId, $customerUserUpdateData->billingAddressData);
+        $customer = $this->createCustomerWithBillingAddress(
+            $customerUserUpdateData->customerUserData->domainId,
+            $customerUserUpdateData->billingAddressData
+        );
 
-        if ($customerUserUpdateData->deliveryAddressData && $customerUserUpdateData->deliveryAddressData->addressFilled) {
+        if (
+            $customerUserUpdateData->deliveryAddressData
+            && $customerUserUpdateData->deliveryAddressData->addressFilled
+        ) {
             $customerUserUpdateData->deliveryAddressData->customer = $customer;
             $deliveryAddress = $this->deliveryAddressFacade->create($customerUserUpdateData->deliveryAddressData);
 
@@ -224,7 +235,10 @@ class CustomerUserFacade
         $customerUser = $this->getCustomerUserById($customerUserId);
         $customerUserUpdateData->deliveryAddressData->customer = $customerUser->getCustomer();
 
-        if ($customerUserUpdateData->deliveryAddressData && $customerUserUpdateData->deliveryAddressData->addressFilled) {
+        if (
+            $customerUserUpdateData->deliveryAddressData
+            && $customerUserUpdateData->deliveryAddressData->addressFilled
+        ) {
             $deliveryAddress = $this->deliveryAddressFacade->create($customerUserUpdateData->deliveryAddressData);
             $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
         }
@@ -236,10 +250,16 @@ class CustomerUserFacade
         $customerUser->edit($customerUserUpdateData->customerUserData);
 
         if ($customerUserUpdateData->customerUserData->password !== null) {
-            $this->customerUserPasswordFacade->changePassword($customerUser, $customerUserUpdateData->customerUserData->password);
+            $this->customerUserPasswordFacade->changePassword(
+                $customerUser,
+                $customerUserUpdateData->customerUserData->password
+            );
         }
 
-        $this->billingAddressFacade->edit($customerUser->getCustomer()->getBillingAddress()->getId(), $customerUserUpdateData->billingAddressData);
+        $this->billingAddressFacade->edit(
+            $customerUser->getCustomer()->getBillingAddress()->getId(),
+            $customerUserUpdateData->billingAddressData
+        );
 
         return $customerUser;
     }
@@ -314,8 +334,11 @@ class CustomerUserFacade
             $customerUser->getDomainId()
         );
 
-        if ($customerUserByEmailAndDomain !== null && $customerUser->getId() !== $customerUserByEmailAndDomain->getId()) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException($email);
+        if (
+            $customerUserByEmailAndDomain !== null
+            && $customerUser->getId() !== $customerUserByEmailAndDomain->getId()
+        ) {
+            throw new DuplicateEmailException($email);
         }
 
         $customerUser->setEmail($email);
@@ -346,9 +369,14 @@ class CustomerUserFacade
      * @param string $deviceId
      * @param \DateTime $tokenExpiration
      */
-    public function addRefreshTokenChain(CustomerUser $customerUser, string $refreshTokenChain, string $deviceId, \DateTime $tokenExpiration): void
+    public function addRefreshTokenChain(CustomerUser $customerUser, string $refreshTokenChain, string $deviceId, DateTime $tokenExpiration): void
     {
-        $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain($customerUser, $refreshTokenChain, $deviceId, $tokenExpiration);
+        $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain(
+            $customerUser,
+            $refreshTokenChain,
+            $deviceId,
+            $tokenExpiration
+        );
         $customerUser->addRefreshTokenChain($refreshTokenChain);
         $this->em->flush();
     }

@@ -70,12 +70,23 @@ class LogoutExceptionSubscriber implements EventSubscriberInterface
      */
     public function onKernelException(ExceptionEvent $event): void
     {
-        if ($event->getThrowable() instanceof LogoutException || $event->getThrowable()->getPrevious() instanceof LogoutException) {
+        if (
+            $event->getThrowable() instanceof LogoutException
+            || $event->getThrowable()->getPrevious() instanceof LogoutException
+        ) {
             if ($this->currentCustomerUser->findCurrentCustomerUser() !== null) {
                 $domainId = $this->currentCustomerUser->findCurrentCustomerUser()->getDomainId();
                 $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
-                $this->flashBag->add(FlashMessage::KEY_ERROR, t('There was an error during logout attempt. If you really want to sign out, please try it again.', [], 'messages', $locale));
+                $this->flashBag->add(
+                    FlashMessage::KEY_ERROR,
+                    t(
+                        'There was an error during logout attempt. If you really want to sign out, please try it again.',
+                        [],
+                        'messages',
+                        $locale
+                    )
+                );
             }
 
             $redirectUrl = $this->getSafeUrlToRedirect($event->getRequest()->headers->get('referer'));

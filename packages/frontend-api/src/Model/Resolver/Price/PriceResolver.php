@@ -80,7 +80,9 @@ class PriceResolver implements ResolverInterface, AliasedInterface
      */
     public function resolveByProduct($data): ProductPrice
     {
-        $product = $data instanceof Product ? $data : $this->productOnCurrentDomainFacade->getVisibleProductById($data['id']);
+        $product = $data instanceof Product ? $data : $this->productOnCurrentDomainFacade->getVisibleProductById(
+            $data['id']
+        );
         return $this->productCachedAttributesFacade->getProductSellingPrice($product);
     }
 

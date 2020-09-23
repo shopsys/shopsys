@@ -97,19 +97,25 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
 
     /**
      * The default pricing group for domain 1 is created in database migration.
+     *
      * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135346
      *
      * The default pricing groups for the other domains are created during build (in "domains-data-create" phing target).
      * @see \Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator
-     *
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
     private function editDefaultPricingGroupOnDomain(DomainConfig $domainConfig): void
     {
-        $defaultPricingGroupOnDomain = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());
+        $defaultPricingGroupOnDomain = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
+            $domainConfig->getId()
+        );
         $pricingGroupData = $this->pricingGroupDataFactory->createFromPricingGroup($defaultPricingGroupOnDomain);
         $pricingGroupData->name = t('Ordinary customer', [], 'dataFixtures', $domainConfig->getLocale());
         $this->pricingGroupFacade->edit($defaultPricingGroupOnDomain->getId(), $pricingGroupData);
-        $this->addReferenceForDomain(self::PRICING_GROUP_ORDINARY, $defaultPricingGroupOnDomain, $domainConfig->getId());
+        $this->addReferenceForDomain(
+            self::PRICING_GROUP_ORDINARY,
+            $defaultPricingGroupOnDomain,
+            $domainConfig->getId()
+        );
     }
 }

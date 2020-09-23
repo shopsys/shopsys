@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\InvalidGridLimitValueException;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\RememberGridLimitException;
 
 class AdministratorGridFacade
 {
@@ -47,15 +49,19 @@ class AdministratorGridFacade
     protected function rememberGridLimit(Administrator $administrator, Grid $grid)
     {
         if (!$grid->isEnabledPaging()) {
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Exception\RememberGridLimitException($grid->getId());
+            throw new RememberGridLimitException($grid->getId());
         }
         if ($grid->getLimit() <= 0) {
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Exception\InvalidGridLimitValueException($grid->getLimit());
+            throw new InvalidGridLimitValueException($grid->getLimit());
         }
 
         $gridLimit = $administrator->getGridLimit($grid->getId());
         if ($gridLimit === null) {
-            $gridLimit = $this->administratorGridLimitFactory->create($administrator, $grid->getId(), $grid->getLimit());
+            $gridLimit = $this->administratorGridLimitFactory->create(
+                $administrator,
+                $grid->getId(),
+                $grid->getLimit()
+            );
             $administrator->addGridLimit($gridLimit);
         } else {
             $gridLimit->setLimit($grid->getLimit());

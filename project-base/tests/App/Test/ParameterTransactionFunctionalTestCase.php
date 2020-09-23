@@ -23,6 +23,9 @@ class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCa
         $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $parameterValueTranslatedName = t($parameterValueNameId, [], 'dataFixtures', $firstDomainLocale);
 
-        return $this->parameterFacade->getParameterValueByValueTextAndLocale($parameterValueTranslatedName, $firstDomainLocale)->getId();
+        return $this->parameterFacade->getParameterValueByValueTextAndLocale(
+            $parameterValueTranslatedName,
+            $firstDomainLocale
+        )->getId();
     }
 }

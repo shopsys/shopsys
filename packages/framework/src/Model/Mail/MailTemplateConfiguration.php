@@ -71,7 +71,9 @@ class MailTemplateConfiguration
     public function addMailTemplateVariables(string $mailTemplateSlug, MailTemplateVariables $mailTemplateVariables): void
     {
         if (array_key_exists($mailTemplateSlug, $this->mailTemplateVariables)) {
-            throw new InvalidMailTemplateVariablesConfigurationException(sprintf('Template variables for mail template "%s" are already registered.', $mailTemplateSlug));
+            throw new InvalidMailTemplateVariablesConfigurationException(
+                sprintf('Template variables for mail template "%s" are already registered.', $mailTemplateSlug)
+            );
         }
 
         $this->mailTemplateVariables[$mailTemplateSlug] = $mailTemplateVariables;
@@ -85,16 +87,48 @@ class MailTemplateConfiguration
             ->addVariable(OrderMail::VARIABLE_NUMBER, t('Order number'))
             ->addVariable(OrderMail::VARIABLE_DATE, t('Date and time of order creation'))
             ->addVariable(OrderMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_TRANSPORT, t('Chosen shipping name'), MailTemplateVariables::CONTEXT_BODY)
+            ->addVariable(
+                OrderMail::VARIABLE_TRANSPORT,
+                t('Chosen shipping name'),
+                MailTemplateVariables::CONTEXT_BODY
+            )
             ->addVariable(OrderMail::VARIABLE_PAYMENT, t('Chosen payment name'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_TOTAL_PRICE, t('Total order price (including VAT)'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_BILLING_ADDRESS, t('Billing address - name, last name, company, company number, tax number and billing address'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_DELIVERY_ADDRESS, t('Delivery address'), MailTemplateVariables::CONTEXT_BODY)
+            ->addVariable(
+                OrderMail::VARIABLE_TOTAL_PRICE,
+                t('Total order price (including VAT)'),
+                MailTemplateVariables::CONTEXT_BODY
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_BILLING_ADDRESS,
+                t('Billing address - name, last name, company, company number, tax number and billing address'),
+                MailTemplateVariables::CONTEXT_BODY
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_DELIVERY_ADDRESS,
+                t('Delivery address'),
+                MailTemplateVariables::CONTEXT_BODY
+            )
             ->addVariable(OrderMail::VARIABLE_NOTE, t('Note'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_PRODUCTS, t('List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_ORDER_DETAIL_URL, t('Order detail URL address'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_TRANSPORT_INSTRUCTIONS, t('Shipping instructions'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS, t('Payment instructions'), MailTemplateVariables::CONTEXT_BODY);
+            ->addVariable(
+                OrderMail::VARIABLE_PRODUCTS,
+                t('List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)'),
+                MailTemplateVariables::CONTEXT_BODY
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_ORDER_DETAIL_URL,
+                t('Order detail URL address'),
+                MailTemplateVariables::CONTEXT_BODY
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_TRANSPORT_INSTRUCTIONS,
+                t('Shipping instructions'),
+                MailTemplateVariables::CONTEXT_BODY
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS,
+                t('Payment instructions'),
+                MailTemplateVariables::CONTEXT_BODY
+            );
 
         $allOrderStatuses = $this->orderStatusFacade->getAll();
         foreach ($allOrderStatuses as $orderStatus) {
@@ -114,14 +148,23 @@ class MailTemplateConfiguration
             ->addVariable(RegistrationMail::VARIABLE_LAST_NAME, t('Last name'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(RegistrationMail::VARIABLE_EMAIL, t('Email'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(RegistrationMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(RegistrationMail::VARIABLE_LOGIN_PAGE, t('Link to the log in page'), MailTemplateVariables::CONTEXT_BODY);
+            ->addVariable(
+                RegistrationMail::VARIABLE_LOGIN_PAGE,
+                t('Link to the log in page'),
+                MailTemplateVariables::CONTEXT_BODY
+            );
         $this->addMailTemplateVariables(MailTemplate::REGISTRATION_CONFIRM_NAME, $mailTemplate);
 
         // reset password mail template
         $mailTemplate = new MailTemplateVariables(t('Forgotten password sending'));
         $mailTemplate
             ->addVariable(ResetPasswordMail::VARIABLE_EMAIL, t('Email'))
-            ->addVariable(ResetPasswordMail::VARIABLE_NEW_PASSWORD_URL, t('New password settings URL address'), MailTemplateVariables::CONTEXT_BOTH, MailTemplateVariables::REQUIRED_BODY);
+            ->addVariable(
+                ResetPasswordMail::VARIABLE_NEW_PASSWORD_URL,
+                t('New password settings URL address'),
+                MailTemplateVariables::CONTEXT_BOTH,
+                MailTemplateVariables::REQUIRED_BODY
+            );
         $this->addMailTemplateVariables(MailTemplate::RESET_PASSWORD_NAME, $mailTemplate);
 
         // personal data export mail template
@@ -129,7 +172,12 @@ class MailTemplateConfiguration
         $mailTemplate
             ->addVariable(PersonalDataExportMail::VARIABLE_DOMAIN, t('E-shop name'))
             ->addVariable(PersonalDataExportMail::VARIABLE_EMAIL, t('Email'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(PersonalDataExportMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
+            ->addVariable(
+                PersonalDataExportMail::VARIABLE_URL,
+                t('E-shop URL address'),
+                MailTemplateVariables::CONTEXT_BODY,
+                MailTemplateVariables::REQUIRED_BODY
+            );
         $this->addMailTemplateVariables(MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplate);
 
         // personal data access mail template
@@ -137,7 +185,12 @@ class MailTemplateConfiguration
         $mailTemplate
             ->addVariable(PersonalDataAccessMail::VARIABLE_DOMAIN, t('E-shop name'))
             ->addVariable(PersonalDataAccessMail::VARIABLE_EMAIL, t('Email'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(PersonalDataAccessMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
+            ->addVariable(
+                PersonalDataAccessMail::VARIABLE_URL,
+                t('E-shop URL address'),
+                MailTemplateVariables::CONTEXT_BODY,
+                MailTemplateVariables::REQUIRED_BODY
+            );
         $this->addMailTemplateVariables(MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplate);
     }
 }

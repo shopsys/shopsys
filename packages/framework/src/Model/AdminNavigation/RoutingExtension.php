@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\AdminNavigation;
 
 use Knp\Menu\Factory\ExtensionInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -11,6 +12,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * In our menu there are defined non-displayable items without specified mandatory parameters such as "New customer"
  * They are still important for resolving the correct current item and rendering the breadcrumb navigation
  * Having them rendered as a link is not important as they typically represent a number of pages (eg. editing ANY product)
+ *
  * @see \Knp\Menu\Integration\Symfony\RoutingExtension
  */
 class RoutingExtension implements ExtensionInterface
@@ -35,10 +37,10 @@ class RoutingExtension implements ExtensionInterface
     {
         if (!empty($options['route'])) {
             $params = $options['routeParameters'] ?? [];
-            $absolute = (isset($options['routeAbsolute']) && $options['routeAbsolute']) ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH;
+            $absolute = isset($options['routeAbsolute']) && $options['routeAbsolute'] ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH;
             try {
                 $options['uri'] = $this->generator->generate($options['route'], $params, $absolute);
-            } catch (\Symfony\Component\Routing\Exception\MissingMandatoryParametersException $e) {
+            } catch (MissingMandatoryParametersException $e) {
                 $options['uri'] = null;
             }
 

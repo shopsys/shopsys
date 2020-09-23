@@ -21,6 +21,7 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
     public function __construct(QueryBuilder $queryBuilder, $rowIdSourceColumnName, Closure $manipulateRowCallback)
     {
         parent::__construct($queryBuilder, $rowIdSourceColumnName);
+
         $this->manipulateRowCallback = $manipulateRowCallback;
     }
 

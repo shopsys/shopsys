@@ -39,16 +39,22 @@ class Version20180603135341 extends AbstractMigration
             'id' => $orderStatusId,
             'type' => $orderStatusType,
         ]);
-        $this->sql('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)', [
-            'translatableId' => $orderStatusId,
-            'name' => $orderStatusEnglishName,
-            'locale' => 'en',
-        ]);
-        $this->sql('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)', [
-            'translatableId' => $orderStatusId,
-            'name' => $orderStatusCzechName,
-            'locale' => 'cs',
-        ]);
+        $this->sql(
+            'INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)',
+            [
+                'translatableId' => $orderStatusId,
+                'name' => $orderStatusEnglishName,
+                'locale' => 'en',
+            ]
+        );
+        $this->sql(
+            'INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)',
+            [
+                'translatableId' => $orderStatusId,
+                'name' => $orderStatusCzechName,
+                'locale' => 'cs',
+            ]
+        );
     }
 
     /**

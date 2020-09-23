@@ -112,9 +112,6 @@ Some parts of these instructions are already prepared for the locales `en` and `
 Set up the locale of the domain in `config/domains.yaml`.
 This configuration file contains pieces of information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
-!!! note
-    Changing locales for domain may cause tests to start failing. It is necessary to [configure default locale](#38-default-application-locale) properly to fix it.
-
 #### 3.2 Frontend routes
 Create a file with the frontend routes for the added locale if this file is not already created for this locale.
 Create this file in the directory `config/shopsys-routing` with the name `routing_front_xx.yaml` where `xx` replace for the code of added locale.
@@ -175,10 +172,13 @@ An example for domain that uses English language:
 
 #### 3.8 Default application locale
 In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g. `Product::getName()` and you get the proper translation.
-However, sometimes, there is no request (i.e. in CLI commands or in tests) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
+However, sometimes, there is no request (i.e. in CLI commands) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
 
 To change the default application locale, set `locale` parameter to you desired locale (e.g. `es` for Spanish) in your [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yaml).
 The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`config/packages/translation.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/translation.yaml) config).
+
+!!!note
+    Default application locale in test environment is set to first domain locale except administration where is respected [`admin_locale` setting](#36-locale-in-administration)
 
 ### 4. Change the url address for an existing domain
 

@@ -8,6 +8,9 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationExpiredException;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -56,7 +59,7 @@ class AdministratorUserProvider implements UserProviderInterface
                 'Unable to find an active admin Shopsys\FrameworkBundle\Model\Administrator\Administrator object identified by "%s".',
                 $username
             );
-            throw new \Symfony\Component\Security\Core\Exception\UsernameNotFoundException($message, 0);
+            throw new UsernameNotFoundException($message, 0);
         }
 
         return $administrator;
@@ -71,7 +74,7 @@ class AdministratorUserProvider implements UserProviderInterface
         $class = get_class($userInterface);
         if (!$this->supportsClass($class)) {
             $message = sprintf('Instances of "%s" are not supported.', $class);
-            throw new \Symfony\Component\Security\Core\Exception\UnsupportedUserException($message);
+            throw new UnsupportedUserException($message);
         }
 
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
@@ -83,12 +86,12 @@ class AdministratorUserProvider implements UserProviderInterface
             && $freshAdministrator !== null
             && $freshAdministrator->getLoginToken() !== $administrator->getLoginToken()
         ) {
-            throw new \Symfony\Component\Security\Core\Exception\AuthenticationExpiredException();
+            throw new AuthenticationExpiredException();
         }
 
         if ($administrator instanceof TimelimitLoginInterface) {
             if (time() - $administrator->getLastActivity()->getTimestamp() > 3600 * 5) {
-                throw new \Symfony\Component\Security\Core\Exception\AuthenticationExpiredException('Admin was too long inactive.');
+                throw new AuthenticationExpiredException('Admin was too long inactive.');
             }
             if ($freshAdministrator !== null) {
                 $freshAdministrator->setLastActivity(new DateTime());
@@ -96,7 +99,7 @@ class AdministratorUserProvider implements UserProviderInterface
         }
 
         if ($freshAdministrator === null) {
-            throw new \Symfony\Component\Security\Core\Exception\UsernameNotFoundException('Unable to find an active admin');
+            throw new UsernameNotFoundException('Unable to find an active admin');
         }
 
         if ($freshAdministrator instanceof Administrator) {

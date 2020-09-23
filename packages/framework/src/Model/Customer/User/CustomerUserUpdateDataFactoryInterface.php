@@ -14,7 +14,6 @@ interface CustomerUserUpdateDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserUpdateData;

@@ -13,7 +13,6 @@ class TopCategory
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
      * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id", onDelete="CASCADE")
      * @ORM\Id
@@ -22,7 +21,6 @@ class TopCategory
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      */
@@ -30,7 +28,6 @@ class TopCategory
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $position;

@@ -6,13 +6,18 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Cart\AddProductFormType;
 use App\Form\Front\Cart\CartFormType;
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\CartException;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
@@ -123,7 +128,7 @@ class CartController extends FrontBaseController
                 if (!$request->get(self::RECALCULATE_ONLY_PARAMETER_NAME, false)) {
                     return $this->redirectToRoute('front_order_index');
                 }
-            } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException $ex) {
+            } catch (InvalidQuantityException $ex) {
                 $invalidCart = true;
             }
         } elseif ($form->isSubmitted()) {
@@ -151,7 +156,10 @@ class CartController extends FrontBaseController
             'cartItemPrices' => $orderPreview->getQuantifiedItemsPrices(),
             'form' => $form->createView(),
             'isFreeTransportAndPaymentActive' => $this->freeTransportAndPaymentFacade->isActive($domainId),
-            'isPaymentAndTransportFree' => $this->freeTransportAndPaymentFacade->isFree($productsPrice->getPriceWithVat(), $domainId),
+            'isPaymentAndTransportFree' => $this->freeTransportAndPaymentFacade->isFree(
+                $productsPrice->getPriceWithVat(),
+                $domainId
+            ),
             'remainingPriceWithVat' => $remainingPriceWithVat,
             'cartItemDiscounts' => $orderPreview->getQuantifiedItemsDiscounts(),
             'productsPrice' => $productsPrice,
@@ -237,14 +245,17 @@ class CartController extends FrontBaseController
             try {
                 $formData = $form->getData();
 
-                $addProductResult = $this->cartFacade->addProductToCart($formData['productId'], (int)$formData['quantity']);
+                $addProductResult = $this->cartFacade->addProductToCart(
+                    $formData['productId'],
+                    (int)$formData['quantity']
+                );
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
-            } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $ex) {
+            } catch (ProductNotFoundException $ex) {
                 $this->addErrorFlash(t('Selected product no longer available or doesn\'t exist.'));
-            } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException $ex) {
+            } catch (InvalidQuantityException $ex) {
                 $this->addErrorFlash(t('Please enter valid quantity you want to add to cart.'));
-            } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\CartException $ex) {
+            } catch (CartException $ex) {
                 $this->addErrorFlash(t('Unable to add product to cart'));
             }
         } else {
@@ -280,7 +291,10 @@ class CartController extends FrontBaseController
             try {
                 $formData = $form->getData();
 
-                $addProductResult = $this->cartFacade->addProductToCart($formData['productId'], (int)$formData['quantity']);
+                $addProductResult = $this->cartFacade->addProductToCart(
+                    $formData['productId'],
+                    (int)$formData['quantity']
+                );
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
 
@@ -295,11 +309,11 @@ class CartController extends FrontBaseController
                 return $this->render('Front/Inline/Cart/afterAddWindow.html.twig', [
                     'accessories' => $accessories,
                 ]);
-            } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $ex) {
+            } catch (ProductNotFoundException $ex) {
                 $this->addErrorFlash(t('Selected product no longer available or doesn\'t exist.'));
-            } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException $ex) {
+            } catch (InvalidQuantityException $ex) {
                 $this->addErrorFlash(t('Please enter valid quantity you want to add to cart.'));
-            } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\CartException $ex) {
+            } catch (CartException $ex) {
                 $this->addErrorFlash(t('Unable to add product to cart'));
             }
         } else {
@@ -363,7 +377,7 @@ class CartController extends FrontBaseController
                     t('Product {{ name }} removed from cart'),
                     ['name' => $productName]
                 );
-            } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException $ex) {
+            } catch (InvalidCartItemException $ex) {
                 $this->addErrorFlash(t('Unable to remove item from cart. The item is probably already removed.'));
             }
         } else {
@@ -384,19 +398,21 @@ class CartController extends FrontBaseController
     {
         $token = $request->query->get('_token');
 
-        if ($this->isCsrfTokenValid('front_cart_delete_' . $cartItemId, $token)) {
-            try {
-                $this->cartFacade->deleteCartItem($cartItemId);
-            } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException $ex) {
-                return $this->json([
-                    'success' => false,
-                    'errorMessage' => t('Unable to remove item from cart. The item is probably already removed.'),
-                ]);
-            }
-        } else {
+        if (!$this->isCsrfTokenValid('front_cart_delete_' . $cartItemId, $token)) {
             return $this->json([
                 'success' => false,
-                'errorMessage' => t('Unable to remove item from cart. The link for removing it probably expired, try it again.'),
+                'errorMessage' => t(
+                    'Unable to remove item from cart. The link for removing it probably expired, try it again.'
+                ),
+            ]);
+        }
+
+        try {
+            $this->cartFacade->deleteCartItem($cartItemId);
+        } catch (InvalidCartItemException $ex) {
+            return $this->json([
+                'success' => false,
+                'errorMessage' => t('Unable to remove item from cart. The item is probably already removed.'),
             ]);
         }
 
@@ -426,11 +442,21 @@ class CartController extends FrontBaseController
     public function setModuleFacade(ModuleFacade $moduleFacade): void
     {
         if ($this->moduleFacade !== null && $this->moduleFacade !== $moduleFacade) {
-            throw new \BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
         }
-        if ($this->moduleFacade === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->moduleFacade = $moduleFacade;
+        if ($this->moduleFacade !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->moduleFacade = $moduleFacade;
     }
 }

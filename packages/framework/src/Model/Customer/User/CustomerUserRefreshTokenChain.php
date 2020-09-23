@@ -15,7 +15,6 @@ class CustomerUserRefreshTokenChain
 {
     /**
      * @var string
-     *
      * @ORM\Id
      * @ORM\Column(type="guid", unique=true)
      */
@@ -23,7 +22,6 @@ class CustomerUserRefreshTokenChain
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser", inversedBy="refreshTokenChain")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
@@ -31,21 +29,18 @@ class CustomerUserRefreshTokenChain
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", nullable=false)
      */
     protected $tokenChain;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="guid", nullable=false)
      */
     protected $deviceId;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $expiredAt;

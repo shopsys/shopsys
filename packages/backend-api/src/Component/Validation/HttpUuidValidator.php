@@ -24,7 +24,9 @@ class HttpUuidValidator
 
         if (count($invalidUuids) === 1) {
             throw new BadRequestHttpException('This UUID is not valid: ' . reset($invalidUuids));
-        } elseif (count($invalidUuids) > 1) {
+        }
+
+        if (count($invalidUuids) > 1) {
             throw new BadRequestHttpException('These UUIDS are not valid: ' . implode(', ', $invalidUuids));
         }
     }

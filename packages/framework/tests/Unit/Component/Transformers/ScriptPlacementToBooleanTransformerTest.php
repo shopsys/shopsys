@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Form\Transformers\ScriptPlacementToBooleanTransformer;
 use Shopsys\FrameworkBundle\Model\Script\Script;
 use stdClass;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ScriptPlacementToBooleanTransformerTest extends TestCase
 {
@@ -39,7 +40,7 @@ class ScriptPlacementToBooleanTransformerTest extends TestCase
     {
         $transformer = new ScriptPlacementToBooleanTransformer();
 
-        $this->expectException(\Symfony\Component\Form\Exception\TransformationFailedException::class);
+        $this->expectException(TransformationFailedException::class);
         $transformer->reverseTransform($param);
     }
 

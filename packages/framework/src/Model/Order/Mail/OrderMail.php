@@ -248,7 +248,9 @@ class OrderMail implements MessageFactoryInterface
      */
     protected function getProductsHtmlTable(Order $order)
     {
-        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById($order->getItems());
+        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
+            $order->getItems()
+        );
 
         return $this->twig->render('@ShopsysFramework/Mail/Order/products.html.twig', [
             'order' => $order,

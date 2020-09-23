@@ -60,6 +60,7 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

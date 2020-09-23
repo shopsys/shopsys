@@ -119,7 +119,10 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
         $validator->validate();
 
         $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
-        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUserWithArgument($customerUser, $argument);
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUserWithArgument(
+            $customerUser,
+            $argument
+        );
         $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
 
         return $customerUser;

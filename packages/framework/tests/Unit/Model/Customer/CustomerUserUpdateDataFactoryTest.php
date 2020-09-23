@@ -131,7 +131,11 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
             'companyTaxNumber'
         );
 
-        $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder($customerUser, $order, $deliveryAddress);
+        $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder(
+            $customerUser,
+            $order,
+            $deliveryAddress
+        );
 
         $this->assertEquals($customerUserData, $customerUserUpdateData->customerUserData);
         $this->assertEquals($billingAddressData, $customerUserUpdateData->billingAddressData);
@@ -232,7 +236,10 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $this->assertTrue($customerUserUpdateData->billingAddressData->companyCustomer);
         $this->assertSame($order->getCompanyName(), $customerUserUpdateData->billingAddressData->companyName);
         $this->assertSame($order->getCompanyNumber(), $customerUserUpdateData->billingAddressData->companyNumber);
-        $this->assertSame($order->getCompanyTaxNumber(), $customerUserUpdateData->billingAddressData->companyTaxNumber);
+        $this->assertSame(
+            $order->getCompanyTaxNumber(),
+            $customerUserUpdateData->billingAddressData->companyTaxNumber
+        );
         $this->assertSame($order->getStreet(), $customerUserUpdateData->billingAddressData->street);
         $this->assertSame($order->getCity(), $customerUserUpdateData->billingAddressData->city);
         $this->assertSame($order->getPostcode(), $customerUserUpdateData->billingAddressData->postcode);

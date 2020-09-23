@@ -38,6 +38,7 @@ class DisplayOnlyUrlType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
+
         $view->vars['route'] = $options['route'];
         $view->vars['route_params'] = $options['route_params'];
         $view->vars['route_label'] = $options['route_label'];

@@ -20,7 +20,9 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
 
-    /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade */
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     */
     private $transportFacade;
 
     /**
@@ -83,8 +85,18 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Personal collection', [], 'dataFixtures', $locale);
-            $transportData->description[$locale] = t('You will be welcomed by friendly staff!', [], 'dataFixtures', $locale);
-            $transportData->instructions[$locale] = t('We are looking forward to your visit.', [], 'dataFixtures', $locale);
+            $transportData->description[$locale] = t(
+                'You will be welcomed by friendly staff!',
+                [],
+                'dataFixtures',
+                $locale
+            );
+            $transportData->instructions[$locale] = t(
+                'We are looking forward to your visit.',
+                [],
+                'dataFixtures',
+                $locale
+            );
         }
 
         $this->setPriceForAllDomains($transportData, Money::zero());
@@ -108,7 +120,10 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     private function setPriceForAllDomains(TransportData $transportData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());
+            $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+                $price,
+                $domain->getId()
+            );
 
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId());

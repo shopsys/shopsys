@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Module;
 
+use Shopsys\FrameworkBundle\Model\Module\Exception\NotUniqueModuleLabelException;
+
 class ModuleList
 {
     public const ACCESSORIES_ON_BUY = 'accessoriesOnBuy';
@@ -24,7 +26,7 @@ class ModuleList
         $labelsIndexedByNames = $this->getLabelsIndexedByName();
         $namesIndexedByLabel = array_flip($labelsIndexedByNames);
         if (count($labelsIndexedByNames) !== count($namesIndexedByLabel)) {
-            throw new \Shopsys\FrameworkBundle\Model\Module\Exception\NotUniqueModuleLabelException($labelsIndexedByNames);
+            throw new NotUniqueModuleLabelException($labelsIndexedByNames);
         }
 
         return $namesIndexedByLabel;

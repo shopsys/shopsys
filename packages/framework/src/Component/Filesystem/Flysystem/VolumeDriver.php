@@ -47,7 +47,7 @@ class VolumeDriver extends Driver
             $res = (string)$stat['tmb'] === '1' ? $this->createTmb($thumbnailPath, $stat) : $stat['tmb'];
 
             if (!$res) {
-                list($type) = explode('/', $stat['mime']);
+                [$type] = explode('/', $stat['mime']);
                 $fallback = $this->options['resourcePath'] . DIRECTORY_SEPARATOR . strtolower($type) . '.png';
                 if (is_file($fallback)) {
                     $res = $this->tmbname($stat);
@@ -122,23 +122,25 @@ class VolumeDriver extends Driver
         $path = $this->tmbPath . DIRECTORY_SEPARATOR . $this->tmbname($stat);
         if ($this->tmbURL) {
             $thumbnailName = $this->gettmb($path, $stat);
-            $stat['tmb'] = $thumbnailName ? $thumbnailName : 1;
+            $stat['tmb'] = $thumbnailName ?: 1;
         }
 
-        if ($this->tmbPathWritable) {
-            if ($stat['mime'] === 'directory') {
-                foreach ($this->scandirCE($this->decode($stat['hash'])) as $p) {
-                    elFinder::extendTimeLimit(30);
-                    $name = $this->basenameCE($p);
-                    if ($name !== '.' && $name !== '..') {
-                        $this->rmTmb($this->stat($p));
-                    }
+        if (!$this->tmbPathWritable) {
+            return;
+        }
+
+        if ($stat['mime'] === 'directory') {
+            foreach ($this->scandirCE($this->decode($stat['hash'])) as $p) {
+                elFinder::extendTimeLimit(30);
+                $name = $this->basenameCE($p);
+                if ($name !== '.' && $name !== '..') {
+                    $this->rmTmb($this->stat($p));
                 }
-            } elseif (!empty($stat['tmb']) && (string)$stat['tmb'] !== '1') {
-                $thumbnailPath = $this->createThumbnailPath(rawurldecode($stat['tmb']));
-                $this->_unlink($thumbnailPath);
-                clearstatcache();
             }
+        } elseif (!empty($stat['tmb']) && (string)$stat['tmb'] !== '1') {
+            $thumbnailPath = $this->createThumbnailPath(rawurldecode($stat['tmb']));
+            $this->_unlink($thumbnailPath);
+            clearstatcache();
         }
     }
 
@@ -156,7 +158,7 @@ class VolumeDriver extends Driver
 
         if (count($stat) > 0 && $this->tmbURL && !isset($stat['tmb']) && $this->canCreateTmb($path, $stat)) {
             $thumbnailName = $this->gettmb($path, $stat);
-            $stat['tmb'] = $thumbnailName ? $thumbnailName : 1;
+            $stat['tmb'] = $thumbnailName ?: 1;
         }
 
         return $stat;

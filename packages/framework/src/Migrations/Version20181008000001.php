@@ -12,8 +12,12 @@ class Version20181008000001 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $this->sql('UPDATE setting_values SET value = 0 WHERE value IS NULL AND type = \'integer\' AND  name = \'defaultAvailabilityInStockId\'');
-        $this->sql('UPDATE setting_values SET value = 0 WHERE value IS NULL AND type = \'integer\' AND  name = \'defaultUnitId\'');
+        $this->sql(
+            'UPDATE setting_values SET value = 0 WHERE value IS NULL AND type = \'integer\' AND  name = \'defaultAvailabilityInStockId\''
+        );
+        $this->sql(
+            'UPDATE setting_values SET value = 0 WHERE value IS NULL AND type = \'integer\' AND  name = \'defaultUnitId\''
+        );
         $this->sql('UPDATE setting_values SET type = \'none\' where value IS NULL');
     }
 

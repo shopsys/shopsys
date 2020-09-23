@@ -54,7 +54,7 @@ class CheckTimezonesCommand extends Command
     {
         $output->writeln('Checks uniformity of PHP and Postgres timezones...');
 
-        $phpTimezone = empty(ini_get('date.timezone')) ? date_default_timezone_get() : ini_get('date.timezone');
+        $phpTimezone = ini_get('date.timezone') === '' ? date_default_timezone_get() : ini_get('date.timezone');
 
         $stmt = $this->connection->executeQuery('SHOW timezone');
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use BadMethodCallException;
+use DateTime;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer;
@@ -110,7 +111,9 @@ class TokenFacade
      */
     public function getPrivateKey(): Key
     {
-        return new Key(sprintf('file://%s/private.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath')));
+        return new Key(
+            sprintf('file://%s/private.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath'))
+        );
     }
 
     /**
@@ -118,7 +121,9 @@ class TokenFacade
      */
     public function getPublicKey(): Key
     {
-        return new Key(sprintf('file://%s/public.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath')));
+        return new Key(
+            sprintf('file://%s/public.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath'))
+        );
     }
 
     /**
@@ -181,7 +186,7 @@ class TokenFacade
             $customerUser,
             $randomChain,
             $deviceId,
-            \DateTime::createFromFormat('U', '' . $refreshToken->getClaim('exp'))
+            DateTime::createFromFormat('U', '' . $refreshToken->getClaim('exp'))
         );
 
         return (string)$refreshToken;

@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Doctrine;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 use Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder;
 
 class StringColumnsFinderTest extends TestCase
@@ -23,7 +24,9 @@ class StringColumnsFinderTest extends TestCase
             ->willReturnCallback(function ($fieldName) {
                 if ($fieldName === 'stringField') {
                     return 'string';
-                } elseif ($fieldName === 'textField') {
+                }
+
+                if ($fieldName === 'textField') {
                     return 'text';
                 }
                 return 'other';
@@ -33,7 +36,9 @@ class StringColumnsFinderTest extends TestCase
             ->willReturnCallback(function ($fieldName) {
                 if ($fieldName === 'stringField') {
                     return 'string_field';
-                } elseif ($fieldName === 'textField') {
+                }
+
+                if ($fieldName === 'textField') {
                     return 'text_field';
                 }
             });
@@ -54,7 +59,7 @@ class StringColumnsFinderTest extends TestCase
     public function testGetAllStringColumnNamesIndexedByTableNameException()
     {
         $classMetadataMock = $this->createMock(ClassMetadata::class);
-        $this->expectException(\Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException::class);
+        $this->expectException(UnexpectedTypeException::class);
 
         $stringColumnsFinder = new StringColumnsFinder();
         $stringColumnsFinder->getAllStringColumnNamesIndexedByTableName([$classMetadataMock]);

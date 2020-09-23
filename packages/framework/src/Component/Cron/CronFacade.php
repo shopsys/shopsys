@@ -136,7 +136,10 @@ class CronFacade
         try {
             $this->mailer->flushSpoolQueue();
         } catch (Swift_TransportException $exception) {
-            $this->logger->addError('An exception occurred while flushing email queue. Message: "{message}"', ['exception' => $exception, 'message' => $exception->getMessage()]);
+            $this->logger->addError(
+                'An exception occurred while flushing email queue. Message: "{message}"',
+                ['exception' => $exception, 'message' => $exception->getMessage()]
+            );
         }
 
         if ($status === CronModuleExecutor::RUN_STATUS_OK) {

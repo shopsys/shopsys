@@ -58,7 +58,11 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      */
     protected function getCustomPattern($locale, $dateType, $timeType)
     {
-        $dateTimePattern = $this->customDateTimeFormatPatternRepository->findDateTimePattern($locale, $dateType, $timeType);
+        $dateTimePattern = $this->customDateTimeFormatPatternRepository->findDateTimePattern(
+            $locale,
+            $dateType,
+            $timeType
+        );
         if ($dateTimePattern !== null) {
             $pattern = $dateTimePattern->getPattern();
         } else {

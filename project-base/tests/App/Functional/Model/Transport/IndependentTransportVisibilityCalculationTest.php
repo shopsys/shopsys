@@ -43,7 +43,12 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->em->persist($transport);
         $this->em->flush();
 
-        $this->assertTrue($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue(
+            $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
+                $transport,
+                Domain::FIRST_DOMAIN_ID
+            )
+        );
     }
 
     public function testIsIndependentlyVisibleEmptyName()
@@ -65,7 +70,12 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->em->persist($transport);
         $this->em->flush();
 
-        $this->assertFalse($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
+        $this->assertFalse(
+            $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
+                $transport,
+                Domain::FIRST_DOMAIN_ID
+            )
+        );
     }
 
     public function testIsIndependentlyVisibleNotOnDomain()
@@ -80,7 +90,12 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->em->persist($transport);
         $this->em->flush();
 
-        $this->assertFalse($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
+        $this->assertFalse(
+            $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
+                $transport,
+                Domain::FIRST_DOMAIN_ID
+            )
+        );
     }
 
     public function testIsIndependentlyVisibleHidden()
@@ -95,7 +110,12 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->em->persist($transport);
         $this->em->flush();
 
-        $this->assertFalse($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
+        $this->assertFalse(
+            $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
+                $transport,
+                Domain::FIRST_DOMAIN_ID
+            )
+        );
     }
 
     /**

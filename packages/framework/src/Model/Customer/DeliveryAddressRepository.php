@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 
 class DeliveryAddressRepository
 {
@@ -37,7 +38,9 @@ class DeliveryAddressRepository
         $deliveryAddress = $this->getDeliveryAddressRepository()->find($deliveryAddressId);
 
         if ($deliveryAddress === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException('Delivery address with ID ' . $deliveryAddressId . ' not found.');
+            throw new DeliveryAddressNotFoundException(
+                'Delivery address with ID ' . $deliveryAddressId . ' not found.'
+            );
         }
 
         return $deliveryAddress;

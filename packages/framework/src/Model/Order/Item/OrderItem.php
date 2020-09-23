@@ -19,14 +19,12 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
  */
 class OrderItem
 {
-    public const
-        TYPE_PAYMENT = 'payment',
-        TYPE_PRODUCT = 'product',
-        TYPE_TRANSPORT = 'transport';
+    public const TYPE_PAYMENT = 'payment';
+    public const TYPE_PRODUCT = 'product';
+    public const TYPE_TRANSPORT = 'transport';
 
     /**
      * @var int|null
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -35,14 +33,12 @@ class OrderItem
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $type;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order", inversedBy="items")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false)
      */
@@ -50,21 +46,18 @@ class OrderItem
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $name;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     *
      * @ORM\Column(type="money", precision=20, scale=6)
      */
     protected $priceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     *
      * @ORM\Column(type="money", precision=20, scale=6)
      */
     protected $priceWithVat;
@@ -74,7 +67,6 @@ class OrderItem
      * Otherwise it should be set to NULL (which means it will be calculated automatically).
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     protected $totalPriceWithoutVat;
@@ -84,42 +76,36 @@ class OrderItem
      * Otherwise it should be set to NULL (which means it will be calculated automatically).
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     protected $totalPriceWithVat;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="decimal", precision=20, scale=6)
      */
     protected $vatPercent;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $quantity;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     protected $unitName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $catnum;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -127,7 +113,6 @@ class OrderItem
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -135,7 +120,6 @@ class OrderItem
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(nullable=true, name="product_id", referencedColumnName="id", onDelete="SET NULL")
      */
@@ -226,7 +210,9 @@ class OrderItem
      */
     public function getTotalPriceWithVat(): Money
     {
-        return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply($this->quantity);
+        return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply(
+            $this->quantity
+        );
     }
 
     /**

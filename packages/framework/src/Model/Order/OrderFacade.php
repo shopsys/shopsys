@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -256,7 +257,6 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function createOrder(OrderData $orderData, OrderPreview $orderPreview, ?CustomerUser $customerUser = null)
@@ -419,35 +419,11 @@ class OrderFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerUserOrderList(CustomerUser $customerUser)
     {
         return $this->orderRepository->getCustomerUserOrderList($customerUser);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param int $limit
-     * @param int $offset
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
-     */
-    public function getCustomerUserOrderLimitedList(
-        CustomerUser $customerUser,
-        int $limit,
-        int $offset
-    ): array {
-        return $this->orderRepository->getCustomerUserOrderLimitedList($customerUser, $limit, $offset);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return int
-     */
-    public function getCustomerUserOrderCount(CustomerUser $customerUser): int
-    {
-        return $this->orderRepository->getCustomerUserOrderCount($customerUser);
     }
 
     /**
@@ -470,26 +446,6 @@ class OrderFacade
     }
 
     /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    public function getByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser): Order
-    {
-        return $this->orderRepository->getByUuidAndCustomerUser($uuid, $customerUser);
-    }
-
-    /**
-     * @param string $uuid
-     * @param string $urlHash
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    public function getByUuidAndUrlHash(string $uuid, string $urlHash): Order
-    {
-        return $this->orderRepository->getByUuidAndUrlHash($uuid, $urlHash);
-    }
-
-    /**
      * @param string $urlHash
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
@@ -502,7 +458,6 @@ class OrderFacade
     /**
      * @param string $orderNumber
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function getByOrderNumberAndUser($orderNumber, CustomerUser $customerUser)
@@ -532,7 +487,8 @@ class OrderFacade
                 $currentAdmin = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
                 $orderData->createdAsAdministrator = $currentAdmin;
                 $orderData->createdAsAdministratorName = $currentAdmin->getRealName();
-            } catch (\Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException $ex) {
+            } catch (AdministratorIsNotLoggedException $ex) {
+                return;
             }
         }
     }
@@ -730,9 +686,13 @@ class OrderFacade
                 $newOrderItemData->unitName,
                 $newOrderItemData->catnum
             );
-            if (!$newOrderItemData->usePriceCalculation) {
-                $newOrderItem->setTotalPrice(new Price($newOrderItemData->totalPriceWithoutVat, $newOrderItemData->totalPriceWithVat));
+            if ($newOrderItemData->usePriceCalculation) {
+                continue;
             }
+
+            $newOrderItem->setTotalPrice(
+                new Price($newOrderItemData->totalPriceWithoutVat, $newOrderItemData->totalPriceWithVat)
+            );
         }
     }
 
@@ -743,7 +703,10 @@ class OrderFacade
     protected function calculateOrderItemDataPrices(OrderItemData $orderItemData, int $domainId): void
     {
         if ($orderItemData->usePriceCalculation) {
-            $orderItemData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat($orderItemData, $domainId);
+            $orderItemData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat(
+                $orderItemData,
+                $domainId
+            );
             $orderItemData->totalPriceWithVat = null;
             $orderItemData->totalPriceWithoutVat = null;
         } else {

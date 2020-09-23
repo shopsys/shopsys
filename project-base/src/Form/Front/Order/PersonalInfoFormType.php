@@ -80,26 +80,34 @@ class PersonalInfoFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ])
             ->add('lastName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter last name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ])
             ->add('telephone', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter telephone number']),
-                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 30, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ])
             ->add('companyCustomer', CheckboxType::class, ['required' => false])
@@ -143,19 +151,25 @@ class PersonalInfoFormType extends AbstractType
             ->add('street', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter street']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Street name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'Street name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ])
             ->add('city', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter city']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'City name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'City name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ])
             ->add('postcode', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter zip code']),
-                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 30, 'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ])
             ->add('country', ChoiceType::class, [

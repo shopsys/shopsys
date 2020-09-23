@@ -74,6 +74,7 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
 
             $event->setResponse(new RedirectResponse($pathToRedirect, 301));
         } catch (ResourceNotFoundException $exception) {
+            return;
         }
     }
 }

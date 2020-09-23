@@ -2,12 +2,17 @@
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Security;
 
+use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdministratorFrontSecurityFacade
@@ -61,8 +66,8 @@ class AdministratorFrontSecurityFacade
         try {
             $token = $this->getAdministratorToken();
         } catch (
-            \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException |
-            \Symfony\Component\Security\Core\Exception\AuthenticationException $e
+            InvalidTokenException |
+            AuthenticationException $e
         ) {
             return false;
         }
@@ -92,10 +97,9 @@ class AdministratorFrontSecurityFacade
             $user = $this->getAdministratorToken()->getUser();
 
             return $user;
-        } else {
-            $message = 'Administrator is not logged.';
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException($message);
         }
+        $message = 'Administrator is not logged.';
+        throw new AdministratorIsNotLoggedException($message);
     }
 
     /**
@@ -107,13 +111,13 @@ class AdministratorFrontSecurityFacade
         $serializedToken = $this->session->get('_security_' . static::ADMINISTRATION_CONTEXT);
         if ($serializedToken === null) {
             $message = 'Token not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException($message);
+            throw new InvalidTokenException($message);
         }
 
         $token = unserialize($serializedToken);
         if (!$token instanceof TokenInterface) {
             $message = 'Token has invalid interface.';
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException($message);
+            throw new InvalidTokenException($message);
         }
         $this->refreshUserInToken($token);
 
@@ -130,17 +134,17 @@ class AdministratorFrontSecurityFacade
         $user = $token->getUser();
         if (!$user instanceof UserInterface) {
             $message = 'User in token must implement UserInterface.';
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException($message);
+            throw new InvalidTokenException($message);
         }
 
         try {
             $freshUser = $this->administratorUserProvider->refreshUser($user);
-        } catch (\Symfony\Component\Security\Core\Exception\UnsupportedUserException $e) {
+        } catch (UnsupportedUserException $e) {
             $message = 'AdministratorUserProvider does not support user in this token.';
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException($message, $e);
-        } catch (\Symfony\Component\Security\Core\Exception\UsernameNotFoundException $e) {
+            throw new InvalidTokenException($message, $e);
+        } catch (UsernameNotFoundException $e) {
             $message = 'Username not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException($message, $e);
+            throw new InvalidTokenException($message, $e);
         }
 
         $token->setUser($freshUser);

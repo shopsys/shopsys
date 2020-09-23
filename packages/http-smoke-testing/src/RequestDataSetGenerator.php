@@ -51,9 +51,8 @@ class RequestDataSetGenerator implements RouteConfig
     {
         if ($index === 0) {
             return $this->defaultRequestDataSet;
-        } else {
-            return $this->addExtraRequestDataSet();
         }
+        return $this->addExtraRequestDataSet();
     }
 
     /**

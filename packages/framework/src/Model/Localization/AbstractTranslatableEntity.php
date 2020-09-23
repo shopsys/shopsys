@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslatable;
+use Shopsys\FrameworkBundle\Model\Localization\Exception\ImplicitLocaleNotSetException;
 
 abstract class AbstractTranslatableEntity extends AbstractTranslatable
 {
@@ -53,7 +54,7 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
         }
 
         if (!$locale) {
-            throw new \Shopsys\FrameworkBundle\Model\Localization\Exception\ImplicitLocaleNotSetException(
+            throw new ImplicitLocaleNotSetException(
                 $this,
                 $this->id
             );

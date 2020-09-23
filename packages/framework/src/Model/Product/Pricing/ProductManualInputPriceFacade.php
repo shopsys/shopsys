@@ -46,7 +46,10 @@ class ProductManualInputPriceFacade
      */
     public function refresh(Product $product, PricingGroup $pricingGroup, ?Money $inputPrice)
     {
-        $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup($product, $pricingGroup);
+        $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
+            $product,
+            $pricingGroup
+        );
         if ($manualInputPrice === null) {
             $manualInputPrice = $this->productManualInputPriceFactory->create($product, $pricingGroup, $inputPrice);
         } else {

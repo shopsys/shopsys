@@ -9,6 +9,8 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use function array_map;
+use function count;
 
 class ProductFilterDataToQueryTransformer
 {
@@ -23,7 +25,7 @@ class ProductFilterDataToQueryTransformer
             return $filterQuery;
         }
 
-        $brandIds = \array_map(
+        $brandIds = array_map(
             static function (Brand $brand) {
                 return $brand->getId();
             },
@@ -44,7 +46,7 @@ class ProductFilterDataToQueryTransformer
             return $filterQuery;
         }
 
-        $flagIds = \array_map(
+        $flagIds = array_map(
             static function (Flag $flag) {
                 return $flag->getId();
             },
@@ -79,12 +81,12 @@ class ProductFilterDataToQueryTransformer
         $result = [];
 
         foreach ($parameters as $parameterFilterData) {
-            if (\count($parameterFilterData->values) === 0) {
+            if (count($parameterFilterData->values) === 0) {
                 continue;
             }
 
             $result[$parameterFilterData->parameter->getId()] =
-                \array_map(
+                array_map(
                     static function (ParameterValue $item) {
                         return $item->getId();
                     },
@@ -121,6 +123,10 @@ class ProductFilterDataToQueryTransformer
             return $filterQuery;
         }
 
-        return $filterQuery->filterByPrices($pricingGroup, $productFilterData->minimalPrice, $productFilterData->maximalPrice);
+        return $filterQuery->filterByPrices(
+            $pricingGroup,
+            $productFilterData->minimalPrice,
+            $productFilterData->maximalPrice
+        );
     }
 }

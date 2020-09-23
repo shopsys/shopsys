@@ -36,7 +36,7 @@ class DeliveryAddressListType extends AbstractType
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getParent()
     {

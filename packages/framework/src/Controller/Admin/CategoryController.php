@@ -3,11 +3,13 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -96,7 +98,9 @@ class CategoryController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing category - %name%', ['%name%' => $category->getName()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing category - %name%', ['%name%' => $category->getName()])
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/edit.html.twig', [
             'form' => $form->createView(),
@@ -160,7 +164,7 @@ class CategoryController extends AdminBaseController
         if ($domainId !== static::ALL_DOMAINS) {
             try {
                 $this->domain->getDomainConfigById($domainId);
-            } catch (\Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException $ex) {
+            } catch (InvalidDomainIdException $ex) {
                 $domainId = static::ALL_DOMAINS;
             }
         }
@@ -168,9 +172,14 @@ class CategoryController extends AdminBaseController
         $this->session->set('categories_selected_domain_id', $domainId);
 
         if ($domainId === static::ALL_DOMAINS) {
-            $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren($request->getLocale());
+            $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren(
+                $request->getLocale()
+            );
         } else {
-            $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain($domainId, $request->getLocale());
+            $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
+                $domainId,
+                $request->getLocale()
+            );
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/list.html.twig', [
@@ -217,7 +226,7 @@ class CategoryController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException $ex) {
+        } catch (CategoryNotFoundException $ex) {
             $this->addErrorFlash(t('Selected category doesn\'t exist.'));
         }
 

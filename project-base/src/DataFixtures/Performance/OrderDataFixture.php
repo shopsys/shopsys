@@ -195,7 +195,6 @@ class OrderDataFixture
 
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \App\Model\Order\OrderData
      */
     private function createOrderData(?CustomerUser $customerUser = null)

@@ -105,7 +105,12 @@ class ParameterGridFactory implements GridFactoryInterface
             if ($locale !== $this->localization->getAdminLocale()) {
                 $queryBuilder
                     ->addSelect('pt_' . $locale)
-                    ->leftJoin('p.translations', 'pt_' . $locale, Join::WITH, 'pt_' . $locale . '.locale = :locale_' . $locale)
+                    ->leftJoin(
+                        'p.translations',
+                        'pt_' . $locale,
+                        Join::WITH,
+                        'pt_' . $locale . '.locale = :locale_' . $locale
+                    )
                     ->setParameter('locale_' . $locale, $locale);
             }
         }

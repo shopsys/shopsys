@@ -85,7 +85,7 @@ class MessageData
         $this->fromEmail = $fromEmail;
         $this->fromName = $fromName;
         $this->variablesReplacementsForBody = $variablesReplacementsForBody;
-        if (!empty($variablesReplacementsForSubject)) {
+        if (count($variablesReplacementsForSubject) > 0) {
             $this->variablesReplacementsForSubject = $variablesReplacementsForSubject;
         } else {
             $this->variablesReplacementsForSubject = $variablesReplacementsForBody;

@@ -87,12 +87,19 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     protected function getChoicesForCategoryReference(string $categoryReferenceName): array
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         /** @var \App\Model\Category\Category $category */
         $category = $this->getReference($categoryReferenceName);
         /** @var \App\Model\Product\Brand\Brand[] $brands */
-        $brands = $this->brandFilterChoiceRepository->getBrandFilterChoicesInCategory(Domain::FIRST_DOMAIN_ID, $pricingGroup, $category);
+        $brands = $this->brandFilterChoiceRepository->getBrandFilterChoicesInCategory(
+            Domain::FIRST_DOMAIN_ID,
+            $pricingGroup,
+            $category
+        );
 
         return $brands;
     }
@@ -104,11 +111,19 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     protected function getChoicesForSearchText(string $searchText): array
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
         $domainConfig1 = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
 
         /** @var \App\Model\Product\Brand\Brand[] $brands */
-        $brands = $this->brandFilterChoiceRepository->getBrandFilterChoicesForSearch($domainConfig1->getId(), $pricingGroup, $domainConfig1->getLocale(), $searchText);
+        $brands = $this->brandFilterChoiceRepository->getBrandFilterChoicesForSearch(
+            $domainConfig1->getId(),
+            $pricingGroup,
+            $domainConfig1->getLocale(),
+            $searchText
+        );
 
         return $brands;
     }

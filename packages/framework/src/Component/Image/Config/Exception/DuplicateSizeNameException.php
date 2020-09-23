@@ -24,6 +24,7 @@ class DuplicateSizeNameException extends Exception implements ImageConfigExcepti
         } else {
             $message = sprintf('Image size "%s" is not unique.', $this->sizeName);
         }
+
         parent::__construct($message, 0, $previous);
     }
 

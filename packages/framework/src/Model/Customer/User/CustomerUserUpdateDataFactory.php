@@ -80,13 +80,14 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserUpdateData
     {
         return $this->createInstance(
-            $this->billingAddressDataFactory->createFromBillingAddress($customerUser->getCustomer()->getBillingAddress()),
+            $this->billingAddressDataFactory->createFromBillingAddress(
+                $customerUser->getCustomer()->getBillingAddress()
+            ),
             $this->getDeliveryAddressDataFromCustomerUser($customerUser),
             $this->customerUserDataFactory->createFromCustomerUser($customerUser)
         );
@@ -99,7 +100,9 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     protected function getDeliveryAddressDataFromCustomerUser(CustomerUser $customerUser): DeliveryAddressData
     {
         if ($customerUser->getDefaultDeliveryAddress() !== null) {
-            return $this->deliveryAddressDataFactory->createFromDeliveryAddress($customerUser->getDefaultDeliveryAddress());
+            return $this->deliveryAddressDataFactory->createFromDeliveryAddress(
+                $customerUser->getDefaultDeliveryAddress()
+            );
         }
 
         return $this->deliveryAddressDataFactory->create();
@@ -117,10 +120,22 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
 
         $customerUserUpdateData = $this->createFromCustomerUser($customerUser);
 
-        $customerUserUpdateData->customerUserData->firstName = Utils::ifNull($customerUser->getFirstName(), $order->getFirstName());
-        $customerUserUpdateData->customerUserData->lastName = Utils::ifNull($customerUser->getLastName(), $order->getLastName());
-        $customerUserUpdateData->billingAddressData = $this->getAmendedBillingAddressDataByOrder($order, $billingAddress);
-        $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder($order, $deliveryAddress);
+        $customerUserUpdateData->customerUserData->firstName = Utils::ifNull(
+            $customerUser->getFirstName(),
+            $order->getFirstName()
+        );
+        $customerUserUpdateData->customerUserData->lastName = Utils::ifNull(
+            $customerUser->getLastName(),
+            $order->getLastName()
+        );
+        $customerUserUpdateData->billingAddressData = $this->getAmendedBillingAddressDataByOrder(
+            $order,
+            $billingAddress
+        );
+        $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
+            $order,
+            $deliveryAddress
+        );
 
         return $customerUserUpdateData;
     }

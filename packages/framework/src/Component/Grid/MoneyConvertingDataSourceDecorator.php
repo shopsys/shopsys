@@ -42,14 +42,24 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
         $orderSourceColumnName = null,
         $orderDirection = self::ORDER_ASC
     ): PaginationResult {
-        $paginationResult = $this->innerDataSource->getPaginatedRows($limit, $page, $orderSourceColumnName, $orderDirection);
+        $paginationResult = $this->innerDataSource->getPaginatedRows(
+            $limit,
+            $page,
+            $orderSourceColumnName,
+            $orderDirection
+        );
 
         $results = $paginationResult->getResults();
         foreach ($results as $key => $result) {
             $results[$key] = $this->convertRow($result);
         }
 
-        return new PaginationResult($paginationResult->getPage(), $paginationResult->getPageSize(), $paginationResult->getTotalCount(), $results);
+        return new PaginationResult(
+            $paginationResult->getPage(),
+            $paginationResult->getPageSize(),
+            $paginationResult->getTotalCount(),
+            $results
+        );
     }
 
     /**

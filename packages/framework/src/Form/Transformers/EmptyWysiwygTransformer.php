@@ -24,8 +24,7 @@ class EmptyWysiwygTransformer implements DataTransformerInterface
         $trimmedValue = strip_tags(preg_replace('/\s|\&nbsp\;/', '', $value));
         if ($trimmedValue === '') {
             return null;
-        } else {
-            return $value;
         }
+        return $value;
     }
 }

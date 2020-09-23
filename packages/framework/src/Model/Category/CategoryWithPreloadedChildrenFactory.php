@@ -74,14 +74,11 @@ class CategoryWithPreloadedChildrenFactory
 
         foreach ($categories as $category) {
             $parentId = $category->getParent()->getId();
-
-            if ($parentId !== null) {
-                if (!isset($categoriesIndexedByParentId[$parentId])) {
-                    $categoriesIndexedByParentId[$parentId] = [];
-                }
-
-                $categoriesIndexedByParentId[$parentId][] = $category;
+            if (!isset($categoriesIndexedByParentId[$parentId])) {
+                $categoriesIndexedByParentId[$parentId] = [];
             }
+
+            $categoriesIndexedByParentId[$parentId][] = $category;
         }
 
         return $categoriesIndexedByParentId;

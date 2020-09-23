@@ -6,7 +6,9 @@ use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor;
+use SplFileInfo;
 
 class JsFileExtractorTest extends TestCase
 {
@@ -49,9 +51,9 @@ class JsFileExtractorTest extends TestCase
     private function extract($filename)
     {
         if (!is_file($filename)) {
-            throw new \RuntimeException(sprintf('The file "%s" does not exist.', $filename));
+            throw new RuntimeException(sprintf('The file "%s" does not exist.', $filename));
         }
-        $file = new \SplFileInfo($filename);
+        $file = new SplFileInfo($filename);
 
         $extractor = $this->getExtractor();
 

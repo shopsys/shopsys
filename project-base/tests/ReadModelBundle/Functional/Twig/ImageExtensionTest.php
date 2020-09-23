@@ -31,10 +31,18 @@ class ImageExtensionTest extends FunctionalTestCase
         $fileExtension = 'jpg';
 
         $imageFacadeMock = $this->createMock(ImageFacade::class);
-        $imageFacadeMock->method('getImageUrlFromAttributes')->willReturn(sprintf('http://webserver:8080/%s/%d.%s', $entityName, $productId, $fileExtension));
+        $imageFacadeMock->method('getImageUrlFromAttributes')->willReturn(
+            sprintf('http://webserver:8080/%s/%d.%s', $entityName, $productId, $fileExtension)
+        );
         $imageFacadeMock->method('getAdditionalImagesDataFromAttributes')->willReturn([
-            new AdditionalImageData('(min-width: 1200px)', sprintf('http://webserver:8080/%s/additional_0_%d.%s', $entityName, $productId, $fileExtension)),
-            new AdditionalImageData('(max-width: 480px)', sprintf('http://webserver:8080/%s/additional_1_%d.%s', $entityName, $productId, $fileExtension)),
+            new AdditionalImageData(
+                '(min-width: 1200px)',
+                sprintf('http://webserver:8080/%s/additional_0_%d.%s', $entityName, $productId, $fileExtension)
+            ),
+            new AdditionalImageData(
+                '(max-width: 480px)',
+                sprintf('http://webserver:8080/%s/additional_1_%d.%s', $entityName, $productId, $fileExtension)
+            ),
         ]);
 
         $imageView = new ImageView($productId, $fileExtension, $entityName, null);
@@ -59,8 +67,14 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml($imageView);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/additional_0_1.jpg"/>', $this->getCurrentUrl());
-        $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" data-src="%s/content-test/images/product/default/1.jpg" title="" src="" loading="lazy"/>', $this->getCurrentUrl());
+        $expected .= sprintf(
+            '    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/additional_0_1.jpg"/>',
+            $this->getCurrentUrl()
+        );
+        $expected .= sprintf(
+            '    <img alt="" class="image-product" itemprop="image" data-src="%s/content-test/images/product/default/1.jpg" title="" src="" loading="lazy"/>',
+            $this->getCurrentUrl()
+        );
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -80,8 +94,14 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml($imageView, ['lazy' => false]);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/additional_0_1.jpg"/>', $this->getCurrentUrl());
-        $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" src="%s/content-test/images/product/default/1.jpg" title=""/>', $this->getCurrentUrl());
+        $expected .= sprintf(
+            '    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/additional_0_1.jpg"/>',
+            $this->getCurrentUrl()
+        );
+        $expected .= sprintf(
+            '    <img alt="" class="image-product" itemprop="image" src="%s/content-test/images/product/default/1.jpg" title=""/>',
+            $this->getCurrentUrl()
+        );
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -96,7 +116,10 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml(null);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s/noimage.png" src="" loading="lazy"/>', $this->getCurrentUrl());
+        $expected .= sprintf(
+            '    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s/noimage.png" src="" loading="lazy"/>',
+            $this->getCurrentUrl()
+        );
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -112,7 +135,11 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml(null);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s%snoimage.png" src="" loading="lazy"/>', $this->getCurrentUrl(), $defaultFrontDesignImageUrlPrefix);
+        $expected .= sprintf(
+            '    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s%snoimage.png" src="" loading="lazy"/>',
+            $this->getCurrentUrl(),
+            $defaultFrontDesignImageUrlPrefix
+        );
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -142,6 +169,13 @@ class ImageExtensionTest extends FunctionalTestCase
         $templating = $this->getContainer()->get('twig');
         $imageFacade = $imageFacade ?: $this->imageFacade;
 
-        return new ImageExtension($frontDesignImageUrlPrefix, $this->domain, $this->imageLocator, $imageFacade, $templating, $enableLazyLoad);
+        return new ImageExtension(
+            $frontDesignImageUrlPrefix,
+            $this->domain,
+            $this->imageLocator,
+            $imageFacade,
+            $templating,
+            $enableLazyLoad
+        );
     }
 }

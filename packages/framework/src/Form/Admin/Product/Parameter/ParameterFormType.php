@@ -24,7 +24,9 @@ class ParameterFormType extends AbstractType
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter parameter name']),
-                        new Constraints\Length(['max' => 100, 'maxMessage' => 'Parameter name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 100, 'maxMessage' => 'Parameter name cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
             ])

@@ -44,6 +44,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
         AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
         parent::__construct($vatGridFactory);
+
         $this->vatFacade = $vatFacade;
         $this->formFactory = $formFactory;
         $this->vatDataFactory = $vatDataFactory;

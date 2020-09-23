@@ -94,9 +94,15 @@ class OrderItemDataFactory implements OrderItemDataFactoryInterface
             return false;
         }
 
-        $calculatedPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat($orderItemData, $orderItem->getOrder()->getDomainId());
+        $calculatedPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat(
+            $orderItemData,
+            $orderItem->getOrder()->getDomainId()
+        );
         if (!$orderItemData->priceWithoutVat->equals($calculatedPriceWithoutVat)) {
-            throw new OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException($orderItem, $calculatedPriceWithoutVat);
+            throw new OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException(
+                $orderItem,
+                $calculatedPriceWithoutVat
+            );
         }
 
         return true;

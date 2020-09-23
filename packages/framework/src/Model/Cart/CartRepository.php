@@ -32,7 +32,6 @@ class CartRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
     public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)

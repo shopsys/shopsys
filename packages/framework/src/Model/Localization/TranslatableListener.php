@@ -39,18 +39,20 @@ class TranslatableListener extends PrezentTranslatableListener
     {
         $entity = $args->getEntity();
         $metadata = $this->getTranslatableMetadata(get_class($entity));
-        if ($metadata instanceof TranslatableMetadata) {
-            /** @var \Prezent\Doctrine\Translatable\Mapping\PropertyMetadata|null $fallbackLocale */
-            $fallbackLocale = $metadata->fallbackLocale;
-            if ($fallbackLocale !== null) {
-                $metadata->fallbackLocale->setValue($entity, $this->getFallbackLocale());
-            }
+        if (!($metadata instanceof TranslatableMetadata)) {
+            return;
+        }
 
-            /** @var \Prezent\Doctrine\Translatable\Mapping\PropertyMetadata|null $currentLocale */
-            $currentLocale = $metadata->currentLocale;
-            if ($currentLocale !== null) {
-                $metadata->currentLocale->setValue($entity, $this->getCurrentLocale());
-            }
+        /** @var \Prezent\Doctrine\Translatable\Mapping\PropertyMetadata|null $fallbackLocale */
+        $fallbackLocale = $metadata->fallbackLocale;
+        if ($fallbackLocale !== null) {
+            $metadata->fallbackLocale->setValue($entity, $this->getFallbackLocale());
+        }
+
+        /** @var \Prezent\Doctrine\Translatable\Mapping\PropertyMetadata|null $currentLocale */
+        $currentLocale = $metadata->currentLocale;
+        if ($currentLocale !== null) {
+            $metadata->currentLocale->setValue($entity, $this->getCurrentLocale());
         }
     }
 }

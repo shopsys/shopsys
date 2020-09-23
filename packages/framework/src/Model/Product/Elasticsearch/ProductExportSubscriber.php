@@ -29,7 +29,14 @@ class ProductExportSubscriber extends AbstractExportSubscriber
         ProductIndex $index,
         Domain $domain
     ) {
-        parent::__construct($productExportScheduler, $entityManager, $indexFacade, $indexDefinitionLoader, $index, $domain);
+        parent::__construct(
+            $productExportScheduler,
+            $entityManager,
+            $indexFacade,
+            $indexDefinitionLoader,
+            $index,
+            $domain
+        );
     }
 
     /**

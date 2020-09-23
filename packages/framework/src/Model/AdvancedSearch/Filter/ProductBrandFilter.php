@@ -88,11 +88,13 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
             }
         }
 
-        if (count($isNotBrand) > 0) {
-            $subQuery = 'SELECT brand_p.id FROM ' . Product::class . ' brand_p
-                JOIN brand_p.brand _f WITH _f.id IN (:isNotBrand)';
-            $queryBuilder->andWhere('p.id NOT IN (' . $subQuery . ')');
-            $queryBuilder->setParameter('isNotBrand', $isNotBrand);
+        if (count($isNotBrand) === 0) {
+            return;
         }
+
+        $subQuery = 'SELECT brand_p.id FROM ' . Product::class . ' brand_p
+            JOIN brand_p.brand _f WITH _f.id IN (:isNotBrand)';
+        $queryBuilder->andWhere('p.id NOT IN (' . $subQuery . ')');
+        $queryBuilder->setParameter('isNotBrand', $isNotBrand);
     }
 }

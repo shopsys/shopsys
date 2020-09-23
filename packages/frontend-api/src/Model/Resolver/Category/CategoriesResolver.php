@@ -36,7 +36,10 @@ class CategoriesResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(): array
     {
-        return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($this->categoryFacade->getRootCategory(), $this->domain->getId());
+        return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId(
+            $this->categoryFacade->getRootCategory(),
+            $this->domain->getId()
+        );
     }
 
     /**

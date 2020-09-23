@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
 
 class BrandRepository
 {
@@ -37,7 +38,7 @@ class BrandRepository
 
         if ($brand === null) {
             $message = 'Brand with ID ' . $brandId . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException($message);
+            throw new BrandNotFoundException($message);
         }
 
         return $brand;

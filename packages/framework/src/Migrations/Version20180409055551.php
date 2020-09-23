@@ -14,7 +14,9 @@ class Version20180409055551 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $this->sql('UPDATE setting_values SET name = \'personalDataDisplaySiteContent\' WHERE name = \'personalDataSiteContent\'');
+        $this->sql(
+            'UPDATE setting_values SET name = \'personalDataDisplaySiteContent\' WHERE name = \'personalDataSiteContent\''
+        );
 
         foreach ($this->getAllDomainIds() as $domainId) {
             $this->sql(

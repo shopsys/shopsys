@@ -17,21 +17,18 @@ class FriendlyUrl
 {
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $routeName;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $entityId;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      */
@@ -39,7 +36,6 @@ class FriendlyUrl
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      * @ORM\Id
      */
@@ -47,7 +43,6 @@ class FriendlyUrl
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $main;

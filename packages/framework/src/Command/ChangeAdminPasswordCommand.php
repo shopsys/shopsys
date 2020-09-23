@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Exception;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -73,7 +74,7 @@ class ChangeAdminPasswordCommand extends Command
         $question->setHiddenFallback(false);
         $question->setValidator(function ($password) use ($io) {
             if ($password === null) {
-                throw new \Exception('The password cannot be empty');
+                throw new Exception('The password cannot be empty');
             }
 
             $repeatQuestion = new Question('Repeat the password');
@@ -81,7 +82,7 @@ class ChangeAdminPasswordCommand extends Command
             $repeatQuestion->setHiddenFallback(false);
             $repeatQuestion->setValidator(function ($repeatedPassword) use ($password) {
                 if ($repeatedPassword !== $password) {
-                    throw new \Exception('Passwords do not match');
+                    throw new Exception('Passwords do not match');
                 }
 
                 return $repeatedPassword;
@@ -97,7 +98,7 @@ class ChangeAdminPasswordCommand extends Command
         // Workaround for QuestionHelper that does not run validation in non-interactive mode
         // See: https://github.com/symfony/symfony/issues/23211
         if (!$input->isInteractive() && $password === null) {
-            throw new \Exception('The password cannot be empty. Please run this command in interactive mode.');
+            throw new Exception('The password cannot be empty. Please run this command in interactive mode.');
         }
 
         return $password;

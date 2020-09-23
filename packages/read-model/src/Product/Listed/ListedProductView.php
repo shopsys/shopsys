@@ -9,13 +9,6 @@ use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Webmozart\Assert\Assert;
 
-/**
- * @experimental
- *
- * Class representing products in lists in frontend
- *
- * @see https://docs.shopsys.com/en/latest/model/introduction-to-read-model/
- */
 class ListedProductView
 {
     /**
@@ -60,6 +53,7 @@ class ListedProductView
 
     /**
      * ListedProductView constructor.
+     *
      * @param int $id
      * @param string $name
      * @param string|null $shortDescription

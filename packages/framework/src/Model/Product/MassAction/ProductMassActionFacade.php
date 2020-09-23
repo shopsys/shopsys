@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\MassAction;
 
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Product\MassAction\Exception\UnsupportedSelectionType;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
@@ -54,16 +55,20 @@ class ProductMassActionFacade
             $checkedProductIds
         );
 
-        if ($productMassActionData->action === ProductMassActionData::ACTION_SET) {
-            if ($productMassActionData->subject === ProductMassActionData::SUBJECT_PRODUCT_HIDDEN) {
-                $this->productMassActionRepository->setHidden(
-                    $selectedProductIds,
-                    $productMassActionData->value === ProductMassActionData::VALUE_PRODUCT_HIDE
-                );
-                $this->productHiddenRecalculator->calculateHiddenForAll();
-                $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
-            }
+        if ($productMassActionData->action !== ProductMassActionData::ACTION_SET) {
+            return;
         }
+
+        if ($productMassActionData->subject !== ProductMassActionData::SUBJECT_PRODUCT_HIDDEN) {
+            return;
+        }
+
+        $this->productMassActionRepository->setHidden(
+            $selectedProductIds,
+            $productMassActionData->value === ProductMassActionData::VALUE_PRODUCT_HIDE
+        );
+        $this->productHiddenRecalculator->calculateHiddenForAll();
+        $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
     }
 
     /**
@@ -93,7 +98,7 @@ class ProductMassActionFacade
         } elseif ($productMassActionData->selectType === ProductMassActionData::SELECT_TYPE_CHECKED) {
             $selectedProductIds = $checkedProductIds;
         } else {
-            throw new \Shopsys\FrameworkBundle\Model\Product\MassAction\Exception\UnsupportedSelectionType($productMassActionData->selectType);
+            throw new UnsupportedSelectionType($productMassActionData->selectType);
         }
 
         return $selectedProductIds;

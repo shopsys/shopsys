@@ -11,13 +11,21 @@ use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
+use SplFileInfo;
+use function array_map;
+use function in_array;
+use function preg_match;
+use const T_DOC_COMMENT;
+use const T_PRIVATE;
+use const T_PROTECTED;
+use const T_PUBLIC;
 
 final class NoUselessAccessFixer implements FixerInterface, DefinedFixerInterface
 {
     private const ACCESS_TOKENS = [
-        \T_PUBLIC,
-        \T_PROTECTED,
-        \T_PRIVATE,
+        T_PUBLIC,
+        T_PROTECTED,
+        T_PRIVATE,
     ];
 
     /**
@@ -49,13 +57,13 @@ class Foo
      */
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(\T_DOC_COMMENT) && $tokens->isAnyTokenKindsFound(self::ACCESS_TOKENS);
+        return $tokens->isTokenKindFound(T_DOC_COMMENT) && $tokens->isAnyTokenKindsFound(self::ACCESS_TOKENS);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         $allDocBlocks = $this->findAllDocBlocks($tokens);
 
@@ -69,10 +77,12 @@ class Foo
                 $this->rewriteDocBlock($tokens, $docBlock, $position);
             }
 
-            if ($this->areThereAnyEmptyAccessAnnotation($docBlock)) {
-                $this->removeEmptyAccessAnnotations($docBlock);
-                $this->rewriteDocBlock($tokens, $docBlock, $position);
+            if (!$this->areThereAnyEmptyAccessAnnotation($docBlock)) {
+                continue;
             }
+
+            $this->removeEmptyAccessAnnotations($docBlock);
+            $this->rewriteDocBlock($tokens, $docBlock, $position);
         }
     }
 
@@ -82,9 +92,9 @@ class Foo
      */
     private function findAllDocBlocks(Tokens $tokens): array
     {
-        return \array_map(function (Token $token) {
+        return array_map(function (Token $token) {
             return new DocBlock($token->getContent());
-        }, $tokens->findGivenKind(\T_DOC_COMMENT));
+        }, $tokens->findGivenKind(T_DOC_COMMENT));
     }
 
     /**
@@ -95,7 +105,7 @@ class Foo
     {
         $annotations = $docBlock->getAnnotationsOfType('access');
 
-        return !empty($annotations);
+        return count($annotations) > 0;
     }
 
     /**
@@ -107,7 +117,7 @@ class Foo
         $annotations = $docBlock->getAnnotationsOfType('access');
 
         foreach ($annotations as $annotation) {
-            if (\preg_match('~(public|protected|private)~', $annotation->getContent()) === 0) {
+            if (preg_match('~(public|protected|private)~', $annotation->getContent()) === 0) {
                 return true;
             }
         }
@@ -123,7 +133,7 @@ class Foo
         $annotations = $docBlock->getAnnotationsOfType('access');
 
         foreach ($annotations as $annotation) {
-            if (\preg_match('~(public|protected|private)~', $annotation->getContent()) === 0) {
+            if (preg_match('~(public|protected|private)~', $annotation->getContent()) === 0) {
                 $annotation->remove();
             }
         }
@@ -138,7 +148,7 @@ class Foo
     {
         $nextMeaningfulTokenId = $tokens[$tokens->getNextMeaningfulToken($position)]->getId();
 
-        return \in_array($nextMeaningfulTokenId, self::ACCESS_TOKENS, true);
+        return in_array($nextMeaningfulTokenId, self::ACCESS_TOKENS, true);
     }
 
     /**
@@ -209,7 +219,7 @@ class Foo
     /**
      * {@inheritdoc}
      */
-    public function supports(\SplFileInfo $file): bool
+    public function supports(SplFileInfo $file): bool
     {
         return true;
     }

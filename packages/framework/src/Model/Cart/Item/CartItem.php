@@ -8,6 +8,8 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Webmozart\Assert\Assert;
 
@@ -19,7 +21,6 @@ class CartItem
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -28,7 +29,6 @@ class CartItem
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Cart
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Cart\Cart", inversedBy="items", cascade={"persist"})
      * @ORM\JoinColumn(name="cart_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
@@ -36,7 +36,6 @@ class CartItem
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(nullable=true, name="product_id", referencedColumnName="id", onDelete="SET NULL")
      */
@@ -44,21 +43,18 @@ class CartItem
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $quantity;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     protected $watchedPrice;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $addedAt;
@@ -88,7 +84,7 @@ class CartItem
     public function changeQuantity(int $newQuantity): void
     {
         if (Assert::integer($newQuantity) === false || $newQuantity <= 0) {
-            throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($newQuantity);
+            throw new InvalidQuantityException($newQuantity);
         }
 
         $this->quantity = $newQuantity;
@@ -108,7 +104,7 @@ class CartItem
     public function getProduct(): Product
     {
         if ($this->product === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException();
+            throw new ProductNotFoundException();
         }
 
         return $this->product;

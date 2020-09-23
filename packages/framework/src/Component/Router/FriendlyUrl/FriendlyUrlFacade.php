@@ -7,6 +7,9 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class FriendlyUrlFacade
 {
@@ -104,7 +107,7 @@ class FriendlyUrlFacade
         do {
             $attempt++;
             if ($attempt > static::MAX_URL_UNIQUE_RESOLVE_ATTEMPT) {
-                throw new \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException(
+                throw new ReachMaxUrlUniqueResolveAttemptException(
                     $friendlyUrl,
                     $attempt
                 );
@@ -113,7 +116,7 @@ class FriendlyUrlFacade
             $domainRouter = $this->domainRouterFactory->getRouter($friendlyUrl->getDomainId());
             try {
                 $matchedRouteData = $domainRouter->match('/' . $friendlyUrl->getSlug());
-            } catch (\Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {
+            } catch (ResourceNotFoundException $e) {
                 $matchedRouteData = null;
             }
 
@@ -126,11 +129,13 @@ class FriendlyUrlFacade
             $friendlyUrl = $friendlyUrlUniqueResult->getFriendlyUrlForPersist();
         } while (!$friendlyUrlUniqueResult->isUnique());
 
-        if ($friendlyUrl !== null) {
-            $this->em->persist($friendlyUrl);
-            $this->em->flush($friendlyUrl);
-            $this->setFriendlyUrlAsMain($friendlyUrl);
+        if ($friendlyUrl === null) {
+            return;
         }
+
+        $this->em->persist($friendlyUrl);
+        $this->em->flush($friendlyUrl);
+        $this->setFriendlyUrlAsMain($friendlyUrl);
     }
 
     /**
@@ -152,6 +157,33 @@ class FriendlyUrlFacade
     public function findMainFriendlyUrl($domainId, $routeName, $entityId)
     {
         return $this->friendlyUrlRepository->findMainFriendlyUrl($domainId, $routeName, $entityId);
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return string
+     */
+    public function getAbsoluteUrlByRouteNameAndEntityId(int $domainId, string $routeName, int $entityId): string
+    {
+        $mainFriendlyUrl = $this->findMainFriendlyUrl($domainId, $routeName, $entityId);
+
+        if ($mainFriendlyUrl === null) {
+            throw new FriendlyUrlNotFoundException();
+        }
+
+        return $this->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl);
+    }
+
+    /**
+     * @param string $routeName
+     * @param int $entityId
+     * @return string
+     */
+    public function getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain(string $routeName, int $entityId): string
+    {
+        return $this->getAbsoluteUrlByRouteNameAndEntityId($this->domain->getId(), $routeName, $entityId);
     }
 
     /**

@@ -22,7 +22,6 @@ class CartFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
     public function create(CustomerUserIdentifier $customerUserIdentifier): Cart

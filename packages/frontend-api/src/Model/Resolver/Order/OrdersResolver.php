@@ -11,7 +11,7 @@ use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrontendApiBundle\Model\Order\OrderFacade;
 
 class OrdersResolver implements ResolverInterface, AliasedInterface
 {
@@ -23,7 +23,7 @@ class OrdersResolver implements ResolverInterface, AliasedInterface
     protected $currentCustomerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
+     * @var \Shopsys\FrontendApiBundle\Model\Order\OrderFacade
      */
     protected $orderFacade;
 
@@ -34,10 +34,12 @@ class OrdersResolver implements ResolverInterface, AliasedInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFacade $orderFacade
      */
-    public function __construct(CurrentCustomerUser $currentCustomerUser, OrderFacade $orderFacade)
-    {
+    public function __construct(
+        CurrentCustomerUser $currentCustomerUser,
+        OrderFacade $orderFacade
+    ) {
         $this->currentCustomerUser = $currentCustomerUser;
         $this->orderFacade = $orderFacade;
         $this->connectionBuilder = new ConnectionBuilder();

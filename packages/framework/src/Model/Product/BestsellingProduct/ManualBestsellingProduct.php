@@ -20,7 +20,6 @@ class ManualBestsellingProduct
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -29,7 +28,6 @@ class ManualBestsellingProduct
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -37,7 +35,6 @@ class ManualBestsellingProduct
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category", inversedBy="domains")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
@@ -45,14 +42,12 @@ class ManualBestsellingProduct
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $position;

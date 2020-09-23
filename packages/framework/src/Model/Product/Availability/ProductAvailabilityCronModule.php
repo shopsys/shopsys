@@ -49,9 +49,8 @@ class ProductAvailabilityCronModule implements IteratedCronModuleInterface
         if ($this->productAvailabilityRecalculator->runBatchOfScheduledDelayedRecalculations()) {
             $this->logger->debug('Batch is recalculated.');
             return true;
-        } else {
-            $this->logger->debug('All availabilities are recalculated.');
-            return false;
         }
+        $this->logger->debug('All availabilities are recalculated.');
+        return false;
     }
 }

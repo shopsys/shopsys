@@ -27,6 +27,7 @@ class FrontOrderData extends OrderData
     public function __construct()
     {
         parent::__construct();
+
         $this->companyCustomer = false;
         $this->newsletterSubscription = false;
         $this->disallowHeurekaVerifiedByCustomers = false;

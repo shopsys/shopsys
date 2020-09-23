@@ -27,6 +27,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -69,7 +70,9 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
         }
 
         if (count($packageWithoutVersion)) {
-            $this->symfonyStyle->error(sprintf('Some packages on packagist do not have "%s" version', $versionsAsString));
+            $this->symfonyStyle->error(
+                sprintf('Some packages on packagist do not have "%s" version', $versionsAsString)
+            );
             $this->symfonyStyle->listing($packageWithoutVersion);
 
             $this->confirm('Confirm the missing versions are fixed');

@@ -12,8 +12,14 @@ final class NoUselessAccessFixerTest extends AbstractCheckerTestCase
     {
         $this->doTestWrongToFixedFile(__DIR__ . '/wrong/Simple.php', __DIR__ . '/fixed/Simple.php');
         $this->doTestWrongToFixedFile(__DIR__ . '/wrong/Complex.php', __DIR__ . '/fixed/Complex.php');
-        $this->doTestWrongToFixedFile(__DIR__ . '/wrong/DifferentAnnotationAndVisibility.php', __DIR__ . '/fixed/DifferentAnnotationAndVisibility.php');
-        $this->doTestWrongToFixedFile(__DIR__ . '/wrong/EmptyAccessAnnotation.php', __DIR__ . '/fixed/EmptyAccessAnnotation.php');
+        $this->doTestWrongToFixedFile(
+            __DIR__ . '/wrong/DifferentAnnotationAndVisibility.php',
+            __DIR__ . '/fixed/DifferentAnnotationAndVisibility.php'
+        );
+        $this->doTestWrongToFixedFile(
+            __DIR__ . '/wrong/EmptyAccessAnnotation.php',
+            __DIR__ . '/fixed/EmptyAccessAnnotation.php'
+        );
     }
 
     public function testCorrect(): void

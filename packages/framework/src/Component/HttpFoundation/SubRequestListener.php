@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\HttpFoundation;
 
+use Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\TooManyRedirectResponsesException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -65,14 +66,14 @@ class SubRequestListener
     protected function processSubResponse(Response $subResponse)
     {
         if ($subResponse->isRedirection()) {
-            if ($this->redirectResponse === null) {
-                /** @var \Symfony\Component\HttpFoundation\RedirectResponse $subRedirectResponse */
-                $subRedirectResponse = $subResponse;
-                $this->redirectResponse = $subRedirectResponse;
-            } else {
+            if ($this->redirectResponse !== null) {
                 $message = 'Only one subresponse can do a redirect.';
-                throw new \Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\TooManyRedirectResponsesException($message);
+                throw new TooManyRedirectResponsesException($message);
             }
+
+            /** @var \Symfony\Component\HttpFoundation\RedirectResponse $subRedirectResponse */
+            $subRedirectResponse = $subResponse;
+            $this->redirectResponse = $subRedirectResponse;
         }
     }
 }

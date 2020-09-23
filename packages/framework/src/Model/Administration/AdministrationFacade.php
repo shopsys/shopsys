@@ -26,6 +26,12 @@ class AdministrationFacade
      */
     public function isInAdmin(): bool
     {
-        return preg_match('/^admin_/', $this->requestStack->getMasterRequest()->attributes->get('_route')) === 1;
+        $masterRequest = $this->requestStack->getMasterRequest();
+
+        if ($masterRequest === null) {
+            return false;
+        }
+
+        return preg_match('/^admin_/', $masterRequest->attributes->get('_route')) === 1;
     }
 }

@@ -77,7 +77,10 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $filterResponseEventMock->expects($this->any())->method('isMasterRequest')
             ->willReturn(true);
 
-        $inputPriceRecalculationScheduler = new InputPriceRecalculationScheduler($inputPriceRecalculatorMock, $this->setting);
+        $inputPriceRecalculationScheduler = new InputPriceRecalculationScheduler(
+            $inputPriceRecalculatorMock,
+            $this->setting
+        );
 
         $inputPriceRecalculationScheduler->onKernelResponse($filterResponseEventMock);
     }
@@ -111,7 +114,12 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     ) {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
 
-        $this->doTestOnKernelResponseRecalculateInputPrices($inputPriceWithVat, $inputPriceWithoutVat, $vatPercent, self::METHOD_WITHOUT_VAT);
+        $this->doTestOnKernelResponseRecalculateInputPrices(
+            $inputPriceWithVat,
+            $inputPriceWithoutVat,
+            $vatPercent,
+            self::METHOD_WITHOUT_VAT
+        );
     }
 
     /**
@@ -127,7 +135,12 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     ) {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
 
-        $this->doTestOnKernelResponseRecalculateInputPrices($inputPriceWithoutVat, $inputPriceWithVat, $vatPercent, self::METHOD_WITH_VAT);
+        $this->doTestOnKernelResponseRecalculateInputPrices(
+            $inputPriceWithoutVat,
+            $inputPriceWithVat,
+            $vatPercent,
+            self::METHOD_WITH_VAT
+        );
     }
 
     /**

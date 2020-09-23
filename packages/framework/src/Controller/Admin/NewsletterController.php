@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use SplFileObject;
 use Symfony\Component\HttpFoundation\Request;
@@ -99,7 +100,7 @@ class NewsletterController extends AdminBaseController
                     'email' => $email,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $ex) {
+        } catch (CustomerUserNotFoundException $ex) {
             $this->addErrorFlash(t('Selected subscriber doesn\'t exist.'));
         }
 

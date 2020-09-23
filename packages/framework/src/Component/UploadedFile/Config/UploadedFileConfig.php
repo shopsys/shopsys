@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config;
 
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException;
+
 class UploadedFileConfig
 {
     /**
@@ -40,7 +42,7 @@ class UploadedFileConfig
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException(get_class($entity));
+        throw new UploadedFileEntityConfigNotFoundException(get_class($entity));
     }
 
     /**
@@ -49,7 +51,7 @@ class UploadedFileConfig
      */
     public function hasUploadedFileEntityConfig(object $entity): bool
     {
-        foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {
+        foreach (array_keys($this->uploadedFileEntityConfigsByClass) as $className) {
             if ($entity instanceof $className) {
                 return true;
             }
@@ -77,6 +79,6 @@ class UploadedFileConfig
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException($entityClass);
+        throw new UploadedFileEntityConfigNotFoundException($entityClass);
     }
 }

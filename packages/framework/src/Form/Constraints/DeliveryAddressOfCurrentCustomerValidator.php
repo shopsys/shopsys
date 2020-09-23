@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class DeliveryAddressOfCurrentCustomerValidator extends ConstraintValidator
 {
@@ -31,19 +32,19 @@ class DeliveryAddressOfCurrentCustomerValidator extends ConstraintValidator
     public function validate($deliveryAddress, Constraint $constraint): void
     {
         if (!$constraint instanceof DeliveryAddressOfCurrentCustomer) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, UniqueCollection::class);
+            throw new UnexpectedTypeException($constraint, UniqueCollection::class);
         }
 
-        if ($deliveryAddress !== null) {
-            $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        if ($deliveryAddress === null) {
+            return;
+        }
 
-            if ($customerUser !== null) {
-                if (!in_array($deliveryAddress, $customerUser->getCustomer()->getDeliveryAddresses(), true)) {
-                    $this->context->addViolation($constraint->message);
-                }
-            } else {
-                $this->context->addViolation($constraint->message);
-            }
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        if (
+            $customerUser === null
+            || !in_array($deliveryAddress, $customerUser->getCustomer()->getDeliveryAddresses(), true)
+        ) {
+            $this->context->addViolation($constraint->message);
         }
     }
 }

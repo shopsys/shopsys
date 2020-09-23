@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class NotIdenticalToEmailLocalPartValidator extends ConstraintValidator
 {
@@ -15,7 +16,7 @@ class NotIdenticalToEmailLocalPartValidator extends ConstraintValidator
     public function validate($values, Constraint $constraint)
     {
         if (!$constraint instanceof NotIdenticalToEmailLocalPart) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, NotIdenticalToEmailLocalPart::class);
+            throw new UnexpectedTypeException($constraint, NotIdenticalToEmailLocalPart::class);
         }
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();

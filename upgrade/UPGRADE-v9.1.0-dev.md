@@ -69,6 +69,66 @@ There you can find links to upgrade notes for other versions too.
 - fix displaying '+' sign in product filter ([#2023](https://github.com/shopsys/shopsys/pull/2023))
     - see #project-base-diff to update your project
 
+- remove setting domain locale in `CartFacadeTest` ([#2037](https://github.com/shopsys/shopsys/pull/2037))
+    - in tests is used extended class of `Shopsys\FrameworkBundle\Model\Localization\TranslatableListener`
+    - removed `config/packages/test/prezent_doctrine_translatable.yaml`
+    - see #project-base-diff to update your project
+
+- fix frontend-api tests when domain locales are changed ([#2019](https://github.com/shopsys/shopsys/pull/2019))
+    - see #project-base-diff to update your project
+
+- introduce read model layer into product detail ([#1999](https://github.com/shopsys/shopsys/pull/1999))
+    - following methods has changed their interface:
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade::__construct()`
+            ```diff
+                public function __construct(
+                    ProductFacade $productFacade,
+                    ProductAccessoryFacade $productAccessoryFacade,
+                    Domain $domain,
+                    CurrentCustomerUser $currentCustomerUser,
+                    TopProductFacade $topProductFacade,
+                    ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+                    ListedProductViewFactory $listedProductViewFactory,
+                    ProductActionViewFacade $productActionViewFacade,
+            -       ImageViewFacade $imageViewFacade
+            +       ImageViewFacadeInterface $imageViewFacade,
+            +       ?ProductActionViewFactory $productActionViewFactory = null
+                )
+            ```
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::__construct()`
+            ```diff
+                public function __construct(
+                    Domain $domain,
+            -       ProductCachedAttributesFacade $productCachedAttributesFacade
+            +       ProductCachedAttributesFacade $productCachedAttributesFacade,
+            +       ?ImageViewFacadeInterface $imageViewFacade = null,
+            +       ?ProductActionViewFacadeInterface $productActionViewFacade = null
+                )
+            ```
+    - following methods and properties were deprecated and will be removed in the next major version:
+        - `Shopsys\ReadModelBundle\Image\ImageViewFacade::getForEntityIds()` use `getMainImagesByEntityIds()` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade::$productActionViewFacade` 
+            use `Shopsys\ReadModelBundle\Product\Listed\ProductActionViewFactory` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade::createFromProducts()`
+            use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::createFromProducts()` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade::getIdsForProducts()`
+            use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::getIdsForProducts()` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade::$imageViewFacade`
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade::$productActionViewFacade`
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade::createFromProducts()`
+            use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::createFromProducts()` instead
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade::getIdsForProducts()`
+            use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::getIdsForProducts()` instead
+    - see #project-base-diff to update your project
+
+- added more coding standards ([#2035](https://github.com/shopsys/shopsys/pull/2035))
+    - the most of the rules have their own fixer, run `php phing ecs-fix` to resolve them
+        - you need to run `ecs-fix` multiple times unless it is OK, because of the amount of changes
+    - disallowed usage of `empty()` is one which must be fixed manually
+        - first of all, you should keep in mind the `empty` ignores undefined offsets and is typed weak - this state should be probably kept
+        - when your part of code has not been strictly typed yet, you should resolve it first otherwise you will be hacking a new `empty` function by yourself and this rule will have no benefit for you
+        - if `empty` is used for checking elements of an array it can be replaced with `count($array)`
+
 - remove unnecessary default values for ENV variables ([#2040](https://github.com/shopsys/shopsys/pull/2040))
     - these parameters should be configured via ENV variables if set
     - see #project-base-diff to update your project

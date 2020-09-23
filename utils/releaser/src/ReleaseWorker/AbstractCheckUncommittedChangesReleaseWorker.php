@@ -23,7 +23,9 @@ abstract class AbstractCheckUncommittedChangesReleaseWorker extends AbstractShop
     public function work(Version $version): void
     {
         if (!$this->isGitWorkingTreeEmpty()) {
-            $this->symfonyStyle->warning('There are some uncommitted changes in your repository (see the result of "git status" command), please resolve them before you continue with the release process.');
+            $this->symfonyStyle->warning(
+                'There are some uncommitted changes in your repository (see the result of "git status" command), please resolve them before you continue with the release process.'
+            );
             $this->confirm('Confirm that you have resolved all uncommitted files and your working tree is empty now.');
         } else {
             $this->symfonyStyle->success(Message::SUCCESS);

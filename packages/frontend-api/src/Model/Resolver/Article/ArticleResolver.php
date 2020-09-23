@@ -10,15 +10,15 @@ use Overblog\GraphQLBundle\Error\UserError;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Article\Article;
-use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrontendApiBundle\Model\Article\ArticleFacade;
 
 class ArticleResolver implements ResolverInterface, AliasedInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
+     * @var \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade
      */
     protected $articleFacade;
 
@@ -38,7 +38,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
     protected $cookiesFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade

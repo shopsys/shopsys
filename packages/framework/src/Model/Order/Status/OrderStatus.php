@@ -6,11 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\FrameworkBundle\Model\Order\Status\Exception\InvalidOrderStatusTypeException;
+use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException;
 
 /**
  * @ORM\Table(name="order_statuses")
  * @ORM\Entity
- *
  * @method \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation translation(?string $locale = null)
  */
 class OrderStatus extends AbstractTranslatableEntity
@@ -22,7 +23,6 @@ class OrderStatus extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -31,14 +31,12 @@ class OrderStatus extends AbstractTranslatableEntity
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation")
      */
     protected $translations;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $type;
@@ -118,22 +116,22 @@ class OrderStatus extends AbstractTranslatableEntity
      */
     protected function setType($type)
     {
-        if (in_array($type, [
+        if (!in_array($type, [
             self::TYPE_NEW,
             self::TYPE_IN_PROGRESS,
             self::TYPE_DONE,
             self::TYPE_CANCELED,
         ], true)) {
-            $this->type = $type;
-        } else {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Status\Exception\InvalidOrderStatusTypeException($type);
+            throw new InvalidOrderStatusTypeException($type);
         }
+
+        $this->type = $type;
     }
 
     public function checkForDelete()
     {
         if ($this->type !== self::TYPE_IN_PROGRESS) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException($this);
+            throw new OrderStatusDeletionForbiddenException($this);
         }
     }
 }

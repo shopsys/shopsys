@@ -14,6 +14,10 @@ class UnknownNameTranslationForOrderStatusReferenceNameException extends Excepti
      */
     public function __construct(string $referenceName, ?Exception $previous = null)
     {
-        parent::__construct(sprintf('There is no name translation set for "%s" order status reference name.', $referenceName), 0, $previous);
+        parent::__construct(
+            sprintf('There is no name translation set for "%s" order status reference name.', $referenceName),
+            0,
+            $previous
+        );
     }
 }

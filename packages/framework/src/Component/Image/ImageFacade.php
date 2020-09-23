@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
+use Shopsys\FrameworkBundle\Component\Image\Exception\EntityIdentifierException;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class ImageFacade
@@ -129,7 +131,11 @@ class ImageFacade
             $entitiesForFlush = [];
             $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
             $entityId = $this->getEntityId($entity);
-            $oldImage = $this->imageRepository->findImageByEntity($imageEntityConfig->getEntityName(), $entityId, $type);
+            $oldImage = $this->imageRepository->findImageByEntity(
+                $imageEntityConfig->getEntityName(),
+                $entityId,
+                $type
+            );
 
             if ($oldImage !== null) {
                 $this->em->remove($oldImage);
@@ -229,6 +235,7 @@ class ImageFacade
      * @param string $entityName
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
+     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Component\Image\ImageFacade::getImagesByEntityIdAndNameIndexedById()
      */
     public function getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, $type)
     {
@@ -258,7 +265,9 @@ class ImageFacade
     {
         $entityName = $image->getEntityName();
         $imageConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
-        $sizeConfigs = $image->getType() === null ? $imageConfig->getSizeConfigs() : $imageConfig->getSizeConfigsByType($image->getType());
+        $sizeConfigs = $image->getType() === null ? $imageConfig->getSizeConfigs() : $imageConfig->getSizeConfigsByType(
+            $image->getType()
+        );
         foreach ($sizeConfigs as $sizeConfig) {
             $filepath = $this->imageLocator->getAbsoluteImageFilepath($image, $sizeConfig->getName());
 
@@ -281,7 +290,7 @@ class ImageFacade
         }
 
         $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
-        throw new \Shopsys\FrameworkBundle\Component\Image\Exception\EntityIdentifierException($message);
+        throw new EntityIdentifierException($message);
     }
 
     /**
@@ -294,7 +303,7 @@ class ImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
      * @return string
@@ -308,7 +317,7 @@ class ImageFacade
                 . $this->imageLocator->getRelativeImageFilepath($image, $sizeName);
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException();
+        throw new ImageNotFoundException();
     }
 
     /**
@@ -328,7 +337,13 @@ class ImageFacade
         ?string $type,
         ?string $sizeName = null
     ): string {
-        $imageFilepath = $this->imageLocator->getRelativeImageFilepathFromAttributes($id, $extension, $entityName, $type, $sizeName);
+        $imageFilepath = $this->imageLocator->getRelativeImageFilepathFromAttributes(
+            $id,
+            $extension,
+            $entityName,
+            $type,
+            $sizeName
+        );
 
         return $domainConfig->getUrl() . $this->imageUrlPrefix . $imageFilepath;
     }
@@ -377,7 +392,14 @@ class ImageFacade
 
         $result = [];
         foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
-            $imageFilepath = $this->imageLocator->getRelativeImageFilepathFromAttributes($id, $extension, $entityName, $type, $sizeName, $additionalSizeIndex);
+            $imageFilepath = $this->imageLocator->getRelativeImageFilepathFromAttributes(
+                $id,
+                $extension,
+                $entityName,
+                $type,
+                $sizeName,
+                $additionalSizeIndex
+            );
             $url = $domainConfig->getUrl() . $this->imageUrlPrefix . $imageFilepath;
 
             $result[] = new AdditionalImageData($additionalSizeConfig->getMedia(), $url);
@@ -401,11 +423,11 @@ class ImageFacade
                 . $this->imageLocator->getRelativeAdditionalImageFilepath($image, $additionalSizeIndex, $sizeName);
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException();
+        throw new ImageNotFoundException();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
@@ -413,9 +435,8 @@ class ImageFacade
     {
         if ($imageOrEntity instanceof Image) {
             return $imageOrEntity;
-        } else {
-            return $this->getImageByEntity($imageOrEntity, $type);
         }
+        return $this->getImageByEntity($imageOrEntity, $type);
     }
 
     /**
@@ -437,8 +458,13 @@ class ImageFacade
         $targetImages = [];
         foreach ($sourceImages as $sourceImage) {
             $this->mountManager->copy(
-                'main://' . $this->imageLocator->getAbsoluteImageFilepath($sourceImage, ImageConfig::ORIGINAL_SIZE_NAME),
-                'local://' . TransformString::removeDriveLetterFromPath($this->fileUpload->getTemporaryFilepath($sourceImage->getFilename()))
+                'main://' . $this->imageLocator->getAbsoluteImageFilepath(
+                    $sourceImage,
+                    ImageConfig::ORIGINAL_SIZE_NAME
+                ),
+                'local://' . TransformString::removeDriveLetterFromPath(
+                    $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename())
+                )
             );
 
             $targetImage = $this->imageFactory->create(
@@ -476,5 +502,17 @@ class ImageFacade
         $entityName = $this->imageConfig->getImageEntityConfigByClass($entityClass)->getEntityName();
 
         return $this->imageRepository->getMainImagesByEntitiesIndexedByEntityId($entityIds, $entityName);
+    }
+
+    /**
+     * @param int $id
+     * @param string $entityClass
+     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
+     */
+    public function getImagesByEntityId(int $id, string $entityClass): array
+    {
+        $entityName = $this->imageConfig->getImageEntityConfigByClass($entityClass)->getEntityName();
+
+        return $this->getImagesByEntityIdAndNameIndexedById($id, $entityName, null);
     }
 }

@@ -37,10 +37,14 @@ class BrandDataFixture extends AbstractReferenceFixture
     public const BRAND_HYUNDAI = 'brand_hyundai';
     public const BRAND_NIKON = 'brand_nikon';
 
-    /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade */
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
+     */
     private $brandFacade;
 
-    /** @var \App\Model\Product\Brand\BrandDataFactory */
+    /**
+     * @var \App\Model\Product\Brand\BrandDataFactory
+     */
     private $brandDataFactory;
 
     /**
@@ -71,7 +75,12 @@ class BrandDataFixture extends AbstractReferenceFixture
             $brandData->name = $brandName;
 
             foreach ($this->domain->getAllLocales() as $locale) {
-                $brandData->descriptions[$locale] = t('This is description of brand %brandName%.', ['%brandName%' => $brandData->name], 'dataFixtures', $locale);
+                $brandData->descriptions[$locale] = t(
+                    'This is description of brand %brandName%.',
+                    ['%brandName%' => $brandData->name],
+                    'dataFixtures',
+                    $locale
+                );
             }
 
             $brand = $this->brandFacade->create($brandData);

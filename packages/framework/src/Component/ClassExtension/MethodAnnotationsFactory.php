@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
+use OutOfBoundsException;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
 
@@ -63,21 +64,35 @@ class MethodAnnotationsFactory
     ): string {
         foreach ($this->annotationsReplacementsMap->getPatterns() as $frameworkClassPattern) {
             $methodName = $reflectionMethodFromFrameworkClass->getName();
-            if (!$this->isMethodImplementedInClass($methodName, $projectClassBetterReflection)) {
-                if ($this->methodReturningTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes())
-                    || $this->methodParameterTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getParameters())) {
-                    $optionalStaticKeyword = $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '';
-                    $returnType = !empty($this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass)) ? $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) . ' ' : '';
-                    $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes($reflectionMethodFromFrameworkClass);
+            if ($this->isMethodImplementedInClass($methodName, $projectClassBetterReflection)) {
+                continue;
+            }
 
-                    return sprintf(
-                        " * @method %s%s%s(%s)\n",
-                        $optionalStaticKeyword,
-                        $returnType,
-                        $methodName,
-                        $parameterNamesWithTypes
-                    );
-                }
+            if ($this->methodReturningTypeIsExtendedInProject(
+                $frameworkClassPattern,
+                $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes()
+            )
+                || $this->methodParameterTypeIsExtendedInProject(
+                    $frameworkClassPattern,
+                    $reflectionMethodFromFrameworkClass->getParameters()
+                )) {
+                $optionalStaticKeyword = $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '';
+                $returnType = $this->annotationsReplacer->replaceInMethodReturnType(
+                    $reflectionMethodFromFrameworkClass
+                ) !== '' ? $this->annotationsReplacer->replaceInMethodReturnType(
+                    $reflectionMethodFromFrameworkClass
+                ) . ' ' : '';
+                $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes(
+                    $reflectionMethodFromFrameworkClass
+                );
+
+                return sprintf(
+                    " * @method %s%s%s(%s)\n",
+                    $optionalStaticKeyword,
+                    $returnType,
+                    $methodName,
+                    $parameterNamesWithTypes
+                );
             }
         }
 
@@ -94,7 +109,7 @@ class MethodAnnotationsFactory
         try {
             $reflectionMethod = $reflectionClass->getMethod($methodName);
             return $reflectionMethod->getDeclaringClass()->getName() === $reflectionClass->getName();
-        } catch (\OutOfBoundsException $ex) {
+        } catch (OutOfBoundsException $ex) {
             return false;
         }
     }

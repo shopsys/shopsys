@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundException;
 
 class CurrencyRepository
 {
@@ -57,7 +58,7 @@ class CurrencyRepository
 
         if ($currency === null) {
             $message = 'Currency with ID ' . $currencyId . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundException($message);
+            throw new CurrencyNotFoundException($message);
         }
 
         return $currency;

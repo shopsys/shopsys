@@ -16,7 +16,6 @@ class HeurekaCategory
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      */
@@ -24,21 +23,18 @@ class HeurekaCategory
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $name;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $fullName;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
      * @ORM\JoinTable(
      *     name="heureka_category_categories",
@@ -112,7 +108,7 @@ class HeurekaCategory
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getName()
     {
@@ -120,7 +116,7 @@ class HeurekaCategory
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getFullName()
     {

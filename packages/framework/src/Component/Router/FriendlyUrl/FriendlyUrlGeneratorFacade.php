@@ -99,7 +99,10 @@ class FriendlyUrlGeneratorFacade
     {
         $countOfCreatedUrls = 0;
 
-        $friendlyUrlsData = $this->friendlyUrlDataProviderConfig->getFriendlyUrlDataByRouteAndDomain($routeName, $domainConfig);
+        $friendlyUrlsData = $this->friendlyUrlDataProviderConfig->getFriendlyUrlDataByRouteAndDomain(
+            $routeName,
+            $domainConfig
+        );
 
         foreach ($friendlyUrlsData as $friendlyUrlData) {
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(

@@ -5,43 +5,43 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Article;
 
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Article\Article;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetArticlesTest extends GraphQlTestCase
 {
-    /**
-     * @param string $query
-     * @param array $expectedArticlesData
-     * @dataProvider getArticlesDataProvider
-     */
-    public function testGetArticles(string $query, array $expectedArticlesData): void
+    public function testGetArticles(): void
     {
-        $graphQlType = 'articles';
-        $response = $this->getResponseContentForQuery($query);
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
-        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+        foreach ($this->getArticlesDataProvider() as $dataSet) {
+            [$query, $expectedArticlesData] = $dataSet;
 
-        $this->assertArrayHasKey('edges', $responseData);
-        $this->assertCount(count($expectedArticlesData), $responseData['edges']);
+            $graphQlType = 'articles';
+            $response = $this->getResponseContentForQuery($query);
+            $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
+            $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
-        foreach ($responseData['edges'] as $edge) {
-            $this->assertArrayHasKey('node', $edge);
+            $this->assertArrayHasKey('edges', $responseData);
+            $this->assertCount(count($expectedArticlesData), $responseData['edges']);
 
-            $this->assertArrayHasKey('uuid', $edge['node']);
-            $this->assertTrue(Uuid::isValid($edge['node']['uuid']));
+            foreach ($responseData['edges'] as $edge) {
+                $this->assertArrayHasKey('node', $edge);
 
-            $this->assertKeysAreSameAsExpected(
-                [
-                    'name',
-                    'placement',
-                    'text',
-                    'seoH1',
-                    'seoTitle',
-                    'seoMetaDescription',
-                ],
-                $edge['node'],
-                array_shift($expectedArticlesData)
-            );
+                $this->assertArrayHasKey('uuid', $edge['node']);
+                $this->assertTrue(Uuid::isValid($edge['node']['uuid']));
+
+                $this->assertKeysAreSameAsExpected(
+                    [
+                        'name',
+                        'placement',
+                        'text',
+                        'seoH1',
+                        'seoTitle',
+                        'seoMetaDescription',
+                    ],
+                    $edge['node'],
+                    array_shift($expectedArticlesData)
+                );
+            }
         }
     }
 
@@ -61,7 +61,7 @@ class GetArticlesTest extends GraphQlTestCase
     /**
      * @return array
      */
-    public function getArticlesDataProvider(): array
+    private function getArticlesDataProvider(): array
     {
         return [
             [
@@ -85,15 +85,15 @@ class GetArticlesTest extends GraphQlTestCase
                 array_slice($this->getExpectedArticles(), 3, 2),
             ],
             [
-                $this->getFirstArticlesQuery(1, 'topMenu'),
+                $this->getFirstArticlesQuery(1, Article::PLACEMENT_TOP_MENU),
                 array_slice($this->getExpectedArticles(), 3, 1),
             ],
             [
-                $this->getLastArticlesQuery(1, 'topMenu'),
+                $this->getLastArticlesQuery(1, Article::PLACEMENT_TOP_MENU),
                 array_slice($this->getExpectedArticles(), 4, 1),
             ],
             [
-                $this->getAllArticlesQuery('topMenu'),
+                $this->getAllArticlesQuery(Article::PLACEMENT_TOP_MENU),
                 array_slice($this->getExpectedArticles(), 3, 2),
             ],
             [
@@ -202,46 +202,82 @@ class GetArticlesTest extends GraphQlTestCase
      */
     private function getExpectedArticles(): array
     {
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         return [
             [
-                'name' => 'Terms and conditions',
-                'placement' => 'footer',
-                'text' => 'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                'name' => t('Terms and conditions', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
                 'seoH1' => null,
                 'seoTitle' => null,
                 'seoMetaDescription' => null,
             ],
             [
-                'name' => 'Privacy policy',
-                'placement' => 'none',
-                'text' => 'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                'name' => t('Privacy policy', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_NONE,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
                 'seoH1' => null,
                 'seoTitle' => null,
                 'seoMetaDescription' => null,
             ],
             [
-                'name' => 'Information about cookies',
-                'placement' => 'none',
-                'text' => 'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                'name' => t('Information about cookies', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_NONE,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
                 'seoH1' => null,
                 'seoTitle' => null,
                 'seoMetaDescription' => null,
             ],
             [
-                'name' => 'News',
-                'placement' => 'topMenu',
-                'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.',
+                'name' => t('News', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_TOP_MENU,
+                'text' => t(
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
                 'seoH1' => null,
                 'seoTitle' => null,
                 'seoMetaDescription' => null,
             ],
             [
-                'name' => 'Shopping guide',
-                'placement' => 'topMenu',
-                'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.',
-                'seoH1' => 'Shopping guide to improve your shopping experience',
-                'seoTitle' => 'Shopping guide for quick shopping',
-                'seoMetaDescription' => 'Shopping guide - Tips and tricks how to quickly find what you are looking for',
+                'name' => t('Shopping guide', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_TOP_MENU,
+                'text' => t(
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => t(
+                    'Shopping guide to improve your shopping experience',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoTitle' => t('Shopping guide for quick shopping', [], 'dataFixtures', $firstDomainLocale),
+                'seoMetaDescription' => t(
+                    'Shopping guide - Tips and tricks how to quickly find what you are looking for',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
             ],
         ];
     }

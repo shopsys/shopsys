@@ -25,7 +25,9 @@ class FlagFormType extends AbstractType
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter flag name in all languages']),
-                        new Constraints\Length(['max' => 100, 'maxMessage' => 'Flag name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 100, 'maxMessage' => 'Flag name cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
             ])

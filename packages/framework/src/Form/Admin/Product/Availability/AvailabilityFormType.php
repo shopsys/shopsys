@@ -24,7 +24,9 @@ class AvailabilityFormType extends AbstractType
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter availability name in all languages']),
-                        new Constraints\Length(['max' => 100, 'maxMessage' => 'Availability name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 100, 'maxMessage' => 'Availability name cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
             ])

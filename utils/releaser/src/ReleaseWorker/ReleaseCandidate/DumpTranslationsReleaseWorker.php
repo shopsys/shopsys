@@ -30,6 +30,7 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -49,8 +50,12 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
                 $this->commit('dump translations');
                 $this->symfonyStyle->success('Translations were dumped and only deleted were found and committed');
             } else {
-                $this->symfonyStyle->note('There are new translations, check the changed files (you can use "git status") command, fill in the missing translations and commit the changes');
-                $this->confirm('Confirm files are checked, missing translations completed and the changes are committed');
+                $this->symfonyStyle->note(
+                    'There are new translations, check the changed files (you can use "git status") command, fill in the missing translations and commit the changes'
+                );
+                $this->confirm(
+                    'Confirm files are checked, missing translations completed and the changes are committed'
+                );
             }
         } else {
             $this->symfonyStyle->success('There are no new translations');
@@ -84,13 +89,8 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
         $deletedFilesStatus = $this->getProcessResult(['git', 'ls-files', '-d']);
         $deletedFilesCount = $this->countFilesInStatus($deletedFilesStatus);
 
-        // has only deleted files
-        if ($deletedFilesCount === $allFilesCount) {
-            return true;
-        }
-
-        // has also some modified or added files
-        return false;
+        // has only deleted files or has also some modified/added files
+        return $deletedFilesCount === $allFilesCount;
     }
 
     /**
@@ -99,7 +99,7 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private function countFilesInStatus(string $filesStatus): int
     {
-        if (empty($filesStatus)) {
+        if ($filesStatus === '') {
             return 0;
         }
 

@@ -12,7 +12,6 @@ class EnabledModule
 {
     /**
      * @var string
-     *
      * @ORM\Id
      * @ORM\Column(type="string", length=100)
      */

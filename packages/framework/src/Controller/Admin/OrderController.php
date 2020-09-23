@@ -13,6 +13,9 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
@@ -126,11 +129,11 @@ class OrderController extends AdminBaseController
                     ]
                 );
                 return $this->redirectToRoute('admin_order_list');
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $e) {
+            } catch (CustomerUserNotFoundException $e) {
                 $this->addErrorFlash(
                     t('Entered customer not found, please check entered data.')
                 );
-            } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
+            } catch (MailException $e) {
                 $this->addErrorFlash(t('Unable to send updating email'));
             }
         }
@@ -139,7 +142,9 @@ class OrderController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()])
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/edit.html.twig', [
             'form' => $form->createView(),
@@ -163,7 +168,9 @@ class OrderController extends AdminBaseController
 
         $form = $this->createForm(OrderFormType::class, $orderData, ['order' => $order]);
 
-        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById($order->getItems());
+        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
+            $order->getItems()
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/addProduct.html.twig', [
             'form' => $form->createView(),
@@ -187,9 +194,13 @@ class OrderController extends AdminBaseController
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $isAdvancedSearchFormSubmitted = $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted($request);
+        $isAdvancedSearchFormSubmitted = $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
+            $request
+        );
         if ($isAdvancedSearchFormSubmitted) {
-            $queryBuilder = $this->advancedSearchOrderFacade->getQueryBuilderByAdvancedSearchOrderData($advancedSearchData);
+            $queryBuilder = $this->advancedSearchOrderFacade->getQueryBuilderByAdvancedSearchOrderData(
+                $advancedSearchData
+            );
         } else {
             $queryBuilder = $this->orderFacade->getOrderListQueryBuilderByQuickSearchData($quickSearchForm->getData());
         }
@@ -230,7 +241,9 @@ class OrderController extends AdminBaseController
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
-            'isAdvancedSearchFormSubmitted' => $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted($request),
+            'isAdvancedSearchFormSubmitted' => $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
+                $request
+            ),
         ]);
     }
 
@@ -263,7 +276,7 @@ class OrderController extends AdminBaseController
                     'number' => $orderNumber,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $ex) {
+        } catch (OrderNotFoundException $ex) {
             $this->addErrorFlash(t('Selected order doesn\'t exist.'));
         }
 
@@ -277,7 +290,10 @@ class OrderController extends AdminBaseController
      */
     public function getRuleFormAction(Request $request)
     {
-        $ruleForm = $this->advancedSearchOrderFacade->createRuleForm($request->get('filterName'), $request->get('newIndex'));
+        $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
+            $request->get('filterName'),
+            $request->get('newIndex')
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/AdvancedSearch/ruleForm.html.twig', [
             'rulesForm' => $ruleForm->createView(),

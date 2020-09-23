@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
@@ -99,7 +100,7 @@ class ProductVariantFacade
             $this->em->flush($toFlush);
             $this->productFacade->setAdditionalDataAfterCreate($mainVariant, $mainVariantData);
             $this->imageFacade->copyImages($mainProduct, $mainVariant);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
             $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
 

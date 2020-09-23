@@ -15,7 +15,6 @@ class AdministratorRole
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\Administrator", inversedBy="roles")
      * @ORM\JoinColumn(nullable=false, name="administrator_id", referencedColumnName="id", onDelete="CASCADE")
@@ -24,7 +23,6 @@ class AdministratorRole
 
     /**
      * @var string
-     *
      * @ORM\Id
      * @ORM\Column(type="string")
      */

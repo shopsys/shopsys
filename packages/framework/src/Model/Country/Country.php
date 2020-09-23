@@ -11,14 +11,12 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * @ORM\Table(name="countries")
  * @ORM\Entity
- *
  * @method \Shopsys\FrameworkBundle\Model\Country\CountryTranslation translation(?string $locale = null)
  */
 class Country extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -27,22 +25,20 @@ class Country extends AbstractTranslatableEntity
 
     /**
      * Country code in ISO 3166-1 alpha-2
-     * @var string|null
      *
+     * @var string|null
      * @ORM\Column(type="string", length=2)
      */
     protected $code;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\CountryTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Country\CountryTranslation")
      */
     protected $translations;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\CountryDomain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Country\CountryDomain", mappedBy="country", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;
@@ -113,7 +109,7 @@ class Country extends AbstractTranslatableEntity
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCode(): ?string
     {

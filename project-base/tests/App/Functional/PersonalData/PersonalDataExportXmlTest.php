@@ -10,6 +10,7 @@ use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Order\OrderData;
 use App\Model\Product\Product;
+use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Xml\XmlNormalizer;
@@ -84,9 +85,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $countryData = new CountryData();
         $countryData->names = ['cz' => 'Czech Republic'];
         $countryData->code = 'CZ';
-        $country = new Country($countryData);
-
-        return $country;
+        return new Country($countryData);
     }
 
     /**
@@ -107,9 +106,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $billingAddressData->postcode = '70200';
         $billingAddressData->customer = $customer;
 
-        $billingAddress = new BillingAddress($billingAddressData);
-
-        return $billingAddress;
+        return new BillingAddress($billingAddressData);
     }
 
     /**
@@ -127,14 +124,11 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $deliveryAddressData->city = 'Ostrava';
         $deliveryAddressData->lastName = 'Fero';
         $deliveryAddressData->firstName = 'Mrkva';
-        $deliveryAddress = new DeliveryAddress($deliveryAddressData);
-
-        return $deliveryAddress;
+        return new DeliveryAddress($deliveryAddressData);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     *
      * @return \App\Model\Customer\User\CustomerUser
      */
     private function createCustomerUser(Customer $customer)
@@ -143,7 +137,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $customerUserData->firstName = 'Jaromír';
         $customerUserData->lastName = 'Jágr';
         $customerUserData->domainId = self::DOMAIN_ID_FIRST;
-        $customerUserData->createdAt = new \DateTime('2018-04-13');
+        $customerUserData->createdAt = new DateTime('2018-04-13');
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->telephone = '+420987654321';
         $customerUserData->customer = $customer;
@@ -163,7 +157,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $orderData->currency = $currency;
         $orderData->status = $status;
         $orderData->email = 'no-reply@shopsys.com';
-        $orderData->createdAt = new \DateTime('2018-04-13');
+        $orderData->createdAt = new DateTime('2018-04-13');
         $orderData->domainId = self::DOMAIN_ID_FIRST;
         $orderData->lastName = 'Bořič';
         $orderData->firstName = 'Adam';
@@ -177,8 +171,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->country = $country;
 
-        $order = new Order($orderData, '1523596513', 'hash');
-
-        return $order;
+        return new Order($orderData, '1523596513', 'hash');
     }
 }

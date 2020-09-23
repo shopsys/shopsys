@@ -19,6 +19,7 @@ class InvalidQuantityException extends Exception implements CartException
     public function __construct($invalidValue, $message = '', ?Exception $previous = null)
     {
         $this->invalidValue = $invalidValue;
+
         parent::__construct($message, 0, $previous);
     }
 

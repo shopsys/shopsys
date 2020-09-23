@@ -52,7 +52,13 @@ class CustomerRegistrationCest
     {
         $me->wantTo('use mismatching passwords while registration');
         $me->amOnLocalizedRoute('front_registration_register');
-        $registrationPage->register('Roman', 'Štěpánek', 'no-reply.16@shopsys.com', 'user123', 'missmatchingPassword');
+        $registrationPage->register(
+            'Roman',
+            'Štěpánek',
+            'no-reply.16@shopsys.com',
+            'user123',
+            'missmatchingPassword'
+        );
         $registrationPage->seePasswordError('Passwords do not match');
     }
 }

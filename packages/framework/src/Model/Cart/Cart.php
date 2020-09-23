@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
@@ -17,7 +18,6 @@ class Cart
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -26,14 +26,12 @@ class Cart
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=127)
      */
     protected $cartIdentifier;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
      * @ORM\JoinColumn(name="customer_user_id", referencedColumnName="id", nullable = true, onDelete="CASCADE")
      */
@@ -41,7 +39,6 @@ class Cart
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Cart\Item\CartItem",
      *     mappedBy="cart"
@@ -52,7 +49,6 @@ class Cart
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $modifiedAt;
@@ -85,7 +81,7 @@ class Cart
      */
     public function removeItemById($itemId)
     {
-        foreach ($this->items as $key => $item) {
+        foreach ($this->items as $item) {
             if ($item->getId() === $itemId) {
                 $this->items->removeElement($item);
                 $this->setModifiedNow();
@@ -93,7 +89,7 @@ class Cart
             }
         }
         $message = 'Cart item with ID = ' . $itemId . ' is not in cart for remove.';
-        throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException($message);
+        throw new InvalidCartItemException($message);
     }
 
     public function clean()
@@ -151,7 +147,7 @@ class Cart
             }
         }
         $message = 'CartItem with id = ' . $itemId . ' not found in cart.';
-        throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException($message);
+        throw new InvalidCartItemException($message);
     }
 
     /**

@@ -21,11 +21,18 @@ class CopyTotalPricesOfOrderItemTransformer implements DataTransformerInterface
         }
 
         if (!$value instanceof OrderItemData) {
-            throw new TransformationFailedException(sprintf('Instance of %s or null must be provided.', OrderItemData::class));
+            throw new TransformationFailedException(
+                sprintf('Instance of %s or null must be provided.', OrderItemData::class)
+            );
         }
 
         if ($value->quantity !== 1) {
-            throw new TransformationFailedException(sprintf('A single item must provided for total prices to be copiable, quantity of %d provided.', $value->quantity));
+            throw new TransformationFailedException(
+                sprintf(
+                    'A single item must provided for total prices to be copiable, quantity of %d provided.',
+                    $value->quantity
+                )
+            );
         }
 
         $value->totalPriceWithVat = $value->priceWithVat;

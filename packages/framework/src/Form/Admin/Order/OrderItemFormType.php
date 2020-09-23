@@ -90,7 +90,9 @@ class OrderItemFormType extends AbstractType
             ->add('quantity', IntegerType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter quantity']),
-                    new Constraints\GreaterThan(['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}']),
+                    new Constraints\GreaterThan(
+                        ['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}']
+                    ),
                 ],
                 'error_bubbling' => true,
             ])

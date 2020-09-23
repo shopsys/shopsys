@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config;
 
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateEntityNameException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateTypeNameException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\NotSupportedTypeNameException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileConfigException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileConfigurationParseException;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
 
@@ -42,7 +48,7 @@ class UploadedFileConfigLoader
         $yamlParser = new Parser();
 
         if (!$this->filesystem->exists($filename)) {
-            throw new \Symfony\Component\Filesystem\Exception\FileNotFoundException(
+            throw new FileNotFoundException(
                 'File ' . $filename . ' does not exist'
             );
         }
@@ -70,8 +76,8 @@ class UploadedFileConfigLoader
                 $uploadedFileEntityConfig = $this->processEntityConfig($entityConfig);
                 $this->entityNamesByEntityNames[$uploadedFileEntityConfig->getEntityName()] = $uploadedFileEntityConfig->getEntityName();
                 $this->uploadedFileEntityConfigsByClass[$uploadedFileEntityConfig->getEntityClass()] = $uploadedFileEntityConfig;
-            } catch (\Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileConfigException $e) {
-                throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileConfigurationParseException(
+            } catch (UploadedFileConfigException $e) {
+                throw new UploadedFileConfigurationParseException(
                     $entityConfig[UploadedFileConfigDefinition::CONFIG_CLASS],
                     $e
                 );
@@ -91,14 +97,14 @@ class UploadedFileConfigLoader
             $typeMultiple = $typeConfig[UploadedFileConfigDefinition::CONFIG_TYPE_MULTIPLE];
 
             if ($typeName === null) {
-                throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\NotSupportedTypeNameException($typeName);
+                throw new NotSupportedTypeNameException($typeName);
             }
 
-            if (!array_key_exists($typeName, $result)) {
-                $result[$typeName] = new UploadedFileTypeConfig($typeName, $typeMultiple);
-            } else {
-                throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateTypeNameException($typeName);
+            if (array_key_exists($typeName, $result)) {
+                throw new DuplicateTypeNameException($typeName);
             }
+
+            $result[$typeName] = new UploadedFileTypeConfig($typeName, $typeMultiple);
         }
 
         return $result;
@@ -116,7 +122,7 @@ class UploadedFileConfigLoader
         if (array_key_exists($entityClass, $this->uploadedFileEntityConfigsByClass)
             || array_key_exists($entityName, $this->entityNamesByEntityNames)
         ) {
-            throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateEntityNameException($entityName);
+            throw new DuplicateEntityNameException($entityName);
         }
 
         $typesByName = $this->prepareTypes($entityConfig[UploadedFileConfigDefinition::CONFIG_TYPES]);

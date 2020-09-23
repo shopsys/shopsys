@@ -55,6 +55,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
 
     /**
      * Question helper modifications that only waits for "enter"
+     *
      * @param string $message
      */
     protected function confirm(string $message): void
@@ -68,6 +69,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
 
     /**
      * Check if there are some changes and if so, add them and commit them
+     *
      * @param string $message
      */
     protected function commit(string $message): void
@@ -92,7 +94,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
 
         $output = $process->getOutput();
 
-        return !(bool)empty($output);
+        return $output !== '';
     }
 
     private function configureGitIdentityIfMissing(): void
@@ -109,10 +111,12 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
             $this->processRunner->run(['git', 'config', 'user.name', $newName]);
         }
 
-        if ($email === '') {
-            $newEmail = $this->symfonyStyle->ask('What is your email address?');
-            $this->processRunner->run(['git', 'config', 'user.email', $newEmail]);
+        if ($email !== '') {
+            return;
         }
+
+        $newEmail = $this->symfonyStyle->ask('What is your email address?');
+        $this->processRunner->run(['git', 'config', 'user.email', $newEmail]);
     }
 
     /**
@@ -155,7 +159,10 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
     {
         $suggestedDevelopmentVersion = $this->suggestDevelopmentVersion($version, $suggestWithVprefix);
 
-        $question = new Question('Enter next development version of Shopsys Framework', $suggestedDevelopmentVersion->getVersionString());
+        $question = new Question(
+            'Enter next development version of Shopsys Framework',
+            $suggestedDevelopmentVersion->getVersionString()
+        );
         $question->setValidator(static function ($answer) {
             $version = new Version($answer);
 
@@ -173,6 +180,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
 
     /**
      * Return new development version (e.g. from 7.1.0 to 7.2.0-dev)
+     *
      * @param \PharIo\Version\Version $version
      * @param bool $suggestWithVprefix
      * @return \PharIo\Version\Version

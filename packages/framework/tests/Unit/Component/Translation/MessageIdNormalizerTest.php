@@ -2,6 +2,7 @@
 
 namespace Tests\FrameworkBundle\Unit\Component\Translation;
 
+use JMS\TranslationBundle\Exception\InvalidArgumentException;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
@@ -83,7 +84,7 @@ class MessageIdNormalizerTest extends TestCase
 
         $normalizedCatalogue = $messageIdNormalizer->getNormalizedCatalogue($catalogue);
 
-        $this->expectException(\JMS\TranslationBundle\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $normalizedCatalogue->get($message->getId(), $message->getDomain());
     }
 }

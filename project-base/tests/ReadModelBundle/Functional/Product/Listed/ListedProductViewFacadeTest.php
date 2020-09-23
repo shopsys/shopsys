@@ -37,8 +37,19 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
         $this->assertInstanceOf(ListedProductView::class, $listedProductViews[$productId1]);
         $this->assertInstanceOf(ListedProductView::class, $listedProductViews[$productId2]);
 
-        $this->assertEquals(t('Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD', [], 'dataFixtures', $firstDomainLocale), $listedProductViews[$productId1]->getName());
-        $this->assertEquals(t('Defender 2.0 SPK-480', [], 'dataFixtures', $firstDomainLocale), $listedProductViews[$productId2]->getName());
+        $this->assertEquals(
+            t(
+                'Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD',
+                [],
+                'dataFixtures',
+                $firstDomainLocale
+            ),
+            $listedProductViews[$productId1]->getName()
+        );
+        $this->assertEquals(
+            t('Defender 2.0 SPK-480', [], 'dataFixtures', $firstDomainLocale),
+            $listedProductViews[$productId2]->getName()
+        );
     }
 
     public function testGetPaginatedForBrand(): void
@@ -46,7 +57,12 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
         $brandId = 1;
         $foundProductId = 5;
 
-        $paginationResults = $this->listedProductViewFacade->getPaginatedForBrand($brandId, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 10);
+        $paginationResults = $this->listedProductViewFacade->getPaginatedForBrand(
+            $brandId,
+            ProductListOrderingConfig::ORDER_BY_NAME_ASC,
+            1,
+            10
+        );
         $listedProductViews = $paginationResults->getResults();
 
         $this->assertCount(1, $listedProductViews);
@@ -59,12 +75,21 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
         $firstDomainLocale = $this->getFirstDomainLocale();
         $emptyFilterData = new ProductFilterData();
 
-        $paginationResults = $this->listedProductViewFacade->getFilteredPaginatedForSearch('kitty', $emptyFilterData, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 10);
+        $paginationResults = $this->listedProductViewFacade->getFilteredPaginatedForSearch(
+            'kitty',
+            $emptyFilterData,
+            ProductListOrderingConfig::ORDER_BY_NAME_ASC,
+            1,
+            10
+        );
         $listedProductViews = $paginationResults->getResults();
 
         $this->assertArrayHasKey(1, $listedProductViews);
         $this->assertInstanceOf(ListedProductView::class, $listedProductViews[1]);
-        $this->assertEquals(t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale), $listedProductViews[1]->getName());
+        $this->assertEquals(
+            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
+            $listedProductViews[1]->getName()
+        );
     }
 
     public function testGetTop(): void
@@ -78,7 +103,10 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
         $this->assertCount(1, $listedProductViews);
         $this->assertArrayHasKey($firstTopProductId, $listedProductViews);
         $this->assertInstanceOf(ListedProductView::class, $listedProductViews[$firstTopProductId]);
-        $this->assertEquals(t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale), $listedProductViews[$firstTopProductId]->getName());
+        $this->assertEquals(
+            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
+            $listedProductViews[$firstTopProductId]->getName()
+        );
     }
 
     public function testGetFilteredPaginatedInCategory(): void
@@ -87,7 +115,13 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
 
         $categoryId = 9;
 
-        $paginationResults = $this->listedProductViewFacade->getFilteredPaginatedInCategory($categoryId, $emptyFilterData, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 5);
+        $paginationResults = $this->listedProductViewFacade->getFilteredPaginatedInCategory(
+            $categoryId,
+            $emptyFilterData,
+            ProductListOrderingConfig::ORDER_BY_NAME_ASC,
+            1,
+            5
+        );
         $listedProductViews = $paginationResults->getResults();
 
         $this->assertCount(5, $listedProductViews);

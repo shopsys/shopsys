@@ -29,7 +29,6 @@ class ProductAccessory
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer", nullable=false)
      */
     protected $position;

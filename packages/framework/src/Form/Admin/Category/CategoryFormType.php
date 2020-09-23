@@ -113,7 +113,10 @@ class CategoryFormType extends AbstractType
         }
 
         if ($options['category'] !== null) {
-            $parentChoices = $this->categoryFacade->getAllTranslatedWithoutBranch($options['category'], $this->localization->getAdminLocale());
+            $parentChoices = $this->categoryFacade->getAllTranslatedWithoutBranch(
+                $options['category'],
+                $this->localization->getAdminLocale()
+            );
         } else {
             $parentChoices = $this->categoryFacade->getAllTranslated($this->localization->getAdminLocale());
         }
@@ -141,7 +144,9 @@ class CategoryFormType extends AbstractType
                 'entry_options' => [
                     'required' => false,
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
                 'label' => t('Name'),
@@ -190,7 +195,9 @@ class CategoryFormType extends AbstractType
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Heading (H1) cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 255, 'maxMessage' => 'Heading (H1) cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
                 'options_by_domain_id' => $seoH1OptionsByDomainId,

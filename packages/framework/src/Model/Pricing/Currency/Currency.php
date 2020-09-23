@@ -24,7 +24,6 @@ class Currency
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -33,35 +32,30 @@ class Currency
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=50)
      */
     protected $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=3)
      */
     protected $code;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="decimal", precision=20, scale=6)
      */
     protected $exchangeRate;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $minFractionDigits;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=15)
      */
     protected $roundingType;
@@ -155,11 +149,11 @@ class Currency
      */
     protected function setRoundingType(string $roundingType): void
     {
-        if (in_array($roundingType, static::getRoundingTypes(), true) === true) {
-            $this->roundingType = $roundingType;
-        } else {
+        if (in_array($roundingType, static::getRoundingTypes(), true) !== true) {
             throw new InvalidRoundingTypeException($roundingType);
         }
+
+        $this->roundingType = $roundingType;
     }
 
     /**

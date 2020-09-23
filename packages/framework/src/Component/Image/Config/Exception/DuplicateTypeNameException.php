@@ -24,6 +24,7 @@ class DuplicateTypeNameException extends Exception implements ImageConfigExcepti
         } else {
             $message = sprintf('Image type "%s" is not unique.', $this->typeName);
         }
+
         parent::__construct($message, 0, $previous);
     }
 

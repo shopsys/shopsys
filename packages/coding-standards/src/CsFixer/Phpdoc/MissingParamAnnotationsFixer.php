@@ -40,7 +40,10 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
         }
 
         if ($docToken !== null) {
-            $argumentAnalyses = $this->filterArgumentAnalysesFromExistingParamAnnotations($argumentAnalyses, $docToken);
+            $argumentAnalyses = $this->filterArgumentAnalysesFromExistingParamAnnotations(
+                $argumentAnalyses,
+                $docToken
+            );
         }
 
         // all arguments have annotations → skip
@@ -90,7 +93,11 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
         $lines = [];
 
         foreach ($argumentAnalyses as $argumentAnalysis) {
-            $type = $this->phpToDocTypeTransformer->transform($tokens, $argumentAnalysis->getTypeAnalysis(), $argumentAnalysis->getDefault());
+            $type = $this->phpToDocTypeTransformer->transform(
+                $tokens,
+                $argumentAnalysis->getTypeAnalysis(),
+                $argumentAnalysis->getDefault()
+            );
 
             $lines[] = new Line(sprintf(
                 '%s * @param %s %s%s',

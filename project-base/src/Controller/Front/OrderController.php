@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -219,7 +220,10 @@ class OrderController extends FrontBaseController
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
                 /** @var \App\Model\Order\Order $order */
                 $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
-                $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
+                $this->orderFacade->sendHeurekaOrderInfo(
+                    $order,
+                    $frontOrderFormData->disallowHeurekaVerifiedByCustomers
+                );
 
                 if ($frontOrderFormData->newsletterSubscription) {
                     $this->newsletterFacade->addSubscribedEmail($frontOrderFormData->email, $this->domain->getId());
@@ -229,7 +233,7 @@ class OrderController extends FrontBaseController
 
                 try {
                     $this->sendMail($order);
-                } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
+                } catch (MailException $e) {
                     $this->addErrorFlash(
                         t('Unable to send some emails, please contact us for order verification.')
                     );
@@ -263,7 +267,9 @@ class OrderController extends FrontBaseController
                 $orderPreview->getProductsPrice(),
                 $domainId
             ),
-            'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
+            'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions(
+                $this->domain->getId()
+            ),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),
         ]);
@@ -342,6 +348,7 @@ class OrderController extends FrontBaseController
                 ]
             );
         }
+
         if ($transportAndPaymentCheckResult->isPaymentPriceChanged()) {
             $this->addInfoFlashTwig(
                 t('The price of payment {{ paymentName }} changed during ordering process. Check your order, please.'),
@@ -399,7 +406,9 @@ class OrderController extends FrontBaseController
     private function getTermsAndConditionsResponse()
     {
         return $this->render('Front/Content/Order/legalConditions.html.twig', [
-            'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
+            'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions(
+                $this->domain->getId()
+            ),
         ]);
     }
 
@@ -408,7 +417,10 @@ class OrderController extends FrontBaseController
      */
     private function sendMail($order)
     {
-        $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
+        $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId(
+            $order->getStatus(),
+            $order->getDomainId()
+        );
         if ($mailTemplate->isSendMail()) {
             $this->orderMailFacade->sendEmail($order);
         }

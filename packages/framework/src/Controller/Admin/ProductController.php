@@ -17,6 +17,8 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\VariantException;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -183,7 +185,9 @@ class ProductController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)])
+        );
 
         $viewParameters = [
             'form' => $form->createView(),
@@ -258,7 +262,9 @@ class ProductController extends AdminBaseController
 
         $isAdvancedSearchFormSubmitted = $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted($request);
         if ($isAdvancedSearchFormSubmitted) {
-            $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData($advancedSearchData);
+            $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData(
+                $advancedSearchData
+            );
         } else {
             $queryBuilder = $this->productListAdminFacade->getQueryBuilderByQuickSearchData($quickSearchData);
         }
@@ -289,7 +295,9 @@ class ProductController extends AdminBaseController
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
             'massActionForm' => $massActionForm->createView(),
-            'isAdvancedSearchFormSubmitted' => $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted($request),
+            'isAdvancedSearchFormSubmitted' => $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted(
+                $request
+            ),
             'productCanBeCreated' => $productCanBeCreated,
         ]);
     }
@@ -312,7 +320,7 @@ class ProductController extends AdminBaseController
                     'product' => $product,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $ex) {
+        } catch (ProductNotFoundException $ex) {
             $this->addErrorFlash(t('Selected product doesn\'t exist.'));
         }
 
@@ -325,7 +333,10 @@ class ProductController extends AdminBaseController
      */
     public function getRuleFormAction(Request $request)
     {
-        $ruleForm = $this->advancedSearchProductFacade->createRuleForm($request->get('filterName'), $request->get('newIndex'));
+        $ruleForm = $this->advancedSearchProductFacade->createRuleForm(
+            $request->get('filterName'),
+            $request->get('newIndex')
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Product/AdvancedSearch/ruleForm.html.twig', [
             'rulesForm' => $ruleForm->createView(),
@@ -345,7 +356,10 @@ class ProductController extends AdminBaseController
             $formData = $form->getData();
             $mainVariant = $formData[VariantFormType::MAIN_VARIANT];
             try {
-                $newMainVariant = $this->productVariantFacade->createVariant($mainVariant, $formData[VariantFormType::VARIANTS]);
+                $newMainVariant = $this->productVariantFacade->createVariant(
+                    $mainVariant,
+                    $formData[VariantFormType::VARIANTS]
+                );
 
                 $this->addSuccessFlashTwig(
                     t('Variant <strong><a href="{{ url }}">{{ productVariant|productDisplayName }}</a></strong> successfully created.'),
@@ -356,7 +370,7 @@ class ProductController extends AdminBaseController
                 );
 
                 return $this->redirectToRoute('admin_product_list');
-            } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\VariantException $ex) {
+            } catch (VariantException $ex) {
                 $this->addErrorFlash(
                     t('Not possible to create variations of products that are already variant or main variant.')
                 );
@@ -426,11 +440,9 @@ class ProductController extends AdminBaseController
      */
     protected function productCanBeCreated()
     {
-        if (empty($this->unitFacade->getAll()) || $this->setting->get(Setting::DEFAULT_UNIT) === 0 || empty($this->availabilityFacade->getAll())) {
-            return false;
-        }
-
-        return true;
+        return count($this->unitFacade->getAll()) !== 0
+            && $this->setting->get(Setting::DEFAULT_UNIT) !== 0
+            && count($this->availabilityFacade->getAll()) !== 0;
     }
 
     /**

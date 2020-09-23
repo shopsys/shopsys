@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
+use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -148,7 +149,7 @@ class FeedFacade
 
         try {
             return (int)$this->filesystem->getTimestamp($filePath);
-        } catch (\League\Flysystem\FileNotFoundException $fileNotFundException) {
+        } catch (FileNotFoundException $fileNotFundException) {
             return null;
         }
     }

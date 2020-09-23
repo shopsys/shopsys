@@ -41,7 +41,9 @@ class GenerateFriendlyUrlCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<fg=green>Start of generating missing friendly urls from routing_friendly_url.yaml file.</fg=green>');
+        $output->writeln(
+            '<fg=green>Start of generating missing friendly urls from routing_friendly_url.yaml file.</fg=green>'
+        );
 
         $this->friendlyUrlGeneratorFacade->generateUrlsForSupportedEntities($output);
 
