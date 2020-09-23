@@ -65,7 +65,7 @@ class TransportPalletPriceRepository
             ->andWhere('tpp.transport = :transport')
             ->andWhere('tpp.domainId = :domainId')
             ->andWhere('tpp.productsPriceTo >= :productsPrice')
-            ->orderBy('tpp.productsPriceTo', 'desc')
+            ->orderBy('tpp.productsPriceTo', 'asc')
             ->setMaxResults(1)
             ->setParameters([
                 'transport' => $transport,
