@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandDomainNotFoundException;
 
@@ -22,6 +23,12 @@ class Brand extends AbstractTranslatableEntity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var string
@@ -48,6 +55,8 @@ class Brand extends AbstractTranslatableEntity
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
+
+        $this->uuid = $brandData->uuid ?: Uuid::uuid4()->toString();
 
         $this->createDomains($brandData);
         $this->setData($brandData);
@@ -77,6 +86,14 @@ class Brand extends AbstractTranslatableEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**
