@@ -429,6 +429,10 @@
                     font-family: @font-quartenary;
                     line-height: 1.4;
                     color: @color-primary-light;
+
+                    &:hover {
+                        color: @color-add-secondary;
+                    }
                 }
 
                 ul {
@@ -439,7 +443,6 @@
                         font-size: 15px;
                         display: block;
                         color: @color-primary;
-                        transition: all 200ms;
                     }
 
                     li ul {
@@ -477,6 +480,9 @@
                                     top: auto;
 
                                     font-size: 17px;
+                                }
+
+                                &:hover {
                                     color: @color-add-secondary;
                                 }
                             }
