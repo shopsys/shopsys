@@ -9,6 +9,8 @@ use App\Component\Pricing\PriceToAndPriceData;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportData;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class TransportPalletPriceFacade
 {
@@ -50,6 +52,17 @@ class TransportPalletPriceFacade
     public function getSortedPalletPricesByTransportAndDomain(Transport $transport, int $domainId): array
     {
         return $this->transportPalletPriceRepository->getSortedPalletPricesByTransportAndDomain($transport, $domainId);
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getPriceByProductsPrice(Transport $transport, int $domainId, Price $productsPrice): Money
+    {
+        return $this->transportPalletPriceRepository->getPriceByProductsPrice($transport, $domainId, $productsPrice);
     }
 
     /**

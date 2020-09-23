@@ -106,7 +106,8 @@ class PricesPreviewFacade
                     $currency,
                     $domainId,
                     $quantifiedProducts,
-                    $orderPreview->isTransportForFree()
+                    $orderPreview->isTransportForFree(),
+                    $orderPreview->getProductsPrice()
                 );
         }
 
