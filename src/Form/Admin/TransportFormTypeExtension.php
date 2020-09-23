@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Component\Domain\Domain;
+use App\Form\PriceToAndPriceType;
 use App\Model\Product\Type\ProductTypeFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportData;
@@ -15,6 +17,7 @@ use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -48,12 +51,23 @@ class TransportFormTypeExtension extends AbstractTypeExtension
     private $transport;
 
     /**
-     * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
+     * @var \App\Component\Domain\Domain
      */
-    public function __construct(ProductTypeFacade $productTypeFacade, TransportFacade $transportFacade)
-    {
+    private Domain $domain;
+
+    /**
+     * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
+     * @param \App\Component\Domain\Domain $domain
+     */
+    public function __construct(
+        ProductTypeFacade $productTypeFacade,
+        TransportFacade $transportFacade,
+        Domain $domain
+    ) {
         $this->productTypeFacade = $productTypeFacade;
         $this->transportFacade = $transportFacade;
+        $this->domain = $domain;
     }
 
     /**
@@ -131,6 +145,7 @@ class TransportFormTypeExtension extends AbstractTypeExtension
             ]);
 
         $builder->add($this->createTransportPackages($builder));
+        $builder->add($this->createPalletPrices($builder));
     }
 
     /**
@@ -221,5 +236,32 @@ class TransportFormTypeExtension extends AbstractTypeExtension
     public static function getExtendedTypes(): iterable
     {
         yield TransportFormType::class;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createPalletPrices(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $builderPalletPricesGroup = $builder->create('palletPricesGroup', GroupType::class, [
+            'label' => t('Ceny paletové dopravy'),
+            'position' => ['after' => 'basicInformation'],
+        ]);
+        $builderPalletPrices = $builder->create('palletPricesByDomainId', FormType::class);
+        $builderPalletPricesGroup->add($builderPalletPrices);
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $builderPalletPrices->add((string)$domainId, CollectionType::class, [
+                'allow_add' => true,
+                'allow_delete' => true,
+                'entry_type' => PriceToAndPriceType::class,
+                'entry_options' => [
+                    'domainId' => $domainId,
+                ],
+            ]);
+        }
+
+        return $builderPalletPricesGroup;
     }
 }

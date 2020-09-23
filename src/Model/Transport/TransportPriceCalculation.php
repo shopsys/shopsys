@@ -6,6 +6,7 @@ namespace App\Model\Transport;
 
 use App\Model\Product\Package\ProductPackageRepository;
 use App\Model\Transport\Logistic\TransportLogisticFacade;
+use App\Model\Transport\TransportPallet\TransportPalletPriceFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -30,21 +31,29 @@ class TransportPriceCalculation extends BaseTransportPriceCalculation
     private TransportLogisticFacade $transportLogisticFacade;
 
     /**
+     * @var \App\Model\Transport\TransportPallet\TransportPalletPriceFacade
+     */
+    private TransportPalletPriceFacade $transportPalletPriceFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \App\Model\Product\Package\ProductPackageRepository $productPackageRepository
      * @param \App\Model\Transport\Logistic\TransportLogisticFacade $transportLogisticFacade
+     * @param \App\Model\Transport\TransportPallet\TransportPalletPriceFacade $transportPalletPriceFacade
      */
     public function __construct(
         BasePriceCalculation $basePriceCalculation,
         PricingSetting $pricingSetting,
         ProductPackageRepository $productPackageRepository,
-        TransportLogisticFacade $transportLogisticFacade
+        TransportLogisticFacade $transportLogisticFacade,
+        TransportPalletPriceFacade $transportPalletPriceFacade
     ) {
         parent::__construct($basePriceCalculation, $pricingSetting);
 
         $this->productPackageRepository = $productPackageRepository;
         $this->transportLogisticFacade = $transportLogisticFacade;
+        $this->transportPalletPriceFacade = $transportPalletPriceFacade;
     }
 
     /**
@@ -53,6 +62,7 @@ class TransportPriceCalculation extends BaseTransportPriceCalculation
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param bool $transportForFree
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
     public function getCalculatedPricesIndexedByTransportIdByFreeTransport(
@@ -60,7 +70,8 @@ class TransportPriceCalculation extends BaseTransportPriceCalculation
         Currency $currency,
         int $domainId,
         array $quantifiedProducts,
-        bool $transportForFree
+        bool $transportForFree,
+        Price $productsPrice
     ): array {
         $transportsPricesByTransportId = [];
         foreach ($transports as $transport) {
@@ -73,7 +84,8 @@ class TransportPriceCalculation extends BaseTransportPriceCalculation
                 $transport,
                 $currency,
                 $domainId,
-                $quantifiedProducts
+                $quantifiedProducts,
+                $productsPrice
             );
         }
 
@@ -85,14 +97,20 @@ class TransportPriceCalculation extends BaseTransportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     private function calculatePriceByQuantifiedProducts(
         Transport $transport,
         Currency $currency,
         int $domainId,
-        array $quantifiedProducts
+        array $quantifiedProducts,
+        Price $productsPrice
     ): Price {
+        if ($transport->getType() === Transport::TYPE_PALLET) {
+            return $this->calculatePalletTransportPrice($transport, $currency, $domainId, $productsPrice);
+        }
+
         if ($transport->getType() !== Transport::TYPE_PACKAGE) {
             return $this->calculateIndependentPrice($transport, $currency, $domainId);
         }
@@ -108,6 +126,29 @@ class TransportPriceCalculation extends BaseTransportPriceCalculation
         return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
             $transportPackage->getPriceWithVat(),
             PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+            $transport->getTransportDomain($domainId)->getVat(),
+            $currency
+        );
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private function calculatePalletTransportPrice(
+        Transport $transport,
+        Currency $currency,
+        int $domainId,
+        Price $productsPrice
+    ): Price {
+        $transportPrice = $this->transportPalletPriceFacade->getPriceByProductsPrice($transport, $domainId, $productsPrice);
+
+        return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+            $transportPrice,
+            $this->pricingSetting->getInputPriceType(),
             $transport->getTransportDomain($domainId)->getVat(),
             $currency
         );

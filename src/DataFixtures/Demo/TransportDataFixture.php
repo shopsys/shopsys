@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Component\Pricing\PriceToAndPriceData;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportPackage\TransportPackageDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -193,6 +194,36 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->productTypes = [
             $productTypeCommon,
             $productTypeOversized,
+        ];
+        $priceToAndPriceData1 = new PriceToAndPriceData();
+        $priceToAndPriceData1->priceTo = Money::create('1000');
+        $priceToAndPriceData1->price = Money::create('99');
+        $priceToAndPriceData2 = new PriceToAndPriceData();
+        $priceToAndPriceData2->priceTo = Money::create('5000');
+        $priceToAndPriceData2->price = Money::create('299');
+        $priceToAndPriceData3 = new PriceToAndPriceData();
+        $priceToAndPriceData3->priceTo = Money::create('20000');
+        $priceToAndPriceData3->price = Money::create('499');
+        $priceToAndPriceData4 = new PriceToAndPriceData();
+        $priceToAndPriceData4->priceTo = Money::create('20001');
+        $priceToAndPriceData4->price = Money::create('799');
+        $priceToAndPriceData5 = new PriceToAndPriceData();
+        $priceToAndPriceData5->priceTo = Money::create('200');
+        $priceToAndPriceData5->price = Money::create('10');
+        $priceToAndPriceData6 = new PriceToAndPriceData();
+        $priceToAndPriceData6->priceTo = Money::create('201');
+        $priceToAndPriceData6->price = Money::create('20');
+        $transportData->palletPricesByDomainId = [
+            1 => [
+                $priceToAndPriceData1,
+                $priceToAndPriceData2,
+                $priceToAndPriceData3,
+                $priceToAndPriceData4,
+            ],
+            2 => [
+                $priceToAndPriceData5,
+                $priceToAndPriceData6,
+            ],
         ];
 
         $transportData->personalPickup = false;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Transport;
 
 use App\Model\Transport\TransportPackage\TransportPackageFacade;
+use App\Model\Transport\TransportPallet\TransportPalletPriceFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -42,6 +43,11 @@ class TransportFacade extends BaseTransportFacade
     private TransportPackageFacade $transportPackageFacade;
 
     /**
+     * @var \App\Model\Transport\TransportPallet\TransportPalletPriceFacade
+     */
+    private TransportPalletPriceFacade $transportPalletPriceFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Transport\TransportRepository $transportRepository
      * @param \App\Model\Payment\PaymentRepository $paymentRepository
@@ -53,6 +59,7 @@ class TransportFacade extends BaseTransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface $transportFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory
      * @param \App\Model\Transport\TransportPackage\TransportPackageFacade $transportPackageFacade
+     * @param \App\Model\Transport\TransportPallet\TransportPalletPriceFacade $transportPalletPriceFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -65,7 +72,8 @@ class TransportFacade extends BaseTransportFacade
         TransportPriceCalculation $transportPriceCalculation,
         TransportFactoryInterface $transportFactory,
         TransportPriceFactoryInterface $transportPriceFactory,
-        TransportPackageFacade $transportPackageFacade
+        TransportPackageFacade $transportPackageFacade,
+        TransportPalletPriceFacade $transportPalletPriceFacade
     ) {
         parent::__construct(
             $em,
@@ -80,6 +88,7 @@ class TransportFacade extends BaseTransportFacade
             $transportPriceFactory
         );
         $this->transportPackageFacade = $transportPackageFacade;
+        $this->transportPalletPriceFacade = $transportPalletPriceFacade;
     }
 
     /**
@@ -91,6 +100,7 @@ class TransportFacade extends BaseTransportFacade
         /** @var \App\Model\Transport\Transport $transport */
         $transport = parent::create($transportData);
         $this->transportPackageFacade->updateTransportPackages($transport, $transportData);
+        $this->transportPalletPriceFacade->updateTransportPalletPrices($transport, $transportData);
 
         return $transport;
     }
@@ -103,6 +113,7 @@ class TransportFacade extends BaseTransportFacade
     {
         parent::edit($transport, $transportData);
         $this->transportPackageFacade->updateTransportPackages($transport, $transportData);
+        $this->transportPalletPriceFacade->updateTransportPalletPrices($transport, $transportData);
     }
 
     public function findByExternalId(int $id): ?Transport
