@@ -22,6 +22,7 @@ export default class RangeSlider {
 
         if (value == null) {
             value = rangeSlider.minimalValue;
+            rangeSlider.$minimumInput.val('');
         }
 
         if (value > rangeSlider.maximalValue) {
@@ -47,6 +48,7 @@ export default class RangeSlider {
 
         if (value == null) {
             value = rangeSlider.maximalValue;
+            rangeSlider.$maximumInput.val('');
         }
 
         if (value > rangeSlider.maximalValue) {
@@ -105,7 +107,7 @@ export default class RangeSlider {
                 }
             });
 
-            rangeSlider.$minimumInput.change(() => RangeSlider.updateSliderMinimum(rangeSlider));
+            rangeSlider.$minimumInput.change((event) => RangeSlider.updateSliderMinimum(rangeSlider));
             RangeSlider.updateSliderMinimum(rangeSlider);
 
             rangeSlider.$maximumInput.change(() => RangeSlider.updateSliderMaximum(rangeSlider));
