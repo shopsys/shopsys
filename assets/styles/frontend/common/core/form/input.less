@@ -124,6 +124,12 @@
             }
         }
     }
+
+    &[readonly] {
+        background-color: rgba(@input-disabled-background, .35);
+        pointer-events: none;
+        border-color: transparent;
+    }
 }
 
 .input-no-style {
