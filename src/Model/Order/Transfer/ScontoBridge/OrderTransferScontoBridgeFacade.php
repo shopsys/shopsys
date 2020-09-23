@@ -132,7 +132,9 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     protected function getData(): Generator
     {
         foreach ($this->orderRepository->getAllOrdersNotSentToScontoBridge() as $order) {
-            yield $order;
+            if ($order->isGoPayPaid() || !$order->getPayment()->isGoPay()) {
+                yield $order;
+            }
         }
     }
 
