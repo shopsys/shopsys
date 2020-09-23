@@ -46,5 +46,7 @@
         </div>
     </dd>
 </dl>
-{{ form_widget(form.save, { label: 'Register'|trans, attr: {'class' : 'btn--success btn--submit-next btn--registration'} }) }}
+<div class="box-form__submit">
+    {{ form_widget(form.save, { label: 'Register'|trans, attr: {'class' : 'btn--success btn--submit-next'} }) }}
+</div>
 {{ form_end(form) }}
