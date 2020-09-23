@@ -219,7 +219,7 @@
         margin: 0 -@box-chooser-item-spacing;
 
         cursor: pointer;
-        transition: all @transition;
+        transition: padding @transition, transform @transition, max-height @transition;
 
         @media @query-tablet {
             padding-left: 110px;
@@ -476,6 +476,32 @@
                 margin-left: 5px;
 
                 font-size: 8px;
+            }
+        }
+    }
+
+    &__sub-selection {
+        margin: 1rem 0;
+
+        border: 2px solid @color-border-lighter;
+        border-bottom-width: 1px;
+        border-radius: @radius;
+
+        @media @query-lg {
+            margin: 1.5rem;
+        }
+
+        .box-chooser__item {
+            margin: 0;
+        }
+
+        .box-chooser__item__img {
+            max-height: 20px;
+        }
+
+        .box-chooser__item__price {
+            @media @query-md {
+                min-width: 157px;
             }
         }
     }
