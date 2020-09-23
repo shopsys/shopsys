@@ -95,3 +95,14 @@ QueryDecorator:
                 type: 'Article'
                 resolve: "@=resolver('cookiesArticle')"
                 description: "Returns information about cookies article"
+            brands:
+                type: '[Brand!]!'
+                resolve: "@=resolver('brands')"
+                description: "Returns complete list of brands"
+            brand:
+                type: 'Brand'
+                resolve: "@=resolver('brand', [args['uuid']])"
+                args:
+                    uuid:
+                        type: "Uuid!"
+                description: "Returns brand filtered using UUID"

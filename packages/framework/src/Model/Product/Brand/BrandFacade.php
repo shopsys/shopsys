@@ -174,4 +174,13 @@ class BrandFacade
     {
         $this->eventDispatcher->dispatch(new BrandEvent($brand), $eventType);
     }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+     */
+    public function getByUuid(string $uuid): Brand
+    {
+        return $this->brandRepository->getOneByUuid($uuid);
+    }
 }
