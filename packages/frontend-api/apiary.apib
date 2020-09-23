@@ -53,6 +53,9 @@ Authorization header is not required.
                             width
                             height
                         }
+                        brand {
+                            name
+                        }
                     }
                 }
             }
@@ -93,7 +96,8 @@ Authorization header is not required.
                                 "priceWithoutVat": "4.00",
                                 "vatAmount": "0.84"
                             },
-                            "images": []
+                            "images": [],
+                            "brand": null
                         }
                     },
                     {
@@ -213,7 +217,10 @@ Authorization header is not required.
                                     "width": null,
                                     "height": null
                                 }
-                            ]
+                            ],
+                            "brand": {
+                                "name": "Sencor"
+                            }
                         }
                     }
                 ]
@@ -261,6 +268,9 @@ Returns product filtered using UUID
                 url
                 width
                 height
+            }
+            brand {
+                name
             }
         }
     }
@@ -384,7 +394,10 @@ Returns product filtered using UUID
                         "width": null,
                         "height": null
                     }
-                ]
+                ],
+                "brand": {
+                    "name": "Sencor"
+                }
             }
         }
     }

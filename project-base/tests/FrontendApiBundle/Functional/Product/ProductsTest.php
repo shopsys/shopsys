@@ -75,6 +75,9 @@ class ProductsTest extends GraphQlTestCase
                                 priceWithVat
                                 priceWithoutVat
                                 vatAmount
+                            },
+                            brand {
+                                name
                             }
                         }
                     }
@@ -133,6 +136,9 @@ class ProductsTest extends GraphQlTestCase
                     'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('4838.75'),
                     'priceWithoutVat' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('3999'),
                     'vatAmount' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('839.75'),
+                ],
+                'brand' => [
+                    'name' => 'Hyundai',
                 ],
             ],
         ];
