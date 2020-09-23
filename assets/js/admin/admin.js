@@ -17,5 +17,6 @@ import './advert/advert';
 import './../common/validation/customizeFpValidator';
 
 import './promocode/promocode';
+import './promocode/promoCodeGroup';
 
 registerAdmin();
