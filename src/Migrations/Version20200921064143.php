@@ -15,8 +15,6 @@ class Version20200921064143 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('UPDATE friendly_urls SET slug = CONCAT(\'magazin/\', slug) WHERE "route_name" = \'front_blogcategory_detail\' AND "slug" NOT LIKE \'magazin%\' AND "slug" !=\'blog\'');
-        $this->sql('UPDATE friendly_urls SET slug = \'magazin\' WHERE "route_name" = \'front_blogcategory_detail\' AND "slug" =\'blog\'');
-
         $this->sql('UPDATE friendly_urls SET slug = CONCAT(\'magazin/\', slug) WHERE "route_name" = \'front_blogarticle_detail\' AND "slug" NOT LIKE \'magazin%\'');
     }
 
